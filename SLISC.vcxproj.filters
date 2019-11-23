@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SLISC\print.cpp" />
+    <ClCompile Include="SLISC\gsl\source\specfunc\coupling.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\sys\coerce.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\elementary.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\err\error.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\exp.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\sys\fdiv.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\gamma.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\sys\infnan.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\legendre_P.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\log.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\complex\math.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\psi.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\err\stream.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\trig.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\zeta.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\legendre_poly.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_j.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\poch.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_amp_phase.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_temme.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_olver.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\airy.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\airy_der.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_J0.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_Jn.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\bessel_J1.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\pow_int.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\laguerre.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\coulomb_bound.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+    <ClCompile Include="SLISC\gsl\source\specfunc\coulomb.c">
+      <Filter>gsl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="gsl">
+      <UniqueIdentifier>{df18dde9-54f2-4e14-b923-30fa7e5b72ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
