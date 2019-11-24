@@ -1,4 +1,0 @@
-function ret = is_scalar(type)
-ret = is_Bool is_Char is_Int is_Llong is_Float is_Doub is_Ldoub
-is_Int(type) || is_Doub(type) || is_Comp(type);
-end
