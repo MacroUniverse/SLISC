@@ -29,7 +29,7 @@ N = size(type, 1);
 code = cell(N, 1);
 for i = 1:N
     disp(['generating:' type{i,:}]);
-    code{i} = [preprocessor(file, type{i,:}), newline];
+    code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
 filewrite('mul_gen.inl', str);

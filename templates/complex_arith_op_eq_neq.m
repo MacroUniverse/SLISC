@@ -6,8 +6,8 @@ i = 1;
 code = cell(0);
 for T1 = Tr
     for T2 = Tc
-        code{i} = [preprocessor(file, T1{1}, T2{1}), newline];
-        code{i+1} = [preprocessor(file, T2{1}, T1{1}), newline];
+        code{i} = [preproc(file, T1{1}, T2{1}), newline];
+        code{i+1} = [preproc(file, T2{1}, T1{1}), newline];
         i = i + 2;
     end
 end
