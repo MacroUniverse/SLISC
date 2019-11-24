@@ -1,0 +1,17 @@
+// compare two complex numbers
+//% [T1, T2] = varargin{1:2};
+constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
+{
+//% if is_real(T1)
+	return real(s2) == s1 && imag(s2) == 0;
+//% elseif is_real(T2)
+	return real(s1) == s2 && imag(s1) == 0;
+//% else
+	return real(s1) == real(s2) && imag(s1) == imag(s2);
+//% end
+}
+
+constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
+{
+    return !(s1 == s2);
+}
