@@ -1,0 +1,21 @@
+//% [T,T1,T2] = varargin{:};
+//% Ts = contain_type(T); Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
+//%     error('illegal type!');
+//% end
+//% if ndim(T) ~= 1 || ndim(T1) ~= 2 || ndim(T2) ~= 1
+//%     error('illegal dim!');
+//% end
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+    Long Nr = a.n1(), Nc = a.n2();
+#ifdef SLS_CHECK_SHAPE
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < Nr; ++i) {
+        y[i] = 0;
+        for (Long j = 0; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+}

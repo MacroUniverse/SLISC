@@ -17,6 +17,8 @@ elseif any(strfind(type, 'Comp'))
     ret = 'Comp';
 elseif any(strfind(type, 'Lcomp'))
     ret = 'Lcomp';
+elseif any(strfind(type, 'Imag'))
+    ret = 'Imag';
 else
     error('not implemented');
 end

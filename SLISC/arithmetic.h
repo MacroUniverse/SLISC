@@ -1029,22 +1029,7 @@ inline void outprod_par(T &v, const T1 &v1, const T2 &v2)
 }
 
 // matrix-vector multiplication
-template <class T, class T1, class T2, SLS_IF(
-    ndims<T>() == 1 && ndims<T2>() == 1 &&
-    (is_dense_mat<T1>() || is_Dcmat<T1>()))>
-inline void mul(T &y, const T1 &a, const T2 &x)
-{
-    Long Nr = a.n1(), Nc = a.n2();
-#ifdef SLS_CHECK_SHAPE
-    if (Nc != x.size() || y.size() != Nr)
-        SLS_ERR("illegal shape!");
-#endif
-    for (Long i = 0; i < Nr; ++i) {
-        y[i] = 0;
-        for (Long j = 0; j < Nc; ++j)
-            y[i] += a(i, j) * x[j];
-    }
-}
+#include "arithmetic_mul_mv.inl"
 
 // matrix-vector multiplication with symmetric Doub matrix and Comp vectors (use MKL)
 template <class T, class T1, class T2, SLS_IF(
