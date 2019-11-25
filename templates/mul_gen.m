@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'mul_gen.tp.inl';
+file = 'mul_gen.tp';
 Cv = {'Vec', 'Svec', 'Dvec'};
 Cm = {'Cmat', 'Scmat', 'Dcmat', 'Mat'};
 TS = {

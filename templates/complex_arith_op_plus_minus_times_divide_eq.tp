@@ -1,22 +1,22 @@
 // operator+=
-//% [Tc,Tr] = varargin{1:2};
-//% T = rm_comp(Tc);
-constexpr void operator+=(@Tc@_O &z, @Tr@_I x)
+//% [T1,T2] = varargin{1:2};
+//% T = rm_comp(T1);
+constexpr void operator+=(@T1@_O &z, @T2@_I x)
 {
     z.real() += x;
 }
 
-constexpr void operator-=(@Tc@_O &z, @Tr@_I x)
+constexpr void operator-=(@T1@_O &z, @T2@_I x)
 {
     z.real() -= x;
 }
 
-constexpr void operator*=(@Tc@_O &z, @Tr@_I x)
+constexpr void operator*=(@T1@_O &z, @T2@_I x)
 {
     z *= (@T@)x;
 }
 
-constexpr void operator/=(@Tc@_O &z, @Tr@_I x)
+constexpr void operator/=(@T1@_O &z, @T2@_I x)
 {
     z /= (@T@)x;
 }

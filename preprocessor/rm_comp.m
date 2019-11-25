@@ -5,5 +5,7 @@ elseif is_Comp(type)
     ret = 'Doub';
 elseif is_Lcomp(type)
     ret = 'Ldoub';
+else
+    ret = type;
 end
 end
