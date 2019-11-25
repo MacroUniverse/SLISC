@@ -219,6 +219,10 @@ typedef Vector<Uchar> VecUchar;
 typedef const VecUchar &VecUchar_I;
 typedef VecUchar &VecUchar_O, &VecUchar_IO;
 
+typedef Vector<Float> VecFloat;
+typedef const VecFloat &VecFloat_I;
+typedef VecFloat &VecFloat_O, &VecFloat_IO;
+
 typedef Vector<Doub> VecDoub;
 typedef const VecDoub &VecDoub_I;
 typedef VecDoub &VecDoub_O, &VecDoub_IO;
@@ -267,6 +271,10 @@ typedef Matrix<Uchar> MatUchar;
 typedef const MatUchar &MatUchar_I;
 typedef MatUchar &MatUchar_O, &MatUchar_IO;
 
+typedef Matrix<Float> MatFloat;
+typedef const MatFloat &MatFloat_I;
+typedef MatFloat &MatFloat_O, &MatFloat_IO;
+
 typedef Matrix<Doub> MatDoub;
 typedef const MatDoub &MatDoub_I;
 typedef MatDoub &MatDoub_O, &MatDoub_IO;
@@ -310,6 +318,10 @@ typedef CmatChar &CmatChar_O, &CmatChar_IO;
 typedef Cmat<Uchar> CmatUchar;
 typedef const CmatUchar &CmatUchar_I;
 typedef CmatUchar &CmatUchar_O, &CmatUchar_IO;
+
+typedef Cmat<Float> CmatFloat;
+typedef const CmatFloat &CmatFloat_I;
+typedef CmatFloat &CmatFloat_O, &CmatFloat_IO;
 
 typedef Cmat<Doub> CmatDoub;
 typedef const CmatDoub &CmatDoub_I;
@@ -412,6 +424,11 @@ typedef Svector<Llong> SvecLlong;
 typedef const SvecLlong &SvecLlong_I;
 typedef SvecLlong &SvecLlong_O, &SvecLlong_IO;
 
+typedef Svector<Float> SvecFloat;
+typedef SvecFloat &SvecFloat_O, &SvecFloat_IO;
+typedef Svector_c<Float> SvecFloat_c;
+typedef const SvecFloat_c &SvecFloat_I;
+
 typedef Svector<Doub> SvecDoub;
 typedef SvecDoub &SvecDoub_O, &SvecDoub_IO;
 typedef Svector_c<Doub> SvecDoub_c;
@@ -433,6 +450,10 @@ typedef DvecLong &DvecLong_O, &DvecLong_IO;
 typedef Dvector<Llong> DvecLlong;
 typedef const DvecLlong &DvecLlong_I;
 typedef DvecLlong &DvecLlong_O, &DvecLlong_IO;
+
+typedef Dvector<Float> DvecFloat;
+typedef const DvecFloat &DvecFloat_I;
+typedef DvecFloat &DvecFloat_O, &DvecFloat_IO;
 
 typedef Dvector<Doub> DvecDoub;
 typedef const DvecDoub &DvecDoub_I;
@@ -477,6 +498,11 @@ typedef ScmatInt &ScmatLlong_O, &ScmatLlong_IO;
 typedef Scmat_c<Llong> ScmatLlong_c;
 typedef const ScmatLlong_c &ScmatLlong_I;
 
+typedef Scmat<Float> ScmatFloat;
+typedef ScmatFloat &ScmatFloat_O, &ScmatFloat_IO;
+typedef Scmat_c<Float> ScmatFloat_c;
+typedef const ScmatFloat_c &ScmatFloat_I;
+
 typedef Scmat<Doub> ScmatDoub;
 typedef ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
 typedef Scmat_c<Doub> ScmatDoub_c;
@@ -518,6 +544,10 @@ typedef DcmatInt &DcmatLong_O, &DcmatLong_IO;
 typedef Dcmat<Llong> DcmatLlong;
 typedef const DcmatLlong &DcmatLlong_I;
 typedef DcmatInt &DcmatLlong_O, &DcmatLlong_IO;
+
+typedef Dcmat<Float> DcmatFloat;
+typedef const DcmatFloat &DcmatFloat_I;
+typedef DcmatFloat &DcmatFloat_O, &DcmatFloat_IO;
 
 typedef Dcmat<Doub> DcmatDoub;
 typedef const DcmatDoub &DcmatDoub_I;

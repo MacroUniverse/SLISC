@@ -1,10 +1,13 @@
 #pragma once
 #include "global.h"
 #include "meta.h"
+#include "dvector.h"
 #include "matrix.h"
 #include "cmat.h"
+#include "dcmat.h"
 #include "mat3d.h"
 #include "cmat3d.h"
+#include "scmat.h"
 #include "fixsize.h"
 #include "ptr_arith.h"
 
@@ -260,32 +263,6 @@ inline void copy_col(Tmat &a, const Tvec &v, Long_I col)
     }
     else
         SLS_ERR("unknown!");
-}
-
-// vector/matrix stride (step2 is leading demension for matrix)
-template <class T, SLS_IF(is_dense_vec<T>())>
-Long step1(const T &v) {
-	return 1;
-}
-
-template <class T, SLS_IF(is_Dvector<T>())>
-Long step1(const T &v) {
-	return v.step();
-}
-
-template <class T, SLS_IF(is_dense<T>() && is_cmajor<T>())>
-Long step1(const T &v) {
-	return 1;
-}
-
-template <class T, SLS_IF(is_dense<T>() && is_cmajor<T>())>
-Long step2(const T &v) {
-	return v.n1();
-}
-
-template <class T, SLS_IF(is_Dcmat<T>())>
-Long step2(const T &v) {
-	return v.lda();
 }
 
 // sum of container elements
@@ -1152,48 +1129,7 @@ inline void mul_sym(T &y, const T1 &a, const T2 &x)
 }
 
 // matrix-vector multiplication using cBLAS
-template <class T, class T1, class T2,
-    class Ts = contain_type<T>, class Ts1 = contain_type<T1>,
-    class Ts2 = contain_type<T2>, SLS_IF(
-		is_cmajor<T1>() &&
-        (is_dense_vec<T>() || is_Dvector<T>()) &&
-        (is_dense_mat<T1>() || is_Dcmat<T1>()) &&
-        (is_dense_vec<T2>() || is_Dvector<T2>()) &&
-        ((is_Doub<Ts>() && is_Doub<Ts1>() && is_Doub<Ts2>()) ||
-         (is_Comp<Ts>() && is_Comp<Ts1>() && is_Comp<Ts2>()) ||
-         (is_Comp<Ts>() && is_Doub<Ts1>() && is_Comp<Ts>())))>
-inline void mul_gen(T &y, const T1 &a, const T2 &x)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (x.size() != a.n2() || y.size() != a.n1())
-        SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-	Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  step1(y);
-	lda = step2(a);
-	incx = step1(x);
-
-    if (is_Doub<Ts>() && is_Doub<Ts1>())
-        cblas_dgemv(CblasColMajor, CblasNoTrans, N1, N2, 1, (Doub *)a.ptr(),
-            lda, (Doub *)x.ptr(), incx, 0, (Doub *)y.ptr(), incy);
-    else if (is_Comp<Ts>() && is_Comp<Ts1>()) {
-        Comp alpha(1), beta(0);
-        cblas_zgemv(CblasColMajor, CblasNoTrans, N1, N2, &alpha, (Comp *)a.ptr(),
-            lda, (Comp *)x.ptr(), incx, &beta, (Comp *)y.ptr(), incy);
-    }
-    else if (is_Comp<Ts>() && is_Doub<Ts1>()) {
-        // do real part
-        cblas_dgemv(CblasColMajor, CblasNoTrans, N1, N2, 1, (Doub*)a.ptr(),
-            lda, (Doub*)x.ptr(), 2*incx, 0, (Doub*)y.ptr(), 2*incy);
-        // do imag part
-        cblas_dgemv(CblasColMajor, CblasNoTrans, N1, N2, 1, (Doub*)a.ptr(),
-            lda, (Doub*)x.ptr() + 1, 2*incx, 0, (Doub*)y.ptr() + 1, 2*incy);
-    }
-#else
-    mul(y, a, x);
-#endif
-}
+#include "mul_gen.inl"
 
 // parallel version
 template <class T, class T1, class T2, SLS_IF(
