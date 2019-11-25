@@ -1,6 +1,6 @@
 //% [T1,T2] = varargin{:};
 //% T = promo_type(T1,T2);
-constexpr const @T@ operator+(@T1@_I s1, @T2@_I s2)
+const @T@ operator+(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
 	return @T@(s1 + real(s2), imag(s2));
@@ -15,10 +15,10 @@ constexpr const @T@ operator+(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-constexpr const @T@ operator-(@T1@_I s1, @T2@_I s2)
+const @T@ operator-(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
-	return @T@(s1 - real(s2), imag(s2));
+	return @T@(s1 - real(s2), -imag(s2));
 //% elseif is_real(T2)
 	return @T@(real(s1) - s2, imag(s1));
 //% elseif type_num(T1) > type_num(T2)
@@ -30,7 +30,7 @@ constexpr const @T@ operator-(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-constexpr const @T@ operator*(@T1@_I s1, @T2@_I s2)
+const @T@ operator*(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
 	return @T@(s1*real(s2), s1*imag(s2));
@@ -45,7 +45,7 @@ constexpr const @T@ operator*(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-constexpr const @T@ operator/(@T1@_I s1, @T2@_I s2)
+const @T@ operator/(@T1@_I s1, @T2@_I s2)
 {
 //% Tr1 = rm_comp(T1); Tr2 = rm_comp(T2);
 //% numr1 = type_num(Tr1); numr2 = type_num(Tr2);
@@ -60,12 +60,12 @@ constexpr const @T@ operator/(@T1@_I s1, @T2@_I s2)
 //% elseif is_real(T2)
 //%     if numr1 < numr2
     return (@Tc2@)s1 / s2;
-//%     elseif numr2 < numr2
+//%     elseif numr1 > numr2
 	return s1 / (@Tr1@)s2;
 //%     end
 //% elseif numc1 > numc2
 	return s1 / (@Tc1@)s2;
-//% elseif numc2 > numc1
+//% elseif numc1 < numc2
 	return (@Tc2@)s1 / s2;
 //% else
 //%     error('not implemented!');

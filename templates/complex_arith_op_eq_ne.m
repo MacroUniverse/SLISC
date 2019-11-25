@@ -18,4 +18,4 @@ for T1 = type
 end
 
 str = [code{:}];
-filewrite('complex_arith_op_eq_ne.inl', str);
+filewrite('../SLISC/complex_arith_op_eq_ne.inl', str);

@@ -32,4 +32,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('mul_gen.inl', str);
+filewrite('../SLISC/mul_gen.inl', str);
