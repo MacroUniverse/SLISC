@@ -1,5 +1,5 @@
 //% [T1, T2] = varargin{:};
-Bool shape_cmp(@T1@_I v1, @T2@_I &v2)
+Bool shape_cmp(@T1@_I v1, @T2@_I v2)
 {
 //% N1 = ndim(T1); N2 = ndim(T2);
 //% if N1 ~= N2
