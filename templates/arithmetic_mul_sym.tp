@@ -1,0 +1,54 @@
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (x.size() != a.n2() || y.size() != a.n1() || x.size() != y.size())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), lda, incx, incy;
+//% if is_dense_vec(Ty)
+    incy =  1;
+//% else
+    incy = y.step();
+//% end
+//% if is_dense_mat(Ta)
+    lda = a.n1();
+//% else
+    lda = a.lda();
+//% end
+//% if is_dense_vec(Tx)
+    incx = 1;
+//% else
+    incx = x.step();
+//% end
+//% if is_cmajor(Ta)
+	CBLAS_LAYOUT layout = CblasColMajor;
+//% else
+	CBLAS_LAYOUT layout = CblasRowMajor;
+//% end
+
+//% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
+	cblas_ssymv(layout, CblasUpper, N1, alpha, a.ptr(),
+		lda, x.ptr(), incx, beta, y.ptr(), incy);
+//% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+	cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+		lda, x.ptr(), incx, beta, y.ptr(), incy);
+//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
+	cblas_zsymv(layout, CblasUpper, N1, &alpha, a.ptr(),
+		lda, x.ptr(), incx, &beta, y.ptr(), incy);
+//% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
+	// do real part
+	cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+		lda, (@Tsa@*)x.ptr(), 2*incx, beta, (@Tsa@*)y.ptr(), 2*incy);
+	// do imag part
+	cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+		lda, (@Tsa@*)x.ptr()+1, 2*incx, beta, (@Tsa@*)y.ptr()+1, 2*incy);
+//% else
+//%     error('not implemented!');
+//% end
+#else
+    mul(y, a, x);
+#endif
+}

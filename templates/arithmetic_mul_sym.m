@@ -1,8 +1,9 @@
 cd(mfilepath);
-file = 'mul_gen.tp';
+file = 'arithmetic_mul_sym.tp';
 type = {
     'VecDoub', 'CmatDoub', 'VecDoub';
     'VecComp', 'CmatDoub', 'VecComp';
+    'SvecComp', 'DcmatDoub', 'SvecComp';
     'DvecComp', 'DcmatDoub', 'DvecComp';
     };
 
@@ -12,4 +13,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/mul_gen.inl', str);
+filewrite('../SLISC/arithmetic_mul_sym.inl', str);

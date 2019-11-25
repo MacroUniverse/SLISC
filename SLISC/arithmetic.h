@@ -1028,61 +1028,14 @@ inline void outprod_par(T &v, const T1 &v1, const T2 &v2)
     }*/
 }
 
-// matrix-vector multiplication
+// matrix-vector multiplication (most compatible but slow)
 #include "arithmetic_mul_mv.inl"
 
-// matrix-vector multiplication with symmetric Doub matrix and Comp vectors (use MKL)
-template <class T, class T1, class T2, SLS_IF(
-    is_dense_vec<T>() && is_dense_mat<T1>() && is_dense_vec<T2>() &&
-    is_Comp<contain_type<T>>() && is_Doub<contain_type<T1>>() &&
-    is_Comp<contain_type<T2>>()
-)>
-inline void mul_sym(T &y, const T1 &a, const T2 &x)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (a.n1() != a.n2() || x.size() != y.size() || x.size() != a.n1())
-        SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-    // do real part
-    Long N = x.size();
-    cblas_dsymv(CblasColMajor, CblasUpper, N, 1, a.ptr(),
-        N, (Doub*)x.ptr(), 2, 0, (Doub*)y.ptr(), 2);
-    // do imag part
-    cblas_dsymv(CblasColMajor, CblasUpper, N, 1, a.ptr(),
-        N, (Doub*)x.ptr() + 1, 2, 0, (Doub*)y.ptr() + 1, 2);
-#else
-    mul(y, a, x);
-#endif
-}
+// generic matrix-vector multiplication using cBLAS
+#include "arithmetic_mul_gen.inl"
 
-// matrix-vector multiplication with symmetric Dcmat and vectors of Doub and Comp (use MKL)
-template <class T, class T1, class T2, class Ts = contain_type<T>,
-    class Ts1 = contain_type<T1>, class Ts2 = contain_type<T2>, SLS_IF(
-    is_dense_vec<T>() && is_Dcmat<T1>() && is_dense_vec<T2>() &&
-    is_Doub<Ts>() && is_Doub<Ts1> && is_Doub<Ts1>
-)>
-inline void mul_sym(T &y, const T1 &a, const T2 &x)
-{
-    Long N = x.size();
-#ifdef SLS_CHECK_SHAPE
-    if (a.n1() != a.n2() || N != y.size() || N != a.n1())
-        SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-    if (is_Doub<Ts>()) {
-        cblas_dsymv(CblasColMajor, CblasUpper, N, 1, a.ptr(),
-            a.lda(), (Doub*)x.ptr(), 2, 0, (Doub*)y.ptr(), 2);
-    }
-	else
-		SLS_ERR("not implemented");
-#else
-    mul(y, a, x);
-#endif
-}
-
-// matrix-vector multiplication using cBLAS
-#include "mul_gen.inl"
+// symmetric matrix-vector multiplication using cBLAS
+#include "arithmetic_mul_sym.inl"
 
 // parallel version
 template <class T, class T1, class T2, SLS_IF(
