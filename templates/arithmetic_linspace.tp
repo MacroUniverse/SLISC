@@ -1,0 +1,14 @@
+//% Tv = varargin{:};
+//% Ts = contain_type(Tv);
+//% if ~is_dense(Tv)
+//%     error('illegal types');
+//% end
+inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
+{
+//% if is_integral(Ts)
+    if (v.size() != abs(last - first) + 1) {
+		SLS_ERR("linspace for integral types does not support rounding!");
+	}
+//% end
+    linspace_vss(v.ptr(), first, last, v.size());
+}

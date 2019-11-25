@@ -337,13 +337,7 @@ const auto norm(const T &v, SLS_IF(is_dense<T>()))
 
 // === matrix manipulation ===
 
-// does not work for integers
-
-template <class Tv, class T1, class T2, SLS_IF0(is_dense<Tv>())>
-inline void linspace(Tv &v, const T1 &first, const T2 &last)
-{
-    linspace_vss(v.ptr(), (contain_type<Tv>)first, (contain_type<Tv>)last, v.size());
-}
+#include "arithmetic_linspace.inl"
 
 template <class Tv, SLS_IF0(ndims<Tv>() == 1)>
 inline void reorder(Tv &v, VecLong_I order)
