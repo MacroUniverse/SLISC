@@ -1,5 +1,5 @@
 // matrix-vector multiplication using cBLAS
-//% [Ty, Ta, Tx] = varargin{1:3};
+//% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
 inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {

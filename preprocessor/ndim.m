@@ -11,6 +11,6 @@ elseif (is_Mat3d(type) || is_Cmat3d(type) || is_Jcmat3d(type))
 elseif (is_Cmat4d(type) || is_Jcmat4d(type))
     ret =4;
 else
-    err("unknown!");
+    error("unknown!");
     ret = 'e';
 end

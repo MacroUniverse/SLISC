@@ -16,38 +16,7 @@ namespace slisc {
 // === get vec/mat properties ===
 
 // check if vec/mat sizes are the same
-template <class T1, class T2, SLS_IF(
-    is_contain<T1>() && is_contain<T2>() &&
-	ndims<T1>() == 1 && ndims<T2>() == 1)>
-Bool shape_cmp(const T1 &v1, const T2 &v2)
-{
-    return v1.size() == v2.size();
-}
-
-template <class T1, class T2, SLS_IF(
-    is_contain<T1>() && is_contain<T2>() &&
-	ndims<T1>() == 2 && ndims<T2>() == 2)>
-Bool shape_cmp(const T1 &v1, const T2 &v2)
-{
-    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
-}
-
-template <class T1, class T2, SLS_IF(
-    is_contain<T1>() && is_contain<T2>() &&
-	ndims<T1>() == 3 && ndims<T2>() == 3)>
-Bool shape_cmp(const T1 &v1, const T2 &v2)
-{
-        return v1.n1() == v2.n1() && v1.n2() == v2.n2()
-            && v1.n3() == v2.n3();
-}
-
-template <class T1, class T2, SLS_IF(
-    is_contain<T1>() && is_contain<T2>() &&
-	ndims<T1>() != ndims<T2>())>
-Bool shape_cmp(const T1 &v1, const T2 &v2)
-{
-        return false;
-}
+#include "arithmetic_shape_cmp.inl"
 
 // operator== for slisc containers
 template <class T1, class T2, SLS_IF(
