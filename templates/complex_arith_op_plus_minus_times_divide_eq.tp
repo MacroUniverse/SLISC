@@ -1,4 +1,3 @@
-// operator+=
 //% [T1,T2] = varargin{:};
 //% if is_real(T1);
 //%     T = rm_comp(T1);
