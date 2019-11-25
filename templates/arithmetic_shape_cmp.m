@@ -1,8 +1,10 @@
 cd(mfilepath);
 file = 'arithmetic_shape_cmp.tp';
 Tc = {'Vec', 'Svec', 'Dvec', 'Cmat', 'Scmat', ...
-    'Dcmat', 'Cmat3', 'Cmat4', 'Mat', 'Mat3'};
-Ts = {'Int', 'Llong', 'Float', 'Doub', 'Comp'};
+    'Dcmat', 'Jcmat3', 'Cmat3', 'Cmat4', 'Mat', ...
+    'Mat3', 'Mcoo', 'Mcooh'};
+Ts = {'Char', 'Int', 'Llong', 'Float', 'Doub',...
+    'Ldoub', 'Comp', 'Lcomp'};
 
 type = cell(0);
 i = 1;

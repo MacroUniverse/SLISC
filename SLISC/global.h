@@ -187,6 +187,11 @@ typedef const Limag Limag_I;
 typedef Limag &Limag_O, &Limag_IO;
 
 // vector and matrix types
+
+typedef Vector<Char> VecChar;
+typedef const VecChar &VecChar_I;
+typedef VecChar &VecChar_O, &VecChar_IO;
+
 typedef Vector<Int> VecInt;
 typedef const VecInt &VecInt_I;
 typedef VecInt &VecInt_O, &VecInt_IO;
@@ -227,6 +232,10 @@ typedef Vector<Doub> VecDoub;
 typedef const VecDoub &VecDoub_I;
 typedef VecDoub &VecDoub_O, &VecDoub_IO;
 
+typedef Vector<Ldoub> VecLdoub;
+typedef const VecLdoub &VecLdoub_I;
+typedef VecLdoub &VecLdoub_O, &VecLdoub_IO;
+
 typedef Vector<Doub*> VecDoubp;
 typedef const VecDoubp &VecDoubp_I;
 typedef VecDoubp &VecDoubp_O, &VecDoubp_IO;
@@ -239,9 +248,17 @@ typedef Vector<Comp> VecComp;
 typedef const VecComp &VecComp_I;
 typedef VecComp &VecComp_O, &VecComp_IO;
 
+typedef Vector<Lcomp> VecLcomp;
+typedef const VecLcomp &VecLcomp_I;
+typedef VecLcomp &VecLcomp_O, &VecLcomp_IO;
+
 typedef Vector<Bool> VecBool;
 typedef const VecBool &VecBool_I;
 typedef VecBool &VecBool_O, &VecBool_IO;
+
+typedef Matrix<Char> MatChar;
+typedef const MatChar &MatChar_I;
+typedef MatChar &MatChar_O, &MatChar_IO;
 
 typedef Matrix<Int> MatInt;
 typedef const MatInt &MatInt_I;
@@ -253,11 +270,11 @@ typedef MatUint &MatUint_O, &MatUint_IO;
 
 typedef Matrix<Long> MatLong;
 typedef const MatLong &MatLong_I;
-typedef MatInt &MatLong_O, &MatLong_IO;
+typedef MatLong &MatLong_O, &MatLong_IO;
 
 typedef Matrix<Llong> MatLlong;
 typedef const MatLlong &MatLlong_I;
-typedef MatInt &MatLlong_O, &MatLlong_IO;
+typedef MatLlong &MatLlong_O, &MatLlong_IO;
 
 typedef Matrix<Ullong> MatUllong;
 typedef const MatUllong &MatUllong_I;
@@ -279,6 +296,10 @@ typedef Matrix<Doub> MatDoub;
 typedef const MatDoub &MatDoub_I;
 typedef MatDoub &MatDoub_O, &MatDoub_IO;
 
+typedef Matrix<Ldoub> MatLdoub;
+typedef const MatLdoub &MatLdoub_I;
+typedef MatLdoub &MatLdoub_O, &MatLdoub_IO;
+
 typedef Matrix<Imag> MatImag;
 typedef const MatImag &MatImag_I;
 typedef MatImag &MatImag_O, &MatImag_IO;
@@ -287,9 +308,17 @@ typedef Matrix<Comp> MatComp;
 typedef const MatComp &MatComp_I;
 typedef MatComp &MatComp_O, &MatComp_IO;
 
+typedef Matrix<Lcomp> MatLcomp;
+typedef const MatLcomp &MatLcomp_I;
+typedef MatLcomp &MatLcomp_O, &MatLcomp_IO;
+
 typedef Matrix<Bool> MatBool;
 typedef const MatBool &MatBool_I;
 typedef MatBool &MatBool_O, &MatBool_IO;
+
+typedef Cmat<Char> CmatChar;
+typedef const CmatChar &CmatChar_I;
+typedef CmatChar &CmatChar_O, &CmatChar_IO;
 
 typedef Cmat<Int> CmatInt;
 typedef const CmatInt &CmatInt_I;
@@ -327,6 +356,10 @@ typedef Cmat<Doub> CmatDoub;
 typedef const CmatDoub &CmatDoub_I;
 typedef CmatDoub &CmatDoub_O, &CmatDoub_IO;
 
+typedef Cmat<Ldoub> CmatLdoub;
+typedef const CmatLdoub &CmatLdoub_I;
+typedef CmatLdoub &CmatLdoub_O, &CmatLdoub_IO;
+
 typedef Cmat<Imag> CmatImag;
 typedef const CmatImag &CmatImag_I;
 typedef CmatImag &CmatImag_O, &CmatImag_IO;
@@ -335,9 +368,21 @@ typedef Cmat<Comp> CmatComp;
 typedef const CmatComp &CmatComp_I;
 typedef CmatComp &CmatComp_O, &CmatComp_IO;
 
+typedef Cmat<Lcomp> CmatLcomp;
+typedef const CmatLcomp &CmatLcomp_I;
+typedef CmatLcomp &CmatLcomp_O, &CmatLcomp_IO;
+
 typedef Cmat<Bool> CmatBool;
 typedef const CmatBool &CmatBool_I;
 typedef CmatBool &CmatBool_O, &CmatBool_IO;
+
+typedef Mat3d<Char> Mat3Char;
+typedef const Mat3Char &Mat3Char_I;
+typedef Mat3Char &Mat3Char_O, &Mat3Char_IO;
+
+typedef Mat3d<Char> Mat3Char;
+typedef const Mat3Char &Mat3Char_I;
+typedef Mat3Char &Mat3Char_O, &Mat3Char_IO;
 
 typedef Mat3d<Int> Mat3Int;
 typedef const Mat3Int &Mat3Int_I;
@@ -351,13 +396,33 @@ typedef Mat3d<Llong> Mat3Llong;
 typedef const Mat3Llong &Mat3Llong_I;
 typedef Mat3Llong &Mat3Llong_O, &Mat3Llong_IO;
 
+typedef Mat3d<Float> Mat3Float;
+typedef const Mat3Float &Mat3Float_I;
+typedef Mat3Float &Mat3Float_O, &Mat3Float_IO;
+
 typedef Mat3d<Doub> Mat3Doub;
 typedef const Mat3Doub &Mat3Doub_I;
 typedef Mat3Doub &Mat3Doub_O, &Mat3Doub_IO;
 
+typedef Mat3d<Ldoub> Mat3Ldoub;
+typedef const Mat3Ldoub &Mat3Ldoub_I;
+typedef Mat3Ldoub &Mat3Ldoub_O, &Mat3Ldoub_IO;
+
 typedef Mat3d<Comp> Mat3Comp;
 typedef const Mat3Comp &Mat3Comp_I;
 typedef Mat3Comp &Mat3Comp_O, &Mat3Comp_IO;
+
+typedef Mat3d<Lcomp> Mat3Lcomp;
+typedef const Mat3Lcomp &Mat3Lcomp_I;
+typedef Mat3Lcomp &Mat3Lcomp_O, &Mat3Lcomp_IO;
+
+typedef Cmat3d<Char> Cmat3Char;
+typedef const Cmat3Char &Cmat3Char_I;
+typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
+
+typedef Cmat3d<Char> Cmat3Char;
+typedef const Cmat3Char &Cmat3Char_I;
+typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
 typedef Cmat3d<Int> Cmat3Int;
 typedef const Cmat3Int &Cmat3Int_I;
@@ -375,17 +440,37 @@ typedef Cmat3d<Llong> Cmat3Llong;
 typedef const Cmat3Llong &Cmat3Llong_I;
 typedef Cmat3Llong &Cmat3Llong_O, &Cmat3Llong_IO;
 
+typedef Cmat3d<Float> Cmat3Float;
+typedef const Cmat3Float &Cmat3Float_I;
+typedef Cmat3Float &Cmat3Float_O, &Cmat3Float_IO;
+
 typedef Cmat3d<Doub> Cmat3Doub;
 typedef const Cmat3Doub &Cmat3Doub_I;
 typedef Cmat3Doub &Cmat3Doub_O, &Cmat3Doub_IO;
+
+typedef Cmat3d<Ldoub> Cmat3Ldoub;
+typedef const Cmat3Ldoub &Cmat3Ldoub_I;
+typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
 
 typedef Cmat3d<Comp> Cmat3Comp;
 typedef const Cmat3Comp &Cmat3Comp_I;
 typedef Cmat3Comp &Cmat3Comp_O, &Cmat3Comp_IO;
 
+typedef Cmat3d<Lcomp> Cmat3Lcomp;
+typedef const Cmat3Lcomp &Cmat3Lcomp_I;
+typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
+
 typedef Cmat3d<Imag> Cmat3Imag;
 typedef const Cmat3Imag &Cmat3Imag_I;
 typedef Cmat3Imag &Cmat3Imag_O, &Cmat3Imag_IO;
+
+typedef Cmat4d<Char> Cmat4Char;
+typedef const Cmat4Char &Cmat4Char_I;
+typedef Cmat4Char &Cmat4Char_O, &Cmat4Char_IO;
+
+typedef Cmat4d<Char> Cmat4Char;
+typedef const Cmat4Char &Cmat4Char_I;
+typedef Cmat4Char &Cmat4Char_O, &Cmat4Char_IO;
 
 typedef Cmat4d<Int> Cmat4Int;
 typedef const Cmat4Int &Cmat4Int_I;
@@ -399,13 +484,25 @@ typedef Cmat4d<Llong> Cmat4Llong;
 typedef const Cmat4Llong &Cmat4Llong_I;
 typedef Cmat4Llong &Cmat4Llong_O, &Cmat4Llong_IO;
 
+typedef Cmat4d<Float> Cmat4Float;
+typedef const Cmat4Float &Cmat4Float_I;
+typedef Cmat4Float &Cmat4Float_O, &Cmat4Float_IO;
+
 typedef Cmat4d<Doub> Cmat4Doub;
 typedef const Cmat4Doub &Cmat4Doub_I;
 typedef Cmat4Doub &Cmat4Doub_O, &Cmat4Doub_IO;
 
+typedef Cmat4d<Ldoub> Cmat4Ldoub;
+typedef const Cmat4Ldoub &Cmat4Ldoub_I;
+typedef Cmat4Ldoub &Cmat4Ldoub_O, &Cmat4Ldoub_IO;
+
 typedef Cmat4d<Comp> Cmat4Comp;
 typedef const Cmat4Comp &Cmat4Comp_I;
 typedef Cmat4Comp &Cmat4Comp_O, &Cmat4Comp_IO;
+
+typedef Cmat4d<Lcomp> Cmat4Lcomp;
+typedef const Cmat4Lcomp &Cmat4Lcomp_I;
+typedef Cmat4Lcomp &Cmat4Lcomp_O, &Cmat4Lcomp_IO;
 
 typedef Svector<Char> SvecChar;
 typedef SvecChar &SvecChar_O, &SvecChar_IO;
@@ -413,16 +510,19 @@ typedef Svector_c<Char> SvecChar_c;
 typedef const SvecChar_c &SvecChar_I;
 
 typedef Svector<Int> SvecInt;
-typedef const SvecInt &SvecInt_I;
 typedef SvecInt &SvecInt_O, &SvecInt_IO;
+typedef Svector_c<Int> SvecInt_c;
+typedef const SvecInt_c &SvecInt_I;
 
 typedef Svector<Long> SvecLong;
-typedef const SvecLong &SvecLong_I;
 typedef SvecLong &SvecLong_O, &SvecLong_IO;
+typedef Svector_c<Long> SvecLong_c;
+typedef const SvecLong_c &SvecLong_I;
 
 typedef Svector<Llong> SvecLlong;
-typedef const SvecLlong &SvecLlong_I;
 typedef SvecLlong &SvecLlong_O, &SvecLlong_IO;
+typedef Svector_c<Llong> SvecLlong_c;
+typedef const SvecLlong_c &SvecLlong_I;
 
 typedef Svector<Float> SvecFloat;
 typedef SvecFloat &SvecFloat_O, &SvecFloat_IO;
@@ -434,10 +534,28 @@ typedef SvecDoub &SvecDoub_O, &SvecDoub_IO;
 typedef Svector_c<Doub> SvecDoub_c;
 typedef const SvecDoub_c &SvecDoub_I;
 
+typedef Svector<Ldoub> SvecLdoub;
+typedef SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
+typedef Svector_c<Ldoub> SvecLdoub_c;
+typedef const SvecLdoub_c &SvecLdoub_I;
+
 typedef Svector<Comp> SvecComp;
 typedef SvecComp &SvecComp_O, &SvecComp_IO;
 typedef Svector_c<Comp> SvecComp_c;
 typedef const SvecComp_c &SvecComp_I;
+
+typedef Svector<Lcomp> SvecLcomp;
+typedef SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
+typedef Svector_c<Lcomp> SvecLcomp_c;
+typedef const SvecLcomp_c &SvecLcomp_I;
+
+typedef Dvector<Char> DvecChar;
+typedef const DvecChar &DvecChar_I;
+typedef DvecChar &DvecChar_O, &DvecChar_IO;
+
+typedef Dvector<Char> DvecChar;
+typedef const DvecChar &DvecChar_I;
+typedef DvecChar &DvecChar_O, &DvecChar_IO;
 
 typedef Dvector<Int> DvecInt;
 typedef const DvecInt &DvecInt_I;
@@ -459,9 +577,21 @@ typedef Dvector<Doub> DvecDoub;
 typedef const DvecDoub &DvecDoub_I;
 typedef DvecDoub &DvecDoub_O, &DvecDoub_IO;
 
+typedef Dvector<Ldoub> DvecLdoub;
+typedef const DvecLdoub &DvecLdoub_I;
+typedef DvecLdoub &DvecLdoub_O, &DvecLdoub_IO;
+
 typedef Dvector<Comp> DvecComp;
 typedef const DvecComp &DvecComp_I;
 typedef DvecComp &DvecComp_O, &DvecComp_IO;
+
+typedef Dvector<Lcomp> DvecLcomp;
+typedef const DvecLcomp &DvecLcomp_I;
+typedef DvecLcomp &DvecLcomp_O, &DvecLcomp_IO;
+
+typedef Smat<Char> SmatChar;
+typedef const SmatChar &SmatChar_I;
+typedef SmatChar &SmatChar_O, &SmatChar_IO;
 
 typedef Smat<Int> SmatInt;
 typedef const SmatInt &SmatInt_I;
@@ -469,19 +599,37 @@ typedef SmatInt &SmatInt_O, &SmatInt_IO;
 
 typedef Smat<Long> SmatLong;
 typedef const SmatLong &SmatLong_I;
-typedef SmatInt &SmatLong_O, &SmatLong_IO;
+typedef SmatLong &SmatLong_O, &SmatLong_IO;
 
 typedef Smat<Llong> SmatLlong;
 typedef const SmatLlong &SmatLlong_I;
-typedef SmatInt &SmatLlong_O, &SmatLlong_IO;
+typedef SmatLlong &SmatLlong_O, &SmatLlong_IO;
 
 typedef Smat<Doub> SmatDoub;
 typedef const SmatDoub &SmatDoub_I;
 typedef SmatDoub &SmatDoub_O, &SmatDoub_IO;
 
+typedef Smat<Ldoub> SmatLdoub;
+typedef const SmatLdoub &SmatLdoub_I;
+typedef SmatLdoub &SmatLdoub_O, &SmatLdoub_IO;
+
 typedef Smat<Comp> SmatComp;
 typedef const SmatComp &SmatComp_I;
 typedef SmatComp &SmatComp_O, &SmatComp_IO;
+
+typedef Smat<Lcomp> SmatLcomp;
+typedef const SmatLcomp &SmatLcomp_I;
+typedef SmatLcomp &SmatLcomp_O, &SmatLcomp_IO;
+
+typedef Scmat<Char> ScmatChar;
+typedef ScmatChar &ScmatChar_O, &ScmatChar_IO;
+typedef Scmat_c<Char> ScmatChar_c;
+typedef const ScmatChar_c &ScmatChar_I;
+
+typedef Scmat<Char> ScmatChar;
+typedef ScmatChar &ScmatChar_O, &ScmatChar_IO;
+typedef Scmat_c<Char> ScmatChar_c;
+typedef const ScmatChar_c &ScmatChar_I;
 
 typedef Scmat<Int> ScmatInt;
 typedef ScmatInt &ScmatInt_O, &ScmatInt_IO;
@@ -489,12 +637,12 @@ typedef Scmat_c<Int> ScmatInt_c;
 typedef const ScmatInt_c &ScmatInt_I;
 
 typedef Scmat<Long> ScmatLong;
-typedef ScmatInt &ScmatLong_O, &ScmatLong_IO;
+typedef ScmatLong &ScmatLong_O, &ScmatLong_IO;
 typedef Scmat_c<Long> ScmatLong_c;
 typedef const ScmatLong_c &ScmatLong_I;
 
 typedef Scmat<Llong> ScmatLlong;
-typedef ScmatInt &ScmatLlong_O, &ScmatLlong_IO;
+typedef ScmatLlong &ScmatLlong_O, &ScmatLlong_IO;
 typedef Scmat_c<Llong> ScmatLlong_c;
 typedef const ScmatLlong_c &ScmatLlong_I;
 
@@ -508,10 +656,29 @@ typedef ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
 typedef Scmat_c<Doub> ScmatDoub_c;
 typedef const ScmatDoub_c &ScmatDoub_I;
 
+typedef Scmat<Ldoub> ScmatLdoub;
+typedef ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
+typedef Scmat_c<Ldoub> ScmatLdoub_c;
+typedef const ScmatLdoub_c &ScmatLdoub_I;
+
 typedef Scmat<Comp> ScmatComp;
 typedef ScmatComp &ScmatComp_O, &ScmatComp_IO;
 typedef Scmat_c<Comp> ScmatComp_c;
 typedef const ScmatComp_c &ScmatComp_I;
+
+typedef Scmat<Lcomp> ScmatLcomp;
+typedef ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
+typedef Scmat_c<Lcomp> ScmatLcomp_c;
+typedef const ScmatLcomp_c &ScmatLcomp_I;
+
+typedef Scmat<Lcomp> ScmatLcomp;
+typedef ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
+typedef Scmat_c<Lcomp> ScmatLcomp_c;
+typedef const ScmatLcomp_c &ScmatLcomp_I;
+
+typedef Dmat<Char> DmatChar;
+typedef const DmatChar &DmatChar_I;
+typedef DmatChar &DmatChar_O, &DmatChar_IO;
 
 typedef Dmat<Int> DmatInt;
 typedef const DmatInt &DmatInt_I;
@@ -519,19 +686,35 @@ typedef DmatInt &DmatInt_O, &DmatInt_IO;
 
 typedef Dmat<Long> DmatLong;
 typedef const DmatLong &DmatLong_I;
-typedef DmatInt &DmatLong_O, &DmatLong_IO;
+typedef DmatLong &DmatLong_O, &DmatLong_IO;
 
 typedef Dmat<Llong> DmatLlong;
 typedef const DmatLlong &DmatLlong_I;
-typedef DmatInt &DmatLlong_O, &DmatLlong_IO;
+typedef DmatLlong &DmatLlong_O, &DmatLlong_IO;
 
 typedef Dmat<Doub> DmatDoub;
 typedef const DmatDoub &DmatDoub_I;
 typedef DmatDoub &DmatDoub_O, &DmatDoub_IO;
 
+typedef Dmat<Ldoub> DmatLdoub;
+typedef const DmatLdoub &DmatLdoub_I;
+typedef DmatLdoub &DmatLdoub_O, &DmatLdoub_IO;
+
 typedef Dmat<Comp> DmatComp;
 typedef const DmatComp &DmatComp_I;
 typedef DmatComp &DmatComp_O, &DmatComp_IO;
+
+typedef Dmat<Lcomp> DmatLcomp;
+typedef const DmatLcomp &DmatLcomp_I;
+typedef DmatLcomp &DmatLcomp_O, &DmatLcomp_IO;
+
+typedef Dcmat<Char> DcmatChar;
+typedef const DcmatChar &DcmatChar_I;
+typedef DcmatChar &DcmatChar_O, &DcmatChar_IO;
+
+typedef Dcmat<Char> DcmatChar;
+typedef const DcmatChar &DcmatChar_I;
+typedef DcmatChar &DcmatChar_O, &DcmatChar_IO;
 
 typedef Dcmat<Int> DcmatInt;
 typedef const DcmatInt &DcmatInt_I;
@@ -539,11 +722,11 @@ typedef DcmatInt &DcmatInt_O, &DcmatInt_IO;
 
 typedef Dcmat<Long> DcmatLong;
 typedef const DcmatLong &DcmatLong_I;
-typedef DcmatInt &DcmatLong_O, &DcmatLong_IO;
+typedef DcmatLong &DcmatLong_O, &DcmatLong_IO;
 
 typedef Dcmat<Llong> DcmatLlong;
 typedef const DcmatLlong &DcmatLlong_I;
-typedef DcmatInt &DcmatLlong_O, &DcmatLlong_IO;
+typedef DcmatLlong &DcmatLlong_O, &DcmatLlong_IO;
 
 typedef Dcmat<Float> DcmatFloat;
 typedef const DcmatFloat &DcmatFloat_I;
@@ -553,9 +736,21 @@ typedef Dcmat<Doub> DcmatDoub;
 typedef const DcmatDoub &DcmatDoub_I;
 typedef DcmatDoub &DcmatDoub_O, &DcmatDoub_IO;
 
+typedef Dcmat<Ldoub> DcmatLdoub;
+typedef const DcmatLdoub &DcmatLdoub_I;
+typedef DcmatLdoub &DcmatLdoub_O, &DcmatLdoub_IO;
+
 typedef Dcmat<Comp> DcmatComp;
 typedef const DcmatComp &DcmatComp_I;
 typedef DcmatComp &DcmatComp_O, &DcmatComp_IO;
+
+typedef Dcmat<Lcomp> DcmatLcomp;
+typedef const DcmatLcomp &DcmatLcomp_I;
+typedef DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
+
+typedef Jcmat<Char> JcmatChar;
+typedef const JcmatChar &JcmatChar_I;
+typedef JcmatChar &JcmatChar_O, &JcmatChar_IO;
 
 typedef Jcmat<Int> JcmatInt;
 typedef const JcmatInt &JcmatInt_I;
@@ -563,19 +758,35 @@ typedef JcmatInt &JcmatInt_O, &JcmatInt_IO;
 
 typedef Jcmat<Long> JcmatLong;
 typedef const JcmatLong &JcmatLong_I;
-typedef JcmatInt &JcmatLong_O, &JcmatLong_IO;
+typedef JcmatLong &JcmatLong_O, &JcmatLong_IO;
 
 typedef Jcmat<Llong> JcmatLlong;
 typedef const JcmatLlong &JcmatLlong_I;
-typedef JcmatInt &JcmatLlong_O, &JcmatLlong_IO;
+typedef JcmatLlong &JcmatLlong_O, &JcmatLlong_IO;
 
 typedef Jcmat<Doub> JcmatDoub;
 typedef const JcmatDoub &JcmatDoub_I;
 typedef JcmatDoub &JcmatDoub_O, &JcmatDoub_IO;
 
+typedef Jcmat<Ldoub> JcmatLdoub;
+typedef const JcmatLdoub &JcmatLdoub_I;
+typedef JcmatLdoub &JcmatLdoub_O, &JcmatLdoub_IO;
+
 typedef Jcmat<Comp> JcmatComp;
 typedef const JcmatComp &JcmatComp_I;
 typedef JcmatComp &JcmatComp_O, &JcmatComp_IO;
+
+typedef Jcmat<Lcomp> JcmatLcomp;
+typedef const JcmatLcomp &JcmatLcomp_I;
+typedef JcmatLcomp &JcmatLcomp_O, &JcmatLcomp_IO;
+
+typedef Jcmat3d<Char> Jcmat3Char;
+typedef const Jcmat3Char &Jcmat3Char_I;
+typedef Jcmat3Char &Jcmat3Char_O, &Jcmat3Char_IO;
+
+typedef Jcmat3d<Char> Jcmat3Char;
+typedef const Jcmat3Char &Jcmat3Char_I;
+typedef Jcmat3Char &Jcmat3Char_O, &Jcmat3Char_IO;
 
 typedef Jcmat3d<Int> Jcmat3Int;
 typedef const Jcmat3Int &Jcmat3Int_I;
@@ -583,19 +794,35 @@ typedef Jcmat3Int &Jcmat3Int_O, &Jcmat3Int_IO;
 
 typedef Jcmat3d<Long> Jcmat3Long;
 typedef const Jcmat3Long &Jcmat3Long_I;
-typedef Jcmat3Int &Jcmat3Long_O, &Jcmat3Long_IO;
+typedef Jcmat3Long &Jcmat3Long_O, &Jcmat3Long_IO;
 
 typedef Jcmat3d<Llong> Jcmat3Llong;
 typedef const Jcmat3Llong &Jcmat3Llong_I;
-typedef Jcmat3Int &Jcmat3Llong_O, &Jcmat3Llong_IO;
+typedef Jcmat3Llong &Jcmat3Llong_O, &Jcmat3Llong_IO;
+
+typedef Jcmat3d<Float> Jcmat3Float;
+typedef const Jcmat3Float &Jcmat3Float_I;
+typedef Jcmat3Float &Jcmat3Float_O, &Jcmat3Float_IO;
 
 typedef Jcmat3d<Doub> Jcmat3Doub;
 typedef const Jcmat3Doub &Jcmat3Doub_I;
 typedef Jcmat3Doub &Jcmat3Doub_O, &Jcmat3Doub_IO;
 
+typedef Jcmat3d<Ldoub> Jcmat3Ldoub;
+typedef const Jcmat3Ldoub &Jcmat3Ldoub_I;
+typedef Jcmat3Ldoub &Jcmat3Ldoub_O, &Jcmat3Ldoub_IO;
+
 typedef Jcmat3d<Comp> Jcmat3Comp;
 typedef const Jcmat3Comp &Jcmat3Comp_I;
 typedef Jcmat3Comp &Jcmat3Comp_O, &Jcmat3Comp_IO;
+
+typedef Jcmat3d<Lcomp> Jcmat3Lcomp;
+typedef const Jcmat3Lcomp &Jcmat3Lcomp_I;
+typedef Jcmat3Lcomp &Jcmat3Lcomp_O, &Jcmat3Lcomp_IO;
+
+typedef Jcmat4d<Char> Jcmat4Char;
+typedef const Jcmat4Char &Jcmat4Char_I;
+typedef Jcmat4Char &Jcmat4Char_O, &Jcmat4Char_IO;
 
 typedef Jcmat4d<Int> Jcmat4Int;
 typedef const Jcmat4Int &Jcmat4Int_I;
@@ -603,19 +830,31 @@ typedef Jcmat4Int &Jcmat4Int_O, &Jcmat4Int_IO;
 
 typedef Jcmat4d<Long> Jcmat4Long;
 typedef const Jcmat4Long &Jcmat4Long_I;
-typedef Jcmat4Int &Jcmat4Long_O, &Jcmat4Long_IO;
+typedef Jcmat4Long &Jcmat4Long_O, &Jcmat4Long_IO;
 
 typedef Jcmat4d<Llong> Jcmat4Llong;
 typedef const Jcmat4Llong &Jcmat4Llong_I;
-typedef Jcmat4Int &Jcmat4Llong_O, &Jcmat4Llong_IO;
+typedef Jcmat4Llong &Jcmat4Llong_O, &Jcmat4Llong_IO;
 
 typedef Jcmat4d<Doub> Jcmat4Doub;
 typedef const Jcmat4Doub &Jcmat4Doub_I;
 typedef Jcmat4Doub &Jcmat4Doub_O, &Jcmat4Doub_IO;
 
+typedef Jcmat4d<Ldoub> Jcmat4Ldoub;
+typedef const Jcmat4Ldoub &Jcmat4Ldoub_I;
+typedef Jcmat4Ldoub &Jcmat4Ldoub_O, &Jcmat4Ldoub_IO;
+
 typedef Jcmat4d<Comp> Jcmat4Comp;
 typedef const Jcmat4Comp &Jcmat4Comp_I;
 typedef Jcmat4Comp &Jcmat4Comp_O, &Jcmat4Comp_IO;
+
+typedef Jcmat4d<Lcomp> Jcmat4Lcomp;
+typedef const Jcmat4Lcomp &Jcmat4Lcomp_I;
+typedef Jcmat4Lcomp &Jcmat4Lcomp_O, &Jcmat4Lcomp_IO;
+
+typedef Scmat3d<Char> Scmat3Char;
+typedef const Scmat3Char &Scmat3Char_I;
+typedef Scmat3Char &Scmat3Char_O, &Scmat3Char_IO;
 
 typedef Scmat3d<Int> Scmat3Int;
 typedef const Scmat3Int &Scmat3Int_I;
@@ -633,9 +872,17 @@ typedef Scmat3d<Doub> Scmat3Doub;
 typedef const Scmat3Doub &Scmat3Doub_I;
 typedef Scmat3Doub &Scmat3Doub_O, &Scmat3Doub_IO;
 
+typedef Scmat3d<Ldoub> Scmat3Ldoub;
+typedef const Scmat3Ldoub &Scmat3Ldoub_I;
+typedef Scmat3Ldoub &Scmat3Ldoub_O, &Scmat3Ldoub_IO;
+
 typedef Scmat3d<Comp> Scmat3Comp;
 typedef const Scmat3Comp &Scmat3Comp_I;
 typedef Scmat3Comp &Scmat3Comp_O, &Scmat3Comp_IO;
+
+typedef Scmat3d<Lcomp> Scmat3Lcomp;
+typedef const Scmat3Lcomp &Scmat3Lcomp_I;
+typedef Scmat3Lcomp &Scmat3Lcomp_O, &Scmat3Lcomp_IO;
 
 // fixed-size containers
 
@@ -654,10 +901,20 @@ template <Long N> using FvecDoub_I = const FixVec<Doub, N> &;
 template <Long N> using FvecDoub_O = FixVec<Doub, N> &;
 template <Long N> using FvecDoub_IO = FixVec<Doub, N> &;
 
+template <Long N> using FvecLdoub = FixVec<Ldoub, N>;
+template <Long N> using FvecLdoub_I = const FixVec<Ldoub, N> &;
+template <Long N> using FvecLdoub_O = FixVec<Ldoub, N> &;
+template <Long N> using FvecLdoub_IO = FixVec<Ldoub, N> &;
+
 template <Long N> using FvecComp = FixVec<Comp, N>;
 template <Long N> using FvecComp_I = const FixVec<Comp, N> &;
 template <Long N> using FvecComp_O = FixVec<Comp, N> &;
 template <Long N> using FvecComp_IO = FixVec<Comp, N> &;
+
+template <Long N> using FvecLcomp = FixVec<Lcomp, N>;
+template <Long N> using FvecLcomp_I = const FixVec<Lcomp, N> &;
+template <Long N> using FvecLcomp_O = FixVec<Lcomp, N> &;
+template <Long N> using FvecLcomp_IO = FixVec<Lcomp, N> &;
 
 template <Long Nr, Long Nc> using FcmatChar = FixCmat<Char, Nr, Nc>;
 template <Long Nr, Long Nc> using FcmatChar_I = const FixCmat<Char, Nr, Nc> &;
@@ -674,10 +931,20 @@ template <Long Nr, Long Nc> using FcmatDoub_I = const FixCmat<Doub, Nr, Nc> &;
 template <Long Nr, Long Nc> using FcmatDoub_O = FixCmat<Doub, Nr, Nc> &;
 template <Long Nr, Long Nc> using FcmatDoub_IO = FixCmat<Doub, Nr, Nc> &;
 
+template <Long Nr, Long Nc> using FcmatLdoub = FixCmat<Ldoub, Nr, Nc>;
+template <Long Nr, Long Nc> using FcmatLdoub_I = const FixCmat<Ldoub, Nr, Nc> &;
+template <Long Nr, Long Nc> using FcmatLdoub_O = FixCmat<Ldoub, Nr, Nc> &;
+template <Long Nr, Long Nc> using FcmatLdoub_IO = FixCmat<Ldoub, Nr, Nc> &;
+
 template <Long Nr, Long Nc> using FcmatComp = FixCmat<Comp, Nr, Nc>;
 template <Long Nr, Long Nc> using FcmatComp_I = const FixCmat<Comp, Nr, Nc> &;
 template <Long Nr, Long Nc> using FcmatComp_O = FixCmat<Comp, Nr, Nc> &;
 template <Long Nr, Long Nc> using FcmatComp_IO = FixCmat<Comp, Nr, Nc> &;
+
+template <Long Nr, Long Nc> using FcmatLcomp = FixCmat<Lcomp, Nr, Nc>;
+template <Long Nr, Long Nc> using FcmatLcomp_I = const FixCmat<Lcomp, Nr, Nc> &;
+template <Long Nr, Long Nc> using FcmatLcomp_O = FixCmat<Lcomp, Nr, Nc> &;
+template <Long Nr, Long Nc> using FcmatLcomp_IO = FixCmat<Lcomp, Nr, Nc> &;
 
 // sparse containers
 
@@ -689,9 +956,21 @@ typedef Diag<Doub> DiagDoub;
 typedef const DiagDoub &DiagDoub_I;
 typedef DiagDoub &DiagDoub_O, &DiagDoub_IO;
 
+typedef Diag<Ldoub> DiagLdoub;
+typedef const DiagLdoub &DiagLdoub_I;
+typedef DiagLdoub &DiagLdoub_O, &DiagLdoub_IO;
+
 typedef Diag<Comp> DiagComp;
 typedef const DiagComp &DiagComp_I;
 typedef DiagComp &DiagComp_O, &DiagComp_IO;
+
+typedef Diag<Lcomp> DiagLcomp;
+typedef const DiagLcomp &DiagLcomp_I;
+typedef DiagLcomp &DiagLcomp_O, &DiagLcomp_IO;
+
+typedef MatCoo<Char> McooChar;
+typedef const McooChar &McooChar_I;
+typedef McooChar &McooChar_O, &McooChar_IO;
 
 typedef MatCoo<Int> McooInt;
 typedef const McooInt &McooInt_I;
@@ -705,9 +984,17 @@ typedef MatCoo<Llong> McooLlong;
 typedef const McooLlong &McooLlong_I;
 typedef McooLlong &McooLlong_O, &McooLlong_IO;
 
+typedef MatCoo<Float> McooFloat;
+typedef const McooFloat &McooFloat_I;
+typedef McooFloat &McooFloat_O, &McooFloat_IO;
+
 typedef MatCoo<Doub> McooDoub;
 typedef const McooDoub &McooDoub_I;
 typedef McooDoub &McooDoub_O, &McooDoub_IO;
+
+typedef MatCoo<Ldoub> McooLdoub;
+typedef const McooLdoub &McooLdoub_I;
+typedef McooLdoub &McooLdoub_O, &McooLdoub_IO;
 
 typedef MatCoo<Imag> McooImag;
 typedef const McooImag &McooImag_I;
@@ -717,17 +1004,49 @@ typedef MatCoo<Comp> McooComp;
 typedef const McooComp &McooComp_I;
 typedef McooComp &McooComp_O, &McooComp_IO;
 
+typedef MatCoo<Lcomp> McooLcomp;
+typedef const McooLcomp &McooLcomp_I;
+typedef McooLcomp &McooLcomp_O, &McooLcomp_IO;
+
+typedef MatCooH<Char> McoohChar;
+typedef const McoohChar &McoohChar_I;
+typedef McoohChar &McoohChar_O, &McoohChar_IO;
+
 typedef MatCooH<Int> McoohInt;
 typedef const McoohInt &McoohInt_I;
 typedef McoohInt &McoohInt_O, &McoohInt_IO;
+
+typedef MatCooH<Long> McoohLong;
+typedef const McoohLong &McoohLong_I;
+typedef McoohLong &McoohLong_O, &McoohLong_IO;
+
+typedef MatCooH<Llong> McoohLlong;
+typedef const McoohLlong &McoohLlong_I;
+typedef McoohLlong &McoohLlong_O, &McoohLlong_IO;
+
+typedef MatCooH<Float> McoohFloat;
+typedef const McoohFloat &McoohFloat_I;
+typedef McoohFloat &McoohFloat_O, &McoohFloat_IO;
 
 typedef MatCooH<Doub> McoohDoub;
 typedef const McoohDoub &McoohDoub_I;
 typedef McoohDoub &McoohDoub_O, &McoohDoub_IO;
 
+typedef MatCooH<Ldoub> McoohLdoub;
+typedef const McoohLdoub &McoohLdoub_I;
+typedef McoohLdoub &McoohLdoub_O, &McoohLdoub_IO;
+
 typedef MatCooH<Comp> McoohComp;
 typedef const McoohComp &McoohComp_I;
 typedef McoohComp &McoohComp_O, &McoohComp_IO;
+
+typedef MatCooH<Lcomp> McoohLcomp;
+typedef const McoohLcomp &McoohLcomp_I;
+typedef McoohLcomp &McoohLcomp_O, &McoohLcomp_IO;
+
+typedef CmatObd<Char> CmobdChar;
+typedef const CmobdChar &CmobdChar_I;
+typedef CmobdChar &CmobdChar_O, &CmobdChar_IO;
 
 typedef CmatObd<Int> CmobdInt;
 typedef const CmobdInt &CmobdInt_I;
@@ -737,6 +1056,10 @@ typedef CmatObd<Doub> CmobdDoub;
 typedef const CmobdDoub &CmobdDoub_I;
 typedef CmobdDoub &CmobdDoub_O, &CmobdDoub_IO;
 
+typedef CmatObd<Ldoub> CmobdLdoub;
+typedef const CmobdLdoub &CmobdLdoub_I;
+typedef CmobdLdoub &CmobdLdoub_O, &CmobdLdoub_IO;
+
 typedef CmatObd<Imag> CmobdImag;
 typedef const CmobdImag &CmobdImag_I;
 typedef CmobdImag &CmobdImag_O, &CmobdImag_IO;
@@ -745,13 +1068,25 @@ typedef CmatObd<Comp> CmobdComp;
 typedef const CmobdComp &CmobdComp_I;
 typedef CmobdComp &CmobdComp_O, &CmobdComp_IO;
 
+typedef CmatObd<Lcomp> CmobdLcomp;
+typedef const CmobdLcomp &CmobdLcomp_I;
+typedef CmobdLcomp &CmobdLcomp_O, &CmobdLcomp_IO;
+
 typedef Flm<Doub> FlmDoub;
 typedef const FlmDoub &FlmDoub_I;
 typedef FlmDoub &FlmDoub_O, &FlmDoub_IO;
 
+typedef Flm<Ldoub> FlmLdoub;
+typedef const FlmLdoub &FlmLdoub_I;
+typedef FlmLdoub &FlmLdoub_O, &FlmLdoub_IO;
+
 typedef Flm<Comp> FlmComp;
 typedef const FlmComp &FlmComp_I;
 typedef FlmComp &FlmComp_O, &FlmComp_IO;
+
+typedef Flm<Lcomp> FlmLcomp;
+typedef const FlmLcomp &FlmLcomp_I;
+typedef FlmLcomp &FlmLcomp_O, &FlmLcomp_IO;
 
 typedef const Matt &Matt_I;
 typedef Matt &Matt_O, &Matt_IO;

@@ -2,9 +2,15 @@
 #pragma once
 #include "sort.h"
 #include "svector.h"
-#include "arithmetic.h"
 
 namespace slisc {
+
+template <class Tv, class T1, class T2, SLS_IF(is_dense<Tv>())>
+inline void linspace(Tv &v, const T1 &first, const T2 &last);
+
+template <class Tv, SLS_IF(ndims<Tv>() == 1)>
+inline void reorder(Tv &v, VecLong_I order);
+
 template <class T>
 class MatCoo : public Vbase<T>
 {

@@ -132,7 +132,7 @@ public:
     // input a bool
     // " (y/n) " will be appended to prompt
     Bool iBool(Str_I prompt) {
-        slisc::Bool out;
+        slisc::Bool out = false;
         if (m_status == Stat::NO_IO) {
             // no IO
             Bool_cin(out, prompt);
@@ -148,9 +148,12 @@ public:
                 m_fout.open(m_fname, std::ios::app);
                 m_fin.close();
                 Bool_fout(out, prompt);
-                return out;
             }
+			else
+				SLS_ERR("unknown!");
         }
+		else
+			SLS_ERR("unknown!");
         return out;
     }
 

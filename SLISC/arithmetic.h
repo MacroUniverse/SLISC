@@ -4,11 +4,16 @@
 #include "dvector.h"
 #include "matrix.h"
 #include "cmat.h"
+#include "cmat4d.h"
 #include "dcmat.h"
+#include "jcmat.h"
+#include "jcmat3d.h"
 #include "mat3d.h"
 #include "cmat3d.h"
 #include "scmat.h"
 #include "fixsize.h"
+#include "matcoo.h"
+#include "matcooh.h"
 #include "ptr_arith.h"
 
 namespace slisc {
@@ -334,13 +339,13 @@ const auto norm(const T &v, SLS_IF(is_dense<T>()))
 
 // does not work for integers
 
-template <class Tv, class T1, class T2, SLS_IF(is_dense<Tv>())>
+template <class Tv, class T1, class T2, SLS_IF0(is_dense<Tv>())>
 inline void linspace(Tv &v, const T1 &first, const T2 &last)
 {
     linspace_vss(v.ptr(), (contain_type<Tv>)first, (contain_type<Tv>)last, v.size());
 }
 
-template <class Tv, SLS_IF(ndims<Tv>() == 1)>
+template <class Tv, SLS_IF0(ndims<Tv>() == 1)>
 inline void reorder(Tv &v, VecLong_I order)
 {
     Long N = v.size();
