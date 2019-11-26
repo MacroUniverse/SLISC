@@ -18,7 +18,7 @@ struct Base_interp
     }
 
     void interp(VecDoub &v, const VecDoub &v1) {
-        v.resize(v1);
+        v.resize(v1.size());
         for (Int i = 0; i < v1.size(); ++i) {
             v[i] = interp(v1[i]);
         }

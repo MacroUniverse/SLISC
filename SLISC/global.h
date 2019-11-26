@@ -140,6 +140,7 @@ typedef Str32 &Str32_O, &Str32_IO;
 // === class declarations ===
 template <class T> class ImagNum;
 template <class T> class Vector;
+class VecBool; class VecChar; class VecInt; class VecLlong; class VecFloat; class VecDoub; class VecLdoub; class VecFcomp; class VecComp; class VecLcomp; class VecImag;
 template <class T> class Matrix;
 template <class T> class Cmat;
 template <class T, Long Nr> class FixVec;
@@ -188,71 +189,48 @@ typedef Limag &Limag_O, &Limag_IO;
 
 // vector and matrix types
 
-typedef Vector<Char> VecChar;
 typedef const VecChar &VecChar_I;
 typedef VecChar &VecChar_O, &VecChar_IO;
 
-typedef Vector<Int> VecInt;
 typedef const VecInt &VecInt_I;
 typedef VecInt &VecInt_O, &VecInt_IO;
 
-typedef Vector<Uint> VecUint;
-typedef const VecUint &VecUint_I;
-typedef VecUint &VecUint_O, &VecUint_IO;
+#ifdef SLS_USE_INT_AS_LONG
+typedef VecInt VecLong;
+#else
+typedef VecLlong VecLong;
+#endif
 
-typedef Vector<Long> VecLong;
 typedef const VecLong &VecLong_I;
 typedef VecLong &VecLong_O, &VecLong_IO;
 
-typedef Vector<Llong> VecLlong;
 typedef const VecLlong &VecLlong_I;
 typedef VecLlong &VecLlong_O, &VecLlong_IO;
 
-typedef Vector<Ullong> VecUllong;
-typedef const VecUllong &VecUllong_I;
-typedef VecUllong &VecUllong_O, &VecUllong_IO;
-
-typedef Vector<Char> VecChar;
 typedef const VecChar &VecChar_I;
 typedef VecChar &VecChar_O, &VecChar_IO;
 
-typedef Vector<Char*> VecCharp;
-typedef const VecCharp &VecCharp_I;
-typedef VecCharp &VecCharp_O, &VecCharp_IO;
-
-typedef Vector<Uchar> VecUchar;
-typedef const VecUchar &VecUchar_I;
-typedef VecUchar &VecUchar_O, &VecUchar_IO;
-
-typedef Vector<Float> VecFloat;
 typedef const VecFloat &VecFloat_I;
 typedef VecFloat &VecFloat_O, &VecFloat_IO;
 
-typedef Vector<Doub> VecDoub;
 typedef const VecDoub &VecDoub_I;
 typedef VecDoub &VecDoub_O, &VecDoub_IO;
 
-typedef Vector<Ldoub> VecLdoub;
 typedef const VecLdoub &VecLdoub_I;
 typedef VecLdoub &VecLdoub_O, &VecLdoub_IO;
 
-typedef Vector<Doub*> VecDoubp;
-typedef const VecDoubp &VecDoubp_I;
-typedef VecDoubp &VecDoubp_O, &VecDoubp_IO;
-
-typedef Vector<Imag> VecImag;
 typedef const VecImag &VecImag_I;
 typedef VecImag &VecImag_O, &VecImag_IO;
 
-typedef Vector<Comp> VecComp;
+typedef const VecFcomp &VecFcomp_I;
+typedef VecFcomp &VecFcomp_O, &VecFcomp_IO;
+
 typedef const VecComp &VecComp_I;
 typedef VecComp &VecComp_O, &VecComp_IO;
 
-typedef Vector<Lcomp> VecLcomp;
 typedef const VecLcomp &VecLcomp_I;
 typedef VecLcomp &VecLcomp_O, &VecLcomp_IO;
 
-typedef Vector<Bool> VecBool;
 typedef const VecBool &VecBool_I;
 typedef VecBool &VecBool_O, &VecBool_IO;
 

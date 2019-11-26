@@ -16,7 +16,7 @@ public:
     typedef T value_type;
     // constructors
     explicit Vbase(Long_I N);
-    Vbase(const Vector<T> &rhs); // copy constructor
+    Vbase(const Vbase<T> &rhs); // copy constructor
 
     // get properties
     T* ptr(); // get pointer
@@ -46,7 +46,7 @@ template<class T>
 inline Vbase<T>::Vbase(Long_I N) : m_p(new T[N]), m_N(N) {}
 
 template <class T>
-Vbase<T>::Vbase(const Vector<T> &rhs)
+Vbase<T>::Vbase(const Vbase<T> &rhs)
 {
 #ifndef SLS_ALLOW_COPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden, use reference "
@@ -313,5 +313,7 @@ inline void Vector<T>::operator<<(Vector<T> &rhs)
 {
     Base::operator<<(rhs);
 }
+
+#include "vector_Vec.inl"
 
 } // namespace slisc

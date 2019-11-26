@@ -390,7 +390,7 @@ inline void fft_interp(VecComp_O y1, VecDoub_I x1, VecDoub_I x, VecComp_I y)
 {
     Doub dx{ (x.end() - x[0]) / (x.size() - 1.) }, a{ PI / dx };
     Long i, j, N{ y.size() }, N1{ x1.size() };
-    y1.resize(x1);
+    y1.resize(x1.size());
     for (j = 0; j < N1; ++j)
         for (i = 0; i < N; ++i)
             y1[j] += y[i] * sinc(a*(x1[j] - x[i]));

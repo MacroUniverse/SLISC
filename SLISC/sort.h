@@ -6,8 +6,9 @@ namespace slisc {
 // ======== declarations =========
 
 // sort v in ascending order, and rearrange v1 at the same time
-template<class T, class U>
-void sort2(Vector<T> &v, Vector<U> &v1);
+template<class T, class U, SLS_IF(
+	is_Vector<T>() && is_Vector<U>())>
+void sort2(T &v, U &v1);
 
 template<class T, class U>
 void sort2(vector_IO<T> v, vector_IO<U> v1);
@@ -16,12 +17,12 @@ void sort2(vector_IO<T> v, vector_IO<U> v1);
 
 
 // ======== implementations =======
-template<class T>
-void sort(Vector<T> &arr, Long m = -1)
+template<class T, SLS_IF(is_Vector<T>())>
+void sort(T &arr, Long m = -1)
 {
     static const Int M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = arr.size();
-    T a;
+    contain_type<T> a;
     VecLong istack(NSTACK);
     if (m>0) n = MIN(m, n);
     ir = n - 1;
@@ -151,16 +152,17 @@ void sort2_vv(T *v, U *v1, Long_I N)
     }
 }
 
-template<class T, class U>
-void sort2(Vector<T> &v, Vector<U> &v1)
+template<class T, class U, SLS_IF(
+	is_Vector<T>() && is_Vector<U>())>
+void sort2(T &v, U &v1)
 { sort2_vv(v.ptr(), v1.ptr(), v1.size()); }
 
 template<class T, class U>
 void sort2(vector_IO<T> v, vector_IO<U> v1)
 { sort2_vv(v.data(), v1.data(), v1.size()); }
 
-template<class T>
-void shell(Vector<T> &a, Int m = -1)
+template<class T, SLS_IF(is_Vector<T>())>
+void shell(T &a, Int m = -1)
 {
     Int i, j, inc, n = a.size();
     T v;
@@ -186,8 +188,8 @@ void shell(Vector<T> &a, Int m = -1)
 }
 
 namespace hpsort_util {
-    template<class T>
-    void sift_down(Vector<T> &ra, const Int l, const Int r)
+    template<class T, SLS_IF(is_Vector<T>())>
+    void sift_down(T &ra, const Int l, const Int r)
     {
         Int j, jold;
         T a;
@@ -205,8 +207,8 @@ namespace hpsort_util {
     }
 }
 
-template<class T>
-void hpsort(Vector<T> &ra)
+template<class T, SLS_IF(is_Vector<T>())>
+void hpsort(T &ra)
 {
     Int i, n = ra.size();
     for (i = n / 2 - 1; i >= 0; i--)
@@ -217,8 +219,8 @@ void hpsort(Vector<T> &ra)
     }
 }
 
-template<class T>
-void piksrt(Vector<T> &arr)
+template<class T, SLS_IF(is_Vector<T>())>
+void piksrt(T &arr)
 {
     Int i, j, n = arr.size();
     T a;
@@ -233,8 +235,8 @@ void piksrt(Vector<T> &arr)
     }
 }
 
-template<class T, class U>
-void piksr2(Vector<T> &arr, Vector<U> &brr)
+template<class T, class U, SLS_IF(is_Vector<T>() && is_Vector<U>())>
+void piksr2(T &arr, U &brr)
 {
     Int i, j, n = arr.size();
     T a;
@@ -257,21 +259,21 @@ struct Indexx {
     Int n;
     VecInt indx;
 
-    template<class T> Indexx(const Vector<T> &arr) {
+    template<class T, SLS_IF(is_Vector<T>())> Indexx(const T &arr) {
         index(&arr[0], arr.size());
     }
     Indexx() : indx(0) {}
 
-    template<class T> void sort(Vector<T> &brr) {
+    template<class T, SLS_IF(is_Vector<T>())> void sort(T &brr) {
         if (brr.size() != n) throw("bad size in Index sort");
-        Vector<T> tmp(brr);
+        T tmp(brr);
         for (Int j = 0; j<n; j++) brr[j] = tmp[indx[j]];
     }
 
-    template<class T> inline const T & el(Vector<T> &brr, Int j) const {
+    template<class T, SLS_IF(is_Vector<T>())> inline const T & el(T &brr, Int j) const {
         return brr[indx[j]];
     }
-    template<class T> inline T & el(Vector<T> &brr, Int j) {
+    template<class T> inline T & el(T &brr, Int j) {
         return brr[indx[j]];
     }
 
@@ -350,8 +352,8 @@ void Indexx::index(const T *arr, Int nn)
     }
 }
 
-template<class T>
-T select(const Int k, Vector<T> &arr)
+template<class T, SLS_IF(is_Vector<T>())>
+T select(const Int k, T &arr)
 {
     Int i, ir, j, l, mid, n = arr.size();
     T a;

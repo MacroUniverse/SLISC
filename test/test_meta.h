@@ -95,7 +95,7 @@ inline void test_meta()
     if (!is_same<contain_type<FixVec<Fcomp, 3>>, Fcomp>()) SLS_ERR("failed!");
 
     // is_contain
-    if (!is_contain<Vector<Int>>()) SLS_ERR("failed!");
+    if (!is_contain<VecInt>()) SLS_ERR("failed!");
     if (!is_contain<Matrix<Float>>()) SLS_ERR("failed!");
     if (!is_contain<Cmat<Doub>>()) SLS_ERR("failed!");
     if (!is_contain<FixVec<Comp, 2>>()) SLS_ERR("failed!");
@@ -108,7 +108,7 @@ inline void test_meta()
     if (is_contain<vector<Long>>()) SLS_ERR("failed!");
 
     // is_real_contain
-    if (!is_real_contain<Vector<Int>>()) SLS_ERR("failed!");
+    if (!is_real_contain<VecInt>()) SLS_ERR("failed!");
     if (!is_real_contain<Matrix<Float>>()) SLS_ERR("failed!");
     if (!is_real_contain<Cmat<Doub>>()) SLS_ERR("failed!");
     if (is_real_contain<FixVec<Comp, 2>>()) SLS_ERR("failed!");

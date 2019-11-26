@@ -1,0 +1,74 @@
+//% T = varargin{:};
+//% VecT = ['Vec' T];
+class @VecT@ : public Vbase<@T@>
+{
+protected:
+    typedef Vbase<@T@> Base;
+    using Base::m_p;
+    using Base::m_N;
+    @VecT@();
+public:
+    using Base::resize;
+    using Base::resize_cpy;
+    using Base::operator=;
+
+    explicit @VecT@(Long_I N);
+    @VecT@(Long_I N, @T@_I s); // initialize to constant value
+    @VecT@(Long_I N, const @T@ *a); // copy from existing memory
+	@VecT@(const @VecT@ &rhs); // copy constructor
+
+    @VecT@ &operator=(const @VecT@ &rhs);
+    template <class Tv, SLS_IF(is_dense_vec<Tv>())>
+    @VecT@ &operator=(const Tv &rhs);
+    template <class Tv, SLS_IF(is_Dvector<Tv>())>
+    @VecT@ &operator=(const Tv &rhs);
+    void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
+#ifdef SLS_CUSLISC
+    @VecT@ & operator=(const Gvector<@T@> &rhs) // copy from GPU vector
+    { rhs.get(*this); return *this; }
+#endif
+};
+
+inline @VecT@::@VecT@() {}
+
+inline @VecT@::@VecT@(Long_I N) : Base(N) {}
+
+inline @VecT@::@VecT@(Long_I N, @T@_I s) : @VecT@(N)
+{
+    *this = s;
+}
+
+inline @VecT@::@VecT@(Long_I N, const @T@ * a) : @VecT@(N)
+{
+    veccpy(m_p, a, N);
+}
+
+@VecT@::@VecT@(const @VecT@ &rhs)
+{
+	SLS_ERR("copy constructor forbidden!");
+}
+
+@VecT@ &@VecT@::operator=(@VecT@_I rhs)
+{
+    copy(*this, rhs);
+    return *this;
+}
+
+template <class Tv, SLS_IF0(is_dense_vec<Tv>())>
+@VecT@ &@VecT@::operator=(const Tv &rhs)
+{
+    copy(*this, rhs);
+    return *this;
+}
+
+template <class Tv, SLS_IF0(is_Dvector<Tv>())>
+@VecT@ &@VecT@::operator=(const Tv &rhs)
+{
+    copy(*this, rhs);
+    return *this;
+}
+
+inline void @VecT@::operator<<(@VecT@ &rhs)
+{
+    Base::operator<<(rhs);
+}

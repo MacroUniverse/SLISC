@@ -257,7 +257,7 @@ template <class T> struct is_Vector_imp<Vector<T>> : integral_constant<Bool, is_
 template<class T>
 constexpr Bool is_Vector()
 {
-    return is_Vector_imp<T>();
+    return is_Vector_imp<T>() || is_same<T, VecBool>() || is_same<T, VecChar>() || is_same<T, VecInt>() || is_same<T, VecLlong>() || is_same<T, VecFloat>() || is_same<T, VecDoub>() || is_same<T, VecLdoub>() || is_same<T, VecFcomp>() || is_same<T, VecComp>() || is_same<T, VecLcomp>() || is_same<T, VecImag>();
 }
 
 template <class T> struct is_Matrix_imp : false_type {};

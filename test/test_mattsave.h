@@ -96,16 +96,16 @@ void test_mattsave()
     // vectors
     // TODO: Char
 
-    VecInt r_vi(0);
+    Vector<Int> r_vi(0);
     load(r_vi, "vi", matt);
-    if (r_vi != vi) SLS_ERR("failed!");
+    if ((VecInt&)r_vi != (VecInt&)vi) SLS_ERR("failed!");
 
-    VecDoub r_v(0);
+    Vector<Doub> r_v(0);
     load(r_v, "v", matt);
     r_v -= v;
     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
 
-    VecComp r_vc(0);
+    Vector<Comp> r_vc(0);
     load(r_vc, "vc", matt);
     r_vc -= vc;
     if (norm(r_v) > 1e-15) SLS_ERR("failed!");

@@ -465,7 +465,7 @@ inline void test_arithmetic()
         conj(v);
         if (v != v1) SLS_ERR("failed!");
         linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
-        Vector<Lcomp> v2(v.size());
+        VecLcomp v2(v.size());
         conj(v2, v);
         if (v2 != v1) SLS_ERR("failed!");
     }
@@ -493,7 +493,7 @@ inline void test_arithmetic()
     {
         MatComp a(4,7); linspace(a, Comp(1, -1), Comp(28, -28));
         VecInt v(7); linspace(v, 1, 7);
-        Vector<Lcomp> v1(4), v2(a.n1());
+        VecLcomp v1(4), v2(a.n1());
         v1[0] = Comp(140, -140); v1[1] = Comp(336, -336);
         v1[2] = Comp(532, -532); v1[3] = Comp(728, -728);
         mul(v2, a, v);
@@ -564,7 +564,7 @@ inline void test_arithmetic()
     {
         MatComp a(7,4); linspace(a, Comp(1, -1), Comp(28, -28));
         VecChar v(7); linspace(v, 1, 7);
-        Vector<Lcomp> v1(4), v2(a.n2());
+        VecLcomp v1(4), v2(a.n2());
         v1[0] = Comp(476, -476); v1[1] = Comp(504, -504);
         v1[2] = Comp(532, -532); v1[3] = Comp(560, -560);
         mul(v2, v, a);

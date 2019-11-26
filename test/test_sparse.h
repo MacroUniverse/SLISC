@@ -43,7 +43,7 @@ inline void test_sparse()
         DiagComp d(4, Comp(1,-3));
         if (d.n1() != 4 || d.n2() != 4 || d.nnz() != 4)
             SLS_ERR("failed!");
-        if ((VecComp&)d != Comp(1, -3))
+        if ((Vector<Comp>&)d != Comp(1, -3))
             SLS_ERR("failed!");
     }
 
@@ -58,7 +58,7 @@ inline void test_sparse()
         DiagInt c(5, 1);
         if (c.n1() != 5 || c.n2() != 5 || c.nnz() != 5)
             SLS_ERR("failed!");
-        if ((VecInt&)c != 1)
+        if ((Vector<Int>&)c != 1)
             SLS_ERR("failed!");
     }
 
@@ -277,7 +277,7 @@ inline void test_sparse()
     // mul(cmat, cmat, diag)
     {
         CmatInt a(4, 5, 1);
-        VecInt b(5); linspace(b, 1, 5);
+        Vector<Int> b(5); b[0] = 1; b[1] = 2; b[2] = 3; b[3] = 4; b[4] = 5;
         CmatInt c(4, 5);
         mul(c, a, (DiagInt)b);
         if (!shape_cmp(c, a)) SLS_ERR("failed!");

@@ -122,7 +122,7 @@ inline void coulombFDF0(Vbase<Doub> &F, Vbase<Doub> &dF, Int_I l, Doub_I k, cons
 
 inline void coulombFDF(VecDoub &F, Vbase<Doub> &dF, Int_I l, Doub_I k, VecDoub_I r, Doub_I Z = -1.)
 {
-    F.resize(r); coulombFDF0(F, dF, l, k, r, Z);
+    F.resize(r.size()); coulombFDF0(F, dF, l, k, r, Z);
 }
 
 inline void coulombFDF(MatDoub &F, Vbase<Doub> &dF, Int_I l, Doub_I k, MatDoub_I r, Doub_I Z = -1.)

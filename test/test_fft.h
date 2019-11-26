@@ -34,10 +34,10 @@ void test_fft()
     if (abs(fft_interp(x[2], x, y) - y[2]) > 1e-15) SLS_ERR("failed!");
 
     // fftshift()
-    VecInt vInt(4); linspace(vInt, 1, 4);
+    Vector<Int> vInt(4); vInt[0] = 1; vInt[1] = 2; vInt[2] = 3; vInt[3] = 4;
     fftshift(vInt);
-    VecInt vInt1(4); vInt1[0] = 3; vInt1[1] = 4; vInt1[2] = 1; vInt1[3] = 2;
-    if (vInt != vInt1) SLS_ERR("failed!");
+    Vector<Int> vInt1(4); vInt1[0] = 3; vInt1[1] = 4; vInt1[2] = 1; vInt1[3] = 2;
+    if ((VecInt&)vInt != (VecInt&)vInt1) SLS_ERR("failed!");
 
     // test fft2x(), ifft2x, fft4x(), ifft4x
     v.resize(4); v[0] = Comp(1., 1.); v[1] = Comp(2., 2.); v[2] = Comp(3., 5.); v[3] = Comp(4., 7.);
