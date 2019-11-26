@@ -66,7 +66,7 @@ Long @DiagT@::n2() const
 {
     if (i == j)
 		return (*this)[i];
-	SLS_ERR('not a diagonal element!');
+	SLS_ERR("not a diagonal element!");
     return (*this)[i];
 }
 

@@ -2,7 +2,6 @@
 // use pointers for array input/output
 #pragma once
 #include "scalar_arith.h"
-#include "copy.h"
 
 namespace slisc {
 

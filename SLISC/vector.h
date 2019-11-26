@@ -1,6 +1,5 @@
 // vector container
 #pragma once
-#include "copy.h"
 
 namespace slisc {
 
@@ -34,7 +33,6 @@ public:
     T& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
     const T& end(Long_I i) const;
     Vbase & operator=(const Vbase &rhs);
-    Vbase & operator=(const T &rhs); // for scalar
     void operator<<(Vbase &rhs); // move data
     ~Vbase();
 };
@@ -171,13 +169,6 @@ inline Vbase<T> & Vbase<T>::operator=(const Vbase<T> &rhs)
 }
 
 template <class T>
-inline Vbase<T> & Vbase<T>::operator=(const T &rhs)
-{
-    vecset(m_p, rhs, m_N);
-    return *this;
-}
-
-template <class T>
 inline T & Vbase<T>::end()
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -235,25 +226,15 @@ protected:
 public:
     using Base::resize;
     using Base::resize_cpy;
-    using Base::operator=;
 
     explicit Vector(Long_I N);
     Vector(Long_I N, const T &s); // initialize to constant value
     Vector(Long_I N, const T *a); // copy from existing memory
 
     Vector(const Vector &rhs);    // copy constructor
-    Vector &operator=(const Vector &rhs);
-    template <class Tv, SLS_IF(is_dense_vec<Tv>())>
-    Vector &operator=(const Tv &rhs);
-    template <class Tv, SLS_IF(is_Dvector<Tv>())>
-    Vector &operator=(const Tv &rhs);
     void operator<<(Vector &rhs); // move data and rhs.resize(0)
     template <class T1>
     void resize(const Vector<T1> &v);
-#ifdef SLS_CUSLISC
-    Vector & operator=(const Gvector<T> &rhs) // copy from GPU vector
-    { rhs.get(*this); return *this; }
-#endif
 };
 
 template<class T>
@@ -277,29 +258,6 @@ inline Vector<T>::Vector(Long_I N, const T * a) : Vector(N)
 template <class T>
 Vector<T>::Vector(const Vector<T> &rhs) : Base(rhs)
 {}
-
-template <class T>
-Vector<T> &Vector<T>::operator=(const Vector<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T>
-template <class Tv, SLS_IF0(is_dense_vec<Tv>())>
-Vector<T> &Vector<T>::operator=(const Tv &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T>
-template <class Tv, SLS_IF0(is_Dvector<Tv>())>
-Vector<T> &Vector<T>::operator=(const Tv &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
 
 template<class T>
 template<class T1>

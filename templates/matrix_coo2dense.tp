@@ -1,0 +1,36 @@
+//% [Tmat, Ts] = varargin{:};
+//% if ~((is_dense_mat(Tmat) || is_Dmatrix(Tmat) || is_Jmat(Tmat)) && is_scalar(Ts))
+//%     error('illegal types');
+//% end
+//% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];
+inline void coo2dense(@Tmat@_O lhs, @McooTs@_I rhs)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+    copy(lhs, 0);
+    for (Long i = 0; i < rhs.nnz(); ++i) {
+        lhs(rhs.row(i), rhs.col(i)) = rhs[i];
+    }
+    return lhs;
+}
+
+inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+    copy(lhs, 0);
+    for (Long i = 0; i < rhs.nnz(); ++i) {
+        Long r = rhs.row(i), c = rhs.col(i);
+        if (r == c)
+            lhs(r, r) = rhs(i);
+        else {
+            lhs(r, c) = rhs(i);
+            lhs(c, r) = conj(rhs(i));
+        }
+    }
+    return lhs;
+}

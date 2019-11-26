@@ -5,44 +5,8 @@
 namespace slisc {
 // Matrix Class
 
-// convert MatCoo to dense matrix
-template <class T, class T1, SLS_IF(
-    is_dense<T>() && is_scalar<T1>() &&
-    is_promo<contain_type<T>, T1>()
-)>
-inline T &coo2dense(T &lhs, const MatCoo<T1> &rhs)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(lhs, rhs))
-        SLS_ERR("wrong shape!");
-#endif
-    lhs = contain_type<T>(0);
-    for (Long i = 0; i < rhs.nnz(); ++i) {
-        lhs(rhs.row(i), rhs.col(i)) = rhs[i];
-    }
-    return lhs;
-}
-
-// convert MatCooH to dense matrix
-template <class T, class T1, SLS_IF(
-    is_dense<T>() && is_scalar<T1>() &&
-    is_promo<contain_type<T>, T1>()
-)>
-inline T &cooh2dense(T &lhs, const MatCooH<T1> &rhs)
-{
-    lhs.resize(rhs.n1(), rhs.n2());
-    lhs = contain_type<T>(0);
-    for (Long i = 0; i < rhs.nnz(); ++i) {
-        Long r = rhs.row(i), c = rhs.col(i);
-        if (r == c)
-            lhs(r, r) = rhs(i);
-        else {
-            lhs(r, c) = rhs(i);
-            lhs(c, r) = conj(rhs(i));
-        }
-    }
-    return lhs;
-}
+// convert MatCoo and MatCooH to dense matrix
+#include "matrix_coo2dense.inl"
 
 template <class T>
 class Matrix : public Vbase<T>

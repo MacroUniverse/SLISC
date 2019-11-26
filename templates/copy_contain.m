@@ -1,7 +1,7 @@
 cd(mfilepath);
-file = 'diag_Diag.tp';
+file = 'copy_contain.tp';
 type = {
-    'Int'; 'Doub'; 'Fcomp'; 'Comp'; 'Imag';
+    'CmatDoub', 'CmatDoub';
     };
 
 N = size(type, 1);
@@ -10,4 +10,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/diag_Diag.inl', str);
+filewrite('../SLISC/copy_contain.inl', str);

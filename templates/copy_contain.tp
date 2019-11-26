@@ -1,0 +1,41 @@
+//% [T, T1] = varargin{:};
+//% if ~is_promo(contain_type(T), contain_type(T1))
+//%     error('illegal types');
+//% end
+void copy(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	if (v.size() == 0)
+		return;
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+	veccpy(v.ptr(), v1.ptr(), v.size());
+//% elseif is_Dvector(T) && is_Dvector(T1)
+	veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());
+//% elseif is_dense_vec(T) && is_Dvector(T1)
+	veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
+//% elseif is_Dvector(T) && is_dense_vec(T1)
+	veccpy(v.ptr(), v.step(), v1.ptr(), v1.size());
+//% elseif is_dense_mat(T) && is_dense_mat(T1) && is_diff_major(T, T1)
+//%     if is_cmajor(T)
+	matcpy_2_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
+//%     else
+	matcpy_2_major(v.ptr(), v1.ptr(), v.n2(), v.n1());
+//%     end
+//% elseif is_Dmat(T) && is_Dmat(T1) || is_Dcmat(T) && is_Dcmat(T1)
+	matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+//% elseif is_Jcmat3d(T) && is_Jcmat3d(T1)
+	// slow
+    if (v1.size() != 0)
+    for (Long k = 0; k < v.n3(); ++k)
+        for (Long j = 0; j < v.n2(); ++j)
+            for (Long i = 0; i < v.n1(); ++i)
+                a(i, j, k) = a1(i, j, k);
+//% else
+//%     disp(['T = ', T]);
+//%     disp(['T1 = ', T1]);
+//%     error('not implemented!');
+//% end
+}

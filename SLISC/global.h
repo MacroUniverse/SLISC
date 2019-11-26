@@ -80,10 +80,10 @@ typedef const Ullong Ullong_I;
 typedef Ullong &Ullong_O, &Ullong_IO;
 #endif
 
-#ifndef SLS_USE_INT_AS_LONG
-typedef Llong Long;
-#else
+#ifdef SLS_USE_INT_AS_LONG
 typedef Int Long;
+#else
+typedef Llong Long;
 #endif
 typedef const Long Long_I;
 typedef Long &Long_O, &Long_IO;
@@ -161,7 +161,9 @@ template <class T> class Jcmat3d;
 template <class T> class Jcmat4d;
 template <class T> class Scmat3d;
 class DiagInt; class DiagDoub; class DiagLdoub; class DiagComp; class DiagLcomp;
-template <class T> class MatCoo;
+class McooChar; class McooInt; class McooLlong; class McooFloat; class McooDoub; class McooLdoub;
+class McooFcomp;
+class McooComp; class McooLcomp; class McooImag;
 template <class T> class MatCooH;
 template <class T> class CmatObd;
 template <class T> class Flm;
@@ -941,43 +943,39 @@ typedef DiagComp &DiagComp_O, &DiagComp_IO;
 typedef const DiagLcomp &DiagLcomp_I;
 typedef DiagLcomp &DiagLcomp_O, &DiagLcomp_IO;
 
-typedef MatCoo<Char> McooChar;
 typedef const McooChar &McooChar_I;
 typedef McooChar &McooChar_O, &McooChar_IO;
 
-typedef MatCoo<Int> McooInt;
 typedef const McooInt &McooInt_I;
 typedef McooInt &McooInt_O, &McooInt_IO;
 
-typedef MatCoo<Long> McooLong;
+#ifdef SLS_USE_INT_AS_LONG
+typedef McooInt McooLong;
+#else
+typedef McooLlong McooLong;
+#endif
+
 typedef const McooLong &McooLong_I;
 typedef McooLong &McooLong_O, &McooLong_IO;
 
-typedef MatCoo<Llong> McooLlong;
 typedef const McooLlong &McooLlong_I;
 typedef McooLlong &McooLlong_O, &McooLlong_IO;
 
-typedef MatCoo<Float> McooFloat;
 typedef const McooFloat &McooFloat_I;
 typedef McooFloat &McooFloat_O, &McooFloat_IO;
 
-typedef MatCoo<Doub> McooDoub;
 typedef const McooDoub &McooDoub_I;
 typedef McooDoub &McooDoub_O, &McooDoub_IO;
 
-typedef MatCoo<Ldoub> McooLdoub;
 typedef const McooLdoub &McooLdoub_I;
 typedef McooLdoub &McooLdoub_O, &McooLdoub_IO;
 
-typedef MatCoo<Imag> McooImag;
 typedef const McooImag &McooImag_I;
 typedef McooImag &McooImag_O, &McooImag_IO;
 
-typedef MatCoo<Comp> McooComp;
 typedef const McooComp &McooComp_I;
 typedef McooComp &McooComp_O, &McooComp_IO;
 
-typedef MatCoo<Lcomp> McooLcomp;
 typedef const McooLcomp &McooLcomp_I;
 typedef McooLcomp &McooLcomp_O, &McooLcomp_IO;
 

@@ -435,12 +435,12 @@ constexpr Bool is_Diag()
     return is_same<T, DiagInt>() || is_same<T, DiagDoub>() || is_same<T, DiagLdoub>() || is_same<T, DiagComp>() || 			is_same<T, DiagLcomp>();
 }
 
-template <class T> struct is_MatCoo_imp : false_type {};
-template <class T> struct is_MatCoo_imp<MatCoo<T>> : integral_constant<Bool, is_scalar<T>()> {};
 template<class T>
 constexpr Bool is_MatCoo()
 {
-    return is_MatCoo_imp<T>();
+    return is_same<T, McooChar>() || is_same<T, McooChar>() || is_same<T, McooInt>() || is_same<T, McooLlong>() ||
+		is_same<T, McooFloat>() || is_same<T, McooDoub>() || is_same<T, McooLdoub>() || is_same<T, McooFcomp>() ||
+		is_same<T, McooComp>() || is_same<T, McooLcomp>();
 }
 
 template <class T> struct is_CmatObd_imp : false_type {};

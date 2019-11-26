@@ -1,7 +1,8 @@
 cd(mfilepath);
-file = 'diag_Diag.tp';
+file = 'matrix_coo2dense.tp';
 type = {
-    'Int'; 'Doub'; 'Fcomp'; 'Comp'; 'Imag';
+    'CmatDoub', 'Doub';
+    'CmatComp', 'Comp';
     };
 
 N = size(type, 1);
@@ -10,4 +11,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/diag_Diag.inl', str);
+filewrite('../SLISC/matrix_coo2dense.inl', str);

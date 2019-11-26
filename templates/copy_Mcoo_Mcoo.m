@@ -1,7 +1,8 @@
 cd(mfilepath);
-file = 'diag_Diag.tp';
+file = 'copy_Mcoo_Mcoo.tp';
 type = {
-    'Int'; 'Doub'; 'Fcomp'; 'Comp'; 'Imag';
+    'Doub', 'Doub';
+    'Comp', 'Comp';
     };
 
 N = size(type, 1);
@@ -10,4 +11,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/diag_Diag.inl', str);
+filewrite('../SLISC/copy_Mcoo_Mcoo.inl', str);
