@@ -84,17 +84,15 @@ Comp fft_interp(Doub_I x1, VecDoub_I x, VecComp_I y);
 
 void fft_interp(VecComp_O y1, VecDoub_I x1, VecDoub_I x, VecComp_I y);
 
-template <class T>
-void fftshift(Vector<T> &v)
+template <class T, SLS_IF(ndims<T>() == 1)>
+void fftshift(T &v)
 {
-    Long n{ v.size() };
-    if (isodd(n)) SLS_ERR("fftshift only supports even columns!");
-    Long halfn{ n / 2 };
-    Vector<T> temp(halfn);
-    size_t size{ halfn * sizeof(T) };
-    memcpy(&temp[0], v.ptr(), size);
-    memcpy(v.ptr(), v.ptr() + halfn, size);
-    memcpy(v.ptr() + halfn, &temp[0], size);
+    Long n = v.size();
+    if (isodd(n))
+		SLS_ERR("fftshift only supports even elements!");
+    Long halfn = n/2;
+    for (Long i = 0; i < halfn; ++i)
+		swap(v[i], v[i+halfn]);
 }
 
 template <class T>
@@ -102,8 +100,9 @@ void fftshift(Matrix<T> &a, Int_I dim = 1)
 {
     Long m{ a.n1() }, n{ a.n2() };
     if (dim == 1) {
-        if (isodd(m)) SLS_ERR("fftshift only supports even rows!");
-            Long halfm = m / 2;
+        if (isodd(m))
+			SLS_ERR("fftshift only supports even rows!");
+        Long halfm = m / 2;
         Matrix<T> temp(halfm, n);
         Long size = halfm*n * sizeof(T);
         memcpy(temp[0], a[0], size);
@@ -111,15 +110,14 @@ void fftshift(Matrix<T> &a, Int_I dim = 1)
         memcpy(a[halfm], temp[0], size);
     }
     else if (dim == 2) {
-        if (isodd(n)) SLS_ERR("fftshift only supports even columns!");
-            Long i, halfn{ n / 2 };
-        Vector<T> temp(halfn);
-        Long size = halfn * sizeof(T);
-        for (i = 0; i < m; ++i) {
-            memcpy(&temp[0], a[i], size);
-            memcpy(a[i], &a[i][halfn], size);
-            memcpy(&a[i][halfn], &temp[0], size);
-        }
+        if (isodd(n))
+			SLS_ERR("fftshift only supports even columns!");
+        Long halfn = n/2;
+        for (Long i = 0; i < m; ++i) {
+			T *v = &a(i, 0);
+            for (Long j = 0; j < halfn; ++j)
+				swap(v[j], v[j+halfn]);
+		}
     }
 }
 

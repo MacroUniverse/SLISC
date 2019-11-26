@@ -1,5 +1,5 @@
 // square diagonal matrix
-// mostly a clone a Vector<T>
+// mostly a clone of VecXXX
 #pragma once
 #include "vector.h"
 
