@@ -5,11 +5,9 @@
 
 namespace slisc {
 
-inline void linspace(VecDoub_O v, Doub_I first, Doub_I last);
 inline void linspace(VecLlong_O v, Llong_I first, Llong_I last);
-
-template <class Tv, SLS_IF(ndims<Tv>() == 1)>
-inline void reorder(Tv &v, VecLong_I order);
+inline void reorder(SvecDoub_O v, VecLong_I order);
+inline void reorder(SvecLlong_O v, VecLong_I order);
 
 template <class T>
 class MatCoo : public Vbase<T>

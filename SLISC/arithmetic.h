@@ -339,22 +339,7 @@ const auto norm(const T &v, SLS_IF(is_dense<T>()))
 
 #include "arithmetic_linspace.inl"
 
-template <class Tv, SLS_IF0(ndims<Tv>() == 1)>
-inline void reorder(Tv &v, VecLong_I order)
-{
-    Long N = v.size();
-#ifdef SLS_CHECK_SHAPE
-    if (order.size() != N)
-        SLS_ERR("wrong shape!");
-#endif
-    Vector<contain_type<Tv>> u(N);
-    for (Long i = 0; i < N; ++i) {
-        u[i] = v[order[i]];
-    }
-    for (Long i = 0; i < N; ++i) {
-        v[i] = u[i];
-    }
-}
+#include "arithmetic_reorder.inl"
 
 // === vectorized math functions ===
 
