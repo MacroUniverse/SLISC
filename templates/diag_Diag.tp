@@ -1,0 +1,83 @@
+//% T = varargin{:};
+//% DiagT = ['Diag', T];
+//% VecT = ['Vec', T];
+class @DiagT@ : public @VecT@
+{
+private:
+    typedef @VecT@ Base;
+    @DiagT@() : Base() {} // default constructor: uninitialized
+public:
+    using Base::operator();
+    using Base::operator=;
+    @DiagT@(Long_I N);
+    @DiagT@(Long_I N, @T@_I s);
+    @DiagT@(@VecT@_I v);
+    Long size() const;
+    Long nnz() const;
+    Long n1() const;
+    Long n2() const;
+    @DiagT@ &operator=(@DiagT@_I rhs);
+    @DiagT@ &operator=(@VecT@_I rhs);
+    @T@ &ref(Long_I i, Long_I j);
+    const @T@ operator()(Long_I i, Long_I j) const;
+};
+
+@DiagT@::@DiagT@(Long_I N) : Base(N) {}
+
+@DiagT@::@DiagT@(Long_I N, @T@_I s) : Base(N, s) {}
+
+@DiagT@::@DiagT@(@VecT@_I v) : Base(v.size())
+{
+    *this = v;
+}
+
+Long @DiagT@::size() const
+{
+    SLS_ERR("use nnz() instead!");
+    return 0;
+}
+
+Long @DiagT@::nnz() const
+{
+    return Base::size();
+}
+
+Long @DiagT@::n1() const
+{
+    return Base::size();
+}
+
+Long @DiagT@::n2() const
+{
+    return Base::size();
+}
+
+@DiagT@ &@DiagT@::operator=(@DiagT@_I rhs)
+{
+    Base::operator=(rhs); return *this;
+}
+
+@DiagT@ &@DiagT@::operator=(@VecT@_I rhs)
+{
+    Base::operator=(rhs); return *this;
+}
+
+@T@ &@DiagT@::ref(Long_I i, Long_I j)
+{
+    if (i == j)
+		return (*this)[i];
+	SLS_ERR('not a diagonal element!');
+    return (*this)[i];
+}
+
+const @T@ @DiagT@::operator()(Long_I i, Long_I j) const
+{
+    if (i == j) return (*this)[i];
+    return 0;
+}
+
+// convert vector to diagonal matrix
+const @DiagT@ &diag(@VecT@_I v)
+{
+    return (@DiagT@&)v;
+}

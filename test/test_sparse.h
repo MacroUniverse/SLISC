@@ -277,9 +277,9 @@ inline void test_sparse()
     // mul(cmat, cmat, diag)
     {
         CmatInt a(4, 5, 1);
-        Vector<Int> b(5); b[0] = 1; b[1] = 2; b[2] = 3; b[3] = 4; b[4] = 5;
+        VecInt b(5); b[0] = 1; b[1] = 2; b[2] = 3; b[3] = 4; b[4] = 5;
         CmatInt c(4, 5);
-        mul(c, a, (DiagInt)b);
+        mul(c, a, diag(b));
         if (!shape_cmp(c, a)) SLS_ERR("failed!");
         if (!equals_to_vs(&c(0,0), 1, c.n1())) SLS_ERR("failed!");
         if (!equals_to_vs(&c(0,1), 2, c.n1())) SLS_ERR("failed!");

@@ -429,12 +429,10 @@ constexpr Bool is_Jcmat4d()
     return is_Jcmat4d_imp<T>();
 }
 
-template <class T> struct is_Diag_imp : false_type {};
-template <class T> struct is_Diag_imp<Diag<T>> : integral_constant<Bool, is_scalar<T>()> {};
 template<class T>
 constexpr Bool is_Diag()
 {
-    return is_Diag_imp<T>();
+    return is_same<T, DiagInt>() || is_same<T, DiagDoub>() || is_same<T, DiagLdoub>() || is_same<T, DiagComp>() || 			is_same<T, DiagLcomp>();
 }
 
 template <class T> struct is_MatCoo_imp : false_type {};

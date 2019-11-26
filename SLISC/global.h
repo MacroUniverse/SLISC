@@ -160,7 +160,7 @@ template <class T> class Jcmat;
 template <class T> class Jcmat3d;
 template <class T> class Jcmat4d;
 template <class T> class Scmat3d;
-template <class T> class Diag;
+class DiagInt; class DiagDoub; class DiagLdoub; class DiagComp; class DiagLcomp;
 template <class T> class MatCoo;
 template <class T> class MatCooH;
 template <class T> class CmatObd;
@@ -926,23 +926,18 @@ template <Long Nr, Long Nc> using FcmatLcomp_IO = FixCmat<Lcomp, Nr, Nc> &;
 
 // sparse containers
 
-typedef Diag<Int> DiagInt;
 typedef const DiagInt &DiagInt_I;
 typedef DiagInt &DiagInt_O, &DiagInt_IO;
 
-typedef Diag<Doub> DiagDoub;
 typedef const DiagDoub &DiagDoub_I;
 typedef DiagDoub &DiagDoub_O, &DiagDoub_IO;
 
-typedef Diag<Ldoub> DiagLdoub;
 typedef const DiagLdoub &DiagLdoub_I;
 typedef DiagLdoub &DiagLdoub_O, &DiagLdoub_IO;
 
-typedef Diag<Comp> DiagComp;
 typedef const DiagComp &DiagComp_I;
 typedef DiagComp &DiagComp_O, &DiagComp_IO;
 
-typedef Diag<Lcomp> DiagLcomp;
 typedef const DiagLcomp &DiagLcomp_I;
 typedef DiagLcomp &DiagLcomp_O, &DiagLcomp_IO;
 
