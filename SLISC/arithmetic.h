@@ -1,6 +1,5 @@
 #pragma once
 #include "global.h"
-#include "meta.h"
 #include "dvector.h"
 #include "matrix.h"
 #include "cmat.h"

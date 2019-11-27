@@ -1,42 +1,22 @@
 //% T = varargin{:};
 //% VecT = ['Vec' T];
-void veccpy(@T@ *dst, const @T@ *src, Long_I N);
-void veccpy(@T@ *dst, @T@_I src, Long_I N);
+//% VbaseT = ['Vbase' T];
 
-class @VecT@ : public Vbase<@T@>
+class @VecT@ : public @VbaseT@
 {
-protected:
-    typedef Vbase<@T@> Base;
-    using Base::m_p;
-    using Base::m_N;
-    @VecT@();
 public:
+	typedef @VbaseT@ Base;
     using Base::resize;
-    using Base::resize_cpy;
     using Base::operator[];
 
     explicit @VecT@(Long_I N);
-    @VecT@(Long_I N, @T@_I s); // initialize to constant value
-    @VecT@(Long_I N, const @T@ *a); // copy from existing memory
     @VecT@(const @VecT@ &rhs); // copy constructor
     void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
 
-inline @VecT@::@VecT@() {}
-
 inline @VecT@::@VecT@(Long_I N) : Base(N) {}
 
-inline @VecT@::@VecT@(Long_I N, @T@_I s) : @VecT@(N)
-{
-    veccpy(m_p, s, N);
-}
-
-inline @VecT@::@VecT@(Long_I N, const @T@ * a) : @VecT@(N)
-{
-    veccpy(m_p, a, N);
-}
-
-@VecT@::@VecT@(const @VecT@ &rhs)
+inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(0)
 {
     SLS_ERR("copy constructor forbidden!");
 }

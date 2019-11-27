@@ -10,6 +10,9 @@
 namespace slisc {
 //  === pointer interface ===
 
+#include "copy_vecset.inl"
+#include "copy_veccpy.inl"
+
 template<class T, class T1, SLS_IF(is_promo<T, T1>())>
 inline void matcpy(T *v, Long_I lda, const T1 *v1, Long_I lda1, Long_I Nr, Long_I Nc)
 {

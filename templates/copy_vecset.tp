@@ -1,0 +1,12 @@
+//% T = varargin{:};
+inline void vecset(@T@ *v, @T@_I val, Long_I n)
+{
+    for (@T@ *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
+{
+    for (@T@ *p = v; p < v + n*step; p += step)
+        *p = val;
+}
