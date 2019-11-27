@@ -19,23 +19,10 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
-    using Base::operator=;
     Cmat(Long_I Nr, Long_I Nc);
     Cmat(Long_I Nr, Long_I Nc, const T &s);    //Initialize to constant
     Cmat(Long_I Nr, Long_I Nc, const T *ptr);    // Initialize to array
     Cmat(const Cmat &rhs);        // Copy constructor
-    Cmat & operator=(const Cmat &rhs);    // copy assignment
-    template <class Tmat, SLS_IF(is_dense_mat<Tmat>())>
-    Cmat & operator=(const Tmat &rhs);
-    Cmat & operator=(const T &rhs);
-    template <class T1>
-    Cmat & operator=(const MatCoo<T1> &rhs);
-    template <class T1>
-    Cmat & operator=(const MatCooH<T1> &rhs);
-#ifdef _CUSLISC_
-    Cmat & operator=(const Gcmat<T> &rhs) // copy from GPU vector
-    { rhs.get(*this); return *this; }
-#endif
     void operator<<(Cmat &rhs); // move data and rhs.resize(0, 0)
     T& operator()(Long_I i, Long_I j);    // double indexing
     const T& operator()(Long_I i, Long_I j) const;
@@ -66,39 +53,6 @@ Cmat<T>::Cmat(const Cmat<T> &rhs)
 {
     SLS_ERR("Copy constructor or move constructor is forbidden, "
         "use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-template <class T>
-inline Cmat<T> & Cmat<T>::operator=(const Cmat<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class Tmat, SLS_IF0(is_dense_mat<Tmat>())>
-inline Cmat<T> & Cmat<T>::operator=(const Tmat &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T>
-inline Cmat<T> & Cmat<T>::operator=(const T &rhs)
-{
-    vecset(m_p, rhs, m_N);
-    return *this;
-}
-
-template <class T> template <class T1>
-inline Cmat<T> & Cmat<T>::operator=(const MatCoo<T1> &rhs)
-{
-    return coo2dense(*this, rhs);
-}
-
-template <class T> template <class T1>
-inline Cmat<T> & Cmat<T>::operator=(const MatCooH<T1> &rhs)
-{
-    return cooh2dense(*this, rhs);
 }
 
 template <class T>

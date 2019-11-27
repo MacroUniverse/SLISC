@@ -24,27 +24,27 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
     incx = x.step();
 //% end
 //% if is_cmajor(Ta)
-	CBLAS_LAYOUT layout = CblasColMajor;
+    CBLAS_LAYOUT layout = CblasColMajor;
 //% else
-	CBLAS_LAYOUT layout = CblasRowMajor;
+    CBLAS_LAYOUT layout = CblasRowMajor;
 //% end
 
 //% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
-	cblas_ssymv(layout, CblasUpper, N1, alpha, a.ptr(),
-		lda, x.ptr(), incx, beta, y.ptr(), incy);
+    cblas_ssymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
 //% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
-	cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
-		lda, x.ptr(), incx, beta, y.ptr(), incy);
+    cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
 //% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
-	cblas_zsymv(layout, CblasUpper, N1, &alpha, a.ptr(),
-		lda, x.ptr(), incx, &beta, y.ptr(), incy);
+    cblas_zsymv(layout, CblasUpper, N1, &alpha, a.ptr(),
+        lda, x.ptr(), incx, &beta, y.ptr(), incy);
 //% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
-	// do real part
-	cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
-		lda, (@Tsa@*)x.ptr(), 2*incx, beta, (@Tsa@*)y.ptr(), 2*incy);
-	// do imag part
-	cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
-		lda, (@Tsa@*)x.ptr()+1, 2*incx, beta, (@Tsa@*)y.ptr()+1, 2*incy);
+    // do real part
+    cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, (@Tsa@*)x.ptr(), 2*incx, beta, (@Tsa@*)y.ptr(), 2*incy);
+    // do imag part
+    cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, (@Tsa@*)x.ptr()+1, 2*incx, beta, (@Tsa@*)y.ptr()+1, 2*incy);
 //% else
 //%     error('not implemented!');
 //% end

@@ -3,7 +3,7 @@ if (is_cmajor(T) && is_cmajor(U))
     ret = true;
 elseif (is_rmajor(T) && is_rmajor(U))
     ret = true;
-elseif (ndims(T) == 1 && ndims(T) == 1)
+elseif (ndim(T) == 1 && ndim(T) == 1)
     ret = true;
 else
     ret = false;

@@ -20,12 +20,6 @@ public:
     const T &operator()(Long_I i) const; // m_data[i]
     T &operator()(Long_I i);
     Long find(Long_I i, Long_I j);
-    template <class T1, SLS_IF(is_promo<T, T1>())>
-    CmatObd &operator=(const CmatObd<T1> &rhs);
-    template <class T1, SLS_IF(is_promo<T, T1>())>
-    CmatObd &operator=(const MatCoo<T1> &rhs);
-    template <class T1, SLS_IF(is_promo<T, T1>())>
-    CmatObd &operator=(const Cmat3d<T1> &a);
     const T * ptr() const; // not the first element!
     T * ptr();
     Long n1() const;
@@ -92,67 +86,6 @@ inline Long CmatObd<T>::find(Long_I i1, Long_I i2)
     }
     SLS_ERR("element out of block!");
     return -1;
-}
-
-template <class T>
-template <class T1, SLS_IF0(is_promo<T, T1>())>
-CmatObd<T> &CmatObd<T>::operator=(const CmatObd<T1> &a)
-{
-    m_data = a.cmat3();
-    return *this;
-}
-
-// convert Mcoo matrix to MatOdb matrix
-template <class T>
-template <class T1, SLS_IF0(is_promo<T, T1>())>
-CmatObd<T> &CmatObd<T>::operator=(const MatCoo<T1> &a)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(*this, a))
-        SLS_ERR("wrong shape!");
-#endif
-    m_data = 0;
-    for (Long k = 0; k < a.nnz(); ++k) {
-        Long i = a.row(k) + 1, j = a.col(k) + 1;
-        Long N = n0() - 1, Nblk = m_data.n3();
-        Long iblk = i / N, jblk = j / N;
-        Long m = i % N;
-        if (iblk == jblk) {
-            if (iblk == Nblk)
-                m_data(N, N, Nblk - 1) = a[k];
-            else if (i == j && m == 0 && iblk > 0)
-                 m_data(0, 0, iblk) = a[k];
-            else
-                m_data(m, j % N, iblk) = a[k];
-            continue;
-        }
-        else if (jblk == iblk - 1) {
-            if (m == 0) {
-                m_data(N, j % N, jblk) = a[k];
-                continue;
-            }
-        }
-        else if (jblk == iblk + 1) {
-            Long n = j % N;
-            if (n == 0) {
-                m_data(m, N, iblk) = a[k];
-                continue;
-            }
-        }
-        SLS_ERR("element out of block!");
-    }
-    return *this;
-}
-
-template<class T>
-template <class T1, SLS_IF0(is_promo<T, T1>())>
-CmatObd<T> &CmatObd<T>::operator=(const Cmat3d<T1>& rhs)
-{
-    m_data = rhs;
-    // set the first overlapped element to 0
-    Long step = SQR(n0());
-    vecset(m_data.ptr() + step - 1, 0, nblk() - 1, step);
-    return *this;
 }
 
 template<class T>

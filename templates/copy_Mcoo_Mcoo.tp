@@ -11,8 +11,8 @@ void copy(@McooT@_O v, @McooT1@_I v1)
     if (v1.nnz() == 0)
         return;
 //% if is_same(T, T1)
-	if (v.ptr() == v1.ptr())
-		SLS_ERR("self assignment is forbidden!");
+    if (v.ptr() == v1.ptr())
+        SLS_ERR("self assignment is forbidden!");
 //% end
     Long Nnz = v1.nnz();
     v.resize(Nnz);

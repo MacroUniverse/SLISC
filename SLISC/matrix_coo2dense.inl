@@ -8,7 +8,6 @@ inline void coo2dense(CmatDoub_O lhs, McooDoub_I rhs)
     for (Long i = 0; i < rhs.nnz(); ++i) {
         lhs(rhs.row(i), rhs.col(i)) = rhs[i];
     }
-    return lhs;
 }
 
 inline void cooh2dense(CmatDoub_O lhs, McoohDoub_I rhs)
@@ -24,10 +23,9 @@ inline void cooh2dense(CmatDoub_O lhs, McoohDoub_I rhs)
             lhs(r, r) = rhs(i);
         else {
             lhs(r, c) = rhs(i);
-            lhs(c, r) = conj(rhs(i));
+            lhs(c, r) = CONJ(rhs(i));
         }
     }
-    return lhs;
 }
 
 inline void coo2dense(CmatComp_O lhs, McooComp_I rhs)
@@ -40,7 +38,6 @@ inline void coo2dense(CmatComp_O lhs, McooComp_I rhs)
     for (Long i = 0; i < rhs.nnz(); ++i) {
         lhs(rhs.row(i), rhs.col(i)) = rhs[i];
     }
-    return lhs;
 }
 
 inline void cooh2dense(CmatComp_O lhs, McoohComp_I rhs)
@@ -56,9 +53,8 @@ inline void cooh2dense(CmatComp_O lhs, McoohComp_I rhs)
             lhs(r, r) = rhs(i);
         else {
             lhs(r, c) = rhs(i);
-            lhs(c, r) = conj(rhs(i));
+            lhs(c, r) = CONJ(rhs(i));
         }
     }
-    return lhs;
 }
 

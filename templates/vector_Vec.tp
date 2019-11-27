@@ -13,12 +13,12 @@ protected:
 public:
     using Base::resize;
     using Base::resize_cpy;
-	using Base::operator[];
+    using Base::operator[];
 
     explicit @VecT@(Long_I N);
     @VecT@(Long_I N, @T@_I s); // initialize to constant value
     @VecT@(Long_I N, const @T@ *a); // copy from existing memory
-	@VecT@(const @VecT@ &rhs); // copy constructor
+    @VecT@(const @VecT@ &rhs); // copy constructor
     void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
 
@@ -38,7 +38,7 @@ inline @VecT@::@VecT@(Long_I N, const @T@ * a) : @VecT@(N)
 
 @VecT@::@VecT@(const @VecT@ &rhs)
 {
-	SLS_ERR("copy constructor forbidden!");
+    SLS_ERR("copy constructor forbidden!");
 }
 
 inline void @VecT@::operator<<(@VecT@ &rhs)

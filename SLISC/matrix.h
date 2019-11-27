@@ -5,9 +5,6 @@
 namespace slisc {
 // Matrix Class
 
-// convert MatCoo and MatCooH to dense matrix
-#include "matrix_coo2dense.inl"
-
 template <class T>
 class Matrix : public Vbase<T>
 {
@@ -20,18 +17,10 @@ private:
 public:
     using Base::ptr;
     using Base::operator();
-    using Base::operator=;
     Matrix(Long_I Nr, Long_I Nc);
     Matrix(Long_I Nr, Long_I Nc, const T &s);    //Initialize to constant
     Matrix(Long_I Nr, Long_I Nc, const T *ptr);    // Initialize to array
     Matrix(const Matrix &rhs);        // Copy constructor
-    Matrix & operator=(const Matrix &rhs);
-    template <class Tmat, SLS_IF(is_dense_mat<Tmat>())>
-    Matrix & operator=(const Tmat &rhs);    // copy assignment
-    template <class T1>
-    Matrix & operator=(const MatCoo<T1> &rhs);
-    template <class T1>
-    Matrix & operator=(const MatCooH<T1> &rhs);
 #ifdef _CUSLISC_
     Matrix & operator=(const Gmatrix<T> &rhs) // copy from GPU vector
     { rhs.get(*this); return *this; }
@@ -54,7 +43,7 @@ Matrix<T>::Matrix(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
 
 template <class T>
 Matrix<T>::Matrix(Long_I Nr, Long_I Nc, const T &s) : Matrix(Nr, Nc)
-{ *this = s; }
+{ copy(*this, s); }
 
 template <class T>
 Matrix<T>::Matrix(Long_I Nr, Long_I Nc, const T *ptr) : Matrix(Nr, Nc)
@@ -64,32 +53,6 @@ template <class T>
 Matrix<T>::Matrix(const Matrix<T> &rhs) : Matrix()
 {
     SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-template <class T>
-inline Matrix<T> & Matrix<T>::operator=(const Matrix<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class Tmat, SLS_IF0(is_dense_mat<Tmat>())>
-inline Matrix<T> & Matrix<T>::operator=(const Tmat &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class T1>
-inline Matrix<T> & Matrix<T>::operator=(const MatCoo<T1> &rhs)
-{
-    return coo2dense(*this, rhs);
-}
-
-template <class T> template <class T1>
-inline Matrix<T> & Matrix<T>::operator=(const MatCooH<T1> &rhs)
-{
-    return cooh2dense(*this, rhs);
 }
 
 template <class T>

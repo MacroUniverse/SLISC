@@ -89,10 +89,10 @@ void fftshift(T &v)
 {
     Long n = v.size();
     if (isodd(n))
-		SLS_ERR("fftshift only supports even elements!");
+        SLS_ERR("fftshift only supports even elements!");
     Long halfn = n/2;
     for (Long i = 0; i < halfn; ++i)
-		swap(v[i], v[i+halfn]);
+        swap(v[i], v[i+halfn]);
 }
 
 template <class T>
@@ -101,7 +101,7 @@ void fftshift(Matrix<T> &a, Int_I dim = 1)
     Long m{ a.n1() }, n{ a.n2() };
     if (dim == 1) {
         if (isodd(m))
-			SLS_ERR("fftshift only supports even rows!");
+            SLS_ERR("fftshift only supports even rows!");
         Long halfm = m / 2;
         Matrix<T> temp(halfm, n);
         Long size = halfm*n * sizeof(T);
@@ -111,13 +111,13 @@ void fftshift(Matrix<T> &a, Int_I dim = 1)
     }
     else if (dim == 2) {
         if (isodd(n))
-			SLS_ERR("fftshift only supports even columns!");
+            SLS_ERR("fftshift only supports even columns!");
         Long halfn = n/2;
         for (Long i = 0; i < m; ++i) {
-			T *v = &a(i, 0);
+            T *v = &a(i, 0);
             for (Long j = 0; j < halfn; ++j)
-				swap(v[j], v[j+halfn]);
-		}
+                swap(v[j], v[j+halfn]);
+        }
     }
 }
 

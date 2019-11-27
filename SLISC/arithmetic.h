@@ -15,6 +15,7 @@
 #include "matcoo.h"
 #include "matcooh.h"
 #include "ptr_arith.h"
+#include "copy.h"
 
 namespace slisc {
 
@@ -1101,8 +1102,8 @@ inline void mul(T &y, const T1 &a, const T2 &x)
 
 // using mkl
 template <class T, class T1, class T2, 
-	class Ts = contain_type<T>, class Ts1 = contain_type<T1>,
-	class Ts2 = contain_type<T2>, SLS_IF(
+    class Ts = contain_type<T>, class Ts1 = contain_type<T1>,
+    class Ts2 = contain_type<T2>, SLS_IF(
     is_dense_mat<T>() && is_dense_mat<T1>() && is_dense_mat<T2>())>
 inline void mul_gen(T &y, const T1 &a, const T2 &x)
 {
@@ -1121,7 +1122,7 @@ inline void mul_gen(T &y, const T1 &a, const T2 &x)
     }
     else
         SLS_WARN("not implemented with cBLAS, using slow version");
-		mul(y, a, x);
+        mul(y, a, x);
 #else
     mul(y, a, x);
 #endif

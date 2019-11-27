@@ -104,7 +104,7 @@ void test_dense()
             SLS_ERR("failed!");
 
         CmatDoub a2(4, 5), b2(4, 5);
-        linspace(a2, 1, 20); b2 = a2;
+        linspace(a2, 1, 20); copy(b2, a2);
         b2.resize_cpy(7, 9);
         if (slice(b2, 0, 4, 0, 5) != a2)
             SLS_ERR("failed!");
@@ -113,7 +113,7 @@ void test_dense()
             SLS_ERR("failed!");
 
         Cmat3Doub a3(2, 3, 4), b3(2, 3, 4);
-        rand(a3); b3 = a3;
+        rand(a3); copy(b3, a3);
         b3.resize_cpy(3, 4, 5);
         if (slice(b3, 0, 2, 0, 3, 0, 4) != a3)
             SLS_ERR("failed!");
@@ -123,24 +123,24 @@ void test_dense()
     }
 
     // assignment operator
-    vDoub = 1.; if (vDoub != 1.) SLS_ERR("failed!");
-    aDoub = 1.; if (aDoub != 1.) SLS_ERR("failed!");
-    a3Doub = 1.; if (a3Doub != 1.) SLS_ERR("failed!");
+    copy(vDoub, 1.); if (vDoub != 1.) SLS_ERR("failed!");
+    copy(aDoub, 1.); if (aDoub != 1.) SLS_ERR("failed!");
+    copy(a3Doub, 1.); if (a3Doub != 1.) SLS_ERR("failed!");
     VecDoub vDoub1(4);
-    vDoub1 = 2.;
-    vDoub = vDoub1;
+    copy(vDoub1, 2.);
+    copy(vDoub, vDoub1);
     if (vDoub != vDoub1) SLS_ERR("failed!");
     MatDoub aDoub1(4, 4);
-    aDoub1 = 2.;
-    aDoub = aDoub1;
+    copy(aDoub1, 2.);
+    copy(aDoub, aDoub1);
     if (aDoub != aDoub1) SLS_ERR("failed!");
     Mat3Doub a3Doub1(4, 4, 4);
-    a3Doub1 = 2.;
-    a3Doub = a3Doub1;
+    copy(a3Doub1, 2.);
+    copy(a3Doub, a3Doub1);
     if (a3Doub != a3Doub1) SLS_ERR("failed!");
     Cmat3Doub c3Doub1(4, 4, 4);
-    c3Doub1 = 2.;
-    c3Doub = c3Doub1;
+    copy(c3Doub1, 2.);
+    copy(c3Doub, c3Doub1);
     if (c3Doub != c3Doub1) SLS_ERR("failed!");
 
     // move operator

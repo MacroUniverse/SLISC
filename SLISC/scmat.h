@@ -20,14 +20,6 @@ public:
     Scmat(T *ptr, Long_I Nr, Long_I Nc);
 
     // === Cmat functions ===
-    Scmat & operator=(const Scmat &rhs);    // copy assignment
-    template <class Tmat, SLS_IF(is_dense_mat<Tmat>())>
-    Scmat & operator=(const Tmat &rhs);
-    Scmat & operator=(const T &rhs);
-    template <class T1>
-    Scmat & operator=(const MatCoo<T1> &rhs);
-    template <class T1>
-    Scmat & operator=(const MatCooH<T1> &rhs);
     T& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
@@ -56,38 +48,6 @@ inline Scmat<T>::Scmat(T *ptr, Long_I Nr, Long_I Nc)
     : Scmat(Nr, Nc)
 {
     m_p = (T *)ptr;
-}
-
-template <class T>
-inline Scmat<T> & Scmat<T>::operator=(const Scmat<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class Tmat, SLS_IF0(is_dense_mat<Tmat>())>
-inline Scmat<T> & Scmat<T>::operator=(const Tmat &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T>
-inline Scmat<T> & Scmat<T>::operator=(const T &rhs)
-{
-    vecset(m_p, rhs, m_N);
-}
-
-template <class T> template <class T1>
-inline Scmat<T> & Scmat<T>::operator=(const MatCoo<T1> &rhs)
-{
-    return coo2dense(*this, rhs);
-}
-
-template <class T> template <class T1>
-inline Scmat<T> & Scmat<T>::operator=(const MatCooH<T1> &rhs)
-{
-    return cooh2dense(*this, rhs);
 }
 
 template <class T>

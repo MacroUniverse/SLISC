@@ -36,7 +36,7 @@ public:
     // return -2 if reading failed (e.g. file is not finished, wrong format)
     Int open(Str_I fname, Char_I *rw, Int_I precision = 17);
 
-	Bool isopen();
+    Bool isopen();
 
     // close a file, if not called, will be called in destructor
     void close();
@@ -141,7 +141,7 @@ inline Int Matt::get_profile()
         m_size.push_back(size);
         m_ind[i] = fin.tellg();
     }
-	return 0;
+    return 0;
 }
 
 // search variable in file by name
@@ -161,8 +161,8 @@ inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 
 Int Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 {
-	if (isopen())
-		close();
+    if (isopen())
+        close();
     this->fname = fname;
     if (rw[0] == 'w') {
 
@@ -200,7 +200,7 @@ Int Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 
 inline Bool Matt::isopen()
 {
-	return m_in.is_open() != m_out.is_open();
+    return m_in.is_open() != m_out.is_open();
 }
 
 inline void Matt::close()

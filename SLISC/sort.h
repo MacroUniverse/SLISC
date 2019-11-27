@@ -7,7 +7,7 @@ namespace slisc {
 
 // sort v in ascending order, and rearrange v1 at the same time
 template<class T, class U, SLS_IF(
-	is_Vector<T>() && is_Vector<U>())>
+    is_Vector<T>() && is_Vector<U>())>
 void sort2(T &v, U &v1);
 
 template<class T, class U>
@@ -153,7 +153,7 @@ void sort2_vv(T *v, U *v1, Long_I N)
 }
 
 template<class T, class U, SLS_IF(
-	is_Vector<T>() && is_Vector<U>())>
+    is_Vector<T>() && is_Vector<U>())>
 void sort2(T &v, U &v1)
 { sort2_vv(v.ptr(), v1.ptr(), v1.size()); }
 

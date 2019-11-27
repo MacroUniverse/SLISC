@@ -30,12 +30,6 @@ public:
     const T& end() const;
     T& end(Long_I i);
     const T& end(Long_I i) const;
-    Dvector & operator=(const Dvector &rhs);
-    template <class T1>
-    Dvector & operator=(const Dvector<T1> &rhs);
-    template <class T1, SLS_IF(is_dense<T1>())>
-    Dvector & operator=(const T1 &rhs);
-    Dvector & operator=(const T &rhs); // for scalar
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -146,39 +140,6 @@ template<class T>
 inline const T & Dvector<T>::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
-}
-
-template <class T>
-inline Dvector<T> & Dvector<T>::operator=(const Dvector<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T>
-inline Dvector<T> & Dvector<T>::operator=(const T &rhs)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (m_N != rhs.size())
-        SLS_ERR("wrong shape!");
-#endif
-    vecset(m_p, rhs, m_N, m_step);
-    return *this;
-}
-
-template <class T> template <class T1>
-inline Dvector<T> & Dvector<T>::operator=(const Dvector<T1> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class T1, SLS_IF0(
-    is_dense<T1>())>
-inline Dvector<T> & Dvector<T>::operator=(const T1 &rhs)
-{
-    copy(*this, rhs);
-    return *this;
 }
 
 template<class T>

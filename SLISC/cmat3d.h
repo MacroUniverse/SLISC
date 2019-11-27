@@ -21,21 +21,9 @@ public:
     typedef T value_type;
     using Base::operator();
     using Base::ptr;
-    using Base::operator=;
     Cmat3d(Long_I N1, Long_I N2, Long_I N3);
     Cmat3d(Long_I N1, Long_I N2, Long_I N3, const T &a);
     Cmat3d(const Cmat3d &rhs);   // Copy constructor
-    Cmat3d & operator=(const Cmat3d &rhs);    // copy assignment
-    template <class T1>
-    Cmat3d & operator=(const Cmat3d<T1> &rhs);
-#ifdef _CUSLISC_
-    Cmat3d & operator=(const Gmat3d<T> &rhs) // copy from GPU vector
-    { rhs.get(*this); return *this; }
-#endif
-#ifdef _CUSLISC_
-    Cmat3d & operator=(const Gcmat3d<T> &rhs) // copy from GPU vector
-    { rhs.get(*this); return *this; }
-#endif
     void operator<<(Cmat3d &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     template <class T1>
@@ -56,25 +44,12 @@ Cmat3d<T>::Cmat3d(Long_I N1, Long_I N2, Long_I N3) : Base(N1*N2*N3), m_N1(N1), m
 
 template <class T>
 Cmat3d<T>::Cmat3d(Long_I N1, Long_I N2, Long_I N3, const T &s) : Cmat3d(N1, N2, N3)
-{ *this = s; }
+{ copy(*this, s); }
 
 template <class T>
 Cmat3d<T>::Cmat3d(const Cmat3d<T> &rhs)
 {
     SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-template <class T>
-inline Cmat3d<T> & Cmat3d<T>::operator=(const Cmat3d<T> &rhs)
-{
-    return operator=<T>(rhs);
-}
-
-template <class T> template <class T1>
-inline Cmat3d<T> & Cmat3d<T>::operator=(const Cmat3d<T1> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
 }
 
 template <class T>

@@ -20,7 +20,7 @@ void sls_inp_imp(const Char * varname, T &var)
 // jump to the next line
 inline void cin_line()
 {
-	cin.ignore(1000, '\n');
+    cin.ignore(1000, '\n');
     cout << endl;
 }
 
@@ -149,11 +149,11 @@ public:
                 m_fin.close();
                 Bool_fout(out, prompt);
             }
-			else
-				SLS_ERR("unknown!");
+            else
+                SLS_ERR("unknown!");
         }
-		else
-			SLS_ERR("unknown!");
+        else
+            SLS_ERR("unknown!");
         return out;
     }
 

@@ -27,20 +27,20 @@
 #endif
 
 #ifdef SLS_USE_MKL
-	#define MKL_Complex16 double _Complex
-	#include <mkl.h>
-	#define SLS_USE_CBLAS
-	#define SLS_USE_LAPACKE
+    #define MKL_Complex16 double _Complex
+    #include <mkl.h>
+    #define SLS_USE_CBLAS
+    #define SLS_USE_LAPACKE
 #else
-	#ifdef SLS_USE_CBLAS
-		#include <cblas.h>
-	#endif
-	#ifdef SLS_USE_LAPACKE
-		#include <lapacke.h>
-		#ifdef I // I is already defined in "/usr/include/complex.h"
-			#undef I
-		#endif
-	#endif
+    #ifdef SLS_USE_CBLAS
+        #include <cblas.h>
+    #endif
+    #ifdef SLS_USE_LAPACKE
+        #include <lapacke.h>
+        #ifdef I // I is already defined in "/usr/include/complex.h"
+            #undef I
+        #endif
+    #endif
 #endif
 
 namespace slisc {
@@ -164,7 +164,10 @@ class DiagInt; class DiagDoub; class DiagLdoub; class DiagComp; class DiagLcomp;
 class McooChar; class McooInt; class McooLlong; class McooFloat; class McooDoub; class McooLdoub;
 class McooFcomp;
 class McooComp; class McooLcomp; class McooImag;
-template <class T> class MatCooH;
+
+class McoohChar; class McoohInt; class McoohLlong; class McoohFloat; class McoohDoub; class McoohLdoub;
+class McoohFcomp;
+class McoohComp; class McoohLcomp; class McoohImag;
 template <class T> class CmatObd;
 template <class T> class Flm;
 class Matt;
@@ -951,8 +954,10 @@ typedef McooInt &McooInt_O, &McooInt_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef McooInt McooLong;
+typedef McoohInt McoohLong;
 #else
 typedef McooLlong McooLong;
+typedef McoohLlong McoohLong;
 #endif
 
 typedef const McooLong &McooLong_I;
@@ -979,39 +984,30 @@ typedef McooComp &McooComp_O, &McooComp_IO;
 typedef const McooLcomp &McooLcomp_I;
 typedef McooLcomp &McooLcomp_O, &McooLcomp_IO;
 
-typedef MatCooH<Char> McoohChar;
 typedef const McoohChar &McoohChar_I;
 typedef McoohChar &McoohChar_O, &McoohChar_IO;
 
-typedef MatCooH<Int> McoohInt;
 typedef const McoohInt &McoohInt_I;
 typedef McoohInt &McoohInt_O, &McoohInt_IO;
 
-typedef MatCooH<Long> McoohLong;
 typedef const McoohLong &McoohLong_I;
 typedef McoohLong &McoohLong_O, &McoohLong_IO;
 
-typedef MatCooH<Llong> McoohLlong;
 typedef const McoohLlong &McoohLlong_I;
 typedef McoohLlong &McoohLlong_O, &McoohLlong_IO;
 
-typedef MatCooH<Float> McoohFloat;
 typedef const McoohFloat &McoohFloat_I;
 typedef McoohFloat &McoohFloat_O, &McoohFloat_IO;
 
-typedef MatCooH<Doub> McoohDoub;
 typedef const McoohDoub &McoohDoub_I;
 typedef McoohDoub &McoohDoub_O, &McoohDoub_IO;
 
-typedef MatCooH<Ldoub> McoohLdoub;
 typedef const McoohLdoub &McoohLdoub_I;
 typedef McoohLdoub &McoohLdoub_O, &McoohLdoub_IO;
 
-typedef MatCooH<Comp> McoohComp;
 typedef const McoohComp &McoohComp_I;
 typedef McoohComp &McoohComp_O, &McoohComp_IO;
 
-typedef MatCooH<Lcomp> McoohLcomp;
 typedef const McoohLcomp &McoohLcomp_I;
 typedef McoohLcomp &McoohLcomp_O, &McoohLcomp_IO;
 
@@ -1104,5 +1100,4 @@ void pause(Doub_I t);
 #endif
 
 #define SLS_WARN(str) do{cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl;} while(0)
-
 } // namespace slisc

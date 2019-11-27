@@ -19,17 +19,9 @@ private:
 public:
     using Base::operator();
     using Base::ptr;
-    using Base::operator=;
     Mat3d(Long_I N1, Long_I N2, Long_I N3);
     Mat3d(Long_I N1, Long_I N2, Long_I N3, const T &a);
     Mat3d(const Mat3d &rhs);   // Copy constructor
-    Mat3d & operator=(const Mat3d &rhs);    // copy assignment
-    template <class Tmat3, SLS_IF(is_dense_mat3<Tmat3>())>
-    Mat3d & operator=(const Tmat3 &rhs);
-#ifdef _CUSLISC_
-    Mat3d & operator=(const Gmat3d<T> &rhs) // copy from GPU vector
-    { rhs.get(*this); return *this; }
-#endif
     void operator<<(Mat3d &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     template <class T1>
@@ -49,26 +41,12 @@ Mat3d<T>::Mat3d(Long_I N1, Long_I N2, Long_I N3) : Base(N1*N2*N3), m_N1(N1), m_N
 
 template <class T>
 Mat3d<T>::Mat3d(Long_I N1, Long_I N2, Long_I N3, const T &s) : Mat3d(N1, N2, N3)
-{ *this = s; }
+{ copy(*this, s); }
 
 template <class T>
 Mat3d<T>::Mat3d(const Mat3d<T> &rhs)
 {
     SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-template <class T>
-inline Mat3d<T> & Mat3d<T>::operator=(const Mat3d<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class Tmat3, SLS_IF0(is_dense_mat3<Tmat3>())>
-inline Mat3d<T> & Mat3d<T>::operator=(const Tmat3 &rhs)
-{
-    copy(*this, rhs);
-    return *this;
 }
 
 template <class T>

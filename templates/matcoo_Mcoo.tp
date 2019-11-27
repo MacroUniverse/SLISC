@@ -1,18 +1,17 @@
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
 inline void reorder(Svec@T@_O v, VecLong_I order);
-inline void reorder(Svec@T@_O v, VecLong_I order);
+inline void reorder(SvecLong_O v, VecLong_I order);
 
 class @McooT@ : public Vbase<@T@>
 {
 private:
-    typedef Vbase<T> Base;
+    typedef Vbase<@T@> Base;
     using Base::m_p;
     using Base::m_N;
     Long m_Nr, m_Nc, m_Nnz;
     VecLong m_row, m_col;
-    T m_zero = (T)0; // TODO: this could be static inline variable for c++17
-    @McooT@() {} // default constructor: uninitialized
+    // @McooT@() {} // default constructor: uninitialized
 public:
     using Base::ptr;
     @McooT@(Long_I Nr, Long_I Nc);
@@ -22,10 +21,9 @@ public:
     const Long *row_ptr() const;
     Long *col_ptr();
     const Long *col_ptr() const;
-    @McooT@ & operator=(const @McooT@ &rhs);
     // inline void operator<<(@McooT@ &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
-    void push(const T &s, Long_I i, Long_I j); // add one nonzero element
-    void set(const T &s, Long_I i, Long_I j); // change existing element or push new element
+    void push(@T@_I s, Long_I i, Long_I j); // add one nonzero element
+    void set(@T@_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n1() const;
     Long n2() const;
     Long size() const; // return m_Nr * m_Nc
@@ -34,11 +32,11 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    T& ref(Long_I i, Long_I j);
+    @T@ & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const T& operator()(Long_I i, Long_I j) const;
-    T &operator()(Long_I ind); // return element
-    const T &operator()(Long_I ind) const;
+    const @T@ operator()(Long_I i, Long_I j) const;
+    @T@ &operator()(Long_I ind); // return element
+    const @T@ operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -48,19 +46,19 @@ public:
     void sort_r(); // sort to row major
 };
 
-@McooT@::MatCoo(Long_I Nr, Long_I Nc)
+@McooT@::@McooT@(Long_I Nr, Long_I Nc)
     : m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-@McooT@::MatCoo(Long_I Nr, Long_I Nc, Long_I Ncap) :
+@McooT@::@McooT@(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-@McooT@::MatCoo(const @McooT@ &rhs)
+@McooT@::@McooT@(const @McooT@ &rhs)
+    : m_row(0), m_col(0)
 {
-    SLS_ERR("Copy constructor or move constructor is forbidden, use reference "
-         "argument for function input or output, and use \"=\" to copy!");
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
 }
 
 Long * @McooT@::row_ptr()
@@ -83,12 +81,6 @@ const Long *@McooT@::col_ptr() const
     return m_col.ptr();
 }
 
-@McooT@ & @McooT@::operator=(const @McooT@ &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
 Long @McooT@::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
@@ -98,49 +90,49 @@ Long @McooT@::find(Long_I i, Long_I j) const
     return -1;
 }
 
-T& @McooT@::ref(Long_I i, Long_I j)
+@T@& @McooT@::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
-        SLS_ERR("MatCoo::operator()(i,j): index out of bounds!");
+        SLS_ERR("@McooT@::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
     if (n < 0)
-        SLS_ERR("MatCoo::operator()(i,j): element does not exist!");
+        SLS_ERR("@McooT@::operator()(i,j): element does not exist!");
     return m_p[n];
 }
 
-const T &@McooT@::operator()(Long_I i, Long_I j) const
+const @T@ @McooT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
-        SLS_ERR("MatCoo::operator()(i,j): index out of bounds!");
+        SLS_ERR("@McooT@::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
     if (n < 0)
-        return m_zero; // never return a (const) reference to a temporary
+        return 0; // never return a (const) reference to a temporary
     return m_p[n];
 }
 
-void @McooT@::push(const T &s, Long_I i, Long_I j)
+void @McooT@::push(@T@_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
-        SLS_ERR("MatCoo::push(): index out of bounds!");
+        SLS_ERR("@McooT@::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
     Long n;
     for (n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
-            SLS_ERR("MatCoo::push(s,i,j): element already exists!");
+            SLS_ERR("@McooT@::push(s,i,j): element already exists!");
     }
 #endif
-    if (m_Nnz == m_N) SLS_ERR("MatCoo::add(): out of memory, please reserve!");
+    if (m_Nnz == m_N) SLS_ERR("@McooT@::add(): out of memory, please reserve!");
     m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
     ++m_Nnz;
 }
 
-void @McooT@::set(const T &s, Long_I i, Long_I j)
+void @McooT@::set(@T@_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -150,7 +142,7 @@ void @McooT@::set(const T &s, Long_I i, Long_I j)
         }
     }
     // push
-    if (m_Nnz == m_N) SLS_ERR("MatCoo::add(): out of memory, please reserve!");
+    if (m_Nnz == m_N) SLS_ERR("@McooT@::add(): out of memory, please reserve!");
     m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
     ++m_Nnz;
 }
@@ -180,20 +172,20 @@ Long @McooT@::capacity() const
     return Base::size();
 }
 
-T & @McooT@::operator()(Long_I ind)
+@T@ & @McooT@::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
-        SLS_ERR("MatCoo::operator(): subscript out of bounds!");
+        SLS_ERR("@McooT@::operator(): subscript out of bounds!");
 #endif
     return m_p[ind];
 }
 
-const T & @McooT@::operator()(Long_I ind) const
+const @T@ @McooT@::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
-        SLS_ERR("MatCoo::operator() const: subscript out of bounds!");
+        SLS_ERR("@McooT@::operator() const: subscript out of bounds!");
 #endif
     return m_p[ind];
 }
@@ -202,7 +194,7 @@ Long @McooT@::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
-        SLS_ERR("MatCoo::row() subscript out of bounds");
+        SLS_ERR("@McooT@::row() subscript out of bounds");
 #endif
     return m_row[ind];
 }
@@ -211,7 +203,7 @@ Long @McooT@::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
-        SLS_ERR("MatCoo::col() subscript out of bounds");
+        SLS_ERR("@McooT@::col() subscript out of bounds");
 #endif
     return m_col[ind];
 }
@@ -220,10 +212,10 @@ void @McooT@::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
-        SLS_ERR("MatCoo::trim() negative input!");
+        SLS_ERR("@McooT@::trim() negative input!");
 #endif
     if (Nnz < m_Nnz) m_Nnz = Nnz;
-    else if (Nnz > m_Nnz) SLS_ERR("MatCoo::trim(): Nnz > m_Nnz!");
+    else if (Nnz > m_Nnz) SLS_ERR("@McooT@::trim(): Nnz > m_Nnz!");
 }
 
 void @McooT@::resize(Long_I N)
@@ -256,7 +248,7 @@ inline void @McooT@::sort_r()
         inds[i] = m_Nc * m_row[i] + m_col[i];
     }
     sort2(inds, order);
-    Svector<T> sli(m_p, m_Nnz);
+    Svector<@T@> sli(m_p, m_Nnz);
     reorder(sli, order);
     Svector<Long> sli1;
     sli1.set_size(m_Nnz);

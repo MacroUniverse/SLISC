@@ -432,15 +432,15 @@ constexpr Bool is_Jcmat4d()
 template<class T>
 constexpr Bool is_Diag()
 {
-    return is_same<T, DiagInt>() || is_same<T, DiagDoub>() || is_same<T, DiagLdoub>() || is_same<T, DiagComp>() || 			is_same<T, DiagLcomp>();
+    return is_same<T, DiagInt>() || is_same<T, DiagDoub>() || is_same<T, DiagLdoub>() || is_same<T, DiagComp>() ||             is_same<T, DiagLcomp>();
 }
 
 template<class T>
 constexpr Bool is_MatCoo()
 {
     return is_same<T, McooChar>() || is_same<T, McooChar>() || is_same<T, McooInt>() || is_same<T, McooLlong>() ||
-		is_same<T, McooFloat>() || is_same<T, McooDoub>() || is_same<T, McooLdoub>() || is_same<T, McooFcomp>() ||
-		is_same<T, McooComp>() || is_same<T, McooLcomp>();
+        is_same<T, McooFloat>() || is_same<T, McooDoub>() || is_same<T, McooLdoub>() || is_same<T, McooFcomp>() ||
+        is_same<T, McooComp>() || is_same<T, McooLcomp>();
 }
 
 template <class T> struct is_CmatObd_imp : false_type {};
@@ -451,12 +451,12 @@ constexpr Bool is_CmatObd()
     return is_CmatObd_imp<T>();
 }
 
-template <class T> struct is_MatCooH_imp : false_type {};
-template <class T> struct is_MatCooH_imp<MatCooH<T>> : integral_constant<Bool, is_scalar<T>()> {};
 template<class T>
 constexpr Bool is_MatCooH()
 {
-    return is_MatCooH_imp<T>();
+    return is_same<T, McoohChar>() || is_same<T, McoohChar>() || is_same<T, McoohInt>() || is_same<T, McoohLlong>() ||
+        is_same<T, McoohFloat>() || is_same<T, McoohDoub>() || is_same<T, McoohLdoub>() || is_same<T, McoohFcomp>() ||
+        is_same<T, McoohComp>() || is_same<T, McoohLcomp>();
 }
 
 // check if is fixed-size container
@@ -606,7 +606,7 @@ constexpr Int ndims()
 template <class T, SLS_IF(is_contain<T>())>
 constexpr auto contain_type_fun()
 {
-	return typename T::value_type();
+    return typename T::value_type();
 };
 
 template <class T> using contain_type = decltype(contain_type_fun<T>());
@@ -782,5 +782,64 @@ template<> struct num_type_imp<Char> { typedef Int type; };
 template<> struct num_type_imp<Uchar> { typedef Int type; };
 
 template <typename T> using num_type = typename num_type_imp<T>::type;
+
+
+
+template<class T, class T1>
+inline void vecset(T *v, const T1 &val, Long_I n)
+{
+    T val0 = (T)val;
+    for (T *p = v; p < v + n; ++p)
+        *p = val0;
+}
+
+template<class T, class T1>
+inline void vecset(T *v, const T1 &val, Long_I n, Long_I step)
+{
+    T val0 = (T)val;
+    for (T *p = v; p < v + n*step; p += step)
+        *p = val0;
+}
+
+template<class T>
+inline void veccpy(T *v, const T *v1, Long_I n)
+{
+    memcpy(v, v1, n * sizeof(T));
+}
+
+template<class T, class T1, SLS_IF(is_promo<T,T1>())>
+inline void veccpy(T *v, const T1 *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+template<class T, class T1, SLS_IF(is_promo<T, T1>())>
+inline void veccpy(T *v, const T1 *v1, Long_I step1, Long_I n)
+{
+    for (T *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+template<class T, class T1, SLS_IF(is_promo<T, T1>())>
+inline void veccpy(T *v, Long_I step, const T1 *v1, Long_I n)
+{
+    for (T *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+template<class T, class T1, SLS_IF(is_promo<T, T1>())>
+inline void veccpy(T *v, Long_I step, const T1 *v1, Long_I step1, Long_I n)
+{
+    T *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
 
 } // namespace slisc

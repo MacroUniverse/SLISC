@@ -25,10 +25,6 @@ public:
     T & operator()(Long_I i) const;
     T & end() const;
     T & end(Long_I i) const;
-    Svector & operator=(const Svector &rhs);
-    template <class Tv, SLS_IF(is_dense_vec<Tv>() || is_Dvector<Tv>())>
-    Svector & operator=(const Tv &rhs);
-    Svector & operator=(const T &rhs); // for scalar
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -102,28 +98,6 @@ inline T & Svector<T>::end(Long_I i) const
         SLS_ERR("index out of bound");
 #endif
     return m_p[m_N - i];
-}
-
-template <class T>
-inline Svector<T> & Svector<T>::operator=(const Svector<T> &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T> template <class Tv, SLS_IF0(
-    is_dense_vec<Tv>() || is_Dvector<Tv>())>
-inline Svector<T> & Svector<T>::operator=(const Tv &rhs)
-{
-    copy(*this, rhs);
-    return *this;
-}
-
-template <class T>
-inline Svector<T> & Svector<T>::operator=(const T &rhs)
-{
-    vecset(m_p, rhs, m_N);
-    return *this;
 }
 
 template<class T>

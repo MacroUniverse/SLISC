@@ -88,14 +88,14 @@ void mul_v_cmatobd_v(Ty *y, const Tx *x, const T *a, Long_I blk_size, Long_I Nbl
 
     // middle blocks
     for (Long blk = 1; blk < Nblk - 1; ++blk) {
-		for (Long j = 0; j < blk_size; ++j) {
-			Tx s = x[j];
-			for (Long i = 0; i < blk_size; ++i) {
-				y[i] += (*a) * s;
-				++a;
-			}
-		}
-		x += step; y += step;
+        for (Long j = 0; j < blk_size; ++j) {
+            Tx s = x[j];
+            for (Long i = 0; i < blk_size; ++i) {
+                y[i] += (*a) * s;
+                ++a;
+            }
+        }
+        x += step; y += step;
     }
     
     // last block
