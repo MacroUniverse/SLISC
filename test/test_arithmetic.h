@@ -536,11 +536,11 @@ inline void test_arithmetic()
             SLS_ERR("failed!");
     }
 
-	// symmetric matrix-vector multiplication using cblas
-	{
-		VecComp x(11), y(13), y1(13); rand(x); rand(y);
+    // symmetric matrix-vector multiplication using cblas
+    {
+        VecComp x(11), y(13), y1(13); rand(x); rand(y);
         CmatDoub a(13, 13), b(13, 13); rand(a);
-		trans(b, a); a += b;
+        trans(b, a); a += b;
         mul(y, a, x);
         mul_sym(y1, a, x);
         y1 -= y;
@@ -558,7 +558,7 @@ inline void test_arithmetic()
         sli_y1 -= sli_y;
         if (max_abs(sli_y1) > 1e-13)
             SLS_ERR("failed!");
-	}
+    }
 
     // vector-matrix multiplication
     {

@@ -75,7 +75,7 @@ inline void test_all()
     //cout << "test_cmatobd()" << endl;
     //test_cmatobd();
 #if defined(SLS_USE_MKL) || defined(SLS_USE_LAPACKE) && defined(SLS_USE_CBLAS)
-	// cout << "test_lin_eq()" << endl;
+    // cout << "test_lin_eq()" << endl;
     // test_lin_eq();
     // cout << "test_eig()" << endl;
     // test_eig();
