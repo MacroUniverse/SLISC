@@ -9,20 +9,9 @@ void test_dense()
 {
     using namespace slisc;
 
-    // static or constexpr members
-    {
-        if (ndims<VecInt>() != 1) SLS_ERR("failed!");
-        if (ndims<MatInt>() != 2 || !is_rmajor<MatInt>()) SLS_ERR("failed!");
-        if (ndims<CmatInt>() != 2 || !is_cmajor<CmatInt>()) SLS_ERR("failed!");
-        if (ndims<Mat3Doub>() != 3 || !is_rmajor<Mat3Doub>()) SLS_ERR("failed!");
-        if (ndims<Cmat3Doub>() != 3 || !is_cmajor<Cmat3Doub>()) SLS_ERR("failed!");
-    }
-
     // size initialize
     {
-    VecDoub vDoub(3);
-    if (vDoub.size() != 3) SLS_ERR("failed!");
-    if (vDoub.ptr() != &vDoub[0]) SLS_ERR("failed!");
+    
     MatDoub aDoub(3, 3);
     if (aDoub.size() != 9) SLS_ERR("failed!");
     if (aDoub.n1() != 3) SLS_ERR("failed!");
@@ -43,21 +32,7 @@ void test_dense()
     }
 
     // const initialize
-    VecDoub vDoub(3, 1.);
-    if (vDoub != 1.) SLS_ERR("failed!");
-    MatDoub aDoub(3, 3, 1.);
-    if (aDoub != 1.) SLS_ERR("failed!");
-    Mat3Doub a3Doub(3, 3, 3, 1.);
-    if (a3Doub != 1.) SLS_ERR("failed!");
-    Cmat3Doub c3Doub(3, 3, 3, 1.);
-    if (c3Doub != 1.) SLS_ERR("failed!");
 
-    // resize
-    vDoub.resize(0);
-    if (vDoub.size() != 0) SLS_ERR("failed!");
-    vDoub.resize(4);
-    if (vDoub.size() != 4) SLS_ERR("failed!");
-    if (vDoub.ptr() != &vDoub[0]) SLS_ERR("failed!");
     aDoub.resize(0, 3);
     if (aDoub.size() != 0) SLS_ERR("failed!");
     aDoub.resize(3, 0);
@@ -126,10 +101,7 @@ void test_dense()
     copy(vDoub, 1.); if (vDoub != 1.) SLS_ERR("failed!");
     copy(aDoub, 1.); if (aDoub != 1.) SLS_ERR("failed!");
     copy(a3Doub, 1.); if (a3Doub != 1.) SLS_ERR("failed!");
-    VecDoub vDoub1(4);
-    copy(vDoub1, 2.);
-    copy(vDoub, vDoub1);
-    if (vDoub != vDoub1) SLS_ERR("failed!");
+    
     MatDoub aDoub1(4, 4);
     copy(aDoub1, 2.);
     copy(aDoub, aDoub1);

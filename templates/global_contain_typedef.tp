@@ -1,0 +1,18 @@
+//% Con = varargin{1};
+//% for i = 2:numel(varargin)
+//%     Ts = varargin{i};
+//%     T = [Con Ts];
+//%     if is_Long(Ts)
+#ifdef SLS_USE_INT_AS_LONG
+typedef @Con@Int @Con@Long;
+#else
+typedef @Con@Llong @Con@Long;
+#endif
+
+//%     else
+class @T@;
+//%     end
+typedef const @T@ &@T@_I;
+typedef @T@ &@T@_O, &@T@_IO;
+
+//% end

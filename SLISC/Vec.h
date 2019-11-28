@@ -1,9 +1,9 @@
 // vector container
 #pragma once
+#include "Vbase.h"
 
 namespace slisc {
 
-#include "vector_Vbase.inl"
-#include "vector_Vec.inl"
+#include "Vec.inl"
 
 } // namespace slisc
