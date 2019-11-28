@@ -1,0 +1,15 @@
+//% [T1, T2] = varargin{:};
+Bool operator==(@T1@_I v1, @T2@_I v2)
+{
+//% if is_dense(T1) && is_dense(T2) && is_same_major(T1, T2)
+	return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.ptr(), v2.ptr(), v2.size());
+//% else
+//%     error('not implemented!');
+//% end
+}
+
+Bool operator!=(@T1@_I v1, @T2@_I v2)
+{
+	return !(v1 == v2);
+}

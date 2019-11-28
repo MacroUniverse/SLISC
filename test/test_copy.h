@@ -1,5 +1,6 @@
 #pragma once
 #include "../SLISC/copy.h"
+#include "../SLISC/compare.h"
 
 void test_copy()
 {
