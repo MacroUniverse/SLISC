@@ -136,7 +136,7 @@ typedef Str32 &Str32_O, &Str32_IO;
 // === class declarations ===
 
 // vector and matrix types
-#include "global_contain_typedef.inl"
+#include "typedef_contain.inl"
 
 // quiet NaN definition
 // uncomment one of the following 3 methods of defining a global NaN

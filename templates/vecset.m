@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'copy_vecset.tp';
+file = 'vecset.tp';
 type = {
     'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Fcomp'; 'Comp'; 'Lcomp';
     };
@@ -10,4 +10,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/copy_vecset.inl', str);
+filewrite('../SLISC/vecset.inl', str);

@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'copy_veccpy.tp';
+file = 'veccpy.tp';
 type = {
     'Char', 'Char';
     'Int', 'Char';
@@ -19,4 +19,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/copy_veccpy.inl', str);
+filewrite('../SLISC/veccpy.inl', str);

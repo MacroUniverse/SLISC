@@ -8,15 +8,15 @@
 namespace slisc {
 //  === pointer interface ===
 
-#include "copy_vecset.inl"
-#include "copy_veccpy.inl"
-#include "copy_matcpy.inl"
+#include "vecset.inl"
+#include "veccpy.inl"
+// #include "matcpy.inl"
 
 // copy dense matrix with different majors
 // lda1 is leading dimension of a1, lda2 is leading dimension of a2
 // if a1 is row major and a2 is column major, N1 is number of columns, N2 is number of rows
 // if a1 is column major and a2 is row major, N1 is number of rows, N2 is number of columns
-#include "copy_matcpy_diff_major.inl"
+// #include "matcpy_diff_major.inl"
 
 // === container interface ===
 // must use pointer version
