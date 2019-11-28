@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'complex_arith_op_eq_ne.tp';
+file = 'complex_eq_ne.tp';
 type = {
     'Float', 'Comp';
     'Fcomp', 'Comp';
@@ -14,4 +14,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/complex_arith_op_eq_ne.inl', str);
+filewrite('../SLISC/complex_eq_ne.inl', str);

@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'complex_arith_op_plus_minus_times_divide.tp';
+file = 'complex_plus_minus_times_divide.tp';
 type = {
     'Float', 'Comp';
     'Comp', 'Int';
@@ -18,4 +18,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/complex_arith_op_plus_minus_times_divide.inl', str);
+filewrite('../SLISC/complex_plus_minus_times_divide.inl', str);

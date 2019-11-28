@@ -1,4 +1,4 @@
-file = 'complex_arith_op_plus_minus_times_divide_eq.tp';
+file = 'complex_plus_minus_times_divide_eq.tp';
 type = {
     'Comp', 'Float';
     };
@@ -9,4 +9,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/complex_arith_op_plus_minus_times_divide_eq.inl', str);
+filewrite('../SLISC/complex_plus_minus_times_divide_eq.inl', str);

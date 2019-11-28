@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'arithmetic_shape_cmp.tp';
+file = 'compare_shape_cmp.tp';
 type = {
     'VecDoub', 'VecDoub';
     'VecComp', 'VecComp';
@@ -40,4 +40,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/arithmetic_shape_cmp.inl', str);
+filewrite('../SLISC/compare_shape_cmp.inl', str);

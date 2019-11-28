@@ -2,9 +2,11 @@
 // TODO: test mparith.h not finished
 #pragma once
 #include "test_Vec.h"
+#include "test_copy.h"
 void test_all()
 {
 	using std::cout; using std::endl;
 	test_Vec();
+	test_copy();
     cout << "testing successful!" << endl;
 }

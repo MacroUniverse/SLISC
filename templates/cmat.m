@@ -1,5 +1,5 @@
 cd(mfilepath);
-file = 'cmat.tp';
+file = 'Cmat.tp';
 type = {'Bool'; 'Char'; 'Int'; 'Llong'; 'Float'; 'Doub';...
     'Ldoub'; 'Fcomp'; 'Comp'; 'Lcomp'; 'Imag';};
 
@@ -9,4 +9,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/cmat.inl', str);
+filewrite('../SLISC/Cmat.inl', str);

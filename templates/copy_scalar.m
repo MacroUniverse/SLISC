@@ -1,21 +1,22 @@
 cd(mfilepath);
 file = 'copy_scalar.tp';
 type = {
-    'VecDoub', 'Doub';
+    'VecChar', 'Char';
     'VecInt', 'Int';
-    'SvecDoub', 'Doub';
-    'SvecComp', 'Comp';
-    'DvecDoub', 'Doub';
-    'DvecComp', 'Comp';
-    'CmatDoub', 'Doub';
-    'CmatComp', 'Comp';
-    'ScmatDoub', 'Doub';
-    'ScmatComp', 'Comp';
-    'DcmatDoub', 'Doub';
-    'DcmatComp', 'Comp';
-    'MatDoub', 'Doub';
-    'Mat3Doub', 'Doub';
-    'Cmat3Doub', 'Doub';
+    'VecDoub', 'Doub';
+%     'SvecDoub', 'Doub';
+%     'SvecComp', 'Comp';
+%     'DvecDoub', 'Doub';
+%     'DvecComp', 'Comp';
+%     'CmatDoub', 'Doub';
+%     'CmatComp', 'Comp';
+%     'ScmatDoub', 'Doub';
+%     'ScmatComp', 'Comp';
+%     'DcmatDoub', 'Doub';
+%     'DcmatComp', 'Comp';
+%     'MatDoub', 'Doub';
+%     'Mat3Doub', 'Doub';
+%     'Cmat3Doub', 'Doub';
     };
 
 N = size(type, 1);

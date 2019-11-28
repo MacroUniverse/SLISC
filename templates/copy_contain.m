@@ -2,11 +2,11 @@ cd(mfilepath);
 file = 'copy_contain.tp';
 type = {
     'VecDoub', 'VecDoub';
-    'CmatDoub', 'CmatDoub';
-    'Cmat3Doub', 'Cmat3Doub';
-    'Jcmat3Doub', 'Jcmat3Doub';
-    'MatDoub', 'MatDoub';
-    'Mat3Doub', 'Mat3Doub';
+%     'CmatDoub', 'CmatDoub';
+%     'Cmat3Doub', 'Cmat3Doub';
+%     'Jcmat3Doub', 'Jcmat3Doub';
+%     'MatDoub', 'MatDoub';
+%     'Mat3Doub', 'Mat3Doub';
     };
 
 N = size(type, 1);

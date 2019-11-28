@@ -21,11 +21,4 @@ void test_Vec()
 		SLS_ERR("failed!");
     if (vDoub.ptr() != &vDoub[0])
 		SLS_ERR("failed!");
-
-	// assignment
-	// VecDoub vDoub1(vDoub.size());
-	// copy(vDoub1, 2.);
-    // copy(vDoub, vDoub1);
-    // if (vDoub != vDoub1)
-	// 	SLS_ERR("failed!");
 }

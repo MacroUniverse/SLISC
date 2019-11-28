@@ -1,19 +1,4 @@
 #pragma once
-#include "global.h"
-#include "dvector.h"
-#include "matrix.h"
-#include "cmat.h"
-#include "cmat4d.h"
-#include "dcmat.h"
-#include "jcmat.h"
-#include "jcmat3d.h"
-#include "mat3d.h"
-#include "cmat3d.h"
-#include "scmat.h"
-#include "fixsize.h"
-#include "matcoo.h"
-#include "matcooh.h"
-#include "ptr_arith.h"
 #include "copy.h"
 
 namespace slisc {

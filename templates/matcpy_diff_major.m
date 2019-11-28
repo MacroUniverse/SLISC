@@ -1,8 +1,9 @@
 cd(mfilepath);
-file = 'matrix_coo2dense.tp';
+file = 'copy_matcpy_diff_major.tp';
 type = {
-    'CmatDoub', 'Doub';
-    'CmatComp', 'Comp';
+    'Int', 'Int';
+    'Doub', 'Doub';
+    'Comp', 'Comp';
     };
 
 N = size(type, 1);
@@ -11,4 +12,4 @@ for i = 1:N
     code{i} = [preproc(file, type{i,:}), newline];
 end
 str = [code{:}];
-filewrite('../SLISC/matrix_coo2dense.inl', str);
+filewrite('../SLISC/copy_matcpy_diff_major.inl', str);

@@ -3,58 +3,24 @@
 // all `container = container` should be implemented using copy
 #pragma once
 
-#include "meta.h"
-#include "vector.h"
-#include "matcoo.h"
+#include "Vec.h"
 
 namespace slisc {
 //  === pointer interface ===
 
 #include "copy_vecset.inl"
 #include "copy_veccpy.inl"
-
-template<class T, class T1, SLS_IF(is_promo<T, T1>())>
-inline void matcpy(T *v, Long_I lda, const T1 *v1, Long_I lda1, Long_I Nr, Long_I Nc)
-{
-    for (Long j = 0; j < Nr; ++j) {
-        veccpy(v, v1, Nc);
-        v += lda; v1 += lda1;
-    }
-}
+#include "copy_matcpy.inl"
 
 // copy dense matrix with different majors
-// if a1 is row major and a2 is column major, N1 is number of columns, N2 is number of rows
-// if a1 is column major and a2 is row major, N1 is number of rows, N2 is number of columns
-template<class T, class T1, SLS_IF(is_promo<T, T1>())>
-inline void matcpy_2_major(T *a2, const T1 *a1, Long_I N2, Long_I N1)
-{
-    for (Long i2 = 0; i2 < N2; ++i2) {
-        Long start = N1 * i2, k2 = i2;
-        for (Long k1 = start; k1 < start + N1; ++k1) {
-            a2[k2] = a1[k1];
-            k2 += N2;
-        }
-    }
-}
-
-// copy stride matrix with different majors
 // lda1 is leading dimension of a1, lda2 is leading dimension of a2
 // if a1 is row major and a2 is column major, N1 is number of columns, N2 is number of rows
 // if a1 is column major and a2 is row major, N1 is number of rows, N2 is number of columns
-template<class T, class T1, SLS_IF(is_promo<T, T1>())>
-inline void matcpy_2_major(T *a2, const T1 *a1, Long_I N2, Long_I lda2, Long_I N1, Long_I lda1)
-{
-    for (Long i2 = 0; i2 < N2; ++i2) {
-        Long start = lda1 * i2, k2 = i2;
-        for (Long k1 = start; k1 < start + N1; ++k1) {
-            a2[k2] = a1[k1];
-            k2 += lda2;
-        }
-    }
-}
+#include "copy_matcpy_diff_major.inl"
 
 // === container interface ===
 // must use pointer version
+
 
 // scalar to container
 #include "copy_scalar.inl"
@@ -63,10 +29,10 @@ inline void matcpy_2_major(T *a2, const T1 *a1, Long_I N2, Long_I lda2, Long_I N
 #include "copy_contain.inl"
 
 // for sparse containers
-#include "copy_Mcoo_Mcoo.inl"
+// #include "copy_Mcoo_Mcoo.inl"
 
 // from MatCoo and MatCooH to dense matrix
-#include "matrix_coo2dense.inl"
+// #include "matrix_coo2dense.inl"
 
 // template <class T, class T1, SLS_IF(is_promo<T, T1>())>
 // void copy(MatCoo<T> &v, const CmatObd<T1> &v1)
