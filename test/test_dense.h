@@ -78,14 +78,7 @@ void test_dense()
         if (v(0) != 100 || v(1) != 101)
             SLS_ERR("failed!");
 
-        CmatDoub a2(4, 5), b2(4, 5);
-        linspace(a2, 1, 20); copy(b2, a2);
-        b2.resize_cpy(7, 9);
-        if (slice(b2, 0, 4, 0, 5) != a2)
-            SLS_ERR("failed!");
-        b2.resize_cpy(4, 5);
-        if (b2 != a2)
-            SLS_ERR("failed!");
+        
 
         Cmat3Doub a3(2, 3, 4), b3(2, 3, 4);
         rand(a3); copy(b3, a3);

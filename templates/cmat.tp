@@ -8,7 +8,6 @@ protected:
     using Base::m_p;
     using Base::m_N;
     Long m_Nr, m_Nc;
-    @CmatT@(); // default constructor: uninitialized
 public:
     using Base::ptr;
     using Base::operator();
@@ -22,11 +21,9 @@ public:
     void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
 };
 
-@CmatT@::@CmatT@() {}
-
 @CmatT@::@CmatT@(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
 
-@CmatT@::@CmatT@(const @CmatT@ &rhs)
+@CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
 {
     SLS_ERR("Copy constructor or move constructor is forbidden, "
         "use reference argument for function input or output, and use \"=\" to copy!");

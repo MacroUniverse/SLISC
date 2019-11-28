@@ -1,7 +1,4 @@
-//% Tv = varargin{:};
-//% T = contain_type(Tv);
-//% if is_Vec(Tv)
-void resize_cpy(@Tv@_IO v, Long_I N)
+void resize_cpy(VecDoub_IO v, Long_I N)
 {
     N0 = v.size();
     if (N != N0) {
@@ -22,8 +19,8 @@ void resize_cpy(@Tv@_IO v, Long_I N)
         }
     }
 }
-//% elseif is_Cmat(Tv)
-void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
+
+void resize_cpy(CmatDoub_IO v, Long_I N1, Long_I N2)
 {
 	Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
 	Long N = N1 * N2;
@@ -34,14 +31,11 @@ void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
 		elseif (N == 0)
 			v.resize(0, 0);
         else {
-			@Tv@ v_new(N1, N2); copy(v_new, 0);
-//%     Tsli = slice_type(Tv);
+			CmatDoub v_new(N1, N2); copy(v_new, 0);
 			Long N1min = MIN(N1, N10), N2min = MIN(N2, N20);
             Tsli sli; slice(sli, v, 0, N1min, 0, N2min);
 			copy(sli, v);
         }
     }
 }
-//% else
-//%     error('not implemented');
-//% end
+

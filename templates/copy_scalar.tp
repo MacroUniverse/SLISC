@@ -8,7 +8,7 @@ void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_dense(T)
     vecset(v.ptr(), s, v.size());
-//% elseif is_Dvector(T)
+//% elseif is_Dvec(T)
     vecset(v.ptr(), s, v.size(), v.step());
 //% elseif is_Dcmat(T)
     Long N1 = v.n1(), N2 = v.n2();

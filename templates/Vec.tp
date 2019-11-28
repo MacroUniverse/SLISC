@@ -5,7 +5,7 @@
 class @VecT@ : public @VbaseT@
 {
 public:
-	typedef @VbaseT@ Base;
+    typedef @VbaseT@ Base;
     using Base::resize;
     using Base::operator[];
 

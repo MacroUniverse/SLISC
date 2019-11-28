@@ -1,6 +1,6 @@
 function ret = contain_num(type)
-if (is_Vector(type)), ret = 0;
-elseif (is_Matrix(type)), ret = 1;
+if (is_Vec(type)), ret = 0;
+elseif (is_Mat(type)), ret = 1;
 elseif (is_Cmat(type)), ret = 2;
 elseif (is_Mat3d(type)), ret = 3;
 elseif (is_Cmat3d(type)), ret = 4;
@@ -11,8 +11,8 @@ elseif (is_FixVec(type)), ret = 20;
 elseif (is_FixCmat(type)), ret = 22;
 
 elseif (is_Diag(type)), ret = 31;
-elseif (is_MatCoo(type)), ret = 32;
-elseif (is_MatCooH(type)), ret = 33;
+elseif (is_Mcoo(type)), ret = 32;
+elseif (is_McooH(type)), ret = 33;
 elseif (is_CmatObd(type)), ret = 34;
 
 elseif (is_Svector(type)), ret = 40;

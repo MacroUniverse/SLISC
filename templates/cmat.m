@@ -1,7 +1,7 @@
 cd(mfilepath);
 file = 'Cmat.tp';
 type = {'Bool'; 'Char'; 'Int'; 'Llong'; 'Float'; 'Doub';...
-    'Ldoub'; 'Fcomp'; 'Comp'; 'Lcomp'; 'Imag';};
+    'Ldoub'; 'Fcomp'; 'Comp'; 'Lcomp';};
 
 N = size(type, 1);
 code = cell(0);

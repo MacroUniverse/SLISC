@@ -1,5 +1,5 @@
 //% [Tmat, Ts] = varargin{:};
-//% if ~((is_dense_mat(Tmat) || is_Dmatrix(Tmat) || is_Jmat(Tmat)) && is_scalar(Ts))
+//% if ~((is_dense_mat(Tmat) || is_Dmat(Tmat) || is_Jmat(Tmat)) && is_scalar(Ts))
 //%     error('illegal types');
 //% end
 //% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];

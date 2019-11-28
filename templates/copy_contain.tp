@@ -12,11 +12,11 @@ void copy(@T@_O v, @T1@_I v1)
         return;
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
     veccpy(v.ptr(), v1.ptr(), v.size());
-//% elseif is_Dvector(T) && is_Dvector(T1)
+//% elseif is_Dvec(T) && is_Dvec(T1)
     veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());
-//% elseif is_dense_vec(T) && is_Dvector(T1)
+//% elseif is_dense_vec(T) && is_Dvec(T1)
     veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
-//% elseif is_Dvector(T) && is_dense_vec(T1)
+//% elseif is_Dvec(T) && is_dense_vec(T1)
     veccpy(v.ptr(), v.step(), v1.ptr(), v1.size());
 //% elseif is_dense_mat(T) && is_dense_mat(T1) && is_diff_major(T, T1)
 //%     if is_cmajor(T)

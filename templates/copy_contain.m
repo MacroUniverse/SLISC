@@ -2,7 +2,7 @@ cd(mfilepath);
 file = 'copy_contain.tp';
 type = {
     'VecDoub', 'VecDoub';
-%     'CmatDoub', 'CmatDoub';
+    'CmatDoub', 'CmatDoub';
 %     'Cmat3Doub', 'Cmat3Doub';
 %     'Jcmat3Doub', 'Jcmat3Doub';
 %     'MatDoub', 'MatDoub';
