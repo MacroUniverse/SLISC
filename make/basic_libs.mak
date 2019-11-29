@@ -10,11 +10,11 @@ compiler = g++
 # link
 # choose `$(mkl_dyn_link)` or `$(mkl_stat_link)`
 goal:main.o
-	$(compiler) $(flags) -o main.x main.o Vec.o Vbase.o $(libs)
+	$(compiler) $(flags) -o main.x main.o test_Vbase.o $(libs)
 
 # compile
 main.o:main.cpp
-	$(compiler) $(flags) -std=c++11 -c main.cpp SLISC/Vbase.cpp SLISC/Vec.cpp
+	$(compiler) $(flags) -std=c++11 -c main.cpp test/*.cpp
 
 clean:
 	rm -f *.o *.x

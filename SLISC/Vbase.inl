@@ -1,6 +1,34 @@
-VbaseLlong::VbaseLlong(Long_I N) : m_p(new Llong[N]), m_N(N) {}
+class VbaseLlong
+{
+protected:
+    Llong *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef Llong value_type;
+    // constructors
+    explicit VbaseLlong(Long_I N);
+    VbaseLlong(const VbaseLlong &rhs); // copy constructor
 
-VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
+    // get properties
+    Llong* ptr(); // get pointer
+    const Llong* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    Llong & operator[](Long_I i);
+    const Llong & operator[](Long_I i) const;
+    Llong & operator()(Long_I i);
+    const Llong & operator()(Long_I i) const;
+    Llong& end();
+    const Llong& end() const;
+    Llong& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Llong& end(Long_I i) const;
+    void operator<<(VbaseLlong &rhs); // move data
+    ~VbaseLlong();
+};
+
+inline VbaseLlong::VbaseLlong(Long_I N) : m_p(new Llong[N]), m_N(N) {}
+
+inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
 {
 #ifndef SLS_ALLOW_COPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
@@ -10,7 +38,7 @@ VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
     // veccpy(m_p, rhs.ptr(), m_N);
 }
 
-Llong * VbaseLlong::ptr()
+inline Llong * VbaseLlong::ptr()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -19,7 +47,7 @@ Llong * VbaseLlong::ptr()
     return m_p;
 }
 
-const Llong * VbaseLlong::ptr() const
+inline const Llong * VbaseLlong::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -28,12 +56,12 @@ const Llong * VbaseLlong::ptr() const
     return m_p;
 }
 
-Long VbaseLlong::size() const
+inline Long VbaseLlong::size() const
 {
     return m_N;
 }
 
-void VbaseLlong::resize(Long_I N)
+inline void VbaseLlong::resize(Long_I N)
 {
     if (N != m_N) {
         if (m_N == 0) {
@@ -51,7 +79,7 @@ void VbaseLlong::resize(Long_I N)
     }
 }
 
-void VbaseLlong::operator<<(VbaseLlong &rhs)
+inline void VbaseLlong::operator<<(VbaseLlong &rhs)
 {
     if (this == &rhs)
         SLS_ERR("self move is forbidden!");
@@ -61,7 +89,7 @@ void VbaseLlong::operator<<(VbaseLlong &rhs)
     m_p = rhs.m_p;
 }
 
-Llong & VbaseLlong::operator[](Long_I i)
+inline Llong & VbaseLlong::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -70,7 +98,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-const Llong & VbaseLlong::operator[](Long_I i) const
+inline const Llong & VbaseLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -79,13 +107,13 @@ const Llong & VbaseLlong::operator[](Long_I i) const
     return m_p[i];
 }
 
-Llong & VbaseLlong::operator()(Long_I i)
+inline Llong & VbaseLlong::operator()(Long_I i)
 { return (*this)[i]; }
 
-const Llong & VbaseLlong::operator()(Long_I i) const
+inline const Llong & VbaseLlong::operator()(Long_I i) const
 { return (*this)[i]; }
 
-Llong & VbaseLlong::end()
+inline Llong & VbaseLlong::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -94,7 +122,7 @@ Llong & VbaseLlong::end()
     return m_p[m_N - 1];
 }
 
-const Llong & VbaseLlong::end() const
+inline const Llong & VbaseLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -103,7 +131,7 @@ const Llong & VbaseLlong::end() const
     return m_p[m_N - 1];
 }
 
-Llong & VbaseLlong::end(Long_I i)
+inline Llong & VbaseLlong::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -112,7 +140,7 @@ Llong & VbaseLlong::end(Long_I i)
     return m_p[m_N - i];
 }
 
-const Llong & VbaseLlong::end(Long_I i) const
+inline const Llong & VbaseLlong::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -121,15 +149,43 @@ const Llong & VbaseLlong::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-VbaseLlong::~VbaseLlong()
+inline VbaseLlong::~VbaseLlong()
 {
     if (m_N != 0)
         delete[] m_p;
 }
 
-VbaseDoub::VbaseDoub(Long_I N) : m_p(new Doub[N]), m_N(N) {}
+class VbaseDoub
+{
+protected:
+    Doub *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef Doub value_type;
+    // constructors
+    explicit VbaseDoub(Long_I N);
+    VbaseDoub(const VbaseDoub &rhs); // copy constructor
 
-VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
+    // get properties
+    Doub* ptr(); // get pointer
+    const Doub* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    Doub & operator[](Long_I i);
+    const Doub & operator[](Long_I i) const;
+    Doub & operator()(Long_I i);
+    const Doub & operator()(Long_I i) const;
+    Doub& end();
+    const Doub& end() const;
+    Doub& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Doub& end(Long_I i) const;
+    void operator<<(VbaseDoub &rhs); // move data
+    ~VbaseDoub();
+};
+
+inline VbaseDoub::VbaseDoub(Long_I N) : m_p(new Doub[N]), m_N(N) {}
+
+inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
 {
 #ifndef SLS_ALLOW_COPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
@@ -139,7 +195,7 @@ VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
     // veccpy(m_p, rhs.ptr(), m_N);
 }
 
-Doub * VbaseDoub::ptr()
+inline Doub * VbaseDoub::ptr()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -148,7 +204,7 @@ Doub * VbaseDoub::ptr()
     return m_p;
 }
 
-const Doub * VbaseDoub::ptr() const
+inline const Doub * VbaseDoub::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -157,12 +213,12 @@ const Doub * VbaseDoub::ptr() const
     return m_p;
 }
 
-Long VbaseDoub::size() const
+inline Long VbaseDoub::size() const
 {
     return m_N;
 }
 
-void VbaseDoub::resize(Long_I N)
+inline void VbaseDoub::resize(Long_I N)
 {
     if (N != m_N) {
         if (m_N == 0) {
@@ -180,7 +236,7 @@ void VbaseDoub::resize(Long_I N)
     }
 }
 
-void VbaseDoub::operator<<(VbaseDoub &rhs)
+inline void VbaseDoub::operator<<(VbaseDoub &rhs)
 {
     if (this == &rhs)
         SLS_ERR("self move is forbidden!");
@@ -190,7 +246,7 @@ void VbaseDoub::operator<<(VbaseDoub &rhs)
     m_p = rhs.m_p;
 }
 
-Doub & VbaseDoub::operator[](Long_I i)
+inline Doub & VbaseDoub::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -199,7 +255,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-const Doub & VbaseDoub::operator[](Long_I i) const
+inline const Doub & VbaseDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -208,13 +264,13 @@ const Doub & VbaseDoub::operator[](Long_I i) const
     return m_p[i];
 }
 
-Doub & VbaseDoub::operator()(Long_I i)
+inline Doub & VbaseDoub::operator()(Long_I i)
 { return (*this)[i]; }
 
-const Doub & VbaseDoub::operator()(Long_I i) const
+inline const Doub & VbaseDoub::operator()(Long_I i) const
 { return (*this)[i]; }
 
-Doub & VbaseDoub::end()
+inline Doub & VbaseDoub::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -223,7 +279,7 @@ Doub & VbaseDoub::end()
     return m_p[m_N - 1];
 }
 
-const Doub & VbaseDoub::end() const
+inline const Doub & VbaseDoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -232,7 +288,7 @@ const Doub & VbaseDoub::end() const
     return m_p[m_N - 1];
 }
 
-Doub & VbaseDoub::end(Long_I i)
+inline Doub & VbaseDoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -241,7 +297,7 @@ Doub & VbaseDoub::end(Long_I i)
     return m_p[m_N - i];
 }
 
-const Doub & VbaseDoub::end(Long_I i) const
+inline const Doub & VbaseDoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -250,15 +306,43 @@ const Doub & VbaseDoub::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-VbaseDoub::~VbaseDoub()
+inline VbaseDoub::~VbaseDoub()
 {
     if (m_N != 0)
         delete[] m_p;
 }
 
-VbaseComp::VbaseComp(Long_I N) : m_p(new Comp[N]), m_N(N) {}
+class VbaseComp
+{
+protected:
+    Comp *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef Comp value_type;
+    // constructors
+    explicit VbaseComp(Long_I N);
+    VbaseComp(const VbaseComp &rhs); // copy constructor
 
-VbaseComp::VbaseComp(const VbaseComp &rhs)
+    // get properties
+    Comp* ptr(); // get pointer
+    const Comp* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    Comp & operator[](Long_I i);
+    const Comp & operator[](Long_I i) const;
+    Comp & operator()(Long_I i);
+    const Comp & operator()(Long_I i) const;
+    Comp& end();
+    const Comp& end() const;
+    Comp& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Comp& end(Long_I i) const;
+    void operator<<(VbaseComp &rhs); // move data
+    ~VbaseComp();
+};
+
+inline VbaseComp::VbaseComp(Long_I N) : m_p(new Comp[N]), m_N(N) {}
+
+inline VbaseComp::VbaseComp(const VbaseComp &rhs)
 {
 #ifndef SLS_ALLOW_COPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
@@ -268,7 +352,7 @@ VbaseComp::VbaseComp(const VbaseComp &rhs)
     // veccpy(m_p, rhs.ptr(), m_N);
 }
 
-Comp * VbaseComp::ptr()
+inline Comp * VbaseComp::ptr()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -277,7 +361,7 @@ Comp * VbaseComp::ptr()
     return m_p;
 }
 
-const Comp * VbaseComp::ptr() const
+inline const Comp * VbaseComp::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -286,12 +370,12 @@ const Comp * VbaseComp::ptr() const
     return m_p;
 }
 
-Long VbaseComp::size() const
+inline Long VbaseComp::size() const
 {
     return m_N;
 }
 
-void VbaseComp::resize(Long_I N)
+inline void VbaseComp::resize(Long_I N)
 {
     if (N != m_N) {
         if (m_N == 0) {
@@ -309,7 +393,7 @@ void VbaseComp::resize(Long_I N)
     }
 }
 
-void VbaseComp::operator<<(VbaseComp &rhs)
+inline void VbaseComp::operator<<(VbaseComp &rhs)
 {
     if (this == &rhs)
         SLS_ERR("self move is forbidden!");
@@ -319,7 +403,7 @@ void VbaseComp::operator<<(VbaseComp &rhs)
     m_p = rhs.m_p;
 }
 
-Comp & VbaseComp::operator[](Long_I i)
+inline Comp & VbaseComp::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -328,7 +412,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-const Comp & VbaseComp::operator[](Long_I i) const
+inline const Comp & VbaseComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -337,13 +421,13 @@ const Comp & VbaseComp::operator[](Long_I i) const
     return m_p[i];
 }
 
-Comp & VbaseComp::operator()(Long_I i)
+inline Comp & VbaseComp::operator()(Long_I i)
 { return (*this)[i]; }
 
-const Comp & VbaseComp::operator()(Long_I i) const
+inline const Comp & VbaseComp::operator()(Long_I i) const
 { return (*this)[i]; }
 
-Comp & VbaseComp::end()
+inline Comp & VbaseComp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -352,7 +436,7 @@ Comp & VbaseComp::end()
     return m_p[m_N - 1];
 }
 
-const Comp & VbaseComp::end() const
+inline const Comp & VbaseComp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -361,7 +445,7 @@ const Comp & VbaseComp::end() const
     return m_p[m_N - 1];
 }
 
-Comp & VbaseComp::end(Long_I i)
+inline Comp & VbaseComp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -370,7 +454,7 @@ Comp & VbaseComp::end(Long_I i)
     return m_p[m_N - i];
 }
 
-const Comp & VbaseComp::end(Long_I i) const
+inline const Comp & VbaseComp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -379,7 +463,7 @@ const Comp & VbaseComp::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-VbaseComp::~VbaseComp()
+inline VbaseComp::~VbaseComp()
 {
     if (m_N != 0)
         delete[] m_p;

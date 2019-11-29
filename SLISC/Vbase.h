@@ -3,5 +3,5 @@
 #include "global.h"
 
 namespace slisc {
-#include "Vbase.dec.inl"
+#include "Vbase.inl"
 } // namespace slisc

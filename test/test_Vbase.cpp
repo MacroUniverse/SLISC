@@ -1,6 +1,6 @@
-#include "test_Vbase.h"
+#include "../SLISC/Vbase.h"
 
-int test_Vbase()
+void test_Vbase()
 {
 	using namespace slisc;
 	Long N = 3;

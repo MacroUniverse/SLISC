@@ -2,9 +2,37 @@
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];
-@VbaseT@::@VbaseT@(Long_I N) : m_p(new @T@[N]), m_N(N) {}
+class @VbaseT@
+{
+protected:
+    @T@ *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef @T@ value_type;
+    // constructors
+    explicit @VbaseT@(Long_I N);
+    @VbaseT@(const @VbaseT@ &rhs); // copy constructor
 
-@VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
+    // get properties
+    @T@* ptr(); // get pointer
+    const @T@* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    @T@ & operator[](Long_I i);
+    const @T@ & operator[](Long_I i) const;
+    @T@ & operator()(Long_I i);
+    const @T@ & operator()(Long_I i) const;
+    @T@& end();
+    const @T@& end() const;
+    @T@& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const @T@& end(Long_I i) const;
+    void operator<<(@VbaseT@ &rhs); // move data
+    ~@VbaseT@();
+};
+
+inline @VbaseT@::@VbaseT@(Long_I N) : m_p(new @T@[N]), m_N(N) {}
+
+inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 {
 #ifndef SLS_ALLOW_COPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
@@ -14,7 +42,7 @@
     // veccpy(m_p, rhs.ptr(), m_N);
 }
 
-@T@ * @VbaseT@::ptr()
+inline @T@ * @VbaseT@::ptr()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -23,7 +51,7 @@
     return m_p;
 }
 
-const @T@ * @VbaseT@::ptr() const
+inline const @T@ * @VbaseT@::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -32,12 +60,12 @@ const @T@ * @VbaseT@::ptr() const
     return m_p;
 }
 
-Long @VbaseT@::size() const
+inline Long @VbaseT@::size() const
 {
     return m_N;
 }
 
-void @VbaseT@::resize(Long_I N)
+inline void @VbaseT@::resize(Long_I N)
 {
     if (N != m_N) {
         if (m_N == 0) {
@@ -55,7 +83,7 @@ void @VbaseT@::resize(Long_I N)
     }
 }
 
-void @VbaseT@::operator<<(@VbaseT@ &rhs)
+inline void @VbaseT@::operator<<(@VbaseT@ &rhs)
 {
     if (this == &rhs)
         SLS_ERR("self move is forbidden!");
@@ -65,7 +93,7 @@ void @VbaseT@::operator<<(@VbaseT@ &rhs)
     m_p = rhs.m_p;
 }
 
-@T@ & @VbaseT@::operator[](Long_I i)
+inline @T@ & @VbaseT@::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -74,7 +102,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-const @T@ & @VbaseT@::operator[](Long_I i) const
+inline const @T@ & @VbaseT@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -83,13 +111,13 @@ const @T@ & @VbaseT@::operator[](Long_I i) const
     return m_p[i];
 }
 
-@T@ & @VbaseT@::operator()(Long_I i)
+inline @T@ & @VbaseT@::operator()(Long_I i)
 { return (*this)[i]; }
 
-const @T@ & @VbaseT@::operator()(Long_I i) const
+inline const @T@ & @VbaseT@::operator()(Long_I i) const
 { return (*this)[i]; }
 
-@T@ & @VbaseT@::end()
+inline @T@ & @VbaseT@::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -98,7 +126,7 @@ const @T@ & @VbaseT@::operator()(Long_I i) const
     return m_p[m_N - 1];
 }
 
-const @T@ & @VbaseT@::end() const
+inline const @T@ & @VbaseT@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -107,7 +135,7 @@ const @T@ & @VbaseT@::end() const
     return m_p[m_N - 1];
 }
 
-@T@ & @VbaseT@::end(Long_I i)
+inline @T@ & @VbaseT@::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -116,7 +144,7 @@ const @T@ & @VbaseT@::end() const
     return m_p[m_N - i];
 }
 
-const @T@ & @VbaseT@::end(Long_I i) const
+inline const @T@ & @VbaseT@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -125,7 +153,7 @@ const @T@ & @VbaseT@::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-@VbaseT@::~@VbaseT@()
+inline @VbaseT@::~@VbaseT@()
 {
     if (m_N != 0)
         delete[] m_p;

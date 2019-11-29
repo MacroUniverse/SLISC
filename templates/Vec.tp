@@ -14,3 +14,15 @@ public:
     @VecT@(const @VecT@ &rhs); // copy constructor
     void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
+
+inline @VecT@::@VecT@(Long_I N) : Base(N) {}
+
+inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(0)
+{
+    SLS_ERR("copy constructor forbidden!");
+}
+
+inline void @VecT@::operator<<(@VecT@ &rhs)
+{
+    Base::operator<<(rhs);
+}
