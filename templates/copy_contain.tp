@@ -1,3 +1,14 @@
+//% types = {
+//%     'VbaseLlong', 'VbaseLlong';
+//%     'VbaseDoub', 'VbaseDoub';
+//%     'VbaseComp', 'VbaseComp';
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//%     'CmatLlong', 'CmatLlong';
+//%     'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp';};
+//%---------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(contain_type(T), contain_type(T1))
 //%     error('illegal types');

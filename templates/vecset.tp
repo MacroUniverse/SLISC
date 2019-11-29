@@ -1,3 +1,7 @@
+//% types = {
+//%     'Llong'; 'Doub'; 'Comp';
+//%     };
+//%-----------------------
 //% T = varargin{:};
 inline void vecset(@T@ *v, @T@_I val, Long_I n)
 {

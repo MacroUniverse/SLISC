@@ -1,14 +1,14 @@
 function ret = ndim(type)
-if (is_dense_vec(type) || is_FixVec(type) ||...
-    is_Svector(type) || is_Svector_c(type) || is_Dvector(type))
+if (is_Vbase(type) || is_dense_vec(type) || is_FixVec(type) ||...
+    is_Svec(type) || is_Svec_c(type) || is_Dvec(type))
     ret =1;
 elseif (is_dense_mat(type) || is_sparse_mat(type) ||...
-    is_FixCmat(type) || is_Scmat(type) || is_Scmat_c(type) ||....
-    is_Dcmat(type) || is_Jcmat(type) || is_CmatObd(type))
+    is_Fcmat(type) || is_Scmat(type) || is_Scmat_c(type) ||....
+    is_Dcmat(type) || is_Jcmat(type) || is_Cmobd(type))
     ret =2;
-elseif (is_Mat3d(type) || is_Cmat3d(type) || is_Jcmat3d(type))
+elseif (is_Mat3(type) || is_Cmat3(type) || is_Jcmat3(type))
     ret =3;
-elseif (is_Cmat4d(type) || is_Jcmat4d(type))
+elseif (is_Cmat4(type) || is_Jcmat4(type))
     ret =4;
 else
     error("unknown!");

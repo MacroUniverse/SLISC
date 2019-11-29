@@ -1,3 +1,12 @@
+//% types = {
+//%     'VecLlong', 'Llong';
+//%     'VecDoub', 'Doub';
+//%     'VecComp', 'Comp';
+//%     'CmatLlong', 'Llong';
+//%     'CmatDoub', 'Doub';
+//%     'CmatComp', 'Comp';
+//%     };
+//%-------------------------------------
 //% [T, Ts] = varargin{:};
 //% if ~is_contain(T) || ~is_scalar(Ts)
 //%     error('illegal types!');

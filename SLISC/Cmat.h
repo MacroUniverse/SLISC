@@ -1,4 +1,4 @@
-// vector container
+// Cmat container
 #pragma once
 #include "Vbase.h"
 

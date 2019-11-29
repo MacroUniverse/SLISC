@@ -22,3 +22,15 @@ class VecComp;
 typedef const VecComp &VecComp_I;
 typedef VecComp &VecComp_O, &VecComp_IO;
 
+class CmatLlong;
+typedef const CmatLlong &CmatLlong_I;
+typedef CmatLlong &CmatLlong_O, &CmatLlong_IO;
+
+class CmatDoub;
+typedef const CmatDoub &CmatDoub_I;
+typedef CmatDoub &CmatDoub_O, &CmatDoub_IO;
+
+class CmatComp;
+typedef const CmatComp &CmatComp_I;
+typedef CmatComp &CmatComp_O, &CmatComp_IO;
+

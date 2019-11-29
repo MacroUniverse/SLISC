@@ -4,7 +4,11 @@
 //%   'Vbase' 'Comp';
 //%   'Vec' 'Llong';
 //%   'Vec' 'Doub';
-//%   'Vec' 'Comp';};
+//%   'Vec' 'Comp';
+//%   'Cmat' 'Llong';
+//%   'Cmat' 'Doub';
+//%   'Cmat' 'Comp';
+//%   };
 //%---------------------------
 //% [Con, Ts] = varargin{:};
 //% T = [Con Ts];

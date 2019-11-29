@@ -5,6 +5,7 @@
 void test_Vbase();
 void test_Vec();
 void test_Cmat();
+void test_copy();
 
 void test_all()
 {
@@ -15,5 +16,7 @@ void test_all()
 	test_Vec();
 	cout << "test_Cmat()" << endl;
 	test_Cmat();
+	cout << "test_copy()" << endl;
+	test_copy();
     cout << "testing successful!" << endl;
 }
