@@ -5,6 +5,9 @@
 //%   'Vec' 'Llong';
 //%   'Vec' 'Doub';
 //%   'Vec' 'Comp';
+//%   'Mat' 'Llong';
+//%   'Mat' 'Doub';
+//%   'Mat' 'Comp';
 //%   'Cmat' 'Llong';
 //%   'Cmat' 'Doub';
 //%   'Cmat' 'Comp';

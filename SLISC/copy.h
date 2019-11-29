@@ -3,6 +3,7 @@
 // all `container = container` should be implemented using copy
 #pragma once
 #include "../SLISC/Vec.h"
+#include "../SLISC/Mat.h"
 #include "../SLISC/Cmat.h"
 
 // #include "Vec.h"
@@ -12,7 +13,8 @@ namespace slisc {
 
 #include "vecset.inl"
 #include "veccpy.inl"
-// #include "matcpy.inl"
+#include "matcpy.inl"
+#include "matcpy_diff_major.inl"
 
 // copy dense matrix with different majors
 // lda1 is leading dimension of a1, lda2 is leading dimension of a2

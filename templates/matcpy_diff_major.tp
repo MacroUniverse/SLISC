@@ -1,3 +1,9 @@
+//% types = {
+//%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//%     };
+//%----------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1);
 //%     error('illegal types!');
