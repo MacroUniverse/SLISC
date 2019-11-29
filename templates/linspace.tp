@@ -1,3 +1,5 @@
+//% types = {'VecLlong'; 'VecDoub'; 'CmatLlong'; 'CmatDoub';};
+//%---------------------------------
 //% Tv = varargin{:};
 //% Ts = contain_type(Tv);
 //% if ~is_dense(Tv)

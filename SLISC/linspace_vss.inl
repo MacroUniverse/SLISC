@@ -1,0 +1,14 @@
+inline void linspace_vss(Llong *v, Llong_I first, Llong_I last, Long N)
+{
+    Llong delta = (last - first) / (N - 1);
+    for (Long i = 0; i < N; ++i)
+        v[i] = first + delta * i;
+}
+
+inline void linspace_vss(Doub *v, Doub_I first, Doub_I last, Long N)
+{
+    Doub delta = (last - first) / (N - 1);
+    for (Long i = 0; i < N; ++i)
+        v[i] = first + delta * i;
+}
+

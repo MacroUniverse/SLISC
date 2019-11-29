@@ -1,3 +1,5 @@
+//% types = {'Llong'; 'Doub';};
+//%-----------------------
 //% T = varargin{:};
 inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 {

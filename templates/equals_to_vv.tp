@@ -7,7 +7,7 @@
 //%     };
 //%--------------------------------
 //% [T1, T2] = varargin{:};
-Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
+inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         if (v1[i] != v2[i])

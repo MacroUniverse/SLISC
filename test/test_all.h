@@ -7,6 +7,7 @@ void test_Vec();
 void test_Cmat();
 void test_copy();
 void test_compare();
+void test_arithmetics();
 
 void test_all()
 {
@@ -21,5 +22,7 @@ void test_all()
 	test_copy();
 	cout << "test_compare()" << endl;
 	test_compare();
+	cout << "test_arithmetics()" << endl;
+	test_arithmetics();
     cout << "testing successful!" << endl;
 }
