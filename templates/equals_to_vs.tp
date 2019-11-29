@@ -1,3 +1,9 @@
+//% types = {
+//%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//%     };
+//%------------------------
 //% T = varargin{:};
 Bool equals_to_vs(const @T@ *v, @T@_I s, Long_I N)
 {

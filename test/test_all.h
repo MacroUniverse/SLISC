@@ -6,6 +6,7 @@ void test_Vbase();
 void test_Vec();
 void test_Cmat();
 void test_copy();
+void test_compare();
 
 void test_all()
 {
@@ -18,5 +19,7 @@ void test_all()
 	test_Cmat();
 	cout << "test_copy()" << endl;
 	test_copy();
+	cout << "test_compare()" << endl;
+	test_compare();
     cout << "testing successful!" << endl;
 }

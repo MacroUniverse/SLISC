@@ -13,7 +13,7 @@
 //% elseif ~is_promo(contain_type(T), Ts)
 //%     error('not a promo!');
 //% end
-void copy(@T@_O v, @Ts@_I s)
+inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_dense(T)
     vecset(v.ptr(), s, v.size());

@@ -13,7 +13,7 @@
 //% if ~is_promo(contain_type(T), contain_type(T1))
 //%     error('illegal types');
 //% end
-void copy(@T@_O v, @T1@_I v1)
+inline void copy(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))
