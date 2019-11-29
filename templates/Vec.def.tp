@@ -1,0 +1,17 @@
+//% types = {'Bool'; 'Char'; 'Int'; 'Llong'; 'Float'; 'Doub';...
+//%    'Ldoub'; 'Fcomp'; 'Comp'; 'Lcomp';};
+//%----------------------------------------------------------
+//% T = varargin{:};
+//% VecT = ['Vec' T];
+//% VbaseT = ['Vbase' T];
+@VecT@::@VecT@(Long_I N) : Base(N) {}
+
+@VecT@::@VecT@(const @VecT@ &rhs) : Base(0)
+{
+    SLS_ERR("copy constructor forbidden!");
+}
+
+void @VecT@::operator<<(@VecT@ &rhs)
+{
+    Base::operator<<(rhs);
+}

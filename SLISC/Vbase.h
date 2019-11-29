@@ -1,9 +1,6 @@
 // basic vector
 #pragma once
-#include "global.h"
 
 namespace slisc {
-
-#include "Vbase.inl"
-
+#include "Vbase.dec.inl"
 } // namespace slisc
