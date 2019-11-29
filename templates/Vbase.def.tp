@@ -1,9 +1,8 @@
-//% types = {'Bool'; 'Char'; 'Int'; 'Llong'; 'Float'; 'Doub';...
-//%     'Ldoub'; 'Fcomp'; 'Comp'; 'Lcomp';};
+//% types = {'Llong'; 'Doub'; 'Comp'};
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];
-inline @VbaseT@::@VbaseT@(Long_I N) : m_p(new @T@[N]), m_N(N) {}
+@VbaseT@::@VbaseT@(Long_I N) : m_p(new @T@[N]), m_N(N) {}
 
 @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 {
@@ -15,7 +14,7 @@ inline @VbaseT@::@VbaseT@(Long_I N) : m_p(new @T@[N]), m_N(N) {}
     // veccpy(m_p, rhs.ptr(), m_N);
 }
 
-inline @T@ * @VbaseT@::ptr()
+@T@ * @VbaseT@::ptr()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -24,7 +23,7 @@ inline @T@ * @VbaseT@::ptr()
     return m_p;
 }
 
-inline const @T@ * @VbaseT@::ptr() const
+const @T@ * @VbaseT@::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -33,12 +32,12 @@ inline const @T@ * @VbaseT@::ptr() const
     return m_p;
 }
 
-inline Long @VbaseT@::size() const
+Long @VbaseT@::size() const
 {
     return m_N;
 }
 
-inline void @VbaseT@::resize(Long_I N)
+void @VbaseT@::resize(Long_I N)
 {
     if (N != m_N) {
         if (m_N == 0) {
@@ -56,7 +55,7 @@ inline void @VbaseT@::resize(Long_I N)
     }
 }
 
-inline void @VbaseT@::operator<<(@VbaseT@ &rhs)
+void @VbaseT@::operator<<(@VbaseT@ &rhs)
 {
     if (this == &rhs)
         SLS_ERR("self move is forbidden!");
@@ -66,7 +65,7 @@ inline void @VbaseT@::operator<<(@VbaseT@ &rhs)
     m_p = rhs.m_p;
 }
 
-inline @T@ & @VbaseT@::operator[](Long_I i)
+@T@ & @VbaseT@::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -75,7 +74,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const @T@ & @VbaseT@::operator[](Long_I i) const
+const @T@ & @VbaseT@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -84,13 +83,13 @@ inline const @T@ & @VbaseT@::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline @T@ & @VbaseT@::operator()(Long_I i)
+@T@ & @VbaseT@::operator()(Long_I i)
 { return (*this)[i]; }
 
-inline const @T@ & @VbaseT@::operator()(Long_I i) const
+const @T@ & @VbaseT@::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline @T@ & @VbaseT@::end()
+@T@ & @VbaseT@::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -99,7 +98,7 @@ inline @T@ & @VbaseT@::end()
     return m_p[m_N - 1];
 }
 
-inline const @T@ & @VbaseT@::end() const
+const @T@ & @VbaseT@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -108,7 +107,7 @@ inline const @T@ & @VbaseT@::end() const
     return m_p[m_N - 1];
 }
 
-inline @T@ & @VbaseT@::end(Long_I i)
+@T@ & @VbaseT@::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -117,7 +116,7 @@ inline @T@ & @VbaseT@::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const @T@ & @VbaseT@::end(Long_I i) const
+const @T@ & @VbaseT@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -126,7 +125,7 @@ inline const @T@ & @VbaseT@::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline @VbaseT@::~@VbaseT@()
+@VbaseT@::~@VbaseT@()
 {
     if (m_N != 0)
         delete[] m_p;

@@ -1,0 +1,22 @@
+//% types = {
+//%   'Vbase' 'Llong';
+//%   'Vbase' 'Doub';
+//%   'Vbase' 'Comp';
+//%   'Vec' 'Llong';
+//%   'Vec' 'Doub';
+//%   'Vec' 'Comp';};
+//%---------------------------
+//% [Con, Ts] = varargin{:};
+//% T = [Con Ts];
+//% if is_Long(Ts)
+#ifdef SLS_USE_INT_AS_LONG
+typedef @Con@Int @Con@Long;
+#else
+typedef @Con@Llong @Con@Long;
+#endif
+
+//% else
+class @T@;
+//% end
+typedef const @T@ &@T@_I;
+typedef @T@ &@T@_O, &@T@_IO;

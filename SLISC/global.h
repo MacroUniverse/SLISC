@@ -12,6 +12,7 @@
 #define SLS_CHECK_SHAPE
 #endif
 
+#include <stdlib.h>
 #include <limits>
 #include <cmath>
 #include <algorithm>
