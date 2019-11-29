@@ -1,5 +1,8 @@
 //% types = {
 //%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//%     'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp';
 //% };
 //%---------------------------------
 //% [T1, T2] = varargin{:};

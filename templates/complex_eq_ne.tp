@@ -7,7 +7,7 @@
 //%     };
 //%------------------------
 //% [T1, T2] = varargin{1:2};
-constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
+inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
     return real(s2) == s1 && imag(s2) == 0;
@@ -18,7 +18,7 @@ constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
+inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
 {
     return !(s1 == s2);
 }
