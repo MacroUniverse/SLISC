@@ -1,3 +1,11 @@
+//% types = {
+//%     'Float', 'Comp';
+//%     'Fcomp', 'Comp';
+//%     'Comp', 'Int';
+//%     'Int', 'Comp';
+//%     'Lcomp', 'Comp';
+//%     };
+//%------------------------
 //% [T1, T2] = varargin{1:2};
 constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
 {

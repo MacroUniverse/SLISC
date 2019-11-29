@@ -1,3 +1,15 @@
+//% types = {
+//%     'Float', 'Comp';
+//%     'Comp', 'Int';
+//%     'Int', 'Comp';
+//%     'Llong', 'Comp';
+//%     'Comp', 'Llong';
+//%     'Comp', 'Char';
+//%     'Comp', 'Float';
+//%     'Doub', 'Fcomp';
+//%     'Fcomp', 'Comp';
+//%     };
+//%-------------------------------------
 //% [T1,T2] = varargin{:};
 //% T = promo_type(T1,T2);
 const @T@ operator+(@T1@_I s1, @T2@_I s2)

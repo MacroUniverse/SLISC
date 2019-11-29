@@ -1,5 +1,6 @@
 // complex related functions
 #pragma once
+#include "global.h"
 
 namespace slisc {
 #include "complex_eq_ne.inl"

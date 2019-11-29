@@ -7,11 +7,14 @@ void test_Vec();
 void test_Cmat();
 void test_copy();
 void test_compare();
+void test_complex_arith();
 void test_arithmetics();
 
 void test_all()
 {
 	using std::cout; using std::endl;
+	cout << "test_complex_arith()" << endl;
+	test_complex_arith();
 	cout << "test_Vbase()" << endl;
 	test_Vbase();
 	cout << "test_Vec()" << endl;
