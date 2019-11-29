@@ -1,3 +1,7 @@
+//% types = {
+//%     'VecDoub', 'VecDoub';
+//% }
+//%---------------------------------
 //% [T1, T2] = varargin{:};
 Bool shape_cmp(@T1@_I v1, @T2@_I v2)
 {
