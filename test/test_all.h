@@ -4,6 +4,7 @@
 #include <iostream>
 void test_Vbase();
 void test_Vec();
+void test_Mat();
 void test_Cmat();
 void test_copy();
 void test_compare();
@@ -19,6 +20,8 @@ void test_all()
 	test_Vbase();
 	cout << "test_Vec()" << endl;
 	test_Vec();
+	cout << "test_Mat()" << endl;
+	test_Mat();
 	cout << "test_Cmat()" << endl;
 	test_Cmat();
 	cout << "test_copy()" << endl;

@@ -1,8 +1,7 @@
 // row-major matrix container
 #pragma once
-#include "vector.h"
+#include "Vbase.h"
 
 namespace slisc {
-// Matrix Class
-#include "matrix.inl"
-}
+#include "Mat.inl"
+} // namespace slisc
