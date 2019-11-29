@@ -1,3 +1,5 @@
+//% types = {'Llong'; 'Doub'; 'Comp';};
+//%----------------------------------------
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
 //% VbaseT = ['Vbase' T];
@@ -21,9 +23,9 @@ public:
     void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
 };
 
-@CmatT@::@CmatT@(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+inline @CmatT@::@CmatT@(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
 
-@CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
+inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
 {
     SLS_ERR("Copy constructor or move constructor is forbidden, "
         "use reference argument for function input or output, and use \"=\" to copy!");

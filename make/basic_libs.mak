@@ -9,8 +9,9 @@ compiler = g++
 
 # link
 # choose `$(mkl_dyn_link)` or `$(mkl_stat_link)`
+# strange, order of *.o files doesn't matter?
 goal:main.o
-	$(compiler) $(flags) -o main.x main.o test_Vbase.o $(libs)
+	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 # compile
 main.o:main.cpp

@@ -1,10 +1,10 @@
-#include "../SLISC/Vbase.h"
+#include "../SLISC/Vec.h"
 
-void test_Vbase()
+void test_Vec()
 {
 	using namespace slisc;
 	Long N = 3;
-	VbaseDoub v(N);
+	VecDoub v(N);
 	if (v.size() != N)
 		SLS_ERR("failed!");
 	v[1] = 2;
