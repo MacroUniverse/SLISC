@@ -10,6 +10,7 @@
 //%     'CmatComp', 'CmatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
+//%     'DcmatDoub', 'CmatDoub';
 //%     };
 //%---------------------------
 //% [T, T1] = varargin{:};
@@ -40,6 +41,8 @@ inline void copy(@T@_O v, @T1@_I v1)
 //%     end
 //% elseif is_Dmat(T) && is_Dmat(T1) || is_Dcmat(T) && is_Dcmat(T1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+//% elseif is_Dcmat(T) && is_Cmat(T1)
+    matcpy(v.ptr(), v.lda(), v1.ptr(), v.n1(), v.n1(), v.n2());
 //% elseif ndim(T) == 3 && ndim(T1) == 3
     // slow
     if (v1.size() != 0)

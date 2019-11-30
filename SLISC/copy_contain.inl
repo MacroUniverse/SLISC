@@ -119,3 +119,14 @@ inline void copy(CmatDoub_O v, MatDoub_I v1)
     matcpy_diff_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
 }
 
+inline void copy(DcmatDoub_O v, CmatDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    matcpy(v.ptr(), v.lda(), v1.ptr(), v.n1(), v.n1(), v.n2());
+}
+

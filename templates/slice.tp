@@ -1,0 +1,13 @@
+//% types = {'CmatDoub'};
+//%----------------------------
+//% Tmat = varargin{:};
+//% if is_Cmat(Tmat)
+//%     DcmatT = ['Dcmat' contain_type(Tmat)];
+inline void slice(@DcmatT@_O sli, @Tmat@_I a,
+    Long_I i, Long_I Nr, Long_I j, Long_I Nc)
+{
+    sli.set(&a(i, j), Nr, Nc, a.n1());
+}
+//% else
+//%     error('not implemented!');
+//% end

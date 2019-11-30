@@ -4,7 +4,7 @@
 inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 {
 //% if is_integral(T)
-	@T@ delta = (last - first), Nm1 = N-1;
+    @T@ delta = (last - first), Nm1 = N-1;
     for (Long i = 0; i < N; ++i)
         v[i] = first + delta * i / Nm1;
 //% else

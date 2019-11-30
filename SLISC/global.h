@@ -44,7 +44,7 @@ namespace slisc {
 
 // using std
 
-using std::complex;
+using std::complex; using std::min; using std::max;
 using std::vector; using std::string; using std::to_string;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::ifstream; using std::ofstream;

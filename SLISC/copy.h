@@ -5,8 +5,7 @@
 #include "../SLISC/Vec.h"
 #include "../SLISC/Mat.h"
 #include "../SLISC/Cmat.h"
-
-// #include "Vec.h"
+#include "../SLISC/Dcmat.h"
 
 namespace slisc {
 //  === pointer interface ===

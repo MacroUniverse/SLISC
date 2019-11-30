@@ -52,12 +52,12 @@ inline const Llong & MatLlong::operator()(Long_I i, Long_I j) const
 
 inline Long MatLlong::n1() const
 {
-	return m_Nr;
+    return m_Nr;
 }
 
 inline Long MatLlong::n2() const
 {
-	return m_Nc;
+    return m_Nc;
 }
 
 inline void MatLlong::resize(Long_I Nr, Long_I Nc)
@@ -122,12 +122,12 @@ inline const Doub & MatDoub::operator()(Long_I i, Long_I j) const
 
 inline Long MatDoub::n1() const
 {
-	return m_Nr;
+    return m_Nr;
 }
 
 inline Long MatDoub::n2() const
 {
-	return m_Nc;
+    return m_Nc;
 }
 
 inline void MatDoub::resize(Long_I Nr, Long_I Nc)
@@ -192,12 +192,12 @@ inline const Comp & MatComp::operator()(Long_I i, Long_I j) const
 
 inline Long MatComp::n1() const
 {
-	return m_Nr;
+    return m_Nr;
 }
 
 inline Long MatComp::n2() const
 {
-	return m_Nc;
+    return m_Nc;
 }
 
 inline void MatComp::resize(Long_I Nr, Long_I Nc)

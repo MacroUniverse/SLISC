@@ -88,8 +88,8 @@ inline Bool operator!=(CmatComp_I v1, CmatComp_I v2)
 
 inline Bool operator==(MatDoub_I v1, CmatDoub_I v2)
 {
-	if (!shape_cmp(v1, v2))
-		return false;
+    if (!shape_cmp(v1, v2))
+        return false;
     for (Long i = 0; i < v1.n1(); ++i)
         for (Long j = 0; j < v1.n2(); ++j)
             if (v1(i, j) != v2(i, j))
@@ -104,8 +104,8 @@ inline Bool operator!=(MatDoub_I v1, CmatDoub_I v2)
 
 inline Bool operator==(CmatDoub_I v1, MatDoub_I v2)
 {
-	if (!shape_cmp(v1, v2))
-		return false;
+    if (!shape_cmp(v1, v2))
+        return false;
     for (Long i = 0; i < v1.n1(); ++i)
         for (Long j = 0; j < v1.n2(); ++j)
             if (v1(i, j) != v2(i, j))

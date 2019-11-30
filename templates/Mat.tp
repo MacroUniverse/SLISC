@@ -57,12 +57,12 @@ inline const @T@ & @MatT@::operator()(Long_I i, Long_I j) const
 
 inline Long @MatT@::n1() const
 {
-	return m_Nr;
+    return m_Nr;
 }
 
 inline Long @MatT@::n2() const
 {
-	return m_Nc;
+    return m_Nc;
 }
 
 inline void @MatT@::resize(Long_I Nr, Long_I Nc)

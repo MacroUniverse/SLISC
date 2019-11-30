@@ -46,3 +46,11 @@ class CmatComp;
 typedef const CmatComp &CmatComp_I;
 typedef CmatComp &CmatComp_O, &CmatComp_IO;
 
+class DcmatDoub;
+typedef const DcmatDoub &DcmatDoub_I;
+typedef DcmatDoub &DcmatDoub_O, &DcmatDoub_IO;
+
+class DcmatComp;
+typedef const DcmatComp &DcmatComp_I;
+typedef DcmatComp &DcmatComp_O, &DcmatComp_IO;
+

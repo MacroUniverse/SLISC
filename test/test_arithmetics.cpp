@@ -4,6 +4,17 @@
 void test_arithmetics()
 {
 	using namespace slisc;
+
+	// resize_cpy()
+	{
+		Long N = 4;
+		VecDoub v(N), v1(N); linspace(v, 1, N);
+		copy(v1, v);
+		resize_cpy(v, 2*N);
+		if (!equals_to_vv(v.ptr(), v1.ptr(), N))
+			SLS_ERR("failed!");
+	}
+
 	// linspace()
 	{
 		Long N = 3;
