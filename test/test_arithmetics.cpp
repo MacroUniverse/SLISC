@@ -44,4 +44,9 @@ void test_arithmetics()
 		if (y != y1)
 			SLS_ERR("failed!");
 	}
+
+	// trans()
+	{
+
+	}
 }

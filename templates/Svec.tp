@@ -1,0 +1,242 @@
+//% types = {'Llong'; 'Doub'; 'Comp';};
+//%------------------------
+//% T = varargin{:};
+//% SvecT = ['Svec' T];
+//% SvecT_c = [SvecT '_c'];
+class @SvecT@
+{
+public:
+    typedef @T@ value_type;
+    @T@ *m_p;
+    Long m_N;
+    @SvecT@();
+    @SvecT@(Long_I N);
+    @SvecT@(@T@ *ptr, Long_I N);
+
+    @T@* ptr() const; // get pointer
+    Long size() const;
+    // resize() is a bad idea, don't try to create it!
+    @T@ & operator[](Long_I i) const;
+    @T@ & operator()(Long_I i) const;
+    @T@ & end() const;
+    @T@ & end(Long_I i) const;
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_size(Long_I N);
+    void set_ptr(@T@ *ptr);
+    void set(@T@ *ptr, Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    
+    ~@SvecT@();
+};
+
+inline @SvecT@::@SvecT@() {}
+
+inline @SvecT@::@SvecT@(Long_I N) : m_N(N) {}
+
+inline @SvecT@::@SvecT@(@T@ *ptr, Long_I N)
+    : m_p(ptr), m_N(N) {}
+
+inline @T@ * @SvecT@::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long @SvecT@::size() const
+{
+    return m_N;
+}
+
+inline @T@ & @SvecT@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline @T@ & @SvecT@::operator()(Long_I i) const
+{
+    return (*this)[i];
+}
+
+inline @T@ & @SvecT@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline @T@ & @SvecT@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline void @SvecT@::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline void @SvecT@::set_ptr(@T@ * ptr)
+{
+    m_p = ptr;
+}
+
+inline void @SvecT@::set(@T@ * ptr, Long_I N)
+{
+    m_p = ptr; m_N = N;
+}
+
+inline void @SvecT@::next()
+{
+    m_p += m_N;
+}
+
+inline void @SvecT@::last()
+{
+    m_p -= m_N;
+}
+
+inline void @SvecT@::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline @SvecT@::~@SvecT@() {}
+
+// ===========  slice to constant array (low level const) ========
+class @SvecT_c@
+{
+public:
+    typedef @T@ value_type;
+    const @T@ *m_p;
+    Long m_N;
+    @SvecT_c@();
+    @SvecT_c@(Long_I N);
+    @SvecT_c@(const @T@ *ptr, Long_I N);
+
+    const @T@* ptr() const;
+    Long size() const;
+    // resize() is a bad idea, don't try to create it!
+    const @T@ & operator[](Long_I i) const;
+    const @T@ & operator()(Long_I i) const;
+    const @T@& end() const;
+    const @T@& end(Long_I i) const;
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_size(Long_I N);
+    void set_ptr(const @T@ *ptr);
+    void set(const @T@ *ptr, Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+
+    ~@SvecT_c@();
+};
+
+inline @SvecT_c@::@SvecT_c@() {}
+
+inline @SvecT_c@::@SvecT_c@(Long_I N) : m_N(N) {}
+
+inline @SvecT_c@::@SvecT_c@(const @T@ *ptr, Long_I N)
+    : m_p(ptr), m_N(N) {}
+
+inline const @T@ * @SvecT_c@::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long @SvecT_c@::size() const
+{
+    return m_N;
+}
+
+inline const @T@ & @SvecT_c@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const @T@ & @SvecT_c@::operator()(Long_I i) const
+{
+    return (*this)[i];
+}
+
+inline const @T@ & @SvecT_c@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const @T@ & @SvecT_c@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline void @SvecT_c@::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline void @SvecT_c@::set_ptr(const @T@ * ptr)
+{
+    m_p = ptr;
+}
+
+inline void @SvecT_c@::set(const @T@ * ptr, Long_I N)
+{
+    m_p = ptr; m_N = N;
+}
+
+inline void @SvecT_c@::next()
+{
+    m_p += m_N;
+}
+
+inline void @SvecT_c@::last()
+{
+    m_p -= m_N;
+}
+
+inline void @SvecT_c@::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline @SvecT_c@::~@SvecT_c@()
+{}

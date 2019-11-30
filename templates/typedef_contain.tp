@@ -13,6 +13,9 @@
 //%   'Cmat' 'Comp';
 //%   'Dcmat' 'Doub';
 //%   'Dcmat' 'Comp';
+//%   'Svec' 'Llong';
+//%   'Svec' 'Doub';
+//%   'Svec' 'Comp';
 //%   };
 //%---------------------------
 //% [Con, Ts] = varargin{:};

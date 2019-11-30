@@ -1,0 +1,13 @@
+//% types = {'CmatDoub'; 'CmatComp'; 'DcmatDoub'; 'DcmatComp'};
+//%--------------------------
+//% T = varargin{:};
+inline void trans(@T@_IO v)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (v.n1() != v.n2())
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < v.n1(); ++i)
+        for (Long j = 0; j < i; ++j)
+            swap(v(i, j), v(j, i));
+}

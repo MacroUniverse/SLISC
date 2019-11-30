@@ -1,3 +1,10 @@
+//% types = {
+//%     'VecDoub', 'CmatDoub', 'VecDoub';
+//%     'VecComp', 'CmatDoub', 'VecComp';
+//%   %  'SvecComp', 'DcmatDoub', 'SvecComp';
+//%   %  'DvecComp', 'DcmatDoub', 'DvecComp';
+//%     };
+//%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
 inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
