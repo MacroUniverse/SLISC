@@ -240,3 +240,16 @@ inline void @SvecT_c@::shift(Long_I N)
 
 inline @SvecT_c@::~@SvecT_c@()
 {}
+
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong SvecLong;
+typedef SvecLlong_c SvecLong_c;
+#endif
+//% else
+typedef const @SvecT_c@ & @SvecT@_I;
+typedef @SvecT@ & @SvecT@_O, & @SvecT@_IO;
+//% end

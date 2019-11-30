@@ -236,6 +236,9 @@ inline void SvecLlong_c::shift(Long_I N)
 inline SvecLlong_c::~SvecLlong_c()
 {}
 
+typedef const SvecLlong_c & SvecLlong_I;
+typedef SvecLlong & SvecLlong_O, & SvecLlong_IO;
+
 class SvecDoub
 {
 public:
@@ -474,6 +477,9 @@ inline void SvecDoub_c::shift(Long_I N)
 inline SvecDoub_c::~SvecDoub_c()
 {}
 
+typedef const SvecDoub_c & SvecDoub_I;
+typedef SvecDoub & SvecDoub_O, & SvecDoub_IO;
+
 class SvecComp
 {
 public:
@@ -711,4 +717,7 @@ inline void SvecComp_c::shift(Long_I N)
 
 inline SvecComp_c::~SvecComp_c()
 {}
+
+typedef const SvecComp_c & SvecComp_I;
+typedef SvecComp & SvecComp_O, & SvecComp_IO;
 

@@ -116,3 +116,14 @@ inline @T@ * @DcmatT@::ptr()
 {
     return m_p;
 }
+
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef DcmatInt DcmatLong;
+#else
+typedef DcmatLlong DcmatLong;
+#endif
+//% else
+typedef const @DcmatT@ & @DcmatT@_I;
+typedef @DcmatT@ & @DcmatT@_O, & @DcmatT@_IO;
+//% end

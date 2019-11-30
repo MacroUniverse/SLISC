@@ -65,6 +65,9 @@ inline void CmatLlong::resize(Long_I Nr, Long_I Nc)
     }
 }
 
+typedef const CmatLlong & CmatLlong_I;
+typedef CmatLlong & CmatLlong_O, & CmatLlong_IO;
+
 class CmatDoub : public VbaseDoub
 {
 protected:
@@ -132,6 +135,9 @@ inline void CmatDoub::resize(Long_I Nr, Long_I Nc)
     }
 }
 
+typedef const CmatDoub & CmatDoub_I;
+typedef CmatDoub & CmatDoub_O, & CmatDoub_IO;
+
 class CmatComp : public VbaseComp
 {
 protected:
@@ -198,4 +204,7 @@ inline void CmatComp::resize(Long_I Nr, Long_I Nc)
         m_Nr = Nr; m_Nc = Nc;
     }
 }
+
+typedef const CmatComp & CmatComp_I;
+typedef CmatComp & CmatComp_O, & CmatComp_IO;
 

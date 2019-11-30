@@ -26,3 +26,14 @@ inline void @VecT@::operator<<(@VecT@ &rhs)
 {
     Base::operator<<(rhs);
 }
+
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef VecInt VecLong;
+#else
+typedef VecLlong VecLong;
+#endif
+//% else
+typedef const @VecT@ & @VecT@_I;
+typedef @VecT@ & @VecT@_O, & @VecT@_IO;
+//% end

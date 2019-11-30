@@ -22,6 +22,9 @@ inline void VecLlong::operator<<(VecLlong &rhs)
     Base::operator<<(rhs);
 }
 
+typedef const VecLlong & VecLlong_I;
+typedef VecLlong & VecLlong_O, & VecLlong_IO;
+
 class VecDoub : public VbaseDoub
 {
 public:
@@ -46,6 +49,9 @@ inline void VecDoub::operator<<(VecDoub &rhs)
     Base::operator<<(rhs);
 }
 
+typedef const VecDoub & VecDoub_I;
+typedef VecDoub & VecDoub_O, & VecDoub_IO;
+
 class VecComp : public VbaseComp
 {
 public:
@@ -69,4 +75,7 @@ inline void VecComp::operator<<(VecComp &rhs)
 {
     Base::operator<<(rhs);
 }
+
+typedef const VecComp & VecComp_I;
+typedef VecComp & VecComp_O, & VecComp_IO;
 

@@ -12,6 +12,7 @@ namespace slisc {
 #include "linspace.inl"
 #include "reorder.inl"
 #include "trans.inl"
+#include "trans2.inl"
 #include "mul_mv.inl"
 #include "mul_gen.inl"
 #include "mul_sym.inl"

@@ -1,5 +1,6 @@
 cd(mfilepath);
 cd('../templates');
+delete('../SLISC/*.inl');
 tp_list = ls('*.tp');
 Ntp = size(tp_list, 1);
 for i = 1:Ntp

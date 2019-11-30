@@ -134,11 +134,6 @@ typedef std::u32string Str32;
 typedef const Str32 &Str32_I;
 typedef Str32 &Str32_O, &Str32_IO;
 
-// === class declarations ===
-
-// vector and matrix types
-#include "typedef_contain.inl"
-
 // quiet NaN definition
 // uncomment one of the following 3 methods of defining a global NaN
 // you can test by verifying that (NaN != NaN) is true

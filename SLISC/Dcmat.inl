@@ -113,6 +113,9 @@ inline Llong * DcmatLlong::ptr()
     return m_p;
 }
 
+typedef const DcmatLlong & DcmatLlong_I;
+typedef DcmatLlong & DcmatLlong_O, & DcmatLlong_IO;
+
 class DcmatDoub
 {
 private:
@@ -228,6 +231,9 @@ inline Doub * DcmatDoub::ptr()
     return m_p;
 }
 
+typedef const DcmatDoub & DcmatDoub_I;
+typedef DcmatDoub & DcmatDoub_O, & DcmatDoub_IO;
+
 class DcmatComp
 {
 private:
@@ -342,4 +348,7 @@ inline Comp * DcmatComp::ptr()
 {
     return m_p;
 }
+
+typedef const DcmatComp & DcmatComp_I;
+typedef DcmatComp & DcmatComp_O, & DcmatComp_IO;
 

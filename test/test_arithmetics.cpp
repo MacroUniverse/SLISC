@@ -47,6 +47,11 @@ void test_arithmetics()
 
 	// trans()
 	{
-
+		Long N = 4;
+		CmatDoub a(N, N), b(N, N);
+		linspace(a, 1, N*N); copy(b, a);
+		trans(a); trans(a);
+		if (a != b)
+			SLS_ERR("failed!");
 	}
 }

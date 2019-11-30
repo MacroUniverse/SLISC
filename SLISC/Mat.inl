@@ -68,6 +68,9 @@ inline void MatLlong::resize(Long_I Nr, Long_I Nc)
     }
 }
 
+typedef const MatLlong & MatLlong_I;
+typedef MatLlong & MatLlong_O, & MatLlong_IO;
+
 class MatDoub : public VbaseDoub
 {
 private:
@@ -138,6 +141,9 @@ inline void MatDoub::resize(Long_I Nr, Long_I Nc)
     }
 }
 
+typedef const MatDoub & MatDoub_I;
+typedef MatDoub & MatDoub_O, & MatDoub_IO;
+
 class MatComp : public VbaseComp
 {
 private:
@@ -207,4 +213,7 @@ inline void MatComp::resize(Long_I Nr, Long_I Nc)
         m_Nr = Nr; m_Nc = Nc;
     }
 }
+
+typedef const MatComp & MatComp_I;
+typedef MatComp & MatComp_O, & MatComp_IO;
 
