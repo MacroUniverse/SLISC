@@ -4,6 +4,7 @@
 #include "Svec.h"
 #include "Dcmat.h"
 #include "copy.h"
+#include "scalar_arith.h"
 #include "slice_arith.h"
 
 namespace slisc {

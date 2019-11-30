@@ -1,0 +1,8 @@
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%------------------------------
+//% T = varargin{:};
+//% if is_Bool(T) || is_Char(T)
+inline Int to_num(@T@_I x) { return (Int)x; }
+//% else
+inline const @T@ to_num(@T@_I x) { return x; }
+//% end

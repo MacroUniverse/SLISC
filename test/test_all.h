@@ -10,6 +10,7 @@ void test_copy();
 void test_compare();
 void test_complex_arith();
 void test_arithmetics();
+void test_disp();
 
 void test_all()
 {
@@ -30,5 +31,7 @@ void test_all()
 	test_compare();
 	cout << "test_arithmetics()" << endl;
 	test_arithmetics();
+	cout << "test_disp()" << endl;
+	test_disp();
     cout << "testing successful!" << endl;
 }

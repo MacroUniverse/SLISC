@@ -53,5 +53,13 @@ void test_arithmetics()
 		trans(a); trans(a);
 		if (a != b)
 			SLS_ERR("failed!");
+
+		Long N1 = 5, N2 = 6;
+		CmatDoub c(N1, N2), d(N2, N1), e(N1, N2);
+		linspace(c, 1, N1*N2);
+		copy(e, c);
+		trans(d, c); trans(c, d);
+		if (c != e)
+			SLS_ERR("failed!");
 	}
 }
