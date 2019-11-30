@@ -1,36 +1,3 @@
-inline void copy(VbaseLlong_O v, VbaseLlong_I v1)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
-    if (v.size() == 0)
-        return;
-    veccpy(v.ptr(), v1.ptr(), v.size());
-}
-
-inline void copy(VbaseDoub_O v, VbaseDoub_I v1)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
-    if (v.size() == 0)
-        return;
-    veccpy(v.ptr(), v1.ptr(), v.size());
-}
-
-inline void copy(VbaseComp_O v, VbaseComp_I v1)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
-    if (v.size() == 0)
-        return;
-    veccpy(v.ptr(), v1.ptr(), v.size());
-}
-
 inline void copy(VecLlong_O v, VecLlong_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -54,6 +21,39 @@ inline void copy(VecDoub_O v, VecDoub_I v1)
 }
 
 inline void copy(VecComp_O v, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(MatLlong_O v, MatLlong_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(MatDoub_O v, MatDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(MatComp_O v, MatComp_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))
@@ -95,5 +95,27 @@ inline void copy(CmatComp_O v, CmatComp_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(MatDoub_O v, CmatDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    matcpy_diff_major(v.ptr(), v1.ptr(), v.n2(), v.n1());
+}
+
+inline void copy(CmatDoub_O v, MatDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    matcpy_diff_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
 }
 

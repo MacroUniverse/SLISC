@@ -1,13 +1,16 @@
 //% types = {
-//%     'VbaseLlong', 'VbaseLlong';
-//%     'VbaseDoub', 'VbaseDoub';
-//%     'VbaseComp', 'VbaseComp';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecComp';
+//%     'MatLlong', 'MatLlong';
+//%     'MatDoub', 'MatDoub';
+//%     'MatComp', 'MatComp';
 //%     'CmatLlong', 'CmatLlong';
 //%     'CmatDoub', 'CmatDoub';
-//%     'CmatComp', 'CmatComp';};
+//%     'CmatComp', 'CmatComp';
+//%     'MatDoub', 'CmatDoub';
+//%     'CmatDoub', 'MatDoub';
+//%     };
 //%---------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(contain_type(T), contain_type(T1))
@@ -31,9 +34,9 @@ inline void copy(@T@_O v, @T1@_I v1)
     veccpy(v.ptr(), v.step(), v1.ptr(), v1.size());
 //% elseif is_dense_mat(T) && is_dense_mat(T1) && is_diff_major(T, T1)
 //%     if is_cmajor(T)
-    matcpy_2_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
+    matcpy_diff_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
 //%     else
-    matcpy_2_major(v.ptr(), v1.ptr(), v.n2(), v.n1());
+    matcpy_diff_major(v.ptr(), v1.ptr(), v.n2(), v.n1());
 //%     end
 //% elseif is_Dmat(T) && is_Dmat(T1) || is_Dcmat(T) && is_Dcmat(T1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
