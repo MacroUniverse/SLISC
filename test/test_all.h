@@ -6,6 +6,7 @@ void test_Vbase();
 void test_Vec();
 void test_Mat();
 void test_Cmat();
+void test_Cmat3();
 void test_copy();
 void test_compare();
 void test_complex_arith();
@@ -25,6 +26,8 @@ void test_all()
 	test_Mat();
 	cout << "test_Cmat()" << endl;
 	test_Cmat();
+	cout << "test_Cmat3()" << endl;
+	test_Cmat3();
 	cout << "test_copy()" << endl;
 	test_copy();
 	cout << "test_compare()" << endl;

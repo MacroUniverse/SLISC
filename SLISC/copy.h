@@ -2,10 +2,11 @@
 // includes container shape checking
 // all `container = container` should be implemented using copy
 #pragma once
-#include "../SLISC/Vec.h"
-#include "../SLISC/Mat.h"
-#include "../SLISC/Cmat.h"
-#include "../SLISC/Dcmat.h"
+#include "Vec.h"
+#include "Mat.h"
+#include "Cmat.h"
+#include "Cmat3.h"
+#include "Dcmat.h"
 
 namespace slisc {
 //  === pointer interface ===

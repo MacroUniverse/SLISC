@@ -1,6 +1,7 @@
 #include "Vec.h"
 #include "Mat.h"
 #include "Cmat.h"
+#include "Cmat3.h"
 #include "Svec.h"
 #include "Dcmat.h"
 #include "copy.h"
