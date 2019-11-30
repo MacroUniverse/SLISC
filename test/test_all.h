@@ -9,6 +9,7 @@ void test_Cmat();
 void test_Cmat3();
 void test_Cmat4();
 void test_Svec();
+void test_Dvec();
 void test_Scmat();
 void test_copy();
 void test_compare();
@@ -35,6 +36,8 @@ void test_all()
 	test_Cmat4();
 	cout << "test_Svec()" << endl;
 	test_Svec();
+	cout << "test_Dvec()" << endl;
+	test_Dvec();
 	cout << "test_Scmat()" << endl;
 	test_Scmat();
 	cout << "test_copy()" << endl;
