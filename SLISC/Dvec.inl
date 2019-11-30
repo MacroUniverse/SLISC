@@ -155,6 +155,9 @@ inline void DvecLlong::shift(Long_I N)
 
 inline DvecLlong::~DvecLlong() {}
 
+typedef const DvecLlong & DvecLlong_I;
+typedef DvecLlong & DvecLlong_O, & DvecLlong_IO;
+
 class DvecDoub
 {
 private:
@@ -312,6 +315,9 @@ inline void DvecDoub::shift(Long_I N)
 
 inline DvecDoub::~DvecDoub() {}
 
+typedef const DvecDoub & DvecDoub_I;
+typedef DvecDoub & DvecDoub_O, & DvecDoub_IO;
+
 class DvecComp
 {
 private:
@@ -468,4 +474,7 @@ inline void DvecComp::shift(Long_I N)
 }
 
 inline DvecComp::~DvecComp() {}
+
+typedef const DvecComp & DvecComp_I;
+typedef DvecComp & DvecComp_O, & DvecComp_IO;
 

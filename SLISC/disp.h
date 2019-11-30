@@ -1,5 +1,5 @@
 #pragma once
-#include "arithmetics.h"
+#include "arithmetic.h"
 
 namespace slisc {
 const Int def_disp_prec = 8;

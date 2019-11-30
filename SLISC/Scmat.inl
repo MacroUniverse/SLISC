@@ -188,6 +188,9 @@ inline void ScmatLlong_c::shift(Long_I N)
 
 inline ScmatLlong_c::~ScmatLlong_c() {}
 
+typedef const ScmatLlong & ScmatLlong_I;
+typedef ScmatLlong & ScmatLlong_O, & ScmatLlong_IO;
+
 class ScmatDoub : public SvecDoub
 {
 public:
@@ -378,6 +381,9 @@ inline void ScmatDoub_c::shift(Long_I N)
 
 inline ScmatDoub_c::~ScmatDoub_c() {}
 
+typedef const ScmatDoub & ScmatDoub_I;
+typedef ScmatDoub & ScmatDoub_O, & ScmatDoub_IO;
+
 class ScmatComp : public SvecComp
 {
 public:
@@ -567,4 +573,7 @@ inline void ScmatComp_c::shift(Long_I N)
 }
 
 inline ScmatComp_c::~ScmatComp_c() {}
+
+typedef const ScmatComp & ScmatComp_I;
+typedef ScmatComp & ScmatComp_O, & ScmatComp_IO;
 

@@ -193,3 +193,14 @@ inline void @ScmatT_c@::shift(Long_I N)
 }
 
 inline @ScmatT_c@::~@ScmatT_c@() {}
+
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef ScmatInt ScmatLong;
+#else
+typedef ScmatLlong ScmatLong;
+#endif
+//% else
+typedef const @ScmatT@ & @ScmatT@_I;
+typedef @ScmatT@ & @ScmatT@_O, & @ScmatT@_IO;
+//% end

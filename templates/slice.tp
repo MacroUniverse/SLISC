@@ -1,13 +1,58 @@
-//% types = {'CmatDoub'};
+//% types = {
+//%     'VecDoub'; 'VecComp';
+//%     'SvecDoub'; 'SvecComp';
+//%     'DvecDoub'; 'DvecComp';
+//%     'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp';
+//% };
 //%----------------------------
-//% Tmat = varargin{:};
-//% if is_Cmat(Tmat)
-//%     DcmatT = ['Dcmat' contain_type(Tmat)];
-inline void slice(@DcmatT@_O sli, @Tmat@_I a,
-    Long_I i, Long_I Nr, Long_I j, Long_I Nc)
+//% Tv = varargin{:};
+//% T = contain_type(Tv);
+//% Tsli = slice_type(Tv);
+//% if ndim(Tv) == 1
+inline void slice(@Tsli@_O sli, @Tv@_IO v,
+    Long_I start, Long_I N)
 {
-    sli.set(&a(i, j), Nr, Nc, a.n1());
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i + N > v.size())
+        SLS_ERR("index out of bound!");
+#endif
+//%     if is_dense_vec(Tv)
+    sli.set(v.ptr() + start, N);
+//%     elseif is_Dvec(Tv)
+    sli.set(v.ptr() + start, N, v.step());
+//%     else
+//%         error('not implemented (1)!');
+//%     end
 }
+//% elseif ndim(Tv) == 2
+inline void slice(@Tsli@_O sli, @Tv@_IO v,
+    Long_I start1, Long_I N1, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start1 < 0 || start1 + N1 > v.n1() ||
+			start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+//%     if is_dense_mat(Tv)
+    sli.set(&v(start1, start2), N1, N2, v.n1());
+//%     elseif is_Dcmat(Tv)
+    sli.set(&v(start1, start2), N1, N2, v.lda());
+//%     else
+//%         error('not implemented (1)!');
+//%     end
+}
+//%     if is_Cmat(Tv)
+//%         ScmatT = ['Scmat' T];
+inline void slice(@ScmatT@_O sli, @Tv@_IO v, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	sli.set(v.ptr() + v.n1()*start2, v.n1(), N2);
+}
+//%     end
 //% else
 //%     error('not implemented!');
 //% end

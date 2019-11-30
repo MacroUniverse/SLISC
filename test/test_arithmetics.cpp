@@ -1,4 +1,4 @@
-#include "../SLISC/arithmetics.h"
+#include "../SLISC/arithmetic.h"
 #include "../SLISC/compare.h"
 
 void test_arithmetics()

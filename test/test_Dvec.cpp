@@ -1,4 +1,4 @@
-#include "../SLISC/arithmetics.h"
+#include "../SLISC/arithmetic.h"
 
 void test_Dvec()
 {

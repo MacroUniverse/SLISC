@@ -1,7 +1,7 @@
 // test dense containers here
 #pragma once
 #include "../SLISC/Cmat.h"
-#include "../SLISC/arithmetics.h"
+#include "../SLISC/arithmetic.h"
 
 void test_Cmat()
 {
