@@ -3,6 +3,7 @@
 #include "Cmat.h"
 #include "Cmat3.h"
 #include "Svec.h"
+#include "Scmat.h"
 #include "Dcmat.h"
 #include "copy.h"
 #include "scalar_arith.h"

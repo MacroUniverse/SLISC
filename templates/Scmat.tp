@@ -1,0 +1,195 @@
+//% types = {'Llong'; 'Doub'; 'Comp';};
+//%------------------------
+//% T = varargin{:};
+//% SvecT = ['Svec' T];
+//% ScmatT = ['Scmat' T];
+//% ScmatT_c = [ScmatT '_c'];
+class @ScmatT@ : public @SvecT@
+{
+public:
+    typedef @SvecT@ Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+    @ScmatT@();
+    @ScmatT@(Long_I Nr, Long_I Nc);
+    @ScmatT@(@T@ *ptr, Long_I Nr, Long_I Nc);
+
+    // === Cmat functions ===
+    @T@& operator()(Long_I i, Long_I j) const; // double indexing
+    Long n1() const;
+    Long n2() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void set_size(Long_I Nr, Long_I Nc);
+    void set_ptr(@T@ *ptr);
+    void set(@T@ *ptr, Long_I Nr, Long_I Nc);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    ~@ScmatT@();
+};
+
+inline @ScmatT@::@ScmatT@() {}
+
+inline @ScmatT@::@ScmatT@(Long_I Nr, Long_I Nc)
+    : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+
+inline @ScmatT@::@ScmatT@(@T@ *ptr, Long_I Nr, Long_I Nc)
+    : @ScmatT@(Nr, Nc)
+{
+    m_p = (@T@ *)ptr;
+}
+
+inline @T@ & @ScmatT@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_Nr * j];
+}
+
+inline Long @ScmatT@::n1() const
+{
+    return m_Nr;
+}
+
+inline Long @ScmatT@::n2() const
+{
+    return m_Nc;
+}
+
+inline void @ScmatT@::set_size(Long_I Nr, Long_I Nc)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+#endif
+    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+}
+
+inline void @ScmatT@::set_ptr(@T@ * ptr)
+{
+    m_p = (@T@ *)ptr;
+}
+
+inline void @ScmatT@::set(@T@ * ptr, Long_I Nr, Long_I Nc)
+{
+    m_p = (@T@ *)ptr;
+    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+}
+
+inline void @ScmatT@::next()
+{
+    m_p += m_N;
+}
+
+inline void @ScmatT@::last()
+{
+    m_p -= m_N;
+}
+
+inline void @ScmatT@::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline @ScmatT@::~@ScmatT@() {}
+
+
+// ========== low level const of @ScmatT@ =========
+class @ScmatT_c@ : public @SvecT@
+{
+public:
+    typedef @SvecT@ Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+    @ScmatT_c@();
+    @ScmatT_c@(Long_I Nr, Long_I Nc);
+    @ScmatT_c@(const @T@ *ptr, Long_I Nr, Long_I Nc);
+
+    // === Cmat functions ===
+    const @T@& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void set_size(Long_I Nr, Long_I Nc);
+    void set_ptr(const @T@ *ptr);
+    void set(const @T@ *ptr, Long_I Nr, Long_I Nc);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    ~@ScmatT_c@();
+};
+
+inline @ScmatT_c@::@ScmatT_c@() {}
+
+inline @ScmatT_c@::@ScmatT_c@(Long_I Nr, Long_I Nc)
+    : m_Nr(Nr), m_Nc(Nc), Base(Nr*Nc) {}
+
+inline @ScmatT_c@::@ScmatT_c@(const @T@ *ptr, Long_I Nr, Long_I Nc)
+    : @ScmatT_c@(Nr, Nc)
+{
+    m_p = (@T@ *)ptr;
+}
+
+inline const @T@ & @ScmatT_c@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_Nr * j];
+}
+
+inline Long @ScmatT_c@::n1() const
+{
+    return m_Nr;
+}
+
+inline Long @ScmatT_c@::n2() const
+{
+    return m_Nc;
+}
+
+inline void @ScmatT_c@::set_size(Long_I Nr, Long_I Nc)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+#endif
+    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+}
+
+inline void @ScmatT_c@::set_ptr(const @T@ * ptr)
+{
+    m_p = (@T@ *)ptr;
+}
+
+inline void @ScmatT_c@::set(const @T@ * ptr, Long_I Nr, Long_I Nc)
+{
+    m_p = (@T@ *)ptr;
+    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+}
+
+inline void @ScmatT_c@::next()
+{
+    m_p += m_N;
+}
+
+inline void @ScmatT_c@::last()
+{
+    m_p -= m_N;
+}
+
+inline void @ScmatT_c@::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline @ScmatT_c@::~@ScmatT_c@() {}
