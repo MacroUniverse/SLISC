@@ -5,6 +5,7 @@
 namespace slisc {
 #include "linspace_vss.inl"
 #include "linspace.inl"
+#include "reorder.inl"
 #include "mul_mv.inl"
 #include "mul_gen.inl"
 } // namespace slisc

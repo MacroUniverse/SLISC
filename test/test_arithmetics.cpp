@@ -12,6 +12,15 @@ void test_arithmetics()
 		if (!equals_to_vv(v.ptr(), v1.ptr(), N))
 			SLS_ERR("failed!");
 	}
+
+	// reorder()
+	{
+		VecLlong v(4), order(4); linspace(v, 0, 3);
+		order[0] = 2; order[1] = 1; order[2] = 0; order[3] = 3;
+		reorder(v, order);
+		if (v != order)
+			SLS_ERR("failed!");
+	}
 	
 	// mul_gen()
 	{
