@@ -1,3 +1,30 @@
+class VecInt : public VbaseInt
+{
+public:
+    typedef VbaseInt Base;
+    using Base::resize;
+    using Base::operator[];
+
+    explicit VecInt(Long_I N);
+    VecInt(const VecInt &rhs); // copy constructor
+    void operator<<(VecInt &rhs); // move data and rhs.resize(0)
+};
+
+inline VecInt::VecInt(Long_I N) : Base(N) {}
+
+inline VecInt::VecInt(const VecInt &rhs) : Base(0)
+{
+    SLS_ERR("copy constructor forbidden!");
+}
+
+inline void VecInt::operator<<(VecInt &rhs)
+{
+    Base::operator<<(rhs);
+}
+
+typedef const VecInt & VecInt_I;
+typedef VecInt & VecInt_O, & VecInt_IO;
+
 class VecLlong : public VbaseLlong
 {
 public:

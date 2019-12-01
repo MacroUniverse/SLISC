@@ -1,3 +1,4 @@
+#pragma once
 #include "Vec.h"
 #include "Mat.h"
 #include "Cmat.h"
@@ -6,11 +7,14 @@
 #include "Dvec.h"
 #include "Scmat.h"
 #include "Dcmat.h"
+#include "compare.h"
 #include "copy.h"
 #include "scalar_arith.h"
 #include "slice_arith.h"
 
 namespace slisc {
+#include "min_max_v.inl"
+#include "min_max.inl"
 #include "resize_cpy.inl"
 #include "linspace_vss.inl"
 #include "linspace.inl"

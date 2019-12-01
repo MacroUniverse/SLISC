@@ -1,0 +1,33 @@
+//% types = {
+//%     'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'MatLlong'; 'MatDoub'; 'MatComp';
+//%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
+//% };
+//%--------------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if is_Llong(Ts)
+inline void rand(@T@_O v, Long_I N)
+{
+	Long i, Nv = v.size();
+	for (i = 0; i < Nv; ++i)
+		v[i] = randLong(N);
+}
+//% elseif is_Doub(Ts)
+inline void rand(@T@_O &v)
+{
+	Long i, N = v.size();
+	for (i = 0; i < N; ++i)
+		v[i] = randDoub();
+}
+//% elseif is_Comp(Ts)
+//% % complex random number
+//% % uniform distribution
+inline void rand(@T@_O &v)
+{
+	Long i, N = v.size();
+	for (i = 0; i < N; ++i)
+		v[i] = randComp();
+}
+//% end

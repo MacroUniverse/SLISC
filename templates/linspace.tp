@@ -1,4 +1,4 @@
-//% types = {'VecLlong'; 'VecDoub'; 'CmatLlong'; 'CmatDoub';};
+//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'CmatLlong'; 'CmatDoub';};
 //%---------------------------------
 //% Tv = varargin{:};
 //% Ts = contain_type(Tv);

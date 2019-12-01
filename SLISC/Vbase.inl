@@ -1,3 +1,160 @@
+class VbaseInt
+{
+protected:
+    Int *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef Int value_type;
+    // constructors
+    explicit VbaseInt(Long_I N);
+    VbaseInt(const VbaseInt &rhs); // copy constructor
+
+    // get properties
+    Int* ptr(); // get pointer
+    const Int* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    Int & operator[](Long_I i);
+    const Int & operator[](Long_I i) const;
+    Int & operator()(Long_I i);
+    const Int & operator()(Long_I i) const;
+    Int& end();
+    const Int& end() const;
+    Int& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Int& end(Long_I i) const;
+    void operator<<(VbaseInt &rhs); // move data
+    ~VbaseInt();
+};
+
+inline VbaseInt::VbaseInt(Long_I N) : m_p(new Int[N]), m_N(N) {}
+
+inline VbaseInt::VbaseInt(const VbaseInt &rhs)
+{
+#ifndef SLS_ALLOW_COPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+    // m_N = rhs.m_N;
+    // m_p = new Int[rhs.m_N];
+    // veccpy(m_p, rhs.ptr(), m_N);
+}
+
+inline Int * VbaseInt::ptr()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline const Int * VbaseInt::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long VbaseInt::size() const
+{
+    return m_N;
+}
+
+inline void VbaseInt::resize(Long_I N)
+{
+    if (N != m_N) {
+        if (m_N == 0) {
+            m_N = N; m_p = new Int[N];
+        }
+        else { // m_N != 0
+            delete[] m_p;
+            if (N == 0)
+                m_N = 0;
+            else {
+                m_N = N;
+                m_p = new Int[N];
+            }
+        }
+    }
+}
+
+inline void VbaseInt::operator<<(VbaseInt &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    if (m_N != 0)
+        delete[] m_p;
+    m_N = rhs.m_N; rhs.m_N = 0;
+    m_p = rhs.m_p;
+}
+
+inline Int & VbaseInt::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+    SLS_ERR("VbaseInt subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Int & VbaseInt::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=m_N)
+        SLS_ERR("VbaseInt subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Int & VbaseInt::operator()(Long_I i)
+{ return (*this)[i]; }
+
+inline const Int & VbaseInt::operator()(Long_I i) const
+{ return (*this)[i]; }
+
+inline Int & VbaseInt::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Int & VbaseInt::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Int & VbaseInt::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline const Int & VbaseInt::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline VbaseInt::~VbaseInt()
+{
+    if (m_N != 0)
+        delete[] m_p;
+}
+
 class VbaseLlong
 {
 protected:

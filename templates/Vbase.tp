@@ -1,4 +1,4 @@
-//% types = {'Llong'; 'Doub'; 'Comp'};
+//% types = {'Int'; 'Llong'; 'Doub'; 'Comp'};
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];

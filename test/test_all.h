@@ -17,6 +17,7 @@ void test_compare();
 void test_complex_arith();
 void test_arithmetics();
 void test_disp();
+void test_random();
 
 void test_all()
 {
@@ -51,5 +52,7 @@ void test_all()
 	test_arithmetics();
 	cout << "test_disp()" << endl;
 	test_disp();
+	cout << "test_random()" << endl;
+	test_random();
     cout << "testing successful!" << endl;
 }
