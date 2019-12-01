@@ -1,0 +1,7 @@
+//% types = {'vecStr'};
+//%--------------------------
+//% T = varargin{:};
+inline Long Size(@T@_I v)
+{
+	return v.size();
+}

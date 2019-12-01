@@ -134,6 +134,10 @@ typedef std::u32string Str32;
 typedef const Str32 &Str32_I;
 typedef Str32 &Str32_O, &Str32_IO;
 
+typedef vector<Str> vecStr;
+typedef const vecStr &vecStr_I;
+typedef vecStr &vecStr_O, &vecStr_IO;
+
 // quiet NaN definition
 // uncomment one of the following 3 methods of defining a global NaN
 // you can test by verifying that (NaN != NaN) is true

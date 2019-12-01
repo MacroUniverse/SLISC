@@ -19,6 +19,7 @@ void test_arithmetics();
 void test_disp();
 void test_random();
 void test_anglib();
+void test_file();
 
 void test_all()
 {
@@ -55,6 +56,8 @@ void test_all()
 	test_random();
 	cout << "test_anglib()" << endl;
 	test_anglib();
+	cout << "test_file()" << endl;
+	test_file();
 	
 	cout << "do optional tests? (y/n)" << endl;
 	if (getchar() == 'y') {
