@@ -1,0 +1,18 @@
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'};
+//%-----------------------------
+//% T = varargin{:};
+void matt_write_scalar(@T@_I s, ofstream &m_out)
+{
+//% if is_real(T)
+    m_out << to_num(s) << Matt::dlm;
+//% elseif is_comp(T)
+	if (imag(s) == 0)
+		m_out << real(s) << Matt::dlm;
+	else if (imag(s) < 0)
+		m_out << real(s) << imag(s) << "i ";
+	else
+		m_out << real(s) << '+' << imag(s) << "i ";
+//% else
+//%     error('not implemented!');
+//% end
+}
