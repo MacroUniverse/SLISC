@@ -1,13 +1,217 @@
+class ScmatInt_c : public SvecInt_c
+{
+public:
+    Long m_N1, m_N2;
+    ScmatInt_c();
+    ScmatInt_c(Long_I N1, Long_I N2);
+    ScmatInt_c(const Int *ptr, Long_I N1, Long_I N2);
+
+    // === Cmat functions ===
+    const Int& operator()(Long_I i, Long_I j) const; // double indexing
+    Long n1() const;
+    Long n2() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void set_size(Long_I N1, Long_I N2);
+    void set(const Int *ptr, Long_I N1, Long_I N2);
+    ~ScmatInt_c();
+};
+
+inline ScmatInt_c::ScmatInt_c() {}
+
+inline ScmatInt_c::ScmatInt_c(Long_I N1, Long_I N2)
+    : SvecInt_c(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline ScmatInt_c::ScmatInt_c(const Int *ptr, Long_I N1, Long_I N2)
+    : ScmatInt_c(N1, N2)
+{
+    m_p = ptr;
+}
+
+inline const Int & ScmatInt_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1 * j];
+}
+
+inline Long ScmatInt_c::n1() const
+{
+    return m_N1;
+}
+
+inline Long ScmatInt_c::n2() const
+{
+    return m_N2;
+}
+
+inline void ScmatInt_c::set_size(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
+#endif
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline void ScmatInt_c::set(const Int * ptr, Long_I N1, Long_I N2)
+{
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline ScmatInt_c::~ScmatInt_c() {}
+
+typedef const ScmatInt_c & ScmatInt_I;
+
+class ScmatInt : public SvecInt
+{
+public:
+    Long m_N1, m_N2;
+    ScmatInt();
+    ScmatInt(Long_I N1, Long_I N2);
+    ScmatInt(Int *ptr, Long_I N1, Long_I N2);
+
+    // === Cmat functions ===
+    Int& operator()(Long_I i, Long_I j) const; // double indexing
+    Long n1() const;
+    Long n2() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void set_size(Long_I N1, Long_I N2);
+    void set(Int *ptr, Long_I N1, Long_I N2);
+    ~ScmatInt();
+};
+
+inline ScmatInt::ScmatInt() {}
+
+inline ScmatInt::ScmatInt(Long_I N1, Long_I N2)
+    : SvecInt(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline ScmatInt::ScmatInt(Int *ptr, Long_I N1, Long_I N2)
+    : ScmatInt(N1, N2)
+{
+    m_p = ptr;
+}
+
+inline Int & ScmatInt::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1 * j];
+}
+
+inline Long ScmatInt::n1() const
+{
+    return m_N1;
+}
+
+inline Long ScmatInt::n2() const
+{
+    return m_N2;
+}
+
+inline void ScmatInt::set_size(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
+#endif
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline void ScmatInt::set(Int * ptr, Long_I N1, Long_I N2)
+{
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline ScmatInt::~ScmatInt() {}
+
+typedef const ScmatInt & ScmatInt_O, & ScmatInt_IO;
+
+class ScmatLlong_c : public SvecLlong_c
+{
+public:
+    Long m_N1, m_N2;
+    ScmatLlong_c();
+    ScmatLlong_c(Long_I N1, Long_I N2);
+    ScmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2);
+
+    // === Cmat functions ===
+    const Llong& operator()(Long_I i, Long_I j) const; // double indexing
+    Long n1() const;
+    Long n2() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void set_size(Long_I N1, Long_I N2);
+    void set(const Llong *ptr, Long_I N1, Long_I N2);
+    ~ScmatLlong_c();
+};
+
+inline ScmatLlong_c::ScmatLlong_c() {}
+
+inline ScmatLlong_c::ScmatLlong_c(Long_I N1, Long_I N2)
+    : SvecLlong_c(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline ScmatLlong_c::ScmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2)
+    : ScmatLlong_c(N1, N2)
+{
+    m_p = ptr;
+}
+
+inline const Llong & ScmatLlong_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1 * j];
+}
+
+inline Long ScmatLlong_c::n1() const
+{
+    return m_N1;
+}
+
+inline Long ScmatLlong_c::n2() const
+{
+    return m_N2;
+}
+
+inline void ScmatLlong_c::set_size(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
+#endif
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline void ScmatLlong_c::set(const Llong * ptr, Long_I N1, Long_I N2)
+{
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline ScmatLlong_c::~ScmatLlong_c() {}
+
+typedef const ScmatLlong_c & ScmatLlong_I;
+
 class ScmatLlong : public SvecLlong
 {
 public:
-    typedef SvecLlong Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_Nr, m_Nc;
+    Long m_N1, m_N2;
     ScmatLlong();
-    ScmatLlong(Long_I Nr, Long_I Nc);
-    ScmatLlong(Llong *ptr, Long_I Nr, Long_I Nc);
+    ScmatLlong(Long_I N1, Long_I N2);
+    ScmatLlong(Llong *ptr, Long_I N1, Long_I N2);
 
     // === Cmat functions ===
     Llong& operator()(Long_I i, Long_I j) const; // double indexing
@@ -17,190 +221,151 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I Nr, Long_I Nc);
-    void set_ptr(Llong *ptr);
-    void set(Llong *ptr, Long_I Nr, Long_I Nc);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void set_size(Long_I N1, Long_I N2);
+    void set(Llong *ptr, Long_I N1, Long_I N2);
     ~ScmatLlong();
 };
 
 inline ScmatLlong::ScmatLlong() {}
 
-inline ScmatLlong::ScmatLlong(Long_I Nr, Long_I Nc)
-    : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+inline ScmatLlong::ScmatLlong(Long_I N1, Long_I N2)
+    : SvecLlong(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline ScmatLlong::ScmatLlong(Llong *ptr, Long_I Nr, Long_I Nc)
-    : ScmatLlong(Nr, Nc)
+inline ScmatLlong::ScmatLlong(Llong *ptr, Long_I N1, Long_I N2)
+    : ScmatLlong(N1, N2)
 {
-    m_p = (Llong *)ptr;
+    m_p = ptr;
 }
 
 inline Llong & ScmatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_Nr * j];
+    return m_p[i + m_N1 * j];
 }
 
 inline Long ScmatLlong::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long ScmatLlong::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
-inline void ScmatLlong::set_size(Long_I Nr, Long_I Nc)
+inline void ScmatLlong::set_size(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
 #endif
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatLlong::set_ptr(Llong * ptr)
+inline void ScmatLlong::set(Llong * ptr, Long_I N1, Long_I N2)
 {
-    m_p = (Llong *)ptr;
-}
-
-inline void ScmatLlong::set(Llong * ptr, Long_I Nr, Long_I Nc)
-{
-    m_p = (Llong *)ptr;
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
-
-inline void ScmatLlong::next()
-{
-    m_p += m_N;
-}
-
-inline void ScmatLlong::last()
-{
-    m_p -= m_N;
-}
-
-inline void ScmatLlong::shift(Long_I N)
-{
-    m_p += N;
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
 inline ScmatLlong::~ScmatLlong() {}
 
+typedef const ScmatLlong & ScmatLlong_O, & ScmatLlong_IO;
 
-// ========== low level const of ScmatLlong =========
-class ScmatLlong_c : public SvecLlong
+#ifdef SLS_USE_INT_AS_LONG
+typedef ScmatInt_c ScmatLong_c;
+#else
+typedef ScmatLlong_c ScmatLong_c;
+#endif
+
+typedef const ScmatLong_c & ScmatLong_I;
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef ScmatInt ScmatLong;
+#else
+typedef ScmatLlong ScmatLong;
+#endif
+
+typedef const ScmatLong & ScmatLong_O, & ScmatLong_IO;
+
+class ScmatDoub_c : public SvecDoub_c
 {
 public:
-    typedef SvecLlong Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_Nr, m_Nc;
-    ScmatLlong_c();
-    ScmatLlong_c(Long_I Nr, Long_I Nc);
-    ScmatLlong_c(const Llong *ptr, Long_I Nr, Long_I Nc);
+    Long m_N1, m_N2;
+    ScmatDoub_c();
+    ScmatDoub_c(Long_I N1, Long_I N2);
+    ScmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2);
 
     // === Cmat functions ===
-    const Llong& operator()(Long_I i, Long_I j) const;
+    const Doub& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I Nr, Long_I Nc);
-    void set_ptr(const Llong *ptr);
-    void set(const Llong *ptr, Long_I Nr, Long_I Nc);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
-    ~ScmatLlong_c();
+    void set_size(Long_I N1, Long_I N2);
+    void set(const Doub *ptr, Long_I N1, Long_I N2);
+    ~ScmatDoub_c();
 };
 
-inline ScmatLlong_c::ScmatLlong_c() {}
+inline ScmatDoub_c::ScmatDoub_c() {}
 
-inline ScmatLlong_c::ScmatLlong_c(Long_I Nr, Long_I Nc)
-    : m_Nr(Nr), m_Nc(Nc), Base(Nr*Nc) {}
+inline ScmatDoub_c::ScmatDoub_c(Long_I N1, Long_I N2)
+    : SvecDoub_c(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline ScmatLlong_c::ScmatLlong_c(const Llong *ptr, Long_I Nr, Long_I Nc)
-    : ScmatLlong_c(Nr, Nc)
+inline ScmatDoub_c::ScmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2)
+    : ScmatDoub_c(N1, N2)
 {
-    m_p = (Llong *)ptr;
+    m_p = ptr;
 }
 
-inline const Llong & ScmatLlong_c::operator()(Long_I i, Long_I j) const
+inline const Doub & ScmatDoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_Nr * j];
+    return m_p[i + m_N1 * j];
 }
 
-inline Long ScmatLlong_c::n1() const
+inline Long ScmatDoub_c::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
-inline Long ScmatLlong_c::n2() const
+inline Long ScmatDoub_c::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
-inline void ScmatLlong_c::set_size(Long_I Nr, Long_I Nc)
+inline void ScmatDoub_c::set_size(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
 #endif
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatLlong_c::set_ptr(const Llong * ptr)
+inline void ScmatDoub_c::set(const Doub * ptr, Long_I N1, Long_I N2)
 {
-    m_p = (Llong *)ptr;
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatLlong_c::set(const Llong * ptr, Long_I Nr, Long_I Nc)
-{
-    m_p = (Llong *)ptr;
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
+inline ScmatDoub_c::~ScmatDoub_c() {}
 
-inline void ScmatLlong_c::next()
-{
-    m_p += m_N;
-}
-
-inline void ScmatLlong_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void ScmatLlong_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline ScmatLlong_c::~ScmatLlong_c() {}
-
-typedef const ScmatLlong & ScmatLlong_I;
-typedef ScmatLlong & ScmatLlong_O, & ScmatLlong_IO;
+typedef const ScmatDoub_c & ScmatDoub_I;
 
 class ScmatDoub : public SvecDoub
 {
 public:
-    typedef SvecDoub Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_Nr, m_Nc;
+    Long m_N1, m_N2;
     ScmatDoub();
-    ScmatDoub(Long_I Nr, Long_I Nc);
-    ScmatDoub(Doub *ptr, Long_I Nr, Long_I Nc);
+    ScmatDoub(Long_I N1, Long_I N2);
+    ScmatDoub(Doub *ptr, Long_I N1, Long_I N2);
 
     // === Cmat functions ===
     Doub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -210,190 +375,135 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I Nr, Long_I Nc);
-    void set_ptr(Doub *ptr);
-    void set(Doub *ptr, Long_I Nr, Long_I Nc);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void set_size(Long_I N1, Long_I N2);
+    void set(Doub *ptr, Long_I N1, Long_I N2);
     ~ScmatDoub();
 };
 
 inline ScmatDoub::ScmatDoub() {}
 
-inline ScmatDoub::ScmatDoub(Long_I Nr, Long_I Nc)
-    : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+inline ScmatDoub::ScmatDoub(Long_I N1, Long_I N2)
+    : SvecDoub(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline ScmatDoub::ScmatDoub(Doub *ptr, Long_I Nr, Long_I Nc)
-    : ScmatDoub(Nr, Nc)
+inline ScmatDoub::ScmatDoub(Doub *ptr, Long_I N1, Long_I N2)
+    : ScmatDoub(N1, N2)
 {
-    m_p = (Doub *)ptr;
+    m_p = ptr;
 }
 
 inline Doub & ScmatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_Nr * j];
+    return m_p[i + m_N1 * j];
 }
 
 inline Long ScmatDoub::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long ScmatDoub::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
-inline void ScmatDoub::set_size(Long_I Nr, Long_I Nc)
+inline void ScmatDoub::set_size(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
 #endif
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatDoub::set_ptr(Doub * ptr)
+inline void ScmatDoub::set(Doub * ptr, Long_I N1, Long_I N2)
 {
-    m_p = (Doub *)ptr;
-}
-
-inline void ScmatDoub::set(Doub * ptr, Long_I Nr, Long_I Nc)
-{
-    m_p = (Doub *)ptr;
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
-
-inline void ScmatDoub::next()
-{
-    m_p += m_N;
-}
-
-inline void ScmatDoub::last()
-{
-    m_p -= m_N;
-}
-
-inline void ScmatDoub::shift(Long_I N)
-{
-    m_p += N;
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
 inline ScmatDoub::~ScmatDoub() {}
 
+typedef const ScmatDoub & ScmatDoub_O, & ScmatDoub_IO;
 
-// ========== low level const of ScmatDoub =========
-class ScmatDoub_c : public SvecDoub
+class ScmatComp_c : public SvecComp_c
 {
 public:
-    typedef SvecDoub Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_Nr, m_Nc;
-    ScmatDoub_c();
-    ScmatDoub_c(Long_I Nr, Long_I Nc);
-    ScmatDoub_c(const Doub *ptr, Long_I Nr, Long_I Nc);
+    Long m_N1, m_N2;
+    ScmatComp_c();
+    ScmatComp_c(Long_I N1, Long_I N2);
+    ScmatComp_c(const Comp *ptr, Long_I N1, Long_I N2);
 
     // === Cmat functions ===
-    const Doub& operator()(Long_I i, Long_I j) const;
+    const Comp& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I Nr, Long_I Nc);
-    void set_ptr(const Doub *ptr);
-    void set(const Doub *ptr, Long_I Nr, Long_I Nc);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
-    ~ScmatDoub_c();
+    void set_size(Long_I N1, Long_I N2);
+    void set(const Comp *ptr, Long_I N1, Long_I N2);
+    ~ScmatComp_c();
 };
 
-inline ScmatDoub_c::ScmatDoub_c() {}
+inline ScmatComp_c::ScmatComp_c() {}
 
-inline ScmatDoub_c::ScmatDoub_c(Long_I Nr, Long_I Nc)
-    : m_Nr(Nr), m_Nc(Nc), Base(Nr*Nc) {}
+inline ScmatComp_c::ScmatComp_c(Long_I N1, Long_I N2)
+    : SvecComp_c(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline ScmatDoub_c::ScmatDoub_c(const Doub *ptr, Long_I Nr, Long_I Nc)
-    : ScmatDoub_c(Nr, Nc)
+inline ScmatComp_c::ScmatComp_c(const Comp *ptr, Long_I N1, Long_I N2)
+    : ScmatComp_c(N1, N2)
 {
-    m_p = (Doub *)ptr;
+    m_p = ptr;
 }
 
-inline const Doub & ScmatDoub_c::operator()(Long_I i, Long_I j) const
+inline const Comp & ScmatComp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_Nr * j];
+    return m_p[i + m_N1 * j];
 }
 
-inline Long ScmatDoub_c::n1() const
+inline Long ScmatComp_c::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
-inline Long ScmatDoub_c::n2() const
+inline Long ScmatComp_c::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
-inline void ScmatDoub_c::set_size(Long_I Nr, Long_I Nc)
+inline void ScmatComp_c::set_size(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
 #endif
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatDoub_c::set_ptr(const Doub * ptr)
+inline void ScmatComp_c::set(const Comp * ptr, Long_I N1, Long_I N2)
 {
-    m_p = (Doub *)ptr;
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatDoub_c::set(const Doub * ptr, Long_I Nr, Long_I Nc)
-{
-    m_p = (Doub *)ptr;
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
+inline ScmatComp_c::~ScmatComp_c() {}
 
-inline void ScmatDoub_c::next()
-{
-    m_p += m_N;
-}
-
-inline void ScmatDoub_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void ScmatDoub_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline ScmatDoub_c::~ScmatDoub_c() {}
-
-typedef const ScmatDoub & ScmatDoub_I;
-typedef ScmatDoub & ScmatDoub_O, & ScmatDoub_IO;
+typedef const ScmatComp_c & ScmatComp_I;
 
 class ScmatComp : public SvecComp
 {
 public:
-    typedef SvecComp Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_Nr, m_Nc;
+    Long m_N1, m_N2;
     ScmatComp();
-    ScmatComp(Long_I Nr, Long_I Nc);
-    ScmatComp(Comp *ptr, Long_I Nr, Long_I Nc);
+    ScmatComp(Long_I N1, Long_I N2);
+    ScmatComp(Comp *ptr, Long_I N1, Long_I N2);
 
     // === Cmat functions ===
     Comp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -403,177 +513,56 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I Nr, Long_I Nc);
-    void set_ptr(Comp *ptr);
-    void set(Comp *ptr, Long_I Nr, Long_I Nc);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void set_size(Long_I N1, Long_I N2);
+    void set(Comp *ptr, Long_I N1, Long_I N2);
     ~ScmatComp();
 };
 
 inline ScmatComp::ScmatComp() {}
 
-inline ScmatComp::ScmatComp(Long_I Nr, Long_I Nc)
-    : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+inline ScmatComp::ScmatComp(Long_I N1, Long_I N2)
+    : SvecComp(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline ScmatComp::ScmatComp(Comp *ptr, Long_I Nr, Long_I Nc)
-    : ScmatComp(Nr, Nc)
+inline ScmatComp::ScmatComp(Comp *ptr, Long_I N1, Long_I N2)
+    : ScmatComp(N1, N2)
 {
-    m_p = (Comp *)ptr;
+    m_p = ptr;
 }
 
 inline Comp & ScmatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_Nr * j];
+    return m_p[i + m_N1 * j];
 }
 
 inline Long ScmatComp::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long ScmatComp::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
-inline void ScmatComp::set_size(Long_I Nr, Long_I Nc)
+inline void ScmatComp::set_size(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
+    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
 #endif
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
-inline void ScmatComp::set_ptr(Comp * ptr)
+inline void ScmatComp::set(Comp * ptr, Long_I N1, Long_I N2)
 {
-    m_p = (Comp *)ptr;
-}
-
-inline void ScmatComp::set(Comp * ptr, Long_I Nr, Long_I Nc)
-{
-    m_p = (Comp *)ptr;
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
-
-inline void ScmatComp::next()
-{
-    m_p += m_N;
-}
-
-inline void ScmatComp::last()
-{
-    m_p -= m_N;
-}
-
-inline void ScmatComp::shift(Long_I N)
-{
-    m_p += N;
+    m_p = ptr;
+    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
 inline ScmatComp::~ScmatComp() {}
 
-
-// ========== low level const of ScmatComp =========
-class ScmatComp_c : public SvecComp
-{
-public:
-    typedef SvecComp Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_Nr, m_Nc;
-    ScmatComp_c();
-    ScmatComp_c(Long_I Nr, Long_I Nc);
-    ScmatComp_c(const Comp *ptr, Long_I Nr, Long_I Nc);
-
-    // === Cmat functions ===
-    const Comp& operator()(Long_I i, Long_I j) const;
-    Long n1() const;
-    Long n2() const;
-
-    // resize() is a bad idea, don't try to create it!
-
-    // There is no upper bound checking of N, use with care
-    void set_size(Long_I Nr, Long_I Nc);
-    void set_ptr(const Comp *ptr);
-    void set(const Comp *ptr, Long_I Nr, Long_I Nc);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
-    ~ScmatComp_c();
-};
-
-inline ScmatComp_c::ScmatComp_c() {}
-
-inline ScmatComp_c::ScmatComp_c(Long_I Nr, Long_I Nc)
-    : m_Nr(Nr), m_Nc(Nc), Base(Nr*Nc) {}
-
-inline ScmatComp_c::ScmatComp_c(const Comp *ptr, Long_I Nr, Long_I Nc)
-    : ScmatComp_c(Nr, Nc)
-{
-    m_p = (Comp *)ptr;
-}
-
-inline const Comp & ScmatComp_c::operator()(Long_I i, Long_I j) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_Nr * j];
-}
-
-inline Long ScmatComp_c::n1() const
-{
-    return m_Nr;
-}
-
-inline Long ScmatComp_c::n2() const
-{
-    return m_Nc;
-}
-
-inline void ScmatComp_c::set_size(Long_I Nr, Long_I Nc)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (Nr <= 0 || Nc <= 0) SLS_ERR("illegal Nr or Nc!");
-#endif
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
-
-inline void ScmatComp_c::set_ptr(const Comp * ptr)
-{
-    m_p = (Comp *)ptr;
-}
-
-inline void ScmatComp_c::set(const Comp * ptr, Long_I Nr, Long_I Nc)
-{
-    m_p = (Comp *)ptr;
-    m_Nr = Nr; m_Nc = Nc; m_N = Nr * Nc;
-}
-
-inline void ScmatComp_c::next()
-{
-    m_p += m_N;
-}
-
-inline void ScmatComp_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void ScmatComp_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline ScmatComp_c::~ScmatComp_c() {}
-
-typedef const ScmatComp & ScmatComp_I;
-typedef ScmatComp & ScmatComp_O, & ScmatComp_IO;
+typedef const ScmatComp & ScmatComp_O, & ScmatComp_IO;
 
