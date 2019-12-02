@@ -1,4 +1,5 @@
 //% types = {
+//%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'DvecLlong';
@@ -6,6 +7,7 @@
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecComp';
+//%     'MatInt', 'MatInt';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
 //%     'MatComp', 'MatComp';
@@ -17,6 +19,8 @@
 //%     'MatComp', 'CmatComp';
 //%     'CmatComp', 'MatComp';
 //%     'DcmatDoub', 'CmatDoub';
+//%     'Cmat3Doub', 'Cmat3Doub';
+//%     'Cmat3Comp', 'Cmat3Comp';
 //% };
 //%---------------------------------
 //% [T1, T2] = varargin{:};

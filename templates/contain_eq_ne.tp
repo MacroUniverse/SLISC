@@ -6,6 +6,7 @@
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecComp';
+//%     'MatInt', 'MatInt';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
 //%     'MatComp', 'MatComp';

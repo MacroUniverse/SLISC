@@ -21,6 +21,7 @@ void test_random();
 void test_anglib();
 void test_search();
 void test_file();
+void test_matt();
 
 void test_all()
 {
@@ -61,6 +62,8 @@ void test_all()
 	test_search();
 	cout << "test_file()" << endl;
 	test_file();
+	cout << "test_matt()" << endl;
+	test_matt();
 	
 	cout << "do optional tests? (y/n)" << endl;
 	if (getchar() == 'y') {

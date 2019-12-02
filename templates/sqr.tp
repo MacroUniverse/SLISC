@@ -1,0 +1,4 @@
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%-----------------------------------
+//% T = varargin{:};
+inline @T@ sqr(@T@_I a) { return a * a; }

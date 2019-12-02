@@ -90,6 +90,17 @@ inline Bool operator!=(VecComp_I v1, VecComp_I v2)
     return !(v1 == v2);
 }
 
+inline Bool operator==(MatInt_I v1, MatInt_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+
+inline Bool operator!=(MatInt_I v1, MatInt_I v2)
+{
+    return !(v1 == v2);
+}
+
 inline Bool operator==(MatLlong_I v1, MatLlong_I v2)
 {
     return shape_cmp(v1, v2) &&

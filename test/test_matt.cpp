@@ -1,7 +1,7 @@
 #include "../SLISC/matt.h"
 #include "../SLISC/random.h"
 
-void test_mattsave()
+void test_matt()
 {
     using namespace slisc;
 

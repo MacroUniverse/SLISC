@@ -634,9 +634,9 @@ inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
         SLS_ERR("matt file not open!");
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
-    N2 = varname.size();
-    fout << N2 << Matt::dlm;
-    for (i = 0; i < N2; ++i) {
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (i = 0; i < n; ++i) {
         fout << to_num(varname.at(i)) << Matt::dlm;
     }
     // write data type info
@@ -665,9 +665,9 @@ inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
         SLS_ERR("matt file not open!");
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
-    N2 = varname.size();
-    fout << N2 << Matt::dlm;
-    for (i = 0; i < N2; ++i) {
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (i = 0; i < n; ++i) {
         fout << to_num(varname.at(i)) << Matt::dlm;
     }
     // write data type info
@@ -696,9 +696,9 @@ inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
         SLS_ERR("matt file not open!");
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
-    N2 = varname.size();
-    fout << N2 << Matt::dlm;
-    for (i = 0; i < N2; ++i) {
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (i = 0; i < n; ++i) {
         fout << to_num(varname.at(i)) << Matt::dlm;
     }
     // write data type info
@@ -727,9 +727,9 @@ inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
         SLS_ERR("matt file not open!");
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
-    N2 = varname.size();
-    fout << N2 << Matt::dlm;
-    for (i = 0; i < N2; ++i) {
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (i = 0; i < n; ++i) {
         fout << to_num(varname.at(i)) << Matt::dlm;
     }
     // write data type info

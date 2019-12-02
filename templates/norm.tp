@@ -1,0 +1,36 @@
+//% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp';
+//%     'CmatDoub'; 'ScmatDoub'; 'Cmat3Doub'; 'Cmat3Comp';
+//% };
+//%-------------------------------
+//% T = varargin{:};
+//% Ts = contain_type(T);
+//% Tr = rm_comp(Ts);
+//% if is_dense(T) || is_Dvec(T)
+inline @Tr@ norm2(@T@_I v)
+{
+    Long N = v.size();
+    @Tr@ s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+//% elseif is_Dcmat(T)
+inline @Tr@ norm2(@T@_I a)
+{
+    @Tr@ *p = a.ptr();
+    Long Nr = a.n1(), lda = a.lda();
+    rm_comp<contain_type<T>> s2 = 0;
+    for (Long j = 0; j < a.n2(); ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            s2 += abs2(p[i]);
+        p += lda;
+    }
+    return s2;
+}
+//% else
+//%     error('not implemented!');
+//% end
+inline @Tr@ norm(@T@_I v)
+{
+    return sqrt(norm2(v));
+}

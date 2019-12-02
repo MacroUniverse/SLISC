@@ -3,7 +3,7 @@
 
 libs = -lgsl -llapacke -lblas
 
-flags = -Wall -Wno-reorder -fopenmp -O3 -D NDEBUG -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL
+flags = -Wall -Wno-reorder -fopenmp -g -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL
 
 compiler = g++
 

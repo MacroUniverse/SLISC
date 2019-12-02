@@ -6,6 +6,7 @@
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"
+#include "Dcmat.h"
 
 namespace slisc {
 #include "equals_to_vs.inl"

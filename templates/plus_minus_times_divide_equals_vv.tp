@@ -1,0 +1,34 @@
+//% types = {
+//%     'Char', 'Char';
+//%     'Int', 'Int';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//%     };
+//%-------------------
+//% [T, T1] = varargin{:};
+//% if ~is_promo(T, T1)
+//%     error('illegal types');
+//% end
+inline void plus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += v1[i];
+}
+
+inline void minus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= v1[i];
+}
+
+inline void times_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= v1[i];
+}
+
+inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= v1[i];
+}

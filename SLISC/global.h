@@ -22,6 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include "time.h"
 
 #ifdef SLS_USE_MKL
     #define MKL_Complex16 double _Complex

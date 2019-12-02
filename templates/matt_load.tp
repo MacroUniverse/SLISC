@@ -2,6 +2,7 @@
 //%         'VecChar'; 'VecInt'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%         'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //% };
 //%---------------------
 //% T = varargin{:};

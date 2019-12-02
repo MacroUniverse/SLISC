@@ -3,8 +3,12 @@
 
 namespace slisc {
 
+#include "isodd.inl"
 #include "to_num.inl"
 #include "mod.inl"
+#include "sqr.inl"
+#include "abs2.inl"
+
 inline Doub factorial_imp(Doub_I n) {
     if (n == 0. || n == 1.)
         return 1.;
