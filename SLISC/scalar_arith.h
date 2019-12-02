@@ -3,7 +3,6 @@
 
 namespace slisc {
 
-#include "Size.inl"
 #include "to_num.inl"
 #include "mod.inl"
 inline Doub factorial_imp(Doub_I n) {

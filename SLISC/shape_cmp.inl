@@ -1,3 +1,18 @@
+inline Bool shape_cmp(VecInt_I v1, DvecInt_I v2)
+{
+    return v1.size() == v2.size();
+}
+
+inline Bool shape_cmp(VecLlong_I v1, DvecLlong_I v2)
+{
+    return v1.size() == v2.size();
+}
+
+inline Bool shape_cmp(VecDoub_I v1, DvecDoub_I v2)
+{
+    return v1.size() == v2.size();
+}
+
 inline Bool shape_cmp(VecLlong_I v1, VecLlong_I v2)
 {
     return v1.size() == v2.size();

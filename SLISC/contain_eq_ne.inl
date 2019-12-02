@@ -1,3 +1,51 @@
+inline Bool operator==(VecInt_I v1, DvecInt_I v2)
+{
+	if (!shape_cmp(v1, v2))
+        return false;
+	for (Long i = 0; i < v1.size(); ++i) {
+		if (v1[i] != v2[i])
+            return false;
+	}
+	return true;
+}
+
+inline Bool operator!=(VecInt_I v1, DvecInt_I v2)
+{
+    return !(v1 == v2);
+}
+
+inline Bool operator==(VecLlong_I v1, DvecLlong_I v2)
+{
+	if (!shape_cmp(v1, v2))
+        return false;
+	for (Long i = 0; i < v1.size(); ++i) {
+		if (v1[i] != v2[i])
+            return false;
+	}
+	return true;
+}
+
+inline Bool operator!=(VecLlong_I v1, DvecLlong_I v2)
+{
+    return !(v1 == v2);
+}
+
+inline Bool operator==(VecDoub_I v1, DvecDoub_I v2)
+{
+	if (!shape_cmp(v1, v2))
+        return false;
+	for (Long i = 0; i < v1.size(); ++i) {
+		if (v1[i] != v2[i])
+            return false;
+	}
+	return true;
+}
+
+inline Bool operator!=(VecDoub_I v1, DvecDoub_I v2)
+{
+    return !(v1 == v2);
+}
+
 inline Bool operator==(VecLlong_I v1, VecLlong_I v2)
 {
     return shape_cmp(v1, v2) &&

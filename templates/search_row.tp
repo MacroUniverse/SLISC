@@ -1,0 +1,23 @@
+//% types = {
+//%   %  'VecInt', 'MatInt';
+//%   %  'VecLlong', 'MatLlong';
+//%     'VecInt', 'CmatInt';
+//%     'VecLlong', 'CmatLlong';
+//%     'VecDoub', 'CmatDoub';
+//% };
+//%--------------------------
+//% [Tv, Tmat] = varargin{:};
+//% Tsli = slice2_type(Tmat);
+inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (v.size() != a.n2())
+        SLS_ERR("wrong shape");
+#endif
+    for (Long i = start; i < a.n1(); ++i) {
+		@Tsli@_c sli; slice2(sli, a, i);
+        if (v == sli)
+            return i;
+    }
+    return -1;
+}

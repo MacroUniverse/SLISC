@@ -1,0 +1,31 @@
+//% types = {
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp';
+//% };
+//%----------------------------
+//% Tv = varargin{:};
+//% T = contain_type(Tv);
+//% Tsli = slice2_type(Tv);
+//% if is_Cmat(Tv) || is_Scmat(Tv)
+inline void slice2(@Tsli@_c &sli, @Tv@_I v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.n1());
+}
+
+inline void slice2(@Tsli@ &sli, @Tv@ &v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.n1());
+}
+//% elseif is_Dcmat(Tv)
+inline void slice2(@Tsli@_c &sli, @Tv@_I v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.lda());
+}
+
+inline void slice2(@Tsli@ &sli, @Tv@ &v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.lda());
+}
+//% else
+//%     error('not implemented!');
+//% end

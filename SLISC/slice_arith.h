@@ -8,4 +8,6 @@
 
 namespace slisc {
 #include "slice.inl"
+#include "slice1.inl"
+#include "slice2.inl"
 } // namespace slisc

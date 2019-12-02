@@ -312,6 +312,12 @@ inline VbaseLlong::~VbaseLlong()
         delete[] m_p;
 }
 
+#ifdef SLS_USE_INT_AS_LONG
+typedef VbaseInt VbaseLong;
+#else
+typedef VbaseLlong VbaseLong;
+#endif
+
 class VbaseDoub
 {
 protected:

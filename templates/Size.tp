@@ -1,4 +1,4 @@
-//% types = {'vecStr'};
+//% types = {'vecStr'; 'VecInt'; 'VecLlong'; 'VecDoub';};
 //%--------------------------
 //% T = varargin{:};
 inline Long Size(@T@_I v)

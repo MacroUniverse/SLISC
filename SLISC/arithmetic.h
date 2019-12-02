@@ -13,6 +13,7 @@
 #include "slice_arith.h"
 
 namespace slisc {
+#include "Size.inl"
 #include "min_max_v.inl"
 #include "min_max.inl"
 #include "resize_cpy.inl"

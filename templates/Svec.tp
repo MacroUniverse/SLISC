@@ -1,46 +1,79 @@
-//% types = {'Llong'; 'Doub'; 'Comp';};
+//% types = {
+//%     'Int', true;
+//%     'Int', false;
+//%     'Llong', true;
+//%     'Llong', false;
+//%     'Long', true;
+//%     'Long', false;
+//%     'Doub', true;
+//%     'Doub', false;
+//%     'Comp', true;
+//%     'Comp', false;
+//% };
 //%------------------------
-//% T = varargin{:};
+//% [T, constness] = varargin{:};
 //% SvecT = ['Svec' T];
 //% SvecT_c = [SvecT '_c'];
-class @SvecT@
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = SvecT_c;
+//% else
+//%     CT = T;
+//% 	Class = SvecT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong_c SvecLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+#else
+typedef SvecLlong SvecLong;
+#endif
+//% else
+class @Class@
 {
 public:
-    typedef @T@ value_type;
-    @T@ *m_p;
+    @CT@ *m_p;
     Long m_N;
-    @SvecT@();
-    @SvecT@(Long_I N);
-    @SvecT@(@T@ *ptr, Long_I N);
-
-    @T@* ptr() const; // get pointer
+    @Class@();
+    @Class@(Long_I N);
+    @Class@(@CT@ *ptr, Long_I N);
+	@CT@* ptr() const;
     Long size() const;
-    // resize() is a bad idea, don't try to create it!
-    @T@ & operator[](Long_I i) const;
-    @T@ & operator()(Long_I i) const;
-    @T@ & end() const;
-    @T@ & end(Long_I i) const;
+//% % resize() is a bad idea, don't try to create it!
+    @CT@ & operator[](Long_I i) const;
+    @CT@ & operator()(Long_I i) const;
+    @CT@ & end() const;
+    @CT@ & end(Long_I i) const;
+
+//% if ~constness
+	operator @SvecT_c@();
+//% end
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
-    void set_ptr(@T@ *ptr);
-    void set(@T@ *ptr, Long_I N);
+    void set_ptr(@CT@ *ptr);
+    void set(@CT@ *ptr, Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
     
-    ~@SvecT@();
+    ~@Class@();
 };
 
-inline @SvecT@::@SvecT@() {}
+inline @Class@::@Class@() {}
 
-inline @SvecT@::@SvecT@(Long_I N) : m_N(N) {}
+inline @Class@::@Class@(Long_I N) : m_N(N) {}
 
-inline @SvecT@::@SvecT@(@T@ *ptr, Long_I N)
+inline @Class@::@Class@(@CT@ *ptr, Long_I N)
     : m_p(ptr), m_N(N) {}
 
-inline @T@ * @SvecT@::ptr() const
+inline @CT@ * @Class@::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -49,12 +82,12 @@ inline @T@ * @SvecT@::ptr() const
     return m_p;
 }
 
-inline Long @SvecT@::size() const
+inline Long @Class@::size() const
 {
     return m_N;
 }
 
-inline @T@ & @SvecT@::operator[](Long_I i) const
+inline @CT@ & @Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -63,12 +96,12 @@ inline @T@ & @SvecT@::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline @T@ & @SvecT@::operator()(Long_I i) const
+inline @CT@ & @Class@::operator()(Long_I i) const
 {
     return (*this)[i];
 }
 
-inline @T@ & @SvecT@::end() const
+inline @CT@ & @Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -77,7 +110,7 @@ inline @T@ & @SvecT@::end() const
     return m_p[m_N - 1];
 }
 
-inline @T@ & @SvecT@::end(Long_I i) const
+inline @CT@ & @Class@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -86,7 +119,14 @@ inline @T@ & @SvecT@::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline void @SvecT@::set_size(Long_I N)
+//% if ~constness
+inline @Class@::operator @SvecT_c@()
+{
+	return *((@SvecT_c@ *)this);
+}
+//% end
+
+inline void @Class@::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N <= 0) SLS_ERR("illegal N!");
@@ -94,162 +134,36 @@ inline void @SvecT@::set_size(Long_I N)
     m_N = N;
 }
 
-inline void @SvecT@::set_ptr(@T@ * ptr)
+inline void @Class@::set_ptr(@CT@ * ptr)
 {
     m_p = ptr;
 }
 
-inline void @SvecT@::set(@T@ * ptr, Long_I N)
+inline void @Class@::set(@CT@ * ptr, Long_I N)
 {
     m_p = ptr; m_N = N;
 }
 
-inline void @SvecT@::next()
+inline void @Class@::next()
 {
     m_p += m_N;
 }
 
-inline void @SvecT@::last()
+inline void @Class@::last()
 {
     m_p -= m_N;
 }
 
-inline void @SvecT@::shift(Long_I N)
+inline void @Class@::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline @SvecT@::~@SvecT@() {}
+inline @Class@::~@Class@() {}
+//% end
 
-// ===========  slice to constant array (low level const) ========
-class @SvecT_c@
-{
-public:
-    typedef @T@ value_type;
-    const @T@ *m_p;
-    Long m_N;
-    @SvecT_c@();
-    @SvecT_c@(Long_I N);
-    @SvecT_c@(const @T@ *ptr, Long_I N);
-
-    const @T@* ptr() const;
-    Long size() const;
-    // resize() is a bad idea, don't try to create it!
-    const @T@ & operator[](Long_I i) const;
-    const @T@ & operator()(Long_I i) const;
-    const @T@& end() const;
-    const @T@& end(Long_I i) const;
-
-    // === other member functions ===
-    // There is no bound checking, use with care
-    void set_size(Long_I N);
-    void set_ptr(const @T@ *ptr);
-    void set(const @T@ *ptr, Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
-
-    ~@SvecT_c@();
-};
-
-inline @SvecT_c@::@SvecT_c@() {}
-
-inline @SvecT_c@::@SvecT_c@(Long_I N) : m_N(N) {}
-
-inline @SvecT_c@::@SvecT_c@(const @T@ *ptr, Long_I N)
-    : m_p(ptr), m_N(N) {}
-
-inline const @T@ * @SvecT_c@::ptr() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long @SvecT_c@::size() const
-{
-    return m_N;
-}
-
-inline const @T@ & @SvecT_c@::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const @T@ & @SvecT_c@::operator()(Long_I i) const
-{
-    return (*this)[i];
-}
-
-inline const @T@ & @SvecT_c@::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const @T@ & @SvecT_c@::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
-
-inline void @SvecT_c@::set_size(Long_I N)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (N <= 0) SLS_ERR("illegal N!");
-#endif
-    m_N = N;
-}
-
-inline void @SvecT_c@::set_ptr(const @T@ * ptr)
-{
-    m_p = ptr;
-}
-
-inline void @SvecT_c@::set(const @T@ * ptr, Long_I N)
-{
-    m_p = ptr; m_N = N;
-}
-
-inline void @SvecT_c@::next()
-{
-    m_p += m_N;
-}
-
-inline void @SvecT_c@::last()
-{
-    m_p -= m_N;
-}
-
-inline void @SvecT_c@::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline @SvecT_c@::~@SvecT_c@()
-{}
-
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt SvecLong;
-typedef SvecInt_c SvecLong_c;
-#else
-typedef SvecLlong SvecLong;
-typedef SvecLlong_c SvecLong_c;
-#endif
+//% if constness
+typedef const @Class@ & @SvecT@_I;
 //% else
-typedef const @SvecT_c@ & @SvecT@_I;
-typedef @SvecT@ & @SvecT@_O, & @SvecT@_IO;
+typedef const @Class@ & @SvecT@_O, & @SvecT@_IO;
 //% end

@@ -52,6 +52,14 @@ inline void VecLlong::operator<<(VecLlong &rhs)
 typedef const VecLlong & VecLlong_I;
 typedef VecLlong & VecLlong_O, & VecLlong_IO;
 
+#ifdef SLS_USE_INT_AS_LONG
+typedef VecInt VecLong;
+#else
+typedef VecLlong VecLong;
+#endif
+typedef const VecLong & VecLong_I;
+typedef VecLong & VecLong_O, & VecLong_IO;
+
 class VecDoub : public VbaseDoub
 {
 public:

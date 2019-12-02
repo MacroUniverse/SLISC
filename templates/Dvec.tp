@@ -1,50 +1,80 @@
-//% types = {'Llong'; 'Doub'; 'Comp';};
+//% types = {
+//%     'Int', true;
+//%     'Int', false;
+//%     'Llong', true;
+//%     'Llong', false;
+//%     'Long', true;
+//%     'Long', false;
+//%     'Doub', true;
+//%     'Doub', false;
+//%     'Comp', true;
+//%     'Comp', false;
+//% };
 //%------------------------
-//% T = varargin{:};
+//% [T, constness] = varargin{:};
 //% DvecT = ['Dvec' T];
-class @DvecT@
+//% DvecT_c = [DvecT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = DvecT_c;
+//% else
+//%     CT = T;
+//% 	Class = DvecT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef DvecInt_c DvecLong_c;
+#else
+typedef DvecLlong_c DvecLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef DvecInt DvecLong;
+#else
+typedef DvecLlong DvecLong;
+#endif
+//% else
+class @Class@
 {
 private:
-    @T@ *m_p;
+    @CT@ *m_p;
     Long m_N;
     Long m_step;
 
 public:
-    @DvecT@();
-    @DvecT@(const @T@ *ptr, Long_I N, Long_I step);
-
-    @T@* ptr(); // get pointer
-    const @T@* ptr() const;
+    @Class@();
+    @Class@(@CT@ *ptr, Long_I N, Long_I step);
+	@CT@* ptr() const;
+	@CT@ & operator[](Long_I i) const;
+	@CT@ & operator()(Long_I i) const;
+	@CT@ & end() const;
+	@CT@ & end(Long_I i) const;
     Long size() const;
     Long step() const;
-    // resize() is a bad idea, don't try to create it!
-    @T@ & operator[](Long_I i);
-    const @T@ & operator[](Long_I i) const;
-    @T@ & operator()(Long_I i);
-    const @T@ & operator()(Long_I i) const;
-    @T@& end();
-    const @T@& end() const;
-    @T@& end(Long_I i);
-    const @T@& end(Long_I i) const;
+//% % resize() is a bad idea, don't try to create it!
+
+//% if ~constness
+	operator @DvecT_c@();
+//% end
 
     // === other member functions ===
     // There is no bound checking, use with care
+	void set_ptr(@CT@ *ptr);
+	void set(@CT@ *ptr, Long_I N, Long_I step);
     void set_size(Long_I N);
-    void set_ptr(const @T@ *ptr);
-    void set(const @T@ *ptr, Long_I N, Long_I step);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
     
-    ~@DvecT@();
+    ~@Class@();
 };
 
-inline @DvecT@::@DvecT@() {}
+inline @Class@::@Class@() {}
 
-inline @DvecT@::@DvecT@(const @T@ *ptr, Long_I N, Long_I step)
-    : m_p((@T@ *)ptr), m_N(N), m_step(step) {}
+inline @Class@::@Class@(@CT@ *ptr, Long_I N, Long_I step)
+    : m_p(ptr), m_N(N), m_step(step) {}
 
-inline @T@ * @DvecT@::ptr()
+inline @CT@ * @Class@::ptr() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -53,26 +83,17 @@ inline @T@ * @DvecT@::ptr()
     return m_p;
 }
 
-inline const @T@ * @DvecT@::ptr() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long @DvecT@::size() const
+inline Long @Class@::size() const
 {
     return m_N;
 }
 
-inline Long @DvecT@::step() const
+inline Long @Class@::step() const
 {
     return m_step;
 }
 
-inline @T@ & @DvecT@::operator[](Long_I i)
+inline @CT@ & @Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -81,22 +102,10 @@ inline @T@ & @DvecT@::operator[](Long_I i)
     return m_p[m_step*i];
 }
 
-inline const @T@ & @DvecT@::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[m_step*i];
-}
-
-inline @T@ & @DvecT@::operator()(Long_I i)
+inline @CT@ & @Class@::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const @T@ & @DvecT@::operator()(Long_I i) const
-{ return (*this)[i]; }
-
-inline @T@ & @DvecT@::end()
+inline @CT@ & @Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -105,26 +114,12 @@ inline @T@ & @DvecT@::end()
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const @T@ & @DvecT@::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_step*(m_N - 1)];
-}
-
-inline @T@ & @DvecT@::end(Long_I i)
-{
-    return m_p[m_step*(m_N - 1)];
-}
-
-inline const @T@ & @DvecT@::end(Long_I i) const
+inline @CT@ & @Class@::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
 
-inline void @DvecT@::set_size(Long_I N)
+inline void @Class@::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N <= 0) SLS_ERR("illegal N!");
@@ -132,40 +127,44 @@ inline void @DvecT@::set_size(Long_I N)
     m_N = N;
 }
 
-inline void @DvecT@::set_ptr(const @T@ * ptr)
+//% if ~constness
+inline @Class@::operator @DvecT_c@()
 {
-    m_p = (@T@ *)ptr;
+	return *((@DvecT_c@ *)this);
+}
+//% end
+
+inline void @Class@::set_ptr(@CT@ * ptr)
+{
+    m_p = ptr;
 }
 
-inline void @DvecT@::set(const @T@ * ptr, Long_I N, Long_I step)
+inline void @Class@::set(@CT@ * ptr, Long_I N, Long_I step)
 {
-    m_p = (@T@ *)ptr; m_N = N; m_step = step;
+    m_p = ptr; m_N = N; m_step = step;
 }
 
-inline void @DvecT@::next()
+inline void @Class@::next()
 {
     m_p += m_N;
 }
 
-inline void @DvecT@::last()
+inline void @Class@::last()
 {
     m_p -= m_N;
 }
 
-inline void @DvecT@::shift(Long_I N)
+inline void @Class@::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline @DvecT@::~@DvecT@() {}
+inline @Class@::~@Class@() {}
 
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef DvecInt DvecLong;
-#else
-typedef DvecLlong DvecLong;
-#endif
+//% end
+
+//% if constness
+typedef const @Class@ & @DvecT@_I;
 //% else
-typedef const @DvecT@ & @DvecT@_I;
-typedef @DvecT@ & @DvecT@_O, & @DvecT@_IO;
+typedef const @Class@ & @DvecT@_O, & @DvecT@_IO;
 //% end

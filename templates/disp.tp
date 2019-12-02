@@ -9,7 +9,7 @@
 //%-----------------------------
 //% T = varargin{:};
 //% if ndim(T) == 1
-void disp(@T@_I v, Int_I precision = def_disp_prec)
+inline void disp(@T@_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
@@ -23,7 +23,7 @@ void disp(@T@_I v, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 //% elseif ndim(T) == 2
-void disp(@T@_I a, Int_I precision = def_disp_prec)
+inline void disp(@T@_I a, Int_I precision = def_disp_prec)
 {
     Long i, j, m{ a.n1() }, n{ a.n2() };
     auto oldPrecision = cout.precision();
@@ -40,7 +40,7 @@ void disp(@T@_I a, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 //% elseif ndim(T) == 3
-void disp(@T@_I a, Int_I precision = def_disp_prec) {
+inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
     Long i, j, k, m{ a.n1() }, n{ a.n2() }, q{ a.n3() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
@@ -59,7 +59,7 @@ void disp(@T@_I a, Int_I precision = def_disp_prec) {
     cout.precision(oldPrecision);
 }
 //% elseif ndim(T) == 4
-void disp(@T@_I a, Int_I precision = def_disp_prec) {
+inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
     Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
     auto oldPrecision = cout.precision();
     cout.precision(precision);

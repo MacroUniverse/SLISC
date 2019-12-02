@@ -1,8 +1,15 @@
-//% types = {'Llong'; 'Doub'; 'Comp';};
+//% types = {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp';};
 //%----------------------------------------
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
 //% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef CmatInt CmatLong;
+#else
+typedef CmatLlong CmatLong;
+#endif
+//% else
 class @CmatT@ : public @VbaseT@
 {
 protected:
@@ -70,13 +77,6 @@ inline void @CmatT@::resize(Long_I Nr, Long_I Nc)
     }
 }
 
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef CmatInt CmatLong;
-#else
-typedef CmatLlong CmatLong;
-#endif
-//% else
+//% end
 typedef const @CmatT@ & @CmatT@_I;
 typedef @CmatT@ & @CmatT@_O, & @CmatT@_IO;
-//% end

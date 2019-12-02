@@ -10,7 +10,7 @@
 //% T = contain_type(Tv);
 //% Tsli = slice_type(Tv);
 //% if ndim(Tv) == 1
-inline void slice(@Tsli@_O sli, @Tv@_IO v,
+inline void slice(@Tsli@ &sli, @Tv@_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -26,7 +26,7 @@ inline void slice(@Tsli@_O sli, @Tv@_IO v,
 //%     end
 }
 //% elseif ndim(Tv) == 2
-inline void slice(@Tsli@_O sli, @Tv@_IO v,
+inline void slice(@Tsli@ &sli, @Tv@_IO v,
     Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -44,7 +44,7 @@ inline void slice(@Tsli@_O sli, @Tv@_IO v,
 }
 //%     if is_Cmat(Tv)
 //%         ScmatT = ['Scmat' T];
-inline void slice(@ScmatT@_O sli, @Tv@_IO v, Long_I start2, Long_I N2)
+inline void slice(@ScmatT@ &sli, @Tv@_IO v, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start2 < 0 || start2 + N2 > v.n2())

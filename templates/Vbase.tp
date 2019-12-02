@@ -1,7 +1,14 @@
-//% types = {'Int'; 'Llong'; 'Doub'; 'Comp'};
+//% types = {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp'};
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef VbaseInt VbaseLong;
+#else
+typedef VbaseLlong VbaseLong;
+#endif
+//% else
 class @VbaseT@
 {
 protected:
@@ -158,3 +165,4 @@ inline @VbaseT@::~@VbaseT@()
     if (m_N != 0)
         delete[] m_p;
 }
+//% end

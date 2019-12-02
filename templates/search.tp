@@ -1,0 +1,15 @@
+//% types = {
+//%     'Int', 'VecInt';
+//%     'Llong', 'VecLong';
+//%     'Str', 'vecStr';
+//% };
+//%------------------------
+//% [T, Tv] = varargin{:};
+inline Long search(@T@_I elm, @Tv@_I vec, Long start = 0)
+{
+    for (Long i = start; i < Size(vec); ++i) {
+        if (elm == vec[i])
+            return i;
+    }
+    return -1;
+}

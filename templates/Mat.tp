@@ -1,8 +1,15 @@
-//%  types = {'Llong'; 'Doub'; 'Comp';};
+//%  types = {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp';};
 //%------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];
 //% MatT = ['Mat' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef MatInt MatLong;
+#else
+typedef MatLlong MatLong;
+#endif
+//% else
 class @MatT@ : public @VbaseT@
 {
 private:
@@ -73,13 +80,6 @@ inline void @MatT@::resize(Long_I Nr, Long_I Nc)
     }
 }
 
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef MatInt MatLong;
-#else
-typedef MatLlong MatLong;
-#endif
-//% else
+//% end
 typedef const @MatT@ & @MatT@_I;
 typedef @MatT@ & @MatT@_O, & @MatT@_IO;
-//% end
