@@ -2,7 +2,7 @@ inline void slice(SvecDoub &sli, VecDoub_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
     sli.set(v.ptr() + start, N);
@@ -12,7 +12,7 @@ inline void slice(SvecComp &sli, VecComp_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
     sli.set(v.ptr() + start, N);
@@ -22,7 +22,7 @@ inline void slice(SvecDoub &sli, SvecDoub_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
     sli.set(v.ptr() + start, N);
@@ -32,7 +32,7 @@ inline void slice(SvecComp &sli, SvecComp_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
     sli.set(v.ptr() + start, N);
@@ -42,7 +42,7 @@ inline void slice(DvecDoub &sli, DvecDoub_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
     sli.set(v.ptr() + start, N, v.step());
@@ -52,7 +52,7 @@ inline void slice(DvecComp &sli, DvecComp_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
     sli.set(v.ptr() + start, N, v.step());

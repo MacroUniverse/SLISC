@@ -1,4 +1,5 @@
 //% types = {
+//%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Llong';
 //%     'Doub', 'Doub';

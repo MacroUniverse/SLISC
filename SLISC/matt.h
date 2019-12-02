@@ -1,19 +1,10 @@
 // save vectors and matrices defined in "nr3.h" to ".mat" or ".matt" files.
 // see README.txt for details
-// class types: Doub=0, Comp=1, Int=2, Char=3.
 
 #pragma once
-//#define MATFILE_BINARY
-//#define MATFILE_DUAL
-
 #include "file.h"
 
 namespace slisc {
-
-// matt file object
-class Matt;
-
-// ========== Implementation ============
 
 // Matt class for text mode
 class Matt {
@@ -54,6 +45,12 @@ public:
 
     ~Matt();
 };
+
+typedef const Matt &Matt_I;
+typedef Matt &Matt_O, &Matt_IO;
+
+#include "matt_write_scalar.inl"
+#include "matt_read_scalar.inl"
 
 // read the next variable after previous delimiter
 Long scanInverse(ifstream &fin)
@@ -210,9 +207,6 @@ inline void Matt::close()
     m_ind.clear();
 }
 
-#include "matt_write_scalar.inl"
-#include "matt_read_scalar.inl"
-
 inline Matt::~Matt()
 {
     if (isopen())
@@ -221,179 +215,11 @@ inline Matt::~Matt()
         SLS_ERR("unknown!");
 }
 
-
 // save() functions
+#include "matt_save.inl"
 
-template <class T, SLS_IF(
-    is_Char<T>() || is_Int<T>() || is_Llong<T>() || is_Doub<T>() || is_Comp<T>())>
-inline void save(const T &s, Str_I varname, Matt_IO matt)
-{
-    Long i, n;
-    ofstream &fout = matt.m_out;
-    if (!fout.is_open())
-        SLS_ERR("matt file not open: " + matt.fname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
-    // write variable name info
-    n = varname.size();
-    fout << n << Matt::dlm;
-    for (i = 0; i < n; ++i) {
-        fout << to_num(varname.at(i)) << Matt::dlm;
-    }
-    // write data type info
-    fout << type_num<T>() << Matt::dlm;
-    // write dimension info
-    fout << 0 << Matt::dlm;
-    // write matrix data
-	matt_write_scalar(s, matt.m_out);
-}
-
-template <class Tv, class T = contain_type<Tv>, SLS_IF(
-    ndims<Tv>() == 1 && is_scalar<T>())>
-inline void save(const Tv &v, Str_I varname, Matt_IO matt)
-{
-    Long i, n;
-    ofstream &fout = matt.m_out;
-    if (!fout.is_open())
-        SLS_ERR("matt file not open!");
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
-    // write variable name info
-    n = varname.size();
-    fout << n << Matt::dlm;
-    for (i = 0; i < n; ++i) {
-        fout << to_num(varname.at(i)) << Matt::dlm;
-    }
-    // write data type info
-    fout << type_num<T>() << Matt::dlm;
-    // write dimension info
-    n = v.size();
-    fout << 1 << Matt::dlm << n << Matt::dlm;
-    // write matrix data
-    for (i = 0; i < n; ++i)
-		matt_write_scalar(v[i], matt.m_out);
-}
-
-// save one var to one file (replace old file)
-template <class T>
-inline void save(T &s, Str_I varname, Str_I matt_file)
-{
-    Matt matt(matt_file, "w");
-    save(s, varname, matt);
-    matt.close();
-}
-
-// for string
-inline void save(Str_I str, Str_I varname, Matt_IO matt)
-{
-    SvecChar_c sli; sli.set(str.data(), str.size());
-    save(sli, varname, matt);
-}
-
-// ===== read matt files =====
+// read matt files
 // return 0 if successful, -1 if variable not found
-
-template <class T, SLS_IF(
-    is_Char<T>() || is_Int<T>() || is_Llong<T>() ||
-    is_Doub<T>() || is_Comp<T>())>
-inline Int load(T &s, Str_I varname, Matt_IO matt)
-{
-    Int i;
-    ifstream &fin = matt.m_in;
-    i = matt.search(varname);
-    if (i < 0)
-        return -1;
-    fin.seekg(matt.m_ind[i]);
-
-    if (!is_promo(type_num<T>(), matt.m_type[i]))
-        SLS_ERR("wrong type!");
-    if (matt.m_size[i].size() != 0)
-        SLS_ERR("wrong dimension!");
-
-    matt_read_scalar(s, matt.m_in);
-    return 0;
-}
-
-template <class T, SLS_IF(
-    is_Char<T>() || is_Int<T>() || is_Llong<T>() ||
-    is_Doub<T>() || is_Comp<T>())>
-inline Int load(Vector<T> &v, Str_I varname, Matt_IO matt)
-{
-    Long i, n;
-    ifstream &fin = matt.m_in;
-    i = matt.search(varname);
-    if (i < 0)
-        return -1;
-    fin.seekg(matt.m_ind[i]);
-
-    if (!is_promo(type_num<T>(), matt.m_type[i]))
-        SLS_ERR("wrong type!");
-    if (matt.m_size[i].size() != 1)
-        SLS_ERR("wrong dimension!");
-
-    n = matt.m_size[i][0]; v.resize(n);
-    // read var data
-    for (i = 0; i < n; ++i)
-		matt_read_scalar(v[i], matt.m_in);
-    return 0;
-}
-
-template <class Tm, class T = contain_type<Tm>, SLS_IF(
-    is_dense_mat<Tm>() && (is_Char<T>() || is_Int<T>() || is_Llong<T>() ||
-        is_Doub<T>() || is_Comp<T>()))>
-inline Int load(Tm &a, Str_I varname, Matt_IO matt)
-{
-    Long i, j, m, n;
-    ifstream &fin = matt.m_in;
-    i = matt.search(varname);
-    if (i < 0)
-        return -1;
-    fin.seekg(matt.m_ind[i]);
-
-    if (!is_promo(type_num<T>(), matt.m_type[i]))
-        SLS_ERR("wrong type!");
-    if (matt.m_size[i].size() != 2)
-        SLS_ERR("wrong dimension!");
-
-    m = matt.m_size[i][0]; n = matt.m_size[i][1]; a.resize(m, n);
-    // read var data
-    for (j = 0; j < n; ++j)
-        for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), matt.m_in);
-    return 0;
-}
-
-template <class Tmat, class T = contain_type<Tmat>, SLS_IF(
-    is_dense<Tmat>() && ndims<Tmat>() == 3 && is_scalar<T>())>
-inline Int load(Tmat &a, Str_I varname, Matt_IO matt)
-{
-    Long i, j, k, m, n, q;
-    ifstream &fin = matt.m_in;
-    i = matt.search(varname);
-    if (i < 0)
-        return -1;
-    fin.seekg(matt.m_ind[i]);
-
-    if (!is_promo(type_num<T>(), matt.m_type[i]))
-        SLS_ERR("wrong type!");
-    if (matt.m_size[i].size() != 3)
-        SLS_ERR("wrong dimension!");
-    
-    m = matt.m_size[i][0]; n = matt.m_size[i][1]; q = matt.m_size[i][2];
-    a.resize(m, n, q);
-    // read var data
-    for (k = 0; k < q; ++k)
-        for (j = 0; j < n; ++j)
-            for (i = 0; i < m; ++i)
-                matt_read_scalar(a(i, j, k), matt.m_in);
-    return 0;
-}
-
-// read one var from one file
-template <class T>
-inline void load(T &s, Str_I varname, Str_I matt_file)
-{
-    Matt matt(matt_file, "r");
-    load(s, varname, matt);
-    matt.close();
-}
+#include "matt_load.inl"
 
 } // namespace slisc

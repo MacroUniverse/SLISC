@@ -1,3 +1,160 @@
+class VbaseChar
+{
+protected:
+    Char *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef Char value_type;
+    // constructors
+    explicit VbaseChar(Long_I N);
+    VbaseChar(const VbaseChar &rhs); // copy constructor
+
+    // get properties
+    Char* ptr(); // get pointer
+    const Char* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    Char & operator[](Long_I i);
+    const Char & operator[](Long_I i) const;
+    Char & operator()(Long_I i);
+    const Char & operator()(Long_I i) const;
+    Char& end();
+    const Char& end() const;
+    Char& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Char& end(Long_I i) const;
+    void operator<<(VbaseChar &rhs); // move data
+    ~VbaseChar();
+};
+
+inline VbaseChar::VbaseChar(Long_I N) : m_p(new Char[N]), m_N(N) {}
+
+inline VbaseChar::VbaseChar(const VbaseChar &rhs)
+{
+#ifndef SLS_ALLOW_COPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+    // m_N = rhs.m_N;
+    // m_p = new Char[rhs.m_N];
+    // veccpy(m_p, rhs.ptr(), m_N);
+}
+
+inline Char * VbaseChar::ptr()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline const Char * VbaseChar::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long VbaseChar::size() const
+{
+    return m_N;
+}
+
+inline void VbaseChar::resize(Long_I N)
+{
+    if (N != m_N) {
+        if (m_N == 0) {
+            m_N = N; m_p = new Char[N];
+        }
+        else { // m_N != 0
+            delete[] m_p;
+            if (N == 0)
+                m_N = 0;
+            else {
+                m_N = N;
+                m_p = new Char[N];
+            }
+        }
+    }
+}
+
+inline void VbaseChar::operator<<(VbaseChar &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    if (m_N != 0)
+        delete[] m_p;
+    m_N = rhs.m_N; rhs.m_N = 0;
+    m_p = rhs.m_p;
+}
+
+inline Char & VbaseChar::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+    SLS_ERR("VbaseChar subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Char & VbaseChar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=m_N)
+        SLS_ERR("VbaseChar subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Char & VbaseChar::operator()(Long_I i)
+{ return (*this)[i]; }
+
+inline const Char & VbaseChar::operator()(Long_I i) const
+{ return (*this)[i]; }
+
+inline Char & VbaseChar::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Char & VbaseChar::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Char & VbaseChar::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline const Char & VbaseChar::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline VbaseChar::~VbaseChar()
+{
+    if (m_N != 0)
+        delete[] m_p;
+}
+
 class VbaseInt
 {
 protected:

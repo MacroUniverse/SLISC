@@ -2,6 +2,11 @@
 //%     'VecLlong', 'Llong';
 //%     'VecDoub', 'Doub';
 //%     'VecComp', 'Comp';
+//%     'SvecLlong', 'Llong';
+//%     'SvecDoub', 'Doub';
+//%     'SvecComp', 'Comp';
+//%     'MatInt', 'Int';
+//%     'MatDoub', 'Doub';
 //%     'CmatLlong', 'Llong';
 //%     'CmatDoub', 'Doub';
 //%     'CmatComp', 'Comp';

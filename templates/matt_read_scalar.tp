@@ -2,17 +2,17 @@
 //%------------------------------
 //% T = varargin{:};
 //% if is_Char(T)
-void Matt::matt_read_scalar(@T@_O s, ifstream &m_in)
+inline void matt_read_scalar(Char_O s, ifstream &m_in)
 {
-    Int temp; m_in >> temp; s = (T)temp;
+    Int temp; m_in >> temp; s = (Char)temp;
 }
 //% elseif is_Int(T) || is_Llong(T) || is_Doub(T)
-void Matt::matt_read_scalar(@T@_O s, ifstream &m_in)
+inline void matt_read_scalar(@T@_O s, ifstream &m_in)
 {
     m_in >> s;
 }
 //% elseif is_Comp(T)
-void Matt::matt_read_scalar(@T@_O s, ifstream &m_in)
+inline void matt_read_scalar(@T@_O c, ifstream &m_in)
 {
     Doub cr = 0, ci = 0;
     Char ch;

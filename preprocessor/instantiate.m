@@ -52,7 +52,5 @@ end
 eval_str = [eval_str, newline];
 eval(eval_str);
 % filewrite('cpp_gen.m', eval_str);
-% pause(1);
 % cpp_gen;
-% delete cpp_gen.m;
 end

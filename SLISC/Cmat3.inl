@@ -1,3 +1,151 @@
+class Cmat3Char : public VbaseChar
+{
+private:
+    typedef VbaseChar Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_N1;
+    Long m_N2;
+    Long m_N3;
+public:
+    typedef Char value_type;
+    using Base::operator();
+    using Base::ptr;
+    Cmat3Char(Long_I N1, Long_I N2, Long_I N3);
+    Cmat3Char(const Cmat3Char &rhs) = delete;
+    void operator<<(Cmat3Char &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N1, Long_I N2, Long_I N3);
+    Char & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Char & operator()(Long_I i, Long_I j, Long_I k) const;
+    Long n1() const;
+    Long n2() const;
+    Long n3() const;
+};
+
+inline Cmat3Char::Cmat3Char(Long_I N1, Long_I N2, Long_I N3) : Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+
+inline void Cmat3Char::operator<<(Cmat3Char &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
+    rhs.m_N1 = rhs.m_N2 = rhs.m_N3 = 0;
+    Base::operator<<(rhs);
+}
+
+inline void Cmat3Char::resize(Long_I N1, Long_I N2, Long_I N3)
+{
+    if (N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N1*N2*N3);
+        m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    }
+}
+
+inline Char & Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1*j + m_N1*m_N2*k];
+}
+
+inline const Char & Cmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1*j + m_N1*m_N2*k];
+}
+
+inline Long Cmat3Char::n1() const {
+    return m_N1;
+}
+
+inline Long Cmat3Char::n2() const {
+    return m_N2;
+}
+
+inline Long Cmat3Char::n3() const {
+    return m_N3;
+}
+
+typedef const Cmat3Char & Cmat3Char_I;
+typedef Cmat3Char & Cmat3Char_O, & Cmat3Char_IO;
+
+class Cmat3Int : public VbaseInt
+{
+private:
+    typedef VbaseInt Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_N1;
+    Long m_N2;
+    Long m_N3;
+public:
+    typedef Int value_type;
+    using Base::operator();
+    using Base::ptr;
+    Cmat3Int(Long_I N1, Long_I N2, Long_I N3);
+    Cmat3Int(const Cmat3Int &rhs) = delete;
+    void operator<<(Cmat3Int &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N1, Long_I N2, Long_I N3);
+    Int & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Int & operator()(Long_I i, Long_I j, Long_I k) const;
+    Long n1() const;
+    Long n2() const;
+    Long n3() const;
+};
+
+inline Cmat3Int::Cmat3Int(Long_I N1, Long_I N2, Long_I N3) : Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+
+inline void Cmat3Int::operator<<(Cmat3Int &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
+    rhs.m_N1 = rhs.m_N2 = rhs.m_N3 = 0;
+    Base::operator<<(rhs);
+}
+
+inline void Cmat3Int::resize(Long_I N1, Long_I N2, Long_I N3)
+{
+    if (N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N1*N2*N3);
+        m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    }
+}
+
+inline Int & Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1*j + m_N1*m_N2*k];
+}
+
+inline const Int & Cmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N1*j + m_N1*m_N2*k];
+}
+
+inline Long Cmat3Int::n1() const {
+    return m_N1;
+}
+
+inline Long Cmat3Int::n2() const {
+    return m_N2;
+}
+
+inline Long Cmat3Int::n3() const {
+    return m_N3;
+}
+
+typedef const Cmat3Int & Cmat3Int_I;
+typedef Cmat3Int & Cmat3Int_O, & Cmat3Int_IO;
+
 class Cmat3Llong : public VbaseLlong
 {
 private:

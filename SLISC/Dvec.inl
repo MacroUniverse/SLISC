@@ -136,7 +136,7 @@ public:
     Long size() const;
     Long step() const;
 
-	operator DvecInt_c();
+	operator DvecInt_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -208,7 +208,7 @@ inline void DvecInt::set_size(Long_I N)
     m_N = N;
 }
 
-inline DvecInt::operator DvecInt_c()
+inline DvecInt::operator DvecInt_c() const
 {
 	return *((DvecInt_c *)this);
 }
@@ -381,7 +381,7 @@ public:
     Long size() const;
     Long step() const;
 
-	operator DvecLlong_c();
+	operator DvecLlong_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -453,7 +453,7 @@ inline void DvecLlong::set_size(Long_I N)
     m_N = N;
 }
 
-inline DvecLlong::operator DvecLlong_c()
+inline DvecLlong::operator DvecLlong_c() const
 {
 	return *((DvecLlong_c *)this);
 }
@@ -642,7 +642,7 @@ public:
     Long size() const;
     Long step() const;
 
-	operator DvecDoub_c();
+	operator DvecDoub_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -714,7 +714,7 @@ inline void DvecDoub::set_size(Long_I N)
     m_N = N;
 }
 
-inline DvecDoub::operator DvecDoub_c()
+inline DvecDoub::operator DvecDoub_c() const
 {
 	return *((DvecDoub_c *)this);
 }
@@ -887,7 +887,7 @@ public:
     Long size() const;
     Long step() const;
 
-	operator DvecComp_c();
+	operator DvecComp_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -959,7 +959,7 @@ inline void DvecComp::set_size(Long_I N)
     m_N = N;
 }
 
-inline DvecComp::operator DvecComp_c()
+inline DvecComp::operator DvecComp_c() const
 {
 	return *((DvecComp_c *)this);
 }

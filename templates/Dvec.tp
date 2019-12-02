@@ -54,7 +54,7 @@ public:
 //% % resize() is a bad idea, don't try to create it!
 
 //% if ~constness
-	operator @DvecT_c@();
+	operator @DvecT_c@() const;
 //% end
 
     // === other member functions ===
@@ -128,7 +128,7 @@ inline void @Class@::set_size(Long_I N)
 }
 
 //% if ~constness
-inline @Class@::operator @DvecT_c@()
+inline @Class@::operator @DvecT_c@() const
 {
 	return *((@DvecT_c@ *)this);
 }

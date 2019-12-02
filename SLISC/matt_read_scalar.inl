@@ -1,24 +1,24 @@
-void Matt::matt_read_scalar(Char_O s, ifstream &m_in)
+inline void matt_read_scalar(Char_O s, ifstream &m_in)
 {
-    Int temp; m_in >> temp; s = (T)temp;
+    Int temp; m_in >> temp; s = (Char)temp;
 }
 
-void Matt::matt_read_scalar(Int_O s, ifstream &m_in)
-{
-    m_in >> s;
-}
-
-void Matt::matt_read_scalar(Llong_O s, ifstream &m_in)
+inline void matt_read_scalar(Int_O s, ifstream &m_in)
 {
     m_in >> s;
 }
 
-void Matt::matt_read_scalar(Doub_O s, ifstream &m_in)
+inline void matt_read_scalar(Llong_O s, ifstream &m_in)
 {
     m_in >> s;
 }
 
-void Matt::matt_read_scalar(Comp_O s, ifstream &m_in)
+inline void matt_read_scalar(Doub_O s, ifstream &m_in)
+{
+    m_in >> s;
+}
+
+inline void matt_read_scalar(Comp_O c, ifstream &m_in)
 {
     Doub cr = 0, ci = 0;
     Char ch;

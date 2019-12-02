@@ -1,3 +1,246 @@
+class SvecChar_c
+{
+public:
+    const Char *m_p;
+    Long m_N;
+    SvecChar_c();
+    SvecChar_c(Long_I N);
+    SvecChar_c(const Char *ptr, Long_I N);
+	const Char* ptr() const;
+    Long size() const;
+    const Char & operator[](Long_I i) const;
+    const Char & operator()(Long_I i) const;
+    const Char & end() const;
+    const Char & end(Long_I i) const;
+
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_size(Long_I N);
+    void set_ptr(const Char *ptr);
+    void set(const Char *ptr, Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    
+    ~SvecChar_c();
+};
+
+inline SvecChar_c::SvecChar_c() {}
+
+inline SvecChar_c::SvecChar_c(Long_I N) : m_N(N) {}
+
+inline SvecChar_c::SvecChar_c(const Char *ptr, Long_I N)
+    : m_p(ptr), m_N(N) {}
+
+inline const Char * SvecChar_c::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvecChar_c::size() const
+{
+    return m_N;
+}
+
+inline const Char & SvecChar_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Char & SvecChar_c::operator()(Long_I i) const
+{
+    return (*this)[i];
+}
+
+inline const Char & SvecChar_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Char & SvecChar_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvecChar_c::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline void SvecChar_c::set_ptr(const Char * ptr)
+{
+    m_p = ptr;
+}
+
+inline void SvecChar_c::set(const Char * ptr, Long_I N)
+{
+    m_p = ptr; m_N = N;
+}
+
+inline void SvecChar_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvecChar_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvecChar_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline SvecChar_c::~SvecChar_c() {}
+
+typedef const SvecChar_c & SvecChar_I;
+
+class SvecChar
+{
+public:
+    Char *m_p;
+    Long m_N;
+    SvecChar();
+    SvecChar(Long_I N);
+    SvecChar(Char *ptr, Long_I N);
+	Char* ptr() const;
+    Long size() const;
+    Char & operator[](Long_I i) const;
+    Char & operator()(Long_I i) const;
+    Char & end() const;
+    Char & end(Long_I i) const;
+
+	operator SvecChar_c() const;
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_size(Long_I N);
+    void set_ptr(Char *ptr);
+    void set(Char *ptr, Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    
+    ~SvecChar();
+};
+
+inline SvecChar::SvecChar() {}
+
+inline SvecChar::SvecChar(Long_I N) : m_N(N) {}
+
+inline SvecChar::SvecChar(Char *ptr, Long_I N)
+    : m_p(ptr), m_N(N) {}
+
+inline Char * SvecChar::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvecChar::size() const
+{
+    return m_N;
+}
+
+inline Char & SvecChar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Char & SvecChar::operator()(Long_I i) const
+{
+    return (*this)[i];
+}
+
+inline Char & SvecChar::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Char & SvecChar::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvecChar::operator SvecChar_c() const
+{
+	return *((SvecChar_c *)this);
+}
+
+inline void SvecChar::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline void SvecChar::set_ptr(Char * ptr)
+{
+    m_p = ptr;
+}
+
+inline void SvecChar::set(Char * ptr, Long_I N)
+{
+    m_p = ptr; m_N = N;
+}
+
+inline void SvecChar::next()
+{
+    m_p += m_N;
+}
+
+inline void SvecChar::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvecChar::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline SvecChar::~SvecChar() {}
+
+typedef const SvecChar & SvecChar_O, & SvecChar_IO;
+
 class SvecInt_c
 {
 public:
@@ -132,7 +375,7 @@ public:
     Int & end() const;
     Int & end(Long_I i) const;
 
-	operator SvecInt_c();
+	operator SvecInt_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -199,7 +442,7 @@ inline Int & SvecInt::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline SvecInt::operator SvecInt_c()
+inline SvecInt::operator SvecInt_c() const
 {
 	return *((SvecInt_c *)this);
 }
@@ -375,7 +618,7 @@ public:
     Llong & end() const;
     Llong & end(Long_I i) const;
 
-	operator SvecLlong_c();
+	operator SvecLlong_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -442,7 +685,7 @@ inline Llong & SvecLlong::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline SvecLlong::operator SvecLlong_c()
+inline SvecLlong::operator SvecLlong_c() const
 {
 	return *((SvecLlong_c *)this);
 }
@@ -634,7 +877,7 @@ public:
     Doub & end() const;
     Doub & end(Long_I i) const;
 
-	operator SvecDoub_c();
+	operator SvecDoub_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -701,7 +944,7 @@ inline Doub & SvecDoub::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline SvecDoub::operator SvecDoub_c()
+inline SvecDoub::operator SvecDoub_c() const
 {
 	return *((SvecDoub_c *)this);
 }
@@ -877,7 +1120,7 @@ public:
     Comp & end() const;
     Comp & end(Long_I i) const;
 
-	operator SvecComp_c();
+	operator SvecComp_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
@@ -944,7 +1187,7 @@ inline Comp & SvecComp::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline SvecComp::operator SvecComp_c()
+inline SvecComp::operator SvecComp_c() const
 {
 	return *((SvecComp_c *)this);
 }

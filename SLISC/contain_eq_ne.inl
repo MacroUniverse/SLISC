@@ -1,3 +1,14 @@
+inline Bool operator==(VecInt_I v1, VecInt_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+
+inline Bool operator!=(VecInt_I v1, VecInt_I v2)
+{
+    return !(v1 == v2);
+}
+
 inline Bool operator==(VecInt_I v1, DvecInt_I v2)
 {
 	if (!shape_cmp(v1, v2))

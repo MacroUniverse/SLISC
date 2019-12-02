@@ -14,7 +14,7 @@ inline void slice(@Tsli@ &sli, @Tv@_IO v,
     Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i + N > v.size())
+    if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
 //%     if is_dense_vec(Tv)

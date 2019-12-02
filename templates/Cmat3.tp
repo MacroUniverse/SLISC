@@ -1,4 +1,4 @@
-//% types = {'Llong'; 'Doub'; 'Comp';};
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%----------------------------------------
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
