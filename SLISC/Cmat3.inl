@@ -13,6 +13,7 @@ public:
     using Base::ptr;
     Cmat3Char(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Char(const Cmat3Char &rhs) = delete;
+	Cmat3Char & operator=(const Cmat3Char &rhs) = delete;
     void operator<<(Cmat3Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Char & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -87,6 +88,7 @@ public:
     using Base::ptr;
     Cmat3Int(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Int(const Cmat3Int &rhs) = delete;
+	Cmat3Int & operator=(const Cmat3Int &rhs) = delete;
     void operator<<(Cmat3Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Int & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -161,6 +163,7 @@ public:
     using Base::ptr;
     Cmat3Llong(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Llong(const Cmat3Llong &rhs) = delete;
+	Cmat3Llong & operator=(const Cmat3Llong &rhs) = delete;
     void operator<<(Cmat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Llong & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -235,6 +238,7 @@ public:
     using Base::ptr;
     Cmat3Doub(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Doub(const Cmat3Doub &rhs) = delete;
+	Cmat3Doub & operator=(const Cmat3Doub &rhs) = delete;
     void operator<<(Cmat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Doub & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -309,6 +313,7 @@ public:
     using Base::ptr;
     Cmat3Comp(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Comp(const Cmat3Comp &rhs) = delete;
+	Cmat3Comp & operator=(const Cmat3Comp &rhs) = delete;
     void operator<<(Cmat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Comp & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i

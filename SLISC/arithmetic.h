@@ -17,6 +17,7 @@ namespace slisc {
 #include "plus_minus_times_divide_equals_vv.inl"
 #include "contain_plus_minus_times_divide_equals.inl"
 #include "mul_mv.inl"
+#include "mul_mm.inl"
 #include "mul_gen.inl"
 #include "mul_sym.inl"
 } // namespace slisc

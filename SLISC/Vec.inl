@@ -7,6 +7,7 @@ public:
 
     explicit VecChar(Long_I N);
     VecChar(const VecChar &rhs); // copy constructor
+	VecChar & operator=(const VecChar &rhs) = delete;
     void operator<<(VecChar &rhs); // move data and rhs.resize(0)
 };
 
@@ -34,6 +35,7 @@ public:
 
     explicit VecInt(Long_I N);
     VecInt(const VecInt &rhs); // copy constructor
+	VecInt & operator=(const VecInt &rhs) = delete;
     void operator<<(VecInt &rhs); // move data and rhs.resize(0)
 };
 
@@ -61,6 +63,7 @@ public:
 
     explicit VecLlong(Long_I N);
     VecLlong(const VecLlong &rhs); // copy constructor
+	VecLlong & operator=(const VecLlong &rhs) = delete;
     void operator<<(VecLlong &rhs); // move data and rhs.resize(0)
 };
 
@@ -96,6 +99,7 @@ public:
 
     explicit VecDoub(Long_I N);
     VecDoub(const VecDoub &rhs); // copy constructor
+	VecDoub & operator=(const VecDoub &rhs) = delete;
     void operator<<(VecDoub &rhs); // move data and rhs.resize(0)
 };
 
@@ -123,6 +127,7 @@ public:
 
     explicit VecComp(Long_I N);
     VecComp(const VecComp &rhs); // copy constructor
+	VecComp & operator=(const VecComp &rhs) = delete;
     void operator<<(VecComp &rhs); // move data and rhs.resize(0)
 };
 

@@ -10,6 +10,7 @@ public:
     using Base::operator();
     MatInt(Long_I Nr, Long_I Nc);
     MatInt(const MatInt &rhs);        // Copy constructor
+	MatInt & operator=(const MatInt &rhs) = delete;
     void operator<<(MatInt &rhs); // move data and rhs.resize(0, 0)
     Int& operator()(Long_I i, Long_I j); // double indexing
     const Int& operator()(Long_I i, Long_I j) const;
@@ -83,6 +84,7 @@ public:
     using Base::operator();
     MatLlong(Long_I Nr, Long_I Nc);
     MatLlong(const MatLlong &rhs);        // Copy constructor
+	MatLlong & operator=(const MatLlong &rhs) = delete;
     void operator<<(MatLlong &rhs); // move data and rhs.resize(0, 0)
     Llong& operator()(Long_I i, Long_I j); // double indexing
     const Llong& operator()(Long_I i, Long_I j) const;
@@ -164,6 +166,7 @@ public:
     using Base::operator();
     MatDoub(Long_I Nr, Long_I Nc);
     MatDoub(const MatDoub &rhs);        // Copy constructor
+	MatDoub & operator=(const MatDoub &rhs) = delete;
     void operator<<(MatDoub &rhs); // move data and rhs.resize(0, 0)
     Doub& operator()(Long_I i, Long_I j); // double indexing
     const Doub& operator()(Long_I i, Long_I j) const;
@@ -237,6 +240,7 @@ public:
     using Base::operator();
     MatComp(Long_I Nr, Long_I Nc);
     MatComp(const MatComp &rhs);        // Copy constructor
+	MatComp & operator=(const MatComp &rhs) = delete;
     void operator<<(MatComp &rhs); // move data and rhs.resize(0, 0)
     Comp& operator()(Long_I i, Long_I j); // double indexing
     const Comp& operator()(Long_I i, Long_I j) const;

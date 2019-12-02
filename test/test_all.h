@@ -20,6 +20,7 @@ void test_disp();
 void test_random();
 void test_anglib();
 void test_search();
+void test_lin_eq();
 void test_file();
 void test_matt();
 
@@ -60,6 +61,8 @@ void test_all()
 	test_anglib();
 	cout << "test_search()" << endl;
 	test_search();
+	cout << "test_lin_eq()" << endl;
+	test_lin_eq();
 	cout << "test_file()" << endl;
 	test_file();
 	cout << "test_matt()" << endl;

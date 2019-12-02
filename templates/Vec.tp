@@ -19,6 +19,7 @@ public:
 
     explicit @VecT@(Long_I N);
     @VecT@(const @VecT@ &rhs); // copy constructor
+	@VecT@ & operator=(const @VecT@ &rhs) = delete;
     void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
 
