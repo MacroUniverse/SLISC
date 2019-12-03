@@ -154,6 +154,80 @@ typedef MatLlong MatLong;
 typedef const MatLong & MatLong_I;
 typedef MatLong & MatLong_O, & MatLong_IO;
 
+class MatFloat : public VbaseFloat
+{
+private:
+    typedef VbaseFloat Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+public:
+    using Base::ptr;
+    using Base::operator();
+    MatFloat(Long_I Nr, Long_I Nc);
+    MatFloat(const MatFloat &rhs);        // Copy constructor
+	MatFloat & operator=(const MatFloat &rhs) = delete;
+    void operator<<(MatFloat &rhs); // move data and rhs.resize(0, 0)
+    Float& operator()(Long_I i, Long_I j); // double indexing
+    const Float& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
+};
+
+inline MatFloat::MatFloat(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+
+inline MatFloat::MatFloat(const MatFloat &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatFloat::operator<<(MatFloat &rhs)
+{
+    m_Nr = rhs.m_Nr; m_Nc = rhs.m_Nc;
+    rhs.m_Nr = rhs.m_Nc = 0;
+    Base::operator<<(rhs);
+}
+
+inline Float& MatFloat::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("MatFloat subscript out of bounds");
+#endif
+    return m_p[m_Nc*i+j];
+}
+
+inline const Float & MatFloat::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("MatFloat subscript out of bounds");
+#endif
+    return m_p[m_Nc*i+j];
+}
+
+inline Long MatFloat::n1() const
+{
+    return m_Nr;
+}
+
+inline Long MatFloat::n2() const
+{
+    return m_Nc;
+}
+
+inline void MatFloat::resize(Long_I Nr, Long_I Nc)
+{
+    if (Nr != m_Nr || Nc != m_Nc) {
+        Base::resize(Nr*Nc);
+        m_Nr = Nr; m_Nc = Nc;
+    }
+}
+
+typedef const MatFloat & MatFloat_I;
+typedef MatFloat & MatFloat_O, & MatFloat_IO;
+
 class MatDoub : public VbaseDoub
 {
 private:

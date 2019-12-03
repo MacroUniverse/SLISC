@@ -1,0 +1,26 @@
+//% types = {
+//%	    'CmatDoub', 'CmatDoub', 'DiagDoub';
+//%     'CmatComp', 'CmatComp', 'DiagDoub';
+//%     'CmatComp', 'CmatComp', 'DiagComp';
+//%	    'CmatDoub', 'DiagDoub', 'CmatDoub';
+//%     'CmatComp', 'DiagComp', 'CmatComp';
+//%     'CmatComp', 'DiagDoub', 'CmatComp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+void mul(@T@_O c, @T1@_I a, @T2@_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != b.n1())
+		SLS_ERR("illegal shape!");
+    if (c.n1() != a.n1() || c.n2() != b.n2())
+        SLS_ERR("illegal shape!");
+#endif
+//% if is_dense(T) && is_cmajor(T) && is_dense(T1) && is_cmajor(T1) && is_Diag(T2)
+    mul_cmat_cmat_diag(c.ptr(), a.ptr(), a.n1(), a.n2(), b.ptr());
+//% elseif is_dense(T) && is_cmajor(T) && is_Diag(T1) && is_dense(T2) && is_cmajor(T2)
+	mul_cmat_diag_cmat(c.ptr(), a.ptr(), b.ptr(), b.n1(), b.n2());
+//% else
+//%     error('not implemented!');
+//% end
+}

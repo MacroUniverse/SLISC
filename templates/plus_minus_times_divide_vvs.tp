@@ -1,0 +1,38 @@
+//% types = {
+//%	    'Char', 'Char', 'Char';
+//%	    'Int', 'Int', 'Int';
+//%	    'Llong', 'Llong', 'Llong';
+//%     'Float', 'Float', 'Float';
+//%	    'Doub', 'Doub', 'Doub';
+//%	    'Comp', 'Comp', 'Doub';
+//%	    'Comp', 'Doub', 'Comp';
+//%	    'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal types');
+//% end
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}

@@ -1,0 +1,88 @@
+//% types = {
+//%	    'VecChar', 'VecChar', 'Char';
+//%	    'VecInt', 'VecInt', 'Int';
+//%	    'VecLlong', 'VecLlong', 'Llong';
+//%	    'VecDoub', 'VecDoub', 'Doub';
+//%	    'VecComp', 'VecComp', 'Doub';
+//%	    'VecComp', 'VecDoub', 'Comp';
+//%	    'VecComp', 'VecComp', 'Comp';
+//%	    'CmatInt', 'CmatInt', 'Int';
+//%	    'CmatLlong', 'CmatLlong', 'Llong';
+//%	    'CmatDoub', 'CmatDoub', 'Doub';
+//%	    'CmatComp', 'CmatComp', 'Doub';
+//%	    'CmatComp', 'CmatDoub', 'Comp';
+//%	    'CmatComp', 'CmatComp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, Ts2] = varargin{:};
+//% Ts = contain_type(T); Ts1 = contain_type(T1);
+//% if ~is_promo(Ts, Ts1) || ~is_promo(Ts, Ts2)
+//%     error('illegal types');
+//% end
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    plus_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+	plus(v, v1, s);
+}
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    minus_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    minus_vsv(v.ptr(), s, v1.ptr(), v1.size());
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    times_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+	times(v, v1, s);
+}
+
+inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    divide_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
+}
+//% else
+//%     error('not implemented!');
+//% end

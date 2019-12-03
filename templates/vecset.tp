@@ -1,5 +1,5 @@
 //% types = {
-//%     'Int'; 'Llong'; 'Doub'; 'Comp';
+//%     'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Comp';
 //%     };
 //%-----------------------
 //% T = varargin{:};

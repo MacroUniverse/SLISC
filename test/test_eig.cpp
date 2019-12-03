@@ -1,6 +1,6 @@
 #include "../SLISC/eig.h"
 #include "../SLISC/arithmetic.h"
-#include "../SLISC/diag.h"
+#include "../SLISC/sparse_arith.h"
 #include "../SLISC/random.h"
 #include "../SLISC/disp.h"
 

@@ -475,6 +475,163 @@ typedef VbaseInt VbaseLong;
 typedef VbaseLlong VbaseLong;
 #endif
 
+class VbaseFloat
+{
+protected:
+    Float *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef Float value_type;
+    // constructors
+    explicit VbaseFloat(Long_I N);
+    VbaseFloat(const VbaseFloat &rhs); // copy constructor
+
+    // get properties
+    Float* ptr(); // get pointer
+    const Float* ptr() const;
+    Long size() const;
+    void resize(Long_I N);
+    Float & operator[](Long_I i);
+    const Float & operator[](Long_I i) const;
+    Float & operator()(Long_I i);
+    const Float & operator()(Long_I i) const;
+    Float& end();
+    const Float& end() const;
+    Float& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Float& end(Long_I i) const;
+    void operator<<(VbaseFloat &rhs); // move data
+    ~VbaseFloat();
+};
+
+inline VbaseFloat::VbaseFloat(Long_I N) : m_p(new Float[N]), m_N(N) {}
+
+inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
+{
+#ifndef SLS_ALLOW_COPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+    // m_N = rhs.m_N;
+    // m_p = new Float[rhs.m_N];
+    // veccpy(m_p, rhs.ptr(), m_N);
+}
+
+inline Float * VbaseFloat::ptr()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline const Float * VbaseFloat::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long VbaseFloat::size() const
+{
+    return m_N;
+}
+
+inline void VbaseFloat::resize(Long_I N)
+{
+    if (N != m_N) {
+        if (m_N == 0) {
+            m_N = N; m_p = new Float[N];
+        }
+        else { // m_N != 0
+            delete[] m_p;
+            if (N == 0)
+                m_N = 0;
+            else {
+                m_N = N;
+                m_p = new Float[N];
+            }
+        }
+    }
+}
+
+inline void VbaseFloat::operator<<(VbaseFloat &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    if (m_N != 0)
+        delete[] m_p;
+    m_N = rhs.m_N; rhs.m_N = 0;
+    m_p = rhs.m_p;
+}
+
+inline Float & VbaseFloat::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+    SLS_ERR("VbaseFloat subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Float & VbaseFloat::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=m_N)
+        SLS_ERR("VbaseFloat subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Float & VbaseFloat::operator()(Long_I i)
+{ return (*this)[i]; }
+
+inline const Float & VbaseFloat::operator()(Long_I i) const
+{ return (*this)[i]; }
+
+inline Float & VbaseFloat::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Float & VbaseFloat::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Float & VbaseFloat::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline const Float & VbaseFloat::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline VbaseFloat::~VbaseFloat()
+{
+    if (m_N != 0)
+        delete[] m_p;
+}
+
 class VbaseDoub
 {
 protected:

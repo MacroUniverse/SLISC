@@ -1,3 +1,15 @@
+inline void vecset(Char *v, Char_I val, Long_I n)
+{
+    for (Char *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Char *v, Char_I val, Long_I n, Long_I step)
+{
+    for (Char *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
 inline void vecset(Int *v, Int_I val, Long_I n)
 {
     for (Int *p = v; p < v + n; ++p)
@@ -19,6 +31,18 @@ inline void vecset(Llong *v, Llong_I val, Long_I n)
 inline void vecset(Llong *v, Llong_I val, Long_I n, Long_I step)
 {
     for (Llong *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Float *v, Float_I val, Long_I n)
+{
+    for (Float *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Float *v, Float_I val, Long_I n, Long_I step)
+{
+    for (Float *p = v; p < v + n*step; p += step)
         *p = val;
 }
 

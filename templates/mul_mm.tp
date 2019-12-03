@@ -1,5 +1,7 @@
-//% types = {'CmatDoub', 'CmatDoub', 'CmatDoub';
-//%     };
+//% types = {
+//%     'CmatDoub', 'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp', 'CmatComp';
+//% };
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% if ndim(T) == 2 && ndim(T1) == 2 && ndim(T2) == 2

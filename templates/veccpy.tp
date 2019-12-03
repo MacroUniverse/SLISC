@@ -1,6 +1,10 @@
 //% types = {
+//%     'Char', 'Char';
+//%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Llong';
+//%     'Float', 'Float';
+//%     'Doub', 'Float';
 //%     'Doub', 'Doub';
 //%     'Comp', 'Doub';
 //%     'Comp', 'Llong';

@@ -1,0 +1,19 @@
+//% types = {
+//%     'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatFloat'; 'CmatDoub'; 'CmatComp';
+//%     'MatInt'; 'MatLlong'; 'MatFloat'; 'MatDoub'; 'MatComp';
+//% };
+//%------------------------------
+//% T = varargin{:};
+//% Tr = rm_comp(contain_type(T));
+//% if is_dense(T)
+inline @Tr@ max_abs(@T@_I v)
+{
+    return max_abs_v(v.ptr(), v.size());
+}
+//% elseif is_Dvec(T)
+inline @Tr@ max_abs(@T@_I v)
+{
+    return max_abs_v(v.ptr(), v.size(), v.step());
+}
+//% end

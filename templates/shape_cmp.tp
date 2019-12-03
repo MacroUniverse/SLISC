@@ -6,13 +6,17 @@
 //%     'VecDoub', 'DvecDoub';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecDoub';
+//%     'VecDoub', 'VecComp';
 //%     'VecComp', 'VecComp';
 //%     'MatInt', 'MatInt';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
 //%     'MatComp', 'MatComp';
+//%     'CmatInt', 'CmatInt';
 //%     'CmatLlong', 'CmatLlong';
 //%     'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatDoub';
 //%     'CmatComp', 'CmatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';

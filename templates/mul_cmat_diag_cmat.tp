@@ -1,0 +1,17 @@
+//% types = {
+//%	    'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Doub', 'Comp';
+//%     'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~(is_promo(T, T1) && is_promo(T, T2))
+//%     error('illegal types!');
+//% end
+void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, Long_I Nc)
+{
+    for (Long i = 0; i < Nc; ++i) {
+        times_vvv(c, b, a, Nr);
+        c += Nr; b += Nr;
+    }
+}

@@ -90,6 +90,34 @@ typedef VecLlong VecLong;
 typedef const VecLong & VecLong_I;
 typedef VecLong & VecLong_O, & VecLong_IO;
 
+class VecFloat : public VbaseFloat
+{
+public:
+    typedef VbaseFloat Base;
+    using Base::resize;
+    using Base::operator[];
+
+    explicit VecFloat(Long_I N);
+    VecFloat(const VecFloat &rhs); // copy constructor
+	VecFloat & operator=(const VecFloat &rhs) = delete;
+    void operator<<(VecFloat &rhs); // move data and rhs.resize(0)
+};
+
+inline VecFloat::VecFloat(Long_I N) : Base(N) {}
+
+inline VecFloat::VecFloat(const VecFloat &rhs) : Base(0)
+{
+    SLS_ERR("copy constructor forbidden!");
+}
+
+inline void VecFloat::operator<<(VecFloat &rhs)
+{
+    Base::operator<<(rhs);
+}
+
+typedef const VecFloat & VecFloat_I;
+typedef VecFloat & VecFloat_O, & VecFloat_IO;
+
 class VecDoub : public VbaseDoub
 {
 public:

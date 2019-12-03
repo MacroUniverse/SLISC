@@ -1,4 +1,4 @@
-//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp'};
+//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp'};
 //%----------------------------------------------------------
 //% T = varargin{:};
 //% VecT = ['Vec' T];
