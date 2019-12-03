@@ -145,6 +145,7 @@ typedef CmatInt CmatLong;
 #else
 typedef CmatLlong CmatLong;
 #endif
+
 typedef const CmatLong & CmatLong_I;
 typedef CmatLong & CmatLong_O, & CmatLong_IO;
 

@@ -1,34 +1,37 @@
+//% types = {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp';};
+//%----------------------------------------
 //% T = varargin{:};
-//% DiagT = ['Diag', T];
-//% VecT = ['Vec', T];
+//% DiagT = ['Diag' T];
+//% VecT = ['Vec' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef DiagInt DiagLong;
+#else
+typedef DiagLlong DiagLong;
+#endif
+//% else
+void veccpy(@T@ *, const @T@ *, Llong_I);
+
 class @DiagT@ : public @VecT@
 {
 private:
     typedef @VecT@ Base;
-    @DiagT@() : Base() {} // default constructor: uninitialized
 public:
-    using Base::operator();
-    using Base::operator=;
     @DiagT@(Long_I N);
-    @DiagT@(Long_I N, @T@_I s);
     @DiagT@(@VecT@_I v);
     Long size() const;
     Long nnz() const;
     Long n1() const;
     Long n2() const;
-    @DiagT@ &operator=(@DiagT@_I rhs);
-    @DiagT@ &operator=(@VecT@_I rhs);
     @T@ &ref(Long_I i, Long_I j);
     const @T@ operator()(Long_I i, Long_I j) const;
 };
 
 @DiagT@::@DiagT@(Long_I N) : Base(N) {}
 
-@DiagT@::@DiagT@(Long_I N, @T@_I s) : Base(N, s) {}
-
 @DiagT@::@DiagT@(@VecT@_I v) : Base(v.size())
 {
-    *this = v;
+    veccpy(m_p, v.ptr(), m_N);
 }
 
 Long @DiagT@::size() const
@@ -52,16 +55,6 @@ Long @DiagT@::n2() const
     return Base::size();
 }
 
-@DiagT@ &@DiagT@::operator=(@DiagT@_I rhs)
-{
-    Base::operator=(rhs); return *this;
-}
-
-@DiagT@ &@DiagT@::operator=(@VecT@_I rhs)
-{
-    Base::operator=(rhs); return *this;
-}
-
 @T@ &@DiagT@::ref(Long_I i, Long_I j)
 {
     if (i == j)
@@ -81,3 +74,7 @@ const @DiagT@ &diag(@VecT@_I v)
 {
     return (@DiagT@&)v;
 }
+//% end
+
+typedef const @DiagT@ & @DiagT@_I;
+typedef @DiagT@ & @DiagT@_O, & @DiagT@_IO;

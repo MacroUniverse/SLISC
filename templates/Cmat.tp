@@ -77,7 +77,7 @@ inline void @CmatT@::resize(Long_I Nr, Long_I Nc)
         m_Nr = Nr; m_Nc = Nc;
     }
 }
-
 //% end
+
 typedef const @CmatT@ & @CmatT@_I;
 typedef @CmatT@ & @CmatT@_O, & @CmatT@_IO;
