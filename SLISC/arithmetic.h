@@ -9,6 +9,8 @@ namespace slisc {
 #include "min_max.inl"
 #include "max_abs_v.inl"
 #include "max_abs.inl"
+#include "mod_vvs_vs.inl"
+#include "mod_contain.inl"
 #include "norm.inl"
 #include "resize_cpy.inl"
 #include "linspace_vss.inl"

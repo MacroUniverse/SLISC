@@ -18,6 +18,7 @@ void test_complex_arith();
 void test_arithmetics();
 void test_disp();
 void test_random();
+void test_ylm();
 void test_anglib();
 void test_search();
 void test_lin_eq();
@@ -57,6 +58,8 @@ void test_all()
 	test_arithmetics();
 	cout << "test_random()" << endl;
 	test_random();
+	cout << "test_ylm()" << endl;
+	test_ylm();
 	cout << "test_anglib()" << endl;
 	test_anglib();
 	cout << "test_search()" << endl;
