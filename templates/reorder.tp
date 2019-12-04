@@ -1,10 +1,12 @@
 //% types = {
-//%    % 'VecInt', 'VecLlong';
+//%     'VecInt', 'VecLlong';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
-//%    % 'SvecInt', 'VecLlong';
-//%    % 'SvecLlong', 'VecLlong';
-//%    % 'SvecDoub', 'VecLlong';
+//%     'SvecChar', 'VecLlong';
+//%     'SvecInt', 'VecLlong';
+//%     'SvecLlong', 'VecLlong';
+//%     'SvecDoub', 'VecLlong';
+//%     'SvecComp', 'VecLlong';
 //%     };
 //%---------------------
 //% [Tv, To] = varargin{:};

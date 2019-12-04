@@ -1,0 +1,19 @@
+//% types = {
+//%     'Int', 'Int', 'Int';
+//%     'Llong', 'Llong', 'Llong';
+//%     'Float', 'Float', 'Float';
+//%     'Doub', 'Doub', 'Int';
+//%     'Doub', 'Doub', 'Llong';
+//%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Comp', 'Int';
+//%     'Comp', 'Comp', 'Llong';
+//%     'Comp', 'Comp', 'Doub';
+//%     'Comp', 'Comp', 'Comp';  
+//% };
+//%----------------------------------------------------------
+//% [T, T1, Ts] = varargin{:};
+inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}

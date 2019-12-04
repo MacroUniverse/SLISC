@@ -1,0 +1,34 @@
+//% types = {
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Float', 'Float';
+//%     'Doub', 'Int';
+//%     'Doub', 'Llong';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Int';
+//%     'Comp', 'Llong';
+//%     'Comp', 'Doub';
+//%     'Comp', 'Comp';
+//% };
+//%----------------------------------------------------------
+//% [T1, T2] = varargin{:};
+//% T = promo_type(T1, T2);
+inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+//% if is_comp(T1)
+    @T@ s = conj(v1[0]) * v2[0];
+//% else
+	@T@ s = v1[0] * v2[0];
+//% end
+    for (Long i = 1; i < N; ++i) {
+//% if is_comp(T1)
+        s += conj(v1[i]) * v2[i];
+//% else
+		s += v1[i] * v2[i];
+//% end
+	}
+    return s;
+}

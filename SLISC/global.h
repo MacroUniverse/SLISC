@@ -45,10 +45,17 @@ namespace slisc {
 
 // using std
 
-using std::complex; using std::min; using std::max; using std::swap;
+using std::complex;
 using std::vector; using std::string; using std::to_string;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::ifstream; using std::ofstream;
+using std::min; using std::max; using std::swap;
+using std::abs; using std::real; using std::imag;
+using std::conj; using std::pow;
+using std::sqrt; using std::sin; using std::cos; using std::tan;
+using std::exp; using std::log; using std::log10;
+using std::expm1; using std::log1p; using std::hypot;
+using std::sinh; using std::cosh; using std::tanh;
 
 // Scalar types
 

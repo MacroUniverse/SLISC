@@ -1,22 +1,22 @@
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-inline void reorder(Svec@T@_O v, VecLong_I order);
-inline void reorder(SvecLong_O v, VecLong_I order);
-
-class @McooT@ : public Vbase<@T@>
+//% VbaseT = ['Vbase', T];
+class @McooT@ : public @VbaseT@
 {
 private:
-    typedef Vbase<@T@> Base;
+    typedef @VbaseT@ Base;
     using Base::m_p;
     using Base::m_N;
     Long m_Nr, m_Nc, m_Nnz;
     VecLong m_row, m_col;
-    // @McooT@() {} // default constructor: uninitialized
 public:
     using Base::ptr;
     @McooT@(Long_I Nr, Long_I Nc);
     @McooT@(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
-    @McooT@(const @McooT@ &rhs);        // Copy constructor
+    @McooT@(const @McooT@ &rhs) = delete;  // Copy constructor
+	@McooT@ &operator=(const @McooT@ &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -43,23 +43,19 @@ public:
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
     void reshape(Long_I Nr, Long_I Nc); // change matrix shape
-    void sort_r(); // sort to row major
 };
 
+typedef const @McooT@ &@McooT@_I;
+typedef @McooT@ &@McooT@_O, &@McooT@_IO;
+
 @McooT@::@McooT@(Long_I Nr, Long_I Nc)
-    : m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
+    : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
 @McooT@::@McooT@(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
-
-@McooT@::@McooT@(const @McooT@ &rhs)
-    : m_row(0), m_col(0)
-{
-    SLS_ERR("Copy constructor or move constructor is forbidden!");
-}
 
 Long * @McooT@::row_ptr()
 {
@@ -238,22 +234,4 @@ void @McooT@::reserve(Long_I N)
 void @McooT@::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
-}
-
-inline void @McooT@::sort_r()
-{
-    VecLong inds(m_Nnz), order(m_Nnz);
-    linspace(order, 0, m_Nnz - 1);
-    for (Long i = 0; i < m_Nnz; ++i) {
-        inds[i] = m_Nc * m_row[i] + m_col[i];
-    }
-    sort2(inds, order);
-    Svector<@T@> sli(m_p, m_Nnz);
-    reorder(sli, order);
-    Svector<Long> sli1;
-    sli1.set_size(m_Nnz);
-    sli1.set_ptr(m_row.ptr());
-    reorder(sli1, order);
-    sli1.set_ptr(m_col.ptr());
-    reorder(sli1, order);
 }
