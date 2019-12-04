@@ -1,10 +1,14 @@
 //% types = {
 //%     'VecChar', 'VecChar';
+//%     'VecChar', 'VecInt';
+//%     'VecChar', 'VecLlong';
 //%     'VecInt', 'VecInt';
+//%     'VecInt', 'VecLlong';
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'DvecLlong';
 //%     'VecDoub', 'DvecDoub';
 //%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecDoub';
 //%     'VecDoub', 'VecComp';

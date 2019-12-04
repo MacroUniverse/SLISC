@@ -3,7 +3,22 @@ inline Bool shape_cmp(VecChar_I v1, VecChar_I v2)
     return v1.size() == v2.size();
 }
 
+inline Bool shape_cmp(VecChar_I v1, VecInt_I v2)
+{
+    return v1.size() == v2.size();
+}
+
+inline Bool shape_cmp(VecChar_I v1, VecLlong_I v2)
+{
+    return v1.size() == v2.size();
+}
+
 inline Bool shape_cmp(VecInt_I v1, VecInt_I v2)
+{
+    return v1.size() == v2.size();
+}
+
+inline Bool shape_cmp(VecInt_I v1, VecLlong_I v2)
 {
     return v1.size() == v2.size();
 }
@@ -24,6 +39,11 @@ inline Bool shape_cmp(VecDoub_I v1, DvecDoub_I v2)
 }
 
 inline Bool shape_cmp(VecLlong_I v1, VecLlong_I v2)
+{
+    return v1.size() == v2.size();
+}
+
+inline Bool shape_cmp(VecDoub_I v1, VecLlong_I v2)
 {
     return v1.size() == v2.size();
 }

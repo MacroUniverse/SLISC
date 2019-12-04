@@ -1,4 +1,4 @@
-//% types = {'Int'; 'Llong'; 'Doub'};
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'};
 //%-----------------------------------
 //% T = varargin{:};
 // sort first m elements of arr, quicksort algorithm
@@ -8,7 +8,7 @@ void sort_v(@T@ *arr, Long_I N, Long_I m = -1)
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
     @T@ a;
     VecLong istack(NSTACK);
-    if (m>0) n = MIN(m, n);
+    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {

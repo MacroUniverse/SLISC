@@ -1,5 +1,6 @@
 //% types = {
 //%     'VecChar', 'VecLong';
+//%     'VecInt', 'VecInt';
 //%     'VecInt', 'VecLong';
 //%     'VecLlong', 'VecLong';
 //%     'VecDoub', 'VecLong';
