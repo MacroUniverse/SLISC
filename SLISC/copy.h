@@ -29,7 +29,8 @@ namespace slisc {
 #include "copy_contain.inl"
 
 // for sparse containers
-// #include "copy_Mcoo_Mcoo.inl"
+#include "copy_Mcoo_Mcoo.inl"
+#include "copy_coo2dense.inl"
 
 // from MatCoo and MatCooH to dense matrix
 // #include "matrix_coo2dense.inl"

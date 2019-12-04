@@ -1,3 +1,8 @@
+//% types = {
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//% };
+//%----------------------------
 //% [T, T1] = varargin{:};
 //% McooT = ['Mcoo', T]; McooT1 = ['Mcoo', T1];
 void copy(@McooT@_O v, @McooT1@_I v1)

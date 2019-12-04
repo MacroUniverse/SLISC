@@ -3,6 +3,7 @@
 #include "Mat.h"
 #include "Cmat.h"
 #include "Cmat3.h"
+#include "Mcoo.h"
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"

@@ -29,6 +29,12 @@
 //%     'DcmatDoub', 'CmatDoub';
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'Cmat3Comp', 'Cmat3Comp';
+//%     'McooDoub', 'McooDoub';
+//%     'CmatDoub', 'McooDoub';
+//%     'McooDoub', 'CmatDoub';
+//%     'CmatComp', 'McooComp';
+//%     'McooComp', 'CmatComp';
+//%     'McooComp', 'McooComp';
 //% };
 //%---------------------------------
 //% [T1, T2] = varargin{:};
