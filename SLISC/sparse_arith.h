@@ -11,4 +11,5 @@ namespace slisc {
 #include "mul_sparse_mv.inl"
 #include "mul_sparse_mm.inl"
 #include "sort_r_Mcoo.inl"
+#include "sparse_plus_minus_times_divede_eq_contain_vs.inl"
 } // namespace slisc

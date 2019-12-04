@@ -1,4 +1,4 @@
-void eig_sym(VecDoub_O eigVal, CmatDoub_O eigVec, CmatDoub_I A)
+inline void eig_sym(VecDoub_O eigVal, CmatDoub_O eigVec, CmatDoub_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (A.n1() != A.n2() || !shape_cmp(eigVec, A)

@@ -27,35 +27,35 @@ public:
     const @T@ operator()(Long_I i, Long_I j) const;
 };
 
-@DiagT@::@DiagT@(Long_I N) : Base(N) {}
+inline @DiagT@::@DiagT@(Long_I N) : Base(N) {}
 
-@DiagT@::@DiagT@(@VecT@_I v) : Base(v.size())
+inline @DiagT@::@DiagT@(@VecT@_I v) : Base(v.size())
 {
     veccpy(m_p, v.ptr(), m_N);
 }
 
-Long @DiagT@::size() const
+inline Long @DiagT@::size() const
 {
     SLS_ERR("use nnz() instead!");
     return 0;
 }
 
-Long @DiagT@::nnz() const
+inline Long @DiagT@::nnz() const
 {
     return Base::size();
 }
 
-Long @DiagT@::n1() const
+inline Long @DiagT@::n1() const
 {
     return Base::size();
 }
 
-Long @DiagT@::n2() const
+inline Long @DiagT@::n2() const
 {
     return Base::size();
 }
 
-@T@ &@DiagT@::ref(Long_I i, Long_I j)
+inline @T@ &@DiagT@::ref(Long_I i, Long_I j)
 {
     if (i == j)
         return (*this)[i];
@@ -63,14 +63,14 @@ Long @DiagT@::n2() const
     return (*this)[i];
 }
 
-const @T@ @DiagT@::operator()(Long_I i, Long_I j) const
+inline const @T@ @DiagT@::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
 }
 
 // convert vector to diagonal matrix
-const @DiagT@ &diag(@VecT@_I v)
+inline const @DiagT@ &diag(@VecT@_I v)
 {
     return (@DiagT@&)v;
 }

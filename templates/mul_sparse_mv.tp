@@ -4,7 +4,7 @@
 //% };
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
-void mul(@T@_O y, @T1@_I a, @T2@_I x)
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.size() || a.n1() != y.size())

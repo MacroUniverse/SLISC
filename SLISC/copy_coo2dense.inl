@@ -1,4 +1,4 @@
-inline void coo2dense(CmatDoub_O lhs, McooDoub_I rhs)
+inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(lhs, rhs))
@@ -28,7 +28,7 @@ inline void coo2dense(CmatDoub_O lhs, McooDoub_I rhs)
 //     }
 // }
 
-inline void coo2dense(CmatComp_O lhs, McooComp_I rhs)
+inline void copy(CmatComp_O lhs, McooComp_I rhs)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(lhs, rhs))

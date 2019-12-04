@@ -15,35 +15,35 @@ public:
     const Int operator()(Long_I i, Long_I j) const;
 };
 
-DiagInt::DiagInt(Long_I N) : Base(N) {}
+inline DiagInt::DiagInt(Long_I N) : Base(N) {}
 
-DiagInt::DiagInt(VecInt_I v) : Base(v.size())
+inline DiagInt::DiagInt(VecInt_I v) : Base(v.size())
 {
     veccpy(m_p, v.ptr(), m_N);
 }
 
-Long DiagInt::size() const
+inline Long DiagInt::size() const
 {
     SLS_ERR("use nnz() instead!");
     return 0;
 }
 
-Long DiagInt::nnz() const
+inline Long DiagInt::nnz() const
 {
     return Base::size();
 }
 
-Long DiagInt::n1() const
+inline Long DiagInt::n1() const
 {
     return Base::size();
 }
 
-Long DiagInt::n2() const
+inline Long DiagInt::n2() const
 {
     return Base::size();
 }
 
-Int &DiagInt::ref(Long_I i, Long_I j)
+inline Int &DiagInt::ref(Long_I i, Long_I j)
 {
     if (i == j)
         return (*this)[i];
@@ -51,14 +51,14 @@ Int &DiagInt::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-const Int DiagInt::operator()(Long_I i, Long_I j) const
+inline const Int DiagInt::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
 }
 
 // convert vector to diagonal matrix
-const DiagInt &diag(VecInt_I v)
+inline const DiagInt &diag(VecInt_I v)
 {
     return (DiagInt&)v;
 }
@@ -83,35 +83,35 @@ public:
     const Llong operator()(Long_I i, Long_I j) const;
 };
 
-DiagLlong::DiagLlong(Long_I N) : Base(N) {}
+inline DiagLlong::DiagLlong(Long_I N) : Base(N) {}
 
-DiagLlong::DiagLlong(VecLlong_I v) : Base(v.size())
+inline DiagLlong::DiagLlong(VecLlong_I v) : Base(v.size())
 {
     veccpy(m_p, v.ptr(), m_N);
 }
 
-Long DiagLlong::size() const
+inline Long DiagLlong::size() const
 {
     SLS_ERR("use nnz() instead!");
     return 0;
 }
 
-Long DiagLlong::nnz() const
+inline Long DiagLlong::nnz() const
 {
     return Base::size();
 }
 
-Long DiagLlong::n1() const
+inline Long DiagLlong::n1() const
 {
     return Base::size();
 }
 
-Long DiagLlong::n2() const
+inline Long DiagLlong::n2() const
 {
     return Base::size();
 }
 
-Llong &DiagLlong::ref(Long_I i, Long_I j)
+inline Llong &DiagLlong::ref(Long_I i, Long_I j)
 {
     if (i == j)
         return (*this)[i];
@@ -119,14 +119,14 @@ Llong &DiagLlong::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-const Llong DiagLlong::operator()(Long_I i, Long_I j) const
+inline const Llong DiagLlong::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
 }
 
 // convert vector to diagonal matrix
-const DiagLlong &diag(VecLlong_I v)
+inline const DiagLlong &diag(VecLlong_I v)
 {
     return (DiagLlong&)v;
 }
@@ -160,35 +160,35 @@ public:
     const Doub operator()(Long_I i, Long_I j) const;
 };
 
-DiagDoub::DiagDoub(Long_I N) : Base(N) {}
+inline DiagDoub::DiagDoub(Long_I N) : Base(N) {}
 
-DiagDoub::DiagDoub(VecDoub_I v) : Base(v.size())
+inline DiagDoub::DiagDoub(VecDoub_I v) : Base(v.size())
 {
     veccpy(m_p, v.ptr(), m_N);
 }
 
-Long DiagDoub::size() const
+inline Long DiagDoub::size() const
 {
     SLS_ERR("use nnz() instead!");
     return 0;
 }
 
-Long DiagDoub::nnz() const
+inline Long DiagDoub::nnz() const
 {
     return Base::size();
 }
 
-Long DiagDoub::n1() const
+inline Long DiagDoub::n1() const
 {
     return Base::size();
 }
 
-Long DiagDoub::n2() const
+inline Long DiagDoub::n2() const
 {
     return Base::size();
 }
 
-Doub &DiagDoub::ref(Long_I i, Long_I j)
+inline Doub &DiagDoub::ref(Long_I i, Long_I j)
 {
     if (i == j)
         return (*this)[i];
@@ -196,14 +196,14 @@ Doub &DiagDoub::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-const Doub DiagDoub::operator()(Long_I i, Long_I j) const
+inline const Doub DiagDoub::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
 }
 
 // convert vector to diagonal matrix
-const DiagDoub &diag(VecDoub_I v)
+inline const DiagDoub &diag(VecDoub_I v)
 {
     return (DiagDoub&)v;
 }
@@ -228,35 +228,35 @@ public:
     const Comp operator()(Long_I i, Long_I j) const;
 };
 
-DiagComp::DiagComp(Long_I N) : Base(N) {}
+inline DiagComp::DiagComp(Long_I N) : Base(N) {}
 
-DiagComp::DiagComp(VecComp_I v) : Base(v.size())
+inline DiagComp::DiagComp(VecComp_I v) : Base(v.size())
 {
     veccpy(m_p, v.ptr(), m_N);
 }
 
-Long DiagComp::size() const
+inline Long DiagComp::size() const
 {
     SLS_ERR("use nnz() instead!");
     return 0;
 }
 
-Long DiagComp::nnz() const
+inline Long DiagComp::nnz() const
 {
     return Base::size();
 }
 
-Long DiagComp::n1() const
+inline Long DiagComp::n1() const
 {
     return Base::size();
 }
 
-Long DiagComp::n2() const
+inline Long DiagComp::n2() const
 {
     return Base::size();
 }
 
-Comp &DiagComp::ref(Long_I i, Long_I j)
+inline Comp &DiagComp::ref(Long_I i, Long_I j)
 {
     if (i == j)
         return (*this)[i];
@@ -264,14 +264,14 @@ Comp &DiagComp::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-const Comp DiagComp::operator()(Long_I i, Long_I j) const
+inline const Comp DiagComp::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
 }
 
 // convert vector to diagonal matrix
-const DiagComp &diag(VecComp_I v)
+inline const DiagComp &diag(VecComp_I v)
 {
     return (DiagComp&)v;
 }

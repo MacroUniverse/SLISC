@@ -26,6 +26,7 @@ void test_search();
 void test_lin_eq();
 void test_file();
 void test_matt();
+void test_fedvr();
 
 void test_all()
 {
@@ -76,6 +77,8 @@ void test_all()
 	test_file();
 	cout << "test_matt()" << endl;
 	test_matt();
+	cout << "test_fedvr()" << endl;
+	test_fedvr();
 	
 	cout << "do optional tests? (y/n)" << endl;
 	if (getchar() == 'y') {

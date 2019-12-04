@@ -1,5 +1,5 @@
 // sort first m elements of arr, quicksort algorithm
-void sort_v(Char *arr, Long_I N, Long_I m = -1)
+inline void sort_v(Char *arr, Long_I N, Long_I m = -1)
 {
     static const Int M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -61,7 +61,7 @@ void sort_v(Char *arr, Long_I N, Long_I m = -1)
 }
 
 // sort first m elements of arr, quicksort algorithm
-void sort_v(Int *arr, Long_I N, Long_I m = -1)
+inline void sort_v(Int *arr, Long_I N, Long_I m = -1)
 {
     static const Int M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -123,7 +123,7 @@ void sort_v(Int *arr, Long_I N, Long_I m = -1)
 }
 
 // sort first m elements of arr, quicksort algorithm
-void sort_v(Llong *arr, Long_I N, Long_I m = -1)
+inline void sort_v(Llong *arr, Long_I N, Long_I m = -1)
 {
     static const Int M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -185,7 +185,7 @@ void sort_v(Llong *arr, Long_I N, Long_I m = -1)
 }
 
 // sort first m elements of arr, quicksort algorithm
-void sort_v(Doub *arr, Long_I N, Long_I m = -1)
+inline void sort_v(Doub *arr, Long_I N, Long_I m = -1)
 {
     static const Int M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;

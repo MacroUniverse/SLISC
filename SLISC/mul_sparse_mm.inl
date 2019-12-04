@@ -1,4 +1,4 @@
-void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
+inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())
@@ -9,7 +9,7 @@ void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
     mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
 }
 
-void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
+inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())
@@ -20,7 +20,7 @@ void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
     mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
 }
 
-void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
+inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())
@@ -31,7 +31,7 @@ void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
     mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
 }
 
-void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
+inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())
@@ -42,7 +42,7 @@ void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
 	mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
 }
 
-void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
+inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())
@@ -53,7 +53,7 @@ void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
 	mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
 }
 
-void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
+inline void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())

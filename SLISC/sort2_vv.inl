@@ -1,5 +1,5 @@
 //  from Numerical Recipes 3ed
-void sort2_vv(Char *v, Long *v1, Long_I N)
+inline void sort2_vv(Char *v, Long *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -72,7 +72,7 @@ void sort2_vv(Char *v, Long *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-void sort2_vv(Int *v, Int *v1, Long_I N)
+inline void sort2_vv(Int *v, Int *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -145,7 +145,7 @@ void sort2_vv(Int *v, Int *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-void sort2_vv(Int *v, Long *v1, Long_I N)
+inline void sort2_vv(Int *v, Long *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -218,7 +218,7 @@ void sort2_vv(Int *v, Long *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-void sort2_vv(Llong *v, Long *v1, Long_I N)
+inline void sort2_vv(Llong *v, Long *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
@@ -291,7 +291,7 @@ void sort2_vv(Llong *v, Long *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-void sort2_vv(Doub *v, Long *v1, Long_I N)
+inline void sort2_vv(Doub *v, Long *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;

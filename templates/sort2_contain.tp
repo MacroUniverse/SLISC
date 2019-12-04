@@ -8,7 +8,7 @@
 //%---------------------
 //% [T, T1] = varargin{:};
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
-void sort2(@T@_IO v, @T1@_IO v1)
+inline void sort2(@T@_IO v, @T1@_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (!shape_cmp(v, v1))

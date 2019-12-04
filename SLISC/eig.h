@@ -10,7 +10,7 @@ namespace slisc {
 
 // only upper triangle is needed
 // eigen value in ascending order
-void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
+inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (A.n1() != A.n2() || !shape_cmp(eigVec, A)

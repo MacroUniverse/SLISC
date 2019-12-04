@@ -18,6 +18,8 @@ namespace slisc {
 #include "reorder.inl"
 #include "trans.inl"
 #include "trans2.inl"
+#include "plus_minus_times_divide_equals_vs.inl"
+#include "plus_minus_times_divide_equals_contain_vs.inl"
 #include "plus_minus_times_divide_equals_vv.inl"
 #include "contain_plus_minus_times_divide_equals.inl"
 #include "plus_minus_times_divide_vvs.inl"

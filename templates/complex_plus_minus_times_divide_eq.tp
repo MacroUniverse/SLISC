@@ -8,22 +8,22 @@
 //% else
 //%     T = T1;
 //% end
-void operator+=(@T1@_O z, @T2@_I x)
+inline void operator+=(@T1@_O z, @T2@_I x)
 {
     z += (@T@)x;
 }
 
-void operator-=(@T1@_O z, @T2@_I x)
+inline void operator-=(@T1@_O z, @T2@_I x)
 {
     z -= (@T@)x;
 }
 
-void operator*=(@T1@_O z, @T2@_I x)
+inline void operator*=(@T1@_O z, @T2@_I x)
 {
     z *= (@T@)x;
 }
 
-void operator/=(@T1@_O z, @T2@_I x)
+inline void operator/=(@T1@_O z, @T2@_I x)
 {
     z /= (@T@)x;
 }

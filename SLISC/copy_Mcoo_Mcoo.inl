@@ -1,4 +1,4 @@
-void copy(McooDoub_O v, McooDoub_I v1)
+inline void copy(McooDoub_O v, McooDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))
@@ -17,7 +17,7 @@ void copy(McooDoub_O v, McooDoub_I v1)
     veccpy(v.col_ptr(), v1.col_ptr(), Nnz);
 }
 
-void copy(McooComp_O v, McooComp_I v1)
+inline void copy(McooComp_O v, McooComp_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))

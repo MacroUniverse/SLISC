@@ -71,19 +71,19 @@ void test_inf_sqr_well()
     VecDoub x(Nx), w(Nx), u(Nx);
     CmatDoub H(Nx, Nx); McooDoub Hs(Nx, Nx); // dense and sparse Hamiltonian
     D2_matrix(Hs, x, w, u, bounds, Ngs);
-    H.resize(Hs.n1(), Hs.n2()); H = Hs;
+    H.resize(Hs.n1(), Hs.n2()); copy(H, Hs);
     H *= -0.5; Hs *= -0.5;
 
     // solve eigen states
     VecDoub eigVal(H.n1()); // eigen values / bound state energies
-    CmatDoub eigVec(0, 0); eigVec.resize(H); // eigen vectors / bound states wave functions
+    CmatDoub eigVec(0, 0); eigVec.resize(H.n1(), H.n2()); // eigen vectors / bound states wave functions
     eig_sym(eigVal, eigVec, H);
 
     // test energies
 
     VecDoub eng(8);
     for (Int n = 1; n <= 8; ++n)
-        eng[n - 1] = SQR(PI) / 2. * SQR(n);
+        eng[n - 1] = sqr(PI) / 2. * sqr(n);
     minus_equals_vv(eng.ptr(), eigVal.ptr(), 8);
     if (max_abs_v(eng.ptr(), 8) > 1e-5) SLS_ERR("failed!");
 
@@ -105,17 +105,17 @@ void test_SHO()
     CmatDoub H(Nx, Nx); McooDoub Hs(Nx, Nx); // dense and sparse Hamiltonian
     D2_matrix(Hs, x, w, u, bounds, Ngs);
 
-    H.resize(Hs.n1(), Hs.n2()); H = Hs;
+    H.resize(Hs.n1(), Hs.n2()); copy(H, Hs);
     H *= -0.5; Hs *= -0.5;
 
     // add potential to Hamiltonian
     for (Long i = 0; i < x.size(); ++i) {
-        H(i, i) += 0.5*SQR(x[i]);
+        H(i, i) += 0.5*sqr(x[i]);
     }
 
     // solve eigen states
     VecDoub eigVal(H.n1()); // eigen values / bound state energies
-    CmatDoub eigVec(0, 0); eigVec.resize(H); // eigen vectors / bound states wave functions
+    CmatDoub eigVec(0, 0); eigVec.resize(H.n1(), H.n2()); // eigen vectors / bound states wave functions
     eig_sym(eigVal, eigVec, H);
 
     // test energies

@@ -12,7 +12,7 @@
 //%-------------------------------------
 //% [T1,T2] = varargin{:};
 //% T = promo_type(T1,T2);
-const @T@ operator+(@T1@_I s1, @T2@_I s2)
+inline const @T@ operator+(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
     return @T@(s1 + real(s2), imag(s2));
@@ -27,7 +27,7 @@ const @T@ operator+(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-const @T@ operator-(@T1@_I s1, @T2@_I s2)
+inline const @T@ operator-(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
     return @T@(s1 - real(s2), -imag(s2));
@@ -42,7 +42,7 @@ const @T@ operator-(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-const @T@ operator*(@T1@_I s1, @T2@_I s2)
+inline const @T@ operator*(@T1@_I s1, @T2@_I s2)
 {
 //% if is_real(T1)
     return @T@(s1*real(s2), s1*imag(s2));
@@ -57,7 +57,7 @@ const @T@ operator*(@T1@_I s1, @T2@_I s2)
 //% end
 }
 
-const @T@ operator/(@T1@_I s1, @T2@_I s2)
+inline const @T@ operator/(@T1@_I s1, @T2@_I s2)
 {
 //% Tr1 = rm_comp(T1); Tr2 = rm_comp(T2);
 //% numr1 = type_num(Tr1); numr2 = type_num(Tr2);

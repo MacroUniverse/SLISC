@@ -43,36 +43,36 @@ public:
 typedef const McooChar &McooChar_I;
 typedef McooChar &McooChar_O, &McooChar_IO;
 
-McooChar::McooChar(Long_I Nr, Long_I Nc)
+inline McooChar::McooChar(Long_I Nr, Long_I Nc)
     : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-McooChar::McooChar(Long_I Nr, Long_I Nc, Long_I Ncap) :
+inline McooChar::McooChar(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-Long * McooChar::row_ptr()
+inline Long * McooChar::row_ptr()
 {
     return m_row.ptr();
 }
 
-const Long *McooChar::row_ptr() const
+inline const Long *McooChar::row_ptr() const
 {
     return m_row.ptr();
 }
 
-Long * McooChar::col_ptr()
+inline Long * McooChar::col_ptr()
 {
     return m_col.ptr();
 }
 
-const Long *McooChar::col_ptr() const
+inline const Long *McooChar::col_ptr() const
 {
     return m_col.ptr();
 }
 
-Long McooChar::find(Long_I i, Long_I j) const
+inline Long McooChar::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
@@ -81,7 +81,7 @@ Long McooChar::find(Long_I i, Long_I j) const
     return -1;
 }
 
-Char& McooChar::ref(Long_I i, Long_I j)
+inline Char& McooChar::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -93,7 +93,7 @@ Char& McooChar::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-const Char McooChar::operator()(Long_I i, Long_I j) const
+inline const Char McooChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -105,7 +105,7 @@ const Char McooChar::operator()(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-void McooChar::push(Char_I s, Long_I i, Long_I j)
+inline void McooChar::push(Char_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
@@ -123,7 +123,7 @@ void McooChar::push(Char_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-void McooChar::set(Char_I s, Long_I i, Long_I j)
+inline void McooChar::set(Char_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -138,32 +138,32 @@ void McooChar::set(Char_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-Long McooChar::n1() const
+inline Long McooChar::n1() const
 {
     return m_Nr;
 }
 
-Long McooChar::n2() const
+inline Long McooChar::n2() const
 {
     return m_Nc;
 }
 
-Long McooChar::size() const
+inline Long McooChar::size() const
 {
     return m_Nr * m_Nc;
 }
 
-Long McooChar::nnz() const
+inline Long McooChar::nnz() const
 {
     return m_Nnz;
 }
 
-Long McooChar::capacity() const
+inline Long McooChar::capacity() const
 {
     return Base::size();
 }
 
-Char & McooChar::operator()(Long_I ind)
+inline Char & McooChar::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -172,7 +172,7 @@ Char & McooChar::operator()(Long_I ind)
     return m_p[ind];
 }
 
-const Char McooChar::operator()(Long_I ind) const
+inline const Char McooChar::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -181,7 +181,7 @@ const Char McooChar::operator()(Long_I ind) const
     return m_p[ind];
 }
 
-Long McooChar::row(Long_I ind) const
+inline Long McooChar::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -190,7 +190,7 @@ Long McooChar::row(Long_I ind) const
     return m_row[ind];
 }
 
-Long McooChar::col(Long_I ind) const
+inline Long McooChar::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
@@ -199,7 +199,7 @@ Long McooChar::col(Long_I ind) const
     return m_col[ind];
 }
 
-void McooChar::trim(Long_I Nnz)
+inline void McooChar::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
@@ -209,7 +209,7 @@ void McooChar::trim(Long_I Nnz)
     else if (Nnz > m_Nnz) SLS_ERR("McooChar::trim(): Nnz > m_Nnz!");
 }
 
-void McooChar::resize(Long_I N)
+inline void McooChar::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_N)
@@ -218,7 +218,7 @@ void McooChar::resize(Long_I N)
     m_Nnz = N;
 }
 
-void McooChar::reserve(Long_I N)
+inline void McooChar::reserve(Long_I N)
 {
     Base::resize(N);
     m_row.resize(N);
@@ -226,7 +226,7 @@ void McooChar::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-void McooChar::reshape(Long_I Nr, Long_I Nc)
+inline void McooChar::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
 }
@@ -276,36 +276,36 @@ public:
 typedef const McooInt &McooInt_I;
 typedef McooInt &McooInt_O, &McooInt_IO;
 
-McooInt::McooInt(Long_I Nr, Long_I Nc)
+inline McooInt::McooInt(Long_I Nr, Long_I Nc)
     : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-McooInt::McooInt(Long_I Nr, Long_I Nc, Long_I Ncap) :
+inline McooInt::McooInt(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-Long * McooInt::row_ptr()
+inline Long * McooInt::row_ptr()
 {
     return m_row.ptr();
 }
 
-const Long *McooInt::row_ptr() const
+inline const Long *McooInt::row_ptr() const
 {
     return m_row.ptr();
 }
 
-Long * McooInt::col_ptr()
+inline Long * McooInt::col_ptr()
 {
     return m_col.ptr();
 }
 
-const Long *McooInt::col_ptr() const
+inline const Long *McooInt::col_ptr() const
 {
     return m_col.ptr();
 }
 
-Long McooInt::find(Long_I i, Long_I j) const
+inline Long McooInt::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
@@ -314,7 +314,7 @@ Long McooInt::find(Long_I i, Long_I j) const
     return -1;
 }
 
-Int& McooInt::ref(Long_I i, Long_I j)
+inline Int& McooInt::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -326,7 +326,7 @@ Int& McooInt::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-const Int McooInt::operator()(Long_I i, Long_I j) const
+inline const Int McooInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -338,7 +338,7 @@ const Int McooInt::operator()(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-void McooInt::push(Int_I s, Long_I i, Long_I j)
+inline void McooInt::push(Int_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
@@ -356,7 +356,7 @@ void McooInt::push(Int_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-void McooInt::set(Int_I s, Long_I i, Long_I j)
+inline void McooInt::set(Int_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -371,32 +371,32 @@ void McooInt::set(Int_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-Long McooInt::n1() const
+inline Long McooInt::n1() const
 {
     return m_Nr;
 }
 
-Long McooInt::n2() const
+inline Long McooInt::n2() const
 {
     return m_Nc;
 }
 
-Long McooInt::size() const
+inline Long McooInt::size() const
 {
     return m_Nr * m_Nc;
 }
 
-Long McooInt::nnz() const
+inline Long McooInt::nnz() const
 {
     return m_Nnz;
 }
 
-Long McooInt::capacity() const
+inline Long McooInt::capacity() const
 {
     return Base::size();
 }
 
-Int & McooInt::operator()(Long_I ind)
+inline Int & McooInt::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -405,7 +405,7 @@ Int & McooInt::operator()(Long_I ind)
     return m_p[ind];
 }
 
-const Int McooInt::operator()(Long_I ind) const
+inline const Int McooInt::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -414,7 +414,7 @@ const Int McooInt::operator()(Long_I ind) const
     return m_p[ind];
 }
 
-Long McooInt::row(Long_I ind) const
+inline Long McooInt::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -423,7 +423,7 @@ Long McooInt::row(Long_I ind) const
     return m_row[ind];
 }
 
-Long McooInt::col(Long_I ind) const
+inline Long McooInt::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
@@ -432,7 +432,7 @@ Long McooInt::col(Long_I ind) const
     return m_col[ind];
 }
 
-void McooInt::trim(Long_I Nnz)
+inline void McooInt::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
@@ -442,7 +442,7 @@ void McooInt::trim(Long_I Nnz)
     else if (Nnz > m_Nnz) SLS_ERR("McooInt::trim(): Nnz > m_Nnz!");
 }
 
-void McooInt::resize(Long_I N)
+inline void McooInt::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_N)
@@ -451,7 +451,7 @@ void McooInt::resize(Long_I N)
     m_Nnz = N;
 }
 
-void McooInt::reserve(Long_I N)
+inline void McooInt::reserve(Long_I N)
 {
     Base::resize(N);
     m_row.resize(N);
@@ -459,7 +459,7 @@ void McooInt::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-void McooInt::reshape(Long_I Nr, Long_I Nc)
+inline void McooInt::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
 }
@@ -509,36 +509,36 @@ public:
 typedef const McooLlong &McooLlong_I;
 typedef McooLlong &McooLlong_O, &McooLlong_IO;
 
-McooLlong::McooLlong(Long_I Nr, Long_I Nc)
+inline McooLlong::McooLlong(Long_I Nr, Long_I Nc)
     : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-McooLlong::McooLlong(Long_I Nr, Long_I Nc, Long_I Ncap) :
+inline McooLlong::McooLlong(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-Long * McooLlong::row_ptr()
+inline Long * McooLlong::row_ptr()
 {
     return m_row.ptr();
 }
 
-const Long *McooLlong::row_ptr() const
+inline const Long *McooLlong::row_ptr() const
 {
     return m_row.ptr();
 }
 
-Long * McooLlong::col_ptr()
+inline Long * McooLlong::col_ptr()
 {
     return m_col.ptr();
 }
 
-const Long *McooLlong::col_ptr() const
+inline const Long *McooLlong::col_ptr() const
 {
     return m_col.ptr();
 }
 
-Long McooLlong::find(Long_I i, Long_I j) const
+inline Long McooLlong::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
@@ -547,7 +547,7 @@ Long McooLlong::find(Long_I i, Long_I j) const
     return -1;
 }
 
-Llong& McooLlong::ref(Long_I i, Long_I j)
+inline Llong& McooLlong::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -559,7 +559,7 @@ Llong& McooLlong::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-const Llong McooLlong::operator()(Long_I i, Long_I j) const
+inline const Llong McooLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -571,7 +571,7 @@ const Llong McooLlong::operator()(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-void McooLlong::push(Llong_I s, Long_I i, Long_I j)
+inline void McooLlong::push(Llong_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
@@ -589,7 +589,7 @@ void McooLlong::push(Llong_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-void McooLlong::set(Llong_I s, Long_I i, Long_I j)
+inline void McooLlong::set(Llong_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -604,32 +604,32 @@ void McooLlong::set(Llong_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-Long McooLlong::n1() const
+inline Long McooLlong::n1() const
 {
     return m_Nr;
 }
 
-Long McooLlong::n2() const
+inline Long McooLlong::n2() const
 {
     return m_Nc;
 }
 
-Long McooLlong::size() const
+inline Long McooLlong::size() const
 {
     return m_Nr * m_Nc;
 }
 
-Long McooLlong::nnz() const
+inline Long McooLlong::nnz() const
 {
     return m_Nnz;
 }
 
-Long McooLlong::capacity() const
+inline Long McooLlong::capacity() const
 {
     return Base::size();
 }
 
-Llong & McooLlong::operator()(Long_I ind)
+inline Llong & McooLlong::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -638,7 +638,7 @@ Llong & McooLlong::operator()(Long_I ind)
     return m_p[ind];
 }
 
-const Llong McooLlong::operator()(Long_I ind) const
+inline const Llong McooLlong::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -647,7 +647,7 @@ const Llong McooLlong::operator()(Long_I ind) const
     return m_p[ind];
 }
 
-Long McooLlong::row(Long_I ind) const
+inline Long McooLlong::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -656,7 +656,7 @@ Long McooLlong::row(Long_I ind) const
     return m_row[ind];
 }
 
-Long McooLlong::col(Long_I ind) const
+inline Long McooLlong::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
@@ -665,7 +665,7 @@ Long McooLlong::col(Long_I ind) const
     return m_col[ind];
 }
 
-void McooLlong::trim(Long_I Nnz)
+inline void McooLlong::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
@@ -675,7 +675,7 @@ void McooLlong::trim(Long_I Nnz)
     else if (Nnz > m_Nnz) SLS_ERR("McooLlong::trim(): Nnz > m_Nnz!");
 }
 
-void McooLlong::resize(Long_I N)
+inline void McooLlong::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_N)
@@ -684,7 +684,7 @@ void McooLlong::resize(Long_I N)
     m_Nnz = N;
 }
 
-void McooLlong::reserve(Long_I N)
+inline void McooLlong::reserve(Long_I N)
 {
     Base::resize(N);
     m_row.resize(N);
@@ -692,7 +692,7 @@ void McooLlong::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-void McooLlong::reshape(Long_I Nr, Long_I Nc)
+inline void McooLlong::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
 }
@@ -742,36 +742,36 @@ public:
 typedef const McooDoub &McooDoub_I;
 typedef McooDoub &McooDoub_O, &McooDoub_IO;
 
-McooDoub::McooDoub(Long_I Nr, Long_I Nc)
+inline McooDoub::McooDoub(Long_I Nr, Long_I Nc)
     : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-McooDoub::McooDoub(Long_I Nr, Long_I Nc, Long_I Ncap) :
+inline McooDoub::McooDoub(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-Long * McooDoub::row_ptr()
+inline Long * McooDoub::row_ptr()
 {
     return m_row.ptr();
 }
 
-const Long *McooDoub::row_ptr() const
+inline const Long *McooDoub::row_ptr() const
 {
     return m_row.ptr();
 }
 
-Long * McooDoub::col_ptr()
+inline Long * McooDoub::col_ptr()
 {
     return m_col.ptr();
 }
 
-const Long *McooDoub::col_ptr() const
+inline const Long *McooDoub::col_ptr() const
 {
     return m_col.ptr();
 }
 
-Long McooDoub::find(Long_I i, Long_I j) const
+inline Long McooDoub::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
@@ -780,7 +780,7 @@ Long McooDoub::find(Long_I i, Long_I j) const
     return -1;
 }
 
-Doub& McooDoub::ref(Long_I i, Long_I j)
+inline Doub& McooDoub::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -792,7 +792,7 @@ Doub& McooDoub::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-const Doub McooDoub::operator()(Long_I i, Long_I j) const
+inline const Doub McooDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -804,7 +804,7 @@ const Doub McooDoub::operator()(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-void McooDoub::push(Doub_I s, Long_I i, Long_I j)
+inline void McooDoub::push(Doub_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
@@ -822,7 +822,7 @@ void McooDoub::push(Doub_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-void McooDoub::set(Doub_I s, Long_I i, Long_I j)
+inline void McooDoub::set(Doub_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -837,32 +837,32 @@ void McooDoub::set(Doub_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-Long McooDoub::n1() const
+inline Long McooDoub::n1() const
 {
     return m_Nr;
 }
 
-Long McooDoub::n2() const
+inline Long McooDoub::n2() const
 {
     return m_Nc;
 }
 
-Long McooDoub::size() const
+inline Long McooDoub::size() const
 {
     return m_Nr * m_Nc;
 }
 
-Long McooDoub::nnz() const
+inline Long McooDoub::nnz() const
 {
     return m_Nnz;
 }
 
-Long McooDoub::capacity() const
+inline Long McooDoub::capacity() const
 {
     return Base::size();
 }
 
-Doub & McooDoub::operator()(Long_I ind)
+inline Doub & McooDoub::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -871,7 +871,7 @@ Doub & McooDoub::operator()(Long_I ind)
     return m_p[ind];
 }
 
-const Doub McooDoub::operator()(Long_I ind) const
+inline const Doub McooDoub::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -880,7 +880,7 @@ const Doub McooDoub::operator()(Long_I ind) const
     return m_p[ind];
 }
 
-Long McooDoub::row(Long_I ind) const
+inline Long McooDoub::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -889,7 +889,7 @@ Long McooDoub::row(Long_I ind) const
     return m_row[ind];
 }
 
-Long McooDoub::col(Long_I ind) const
+inline Long McooDoub::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
@@ -898,7 +898,7 @@ Long McooDoub::col(Long_I ind) const
     return m_col[ind];
 }
 
-void McooDoub::trim(Long_I Nnz)
+inline void McooDoub::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
@@ -908,7 +908,7 @@ void McooDoub::trim(Long_I Nnz)
     else if (Nnz > m_Nnz) SLS_ERR("McooDoub::trim(): Nnz > m_Nnz!");
 }
 
-void McooDoub::resize(Long_I N)
+inline void McooDoub::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_N)
@@ -917,7 +917,7 @@ void McooDoub::resize(Long_I N)
     m_Nnz = N;
 }
 
-void McooDoub::reserve(Long_I N)
+inline void McooDoub::reserve(Long_I N)
 {
     Base::resize(N);
     m_row.resize(N);
@@ -925,7 +925,7 @@ void McooDoub::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-void McooDoub::reshape(Long_I Nr, Long_I Nc)
+inline void McooDoub::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
 }
@@ -975,36 +975,36 @@ public:
 typedef const McooComp &McooComp_I;
 typedef McooComp &McooComp_O, &McooComp_IO;
 
-McooComp::McooComp(Long_I Nr, Long_I Nc)
+inline McooComp::McooComp(Long_I Nr, Long_I Nc)
     : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-McooComp::McooComp(Long_I Nr, Long_I Nc, Long_I Ncap) :
+inline McooComp::McooComp(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-Long * McooComp::row_ptr()
+inline Long * McooComp::row_ptr()
 {
     return m_row.ptr();
 }
 
-const Long *McooComp::row_ptr() const
+inline const Long *McooComp::row_ptr() const
 {
     return m_row.ptr();
 }
 
-Long * McooComp::col_ptr()
+inline Long * McooComp::col_ptr()
 {
     return m_col.ptr();
 }
 
-const Long *McooComp::col_ptr() const
+inline const Long *McooComp::col_ptr() const
 {
     return m_col.ptr();
 }
 
-Long McooComp::find(Long_I i, Long_I j) const
+inline Long McooComp::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
@@ -1013,7 +1013,7 @@ Long McooComp::find(Long_I i, Long_I j) const
     return -1;
 }
 
-Comp& McooComp::ref(Long_I i, Long_I j)
+inline Comp& McooComp::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -1025,7 +1025,7 @@ Comp& McooComp::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-const Comp McooComp::operator()(Long_I i, Long_I j) const
+inline const Comp McooComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -1037,7 +1037,7 @@ const Comp McooComp::operator()(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-void McooComp::push(Comp_I s, Long_I i, Long_I j)
+inline void McooComp::push(Comp_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
@@ -1055,7 +1055,7 @@ void McooComp::push(Comp_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-void McooComp::set(Comp_I s, Long_I i, Long_I j)
+inline void McooComp::set(Comp_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -1070,32 +1070,32 @@ void McooComp::set(Comp_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-Long McooComp::n1() const
+inline Long McooComp::n1() const
 {
     return m_Nr;
 }
 
-Long McooComp::n2() const
+inline Long McooComp::n2() const
 {
     return m_Nc;
 }
 
-Long McooComp::size() const
+inline Long McooComp::size() const
 {
     return m_Nr * m_Nc;
 }
 
-Long McooComp::nnz() const
+inline Long McooComp::nnz() const
 {
     return m_Nnz;
 }
 
-Long McooComp::capacity() const
+inline Long McooComp::capacity() const
 {
     return Base::size();
 }
 
-Comp & McooComp::operator()(Long_I ind)
+inline Comp & McooComp::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -1104,7 +1104,7 @@ Comp & McooComp::operator()(Long_I ind)
     return m_p[ind];
 }
 
-const Comp McooComp::operator()(Long_I ind) const
+inline const Comp McooComp::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -1113,7 +1113,7 @@ const Comp McooComp::operator()(Long_I ind) const
     return m_p[ind];
 }
 
-Long McooComp::row(Long_I ind) const
+inline Long McooComp::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -1122,7 +1122,7 @@ Long McooComp::row(Long_I ind) const
     return m_row[ind];
 }
 
-Long McooComp::col(Long_I ind) const
+inline Long McooComp::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
@@ -1131,7 +1131,7 @@ Long McooComp::col(Long_I ind) const
     return m_col[ind];
 }
 
-void McooComp::trim(Long_I Nnz)
+inline void McooComp::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
@@ -1141,7 +1141,7 @@ void McooComp::trim(Long_I Nnz)
     else if (Nnz > m_Nnz) SLS_ERR("McooComp::trim(): Nnz > m_Nnz!");
 }
 
-void McooComp::resize(Long_I N)
+inline void McooComp::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_N)
@@ -1150,7 +1150,7 @@ void McooComp::resize(Long_I N)
     m_Nnz = N;
 }
 
-void McooComp::reserve(Long_I N)
+inline void McooComp::reserve(Long_I N)
 {
     Base::resize(N);
     m_row.resize(N);
@@ -1158,7 +1158,7 @@ void McooComp::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-void McooComp::reshape(Long_I Nr, Long_I Nc)
+inline void McooComp::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
 }

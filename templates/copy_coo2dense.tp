@@ -8,7 +8,7 @@
 //%     error('illegal types');
 //% end
 //% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];
-inline void coo2dense(@Tmat@_O lhs, @McooTs@_I rhs)
+inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(lhs, rhs))

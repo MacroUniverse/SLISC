@@ -48,36 +48,36 @@ public:
 typedef const @McooT@ &@McooT@_I;
 typedef @McooT@ &@McooT@_O, &@McooT@_IO;
 
-@McooT@::@McooT@(Long_I Nr, Long_I Nc)
+inline @McooT@::@McooT@(Long_I Nr, Long_I Nc)
     : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-@McooT@::@McooT@(Long_I Nr, Long_I Nc, Long_I Ncap) :
+inline @McooT@::@McooT@(Long_I Nr, Long_I Nc, Long_I Ncap) :
     Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-Long * @McooT@::row_ptr()
+inline Long * @McooT@::row_ptr()
 {
     return m_row.ptr();
 }
 
-const Long *@McooT@::row_ptr() const
+inline const Long *@McooT@::row_ptr() const
 {
     return m_row.ptr();
 }
 
-Long * @McooT@::col_ptr()
+inline Long * @McooT@::col_ptr()
 {
     return m_col.ptr();
 }
 
-const Long *@McooT@::col_ptr() const
+inline const Long *@McooT@::col_ptr() const
 {
     return m_col.ptr();
 }
 
-Long @McooT@::find(Long_I i, Long_I j) const
+inline Long @McooT@::find(Long_I i, Long_I j) const
 {
     for (Long n = 0; n < m_Nnz; ++n) {
         if (row(n) == i && col(n) == j)
@@ -86,7 +86,7 @@ Long @McooT@::find(Long_I i, Long_I j) const
     return -1;
 }
 
-@T@& @McooT@::ref(Long_I i, Long_I j)
+inline @T@& @McooT@::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -98,7 +98,7 @@ Long @McooT@::find(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-const @T@ @McooT@::operator()(Long_I i, Long_I j) const
+inline const @T@ @McooT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -110,7 +110,7 @@ const @T@ @McooT@::operator()(Long_I i, Long_I j) const
     return m_p[n];
 }
 
-void @McooT@::push(@T@_I s, Long_I i, Long_I j)
+inline void @McooT@::push(@T@_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
@@ -128,7 +128,7 @@ void @McooT@::push(@T@_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-void @McooT@::set(@T@_I s, Long_I i, Long_I j)
+inline void @McooT@::set(@T@_I s, Long_I i, Long_I j)
 {
     Long n;
     // change
@@ -143,32 +143,32 @@ void @McooT@::set(@T@_I s, Long_I i, Long_I j)
     ++m_Nnz;
 }
 
-Long @McooT@::n1() const
+inline Long @McooT@::n1() const
 {
     return m_Nr;
 }
 
-Long @McooT@::n2() const
+inline Long @McooT@::n2() const
 {
     return m_Nc;
 }
 
-Long @McooT@::size() const
+inline Long @McooT@::size() const
 {
     return m_Nr * m_Nc;
 }
 
-Long @McooT@::nnz() const
+inline Long @McooT@::nnz() const
 {
     return m_Nnz;
 }
 
-Long @McooT@::capacity() const
+inline Long @McooT@::capacity() const
 {
     return Base::size();
 }
 
-@T@ & @McooT@::operator()(Long_I ind)
+inline @T@ & @McooT@::operator()(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -177,7 +177,7 @@ Long @McooT@::capacity() const
     return m_p[ind];
 }
 
-const @T@ @McooT@::operator()(Long_I ind) const
+inline const @T@ @McooT@::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -186,7 +186,7 @@ const @T@ @McooT@::operator()(Long_I ind) const
     return m_p[ind];
 }
 
-Long @McooT@::row(Long_I ind) const
+inline Long @McooT@::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -195,7 +195,7 @@ Long @McooT@::row(Long_I ind) const
     return m_row[ind];
 }
 
-Long @McooT@::col(Long_I ind) const
+inline Long @McooT@::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)
@@ -204,7 +204,7 @@ Long @McooT@::col(Long_I ind) const
     return m_col[ind];
 }
 
-void @McooT@::trim(Long_I Nnz)
+inline void @McooT@::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPE
     if (Nnz < 0)
@@ -214,7 +214,7 @@ void @McooT@::trim(Long_I Nnz)
     else if (Nnz > m_Nnz) SLS_ERR("@McooT@::trim(): Nnz > m_Nnz!");
 }
 
-void @McooT@::resize(Long_I N)
+inline void @McooT@::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_N)
@@ -223,7 +223,7 @@ void @McooT@::resize(Long_I N)
     m_Nnz = N;
 }
 
-void @McooT@::reserve(Long_I N)
+inline void @McooT@::reserve(Long_I N)
 {
     Base::resize(N);
     m_row.resize(N);
@@ -231,7 +231,7 @@ void @McooT@::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-void @McooT@::reshape(Long_I Nr, Long_I Nc)
+inline void @McooT@::reshape(Long_I Nr, Long_I Nc)
 {
     m_Nr = Nr; m_Nc = Nc;
 }

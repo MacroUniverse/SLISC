@@ -5,7 +5,7 @@
 //%----------------------------
 //% [T, T1] = varargin{:};
 //% McooT = ['Mcoo', T]; McooT1 = ['Mcoo', T1];
-void copy(@McooT@_O v, @McooT1@_I v1)
+inline void copy(@McooT@_O v, @McooT1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))

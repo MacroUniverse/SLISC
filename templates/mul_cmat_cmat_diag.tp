@@ -8,7 +8,7 @@
 //% if ~(is_promo(T, T1) && is_promo(T, T2))
 //%     error('illegal types!');
 //% end
-void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
+inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
 {
     for (Long i = 0; i < Nc; ++i) {
         times_vvs(c, a, b[i], Nr);

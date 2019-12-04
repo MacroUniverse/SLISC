@@ -8,7 +8,7 @@
 //%------------------------
 //% [T, T1] = varargin{:};
 //  from Numerical Recipes 3ed
-void sort2_vv(@T@ *v, @T1@ *v1, Long_I N)
+inline void sort2_vv(@T@ *v, @T1@ *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
