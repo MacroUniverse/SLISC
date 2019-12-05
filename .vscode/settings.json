@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"*.tp": "cpp",
-		"*.dec": "cpp",
-		"*.def": "cpp",
-		"*.mak": "makefile",
-		"utility": "cpp"
-	}
-}
