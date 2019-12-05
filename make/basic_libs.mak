@@ -17,5 +17,8 @@ goal:main.o
 main.o:main.cpp
 	$(compiler) $(flags) -std=c++11 -c main.cpp test/*.cpp
 
+inl:
+	octave auto_gen.m
+
 clean:
 	rm -f *.o *.x

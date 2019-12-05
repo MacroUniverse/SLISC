@@ -1,6 +1,7 @@
 % str is everything under the '//%---------'
 % `varargin` is a list of template params
 function code = instantiate(str, varargin)
+newline = char(10);
 ind_meta = strfind(str, '//%');
 Nmeta = numel(ind_meta);
 Ncell = 2*Nmeta + 1;
