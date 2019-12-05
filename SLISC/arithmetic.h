@@ -619,6 +619,8 @@ inline void reorder(VecInt_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecInt u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -633,6 +635,8 @@ inline void reorder(VecLlong_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecLlong u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -647,6 +651,8 @@ inline void reorder(VecDoub_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecDoub u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -661,6 +667,8 @@ inline void reorder(SvecChar_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecChar u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -675,6 +683,8 @@ inline void reorder(SvecInt_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecInt u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -689,6 +699,8 @@ inline void reorder(SvecLlong_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecLlong u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -703,6 +715,8 @@ inline void reorder(SvecDoub_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecDoub u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -717,6 +731,8 @@ inline void reorder(SvecComp_O v, VecLlong_I order)
         SLS_ERR("wrong shape!");
 #endif
     static VecComp u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)

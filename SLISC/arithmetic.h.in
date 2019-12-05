@@ -314,6 +314,8 @@ inline void reorder(@Tv@_O v, @To@_I order)
         SLS_ERR("wrong shape!");
 #endif
     static @Tu@ u(N);
+	if (N > u.size())
+		u.resize(2*u.size());
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
