@@ -11,7 +11,6 @@ A template file (`demo.h.in`) looks like
 using namespace std;
 
 //% types = {
-//%     'complex<double>', 'complex<double>', 'int';
 //%     'vector<double>', 'Int', 'vector<float>';
 //%     'vector<complex<double>>', 'vector<complex<double>>', 'vector<Int>';
 //% };
@@ -40,10 +39,6 @@ Using `$octave auto_gen.m`, the generated file `demo.h` looks like
 #include <complex>
 #include <vector>
 using namespace std;
-
-void plus(complex<double> &z, const complex<double> &x, const int &y)
-{
-}
 
 void plus(vector<double> &z, const Int &x, const vector<float> &y)
 {
