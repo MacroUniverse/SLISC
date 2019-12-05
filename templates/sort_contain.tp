@@ -1,8 +1,0 @@
-//% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';};
-//%---------------------
-//% T = varargin{:};
-// sort first m elements of v
-inline void sort(@T@_IO v, Long_I m = -1)
-{
-	sort_v(v.ptr(), v.size(), m);
-}

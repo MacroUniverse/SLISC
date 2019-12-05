@@ -1,0 +1,90 @@
+// Cmat container
+#pragma once
+#include "Vbase.h"
+
+namespace slisc {
+//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp';};
+//%----------------------------------------
+//% T = varargin{:};
+//% CmatT = ['Cmat' T];
+//% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef CmatInt CmatLong;
+#else
+typedef CmatLlong CmatLong;
+#endif
+//% else
+class @CmatT@ : public @VbaseT@
+{
+protected:
+    typedef @VbaseT@ Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+public:
+    using Base::ptr;
+    using Base::operator();
+    @CmatT@(Long_I Nr, Long_I Nc);
+    @CmatT@(const @CmatT@ &rhs);        // Copy constructor
+	@CmatT@ & operator=(const @CmatT@ &rhs) = delete;
+    void operator<<(@CmatT@ &rhs); // move data and rhs.resize(0, 0)
+    @T@& operator()(Long_I i, Long_I j);    // double indexing
+    const @T@& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
+};
+
+inline @CmatT@::@CmatT@(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+
+inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, "
+        "use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void @CmatT@::operator<<(@CmatT@ &rhs)
+{
+    m_Nr = rhs.m_Nr; m_Nc = rhs.m_Nc;
+    rhs.m_Nr = rhs.m_Nc = 0;
+    Base::operator<<(rhs);
+}
+
+inline @T@ & @CmatT@::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i+m_Nr*j];
+}
+
+inline const @T@ & @CmatT@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i+m_Nr*j];
+}
+
+inline Long @CmatT@::n1() const
+{ return m_Nr; }
+
+inline Long @CmatT@::n2() const
+{ return m_Nc; }
+
+inline void @CmatT@::resize(Long_I Nr, Long_I Nc)
+{
+    if (Nr != m_Nr || Nc != m_Nc) {
+        Base::resize(Nr*Nc);
+        m_Nr = Nr; m_Nc = Nc;
+    }
+}
+//% end
+
+typedef const @CmatT@ & @CmatT@_I;
+typedef @CmatT@ & @CmatT@_O, & @CmatT@_IO;
+
+} // namespace slisc

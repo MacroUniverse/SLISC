@@ -1,7 +1,0 @@
-//% types = {'Char'; 'Int'; 'Llong'};
-//%-------------------------------
-//% T = varargin{:};
-inline Bool isodd(@T@_I n)
-{
-    return n & 1;
-}

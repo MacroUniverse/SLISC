@@ -1,0 +1,177 @@
+#pragma once
+#include "global.h"
+
+namespace slisc {
+//% types = {
+//%     'Char', true;
+//%     'Char', false;
+//%     'Int', true;
+//%     'Int', false;
+//%     'Llong', true;
+//%     'Llong', false;
+//%     'Long', true;
+//%     'Long', false;
+//%     'Doub', true;
+//%     'Doub', false;
+//%     'Comp', true;
+//%     'Comp', false;
+//% };
+//%------------------------
+//% [T, constness] = varargin{:};
+//% SvecT = ['Svec' T];
+//% SvecT_c = [SvecT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = SvecT_c;
+//% else
+//%     CT = T;
+//% 	Class = SvecT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong_c SvecLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+#else
+typedef SvecLlong SvecLong;
+#endif
+//% else
+class @Class@
+{
+public:
+    @CT@ *m_p;
+    Long m_N;
+    @Class@();
+    @Class@(Long_I N);
+    @Class@(@CT@ *ptr, Long_I N);
+	@CT@* ptr() const;
+    Long size() const;
+//% % resize() is a bad idea, don't try to create it!
+    @CT@ & operator[](Long_I i) const;
+    @CT@ & operator()(Long_I i) const;
+    @CT@ & end() const;
+    @CT@ & end(Long_I i) const;
+
+//% if ~constness
+	operator @SvecT_c@() const;
+//% end
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_size(Long_I N);
+    void set_ptr(@CT@ *ptr);
+    void set(@CT@ *ptr, Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    
+    ~@Class@();
+};
+
+inline @Class@::@Class@() {}
+
+inline @Class@::@Class@(Long_I N) : m_N(N) {}
+
+inline @Class@::@Class@(@CT@ *ptr, Long_I N)
+    : m_p(ptr), m_N(N) {}
+
+inline @CT@ * @Class@::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long @Class@::size() const
+{
+    return m_N;
+}
+
+inline @CT@ & @Class@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline @CT@ & @Class@::operator()(Long_I i) const
+{
+    return (*this)[i];
+}
+
+inline @CT@ & @Class@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline @CT@ & @Class@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+//% if ~constness
+inline @Class@::operator @SvecT_c@() const
+{
+	return *((@SvecT_c@ *)this);
+}
+//% end
+
+inline void @Class@::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline void @Class@::set_ptr(@CT@ * ptr)
+{
+    m_p = ptr;
+}
+
+inline void @Class@::set(@CT@ * ptr, Long_I N)
+{
+    m_p = ptr; m_N = N;
+}
+
+inline void @Class@::next()
+{
+    m_p += m_N;
+}
+
+inline void @Class@::last()
+{
+    m_p -= m_N;
+}
+
+inline void @Class@::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline @Class@::~@Class@() {}
+//% end
+
+//% if constness
+typedef const @Class@ & @SvecT@_I;
+//% else
+typedef const @Class@ & @SvecT@_O, & @SvecT@_IO;
+//% end
+//%------------------------
+} // namespace slisc

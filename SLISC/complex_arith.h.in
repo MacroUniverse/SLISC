@@ -1,0 +1,149 @@
+// complex related functions
+#pragma once
+#include "global.h"
+
+namespace slisc {
+//% types = {
+//%     'Float', 'Comp';
+//%     'Fcomp', 'Comp';
+//%     'Comp', 'Int';
+//%     'Int', 'Comp';
+//%     'Lcomp', 'Comp';
+//%     };
+//%------------------------
+//% [T1, T2] = varargin{1:2};
+inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
+{
+//% if is_real(T1)
+    return real(s2) == s1 && imag(s2) == 0;
+//% elseif is_real(T2)
+    return real(s1) == s2 && imag(s1) == 0;
+//% else
+    return real(s1) == real(s2) && imag(s1) == imag(s2);
+//% end
+}
+
+inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
+{
+    return !(s1 == s2);
+}
+//%------------------------
+
+//% types = {
+//%     'Comp', 'Float';
+//%     };
+//%----------------------------------
+//% [T1,T2] = varargin{:};
+//% if is_real(T1);
+//%     T = rm_comp(T1);
+//% else
+//%     T = T1;
+//% end
+inline void operator+=(@T1@_O z, @T2@_I x)
+{
+    z += (@T@)x;
+}
+
+inline void operator-=(@T1@_O z, @T2@_I x)
+{
+    z -= (@T@)x;
+}
+
+inline void operator*=(@T1@_O z, @T2@_I x)
+{
+    z *= (@T@)x;
+}
+
+inline void operator/=(@T1@_O z, @T2@_I x)
+{
+    z /= (@T@)x;
+}
+//%------------------------
+
+//% types = {
+//%     'Float', 'Comp';
+//%     'Comp', 'Int';
+//%     'Int', 'Comp';
+//%     'Llong', 'Comp';
+//%     'Comp', 'Llong';
+//%     'Comp', 'Char';
+//%     'Comp', 'Float';
+//%     'Doub', 'Fcomp';
+//%     'Fcomp', 'Comp';
+//%     };
+//%-------------------------------------
+//% [T1,T2] = varargin{:};
+//% T = promo_type(T1,T2);
+inline const @T@ operator+(@T1@_I s1, @T2@_I s2)
+{
+//% if is_real(T1)
+    return @T@(s1 + real(s2), imag(s2));
+//% elseif is_real(T2)
+    return @T@(real(s1) + s2, imag(s1));
+//% elseif type_num(T1) > type_num(T2)
+    return s1 + (@T@)s2;
+//% elseif type_num(T2) > type_num(T1)
+    return (@T@)s1 + s2;
+//% else
+//%     error('not implemented!');
+//% end
+}
+
+inline const @T@ operator-(@T1@_I s1, @T2@_I s2)
+{
+//% if is_real(T1)
+    return @T@(s1 - real(s2), -imag(s2));
+//% elseif is_real(T2)
+    return @T@(real(s1) - s2, imag(s1));
+//% elseif type_num(T1) > type_num(T2)
+    return s1 - (@T@)s2;
+//% elseif type_num(T2) > type_num(T1)
+    return (@T@)s1 - s2;
+//% else
+//%     error('not implemented!');
+//% end
+}
+
+inline const @T@ operator*(@T1@_I s1, @T2@_I s2)
+{
+//% if is_real(T1)
+    return @T@(s1*real(s2), s1*imag(s2));
+//% elseif is_real(T2)
+    return @T@(real(s1)*s2, imag(s1)*s2);
+//% elseif type_num(T1) > type_num(T2)
+    return s1 * (@T@)s2;
+//% elseif type_num(T2) > type_num(T1)
+    return (@T@)s1 * s2;
+//% else
+//%     error('not implemented!');
+//% end
+}
+
+inline const @T@ operator/(@T1@_I s1, @T2@_I s2)
+{
+//% Tr1 = rm_comp(T1); Tr2 = rm_comp(T2);
+//% numr1 = type_num(Tr1); numr2 = type_num(Tr2);
+//% Tc1 = add_comp(Tr1); Tc2 = add_comp(Tr2);
+//% numc1 = type_num(Tc1); numc2 = type_num(Tc2);
+//% if is_real(T1)
+//%     if numr1 < numr2
+    return (@Tr2@)s1 / s2;
+//%     elseif numr1 > numr2
+    return s1 / (@Tc1@)s2;
+//%     end
+//% elseif is_real(T2)
+//%     if numr1 < numr2
+    return (@Tc2@)s1 / s2;
+//%     elseif numr1 > numr2
+    return s1 / (@Tr1@)s2;
+//%     end
+//% elseif numc1 > numc2
+    return s1 / (@Tc1@)s2;
+//% elseif numc1 < numc2
+    return (@Tc2@)s1 / s2;
+//% else
+//%     error('not implemented!');
+//% end
+}
+//%------------------------
+} // namespace slisc

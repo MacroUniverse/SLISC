@@ -1,0 +1,164 @@
+#pragma once
+#include "arithmetic.h"
+#include "Diag.h"
+#include "Mcoo.h"
+#include "sort.h"
+
+namespace slisc {
+//% types = {
+//%	    'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Comp', 'Doub';
+//%     'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~(is_promo(T, T1) && is_promo(T, T2))
+//%     error('illegal types!');
+//% end
+inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
+{
+    for (Long i = 0; i < Nc; ++i) {
+        times_vvs(c, a, b[i], Nr);
+        c += Nr; a += Nr;
+    }
+}
+//%------------------------
+
+//% types = {
+//%	    'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Doub', 'Comp';
+//%     'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~(is_promo(T, T1) && is_promo(T, T2))
+//%     error('illegal types!');
+//% end
+inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, Long_I Nc)
+{
+    for (Long i = 0; i < Nc; ++i) {
+        times_vvv(c, b, a, Nr);
+        c += Nr; b += Nr;
+    }
+}
+//%------------------------
+
+//% types = {
+//%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Comp', 'Comp';
+//% };
+//%-------------------------------
+//% [Ty,T,Tx] = varargin{:};
+//% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
+//%     error('illegal types!');
+//% end
+inline void mul_v_coo_v(@Ty@ *y, const @Tx@ *x, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz)
+{
+    vecset(y, 0, N1);
+    for (Long k = 0; k < Nnz; ++k)
+        y[i[k]] += a_ij[k] * x[j[k]];
+}
+
+inline void mul_v_cooh_v(@Ty@ *y, const @Tx@ *x, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz)
+{
+    vecset(y, 0, N1);
+    for (Long k = 0; k < Nnz; ++k) {
+        Long r = i[k], c = j[k];
+        if (r == c)
+            y[r] += a_ij[k] * x[c];
+        else {
+            y[r] += a_ij[k] * x[c];
+//% if is_comp(T)
+            y[c] += conj(a_ij[k]) * x[r];
+//% else
+            y[c] += a_ij[k] * x[r];
+//% end
+        }
+    }
+}
+//%------------------------
+
+//% types = {
+//%     'VecDoub', 'McooDoub', 'VecDoub';
+//%     'VecComp', 'McooComp', 'VecComp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.size() || a.n1() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+//% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
+	mul_v_coo_v(y.ptr(), x.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz());
+//% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
+	mul_v_cooh_v(y.ptr(), x.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz());
+//% else
+//%     error('not implemented!');
+//% end
+}
+//%------------------------
+
+//% types = {
+//%	    'CmatDoub', 'CmatDoub', 'DiagDoub';
+//%     'CmatComp', 'CmatComp', 'DiagDoub';
+//%     'CmatComp', 'CmatComp', 'DiagComp';
+//%	    'CmatDoub', 'DiagDoub', 'CmatDoub';
+//%     'CmatComp', 'DiagComp', 'CmatComp';
+//%     'CmatComp', 'DiagDoub', 'CmatComp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1())
+		SLS_ERR("illegal shape!");
+    if (y.n1() != a.n1() || y.n2() != x.n2())
+        SLS_ERR("illegal shape!");
+#endif
+//% if is_dense(T) && is_cmajor(T) && is_dense(T1) && is_cmajor(T1) && is_Diag(T2)
+    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+//% elseif is_dense(T) && is_cmajor(T) && is_Diag(T1) && is_dense(T2) && is_cmajor(T2)
+	mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+//% else
+//%     error('not implemented!');
+//% end
+}
+//%------------------------
+
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'};
+//%------------------------------
+//% T = varargin{:};
+//% McooT = ['Mcoo' T];
+//% SvecT = ['Svec' T];
+inline void sort_r(@McooT@_IO a)
+{
+	Long Nnz = a.nnz();
+    VecLong inds(Nnz), order(Nnz);
+    linspace(order, 0, Nnz - 1);
+    for (Long i = 0; i < Nnz; ++i)
+        inds[i] = a.n2() * a.row(i) + a.col(i);
+    sort2(inds, order);
+    @SvecT@ sli(a.ptr(), Nnz);
+    reorder(sli, order);
+    SvecLong sli1;
+    sli1.set(a.row_ptr(), Nnz);
+    reorder(sli1, order);
+    sli1.set_ptr(a.col_ptr());
+    reorder(sli1, order);
+}
+//%------------------------
+
+//% types = {
+//%     'McooDoub', 'Doub';
+//% };
+//%----------------------------
+//% [T, Ts] = varargin{:};
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    times_equals_vs(v.ptr(), s, v.nnz());
+}
+//%------------------------
+} // namespace slisc

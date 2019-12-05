@@ -1,0 +1,57 @@
+// solve eigen problem
+#pragma once
+#include "arithmetic.h"
+
+namespace slisc {
+
+// only upper triangle is needed
+// eigen value in ascending order
+//% types = {
+//%     'VecDoub', 'CmatDoub', 'CmatDoub';
+//%     };
+//%--------------------------------
+//% [Tv, Tm, Tm2] = varargin{:};
+//% Tsv = contain_type(Tv); Tsm = contain_type(Tm); Tsm2 = contain_type(Tm2);
+//% if is_dense_vec(Tv) && is_Doub(Tsv) && is_dense_mat(Tm) && is_same_major(Tm, Tm2) && is_dense_mat(Tm2) && is_Doub(Tsm2)
+inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm@_I A)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (A.n1() != A.n2() || !shape_cmp(eigVec, A)
+        || eigVal.size() != eigVec.n1())
+        SLS_ERR("wrong shape!");
+#endif
+    copy(eigVec, A);
+    Int N = (Int)A.n2();
+    Int ret;
+//% if is_cmajor(Tm)
+    ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.ptr(), N, eigVal.ptr());
+//% else
+    ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.ptr(), N, eigVal.ptr());
+//% end
+    if (ret != 0)
+		SLS_ERR("failed!");
+}
+//% else
+//%     error('Not implemented!');
+//% end
+//%------------------------
+
+// only upper triangle is needed
+// eigen value in ascending order
+inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (A.n1() != A.n2() || !shape_cmp(eigVec, A)
+        || eigVal.size() != eigVec.n1())
+        SLS_ERR("wrong shape!");
+#endif
+    copy(eigVec, A);
+    Int N = (Int)A.n2();
+    eigVal.resize(N);
+    Int ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
+        (double _Complex*)eigVec.ptr(), N, eigVal.ptr());
+    if (ret != 0)
+        SLS_ERR("failed!");
+}
+
+} // namespace slisc

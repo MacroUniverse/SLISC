@@ -1,0 +1,93 @@
+// row-major matrix container
+#pragma once
+#include "Vbase.h"
+
+namespace slisc {
+//%  types = {'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp';};
+//%------------------------------------
+//% T = varargin{:};
+//% VbaseT = ['Vbase' T];
+//% MatT = ['Mat' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef MatInt MatLong;
+#else
+typedef MatLlong MatLong;
+#endif
+//% else
+class @MatT@ : public @VbaseT@
+{
+private:
+    typedef @VbaseT@ Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+public:
+    using Base::ptr;
+    using Base::operator();
+    @MatT@(Long_I Nr, Long_I Nc);
+    @MatT@(const @MatT@ &rhs);        // Copy constructor
+	@MatT@ & operator=(const @MatT@ &rhs) = delete;
+    void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
+    @T@& operator()(Long_I i, Long_I j); // double indexing
+    const @T@& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
+};
+
+inline @MatT@::@MatT@(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+
+inline @MatT@::@MatT@(const @MatT@ &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void @MatT@::operator<<(@MatT@ &rhs)
+{
+    m_Nr = rhs.m_Nr; m_Nc = rhs.m_Nc;
+    rhs.m_Nr = rhs.m_Nc = 0;
+    Base::operator<<(rhs);
+}
+
+inline @T@& @MatT@::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("@MatT@ subscript out of bounds");
+#endif
+    return m_p[m_Nc*i+j];
+}
+
+inline const @T@ & @MatT@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("@MatT@ subscript out of bounds");
+#endif
+    return m_p[m_Nc*i+j];
+}
+
+inline Long @MatT@::n1() const
+{
+    return m_Nr;
+}
+
+inline Long @MatT@::n2() const
+{
+    return m_Nc;
+}
+
+inline void @MatT@::resize(Long_I Nr, Long_I Nc)
+{
+    if (Nr != m_Nr || Nc != m_Nc) {
+        Base::resize(Nr*Nc);
+        m_Nr = Nr; m_Nc = Nc;
+    }
+}
+
+//% end
+typedef const @MatT@ & @MatT@_I;
+typedef @MatT@ & @MatT@_O, & @MatT@_IO;
+//%------------------------
+} // namespace slisc

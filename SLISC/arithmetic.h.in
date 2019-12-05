@@ -1,0 +1,1126 @@
+#pragma once
+#include "copy.h"
+#include "scalar_arith.h"
+#include "slice_arith.h"
+
+namespace slisc {
+
+//% types = {'vecStr'; 'VecInt'; 'VecLlong'; 'VecDoub';};
+//%--------------------------
+//% T = varargin{:};
+inline Long Size(@T@_I v)
+{
+	return v.size();
+}
+//%-------------------------
+
+//% types = {
+//%     'Int'; 'Llong'; 'Doub';
+//% };
+//%--------------------------
+//% T = varargin{:};
+//% if is_real(T) && ~is_Bool(T)
+inline @T@ max_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s < v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline @T@ max_v(const @T@ *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s < v[i])
+            s = v[i];
+    }
+    return s;
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%-------------------------
+
+//% types = {
+//%     'VecInt'; 'VecLlong'; 'VecDoub';
+//% };
+//%--------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
+inline const @Ts@ max(@T@_I v)
+{
+    return max_v(v.ptr(), v.size());
+}
+//% elseif is_Dvec(T) && is_real(Ts) && ~is_Bool(Ts)
+inline const @Ts@ max(@T@_I v)
+{
+    return max_v(v.ptr(), v.size(), v.step());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%-------------------------
+
+//% types = {
+//%     'Int'; 'Llong'; 'Float'; 'Doub'; 'Comp';
+//% };
+//%------------------------------
+//% T = varargin{:};
+//% Tr = rm_comp(T);
+inline @Tr@ max_abs_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tr@ s = abs(v[0]), val;
+    for (Long i = 1; i < N; ++i) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tr@ s = abs(v[0]), val;
+    for (Long i = step; i < N*step; i += step) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+//%-------------------------
+
+//% types = {
+//%     'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatFloat'; 'CmatDoub'; 'CmatComp';
+//%     'MatInt'; 'MatLlong'; 'MatFloat'; 'MatDoub'; 'MatComp';
+//% };
+//%------------------------------
+//% T = varargin{:};
+//% Tr = rm_comp(contain_type(T));
+//% if is_dense(T)
+inline @Tr@ max_abs(@T@_I v)
+{
+    return max_abs_v(v.ptr(), v.size());
+}
+//% elseif is_Dvec(T)
+inline @Tr@ max_abs(@T@_I v)
+{
+    return max_abs_v(v.ptr(), v.size(), v.step());
+}
+//% end
+//%-------------------------
+
+//% types = {
+//%     'Char', 'Char';
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
+//% };
+//%--------------------------
+//% [T, T1] = varargin{:};
+//% Ts1 = contain_type(T1);
+inline void mod_vvs(@T@ *v, const @T1@ *v1, @Ts1@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v1[i], s);
+}
+
+inline void mod_vs(@T1@ *v, @Ts1@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v[i], s);
+}
+//%-------------------------
+
+//% types = {
+//%     'VecInt', 'VecInt', 'Int';
+//%     'VecLlong', 'VecLlong', 'Llong';
+//% };
+//%--------------------------
+//% [T, T1] = varargin{:};
+//% Ts = contain_type(T);
+//% Ts1 = contain_type(T1);
+//% if ~(is_dense(T) && is_dense(T1) && is_same_major(T, T1) && is_promo(Ts, Ts1))
+//%     error('error types!');
+//% end
+inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    mod_vvs(v.ptr(), v1.ptr(), s, v.size());
+}
+
+inline void mod(@T1@_O v, @Ts1@_I s)
+{
+    mod_vs(v.ptr(), s, v.size());
+}
+//%-------------------------
+
+//% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp';
+//%     'CmatDoub'; 'ScmatDoub'; 'Cmat3Doub'; 'Cmat3Comp';
+//% };
+//%-------------------------------
+//% T = varargin{:};
+//% Ts = contain_type(T);
+//% Tr = rm_comp(Ts);
+//% if is_dense(T) || is_Dvec(T)
+inline @Tr@ norm2(@T@_I v)
+{
+    Long N = v.size();
+    @Tr@ s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+//% elseif is_Dcmat(T)
+inline @Tr@ norm2(@T@_I a)
+{
+    @Tr@ *p = a.ptr();
+    Long Nr = a.n1(), lda = a.lda();
+    rm_comp<contain_type<T>> s2 = 0;
+    for (Long j = 0; j < a.n2(); ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            s2 += abs2(p[i]);
+        p += lda;
+    }
+    return s2;
+}
+//% else
+//%     error('not implemented!');
+//% end
+inline @Tr@ norm(@T@_I v)
+{
+    return sqrt(norm2(v));
+}
+//%-------------------------
+
+//% types = {'VecDoub'; 'CmatDoub';};
+//%--------------------------------
+//% Tv = varargin{:};
+//% T = contain_type(Tv);
+//% if is_Vec(Tv)
+inline void resize_cpy(@Tv@_IO v, Long_I N)
+{
+    Long N0 = v.size();
+    if (N != N0) {
+        if (N0 == 0) {
+            v.resize(N); copy(v, 0);
+        }
+        else if (N == 0)
+            v.resize(0);
+        else {
+            @Tv@ v_new(N);
+            if (N > N0) {
+                veccpy(v_new.ptr(), v.ptr(), N0);
+                vecset(v_new.ptr() + N0, 0, N - N0);
+            }
+            else // N < N0
+                veccpy(v_new.ptr(), v.ptr(), N);
+            v << v_new;
+        }
+    }
+}
+//% elseif is_Cmat(Tv)
+//%     Tsli = slice_type(Tv);
+inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
+{
+    Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
+    Long N = N1 * N2;
+    if (N1 != N10 || N2 != N20) {
+        if (N0 == 0) {
+            v.resize(N1, N2); copy(v, 0);
+        }
+        else if (N == 0)
+            v.resize(0, 0);
+        else {
+            @Tv@ v_new(N1, N2); copy(v_new, 0);
+            Long N1min = min(N1, N10), N2min = min(N2, N20);
+            @Tsli@ sli; slice(sli, v, 0, N1min, 0, N2min);
+            copy(sli, v);
+        }
+    }
+}
+//% else
+//%     error('not implemented');
+//% end
+//%-------------------------
+
+//% types = {'Int'; 'Llong'; 'Doub';};
+//%-----------------------
+//% T = varargin{:};
+inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
+{
+//% if is_integral(T)
+    @T@ delta = (last - first), Nm1 = N-1;
+    for (Long i = 0; i < N; ++i)
+        v[i] = first + delta * i / Nm1;
+//% else
+    @T@ delta = (last - first) / (N - 1);
+    for (Long i = 0; i < N; ++i)
+        v[i] = first + delta * i;
+//% end
+}
+//%-------------------------
+
+//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'CmatLlong'; 'CmatDoub';};
+//%---------------------------------
+//% Tv = varargin{:};
+//% Ts = contain_type(Tv);
+//% if ~is_dense(Tv)
+//%     error('illegal types');
+//% end
+inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+//%-------------------------
+
+//% types = {
+//%     'VecInt', 'VecLlong';
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecLlong';
+//%     'SvecChar', 'VecLlong';
+//%     'SvecInt', 'VecLlong';
+//%     'SvecLlong', 'VecLlong';
+//%     'SvecDoub', 'VecLlong';
+//%     'SvecComp', 'VecLlong';
+//%     };
+//%---------------------
+//% [Tv, To] = varargin{:};
+//% Tu = ['Vec' contain_type(Tv)];
+inline void reorder(@Tv@_O v, @To@_I order)
+{
+    Long N = v.size();
+#ifdef SLS_CHECK_SHAPE
+    if (order.size() != N)
+        SLS_ERR("wrong shape!");
+#endif
+    static @Tu@ u(N);
+    for (Long i = 0; i < N; ++i)
+        u[i] = v[order[i]];
+    for (Long i = 0; i < N; ++i)
+        v[i] = u[i];
+}
+//%-------------------------
+
+//% types = {'CmatDoub'; 'CmatComp'; 'DcmatDoub'; 'DcmatComp'};
+//%--------------------------
+//% T = varargin{:};
+inline void trans(@T@_IO v)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (v.n1() != v.n2())
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < v.n1(); ++i)
+        for (Long j = 0; j < i; ++j)
+            swap(v(i, j), v(j, i));
+}
+//%-------------------------
+
+//% types = {
+//%	    'CmatLlong' 'CmatLlong';
+//%	    'CmatDoub' 'CmatDoub';
+//%	    'CmatComp' 'CmatComp';
+//%	    'DcmatLlong' 'DcmatLlong';
+//%	    'DcmatDoub' 'DcmatDoub';
+//%	    'DcmatComp' 'DcmatComp';
+//% };
+//%--------------------------
+//% [T T1] = varargin{:};
+inline void trans(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (v.n1() != v1.n2() || v.n2() != v1.n1())
+        SLS_ERR("wrong size!");
+#endif
+    for (Long i = 0; i < v.n1(); ++i)
+        for (Long j = 0; j < v.n2(); ++j)
+            v(i, j) = v1(j, i);
+}
+//%-------------------------
+
+//% types = {
+//%     'Char', 'Char';
+//%     'Int', 'Int';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//%     };
+//%-------------------
+//% [T, Ts] = varargin{:};
+//% if ~is_promo(T, Ts)
+//%     error('illegal types');
+//% end
+inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += s;
+}
+
+inline void minus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= s;
+}
+
+inline void times_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= s;
+}
+
+inline void times_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] *= s;
+}
+
+//% if is_integral(T)
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= s;
+}
+
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] /= s;
+}
+//% elseif is_fpt(Ts) || is_comp(Ts)
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    times_equals_vs(v, 1/s, N);
+}
+
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
+{
+    times_equals_vs(v, 1/s, N, step);
+}
+//% else
+//%     disp(T); disp(Ts);
+//%     error('not implemented');
+//% end
+//%-------------------------
+
+//% types = {
+//%     'VecChar', 'Char';
+//%     'VecInt', 'Int';
+//%     'VecDoub', 'Doub';
+//%     'VecComp', 'Comp';
+//%     'CmatChar', 'Char';
+//%     'CmatInt', 'Int';
+//%     'CmatDoub', 'Doub';
+//%     'CmatComp', 'Comp';
+//%     };
+//%-------------------
+//% [T, Ts] = varargin{:};
+//% if is_dense(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{
+    plus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{
+    minus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    times_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{
+    divide_equals_vs(v.ptr(), s, v.size());
+}
+//% elseif is_Dvec(T) && is_scalar(Ts)
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    times_equals_vs(v.ptr(), s, v.size(), v.step());
+}
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{
+    divide_equals_vs(v.ptr(), s, v.size(), v.step());
+}
+//% else
+//%     disp(T); disp(Ts);
+//%     error('not implemented');
+//% end
+//%-------------------------
+
+//% types = {
+//%     'Char', 'Char';
+//%     'Int', 'Int';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//%     };
+//%-------------------
+//% [T, T1] = varargin{:};
+//% if ~is_promo(T, T1)
+//%     error('illegal types');
+//% end
+inline void plus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += v1[i];
+}
+
+inline void minus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= v1[i];
+}
+
+inline void times_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= v1[i];
+}
+
+inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= v1[i];
+}
+//%-------------------------
+
+//% types = {
+//%     'VecChar', 'VecChar';
+//%     'VecInt', 'VecInt';
+//%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//%     'MatDoub', 'MatDoub';
+//%     'MatComp', 'MatComp';
+//%     'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp';
+//%     'Cmat3Doub', 'Cmat3Doub';
+//%     'Cmat3Comp', 'Cmat3Comp';
+//%     };
+//%-------------------
+//% [T, T1] = varargin{:};
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+// v += v
+inline void operator+=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    plus_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+// v -= v
+inline void operator-=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+// v *= v
+inline void operator*=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+// v /= v
+inline void operator/=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+//% elseif ndim(T) == 1 && ndim(T1) == 1
+// v += v
+inline void operator+=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+		v[i] += v1[i];
+}
+
+// v -= v
+inline void operator-=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < v.size(); ++i)
+		v[i] -= v1[i];
+}
+
+// v *= v
+inline void operator*=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+		v[i] *= v1[i];
+}
+
+// v /= v
+inline void operator/=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+		v[i] /= v1[i];
+}
+//% end
+//%-------------------------
+
+//% types = {
+//%	    'Char', 'Char', 'Char';
+//%	    'Int', 'Int', 'Int';
+//%	    'Llong', 'Llong', 'Llong';
+//%     'Float', 'Float', 'Float';
+//%	    'Doub', 'Doub', 'Doub';
+//%	    'Comp', 'Comp', 'Doub';
+//%	    'Comp', 'Doub', 'Comp';
+//%	    'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal types');
+//% end
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+//%-------------------------
+
+//% types = {
+//%	    'Char', 'Char', 'Char';
+//%	    'Int', 'Int', 'Int';
+//%	    'Llong', 'Llong', 'Llong';
+//%     'Float', 'Float', 'Float';
+//%	    'Doub', 'Doub', 'Doub';
+//%	    'Comp', 'Comp', 'Doub';
+//%	    'Comp', 'Doub', 'Comp';
+//%	    'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal types');
+//% end
+inline void minus_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = s - v1[i];
+}
+
+inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = s / v1[i];
+}
+//%-------------------------
+
+//% types = {
+//%     'Char', 'Char', 'Char';
+//%     'Int', 'Int', 'Int';
+//%     'Llong', 'Llong', 'Llong';
+//%     'Float', 'Float', 'Float';
+//%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Comp', 'Doub';
+//%     'Comp', 'Doub', 'Comp';
+//%     'Comp', 'Comp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal type!');
+//% end
+inline void plus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + v2[i];
+}
+
+inline void minus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - v2[i];
+}
+
+inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * v2[i];
+}
+
+inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / v2[i];
+}
+//%-------------------------
+
+//% types = {
+//%	    'VecChar', 'VecChar', 'Char';
+//%	    'VecInt', 'VecInt', 'Int';
+//%	    'VecLlong', 'VecLlong', 'Llong';
+//%	    'VecDoub', 'VecDoub', 'Doub';
+//%	    'VecComp', 'VecComp', 'Doub';
+//%	    'VecComp', 'VecDoub', 'Comp';
+//%	    'VecComp', 'VecComp', 'Comp';
+//%	    'CmatInt', 'CmatInt', 'Int';
+//%	    'CmatLlong', 'CmatLlong', 'Llong';
+//%	    'CmatDoub', 'CmatDoub', 'Doub';
+//%	    'CmatComp', 'CmatComp', 'Doub';
+//%	    'CmatComp', 'CmatDoub', 'Comp';
+//%	    'CmatComp', 'CmatComp', 'Comp';
+//% };
+//%------------------------------
+//% [T, T1, Ts2] = varargin{:};
+//% Ts = contain_type(T); Ts1 = contain_type(T1);
+//% if ~is_promo(Ts, Ts1) || ~is_promo(Ts, Ts2)
+//%     error('illegal types');
+//% end
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    plus_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+	plus(v, v1, s);
+}
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    minus_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    minus_vsv(v.ptr(), s, v1.ptr(), v1.size());
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    times_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+	times(v, v1, s);
+}
+
+inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    divide_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%-------------------------
+
+//% types = {
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Float', 'Float';
+//%     'Doub', 'Int';
+//%     'Doub', 'Llong';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Int';
+//%     'Comp', 'Llong';
+//%     'Comp', 'Doub';
+//%     'Comp', 'Comp';  
+//% };
+//%----------------------------------------------------------
+//% [T, Ts] = varargin{:};
+inline void pow_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v[i], s);
+}
+//%-------------------------
+
+//% types = {
+//%     'VecLlong', 'Llong';
+//%     'VecDoub', 'Int';
+//%     'VecDoub', 'Doub';
+//%     'VecComp', 'Int';
+//%     'VecComp', 'Doub';
+//%     'VecComp', 'Comp';
+//% };
+//%---------------------
+//% [T, Ts] = varargin{:};
+inline void pow(@T@_IO v, @Ts@_I s)
+{
+    pow_vs(v.ptr(), s, v.size());
+}
+//%-------------------------
+
+//% types = {
+//%     'Int', 'Int', 'Int';
+//%     'Llong', 'Llong', 'Llong';
+//%     'Float', 'Float', 'Float';
+//%     'Doub', 'Doub', 'Int';
+//%     'Doub', 'Doub', 'Llong';
+//%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Comp', 'Int';
+//%     'Comp', 'Comp', 'Llong';
+//%     'Comp', 'Comp', 'Doub';
+//%     'Comp', 'Comp', 'Comp';  
+//% };
+//%----------------------------------------------------------
+//% [T, T1, Ts] = varargin{:};
+inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}
+//%-------------------------
+
+//% types = {
+//%     'VecLlong', 'VecLlong', 'Llong';
+//%     'VecDoub', 'VecDoub', 'Int';
+//%     'VecDoub', 'VecDoub', 'Doub';
+//%     'VecComp', 'VecComp', 'Int';
+//%     'VecComp', 'VecComp', 'Doub';
+//%     'VecComp', 'VecComp', 'Comp';
+//% };
+//%---------------------
+//% [T, T1, Ts] = varargin{:};
+inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    pow_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+//%-------------------------
+
+//% types = {
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Float', 'Float';
+//%     'Doub', 'Int';
+//%     'Doub', 'Llong';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Int';
+//%     'Comp', 'Llong';
+//%     'Comp', 'Doub';
+//%     'Comp', 'Comp';
+//% };
+//%----------------------------------------------------------
+//% [T1, T2] = varargin{:};
+//% T = promo_type(T1, T2);
+inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+//% if is_comp(T1)
+    @T@ s = conj(v1[0]) * v2[0];
+//% else
+	@T@ s = v1[0] * v2[0];
+//% end
+    for (Long i = 1; i < N; ++i) {
+//% if is_comp(T1)
+        s += conj(v1[i]) * v2[i];
+//% else
+		s += v1[i] * v2[i];
+//% end
+	}
+    return s;
+}
+//%-------------------------
+
+//% types = {
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//% };
+//%---------------------
+//% [T1, T2] = varargin{:};
+//% T = promo_type(contain_type(T1), contain_type(T2));
+//% if is_dense(T1) && is_dense(T2)
+inline @T@ dot(@T1@_I v1, @T2@_I v2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    return dot_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+//% end
+//%-------------------------
+
+//% types = {'VecDoub', 'CmatDoub', 'VecDoub';
+//%   %  'VecLcomp', 'MatComp', 'VecInt';
+//%   %  'VecInt', 'CmatInt', 'VecInt';
+//%     'VecComp', 'CmatComp', 'VecComp';
+//%     'VecComp', 'CmatDoub', 'VecComp';
+//%   %  'DvecComp', 'DcmatDoub', 'DvecComp';
+//%     'VecComp', 'MatComp', 'VecComp';
+//%   %  'VecComp', 'CmatImag', 'VecComp';
+//%   %  'VecComp', 'MatDoub', 'VecComp';
+//%   %  'SvecComp', 'MatDoub', 'VecComp';
+//%     };
+//%-------------------------------
+//% [T,T1,T2] = varargin{:};
+//% Ts = contain_type(T); Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
+//%     error('illegal type!');
+//% end
+//% if ndim(T) ~= 1 || ndim(T1) ~= 2 || ndim(T2) ~= 1
+//%     error('illegal dim!');
+//% end
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+    Long Nr = a.n1(), Nc = a.n2();
+#ifdef SLS_CHECK_SHAPE
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < Nr; ++i) {
+        y[i] = 0;
+        for (Long j = 0; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+}
+//%-------------------------
+
+//% types = {
+//%     'CmatDoub', 'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp', 'CmatComp';
+//% };
+//%-------------------------------
+//% [T,T1,T2] = varargin{:};
+//% if ndim(T) == 2 && ndim(T1) == 2 && ndim(T2) == 2
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+    Long Nr_a = a.n1(), Nc_a = a.n2(), Nc_x = x.n2();
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1() || y.n1() != Nr_a || y.n2() != Nc_x)
+        SLS_ERR("illegal shape!");
+#endif
+    vecset(y.ptr(), 0, Nr_a*Nc_x);
+    for (Long i = 0; i < Nr_a; ++i) {
+        for (Long j = 0; j < Nc_x; ++j) {
+            for (Long k = 0; k < Nc_a; ++k)
+                y(i, j) += a(i, k) * x(k, j);
+        }
+    }
+}
+//% else
+//%     error('not implemented');
+//% end
+//%-------------------------
+
+//% types = {
+//%     'VecDoub', 'CmatDoub', 'VecDoub';
+//%     'VecComp', 'CmatDoub', 'VecComp';
+//%     };
+//%------------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (x.size() != a.n2() || y.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
+//% if is_dense_vec(Ty)
+    incy =  1;
+//% else
+    incy = y.step();
+//% end
+//% if is_dense_mat(Ta)
+    lda = a.n1();
+//% else
+    lda = a.lda();
+//% end
+//% if is_dense_vec(Tx)
+    incx = 1;
+//% else
+    incx = x.step();
+//% end
+//% if is_cmajor(Ta)
+    CBLAS_LAYOUT layout = CblasColMajor;
+//% else
+    CBLAS_LAYOUT layout = CblasRowMajor;
+//% end
+
+//% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
+    cblas_sgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
+//% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
+//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
+    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.ptr(),
+        lda, x.ptr(), incx, &beta, y.ptr(), incy);
+//% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
+    // do real part
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, (@Tsa@*)x.ptr(), 2*incx, beta, (@Tsa@*)y.ptr(), 2*incy);
+    // do imag part
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, (@Tsa@*)x.ptr()+1, 2*incx, beta, (@Tsa@*)y.ptr()+1, 2*incy);
+//% else
+//%     error('not implemented!');
+//% end
+#else
+    mul(y, a, x);
+#endif
+}
+//%-------------------------
+
+//% types = {
+//%     'VecDoub', 'CmatDoub', 'VecDoub';
+//%     'VecComp', 'CmatDoub', 'VecComp';
+//%   %  'SvecComp', 'DcmatDoub', 'SvecComp';
+//%   %  'DvecComp', 'DcmatDoub', 'DvecComp';
+//%     };
+//%--------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (x.size() != a.n2() || y.size() != a.n1() || x.size() != y.size())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), lda, incx, incy;
+//% if is_dense_vec(Ty)
+    incy =  1;
+//% else
+    incy = y.step();
+//% end
+//% if is_dense_mat(Ta)
+    lda = a.n1();
+//% else
+    lda = a.lda();
+//% end
+//% if is_dense_vec(Tx)
+    incx = 1;
+//% else
+    incx = x.step();
+//% end
+//% if is_cmajor(Ta)
+    CBLAS_LAYOUT layout = CblasColMajor;
+//% else
+    CBLAS_LAYOUT layout = CblasRowMajor;
+//% end
+
+//% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
+    cblas_ssymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
+//% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+    cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
+//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
+    cblas_zsymv(layout, CblasUpper, N1, &alpha, a.ptr(),
+        lda, x.ptr(), incx, &beta, y.ptr(), incy);
+//% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
+    // do real part
+    cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, (@Tsa@*)x.ptr(), 2*incx, beta, (@Tsa@*)y.ptr(), 2*incy);
+    // do imag part
+    cblas_dsymv(layout, CblasUpper, N1, alpha, a.ptr(),
+        lda, (@Tsa@*)x.ptr()+1, 2*incx, beta, (@Tsa@*)y.ptr()+1, 2*incy);
+//% else
+//%     error('not implemented!');
+//% end
+#else
+    mul(y, a, x);
+#endif
+}
+
+} // namespace slisc

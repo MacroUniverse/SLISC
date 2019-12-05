@@ -1,9 +1,0 @@
-//% types = {
-//%     'McooDoub', 'Doub';
-//% };
-//%----------------------------
-//% [T, Ts] = varargin{:};
-inline void operator*=(@T@_IO v, @Ts@_I s)
-{
-    times_equals_vs(v.ptr(), s, v.nnz());
-}

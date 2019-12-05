@@ -1,0 +1,136 @@
+#pragma once
+#include "Vec.h"
+#include "Cmat.h"
+#include "Svec.h"
+#include "Dvec.h"
+#include "Scmat.h"
+#include "Dcmat.h"
+
+namespace slisc {
+//% types = {
+//%     'VecDoub'; 'VecComp';
+//%     'SvecDoub'; 'SvecComp';
+//%     'DvecDoub'; 'DvecComp';
+//%     'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp';
+//% };
+//%----------------------------
+//% Tv = varargin{:};
+//% T = contain_type(Tv);
+//% Tsli = slice_type(Tv);
+//% if ndim(Tv) == 1
+inline void slice(@Tsli@ &sli, @Tv@_IO v,
+    Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start < 0 || start + N > v.size())
+        SLS_ERR("index out of bound!");
+#endif
+//%     if is_dense_vec(Tv)
+    sli.set(v.ptr() + start, N);
+//%     elseif is_Dvec(Tv)
+    sli.set(v.ptr() + start, N, v.step());
+//%     else
+//%         error('not implemented (1)!');
+//%     end
+}
+//% elseif ndim(Tv) == 2
+inline void slice(@Tsli@ &sli, @Tv@_IO v,
+    Long_I start1, Long_I N1, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start1 < 0 || start1 + N1 > v.n1() ||
+			start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+//%     if is_dense_mat(Tv)
+    sli.set(&v(start1, start2), N1, N2, v.n1());
+//%     elseif is_Dcmat(Tv)
+    sli.set(&v(start1, start2), N1, N2, v.lda());
+//%     else
+//%         error('not implemented (1)!');
+//%     end
+}
+//%     if is_Cmat(Tv)
+//%         ScmatT = ['Scmat' T];
+inline void slice(@ScmatT@ &sli, @Tv@_IO v, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	sli.set(v.ptr() + v.n1()*start2, v.n1(), N2);
+}
+//%     end
+//% else
+//%     error('not implemented!');
+//% end
+//%------------------------
+
+//% types = {
+//%     'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp';
+//% };
+//%----------------------------
+//% Tv = varargin{:};
+//% T = contain_type(Tv);
+//% Tsli = slice1_type(Tv);
+//% if is_Cmat(Tv) || is_Scmat(Tv)
+inline void slice1(@Tsli@_c &sli, @Tv@_I v, Long_I j)
+{
+	sli.set(v.ptr() + v.n1() * j, v.n1());
+}
+
+inline void slice1(@Tsli@ &sli, @Tv@ &v, Long_I j)
+{
+	sli.set(v.ptr() + v.n1() * j, v.n1());
+}
+
+//% elseif is_Dcmat(Tv)
+inline void slice1(@Tsli@_c &sli, @Tv@_I v, Long_I j)
+{
+	sli.set(v.ptr() + v.lda() * j, v.n1());
+}
+
+inline void slice1(@Tsli@ &sli, @Tv@ &v, Long_I j)
+{
+	sli.set(v.ptr() + v.lda() * j, v.n1());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%------------------------
+
+//% types = {
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp';
+//% };
+//%----------------------------
+//% Tv = varargin{:};
+//% T = contain_type(Tv);
+//% Tsli = slice2_type(Tv);
+//% if is_Cmat(Tv) || is_Scmat(Tv)
+inline void slice2(@Tsli@_c &sli, @Tv@_I v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.n1());
+}
+
+inline void slice2(@Tsli@ &sli, @Tv@ &v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.n1());
+}
+//% elseif is_Dcmat(Tv)
+inline void slice2(@Tsli@_c &sli, @Tv@_I v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.lda());
+}
+
+inline void slice2(@Tsli@ &sli, @Tv@ &v, Long_I i)
+{
+	sli.set(v.ptr() + i, v.n2(), v.lda());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%------------------------
+} // namespace slisc
