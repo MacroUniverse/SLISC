@@ -1122,5 +1122,5 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
     mul(y, a, x);
 #endif
 }
-
+//%--------------------------------
 } // namespace slisc

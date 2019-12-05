@@ -1,32 +1,47 @@
 function auto_gen(file)
-cd('templates');
+cd('SLISC');
 addpath('../preprocessor');
 addpath('../preprocessor/case_conflict');
-delete('../SLISC/*.inl');
-tp_list = ls('*.tp');
-Ntp = size(tp_list, 1);
+in_list = ls('*.in');
+Ntp = size(in_list, 1);
+newline = char(10);
 for i = 1:Ntp
-    tp_file = strtrim(tp_list(i,:));
-    if nargin > 0 && ~strcmp(tp_file, file)
+    in_file = strtrim(in_list(i,:));
+    if nargin > 0 && ~strcmp(in_file, file)
         continue;
     end
-    disp(tp_file);
-    str = fileread(tp_file);
-    ind = strfind(str, '//%-----');
-    if (numel(ind) ~= 1)
-        error('there must be exactly one divider!');
+    disp(in_file);
+    str = fileread(in_file);
+    ind = 1;
+    code = cell(1, 1); k = 0;
+    while true
+        ind1 = find_next(str, '//%', ind);
+        if (isempty(ind1))
+            break;
+        end
+        k = k + 1;
+        code{k} = str(ind:ind1-1);
+        ind2 = find_next(str, '//%-----', ind1);
+        type_str = str(ind1:ind2-1);
+        type_str = strrep(type_str, '//%', '');
+        eval(type_str);
+        ind2 = next_line(str, ind2);
+        ind3 = find_next(str, '//%-----', ind2);
+        if (isempty(ind3))
+            error('no closing //%-----');
+        end
+        str1 = str(ind2:ind3-1);
+        Ninst = size(types, 1);
+        for j = 1:Ninst
+            k = k + 1;
+            code{k} = [instantiate(str1, types{j,:}), newline];
+        end
+        clear types;
+        ind = next_line(str, ind3);
     end
-    type_str = strrep(str(1:ind-1), '//%', '');
-    eval(type_str);
-    ind = next_line(str, ind);
-    str = str(ind:end);
-    Ninst = size(types, 1);
-    code = cell(Ninst, 1);
-    for j = 1:Ninst
-        code{j} = [instantiate(str, types{j,:}), char(10)];
-    end
+    k = k + 1;
+    code{k} = str(ind:end);
     code_cat = [code{:}];
-    filewrite(['../SLISC/' tp_file(1:end-3) '.inl'], code_cat);
-    clear types;
+    filewrite(in_file(1:end-3), code_cat);
 end
 end
