@@ -25,7 +25,7 @@ void plus(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
 //% elseif is_vector(Tz) && is_scalar(Tx) && is_vector(Ty)
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x + y[i];
-/elseif is_vector(Tz) && is_vector(Tx) && is_vector(Ty)
+//% elseif is_vector(Tz) && is_vector(Tx) && is_vector(Ty)
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x[i] + y[i];
 //% else
