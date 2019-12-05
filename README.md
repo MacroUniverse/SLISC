@@ -4,36 +4,52 @@
 
 # Code generation using template file
 
-A template file (`plus.tp`) looks like
+A template file (`demo.h.in`) looks like
 ```c++
+#include <complex>
+#include <vector>
+using namespace std;
+
+//% types = {
+//%     'complex<double>', 'complex<double>', 'int';
+//%     'vector<double>', 'Int', 'vector<float>';
+//%     'vector<complex<double>>', 'vector<complex<double>>', 'vector<Int>';
+//% };
+//%----------------------------------
 //% [Tz, Tx, Ty] = varargin{:};
-void plus(@Tz@_O, @Tx@_I x, @Ty@_I y)
+void plus(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
 {
-//% if is_scalar(Tz) && is_scalar(Tx) && is_scalar(Ty)
-    z = x + y;
-//% elseif is_vector(Tz)
-//%     if is_vector(Tx) && is_scalar(Ty)
-	for (int i = 0; i < z.size(); ++i)
+//% if is_vector(Tz) && is_vector(Tx) && is_scalar(Ty)
+	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x[i] + y;
-//%     elseif is_scalar(Tx) && is_vector(Ty)
-	for (int i = 0; i < z.size(); ++i)
+//% elseif is_vector(Tz) && is_scalar(Tx) && is_vector(Ty)
+	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x + y[i];
-//%		elseif is_vector(Tx) && is_vector(Ty)
-	for (int i = 0; i < z.size(); ++i)
+/elseif is_vector(Tz) && is_vector(Tx) && is_vector(Ty)
+	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x[i] + y[i];
-//%     end
+//% else
+//%     error('not implemented!');
 //% end
 }
+//%-----------------------------------
 ```
 
-To generate code, use e.g.
-`code = preproc(plus.tp, 'VecDoub', 'CmatFloat', 'VecInt');`
-and the output will be
-
+Using `$octave auto_gen.m`, the generated file `demo.h` looks like
 ```c++
-void plus(VecDoub_O z, CmatFloat_I x, VecInt_I y)
+void plus(complex<double> &z, const complex<double> &x, const int &y)
 {
-	for (int i = 0; i < z.size(); ++i)
+}
+
+void plus(vector<double> &z, const Int &x, const vector<float> &y)
+{
+	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x + y[i];
+}
+
+void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const vector<Int> &y)
+{
+	for (size_t i = 0; i < z.size(); ++i)
+		z[i] = x[i] + y[i];
 }
 ```
