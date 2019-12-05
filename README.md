@@ -37,6 +37,10 @@ void plus(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
 
 Using `$octave auto_gen.m`, the generated file `demo.h` looks like
 ```c++
+#include <complex>
+#include <vector>
+using namespace std;
+
 void plus(complex<double> &z, const complex<double> &x, const int &y)
 {
 }
