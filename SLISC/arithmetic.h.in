@@ -14,6 +14,56 @@ inline Long Size(@T@_I v)
 }
 //%-------------------------
 
+//% types = {'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%--------------------------
+//% T = varargin{:}; Tr = rm_comp(T);
+//% if is_integral(T)
+inline Llong sum_abs_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Llong i = 1; i < N; ++i)
+        s += abs(v[i]);
+    return s;
+}
+//% elseif is_fpt(T) || is_comp(T)
+inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tr@ s = abs(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s += abs(v[i]);
+    return s;
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%---------------------------
+
+//% types = {
+//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% };
+//%--------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if is_integral(T)
+//%     Tret = 'Llong';
+//% else
+//%     Tret = rm_comp(Ts);
+//% end
+//% if is_dense(T)
+inline @Tret@ sum_abs(@T@_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%---------------------------
+
 //% types = {
 //%     'Int'; 'Llong'; 'Doub';
 //% };
@@ -71,6 +121,26 @@ inline const @Ts@ max(@T@_I v)
 //%-------------------------
 
 //% types = {
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
+//% };
+//%--------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(Long_O ind, @T@_I v)
+{
+    Long N = v.size();
+    @Ts@ val = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (val < v[i]) {
+            val = v[i]; ind = i;
+        }
+    }
+    return val;
+}
+//% end
+//%--------------------------
+
+//% types = {
 //%     'Int'; 'Llong'; 'Float'; 'Doub'; 'Comp';
 //% };
 //%------------------------------
@@ -107,12 +177,10 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 
 //% types = {
 //%     'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub'; 'VecComp';
-//%     'CmatInt'; 'CmatLlong'; 'CmatFloat'; 'CmatDoub'; 'CmatComp';
-//%     'MatInt'; 'MatLlong'; 'MatFloat'; 'MatDoub'; 'MatComp';
+//%     'MatComp'; 'CmatComp';
 //% };
 //%------------------------------
-//% T = varargin{:};
-//% Tr = rm_comp(contain_type(T));
+//% T = varargin{:}; Tr = rm_comp(contain_type(T));
 //% if is_dense(T)
 inline @Tr@ max_abs(@T@_I v)
 {
@@ -123,8 +191,10 @@ inline @Tr@ max_abs(@T@_I v)
 {
     return max_abs_v(v.ptr(), v.size(), v.step());
 }
+//% else
+//%     error('Not implemented!');
 //% end
-//%-------------------------
+//%--------------------------
 
 //% types = {
 //%     'Char', 'Char';
@@ -178,7 +248,7 @@ inline void mod(@T1@_O v, @Ts1@_I s)
 //%--------------------
 //% T = varargin{:};
 //% if is_integral(T)
-inline Long sum_v(const @T@ *v, Long_I N)
+inline Llong sum_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
@@ -202,7 +272,8 @@ inline @T@ sum_v(const @T@ *v, Long_I N)
 //% end
 //%------------------------
 
-//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'CmatDoub'};
+//% types = {'VecInt'; 'VecLlong'; 'VecDoub';
+//%     'MatComp'; 'CmatDoub'; 'CmatComp';};
 //%----------------
 //% T = varargin{:};
 //% if is_integral(T)
@@ -217,7 +288,8 @@ inline const @Tret@ sum(@T@_I v)
 //%-----------------
 
 //% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp';
-//%     'CmatDoub'; 'ScmatDoub'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'CmatDoub'; 'CmatComp'; 'ScmatDoub'; 'Cmat3Doub';
+//%     'Cmat3Comp'; 'DcmatComp';
 //% };
 //%-------------------------------
 //% T = varargin{:};
@@ -235,9 +307,9 @@ inline @Tr@ norm2(@T@_I v)
 //% elseif is_Dcmat(T)
 inline @Tr@ norm2(@T@_I a)
 {
-    @Tr@ *p = a.ptr();
+    const @Ts@ *p = a.ptr();
     Long Nr = a.n1(), lda = a.lda();
-    rm_comp<contain_type<T>> s2 = 0;
+    @Tr@ s2 = 0;
     for (Long j = 0; j < a.n2(); ++j) {
         for (Long i = 0; i < Nr; ++i)
             s2 += abs2(p[i]);
@@ -305,7 +377,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
 //% end
 //%-------------------------
 
-//% types = {'Int'; 'Llong'; 'Doub';};
+//% types = {'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%-----------------------
 //% T = varargin{:};
 inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
@@ -322,8 +394,8 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 }
 //%-------------------------
 
-//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'MatInt';
-//%     'CmatLlong'; 'CmatDoub'; 'CmatInt';
+//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
+//%     'MatComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //% };
 //%---------------------------------
 //% Tv = varargin{:};
@@ -336,6 +408,73 @@ inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
     linspace_vss(v.ptr(), first, last, v.size());
 }
 //%-------------------------
+
+//% types = {
+//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//% };
+//%---------------------------------
+//% T = varargin{:};
+inline void flip_v(@T@ *v, Long_I N)
+{
+    for (Long i = 0; i < N / 2; ++i)
+        swap(v[i], v[N - i - 1]);
+}
+//%---------------------
+
+//% types = {
+//%     'Char', 'Char';
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//% };
+//%---------------------------------
+//% [T, T1] = varargin{:};
+inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[N - i - 1];
+}
+//%----------------------------
+
+//% types = {
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% };
+//%---------------------------------
+//% Tv = varargin{:};
+//% Ts = contain_type(Tv);
+//% if is_dense(Tv)
+inline void flip(@Tv@_IO v)
+{
+    flip_v(v.ptr(), v.size());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%---------------------------
+
+//% types = {
+//%     'VecChar', 'VecChar';
+//%     'VecInt', 'VecInt';
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//% };
+//%---------------------------------
+//% [T, T1] = varargin{:};
+//% if is_dense(T) && is_dense(T1)
+inline void flip(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    flip_vv(v.ptr(), v1.ptr(), v1.size());
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%---------------------------
 
 //% types = {
 //%     'VecInt', 'VecLlong';
@@ -367,7 +506,8 @@ inline void reorder(@Tv@_O v, @To@_I order)
 }
 //%-------------------------
 
-//% types = {'CmatDoub'; 'CmatComp'; 'DcmatDoub'; 'DcmatComp'};
+//% types = {'CmatDoub'; 'CmatComp';
+//%     'MatComp'; 'DcmatDoub'; 'DcmatComp'};
 //%--------------------------
 //% T = varargin{:};
 inline void trans(@T@_IO v)
@@ -385,13 +525,14 @@ inline void trans(@T@_IO v)
 //% types = {
 //%	    'CmatLlong' 'CmatLlong';
 //%	    'CmatDoub' 'CmatDoub';
+//%	    'MatComp' 'CmatComp';
 //%	    'CmatComp' 'CmatComp';
 //%	    'DcmatLlong' 'DcmatLlong';
 //%	    'DcmatDoub' 'DcmatDoub';
 //%	    'DcmatComp' 'DcmatComp';
 //% };
 //%--------------------------
-//% [T T1] = varargin{:};
+//% [T, T1] = varargin{:};
 inline void trans(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -401,6 +542,99 @@ inline void trans(@T@_O v, @T1@_I v1)
     for (Long i = 0; i < v.n1(); ++i)
         for (Long j = 0; j < v.n2(); ++j)
             v(i, j) = v1(j, i);
+}
+//%-------------------------
+
+//% types = {
+//%	    'Comp';
+//% };
+//%--------------------------
+//% T = varargin{:}; Tr = rm_comp(T);
+inline void conj_v(@T@ *v, Long_I N)
+{
+    @Tr@ *p = (@Tr@ *)v;
+    for (Long i = 1; i < 2*N; i += 2)
+        p[i] = -p[i];
+}
+//%--------------------------
+
+//% types = {
+//%	    'Comp', 'Comp';
+//% };
+//%--------------------------
+//% [T, T1] = varargin{:};
+inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = conj(v1[i]);
+}
+//%-------------------------------
+
+//% types = {
+//%	    'CmatComp'; 'MatComp'; 'DcmatComp';
+//% };
+//%--------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if ~(is_comp(Ts))
+//%     error('error types!');
+//% end
+//% if is_dense(T)
+inline void conj(@T@_IO v)
+{
+    conj_v(v.ptr(), v.size());
+}
+//% elseif is_Dcmat(T)
+inline void conj(@T@_IO v)
+{
+	for (Long j = 0; j < v.n2(); ++j)
+    	conj_v(v.ptr(), v.n1());
+}
+//% end
+//%----------------------------
+
+//% types = {
+//%	    'CmatComp', 'CmatComp';
+//%	    'MatComp', 'MatComp';
+//% };
+//%--------------------------
+//% [T, T1] = varargin{:};
+inline void conj(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    conj_vv(v.ptr(), v1.ptr(), v.size());
+}
+//%----------------------------
+
+//% types = {
+//%	    'CmatComp'; 'MatComp';
+//% };
+//%--------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if ~(is_comp(Ts) && ndim(T) == 2)
+//%     error('error types!');
+//% end
+inline void her(@T@_IO v)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (v.n1() != v.n2()) SLS_ERR("illegal shape!");
+#endif
+    trans(v); conj(v);
+}
+//%---------------------------
+
+//% types = {
+//%	    'MatComp' 'CmatComp';
+//%	    'CmatComp' 'CmatComp';
+//%	    'DcmatComp' 'DcmatComp';
+//% };
+//%--------------------------
+//% [T, T1] = varargin{:};
+inline void her(@T@_O v, @T1@_I v1)
+{
+	trans(v, v1); conj(v);
 }
 //%-------------------------
 

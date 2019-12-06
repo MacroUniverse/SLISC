@@ -2,6 +2,7 @@
 #include "../SLISC/compare.h"
 #include "../SLISC/random.h"
 #include "../SLISC/sort.h"
+#include "../SLISC/slice_arith.h"
 
 void test_arithmetics()
 {
@@ -174,7 +175,8 @@ void test_arithmetics()
         if (sum(e) != Comp(45., -45.)) SLS_ERR("failed!");
         if (max_abs(e) != abs(Comp(9, 9))) SLS_ERR("failed!");
         if (norm2(e) != 285. * 2) SLS_ERR("failed!");
-        if (norm2(slice(e, 0, 2, 0, 2)) != 46. * 2)
+		DcmatComp sli; slice(sli, e, 0, 2, 0, 2);
+        if (norm2(sli) != 46. * 2)
             SLS_ERR("failed!");;
     }
     // sum_abs
@@ -232,7 +234,7 @@ void test_arithmetics()
         VecComp vComp(3), vComp1(3), vComp2(3), vComp3(3);
 
         // v ?= s
-        vLlong = 1;
+        copy(vLlong, 1);
         vLlong += 1;
         if (vLlong != 2) SLS_ERR("failed!");
         vLlong -= 1;
@@ -242,7 +244,7 @@ void test_arithmetics()
         vLlong /= 2;
         if (vLlong != 1) SLS_ERR("failed!");
 
-        vDoub = 1.;
+        copy(vDoub, 1);
         vDoub += 1.;
         if (vDoub != 2.) SLS_ERR("failed!");
         vDoub -= 1.;
@@ -252,7 +254,7 @@ void test_arithmetics()
         vDoub /= 2.;
         if (vDoub != 1.) SLS_ERR("failed!");
 
-        vComp = Comp(1., 1.);
+        copy(vComp, Comp(1, 1));
         vComp += Comp(1., 1.);
         if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
         vComp -= Comp(1., 1.);
@@ -264,7 +266,7 @@ void test_arithmetics()
 
         // v ?= v
 
-        vLlong = 1; vLlong1 = 1;
+        copy(vLlong, 1); copy(vLlong1, 1);
         vLlong += vLlong1;
         if (vLlong != 2) SLS_ERR("failed!");
         vLlong -= vLlong1;
@@ -275,7 +277,7 @@ void test_arithmetics()
         vLlong /= vLlong2;
         if (vLlong != 1) SLS_ERR("failed!");
 
-        vDoub = 1.; vDoub1 = 1.;
+        copy(vDoub, 1); copy(vDoub1, 1);
         vDoub += vDoub1;
         if (vDoub != 2.) SLS_ERR("failed!");
         vDoub -= vDoub1;
@@ -286,12 +288,12 @@ void test_arithmetics()
         vDoub /= vDoub2;
         if (vDoub != 1.) SLS_ERR("failed!");
 
-        vComp = Comp(1., 1.); vComp1 = Comp(1., 1.);
+        copy(vComp, Comp(1, 1)); copy(vComp1, Comp(1, 1));
         vComp += vComp1;
         if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
         vComp -= vComp1;
         if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
-        vComp2 = 2.;
+        copy(vComp2, 2);
         vComp *= vComp2;
         if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
         vComp /= vComp2;

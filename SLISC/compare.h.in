@@ -125,6 +125,7 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2)
 //%     'MatComp', 'MatComp';
 //%     'CmatDoub', 'CmatDoub';
 //%     'CmatComp', 'CmatComp';
+//%     'CmatComp', 'MatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
 //%     };
