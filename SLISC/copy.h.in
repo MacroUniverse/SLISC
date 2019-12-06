@@ -85,10 +85,10 @@ inline void veccpy(@T@ *v, Long_I step, const @T1@ *v1, Long_I step1, Long_I n)
 //% if ~is_promo(T, T1);
 //%     error('illegal types!');
 //% end
-inline void matcpy(@T@ *v, Long_I lda, const @T1@ *v1, Long_I lda1, Long_I Nr, Long_I Nc)
+inline void matcpy(@T@ *v, Long_I lda, const @T1@ *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
-    for (Long j = 0; j < Nr; ++j) {
-        veccpy(v, v1, Nc);
+    for (Long j = 0; j < Nsd; ++j) {
+        veccpy(v, v1, Nld);
         v += lda; v1 += lda1;
     }
 }
@@ -200,7 +200,9 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'DvecInt', 'DvecInt';
 //%     'DvecDoub', 'DvecDoub';
 //%     'DcmatInt', 'CmatInt';
+//%     'DcmatInt', 'DcmatInt';
 //%     'DcmatDoub', 'CmatDoub';
+//%     'DcmatDoub', 'DcmatDoub';
 //%     };
 //%---------------------------
 //% [T, T1] = varargin{:};
@@ -229,8 +231,10 @@ inline void copy(@T@_O v, @T1@_I v1)
 //%     else
     matcpy_diff_major(v.ptr(), v1.ptr(), v.n2(), v.n1());
 //%     end
-//% elseif is_Dmat(T) && is_Dmat(T1) || is_Dcmat(T) && is_Dcmat(T1)
+//% elseif is_Dcmat(T) && is_Dcmat(T1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+//% elseif is_Dmat(T) && is_Dmat(T1)
+    matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n2(), v.n1());
 //% elseif is_Dcmat(T) && is_Cmat(T1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v.n1(), v.n1(), v.n2());
 //% elseif ndim(T) == 3 && ndim(T1) == 3

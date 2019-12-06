@@ -3,6 +3,7 @@
 #include "../SLISC/random.h"
 #include "../SLISC/sort.h"
 #include "../SLISC/slice_arith.h"
+#include "../SLISC/disp.h"
 
 void test_arithmetics()
 {

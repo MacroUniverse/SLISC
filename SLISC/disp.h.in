@@ -6,10 +6,10 @@ const Int def_disp_prec = 8;
 //% types = {
 //%     'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
-//%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%   %  'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%     'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
+//%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
 //% };
 //%-----------------------------
 //% T = varargin{:};
