@@ -271,7 +271,7 @@ void test_arithmetics()
         if (vLlong != 2) SLS_ERR("failed!");
         vLlong -= vLlong1;
         if (vLlong != 1) SLS_ERR("failed!");
-        vLlong2 = 2;
+        copy(vLlong2, 2);
         vLlong *= vLlong2;
         if (vLlong != 2) SLS_ERR("failed!");
         vLlong /= vLlong2;
@@ -282,7 +282,7 @@ void test_arithmetics()
         if (vDoub != 2.) SLS_ERR("failed!");
         vDoub -= vDoub1;
         if (vDoub != 1.) SLS_ERR("failed!");
-        vDoub2 = 2.;
+        copy(vDoub2, 2);
         vDoub *= vDoub2;
         if (vDoub != 2.) SLS_ERR("failed!");
         vDoub /= vDoub2;
@@ -315,109 +315,109 @@ void test_arithmetics()
         if (v != v1) SLS_ERR("failed!");
     }
 
-    // Plus(), Minus(), Times(), Devide()
+    // plus(), minus(), times(), Devide()
     {
         VecInt vLlong(3), vLlong1(3), vLlong2(3), vLlong3(3);
         VecDoub vDoub(3), vDoub1(3), vDoub2(3), vDoub3(3);
         VecComp vComp(3), vComp1(3), vComp2(3), vComp3(3);
 
         // v = v ? s
-        vLlong1 = 1;
-        Plus(vLlong, vLlong1, 1);
+        copy(vLlong1, 1);
+        plus(vLlong, vLlong1, 1);
         if (vLlong != 2) SLS_ERR("failed!");
-        Minus(vLlong, vLlong1, 1);
+        minus(vLlong, vLlong1, 1);
         if (vLlong != 0) SLS_ERR("failed!");
-        Times(vLlong, vLlong1, 2);
+        times(vLlong, vLlong1, 2);
         if (vLlong != 2) SLS_ERR("failed!");
-        Divide(vLlong, vLlong1, 2);
+        divide(vLlong, vLlong1, 2);
         if (vLlong != 0) SLS_ERR("failed!");
 
-        vDoub1 = 1.;
-        Plus(vDoub, vDoub1, 1.);
+        copy(vDoub1, 1);
+        plus(vDoub, vDoub1, 1.);
         if (vDoub != 2.) SLS_ERR("failed!");
-        Minus(vDoub, vDoub1, 1.);
+        minus(vDoub, vDoub1, 1.);
         if (vDoub != 0.) SLS_ERR("failed!");
-        Times(vDoub, vDoub1, 2.);
+        times(vDoub, vDoub1, 2.);
         if (vDoub != 2.) SLS_ERR("failed!");
-        Divide(vDoub, vDoub1, 2.);
+        divide(vDoub, vDoub1, 2.);
         if (vDoub != 0.5) SLS_ERR("failed!");
         
-        vComp1 = 1.;
-        Plus(vComp, vComp1, 1.);
+        copy(vComp1, 1);
+        plus(vComp, vComp1, 1.);
         if (vComp != 2.) SLS_ERR("failed!");
-        Minus(vComp, vComp1, 1.);
+        minus(vComp, vComp1, 1.);
         if (vComp != 0.) SLS_ERR("failed!");
-        Times(vComp, vComp1, 2.);
+        times(vComp, vComp1, 2.);
         if (vComp != 2.) SLS_ERR("failed!");
-        Divide(vComp, vComp1, 2.);
+        divide(vComp, vComp1, 2.);
         if (vComp != 0.5) SLS_ERR("failed!");
 
         // v = s ? v
 
-        vLlong1 = 1;
-        Plus(vLlong, 1, vLlong1);
+        copy(vLlong1, 1);
+        plus(vLlong, 1, vLlong1);
         if (vLlong != 2) SLS_ERR("failed!");
-        Minus(vLlong, 1, vLlong1);
+        minus(vLlong, 1, vLlong1);
         if (vLlong != 0) SLS_ERR("failed!");
-        Times(vLlong, 2, vLlong1);
+        times(vLlong, 2, vLlong1);
         if (vLlong != 2) SLS_ERR("failed!");
-        vLlong1 = 2;
-        Divide(vLlong, 2, vLlong1);
+        copy(vLlong1, 2);
+        divide(vLlong, 2, vLlong1);
         if (vLlong != 1) SLS_ERR("failed!");
 
-        vDoub1 = 1.;
-        Plus(vDoub, 1., vDoub1);
+        copy(vDoub1, 1);
+        plus(vDoub, 1., vDoub1);
         if (vDoub != 2.) SLS_ERR("failed!");
-        Minus(vDoub, 1., vDoub1);
+        minus(vDoub, 1., vDoub1);
         if (vDoub != 0.) SLS_ERR("failed!");
-        Times(vDoub, 2., vDoub1);
+        times(vDoub, 2., vDoub1);
         if (vDoub != 2.) SLS_ERR("failed!");
-        vDoub1 = 2.;
-        Divide(vDoub, 2., vDoub1);
+        copy(vDoub1, 2);
+        divide(vDoub, 2., vDoub1);
         if (vDoub != 1.) SLS_ERR("failed!");
 
-        vComp1 = Comp(1.,1.);
-        Plus(vComp, Comp(1., 1.), vComp1);
+        copy(vComp1, Comp(1,1));
+        plus(vComp, Comp(1., 1.), vComp1);
         if (vComp != Comp(2.,2.)) SLS_ERR("failed!");
-        Minus(vComp, Comp(1.,1.), vComp1);
+        minus(vComp, Comp(1.,1.), vComp1);
         if (vComp != 0.) SLS_ERR("failed!");
-        Times(vComp, 2., vComp1);
+        times(vComp, 2., vComp1);
         if (vComp != Comp(2.,2.)) SLS_ERR("failed!");
-        vComp1 = 2.;
-        Divide(vComp, Comp(2.,2.), vComp1);
+        copy(vComp1, 2);
+        divide(vComp, Comp(2.,2.), vComp1);
         if (vComp != Comp(1.,1.)) SLS_ERR("failed!");
 
         // v = v ? v
 
-        vLlong1 = 4; vLlong2 = 2;
-        Plus(vLlong, vLlong1, vLlong2);
+        copy(vLlong1, 4); copy(vLlong2, 2);
+        plus(vLlong, vLlong1, vLlong2);
         if (vLlong != 6) SLS_ERR("failed!");
-        Minus(vLlong, vLlong1, vLlong2);
+        minus(vLlong, vLlong1, vLlong2);
         if (vLlong != 2) SLS_ERR("failed!");
-        Times(vLlong, vLlong1, vLlong2);
+        times(vLlong, vLlong1, vLlong2);
         if (vLlong != 8) SLS_ERR("failed!");
-        Divide(vLlong, vLlong1, vLlong2);
+        divide(vLlong, vLlong1, vLlong2);
         if (vLlong != 2) SLS_ERR("failed!");
 
-        vDoub1 = 1.; vDoub2 = 2.;
-        Plus(vDoub, vDoub1, vDoub2);
+        copy(vDoub1, 1); copy(vDoub2, 2);
+        plus(vDoub, vDoub1, vDoub2);
         if (vDoub != 3.) SLS_ERR("failed!");
-        Minus(vDoub, vDoub2, vDoub1);
+        minus(vDoub, vDoub2, vDoub1);
         if (vDoub != 1.) SLS_ERR("failed!");
-        Times(vDoub, vDoub1, vDoub2);
+        times(vDoub, vDoub1, vDoub2);
         if (vDoub != 2.) SLS_ERR("failed!");
-        Divide(vDoub, vDoub1, vDoub2);
+        divide(vDoub, vDoub1, vDoub2);
         if (vDoub != 0.5) SLS_ERR("failed!");
 
-        vComp1 = Comp(1., 1.); vComp2 = Comp(2., 2.);
-        Plus(vComp, vComp1, vComp2);
+        copy(vComp1, Comp(1, 1)); copy(vComp2, Comp(2, 2));
+        plus(vComp, vComp1, vComp2);
         if (vComp != Comp(3., 3.)) SLS_ERR("failed!");
-        Minus(vComp, vComp2, vComp1);
+        minus(vComp, vComp2, vComp1);
         if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
-        vComp2 = 2.;
-        Times(vComp, vComp1, vComp2);
+        copy(vComp2, 2);
+        times(vComp, vComp1, vComp2);
         if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
-        Divide(vComp, vComp1, vComp2);
+        divide(vComp, vComp1, vComp2);
         if (vComp != Comp(0.5, 0.5)) SLS_ERR("failed!");
     }
 

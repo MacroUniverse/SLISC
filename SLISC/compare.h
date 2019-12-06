@@ -11,6 +11,14 @@
 #include "Dcmat.h"
 
 namespace slisc {
+inline Bool equals_to_vs(const Int *v, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v[i] != s)
+            return false;
+    return true;
+}
+
 inline Bool equals_to_vs(const Llong *v, Llong_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -488,6 +496,146 @@ inline Bool operator==(CmatDoub_I v1, MatDoub_I v2)
 inline Bool operator!=(CmatDoub_I v1, MatDoub_I v2)
 {
     return !(v1 == v2);
+}
+
+
+inline Bool operator==(VecInt_I v, Int_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(VecInt_I v, Int_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(VecLlong_I v, Llong_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(VecLlong_I v, Llong_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(VecDoub_I v, Doub_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(VecDoub_I v, Doub_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(VecComp_I v, Comp_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(VecComp_I v, Comp_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(DvecInt_I v, Int_I s)
+{
+	for (Long i = 0; i < v.size(); ++i)
+		if (v[i] != s)
+			return false;
+	return true;
+}
+
+inline Bool operator!=(DvecInt_I v, Int_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(DvecLlong_I v, Llong_I s)
+{
+	for (Long i = 0; i < v.size(); ++i)
+		if (v[i] != s)
+			return false;
+	return true;
+}
+
+inline Bool operator!=(DvecLlong_I v, Llong_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(DvecDoub_I v, Doub_I s)
+{
+	for (Long i = 0; i < v.size(); ++i)
+		if (v[i] != s)
+			return false;
+	return true;
+}
+
+inline Bool operator!=(DvecDoub_I v, Doub_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(MatInt_I v, Int_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(MatInt_I v, Int_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(MatLlong_I v, Llong_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(MatLlong_I v, Llong_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(MatDoub_I v, Doub_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(MatDoub_I v, Doub_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(MatComp_I v, Comp_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(MatComp_I v, Comp_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(CmatDoub_I v, Doub_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(CmatDoub_I v, Doub_I s)
+{
+	return !(v == s);
+}
+
+inline Bool operator==(CmatComp_I v, Comp_I s)
+{
+    return equals_to_vs(v.ptr(), s, v.size());
+}
+
+inline Bool operator!=(CmatComp_I v, Comp_I s)
+{
+	return !(v == s);
 }
 
 } // namespace slisc

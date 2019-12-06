@@ -12,6 +12,7 @@
 
 namespace slisc {
 //% types = {
+//%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
 //%     'Comp', 'Comp';
@@ -160,6 +161,38 @@ inline Bool operator==(@T1@_I v1, @T2@_I v2)
 inline Bool operator!=(@T1@_I v1, @T2@_I v2)
 {
     return !(v1 == v2);
+}
+//%------------------------
+
+//% types = {
+//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'DvecInt'; 'DvecLlong'; 'DvecDoub';
+//%     'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
+//%     'CmatDoub'; 'CmatComp';
+//%     };
+//%--------------------------
+//% T = varargin{:};
+//% Ts = contain_type(T);
+inline Bool operator==(@T@_I v, @Ts@_I s)
+{
+//% if is_dense(T)
+    return equals_to_vs(v.ptr(), s, v.size());
+//% elseif is_Dcmat(T)
+	for (Long j = 0; j < v.n2(); ++j)
+		if !equals_to_vs(v.ptr() + v.n1()*j, s, v.n1());
+			return false
+	return true;
+//% else
+	for (Long i = 0; i < v.size(); ++i)
+		if (v[i] != s)
+			return false;
+	return true;
+//% end
+}
+
+inline Bool operator!=(@T@_I v, @Ts@_I s)
+{
+	return !(v == s);
 }
 //%------------------------
 } // namespace slisc

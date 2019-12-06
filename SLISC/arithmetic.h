@@ -491,6 +491,88 @@ inline void mod(VecLlong_O v, Llong_I s)
 }
 
 
+inline void rem_vs(Char *v, Char_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] %= s;
+}
+
+inline void rem_vs(Int *v, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] %= s;
+}
+
+inline void rem_vs(Llong *v, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] %= s;
+}
+
+
+inline void rem_vvs(Char *v, const Char *v1, Char_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] % s;
+}
+
+inline void rem_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] % s;
+}
+
+inline void rem_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] % s;
+}
+
+
+inline void rem(VecChar_IO v, Char_I s)
+{
+    rem_vs(v.ptr(), s, v.size());
+}
+
+inline void rem(VecInt_IO v, Int_I s)
+{
+    rem_vs(v.ptr(), s, v.size());
+}
+
+inline void rem(VecLlong_IO v, Llong_I s)
+{
+    rem_vs(v.ptr(), s, v.size());
+}
+
+
+inline void rem(VecChar_O v, VecChar_I v1, Char_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    rem_vvs(v.ptr(), v1.ptr(), s, v.size());
+}
+
+inline void rem(VecInt_O v, VecInt_I v1, Int_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    rem_vvs(v.ptr(), v1.ptr(), s, v.size());
+}
+
+inline void rem(VecLlong_O v, VecLlong_I v1, Llong_I s)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    rem_vvs(v.ptr(), v1.ptr(), s, v.size());
+}
+
+
 inline Bool sum_v(const Bool *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
