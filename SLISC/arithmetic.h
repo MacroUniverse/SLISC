@@ -416,6 +416,83 @@ inline void mod(VecLlong_O v, Llong_I s)
 }
 
 
+inline Bool sum_v(const Bool *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Bool s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
+inline Long sum_v(const Int *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Llong i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
+inline Long sum_v(const Llong *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Llong i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
+inline Doub sum_v(const Doub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Doub s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
+inline Comp sum_v(const Comp *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Comp s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
+
+inline const Int sum(VecInt_I v)
+{
+    return sum_v(v.ptr(), v.size());
+}
+
+inline const Llong sum(VecLlong_I v)
+{
+    return sum_v(v.ptr(), v.size());
+}
+
+inline const Doub sum(VecDoub_I v)
+{
+    return sum_v(v.ptr(), v.size());
+}
+
+inline const Doub sum(CmatDoub_I v)
+{
+    return sum_v(v.ptr(), v.size());
+}
+
+
 inline Doub norm2(VecDoub_I v)
 {
     Long N = v.size();
@@ -600,12 +677,22 @@ inline void linspace(VecDoub_O v, Doub_I first, Doub_I last)
     linspace_vss(v.ptr(), first, last, v.size());
 }
 
+inline void linspace(MatInt_O v, Int_I first, Int_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
 inline void linspace(CmatLlong_O v, Llong_I first, Llong_I last)
 {
     linspace_vss(v.ptr(), first, last, v.size());
 }
 
 inline void linspace(CmatDoub_O v, Doub_I first, Doub_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
+inline void linspace(CmatInt_O v, Int_I first, Int_I last)
 {
     linspace_vss(v.ptr(), first, last, v.size());
 }

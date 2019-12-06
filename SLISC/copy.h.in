@@ -146,6 +146,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //%     'SvecComp', 'Comp';
 //%     'MatInt', 'Int';
 //%     'MatDoub', 'Doub';
+//%     'CmatInt', 'Int';
 //%     'CmatLlong', 'Llong';
 //%     'CmatDoub', 'Doub';
 //%     'CmatComp', 'Comp';
@@ -181,6 +182,8 @@ inline void copy(@T@_O v, @Ts@_I s)
 //% types = {
 //%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
+//%     'VecInt', 'SvecInt';
+//%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecComp';

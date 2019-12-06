@@ -128,6 +128,16 @@ inline void slice(DcmatComp &sli, ScmatComp_IO v,
 }
 
 
+inline void slice1(SvecInt_c &sli, CmatInt_I v, Long_I j)
+{
+	sli.set(v.ptr() + v.n1() * j, v.n1());
+}
+
+inline void slice1(SvecInt &sli, CmatInt &v, Long_I j)
+{
+	sli.set(v.ptr() + v.n1() * j, v.n1());
+}
+
 inline void slice1(SvecDoub_c &sli, CmatDoub_I v, Long_I j)
 {
 	sli.set(v.ptr() + v.n1() * j, v.n1());
@@ -137,7 +147,6 @@ inline void slice1(SvecDoub &sli, CmatDoub &v, Long_I j)
 {
 	sli.set(v.ptr() + v.n1() * j, v.n1());
 }
-
 
 inline void slice1(SvecComp_c &sli, CmatComp_I v, Long_I j)
 {
@@ -149,7 +158,6 @@ inline void slice1(SvecComp &sli, CmatComp &v, Long_I j)
 	sli.set(v.ptr() + v.n1() * j, v.n1());
 }
 
-
 inline void slice1(SvecDoub_c &sli, ScmatDoub_I v, Long_I j)
 {
 	sli.set(v.ptr() + v.n1() * j, v.n1());
@@ -159,7 +167,6 @@ inline void slice1(SvecDoub &sli, ScmatDoub &v, Long_I j)
 {
 	sli.set(v.ptr() + v.n1() * j, v.n1());
 }
-
 
 inline void slice1(SvecComp_c &sli, ScmatComp_I v, Long_I j)
 {
@@ -171,6 +178,15 @@ inline void slice1(SvecComp &sli, ScmatComp &v, Long_I j)
 	sli.set(v.ptr() + v.n1() * j, v.n1());
 }
 
+inline void slice1(DvecInt_c &sli, MatInt_I v, Long_I j)
+{
+	sli.set(v.ptr() + j, v.n1(), v.n2());
+}
+
+inline void slice1(DvecInt &sli, MatInt &v, Long_I j)
+{
+	sli.set(v.ptr() + j, v.n1(), v.n2());
+}
 
 
 inline void slice2(DvecInt_c &sli, CmatInt_I v, Long_I i)
@@ -231,6 +247,16 @@ inline void slice2(DvecComp_c &sli, ScmatComp_I v, Long_I i)
 inline void slice2(DvecComp &sli, ScmatComp &v, Long_I i)
 {
 	sli.set(v.ptr() + i, v.n2(), v.n1());
+}
+
+inline void slice2(SvecInt_c &sli, MatInt_I v, Long_I i)
+{
+	sli.set(v.ptr() + i*v.n2(), v.n2());
+}
+
+inline void slice2(SvecInt &sli, MatInt &v, Long_I i)
+{
+	sli.set(v.ptr() + i*v.n2(), v.n2());
 }
 
 } // namespace slisc

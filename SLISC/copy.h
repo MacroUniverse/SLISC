@@ -534,6 +534,11 @@ inline void copy(MatDoub_O v, Doub_I s)
     vecset(v.ptr(), s, v.size());
 }
 
+inline void copy(CmatInt_O v, Int_I s)
+{
+    vecset(v.ptr(), s, v.size());
+}
+
 inline void copy(CmatLlong_O v, Llong_I s)
 {
     vecset(v.ptr(), s, v.size());
@@ -571,6 +576,28 @@ inline void copy(VecInt_O v, VecInt_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(VecInt_O v, SvecInt_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(VecInt_O v, DvecInt_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
 }
 
 inline void copy(VecLlong_O v, VecLlong_I v1)

@@ -1,0 +1,92 @@
+// row-major 3D container
+#pragma once
+#include "Vbase.h"
+
+namespace slisc {
+//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp';};
+//%----------------------------------------
+//% T = varargin{:};
+//% Mat3T = ['Mat3' T];
+//% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef Mat3Int Mat3Long;
+#else
+typedef Mat3Llong Mat3Long;
+#endif
+//% else
+class @Mat3T@ : public @VbaseT@
+{
+private:
+    typedef @VbaseT@ Base;
+    Long m_N1;
+    Long m_N2;
+    Long m_N3;
+public:
+    @Mat3T@(Long_I N1, Long_I N2, Long_I N3);
+    @Mat3T@(const @Mat3T@ &rhs) = delete;   // Copy constructor
+    void operator<<(@Mat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N1, Long_I N2, Long_I N3);
+    @T@ & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const @T@ & operator()(Long_I i, Long_I j, Long_I k) const;
+    Long n1() const;
+    Long n2() const;
+    Long n3() const;
+};
+
+inline @Mat3T@::@Mat3T@(Long_I N1, Long_I N2, Long_I N3) :
+	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+
+inline void @Mat3T@::operator<<(@Mat3T@ &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
+    rhs.m_N1 = rhs.m_N2 = rhs.m_N3 = 0;
+    Base::operator<<(rhs);
+}
+
+inline void @Mat3T@::resize(Long_I N1, Long_I N2, Long_I N3)
+{
+    if (N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N1*N2*N3);
+        m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    }
+}
+
+inline @T@ & @Mat3T@::operator()(Long_I i, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[m_N2*m_N3*i + m_N3*j + k];
+}
+
+inline const @T@ & @Mat3T@::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[m_N2*m_N3*i + m_N3*j + k];
+}
+
+inline Long @Mat3T@::n1() const
+{
+	return m_N1;
+}
+
+inline Long @Mat3T@::n2() const
+{
+	return m_N2;
+}
+
+inline Long @Mat3T@::n3() const
+{
+	return m_N3;
+}
+//% end
+
+typedef const @Mat3T@ & @Mat3T@_I;
+typedef @Mat3T@ & @Mat3T@_O, & @Mat3T@_IO;
+//%----------------------
+} // namespace slisc

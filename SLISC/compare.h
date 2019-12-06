@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec.h"
 #include "Mat.h"
+#include "Mat3.h"
 #include "Cmat.h"
 #include "Cmat3.h"
 #include "Mcoo.h"
@@ -109,6 +110,11 @@ inline Bool shape_cmp(VecInt_I v1, VecLlong_I v2)
     return v1.size() == v2.size();
 }
 
+inline Bool shape_cmp(VecInt_I v1, SvecInt_I v2)
+{
+    return v1.size() == v2.size();
+}
+
 inline Bool shape_cmp(VecInt_I v1, DvecInt_I v2)
 {
     return v1.size() == v2.size();
@@ -174,7 +180,18 @@ inline Bool shape_cmp(MatComp_I v1, MatComp_I v2)
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }
 
+inline Bool shape_cmp(Mat3Doub_I v1, Mat3Comp_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2()
+            && v1.n3() == v2.n3();
+}
+
 inline Bool shape_cmp(CmatInt_I v1, CmatInt_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(CmatInt_I v1, MatChar_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }

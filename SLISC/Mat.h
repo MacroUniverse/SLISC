@@ -3,6 +3,80 @@
 #include "Vbase.h"
 
 namespace slisc {
+class MatChar : public VbaseChar
+{
+private:
+    typedef VbaseChar Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+public:
+    using Base::ptr;
+    using Base::operator();
+    MatChar(Long_I Nr, Long_I Nc);
+    MatChar(const MatChar &rhs);        // Copy constructor
+	MatChar & operator=(const MatChar &rhs) = delete;
+    void operator<<(MatChar &rhs); // move data and rhs.resize(0, 0)
+    Char& operator()(Long_I i, Long_I j); // double indexing
+    const Char& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
+};
+
+inline MatChar::MatChar(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+
+inline MatChar::MatChar(const MatChar &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatChar::operator<<(MatChar &rhs)
+{
+    m_Nr = rhs.m_Nr; m_Nc = rhs.m_Nc;
+    rhs.m_Nr = rhs.m_Nc = 0;
+    Base::operator<<(rhs);
+}
+
+inline Char& MatChar::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("MatChar subscript out of bounds");
+#endif
+    return m_p[m_Nc*i+j];
+}
+
+inline const Char & MatChar::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("MatChar subscript out of bounds");
+#endif
+    return m_p[m_Nc*i+j];
+}
+
+inline Long MatChar::n1() const
+{
+    return m_Nr;
+}
+
+inline Long MatChar::n2() const
+{
+    return m_Nc;
+}
+
+inline void MatChar::resize(Long_I Nr, Long_I Nc)
+{
+    if (Nr != m_Nr || Nc != m_Nc) {
+        Base::resize(Nr*Nc);
+        m_Nr = Nr; m_Nc = Nc;
+    }
+}
+
+typedef const MatChar & MatChar_I;
+typedef MatChar & MatChar_O, & MatChar_IO;
+
 class MatInt : public VbaseInt
 {
 private:

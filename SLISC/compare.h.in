@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec.h"
 #include "Mat.h"
+#include "Mat3.h"
 #include "Cmat.h"
 #include "Cmat3.h"
 #include "Mcoo.h"
@@ -51,6 +52,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'VecChar', 'VecLlong';
 //%     'VecInt', 'VecInt';
 //%     'VecInt', 'VecLlong';
+//%     'VecInt', 'SvecInt';
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'DvecLlong';
 //%     'VecDoub', 'DvecDoub';
@@ -64,7 +66,9 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
 //%     'MatComp', 'MatComp';
+//%     'Mat3Doub', 'Mat3Comp';
 //%     'CmatInt', 'CmatInt';
+//%     'CmatInt', 'MatChar';
 //%     'CmatLlong', 'CmatLlong';
 //%     'CmatDoub', 'CmatDoub';
 //%     'CmatComp', 'CmatDoub';

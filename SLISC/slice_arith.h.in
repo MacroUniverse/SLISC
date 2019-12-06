@@ -68,8 +68,8 @@ inline void slice(@ScmatT@ &sli, @Tv@_IO v, Long_I start2, Long_I N2)
 //%------------------------
 
 //% types = {
-//%     'CmatDoub'; 'CmatComp';
-//%     'ScmatDoub'; 'ScmatComp';
+//%     'CmatInt'; 'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp'; 'MatInt';
 //% };
 //%----------------------------
 //% Tv = varargin{:};
@@ -85,7 +85,6 @@ inline void slice1(@Tsli@ &sli, @Tv@ &v, Long_I j)
 {
 	sli.set(v.ptr() + v.n1() * j, v.n1());
 }
-
 //% elseif is_Dcmat(Tv)
 inline void slice1(@Tsli@_c &sli, @Tv@_I v, Long_I j)
 {
@@ -96,6 +95,16 @@ inline void slice1(@Tsli@ &sli, @Tv@ &v, Long_I j)
 {
 	sli.set(v.ptr() + v.lda() * j, v.n1());
 }
+//% elseif is_Mat(Tv)
+inline void slice1(@Tsli@_c &sli, @Tv@_I v, Long_I j)
+{
+	sli.set(v.ptr() + j, v.n1(), v.n2());
+}
+
+inline void slice1(@Tsli@ &sli, @Tv@ &v, Long_I j)
+{
+	sli.set(v.ptr() + j, v.n1(), v.n2());
+}
 //% else
 //%     error('not implemented!');
 //% end
@@ -103,7 +112,7 @@ inline void slice1(@Tsli@ &sli, @Tv@ &v, Long_I j)
 
 //% types = {
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'ScmatDoub'; 'ScmatComp';
+//%     'ScmatDoub'; 'ScmatComp'; 'MatInt';
 //% };
 //%----------------------------
 //% Tv = varargin{:};
@@ -128,6 +137,16 @@ inline void slice2(@Tsli@_c &sli, @Tv@_I v, Long_I i)
 inline void slice2(@Tsli@ &sli, @Tv@ &v, Long_I i)
 {
 	sli.set(v.ptr() + i, v.n2(), v.lda());
+}
+//% elseif is_Mat(Tv)
+inline void slice2(@Tsli@_c &sli, @Tv@_I v, Long_I i)
+{
+	sli.set(v.ptr() + i*v.n2(), v.n2());
+}
+
+inline void slice2(@Tsli@ &sli, @Tv@ &v, Long_I i)
+{
+	sli.set(v.ptr() + i*v.n2(), v.n2());
 }
 //% else
 //%     error('not implemented!');
