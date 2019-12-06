@@ -377,6 +377,61 @@ inline void imag(@T@_O v, @T1@_I v1)
 }
 //%--------------------
 
+//% types = {
+//%     'Int'; 'Llong'; 'Doub'; 'Fcomp'; 'Comp'; 'Lcomp';
+//% };
+//%---------------------
+//% T = varargin{:}; Tr = rm_comp(T);
+inline void abs_v(@T@ *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+//%---------------------
+
+//% types = {
+//%     'Llong', 'Llong'; 
+//%     'Doub', 'Doub'; 
+//%     'Doub', 'Comp';
+//%     'Comp', 'Comp';
+//% };
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v1[i]); 
+}
+//%---------------------
+
+//% types = {
+//%     'VecDoub'; 'VecComp';
+//% };
+//%---------------------
+//% T = varargin{:};
+inline void abs(@T@_IO v)
+{
+    abs_v(v.ptr(), v.size());
+}
+//%---------------------
+
+//% types = {
+//%     'VecDoub', 'VecDoub';
+//%     'VecDoub', 'VecComp';
+//%     'VecComp', 'VecComp';
+//% };
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void abs(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    abs_vv(v.ptr(), v1.ptr(), v1.size());
+}
+//%--------------------
+
 //% types = {'Bool'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%--------------------
 //% T = varargin{:};

@@ -686,6 +686,108 @@ inline void imag(VecComp_O v, VecComp_I v1)
 }
 
 
+
+inline void abs_v(Int *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+
+inline void abs_v(Llong *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+
+inline void abs_v(Doub *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+
+inline void abs_v(Fcomp *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+
+inline void abs_v(Comp *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+
+inline void abs_v(Lcomp *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+
+
+inline void abs_vv(Llong *v, const Llong *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v1[i]); 
+}
+
+inline void abs_vv(Doub *v, const Doub *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v1[i]); 
+}
+
+inline void abs_vv(Doub *v, const Comp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v1[i]); 
+}
+
+inline void abs_vv(Comp *v, const Comp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v1[i]); 
+}
+
+
+inline void abs(VecDoub_IO v)
+{
+    abs_v(v.ptr(), v.size());
+}
+
+inline void abs(VecComp_IO v)
+{
+    abs_v(v.ptr(), v.size());
+}
+
+
+inline void abs(VecDoub_O v, VecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    abs_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+inline void abs(VecDoub_O v, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    abs_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+inline void abs(VecComp_O v, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    abs_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+
 inline Bool sum_v(const Bool *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
