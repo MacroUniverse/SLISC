@@ -502,6 +502,11 @@ inline void matcpy_diff_major(Comp *a2, const Comp *a1, Long_I N2, Long_I lda2, 
 
 
 // scalar to container
+inline void copy(VecInt_O v, Int_I s)
+{
+    vecset(v.ptr(), s, v.size());
+}
+
 inline void copy(VecLlong_O v, Llong_I s)
 {
     vecset(v.ptr(), s, v.size());

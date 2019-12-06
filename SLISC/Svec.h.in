@@ -46,7 +46,7 @@ public:
     @CT@ *m_p;
     Long m_N;
     @Class@();
-    @Class@(Long_I N);
+    explicit @Class@(Long_I N);
     @Class@(@CT@ *ptr, Long_I N);
 	@CT@* ptr() const;
     Long size() const;

@@ -8,7 +8,7 @@ public:
     const Char *m_p;
     Long m_N;
     SvecChar_c();
-    SvecChar_c(Long_I N);
+    explicit SvecChar_c(Long_I N);
     SvecChar_c(const Char *ptr, Long_I N);
 	const Char* ptr() const;
     Long size() const;
@@ -127,7 +127,7 @@ public:
     Char *m_p;
     Long m_N;
     SvecChar();
-    SvecChar(Long_I N);
+    explicit SvecChar(Long_I N);
     SvecChar(Char *ptr, Long_I N);
 	Char* ptr() const;
     Long size() const;
@@ -251,7 +251,7 @@ public:
     const Int *m_p;
     Long m_N;
     SvecInt_c();
-    SvecInt_c(Long_I N);
+    explicit SvecInt_c(Long_I N);
     SvecInt_c(const Int *ptr, Long_I N);
 	const Int* ptr() const;
     Long size() const;
@@ -370,7 +370,7 @@ public:
     Int *m_p;
     Long m_N;
     SvecInt();
-    SvecInt(Long_I N);
+    explicit SvecInt(Long_I N);
     SvecInt(Int *ptr, Long_I N);
 	Int* ptr() const;
     Long size() const;
@@ -494,7 +494,7 @@ public:
     const Llong *m_p;
     Long m_N;
     SvecLlong_c();
-    SvecLlong_c(Long_I N);
+    explicit SvecLlong_c(Long_I N);
     SvecLlong_c(const Llong *ptr, Long_I N);
 	const Llong* ptr() const;
     Long size() const;
@@ -613,7 +613,7 @@ public:
     Llong *m_p;
     Long m_N;
     SvecLlong();
-    SvecLlong(Long_I N);
+    explicit SvecLlong(Long_I N);
     SvecLlong(Llong *ptr, Long_I N);
 	Llong* ptr() const;
     Long size() const;
@@ -753,7 +753,7 @@ public:
     const Doub *m_p;
     Long m_N;
     SvecDoub_c();
-    SvecDoub_c(Long_I N);
+    explicit SvecDoub_c(Long_I N);
     SvecDoub_c(const Doub *ptr, Long_I N);
 	const Doub* ptr() const;
     Long size() const;
@@ -872,7 +872,7 @@ public:
     Doub *m_p;
     Long m_N;
     SvecDoub();
-    SvecDoub(Long_I N);
+    explicit SvecDoub(Long_I N);
     SvecDoub(Doub *ptr, Long_I N);
 	Doub* ptr() const;
     Long size() const;
@@ -996,7 +996,7 @@ public:
     const Comp *m_p;
     Long m_N;
     SvecComp_c();
-    SvecComp_c(Long_I N);
+    explicit SvecComp_c(Long_I N);
     SvecComp_c(const Comp *ptr, Long_I N);
 	const Comp* ptr() const;
     Long size() const;
@@ -1115,7 +1115,7 @@ public:
     Comp *m_p;
     Long m_N;
     SvecComp();
-    SvecComp(Long_I N);
+    explicit SvecComp(Long_I N);
     SvecComp(Comp *ptr, Long_I N);
 	Comp* ptr() const;
     Long size() const;

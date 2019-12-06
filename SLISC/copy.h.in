@@ -139,6 +139,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 
 // scalar to container
 //% types = {
+//%     'VecInt', 'Int';
 //%     'VecLlong', 'Llong';
 //%     'VecDoub', 'Doub';
 //%     'VecComp', 'Comp';

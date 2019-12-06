@@ -1111,7 +1111,7 @@ inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] * s;
+        v[i] = v1[i] / s;
 }
 //%-------------------------
 
