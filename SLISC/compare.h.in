@@ -58,8 +58,10 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'DvecLlong';
 //%     'VecDoub', 'DvecDoub';
+//%     'VecLlong', 'VecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
+//%     'VecDoub', 'VecChar';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecDoub';
 //%     'VecDoub', 'VecComp';
@@ -79,6 +81,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmatDoub', 'MatDoub';
 //%     'MatComp', 'CmatComp';
 //%     'CmatComp', 'MatComp';
+//%     'DcmatInt', 'CmatInt';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'Cmat3Comp', 'Cmat3Comp';
@@ -88,6 +91,10 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmatComp', 'McooComp';
 //%     'McooComp', 'CmatComp';
 //%     'McooComp', 'McooComp';
+//%     'SvecDoub', 'SvecDoub';
+//%     'SvecComp', 'SvecComp';
+//%     'DvecInt', 'DvecInt';
+//%     'DvecDoub', 'DvecDoub';
 //% };
 //%---------------------------------
 //% [T1, T2] = varargin{:};
@@ -126,11 +133,14 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2)
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
 //%     'MatComp', 'MatComp';
+//%     'CmatInt', 'CmatInt';
 //%     'CmatDoub', 'CmatDoub';
 //%     'CmatComp', 'CmatComp';
 //%     'CmatComp', 'MatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
+//%     'DvecInt', 'DvecInt';
+//%     'DvecDoub', 'DvecDoub';
 //%     };
 //%--------------------------
 //% [T1, T2] = varargin{:};

@@ -13,6 +13,7 @@ namespace slisc {
 //%     'DvecDoub'; 'DvecComp';
 //%     'CmatDoub'; 'CmatComp';
 //%     'ScmatDoub'; 'ScmatComp';
+//%     'DcmatInt'; 'CmatInt';
 //% };
 //%----------------------------
 //% Tv = varargin{:};

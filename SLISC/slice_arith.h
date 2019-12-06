@@ -127,6 +127,36 @@ inline void slice(DcmatComp &sli, ScmatComp_IO v,
     sli.set(&v(start1, start2), N1, N2, v.n1());
 }
 
+inline void slice(DcmatInt &sli, DcmatInt_IO v,
+    Long_I start1, Long_I N1, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start1 < 0 || start1 + N1 > v.n1() ||
+			start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    sli.set(&v(start1, start2), N1, N2, v.lda());
+}
+
+inline void slice(DcmatInt &sli, CmatInt_IO v,
+    Long_I start1, Long_I N1, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start1 < 0 || start1 + N1 > v.n1() ||
+			start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    sli.set(&v(start1, start2), N1, N2, v.n1());
+}
+inline void slice(ScmatInt &sli, CmatInt_IO v, Long_I start2, Long_I N2)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start2 < 0 || start2 + N2 > v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	sli.set(v.ptr() + v.n1()*start2, v.n1(), N2);
+}
+
 
 inline void slice1(SvecInt_c &sli, CmatInt_I v, Long_I j)
 {

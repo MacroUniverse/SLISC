@@ -177,7 +177,7 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 
 //% types = {
 //%     'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub'; 'VecComp';
-//%     'MatComp'; 'CmatComp';
+//%     'MatComp'; 'CmatDoub'; 'CmatComp'; 'DvecComp'; 'SvecComp';
 //% };
 //%------------------------------
 //% T = varargin{:}; Tr = rm_comp(contain_type(T));
@@ -514,7 +514,7 @@ inline @Tr@ norm(@T@_I v)
 }
 //%-------------------------
 
-//% types = {'VecDoub'; 'CmatDoub';};
+//% types = {'VecDoub'; 'CmatInt'; 'CmatDoub';};
 //%--------------------------------
 //% Tv = varargin{:};
 //% T = contain_type(Tv);
@@ -565,7 +565,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
 //% end
 //%-------------------------
 
-//% types = {'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%-----------------------
 //% T = varargin{:};
 inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
@@ -582,7 +582,7 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 }
 //%-------------------------
 
-//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
+//% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
 //%     'MatComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //% };
 //%---------------------------------
@@ -715,6 +715,7 @@ inline void trans(@T@_IO v)
 //%	    'CmatDoub' 'CmatDoub';
 //%	    'MatComp' 'CmatComp';
 //%	    'CmatComp' 'CmatComp';
+//%	    'CmatComp' 'MatComp';
 //%	    'DcmatLlong' 'DcmatLlong';
 //%	    'DcmatDoub' 'DcmatDoub';
 //%	    'DcmatComp' 'DcmatComp';
@@ -759,7 +760,7 @@ inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%-------------------------------
 
 //% types = {
-//%	    'CmatComp'; 'MatComp'; 'DcmatComp';
+//%	    'VecComp'; 'CmatComp'; 'MatComp'; 'DcmatComp';
 //% };
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
@@ -815,6 +816,7 @@ inline void her(@T@_IO v)
 
 //% types = {
 //%	    'MatComp' 'CmatComp';
+//%	    'CmatComp' 'MatComp';
 //%	    'CmatComp' 'CmatComp';
 //%	    'DcmatComp' 'DcmatComp';
 //% };
@@ -898,6 +900,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'CmatInt', 'Int';
 //%     'CmatDoub', 'Doub';
 //%     'CmatComp', 'Comp';
+//%     'SvecDoub', 'Doub';
 //%     };
 //%-------------------
 //% [T, Ts] = varargin{:};
@@ -984,11 +987,12 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'CmatComp', 'CmatComp';
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'Cmat3Comp', 'Cmat3Comp';
+//%     'SvecDoub', 'SvecDoub';
+//%     'SvecComp', 'SvecComp';
 //%     };
 //%-------------------
 //% [T, T1] = varargin{:};
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
-// v += v
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -998,7 +1002,6 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
     plus_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
-// v -= v
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -1008,7 +1011,6 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
     minus_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
-// v *= v
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -1018,7 +1020,6 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
     times_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
-// v /= v
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -1417,6 +1418,7 @@ inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 //%     'Float', 'Float';
 //%     'Doub', 'Int';
 //%     'Doub', 'Llong';
+//%     'Doub', 'Char';
 //%     'Doub', 'Doub';
 //%     'Comp', 'Int';
 //%     'Comp', 'Llong';
@@ -1449,7 +1451,9 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 
 //% types = {
 //%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecChar';
 //%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecDoub';
 //%     'VecComp', 'VecComp';
 //% };
 //%---------------------
@@ -1467,16 +1471,56 @@ inline @T@ dot(@T1@_I v1, @T2@_I v2)
 //% end
 //%-------------------------
 
+//% types = {
+//%     'Int', 'Int';
+//%     'Llong', 'Int';
+//%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
+//% };
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    v[0] = v1[0];
+    for (Long i = 1; i < N; ++i)
+        v[i] = v[i - 1] + v1[i];
+}
+//%-------------------------
+
+//% types = {
+//%     'VecInt', 'VecInt';
+//%     'VecLlong', 'VecInt';
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecDoub';
+//% };
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void cumsum(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("illegal shape!");
+#endif
+        cumsum_vv(v.ptr(), v1.ptr(), v1.size());
+}
+//%-------------------------
+
 //% types = {'VecDoub', 'CmatDoub', 'VecDoub';
 //%   %  'VecLcomp', 'MatComp', 'VecInt';
-//%   %  'VecInt', 'CmatInt', 'VecInt';
+//%     'VecInt', 'CmatInt', 'VecInt';
 //%     'VecComp', 'CmatComp', 'VecComp';
 //%     'VecComp', 'CmatDoub', 'VecComp';
-//%   %  'DvecComp', 'DcmatDoub', 'DvecComp';
+//%     'DvecComp', 'DcmatDoub', 'DvecComp';
+//%     'VecComp', 'MatComp', 'VecDoub';
 //%     'VecComp', 'MatComp', 'VecComp';
 //%   %  'VecComp', 'CmatImag', 'VecComp';
 //%   %  'VecComp', 'MatDoub', 'VecComp';
 //%   %  'SvecComp', 'MatDoub', 'VecComp';
+//%     'SvecComp', 'DcmatComp', 'SvecComp';
+//%     'SvecComp', 'DcmatDoub', 'SvecComp';
 //%     };
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
@@ -1503,8 +1547,38 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%-------------------------
 
 //% types = {
+//%     'VecDoub', 'VecDoub', 'MatDoub';
+//%     'VecComp', 'VecDoub', 'MatComp';
+//%     'VecComp', 'VecComp', 'MatComp';
+//% };
+//%-------------------------------
+//% [T,T1,T2] = varargin{:};
+//% Ts = contain_type(T); Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
+//%     error('illegal type!');
+//% end
+//% if ndim(T) ~= 1 || ndim(T1) ~= 1 || ndim(T2) ~= 2
+//%     error('illegal dim!');
+//% end
+inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
+{
+    Long Nr_a = a.n1(), Nc_a = a.n2();
+#ifdef SLS_CHECK_SHAPE
+    if (x.size() != a.n1() || y.size() != Nc_a)
+        SLS_ERR("illegal shape!");
+#endif
+    vecset(y.ptr(), 0, Nc_a);
+    for (Long j = 0; j < Nc_a; ++j) {
+        for (Long i = 0; i < Nr_a; ++i)
+            y[j] += x[i] * a(i, j);
+    }
+}
+//%-----------------------------
+
+//% types = {
 //%     'CmatDoub', 'CmatDoub', 'CmatDoub';
 //%     'CmatComp', 'CmatComp', 'CmatComp';
+//%     'CmatComp', 'CmatComp', 'MatComp';
 //% };
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
@@ -1532,6 +1606,8 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% types = {
 //%     'VecDoub', 'CmatDoub', 'VecDoub';
 //%     'VecComp', 'CmatDoub', 'VecComp';
+//%     'DvecComp', 'DcmatDoub', 'DvecComp';
+//%     'SvecComp', 'DcmatDoub', 'SvecComp';
 //%     };
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -1652,4 +1728,38 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 #endif
 }
 //%--------------------------------
+
+// get all unique rows from a matrix
+//% types = {
+//%     'CmatInt', 'CmatInt';
+//%     'CmatDoub', 'CmatDoub';
+//% };
+//%--------------------
+//% [T, T1] = varargin{:};
+//% Tsli = slice2_type(T);
+//% Tsli1 = slice2_type(T1);
+inline void uniq_rows(@T@_O a, @T1@_I a1)
+{
+    Long k = 0;
+	@Tsli@ sli;
+    @Tsli1@_c sli1, sli2;
+    a.resize(a1.n1(), a1.n2());
+    for (Long i = 0; i < a1.n1(); ++i) {
+        // check repeat
+        Bool repeat = false;
+        slice2(sli1, a1, i);
+        for (Long j = 0; j < k; ++j) {
+			slice2(sli2, a, j);
+            if (sli2 == sli1) {
+                repeat = true; break;
+            }
+        }
+        if (repeat)
+            continue;
+        slice2(sli, a, k); copy(sli, sli1);
+        ++k;
+    }
+    resize_cpy(a, k, a1.n2());
+}
+//%---------------------------
 } // namespace slisc

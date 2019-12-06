@@ -479,9 +479,9 @@ void test_arithmetics()
         conj(v);
         if (v != v1) SLS_ERR("failed!");
         linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
-        Vector<Lcomp> v2(v.size());
-        conj(v2, v);
-        if (v2 != v1) SLS_ERR("failed!");
+        // VecLcomp v2(v.size());
+        // conj(v2, v);
+        // if (v2 != v1) SLS_ERR("failed!");
     }
 
     // s = dot(v, v)
@@ -506,8 +506,8 @@ void test_arithmetics()
     // matrix-vector multiplication (row-major)
     {
         MatComp a(4,7); linspace(a, Comp(1, -1), Comp(28, -28));
-        VecInt v(7); linspace(v, 1, 7);
-        Vector<Lcomp> v1(4), v2(a.n1());
+        VecDoub v(7); linspace(v, 1, 7);
+        VecComp v1(4), v2(a.n1());
         v1[0] = Comp(140, -140); v1[1] = Comp(336, -336);
         v1[2] = Comp(532, -532); v1[3] = Comp(728, -728);
         mul(v2, a, v);
@@ -521,7 +521,7 @@ void test_arithmetics()
         linspace(a, 1, 12);
         VecInt x(4), y(3);
         linspace(x, 1, 4);
-        y = 1;
+        copy(y, 1);
         mul(y, a, x);
         if (y[0] != 70 || y[1] != 80 || y[2] != 90)
             SLS_ERR("failed!");
@@ -537,10 +537,10 @@ void test_arithmetics()
         if (max_abs(y1) > 1e-13)
             SLS_ERR("failed!");
 
-        DvecComp sli_x, sli_y, sli_y1;
-        slice_vec(sli_x, x, 1, 5, 2);
-        slice_vec(sli_y, y, 1, 6, 2);
-        slice_vec(sli_y1, y1, 1, 6, 2);
+        SvecComp sli_x, sli_y, sli_y1;
+        slice(sli_x, x, 1, 5);
+        slice(sli_y, y, 1, 6);
+        slice(sli_y1, y1, 1, 6);
         DcmatDoub sli_a;
         slice(sli_a, a, 2, 6, 2, 5);
         mul(sli_y, sli_a, sli_x);
@@ -553,8 +553,8 @@ void test_arithmetics()
     // vector-matrix multiplication
     {
         MatComp a(7,4); linspace(a, Comp(1, -1), Comp(28, -28));
-        VecChar v(7); linspace(v, 1, 7);
-        Vector<Lcomp> v1(4), v2(a.n2());
+        VecDoub v(7); linspace(v, 1, 7);
+        VecComp v1(4), v2(a.n2());
         v1[0] = Comp(476, -476); v1[1] = Comp(504, -504);
         v1[2] = Comp(532, -532); v1[3] = Comp(560, -560);
         mul(v2, v, a);
@@ -564,7 +564,7 @@ void test_arithmetics()
     // matrix-matrix multiplication
     {
         MatComp a(7,4); linspace(a, Comp(1, -1), Comp(28, -28));
-        FixCmat<Comp, 4, 7> b; her(b, a);
+        CmatComp b(4, 7); her(b, a);
         CmatComp c(b.n1(), a.n2());
         mul(c, b, a);
         if (c(0, 0) != 3262 || c(0, 2) != 3626 || c(1, 1) != 3640 || c(1, 3) != 4032 ||

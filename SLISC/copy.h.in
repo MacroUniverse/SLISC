@@ -75,6 +75,7 @@ inline void veccpy(@T@ *v, Long_I step, const @T1@ *v1, Long_I step1, Long_I n)
 //%------------------------
 
 //% types = {
+//%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
 //%     'Comp', 'Comp';
@@ -195,6 +196,9 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'CmatComp', 'CmatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
+//%     'DvecInt', 'DvecInt';
+//%     'DvecDoub', 'DvecDoub';
+//%     'DcmatInt', 'CmatInt';
 //%     'DcmatDoub', 'CmatDoub';
 //%     };
 //%---------------------------
