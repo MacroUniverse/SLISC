@@ -76,6 +76,14 @@ inline Bool equals_to_vv(const Doub *v1, const Doub *v2, Long_I N)
     return true;
 }
 
+inline Bool equals_to_vv(const Doub *v1, const Comp *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v1[i] != v2[i])
+            return false;
+    return true;
+}
+
 inline Bool equals_to_vv(const Comp *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -369,6 +377,17 @@ inline Bool operator==(VecDoub_I v1, VecDoub_I v2)
 }
 
 inline Bool operator!=(VecDoub_I v1, VecDoub_I v2)
+{
+    return !(v1 == v2);
+}
+
+inline Bool operator==(VecDoub_I v1, VecComp_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+
+inline Bool operator!=(VecDoub_I v1, VecComp_I v2)
 {
     return !(v1 == v2);
 }
