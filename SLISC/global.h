@@ -176,7 +176,6 @@ struct turn_on_floating_exceptions {
 
 const Doub PI = 3.14159265358979323;
 const Doub E = 2.71828182845904524;
-const Comp I(0, 1); 
 
 // report error and pause execution
 void pause(Doub_I t);

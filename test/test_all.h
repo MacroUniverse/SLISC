@@ -2,6 +2,8 @@
 // TODO: test mparith.h not finished
 #pragma once
 #include <iostream>
+void test_Imag();
+void test_complex_arith();
 void test_Vbase();
 void test_Vec();
 void test_Mat();
@@ -16,7 +18,6 @@ void test_dense();
 void test_slice_arith();
 void test_copy();
 void test_compare();
-void test_complex_arith();
 void test_arithmetics();
 void test_disp();
 void test_random();
@@ -34,6 +35,8 @@ void test_gsl();
 void test_all()
 {
 	using std::cout; using std::endl;
+	cout << "test_imag()" << endl;
+	test_Imag();
 	cout << "test_complex_arith()" << endl;
 	test_complex_arith();
 	cout << "test_Vbase()" << endl;

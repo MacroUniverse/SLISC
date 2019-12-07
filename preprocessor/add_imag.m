@@ -1,12 +1,12 @@
-function ret = add_comp(T)
-if is_comp(T)
+function ret = add_imag(T)
+if is_imag(T)
     ret = T;
 elseif is_Float(T)
-    ret = 'Fcomp';
+    ret = 'Fimag';
 elseif is_Doub(T)
-    ret = 'Comp';
+    ret = 'Imag';
 elseif is_Ldoub(T)
-    ret = 'Lcomp';
+    ret = 'Limag';
 else
     error('not implemented');
 end 
