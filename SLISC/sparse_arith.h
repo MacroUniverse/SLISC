@@ -21,6 +21,14 @@ inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, con
     }
 }
 
+inline void mul_cmat_cmat_diag(Comp *c, const Doub *a, Long_I Nr, Long_I Nc, const Comp *b)
+{
+    for (Long i = 0; i < Nc; ++i) {
+        times_vvs(c, a, b[i], Nr);
+        c += Nr; a += Nr;
+    }
+}
+
 inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, const Comp *b)
 {
     for (Long i = 0; i < Nc; ++i) {
@@ -140,6 +148,17 @@ inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 }
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1())
+		SLS_ERR("illegal shape!");
+    if (y.n1() != a.n1() || y.n2() != x.n2())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+}
+
+inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())

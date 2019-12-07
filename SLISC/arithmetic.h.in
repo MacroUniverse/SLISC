@@ -1579,6 +1579,7 @@ inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 
 //% types = {
 //%     'CmatDoub', 'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp', 'CmatDoub';
 //%     'CmatComp', 'CmatComp', 'CmatComp';
 //%     'CmatComp', 'CmatComp', 'MatComp';
 //% };
@@ -1605,6 +1606,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% end
 //%-------------------------
 
+// matrix-vector multiplication
 //% types = {
 //%     'VecDoub', 'CmatDoub', 'VecDoub';
 //%     'VecComp', 'CmatDoub', 'VecComp';
@@ -1731,6 +1733,36 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 }
 //%--------------------------------
 
+//% types = {
+//%     'CmatDoub', 'CmatDoub', 'CmatDoub';
+//%     'CmatComp', 'CmatComp', 'CmatDoub';
+//%     'CmatComp', 'CmatComp', 'CmatComp';
+//%     };
+//%--------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1() || y.n1() != a.n1() || y.n2() != x.n2())
+        SLS_ERR("illegal shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+//% if is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), 1, (Doub*)a.ptr(), a.n1(), (Doub*)x.ptr(), a.n2(), 0, (Doub*)y.ptr(), a.n1());
+//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
+        Comp alpha(1,0), beta(0,0);
+        cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), &alpha, a.ptr(), a.n1(), x.ptr(), a.n2(), &beta, y.ptr(), a.n1());
+//% else
+        SLS_WARN("not implemented with cBLAS, using slow version");
+		mul(y, a, x);
+//% end
+#else
+    mul(y, a, x);
+#endif
+}
+//%--------------------------------
+
 // get all unique rows from a matrix
 //% types = {
 //%     'CmatInt', 'CmatInt';
@@ -1764,4 +1796,55 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
     resize_cpy(a, k, a1.n2());
 }
 //%---------------------------
+
+//% types = {'Doub'; 'Comp';};
+//%-------------------
+//% T = varargin{:};
+inline void exp_v(@T@ *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = exp(v[i]);
+}
+//%-----------------
+
+//% types = {
+//%     'Doub', 'Doub';
+//%     'Comp', 'Comp';
+//% };
+//%-------------------
+//% [T, T1] = varargin{:};
+inline void exp_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = exp(v1[i]);
+}
+//%--------------------
+
+//% types = {
+//%     'VecDoub'; 'VecComp';
+//% };
+//%-------------------
+//% T = varargin{:};
+inline void exp(@T@_IO v)
+{
+    exp_v(v.ptr(), v.size());
+}
+//%--------------------
+
+//% types = {
+//%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//% };
+//%-------------------
+//% [T, T1] = varargin{:};
+inline void exp(@T@_O v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    exp_vv(v.ptr(), v1.ptr(), v1.size());
+}
+//%-------------------
+
 } // namespace slisc

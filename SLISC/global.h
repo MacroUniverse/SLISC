@@ -181,7 +181,7 @@ const Comp I(0, 1);
 // report error and pause execution
 void pause(Doub_I t);
 #ifndef SLS_ERR
-#define SLS_ERR(str) do{cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl; throw("SLS_ERR");} while(0)
+#define SLS_ERR(str) do{cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl; abort();} while(0)
 #endif
 
 #define SLS_WARN(str) do{cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl;} while(0)

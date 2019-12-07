@@ -4923,6 +4923,22 @@ inline void mul(CmatDoub_O y, CmatDoub_I a, CmatDoub_I x)
     }
 }
 
+inline void mul(CmatComp_O y, CmatComp_I a, CmatDoub_I x)
+{
+    Long Nr_a = a.n1(), Nc_a = a.n2(), Nc_x = x.n2();
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1() || y.n1() != Nr_a || y.n2() != Nc_x)
+        SLS_ERR("illegal shape!");
+#endif
+    vecset(y.ptr(), 0, Nr_a*Nc_x);
+    for (Long i = 0; i < Nr_a; ++i) {
+        for (Long j = 0; j < Nc_x; ++j) {
+            for (Long k = 0; k < Nc_a; ++k)
+                y(i, j) += a(i, k) * x(k, j);
+        }
+    }
+}
+
 inline void mul(CmatComp_O y, CmatComp_I a, CmatComp_I x)
 {
     Long Nr_a = a.n1(), Nc_a = a.n2(), Nc_x = x.n2();
@@ -4956,6 +4972,7 @@ inline void mul(CmatComp_O y, CmatComp_I a, MatComp_I x)
 }
 
 
+// matrix-vector multiplication
 inline void mul_gen(VecDoub_O &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -5094,6 +5111,48 @@ inline void mul_sym(VecComp_O &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, D
 }
 
 
+inline void mul_gen(CmatDoub_O y, CmatDoub_I a, CmatDoub_I &x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1() || y.n1() != a.n1() || y.n2() != x.n2())
+        SLS_ERR("illegal shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), 1, (Doub*)a.ptr(), a.n1(), (Doub*)x.ptr(), a.n2(), 0, (Doub*)y.ptr(), a.n1());
+#else
+    mul(y, a, x);
+#endif
+}
+
+inline void mul_gen(CmatComp_O y, CmatComp_I a, CmatDoub_I &x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1() || y.n1() != a.n1() || y.n2() != x.n2())
+        SLS_ERR("illegal shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+        SLS_WARN("not implemented with cBLAS, using slow version");
+		mul(y, a, x);
+#else
+    mul(y, a, x);
+#endif
+}
+
+inline void mul_gen(CmatComp_O y, CmatComp_I a, CmatComp_I &x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n2() != x.n1() || y.n1() != a.n1() || y.n2() != x.n2())
+        SLS_ERR("illegal shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+        Comp alpha(1,0), beta(0,0);
+        cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), &alpha, a.ptr(), a.n1(), x.ptr(), a.n2(), &beta, y.ptr(), a.n1());
+#else
+    mul(y, a, x);
+#endif
+}
+
+
 // get all unique rows from a matrix
 inline void uniq_rows(CmatInt_O a, CmatInt_I a1)
 {
@@ -5142,5 +5201,62 @@ inline void uniq_rows(CmatDoub_O a, CmatDoub_I a1)
     }
     resize_cpy(a, k, a1.n2());
 }
+
+
+inline void exp_v(Doub *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = exp(v[i]);
+}
+
+inline void exp_v(Comp *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = exp(v[i]);
+}
+
+
+inline void exp_vv(Doub *v, const Doub *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = exp(v1[i]);
+}
+
+inline void exp_vv(Comp *v, const Comp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = exp(v1[i]);
+}
+
+
+inline void exp(VecDoub_IO v)
+{
+    exp_v(v.ptr(), v.size());
+}
+
+inline void exp(VecComp_IO v)
+{
+    exp_v(v.ptr(), v.size());
+}
+
+
+inline void exp(VecDoub_O v, VecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    exp_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+inline void exp(VecComp_O v, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    exp_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
 
 } // namespace slisc

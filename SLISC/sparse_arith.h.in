@@ -8,6 +8,7 @@ namespace slisc {
 //% types = {
 //%	    'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Comp', 'Doub';
+//%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
 //% };
 //%------------------------------
@@ -104,6 +105,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%	    'CmatDoub', 'CmatDoub', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagComp';
+//%     'CmatComp', 'CmatDoub', 'DiagComp';
 //%	    'CmatDoub', 'DiagDoub', 'CmatDoub';
 //%     'CmatComp', 'DiagComp', 'CmatComp';
 //%     'CmatComp', 'DiagDoub', 'CmatComp';
