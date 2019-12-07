@@ -1024,6 +1024,28 @@ inline Doub norm(DcmatComp_I v)
 }
 
 
+inline void resize_cpy(VecInt_IO v, Long_I N)
+{
+    Long N0 = v.size();
+    if (N != N0) {
+        if (N0 == 0) {
+            v.resize(N); copy(v, 0);
+        }
+        else if (N == 0)
+            v.resize(0);
+        else {
+            VecInt v1(N);
+            if (N > N0) {
+                veccpy(v1.ptr(), v.ptr(), N0);
+                vecset(v1.ptr() + N0, 0, N - N0);
+            }
+            else // N < N0
+                veccpy(v1.ptr(), v.ptr(), N);
+            v << v1;
+        }
+    }
+}
+
 inline void resize_cpy(VecDoub_IO v, Long_I N)
 {
     Long N0 = v.size();
@@ -1059,9 +1081,8 @@ inline void resize_cpy(CmatInt_IO v, Long_I N1, Long_I N2)
         else {
             CmatInt v1(N1, N2); copy(v1, 0);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            DcmatInt sli; slice(sli, v, 0, N1min, 0, N2min);
-			DcmatInt sli1; slice(sli1, v1, 0, N1min, 0, N2min);
-            copy(sli1, sli);
+            copy(slice(v1, 0, N1min, 0, N2min),
+				slice(v, 0, N1min, 0, N2min));
 			v << v1;
         }
     }
@@ -1080,9 +1101,28 @@ inline void resize_cpy(CmatDoub_IO v, Long_I N1, Long_I N2)
         else {
             CmatDoub v1(N1, N2); copy(v1, 0);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            DcmatDoub sli; slice(sli, v, 0, N1min, 0, N2min);
-			DcmatDoub sli1; slice(sli1, v1, 0, N1min, 0, N2min);
-            copy(sli1, sli);
+            copy(slice(v1, 0, N1min, 0, N2min),
+				slice(v, 0, N1min, 0, N2min));
+			v << v1;
+        }
+    }
+}
+
+inline void resize_cpy(Cmat3Doub_IO v, Long_I N1, Long_I N2, Long_I N3)
+{
+    Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
+    Long N = N1 * N2 * N3;
+    if (N1 != N10 || N2 != N20 || N3 != N30) {
+        if (N0 == 0) {
+            v.resize(N1, N2, N3); copy(v, 0);
+        }
+        else if (N == 0)
+            v.resize(0, 0, 0);
+        else {
+            Cmat3Doub v1(N1, N2, N3); copy(v1, 0);
+            Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
+            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
+				slice(v, 0, N1min, 0, N2min, 0, N3min));
 			v << v1;
         }
     }
@@ -1180,7 +1220,32 @@ inline void linspace(CmatComp_O v, Comp_I first, Comp_I last)
     linspace_vss(v.ptr(), first, last, v.size());
 }
 
+inline void linspace(Cmat3Int_O v, Int_I first, Int_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
+inline void linspace(Cmat3Doub_O v, Doub_I first, Doub_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
+inline void linspace(Cmat3Comp_O v, Comp_I first, Comp_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
 inline void linspace(Cmat4Int_O v, Int_I first, Int_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
+inline void linspace(Cmat4Doub_O v, Doub_I first, Doub_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
+inline void linspace(Cmat4Comp_O v, Comp_I first, Comp_I last)
 {
     linspace_vss(v.ptr(), first, last, v.size());
 }
@@ -5162,22 +5227,19 @@ inline void mul_gen(CmatComp_O y, CmatComp_I a, CmatComp_I &x)
 inline void uniq_rows(CmatInt_O a, CmatInt_I a1)
 {
     Long k = 0;
-	DvecInt sli;
-    DvecInt_c sli1, sli2;
     a.resize(a1.n1(), a1.n2());
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        slice2(sli1, a1, i);
+        DvecInt_c sli1 = slice2(a1, i);
         for (Long j = 0; j < k; ++j) {
-			slice2(sli2, a, j);
-            if (sli2 == sli1) {
+            if (slice2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        slice2(sli, a, k); copy(sli, sli1);
+        copy(slice2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());
@@ -5186,22 +5248,19 @@ inline void uniq_rows(CmatInt_O a, CmatInt_I a1)
 inline void uniq_rows(CmatDoub_O a, CmatDoub_I a1)
 {
     Long k = 0;
-	DvecDoub sli;
-    DvecDoub_c sli1, sli2;
     a.resize(a1.n1(), a1.n2());
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        slice2(sli1, a1, i);
+        DvecDoub_c sli1 = slice2(a1, i);
         for (Long j = 0; j < k; ++j) {
-			slice2(sli2, a, j);
-            if (sli2 == sli1) {
+            if (slice2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        slice2(sli, a, k); copy(sli, sli1);
+        copy(slice2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());

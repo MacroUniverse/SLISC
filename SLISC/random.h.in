@@ -81,6 +81,7 @@ namespace slisc
 //%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
 //%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //% };
 //%--------------------------------

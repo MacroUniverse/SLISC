@@ -12,6 +12,7 @@ void test_Mcoo();
 void test_Svec();
 void test_Dvec();
 void test_Scmat();
+void test_dense();
 void test_slice_arith();
 void test_copy();
 void test_compare();
@@ -54,6 +55,8 @@ void test_all()
 	test_Dvec();
 	cout << "test_Scmat()" << endl;
 	test_Scmat();
+	cout << "test_dense()" << endl;
+	test_dense();
 	cout << "test_slice_arith()" << endl;
 	test_slice_arith();
 	cout << "test_copy()" << endl;

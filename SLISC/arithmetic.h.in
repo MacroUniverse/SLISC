@@ -514,7 +514,7 @@ inline @Tr@ norm(@T@_I v)
 }
 //%-------------------------
 
-//% types = {'VecDoub'; 'CmatInt'; 'CmatDoub';};
+//% types = {'VecInt'; 'VecDoub'; 'CmatInt'; 'CmatDoub'; 'Cmat3Doub';};
 //%--------------------------------
 //% Tv = varargin{:};
 //% T = contain_type(Tv);
@@ -540,7 +540,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N)
         }
     }
 }
-//% elseif is_Cmat(Tv)
+//% elseif is_Cmat(Tv) || is_Mat(Tv)
 //%     Tsli = slice_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
 {
@@ -555,9 +555,28 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
         else {
             @Tv@ v1(N1, N2); copy(v1, 0);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            @Tsli@ sli; slice(sli, v, 0, N1min, 0, N2min);
-			@Tsli@ sli1; slice(sli1, v1, 0, N1min, 0, N2min);
-            copy(sli1, sli);
+            copy(slice(v1, 0, N1min, 0, N2min),
+				slice(v, 0, N1min, 0, N2min));
+			v << v1;
+        }
+    }
+}
+//% elseif is_Cmat3(Tv) || is_Mat3(Tv)
+inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3)
+{
+    Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
+    Long N = N1 * N2 * N3;
+    if (N1 != N10 || N2 != N20 || N3 != N30) {
+        if (N0 == 0) {
+            v.resize(N1, N2, N3); copy(v, 0);
+        }
+        else if (N == 0)
+            v.resize(0, 0, 0);
+        else {
+            @Tv@ v1(N1, N2, N3); copy(v1, 0);
+            Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
+            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
+				slice(v, 0, N1min, 0, N2min, 0, N3min));
 			v << v1;
         }
     }
@@ -586,7 +605,7 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 
 //% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
 //%     'MatComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'Cmat4Int';
+//%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Comp';
 //% };
 //%---------------------------------
 //% Tv = varargin{:};
@@ -1771,27 +1790,23 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 //% };
 //%--------------------
 //% [T, T1] = varargin{:};
-//% Tsli = slice2_type(T);
 //% Tsli1 = slice2_type(T1);
 inline void uniq_rows(@T@_O a, @T1@_I a1)
 {
     Long k = 0;
-	@Tsli@ sli;
-    @Tsli1@_c sli1, sli2;
     a.resize(a1.n1(), a1.n2());
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        slice2(sli1, a1, i);
+        @Tsli1@_c sli1 = slice2(a1, i);
         for (Long j = 0; j < k; ++j) {
-			slice2(sli2, a, j);
-            if (sli2 == sli1) {
+            if (slice2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        slice2(sli, a, k); copy(sli, sli1);
+        copy(slice2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());

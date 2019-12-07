@@ -80,16 +80,14 @@ void test_arithmetics()
         linspace(a, 1, 12);
         VecInt vc(3), vr(4);
         for (Long i = 0; i < 3; ++i) {
-			DvecInt sli; slice2(sli, a, i);
-            copy(vr, sli);
+            copy(vr, slice2(a, i));
             for (Long j = 0; j < 4; ++j) {
                 if (vr[j] != a(i, j))
                     SLS_ERR("failed!");
             }
         }
         for (Long j = 0; j < 4; ++j) {
-			SvecInt sli; slice1(sli, a, j);
-            copy(vc, sli);
+            copy(vc, slice1(a, j));
             for (Long i = 0; i < 3; ++i) {
                 if (vc[i] != a(i, j))
                     SLS_ERR("failed!");
@@ -102,16 +100,14 @@ void test_arithmetics()
         linspace(a, 1, 12);
         VecInt vc(3), vr(4);
         for (Long i = 0; i < 3; ++i) {
-			SvecInt sli; slice2(sli, a, i);
-            copy(vr, sli);
+            copy(vr, slice2(a, i));
             for (Long j = 0; j < 4; ++j) {
                 if (vr[j] != a(i, j))
                     SLS_ERR("failed!");
             }
         }
         for (Long j = 0; j < 4; ++j) {
-			DvecInt sli; slice1(sli, a, j);
-            copy(vc, sli);
+            copy(vc, slice1(a, j));
             for (Long i = 0; i < 3; ++i) {
                 if (vc[i] != a(i, j))
                     SLS_ERR("failed!");
@@ -176,8 +172,7 @@ void test_arithmetics()
         if (sum(e) != Comp(45., -45.)) SLS_ERR("failed!");
         if (max_abs(e) != abs(Comp(9, 9))) SLS_ERR("failed!");
         if (norm2(e) != 285. * 2) SLS_ERR("failed!");
-		DcmatComp sli; slice(sli, e, 0, 2, 0, 2);
-        if (norm2(sli) != 46. * 2)
+        if (norm2(slice(e, 0, 2, 0, 2)) != 46. * 2)
             SLS_ERR("failed!");;
     }
     // sum_abs
@@ -539,11 +534,10 @@ void test_arithmetics()
             SLS_ERR("failed!");
 
         SvecComp sli_x, sli_y, sli_y1;
-        slice(sli_x, x, 1, 5);
-        slice(sli_y, y, 1, 6);
-        slice(sli_y1, y1, 1, 6);
-        DcmatDoub sli_a;
-        slice(sli_a, a, 2, 6, 2, 5);
+        sli_x = slice(x, 1, 5);
+        sli_y = slice(y, 1, 6);
+        sli_y1 = slice(y1, 1, 6);
+        DcmatDoub sli_a = slice(a, 2, 6, 2, 5);
         mul(sli_y, sli_a, sli_x);
         mul_gen(sli_y1, sli_a, sli_x);
         sli_y1 -= sli_y;

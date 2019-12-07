@@ -160,6 +160,27 @@ inline void rand(CmatComp_O &v)
 		v[i] = randComp();
 }
 
+inline void rand(Cmat3Llong_O v, Long_I N)
+{
+	Long i, Nv = v.size();
+	for (i = 0; i < Nv; ++i)
+		v[i] = randLong(N);
+}
+
+inline void rand(Cmat3Doub_O &v)
+{
+	Long i, N = v.size();
+	for (i = 0; i < N; ++i)
+		v[i] = randDoub();
+}
+
+inline void rand(Cmat3Comp_O &v)
+{
+	Long i, N = v.size();
+	for (i = 0; i < N; ++i)
+		v[i] = randComp();
+}
+
 inline void rand(ScmatLlong_O v, Long_I N)
 {
 	Long i, Nv = v.size();

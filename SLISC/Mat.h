@@ -230,6 +230,7 @@ typedef MatInt MatLong;
 #else
 typedef MatLlong MatLong;
 #endif
+
 typedef const MatLong & MatLong_I;
 typedef MatLong & MatLong_O, & MatLong_IO;
 

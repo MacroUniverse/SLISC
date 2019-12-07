@@ -148,9 +148,11 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //%     'SvecComp', 'Comp';
 //%     'MatInt', 'Int';
 //%     'MatDoub', 'Doub';
+//%     'Mat3Doub', 'Doub';
 //%     'CmatInt', 'Int';
 //%     'CmatLlong', 'Llong';
 //%     'CmatDoub', 'Doub';
+//%     'Cmat3Doub', 'Doub';
 //%     'CmatComp', 'Comp';
 //%     };
 //%-------------------------------------
@@ -197,12 +199,14 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'CmatComp', 'CmatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
+//%     'Cmat3Doub', 'Cmat3Doub';
 //%     'DvecInt', 'DvecInt';
 //%     'DvecDoub', 'DvecDoub';
 //%     'DcmatInt', 'CmatInt';
 //%     'DcmatInt', 'DcmatInt';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'DcmatDoub', 'DcmatDoub';
+//%     'Jcmat3Doub', 'Jcmat3Doub';
 //%     };
 //%---------------------------
 //% [T, T1] = varargin{:};

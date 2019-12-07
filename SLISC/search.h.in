@@ -43,8 +43,7 @@ inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n1(); ++i) {
-		@Tsli@_c sli; slice2(sli, a, i);
-        if (v == sli)
+        if (v == slice2(a, i))
             return i;
     }
     return -1;
