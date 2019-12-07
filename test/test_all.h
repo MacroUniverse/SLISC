@@ -29,6 +29,7 @@ void test_file();
 void test_matt();
 void test_fedvr();
 void test_mat_fun();
+void test_gsl();
 
 void test_all()
 {
@@ -85,6 +86,8 @@ void test_all()
 	test_fedvr();
 	cout << "test_mat_fun()" << endl;
 	test_mat_fun();
+	cout << "test_gsl()" << endl;
+	test_gsl();
 	
 	cout << "do optional tests? (y/n)" << endl;
 	if (getchar() == 'y') {
