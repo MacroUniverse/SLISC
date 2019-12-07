@@ -141,8 +141,9 @@ inline @Tsli@_c slice(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I 
 //%------------------------
 
 //% types = {
+//%     'MatInt'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatDoub'; 'CmatComp';
-//%     'ScmatDoub'; 'ScmatComp'; 'MatInt';
+//%     'ScmatDoub'; 'ScmatComp';
 //% };
 //%----------------------------
 //% Tv = varargin{:};
@@ -215,7 +216,7 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
 
 //% types = {
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'ScmatDoub'; 'ScmatComp'; 'MatInt';
+//%     'ScmatDoub'; 'ScmatComp'; 'MatInt'; 'MatDoub'; 'MatComp';
 //% };
 //%----------------------------
 //% Tv = varargin{:};
