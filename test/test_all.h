@@ -31,6 +31,7 @@ void test_matt();
 void test_fedvr();
 void test_mat_fun();
 void test_gsl();
+void test_unicode();
 
 void test_all()
 {
@@ -91,6 +92,8 @@ void test_all()
 	test_mat_fun();
 	cout << "test_gsl()" << endl;
 	test_gsl();
+	cout << "test_unicode()" << endl;
+	test_unicode();
 	
 	cout << "do optional tests? (y/n)" << endl;
 	if (getchar() == 'y') {

@@ -142,9 +142,25 @@ typedef std::u32string Str32;
 typedef const Str32 &Str32_I;
 typedef Str32 &Str32_O, &Str32_IO;
 
+typedef vector<Llong> vecLlong;
+typedef const vecLlong &vecLlong_I;
+typedef vecLlong &vecLlong_O, &vecLlong_IO;
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef vecInt vecLong;
+#else
+typedef vecLlong vecLong;
+#endif
+typedef const vecLong &vecLong_I;
+typedef vecLong &vecLong_O, &vecLong_IO;
+
 typedef vector<Str> vecStr;
 typedef const vecStr &vecStr_I;
 typedef vecStr &vecStr_O, &vecStr_IO;
+
+typedef vector<Str32> vecStr32;
+typedef const vecStr32 &vecStr32_I;
+typedef vecStr32 &vecStr32_O, &vecStr32_IO;
 
 // quiet NaN definition
 // uncomment one of the following 3 methods of defining a global NaN

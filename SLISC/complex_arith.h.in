@@ -123,23 +123,26 @@ inline const @T@ operator/(@T1@_I s1, @T2@_I s2)
 {
 //% Tr1 = rm_comp(T1); Tr2 = rm_comp(T2);
 //% numr1 = type_num(Tr1); numr2 = type_num(Tr2);
-//% Tc1 = add_comp(Tr1); Tc2 = add_comp(Tr2);
-//% numc1 = type_num(Tc1); numc2 = type_num(Tc2);
+//% num1 = type_num(T1); num2 = type_num(T2);
 //% if is_real(T1)
 //%     if numr1 < numr2
     return (@Tr2@)s1 / s2;
 //%     elseif numr1 > numr2
+//%         Tc1 = add_comp(Tr1);
     return s1 / (@Tc1@)s2;
 //%     end
 //% elseif is_real(T2)
 //%     if numr1 < numr2
+//%         Tc2 = add_comp(Tr2);
     return (@Tc2@)s1 / s2;
 //%     elseif numr1 > numr2
     return s1 / (@Tr1@)s2;
 //%     end
-//% elseif numc1 > numc2
+//% elseif num1 > num2
+//%         Tc1 = add_comp(Tr1);
     return s1 / (@Tc1@)s2;
-//% elseif numc1 < numc2
+//% elseif num1 < num2
+//%     Tc2 = add_comp(Tr2);
     return (@Tc2@)s1 / s2;
 //% else
 //%     error('not implemented!');
