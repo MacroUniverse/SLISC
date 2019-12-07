@@ -3,7 +3,7 @@
 #include "Vbase.h"
 
 namespace slisc {
-//% types = {'Llong'; 'Doub'; 'Comp';};
+//% types = {'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%----------------------------------------
 //% T = varargin{:};
 //% Cmat4T = ['Cmat4' T];
@@ -32,7 +32,7 @@ public:
     Long n4() const;
 };
 
-@Cmat4T@::@Cmat4T@(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline @Cmat4T@::@Cmat4T@(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
 
 inline void @Cmat4T@::operator<<(@Cmat4T@ &rhs)

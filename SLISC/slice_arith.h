@@ -1,6 +1,9 @@
 #pragma once
 #include "Vec.h"
+#include "Mat.h"
 #include "Cmat.h"
+#include "Cmat3.h"
+#include "Cmat4.h"
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"
@@ -287,6 +290,55 @@ inline void slice2(SvecInt_c &sli, MatInt_I v, Long_I i)
 inline void slice2(SvecInt &sli, MatInt &v, Long_I i)
 {
 	sli.set(v.ptr() + i*v.n2(), v.n2());
+}
+
+
+inline void slice12(ScmatInt_c &sli, Cmat4Int_I v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatInt &sli, Cmat4Int &v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatLlong_c &sli, Cmat4Llong_I v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatLlong &sli, Cmat4Llong &v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatDoub_c &sli, Cmat4Doub_I v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatDoub &sli, Cmat4Doub &v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatComp_c &sli, Cmat4Comp_I v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+}
+
+inline void slice12(ScmatComp &sli, Cmat4Comp &v, Long_I k, Long_I l)
+{
+	Long N1N2 = v.n1() * v.n2();
+	sli.set(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
 }
 
 } // namespace slisc

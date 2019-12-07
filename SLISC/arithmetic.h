@@ -1180,6 +1180,11 @@ inline void linspace(CmatComp_O v, Comp_I first, Comp_I last)
     linspace_vss(v.ptr(), first, last, v.size());
 }
 
+inline void linspace(Cmat4Int_O v, Int_I first, Int_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
 
 inline void flip_v(Char *v, Long_I N)
 {

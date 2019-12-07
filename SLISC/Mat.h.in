@@ -85,8 +85,8 @@ inline void @MatT@::resize(Long_I Nr, Long_I Nc)
         m_Nr = Nr; m_Nc = Nc;
     }
 }
-
 //% end
+
 typedef const @MatT@ & @MatT@_I;
 typedef @MatT@ & @MatT@_O, & @MatT@_IO;
 //%------------------------

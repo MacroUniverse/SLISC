@@ -3,6 +3,89 @@
 #include "Vbase.h"
 
 namespace slisc {
+class Cmat4Int : public VbaseInt
+{
+private:
+    typedef VbaseInt Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_N1, m_N2, m_N3, m_N4;
+public:
+    typedef Int value_type;
+    using Base::operator();
+    using Base::ptr;
+    using Base::operator=;
+    Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Int(const Cmat4Int &rhs) = delete;   // Copy constructor
+    void operator<<(Cmat4Int &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Int & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Int & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n1() const;
+    Long n2() const;
+    Long n3() const;
+    Long n4() const;
+};
+
+inline Cmat4Int::Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+    : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
+
+inline void Cmat4Int::operator<<(Cmat4Int &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
+    rhs.m_N1 = rhs.m_N2 = rhs.m_N3 = 0;
+    Base::operator<<(rhs);
+}
+
+inline void Cmat4Int::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+{
+    if (N1 != m_N1 || N2 != m_N2 || N3 != m_N3 || N4 != m_N4) {
+        Base::resize(N1*N2*N3*N4);
+        m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
+    }
+}
+
+inline Int & Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
+        k < 0 || k >= m_N3 || l < 0 || l >= m_N4)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    Long N1N2 = m_N1 * m_N2;
+    return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
+}
+
+inline const Int & Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
+        k < 0 || k >= m_N3 || l < 0 || l >= m_N4)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    Long N1N2 = m_N1 * m_N2;
+    return m_p[i + m_N1 * j + N1N2 * k + N1N2 * m_N3*l];
+}
+
+inline Long Cmat4Int::n1() const {
+    return m_N1;
+}
+
+inline Long Cmat4Int::n2() const {
+    return m_N2;
+}
+
+inline Long Cmat4Int::n3() const {
+    return m_N3;
+}
+
+inline Long Cmat4Int::n4() const {
+    return m_N4;
+}
+
+typedef const Cmat4Int & Cmat4Int_I;
+typedef Cmat4Int & Cmat4Int_O, & Cmat4Int_IO;
+
 class Cmat4Llong : public VbaseLlong
 {
 private:
@@ -27,7 +110,7 @@ public:
     Long n4() const;
 };
 
-Cmat4Llong::Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline Cmat4Llong::Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
 
 inline void Cmat4Llong::operator<<(Cmat4Llong &rhs)
@@ -110,7 +193,7 @@ public:
     Long n4() const;
 };
 
-Cmat4Doub::Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline Cmat4Doub::Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
 
 inline void Cmat4Doub::operator<<(Cmat4Doub &rhs)
@@ -193,7 +276,7 @@ public:
     Long n4() const;
 };
 
-Cmat4Comp::Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline Cmat4Comp::Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
 
 inline void Cmat4Comp::operator<<(Cmat4Comp &rhs)

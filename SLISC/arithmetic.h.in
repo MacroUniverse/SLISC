@@ -586,6 +586,7 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 
 //% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
 //%     'MatComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat4Int';
 //% };
 //%---------------------------------
 //% Tv = varargin{:};
