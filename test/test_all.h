@@ -2,6 +2,7 @@
 // TODO: test mparith.h not finished
 #pragma once
 #include <iostream>
+void test_time();
 void test_Imag();
 void test_scalar_arith();
 void test_Vbase();
@@ -36,6 +37,8 @@ void test_unicode();
 void test_all()
 {
 	using std::cout; using std::endl;
+	cout << "test_time()" << endl;
+	test_time();
 	cout << "test_imag()" << endl;
 	test_Imag();
 	cout << "test_scalar_arith()" << endl;
