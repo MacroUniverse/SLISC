@@ -13,6 +13,15 @@ inline Bool isodd(@T@_I n)
 }
 //%------------------------
 
+//% types = {'Char'; 'Int'; 'Llong'};
+//%-------------------------------
+//% T = varargin{:};
+inline Bool ispow2(@T@_I n)
+{
+    return (n&(n-1)) == 0;
+}
+//%-----------------
+
 //% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%------------------------------
 //% T = varargin{:};

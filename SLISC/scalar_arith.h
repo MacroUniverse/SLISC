@@ -20,6 +20,22 @@ inline Bool isodd(Llong_I n)
 }
 
 
+inline Bool ispow2(Char_I n)
+{
+    return (n&(n-1)) == 0;
+}
+
+inline Bool ispow2(Int_I n)
+{
+    return (n&(n-1)) == 0;
+}
+
+inline Bool ispow2(Llong_I n)
+{
+    return (n&(n-1)) == 0;
+}
+
+
 inline Int to_num(Char_I x) { return (Int)x; }
 
 inline const Int to_num(Int_I x) { return x; }

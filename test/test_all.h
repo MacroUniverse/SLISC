@@ -3,7 +3,7 @@
 #pragma once
 #include <iostream>
 void test_Imag();
-void test_complex_arith();
+void test_scalar_arith();
 void test_Vbase();
 void test_Vec();
 void test_Mat();
@@ -37,8 +37,8 @@ void test_all()
 	using std::cout; using std::endl;
 	cout << "test_imag()" << endl;
 	test_Imag();
-	cout << "test_complex_arith()" << endl;
-	test_complex_arith();
+	cout << "test_scalar_arith()" << endl;
+	test_scalar_arith();
 	cout << "test_Vbase()" << endl;
 	test_Vbase();
 	cout << "test_Vec()" << endl;
