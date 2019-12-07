@@ -98,4 +98,8 @@ inline Doub factorial(Int_I n) {
     return factorial_imp(n);
 }
 
+inline Float sinc(Float_I x) { return x == 0.f ? 1.f : sin(x) / x; }
+
+inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
+
 } // namespace slisc

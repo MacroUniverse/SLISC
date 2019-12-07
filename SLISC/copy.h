@@ -547,6 +547,11 @@ inline void copy(MatDoub_O v, Doub_I s)
     vecset(v.ptr(), s, v.size());
 }
 
+inline void copy(MatComp_O v, Comp_I s)
+{
+    vecset(v.ptr(), s, v.size());
+}
+
 inline void copy(Mat3Doub_O v, Doub_I s)
 {
     vecset(v.ptr(), s, v.size());

@@ -148,6 +148,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //%     'SvecComp', 'Comp';
 //%     'MatInt', 'Int';
 //%     'MatDoub', 'Doub';
+//%     'MatComp', 'Comp';
 //%     'Mat3Doub', 'Doub';
 //%     'CmatInt', 'Int';
 //%     'CmatLlong', 'Llong';

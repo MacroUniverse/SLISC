@@ -84,6 +84,16 @@ Comp fft_interp(Doub_I x1, VecDoub_I x, VecComp_I y);
 
 void fft_interp(VecComp_O y1, VecDoub_I x1, VecDoub_I x, VecComp_I y);
 
+inline void fftshift(VecInt_IO v)
+{
+    Long n = v.size();
+    if (isodd(n))
+		SLS_ERR("fftshift only supports even columns!");
+    Long halfn = n / 2;
+    for (Long i = 0; i < halfn; ++i)
+		swap(v[i], v[i + halfn]);
+}
+
 inline void fftshift(VecDoub_IO v)
 {
     Long n = v.size();
@@ -493,7 +503,7 @@ inline void fft_interp(VecComp_O y1, VecDoub_I x1, VecDoub_I x, VecComp_I y)
 {
     Doub dx{ (x.end() - x[0]) / (x.size() - 1.) }, a{ PI / dx };
     Long i, j, N{ y.size() }, N1{ x1.size() };
-    y1.resize(x1);
+    y1.resize(x1.size());
     for (j = 0; j < N1; ++j)
         for (i = 0; i < N; ++i)
             y1[j] += y[i] * sinc(a*(x1[j] - x[i]));
@@ -635,7 +645,7 @@ inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub 
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pxi;
     Comp *pyj, factor, expo, dexpo;
-    Y.resize(Nk, Nc); Y = 0.;
+    Y.resize(Nk, Nc); copy(Y, 0);
     for (j = 0; j < Nk; ++j) {
         pyj = Y.ptr() + Nc*j;
         expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
@@ -654,7 +664,7 @@ inline void dft_par(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, D
 {
     Long j, Nx = X.n1(), Nc = X.n2();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
-    Y.resize(Nk, Nc); Y = 0.;
+    Y.resize(Nk, Nc); copy(Y, 0);
 #pragma omp parallel for
     for (j = 0; j < Nk; ++j) {
         Long i, k;
@@ -678,7 +688,7 @@ inline void idft(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pyi;
     Comp *pxj, factor, expo, dexpo;
-    X.resize(Nx, Nc); X = 0.;
+    X.resize(Nx, Nc); copy(X, 0);
     for (j = 0; j < Nx; ++j) {
         pxj = X.ptr() + Nc*j;
         expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
@@ -696,7 +706,7 @@ inline void idft_par(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, 
 {
     Long j, Nk = Y.n1(), Nc = Y.n2();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
-    X.resize(Nx, Nc); X = 0.;
+    X.resize(Nx, Nc); copy(X, 0);
 #pragma omp parallel for
     for (j = 0; j < Nx; ++j) {
         Long i, k;
