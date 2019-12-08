@@ -2,6 +2,7 @@
 #include "arithmetic.h"
 #include "Diag.h"
 #include "Mcoo.h"
+#include "Cmobd.h"
 #include "sort.h"
 
 namespace slisc {
@@ -103,6 +104,155 @@ inline void mul_v_cooh_v(Comp *y, const Comp *x, const Comp *a_ij, const Long *i
             y[c] += conj(a_ij[k]) * x[r];
         }
     }
+}
+
+
+inline void mul_v_cmatobd_v(Int *y, const Int *x, const Int *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        Int s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < blk_size; ++j) {
+			Int s = x[j];
+			for (Long i = 0; i < blk_size; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        Int s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+
+inline void mul_v_cmatobd_v(Doub *y, const Doub *x, const Doub *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        Doub s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < blk_size; ++j) {
+			Doub s = x[j];
+			for (Long i = 0; i < blk_size; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        Doub s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+
+inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Comp *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        Comp s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < blk_size; ++j) {
+			Comp s = x[j];
+			for (Long i = 0; i < blk_size; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        Comp s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+
+
+inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (y.size() != a.n1() || x.size() != a.n2())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+}
+
+inline void mul(VecDoub_O y, CmobdDoub_I a, VecDoub_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (y.size() != a.n1() || x.size() != a.n2())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+}
+
+inline void mul(VecComp_O y, CmobdComp_I a, VecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (y.size() != a.n1() || x.size() != a.n2())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
 }
 
 
@@ -292,6 +442,68 @@ inline void sort_r(McooComp_IO a)
 inline void operator*=(McooDoub_IO v, Doub_I s)
 {
     times_equals_vs(v.ptr(), s, v.nnz());
+}
+
+
+// (using maximum absolute sum of columns)
+inline Int norm_inf(CmobdInt_I A)
+{
+    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
+    VecInt abs_sum(A.n2()); copy(abs_sum, 0);
+    Long k = 0;
+    SvecInt_c sli(A.ptr() + N0 + 1, N1);
+    // first block
+    for (Long j = 1; j < N0; ++j) {
+        abs_sum[k] += sum_abs(sli);
+        ++k; sli.shift(N0);
+    }
+    --k;
+    // middle blocks
+    sli.set_size(N0); sli.shift(-1);
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+        for (Long j = 0; j < N0; ++j) {
+            abs_sum[k] += sum_abs(sli);
+            ++k; sli.next();
+        }
+        --k;
+    }
+    // last block
+    sli.set_size(N1);
+    for (Long j = 0; j < N1; ++j) {
+        abs_sum[k] += sum_abs(sli);
+        ++k; sli.shift(N0);
+    }
+    return max(abs_sum);
+}
+
+inline Doub norm_inf(CmobdDoub_I A)
+{
+    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
+    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    Long k = 0;
+    SvecDoub_c sli(A.ptr() + N0 + 1, N1);
+    // first block
+    for (Long j = 1; j < N0; ++j) {
+        abs_sum[k] += sum_abs(sli);
+        ++k; sli.shift(N0);
+    }
+    --k;
+    // middle blocks
+    sli.set_size(N0); sli.shift(-1);
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+        for (Long j = 0; j < N0; ++j) {
+            abs_sum[k] += sum_abs(sli);
+            ++k; sli.next();
+        }
+        --k;
+    }
+    // last block
+    sli.set_size(N1);
+    for (Long j = 0; j < N1; ++j) {
+        abs_sum[k] += sum_abs(sli);
+        ++k; sli.shift(N0);
+    }
+    return max(abs_sum);
 }
 
 } // namespace slisc

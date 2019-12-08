@@ -289,7 +289,7 @@ inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
 //%------------------------
 
 //% types = {
-//%     'Cmat4Int'; 'Cmat4Llong'; 'Cmat4Doub'; 'Cmat4Comp';
+//%     'Cmat3Int'; 'Cmat4Int'; 'Cmat4Llong'; 'Cmat4Doub'; 'Cmat4Comp';
 //% };
 //%----------------------------
 //% Tv = varargin{:};

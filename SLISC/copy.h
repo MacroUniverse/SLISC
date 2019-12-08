@@ -500,7 +500,6 @@ inline void matcpy_diff_major(Comp *a2, const Comp *a1, Long_I N2, Long_I lda2, 
 // === container interface ===
 // must use pointer version
 
-
 // scalar to container
 inline void copy(VecInt_O v, Int_I s)
 {
@@ -568,6 +567,11 @@ inline void copy(CmatLlong_O v, Llong_I s)
 }
 
 inline void copy(CmatDoub_O v, Doub_I s)
+{
+    vecset(v.ptr(), s, v.size());
+}
+
+inline void copy(Cmat3Int_O v, Int_I s)
 {
     vecset(v.ptr(), s, v.size());
 }
@@ -749,6 +753,17 @@ inline void copy(CmatDoub_O v, MatDoub_I v1)
     matcpy_diff_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
 }
 
+inline void copy(Cmat3Int_O v, Cmat3Int_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
 inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -895,24 +910,6 @@ inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
     }
 }
 
-// inline void cooh2dense(CmatDoub_O lhs, McoohDoub_I rhs)
-// {
-// #ifdef SLS_CHECK_SHAPE
-//     if (!shape_cmp(lhs, rhs))
-//         SLS_ERR("wrong shape!");
-// #endif
-//     copy(lhs, 0);
-//     for (Long i = 0; i < rhs.nnz(); ++i) {
-//         Long r = rhs.row(i), c = rhs.col(i);
-//         if (r == c)
-//             lhs(r, r) = rhs(i);
-//         else {
-//             lhs(r, c) = rhs(i);
-//             lhs(c, r) = CONJ(rhs(i));
-//         }
-//     }
-// }
-
 inline void copy(CmatComp_O lhs, McooComp_I rhs)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -925,7 +922,102 @@ inline void copy(CmatComp_O lhs, McooComp_I rhs)
     }
 }
 
-// inline void cooh2dense(CmatComp_O lhs, McoohComp_I rhs)
+
+inline void copy(CmobdInt_O lhs, Cmat3Int_I rhs)
+{
+	copy(lhs.cmat3(), rhs);
+	Long step = sqr(lhs.n0());
+    vecset(lhs.ptr() + step - 1, 0, lhs.nblk() - 1, step);
+}
+
+inline void copy(CmobdDoub_O lhs, Cmat3Doub_I rhs)
+{
+	copy(lhs.cmat3(), rhs);
+	Long step = sqr(lhs.n0());
+    vecset(lhs.ptr() + step - 1, 0, lhs.nblk() - 1, step);
+}
+
+
+inline void copy(CmobdInt_O lhs, McooInt_I rhs)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+	auto & c3 = lhs.cmat3();
+    copy(c3, 0);
+    for (Long k = 0; k < rhs.nnz(); ++k) {
+        Long i = rhs.row(k) + 1, j = rhs.col(k) + 1;
+        Long N = lhs.n0() - 1, Nblk = lhs.nblk();
+        Long iblk = i / N, jblk = j / N;
+        Long m = i % N;
+        if (iblk == jblk) {
+            if (iblk == Nblk)
+                c3(N, N, Nblk - 1) = rhs[k];
+            else if (i == j && m == 0 && iblk > 0)
+                c3(0, 0, iblk) = rhs[k];
+            else
+                c3(m, j % N, iblk) = rhs[k];
+            continue;
+        }
+        else if (jblk == iblk - 1) {
+            if (m == 0) {
+                c3(N, j % N, jblk) = rhs[k];
+                continue;
+            }
+        }
+        else if (jblk == iblk + 1) {
+            Long n = j % N;
+            if (n == 0) {
+                c3(m, N, iblk) = rhs[k];
+                continue;
+            }
+        }
+        SLS_ERR("element out of block!");
+    }
+}
+
+inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+	auto & c3 = lhs.cmat3();
+    copy(c3, 0);
+    for (Long k = 0; k < rhs.nnz(); ++k) {
+        Long i = rhs.row(k) + 1, j = rhs.col(k) + 1;
+        Long N = lhs.n0() - 1, Nblk = lhs.nblk();
+        Long iblk = i / N, jblk = j / N;
+        Long m = i % N;
+        if (iblk == jblk) {
+            if (iblk == Nblk)
+                c3(N, N, Nblk - 1) = rhs[k];
+            else if (i == j && m == 0 && iblk > 0)
+                c3(0, 0, iblk) = rhs[k];
+            else
+                c3(m, j % N, iblk) = rhs[k];
+            continue;
+        }
+        else if (jblk == iblk - 1) {
+            if (m == 0) {
+                c3(N, j % N, jblk) = rhs[k];
+                continue;
+            }
+        }
+        else if (jblk == iblk + 1) {
+            Long n = j % N;
+            if (n == 0) {
+                c3(m, N, iblk) = rhs[k];
+                continue;
+            }
+        }
+        SLS_ERR("element out of block!");
+    }
+}
+
+
+// inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
 // #ifdef SLS_CHECK_SHAPE
 //     if (!shape_cmp(lhs, rhs))
@@ -942,7 +1034,6 @@ inline void copy(CmatComp_O lhs, McooComp_I rhs)
 //         }
 //     }
 // }
-
 
 // from MatCoo and MatCooH to dense matrix
 // #include "matrix_coo2dense.inl"

@@ -45,7 +45,7 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 //%---------------------------
 
 //% types = {
-//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'SvecInt'; 'SvecDoub';
 //% };
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
@@ -605,7 +605,7 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 
 //% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
 //%     'MatComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Comp';
+//%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Comp'; 'ScmatInt';
 //% };
 //%---------------------------------
 //% Tv = varargin{:};

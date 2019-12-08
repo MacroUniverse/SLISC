@@ -2,6 +2,7 @@
 #include "arithmetic.h"
 #include "Diag.h"
 #include "Mcoo.h"
+#include "Cmobd.h"
 #include "sort.h"
 
 namespace slisc {
@@ -78,6 +79,74 @@ inline void mul_v_cooh_v(@Ty@ *y, const @Tx@ *x, const @T@ *a_ij, const Long *i,
     }
 }
 //%------------------------
+
+//% types = {
+//%     'Int', 'Int', 'Int';
+//%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Comp', 'Comp';
+//% };
+//%-------------------------------
+//% [Ty,T,Tx] = varargin{:};
+//% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
+//%     error('illegal types!');
+//% end
+inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        @Tx@ s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < blk_size; ++j) {
+			@Tx@ s = x[j];
+			for (Long i = 0; i < blk_size; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        @Tx@ s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+//%-----------------------
+
+//% types = {
+//%     'VecInt', 'CmobdInt', 'VecInt';
+//%     'VecDoub', 'CmobdDoub', 'VecDoub';
+//%     'VecComp', 'CmobdComp', 'VecComp';
+//% };
+//%------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (y.size() != a.n1() || x.size() != a.n2())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+}
+//%------------------------------
 
 //% types = {
 //%     'VecDoub', 'McooDoub', 'VecDoub';
@@ -163,4 +232,41 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
     times_equals_vs(v.ptr(), s, v.nnz());
 }
 //%------------------------
+
+// (using maximum absolute sum of columns)
+//% types = {'CmobdInt'; 'CmobdDoub';};
+//%-----------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% Tr = rm_comp(Ts);
+//% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
+inline @Tr@ norm_inf(@T@_I A)
+{
+    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
+    @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
+    Long k = 0;
+    @SvecTs_c@ sli(A.ptr() + N0 + 1, N1);
+    // first block
+    for (Long j = 1; j < N0; ++j) {
+        abs_sum[k] += sum_abs(sli);
+        ++k; sli.shift(N0);
+    }
+    --k;
+    // middle blocks
+    sli.set_size(N0); sli.shift(-1);
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+        for (Long j = 0; j < N0; ++j) {
+            abs_sum[k] += sum_abs(sli);
+            ++k; sli.next();
+        }
+        --k;
+    }
+    // last block
+    sli.set_size(N1);
+    for (Long j = 0; j < N1; ++j) {
+        abs_sum[k] += sum_abs(sli);
+        ++k; sli.shift(N0);
+    }
+    return max(abs_sum);
+}
+//%---------------------
 } // namespace slisc

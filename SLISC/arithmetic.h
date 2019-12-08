@@ -106,6 +106,16 @@ inline Doub sum_abs(VecComp_I v)
     return sum_abs_v(v.ptr(), v.size());
 }
 
+inline Int sum_abs(SvecInt_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(SvecDoub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
 
 inline Int max_v(const Int *v, Long_I N)
 {
@@ -1261,6 +1271,11 @@ inline void linspace(Cmat4Doub_O v, Doub_I first, Doub_I last)
 }
 
 inline void linspace(Cmat4Comp_O v, Comp_I first, Comp_I last)
+{
+    linspace_vss(v.ptr(), first, last, v.size());
+}
+
+inline void linspace(ScmatInt_O v, Int_I first, Int_I last)
 {
     linspace_vss(v.ptr(), first, last, v.size());
 }

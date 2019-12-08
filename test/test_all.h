@@ -12,6 +12,7 @@ void test_Cmat();
 void test_Cmat3();
 void test_Cmat4();
 void test_Mcoo();
+void test_Cmobd();
 void test_Svec();
 void test_Dvec();
 void test_Scmat();
@@ -57,6 +58,8 @@ void test_all()
 	test_Cmat4();
 	cout << "test_Mcoo()" << endl;
 	test_Mcoo();
+	cout << "test_Cmobd()" << endl;
+	test_Cmobd();
 	cout << "test_Svec()" << endl;
 	test_Svec();
 	cout << "test_Dvec()" << endl;

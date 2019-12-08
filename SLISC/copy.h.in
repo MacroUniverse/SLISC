@@ -136,33 +136,17 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // === container interface ===
 // must use pointer version
 
-
 // scalar to container
 //% types = {
-//%     'VecInt', 'Int';
-//%     'VecLlong', 'Llong';
-//%     'VecDoub', 'Doub';
-//%     'VecComp', 'Comp';
-//%     'SvecLlong', 'Llong';
-//%     'SvecDoub', 'Doub';
-//%     'SvecComp', 'Comp';
-//%     'MatInt', 'Int';
-//%     'MatDoub', 'Doub';
-//%     'MatComp', 'Comp';
-//%     'Mat3Doub', 'Doub';
-//%     'CmatInt', 'Int';
-//%     'CmatLlong', 'Llong';
-//%     'CmatDoub', 'Doub';
-//%     'Cmat3Doub', 'Doub';
-//%     'CmatComp', 'Comp';
-//%     };
+//%     'VecInt'; 'VecLlong'; 'VecDoub';
+//%     'VecComp'; 'SvecLlong'; 'SvecDoub';
+//%     'SvecComp'; 'MatInt'; 'MatDoub';
+//%     'MatComp'; 'Mat3Doub'; 'CmatInt';
+//%     'CmatLlong'; 'CmatDoub'; 'Cmat3Int';
+//%     'Cmat3Doub'; 'CmatComp';
+//% };
 //%-------------------------------------
-//% [T, Ts] = varargin{:};
-//% if ~is_contain(T) || ~is_scalar(Ts)
-//%     error('illegal types!');
-//% elseif ~is_promo(contain_type(T), Ts)
-//%     error('not a promo!');
-//% end
+//% T = varargin{:}; Ts = contain_type(T);
 inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_dense(T)
@@ -200,6 +184,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'CmatComp', 'CmatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
+//%     'Cmat3Int', 'Cmat3Int';
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'DvecInt', 'DvecInt';
 //%     'DvecDoub', 'DvecDoub';
@@ -308,6 +293,67 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
         lhs(rhs.row(i), rhs.col(i)) = rhs[i];
     }
 }
+//%-------------------
+
+//% types = {
+//%     'CmobdInt', 'Cmat3Int';
+//%     'CmobdDoub', 'Cmat3Doub';
+//% };
+//%-----------------------
+//% [T, T1] = varargin{:};
+inline void copy(@T@_O lhs, @T1@_I rhs)
+{
+	copy(lhs.cmat3(), rhs);
+	Long step = sqr(lhs.n0());
+    vecset(lhs.ptr() + step - 1, 0, lhs.nblk() - 1, step);
+}
+//%--------------------
+
+//% types = {
+//%     'CmobdInt', 'McooInt';
+//%     'CmobdDoub', 'McooDoub';
+//% };
+//%-----------------------
+//% [T, T1] = varargin{:};
+inline void copy(@T@_O lhs, @T1@_I rhs)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+	auto & c3 = lhs.cmat3();
+    copy(c3, 0);
+    for (Long k = 0; k < rhs.nnz(); ++k) {
+        Long i = rhs.row(k) + 1, j = rhs.col(k) + 1;
+        Long N = lhs.n0() - 1, Nblk = lhs.nblk();
+        Long iblk = i / N, jblk = j / N;
+        Long m = i % N;
+        if (iblk == jblk) {
+            if (iblk == Nblk)
+                c3(N, N, Nblk - 1) = rhs[k];
+            else if (i == j && m == 0 && iblk > 0)
+                c3(0, 0, iblk) = rhs[k];
+            else
+                c3(m, j % N, iblk) = rhs[k];
+            continue;
+        }
+        else if (jblk == iblk - 1) {
+            if (m == 0) {
+                c3(N, j % N, jblk) = rhs[k];
+                continue;
+            }
+        }
+        else if (jblk == iblk + 1) {
+            Long n = j % N;
+            if (n == 0) {
+                c3(m, N, iblk) = rhs[k];
+                continue;
+            }
+        }
+        SLS_ERR("element out of block!");
+    }
+}
+//%--------------------
 
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
@@ -326,7 +372,6 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 //         }
 //     }
 // }
-//%------------------------
 
 // from MatCoo and MatCooH to dense matrix
 // #include "matrix_coo2dense.inl"

@@ -5,6 +5,7 @@
 #include "Cmat.h"
 #include "Cmat3.h"
 #include "Mcoo.h"
+#include "Cmobd.h"
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"
@@ -86,6 +87,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'DcmatInt', 'CmatInt';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'DcmatDoub', 'DcmatDoub';
+//%     'Cmat3Int', 'Cmat3Int';
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'Cmat3Comp', 'Cmat3Comp';
 //%     'Mat3Doub', 'Mat3Doub';
@@ -101,6 +103,8 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'DvecDoub', 'DvecDoub';
 //%     'Jcmat3Doub', 'Cmat3Doub';
 //%     'Jcmat3Doub', 'Jcmat3Doub';
+//%     'CmobdInt', 'McooInt';
+//%     'CmobdDoub', 'McooDoub';
 //% };
 //%---------------------------------
 //% [T1, T2] = varargin{:};
