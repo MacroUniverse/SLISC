@@ -196,10 +196,14 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'CmatDoub', 'MatDoub';
 //%     'Cmat3Int', 'Cmat3Int';
 //%     'Cmat3Doub', 'Cmat3Doub';
+//%     'Cmat3Comp', 'Cmat3Doub';
+//%     'Cmat3Comp', 'Cmat3Comp';
 //%     'DvecInt', 'DvecInt';
 //%     'DvecLlong', 'DvecLlong';
 //%     'DvecDoub', 'DvecDoub';
 //%     'VecComp', 'DvecComp';
+//%     'SvecComp', 'DvecComp';
+//%     'DvecComp', 'SvecComp';
 //%     'ScmatInt', 'ScmatInt';
 //%     'ScmatLlong', 'ScmatLlong';
 //%     'ScmatDoub', 'CmatDoub';
@@ -214,7 +218,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'DcmatComp', 'DcmatComp';
 //%     'Jcmat3Doub', 'Jcmat3Doub';
 //%     'Jcmat3Comp', 'Jcmat3Comp';
-//%     };
+//% };
 //%---------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(contain_type(T), contain_type(T1))
@@ -317,6 +321,19 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 //%-------------------
 
 //% types = {
+//%     'CmobdInt', 'CmobdInt';
+//%     'CmobdDoub', 'CmobdDoub';
+//%     'CmobdComp', 'CmobdDoub';
+//% };
+//%-----------------------
+//% [T, T1] = varargin{:};
+inline void copy(@T@_O lhs, @T1@_I rhs)
+{
+	copy(lhs.cmat3(), rhs.cmat3());
+}
+//%-------------------
+
+//% types = {
 //%     'CmobdInt', 'Cmat3Int';
 //%     'CmobdDoub', 'Cmat3Doub';
 //% };
@@ -389,7 +406,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //             lhs(r, r) = rhs(i);
 //         else {
 //             lhs(r, c) = rhs(i);
-//             lhs(c, r) = CONJ(rhs(i));
+//             lhs(c, r) = conj(rhs(i));
 //         }
 //     }
 // }

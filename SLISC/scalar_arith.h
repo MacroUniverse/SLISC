@@ -4,6 +4,38 @@
 
 namespace slisc {
 
+constexpr Char sign(Char_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+
+constexpr Int sign(Int_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+
+constexpr Llong sign(Llong_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+
+constexpr Float sign(Float_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+
+constexpr Doub sign(Doub_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+
+
+inline Char sign(Char_I a, Char_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+inline Int sign(Int_I a, Int_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+inline Llong sign(Llong_I a, Llong_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+inline Float sign(Float_I a, Float_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+inline Doub sign(Doub_I a, Doub_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+
 inline Bool isodd(Char_I n)
 {
     return n & 1;

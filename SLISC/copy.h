@@ -819,6 +819,28 @@ inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
     veccpy(v.ptr(), v1.ptr(), v.size());
 }
 
+inline void copy(Cmat3Comp_O v, Cmat3Doub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(Cmat3Comp_O v, Cmat3Comp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
 inline void copy(DvecInt_O v, DvecInt_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -861,6 +883,28 @@ inline void copy(VecComp_O v, DvecComp_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
+}
+
+inline void copy(SvecComp_O v, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
+}
+
+inline void copy(DvecComp_O v, SvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v.step(), v1.ptr(), v1.size());
 }
 
 inline void copy(ScmatInt_O v, ScmatInt_I v1)
@@ -1093,6 +1137,22 @@ inline void copy(CmatComp_O lhs, McooComp_I rhs)
 }
 
 
+inline void copy(CmobdInt_O lhs, CmobdInt_I rhs)
+{
+	copy(lhs.cmat3(), rhs.cmat3());
+}
+
+inline void copy(CmobdDoub_O lhs, CmobdDoub_I rhs)
+{
+	copy(lhs.cmat3(), rhs.cmat3());
+}
+
+inline void copy(CmobdComp_O lhs, CmobdDoub_I rhs)
+{
+	copy(lhs.cmat3(), rhs.cmat3());
+}
+
+
 inline void copy(CmobdInt_O lhs, Cmat3Int_I rhs)
 {
 	copy(lhs.cmat3(), rhs);
@@ -1200,7 +1260,7 @@ inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
 //             lhs(r, r) = rhs(i);
 //         else {
 //             lhs(r, c) = rhs(i);
-//             lhs(c, r) = CONJ(rhs(i));
+//             lhs(c, r) = conj(rhs(i));
 //         }
 //     }
 // }

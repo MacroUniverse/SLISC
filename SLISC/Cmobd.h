@@ -9,7 +9,7 @@ namespace slisc {
 
 Llong sqr(Long);
 
-void vecset(Int *, Int, Llong_I, Llong_I);
+void vecset(Int *, Int_I, Llong_I, Llong_I);
 
 class CmobdInt
 {
@@ -177,7 +177,7 @@ inline void CmobdInt::resize(Long_I blk_size, Long_I Nblk)
     vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
 }
 
-void vecset(Doub *, Doub, Llong_I, Llong_I);
+void vecset(Doub *, Doub_I, Llong_I, Llong_I);
 
 class CmobdDoub
 {
@@ -345,7 +345,7 @@ inline void CmobdDoub::resize(Long_I blk_size, Long_I Nblk)
     vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
 }
 
-void vecset(Comp *, Comp, Llong_I, Llong_I);
+void vecset(Comp *, Comp_I, Llong_I, Llong_I);
 
 class CmobdComp
 {

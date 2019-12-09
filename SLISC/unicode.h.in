@@ -120,7 +120,7 @@ inline Long get_line(Str32_O line, Str32_I str, Long_I start)
 {
     Long ind = str.find(U'\n', start);
     line = str.substr(start, ind - start);
-    if (ind < 0 || ind == Size(str) - 1)
+    if (ind < 0 || ind == size(str) - 1)
         return -1;
     return ind + 1;
 }
@@ -131,7 +131,7 @@ inline Long get_line(Str32_O line, Str32_I str, Long_I start)
 inline Long skip_line(Str32_I &str, Long_I start)
 {
     Long ind = str.find(U'\n', start);
-    if (ind < 0 || ind == Size(str) - 1)
+    if (ind < 0 || ind == size(str) - 1)
         return -1;
     return ind + 1;
 }
@@ -168,7 +168,7 @@ inline void write_file(Str32_I str32, Str32_I fname)
 inline void write_vec_str(vecStr32_I vec_str, Str32_I fname)
 {
     Str32 str;
-    for (Long i = 0; i < Size(vec_str); ++i) {
+    for (Long i = 0; i < size(vec_str); ++i) {
         str += vec_str[i] + U'\n';
     }
     write_file(str, fname);
@@ -245,7 +245,7 @@ inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start)
              imin = ind0; ikey = i;
          }
     }
-    if (imin == Size(str)) imin = -1;
+    if (imin == size(str)) imin = -1;
     return imin;
 }
 
@@ -393,7 +393,7 @@ inline Bool is_whole_word(Str32_I str, Long_I ind, Long_I count)
         return false;
     // check right
     ind0 += 1 + count;
-    if (ind0 < Size(str) && is_alphanum_(str[ind0]))
+    if (ind0 < size(str) && is_alphanum_(str[ind0]))
         return false;
     return true;
 }
@@ -436,7 +436,7 @@ inline Long replace(Str32_IO str, Str32_I key, Str32_I new_str)
 // TODO: replace this with basic_string::find_first_not_of
 inline Long NextNoSpace(Str32_O c, Str32_I str, Long start)
 {
-    for (Long i = start; i < Size(str); ++i) {
+    for (Long i = start; i < size(str); ++i) {
         c = str.at(i);
         if (c == U" ")
             continue;
@@ -498,7 +498,7 @@ inline Long str2int(Long_O num, Str32_I str, Long start)
         SLS_ERR("not a number!"); return -1;  // break point here
     }
     num = c - '0';
-    for (i = start + 1; i < Size(str); ++i) {
+    for (i = start + 1; i < size(str); ++i) {
         c = str.at(i);
         if (c >= '0' && c <= '9')
             num = 10 * num + (Long)(c - '0');
@@ -581,7 +581,7 @@ inline Long pair_brace(Str32_I str, Long ind, Char32_I type = U'{')
 
     Char32 c, c0 = ' ';
     Long Nleft = 1;
-    for (Long i = ind + 1; i < Size(str); i++)
+    for (Long i = ind + 1; i < size(str); i++)
     {
         c = str.at(i);
         if (c == left && c0 != '\\')
@@ -646,7 +646,7 @@ inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I k
     vecStr fnames8;
     fnames.resize(0);
     file_list_ext(fnames8, utf32to8(path), utf32to8(ext), keep_ext);
-    for (Long i = 0; i < Size(fnames8); ++i)
+    for (Long i = 0; i < size(fnames8); ++i)
         fnames.push_back(utf8to32(fnames8[i]));
 }
 

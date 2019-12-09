@@ -8,7 +8,7 @@ namespace slisc {
 // return -1 if not found
 inline Long search(Int_I elm, VecInt_I vec, Long start = 0)
 {
-    for (Long i = start; i < Size(vec); ++i) {
+    for (Long i = start; i < size(vec); ++i) {
         if (elm == vec[i])
             return i;
     }
@@ -17,7 +17,7 @@ inline Long search(Int_I elm, VecInt_I vec, Long start = 0)
 
 inline Long search(Llong_I elm, VecLong_I vec, Long start = 0)
 {
-    for (Long i = start; i < Size(vec); ++i) {
+    for (Long i = start; i < size(vec); ++i) {
         if (elm == vec[i])
             return i;
     }
@@ -26,7 +26,7 @@ inline Long search(Llong_I elm, VecLong_I vec, Long start = 0)
 
 inline Long search(Str_I elm, vecStr_I vec, Long start = 0)
 {
-    for (Long i = start; i < Size(vec); ++i) {
+    for (Long i = start; i < size(vec); ++i) {
         if (elm == vec[i])
             return i;
     }
@@ -95,8 +95,8 @@ inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
 // return -1 if no reapeat
 inline Long find_repeat(vecStr_I v)
 {
-    for (Long i = 0; i < Size(v); ++i) {
-        for (Long j = i + 1; j < Size(v); ++j) {
+    for (Long i = 0; i < size(v); ++i) {
+        for (Long j = i + 1; j < size(v); ++j) {
             if (v[i] == v[j])
                 return i;
         }

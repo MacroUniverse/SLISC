@@ -15,7 +15,7 @@ namespace slisc {
 //% [T, Tv] = varargin{:};
 inline Long search(@T@_I elm, @Tv@_I vec, Long start = 0)
 {
-    for (Long i = start; i < Size(vec); ++i) {
+    for (Long i = start; i < size(vec); ++i) {
         if (elm == vec[i])
             return i;
     }
@@ -59,8 +59,8 @@ inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
 //% T = varargin{:};
 inline Long find_repeat(@T@_I v)
 {
-    for (Long i = 0; i < Size(v); ++i) {
-        for (Long j = i + 1; j < Size(v); ++j) {
+    for (Long i = 0; i < size(v); ++i) {
+        for (Long j = i + 1; j < size(v); ++j) {
             if (v[i] == v[j])
                 return i;
         }

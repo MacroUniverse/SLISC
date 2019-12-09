@@ -4,6 +4,20 @@
 
 namespace slisc {
 
+//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub';};
+//%-------------------------------
+//% T = varargin{:};
+constexpr @T@ sign(@T@_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+//%-------------------------------
+
+//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub';};
+//%-------------------------------
+//% T = varargin{:};
+inline @T@ sign(@T@_I a, @T@_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+//%------------------------
+
 //% types = {'Char'; 'Int'; 'Llong'};
 //%-------------------------------
 //% T = varargin{:};

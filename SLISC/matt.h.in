@@ -265,14 +265,15 @@ inline Matt::~Matt()
 }
 
 // save() functions
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
-//%         'VecChar'; 'VecInt'; 'VecDoub'; 'VecComp';
-//%         'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
-//%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//%         'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
-//%         'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
+//% types = {
+//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
+//%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
 //% };
 //%---------------------
 //% T = varargin{:};
@@ -366,12 +367,6 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
     		for (i = 0; i < N1; ++i)
         		matt_write_scalar(a(i, j, k), fout);
 }
-//% elseif is_Str(T)
-inline void save(Str_I str, Str_I varname, Matt_IO matt)
-{
-    SvecChar_c sli; sli.set(str.data(), str.size());
-    save(sli, varname, matt);
-}
 //% else
 //%     disp(T);
 //%     error('not implemented!');
@@ -385,6 +380,12 @@ inline void save(@T@_I s, Str_I varname, Str_I matt_file)
     matt.close();
 }
 //%------------------------
+
+inline void save(Str_I str, Str_I varname, Matt_IO matt)
+{
+    SvecChar_c sli; sli.set(str.data(), str.size());
+    save(sli, varname, matt);
+}
 
 // read matt files
 // return 0 if successful, -1 if variable not found

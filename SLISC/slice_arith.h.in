@@ -142,7 +142,7 @@ inline @Tsli@_c slice(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I 
 
 //% types = {
 //%     'MatInt'; 'MatDoub'; 'MatComp';
-//%     'CmatInt'; 'CmatDoub'; 'CmatComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'ScmatDoub'; 'ScmatComp';
 //% };
@@ -227,6 +227,58 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I j, Long_I k)
         SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	return sli;
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%------------------------
+
+//% types = {
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//% };
+//%----------------------------
+//% Tv = varargin{:};
+//% Tsli = slice1_type(Tv);
+//% if is_Cmat(Tv)
+inline @Tsli@ slice1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	@Tsli@ sli(&v(i, j), N1);
+	return sli;
+}
+
+inline @Tsli@_c slice1(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	@Tsli@_c sli(&v(i, j), N1);
+	return sli;
+}
+//% elseif is_Cmat3(Tv)
+inline @Tsli@ slice1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
+        SLS_ERR("index out of bound!");
+#endif
+	@Tsli@ sli(&v(i, j, k), N1);
+	return sli;
+}
+
+inline @Tsli@_c slice1(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
+        SLS_ERR("index out of bound!");
+#endif
+	@Tsli@_c sli(&v(i, j, k), N1);
 	return sli;
 }
 //% else
@@ -456,6 +508,37 @@ inline @Tsli@_c slice12(@Tv@_I v, Long_I k, Long_I l)
 #endif
 	Long N1N2 = v.n1() * v.n2();
 	@Tsli@_c sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	return sli;
+}
+//% else
+//%     error('not implemented!');
+//% end
+//%------------------------
+
+//% types = {
+//%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp';
+//% };
+//%----------------------------
+//% T = varargin{:};
+//% Tsli = ['Scmat' contain_type(T)];
+//% if is_Cmat3(T)
+inline @Tsli@ slice12(@T@_IO v, Long_I j, Long_I N2, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j + N2 > v.n2() || k < 0 || k >= v.n3())
+        SLS_ERR("index out of bound!");
+#endif
+    @Tsli@ sli(&v(0, j, k), v.n1(), N2);
+	return sli;
+}
+
+inline @Tsli@_c slice12(@T@_I v, Long_I j, Long_I N2, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j + N2 > v.n2() || k < 0 || k >= v.n3())
+        SLS_ERR("index out of bound!");
+#endif
+    @Tsli@_c sli(&v(0, j, k), v.n1(), N2);
 	return sli;
 }
 //% else

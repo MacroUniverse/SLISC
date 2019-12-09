@@ -14,7 +14,7 @@ Llong sqr(Long);
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
 //% CmobdT = ['Cmobd' T];
-void vecset(@T@ *, @T@, Llong_I, Llong_I);
+void vecset(@T@ *, @T@_I, Llong_I, Llong_I);
 
 class @CmobdT@
 {

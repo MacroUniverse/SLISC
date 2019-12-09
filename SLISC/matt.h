@@ -474,6 +474,35 @@ inline void save(VecInt_I s, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
+inline void save(VecLlong_I v, Str_I varname, Matt_IO matt)
+{
+    ofstream &fout = matt.m_out;
+    if (!fout.is_open())
+        SLS_ERR("matt file not open!");
+    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    // write variable name info
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (Long i = 0; i < n; ++i) {
+        fout << to_num(varname.at(i)) << Matt::dlm;
+    }
+    // write data type info
+    fout << 3 << Matt::dlm;
+    // write dimension info
+    n = v.size();
+    fout << 1 << Matt::dlm << n << Matt::dlm;
+    // write matrix data
+    for (Long i = 0; i < n; ++i)
+		matt_write_scalar(v[i], fout);
+}
+
+inline void save(VecLlong_I s, Str_I varname, Str_I matt_file)
+{
+    Matt matt(matt_file, "w");
+    save(s, varname, matt);
+    matt.close();
+}
+
 inline void save(VecDoub_I v, Str_I varname, Matt_IO matt)
 {
     ofstream &fout = matt.m_out;
@@ -1265,6 +1294,12 @@ inline void save(DcmatComp_I s, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
+
+inline void save(Str_I str, Str_I varname, Matt_IO matt)
+{
+    SvecChar_c sli; sli.set(str.data(), str.size());
+    save(sli, varname, matt);
+}
 
 // read matt files
 // return 0 if successful, -1 if variable not found

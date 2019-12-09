@@ -8,7 +8,7 @@ namespace slisc {
 //% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'Str'; 'Str32'; 'vecStr'; 'vecStr32';};
 //%--------------------------
 //% T = varargin{:};
-inline Long Size(@T@_I v)
+inline Long size(@T@_I v)
 {
 	return v.size();
 }
@@ -45,7 +45,7 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 //%---------------------------
 
 //% types = {
-//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'SvecInt'; 'SvecDoub';
+//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'SvecInt'; 'SvecDoub'; 'SvecComp';
 //% };
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
@@ -101,7 +101,7 @@ inline @T@ max_v(const @T@ *v, Long_I N, Long_I step)
 //%-------------------------
 
 //% types = {
-//%     'VecInt'; 'VecLlong'; 'VecDoub';
+//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'SvecLlong';
 //% };
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
@@ -460,7 +460,7 @@ inline @T@ sum_v(const @T@ *v, Long_I N)
 //% end
 //%------------------------
 
-//% types = {'VecInt'; 'VecLlong'; 'VecDoub';
+//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'SvecDoub';
 //%     'MatComp'; 'CmatDoub'; 'CmatComp';};
 //%----------------
 //% T = varargin{:};
@@ -476,8 +476,8 @@ inline const @Tret@ sum(@T@_I v)
 //%-----------------
 
 //% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp';
-//%     'CmatDoub'; 'CmatComp'; 'ScmatDoub'; 'Cmat3Doub';
-//%     'Cmat3Comp'; 'DcmatComp';
+//%     'CmatDoub'; 'CmatComp'; 'Cmat3Doub';
+//%     'Cmat3Comp'; 'SvecComp'; 'DvecComp'; 'ScmatDoub'; 'DcmatComp';
 //% };
 //%-------------------------------
 //% T = varargin{:};
@@ -928,9 +928,10 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'SvecDoub', 'Doub';
 //%     'DvecComp', 'Doub';
 //%     'DvecComp', 'Comp';
+//%     'Cmat3Doub', 'Doub';
 //%     'Cmat3Comp', 'Doub';
 //%     'Cmat3Comp', 'Comp';
-//%     };
+//% };
 //%-------------------
 //% [T, Ts] = varargin{:};
 //% if is_dense(T) && is_scalar(Ts)
@@ -973,6 +974,7 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Doub', 'Doub';
+//%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
 //%     };
 //%-------------------
@@ -1020,7 +1022,12 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'SvecDoub', 'VecDoub';
 //%     'SvecDoub', 'SvecDoub';
 //%     'SvecComp', 'SvecComp';
-//%     };
+//%     'ScmatDoub', 'ScmatDoub';
+//%     'ScmatComp', 'CmatDoub';
+//%     'ScmatComp', 'ScmatDoub';
+//%     'ScmatComp', 'ScmatComp';
+//%     'DcmatComp', 'DcmatDoub';
+//% };
 //%-------------------
 //% [T, T1] = varargin{:};
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
@@ -1103,6 +1110,56 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
     for (Long i = 0; i < v.size(); ++i)
 		v[i] /= v1[i];
 }
+//% elseif ndim(T) == 2 && ndim(T1) == 2
+// v += v (slow!)
+inline void operator+=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	for (Long j = 0; j < v.n2(); ++j)
+		for (Long i = 0; i < v.n1(); ++i)
+			v(i, j) += v1(i, j);
+}
+
+// v -= v (slow!)
+inline void operator-=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	for (Long j = 0; j < v.n2(); ++j)
+		for (Long i = 0; i < v.n1(); ++i)
+			v(i, j) -= v1(i, j);
+}
+
+// v *= v (slow!)
+inline void operator*=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	for (Long j = 0; j < v.n2(); ++j)
+		for (Long i = 0; i < v.n1(); ++i)
+			v(i, j) *= v1(i, j);
+}
+
+// v /= v (slow!)
+inline void operator/=(@T@_O &v, @T1@_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	for (Long j = 0; j < v.n2(); ++j)
+		for (Long i = 0; i < v.n1(); ++i)
+			v(i, j) /= v1(i, j);
+}
+//% else
+//%     error('not implemented!');
 //% end
 //%-------------------------
 
@@ -1233,6 +1290,8 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%	    'CmatComp', 'CmatComp', 'Doub';
 //%	    'CmatComp', 'CmatDoub', 'Comp';
 //%	    'CmatComp', 'CmatComp', 'Comp';
+//%	    'Cmat3Comp', 'Cmat3Comp', 'Comp';
+//%	    'Cmat3Comp', 'Cmat3Doub', 'Comp';
 //% };
 //%------------------------------
 //% [T, T1, Ts2] = varargin{:};
@@ -1693,7 +1752,12 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'VecComp', 'ScmatDoub', 'VecComp';
 //%     'DvecComp', 'DcmatDoub', 'DvecComp';
 //%     'DvecComp', 'CmatDoub', 'DvecComp';
+//%     'SvecComp', 'ScmatDoub', 'SvecComp';
+//%     'SvecComp', 'ScmatComp', 'SvecComp';
+//%     'SvecComp', 'ScmatComp', 'DvecComp';
 //%     'SvecComp', 'DcmatDoub', 'SvecComp';
+//%     'SvecComp', 'ScmatDoub', 'DvecComp';
+//%     'DvecComp', 'ScmatDoub', 'SvecComp';
 //%     };
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};

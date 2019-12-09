@@ -48,6 +48,7 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 
 //% types = {
 //%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
 //% };
 //%-------------------------------
@@ -55,14 +56,14 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 //% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
 //%     error('illegal types!');
 //% end
-inline void mul_v_coo_v(@Ty@ *y, const @Tx@ *x, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz)
+inline void mul_v_coo_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
 {
     vecset(y, 0, N1);
     for (Long k = 0; k < Nnz; ++k)
         y[i[k]] += a_ij[k] * x[j[k]];
 }
 
-inline void mul_v_cooh_v(@Ty@ *y, const @Tx@ *x, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz)
+inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
 {
     vecset(y, 0, N1);
     for (Long k = 0; k < Nnz; ++k) {
@@ -165,9 +166,9 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 		SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
-	mul_v_coo_v(y.ptr(), x.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz());
+	mul_v_coo_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
-	mul_v_cooh_v(y.ptr(), x.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz());
+	mul_v_cooh_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
 //% else
 //%     error('not implemented!');
 //% end
@@ -238,8 +239,32 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 }
 //%------------------------
 
+//% types = {
+//%     'CmobdDoub', 'Doub';
+//%     'CmobdComp', 'Doub';
+//%     'CmobdComp', 'Comp';
+//% };
+//%----------------------------
+//% [T, Ts] = varargin{:};
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    v.cmat3() *= s;
+}
+//%------------------------
+
+//% types = {
+//%     'CmobdComp', 'CmobdDoub', 'Imag';
+//% };
+//%----------------------------
+//% [T, T1, Ts] = varargin{:};
+inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
+{
+	times(v.cmat3(), v1.cmat3(), s);
+}
+//%------------------------
+
 // (using maximum absolute sum of columns)
-//% types = {'CmobdInt'; 'CmobdDoub';};
+//% types = {'CmobdInt'; 'CmobdDoub'; 'CmobdComp';};
 //%-----------------------------
 //% T = varargin{:}; Ts = contain_type(T);
 //% Tr = rm_comp(Ts);
