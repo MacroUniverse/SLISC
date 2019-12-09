@@ -1,8 +1,8 @@
-function ret = slice2_type(T)
+function ret = slice3_type(T)
 Ts = contain_type(T);
-if is_Cmat(T) || is_Scmat(T) || is_Dcmat(T) || is_Cmat3(T)
+if is_Cmat3(T) || is_Cmat4(T)
     ret = ['Dvec' Ts];
-elseif is_Mat(T)
+elseif is_Mat3(T)
     ret = ['Svec' Ts];
 else
     error('not implemented!');

@@ -5,6 +5,8 @@ elseif any(strfind(type, 'Int'))
     ret = 'Int';
 elseif any(strfind(type, 'Llong'))
     ret = 'Llong';
+elseif any(strfind(type, 'Long'))
+    ret = 'Long';
 elseif any(strfind(type, 'Float'))
     ret = 'Float';
 elseif any(strfind(type, 'Doub'))

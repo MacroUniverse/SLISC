@@ -29,6 +29,7 @@ inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, cons
 //% types = {
 //%	    'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
+//%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Comp', 'Comp';
 //% };
 //%------------------------------
@@ -83,6 +84,7 @@ inline void mul_v_cooh_v(@Ty@ *y, const @Tx@ *x, const @T@ *a_ij, const Long *i,
 //% types = {
 //%     'Int', 'Int', 'Int';
 //%     'Doub', 'Doub', 'Doub';
+//%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
 //% };
 //%-------------------------------
@@ -135,6 +137,8 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //%     'VecInt', 'CmobdInt', 'VecInt';
 //%     'VecDoub', 'CmobdDoub', 'VecDoub';
 //%     'VecComp', 'CmobdComp', 'VecComp';
+//%     'VecComp', 'CmobdDoub', 'VecComp';
+//%     'VecComp', 'CmobdDoub', 'SvecComp';
 //% };
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -176,6 +180,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'CmatComp', 'CmatComp', 'DiagComp';
 //%     'CmatComp', 'CmatDoub', 'DiagComp';
 //%	    'CmatDoub', 'DiagDoub', 'CmatDoub';
+//%     'CmatComp', 'DiagComp', 'ScmatDoub';
 //%     'CmatComp', 'DiagComp', 'CmatComp';
 //%     'CmatComp', 'DiagDoub', 'CmatComp';
 //% };

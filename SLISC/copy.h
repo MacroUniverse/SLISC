@@ -571,6 +571,11 @@ inline void copy(CmatDoub_O v, Doub_I s)
     vecset(v.ptr(), s, v.size());
 }
 
+inline void copy(CmatComp_O v, Comp_I s)
+{
+    vecset(v.ptr(), s, v.size());
+}
+
 inline void copy(Cmat3Int_O v, Int_I s)
 {
     vecset(v.ptr(), s, v.size());
@@ -581,9 +586,48 @@ inline void copy(Cmat3Doub_O v, Doub_I s)
     vecset(v.ptr(), s, v.size());
 }
 
-inline void copy(CmatComp_O v, Comp_I s)
+inline void copy(Cmat3Comp_O v, Comp_I s)
 {
     vecset(v.ptr(), s, v.size());
+}
+
+inline void copy(Cmat4Doub_O v, Doub_I s)
+{
+    vecset(v.ptr(), s, v.size());
+}
+
+inline void copy(DcmatDoub_O v, Doub_I s)
+{
+    Long N1 = v.n1(), N2 = v.n2();
+    for (Long j = 0; j < N2; ++j)
+        vecset(&v(0, j), s, N1);
+}
+
+inline void copy(DcmatComp_O v, Comp_I s)
+{
+    Long N1 = v.n1(), N2 = v.n2();
+    for (Long j = 0; j < N2; ++j)
+        vecset(&v(0, j), s, N1);
+}
+
+inline void copy(Jcmat3Doub_O v, Doub_I s)
+{
+    // slow
+    if (v.size() != 0)
+    for (Long k = 0; k < v.n3(); ++k)
+        for (Long j = 0; j < v.n2(); ++j)
+            for (Long i = 0; i < v.n1(); ++i)
+                v(i, j, k) = s;
+}
+
+inline void copy(Jcmat3Comp_O v, Comp_I s)
+{
+    // slow
+    if (v.size() != 0)
+    for (Long k = 0; k < v.n3(); ++k)
+        for (Long j = 0; j < v.n2(); ++j)
+            for (Long i = 0; i < v.n1(); ++i)
+                v(i, j, k) = s;
 }
 
 
@@ -786,6 +830,17 @@ inline void copy(DvecInt_O v, DvecInt_I v1)
     veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());
 }
 
+inline void copy(DvecLlong_O v, DvecLlong_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());
+}
+
 inline void copy(DvecDoub_O v, DvecDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -795,6 +850,83 @@ inline void copy(DvecDoub_O v, DvecDoub_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());
+}
+
+inline void copy(VecComp_O v, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
+}
+
+inline void copy(ScmatInt_O v, ScmatInt_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(ScmatLlong_O v, ScmatLlong_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(ScmatDoub_O v, CmatDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(ScmatDoub_O v, ScmatDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(ScmatComp_O v, CmatComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void copy(ScmatComp_O v, ScmatComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.ptr(), v1.ptr(), v.size());
 }
 
 inline void copy(DcmatInt_O v, CmatInt_I v1)
@@ -809,6 +941,17 @@ inline void copy(DcmatInt_O v, CmatInt_I v1)
 }
 
 inline void copy(DcmatInt_O v, DcmatInt_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+}
+
+inline void copy(DcmatLlong_O v, DcmatLlong_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))
@@ -841,7 +984,34 @@ inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
 }
 
+inline void copy(DcmatComp_O v, DcmatComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+}
+
 inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    // slow
+    if (v1.size() != 0)
+    for (Long k = 0; k < v.n3(); ++k)
+        for (Long j = 0; j < v.n2(); ++j)
+            for (Long i = 0; i < v.n1(); ++i)
+                v(i, j, k) = v1(i, j, k);
+}
+
+inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(v, v1))

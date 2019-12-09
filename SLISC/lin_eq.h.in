@@ -1,9 +1,8 @@
 #pragma once
-#include "Vec.h"
-#include "Cmat.h"
+#include "compare.h"
 
 namespace slisc {
-//% types = {'CmatDoub';};
+//% types = {'CmatDoub'; 'ScmatDoub';};
 //%---------------------------------
 //% T = varargin{:};
 //% Ts = contain_type(T);

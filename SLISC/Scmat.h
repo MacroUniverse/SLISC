@@ -10,6 +10,7 @@ public:
     ScmatInt_c(Long_I N1, Long_I N2);
     ScmatInt_c(const Int *ptr, Long_I N1, Long_I N2);
 
+
     // === Cmat functions ===
     const Int& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -33,6 +34,7 @@ inline ScmatInt_c::ScmatInt_c(const Int *ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
 }
+
 
 inline const Int & ScmatInt_c::operator()(Long_I i, Long_I j) const
 {
@@ -79,6 +81,8 @@ public:
     ScmatInt(Long_I N1, Long_I N2);
     ScmatInt(Int *ptr, Long_I N1, Long_I N2);
 
+	operator ScmatInt_c() const;
+
     // === Cmat functions ===
     Int& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -101,6 +105,11 @@ inline ScmatInt::ScmatInt(Int *ptr, Long_I N1, Long_I N2)
     : ScmatInt(N1, N2)
 {
     m_p = ptr;
+}
+
+inline ScmatInt::operator ScmatInt_c() const
+{
+	return *((ScmatInt_c *)this);
 }
 
 inline Int & ScmatInt::operator()(Long_I i, Long_I j) const
@@ -148,6 +157,7 @@ public:
     ScmatLlong_c(Long_I N1, Long_I N2);
     ScmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2);
 
+
     // === Cmat functions ===
     const Llong& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -171,6 +181,7 @@ inline ScmatLlong_c::ScmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
 }
+
 
 inline const Llong & ScmatLlong_c::operator()(Long_I i, Long_I j) const
 {
@@ -217,6 +228,8 @@ public:
     ScmatLlong(Long_I N1, Long_I N2);
     ScmatLlong(Llong *ptr, Long_I N1, Long_I N2);
 
+	operator ScmatLlong_c() const;
+
     // === Cmat functions ===
     Llong& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -239,6 +252,11 @@ inline ScmatLlong::ScmatLlong(Llong *ptr, Long_I N1, Long_I N2)
     : ScmatLlong(N1, N2)
 {
     m_p = ptr;
+}
+
+inline ScmatLlong::operator ScmatLlong_c() const
+{
+	return *((ScmatLlong_c *)this);
 }
 
 inline Llong & ScmatLlong::operator()(Long_I i, Long_I j) const
@@ -302,6 +320,7 @@ public:
     ScmatDoub_c(Long_I N1, Long_I N2);
     ScmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2);
 
+
     // === Cmat functions ===
     const Doub& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -325,6 +344,7 @@ inline ScmatDoub_c::ScmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
 }
+
 
 inline const Doub & ScmatDoub_c::operator()(Long_I i, Long_I j) const
 {
@@ -371,6 +391,8 @@ public:
     ScmatDoub(Long_I N1, Long_I N2);
     ScmatDoub(Doub *ptr, Long_I N1, Long_I N2);
 
+	operator ScmatDoub_c() const;
+
     // === Cmat functions ===
     Doub& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -393,6 +415,11 @@ inline ScmatDoub::ScmatDoub(Doub *ptr, Long_I N1, Long_I N2)
     : ScmatDoub(N1, N2)
 {
     m_p = ptr;
+}
+
+inline ScmatDoub::operator ScmatDoub_c() const
+{
+	return *((ScmatDoub_c *)this);
 }
 
 inline Doub & ScmatDoub::operator()(Long_I i, Long_I j) const
@@ -440,6 +467,7 @@ public:
     ScmatComp_c(Long_I N1, Long_I N2);
     ScmatComp_c(const Comp *ptr, Long_I N1, Long_I N2);
 
+
     // === Cmat functions ===
     const Comp& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -463,6 +491,7 @@ inline ScmatComp_c::ScmatComp_c(const Comp *ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
 }
+
 
 inline const Comp & ScmatComp_c::operator()(Long_I i, Long_I j) const
 {
@@ -509,6 +538,8 @@ public:
     ScmatComp(Long_I N1, Long_I N2);
     ScmatComp(Comp *ptr, Long_I N1, Long_I N2);
 
+	operator ScmatComp_c() const;
+
     // === Cmat functions ===
     Comp& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -531,6 +562,11 @@ inline ScmatComp::ScmatComp(Comp *ptr, Long_I N1, Long_I N2)
     : ScmatComp(N1, N2)
 {
     m_p = ptr;
+}
+
+inline ScmatComp::operator ScmatComp_c() const
+{
+	return *((ScmatComp_c *)this);
 }
 
 inline Comp & ScmatComp::operator()(Long_I i, Long_I j) const

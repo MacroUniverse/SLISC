@@ -4,6 +4,7 @@
 #include "Mat3.h"
 #include "Cmat.h"
 #include "Cmat3.h"
+#include "Cmat4.h"
 #include "Mcoo.h"
 #include "Cmobd.h"
 #include "Svec.h"
@@ -59,15 +60,21 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'VecInt', 'SvecInt';
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'DvecLlong';
+//%     'VecDoub', 'SvecDoub';
 //%     'VecDoub', 'DvecDoub';
-//%     'VecLlong', 'VecInt';
-//%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
 //%     'VecDoub', 'VecChar';
 //%     'VecDoub', 'VecDoub';
-//%     'VecComp', 'VecDoub';
 //%     'VecDoub', 'VecComp';
+//%     'VecDoub', 'SvecComp';
+//%     'VecLlong', 'VecInt';
+//%     'VecLlong', 'VecLlong';
+//%     'VecComp', 'VecDoub';
 //%     'VecComp', 'VecComp';
+//%     'VecComp', 'SvecDoub';
+//%     'VecComp', 'SvecComp';
+//%     'VecComp', 'DvecComp';
+//%     'DvecLong', 'DvecLong';
 //%     'MatInt', 'MatInt';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
@@ -85,8 +92,10 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmatComp', 'MatComp';
 //%     'DcmatInt', 'DcmatInt';
 //%     'DcmatInt', 'CmatInt';
+//%     'DcmatLlong', 'DcmatLlong';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'DcmatDoub', 'DcmatDoub';
+//%     'DcmatComp', 'DcmatComp';
 //%     'Cmat3Int', 'Cmat3Int';
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'Cmat3Comp', 'Cmat3Comp';
@@ -97,12 +106,21 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmatComp', 'McooComp';
 //%     'McooComp', 'CmatComp';
 //%     'McooComp', 'McooComp';
+//%     'SvecDoub', 'VecDoub';
 //%     'SvecDoub', 'SvecDoub';
+//%     'SvecDoub', 'SvecComp';
+//%     'SvecComp', 'VecComp';
+//%     'SvecComp', 'SvecDoub';
 //%     'SvecComp', 'SvecComp';
+//%     'ScmatInt', 'ScmatInt';
+//%     'ScmatLlong', 'ScmatLlong';
+//%     'ScmatDoub', 'CmatDoub';
+//%     'ScmatComp', 'CmatComp';
 //%     'DvecInt', 'DvecInt';
 //%     'DvecDoub', 'DvecDoub';
 //%     'Jcmat3Doub', 'Cmat3Doub';
 //%     'Jcmat3Doub', 'Jcmat3Doub';
+//%     'Jcmat3Comp', 'Jcmat3Comp';
 //%     'CmobdInt', 'McooInt';
 //%     'CmobdDoub', 'McooDoub';
 //% };
@@ -152,6 +170,7 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2)
 //%     'Cmat3Doub', 'Cmat3Doub';
 //%     'Mat3Doub', 'Mat3Doub';
 //%     'DvecInt', 'DvecInt';
+//%     'DvecLong', 'DvecLong';
 //%     'DvecDoub', 'DvecDoub';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'Jcmat3Doub', 'Cmat3Doub';

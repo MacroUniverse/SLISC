@@ -50,6 +50,10 @@ public:
     @Class@(Long_I N1, Long_I N2);
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2);
 
+//% if ~constness
+	operator @ScmatT_c@() const;
+//% end
+
     // === Cmat functions ===
     @CT@& operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
@@ -73,6 +77,13 @@ inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
 }
+
+//% if ~constness
+inline @Class@::operator @ScmatT_c@() const
+{
+	return *((@ScmatT_c@ *)this);
+}
+//% end
 
 inline @CT@ & @Class@::operator()(Long_I i, Long_I j) const
 {

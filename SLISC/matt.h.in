@@ -389,7 +389,7 @@ inline void save(@T@_I s, Str_I varname, Str_I matt_file)
 // read matt files
 // return 0 if successful, -1 if variable not found
 //% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
-//%         'VecChar'; 'VecInt'; 'VecDoub'; 'VecComp';
+//%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%         'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';

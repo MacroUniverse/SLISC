@@ -36,7 +36,7 @@ public:
 };
 
 typedef const CmobdInt &CmobdInt_I;
-typedef CmobdInt &CmobdInt_O, CmobdInt_IO;
+typedef CmobdInt &CmobdInt_O, &CmobdInt_IO;
 
 inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)
@@ -204,7 +204,7 @@ public:
 };
 
 typedef const CmobdDoub &CmobdDoub_I;
-typedef CmobdDoub &CmobdDoub_O, CmobdDoub_IO;
+typedef CmobdDoub &CmobdDoub_O, &CmobdDoub_IO;
 
 inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)
@@ -372,7 +372,7 @@ public:
 };
 
 typedef const CmobdComp &CmobdComp_I;
-typedef CmobdComp &CmobdComp_O, CmobdComp_IO;
+typedef CmobdComp &CmobdComp_O, &CmobdComp_IO;
 
 inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)

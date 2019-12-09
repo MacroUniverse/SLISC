@@ -1,3 +1,3 @@
-function ret = is_scalar(type)
-ret = type_num(type) >= 0;
+function ret = is_scalar(T)
+ret = type_num(T) >= 0 || is_Long(T);
 end

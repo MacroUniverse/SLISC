@@ -41,7 +41,7 @@ public:
 };
 
 typedef const @CmobdT@ &@CmobdT@_I;
-typedef @CmobdT@ &@CmobdT@_O, @CmobdT@_IO;
+typedef @CmobdT@ &@CmobdT@_O, &@CmobdT@_IO;
 
 inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)

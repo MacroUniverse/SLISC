@@ -1447,6 +1447,33 @@ inline void load(VecInt_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
+inline Int load(VecLlong_O v, Str_I varname, Matt_IO matt)
+{
+    ifstream &fin = matt.m_in;
+    Long i = matt.search(varname);
+    if (i < 0)
+        return -1;
+    fin.seekg(matt.m_ind[i]);
+
+    if (3 < matt.m_type[i])
+        SLS_ERR("wrong type!");
+    if (matt.m_size[i].size() != 1)
+        SLS_ERR("wrong dimension!");
+
+    Long n = matt.m_size[i][0]; v.resize(n);
+    // read var data
+    for (Long i = 0; i < n; ++i)
+		matt_read_scalar(v[i], fin);
+    return 0;
+}
+
+inline void load(VecLlong_O var, Str_I varname, Str_I matt_file)
+{
+    Matt matt(matt_file, "r");
+    load(var, varname, matt);
+    matt.close();
+}
+
 inline Int load(VecDoub_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
