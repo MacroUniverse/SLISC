@@ -534,10 +534,10 @@ void test_arithmetics()
             SLS_ERR("failed!");
 
         SvecComp sli_x, sli_y, sli_y1;
-        sli_x = slice(x, 1, 5);
-        sli_y = slice(y, 1, 6);
-        sli_y1 = slice(y1, 1, 6);
-        DcmatDoub sli_a = slice(a, 2, 6, 2, 5);
+        sli_x.set(slice(x, 1, 5));
+        sli_y.set(slice(y, 1, 6));
+        sli_y1.set(slice(y1, 1, 6));
+        DcmatDoub sli_a(slice(a, 2, 6, 2, 5));
         mul(sli_y, sli_a, sli_x);
         mul_gen(sli_y1, sli_a, sli_x);
         sli_y1 -= sli_y;

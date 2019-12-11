@@ -39,7 +39,7 @@ void test_Cmat4()
 	ScmatInt sli; 
     for (Long l = 0; l < 5; ++l) {
         for (Long k = 0; k < 4; ++k) {
-			sli = slice12(a, k, l);
+			sli.set(slice12(a, k, l));
             if (sli.ptr() != &a(0, 0, k, l))
                 SLS_ERR("failed!");
         }
