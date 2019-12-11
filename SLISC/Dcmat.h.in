@@ -49,10 +49,12 @@ public:
     @Class@();
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const @Class@ &sli);
 
 //% if ~constness
 	operator @DcmatT_c@() const;
 //% end
+	@Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat member functions ===
     @CT@& operator[](Long_I i) const;
@@ -74,6 +76,11 @@ inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda)
 inline void @Class@::set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 //% if ~constness

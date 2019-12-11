@@ -55,7 +55,7 @@ public:
     @CT@ & operator()(Long_I i) const;
     @CT@ & end() const;
     @CT@ & end(Long_I i) const;
-
+	@Class@ &operator=(const @Class@ &) = delete;
 //% if ~constness
 	operator @SvecT_c@() const;
 //% end
@@ -65,6 +65,7 @@ public:
     void set_size(Long_I N);
     void set_ptr(@CT@ *ptr);
     void set(@CT@ *ptr, Long_I N);
+	void set(const @Class@ &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -148,6 +149,11 @@ inline void @Class@::set_ptr(@CT@ * ptr)
 inline void @Class@::set(@CT@ * ptr, Long_I N)
 {
     m_p = ptr; m_N = N;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void @Class@::next()

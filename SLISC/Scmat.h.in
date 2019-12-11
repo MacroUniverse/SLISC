@@ -53,6 +53,7 @@ public:
 //% if ~constness
 	operator @ScmatT_c@() const;
 //% end
+	@Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat functions ===
     @CT@& operator()(Long_I i, Long_I j) const; // double indexing
@@ -64,6 +65,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(@CT@ *ptr, Long_I N1, Long_I N2);
+	void set(const @Class@ &sli);
     ~@Class@();
 };
 
@@ -116,6 +118,11 @@ inline void @Class@::set(@CT@ * ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline @Class@::~@Class@() {}

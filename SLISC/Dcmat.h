@@ -13,7 +13,9 @@ public:
     DcmatInt_c();
     DcmatInt_c(const Int *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const Int *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatInt_c &sli);
 
+	DcmatInt_c &operator=(const DcmatInt_c &) = delete;
 
     // === Cmat member functions ===
     const Int& operator[](Long_I i) const;
@@ -35,6 +37,11 @@ inline DcmatInt_c::DcmatInt_c(const Int *ptr, Long_I N1, Long_I N2, Long_I lda)
 inline void DcmatInt_c::set(const Int *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatInt_c::set(const DcmatInt_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 
@@ -100,8 +107,10 @@ public:
     DcmatInt();
     DcmatInt(Int *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(Int *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatInt &sli);
 
 	operator DcmatInt_c() const;
+	DcmatInt &operator=(const DcmatInt &) = delete;
 
     // === Cmat member functions ===
     Int& operator[](Long_I i) const;
@@ -123,6 +132,11 @@ inline DcmatInt::DcmatInt(Int *ptr, Long_I N1, Long_I N2, Long_I lda)
 inline void DcmatInt::set(Int *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatInt::set(const DcmatInt &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 inline DcmatInt::operator DcmatInt_c() const
@@ -192,7 +206,9 @@ public:
     DcmatLlong_c();
     DcmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatLlong_c &sli);
 
+	DcmatLlong_c &operator=(const DcmatLlong_c &) = delete;
 
     // === Cmat member functions ===
     const Llong& operator[](Long_I i) const;
@@ -214,6 +230,11 @@ inline DcmatLlong_c::DcmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2, Long_I
 inline void DcmatLlong_c::set(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatLlong_c::set(const DcmatLlong_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 
@@ -279,8 +300,10 @@ public:
     DcmatLlong();
     DcmatLlong(Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatLlong &sli);
 
 	operator DcmatLlong_c() const;
+	DcmatLlong &operator=(const DcmatLlong &) = delete;
 
     // === Cmat member functions ===
     Llong& operator[](Long_I i) const;
@@ -302,6 +325,11 @@ inline DcmatLlong::DcmatLlong(Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
 inline void DcmatLlong::set(Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatLlong::set(const DcmatLlong &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 inline DcmatLlong::operator DcmatLlong_c() const
@@ -387,7 +415,9 @@ public:
     DcmatDoub_c();
     DcmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatDoub_c &sli);
 
+	DcmatDoub_c &operator=(const DcmatDoub_c &) = delete;
 
     // === Cmat member functions ===
     const Doub& operator[](Long_I i) const;
@@ -409,6 +439,11 @@ inline DcmatDoub_c::DcmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2, Long_I ld
 inline void DcmatDoub_c::set(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatDoub_c::set(const DcmatDoub_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 
@@ -474,8 +509,10 @@ public:
     DcmatDoub();
     DcmatDoub(Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatDoub &sli);
 
 	operator DcmatDoub_c() const;
+	DcmatDoub &operator=(const DcmatDoub &) = delete;
 
     // === Cmat member functions ===
     Doub& operator[](Long_I i) const;
@@ -497,6 +534,11 @@ inline DcmatDoub::DcmatDoub(Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
 inline void DcmatDoub::set(Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatDoub::set(const DcmatDoub &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 inline DcmatDoub::operator DcmatDoub_c() const
@@ -566,7 +608,9 @@ public:
     DcmatComp_c();
     DcmatComp_c(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatComp_c &sli);
 
+	DcmatComp_c &operator=(const DcmatComp_c &) = delete;
 
     // === Cmat member functions ===
     const Comp& operator[](Long_I i) const;
@@ -588,6 +632,11 @@ inline DcmatComp_c::DcmatComp_c(const Comp *ptr, Long_I N1, Long_I N2, Long_I ld
 inline void DcmatComp_c::set(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatComp_c::set(const DcmatComp_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 
@@ -653,8 +702,10 @@ public:
     DcmatComp();
     DcmatComp(Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
+	void set(const DcmatComp &sli);
 
 	operator DcmatComp_c() const;
+	DcmatComp &operator=(const DcmatComp &) = delete;
 
     // === Cmat member functions ===
     Comp& operator[](Long_I i) const;
@@ -676,6 +727,11 @@ inline DcmatComp::DcmatComp(Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
 inline void DcmatComp::set(Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
 {
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+}
+
+inline void DcmatComp::set(const DcmatComp &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 inline DcmatComp::operator DcmatComp_c() const

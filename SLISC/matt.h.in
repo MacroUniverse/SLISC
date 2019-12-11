@@ -367,6 +367,31 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
     		for (i = 0; i < N1; ++i)
         		matt_write_scalar(a(i, j, k), fout);
 }
+//% elseif is_Cmat4(T)
+inline void save(@T@_I a, Str_I varname, Matt_IO matt)
+{
+    Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
+    ofstream &fout = matt.m_out;
+    if (!fout.is_open())
+        SLS_ERR("matt file not open!");
+    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    // write variable name info
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (i = 0; i < n; ++i) {
+        fout << to_num(varname.at(i)) << Matt::dlm;
+    }
+    // write data type info
+    fout << @numTs@ << Matt::dlm;
+    // write dimension info
+    fout << 4 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm << N4 << Matt::dlm;
+    // write matrix data
+	for (l = 0; l < N4; ++l)
+		for (k = 0; k < N3; ++k)
+			for (j = 0; j < N2; ++j)
+				for (i = 0; i < N1; ++i)
+					matt_write_scalar(a(i, j, k, l), fout);
+}
 //% else
 //%     disp(T);
 //%     error('not implemented!');
@@ -484,6 +509,31 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 matt_read_scalar(a(i, j, k), fin);
+    return 0;
+}
+//% elseif is_Cmat4(T)
+inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
+{
+    Long i, j, k, l, N1, N2, N3, N4;
+    ifstream &fin = matt.m_in;
+    i = matt.search(varname);
+    if (i < 0)
+        return -1;
+    fin.seekg(matt.m_ind[i]);
+
+    if (@numTs@ < matt.m_type[i])
+        SLS_ERR("wrong type!");
+    if (matt.m_size[i].size() != 3)
+        SLS_ERR("wrong dimension!");
+    
+    N1 = matt.m_size[i][0]; N2 = matt.m_size[i][1]; N3 = matt.m_size[i][2]; N4 = matt.m_size[i][3];
+    a.resize(N1, N2, N3, N4);
+    // read var data
+	for (l = 0; l < N4; ++l)
+		for (k = 0; k < N3; ++k)
+			for (j = 0; j < N2; ++j)
+				for (i = 0; i < N1; ++i)
+					matt_read_scalar(a(i, j, k), fin);
     return 0;
 }
 //% else

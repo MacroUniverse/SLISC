@@ -10,6 +10,7 @@ public:
     ScmatInt_c(Long_I N1, Long_I N2);
     ScmatInt_c(const Int *ptr, Long_I N1, Long_I N2);
 
+	ScmatInt_c &operator=(const ScmatInt_c &) = delete;
 
     // === Cmat functions ===
     const Int& operator()(Long_I i, Long_I j) const; // double indexing
@@ -21,6 +22,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(const Int *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatInt_c &sli);
     ~ScmatInt_c();
 };
 
@@ -69,6 +71,11 @@ inline void ScmatInt_c::set(const Int * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatInt_c::set(const ScmatInt_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatInt_c::~ScmatInt_c() {}
 
 typedef const ScmatInt_c & ScmatInt_I;
@@ -82,6 +89,7 @@ public:
     ScmatInt(Int *ptr, Long_I N1, Long_I N2);
 
 	operator ScmatInt_c() const;
+	ScmatInt &operator=(const ScmatInt &) = delete;
 
     // === Cmat functions ===
     Int& operator()(Long_I i, Long_I j) const; // double indexing
@@ -93,6 +101,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(Int *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatInt &sli);
     ~ScmatInt();
 };
 
@@ -145,6 +154,11 @@ inline void ScmatInt::set(Int * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatInt::set(const ScmatInt &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatInt::~ScmatInt() {}
 
 typedef const ScmatInt & ScmatInt_O, & ScmatInt_IO;
@@ -157,6 +171,7 @@ public:
     ScmatLlong_c(Long_I N1, Long_I N2);
     ScmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2);
 
+	ScmatLlong_c &operator=(const ScmatLlong_c &) = delete;
 
     // === Cmat functions ===
     const Llong& operator()(Long_I i, Long_I j) const; // double indexing
@@ -168,6 +183,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(const Llong *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatLlong_c &sli);
     ~ScmatLlong_c();
 };
 
@@ -216,6 +232,11 @@ inline void ScmatLlong_c::set(const Llong * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatLlong_c::set(const ScmatLlong_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatLlong_c::~ScmatLlong_c() {}
 
 typedef const ScmatLlong_c & ScmatLlong_I;
@@ -229,6 +250,7 @@ public:
     ScmatLlong(Llong *ptr, Long_I N1, Long_I N2);
 
 	operator ScmatLlong_c() const;
+	ScmatLlong &operator=(const ScmatLlong &) = delete;
 
     // === Cmat functions ===
     Llong& operator()(Long_I i, Long_I j) const; // double indexing
@@ -240,6 +262,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(Llong *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatLlong &sli);
     ~ScmatLlong();
 };
 
@@ -292,6 +315,11 @@ inline void ScmatLlong::set(Llong * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatLlong::set(const ScmatLlong &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatLlong::~ScmatLlong() {}
 
 typedef const ScmatLlong & ScmatLlong_O, & ScmatLlong_IO;
@@ -320,6 +348,7 @@ public:
     ScmatDoub_c(Long_I N1, Long_I N2);
     ScmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2);
 
+	ScmatDoub_c &operator=(const ScmatDoub_c &) = delete;
 
     // === Cmat functions ===
     const Doub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -331,6 +360,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(const Doub *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatDoub_c &sli);
     ~ScmatDoub_c();
 };
 
@@ -379,6 +409,11 @@ inline void ScmatDoub_c::set(const Doub * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatDoub_c::set(const ScmatDoub_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatDoub_c::~ScmatDoub_c() {}
 
 typedef const ScmatDoub_c & ScmatDoub_I;
@@ -392,6 +427,7 @@ public:
     ScmatDoub(Doub *ptr, Long_I N1, Long_I N2);
 
 	operator ScmatDoub_c() const;
+	ScmatDoub &operator=(const ScmatDoub &) = delete;
 
     // === Cmat functions ===
     Doub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -403,6 +439,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(Doub *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatDoub &sli);
     ~ScmatDoub();
 };
 
@@ -455,6 +492,11 @@ inline void ScmatDoub::set(Doub * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatDoub::set(const ScmatDoub &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatDoub::~ScmatDoub() {}
 
 typedef const ScmatDoub & ScmatDoub_O, & ScmatDoub_IO;
@@ -467,6 +509,7 @@ public:
     ScmatComp_c(Long_I N1, Long_I N2);
     ScmatComp_c(const Comp *ptr, Long_I N1, Long_I N2);
 
+	ScmatComp_c &operator=(const ScmatComp_c &) = delete;
 
     // === Cmat functions ===
     const Comp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -478,6 +521,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(const Comp *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatComp_c &sli);
     ~ScmatComp_c();
 };
 
@@ -526,6 +570,11 @@ inline void ScmatComp_c::set(const Comp * ptr, Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
 }
 
+inline void ScmatComp_c::set(const ScmatComp_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
 inline ScmatComp_c::~ScmatComp_c() {}
 
 typedef const ScmatComp_c & ScmatComp_I;
@@ -539,6 +588,7 @@ public:
     ScmatComp(Comp *ptr, Long_I N1, Long_I N2);
 
 	operator ScmatComp_c() const;
+	ScmatComp &operator=(const ScmatComp &) = delete;
 
     // === Cmat functions ===
     Comp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -550,6 +600,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(Comp *ptr, Long_I N1, Long_I N2);
+	void set(const ScmatComp &sli);
     ~ScmatComp();
 };
 
@@ -600,6 +651,11 @@ inline void ScmatComp::set(Comp * ptr, Long_I N1, Long_I N2)
 {
     m_p = ptr;
     m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+}
+
+inline void ScmatComp::set(const ScmatComp &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline ScmatComp::~ScmatComp() {}

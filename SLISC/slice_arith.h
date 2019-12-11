@@ -17,7 +17,7 @@ inline SvecDoub slice(VecDoub_IO v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecDoub sli(v.ptr() + start, N);
+    SvecDoub sli(&v[start], N);
 	return sli;
 }
 
@@ -27,7 +27,7 @@ inline SvecDoub_c slice(VecDoub_I v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecDoub_c sli(v.ptr() + start, N);
+    SvecDoub_c sli(&v[start], N);
 	return sli;
 }
 
@@ -37,7 +37,7 @@ inline SvecComp slice(VecComp_IO v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecComp sli(v.ptr() + start, N);
+    SvecComp sli(&v[start], N);
 	return sli;
 }
 
@@ -47,7 +47,7 @@ inline SvecComp_c slice(VecComp_I v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecComp_c sli(v.ptr() + start, N);
+    SvecComp_c sli(&v[start], N);
 	return sli;
 }
 
@@ -57,7 +57,7 @@ inline SvecDoub slice(SvecDoub_IO v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecDoub sli(v.ptr() + start, N);
+    SvecDoub sli(&v[start], N);
 	return sli;
 }
 
@@ -67,7 +67,7 @@ inline SvecDoub_c slice(SvecDoub_I v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecDoub_c sli(v.ptr() + start, N);
+    SvecDoub_c sli(&v[start], N);
 	return sli;
 }
 
@@ -77,7 +77,7 @@ inline SvecComp slice(SvecComp_IO v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecComp sli(v.ptr() + start, N);
+    SvecComp sli(&v[start], N);
 	return sli;
 }
 
@@ -87,7 +87,7 @@ inline SvecComp_c slice(SvecComp_I v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    SvecComp_c sli(v.ptr() + start, N);
+    SvecComp_c sli(&v[start], N);
 	return sli;
 }
 
@@ -97,7 +97,7 @@ inline DvecDoub slice(DvecDoub_IO v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    DvecDoub sli(v.ptr() + start, N, v.step());
+    DvecDoub sli(&v[start], N, v.step());
 	return sli;
 }
 
@@ -107,7 +107,7 @@ inline DvecDoub_c slice(DvecDoub_I v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    DvecDoub_c sli(v.ptr() + start, N, v.step());
+    DvecDoub_c sli(&v[start], N, v.step());
 	return sli;
 }
 
@@ -117,7 +117,7 @@ inline DvecComp slice(DvecComp_IO v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    DvecComp sli(v.ptr() + start, N, v.step());
+    DvecComp sli(&v[start], N, v.step());
 	return sli;
 }
 
@@ -127,7 +127,7 @@ inline DvecComp_c slice(DvecComp_I v, Long_I start, Long_I N)
     if (start < 0 || start + N > v.size())
         SLS_ERR("index out of bound!");
 #endif
-    DvecComp_c sli(v.ptr() + start, N, v.step());
+    DvecComp_c sli(&v[start], N, v.step());
 	return sli;
 }
 
@@ -160,7 +160,7 @@ inline ScmatLlong slice(CmatLlong_IO v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatLlong sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatLlong sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -170,7 +170,7 @@ inline ScmatLlong_c slice(CmatLlong_I v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatLlong_c sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatLlong_c sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -203,7 +203,7 @@ inline ScmatDoub slice(CmatDoub_IO v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatDoub sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatDoub sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -213,7 +213,7 @@ inline ScmatDoub_c slice(CmatDoub_I v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatDoub_c sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatDoub_c sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -246,7 +246,7 @@ inline ScmatComp slice(CmatComp_IO v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatComp sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatComp sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -256,7 +256,7 @@ inline ScmatComp_c slice(CmatComp_I v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatComp_c sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatComp_c sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -361,7 +361,7 @@ inline ScmatInt slice(CmatInt_IO v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatInt sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatInt sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -371,7 +371,7 @@ inline ScmatInt_c slice(CmatInt_I v, Long_I start2, Long_I N2)
     if (start2 < 0 || start2 + N2 > v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatInt_c sli(v.ptr() + v.n1()*start2, v.n1(), N2);
+	ScmatInt_c sli(&v(0, start2), v.n1(), N2);
 	return sli;
 }
 
@@ -442,7 +442,7 @@ inline DvecInt slice1(MatInt_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	DvecInt sli(v.ptr() + j, v.n1(), v.n2());
+	DvecInt sli(&v(0, j), v.n1(), v.n2());
 	return sli;
 }
 
@@ -452,7 +452,7 @@ inline DvecInt_c slice1(MatInt_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	DvecInt_c sli(v.ptr() + j, v.n1(), v.n2());
+	DvecInt_c sli(&v(0, j), v.n1(), v.n2());
 	return sli;
 }
 
@@ -462,7 +462,7 @@ inline DvecDoub slice1(MatDoub_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	DvecDoub sli(v.ptr() + j, v.n1(), v.n2());
+	DvecDoub sli(&v(0, j), v.n1(), v.n2());
 	return sli;
 }
 
@@ -472,7 +472,7 @@ inline DvecDoub_c slice1(MatDoub_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	DvecDoub_c sli(v.ptr() + j, v.n1(), v.n2());
+	DvecDoub_c sli(&v(0, j), v.n1(), v.n2());
 	return sli;
 }
 
@@ -482,7 +482,7 @@ inline DvecComp slice1(MatComp_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp sli(v.ptr() + j, v.n1(), v.n2());
+	DvecComp sli(&v(0, j), v.n1(), v.n2());
 	return sli;
 }
 
@@ -492,7 +492,7 @@ inline DvecComp_c slice1(MatComp_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp_c sli(v.ptr() + j, v.n1(), v.n2());
+	DvecComp_c sli(&v(0, j), v.n1(), v.n2());
 	return sli;
 }
 
@@ -502,7 +502,7 @@ inline SvecInt slice1(CmatInt_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecInt sli(v.ptr() + v.n1() * j, v.n1());
+	SvecInt sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -512,7 +512,7 @@ inline SvecInt_c slice1(CmatInt_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecInt_c sli(v.ptr() + v.n1() * j, v.n1());
+	SvecInt_c sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -522,7 +522,7 @@ inline SvecLlong slice1(CmatLlong_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecLlong sli(v.ptr() + v.n1() * j, v.n1());
+	SvecLlong sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -532,7 +532,7 @@ inline SvecLlong_c slice1(CmatLlong_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecLlong_c sli(v.ptr() + v.n1() * j, v.n1());
+	SvecLlong_c sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -542,7 +542,7 @@ inline SvecDoub slice1(CmatDoub_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub sli(v.ptr() + v.n1() * j, v.n1());
+	SvecDoub sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -552,7 +552,7 @@ inline SvecDoub_c slice1(CmatDoub_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub_c sli(v.ptr() + v.n1() * j, v.n1());
+	SvecDoub_c sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -562,7 +562,7 @@ inline SvecComp slice1(CmatComp_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp sli(v.ptr() + v.n1() * j, v.n1());
+	SvecComp sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -572,7 +572,7 @@ inline SvecComp_c slice1(CmatComp_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp_c sli(v.ptr() + v.n1() * j, v.n1());
+	SvecComp_c sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -582,7 +582,7 @@ inline SvecInt slice1(Cmat3Int_IO v, Long_I j, Long_I k)
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	SvecInt sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	SvecInt sli(&v(0, j, k), v.n1());
 	return sli;
 }
 
@@ -592,7 +592,7 @@ inline SvecInt_c slice1(Cmat3Int_I v, Long_I j, Long_I k)
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	SvecInt_c sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	SvecInt_c sli(&v(0, j, k), v.n1());
 	return sli;
 }
 
@@ -602,7 +602,7 @@ inline SvecDoub slice1(Cmat3Doub_IO v, Long_I j, Long_I k)
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	SvecDoub sli(&v(0, j, k), v.n1());
 	return sli;
 }
 
@@ -612,7 +612,7 @@ inline SvecDoub_c slice1(Cmat3Doub_I v, Long_I j, Long_I k)
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub_c sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	SvecDoub_c sli(&v(0, j, k), v.n1());
 	return sli;
 }
 
@@ -622,7 +622,7 @@ inline SvecComp slice1(Cmat3Comp_IO v, Long_I j, Long_I k)
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	SvecComp sli(&v(0, j, k), v.n1());
 	return sli;
 }
 
@@ -632,7 +632,7 @@ inline SvecComp_c slice1(Cmat3Comp_I v, Long_I j, Long_I k)
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp_c sli(v.ptr() + v.n1()*j + v.n1()*v.n2()*k, v.n1());
+	SvecComp_c sli(&v(0, j, k), v.n1());
 	return sli;
 }
 
@@ -642,7 +642,7 @@ inline SvecDoub slice1(ScmatDoub_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub sli(v.ptr() + v.n1() * j, v.n1());
+	SvecDoub sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -652,7 +652,7 @@ inline SvecDoub_c slice1(ScmatDoub_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub_c sli(v.ptr() + v.n1() * j, v.n1());
+	SvecDoub_c sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -662,7 +662,7 @@ inline SvecComp slice1(ScmatComp_IO v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp sli(v.ptr() + v.n1() * j, v.n1());
+	SvecComp sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -672,7 +672,7 @@ inline SvecComp_c slice1(ScmatComp_I v, Long_I j)
     if (j < 0 || j >= v.n2())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp_c sli(v.ptr() + v.n1() * j, v.n1());
+	SvecComp_c sli(&v(0, j), v.n1());
 	return sli;
 }
 
@@ -844,7 +844,7 @@ inline DvecInt slice2(CmatInt_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecInt sli(v.ptr() + i, v.n2(), v.n1());
+	DvecInt sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -854,7 +854,7 @@ inline DvecInt_c slice2(CmatInt_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecInt_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecInt_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -864,7 +864,7 @@ inline DvecLlong slice2(CmatLlong_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecLlong sli(v.ptr() + i, v.n2(), v.n1());
+	DvecLlong sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -874,7 +874,7 @@ inline DvecLlong_c slice2(CmatLlong_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecLlong_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecLlong_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -884,7 +884,7 @@ inline DvecDoub slice2(CmatDoub_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecDoub sli(v.ptr() + i, v.n2(), v.n1());
+	DvecDoub sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -894,7 +894,7 @@ inline DvecDoub_c slice2(CmatDoub_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecDoub_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecDoub_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -904,7 +904,7 @@ inline DvecComp slice2(CmatComp_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp sli(v.ptr() + i, v.n2(), v.n1());
+	DvecComp sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -914,7 +914,7 @@ inline DvecComp_c slice2(CmatComp_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecComp_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -924,7 +924,7 @@ inline DvecLlong slice2(ScmatLlong_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecLlong sli(v.ptr() + i, v.n2(), v.n1());
+	DvecLlong sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -934,7 +934,7 @@ inline DvecLlong_c slice2(ScmatLlong_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecLlong_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecLlong_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -944,7 +944,7 @@ inline DvecDoub slice2(ScmatDoub_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecDoub sli(v.ptr() + i, v.n2(), v.n1());
+	DvecDoub sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -954,7 +954,7 @@ inline DvecDoub_c slice2(ScmatDoub_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecDoub_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecDoub_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -964,7 +964,7 @@ inline DvecComp slice2(ScmatComp_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp sli(v.ptr() + i, v.n2(), v.n1());
+	DvecComp sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -974,7 +974,7 @@ inline DvecComp_c slice2(ScmatComp_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp_c sli(v.ptr() + i, v.n2(), v.n1());
+	DvecComp_c sli(&v(i, 0), v.n2(), v.n1());
 	return sli;
 }
 
@@ -984,7 +984,7 @@ inline SvecInt slice2(MatInt_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	SvecInt sli(v.ptr() + i*v.n2(), v.n2());
+	SvecInt sli(&v(i, 0), v.n2());
 	return sli;
 }
 
@@ -994,7 +994,7 @@ inline SvecInt_c slice2(MatInt_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	SvecInt_c sli(v.ptr() + i*v.n2(), v.n2());
+	SvecInt_c sli(&v(i, 0), v.n2());
 	return sli;
 }
 
@@ -1004,7 +1004,7 @@ inline SvecDoub slice2(MatDoub_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub sli(v.ptr() + i*v.n2(), v.n2());
+	SvecDoub sli(&v(i, 0), v.n2());
 	return sli;
 }
 
@@ -1014,7 +1014,7 @@ inline SvecDoub_c slice2(MatDoub_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	SvecDoub_c sli(v.ptr() + i*v.n2(), v.n2());
+	SvecDoub_c sli(&v(i, 0), v.n2());
 	return sli;
 }
 
@@ -1024,7 +1024,7 @@ inline SvecComp slice2(MatComp_IO v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp sli(v.ptr() + i*v.n2(), v.n2());
+	SvecComp sli(&v(i, 0), v.n2());
 	return sli;
 }
 
@@ -1034,7 +1034,7 @@ inline SvecComp_c slice2(MatComp_I v, Long_I i)
     if (i < 0 || i >= v.n1())
         SLS_ERR("index out of bound!");
 #endif
-	SvecComp_c sli(v.ptr() + i*v.n2(), v.n2());
+	SvecComp_c sli(&v(i, 0), v.n2());
 	return sli;
 }
 
@@ -1044,7 +1044,7 @@ inline DvecComp slice2(Cmat3Comp_IO v, Long_I i, Long_I k)
     if (i < 0 || i >= v.n1() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp sli(v.ptr() + i + v.n1()*v.n2()*k, v.n2(), v.n1());
+	DvecComp sli(&v(i, 0, k), v.n2(), v.n1());
 	return sli;
 }
 
@@ -1054,7 +1054,7 @@ inline DvecComp_c slice2(Cmat3Comp_I v, Long_I i, Long_I k)
     if (i < 0 || i >= v.n1() || k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	DvecComp_c sli(v.ptr() + i + v.n1()*v.n2()*k, v.n2(), v.n1());
+	DvecComp_c sli(&v(i, 0, k), v.n2(), v.n1());
 	return sli;
 }
 
@@ -1267,7 +1267,7 @@ inline ScmatInt slice12(Cmat3Int_IO v, Long_I k)
     if (k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatInt sli(v.ptr() + v.n1()*v.n2()*k, v.n1(), v.n2());
+	ScmatInt sli(&v(0, 0, k), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1277,7 +1277,7 @@ inline ScmatInt_c slice12(Cmat3Int_I v, Long_I k)
     if (k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatInt_c sli(v.ptr() + v.n1()*v.n2()*k, v.n1(), v.n2());
+	ScmatInt_c sli(&v(0, 0, k), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1287,7 +1287,7 @@ inline ScmatDoub slice12(Cmat3Doub_IO v, Long_I k)
     if (k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatDoub sli(v.ptr() + v.n1()*v.n2()*k, v.n1(), v.n2());
+	ScmatDoub sli(&v(0, 0, k), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1297,7 +1297,7 @@ inline ScmatDoub_c slice12(Cmat3Doub_I v, Long_I k)
     if (k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatDoub_c sli(v.ptr() + v.n1()*v.n2()*k, v.n1(), v.n2());
+	ScmatDoub_c sli(&v(0, 0, k), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1307,7 +1307,7 @@ inline ScmatComp slice12(Cmat3Comp_IO v, Long_I k)
     if (k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatComp sli(v.ptr() + v.n1()*v.n2()*k, v.n1(), v.n2());
+	ScmatComp sli(&v(0, 0, k), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1317,7 +1317,7 @@ inline ScmatComp_c slice12(Cmat3Comp_I v, Long_I k)
     if (k < 0 || k >= v.n3())
         SLS_ERR("index out of bound!");
 #endif
-	ScmatComp_c sli(v.ptr() + v.n1()*v.n2()*k, v.n1(), v.n2());
+	ScmatComp_c sli(&v(0, 0, k), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1327,8 +1327,7 @@ inline ScmatInt slice12(Cmat4Int_IO v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatInt sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatInt sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1338,8 +1337,7 @@ inline ScmatInt_c slice12(Cmat4Int_I v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatInt_c sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatInt_c sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1349,8 +1347,7 @@ inline ScmatLlong slice12(Cmat4Llong_IO v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatLlong sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatLlong sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1360,8 +1357,7 @@ inline ScmatLlong_c slice12(Cmat4Llong_I v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatLlong_c sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatLlong_c sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1371,8 +1367,7 @@ inline ScmatDoub slice12(Cmat4Doub_IO v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatDoub sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatDoub sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1382,8 +1377,7 @@ inline ScmatDoub_c slice12(Cmat4Doub_I v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatDoub_c sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatDoub_c sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1393,8 +1387,7 @@ inline ScmatComp slice12(Cmat4Comp_IO v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatComp sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatComp sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 
@@ -1404,8 +1397,7 @@ inline ScmatComp_c slice12(Cmat4Comp_I v, Long_I k, Long_I l)
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
         SLS_ERR("index out of bound!");
 #endif
-	Long N1N2 = v.n1() * v.n2();
-	ScmatComp_c sli(v.ptr() + N1N2*k + N1N2*v.n3()*l, v.n1(), v.n2());
+	ScmatComp_c sli(&v(0, 0, k, l), v.n1(), v.n2());
 	return sli;
 }
 

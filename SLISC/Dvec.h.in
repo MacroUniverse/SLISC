@@ -60,11 +60,13 @@ public:
 //% if ~constness
 	operator @DvecT_c@() const;
 //% end
+	@Class@ &operator=(const @Class@ &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(@CT@ *ptr);
 	void set(@CT@ *ptr, Long_I N, Long_I step);
+	void set(const @Class@ &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -146,6 +148,11 @@ inline void @Class@::set_ptr(@CT@ * ptr)
 inline void @Class@::set(@CT@ * ptr, Long_I N, Long_I step)
 {
     m_p = ptr; m_N = N; m_step = step;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
 }
 
 inline void @Class@::next()

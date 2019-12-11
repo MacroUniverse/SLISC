@@ -49,8 +49,11 @@ public:
     @Class@();
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
-
+	void set(const @Class@ &sli);
+//% if ~constness
 	operator @Jcmat3T_c@() const;
+//% end
+	@Class@ &operator=(const @Class@ &) = delete;
     @CT@& operator[](Long_I i) const;
     @CT@& operator()(Long_I i) const;
     @CT@& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -76,6 +79,11 @@ inline void @Class@::set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step
     m_p = ptr; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     m_step1 = step1; m_step2 = step2; m_step3 = step3;
     m_N = N1 * N2 * N3;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3; m_step1 = sli.m_step1; m_step2 = sli.m_step2; m_step3 = sli.m_step3;
 }
 
 //% if ~constness

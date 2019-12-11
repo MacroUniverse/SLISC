@@ -20,11 +20,13 @@ public:
     Long size() const;
     Long step() const;
 
+	DvecInt_c &operator=(const DvecInt_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(const Int *ptr);
 	void set(const Int *ptr, Long_I N, Long_I step);
+	void set(const DvecInt_c &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -102,6 +104,11 @@ inline void DvecInt_c::set(const Int * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecInt_c::set(const DvecInt_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecInt_c::next()
 {
     m_p += m_N;
@@ -141,11 +148,13 @@ public:
     Long step() const;
 
 	operator DvecInt_c() const;
+	DvecInt &operator=(const DvecInt &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(Int *ptr);
 	void set(Int *ptr, Long_I N, Long_I step);
+	void set(const DvecInt &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -227,6 +236,11 @@ inline void DvecInt::set(Int * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecInt::set(const DvecInt &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecInt::next()
 {
     m_p += m_N;
@@ -265,11 +279,13 @@ public:
     Long size() const;
     Long step() const;
 
+	DvecLlong_c &operator=(const DvecLlong_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(const Llong *ptr);
 	void set(const Llong *ptr, Long_I N, Long_I step);
+	void set(const DvecLlong_c &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -347,6 +363,11 @@ inline void DvecLlong_c::set(const Llong * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecLlong_c::set(const DvecLlong_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecLlong_c::next()
 {
     m_p += m_N;
@@ -386,11 +407,13 @@ public:
     Long step() const;
 
 	operator DvecLlong_c() const;
+	DvecLlong &operator=(const DvecLlong &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(Llong *ptr);
 	void set(Llong *ptr, Long_I N, Long_I step);
+	void set(const DvecLlong &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -472,6 +495,11 @@ inline void DvecLlong::set(Llong * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecLlong::set(const DvecLlong &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecLlong::next()
 {
     m_p += m_N;
@@ -526,11 +554,13 @@ public:
     Long size() const;
     Long step() const;
 
+	DvecDoub_c &operator=(const DvecDoub_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(const Doub *ptr);
 	void set(const Doub *ptr, Long_I N, Long_I step);
+	void set(const DvecDoub_c &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -608,6 +638,11 @@ inline void DvecDoub_c::set(const Doub * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecDoub_c::set(const DvecDoub_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecDoub_c::next()
 {
     m_p += m_N;
@@ -647,11 +682,13 @@ public:
     Long step() const;
 
 	operator DvecDoub_c() const;
+	DvecDoub &operator=(const DvecDoub &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(Doub *ptr);
 	void set(Doub *ptr, Long_I N, Long_I step);
+	void set(const DvecDoub &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -733,6 +770,11 @@ inline void DvecDoub::set(Doub * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecDoub::set(const DvecDoub &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecDoub::next()
 {
     m_p += m_N;
@@ -771,11 +813,13 @@ public:
     Long size() const;
     Long step() const;
 
+	DvecComp_c &operator=(const DvecComp_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(const Comp *ptr);
 	void set(const Comp *ptr, Long_I N, Long_I step);
+	void set(const DvecComp_c &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -853,6 +897,11 @@ inline void DvecComp_c::set(const Comp * ptr, Long_I N, Long_I step)
     m_p = ptr; m_N = N; m_step = step;
 }
 
+inline void DvecComp_c::set(const DvecComp_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
 inline void DvecComp_c::next()
 {
     m_p += m_N;
@@ -892,11 +941,13 @@ public:
     Long step() const;
 
 	operator DvecComp_c() const;
+	DvecComp &operator=(const DvecComp &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
 	void set_ptr(Comp *ptr);
 	void set(Comp *ptr, Long_I N, Long_I step);
+	void set(const DvecComp &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -976,6 +1027,11 @@ inline void DvecComp::set_ptr(Comp * ptr)
 inline void DvecComp::set(Comp * ptr, Long_I N, Long_I step)
 {
     m_p = ptr; m_N = N; m_step = step;
+}
+
+inline void DvecComp::set(const DvecComp &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
 }
 
 inline void DvecComp::next()
