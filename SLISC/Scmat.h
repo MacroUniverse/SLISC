@@ -4,8 +4,9 @@
 namespace slisc {
 class ScmatInt_c : public SvecInt_c
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatInt_c();
     ScmatInt_c(Long_I N1, Long_I N2);
     ScmatInt_c(const Int *ptr, Long_I N1, Long_I N2);
@@ -82,8 +83,9 @@ typedef const ScmatInt_c & ScmatInt_I;
 
 class ScmatInt : public SvecInt
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatInt();
     ScmatInt(Long_I N1, Long_I N2);
     ScmatInt(Int *ptr, Long_I N1, Long_I N2);
@@ -165,8 +167,9 @@ typedef const ScmatInt & ScmatInt_O, & ScmatInt_IO;
 
 class ScmatLlong_c : public SvecLlong_c
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatLlong_c();
     ScmatLlong_c(Long_I N1, Long_I N2);
     ScmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2);
@@ -243,8 +246,9 @@ typedef const ScmatLlong_c & ScmatLlong_I;
 
 class ScmatLlong : public SvecLlong
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatLlong();
     ScmatLlong(Long_I N1, Long_I N2);
     ScmatLlong(Llong *ptr, Long_I N1, Long_I N2);
@@ -342,8 +346,9 @@ typedef const ScmatLong & ScmatLong_O, & ScmatLong_IO;
 
 class ScmatDoub_c : public SvecDoub_c
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatDoub_c();
     ScmatDoub_c(Long_I N1, Long_I N2);
     ScmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2);
@@ -420,8 +425,9 @@ typedef const ScmatDoub_c & ScmatDoub_I;
 
 class ScmatDoub : public SvecDoub
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatDoub();
     ScmatDoub(Long_I N1, Long_I N2);
     ScmatDoub(Doub *ptr, Long_I N1, Long_I N2);
@@ -503,8 +509,9 @@ typedef const ScmatDoub & ScmatDoub_O, & ScmatDoub_IO;
 
 class ScmatComp_c : public SvecComp_c
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatComp_c();
     ScmatComp_c(Long_I N1, Long_I N2);
     ScmatComp_c(const Comp *ptr, Long_I N1, Long_I N2);
@@ -581,8 +588,9 @@ typedef const ScmatComp_c & ScmatComp_I;
 
 class ScmatComp : public SvecComp
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     ScmatComp();
     ScmatComp(Long_I N1, Long_I N2);
     ScmatComp(Comp *ptr, Long_I N1, Long_I N2);

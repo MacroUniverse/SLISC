@@ -4,11 +4,10 @@
 namespace slisc {
 class DvecInt_c
 {
-private:
+protected:
     const Int *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecInt_c();
     DvecInt_c(const Int *ptr, Long_I N, Long_I step);
@@ -131,11 +130,10 @@ typedef const DvecInt_c & DvecInt_I;
 
 class DvecInt
 {
-private:
+protected:
     Int *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecInt();
     DvecInt(Int *ptr, Long_I N, Long_I step);
@@ -263,11 +261,10 @@ typedef const DvecInt & DvecInt_O, & DvecInt_IO;
 
 class DvecLlong_c
 {
-private:
+protected:
     const Llong *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecLlong_c();
     DvecLlong_c(const Llong *ptr, Long_I N, Long_I step);
@@ -390,11 +387,10 @@ typedef const DvecLlong_c & DvecLlong_I;
 
 class DvecLlong
 {
-private:
+protected:
     Llong *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecLlong();
     DvecLlong(Llong *ptr, Long_I N, Long_I step);
@@ -538,11 +534,10 @@ typedef const DvecLong & DvecLong_O, & DvecLong_IO;
 
 class DvecDoub_c
 {
-private:
+protected:
     const Doub *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecDoub_c();
     DvecDoub_c(const Doub *ptr, Long_I N, Long_I step);
@@ -665,11 +660,10 @@ typedef const DvecDoub_c & DvecDoub_I;
 
 class DvecDoub
 {
-private:
+protected:
     Doub *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecDoub();
     DvecDoub(Doub *ptr, Long_I N, Long_I step);
@@ -797,11 +791,10 @@ typedef const DvecDoub & DvecDoub_O, & DvecDoub_IO;
 
 class DvecComp_c
 {
-private:
+protected:
     const Comp *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecComp_c();
     DvecComp_c(const Comp *ptr, Long_I N, Long_I step);
@@ -924,11 +917,10 @@ typedef const DvecComp_c & DvecComp_I;
 
 class DvecComp
 {
-private:
+protected:
     Comp *m_p;
     Long m_N;
     Long m_step;
-
 public:
     DvecComp();
     DvecComp(Comp *ptr, Long_I N, Long_I step);

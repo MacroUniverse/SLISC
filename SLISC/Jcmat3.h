@@ -4,7 +4,7 @@
 namespace slisc {
 class Jcmat3Int_c
 {
-private:
+protected:
     const Int *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -117,7 +117,7 @@ typedef const Jcmat3Int_c & Jcmat3Int_I;
 
 class Jcmat3Int
 {
-private:
+protected:
     Int *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -235,7 +235,7 @@ typedef const Jcmat3Int & Jcmat3Int_O, & Jcmat3Int_IO;
 
 class Jcmat3Llong_c
 {
-private:
+protected:
     const Llong *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -348,7 +348,7 @@ typedef const Jcmat3Llong_c & Jcmat3Llong_I;
 
 class Jcmat3Llong
 {
-private:
+protected:
     Llong *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -482,7 +482,7 @@ typedef const Jcmat3Long & Jcmat3Long_O, & Jcmat3Long_IO;
 
 class Jcmat3Doub_c
 {
-private:
+protected:
     const Doub *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -595,7 +595,7 @@ typedef const Jcmat3Doub_c & Jcmat3Doub_I;
 
 class Jcmat3Doub
 {
-private:
+protected:
     Doub *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -713,7 +713,7 @@ typedef const Jcmat3Doub & Jcmat3Doub_O, & Jcmat3Doub_IO;
 
 class Jcmat3Comp_c
 {
-private:
+protected:
     const Comp *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;
@@ -826,7 +826,7 @@ typedef const Jcmat3Comp_c & Jcmat3Comp_I;
 
 class Jcmat3Comp
 {
-private:
+protected:
     Comp *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;

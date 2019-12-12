@@ -40,11 +40,10 @@ typedef DvecLlong DvecLong;
 //% else
 class @Class@
 {
-private:
+protected:
     @CT@ *m_p;
     Long m_N;
     Long m_step;
-
 public:
     @Class@();
     @Class@(@CT@ *ptr, Long_I N, Long_I step);

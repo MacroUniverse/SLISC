@@ -4,9 +4,10 @@
 namespace slisc {
 class SvecChar_c
 {
-public:
-    const Char *m_p;
+protected:
+	const Char *m_p;
     Long m_N;
+public:
     SvecChar_c();
     explicit SvecChar_c(Long_I N);
     SvecChar_c(const Char *ptr, Long_I N);
@@ -129,9 +130,10 @@ typedef const SvecChar_c & SvecChar_I;
 
 class SvecChar
 {
-public:
-    Char *m_p;
+protected:
+	Char *m_p;
     Long m_N;
+public:
     SvecChar();
     explicit SvecChar(Long_I N);
     SvecChar(Char *ptr, Long_I N);
@@ -259,9 +261,10 @@ typedef const SvecChar & SvecChar_O, & SvecChar_IO;
 
 class SvecInt_c
 {
-public:
-    const Int *m_p;
+protected:
+	const Int *m_p;
     Long m_N;
+public:
     SvecInt_c();
     explicit SvecInt_c(Long_I N);
     SvecInt_c(const Int *ptr, Long_I N);
@@ -384,9 +387,10 @@ typedef const SvecInt_c & SvecInt_I;
 
 class SvecInt
 {
-public:
-    Int *m_p;
+protected:
+	Int *m_p;
     Long m_N;
+public:
     SvecInt();
     explicit SvecInt(Long_I N);
     SvecInt(Int *ptr, Long_I N);
@@ -514,9 +518,10 @@ typedef const SvecInt & SvecInt_O, & SvecInt_IO;
 
 class SvecLlong_c
 {
-public:
-    const Llong *m_p;
+protected:
+	const Llong *m_p;
     Long m_N;
+public:
     SvecLlong_c();
     explicit SvecLlong_c(Long_I N);
     SvecLlong_c(const Llong *ptr, Long_I N);
@@ -639,9 +644,10 @@ typedef const SvecLlong_c & SvecLlong_I;
 
 class SvecLlong
 {
-public:
-    Llong *m_p;
+protected:
+	Llong *m_p;
     Long m_N;
+public:
     SvecLlong();
     explicit SvecLlong(Long_I N);
     SvecLlong(Llong *ptr, Long_I N);
@@ -785,9 +791,10 @@ typedef const SvecLong & SvecLong_O, & SvecLong_IO;
 
 class SvecDoub_c
 {
-public:
-    const Doub *m_p;
+protected:
+	const Doub *m_p;
     Long m_N;
+public:
     SvecDoub_c();
     explicit SvecDoub_c(Long_I N);
     SvecDoub_c(const Doub *ptr, Long_I N);
@@ -910,9 +917,10 @@ typedef const SvecDoub_c & SvecDoub_I;
 
 class SvecDoub
 {
-public:
-    Doub *m_p;
+protected:
+	Doub *m_p;
     Long m_N;
+public:
     SvecDoub();
     explicit SvecDoub(Long_I N);
     SvecDoub(Doub *ptr, Long_I N);
@@ -1040,9 +1048,10 @@ typedef const SvecDoub & SvecDoub_O, & SvecDoub_IO;
 
 class SvecComp_c
 {
-public:
-    const Comp *m_p;
+protected:
+	const Comp *m_p;
     Long m_N;
+public:
     SvecComp_c();
     explicit SvecComp_c(Long_I N);
     SvecComp_c(const Comp *ptr, Long_I N);
@@ -1165,9 +1174,10 @@ typedef const SvecComp_c & SvecComp_I;
 
 class SvecComp
 {
-public:
-    Comp *m_p;
+protected:
+	Comp *m_p;
     Long m_N;
+public:
     SvecComp();
     explicit SvecComp(Long_I N);
     SvecComp(Comp *ptr, Long_I N);

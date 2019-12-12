@@ -3,7 +3,7 @@
 namespace slisc {
 class DcmatInt_c
 {
-private:
+protected:
     const Int *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -97,7 +97,7 @@ typedef const DcmatInt_c & DcmatInt_I;
 
 class DcmatInt
 {
-private:
+protected:
     Int *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -196,7 +196,7 @@ typedef const DcmatInt & DcmatInt_O, & DcmatInt_IO;
 
 class DcmatLlong_c
 {
-private:
+protected:
     const Llong *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -290,7 +290,7 @@ typedef const DcmatLlong_c & DcmatLlong_I;
 
 class DcmatLlong
 {
-private:
+protected:
     Llong *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -405,7 +405,7 @@ typedef const DcmatLong & DcmatLong_O, & DcmatLong_IO;
 
 class DcmatDoub_c
 {
-private:
+protected:
     const Doub *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -499,7 +499,7 @@ typedef const DcmatDoub_c & DcmatDoub_I;
 
 class DcmatDoub
 {
-private:
+protected:
     Doub *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -598,7 +598,7 @@ typedef const DcmatDoub & DcmatDoub_O, & DcmatDoub_IO;
 
 class DcmatComp_c
 {
-private:
+protected:
     const Comp *m_p;
     Long m_N;
     Long m_N1, m_N2;
@@ -692,7 +692,7 @@ typedef const DcmatComp_c & DcmatComp_I;
 
 class DcmatComp
 {
-private:
+protected:
     Comp *m_p;
     Long m_N;
     Long m_N1, m_N2;

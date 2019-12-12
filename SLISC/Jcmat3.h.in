@@ -40,7 +40,7 @@ typedef Jcmat3Llong Jcmat3Long;
 //% else
 class @Class@
 {
-private:
+protected:
     @CT@ *m_p;
     Long m_N;
     Long m_N1, m_N2, m_N3;

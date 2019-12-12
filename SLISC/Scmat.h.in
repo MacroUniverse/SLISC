@@ -44,8 +44,9 @@ typedef ScmatLlong ScmatLong;
 //% else
 class @Class@ : public @Base@
 {
+protected:
+	Long m_N1, m_N2;
 public:
-    Long m_N1, m_N2;
     @Class@();
     @Class@(Long_I N1, Long_I N2);
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2);

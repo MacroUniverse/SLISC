@@ -42,9 +42,10 @@ typedef SvecLlong SvecLong;
 //% else
 class @Class@
 {
-public:
-    @CT@ *m_p;
+protected:
+	@CT@ *m_p;
     Long m_N;
+public:
     @Class@();
     explicit @Class@(Long_I N);
     @Class@(@CT@ *ptr, Long_I N);

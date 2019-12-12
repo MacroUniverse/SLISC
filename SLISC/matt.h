@@ -144,9 +144,16 @@ inline Int Matt::get_profile()
     // read number of variables and their positions
     fin.seekg(0, fin.end);
     Long gmax = fin.tellg();
+	// check end mark
+	fin.seekg(gmax-2);
+	Char c1 = fin.get(), c2 = fin.get();
+	if (c1 != Matt::dlm || c2 != Matt::dlm) {
+		return -1;
+	}
+	fin.seekg(gmax-2);
     m_n = (Int)scanInverse(fin);
     if (m_n < 1)
-        return -1;
+        SLS_ERR("unknown!");
     m_ind.resize(m_n);
     for (i = 0; i < m_n; ++i) {
         m_ind[i] = scanInverse(fin);
@@ -259,6 +266,8 @@ inline void Matt::close()
             fout << m_ind[i] << dlm;
         // write number of variables
         fout << m_n;
+		// mark end-of-file
+		fout << Matt::dlm << Matt::dlm;
         m_out.close();
     }
     else {
