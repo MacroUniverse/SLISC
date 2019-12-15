@@ -142,6 +142,10 @@ typedef std::u32string Str32;
 typedef const Str32 &Str32_I;
 typedef Str32 &Str32_O, &Str32_IO;
 
+typedef vector<Int> vecInt;
+typedef const vecInt &vecInt_I;
+typedef vecInt &vecInt_O, &vecInt_IO;
+
 typedef vector<Llong> vecLlong;
 typedef const vecLlong &vecLlong_I;
 typedef vecLlong &vecLlong_O, &vecLlong_IO;

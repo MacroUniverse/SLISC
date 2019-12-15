@@ -5,6 +5,11 @@
 
 namespace slisc {
 
+inline Long size(VecChar_I v)
+{
+	return v.size();
+}
+
 inline Long size(VecInt_I v)
 {
 	return v.size();
