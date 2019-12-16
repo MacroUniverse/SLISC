@@ -47,7 +47,8 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPE
-    if (N < 1) SLS_ERR("");
+    if (N < 1)
+		SLS_ERR("empty container!");
 #endif
     Long diff = s - v[0];
     if (diff < 0) {
@@ -63,7 +64,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
     if (diff == 0) {
         ind = ind2; return true;
     }
-    for (Long i = 0; i < N; ++i) {
+    while (true) {
         ind = (ind1 + ind2) / 2;
         Long diff = v[ind] - s;
         if (diff > 0)
@@ -76,15 +77,50 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
             ind = ind1; return false;
         }
     }
-    SLS_ERR("slisc::lookup(): unknown error!");
-    return false;
+}
+
+inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
+{
+	Long N = ind2 - ind1 + 1;
+#ifdef SLS_CHECK_SHAPE
+    if (N < 1)
+		SLS_ERR("range error!");
+#endif
+    Long diff = s - v[0];
+    if (diff < 0) {
+		ind = -1; return false;
+	}
+    if (diff == 0) {
+        ind = 0; return true;
+    }
+    diff = v[ind2] - s;
+    if (diff < 0) {
+		ind = ind2; return false;
+	}
+    if (diff == 0) {
+        ind = ind2; return true;
+    }
+    while (true) {
+        ind = (ind1 + ind2) / 2;
+        Long diff = v[ind] - s;
+        if (diff > 0)
+			ind2 = ind;
+        else if (diff < 0)
+			ind1 = ind;
+		else
+			return true;
+        if (ind2 - ind1 == 1) {
+            ind = ind1; return false;
+        }
+    }
 }
 
 inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPE
-    if (N < 1) SLS_ERR("");
+    if (N < 1)
+		SLS_ERR("empty container!");
 #endif
     Long diff = s - v[0];
     if (diff < 0) {
@@ -100,7 +136,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
     if (diff == 0) {
         ind = ind2; return true;
     }
-    for (Long i = 0; i < N; ++i) {
+    while (true) {
         ind = (ind1 + ind2) / 2;
         Long diff = v[ind] - s;
         if (diff > 0)
@@ -113,15 +149,50 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
             ind = ind1; return false;
         }
     }
-    SLS_ERR("slisc::lookup(): unknown error!");
-    return false;
+}
+
+inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
+{
+	Long N = ind2 - ind1 + 1;
+#ifdef SLS_CHECK_SHAPE
+    if (N < 1)
+		SLS_ERR("range error!");
+#endif
+    Long diff = s - v[0];
+    if (diff < 0) {
+		ind = -1; return false;
+	}
+    if (diff == 0) {
+        ind = 0; return true;
+    }
+    diff = v[ind2] - s;
+    if (diff < 0) {
+		ind = ind2; return false;
+	}
+    if (diff == 0) {
+        ind = ind2; return true;
+    }
+    while (true) {
+        ind = (ind1 + ind2) / 2;
+        Long diff = v[ind] - s;
+        if (diff > 0)
+			ind2 = ind;
+        else if (diff < 0)
+			ind1 = ind;
+		else
+			return true;
+        if (ind2 - ind1 == 1) {
+            ind = ind1; return false;
+        }
+    }
 }
 
 inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPE
-    if (N < 1) SLS_ERR("");
+    if (N < 1)
+		SLS_ERR("empty container!");
 #endif
     Long diff = s - v[0];
     if (diff < 0) {
@@ -137,7 +208,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
     if (diff == 0) {
         ind = ind2; return true;
     }
-    for (Long i = 0; i < N; ++i) {
+    while (true) {
         ind = (ind1 + ind2) / 2;
         Long diff = v[ind] - s;
         if (diff > 0)
@@ -150,15 +221,50 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
             ind = ind1; return false;
         }
     }
-    SLS_ERR("slisc::lookup(): unknown error!");
-    return false;
+}
+
+inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
+{
+	Long N = ind2 - ind1 + 1;
+#ifdef SLS_CHECK_SHAPE
+    if (N < 1)
+		SLS_ERR("range error!");
+#endif
+    Long diff = s - v[0];
+    if (diff < 0) {
+		ind = -1; return false;
+	}
+    if (diff == 0) {
+        ind = 0; return true;
+    }
+    diff = v[ind2] - s;
+    if (diff < 0) {
+		ind = ind2; return false;
+	}
+    if (diff == 0) {
+        ind = ind2; return true;
+    }
+    while (true) {
+        ind = (ind1 + ind2) / 2;
+        Long diff = v[ind] - s;
+        if (diff > 0)
+			ind2 = ind;
+        else if (diff < 0)
+			ind1 = ind;
+		else
+			return true;
+        if (ind2 - ind1 == 1) {
+            ind = ind1; return false;
+        }
+    }
 }
 
 inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPE
-    if (N < 1) SLS_ERR("");
+    if (N < 1)
+		SLS_ERR("empty container!");
 #endif
     Long diff = s - v[0];
     if (diff < 0) {
@@ -174,7 +280,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
     if (diff == 0) {
         ind = ind2; return true;
     }
-    for (Long i = 0; i < N; ++i) {
+    while (true) {
         ind = (ind1 + ind2) / 2;
         Long diff = v[ind] - s;
         if (diff > 0)
@@ -187,15 +293,50 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
             ind = ind1; return false;
         }
     }
-    SLS_ERR("slisc::lookup(): unknown error!");
-    return false;
+}
+
+inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
+{
+	Long N = ind2 - ind1 + 1;
+#ifdef SLS_CHECK_SHAPE
+    if (N < 1)
+		SLS_ERR("range error!");
+#endif
+    Long diff = s - v[0];
+    if (diff < 0) {
+		ind = -1; return false;
+	}
+    if (diff == 0) {
+        ind = 0; return true;
+    }
+    diff = v[ind2] - s;
+    if (diff < 0) {
+		ind = ind2; return false;
+	}
+    if (diff == 0) {
+        ind = ind2; return true;
+    }
+    while (true) {
+        ind = (ind1 + ind2) / 2;
+        Long diff = v[ind] - s;
+        if (diff > 0)
+			ind2 = ind;
+        else if (diff < 0)
+			ind1 = ind;
+		else
+			return true;
+        if (ind2 - ind1 == 1) {
+            ind = ind1; return false;
+        }
+    }
 }
 
 inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPE
-    if (N < 1) SLS_ERR("");
+    if (N < 1)
+		SLS_ERR("empty container!");
 #endif
     Long diff = s - v[0];
     if (diff < 0) {
@@ -211,7 +352,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
     if (diff == 0) {
         ind = ind2; return true;
     }
-    for (Long i = 0; i < N; ++i) {
+    while (true) {
         ind = (ind1 + ind2) / 2;
         Long diff = v[ind] - s;
         if (diff > 0)
@@ -224,8 +365,42 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
             ind = ind1; return false;
         }
     }
-    SLS_ERR("slisc::lookup(): unknown error!");
-    return false;
+}
+
+inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
+{
+	Long N = ind2 - ind1 + 1;
+#ifdef SLS_CHECK_SHAPE
+    if (N < 1)
+		SLS_ERR("range error!");
+#endif
+    Long diff = s - v[0];
+    if (diff < 0) {
+		ind = -1; return false;
+	}
+    if (diff == 0) {
+        ind = 0; return true;
+    }
+    diff = v[ind2] - s;
+    if (diff < 0) {
+		ind = ind2; return false;
+	}
+    if (diff == 0) {
+        ind = ind2; return true;
+    }
+    while (true) {
+        ind = (ind1 + ind2) / 2;
+        Long diff = v[ind] - s;
+        if (diff > 0)
+			ind2 = ind;
+        else if (diff < 0)
+			ind1 = ind;
+		else
+			return true;
+        if (ind2 - ind1 == 1) {
+            ind = ind1; return false;
+        }
+    }
 }
 
 
