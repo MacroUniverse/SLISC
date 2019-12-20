@@ -25,7 +25,7 @@ public:
 
     // open a file, return 0 if success
     // return -2 if reading failed (e.g. file is not finished, wrong format)
-    Int open(Str_I fname, Char_I *rw, Int_I precision = 17);
+    void open(Str_I fname, Char_I *rw, Int_I precision = 17);
 
 	Bool isopen();
 
@@ -37,7 +37,7 @@ public:
     // get var names and positions from the end of the file
     // after return, matt.m_ind[i] points to the first matrix element;
     // return 0 if successful, return -1 if failed
-    Int get_profile();
+    void get_profile();
 
     // search a variable by name, return index to m_name[i]
     // return -1 if not found
@@ -134,7 +134,9 @@ Long scanInverse(ifstream &fin)
     return N;
 }
 
-inline Int Matt::get_profile()
+struct Matt_file_not_complete {};
+
+inline void Matt::get_profile()
 {
     Int i, j, n, temp;
     vector<Long> size;
@@ -148,7 +150,7 @@ inline Int Matt::get_profile()
 	fin.seekg(gmax-2);
 	Char c1 = fin.get(), c2 = fin.get();
 	if (c1 != Matt::dlm || c2 != Matt::dlm) {
-		return -1;
+		throw Matt_file_not_complete();
 	}
 	fin.seekg(gmax-2);
     m_n = (Int)scanInverse(fin);
@@ -158,9 +160,9 @@ inline Int Matt::get_profile()
     for (i = 0; i < m_n; ++i) {
         m_ind[i] = scanInverse(fin);
         if (m_ind[i] >= gmax || m_ind[i] < 0)
-            return -1;
+            SLS_ERR("unknown!");
         if (i > 0 && m_ind[i] <= m_ind[i - 1])
-            return -1;
+            SLS_ERR("unknown!");
     }
 
     // loop through each variable
@@ -172,30 +174,29 @@ inline Int Matt::get_profile()
         for (j = 0; j < n; ++j) {
             fin >> temp;
             if (temp <= 0 || temp > 127)
-                return -1;
+                SLS_ERR("unknown!");
             name.push_back((Char)temp);
         }
         m_name.push_back(name);
         // read var type
         fin >> temp;
         if (temp < 0 || temp > 100)
-            return -1;
+            SLS_ERR("unknown!");
         m_type.push_back(temp);
         // read var dim
         fin >> n;
         if (n < 0 || n > 10)
-            return -1;
+            SLS_ERR("unknown!");
         size.resize(0);
         for (j = 0; j < n; ++j) {
             fin >> temp;
             if (temp < 0)
-                return -1;
+                SLS_ERR("unknown!");
             size.push_back(temp);
         }
         m_size.push_back(size);
         m_ind[i] = fin.tellg();
     }
-	return 0;
 }
 
 // search variable in file by name
@@ -213,7 +214,7 @@ inline Matt::Matt() {}
 inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 { open(fname, rw, precision); }
 
-Int Matt::open(Str_I fname, Char_I *rw, Int_I precision)
+void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 {
 	if (isopen())
 		close();
@@ -247,9 +248,8 @@ Int Matt::open(Str_I fname, Char_I *rw, Int_I precision)
         if (!m_in.good())
             SLS_ERR("error: file not found: " + fname);
         m_in.precision(17);
-        return get_profile(); // get var names
+        get_profile(); // get var names
     }
-    return 0;
 }
 
 inline Bool Matt::isopen()
