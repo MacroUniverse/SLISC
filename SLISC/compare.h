@@ -5,6 +5,7 @@
 #include "Cmat.h"
 #include "Cmat3.h"
 #include "Cmat4.h"
+#include "Cband.h"
 #include "Mcoo.h"
 #include "Cmobd.h"
 #include "Svec.h"
@@ -500,6 +501,26 @@ inline Bool shape_cmp(CmobdInt_I v1, McooInt_I v2)
 }
 
 inline Bool shape_cmp(CmobdDoub_I v1, McooDoub_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(CbandDoub_I v1, CmatDoub_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(CbandComp_I v1, CmatComp_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(CmatDoub_I v1, CbandDoub_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(CmatComp_I v1, CbandComp_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }

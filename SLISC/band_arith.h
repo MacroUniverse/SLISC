@@ -1,5 +1,6 @@
 #pragma once
-#include "band.h"
+#include "arithmetic.h"
+#include "Cband.h"
 
 namespace slisc {
 
@@ -8,65 +9,65 @@ namespace slisc {
 // ref: cBLAS gbmv() routine
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
-void copy(CbandDoub_O b, CmatDoub_I a, Long_I Nup, Long_I Nlow)
+void copy(CbandDoub_O b, CmatDoub_I a)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
-		SLS_ERR('wrong shape!');
+		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
 	CmatDoub &c = b.cmat();
     for (Long j = 0; j < N2; j++) {
-        Long k = Nup - j;
-        for (Long i = max(0, j - Nup); i < min(N1, j + Nlow + 1); i++) {
+        Long k = b.nup() - j;
+        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
             c(k + i, j) = a(i, j);
         }
     }
 }
 
-void copy(CmatDoub_O a, CbandDoub_O b, Long_I Nup, Long_I Nlow)
+void copy(CmatDoub_O a, CbandDoub_O b)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
-		SLS_ERR('wrong shape!');
+		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
 	CmatDoub &c = b.cmat();
     for (Long j = 0; j < N2; j++) {
-        Long k = Nup - j;
-        for (Long i = max(0, j - Nup); i < min(N1, j + Nlow + 1); i++) {
+        Long k = b.nup() - j;
+        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
             a(i, j) = c(k + i, j);
         }
     }
 }
 
-void copy(CbandComp_O b, CmatComp_I a, Long_I Nup, Long_I Nlow)
+void copy(CbandComp_O b, CmatComp_I a)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
-		SLS_ERR('wrong shape!');
+		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
 	CmatComp &c = b.cmat();
     for (Long j = 0; j < N2; j++) {
-        Long k = Nup - j;
-        for (Long i = max(0, j - Nup); i < min(N1, j + Nlow + 1); i++) {
+        Long k = b.nup() - j;
+        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
             c(k + i, j) = a(i, j);
         }
     }
 }
 
-void copy(CmatComp_O a, CbandComp_O b, Long_I Nup, Long_I Nlow)
+void copy(CmatComp_O a, CbandComp_O b)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
-		SLS_ERR('wrong shape!');
+		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
 	CmatComp &c = b.cmat();
     for (Long j = 0; j < N2; j++) {
-        Long k = Nup - j;
-        for (Long i = max(0, j - Nup); i < min(N1, j + Nlow + 1); i++) {
+        Long k = b.nup() - j;
+        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
             a(i, j) = c(k + i, j);
         }
     }
@@ -78,7 +79,7 @@ void copy(CmatComp_O a, CbandComp_O b, Long_I Nup, Long_I Nlow)
 //     Long N1 = a.n1(), N2 = a.n2();
 //     for (Long i = 0; i < N1; i++) {
 //         Long k = Nlow - i;
-//         for (Long j = MAX(0, i - Nlow); j < MIN(N2, i + Nup + 1); j++) {
+//         for (Long j = max(Long(0), i - Nlow); j < MIN(N2, i + Nup + 1); j++) {
 //             b(i, k + j) = a(i, j);
 //         }
 //     }
@@ -90,7 +91,7 @@ void copy(CmatComp_O a, CbandComp_O b, Long_I Nup, Long_I Nlow)
 //     Long N1 = a.n1(), N2 = a.n2();
 //     for (Long i = 0; i < N1; i++) {
 //         Long k = Nlow - i;
-//         for (Long j = MAX(0, i - Nlow); j < MIN(N2, i + Nup + 1); j++) {
+//         for (Long j = max(Long(0), i - Nlow); j < MIN(N2, i + Nup + 1); j++) {
 //             a(i, j) = b(i, k + j);
 //         }
 //     }

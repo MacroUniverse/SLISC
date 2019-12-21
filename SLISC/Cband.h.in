@@ -1,5 +1,6 @@
 // band diagonal matrix class
-#include "cmat.h"
+#pragma once
+#include "Cmat.h"
 
 namespace slisc {
 
@@ -7,7 +8,7 @@ namespace slisc {
 //%---------------------
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
-//% CbandT = ['CbandT' T];
+//% CbandT = ['Cband' T];
 class @CbandT@
 {
 public:
@@ -62,7 +63,7 @@ inline Long @CbandT@::nlow() const
     return m_Nlow;
 }
 
-inline @CmatT@ &cmat()
+inline @CmatT@ &@CbandT@::cmat()
 {
 	return m_a;
 }

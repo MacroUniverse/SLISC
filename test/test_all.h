@@ -11,6 +11,7 @@ void test_Mat();
 void test_Cmat();
 void test_Cmat3();
 void test_Cmat4();
+void test_band();
 void test_Mcoo();
 void test_Cmobd();
 void test_Svec();
@@ -56,6 +57,8 @@ void test_all()
 	test_Cmat3();
 	cout << "test_Cmat4()" << endl;
 	test_Cmat4();
+	cout << "test_band()" << endl;
+	test_band();
 	cout << "test_Mcoo()" << endl;
 	test_Mcoo();
 	cout << "test_Cmobd()" << endl;

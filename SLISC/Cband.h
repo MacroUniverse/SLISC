@@ -1,9 +1,10 @@
 // band diagonal matrix class
-#include "cmat.h"
+#pragma once
+#include "Cmat.h"
 
 namespace slisc {
 
-class CbandTInt
+class CbandInt
 {
 public:
     Long m_N1;
@@ -12,7 +13,7 @@ public:
     Long m_Nlow;
     CmatInt m_a;
 
-    CbandTInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow);
+    CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow);
 
     Int * ptr();
     const Int * ptr() const;
@@ -23,49 +24,49 @@ public:
 	CmatInt &cmat();
 };
 
-inline CbandTInt::CbandTInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
+inline CbandInt::CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
     m_N1(N1), m_N2(N2), m_Nup(Nup), m_Nlow(Nlow), m_a(Nup+Nlow+1, N2)
 {}
 
-inline Int * CbandTInt::ptr()
+inline Int * CbandInt::ptr()
 {
     return m_a.ptr();
 }
 
-inline const Int * CbandTInt::ptr() const
+inline const Int * CbandInt::ptr() const
 {
     return m_a.ptr();
 }
 
-inline Long CbandTInt::n1() const
+inline Long CbandInt::n1() const
 {
     return m_N1;
 }
 
-inline Long CbandTInt::n2() const
+inline Long CbandInt::n2() const
 {
     return m_N2;
 }
 
-inline Long CbandTInt::nup() const
+inline Long CbandInt::nup() const
 {
     return m_Nup;
 }
 
-inline Long CbandTInt::nlow() const
+inline Long CbandInt::nlow() const
 {
     return m_Nlow;
 }
 
-inline CmatInt &cmat()
+inline CmatInt &CbandInt::cmat()
 {
 	return m_a;
 }
 
-typedef const CbandTInt & CbandTInt_I;
-typedef CbandTInt & CbandTInt_O, & CbandTInt_IO;
+typedef const CbandInt & CbandInt_I;
+typedef CbandInt & CbandInt_O, & CbandInt_IO;
 
-class CbandTDoub
+class CbandDoub
 {
 public:
     Long m_N1;
@@ -74,7 +75,7 @@ public:
     Long m_Nlow;
     CmatDoub m_a;
 
-    CbandTDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow);
+    CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow);
 
     Doub * ptr();
     const Doub * ptr() const;
@@ -85,49 +86,49 @@ public:
 	CmatDoub &cmat();
 };
 
-inline CbandTDoub::CbandTDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
+inline CbandDoub::CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
     m_N1(N1), m_N2(N2), m_Nup(Nup), m_Nlow(Nlow), m_a(Nup+Nlow+1, N2)
 {}
 
-inline Doub * CbandTDoub::ptr()
+inline Doub * CbandDoub::ptr()
 {
     return m_a.ptr();
 }
 
-inline const Doub * CbandTDoub::ptr() const
+inline const Doub * CbandDoub::ptr() const
 {
     return m_a.ptr();
 }
 
-inline Long CbandTDoub::n1() const
+inline Long CbandDoub::n1() const
 {
     return m_N1;
 }
 
-inline Long CbandTDoub::n2() const
+inline Long CbandDoub::n2() const
 {
     return m_N2;
 }
 
-inline Long CbandTDoub::nup() const
+inline Long CbandDoub::nup() const
 {
     return m_Nup;
 }
 
-inline Long CbandTDoub::nlow() const
+inline Long CbandDoub::nlow() const
 {
     return m_Nlow;
 }
 
-inline CmatDoub &cmat()
+inline CmatDoub &CbandDoub::cmat()
 {
 	return m_a;
 }
 
-typedef const CbandTDoub & CbandTDoub_I;
-typedef CbandTDoub & CbandTDoub_O, & CbandTDoub_IO;
+typedef const CbandDoub & CbandDoub_I;
+typedef CbandDoub & CbandDoub_O, & CbandDoub_IO;
 
-class CbandTComp
+class CbandComp
 {
 public:
     Long m_N1;
@@ -136,7 +137,7 @@ public:
     Long m_Nlow;
     CmatComp m_a;
 
-    CbandTComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow);
+    CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow);
 
     Comp * ptr();
     const Comp * ptr() const;
@@ -147,46 +148,46 @@ public:
 	CmatComp &cmat();
 };
 
-inline CbandTComp::CbandTComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
+inline CbandComp::CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
     m_N1(N1), m_N2(N2), m_Nup(Nup), m_Nlow(Nlow), m_a(Nup+Nlow+1, N2)
 {}
 
-inline Comp * CbandTComp::ptr()
+inline Comp * CbandComp::ptr()
 {
     return m_a.ptr();
 }
 
-inline const Comp * CbandTComp::ptr() const
+inline const Comp * CbandComp::ptr() const
 {
     return m_a.ptr();
 }
 
-inline Long CbandTComp::n1() const
+inline Long CbandComp::n1() const
 {
     return m_N1;
 }
 
-inline Long CbandTComp::n2() const
+inline Long CbandComp::n2() const
 {
     return m_N2;
 }
 
-inline Long CbandTComp::nup() const
+inline Long CbandComp::nup() const
 {
     return m_Nup;
 }
 
-inline Long CbandTComp::nlow() const
+inline Long CbandComp::nlow() const
 {
     return m_Nlow;
 }
 
-inline CmatComp &cmat()
+inline CmatComp &CbandComp::cmat()
 {
 	return m_a;
 }
 
-typedef const CbandTComp & CbandTComp_I;
-typedef CbandTComp & CbandTComp_O, & CbandTComp_IO;
+typedef const CbandComp & CbandComp_I;
+typedef CbandComp & CbandComp_O, & CbandComp_IO;
 
 } // namespace slisc
