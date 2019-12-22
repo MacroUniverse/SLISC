@@ -1,5 +1,6 @@
 #pragma once
 #include "arithmetic.h"
+#include "slice_arith.h"
 #include "Cband.h"
 
 namespace slisc {
@@ -9,6 +10,17 @@ namespace slisc {
 // ref: cBLAS gbmv() routine
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
+void copy(CbandDoub_O a, Doub_I s)
+{
+	copy(a.cmat(), s);
+}
+
+void copy(CbandComp_O a, Comp_I s)
+{
+	copy(a.cmat(), s);
+}
+
+
 void copy(CbandDoub_O b, CmatDoub_I a)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -16,28 +28,34 @@ void copy(CbandDoub_O b, CmatDoub_I a)
 		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
-	CmatDoub &c = b.cmat();
-    for (Long j = 0; j < N2; j++) {
+    for (Long j = 0; j < N2; ++j) {
+		SvecDoub sli_b = slice1(b.cmat(), j);
+		SvecDoub_c sli_a = slice1(a, j);
         Long k = b.nup() - j;
-        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
-            c(k + i, j) = a(i, j);
-        }
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
     }
 }
 
-void copy(CmatDoub_O a, CbandDoub_O b)
+void copy(CmatDoub_O a, CbandDoub_I b)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
 		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
-	CmatDoub &c = b.cmat();
-    for (Long j = 0; j < N2; j++) {
+    for (Long j = 0; j < N2; ++j) {
         Long k = b.nup() - j;
-        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
-            a(i, j) = c(k + i, j);
-        }
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+		SvecDoub sli_a = slice1(a, j);
+		SvecDoub_c sli_b = slice1(b.cmat(), j);
+		for (Long i = 0; i < i_beg; ++i)
+			sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+		for (Long i = i_end; i < N1; ++i)
+			sli_a[i] = 0;
     }
 }
 
@@ -48,28 +66,34 @@ void copy(CbandComp_O b, CmatComp_I a)
 		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
-	CmatComp &c = b.cmat();
-    for (Long j = 0; j < N2; j++) {
+    for (Long j = 0; j < N2; ++j) {
+		SvecComp sli_b = slice1(b.cmat(), j);
+		SvecComp_c sli_a = slice1(a, j);
         Long k = b.nup() - j;
-        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
-            c(k + i, j) = a(i, j);
-        }
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
     }
 }
 
-void copy(CmatComp_O a, CbandComp_O b)
+void copy(CmatComp_O a, CbandComp_I b)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
 		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
-	CmatComp &c = b.cmat();
-    for (Long j = 0; j < N2; j++) {
+    for (Long j = 0; j < N2; ++j) {
         Long k = b.nup() - j;
-        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
-            a(i, j) = c(k + i, j);
-        }
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+		SvecComp sli_a = slice1(a, j);
+		SvecComp_c sli_b = slice1(b.cmat(), j);
+		for (Long i = 0; i < i_beg; ++i)
+			sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+		for (Long i = i_end; i < N1; ++i)
+			sli_a[i] = 0;
     }
 }
 

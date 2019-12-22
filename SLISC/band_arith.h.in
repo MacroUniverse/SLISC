@@ -1,5 +1,6 @@
 #pragma once
 #include "arithmetic.h"
+#include "slice_arith.h"
 #include "Cband.h"
 
 namespace slisc {
@@ -10,11 +11,24 @@ namespace slisc {
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
 //% types = {
+//%     'CbandDoub'; 'CbandComp';
+//% };
+//%------------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+void copy(@T@_O a, @Ts@_I s)
+{
+	copy(a.cmat(), s);
+}
+//%------------------------------
+
+//% types = {
 //%     'CbandDoub', 'CmatDoub';
 //%     'CbandComp', 'CmatComp';
 //% };
 //%------------------------------
 //% [BandT, CmatT] = varargin{:};
+//% Ts = contain_type(CmatT);
+//% SvecT = ['Svec' Ts];
 void copy(@BandT@_O b, @CmatT@_I a)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -22,28 +36,34 @@ void copy(@BandT@_O b, @CmatT@_I a)
 		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
-	@CmatT@ &c = b.cmat();
-    for (Long j = 0; j < N2; j++) {
+    for (Long j = 0; j < N2; ++j) {
+		@SvecT@ sli_b = slice1(b.cmat(), j);
+		@SvecT@_c sli_a = slice1(a, j);
         Long k = b.nup() - j;
-        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
-            c(k + i, j) = a(i, j);
-        }
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
     }
 }
 
-void copy(@CmatT@_O a, @BandT@_O b)
+void copy(@CmatT@_O a, @BandT@_I b)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
 		SLS_ERR("wrong shape!");
 #endif
     Long N1 = a.n1(), N2 = a.n2();
-	@CmatT@ &c = b.cmat();
-    for (Long j = 0; j < N2; j++) {
+    for (Long j = 0; j < N2; ++j) {
         Long k = b.nup() - j;
-        for (Long i = max(Long(0), j - b.nup()); i < min(N1, j + b.nlow() + 1); i++) {
-            a(i, j) = c(k + i, j);
-        }
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+		@SvecT@ sli_a = slice1(a, j);
+		@SvecT@_c sli_b = slice1(b.cmat(), j);
+		for (Long i = 0; i < i_beg; ++i)
+			sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+		for (Long i = i_end; i < N1; ++i)
+			sli_a[i] = 0;
     }
 }
 //%------------------------------

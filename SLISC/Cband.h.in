@@ -22,11 +22,14 @@ public:
 
     @T@ * ptr();
     const @T@ * ptr() const;
+	@T@ operator()(Long_I i, Long_I j) const;
+	@T@ &ref(Long_I i, Long_I j);
     Long n1() const;
     Long n2() const;
     Long nup() const;
     Long nlow() const;
 	@CmatT@ &cmat();
+	const @CmatT@ &cmat() const;
 };
 
 inline @CbandT@::@CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
@@ -41,6 +44,28 @@ inline @T@ * @CbandT@::ptr()
 inline const @T@ * @CbandT@::ptr() const
 {
     return m_a.ptr();
+}
+
+inline @T@ @CbandT@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		return 0;
+    return m_a(m_Nup + i - j, j);
+}
+
+inline @T@ &@CbandT@::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		SLS_ERR("index out of band!");
+    return m_a(m_Nup + i - j, j);
 }
 
 inline Long @CbandT@::n1() const
@@ -64,6 +89,11 @@ inline Long @CbandT@::nlow() const
 }
 
 inline @CmatT@ &@CbandT@::cmat()
+{
+	return m_a;
+}
+
+inline const @CmatT@ &@CbandT@::cmat() const
 {
 	return m_a;
 }

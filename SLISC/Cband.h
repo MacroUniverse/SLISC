@@ -17,11 +17,14 @@ public:
 
     Int * ptr();
     const Int * ptr() const;
+	Int operator()(Long_I i, Long_I j) const;
+	Int &ref(Long_I i, Long_I j);
     Long n1() const;
     Long n2() const;
     Long nup() const;
     Long nlow() const;
 	CmatInt &cmat();
+	const CmatInt &cmat() const;
 };
 
 inline CbandInt::CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
@@ -36,6 +39,28 @@ inline Int * CbandInt::ptr()
 inline const Int * CbandInt::ptr() const
 {
     return m_a.ptr();
+}
+
+inline Int CbandInt::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		return 0;
+    return m_a(m_Nup + i - j, j);
+}
+
+inline Int &CbandInt::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		SLS_ERR("index out of band!");
+    return m_a(m_Nup + i - j, j);
 }
 
 inline Long CbandInt::n1() const
@@ -63,6 +88,11 @@ inline CmatInt &CbandInt::cmat()
 	return m_a;
 }
 
+inline const CmatInt &CbandInt::cmat() const
+{
+	return m_a;
+}
+
 typedef const CbandInt & CbandInt_I;
 typedef CbandInt & CbandInt_O, & CbandInt_IO;
 
@@ -79,11 +109,14 @@ public:
 
     Doub * ptr();
     const Doub * ptr() const;
+	Doub operator()(Long_I i, Long_I j) const;
+	Doub &ref(Long_I i, Long_I j);
     Long n1() const;
     Long n2() const;
     Long nup() const;
     Long nlow() const;
 	CmatDoub &cmat();
+	const CmatDoub &cmat() const;
 };
 
 inline CbandDoub::CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
@@ -98,6 +131,28 @@ inline Doub * CbandDoub::ptr()
 inline const Doub * CbandDoub::ptr() const
 {
     return m_a.ptr();
+}
+
+inline Doub CbandDoub::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		return 0;
+    return m_a(m_Nup + i - j, j);
+}
+
+inline Doub &CbandDoub::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		SLS_ERR("index out of band!");
+    return m_a(m_Nup + i - j, j);
 }
 
 inline Long CbandDoub::n1() const
@@ -125,6 +180,11 @@ inline CmatDoub &CbandDoub::cmat()
 	return m_a;
 }
 
+inline const CmatDoub &CbandDoub::cmat() const
+{
+	return m_a;
+}
+
 typedef const CbandDoub & CbandDoub_I;
 typedef CbandDoub & CbandDoub_O, & CbandDoub_IO;
 
@@ -141,11 +201,14 @@ public:
 
     Comp * ptr();
     const Comp * ptr() const;
+	Comp operator()(Long_I i, Long_I j) const;
+	Comp &ref(Long_I i, Long_I j);
     Long n1() const;
     Long n2() const;
     Long nup() const;
     Long nlow() const;
 	CmatComp &cmat();
+	const CmatComp &cmat() const;
 };
 
 inline CbandComp::CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow):
@@ -160,6 +223,28 @@ inline Comp * CbandComp::ptr()
 inline const Comp * CbandComp::ptr() const
 {
     return m_a.ptr();
+}
+
+inline Comp CbandComp::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		return 0;
+    return m_a(m_Nup + i - j, j);
+}
+
+inline Comp &CbandComp::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+		SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+		SLS_ERR("index out of band!");
+    return m_a(m_Nup + i - j, j);
 }
 
 inline Long CbandComp::n1() const
@@ -183,6 +268,11 @@ inline Long CbandComp::nlow() const
 }
 
 inline CmatComp &CbandComp::cmat()
+{
+	return m_a;
+}
+
+inline const CmatComp &CbandComp::cmat() const
 {
 	return m_a;
 }
