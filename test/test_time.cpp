@@ -12,7 +12,7 @@ void SLS_TIME_H_ERR(const std::string &str) {}
 void test_time()
 {
 #ifndef NDEBUG
-    std::cout << "test_time() : not fail in debug mode!" << std::endl;
+    std::cout << "test_time() : no fail in debug mode!" << std::endl;
 #endif
     using namespace slisc;
     Timer t; CPUTimer cput;
