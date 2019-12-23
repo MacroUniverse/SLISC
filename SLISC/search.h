@@ -81,8 +81,8 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
 
 inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 {
-	Long N = ind2 - ind1 + 1;
 #ifdef SLS_CHECK_SHAPE
+	Long N = ind2 - ind1 + 1;
     if (N < 1)
 		SLS_ERR("range error!");
 #endif
@@ -153,8 +153,8 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 
 inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
-	Long N = ind2 - ind1 + 1;
 #ifdef SLS_CHECK_SHAPE
+	Long N = ind2 - ind1 + 1;
     if (N < 1)
 		SLS_ERR("range error!");
 #endif
@@ -225,8 +225,8 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 
 inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 {
-	Long N = ind2 - ind1 + 1;
 #ifdef SLS_CHECK_SHAPE
+	Long N = ind2 - ind1 + 1;
     if (N < 1)
 		SLS_ERR("range error!");
 #endif
@@ -297,8 +297,8 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 
 inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
 {
-	Long N = ind2 - ind1 + 1;
 #ifdef SLS_CHECK_SHAPE
+	Long N = ind2 - ind1 + 1;
     if (N < 1)
 		SLS_ERR("range error!");
 #endif
@@ -369,8 +369,8 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 
 inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
-	Long N = ind2 - ind1 + 1;
 #ifdef SLS_CHECK_SHAPE
+	Long N = ind2 - ind1 + 1;
     if (N < 1)
 		SLS_ERR("range error!");
 #endif
