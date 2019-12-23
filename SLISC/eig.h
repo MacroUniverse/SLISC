@@ -3,7 +3,7 @@
 #include "arithmetic.h"
 
 namespace slisc {
-
+#ifdef SLS_USE_LAPACKE
 // only upper triangle is needed
 // eigen value in ascending order
 inline void eig_sym(VecDoub_O eigVal, CmatDoub_O eigVec, CmatDoub_I A)
@@ -69,5 +69,5 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
     if (ret != 0)
         SLS_ERR("failed!");
 }
-
+#endif
 } // namespace slisc

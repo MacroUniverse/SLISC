@@ -7,7 +7,7 @@
 void test_eig()
 {
     using namespace slisc;
-
+#ifdef SLS_USE_LAPACKE
     // test eig_sym(CmatDoub)
     {
         Long N = 20;
@@ -68,4 +68,5 @@ void test_eig()
             }
         }
     }
+#endif
 }

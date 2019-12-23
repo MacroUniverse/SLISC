@@ -1648,19 +1648,26 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 }
 //%-------------------------
 
-//% types = {'VecDoub', 'CmatDoub', 'VecDoub';
-//%   %  'VecLcomp', 'MatComp', 'VecInt';
-//%     'VecInt', 'CmatInt', 'VecInt';
-//%     'VecComp', 'CmatComp', 'VecComp';
-//%     'VecComp', 'CmatDoub', 'VecComp';
-//%     'DvecComp', 'DcmatDoub', 'DvecComp';
-//%     'VecComp', 'MatComp', 'VecDoub';
-//%     'VecComp', 'MatComp', 'VecComp';
-//%   %  'VecComp', 'CmatImag', 'VecComp';
-//%   %  'VecComp', 'MatDoub', 'VecComp';
-//%   %  'SvecComp', 'MatDoub', 'VecComp';
-//%     'SvecComp', 'DcmatComp', 'SvecComp';
-//%     'SvecComp', 'DcmatDoub', 'SvecComp';
+//% types = {'VecDoub' 'CmatDoub' 'VecDoub';
+//%   %  'VecLcomp' 'MatComp' 'VecInt';
+//%     'VecInt' 'CmatInt' 'VecInt';
+//%     'VecComp' 'CmatComp' 'VecComp';
+//%     'VecComp' 'CmatDoub' 'VecComp';
+//%     'DvecComp' 'DcmatDoub' 'DvecComp';
+//%     'SvecComp' 'ScmatDoub' 'SvecComp';
+//%     'SvecComp' 'ScmatDoub' 'DvecComp';
+//%     'DvecComp' 'CmatDoub' 'DvecComp';
+//%     'DvecComp' 'ScmatDoub' 'SvecComp';
+//%     'VecComp' 'MatComp' 'VecDoub';
+//%     'VecComp' 'MatComp' 'VecComp';
+//%     'VecComp' 'CmatImag' 'VecComp';
+//%     'VecComp' 'MatDoub' 'VecComp';
+//%     'VecComp' 'ScmatDoub' 'VecComp';
+//%     'SvecComp' 'MatDoub' 'VecComp';
+//%     'SvecComp' 'ScmatComp' 'SvecComp';
+//%     'SvecComp' 'ScmatComp' 'DvecComp';
+//%     'SvecComp' 'DcmatComp' 'SvecComp';
+//%     'SvecComp' 'DcmatDoub' 'SvecComp';
 //%     };
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};

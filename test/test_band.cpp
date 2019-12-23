@@ -52,7 +52,7 @@ void test_band()
 			}
 		}
 	}
-
+#ifdef SLS_USE_CBLAS
     // test band matrix-vector multiplication
     {
         Long N1 = 5, N2 = 6, Nlow = 2, Nup = 1;
@@ -89,4 +89,5 @@ void test_band()
         if (max_abs(y1) > 1e-13)
             SLS_ERR("failed");
     }
+#endif
 }

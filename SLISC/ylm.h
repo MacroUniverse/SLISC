@@ -4,13 +4,12 @@
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_sf_legendre.h>
 #include <gsl/gsl_sf_coupling.h>
-#endif
 
 namespace slisc {
 
 // same definition with Wolfram Alpha
 // see http://littleshi.cn/online/SphHar.html
-#ifdef SLS_USE_GSL
+
 Comp ylm(Int_I l, Int_I m, Doub_I theta, Doub_I phi)
 {
     Doub A, ret0;
@@ -39,7 +38,6 @@ Comp ylm(Int_I l, Int_I m, Doub_I theta, Doub_I phi)
     }
     return ret0;
 }
-#endif
 
 // generalized spherical harmonics
 Comp yl1l2LM(Int_I l1, Int_I l2, Int_I L, Int_I M,
@@ -57,3 +55,4 @@ Comp yl1l2LM(Int_I l1, Int_I l2, Int_I L, Int_I M,
 }
 
 } // namespace slisc
+#endif

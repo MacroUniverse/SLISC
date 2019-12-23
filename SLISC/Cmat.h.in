@@ -3,7 +3,7 @@
 #include "Vbase.h"
 
 namespace slisc {
-//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp';};
+//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp'; 'Imag'};
 //%----------------------------------------
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];

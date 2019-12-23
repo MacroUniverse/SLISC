@@ -27,14 +27,17 @@ void test_Cmat4()
         SLS_ERR("failed!");
 
     Long ind = 0;
-    for (Long l = 0; l < 5; ++l)
-        for (Long k = 0; k < 4; ++k)
-            for (Long j = 0; j < 3; ++j)
+    for (Long l = 0; l < 5; ++l) {
+        for (Long k = 0; k < 4; ++k) {
+            for (Long j = 0; j < 3; ++j) {
                 for (Long i = 0; i < 2; ++i) {
                     ++ind;
                     if (a(i, j, k, l) != ind)
                         SLS_ERR("failed!");
                 }
+			}
+		}
+	}
 
 	ScmatInt sli; 
     for (Long l = 0; l < 5; ++l) {

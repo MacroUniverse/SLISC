@@ -5,6 +5,7 @@
 
 void test_lin_eq()
 {
+#ifdef SLS_USE_LAPACKE
     using namespace slisc;
 	{
 		CmatDoub a(3, 3), a_inv(3, 3), b(3, 3);
@@ -89,4 +90,5 @@ void test_lin_eq()
 			SLS_ERR("failed!");
 		}
 	}
+#endif
 }

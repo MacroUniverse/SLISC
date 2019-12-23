@@ -438,4 +438,75 @@ inline void CmatComp::resize(Long_I Nr, Long_I Nc)
 typedef const CmatComp & CmatComp_I;
 typedef CmatComp & CmatComp_O, & CmatComp_IO;
 
+class CmatImag : public VbaseImag
+{
+protected:
+    typedef VbaseImag Base;
+    using Base::m_p;
+    using Base::m_N;
+    Long m_Nr, m_Nc;
+public:
+    using Base::ptr;
+    using Base::operator();
+    CmatImag(Long_I Nr, Long_I Nc);
+    CmatImag(const CmatImag &rhs);        // Copy constructor
+	CmatImag & operator=(const CmatImag &rhs) = delete;
+    void operator<<(CmatImag &rhs); // move data and rhs.resize(0, 0)
+    Imag& operator()(Long_I i, Long_I j);    // double indexing
+    const Imag& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
+};
+
+inline CmatImag::CmatImag(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+
+inline CmatImag::CmatImag(const CmatImag &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, "
+        "use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void CmatImag::operator<<(CmatImag &rhs)
+{
+    m_Nr = rhs.m_Nr; m_Nc = rhs.m_Nc;
+    rhs.m_Nr = rhs.m_Nc = 0;
+    Base::operator<<(rhs);
+}
+
+inline Imag & CmatImag::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i+m_Nr*j];
+}
+
+inline const Imag & CmatImag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i+m_Nr*j];
+}
+
+inline Long CmatImag::n1() const
+{ return m_Nr; }
+
+inline Long CmatImag::n2() const
+{ return m_Nc; }
+
+inline void CmatImag::resize(Long_I Nr, Long_I Nc)
+{
+    if (Nr != m_Nr || Nc != m_Nc) {
+        Base::resize(Nr*Nc);
+        m_Nr = Nr; m_Nc = Nc;
+    }
+}
+
+typedef const CmatImag & CmatImag_I;
+typedef CmatImag & CmatImag_O, & CmatImag_IO;
+
 } // namespace slisc

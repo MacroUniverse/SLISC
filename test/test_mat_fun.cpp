@@ -4,6 +4,7 @@
 
 void test_mat_fun()
 {
+#ifdef SLS_USE_LAPACKE
     using namespace slisc;
     {
         CmatDoub a(3, 3); // symmetric matrix
@@ -27,4 +28,5 @@ void test_mat_fun()
             if (max_abs(out) > 5e-13) SLS_ERR("failed!");
         }
     }
+#endif
 }

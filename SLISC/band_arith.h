@@ -33,6 +33,7 @@ inline DcmatComp_c band(CbandComp_I a)
 
 
 // matrix-vector multiplication for band matrix
+#ifdef SLS_USE_CBLAS
 inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
 {
     Doub alpha = 1, beta = 0;
@@ -48,5 +49,6 @@ inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
         &alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, &beta, y.ptr(), incy);
 }
+#endif
 
 } // namespace slisc

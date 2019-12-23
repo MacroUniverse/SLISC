@@ -58,6 +58,7 @@ void test_D2_mat()
 }
 
 // bound states of infinite square well
+#ifdef SLS_USE_LAPACKE
 void test_inf_sqr_well()
 {
     // === params ===
@@ -89,8 +90,10 @@ void test_inf_sqr_well()
 
     // TODO: test wave function using analytical solution
 }
+#endif
 
 // bound states of simple harmonic oscillator
+#ifdef SLS_USE_LAPACKE
 void test_SHO()
 {
     // === params ===
@@ -125,11 +128,14 @@ void test_SHO()
 
     // TODO: test wave function using analytical solution.
 }
+#endif
 
 void test_fedvr()
 {
     test_gauss();
     test_D2_mat();
+#ifdef SLS_USE_LAPACKE
     test_SHO();
     test_inf_sqr_well();
+#endif
 }

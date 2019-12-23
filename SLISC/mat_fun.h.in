@@ -3,7 +3,7 @@
 #include "arithmetic.h"
 #include "sparse_arith.h"
 #include "eig.h"
-
+#ifdef SLS_USE_LAPACKE
 namespace slisc {
 
 // out = exp(a*s) for symmetric matrix
@@ -47,3 +47,4 @@ void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
 }
 
 } // namespace slisc
+#endif

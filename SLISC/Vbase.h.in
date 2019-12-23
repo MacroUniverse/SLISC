@@ -1,9 +1,10 @@
 // basic vector
 #pragma once
 #include "global.h"
+#include "Imag.h"
 
 namespace slisc {
-//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp'};
+//% types = {'Char'; 'Int'; 'Llong'; 'Long'; 'Float'; 'Doub'; 'Comp'; 'Imag'};
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];

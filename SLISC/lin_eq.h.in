@@ -2,13 +2,13 @@
 #include "compare.h"
 #include "band_arith.h"
 
+#ifdef SLS_USE_LAPACKE
 namespace slisc {
 //not the most accurate, see also ?gerfs
 //% types = {'CmatDoub'; 'ScmatDoub';};
 //%---------------------------------
 //% T = varargin{:};
 //% Ts = contain_type(T);
-#ifdef SLS_USE_LAPACKE
 inline void inv_mat(@T@_IO A)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -27,7 +27,6 @@ inline void inv_mat(@T@_IO A)
 //%     error('not implemented (1)!');
 //% end
 }
-#endif
 //%------------------------ 
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
@@ -181,3 +180,4 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, VecInt_IO ipiv)
 }
 //%---------------------
 } // namespace slisc
+#endif

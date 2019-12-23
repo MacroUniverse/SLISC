@@ -2,6 +2,7 @@
 
 void test_ylm()
 {
+#ifdef SLS_USE_GSL
     using namespace slisc;
     Comp ret = ylm(5, 3, 1., 1);
     if (abs(ret - Comp(0.33207247946604928, -0.047335783997989426)) > 1e-14)
@@ -14,4 +15,5 @@ void test_ylm()
     ret = yl1l2LM(1, 2, 3, 1, 1.1, 2.2, 1.2, 2.3);
     if (abs(ret - Comp(-0.01344167979466, 0.016624624728563)) > 1e-8)
         SLS_ERR("failed");
+#endif
 }

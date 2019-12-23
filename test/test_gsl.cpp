@@ -7,6 +7,7 @@
 
 void test_gsl()
 {
+#ifdef SLS_USE_GSL
     using namespace slisc;
     Int two_ja = 1, two_ma = 1;
     Int two_jb = 1, two_mb = -1;
@@ -113,4 +114,5 @@ void test_gsl()
         if (abs(F[3] - 0.103105785225698) > 1e-15)
             SLS_ERR("failed!");
     }
+#endif
 }
