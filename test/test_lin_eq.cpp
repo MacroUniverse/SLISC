@@ -17,20 +17,76 @@ void test_lin_eq()
 			SLS_ERR("failed!");
 	}
     
+	// solve general matrix
+	{
+		Long N1 = 10, N2 = 10;
+		CmatDoub a(N1, N2);
+		VecDoub x(N2), y(N2);
+		rand(x); rand(a);
+		mul(y, a, x);
+		lin_eq(y, a);
+		y -= x;
+		if (max_abs(y) > 5e-14) {
+			cout << "max_abs(y) = " << max_abs(y) << endl;
+			SLS_ERR("failed!");
+		}
+	}
+
+	{
+		Long N1 = 10, N2 = 10;
+		CmatComp a(N1, N2);
+		VecComp x(N2), y(N2);
+		rand(x); rand(a);
+		mul(y, a, x);
+		lin_eq(y, a);
+		y -= x;
+		if (max_abs(y) > 5e-14) {
+			cout << "max_abs(y) = " << max_abs(y) << endl;
+			SLS_ERR("failed!");
+		}
+	}
+
 	// solve band matrix
 	{
 		Long N1 = 10, N2 = 10, Nup = 3, Nlow = 4;
-		CmatDoub a(N1, N2);
 		CbandDoub b(N1, N2, Nup, Nlow);
-		VecDoub x(N2), ya(N2), yb(N2), xa(N2), xb(N2);
-		rand(x);
-		rand(b.cmat());
-		copy(a, b);
-		mul(ya, a, x); mul(yb, b, x);
-		lin_eq(ya, a);
-		lin_eq(yb, b);
-		yb -= ya;
-		if (max_abs(yb) > 1e-14)
+		VecDoub x(N2), y(N2);
+		rand(x); rand(b.cmat());
+		mul(y, b, x);
+		lin_eq(y, b);
+		y -= x;
+		if (max_abs(y) > 5e-14) {
+			cout << "max_abs(y) = " << max_abs(y) << endl;
 			SLS_ERR("failed!");
+		}
+	}
+
+	{
+		Long N1 = 10, N2 = 10, Nup = 3, Nlow = 4;
+		CbandComp b(N1, N2, Nup, Nlow);
+		VecComp x(N2), y(N2);
+		rand(x); rand(b.cmat());
+		mul(y, b, x);
+		lin_eq(y, b);
+		y -= x;
+		if (max_abs(y) > 5e-14) {
+			cout << "max_abs(y) = " << max_abs(y) << endl;
+			SLS_ERR("failed!");
+		}
+	}
+
+	{
+		Long N1 = 10, N2 = 10, Nup = 3, Nlow = 4;
+		CbandComp b(N1, N2, Nup, Nlow, Nup + 2*Nlow + 1, Nlow + Nup);
+		VecInt ipiv(N1);
+		VecComp x(N2), y(N2);
+		rand(x); rand(b.cmat());
+		mul(y, b, x);
+		lin_eq(y, b, ipiv);
+		y -= x;
+		if (max_abs(y) > 5e-14) {
+			cout << "max_abs(y) = " << max_abs(y) << endl;
+			SLS_ERR("failed!");
+		}
 	}
 }

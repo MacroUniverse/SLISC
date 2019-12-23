@@ -22,7 +22,7 @@ inline void inv_mat(@T@_IO A)
     LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
 //% elseif is_dense_mat(T) && is_Comp(Ts)
 	LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
-    LAPACKE_zgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
+    LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.ptr(), N, (double _Complex*)ipiv.ptr());
 //% else
 //%     error('not implemented (1)!');
 //% end
@@ -37,6 +37,7 @@ inline void inv_mat(@T@_IO A)
 //% 'ScmatDoub' 'ScmatDoub';
 //% 'VecDoub' 'CmatDoub';
 //% 'SvecDoub' 'CmatDoub';
+//% 'VecComp' 'CmatComp';
 //% };
 //%---------------------
 //% [Tx, Ta] = varargin{:};
@@ -71,7 +72,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% if is_Doub(Tsa) && is_Doub(Tsx)
 	Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
 //% elseif is_Comp(Tsa) && is_Comp(Tsx)
-	Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+	Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');
@@ -86,6 +87,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
 //% types = {
 //%     'VecDoub' 'CbandDoub';
+//%     'VecComp' 'CbandComp';
 //% };
 //%---------------------
 //% [Tx, Ta] = varargin{:};
@@ -121,7 +123,53 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% if is_Doub(Tsx) && is_Doub(Tsa)
 	Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
 //% elseif is_Comp(Tsx) && is_Comp(Tsa)
-	Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+	Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+//% else
+//%     disp(Tx); disp(Ta);
+//%     error('not implemented (2)');
+//% end
+	if (ret != 0) {
+		cout << "LAPACK returned " << ret << endl;
+		SLS_ERR("something wrong!");
+	}
+}
+//%---------------------
+
+// solution to linear system with band coefficient matrix A and multiple right-hand sides.
+// matrix will be replaced with LU decomp
+// use the following to generate input data
+// VecInt ipiv(a.n1());
+// @Ta@ a1(a.n1(), a.n2(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+// copy(a1, a);
+//% types = {
+//%     'VecDoub' 'CbandDoub';
+//%     'VecComp' 'CbandComp';
+//% };
+//%---------------------
+//% [Tx, Ta] = varargin{:};
+//% Tsx = contain_type(Tx); Tsa = contain_type(Ta);
+inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, VecInt_IO ipiv)
+{
+#ifdef SLS_CHECK_SHAPE
+//% if is_dense_vec(Tx)
+	if (a1.n1() != a1.n2() || a1.n2() != x.size())
+//% else
+	if (a1.n1() != a1.n2() || a1.n2() != x.n1())
+//% end
+		SLS_ERR("wrong shape!");
+#endif
+	Int lda = a1.lda();
+//% if is_Cmat(Tx) || is_Scmat(Tx)
+	Int ldx = x.n1(), nrhs = x.n2();
+//% elseif is_Dcmat(Tx)
+	Int ldx = x.lda(), nrhs = x.n2();
+//% elseif is_dense_vec(Tx)
+	Int ldx = x.size(), nrhs = 1;
+//% end
+//% if is_Doub(Tsx) && is_Doub(Tsa)
+	Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+//% elseif is_Comp(Tsx) && is_Comp(Tsa)
+	Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');
