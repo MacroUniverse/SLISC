@@ -85,8 +85,12 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmatInt' 'MatChar';
 //%     'CmatLlong' 'CmatLlong';
 //%     'CmatDoub' 'CmatDoub';
+//%     'CmatDoub' 'ScmatDoub';
+//%     'CmatDoub' 'DcmatDoub';
 //%     'CmatComp' 'CmatDoub';
 //%     'CmatComp' 'CmatComp';
+//%     'CmatComp' 'ScmatComp';
+//%     'CmatComp' 'DcmatComp';
 //%     'MatDoub' 'CmatDoub';
 //%     'CmatDoub' 'MatDoub';
 //%     'MatComp' 'CmatComp';
@@ -97,6 +101,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'DcmatDoub' 'CmatDoub';
 //%     'DcmatDoub' 'DcmatDoub';
 //%     'DcmatComp' 'DcmatDoub';
+//%     'DcmatComp' 'CmatComp';
 //%     'DcmatDoub' 'DcmatComp';
 //%     'DcmatComp' 'DcmatComp';
 //%     'Cmat3Int' 'Cmat3Int';
@@ -131,6 +136,8 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'Jcmat3Comp' 'Jcmat3Comp';
 //%     'CmobdInt' 'McooInt';
 //%     'CmobdDoub' 'McooDoub';
+//%     'CbandDoub' 'CbandDoub';
+//%     'CbandComp' 'CbandComp';
 //%     'CbandDoub' 'CmatDoub';
 //%     'CbandComp' 'CmatComp';
 //%     'CmatDoub' 'CbandDoub';

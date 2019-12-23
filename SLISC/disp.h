@@ -381,4 +381,38 @@ inline void disp(CmobdInt_I a, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 
+inline void disp(CbandDoub_I a, Int_I precision = def_disp_prec)
+{
+    Long i, j, m{ a.n1() }, n{ a.n2() };
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    if (a.size() == 0) cout << "empty";
+    else
+        for (i = 0; i < m; ++i) {
+            for (j = 0; j < n; ++j) {
+                cout << to_num(a(i, j)) << "   ";
+            }
+            cout << endl;
+        }
+    cout << endl;
+    cout.precision(oldPrecision);
+}
+
+inline void disp(CbandComp_I a, Int_I precision = def_disp_prec)
+{
+    Long i, j, m{ a.n1() }, n{ a.n2() };
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    if (a.size() == 0) cout << "empty";
+    else
+        for (i = 0; i < m; ++i) {
+            for (j = 0; j < n; ++j) {
+                cout << to_num(a(i, j)) << "   ";
+            }
+            cout << endl;
+        }
+    cout << endl;
+    cout.precision(oldPrecision);
+}
+
 } // namespace slisc

@@ -10,7 +10,7 @@ const Int def_disp_prec = 8;
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
-//%     'CmobdInt';
+//%     'CmobdInt'; 'CbandDoub'; 'CbandComp';
 //% };
 //%-----------------------------
 //% T = varargin{:};

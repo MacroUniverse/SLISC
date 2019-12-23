@@ -10,14 +10,49 @@ namespace slisc {
 // ref: cBLAS gbmv() routine
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
+// slice the non-zero band
+//% types = {
+//%     'Doub'; 'Comp';
+//% };
+//%------------------------------
+//% T = varargin{:};
+//% CbandT = ['Cband' T]; DcmatT = ['Dcmat' T];
+inline @DcmatT@ band(@CbandT@_IO a)
+{
+	return @DcmatT@(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+}
+
+inline @DcmatT@_c band(@CbandT@_I a)
+{
+	return @DcmatT@_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+}
+//%------------------------------
+
 //% types = {
 //%     'CbandDoub'; 'CbandComp';
 //% };
 //%------------------------------
 //% T = varargin{:}; Ts = contain_type(T);
-void copy(@T@_O a, @Ts@_I s)
+inline void copy(@T@_O a, @Ts@_I s)
 {
-	copy(a.cmat(), s);
+	copy(band(a), s);
+}
+//%------------------------------
+
+//% types = {
+//%     'CbandDoub' 'CbandDoub';
+//%     'CbandComp' 'CbandComp';
+//% };
+//%------------------------------
+//% [T, T1] = varargin{:};
+inline void copy(@T@_O a, @T@_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
+		SLS_ERR("wrong shape!");
+#endif
+	a.reshape(b.n1(), b.nup(), b.nlow());
+	copy(band(a), band(b));
 }
 //%------------------------------
 
@@ -29,7 +64,7 @@ void copy(@T@_O a, @Ts@_I s)
 //% [BandT, CmatT] = varargin{:};
 //% Ts = contain_type(CmatT);
 //% SvecT = ['Svec' Ts];
-void copy(@BandT@_O b, @CmatT@_I a)
+inline void copy(@BandT@_O b, @CmatT@_I a)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
@@ -39,14 +74,14 @@ void copy(@BandT@_O b, @CmatT@_I a)
     for (Long j = 0; j < N2; ++j) {
 		@SvecT@ sli_b = slice1(b.cmat(), j);
 		@SvecT@_c sli_a = slice1(a, j);
-        Long k = b.nup() - j;
+        Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
             sli_b[k + i] = sli_a[i];
     }
 }
 
-void copy(@CmatT@_O a, @BandT@_I b)
+inline void copy(@CmatT@_O a, @BandT@_I b)
 {
 #ifdef SLS_CHECK_SHAPE
 	if (!shape_cmp(a, b))
@@ -54,7 +89,7 @@ void copy(@CmatT@_O a, @BandT@_I b)
 #endif
     Long N1 = a.n1(), N2 = a.n2();
     for (Long j = 0; j < N2; ++j) {
-        Long k = b.nup() - j;
+        Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
 		@SvecT@ sli_a = slice1(a, j);
 		@SvecT@_c sli_b = slice1(b.cmat(), j);
@@ -94,22 +129,20 @@ void copy(@CmatT@_O a, @BandT@_I b)
 // matrix-vector multiplication for band matrix
 
 // matrix-vector multiplication for band matrix
-void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
+inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
 {
     Doub alpha = 1, beta = 0;
-    Long lda = a.nlow() + a.nup() + 1;
     Long incx = 1, incy = 1;
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        alpha, a.ptr(), lda, x.ptr(), incx, beta, y.ptr(), incy);
+        alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, beta, y.ptr(), incy);
 }
 
-void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
+inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
 {
     Comp alpha(1, 0), beta(0, 0);
-    Long lda = a.nlow() + a.nup() + 1;
     Long incx = 1, incy = 1;
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        &alpha, a.ptr(), lda, x.ptr(), incx, &beta, y.ptr(), incy);
+        &alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, &beta, y.ptr(), incy);
 }
 
 } // namespace slisc

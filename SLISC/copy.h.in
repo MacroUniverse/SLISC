@@ -191,7 +191,11 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'MatComp', 'MatComp';
 //%     'CmatLlong', 'CmatLlong';
 //%     'CmatDoub', 'CmatDoub';
+//%     'CmatDoub', 'ScmatDoub';
+//%     'CmatDoub', 'DcmatDoub';
 //%     'CmatComp', 'CmatComp';
+//%     'CmatComp', 'ScmatComp';
+//%     'CmatComp', 'DcmatComp';
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
 //%     'Cmat3Int', 'Cmat3Int';
@@ -216,6 +220,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'DcmatLlong', 'DcmatLlong';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'DcmatDoub', 'DcmatDoub';
+//%     'DcmatComp', 'CmatComp';
 //%     'DcmatComp', 'DcmatComp';
 //%     'Jcmat3Doub', 'Jcmat3Doub';
 //%     'Jcmat3Comp', 'Jcmat3Comp';
@@ -251,6 +256,8 @@ inline void copy(@T@_O v, @T1@_I v1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
 //% elseif is_Dmat(T) && is_Dmat(T1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n2(), v.n1());
+//% elseif is_Cmat(T) && is_Dcmat(T1)
+    matcpy(v.ptr(), v.n1(), v1.ptr(), v1.lda(), v.n1(), v.n2());
 //% elseif is_Dcmat(T) && is_Cmat(T1)
     matcpy(v.ptr(), v.lda(), v1.ptr(), v.n1(), v.n1(), v.n2());
 //% elseif ndim(T) == 3 && ndim(T1) == 3

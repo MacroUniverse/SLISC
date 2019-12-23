@@ -1,12 +1,13 @@
 #pragma once
 #include "compare.h"
+#include "band_arith.h"
 
 namespace slisc {
+//not the most accurate, see also ?gerfs
 //% types = {'CmatDoub'; 'ScmatDoub';};
 //%---------------------------------
 //% T = varargin{:};
 //% Ts = contain_type(T);
-//% if is_dense_mat(T) && is_Doub(Ts)
 #ifdef SLS_USE_LAPACKE
 inline void inv_mat(@T@_IO A)
 {
@@ -16,12 +17,119 @@ inline void inv_mat(@T@_IO A)
 #endif
     Int N = (Int)A.n1();
     VecInt ipiv(N);
+//% if is_dense_mat(T) && is_Doub(Ts)
     LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
     LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
+//% elseif is_dense_mat(T) && is_Comp(Ts)
+	LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
+    LAPACKE_zgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
+//% else
+//%     error('not implemented (1)!');
+//% end
 }
 #endif
-//% else
-//%     error('not implemented!');
-//% end
 //%------------------------ 
+
+// solution to linear system with general coefficient matrix A and multiple right-hand sides.
+//% types = {
+//% 'CmatDoub' 'CmatDoub';
+//% 'ScmatDoub' 'CmatDoub';
+//% 'ScmatDoub' 'ScmatDoub';
+//% 'VecDoub' 'CmatDoub';
+//% 'SvecDoub' 'CmatDoub';
+//% };
+//%---------------------
+//% [Tx, Ta] = varargin{:};
+//% Tsx = contain_type(Tx); Tsa = contain_type(Ta);
+//% CmatTsa = ['Cmat' Tsa];
+inline void lin_eq(@Tx@_IO x, @Ta@_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+//% if is_dense_vec(Tx)
+	if (a.n1() != a.n2() || a.n2() != x.size())
+//% else
+	if (a.n1() != a.n2() || a.n2() != x.n1())
+//% end
+		SLS_ERR("wrong shape!");
+#endif
+	static @CmatTsa@ a1(a.n1(), a.n2());
+	static VecInt ipiv(a.n1());
+	if (!shape_cmp(a1, a))
+		a1.resize(a.n1(), a.n2());
+	copy(a1, a);
+	if (a.n1() > ipiv.size())
+		ipiv.resize(a.n1());
+	Int lda = a1.n1();
+//% if is_Cmat(Tx) || is_Scmat(Tx)
+	Int ldx = x.n1(), nrhs = x.n2();
+//% elseif is_Dcmat(Tx)
+	Int ldx = x.lda(), nrhs = x.n2();
+//% elseif is_dense_vec(Tx)
+	Int ldx = x.size(), nrhs = 1;
+//% end
+
+//% if is_Doub(Tsa) && is_Doub(Tsx)
+	Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+//% elseif is_Comp(Tsa) && is_Comp(Tsx)
+	Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+//% else
+//%     disp(Tx); disp(Ta);
+//%     error('not implemented (2)');
+//% end
+	if (ret != 0) {
+		cout << "LAPACK returned " << ret << endl;
+		SLS_ERR("something wrong!");
+	}
+}
+//%---------------------
+
+// solution to linear system with band coefficient matrix A and multiple right-hand sides.
+//% types = {
+//%     'VecDoub' 'CbandDoub';
+//% };
+//%---------------------
+//% [Tx, Ta] = varargin{:};
+//% Tsx = contain_type(Tx); Tsa = contain_type(Ta);
+//% CbandTsa = ['Cband' Tsa];
+inline void lin_eq(@Tx@_IO x, @Ta@_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+//% if is_dense_vec(Tx)
+	if (a.n1() != a.n2() || a.n2() != x.size())
+//% else
+	if (a.n1() != a.n2() || a.n2() != x.n1())
+//% end
+		SLS_ERR("wrong shape!");
+#endif
+	static @CbandTsa@ a1(a.n1(), a.n2(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+	static VecInt ipiv(a.n1());
+	if (a1.lda() < a.nup() + 2*a.nlow() + 1 || a1.n2() != a.n2())
+		a1.resize(a.nup() + 2*a.nlow() + 1, a.n2());
+	a1.shift(a.nlow() + a.nup()); copy(a1, a);
+	if (a.n1() > ipiv.size())
+		ipiv.resize(a.n1());
+
+	Int lda = a1.lda();
+//% if is_Cmat(Tx) || is_Scmat(Tx)
+	Int ldx = x.n1(), nrhs = x.n2();
+//% elseif is_Dcmat(Tx)
+	Int ldx = x.lda(), nrhs = x.n2();
+//% elseif is_dense_vec(Tx)
+	Int ldx = x.size(), nrhs = 1;
+//% end
+
+//% if is_Doub(Tsx) && is_Doub(Tsa)
+	Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+//% elseif is_Comp(Tsx) && is_Comp(Tsa)
+	Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+//% else
+//%     disp(Tx); disp(Ta);
+//%     error('not implemented (2)');
+//% end
+	if (ret != 0) {
+		cout << "LAPACK returned " << ret << endl;
+		SLS_ERR("something wrong!");
+	}
+}
+//%---------------------
 } // namespace slisc
