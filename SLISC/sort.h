@@ -277,12 +277,12 @@ inline void sort(VecDoub_IO v, Long_I m = -1)
 
 
 //  from Numerical Recipes 3ed
-inline void sort2_vv(Char *v, Long *v1, Long_I N)
+inline void sort2_vv(Char *v, Llong *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
     Char a;
-    Long b;
+    Llong b;
     VecLong istack(NSTACK);
     ir = n - 1;
     for (;;) {
@@ -423,12 +423,12 @@ inline void sort2_vv(Int *v, Int *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-inline void sort2_vv(Int *v, Long *v1, Long_I N)
+inline void sort2_vv(Int *v, Llong *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
     Int a;
-    Long b;
+    Llong b;
     VecLong istack(NSTACK);
     ir = n - 1;
     for (;;) {
@@ -496,12 +496,12 @@ inline void sort2_vv(Int *v, Long *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-inline void sort2_vv(Llong *v, Long *v1, Long_I N)
+inline void sort2_vv(Llong *v, Llong *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
     Llong a;
-    Long b;
+    Llong b;
     VecLong istack(NSTACK);
     ir = n - 1;
     for (;;) {
@@ -569,12 +569,12 @@ inline void sort2_vv(Llong *v, Long *v1, Long_I N)
 }
 
 //  from Numerical Recipes 3ed
-inline void sort2_vv(Doub *v, Long *v1, Long_I N)
+inline void sort2_vv(Doub *v, Llong *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
     Doub a;
-    Long b;
+    Llong b;
     VecLong istack(NSTACK);
     ir = n - 1;
     for (;;) {
@@ -642,7 +642,7 @@ inline void sort2_vv(Doub *v, Long *v1, Long_I N)
 }
 
 
-inline void sort2(VecChar_IO v, VecLong_IO v1)
+inline void sort2(VecChar_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (!shape_cmp(v, v1))
@@ -660,7 +660,7 @@ inline void sort2(VecInt_IO v, VecInt_IO v1)
 	sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
-inline void sort2(VecInt_IO v, VecLong_IO v1)
+inline void sort2(VecInt_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (!shape_cmp(v, v1))
@@ -669,7 +669,7 @@ inline void sort2(VecInt_IO v, VecLong_IO v1)
 	sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
-inline void sort2(VecLlong_IO v, VecLong_IO v1)
+inline void sort2(VecLlong_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (!shape_cmp(v, v1))
@@ -678,13 +678,22 @@ inline void sort2(VecLlong_IO v, VecLong_IO v1)
 	sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
-inline void sort2(VecDoub_IO v, VecLong_IO v1)
+inline void sort2(VecDoub_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (!shape_cmp(v, v1))
 		SLS_ERR("wrong shape!");
 #endif
 	sort2_vv(v.ptr(), v1.ptr(), v.size());
+}
+
+inline void sort2(vecLlong_IO v, vecLlong_IO v1)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (v.size() != v1.size())
+		SLS_ERR("wrong shape!");
+#endif
+	sort2_vv(v.data(), v1.data(), (Long)v.size());
 }
 
 } // namespace slisc

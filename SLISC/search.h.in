@@ -8,8 +8,10 @@ namespace slisc {
 // return -1 if not found
 //% types = {
 //%     'Int', 'VecInt';
-//%     'Llong', 'VecLong';
+//%     'Llong', 'VecLlong';
 //%     'Str', 'vecStr';
+//%     'Str32', 'vecStr32';
+//%     'Llong', 'vecLlong';
 //% };
 //%------------------------
 //% [Ts, Tv] = varargin{:};
@@ -113,7 +115,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 // check if v[i] == v[j] for any i and j
 // return the index of one of the repeated elements
 // return -1 if no reapeat
-//% types = {'vecStr'; 'VecChar'; 'VecInt'; 'VecLlong';};
+//% types = {'vecStr'; 'vecStr32'; 'VecChar'; 'VecInt'; 'VecLlong'; 'vecLlong'};
 //%--------------------------
 //% T = varargin{:};
 inline Long find_repeat(@T@_I v)

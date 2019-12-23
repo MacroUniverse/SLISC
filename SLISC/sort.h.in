@@ -79,11 +79,11 @@ inline void sort(@T@_IO v, Long_I m = -1)
 //%------------------------
 
 //% types = {
-//%     'Char', 'Long';
+//%     'Char', 'Llong';
 //%     'Int', 'Int';
-//%     'Int', 'Long';
-//%     'Llong', 'Long';
-//%     'Doub', 'Long';
+//%     'Int', 'Llong';
+//%     'Llong', 'Llong';
+//%     'Doub', 'Llong';
 //% };
 //%------------------------
 //% [T, T1] = varargin{:};
@@ -162,11 +162,12 @@ inline void sort2_vv(@T@ *v, @T1@ *v1, Long_I N)
 //%------------------------
 
 //% types = {
-//%     'VecChar', 'VecLong';
+//%     'VecChar', 'VecLlong';
 //%     'VecInt', 'VecInt';
-//%     'VecInt', 'VecLong';
-//%     'VecLlong', 'VecLong';
-//%     'VecDoub', 'VecLong';
+//%     'VecInt', 'VecLlong';
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecLlong';
+//%     'vecLlong', 'vecLlong';
 //% };
 //%---------------------
 //% [T, T1] = varargin{:};
@@ -178,6 +179,15 @@ inline void sort2(@T@_IO v, @T1@_IO v1)
 		SLS_ERR("wrong shape!");
 #endif
 	sort2_vv(v.ptr(), v1.ptr(), v.size());
+}
+//% elseif is_vector(T) && is_vector(T1)
+inline void sort2(@T@_IO v, @T1@_IO v1)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (v.size() != v1.size())
+		SLS_ERR("wrong shape!");
+#endif
+	sort2_vv(v.data(), v1.data(), (Long)v.size());
 }
 //% else
 //%     error('not implemented!');

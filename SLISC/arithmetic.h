@@ -35,6 +35,11 @@ inline Long size(Str32_I v)
 	return v.size();
 }
 
+inline Long size(vecLlong_I v)
+{
+	return v.size();
+}
+
 inline Long size(vecStr_I v)
 {
 	return v.size();

@@ -20,6 +20,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <cstring>
 #include "time.h"
@@ -69,21 +70,16 @@ typedef unsigned int &Uint_O, &Uint_IO;
 
 #ifdef _MSC_VER
 typedef __int64 Llong;
-typedef const Llong Llong_I; // 64 bit integer
-typedef Llong &Llong_O, &Llong_IO;
-
-typedef const unsigned __int64 Ullong_I;
 typedef unsigned __int64 Ullong;
-typedef unsigned __int64 &Ullong_O, &Ullong_IO;
 #else
 typedef long long int Llong;
+typedef unsigned long long int Ullong;
+#endif
 typedef const Llong Llong_I; // 64 bit integer
 typedef Llong &Llong_O, &Llong_IO;
 
-typedef unsigned long long int Ullong;
 typedef const Ullong Ullong_I;
 typedef Ullong &Ullong_O, &Ullong_IO;
-#endif
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef Int Long;

@@ -18,7 +18,7 @@ inline @T@ sign(@T@_I a, @T@_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'};
+//% types = {'Char'; 'Int'; 'Uint'; 'Llong'; 'Ullong';};
 //%-------------------------------
 //% T = varargin{:};
 inline Bool isodd(@T@_I n)

@@ -16,7 +16,7 @@ inline Long search(Int_I s, VecInt_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Llong_I s, VecLong_I v, Long start = 0)
+inline Long search(Llong_I s, VecLlong_I v, Long start = 0)
 {
 	Long N = size(v);
     for (Long i = start; i < N; ++i) {
@@ -27,6 +27,26 @@ inline Long search(Llong_I s, VecLong_I v, Long start = 0)
 }
 
 inline Long search(Str_I s, vecStr_I v, Long start = 0)
+{
+	Long N = size(v);
+    for (Long i = start; i < N; ++i) {
+        if (s == v[i])
+            return i;
+    }
+    return -1;
+}
+
+inline Long search(Str32_I s, vecStr32_I v, Long start = 0)
+{
+	Long N = size(v);
+    for (Long i = start; i < N; ++i) {
+        if (s == v[i])
+            return i;
+    }
+    return -1;
+}
+
+inline Long search(Llong_I s, vecLlong_I v, Long start = 0)
 {
 	Long N = size(v);
     for (Long i = start; i < N; ++i) {
@@ -419,6 +439,18 @@ inline Long find_repeat(vecStr_I v)
     return -1;
 }
 
+inline Long find_repeat(vecStr32_I v)
+{
+	Long N = size(v);
+    for (Long i = 0; i < N; ++i) {
+        for (Long j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
 inline Long find_repeat(VecChar_I v)
 {
 	Long N = size(v);
@@ -444,6 +476,18 @@ inline Long find_repeat(VecInt_I v)
 }
 
 inline Long find_repeat(VecLlong_I v)
+{
+	Long N = size(v);
+    for (Long i = 0; i < N; ++i) {
+        for (Long j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(vecLlong_I v)
 {
 	Long N = size(v);
     for (Long i = 0; i < N; ++i) {

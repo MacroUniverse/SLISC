@@ -29,7 +29,7 @@ inline Bool file_exist_case(Str_I fname)
     }
     vecStr names;
     file_list(names, path);
-    if (is_in(name, names))
+    if (search(name, names) >= 0)
         return true;
     else
         return false;

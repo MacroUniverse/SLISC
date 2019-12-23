@@ -1,3 +1,3 @@
-function ret = is_vector(type)
-ret = any(strfind(type, 'vector'));
+function ret = is_vector(T)
+ret = any(strfind(T, 'vector')) || strcmp(T(1:3), 'vec');
 end
