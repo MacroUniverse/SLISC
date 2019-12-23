@@ -3,6 +3,7 @@
 // all `container = container` should be implemented using copy
 #pragma once
 #include "compare.h"
+#include "slice_arith.h"
 
 namespace slisc {
 //  === pointer interface ===
@@ -448,5 +449,108 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //         }
 //     }
 // }
+
+//% types = {
+//%     'CbandDoub'; 'CbandComp';
+//% };
+//%------------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% DcmatTs = ['Dcmat' Ts];
+@DcmatTs@ band(@T@_IO);
+@DcmatTs@_c band(@T@_I);
+
+inline void copy(@T@_O a, @Ts@_I s)
+{
+	copy(band(a), s);
+}
+//%------------------------------
+
+//% types = {
+//%     'CbandDoub' 'CbandDoub';
+//%     'CbandComp' 'CbandComp';
+//% };
+//%------------------------------
+//% [T, T1] = varargin{:};
+inline void copy(@T@_O a, @T@_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
+		SLS_ERR("wrong shape!");
+#endif
+	a.reshape(b.n1(), b.nup(), b.nlow());
+	copy(band(a), band(b));
+}
+//%------------------------------
+
+//% types = {
+//%     'CbandDoub', 'CmatDoub';
+//%     'CbandComp', 'CmatComp';
+//% };
+//%------------------------------
+//% [BandT, CmatT] = varargin{:};
+//% Ts = contain_type(CmatT);
+//% SvecT = ['Svec' Ts];
+inline void copy(@BandT@_O b, @CmatT@_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+	if (!shape_cmp(a, b))
+		SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+		@SvecT@ sli_b = slice1(b.cmat(), j);
+		@SvecT@_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
+    }
+}
+
+inline void copy(@CmatT@_O a, @BandT@_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+	if (!shape_cmp(a, b))
+		SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        Long k = b.idiag() - j;
+		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+		@SvecT@ sli_a = slice1(a, j);
+		@SvecT@_c sli_b = slice1(b.cmat(), j);
+		for (Long i = 0; i < i_beg; ++i)
+			sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+		for (Long i = i_end; i < N1; ++i)
+			sli_a[i] = 0;
+    }
+}
+//%------------------------------
+
+// void copy(Matrix<T> &b, const Matrix<T> &a, Long_I Nup, Long_I Nlow)
+// {
+//     Long N1 = a.n1(), N2 = a.n2();
+//     for (Long i = 0; i < N1; i++) {
+//         Long k = Nlow - i;
+//         for (Long j = max(Long(0), i - Nlow); j < MIN(N2, i + Nup + 1); j++) {
+//             b(i, k + j) = a(i, j);
+//         }
+//     }
+// }
+
+// template <class T, SLS_IF0(is_scalar<T>())>
+// void copy(Matrix<T> &a, const Matrix<T> &b, Long_I Nup, Long_I Nlow)
+// {
+//     Long N1 = a.n1(), N2 = a.n2();
+//     for (Long i = 0; i < N1; i++) {
+//         Long k = Nlow - i;
+//         for (Long j = max(Long(0), i - Nlow); j < MIN(N2, i + Nup + 1); j++) {
+//             a(i, j) = b(i, k + j);
+//         }
+//     }
+// }
+
 
 } // namespace slisc
