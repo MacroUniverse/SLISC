@@ -141,13 +141,14 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 // @Ta@ a1(a.n1(), a.n2(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
 // copy(a1, a);
 //% types = {
-//%     'VecDoub' 'CbandDoub';
-//%     'VecComp' 'CbandComp';
+//%     'VecDoub' 'CbandDoub' 'VecInt';
+//%     'VecComp' 'CbandComp' 'VecInt';
+//%     'ScmatComp' 'CbandComp' 'SvecInt';
 //% };
 //%---------------------
-//% [Tx, Ta] = varargin{:};
+//% [Tx, Ta, Ti] = varargin{:};
 //% Tsx = contain_type(Tx); Tsa = contain_type(Ta);
-inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, VecInt_IO ipiv)
+inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, @Ti@_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPE
 //% if is_dense_vec(Tx)

@@ -256,5 +256,20 @@ inline void lin_eq(VecComp_IO x, CbandComp_IO a1, VecInt_IO ipiv)
 	}
 }
 
+inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
+{
+#ifdef SLS_CHECK_SHAPE
+	if (a1.n1() != a1.n2() || a1.n2() != x.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	Int lda = a1.lda();
+	Int ldx = x.n1(), nrhs = x.n2();
+	Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+	if (ret != 0) {
+		cout << "LAPACK returned " << ret << endl;
+		SLS_ERR("something wrong!");
+	}
+}
+
 } // namespace slisc
 #endif

@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "Svec.h"
 
 namespace slisc {
 class ScmatInt_c : public SvecInt_c
