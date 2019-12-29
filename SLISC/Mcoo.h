@@ -15,7 +15,7 @@ public:
     McooChar(Long_I Nr, Long_I Nc);
     McooChar(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
     McooChar(const McooChar &rhs) = delete;  // Copy constructor
-	McooChar &operator=(const McooChar &rhs) = delete;// copy assignment
+    McooChar &operator=(const McooChar &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -248,7 +248,7 @@ public:
     McooInt(Long_I Nr, Long_I Nc);
     McooInt(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
     McooInt(const McooInt &rhs) = delete;  // Copy constructor
-	McooInt &operator=(const McooInt &rhs) = delete;// copy assignment
+    McooInt &operator=(const McooInt &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -481,7 +481,7 @@ public:
     McooLlong(Long_I Nr, Long_I Nc);
     McooLlong(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
     McooLlong(const McooLlong &rhs) = delete;  // Copy constructor
-	McooLlong &operator=(const McooLlong &rhs) = delete;// copy assignment
+    McooLlong &operator=(const McooLlong &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -714,7 +714,7 @@ public:
     McooDoub(Long_I Nr, Long_I Nc);
     McooDoub(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
     McooDoub(const McooDoub &rhs) = delete;  // Copy constructor
-	McooDoub &operator=(const McooDoub &rhs) = delete;// copy assignment
+    McooDoub &operator=(const McooDoub &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -947,7 +947,7 @@ public:
     McooComp(Long_I Nr, Long_I Nc);
     McooComp(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
     McooComp(const McooComp &rhs) = delete;  // Copy constructor
-	McooComp &operator=(const McooComp &rhs) = delete;// copy assignment
+    McooComp &operator=(const McooComp &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();

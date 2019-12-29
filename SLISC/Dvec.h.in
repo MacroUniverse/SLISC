@@ -23,7 +23,7 @@ namespace slisc {
 //%     Class = DvecT_c;
 //% else
 //%     CT = T;
-//% 	Class = DvecT;
+//%     Class = DvecT;
 //% end
 //% if is_Long(T) && constness
 #ifdef SLS_USE_INT_AS_LONG
@@ -47,25 +47,25 @@ protected:
 public:
     @Class@();
     @Class@(@CT@ *ptr, Long_I N, Long_I step);
-	@CT@* ptr() const;
-	@CT@ & operator[](Long_I i) const;
-	@CT@ & operator()(Long_I i) const;
-	@CT@ & end() const;
-	@CT@ & end(Long_I i) const;
+    @CT@* ptr() const;
+    @CT@ & operator[](Long_I i) const;
+    @CT@ & operator()(Long_I i) const;
+    @CT@ & end() const;
+    @CT@ & end(Long_I i) const;
     Long size() const;
     Long step() const;
 //% % resize() is a bad idea, don't try to create it!
 
 //% if ~constness
-	operator @DvecT_c@() const;
+    operator @DvecT_c@() const;
 //% end
-	@Class@ &operator=(const @Class@ &) = delete;
+    @Class@ &operator=(const @Class@ &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-	void set_ptr(@CT@ *ptr);
-	void set(@CT@ *ptr, Long_I N, Long_I step);
-	void set(const @Class@ &sli);
+    void set_ptr(@CT@ *ptr);
+    void set(@CT@ *ptr, Long_I N, Long_I step);
+    void set(const @Class@ &sli);
     void set_size(Long_I N);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
@@ -135,7 +135,7 @@ inline void @Class@::set_size(Long_I N)
 //% if ~constness
 inline @Class@::operator @DvecT_c@() const
 {
-	return *((@DvecT_c@ *)this);
+    return *((@DvecT_c@ *)this);
 }
 //% end
 
@@ -151,7 +151,7 @@ inline void @Class@::set(@CT@ * ptr, Long_I N, Long_I step)
 
 inline void @Class@::set(const @Class@ &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+    m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
 }
 
 inline void @Class@::next()

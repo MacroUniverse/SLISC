@@ -26,8 +26,8 @@ namespace slisc {
 //%     Class = ScmatT_c;
 //% else
 //%     CT = T;
-//% 	Base = SvecT;
-//% 	Class = ScmatT;
+//%     Base = SvecT;
+//%     Class = ScmatT;
 //% end
 //% if is_Long(T) && constness
 #ifdef SLS_USE_INT_AS_LONG
@@ -45,16 +45,16 @@ typedef ScmatLlong ScmatLong;
 class @Class@ : public @Base@
 {
 protected:
-	Long m_N1, m_N2;
+    Long m_N1, m_N2;
 public:
     @Class@();
     @Class@(Long_I N1, Long_I N2);
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2);
 
 //% if ~constness
-	operator @ScmatT_c@() const;
+    operator @ScmatT_c@() const;
 //% end
-	@Class@ &operator=(const @Class@ &) = delete;
+    @Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat functions ===
     @CT@& operator()(Long_I i, Long_I j) const; // double indexing
@@ -66,7 +66,7 @@ public:
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2);
     void set(@CT@ *ptr, Long_I N1, Long_I N2);
-	void set(const @Class@ &sli);
+    void set(const @Class@ &sli);
     ~@Class@();
 };
 
@@ -84,7 +84,7 @@ inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2)
 //% if ~constness
 inline @Class@::operator @ScmatT_c@() const
 {
-	return *((@ScmatT_c@ *)this);
+    return *((@ScmatT_c@ *)this);
 }
 //% end
 
@@ -123,7 +123,7 @@ inline void @Class@::set(@CT@ * ptr, Long_I N1, Long_I N2)
 
 inline void @Class@::set(const @Class@ &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+    m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline @Class@::~@Class@() {}

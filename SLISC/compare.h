@@ -575,13 +575,13 @@ inline Bool operator!=(VecInt_I v1, VecInt_I v2)
 
 inline Bool operator==(VecInt_I v1, DvecInt_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
-	for (Long i = 0; i < v1.size(); ++i) {
-		if (v1[i] != v2[i])
+    for (Long i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i])
             return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 inline Bool operator!=(VecInt_I v1, DvecInt_I v2)
@@ -591,13 +591,13 @@ inline Bool operator!=(VecInt_I v1, DvecInt_I v2)
 
 inline Bool operator==(VecLlong_I v1, DvecLlong_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
-	for (Long i = 0; i < v1.size(); ++i) {
-		if (v1[i] != v2[i])
+    for (Long i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i])
             return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 inline Bool operator!=(VecLlong_I v1, DvecLlong_I v2)
@@ -607,13 +607,13 @@ inline Bool operator!=(VecLlong_I v1, DvecLlong_I v2)
 
 inline Bool operator==(VecDoub_I v1, DvecDoub_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
-	for (Long i = 0; i < v1.size(); ++i) {
-		if (v1[i] != v2[i])
+    for (Long i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i])
             return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 inline Bool operator!=(VecDoub_I v1, DvecDoub_I v2)
@@ -814,13 +814,13 @@ inline Bool operator!=(Mat3Doub_I v1, Mat3Doub_I v2)
 
 inline Bool operator==(DvecInt_I v1, DvecInt_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
-	for (Long i = 0; i < v1.size(); ++i) {
-		if (v1[i] != v2[i])
+    for (Long i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i])
             return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 inline Bool operator!=(DvecInt_I v1, DvecInt_I v2)
@@ -830,13 +830,13 @@ inline Bool operator!=(DvecInt_I v1, DvecInt_I v2)
 
 inline Bool operator==(DvecLong_I v1, DvecLong_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
-	for (Long i = 0; i < v1.size(); ++i) {
-		if (v1[i] != v2[i])
+    for (Long i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i])
             return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 inline Bool operator!=(DvecLong_I v1, DvecLong_I v2)
@@ -846,13 +846,13 @@ inline Bool operator!=(DvecLong_I v1, DvecLong_I v2)
 
 inline Bool operator==(DvecDoub_I v1, DvecDoub_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
-	for (Long i = 0; i < v1.size(); ++i) {
-		if (v1[i] != v2[i])
+    for (Long i = 0; i < v1.size(); ++i) {
+        if (v1[i] != v2[i])
             return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 inline Bool operator!=(DvecDoub_I v1, DvecDoub_I v2)
@@ -878,13 +878,13 @@ inline Bool operator!=(DcmatDoub_I v1, CmatDoub_I v2)
 
 inline Bool operator==(Jcmat3Doub_I v1, Cmat3Doub_I v2)
 {
-	if (!shape_cmp(v1, v2))
+    if (!shape_cmp(v1, v2))
         return false;
     for (Long i = 0; i < v1.n1(); ++i)
         for (Long j = 0; j < v1.n2(); ++j)
-			for (Long k = 0; k < v1.n3(); ++k)
-				if (v1(i, j, k) != v2(i, j, k))
-					return false;
+            for (Long k = 0; k < v1.n3(); ++k)
+                if (v1(i, j, k) != v2(i, j, k))
+                    return false;
     return true;
 }
 
@@ -901,7 +901,7 @@ inline Bool operator==(VecInt_I v, Int_I s)
 
 inline Bool operator!=(VecInt_I v, Int_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(VecLlong_I v, Llong_I s)
@@ -911,7 +911,7 @@ inline Bool operator==(VecLlong_I v, Llong_I s)
 
 inline Bool operator!=(VecLlong_I v, Llong_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(VecDoub_I v, Doub_I s)
@@ -921,7 +921,7 @@ inline Bool operator==(VecDoub_I v, Doub_I s)
 
 inline Bool operator!=(VecDoub_I v, Doub_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(VecComp_I v, Comp_I s)
@@ -931,46 +931,46 @@ inline Bool operator==(VecComp_I v, Comp_I s)
 
 inline Bool operator!=(VecComp_I v, Comp_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(DvecInt_I v, Int_I s)
 {
-	for (Long i = 0; i < v.size(); ++i)
-		if (v[i] != s)
-			return false;
-	return true;
+    for (Long i = 0; i < v.size(); ++i)
+        if (v[i] != s)
+            return false;
+    return true;
 }
 
 inline Bool operator!=(DvecInt_I v, Int_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(DvecLlong_I v, Llong_I s)
 {
-	for (Long i = 0; i < v.size(); ++i)
-		if (v[i] != s)
-			return false;
-	return true;
+    for (Long i = 0; i < v.size(); ++i)
+        if (v[i] != s)
+            return false;
+    return true;
 }
 
 inline Bool operator!=(DvecLlong_I v, Llong_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(DvecDoub_I v, Doub_I s)
 {
-	for (Long i = 0; i < v.size(); ++i)
-		if (v[i] != s)
-			return false;
-	return true;
+    for (Long i = 0; i < v.size(); ++i)
+        if (v[i] != s)
+            return false;
+    return true;
 }
 
 inline Bool operator!=(DvecDoub_I v, Doub_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(MatInt_I v, Int_I s)
@@ -980,7 +980,7 @@ inline Bool operator==(MatInt_I v, Int_I s)
 
 inline Bool operator!=(MatInt_I v, Int_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(MatLlong_I v, Llong_I s)
@@ -990,7 +990,7 @@ inline Bool operator==(MatLlong_I v, Llong_I s)
 
 inline Bool operator!=(MatLlong_I v, Llong_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(MatDoub_I v, Doub_I s)
@@ -1000,7 +1000,7 @@ inline Bool operator==(MatDoub_I v, Doub_I s)
 
 inline Bool operator!=(MatDoub_I v, Doub_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(MatComp_I v, Comp_I s)
@@ -1010,7 +1010,7 @@ inline Bool operator==(MatComp_I v, Comp_I s)
 
 inline Bool operator!=(MatComp_I v, Comp_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(Mat3Doub_I v, Doub_I s)
@@ -1020,7 +1020,7 @@ inline Bool operator==(Mat3Doub_I v, Doub_I s)
 
 inline Bool operator!=(Mat3Doub_I v, Doub_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(CmatDoub_I v, Doub_I s)
@@ -1030,7 +1030,7 @@ inline Bool operator==(CmatDoub_I v, Doub_I s)
 
 inline Bool operator!=(CmatDoub_I v, Doub_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(CmatComp_I v, Comp_I s)
@@ -1040,7 +1040,7 @@ inline Bool operator==(CmatComp_I v, Comp_I s)
 
 inline Bool operator!=(CmatComp_I v, Comp_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(Cmat3Doub_I v, Doub_I s)
@@ -1050,7 +1050,7 @@ inline Bool operator==(Cmat3Doub_I v, Doub_I s)
 
 inline Bool operator!=(Cmat3Doub_I v, Doub_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 inline Bool operator==(Cmat3Comp_I v, Comp_I s)
@@ -1060,7 +1060,7 @@ inline Bool operator==(Cmat3Comp_I v, Comp_I s)
 
 inline Bool operator!=(Cmat3Comp_I v, Comp_I s)
 {
-	return !(v == s);
+    return !(v == s);
 }
 
 } // namespace slisc

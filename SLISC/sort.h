@@ -254,25 +254,25 @@ inline void sort_v(Doub *arr, Long_I N, Long_I m = -1)
 // sort first m elements of v
 inline void sort(VecChar_IO v, Long_I m = -1)
 {
-	sort_v(v.ptr(), v.size(), m);
+    sort_v(v.ptr(), v.size(), m);
 }
 
 // sort first m elements of v
 inline void sort(VecInt_IO v, Long_I m = -1)
 {
-	sort_v(v.ptr(), v.size(), m);
+    sort_v(v.ptr(), v.size(), m);
 }
 
 // sort first m elements of v
 inline void sort(VecLlong_IO v, Long_I m = -1)
 {
-	sort_v(v.ptr(), v.size(), m);
+    sort_v(v.ptr(), v.size(), m);
 }
 
 // sort first m elements of v
 inline void sort(VecDoub_IO v, Long_I m = -1)
 {
-	sort_v(v.ptr(), v.size(), m);
+    sort_v(v.ptr(), v.size(), m);
 }
 
 
@@ -645,55 +645,55 @@ inline void sort2_vv(Doub *v, Llong *v1, Long_I N)
 inline void sort2(VecChar_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (!shape_cmp(v, v1))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.ptr(), v1.ptr(), v.size());
+    sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
 inline void sort2(VecInt_IO v, VecInt_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (!shape_cmp(v, v1))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.ptr(), v1.ptr(), v.size());
+    sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
 inline void sort2(VecInt_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (!shape_cmp(v, v1))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.ptr(), v1.ptr(), v.size());
+    sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
 inline void sort2(VecLlong_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (!shape_cmp(v, v1))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.ptr(), v1.ptr(), v.size());
+    sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
 inline void sort2(VecDoub_IO v, VecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (!shape_cmp(v, v1))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.ptr(), v1.ptr(), v.size());
+    sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 
 inline void sort2(vecLlong_IO v, vecLlong_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (v.size() != v1.size())
-		SLS_ERR("wrong shape!");
+    if (v.size() != v1.size())
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.data(), v1.data(), (Long)v.size());
+    sort2_vv(v.data(), v1.data(), (Long)v.size());
 }
 
 } // namespace slisc

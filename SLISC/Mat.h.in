@@ -27,7 +27,7 @@ public:
     using Base::operator();
     @MatT@(Long_I Nr, Long_I Nc);
     @MatT@(const @MatT@ &rhs);        // Copy constructor
-	@MatT@ & operator=(const @MatT@ &rhs) = delete;
+    @MatT@ & operator=(const @MatT@ &rhs) = delete;
     void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
     @T@& operator()(Long_I i, Long_I j); // double indexing
     const @T@& operator()(Long_I i, Long_I j) const;

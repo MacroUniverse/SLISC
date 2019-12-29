@@ -35,7 +35,7 @@ public:
 };
 
 inline @Mat3T@::@Mat3T@(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void @Mat3T@::operator<<(@Mat3T@ &rhs)
 {
@@ -72,17 +72,17 @@ inline const @T@ & @Mat3T@::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long @Mat3T@::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long @Mat3T@::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long @Mat3T@::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 //% end
 

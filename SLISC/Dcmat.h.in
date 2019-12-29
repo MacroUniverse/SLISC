@@ -22,7 +22,7 @@ namespace slisc {
 //%     Class = DcmatT_c;
 //% else
 //%     CT = T;
-//% 	Class = DcmatT;
+//%     Class = DcmatT;
 //% end
 //% if is_Long(T) && constness
 #ifdef SLS_USE_INT_AS_LONG
@@ -49,12 +49,12 @@ public:
     @Class@();
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda);
-	void set(const @Class@ &sli);
+    void set(const @Class@ &sli);
 
 //% if ~constness
-	operator @DcmatT_c@() const;
+    operator @DcmatT_c@() const;
 //% end
-	@Class@ &operator=(const @Class@ &) = delete;
+    @Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat member functions ===
     @CT@& operator[](Long_I i) const;
@@ -80,13 +80,13 @@ inline void @Class@::set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda)
 
 inline void @Class@::set(const @Class@ &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
+    m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
 }
 
 //% if ~constness
 inline @Class@::operator @DcmatT_c@() const
 {
-	return *((@DcmatT_c@ *)this);
+    return *((@DcmatT_c@ *)this);
 }
 //% end
 

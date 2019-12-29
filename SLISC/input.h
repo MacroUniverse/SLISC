@@ -4,7 +4,7 @@
 namespace slisc {
 inline void cin_line()
 {
-	cin.ignore(1000, '\n');
+    cin.ignore(1000, '\n');
     cout << endl;
 }
 } // namespace slisc

@@ -23,7 +23,7 @@ public:
 };
 
 inline Mat3Char::Mat3Char(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void Mat3Char::operator<<(Mat3Char &rhs)
 {
@@ -60,17 +60,17 @@ inline const Char & Mat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long Mat3Char::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long Mat3Char::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long Mat3Char::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 
 typedef const Mat3Char & Mat3Char_I;
@@ -96,7 +96,7 @@ public:
 };
 
 inline Mat3Int::Mat3Int(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void Mat3Int::operator<<(Mat3Int &rhs)
 {
@@ -133,17 +133,17 @@ inline const Int & Mat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long Mat3Int::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long Mat3Int::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long Mat3Int::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 
 typedef const Mat3Int & Mat3Int_I;
@@ -169,7 +169,7 @@ public:
 };
 
 inline Mat3Llong::Mat3Llong(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void Mat3Llong::operator<<(Mat3Llong &rhs)
 {
@@ -206,17 +206,17 @@ inline const Llong & Mat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long Mat3Llong::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long Mat3Llong::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long Mat3Llong::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 
 typedef const Mat3Llong & Mat3Llong_I;
@@ -251,7 +251,7 @@ public:
 };
 
 inline Mat3Float::Mat3Float(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void Mat3Float::operator<<(Mat3Float &rhs)
 {
@@ -288,17 +288,17 @@ inline const Float & Mat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long Mat3Float::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long Mat3Float::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long Mat3Float::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 
 typedef const Mat3Float & Mat3Float_I;
@@ -324,7 +324,7 @@ public:
 };
 
 inline Mat3Doub::Mat3Doub(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void Mat3Doub::operator<<(Mat3Doub &rhs)
 {
@@ -361,17 +361,17 @@ inline const Doub & Mat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long Mat3Doub::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long Mat3Doub::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long Mat3Doub::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 
 typedef const Mat3Doub & Mat3Doub_I;
@@ -397,7 +397,7 @@ public:
 };
 
 inline Mat3Comp::Mat3Comp(Long_I N1, Long_I N2, Long_I N3) :
-	Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 inline void Mat3Comp::operator<<(Mat3Comp &rhs)
 {
@@ -434,17 +434,17 @@ inline const Comp & Mat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 
 inline Long Mat3Comp::n1() const
 {
-	return m_N1;
+    return m_N1;
 }
 
 inline Long Mat3Comp::n2() const
 {
-	return m_N2;
+    return m_N2;
 }
 
 inline Long Mat3Comp::n3() const
 {
-	return m_N3;
+    return m_N3;
 }
 
 typedef const Mat3Comp & Mat3Comp_I;

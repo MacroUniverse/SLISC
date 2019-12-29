@@ -13,46 +13,46 @@ void test_unicode();
 
 void test_all()
 {
-	using std::cout; using std::endl;
-	cout << "test_time()" << endl; test_time();
-	cout << "test_imag()" << endl; test_Imag();
-	cout << "test_scalar_arith()" << endl; test_scalar_arith();
-	cout << "test_Vbase()" << endl; test_Vbase();
-	cout << "test_Vec()" << endl; test_Vec();
-	cout << "test_Mat()" << endl; test_Mat();
-	cout << "test_Cmat()" << endl; test_Cmat();
-	cout << "test_Cmat3()" << endl; test_Cmat3();
-	cout << "test_Cmat4()" << endl; test_Cmat4();
-	cout << "test_band()" << endl; test_band();
-	cout << "test_Mcoo()" << endl; test_Mcoo();
-	cout << "test_Cmobd()" << endl; test_Cmobd();
-	cout << "test_Svec()" << endl; test_Svec();
-	cout << "test_Dvec()" << endl; test_Dvec();
-	cout << "test_Scmat()" << endl; test_Scmat();
-	cout << "test_Scmat3()" << endl; test_Scmat3();
-	cout << "test_dense()" << endl; test_dense();
-	cout << "test_slice_arith()" << endl; test_slice_arith();
-	cout << "test_copy()" << endl; test_copy();
-	cout << "test_compare()" << endl; test_compare();
-	cout << "test_arithmetics()" << endl; test_arithmetics();
-	cout << "test_random()" << endl; test_random();
-	cout << "test_sort()" << endl; test_sort();
-	cout << "test_ylm()" << endl; test_ylm();
-	cout << "test_anglib()" << endl; test_anglib();
-	cout << "test_search()" << endl; test_search();
-	cout << "test_lin_eq()" << endl; test_lin_eq();
-	cout << "test_file()" << endl; test_file();
-	cout << "test_matt()" << endl; test_matt();
-	cout << "test_fedvr()" << endl; test_fedvr();
-	cout << "test_mat_fun()" << endl; test_mat_fun();
-	cout << "test_gsl()" << endl; test_gsl();
-	cout << "test_unicode()" << endl; test_unicode();
-	
-	cout << "do optional tests? (y/n)" << endl;
-	if (getchar() == 'y') {
-		cout << "test_disp()" << endl; test_disp();
-	}
-	else
-		cout << "optional tests skipped." << endl;
-	cout << "testing successful!" << endl;
+    using std::cout; using std::endl;
+    cout << "test_time()" << endl; test_time();
+    cout << "test_imag()" << endl; test_Imag();
+    cout << "test_scalar_arith()" << endl; test_scalar_arith();
+    cout << "test_Vbase()" << endl; test_Vbase();
+    cout << "test_Vec()" << endl; test_Vec();
+    cout << "test_Mat()" << endl; test_Mat();
+    cout << "test_Cmat()" << endl; test_Cmat();
+    cout << "test_Cmat3()" << endl; test_Cmat3();
+    cout << "test_Cmat4()" << endl; test_Cmat4();
+    cout << "test_band()" << endl; test_band();
+    cout << "test_Mcoo()" << endl; test_Mcoo();
+    cout << "test_Cmobd()" << endl; test_Cmobd();
+    cout << "test_Svec()" << endl; test_Svec();
+    cout << "test_Dvec()" << endl; test_Dvec();
+    cout << "test_Scmat()" << endl; test_Scmat();
+    cout << "test_Scmat3()" << endl; test_Scmat3();
+    cout << "test_dense()" << endl; test_dense();
+    cout << "test_slice_arith()" << endl; test_slice_arith();
+    cout << "test_copy()" << endl; test_copy();
+    cout << "test_compare()" << endl; test_compare();
+    cout << "test_arithmetics()" << endl; test_arithmetics();
+    cout << "test_random()" << endl; test_random();
+    cout << "test_sort()" << endl; test_sort();
+    cout << "test_ylm()" << endl; test_ylm();
+    cout << "test_anglib()" << endl; test_anglib();
+    cout << "test_search()" << endl; test_search();
+    cout << "test_lin_eq()" << endl; test_lin_eq();
+    cout << "test_file()" << endl; test_file();
+    cout << "test_matt()" << endl; test_matt();
+    cout << "test_fedvr()" << endl; test_fedvr();
+    cout << "test_mat_fun()" << endl; test_mat_fun();
+    cout << "test_gsl()" << endl; test_gsl();
+    cout << "test_unicode()" << endl; test_unicode();
+    
+    cout << "do optional tests? (y/n)" << endl;
+    if (getchar() == 'y') {
+        cout << "test_disp()" << endl; test_disp();
+    }
+    else
+        cout << "optional tests skipped." << endl;
+    cout << "testing successful!" << endl;
 }

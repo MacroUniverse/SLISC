@@ -27,7 +27,7 @@ public:
     // return -2 if reading failed (e.g. file is not finished, wrong format)
     void open(Str_I fname, Char_I *rw, Int_I precision = 17);
 
-	Bool isopen();
+    Bool isopen();
 
     // close a file, if not called, will be called in destructor
     void close();
@@ -57,12 +57,12 @@ inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 //% if is_real(T)
     m_out << to_num(s) << Matt::dlm;
 //% elseif is_comp(T)
-	if (imag(s) == 0)
-		m_out << real(s) << Matt::dlm;
-	else if (imag(s) < 0)
-		m_out << real(s) << imag(s) << "i ";
-	else
-		m_out << real(s) << '+' << imag(s) << "i ";
+    if (imag(s) == 0)
+        m_out << real(s) << Matt::dlm;
+    else if (imag(s) < 0)
+        m_out << real(s) << imag(s) << "i ";
+    else
+        m_out << real(s) << '+' << imag(s) << "i ";
 //% else
 //%     error('not implemented!');
 //% end
@@ -130,13 +130,13 @@ inline void Matt::get_profile()
     // read number of variables and their positions
     fin.seekg(0, fin.end);
     Long gmax = fin.tellg();
-	// check end mark
-	fin.seekg(gmax-2);
-	Char c1 = fin.get(), c2 = fin.get();
-	if (c1 != Matt::dlm || c2 != Matt::dlm) {
-		throw Matt_file_not_complete();
-	}
-	fin.seekg(gmax-2);
+    // check end mark
+    fin.seekg(gmax-2);
+    Char c1 = fin.get(), c2 = fin.get();
+    if (c1 != Matt::dlm || c2 != Matt::dlm) {
+        throw Matt_file_not_complete();
+    }
+    fin.seekg(gmax-2);
     m_n = (Int)scanInverse(fin);
     if (m_n < 1)
         SLS_ERR("unknown!");
@@ -200,8 +200,8 @@ inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 
 void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 {
-	if (isopen())
-		close();
+    if (isopen())
+        close();
     this->fname = fname;
     if (rw[0] == 'w') {
 
@@ -238,7 +238,7 @@ void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 
 inline Bool Matt::isopen()
 {
-	return m_in.is_open() != m_out.is_open();
+    return m_in.is_open() != m_out.is_open();
 }
 
 inline void Matt::close()
@@ -250,8 +250,8 @@ inline void Matt::close()
             fout << m_ind[i] << dlm;
         // write number of variables
         fout << m_n;
-		// mark end-of-file
-		fout << Matt::dlm << Matt::dlm;
+        // mark end-of-file
+        fout << Matt::dlm << Matt::dlm;
         m_out.close();
     }
     else {
@@ -306,7 +306,7 @@ inline void save(@T@_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-	matt_write_scalar(s, fout);
+    matt_write_scalar(s, fout);
 }
 //% elseif ndim(T) == 1 && is_scalar(Ts)
 inline void save(@T@_I v, Str_I varname, Matt_IO matt)
@@ -328,7 +328,7 @@ inline void save(@T@_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 //% elseif ndim(T) == 2
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
@@ -372,9 +372,9 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
     fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
     // write matrix data
     for (k = 0; k < N3; ++k)
-    	for (j = 0; j < N2; ++j)
-    		for (i = 0; i < N1; ++i)
-        		matt_write_scalar(a(i, j, k), fout);
+        for (j = 0; j < N2; ++j)
+            for (i = 0; i < N1; ++i)
+                matt_write_scalar(a(i, j, k), fout);
 }
 //% elseif is_Cmat4(T)
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
@@ -395,11 +395,11 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 4 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm << N4 << Matt::dlm;
     // write matrix data
-	for (l = 0; l < N4; ++l)
-		for (k = 0; k < N3; ++k)
-			for (j = 0; j < N2; ++j)
-				for (i = 0; i < N1; ++i)
-					matt_write_scalar(a(i, j, k, l), fout);
+    for (l = 0; l < N4; ++l)
+        for (k = 0; k < N3; ++k)
+            for (j = 0; j < N2; ++j)
+                for (i = 0; i < N1; ++i)
+                    matt_write_scalar(a(i, j, k, l), fout);
 }
 //% else
 //%     disp(T);
@@ -471,7 +471,7 @@ inline Int load(@T@_O v, Str_I varname, Matt_IO matt)
     Long n = matt.m_size[i][0]; v.resize(n);
     // read var data
     for (Long i = 0; i < n; ++i)
-		matt_read_scalar(v[i], fin);
+        matt_read_scalar(v[i], fin);
     return 0;
 }
 //% elseif is_Mat(T) || is_Cmat(T)
@@ -493,7 +493,7 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 //% elseif is_Mat3(T) || is_Cmat3(T)
@@ -538,11 +538,11 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
     N1 = matt.m_size[i][0]; N2 = matt.m_size[i][1]; N3 = matt.m_size[i][2]; N4 = matt.m_size[i][3];
     a.resize(N1, N2, N3, N4);
     // read var data
-	for (l = 0; l < N4; ++l)
-		for (k = 0; k < N3; ++k)
-			for (j = 0; j < N2; ++j)
-				for (i = 0; i < N1; ++i)
-					matt_read_scalar(a(i, j, k), fin);
+    for (l = 0; l < N4; ++l)
+        for (k = 0; k < N3; ++k)
+            for (j = 0; j < N2; ++j)
+                for (i = 0; i < N1; ++i)
+                    matt_read_scalar(a(i, j, k), fin);
     return 0;
 }
 //% else

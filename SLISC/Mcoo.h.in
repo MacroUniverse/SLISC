@@ -20,7 +20,7 @@ public:
     @McooT@(Long_I Nr, Long_I Nc);
     @McooT@(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
     @McooT@(const @McooT@ &rhs) = delete;  // Copy constructor
-	@McooT@ &operator=(const @McooT@ &rhs) = delete;// copy assignment
+    @McooT@ &operator=(const @McooT@ &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();

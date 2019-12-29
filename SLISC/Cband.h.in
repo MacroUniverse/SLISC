@@ -15,35 +15,35 @@ public:
     Long m_N1;
     Long m_Nup;
     Long m_Nlow;
-	Long m_idiag; // position of diagonal
+    Long m_idiag; // position of diagonal
     @CmatT@ m_a;
 
     @CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
     @T@ * ptr();
     const @T@ * ptr() const;
-	@T@ operator()(Long_I i, Long_I j) const;
-	@T@ &ref(Long_I i, Long_I j);
+    @T@ operator()(Long_I i, Long_I j) const;
+    @T@ &ref(Long_I i, Long_I j);
     Long n1() const;
     Long n2() const;
-	Long size() const;
+    Long size() const;
     Long nup() const;
     Long nlow() const;
-	Long lda() const;
-	Long idiag() const;
-	@CmatT@ &cmat();
-	const @CmatT@ &cmat() const;
-	void resize(Long_I lda, Long_I N2);
-	void reshape(Long_I N1, Long_I Nup, Long_I Nlow);
-	void shift(Long_I idiag);
+    Long lda() const;
+    Long idiag() const;
+    @CmatT@ &cmat();
+    const @CmatT@ &cmat() const;
+    void resize(Long_I lda, Long_I N2);
+    void reshape(Long_I N1, Long_I Nup, Long_I Nlow);
+    void shift(Long_I idiag);
 };
 
 inline @CbandT@::@CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
     m_N1(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
-		SLS_ERR("wrong shape!");
+    if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
+        SLS_ERR("wrong shape!");
 #endif
 }
 
@@ -60,22 +60,22 @@ inline const @T@ * @CbandT@::ptr() const
 inline @T@ @CbandT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N1 || j < 0 || j >= n2())
-		SLS_ERR("index out of bound!");
+    if (i < 0 || i >= m_N1 || j < 0 || j >= n2())
+        SLS_ERR("index out of bound!");
 #endif
-	if (i - j > m_Nlow || j - i > m_Nup)
-		return 0;
+    if (i - j > m_Nlow || j - i > m_Nup)
+        return 0;
     return m_a(m_idiag + i - j, j);
 }
 
 inline @T@ &@CbandT@::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N1 || j < 0 || j >= n2())
-		SLS_ERR("index out of bound!");
+    if (i < 0 || i >= m_N1 || j < 0 || j >= n2())
+        SLS_ERR("index out of bound!");
 #endif
-	if (i - j > m_Nlow || j - i > m_Nup)
-		SLS_ERR("index out of band!");
+    if (i - j > m_Nlow || j - i > m_Nup)
+        SLS_ERR("index out of band!");
     return m_a(m_idiag + i - j, j);
 }
 
@@ -91,7 +91,7 @@ inline Long @CbandT@::n2() const
 
 inline Long @CbandT@::size() const
 {
-	return n1() * n2();
+    return n1() * n2();
 }
 
 inline Long @CbandT@::nup() const
@@ -111,40 +111,40 @@ inline Long @CbandT@::lda() const
 
 inline Long @CbandT@::idiag() const
 {
-	return m_idiag;
+    return m_idiag;
 }
 
 inline @CmatT@ &@CbandT@::cmat()
 {
-	return m_a;
+    return m_a;
 }
 
 inline const @CmatT@ &@CbandT@::cmat() const
 {
-	return m_a;
+    return m_a;
 }
 
 inline void @CbandT@::resize(Long_I lda, Long_I N2)
 {
-	m_a.resize(lda, N2);
+    m_a.resize(lda, N2);
 }
 
 inline void @CbandT@::reshape(Long_I N1, Long_I Nup, Long_I Nlow)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow)
-		SLS_ERR("wrong shape!");
+    if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow)
+        SLS_ERR("wrong shape!");
 #endif
-	m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
+    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
 }
 
 inline void @CbandT@::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-		SLS_ERR("wrong shape!");
+    if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
+        SLS_ERR("wrong shape!");
 #endif
-	m_idiag = idiag;
+    m_idiag = idiag;
 }
 
 typedef const @CbandT@ & @CbandT@_I;

@@ -19,12 +19,12 @@ namespace slisc {
 //% CbandT = ['Cband' T]; DcmatT = ['Dcmat' T];
 inline @DcmatT@ band(@CbandT@_IO a)
 {
-	return @DcmatT@(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+    return @DcmatT@(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
 }
 
 inline @DcmatT@_c band(@CbandT@_I a)
 {
-	return @DcmatT@_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+    return @DcmatT@_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
 }
 //%------------------------------
 

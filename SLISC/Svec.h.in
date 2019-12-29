@@ -25,7 +25,7 @@ namespace slisc {
 //%     Class = SvecT_c;
 //% else
 //%     CT = T;
-//% 	Class = SvecT;
+//%     Class = SvecT;
 //% end
 //% if is_Long(T) && constness
 #ifdef SLS_USE_INT_AS_LONG
@@ -43,22 +43,22 @@ typedef SvecLlong SvecLong;
 class @Class@
 {
 protected:
-	@CT@ *m_p;
+    @CT@ *m_p;
     Long m_N;
 public:
     @Class@();
     explicit @Class@(Long_I N);
     @Class@(@CT@ *ptr, Long_I N);
-	@CT@* ptr() const;
+    @CT@* ptr() const;
     Long size() const;
 //% % resize() is a bad idea, don't try to create it!
     @CT@ & operator[](Long_I i) const;
     @CT@ & operator()(Long_I i) const;
     @CT@ & end() const;
     @CT@ & end(Long_I i) const;
-	@Class@ &operator=(const @Class@ &) = delete;
+    @Class@ &operator=(const @Class@ &) = delete;
 //% if ~constness
-	operator @SvecT_c@() const;
+    operator @SvecT_c@() const;
 //% end
 
     // === other member functions ===
@@ -66,7 +66,7 @@ public:
     void set_size(Long_I N);
     void set_ptr(@CT@ *ptr);
     void set(@CT@ *ptr, Long_I N);
-	void set(const @Class@ &sli);
+    void set(const @Class@ &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -130,7 +130,7 @@ inline @CT@ & @Class@::end(Long_I i) const
 //% if ~constness
 inline @Class@::operator @SvecT_c@() const
 {
-	return *((@SvecT_c@ *)this);
+    return *((@SvecT_c@ *)this);
 }
 //% end
 
@@ -154,7 +154,7 @@ inline void @Class@::set(@CT@ * ptr, Long_I N)
 
 inline void @Class@::set(const @Class@ &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void @Class@::next()

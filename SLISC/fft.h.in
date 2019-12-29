@@ -91,10 +91,10 @@ inline void fftshift(@T@_IO v)
 {
     Long n = v.size();
     if (isodd(n))
-		SLS_ERR("fftshift only supports even columns!");
+        SLS_ERR("fftshift only supports even columns!");
     Long halfn = n / 2;
     for (Long i = 0; i < halfn; ++i)
-		swap(v[i], v[i + halfn]);
+        swap(v[i], v[i + halfn]);
 }
 //%----------------
 
@@ -108,23 +108,23 @@ inline void fftshift(@T@_IO a, Int_I dim = 1)
     Long N1 = a.n1(), N2 = a.n2();
     if (dim == 1) {
         if (isodd(N1))
-			SLS_ERR("fftshift only supports even rows!");
+            SLS_ERR("fftshift only supports even rows!");
         Long halfn = N1 / 2;
         for (Long j = 0; j < N2; ++j) {
-			@Tsli1@ sli = slice1(a, j);
-			for (Long i = 0; i < halfn; ++i)
-				swap(sli[i], sli[i + halfn]);
-		}
+            @Tsli1@ sli = slice1(a, j);
+            for (Long i = 0; i < halfn; ++i)
+                swap(sli[i], sli[i + halfn]);
+        }
     }
     else if (dim == 2) {
         if (isodd(N2))
-			SLS_ERR("fftshift only supports even rows!");
+            SLS_ERR("fftshift only supports even rows!");
         Long halfn = N2 / 2;
         for (Long i = 0; i < N1; ++i) {
-			@Tsli2@ sli = slice2(a, i);
-			for (Long i = 0; i < halfn; ++i)
-				swap(sli[i], sli[i + halfn]);
-		}
+            @Tsli2@ sli = slice2(a, i);
+            for (Long i = 0; i < halfn; ++i)
+                swap(sli[i], sli[i + halfn]);
+        }
     }
 }
 //%-----------------

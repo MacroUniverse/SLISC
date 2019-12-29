@@ -7,7 +7,7 @@
 
 namespace slisc {
 //% types = {
-//%	    'Doub', 'Doub', 'Doub';
+//%        'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
@@ -27,7 +27,7 @@ inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, cons
 //%------------------------
 
 //% types = {
-//%	    'Doub', 'Doub', 'Doub';
+//%        'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Comp', 'Comp';
@@ -112,14 +112,14 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 
     // middle blocks
     for (Long blk = 1; blk < Nblk - 1; ++blk) {
-		for (Long j = 0; j < blk_size; ++j) {
-			@Tx@ s = x[j];
-			for (Long i = 0; i < blk_size; ++i) {
-				y[i] += (*a) * s;
-				++a;
-			}
-		}
-		x += step; y += step;
+        for (Long j = 0; j < blk_size; ++j) {
+            @Tx@ s = x[j];
+            for (Long i = 0; i < blk_size; ++i) {
+                y[i] += (*a) * s;
+                ++a;
+            }
+        }
+        x += step; y += step;
     }
     
     // last block
@@ -163,12 +163,12 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.size() || a.n1() != y.size())
-		SLS_ERR("illegal shape!");
+        SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
-	mul_v_coo_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
+    mul_v_coo_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
-	mul_v_cooh_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
+    mul_v_cooh_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
 //% else
 //%     error('not implemented!');
 //% end
@@ -176,11 +176,11 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%------------------------
 
 //% types = {
-//%	    'CmatDoub', 'CmatDoub', 'DiagDoub';
+//%        'CmatDoub', 'CmatDoub', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagComp';
 //%     'CmatComp', 'CmatDoub', 'DiagComp';
-//%	    'CmatDoub', 'DiagDoub', 'CmatDoub';
+//%        'CmatDoub', 'DiagDoub', 'CmatDoub';
 //%     'CmatComp', 'DiagComp', 'ScmatDoub';
 //%     'CmatComp', 'DiagComp', 'CmatComp';
 //%     'CmatComp', 'DiagDoub', 'CmatComp';
@@ -191,14 +191,14 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPE
     if (a.n2() != x.n1())
-		SLS_ERR("illegal shape!");
+        SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
 //% if is_dense(T) && is_cmajor(T) && is_dense(T1) && is_cmajor(T1) && is_Diag(T2)
     mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
 //% elseif is_dense(T) && is_cmajor(T) && is_Diag(T1) && is_dense(T2) && is_cmajor(T2)
-	mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
 //% else
 //%     error('not implemented!');
 //% end
@@ -212,7 +212,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% SvecT = ['Svec' T];
 inline void sort_r(@McooT@_IO a)
 {
-	Long Nnz = a.nnz();
+    Long Nnz = a.nnz();
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
@@ -259,7 +259,7 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 //% [T, T1, Ts] = varargin{:};
 inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-	times(v.cmat3(), v1.cmat3(), s);
+    times(v.cmat3(), v1.cmat3(), s);
 }
 //%------------------------
 

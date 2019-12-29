@@ -5,26 +5,26 @@ namespace slisc {
 class SvecChar_c
 {
 protected:
-	const Char *m_p;
+    const Char *m_p;
     Long m_N;
 public:
     SvecChar_c();
     explicit SvecChar_c(Long_I N);
     SvecChar_c(const Char *ptr, Long_I N);
-	const Char* ptr() const;
+    const Char* ptr() const;
     Long size() const;
     const Char & operator[](Long_I i) const;
     const Char & operator()(Long_I i) const;
     const Char & end() const;
     const Char & end(Long_I i) const;
-	SvecChar_c &operator=(const SvecChar_c &) = delete;
+    SvecChar_c &operator=(const SvecChar_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(const Char *ptr);
     void set(const Char *ptr, Long_I N);
-	void set(const SvecChar_c &sli);
+    void set(const SvecChar_c &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -106,7 +106,7 @@ inline void SvecChar_c::set(const Char * ptr, Long_I N)
 
 inline void SvecChar_c::set(const SvecChar_c &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecChar_c::next()
@@ -131,27 +131,27 @@ typedef const SvecChar_c & SvecChar_I;
 class SvecChar
 {
 protected:
-	Char *m_p;
+    Char *m_p;
     Long m_N;
 public:
     SvecChar();
     explicit SvecChar(Long_I N);
     SvecChar(Char *ptr, Long_I N);
-	Char* ptr() const;
+    Char* ptr() const;
     Long size() const;
     Char & operator[](Long_I i) const;
     Char & operator()(Long_I i) const;
     Char & end() const;
     Char & end(Long_I i) const;
-	SvecChar &operator=(const SvecChar &) = delete;
-	operator SvecChar_c() const;
+    SvecChar &operator=(const SvecChar &) = delete;
+    operator SvecChar_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(Char *ptr);
     void set(Char *ptr, Long_I N);
-	void set(const SvecChar &sli);
+    void set(const SvecChar &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -214,7 +214,7 @@ inline Char & SvecChar::end(Long_I i) const
 
 inline SvecChar::operator SvecChar_c() const
 {
-	return *((SvecChar_c *)this);
+    return *((SvecChar_c *)this);
 }
 
 inline void SvecChar::set_size(Long_I N)
@@ -237,7 +237,7 @@ inline void SvecChar::set(Char * ptr, Long_I N)
 
 inline void SvecChar::set(const SvecChar &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecChar::next()
@@ -262,26 +262,26 @@ typedef const SvecChar & SvecChar_O, & SvecChar_IO;
 class SvecInt_c
 {
 protected:
-	const Int *m_p;
+    const Int *m_p;
     Long m_N;
 public:
     SvecInt_c();
     explicit SvecInt_c(Long_I N);
     SvecInt_c(const Int *ptr, Long_I N);
-	const Int* ptr() const;
+    const Int* ptr() const;
     Long size() const;
     const Int & operator[](Long_I i) const;
     const Int & operator()(Long_I i) const;
     const Int & end() const;
     const Int & end(Long_I i) const;
-	SvecInt_c &operator=(const SvecInt_c &) = delete;
+    SvecInt_c &operator=(const SvecInt_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(const Int *ptr);
     void set(const Int *ptr, Long_I N);
-	void set(const SvecInt_c &sli);
+    void set(const SvecInt_c &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -363,7 +363,7 @@ inline void SvecInt_c::set(const Int * ptr, Long_I N)
 
 inline void SvecInt_c::set(const SvecInt_c &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecInt_c::next()
@@ -388,27 +388,27 @@ typedef const SvecInt_c & SvecInt_I;
 class SvecInt
 {
 protected:
-	Int *m_p;
+    Int *m_p;
     Long m_N;
 public:
     SvecInt();
     explicit SvecInt(Long_I N);
     SvecInt(Int *ptr, Long_I N);
-	Int* ptr() const;
+    Int* ptr() const;
     Long size() const;
     Int & operator[](Long_I i) const;
     Int & operator()(Long_I i) const;
     Int & end() const;
     Int & end(Long_I i) const;
-	SvecInt &operator=(const SvecInt &) = delete;
-	operator SvecInt_c() const;
+    SvecInt &operator=(const SvecInt &) = delete;
+    operator SvecInt_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(Int *ptr);
     void set(Int *ptr, Long_I N);
-	void set(const SvecInt &sli);
+    void set(const SvecInt &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -471,7 +471,7 @@ inline Int & SvecInt::end(Long_I i) const
 
 inline SvecInt::operator SvecInt_c() const
 {
-	return *((SvecInt_c *)this);
+    return *((SvecInt_c *)this);
 }
 
 inline void SvecInt::set_size(Long_I N)
@@ -494,7 +494,7 @@ inline void SvecInt::set(Int * ptr, Long_I N)
 
 inline void SvecInt::set(const SvecInt &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecInt::next()
@@ -519,26 +519,26 @@ typedef const SvecInt & SvecInt_O, & SvecInt_IO;
 class SvecLlong_c
 {
 protected:
-	const Llong *m_p;
+    const Llong *m_p;
     Long m_N;
 public:
     SvecLlong_c();
     explicit SvecLlong_c(Long_I N);
     SvecLlong_c(const Llong *ptr, Long_I N);
-	const Llong* ptr() const;
+    const Llong* ptr() const;
     Long size() const;
     const Llong & operator[](Long_I i) const;
     const Llong & operator()(Long_I i) const;
     const Llong & end() const;
     const Llong & end(Long_I i) const;
-	SvecLlong_c &operator=(const SvecLlong_c &) = delete;
+    SvecLlong_c &operator=(const SvecLlong_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(const Llong *ptr);
     void set(const Llong *ptr, Long_I N);
-	void set(const SvecLlong_c &sli);
+    void set(const SvecLlong_c &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -620,7 +620,7 @@ inline void SvecLlong_c::set(const Llong * ptr, Long_I N)
 
 inline void SvecLlong_c::set(const SvecLlong_c &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecLlong_c::next()
@@ -645,27 +645,27 @@ typedef const SvecLlong_c & SvecLlong_I;
 class SvecLlong
 {
 protected:
-	Llong *m_p;
+    Llong *m_p;
     Long m_N;
 public:
     SvecLlong();
     explicit SvecLlong(Long_I N);
     SvecLlong(Llong *ptr, Long_I N);
-	Llong* ptr() const;
+    Llong* ptr() const;
     Long size() const;
     Llong & operator[](Long_I i) const;
     Llong & operator()(Long_I i) const;
     Llong & end() const;
     Llong & end(Long_I i) const;
-	SvecLlong &operator=(const SvecLlong &) = delete;
-	operator SvecLlong_c() const;
+    SvecLlong &operator=(const SvecLlong &) = delete;
+    operator SvecLlong_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(Llong *ptr);
     void set(Llong *ptr, Long_I N);
-	void set(const SvecLlong &sli);
+    void set(const SvecLlong &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -728,7 +728,7 @@ inline Llong & SvecLlong::end(Long_I i) const
 
 inline SvecLlong::operator SvecLlong_c() const
 {
-	return *((SvecLlong_c *)this);
+    return *((SvecLlong_c *)this);
 }
 
 inline void SvecLlong::set_size(Long_I N)
@@ -751,7 +751,7 @@ inline void SvecLlong::set(Llong * ptr, Long_I N)
 
 inline void SvecLlong::set(const SvecLlong &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecLlong::next()
@@ -792,26 +792,26 @@ typedef const SvecLong & SvecLong_O, & SvecLong_IO;
 class SvecDoub_c
 {
 protected:
-	const Doub *m_p;
+    const Doub *m_p;
     Long m_N;
 public:
     SvecDoub_c();
     explicit SvecDoub_c(Long_I N);
     SvecDoub_c(const Doub *ptr, Long_I N);
-	const Doub* ptr() const;
+    const Doub* ptr() const;
     Long size() const;
     const Doub & operator[](Long_I i) const;
     const Doub & operator()(Long_I i) const;
     const Doub & end() const;
     const Doub & end(Long_I i) const;
-	SvecDoub_c &operator=(const SvecDoub_c &) = delete;
+    SvecDoub_c &operator=(const SvecDoub_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(const Doub *ptr);
     void set(const Doub *ptr, Long_I N);
-	void set(const SvecDoub_c &sli);
+    void set(const SvecDoub_c &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -893,7 +893,7 @@ inline void SvecDoub_c::set(const Doub * ptr, Long_I N)
 
 inline void SvecDoub_c::set(const SvecDoub_c &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecDoub_c::next()
@@ -918,27 +918,27 @@ typedef const SvecDoub_c & SvecDoub_I;
 class SvecDoub
 {
 protected:
-	Doub *m_p;
+    Doub *m_p;
     Long m_N;
 public:
     SvecDoub();
     explicit SvecDoub(Long_I N);
     SvecDoub(Doub *ptr, Long_I N);
-	Doub* ptr() const;
+    Doub* ptr() const;
     Long size() const;
     Doub & operator[](Long_I i) const;
     Doub & operator()(Long_I i) const;
     Doub & end() const;
     Doub & end(Long_I i) const;
-	SvecDoub &operator=(const SvecDoub &) = delete;
-	operator SvecDoub_c() const;
+    SvecDoub &operator=(const SvecDoub &) = delete;
+    operator SvecDoub_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(Doub *ptr);
     void set(Doub *ptr, Long_I N);
-	void set(const SvecDoub &sli);
+    void set(const SvecDoub &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -1001,7 +1001,7 @@ inline Doub & SvecDoub::end(Long_I i) const
 
 inline SvecDoub::operator SvecDoub_c() const
 {
-	return *((SvecDoub_c *)this);
+    return *((SvecDoub_c *)this);
 }
 
 inline void SvecDoub::set_size(Long_I N)
@@ -1024,7 +1024,7 @@ inline void SvecDoub::set(Doub * ptr, Long_I N)
 
 inline void SvecDoub::set(const SvecDoub &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecDoub::next()
@@ -1049,26 +1049,26 @@ typedef const SvecDoub & SvecDoub_O, & SvecDoub_IO;
 class SvecComp_c
 {
 protected:
-	const Comp *m_p;
+    const Comp *m_p;
     Long m_N;
 public:
     SvecComp_c();
     explicit SvecComp_c(Long_I N);
     SvecComp_c(const Comp *ptr, Long_I N);
-	const Comp* ptr() const;
+    const Comp* ptr() const;
     Long size() const;
     const Comp & operator[](Long_I i) const;
     const Comp & operator()(Long_I i) const;
     const Comp & end() const;
     const Comp & end(Long_I i) const;
-	SvecComp_c &operator=(const SvecComp_c &) = delete;
+    SvecComp_c &operator=(const SvecComp_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(const Comp *ptr);
     void set(const Comp *ptr, Long_I N);
-	void set(const SvecComp_c &sli);
+    void set(const SvecComp_c &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -1150,7 +1150,7 @@ inline void SvecComp_c::set(const Comp * ptr, Long_I N)
 
 inline void SvecComp_c::set(const SvecComp_c &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecComp_c::next()
@@ -1175,27 +1175,27 @@ typedef const SvecComp_c & SvecComp_I;
 class SvecComp
 {
 protected:
-	Comp *m_p;
+    Comp *m_p;
     Long m_N;
 public:
     SvecComp();
     explicit SvecComp(Long_I N);
     SvecComp(Comp *ptr, Long_I N);
-	Comp* ptr() const;
+    Comp* ptr() const;
     Long size() const;
     Comp & operator[](Long_I i) const;
     Comp & operator()(Long_I i) const;
     Comp & end() const;
     Comp & end(Long_I i) const;
-	SvecComp &operator=(const SvecComp &) = delete;
-	operator SvecComp_c() const;
+    SvecComp &operator=(const SvecComp &) = delete;
+    operator SvecComp_c() const;
 
     // === other member functions ===
     // There is no bound checking, use with care
     void set_size(Long_I N);
     void set_ptr(Comp *ptr);
     void set(Comp *ptr, Long_I N);
-	void set(const SvecComp &sli);
+    void set(const SvecComp &sli);
     void next(); // m_ptr += m_N
     void last(); // m_ptr -= m_N
     void shift(Long_I N); // m_ptr += N;
@@ -1258,7 +1258,7 @@ inline Comp & SvecComp::end(Long_I i) const
 
 inline SvecComp::operator SvecComp_c() const
 {
-	return *((SvecComp_c *)this);
+    return *((SvecComp_c *)this);
 }
 
 inline void SvecComp::set_size(Long_I N)
@@ -1281,7 +1281,7 @@ inline void SvecComp::set(Comp * ptr, Long_I N)
 
 inline void SvecComp::set(const SvecComp &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline void SvecComp::next()

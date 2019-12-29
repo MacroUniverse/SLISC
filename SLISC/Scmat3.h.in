@@ -26,8 +26,8 @@ namespace slisc {
 //%     Class = Scmat3T_c;
 //% else
 //%     CT = T;
-//% 	Base = SvecT;
-//% 	Class = Scmat3T;
+//%     Base = SvecT;
+//%     Class = Scmat3T;
 //% end
 //% if is_Long(T) && constness
 #ifdef SLS_USE_INT_AS_LONG
@@ -45,29 +45,29 @@ typedef Scmat3Llong Scmat3Long;
 class @Class@ : public @Base@
 {
 protected:
-	Long m_N1, m_N2, m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     @Class@();
     @Class@(Long_I N1, Long_I N2, Long_I N3);
     @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3);
 
 //% if ~constness
-	operator @Scmat3T_c@() const;
+    operator @Scmat3T_c@() const;
 //% end
-	@Class@ &operator=(const @Class@ &) = delete;
+    @Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat functions ===
     @CT@& operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
-	Long n3() const;
+    Long n3() const;
 
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
     void set_size(Long_I N1, Long_I N2, Long_I N3);
     void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3);
-	void set(const @Class@ &sli);
+    void set(const @Class@ &sli);
     ~@Class@();
 };
 
@@ -85,7 +85,7 @@ inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3)
 //% if ~constness
 inline @Class@::operator @Scmat3T_c@() const
 {
-	return *((@Scmat3T_c@ *)this);
+    return *((@Scmat3T_c@ *)this);
 }
 //% end
 
@@ -129,8 +129,8 @@ inline void @Class@::set(@CT@ * ptr, Long_I N1, Long_I N2, Long_I N3)
 
 inline void @Class@::set(const @Class@ &sli)
 {
-	m_p = sli.m_p; m_N = sli.m_N;
-	m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+    m_p = sli.m_p; m_N = sli.m_N;
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
 }
 
 inline @Class@::~@Class@() {}

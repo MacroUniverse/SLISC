@@ -27,7 +27,7 @@ public:
     // return -2 if reading failed (e.g. file is not finished, wrong format)
     void open(Str_I fname, Char_I *rw, Int_I precision = 17);
 
-	Bool isopen();
+    Bool isopen();
 
     // close a file, if not called, will be called in destructor
     void close();
@@ -71,12 +71,12 @@ inline void matt_write_scalar(Doub_I s, ofstream &m_out)
 
 inline void matt_write_scalar(Comp_I s, ofstream &m_out)
 {
-	if (imag(s) == 0)
-		m_out << real(s) << Matt::dlm;
-	else if (imag(s) < 0)
-		m_out << real(s) << imag(s) << "i ";
-	else
-		m_out << real(s) << '+' << imag(s) << "i ";
+    if (imag(s) == 0)
+        m_out << real(s) << Matt::dlm;
+    else if (imag(s) < 0)
+        m_out << real(s) << imag(s) << "i ";
+    else
+        m_out << real(s) << '+' << imag(s) << "i ";
 }
 
 
@@ -146,13 +146,13 @@ inline void Matt::get_profile()
     // read number of variables and their positions
     fin.seekg(0, fin.end);
     Long gmax = fin.tellg();
-	// check end mark
-	fin.seekg(gmax-2);
-	Char c1 = fin.get(), c2 = fin.get();
-	if (c1 != Matt::dlm || c2 != Matt::dlm) {
-		throw Matt_file_not_complete();
-	}
-	fin.seekg(gmax-2);
+    // check end mark
+    fin.seekg(gmax-2);
+    Char c1 = fin.get(), c2 = fin.get();
+    if (c1 != Matt::dlm || c2 != Matt::dlm) {
+        throw Matt_file_not_complete();
+    }
+    fin.seekg(gmax-2);
     m_n = (Int)scanInverse(fin);
     if (m_n < 1)
         SLS_ERR("unknown!");
@@ -216,8 +216,8 @@ inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 
 void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 {
-	if (isopen())
-		close();
+    if (isopen())
+        close();
     this->fname = fname;
     if (rw[0] == 'w') {
 
@@ -254,7 +254,7 @@ void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 
 inline Bool Matt::isopen()
 {
-	return m_in.is_open() != m_out.is_open();
+    return m_in.is_open() != m_out.is_open();
 }
 
 inline void Matt::close()
@@ -266,8 +266,8 @@ inline void Matt::close()
             fout << m_ind[i] << dlm;
         // write number of variables
         fout << m_n;
-		// mark end-of-file
-		fout << Matt::dlm << Matt::dlm;
+        // mark end-of-file
+        fout << Matt::dlm << Matt::dlm;
         m_out.close();
     }
     else {
@@ -307,7 +307,7 @@ inline void save(Char_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-	matt_write_scalar(s, fout);
+    matt_write_scalar(s, fout);
 }
 
 inline void save(Char_I s, Str_I varname, Str_I matt_file)
@@ -334,7 +334,7 @@ inline void save(Int_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-	matt_write_scalar(s, fout);
+    matt_write_scalar(s, fout);
 }
 
 inline void save(Int_I s, Str_I varname, Str_I matt_file)
@@ -361,7 +361,7 @@ inline void save(Llong_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-	matt_write_scalar(s, fout);
+    matt_write_scalar(s, fout);
 }
 
 inline void save(Llong_I s, Str_I varname, Str_I matt_file)
@@ -388,7 +388,7 @@ inline void save(Doub_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-	matt_write_scalar(s, fout);
+    matt_write_scalar(s, fout);
 }
 
 inline void save(Doub_I s, Str_I varname, Str_I matt_file)
@@ -415,7 +415,7 @@ inline void save(Comp_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-	matt_write_scalar(s, fout);
+    matt_write_scalar(s, fout);
 }
 
 inline void save(Comp_I s, Str_I varname, Str_I matt_file)
@@ -444,7 +444,7 @@ inline void save(VecChar_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(VecChar_I s, Str_I varname, Str_I matt_file)
@@ -473,7 +473,7 @@ inline void save(VecInt_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(VecInt_I s, Str_I varname, Str_I matt_file)
@@ -502,7 +502,7 @@ inline void save(VecLlong_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(VecLlong_I s, Str_I varname, Str_I matt_file)
@@ -531,7 +531,7 @@ inline void save(VecDoub_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(VecDoub_I s, Str_I varname, Str_I matt_file)
@@ -560,7 +560,7 @@ inline void save(VecComp_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(VecComp_I s, Str_I varname, Str_I matt_file)
@@ -589,7 +589,7 @@ inline void save(SvecChar_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(SvecChar_I s, Str_I varname, Str_I matt_file)
@@ -618,7 +618,7 @@ inline void save(SvecInt_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(SvecInt_I s, Str_I varname, Str_I matt_file)
@@ -647,7 +647,7 @@ inline void save(SvecLlong_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(SvecLlong_I s, Str_I varname, Str_I matt_file)
@@ -676,7 +676,7 @@ inline void save(SvecDoub_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(SvecDoub_I s, Str_I varname, Str_I matt_file)
@@ -705,7 +705,7 @@ inline void save(SvecComp_I v, Str_I varname, Matt_IO matt)
     fout << 1 << Matt::dlm << n << Matt::dlm;
     // write matrix data
     for (Long i = 0; i < n; ++i)
-		matt_write_scalar(v[i], fout);
+        matt_write_scalar(v[i], fout);
 }
 
 inline void save(SvecComp_I s, Str_I varname, Str_I matt_file)
@@ -966,9 +966,9 @@ inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
     fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
     // write matrix data
     for (k = 0; k < N3; ++k)
-    	for (j = 0; j < N2; ++j)
-    		for (i = 0; i < N1; ++i)
-        		matt_write_scalar(a(i, j, k), fout);
+        for (j = 0; j < N2; ++j)
+            for (i = 0; i < N1; ++i)
+                matt_write_scalar(a(i, j, k), fout);
 }
 
 inline void save(Cmat3Int_I s, Str_I varname, Str_I matt_file)
@@ -997,9 +997,9 @@ inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
     fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
     // write matrix data
     for (k = 0; k < N3; ++k)
-    	for (j = 0; j < N2; ++j)
-    		for (i = 0; i < N1; ++i)
-        		matt_write_scalar(a(i, j, k), fout);
+        for (j = 0; j < N2; ++j)
+            for (i = 0; i < N1; ++i)
+                matt_write_scalar(a(i, j, k), fout);
 }
 
 inline void save(Cmat3Llong_I s, Str_I varname, Str_I matt_file)
@@ -1028,9 +1028,9 @@ inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
     fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
     // write matrix data
     for (k = 0; k < N3; ++k)
-    	for (j = 0; j < N2; ++j)
-    		for (i = 0; i < N1; ++i)
-        		matt_write_scalar(a(i, j, k), fout);
+        for (j = 0; j < N2; ++j)
+            for (i = 0; i < N1; ++i)
+                matt_write_scalar(a(i, j, k), fout);
 }
 
 inline void save(Cmat3Doub_I s, Str_I varname, Str_I matt_file)
@@ -1059,9 +1059,9 @@ inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
     fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
     // write matrix data
     for (k = 0; k < N3; ++k)
-    	for (j = 0; j < N2; ++j)
-    		for (i = 0; i < N1; ++i)
-        		matt_write_scalar(a(i, j, k), fout);
+        for (j = 0; j < N2; ++j)
+            for (i = 0; i < N1; ++i)
+                matt_write_scalar(a(i, j, k), fout);
 }
 
 inline void save(Cmat3Comp_I s, Str_I varname, Str_I matt_file)
@@ -1453,7 +1453,7 @@ inline Int load(VecChar_O v, Str_I varname, Matt_IO matt)
     Long n = matt.m_size[i][0]; v.resize(n);
     // read var data
     for (Long i = 0; i < n; ++i)
-		matt_read_scalar(v[i], fin);
+        matt_read_scalar(v[i], fin);
     return 0;
 }
 
@@ -1480,7 +1480,7 @@ inline Int load(VecInt_O v, Str_I varname, Matt_IO matt)
     Long n = matt.m_size[i][0]; v.resize(n);
     // read var data
     for (Long i = 0; i < n; ++i)
-		matt_read_scalar(v[i], fin);
+        matt_read_scalar(v[i], fin);
     return 0;
 }
 
@@ -1507,7 +1507,7 @@ inline Int load(VecLlong_O v, Str_I varname, Matt_IO matt)
     Long n = matt.m_size[i][0]; v.resize(n);
     // read var data
     for (Long i = 0; i < n; ++i)
-		matt_read_scalar(v[i], fin);
+        matt_read_scalar(v[i], fin);
     return 0;
 }
 
@@ -1534,7 +1534,7 @@ inline Int load(VecDoub_O v, Str_I varname, Matt_IO matt)
     Long n = matt.m_size[i][0]; v.resize(n);
     // read var data
     for (Long i = 0; i < n; ++i)
-		matt_read_scalar(v[i], fin);
+        matt_read_scalar(v[i], fin);
     return 0;
 }
 
@@ -1561,7 +1561,7 @@ inline Int load(VecComp_O v, Str_I varname, Matt_IO matt)
     Long n = matt.m_size[i][0]; v.resize(n);
     // read var data
     for (Long i = 0; i < n; ++i)
-		matt_read_scalar(v[i], fin);
+        matt_read_scalar(v[i], fin);
     return 0;
 }
 
@@ -1590,7 +1590,7 @@ inline Int load(MatInt_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1619,7 +1619,7 @@ inline Int load(MatLlong_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1648,7 +1648,7 @@ inline Int load(MatDoub_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1677,7 +1677,7 @@ inline Int load(MatComp_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1706,7 +1706,7 @@ inline Int load(CmatInt_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1735,7 +1735,7 @@ inline Int load(CmatLlong_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1764,7 +1764,7 @@ inline Int load(CmatDoub_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 
@@ -1793,7 +1793,7 @@ inline Int load(CmatComp_O a, Str_I varname, Matt_IO matt)
     // read var data
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
-			matt_read_scalar(a(i, j), fin);
+            matt_read_scalar(a(i, j), fin);
     return 0;
 }
 

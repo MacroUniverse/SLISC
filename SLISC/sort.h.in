@@ -74,7 +74,7 @@ inline void sort_v(@T@ *arr, Long_I N, Long_I m = -1)
 // sort first m elements of v
 inline void sort(@T@_IO v, Long_I m = -1)
 {
-	sort_v(v.ptr(), v.size(), m);
+    sort_v(v.ptr(), v.size(), m);
 }
 //%------------------------
 
@@ -175,19 +175,19 @@ inline void sort2_vv(@T@ *v, @T1@ *v1, Long_I N)
 inline void sort2(@T@_IO v, @T1@_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (!shape_cmp(v, v1))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.ptr(), v1.ptr(), v.size());
+    sort2_vv(v.ptr(), v1.ptr(), v.size());
 }
 //% elseif is_vector(T) && is_vector(T1)
 inline void sort2(@T@_IO v, @T1@_IO v1)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (v.size() != v1.size())
-		SLS_ERR("wrong shape!");
+    if (v.size() != v1.size())
+        SLS_ERR("wrong shape!");
 #endif
-	sort2_vv(v.data(), v1.data(), (Long)v.size());
+    sort2_vv(v.data(), v1.data(), (Long)v.size());
 }
 //% else
 //%     error('not implemented!');

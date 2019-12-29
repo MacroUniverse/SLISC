@@ -11,7 +11,7 @@ namespace slisc {
 //% T = varargin{:};
 inline Long size(@T@_I v)
 {
-	return v.size();
+    return v.size();
 }
 //%-------------------------
 
@@ -557,8 +557,8 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
             @Tv@ v1(N1, N2); copy(v1, 0);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
-				slice(v, 0, N1min, 0, N2min));
-			v << v1;
+                slice(v, 0, N1min, 0, N2min));
+            v << v1;
         }
     }
 }
@@ -577,8 +577,8 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3)
             @Tv@ v1(N1, N2, N3); copy(v1, 0);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-				slice(v, 0, N1min, 0, N2min, 0, N3min));
-			v << v1;
+                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            v << v1;
         }
     }
 }
@@ -708,8 +708,8 @@ inline void reorder(@Tv@_O v, @To@_I order)
         SLS_ERR("wrong shape!");
 #endif
     static @Tu@ u(N);
-	if (N > u.size())
-		u.resize(max(N, 2*u.size()));
+    if (N > u.size())
+        u.resize(max(N, 2*u.size()));
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)
@@ -734,16 +734,16 @@ inline void trans(@T@_IO v)
 //%-------------------------
 
 //% types = {
-//%	    'CmatLlong' 'CmatLlong';
-//%	    'CmatDoub' 'CmatDoub';
-//%	    'MatComp' 'CmatComp';
-//%	    'CmatComp' 'CmatComp';
-//%	    'CmatComp' 'MatComp';
+//%        'CmatLlong' 'CmatLlong';
+//%        'CmatDoub' 'CmatDoub';
+//%        'MatComp' 'CmatComp';
+//%        'CmatComp' 'CmatComp';
+//%        'CmatComp' 'MatComp';
 //%     'ScmatDoub' 'ScmatDoub';
 //%     'ScmatComp' 'ScmatComp';
-//%	    'DcmatLlong' 'DcmatLlong';
-//%	    'DcmatDoub' 'DcmatDoub';
-//%	    'DcmatComp' 'DcmatComp';
+//%        'DcmatLlong' 'DcmatLlong';
+//%        'DcmatDoub' 'DcmatDoub';
+//%        'DcmatComp' 'DcmatComp';
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -760,7 +760,7 @@ inline void trans(@T@_O v, @T1@_I v1)
 //%-------------------------
 
 //% types = {
-//%	    'Comp';
+//%        'Comp';
 //% };
 //%--------------------------
 //% T = varargin{:}; Tr = rm_comp(T);
@@ -773,7 +773,7 @@ inline void conj_v(@T@ *v, Long_I N)
 //%--------------------------
 
 //% types = {
-//%	    'Comp', 'Comp';
+//%        'Comp', 'Comp';
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -785,7 +785,7 @@ inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%-------------------------------
 
 //% types = {
-//%	    'VecComp'; 'CmatComp'; 'MatComp'; 'DcmatComp';
+//%        'VecComp'; 'CmatComp'; 'MatComp'; 'DcmatComp';
 //% };
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
@@ -800,15 +800,15 @@ inline void conj(@T@_IO v)
 //% elseif is_Dcmat(T)
 inline void conj(@T@_IO v)
 {
-	for (Long j = 0; j < v.n2(); ++j)
-    	conj_v(v.ptr(), v.n1());
+    for (Long j = 0; j < v.n2(); ++j)
+        conj_v(v.ptr(), v.n1());
 }
 //% end
 //%----------------------------
 
 //% types = {
-//%	    'CmatComp', 'CmatComp';
-//%	    'MatComp', 'MatComp';
+//%        'CmatComp', 'CmatComp';
+//%        'MatComp', 'MatComp';
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -823,7 +823,7 @@ inline void conj(@T@_O v, @T1@_I v1)
 //%----------------------------
 
 //% types = {
-//%	    'CmatComp'; 'MatComp';
+//%        'CmatComp'; 'MatComp';
 //% };
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
@@ -840,16 +840,16 @@ inline void her(@T@_IO v)
 //%---------------------------
 
 //% types = {
-//%	    'MatComp' 'CmatComp';
-//%	    'CmatComp' 'MatComp';
-//%	    'CmatComp' 'CmatComp';
-//%	    'DcmatComp' 'DcmatComp';
+//%        'MatComp' 'CmatComp';
+//%        'CmatComp' 'MatComp';
+//%        'CmatComp' 'CmatComp';
+//%        'DcmatComp' 'DcmatComp';
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
 inline void her(@T@_O v, @T1@_I v1)
 {
-	trans(v, v1); conj(v);
+    trans(v, v1); conj(v);
 }
 //%-------------------------
 
@@ -1077,7 +1077,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
         SLS_ERR("wrong shape!");
 #endif
     for (Long i = 0; i < v.size(); ++i)
-		v[i] += v1[i];
+        v[i] += v1[i];
 }
 
 // v -= v
@@ -1087,8 +1087,8 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < v.size(); ++i)
-		v[i] -= v1[i];
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] -= v1[i];
 }
 
 // v *= v
@@ -1099,7 +1099,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
         SLS_ERR("wrong shape!");
 #endif
     for (Long i = 0; i < v.size(); ++i)
-		v[i] *= v1[i];
+        v[i] *= v1[i];
 }
 
 // v /= v
@@ -1110,7 +1110,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
         SLS_ERR("wrong shape!");
 #endif
     for (Long i = 0; i < v.size(); ++i)
-		v[i] /= v1[i];
+        v[i] /= v1[i];
 }
 //% elseif ndim(T) == 2 && ndim(T1) == 2
 // v += v (slow!)
@@ -1120,9 +1120,9 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-	for (Long j = 0; j < v.n2(); ++j)
-		for (Long i = 0; i < v.n1(); ++i)
-			v(i, j) += v1(i, j);
+    for (Long j = 0; j < v.n2(); ++j)
+        for (Long i = 0; i < v.n1(); ++i)
+            v(i, j) += v1(i, j);
 }
 
 // v -= v (slow!)
@@ -1132,9 +1132,9 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-	for (Long j = 0; j < v.n2(); ++j)
-		for (Long i = 0; i < v.n1(); ++i)
-			v(i, j) -= v1(i, j);
+    for (Long j = 0; j < v.n2(); ++j)
+        for (Long i = 0; i < v.n1(); ++i)
+            v(i, j) -= v1(i, j);
 }
 
 // v *= v (slow!)
@@ -1144,9 +1144,9 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-	for (Long j = 0; j < v.n2(); ++j)
-		for (Long i = 0; i < v.n1(); ++i)
-			v(i, j) *= v1(i, j);
+    for (Long j = 0; j < v.n2(); ++j)
+        for (Long i = 0; i < v.n1(); ++i)
+            v(i, j) *= v1(i, j);
 }
 
 // v /= v (slow!)
@@ -1156,9 +1156,9 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-	for (Long j = 0; j < v.n2(); ++j)
-		for (Long i = 0; i < v.n1(); ++i)
-			v(i, j) /= v1(i, j);
+    for (Long j = 0; j < v.n2(); ++j)
+        for (Long i = 0; i < v.n1(); ++i)
+            v(i, j) /= v1(i, j);
 }
 //% else
 //%     error('not implemented!');
@@ -1166,15 +1166,15 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 //%-------------------------
 
 //% types = {
-//%	    'Char', 'Char', 'Char';
-//%	    'Int', 'Int', 'Int';
-//%	    'Llong', 'Llong', 'Llong';
+//%        'Char', 'Char', 'Char';
+//%        'Int', 'Int', 'Int';
+//%        'Llong', 'Llong', 'Llong';
 //%     'Float', 'Float', 'Float';
-//%	    'Doub', 'Doub', 'Doub';
-//%	    'Comp', 'Comp', 'Doub';
-//%	    'Comp', 'Doub', 'Imag';
-//%	    'Comp', 'Doub', 'Comp';
-//%	    'Comp', 'Comp', 'Comp';
+//%        'Doub', 'Doub', 'Doub';
+//%        'Comp', 'Comp', 'Doub';
+//%        'Comp', 'Doub', 'Imag';
+//%        'Comp', 'Doub', 'Comp';
+//%        'Comp', 'Comp', 'Comp';
 //% };
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -1207,14 +1207,14 @@ inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 //%-------------------------
 
 //% types = {
-//%	    'Char', 'Char', 'Char';
-//%	    'Int', 'Int', 'Int';
-//%	    'Llong', 'Llong', 'Llong';
+//%        'Char', 'Char', 'Char';
+//%        'Int', 'Int', 'Int';
+//%        'Llong', 'Llong', 'Llong';
 //%     'Float', 'Float', 'Float';
-//%	    'Doub', 'Doub', 'Doub';
-//%	    'Comp', 'Comp', 'Doub';
-//%	    'Comp', 'Doub', 'Comp';
-//%	    'Comp', 'Comp', 'Comp';
+//%        'Doub', 'Doub', 'Doub';
+//%        'Comp', 'Comp', 'Doub';
+//%        'Comp', 'Doub', 'Comp';
+//%        'Comp', 'Comp', 'Comp';
 //% };
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -1276,24 +1276,24 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%-------------------------
 
 //% types = {
-//%	    'VecChar', 'VecChar', 'Char';
-//%	    'VecInt', 'VecInt', 'Int';
-//%	    'VecLlong', 'VecLlong', 'Llong';
-//%	    'VecDoub', 'VecDoub', 'Doub';
-//%	    'VecComp', 'VecComp', 'Doub';
-//%	    'VecComp', 'VecDoub', 'Doub';
-//%	    'VecComp', 'SvecDoub', 'Doub';
-//%	    'VecComp', 'SvecDoub', 'Imag';
-//%	    'VecComp', 'VecDoub', 'Comp';
-//%	    'VecComp', 'VecComp', 'Comp';
-//%	    'CmatInt', 'CmatInt', 'Int';
-//%	    'CmatLlong', 'CmatLlong', 'Llong';
-//%	    'CmatDoub', 'CmatDoub', 'Doub';
-//%	    'CmatComp', 'CmatComp', 'Doub';
-//%	    'CmatComp', 'CmatDoub', 'Comp';
-//%	    'CmatComp', 'CmatComp', 'Comp';
-//%	    'Cmat3Comp', 'Cmat3Comp', 'Comp';
-//%	    'Cmat3Comp', 'Cmat3Doub', 'Comp';
+//%        'VecChar', 'VecChar', 'Char';
+//%        'VecInt', 'VecInt', 'Int';
+//%        'VecLlong', 'VecLlong', 'Llong';
+//%        'VecDoub', 'VecDoub', 'Doub';
+//%        'VecComp', 'VecComp', 'Doub';
+//%        'VecComp', 'VecDoub', 'Doub';
+//%        'VecComp', 'SvecDoub', 'Doub';
+//%        'VecComp', 'SvecDoub', 'Imag';
+//%        'VecComp', 'VecDoub', 'Comp';
+//%        'VecComp', 'VecComp', 'Comp';
+//%        'CmatInt', 'CmatInt', 'Int';
+//%        'CmatLlong', 'CmatLlong', 'Llong';
+//%        'CmatDoub', 'CmatDoub', 'Doub';
+//%        'CmatComp', 'CmatComp', 'Doub';
+//%        'CmatComp', 'CmatDoub', 'Comp';
+//%        'CmatComp', 'CmatComp', 'Comp';
+//%        'Cmat3Comp', 'Cmat3Comp', 'Comp';
+//%        'Cmat3Comp', 'Cmat3Doub', 'Comp';
 //% };
 //%------------------------------
 //% [T, T1, Ts2] = varargin{:};
@@ -1313,7 +1313,7 @@ inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 
 inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-	plus(v, v1, s);
+    plus(v, v1, s);
 }
 
 inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
@@ -1345,7 +1345,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 
 inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-	times(v, v1, s);
+    times(v, v1, s);
 }
 
 inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
@@ -1371,17 +1371,17 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 //%-------------------------
 
 //% types = {
-//%	    'VecChar', 'VecChar', 'VecChar';
-//%	    'VecInt', 'VecInt', 'VecInt';
-//%	    'VecLlong', 'VecLlong', 'VecLlong';
-//%	    'VecDoub', 'VecDoub', 'VecDoub';
-//%	    'VecComp', 'VecDoub', 'VecDoub';
-//%	    'VecComp', 'VecComp', 'VecComp';
-//%	    'CmatInt', 'CmatInt', 'CmatInt';
-//%	    'CmatLlong', 'CmatLlong', 'CmatLlong';
-//%	    'CmatDoub', 'CmatDoub', 'CmatDoub';
-//%	    'CmatComp', 'CmatDoub', 'CmatDoub';
-//%	    'CmatComp', 'CmatComp', 'CmatComp';
+//%        'VecChar', 'VecChar', 'VecChar';
+//%        'VecInt', 'VecInt', 'VecInt';
+//%        'VecLlong', 'VecLlong', 'VecLlong';
+//%        'VecDoub', 'VecDoub', 'VecDoub';
+//%        'VecComp', 'VecDoub', 'VecDoub';
+//%        'VecComp', 'VecComp', 'VecComp';
+//%        'CmatInt', 'CmatInt', 'CmatInt';
+//%        'CmatLlong', 'CmatLlong', 'CmatLlong';
+//%        'CmatDoub', 'CmatDoub', 'CmatDoub';
+//%        'CmatComp', 'CmatDoub', 'CmatDoub';
+//%        'CmatComp', 'CmatComp', 'CmatComp';
 //% };
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -1393,37 +1393,37 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
 #endif
-	plus_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
+    plus_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
 inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
 #endif
-	minus_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
+    minus_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
 inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
 #endif
-	times_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
+    times_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
 inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 #ifdef SLS_CHECK_SHAPE
-	if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-		SLS_ERR("wrong shape!");
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
 #endif
-	divide_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
+    divide_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 //% else
 //%     error('not implemented!');
@@ -1574,15 +1574,15 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% if is_comp(T1)
     @T@ s = conj(v1[0]) * v2[0];
 //% else
-	@T@ s = v1[0] * v2[0];
+    @T@ s = v1[0] * v2[0];
 //% end
     for (Long i = 1; i < N; ++i) {
 //% if is_comp(T1)
         s += conj(v1[i]) * v2[i];
 //% else
-		s += v1[i] * v2[i];
+        s += v1[i] * v2[i];
 //% end
-	}
+    }
     return s;
 }
 //%-------------------------
@@ -1911,7 +1911,7 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
         cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), &alpha, a.ptr(), a.n1(), x.ptr(), a.n2(), &beta, y.ptr(), a.n1());
 //% else
         SLS_WARN("not implemented with cBLAS, using slow version");
-		mul(y, a, x);
+        mul(y, a, x);
 //% end
 #else
     mul(y, a, x);

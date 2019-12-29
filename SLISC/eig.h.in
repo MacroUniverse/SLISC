@@ -31,7 +31,7 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
     ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.ptr(), N, eigVal.ptr());
 //% end
     if (ret != 0)
-		SLS_ERR("failed!");
+        SLS_ERR("failed!");
 }
 //% else
 //%     error('Not implemented!');
