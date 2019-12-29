@@ -56,22 +56,22 @@ inline constexpr Bool operator!=(Lcomp_I s1, Comp_I s2)
 
 inline void operator+=(Comp_O z, Float_I x)
 {
-    z += (Comp)x;
+    z += (Doub)x;
 }
 
 inline void operator-=(Comp_O z, Float_I x)
 {
-    z -= (Comp)x;
+    z -= (Doub)x;
 }
 
 inline void operator*=(Comp_O z, Float_I x)
 {
-    z *= (Comp)x;
+    z *= (Doub)x;
 }
 
 inline void operator/=(Comp_O z, Float_I x)
 {
-    z /= (Comp)x;
+    z /= (Doub)x;
 }
 
 

@@ -37,6 +37,7 @@ inline void inv_mat(@T@_IO A)
 //% 'VecDoub' 'CmatDoub';
 //% 'SvecDoub' 'CmatDoub';
 //% 'VecComp' 'CmatComp';
+//% 'SvecComp' 'ScmatComp';
 //% };
 //%---------------------
 //% [Tx, Ta] = varargin{:};

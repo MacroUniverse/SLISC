@@ -67,6 +67,9 @@ inline @T@ abs(@Timag@_I val)
 }
 //%------------------
 
+// imaginary unit
+const Imag I(1);
+
 // operator+
 inline Imag operator+(Imag_I z1, Imag_I z2)
 {
@@ -150,6 +153,7 @@ inline Comp operator*(Comp_I z1, Imag_I z2)
     return Comp(-z2.imag()*z1.imag(), z2.imag()*z1.real());
 }
 
+// operator/
 inline Imag operator/(Imag_I z, Doub_I x)
 {
     return Imag(z.imag() / x);
@@ -160,13 +164,40 @@ inline Imag operator/(Doub_I x, Imag_I z)
     return Imag(-x / z.imag());
 }
 
+inline Comp operator/(Comp_I z1, Imag_I z2)
+{
+    return Comp(z1.imag() / z2.imag(), -z1.real() / z2.imag());
+}
+
+// operator+=
+inline void operator+=(Comp_IO z1, Imag_I z2)
+{
+	z1 = z1 + z2;
+}
+
+// operator-=
+inline void operator-=(Comp_IO z1, Imag_I z2)
+{
+	z1 = z1 - z2;
+}
+
+// operator*=
+inline void operator*=(Comp_IO z1, Imag_I z2)
+{
+	z1 = z1 * z2;
+}
+
+// operator/=
+inline void operator/=(Comp_IO z1, Imag_I z2)
+{
+	z1 = z1 / z2;
+}
+
+// operator<<
 inline std::ostream &operator<<(std::ostream &out, Imag_I num)
 {
     out << num.imag() << 'i';
     return out;
 }
-
-// imaginary unit
-const Imag I(1);
 
 } // namespace slisc

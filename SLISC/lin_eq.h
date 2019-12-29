@@ -169,6 +169,29 @@ inline void lin_eq(VecComp_IO x, CmatComp_I a)
 	}
 }
 
+inline void lin_eq(SvecComp_IO x, ScmatComp_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+	if (a.n1() != a.n2() || a.n2() != x.size())
+		SLS_ERR("wrong shape!");
+#endif
+	static CmatComp a1(a.n1(), a.n2());
+	static VecInt ipiv(a.n1());
+	if (!shape_cmp(a1, a))
+		a1.resize(a.n1(), a.n2());
+	copy(a1, a);
+	if (a.n1() > ipiv.size())
+		ipiv.resize(a.n1());
+	Int lda = a1.n1();
+	Int ldx = x.size(), nrhs = 1;
+
+	Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+	if (ret != 0) {
+		cout << "LAPACK returned " << ret << endl;
+		SLS_ERR("something wrong!");
+	}
+}
+
 
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
 inline void lin_eq(VecDoub_IO x, CbandDoub_I a)

@@ -636,6 +636,26 @@ inline SvecComp_c slice1(Cmat3Comp_I v, Long_I j, Long_I k)
 	return sli;
 }
 
+inline SvecInt slice1(ScmatInt_IO v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	SvecInt sli(&v(0, j), v.n1());
+	return sli;
+}
+
+inline SvecInt_c slice1(ScmatInt_I v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+	SvecInt_c sli(&v(0, j), v.n1());
+	return sli;
+}
+
 inline SvecDoub slice1(ScmatDoub_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS

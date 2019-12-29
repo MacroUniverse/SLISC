@@ -2948,6 +2948,50 @@ inline void operator/=(SvecComp_O &v, SvecComp_I v1)
     divide_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
+// v += v
+inline void operator+=(SvecComp_O &v, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+		v[i] += v1[i];
+}
+
+// v -= v
+inline void operator-=(SvecComp_O &v, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < v.size(); ++i)
+		v[i] -= v1[i];
+}
+
+// v *= v
+inline void operator*=(SvecComp_O &v, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+		v[i] *= v1[i];
+}
+
+// v /= v
+inline void operator/=(SvecComp_O &v, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+		v[i] /= v1[i];
+}
+
 inline void operator+=(ScmatDoub_O &v, ScmatDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPE

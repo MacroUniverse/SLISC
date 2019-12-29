@@ -34,7 +34,10 @@ inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
 //%     };
 //%----------------------------------
 //% [T1,T2] = varargin{:};
-//% if is_real(T1);
+//% if ~is_promo(T1, T2)
+//%     error("illegal types!");
+//% end
+//% if is_real(T2);
 //%     T = rm_comp(T1);
 //% else
 //%     T = T1;

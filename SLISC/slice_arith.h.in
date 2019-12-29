@@ -149,7 +149,7 @@ inline @Tsli@_c slice(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I 
 //%     'MatInt'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp';
-//%     'ScmatDoub'; 'ScmatComp';
+//%     'ScmatInt'; 'ScmatDoub'; 'ScmatComp';
 //% };
 //%----------------------------
 //% Tv = varargin{:};
