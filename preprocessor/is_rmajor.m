@@ -1,6 +1,6 @@
-function ret = is_rmajor(type)
-if (is_Mat(type) || is_Mat3d(type) ||...
-        is_Smat(type) || is_Dmat(type))
+function ret = is_rmajor(T)
+if (is_Mat(T) || is_Mat3(T) ||...
+        is_Smat(T) || is_Dmat(T))
     ret = true;
 else
     ret = false;

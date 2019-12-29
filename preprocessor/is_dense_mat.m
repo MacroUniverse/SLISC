@@ -1,4 +1,4 @@
-function ret = is_dense_mat(type)
-ret = is_Mat(type) || is_Cmat(type) || is_Fcmat(type)...
-        || is_Scmat(type) || is_Scmat_c(type) || is_Smat(type);
+function ret = is_dense_mat(T)
+ret = is_Mat(T) || is_Cmat(T) || is_Fcmat(T)...
+        || is_Scmat(T) || is_Scmat_c(T) || is_Smat(T);
 end

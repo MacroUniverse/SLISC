@@ -1,3 +1,3 @@
-function ret = is_Float(type)
-ret = strcmp(type, 'Float');
+function ret = is_Float(T)
+ret = strcmp(T, 'Float');
 end

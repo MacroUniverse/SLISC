@@ -1,3 +1,3 @@
-function ret = is_Scmat_c(type)
-ret = numel(regexp(type, 'Scmat.*_c?', 'once')) > 0;
+function ret = is_Scmat_c(T)
+ret = numel(regexp(T, 'Scmat.*_c?', 'once')) > 0;
 end

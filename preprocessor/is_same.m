@@ -1,3 +1,3 @@
-function ret = is_same(type1, type2)
-ret = strcmp(type1, type2);
+function ret = is_same(T1, T2)
+ret = strcmp(T1, T2);
 end

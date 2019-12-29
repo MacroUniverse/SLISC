@@ -1,12 +1,12 @@
-function ret = slice_type(type)
-Ts = contain_type(type);
-if is_Vec(type) || is_Svec(type)
+function ret = slice_type(T)
+Ts = contain_type(T);
+if is_Vec(T) || is_Svec(T)
     ret = ['Svec' Ts];
-elseif is_Dvec(type)
+elseif is_Dvec(T)
     ret = ['Dvec' Ts];
-elseif is_Cmat(type) || is_Scmat(type) || is_Dcmat(type)
+elseif is_Cmat(T) || is_Scmat(T) || is_Dcmat(T)
     ret = ['Dcmat' Ts];
-elseif is_Cmat3(type)
+elseif is_Cmat3(T)
     ret = ['Jcmat3' Ts];
 else
     error('not implemented!');

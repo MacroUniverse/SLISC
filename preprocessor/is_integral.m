@@ -1,4 +1,4 @@
-function ret = is_integral(type)
-ret = is_Char(type) || is_Int(type) ||...
-    is_Long(type) || is_Llong(type);
+function ret = is_integral(T)
+ret = is_Char(T) || is_Int(T) ||...
+    is_Long(T) || is_Llong(T);
 end

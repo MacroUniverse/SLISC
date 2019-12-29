@@ -1,25 +1,25 @@
-function ret = contain_type(type)
-if any(strfind(type, 'Char'))
+function ret = contain_type(T)
+if any(strfind(T, 'Char'))
     ret = 'Char';
-elseif any(strfind(type, 'Int'))
+elseif any(strfind(T, 'Int'))
     ret = 'Int';
-elseif any(strfind(type, 'Llong'))
+elseif any(strfind(T, 'Llong'))
     ret = 'Llong';
-elseif any(strfind(type, 'Long'))
+elseif any(strfind(T, 'Long'))
     ret = 'Long';
-elseif any(strfind(type, 'Float'))
+elseif any(strfind(T, 'Float'))
     ret = 'Float';
-elseif any(strfind(type, 'Doub'))
+elseif any(strfind(T, 'Doub'))
     ret = 'Doub';
-elseif any(strfind(type, 'Ldoub'))
+elseif any(strfind(T, 'Ldoub'))
     ret = 'Ldoub';
-elseif any(strfind(type, 'Fcomp'))
+elseif any(strfind(T, 'Fcomp'))
     ret = 'Fcomp';
-elseif any(strfind(type, 'Comp'))
+elseif any(strfind(T, 'Comp'))
     ret = 'Comp';
-elseif any(strfind(type, 'Lcomp'))
+elseif any(strfind(T, 'Lcomp'))
     ret = 'Lcomp';
-elseif any(strfind(type, 'Imag'))
+elseif any(strfind(T, 'Imag'))
     ret = 'Imag';
 else
     error('not implemented');

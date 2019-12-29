@@ -1,3 +1,3 @@
-function ret = is_Dmat(type)
-ret = strcmp(type(1:4), 'Dmat');
+function ret = is_Dmat(T)
+ret = strcmp(T(1:4), 'Dmat');
 end

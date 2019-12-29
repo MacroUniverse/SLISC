@@ -1,3 +1,3 @@
-function ret = is_dense_mat4(type)
-ret = is_Cmat4d(type) || is_Jcmat4d(type);
+function ret = is_dense_mat4(T)
+ret = is_Cmat4(T) || is_Jcmat4(T);
 end

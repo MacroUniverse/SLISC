@@ -1,3 +1,3 @@
-function ret = is_Svec(type)
-ret = strcmp(type(1:4), 'Svec');
+function ret = is_Svec(T)
+ret = strcmp(T(1:4), 'Svec');
 end

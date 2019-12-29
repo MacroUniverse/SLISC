@@ -1,3 +1,3 @@
-function ret = is_Fimag(type)
-ret = strcmp(type, 'Fimag');
+function ret = is_Fimag(T)
+ret = strcmp(T, 'Fimag');
 end

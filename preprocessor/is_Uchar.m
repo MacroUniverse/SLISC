@@ -1,3 +1,3 @@
-function ret = is_Uchar(type)
-ret = strcmp(type, 'Uchar');
+function ret = is_Uchar(T)
+ret = strcmp(T, 'Uchar');
 end

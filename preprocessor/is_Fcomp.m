@@ -1,3 +1,3 @@
-function ret = is_Fcomp(type)
-ret = strcmp(type, 'Fcomp');
+function ret = is_Fcomp(T)
+ret = strcmp(T, 'Fcomp');
 end

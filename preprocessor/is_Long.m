@@ -1,3 +1,3 @@
-function ret = is_Long(type)
-ret = strcmp(type, 'Long');
+function ret = is_Long(T)
+ret = strcmp(T, 'Long');
 end

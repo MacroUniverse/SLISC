@@ -1,3 +1,3 @@
-function ret = is_Imag(type)
-ret = strcmp(type, 'Imag');
+function ret = is_Imag(T)
+ret = strcmp(T, 'Imag');
 end

@@ -1,3 +1,3 @@
-function ret = is_Vec(type)
-ret = strcmp(type(1:3), 'Vec');
+function ret = is_Vec(T)
+ret = strcmp(T(1:3), 'Vec');
 end

@@ -1,3 +1,3 @@
-function ret = is_contain(type)
-ret = contain_num(type) >= 0;
+function ret = is_contain(T)
+ret = contain_num(T) >= 0;
 end

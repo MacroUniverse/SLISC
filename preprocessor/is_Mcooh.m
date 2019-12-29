@@ -1,3 +1,3 @@
-function ret = is_Mcooh(type)
-ret = strcmp(type(1:5), 'Mcooh');
+function ret = is_Mcooh(T)
+ret = strcmp(T(1:5), 'Mcooh');
 end

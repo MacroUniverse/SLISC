@@ -1,3 +1,3 @@
-function ret = is_Lcomp(type)
-ret = strcmp(type, 'Lcomp');
+function ret = is_Lcomp(T)
+ret = strcmp(T, 'Lcomp');
 end

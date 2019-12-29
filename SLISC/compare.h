@@ -11,6 +11,7 @@
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"
+#include "Scmat3.h"
 #include "Dcmat.h"
 #include "Jcmat3.h"
 

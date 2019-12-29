@@ -1,4 +1,4 @@
-function ret = is_imag(type)
-ret = strcmp(type, 'Fimag') || strcmp(type, 'Imag') ||...
-    strcmp(type, 'Fimag');
+function ret = is_imag(T)
+ret = strcmp(T, 'Fimag') || strcmp(T, 'Imag') ||...
+    strcmp(T, 'Fimag');
 end

@@ -1,3 +1,3 @@
-function ret = is_Ldoub(type)
-ret = strcmp(type, 'Ldoub');
+function ret = is_Ldoub(T)
+ret = strcmp(T, 'Ldoub');
 end

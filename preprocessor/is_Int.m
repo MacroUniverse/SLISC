@@ -1,3 +1,3 @@
-function ret = is_Int(type)
-ret = strcmp(type, 'Int');
+function ret = is_Int(T)
+ret = strcmp(T, 'Int');
 end

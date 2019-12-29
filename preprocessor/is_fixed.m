@@ -1,3 +1,3 @@
-function ret = is_fixed(type)
-ret = is_FixVec(type) || is_FixCmat(type);
+function ret = is_fixed(T)
+ret = is_FixVec(T) || is_FixCmat(T);
 end

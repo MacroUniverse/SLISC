@@ -1,3 +1,3 @@
-function ret = is_Str(type)
-ret = strcmp(type, 'Str');
+function ret = is_Str(T)
+ret = strcmp(T, 'Str');
 end

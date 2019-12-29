@@ -1,4 +1,4 @@
-function ret = is_sparse_mat(type)
-ret = is_Diag(type) || is_Mcoo(type) ||....
-    is_Mcooh(type) || is_Cmobd(type);
+function ret = is_sparse_mat(T)
+ret = is_Diag(T) || is_Mcoo(T) ||....
+    is_Mcooh(T) || is_Cmobd(T);
 end

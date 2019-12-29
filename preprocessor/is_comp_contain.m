@@ -1,3 +1,3 @@
-function ret = is_comp_contain(type)
-ret = is_contain(type) && is_comp(contain_type(type));
+function ret = is_comp_contain(T)
+ret = is_contain(T) && is_comp(contain_type(T));
 end

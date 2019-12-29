@@ -1,3 +1,3 @@
-function ret = is_comp_dense(type)
-ret = is_dense(type) && is_comp(contain_type(type));
+function ret = is_comp_dense(T)
+ret = is_dense(T) && is_comp(contain_type(T));
 end

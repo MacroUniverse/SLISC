@@ -1,3 +1,3 @@
-function ret = is_Limag(type)
-ret = strcmp(type, 'Limag');
+function ret = is_Limag(T)
+ret = strcmp(T, 'Limag');
 end

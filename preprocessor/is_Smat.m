@@ -1,3 +1,3 @@
-function ret = is_Smat(type)
-ret = strcmp(type(1:4), 'Smat');
+function ret = is_Smat(T)
+ret = strcmp(T(1:4), 'Smat');
 end

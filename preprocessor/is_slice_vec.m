@@ -1,3 +1,3 @@
-function ret = is_slice_vec(type)
-ret = is_Svector(type) || is_Dvector(type);
+function ret = is_slice_vec(T)
+ret = is_Svector(T) || is_Dvector(T);
 end

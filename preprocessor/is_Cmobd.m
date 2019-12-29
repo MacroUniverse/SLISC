@@ -1,3 +1,3 @@
-function ret = is_Cmobd(type)
-ret = strcmp(type(1:5), 'Cmobd');
+function ret = is_Cmobd(T)
+ret = strcmp(T(1:5), 'Cmobd');
 end

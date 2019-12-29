@@ -1,3 +1,3 @@
-function ret = is_Bool(type)
-ret = strcmp(type, 'Bool');
+function ret = is_Bool(T)
+ret = strcmp(T, 'Bool');
 end

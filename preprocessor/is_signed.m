@@ -1,4 +1,4 @@
-function ret = is_signed(type)
-ret = is_Char(type) || is_Int(type) || is_Llong(type)....
-    || is_fpt(type);
+function ret = is_signed(T)
+ret = is_Char(T) || is_Int(T) || is_Llong(T)....
+    || is_fpt(T);
 end

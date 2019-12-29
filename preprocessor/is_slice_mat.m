@@ -1,3 +1,3 @@
-function ret = is_slice_mat(type)
-ret = is_Scmat(type) || is_Scmat_c(type) || is_Dcmat(type);
+function ret = is_slice_mat(T)
+ret = is_Scmat(T) || is_Scmat_c(T) || is_Dcmat(T);
 end

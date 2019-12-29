@@ -1,3 +1,3 @@
-function ret = is_comp(type)
-ret = is_Fcomp(type) || is_Comp(type) || is_Lcomp(type);
+function ret = is_comp(T)
+ret = is_Fcomp(T) || is_Comp(T) || is_Lcomp(T);
 end

@@ -1,3 +1,3 @@
-function ret = is_fpt(type)
-ret = is_Float(type) || is_Doub(type) || is_Ldoub(type);
+function ret = is_fpt(T)
+ret = is_Float(T) || is_Doub(T) || is_Ldoub(T);
 end

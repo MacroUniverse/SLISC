@@ -1,4 +1,4 @@
-function ret = is_dense_vec(type)
-ret = is_Vbase(type) || is_Vec(type) || is_Fvec(type) ||...
-    is_Svec(type) || is_Svec_c(type);
+function ret = is_dense_vec(T)
+ret = is_Vbase(T) || is_Vec(T) || is_Fvec(T) ||...
+    is_Svec(T) || is_Svec_c(T);
 end

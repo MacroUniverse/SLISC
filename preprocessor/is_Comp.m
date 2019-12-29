@@ -1,3 +1,3 @@
-function ret = is_Comp(type)
-ret = strcmp(type, 'Comp');
+function ret = is_Comp(T)
+ret = strcmp(T, 'Comp');
 end
