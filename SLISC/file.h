@@ -1,4 +1,5 @@
 #pragma once
+#include "time.h"
 #include "arithmetic.h"
 #include <sstream>
 #include <fstream>

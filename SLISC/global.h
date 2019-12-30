@@ -23,7 +23,6 @@
 #include <iomanip>
 #include <fstream>
 #include <cstring>
-#include "time.h"
 
 #ifdef SLS_USE_MKL
     #define MKL_Complex16 double _Complex
@@ -193,8 +192,7 @@ struct turn_on_floating_exceptions {
 const Doub PI = 3.14159265358979323;
 const Doub E = 2.71828182845904524;
 
-// report error and pause execution
-void pause(Doub_I t);
+// error handling
 #ifndef SLS_ERR
 #define SLS_ERR(str) do{cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl; abort();} while(0)
 #endif

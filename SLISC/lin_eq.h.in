@@ -30,6 +30,7 @@ inline void inv_mat(@T@_IO A)
 //%------------------------ 
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
+// ####### Not Thread Safe ######
 //% types = {
 //% 'CmatDoub' 'CmatDoub';
 //% 'ScmatDoub' 'CmatDoub';
@@ -84,7 +85,60 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 }
 //%---------------------
 
+// solution to linear system with general coefficient matrix A and multiple right-hand sides.
+// A will be changed to LU matrix
+// ipiv: integer work space of size a.n1()
+//% types = {
+//% 'CmatDoub' 'CmatDoub' 'SvecInt';
+//% 'ScmatDoub' 'CmatDoub' 'SvecInt';
+//% 'ScmatDoub' 'ScmatDoub' 'SvecInt';
+//% 'VecDoub' 'CmatDoub' 'SvecInt';
+//% 'SvecDoub' 'CmatDoub' 'SvecInt';
+//% 'VecComp' 'CmatComp' 'SvecInt';
+//% 'SvecComp' 'ScmatComp' 'SvecInt';
+//% };
+//%---------------------
+//% [Tx, Ta, Ti] = varargin{:};
+//% Tsx = contain_type(Tx); Tsa = contain_type(Ta);
+//% CmatTsa = ['Cmat' Tsa];
+inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
+{
+#ifdef SLS_CHECK_SHAPE
+//% if is_dense_vec(Tx)
+    if (a.n1() != a.n2() || a.n2() != x.size())
+//% else
+    if (a.n1() != a.n2() || a.n2() != x.n1())
+//% end
+        SLS_ERR("wrong shape!");
+	if (ipiv.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+    Int lda = a.n1();
+//% if is_Cmat(Tx) || is_Scmat(Tx)
+    Int ldx = x.n1(), nrhs = x.n2();
+//% elseif is_Dcmat(Tx)
+    Int ldx = x.lda(), nrhs = x.n2();
+//% elseif is_dense_vec(Tx)
+    Int ldx = x.size(), nrhs = 1;
+//% end
+
+//% if is_Doub(Tsa) && is_Doub(Tsx)
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+//% elseif is_Comp(Tsa) && is_Comp(Tsx)
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+//% else
+//%     disp(Tx); disp(Ta);
+//%     error('not implemented (2)');
+//% end
+    if (ret != 0) {
+        cout << "LAPACK returned " << ret << endl;
+        SLS_ERR("something wrong!");
+    }
+}
+//%---------------------
+
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
+// ####### Not Thread Safe ######
 //% types = {
 //%     'VecDoub' 'CbandDoub';
 //%     'VecComp' 'CbandComp';

@@ -1,3 +1,4 @@
+#include "../SLISC/global.h"
 #include "../SLISC/time.h"
 #include <string>
 #include <iostream>
