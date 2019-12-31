@@ -929,6 +929,9 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'SvecDoub', 'Doub';
 //%     'DvecComp', 'Doub';
 //%     'DvecComp', 'Comp';
+//%     'DcmatDoub', 'Doub';
+//%     'DcmatComp', 'Doub';
+//%     'DcmatComp', 'Comp';
 //%     'Cmat3Doub', 'Doub';
 //%     'Cmat3Comp', 'Doub';
 //%     'Cmat3Comp', 'Comp';
@@ -954,6 +957,40 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 inline void operator/=(@T@_IO v, @Ts@_I s)
 {
     divide_equals_vs(v.ptr(), s, v.size());
+}
+//% elseif is_Dvec(T) && is_scalar(Ts)
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    times_equals_vs(v.ptr(), s, v.size(), v.step());
+}
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{
+    divide_equals_vs(v.ptr(), s, v.size(), v.step());
+}
+//% elseif is_Dcmat(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{
+	for (Long j = 0; j < v.n2(); ++j)
+    	plus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	minus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	times_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	divide_equals_vs(&v(0,j), s, v.n1());
 }
 //% elseif is_Dvec(T) && is_scalar(Ts)
 inline void operator*=(@T@_IO v, @Ts@_I s)

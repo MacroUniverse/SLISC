@@ -2262,6 +2262,78 @@ inline void operator/=(DvecComp_IO v, Comp_I s)
     divide_equals_vs(v.ptr(), s, v.size(), v.step());
 }
 
+inline void operator+=(DcmatDoub_IO v, Doub_I s)
+{
+	for (Long j = 0; j < v.n2(); ++j)
+    	plus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator-=(DcmatDoub_IO v, Doub_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	minus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator*=(DcmatDoub_IO v, Doub_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	times_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator/=(DcmatDoub_IO v, Doub_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	divide_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator+=(DcmatComp_IO v, Doub_I s)
+{
+	for (Long j = 0; j < v.n2(); ++j)
+    	plus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator-=(DcmatComp_IO v, Doub_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	minus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator*=(DcmatComp_IO v, Doub_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	times_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator/=(DcmatComp_IO v, Doub_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	divide_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator+=(DcmatComp_IO v, Comp_I s)
+{
+	for (Long j = 0; j < v.n2(); ++j)
+    	plus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator-=(DcmatComp_IO v, Comp_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	minus_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator*=(DcmatComp_IO v, Comp_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	times_equals_vs(&v(0,j), s, v.n1());
+}
+
+inline void operator/=(DcmatComp_IO v, Comp_I s)
+{
+    for (Long j = 0; j < v.n2(); ++j)
+    	divide_equals_vs(&v(0,j), s, v.n1());
+}
+
 inline void operator+=(Cmat3Doub_IO v, Doub_I s)
 {
     plus_equals_vs(v.ptr(), s, v.size());
