@@ -33,9 +33,9 @@ public:
     // reference to an element (element must exist)
     Char & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const Char operator()(Long_I i, Long_I j) const;
+    Char operator()(Long_I i, Long_I j) const;
     Char &operator()(Long_I ind); // return element
-    const Char operator()(Long_I ind) const;
+    Char operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -97,7 +97,7 @@ inline Char& McooChar::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-inline const Char McooChar::operator()(Long_I i, Long_I j) const
+inline Char McooChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -176,7 +176,7 @@ inline Char & McooChar::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline const Char McooChar::operator()(Long_I ind) const
+inline Char McooChar::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -266,9 +266,9 @@ public:
     // reference to an element (element must exist)
     Int & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const Int operator()(Long_I i, Long_I j) const;
+    Int operator()(Long_I i, Long_I j) const;
     Int &operator()(Long_I ind); // return element
-    const Int operator()(Long_I ind) const;
+    Int operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -330,7 +330,7 @@ inline Int& McooInt::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-inline const Int McooInt::operator()(Long_I i, Long_I j) const
+inline Int McooInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -409,7 +409,7 @@ inline Int & McooInt::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline const Int McooInt::operator()(Long_I ind) const
+inline Int McooInt::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -499,9 +499,9 @@ public:
     // reference to an element (element must exist)
     Llong & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const Llong operator()(Long_I i, Long_I j) const;
+    Llong operator()(Long_I i, Long_I j) const;
     Llong &operator()(Long_I ind); // return element
-    const Llong operator()(Long_I ind) const;
+    Llong operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -563,7 +563,7 @@ inline Llong& McooLlong::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-inline const Llong McooLlong::operator()(Long_I i, Long_I j) const
+inline Llong McooLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -642,7 +642,7 @@ inline Llong & McooLlong::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline const Llong McooLlong::operator()(Long_I ind) const
+inline Llong McooLlong::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -732,9 +732,9 @@ public:
     // reference to an element (element must exist)
     Doub & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const Doub operator()(Long_I i, Long_I j) const;
+    Doub operator()(Long_I i, Long_I j) const;
     Doub &operator()(Long_I ind); // return element
-    const Doub operator()(Long_I ind) const;
+    Doub operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -796,7 +796,7 @@ inline Doub& McooDoub::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-inline const Doub McooDoub::operator()(Long_I i, Long_I j) const
+inline Doub McooDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -875,7 +875,7 @@ inline Doub & McooDoub::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline const Doub McooDoub::operator()(Long_I ind) const
+inline Doub McooDoub::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -965,9 +965,9 @@ public:
     // reference to an element (element must exist)
     Comp & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const Comp operator()(Long_I i, Long_I j) const;
+    Comp operator()(Long_I i, Long_I j) const;
     Comp &operator()(Long_I ind); // return element
-    const Comp operator()(Long_I ind) const;
+    Comp operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -1029,7 +1029,7 @@ inline Comp& McooComp::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-inline const Comp McooComp::operator()(Long_I i, Long_I j) const
+inline Comp McooComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -1108,7 +1108,7 @@ inline Comp & McooComp::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline const Comp McooComp::operator()(Long_I ind) const
+inline Comp McooComp::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)

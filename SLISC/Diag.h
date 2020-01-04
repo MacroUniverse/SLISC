@@ -18,7 +18,7 @@ public:
     Long n1() const;
     Long n2() const;
     Int &ref(Long_I i, Long_I j);
-    const Int operator()(Long_I i, Long_I j) const;
+    Int operator()(Long_I i, Long_I j) const;
 };
 
 inline DiagInt::DiagInt(Long_I N) : Base(N) {}
@@ -57,7 +57,7 @@ inline Int &DiagInt::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-inline const Int DiagInt::operator()(Long_I i, Long_I j) const
+inline Int DiagInt::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
@@ -86,7 +86,7 @@ public:
     Long n1() const;
     Long n2() const;
     Llong &ref(Long_I i, Long_I j);
-    const Llong operator()(Long_I i, Long_I j) const;
+    Llong operator()(Long_I i, Long_I j) const;
 };
 
 inline DiagLlong::DiagLlong(Long_I N) : Base(N) {}
@@ -125,7 +125,7 @@ inline Llong &DiagLlong::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-inline const Llong DiagLlong::operator()(Long_I i, Long_I j) const
+inline Llong DiagLlong::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
@@ -163,7 +163,7 @@ public:
     Long n1() const;
     Long n2() const;
     Doub &ref(Long_I i, Long_I j);
-    const Doub operator()(Long_I i, Long_I j) const;
+    Doub operator()(Long_I i, Long_I j) const;
 };
 
 inline DiagDoub::DiagDoub(Long_I N) : Base(N) {}
@@ -202,7 +202,7 @@ inline Doub &DiagDoub::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-inline const Doub DiagDoub::operator()(Long_I i, Long_I j) const
+inline Doub DiagDoub::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;
@@ -231,7 +231,7 @@ public:
     Long n1() const;
     Long n2() const;
     Comp &ref(Long_I i, Long_I j);
-    const Comp operator()(Long_I i, Long_I j) const;
+    Comp operator()(Long_I i, Long_I j) const;
 };
 
 inline DiagComp::DiagComp(Long_I N) : Base(N) {}
@@ -270,7 +270,7 @@ inline Comp &DiagComp::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-inline const Comp DiagComp::operator()(Long_I i, Long_I j) const
+inline Comp DiagComp::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;

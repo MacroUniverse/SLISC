@@ -30,7 +30,7 @@ public:
     Long n1() const;
     Long n2() const;
     @T@ &ref(Long_I i, Long_I j);
-    const @T@ operator()(Long_I i, Long_I j) const;
+    @T@ operator()(Long_I i, Long_I j) const;
 };
 
 inline @DiagT@::@DiagT@(Long_I N) : Base(N) {}
@@ -69,7 +69,7 @@ inline @T@ &@DiagT@::ref(Long_I i, Long_I j)
     return (*this)[i];
 }
 
-inline const @T@ @DiagT@::operator()(Long_I i, Long_I j) const
+inline @T@ @DiagT@::operator()(Long_I i, Long_I j) const
 {
     if (i == j) return (*this)[i];
     return 0;

@@ -42,7 +42,7 @@ inline Bool ispow2(@T@_I n)
 //% if is_Bool(T) || is_Char(T)
 inline Int to_num(@T@_I x) { return (Int)x; }
 //% else
-inline const @T@ to_num(@T@_I x) { return x; }
+inline @T@ to_num(@T@_I x) { return x; }
 //% end
 //%------------------------
 

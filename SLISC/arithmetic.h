@@ -211,22 +211,22 @@ inline Doub max_v(const Doub *v, Long_I N, Long_I step)
 }
 
 
-inline const Int max(VecInt_I v)
+inline Int max(VecInt_I v)
 {
     return max_v(v.ptr(), v.size());
 }
 
-inline const Llong max(VecLlong_I v)
+inline Llong max(VecLlong_I v)
 {
     return max_v(v.ptr(), v.size());
 }
 
-inline const Doub max(VecDoub_I v)
+inline Doub max(VecDoub_I v)
 {
     return max_v(v.ptr(), v.size());
 }
 
-inline const Llong max(SvecLlong_I v)
+inline Llong max(SvecLlong_I v)
 {
     return max_v(v.ptr(), v.size());
 }
@@ -908,37 +908,37 @@ inline Comp sum_v(const Comp *v, Long_I N)
 }
 
 
-inline const Int sum(VecInt_I v)
+inline Int sum(VecInt_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
-inline const Llong sum(VecLlong_I v)
+inline Llong sum(VecLlong_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
-inline const Doub sum(VecDoub_I v)
+inline Doub sum(VecDoub_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
-inline const Doub sum(SvecDoub_I v)
+inline Doub sum(SvecDoub_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
-inline const Comp sum(MatComp_I v)
+inline Comp sum(MatComp_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
-inline const Doub sum(CmatDoub_I v)
+inline Doub sum(CmatDoub_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
-inline const Comp sum(CmatComp_I v)
+inline Comp sum(CmatComp_I v)
 {
     return sum_v(v.ptr(), v.size());
 }

@@ -107,12 +107,12 @@ inline @T@ max_v(const @T@ *v, Long_I N, Long_I step)
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
 //% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
-inline const @Ts@ max(@T@_I v)
+inline @Ts@ max(@T@_I v)
 {
     return max_v(v.ptr(), v.size());
 }
 //% elseif is_Dvec(T) && is_real(Ts) && ~is_Bool(Ts)
-inline const @Ts@ max(@T@_I v)
+inline @Ts@ max(@T@_I v)
 {
     return max_v(v.ptr(), v.size(), v.step());
 }
@@ -470,7 +470,7 @@ inline @T@ sum_v(const @T@ *v, Long_I N)
 //% else
 //%     Tret = contain_type(T);
 //% end
-inline const @Tret@ sum(@T@_I v)
+inline @Tret@ sum(@T@_I v)
 {
     return sum_v(v.ptr(), v.size());
 }

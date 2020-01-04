@@ -38,9 +38,9 @@ public:
     // reference to an element (element must exist)
     @T@ & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
-    const @T@ operator()(Long_I i, Long_I j) const;
+    @T@ operator()(Long_I i, Long_I j) const;
     @T@ &operator()(Long_I ind); // return element
-    const @T@ operator()(Long_I ind) const;
+    @T@ operator()(Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -102,7 +102,7 @@ inline @T@& @McooT@::ref(Long_I i, Long_I j)
     return m_p[n];
 }
 
-inline const @T@ @McooT@::operator()(Long_I i, Long_I j) const
+inline @T@ @McooT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
@@ -181,7 +181,7 @@ inline @T@ & @McooT@::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline const @T@ @McooT@::operator()(Long_I ind) const
+inline @T@ @McooT@::operator()(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)

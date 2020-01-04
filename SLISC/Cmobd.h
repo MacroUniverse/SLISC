@@ -31,7 +31,7 @@ public:
     Cmat3Int &cmat3();
     Long n0() const; // n0() = m_data.n1() = m_data.n2()
     Long nblk() const; // m_data.n3()
-    const Int operator()(Long_I i, Long_I j) const;
+    Int operator()(Long_I i, Long_I j) const;
     void resize(Long_I blk_size, Long_I Nblk);
 };
 
@@ -139,7 +139,7 @@ inline Long CmobdInt::nblk() const
     return m_data.n3();
 }
 
-inline const Int CmobdInt::operator()(Long_I i1, Long_I i2) const
+inline Int CmobdInt::operator()(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i1 < 0 || i1 >= m_N1 || i2 < 0 || i2 >= m_N1)
@@ -199,7 +199,7 @@ public:
     Cmat3Doub &cmat3();
     Long n0() const; // n0() = m_data.n1() = m_data.n2()
     Long nblk() const; // m_data.n3()
-    const Doub operator()(Long_I i, Long_I j) const;
+    Doub operator()(Long_I i, Long_I j) const;
     void resize(Long_I blk_size, Long_I Nblk);
 };
 
@@ -307,7 +307,7 @@ inline Long CmobdDoub::nblk() const
     return m_data.n3();
 }
 
-inline const Doub CmobdDoub::operator()(Long_I i1, Long_I i2) const
+inline Doub CmobdDoub::operator()(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i1 < 0 || i1 >= m_N1 || i2 < 0 || i2 >= m_N1)
@@ -367,7 +367,7 @@ public:
     Cmat3Comp &cmat3();
     Long n0() const; // n0() = m_data.n1() = m_data.n2()
     Long nblk() const; // m_data.n3()
-    const Comp operator()(Long_I i, Long_I j) const;
+    Comp operator()(Long_I i, Long_I j) const;
     void resize(Long_I blk_size, Long_I Nblk);
 };
 
@@ -475,7 +475,7 @@ inline Long CmobdComp::nblk() const
     return m_data.n3();
 }
 
-inline const Comp CmobdComp::operator()(Long_I i1, Long_I i2) const
+inline Comp CmobdComp::operator()(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i1 < 0 || i1 >= m_N1 || i2 < 0 || i2 >= m_N1)

@@ -36,7 +36,7 @@ public:
     @Cmat3T@ &cmat3();
     Long n0() const; // n0() = m_data.n1() = m_data.n2()
     Long nblk() const; // m_data.n3()
-    const @T@ operator()(Long_I i, Long_I j) const;
+    @T@ operator()(Long_I i, Long_I j) const;
     void resize(Long_I blk_size, Long_I Nblk);
 };
 
@@ -144,7 +144,7 @@ inline Long @CmobdT@::nblk() const
     return m_data.n3();
 }
 
-inline const @T@ @CmobdT@::operator()(Long_I i1, Long_I i2) const
+inline @T@ @CmobdT@::operator()(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i1 < 0 || i1 >= m_N1 || i2 < 0 || i2 >= m_N1)
