@@ -52,6 +52,17 @@ void test_band()
 			}
 		}
 	}
+
+    // nband()
+    {
+        CmatComp a(6, 7); copy(a, 0);
+        a(4, 2) = a(2, 5) = 5;
+        Long Nup, Nlow;
+        nband(Nup, Nlow, a);
+        if (Nup != 3 || Nlow != 2)
+            SLS_ERR("failed!");
+    }
+
 #ifdef SLS_USE_CBLAS
     // test band matrix-vector multiplication
     {
