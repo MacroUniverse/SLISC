@@ -142,6 +142,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //%     'VecInt'; 'VecLlong'; 'VecDoub';
 //%     'VecComp'; 'SvecLlong'; 'SvecDoub';
 //%     'SvecComp'; 'MatInt'; 'MatDoub';
+//%     'DvecDoub'; 'DvecComp';
 //%     'MatComp'; 'Mat3Doub'; 'CmatInt';
 //%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int';
@@ -484,13 +485,22 @@ inline void copy(@T@_O a, @T@_I b)
 
 //% types = {
 //%     'CbandDoub', 'CmatDoub';
+//%     'CmatDoub', 'CbandDoub';
+//%     'CbandDoub', 'ScmatDoub';
+//%     'ScmatDoub', 'CbandDoub';
 //%     'CbandComp', 'CmatComp';
+//%     'CmatComp', 'CbandComp';
+//%     'CbandComp', 'ScmatComp';
+//%     'ScmatComp', 'CbandComp';
+//%     'CbandComp', 'ScmatDoub';
+//%     'ScmatComp', 'CbandDoub';
 //% };
 //%------------------------------
-//% [BandT, CmatT] = varargin{:};
-//% Ts = contain_type(CmatT);
-//% SvecT = ['Svec' Ts];
-inline void copy(@BandT@_O b, @CmatT@_I a)
+//% [T1, T2] = varargin{:};
+//% Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% SvecTs1 = ['Svec' Ts1]; SvecTs2 = ['Svec' Ts2];
+//% if is_Cband(T1)
+inline void copy(@T1@_O b, @T2@_I a)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(a, b))
@@ -498,16 +508,16 @@ inline void copy(@BandT@_O b, @CmatT@_I a)
 #endif
     Long N1 = a.n1(), N2 = a.n2();
     for (Long j = 0; j < N2; ++j) {
-        @SvecT@ sli_b = slice1(b.cmat(), j);
-        @SvecT@_c sli_a = slice1(a, j);
+        @SvecTs1@ sli_b = slice1(b.cmat(), j);
+        @SvecTs2@_c sli_a = slice1(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
             sli_b[k + i] = sli_a[i];
     }
 }
-
-inline void copy(@CmatT@_O a, @BandT@_I b)
+//% else
+inline void copy(@T1@_O a, @T2@_I b)
 {
 #ifdef SLS_CHECK_SHAPE
     if (!shape_cmp(a, b))
@@ -517,8 +527,8 @@ inline void copy(@CmatT@_O a, @BandT@_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        @SvecT@ sli_a = slice1(a, j);
-        @SvecT@_c sli_b = slice1(b.cmat(), j);
+        @SvecTs1@ sli_a = slice1(a, j);
+        @SvecTs2@_c sli_b = slice1(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             sli_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)
@@ -527,6 +537,7 @@ inline void copy(@CmatT@_O a, @BandT@_I b)
             sli_a[i] = 0;
     }
 }
+//% end
 //%------------------------------
 
 // void copy(Matrix<T> &b, const Matrix<T> &a, Long_I Nup, Long_I Nlow)

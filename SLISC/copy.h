@@ -547,6 +547,16 @@ inline void copy(MatDoub_O v, Doub_I s)
     vecset(v.ptr(), s, v.size());
 }
 
+inline void copy(DvecDoub_O v, Doub_I s)
+{
+    vecset(v.ptr(), s, v.size(), v.step());
+}
+
+inline void copy(DvecComp_O v, Comp_I s)
+{
+    vecset(v.ptr(), s, v.size(), v.step());
+}
+
 inline void copy(MatComp_O v, Comp_I s)
 {
     vecset(v.ptr(), s, v.size());
@@ -1438,6 +1448,44 @@ inline void copy(CmatDoub_O a, CbandDoub_I b)
     }
 }
 
+inline void copy(CbandDoub_O b, ScmatDoub_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        SvecDoub sli_b = slice1(b.cmat(), j);
+        SvecDoub_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
+    }
+}
+
+inline void copy(ScmatDoub_O a, CbandDoub_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        SvecDoub sli_a = slice1(a, j);
+        SvecDoub_c sli_b = slice1(b.cmat(), j);
+        for (Long i = 0; i < i_beg; ++i)
+            sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+        for (Long i = i_end; i < N1; ++i)
+            sli_a[i] = 0;
+    }
+}
+
 inline void copy(CbandComp_O b, CmatComp_I a)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -1467,6 +1515,82 @@ inline void copy(CmatComp_O a, CbandComp_I b)
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         SvecComp sli_a = slice1(a, j);
         SvecComp_c sli_b = slice1(b.cmat(), j);
+        for (Long i = 0; i < i_beg; ++i)
+            sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+        for (Long i = i_end; i < N1; ++i)
+            sli_a[i] = 0;
+    }
+}
+
+inline void copy(CbandComp_O b, ScmatComp_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        SvecComp sli_b = slice1(b.cmat(), j);
+        SvecComp_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
+    }
+}
+
+inline void copy(ScmatComp_O a, CbandComp_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        SvecComp sli_a = slice1(a, j);
+        SvecComp_c sli_b = slice1(b.cmat(), j);
+        for (Long i = 0; i < i_beg; ++i)
+            sli_a[i] = 0;
+        for (Long i = i_beg; i < i_end; i++)
+            sli_a[i] = sli_b[k + i];
+        for (Long i = i_end; i < N1; ++i)
+            sli_a[i] = 0;
+    }
+}
+
+inline void copy(CbandComp_O b, ScmatDoub_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        SvecComp sli_b = slice1(b.cmat(), j);
+        SvecDoub_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i] = sli_a[i];
+    }
+}
+
+inline void copy(ScmatComp_O a, CbandDoub_I b)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        SvecComp sli_a = slice1(a, j);
+        SvecDoub_c sli_b = slice1(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             sli_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)

@@ -151,6 +151,71 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
 }
 
 
+// set real part of band matrix to constant
+inline void copy_real(CbandComp_O b, Doub_I s)
+{
+    Long N1 = b.n1(), N2 = b.n2();
+    for (Long j = 0; j < N2; ++j) {
+        SvecComp sli_b = slice1(b.cmat(), j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i].real(s);
+    }
+}
+
+// set real part of band matrix diagonal to constant
+inline void copy_diag_real(CbandComp_O b, Doub_I s)
+{
+    Long lda = 2*b.lda(), N = min(b.n1(), b.n2());
+    Doub *p_diag = (Doub *)&b.cmat()(b.idiag(), 0);
+    Doub *p_end = p_diag + lda * N;
+    for (; p_diag < p_end; p_diag += lda)
+        *p_diag = s;
+}
+
+// copy double dense matrix to imag part of band matrix
+inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
+{
+    #ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+    #endif
+    Long N1 = a.n1(), N2 = a.n2();
+    for (Long j = 0; j < N2; ++j) {
+        SvecComp sli_b = slice1(b.cmat(), j);
+        SvecDoub_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i)
+            sli_b[k + i].imag(sli_a[i]);
+    }
+}
+
+// construct Crank-Nicolson coefficient matrix from hamiltonian
+// B = 1/2 + I*dt*A/4
+inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    Doub dt4 = 0.25*dt;
+    for (Long j = 0; j < N2; ++j) {
+        SvecComp sli_b = slice1(b.cmat(), j);
+        SvecDoub_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i) {
+            if (i == j)
+                sli_b[k + i] = Comp(0.5, dt4 * sli_a[i]);
+            else
+                sli_b[k + i] = Comp(0, dt4 * sli_a[i]);
+        }
+    }
+}
+
 // matrix-vector multiplication for band matrix
 #ifdef SLS_USE_CBLAS
 inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)

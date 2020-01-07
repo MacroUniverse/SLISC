@@ -2222,6 +2222,46 @@ inline void operator/=(CmatComp_IO v, Comp_I s)
     divide_equals_vs(v.ptr(), s, v.size());
 }
 
+inline void operator+=(ScmatComp_IO v, Doub_I s)
+{
+    plus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator-=(ScmatComp_IO v, Doub_I s)
+{
+    minus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator*=(ScmatComp_IO v, Doub_I s)
+{
+    times_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator/=(ScmatComp_IO v, Doub_I s)
+{
+    divide_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator+=(ScmatComp_IO v, Comp_I s)
+{
+    plus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator-=(ScmatComp_IO v, Comp_I s)
+{
+    minus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator*=(ScmatComp_IO v, Comp_I s)
+{
+    times_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator/=(ScmatComp_IO v, Comp_I s)
+{
+    divide_equals_vs(v.ptr(), s, v.size());
+}
+
 inline void operator+=(SvecDoub_IO v, Doub_I s)
 {
     plus_equals_vs(v.ptr(), s, v.size());

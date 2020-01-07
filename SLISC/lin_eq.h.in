@@ -198,6 +198,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% types = {
 //%     'VecDoub' 'CbandDoub' 'VecInt';
 //%     'VecComp' 'CbandComp' 'VecInt';
+//%     'SvecComp' 'CbandComp' 'SvecInt';
 //%     'ScmatComp' 'CbandComp' 'SvecInt';
 //% };
 //%---------------------

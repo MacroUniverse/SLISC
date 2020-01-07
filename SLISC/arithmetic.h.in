@@ -926,6 +926,8 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'CmatDoub', 'Doub';
 //%     'CmatComp', 'Doub';
 //%     'CmatComp', 'Comp';
+//%     'ScmatComp', 'Doub';
+//%     'ScmatComp', 'Comp';
 //%     'SvecDoub', 'Doub';
 //%     'DvecComp', 'Doub';
 //%     'DvecComp', 'Comp';
