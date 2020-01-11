@@ -48,6 +48,8 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
             ++i;
         }
     }
+    if (!found)
+        Nup = a.n2() - 1;
     
     // check lower diagonals
     found = false;
@@ -61,6 +63,8 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
             ++j;
         }
 	}
+    if (!found)
+        Nlow = a.n1() - 1;
 }
 
 inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
@@ -77,6 +81,8 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
             ++i;
         }
     }
+    if (!found)
+        Nup = a.n2() - 1;
     
     // check lower diagonals
     found = false;
@@ -90,6 +96,8 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
             ++j;
         }
 	}
+    if (!found)
+        Nlow = a.n1() - 1;
 }
 
 inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
@@ -106,6 +114,8 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
             ++i;
         }
     }
+    if (!found)
+        Nup = a.n2() - 1;
     
     // check lower diagonals
     found = false;
@@ -119,6 +129,8 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
             ++j;
         }
 	}
+    if (!found)
+        Nlow = a.n1() - 1;
 }
 
 inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
@@ -135,6 +147,8 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
             ++i;
         }
     }
+    if (!found)
+        Nup = a.n2() - 1;
     
     // check lower diagonals
     found = false;
@@ -148,6 +162,8 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
             ++j;
         }
 	}
+    if (!found)
+        Nlow = a.n1() - 1;
 }
 
 
@@ -212,6 +228,30 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
                 sli_b[k + i] = Comp(0.5, dt4 * sli_a[i]);
             else
                 sli_b[k + i] = Comp(0, dt4 * sli_a[i]);
+        }
+    }
+}
+
+// cn_band_mat() for imaginary time propagation
+// B = 1/2 + dt*A/4
+inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Long N1 = a.n1(), N2 = a.n2();
+    Doub dt4 = 0.25*dt;
+    for (Long j = 0; j < N2; ++j) {
+        SvecComp sli_b = slice1(b.cmat(), j);
+        SvecDoub_c sli_a = slice1(a, j);
+        Long k = b.idiag() - j;
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        for (Long i = i_beg; i < i_end; ++i) {
+            if (i == j)
+                sli_b[k + i] = 0.5 + dt4 * sli_a[i];
+            else
+                sli_b[k + i] = dt4 * sli_a[i];
         }
     }
 }

@@ -12,7 +12,7 @@ mkl_compile =  -m64 -I${MKLROOT}/include
 # use `dpkg -L dpkg -L libgsl-dev` to check the installation directory
 libs = -lgsl
 
-no_warn = -Wno-reorder -Wno-misleading-indentation # supress warning about initializer list order
+no_warn = -Wno-reorder -Wno-misleading-indentation -fmax-errors=1 # supress warning about initializer list order
 
 flags = -Wall $(no_warn) -fopenmp -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL
 

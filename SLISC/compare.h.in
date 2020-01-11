@@ -127,8 +127,12 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'ScmatInt' 'ScmatInt';
 //%     'ScmatLlong' 'ScmatLlong';
 //%     'ScmatDoub' 'CmatDoub';
+//%     'ScmatDoub' 'CbandDoub';
+//%     'ScmatDoub' 'CbandComp';
 //%     'ScmatComp' 'CmatDoub';
 //%     'ScmatComp' 'CmatComp';
+//%     'ScmatComp' 'CbandDoub';
+//%     'ScmatComp' 'CbandComp';
 //%     'DvecInt' 'DvecInt';
 //%     'DvecDoub' 'DvecDoub';
 //%     'DvecComp' 'SvecComp';
