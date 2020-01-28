@@ -16,6 +16,10 @@ void test_time()
     std::cout << "test_time() : no fail in debug mode!" << std::endl;
 #endif
     using namespace slisc;
+    // hh:mm:ss time
+    if (hhmmss(27*3600+12*60 + 5) != "03:12:05")
+        SLS_ERR("failed!");
+
     Timer t; CPUTimer cput;
     // cpu time
     cput.tic();

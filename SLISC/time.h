@@ -5,8 +5,33 @@
 #include <string.h>
 #include <chrono>
 #include <ctime>
+#include "string.h"
 
 namespace slisc {
+
+// convert time() or a number to "hh:mm:ss" format
+inline Str hhmmss(Int sec = -1)
+{
+    if (sec < 0)
+        sec = std::time(nullptr);
+    sec %= 86400;
+    Str hh = num2str(sec / 3600);
+    sec %= 3600;
+    Str mm = num2str(sec / 60);
+    Str ss = num2str(sec % 60);
+    Str ret;
+    if (hh.size() == 1)
+        ret += "0";
+    ret += hh + ":";
+    if (mm.size() == 1)
+        ret += "0";
+    ret += mm + ":";
+    if (ss.size() == 1)
+        ret += "0";
+    ret += ss;
+    cout << ret << endl;
+    return ret;
+}
 
 // timer for natural time
 class Timer
