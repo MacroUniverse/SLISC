@@ -9,11 +9,18 @@
 
 namespace slisc {
 
-// convert time() or a number to "hh:mm:ss" format
-inline Str hhmmss(Int sec = -1)
+// get current system time "hh:mm:ss"
+inline Str hhmmss()
 {
-    if (sec < 0)
-        sec = std::time(nullptr);
+    auto p = std::chrono::system_clock::now();
+    std::time_t t = std::chrono::system_clock::to_time_t(p);
+    Str str = std::ctime(&t);
+    return str.substr(str.find(':')-2, 8);
+}
+
+// convert seconds to "hh:mm:ss" format
+inline Str hhmmss(Int sec)
+{
     sec %= 86400;
     Str hh = num2str(sec / 3600);
     sec %= 3600;
