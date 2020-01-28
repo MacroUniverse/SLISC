@@ -29,7 +29,6 @@ inline Str hhmmss(Int sec = -1)
     if (ss.size() == 1)
         ret += "0";
     ret += ss;
-    cout << ret << endl;
     return ret;
 }
 
