@@ -80,7 +80,6 @@ inline void file_list(vecStr_O fnames, Str_I path)
     Str name;
     while (true) {
         std::getline(iss, name);
-        cout << name << endl;
         if (iss.eof())
             break;
         fnames.push_back(name);
