@@ -8,8 +8,8 @@ void test_Mcoo(); void test_Cmobd(); void test_Svec(); void test_Dvec(); void te
 void test_Scmat3(); void test_dense(); void test_slice_arith(); void test_copy();
 void test_compare(); void test_arithmetics(); void test_disp(); void test_random();
 void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq();
-void test_file(); void test_matt(); void test_fedvr(); void test_mat_fun(); void test_gsl();
-void test_unicode();
+void test_linux(); void test_file(); void test_matt(); void test_fedvr(); void test_mat_fun();
+void test_gsl(); void test_unicode();
 
 void test_all()
 {
@@ -41,6 +41,7 @@ void test_all()
     cout << "test_anglib()" << endl; test_anglib();
     cout << "test_search()" << endl; test_search();
     cout << "test_lin_eq()" << endl; test_lin_eq();
+    cout << "test_linux()" << endl; test_linux();
     cout << "test_file()" << endl; test_file();
     cout << "test_matt()" << endl; test_matt();
     cout << "test_fedvr()" << endl; test_fedvr();

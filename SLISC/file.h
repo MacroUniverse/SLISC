@@ -1,6 +1,7 @@
 #pragma once
 #include "time.h"
 #include "arithmetic.h"
+#include "linux.h"
 #include <sstream>
 #include <fstream>
 #include <codecvt>
@@ -71,33 +72,19 @@ inline void file_rm(Str_I wildcard_name) {
 // only works for linux
 #ifdef __GNUC__
 inline void file_list(vecStr_O fnames, Str_I path)
-{
-    Str temp_fname, temp_fname_pref = "SLISC_temporary_file";
-
-    // create unused temporary file name
-    for (Long i = 0; i < 1000; ++i) {
-        if (i == 999)
-            SLS_ERR("too many temporary files!");
-        temp_fname = temp_fname_pref + to_string(i);
-        if (!file_exist(temp_fname)) break;
-    }
-    
+{    
     // save a list of all files (no folder) to temporary file
-    Int ret = system(("ls -p " + path + " | grep -v / > " + temp_fname).c_str()); ++ret;
-
+    std::istringstream iss(exec_str(("ls -p " + path + " | grep -v /").c_str()));
+    
     // read the temporary file
-    ifstream fin(temp_fname);
-    for (Long i = 0; i < 10000; ++i) {
-        Str name;
-        std::getline(fin, name);
-        if (fin.eof())
+    Str name;
+    while (true) {
+        std::getline(iss, name);
+        cout << name << endl;
+        if (iss.eof())
             break;
         fnames.push_back(name);
     }
-    fin.close();
-
-    // remove temporary file
-    std::remove(temp_fname.c_str());
 }
 #else
 #ifdef SLS_HAS_FILESYSTEM
