@@ -164,4 +164,32 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
     fin.close();
     fout.close();
 }
+
+// get number of bytes in file
+inline Long filesize(Str_I fname)
+{
+    ifstream fin(fname, ifstream::ate | ifstream::binary);
+    return fin.tellg();
+}
+
+// write binary file
+inline void write_bin(Str_I data, Str_I fname)
+{
+	ofstream fout(fname, ios::out | ios::binary);
+	fout.write(data.c_str(), data.size());
+	fout.close();
+}
+
+// read binary file
+// if (Nbytes < 0) read the whole file
+// else, read `Nbytes` bytes
+inline void read_bin(Str_O data, Str_I fname, Long Nbytes = -1)
+{
+    if (Nbytes < 0)
+        Nbytes = filesize(fname);
+    data.resize(Nbytes);
+	ifstream fin(fname, ios::in | ios::binary);
+	fin.read(&data[0], Nbytes);
+}
+
 } // namespace slisc

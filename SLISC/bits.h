@@ -5,36 +5,52 @@
 namespace slisc {
 
 // extract a bit at the i-th place from the right
-inline bool bitR(char byte, int i)
+inline bool bitR(Uchar byte, int i)
 {
-    return (byte >> i) & char(1);
+    return (byte >> i) & Uchar(1);
 }
 
 // extract a bit at the i-th place from the left
-inline bool bitL(char byte, int i)
+inline bool bitL(Uchar byte, int i)
 {
-    return (byte << i) & char(128);
+    return (byte << i) & Uchar(128);
 }
 
 // set i-th bit from the right
-inline void set_bitR(char &byte, int i)
+inline void set_bitR(Uchar_IO byte, int i)
 {
-	byte |= char(1) << i;
+	byte |= Uchar(1) << i;
 }
 
 // set i-th bit from the left
-inline void set_bitL(char &byte, int i)
+inline void set_bitL(Uchar_IO byte, int i)
 {
-	byte |= char(128) >> i;
+	byte |= Uchar(128) >> i;
 }
 
-// print bits
-inline void bits(char byte)
+// unset i-th bit from the right
+inline void unset_bitR(Uchar_IO byte, int i)
 {
+	byte &= ~(Uchar(1) << i);
+}
+
+// unset i-th bit from the left
+inline void unset_bitL(Uchar_IO byte, int i)
+{
+	byte &= ~(Uchar(128) >> i);
+}
+
+// convert byte to 8 char '0' or '1'
+inline Str bit_str(Uchar_I byte)
+{
+	Str str; str.resize(8);
 	for (int i = 0; i < 8; ++i) {
-		cout << bitL(byte, i);
+		if (bitL(byte, i))
+			str[i] = '1';
+		else
+			str[i] = '0';
 	}
-	cout << endl;
+	return str;
 }
 
 // test if system use little endian (less significant byte has smaller memory address)
@@ -43,17 +59,17 @@ inline void bits(char byte)
 inline bool little_endian()
 {
 	short int num = 1;
-	char *b = (char *)&num;
+	Uchar *b = (Uchar *)&num;
 	return b[0];
 }
 
 // convert endianness
-inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
+inline void change_endian(Uchar *data, Long_I elm_size, Long_I Nelm)
 {
 	Long half = elm_size/2;
 	for (Long i = 0; i < Nelm; ++i) {
 		for (Long j = 0; j < half; ++j) {
-			swap(p[j], p[elm_size-j]);
+			swap(data[j], data[elm_size-j]);
 		}
 		data += elm_size;
 	}

@@ -1,5 +1,6 @@
 // do all available tests of SLISC
 // TODO: test mparith.h not finished
+
 #pragma once
 #include <iostream>
 void test_time(); void test_Imag(); void test_scalar_arith(); void test_Vbase(); void test_Vec();
@@ -9,7 +10,7 @@ void test_Scmat3(); void test_dense(); void test_slice_arith(); void test_copy()
 void test_compare(); void test_arithmetics(); void test_disp(); void test_random();
 void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq();
 void test_linux(); void test_file(); void test_matt(); void test_fedvr(); void test_mat_fun();
-void test_gsl(); void test_unicode();
+void test_gsl(); void test_unicode(); void test_bits();
 
 void test_all()
 {
@@ -47,6 +48,7 @@ void test_all()
     cout << "test_fedvr()" << endl; test_fedvr();
     cout << "test_mat_fun()" << endl; test_mat_fun();
     cout << "test_gsl()" << endl; test_gsl();
+    cout << "test_bits()" << endl; test_bits();
     cout << "test_unicode()" << endl; test_unicode();
     
     cout << "do optional tests? (y/n)" << endl;
