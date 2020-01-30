@@ -174,24 +174,54 @@ inline Long file_size(Str_I fname)
     return fin.tellg();
 }
 
-// write binary file
+// open binary file to write
+inline void open_bin(ofstream &fout, Str_I fname)
+{
+    if (fout.is_open())
+        fout.close();
+	fout.open(fname, std::ios::out | std::ios::binary);
+}
+
+// open binary file to read
+inline void open_bin(ifstream &fin, Str_I fname)
+{
+    if (fin.is_open())
+        fin.close();
+	fin.open(fname, std::ios::in | std::ios::binary);
+}
+
+// write binary file (once)
 inline void write_bin(Str_I data, Str_I fname)
 {
-	ofstream fout(fname, std::ios::out | std::ios::binary);
+	ofstream fout; open_bin(fout, fname);
 	fout.write(data.c_str(), data.size());
 	fout.close();
 }
 
-// read binary file
-// if (Nbytes < 0) read the whole file
-// else, read `Nbytes` bytes
-inline void read_bin(Str_O data, Str_I fname, Long Nbytes = -1)
+// read binary file (once)
+inline void read_bin(Str_O data, Str_I fname)
 {
-    if (Nbytes < 0)
-        Nbytes = file_size(fname);
+    Long Nbytes = file_size(fname);
     data.resize(Nbytes);
-	ifstream fin(fname, std::ios::in | std::ios::binary);
+	ifstream fin; open_bin(fin, fname);
 	fin.read(&data[0], Nbytes);
+    fin.close();
+}
+
+// write binary file (multiple times)
+inline void write_bin(ofstream &fout, Str_I data)
+{
+	fout.write(data.c_str(), data.size());
+}
+
+// read binary file (multiple times)
+// if end of file reached before Nbytes is read, data will be the actual bytes left
+inline void read_bin(Str_O data, ifstream &fin, Long_I Nbytes)
+{
+    data.resize(Nbytes);
+	Long count = fin.read(&data[0], Nbytes).gcount();
+    if (count < Nbytes)
+        data.resize(count);
 }
 
 } // namespace slisc
