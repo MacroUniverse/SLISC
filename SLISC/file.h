@@ -166,8 +166,10 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 }
 
 // get number of bytes in file
-inline Long filesize(Str_I fname)
+inline Long file_size(Str_I fname)
 {
+    if (!file_exist(fname))
+        SLS_ERR("file not found: " + fname);
     ifstream fin(fname, ifstream::ate | ifstream::binary);
     return fin.tellg();
 }
@@ -175,7 +177,7 @@ inline Long filesize(Str_I fname)
 // write binary file
 inline void write_bin(Str_I data, Str_I fname)
 {
-	ofstream fout(fname, ios::out | ios::binary);
+	ofstream fout(fname, std::ios::out | std::ios::binary);
 	fout.write(data.c_str(), data.size());
 	fout.close();
 }
@@ -186,9 +188,9 @@ inline void write_bin(Str_I data, Str_I fname)
 inline void read_bin(Str_O data, Str_I fname, Long Nbytes = -1)
 {
     if (Nbytes < 0)
-        Nbytes = filesize(fname);
+        Nbytes = file_size(fname);
     data.resize(Nbytes);
-	ifstream fin(fname, ios::in | ios::binary);
+	ifstream fin(fname, std::ios::in | std::ios::binary);
 	fin.read(&data[0], Nbytes);
 }
 
