@@ -3,7 +3,8 @@
 void test_bits()
 {
 	using namespace slisc;
-	Int a = little_endian(); ++a;
+	if (!little_endian())
+		SLS_WARN("this system is using big endian, is it x86 or x64 architecture?");
 
 	Int byte = 0;
 	for (Long i = 0; i < 8; ++i) {

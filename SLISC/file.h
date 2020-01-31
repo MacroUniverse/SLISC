@@ -216,6 +216,7 @@ inline void write_bin(ofstream &fout, Str_I data)
 
 // read binary file (multiple times)
 // if end of file reached before Nbytes is read, data will be the actual bytes left
+// use fin.ignore(N) to skip N bytes
 inline void read_bin(Str_O data, ifstream &fin, Long_I Nbytes)
 {
     data.resize(Nbytes);

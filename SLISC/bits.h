@@ -56,6 +56,7 @@ inline Str bit_str(Uchar_I byte)
 // test if system use little endian (less significant byte has smaller memory address)
 // for example, shot int(1) will be 00000001 0000000 in little endian
 // there is no concept of "bit endian" since they are not addressable
+// Intel x86 and x64 architechture use little endian
 inline bool little_endian()
 {
 	short int num = 1;
