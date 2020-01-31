@@ -218,55 +218,18 @@ inline Long read_bin(Char *data, Long_I Nbyte, Str_I fname)
 // `fin.ignore(N)` skip N bytes
 //===================================
 
-inline void write(ofstream &fout, Char_I s)
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%--------------------
+//% T = varargin{:};
+inline void write(ofstream &fout, @T@_I s)
 {
-    fout.write((char*)&s, sizeof(Char));
+    fout.write((char*)&s, sizeof(@T@));
 }
 
-inline void read(ifstream &fin, Char_O s)
+inline void read(ifstream &fin, @T@_O s)
 {
-    fin.read((char*)&s, sizeof(Char));
+    fin.read((char*)&s, sizeof(@T@));
 }
-
-inline void write(ofstream &fout, Int_I s)
-{
-    fout.write((char*)&s, sizeof(Int));
-}
-
-inline void read(ifstream &fin, Int_O s)
-{
-    fin.read((char*)&s, sizeof(Int));
-}
-
-inline void write(ofstream &fout, Llong_I s)
-{
-    fout.write((char*)&s, sizeof(Llong));
-}
-
-inline void read(ifstream &fin, Llong_O s)
-{
-    fin.read((char*)&s, sizeof(Llong));
-}
-
-inline void write(ofstream &fout, Doub_I s)
-{
-    fout.write((char*)&s, sizeof(Doub));
-}
-
-inline void read(ifstream &fin, Doub_O s)
-{
-    fin.read((char*)&s, sizeof(Doub));
-}
-
-inline void write(ofstream &fout, Comp_I s)
-{
-    fout.write((char*)&s, sizeof(Comp));
-}
-
-inline void read(ifstream &fin, Comp_O s)
-{
-    fin.read((char*)&s, sizeof(Comp));
-}
-
+//%--------------------
 
 } // namespace slisc

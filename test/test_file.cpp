@@ -37,9 +37,27 @@ void test_file()
 	Str tmp;
 	fin.read(&data1[0], 10);
 	fin.read(&data1[10], 10);
-	fin.read(&data1[20], 10);;
+	fin.read(&data1[20], 10);
+	fin.close();
 	if (data1 != data)
 		SLS_ERR("failed!");
 
+	// write() and read() scalar
+	open_bin(fout, "test_bin");
+	write(fout, 12345);
+	write(fout, 3.1415);
+	write(fout, 1.1 + 2.2*I);
+	fout.close();
+	open_bin(fin, "test_bin");
+	Int i; Doub d; Comp c;
+	read(fin, i);
+	if (i != 12345)
+		SLS_ERR("failed!");
+	read(fin, d);
+	if (d != 3.1415)
+		SLS_ERR("failed!");
+	read(fin, c);
+	if (c != 1.1 + 2.2*I)
+		SLS_ERR("failed!");
 	remove("test_bin");
 }

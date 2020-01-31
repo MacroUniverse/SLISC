@@ -34,7 +34,6 @@ public:
 
     // get var names and positions from the end of the file
     // after return, matt.m_ind[i] points to the first matrix element;
-    // return 0 if successful, return -1 if failed
     void get_profile();
 
     // search a variable by name, return index to m_name[i]
