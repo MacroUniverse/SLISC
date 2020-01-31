@@ -1,5 +1,4 @@
-// save vectors and matrices defined in "nr3.h" to ".mat" or ".matt" files.
-// see README.txt for details
+// save vectors and matrices to ".matt" file
 
 #pragma once
 #include "file.h"
@@ -23,8 +22,7 @@ public:
     vector<vector<Long>> m_size; // variable dimensions
     vector<Long> m_ind; // variable positions (line indices)
 
-    // open a file, return 0 if success
-    // return -2 if reading failed (e.g. file is not finished, wrong format)
+    // open a file
     void open(Str_I fname, Char_I *rw, Int_I precision = 17);
 
     Bool isopen();

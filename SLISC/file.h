@@ -191,38 +191,31 @@ inline void open_bin(ifstream &fin, Str_I fname)
 }
 
 // write binary file (once)
-inline void write_bin(Str_I data, Str_I fname)
+inline void write_bin(const Char *data, Long_I Nbyte, Str_I fname)
 {
 	ofstream fout; open_bin(fout, fname);
-	fout.write(data.c_str(), data.size());
+	fout.write(data, Nbyte);
 	fout.close();
 }
 
 // read binary file (once)
-inline void read_bin(Str_O data, Str_I fname)
+// return the actual bytes read
+inline Long read_bin(Char *data, Long_I Nbyte, Str_I fname)
 {
-    Long Nbytes = file_size(fname);
-    data.resize(Nbytes);
+    Long Nbyte0 = file_size(fname);
+    if (Nbyte0 > Nbyte)
+        SLS_ERR("Nbyte too small");
 	ifstream fin; open_bin(fin, fname);
-	fin.read(&data[0], Nbytes);
+	Long count = fin.read(&data[0], Nbyte0).gcount();
     fin.close();
+    return count;
 }
 
-// write binary file (multiple times)
-inline void write_bin(ofstream &fout, Str_I data)
-{
-	fout.write(data.c_str(), data.size());
-}
-
-// read binary file (multiple times)
-// if end of file reached before Nbytes is read, data will be the actual bytes left
-// use fin.ignore(N) to skip N bytes
-inline void read_bin(Str_O data, ifstream &fin, Long_I Nbytes)
-{
-    data.resize(Nbytes);
-	Long count = fin.read(&data[0], Nbytes).gcount();
-    if (count < Nbytes)
-        data.resize(count);
-}
+// read and write
+//===================================
+// `ofstream::write(p_char, Nbytes)`
+// `ifstream::read(p_char, Nbytes).gcount()` will return the actual bytes read before end of file
+// `fin.ignore(N)` skip N bytes
+//===================================
 
 } // namespace slisc
