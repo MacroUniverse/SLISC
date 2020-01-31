@@ -53,17 +53,7 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 #endif
 }
 
-// read whole file to Str
-inline void read_file(Str_O str, Str_I fname)
-{
-    if (!file_exist(fname))
-        SLS_ERR("file \"" + fname + "\" does not exist!");
-    ifstream fin(fname, std::ios::binary);
-    stringstream ss;
-    ss << fin.rdbuf();
-    str = ss.str();
-}
-
+// remove a file
 inline void file_rm(Str_I wildcard_name) {
     system(("rm " + wildcard_name).c_str());
 }
@@ -191,7 +181,7 @@ inline void open_bin(ifstream &fin, Str_I fname)
 }
 
 // write binary file (once)
-inline void write_bin(const Char *data, Long_I Nbyte, Str_I fname)
+inline void write(const Char *data, Long_I Nbyte, Str_I fname)
 {
 	ofstream fout; open_bin(fout, fname);
 	fout.write(data, Nbyte);
@@ -200,7 +190,7 @@ inline void write_bin(const Char *data, Long_I Nbyte, Str_I fname)
 
 // read binary file (once)
 // return the actual bytes read
-inline Long read_bin(Char *data, Long_I Nbyte, Str_I fname)
+inline Long read(Char *data, Long_I Nbyte, Str_I fname)
 {
     Long Nbyte0 = file_size(fname);
     if (Nbyte0 > Nbyte)
@@ -211,7 +201,21 @@ inline Long read_bin(Char *data, Long_I Nbyte, Str_I fname)
     return count;
 }
 
-// read and write
+// write Str to file
+inline void write(Str_I str, Str_I fname)
+{
+    write(str.c_str(), str.size(), fname);
+}
+
+// read whole file to Str
+inline void read(Str_O str, Str_I fname)
+{
+    str.resize(file_size(fname));
+    read(&str[0], str.size(), fname);
+}
+
+// read and write from/to ifstrea/ofstream
+
 //===================================
 // `ofstream::write(p_char, Nbytes)`
 // `ifstream::read(p_char, Nbytes).gcount()` will return the actual bytes read before end of file
@@ -231,5 +235,34 @@ inline void read(ifstream &fin, @T@_O s)
     fin.read((char*)&s, sizeof(@T@));
 }
 //%--------------------
+
+// string
+inline void write(ofstream &fout, Str_I str)
+{
+    fout.write(str.data(), str.size());
+}
+
+// if end of file reached before data is filled, it will be resized
+inline void read(ifstream &fin, Str_O str)
+{
+	Long count = fin.read(&str[0], str.size()).gcount();
+    if (count < size(str))
+        str.resize(count);
+}
+
+// string with 32-bit char (usually for UTF32)
+inline void write(ofstream &fout, Str32_I str)
+{
+    fout.write((Char *)str.data(), 4*str.size());
+}
+
+// if end of file reached before str is filled, it will be resized
+inline void read(ifstream &fin, Str32_O str)
+{
+	Long count = fin.read((Char *)&str[0], 4*str.size()).gcount();
+    count /= 4;
+    if (count < size(str))
+        str.resize(count);
+}
 
 } // namespace slisc

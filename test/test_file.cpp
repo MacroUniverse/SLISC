@@ -9,30 +9,30 @@ void test_file()
 	if (names.size() < 3)
 		SLS_ERR("failed!");
 
-	// write_bin()
+	// write()
 	Str data = "abcdefghijklmnopqrstuvwxyz";
-	write_bin(data.data(), data.size(), "test_bin");
+	write(data.data(), data.size(), "test_bin");
 	if (file_size("test_bin") != size(data))
 		SLS_ERR("failed!");
 	Str data1;
 
-	// read_bin()
+	// read()
 	data1.resize(data.size());
-	read_bin(&data1[0], data1.size(), "test_bin");
+	read(&data1[0], data1.size(), "test_bin");
 	if (data1 != data)
 		SLS_ERR("failed!");
 	
-	// multiple write_bin()
+	// multiple binary write()
 	ofstream fout; open_bin(fout, "test_bin");
 	fout.write(&data[0], 5);
 	fout.write(&data[5], 5);
 	fout.write(&data[10], 16);
 	fout.close();
-	read_bin(&data1[0], data1.size(), "test_bin");
+	read(&data1[0], data1.size(), "test_bin");
 	if (data1 != data)
 		SLS_ERR("failed!");
 	
-	// multiple read_bin()
+	// multiple binary read()
 	ifstream fin; open_bin(fin, "test_bin");
 	Str tmp;
 	fin.read(&data1[0], 10);
@@ -59,5 +59,33 @@ void test_file()
 	read(fin, c);
 	if (c != 1.1 + 2.2*I)
 		SLS_ERR("failed!");
+	
+	// write() and read() string to/from file
+	Str str(data), str1;
+	write(str, "test_bin");
+	read(str1, "test_bin");
+	if (str != str1)
+		SLS_ERR("failed!");
+
+	// write() and read() string to/from fstream
+	open_bin(fout, "test_bin");
+	write(fout, str.substr(0, 5));
+	write(fout, str.substr(5, 5));
+	write(fout, str.substr(10, 16));
+	fout.close();
+	
+	open_bin(fin, "test_bin");
+	tmp.resize(10);
+	str1.clear();
+	read(fin, tmp);
+	str1 += tmp;
+	read(fin, tmp);
+	str1 += tmp;
+	read(fin, tmp);
+	str1 += tmp;
+	fin.close();
+	if (str1 != str)
+		SLS_ERR("failed!");
+
 	remove("test_bin");
 }

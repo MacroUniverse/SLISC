@@ -34,14 +34,6 @@ struct set_windows_console_utf8 {
 set_windows_console_utf8 yes_set_windows_console_utf8;
 #endif
 
-// write Str to file
-inline void write_file(Str_I str, Str_I name)
-{
-    ofstream fout(name, std::ios::binary);
-    fout << str;
-    fout.close();
-}
-
 #ifdef SLS_USE_UTFCPP
 // convert from UTF-8 Str to UTF-32 Str32
 inline void utf8to32(Str32_O str32, Str_I str)
@@ -137,29 +129,29 @@ inline Long skip_line(Str32_I &str, Long_I start)
 }
 
 // read a UTF-8 file into UTF-32 Str32
-inline void read_file(Str32_O str32, Str_I fname)
+inline void read(Str32_O str32, Str_I fname)
 {
     Str str;
-    read_file(str, fname);
+    read(str, fname);
     utf8to32(str32, str);
 }
 
-inline void read_file(Str32_O str32, Str32_I fname)
+inline void read(Str32_O str32, Str32_I fname)
 {
-    read_file(str32, utf32to8(fname));
+    read(str32, utf32to8(fname));
 }
 
 // write UTF-32 Str32 into a UTF-8 file
-inline void write_file(Str32_I str32, Str_I fname)
+inline void write(Str32_I str32, Str_I fname)
 {
     Str str;
     utf32to8(str, str32);
-    write_file(str, fname);
+    write(str, fname);
 }
 
-inline void write_file(Str32_I str32, Str32_I fname)
+inline void write(Str32_I str32, Str32_I fname)
 {
-    write_file(str32, utf32to8(fname));
+    write(str32, utf32to8(fname));
 }
 
 // write a vector of strings to file
@@ -171,7 +163,7 @@ inline void write_vec_str(vecStr32_I vec_str, Str32_I fname)
     for (Long i = 0; i < size(vec_str); ++i) {
         str += vec_str[i] + U'\n';
     }
-    write_file(str, fname);
+    write(str, fname);
 }
 
 // read the file written by `write_vec_str()`
@@ -180,7 +172,7 @@ inline void read_vec_str(vecStr32_O vec_str, Str32_I fname)
 {
     Str32 str;
     vec_str.clear();
-    read_file(str, fname);
+    read(str, fname);
     CRLF_to_LF(str);
     Long ind0 = 0;
     for (Long i = 0; ; ++i) {
