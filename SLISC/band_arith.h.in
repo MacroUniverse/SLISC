@@ -54,7 +54,7 @@ inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
     
     // check lower diagonals
     found = false;
-	for (Long k = a.n1() - 1; k > 0  && !found; --k) {
+    for (Long k = a.n1() - 1; k > 0  && !found; --k) {
         Long j = 0;
         for (Long i = k; i < a.n1() && !found; ++i) {
             if (j > a.n2()) break;
@@ -63,7 +63,7 @@ inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
             }
             ++j;
         }
-	}
+    }
     if (!found)
         Nlow = a.n1() - 1;
 }
@@ -174,19 +174,19 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //% if is_dense_vec(Tx)
     Long incx = 1;
 //% elseif is_Dvec(Tx)
-	Long incx = x.step();
+    Long incx = x.step();
 //% end
 //% if is_dense_vec(Ty)
     Long incy = 1;
 //% elseif is_Dvec(Ty)
-	Long incy = x.step();
+    Long incy = x.step();
 //% end
 //% if is_Doub(Tsx) && is_Doub(Tsa) && is_Doub(Tsy)
-	Doub alpha = 1, beta = 0;
+    Doub alpha = 1, beta = 0;
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
         alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, beta, y.ptr(), incy);
 //% elseif is_Comp(Tsx) && is_Comp(Tsa) && is_Comp(Tsy)
-	Comp alpha(1, 0), beta(0, 0);
+    Comp alpha(1, 0), beta(0, 0);
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
         &alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, &beta, y.ptr(), incy);
 //% else

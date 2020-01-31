@@ -110,8 +110,8 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
     if (a.n1() != a.n2() || a.n2() != x.n1())
 //% end
         SLS_ERR("wrong shape!");
-	if (ipiv.size() != a.n1())
-		SLS_ERR("wrong shape!");
+    if (ipiv.size() != a.n1())
+        SLS_ERR("wrong shape!");
 #endif
     Int lda = a.n1();
 //% if is_Cmat(Tx) || is_Scmat(Tx)

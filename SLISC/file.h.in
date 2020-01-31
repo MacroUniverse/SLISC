@@ -169,7 +169,7 @@ inline void open_bin(ofstream &fout, Str_I fname)
 {
     if (fout.is_open())
         fout.close();
-	fout.open(fname, std::ios::out | std::ios::binary);
+    fout.open(fname, std::ios::out | std::ios::binary);
 }
 
 // open binary file to read
@@ -177,15 +177,15 @@ inline void open_bin(ifstream &fin, Str_I fname)
 {
     if (fin.is_open())
         fin.close();
-	fin.open(fname, std::ios::in | std::ios::binary);
+    fin.open(fname, std::ios::in | std::ios::binary);
 }
 
 // write binary file (once)
 inline void write(const Char *data, Long_I Nbyte, Str_I fname)
 {
-	ofstream fout; open_bin(fout, fname);
-	fout.write(data, Nbyte);
-	fout.close();
+    ofstream fout; open_bin(fout, fname);
+    fout.write(data, Nbyte);
+    fout.close();
 }
 
 // read binary file (once)
@@ -195,8 +195,8 @@ inline Long read(Char *data, Long_I Nbyte, Str_I fname)
     Long Nbyte0 = file_size(fname);
     if (Nbyte0 > Nbyte)
         SLS_ERR("Nbyte too small");
-	ifstream fin; open_bin(fin, fname);
-	Long count = fin.read(&data[0], Nbyte0).gcount();
+    ifstream fin; open_bin(fin, fname);
+    Long count = fin.read(&data[0], Nbyte0).gcount();
     fin.close();
     return count;
 }
@@ -245,7 +245,7 @@ inline void write(ofstream &fout, Str_I str)
 // if end of file reached before data is filled, it will be resized
 inline void read(ifstream &fin, Str_O str)
 {
-	Long count = fin.read(&str[0], str.size()).gcount();
+    Long count = fin.read(&str[0], str.size()).gcount();
     if (count < size(str))
         str.resize(count);
 }
@@ -259,7 +259,7 @@ inline void write(ofstream &fout, Str32_I str)
 // if end of file reached before str is filled, it will be resized
 inline void read(ifstream &fin, Str32_O str)
 {
-	Long count = fin.read((Char *)&str[0], 4*str.size()).gcount();
+    Long count = fin.read((Char *)&str[0], 4*str.size()).gcount();
     count /= 4;
     if (count < size(str))
         str.resize(count);

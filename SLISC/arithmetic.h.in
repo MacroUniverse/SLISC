@@ -973,26 +973,26 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //% elseif is_Dcmat(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 {
-	for (Long j = 0; j < v.n2(); ++j)
-    	plus_equals_vs(&v(0,j), s, v.n1());
+    for (Long j = 0; j < v.n2(); ++j)
+        plus_equals_vs(&v(0,j), s, v.n1());
 }
 
 inline void operator-=(@T@_IO v, @Ts@_I s)
 {
     for (Long j = 0; j < v.n2(); ++j)
-    	minus_equals_vs(&v(0,j), s, v.n1());
+        minus_equals_vs(&v(0,j), s, v.n1());
 }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
 {
     for (Long j = 0; j < v.n2(); ++j)
-    	times_equals_vs(&v(0,j), s, v.n1());
+        times_equals_vs(&v(0,j), s, v.n1());
 }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
 {
     for (Long j = 0; j < v.n2(); ++j)
-    	divide_equals_vs(&v(0,j), s, v.n1());
+        divide_equals_vs(&v(0,j), s, v.n1());
 }
 //% elseif is_Dvec(T) && is_scalar(Ts)
 inline void operator*=(@T@_IO v, @Ts@_I s)
