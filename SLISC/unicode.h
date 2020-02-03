@@ -108,7 +108,7 @@ inline Bool file_exist(Str32_I fname) {
 // read a line from a string, from str[start] to 1 char before '\n'
 // return the start of the next line, return -1 if out of bound
 // if the file ends with `\n`, then the line.back() is not empty
-inline Long get_line(Str32_O line, Str32_I str, Long_I start)
+inline Long get_line(Str32_O line, Str32_I str, Long_I start = 0)
 {
     Long ind = str.find(U'\n', start);
     line = str.substr(start, ind - start);
@@ -120,7 +120,7 @@ inline Long get_line(Str32_O line, Str32_I str, Long_I start)
 // skip to the next line
 // return the index after `\n`
 // return -1 if `\n` not found
-inline Long skip_line(Str32_I &str, Long_I start)
+inline Long skip_line(Str32_I &str, Long_I start = 0)
 {
     Long ind = str.find(U'\n', start);
     if (ind < 0 || ind == size(str) - 1)
@@ -276,7 +276,7 @@ inline Long CRLF_to_LF(Str32_IO str)
 // Find the next appearance of one of "key"
 // output the ikey of key[ikey] found
 // return the first index of key[ikey] found, return -1 if nothing found
-inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start)
+inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start = 0)
 {
     Long i{}, ind0{}, Nkey{}, imin;
     Nkey = keys.size();
@@ -531,7 +531,7 @@ inline Long find_num(Str32_I str, Long start)
 // get non-negative integer from string
 // return the index after the last digit, return -1 if failed
 // str[start] must be a number
-inline Long str2int(Long_O num, Str32_I str, Long start)
+inline Long str2int(Long_O num, Str32_I str, Long_I start = 0)
 {
     Long i{};
     Char32 c;
@@ -553,7 +553,7 @@ inline Long str2int(Long_O num, Str32_I str, Long start)
 // get non-negative double from string
 // return the index after the last digit, return -1 if failed
 // str[start] must be a number
-inline Long str2double(Doub& num, Str32_I str, Long start)
+inline Long str2double(Doub& num, Str32_I str, Long_I start = 0)
 {
     Long ind0{}, num1{}, num2{};
     ind0 = str2int(num1, str, start);
@@ -567,6 +567,12 @@ inline Long str2double(Doub& num, Str32_I str, Long start)
         num /= 10;
     num += (Doub)num1;
     return ind0;
+}
+
+inline Long str2int(Str32_I str)
+{
+    Long num; str2int(num, str);
+    return num;
 }
 
 // delete any following ' ' or '\n' characters starting from "start" (including "start")
