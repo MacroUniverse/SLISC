@@ -7,7 +7,7 @@ void test_time(); void test_Imag(); void test_scalar_arith(); void test_Vbase();
 void test_Mat(); void test_Cmat(); void test_Cmat3(); void test_Cmat4(); void test_band();
 void test_Mcoo(); void test_Cmobd(); void test_Svec(); void test_Dvec(); void test_Scmat();
 void test_Scmat3(); void test_dense(); void test_slice_arith(); void test_copy();
-void test_compare(); void test_arithmetics(); void test_disp(); void test_random();
+void test_compare(); void test_arithmetic(); void test_disp(); void test_random();
 void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq();
 void test_linux(); void test_file(); void test_matt(); void test_matb(); void test_fedvr();
 void test_mat_fun(); void test_gsl(); void test_unicode(); void test_bits();
@@ -35,7 +35,7 @@ void test_all()
     cout << "test_slice_arith()" << endl; test_slice_arith();
     cout << "test_copy()" << endl; test_copy();
     cout << "test_compare()" << endl; test_compare();
-    cout << "test_arithmetics()" << endl; test_arithmetics();
+    cout << "test_arithmetic()" << endl; test_arithmetic();
     cout << "test_random()" << endl; test_random();
     cout << "test_sort()" << endl; test_sort();
     cout << "test_ylm()" << endl; test_ylm();

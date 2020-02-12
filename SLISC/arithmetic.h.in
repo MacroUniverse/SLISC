@@ -1958,6 +1958,29 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 }
 //%--------------------------------
 
+// get unique elements from a vector
+//% types = {'VecInt'; 'VecLong'; 'vecInt'; 'vecLong';};
+//%---------------------
+//% T = varargin{:};
+inline void uniq_elm(@T@_IO v)
+{
+    Long N = v.size(), n = 0; // already done
+    for (Long i = 0; i < N; ++i) {
+        Bool repeat = false;
+        for (Long j = 0; j < n; ++j) {
+            if (v[i] == v[j]) {
+                repeat = true; break;
+            }
+        }
+        if (!repeat) {
+            v[n] = v[i];
+            ++n;
+        }
+    }
+    v.resize(n);
+}
+//%---------------------
+
 // get all unique rows from a matrix
 //% types = {
 //%     'CmatInt', 'CmatInt';

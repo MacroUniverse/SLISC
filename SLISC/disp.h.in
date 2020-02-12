@@ -4,6 +4,7 @@
 namespace slisc {
 const Int def_disp_prec = 8;
 //% types = {
+//%     'vecInt'; 'vecLlong';
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
@@ -19,10 +20,11 @@ inline void disp(@T@_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;

@@ -5,7 +5,7 @@
 #include "../SLISC/slice_arith.h"
 #include "../SLISC/disp.h"
 
-void test_arithmetics()
+void test_arithmetic()
 {
 	using namespace slisc;
 
@@ -573,6 +573,15 @@ void test_arithmetics()
         VecLlong v1(v.size());
         cumsum(v1, v);
         if (v1[0] != 1 || v1[1] != 3 || v1[2] != 6 || v1[3] != 10)
+            SLS_ERR("failed!");
+    }
+
+    // uniq_elm()
+    {
+        vecInt v = {1,3,2,5,8,1,8,5,3,2,6,7,6};
+        vecInt v1 = {1,3,2,5,8,6,7};
+        uniq_elm(v);
+        if (v != v1)
             SLS_ERR("failed!");
     }
 

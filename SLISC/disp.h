@@ -3,14 +3,45 @@
 
 namespace slisc {
 const Int def_disp_prec = 8;
+inline void disp(vecInt_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
+inline void disp(vecLlong_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
 inline void disp(VecInt_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
@@ -21,10 +52,11 @@ inline void disp(VecLlong_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
@@ -35,10 +67,11 @@ inline void disp(VecDoub_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
@@ -49,10 +82,11 @@ inline void disp(VecComp_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
@@ -258,10 +292,11 @@ inline void disp(SvecLlong_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
@@ -272,10 +307,11 @@ inline void disp(SvecDoub_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
@@ -286,10 +322,11 @@ inline void disp(SvecComp_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
     cout.precision(precision);
-    if (v.size() == 0)
+    Long N = v.size();
+    if (N == 0)
         cout << "empty";
     else
-        for (Long i = 0; i < v.size(); ++i) {
+        for (Long i = 0; i < N; ++i) {
             cout << to_num(v[i]) << "   ";
         }
     cout << endl << endl;
