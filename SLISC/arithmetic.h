@@ -6732,6 +6732,29 @@ inline void mul_gen(ScmatComp_O y, ScmatDoub_I a, CmatComp_I &x)
 }
 
 
+// concatinate std::vector
+// get unique elements from a vector
+inline void operator+=(vecInt_IO v, vecInt_I v1)
+{
+    v.insert(v.end(), v1.begin(), v1.end());
+}
+
+inline void operator+=(vecLong_IO v, vecLong_I v1)
+{
+    v.insert(v.end(), v1.begin(), v1.end());
+}
+
+inline void operator+=(vecStr_IO v, vecStr_I v1)
+{
+    v.insert(v.end(), v1.begin(), v1.end());
+}
+
+inline void operator+=(vecStr32_IO v, vecStr32_I v1)
+{
+    v.insert(v.end(), v1.begin(), v1.end());
+}
+
+
 // get unique elements from a vector
 inline void uniq_elm(VecInt_IO v)
 {
@@ -6788,6 +6811,42 @@ inline void uniq_elm(vecInt_IO v)
 }
 
 inline void uniq_elm(vecLong_IO v)
+{
+    Long N = v.size(), n = 0; // already done
+    for (Long i = 0; i < N; ++i) {
+        Bool repeat = false;
+        for (Long j = 0; j < n; ++j) {
+            if (v[i] == v[j]) {
+                repeat = true; break;
+            }
+        }
+        if (!repeat) {
+            v[n] = v[i];
+            ++n;
+        }
+    }
+    v.resize(n);
+}
+
+inline void uniq_elm(vecStr_IO v)
+{
+    Long N = v.size(), n = 0; // already done
+    for (Long i = 0; i < N; ++i) {
+        Bool repeat = false;
+        for (Long j = 0; j < n; ++j) {
+            if (v[i] == v[j]) {
+                repeat = true; break;
+            }
+        }
+        if (!repeat) {
+            v[n] = v[i];
+            ++n;
+        }
+    }
+    v.resize(n);
+}
+
+inline void uniq_elm(vecStr32_IO v)
 {
     Long N = v.size(), n = 0; // already done
     for (Long i = 0; i < N; ++i) {

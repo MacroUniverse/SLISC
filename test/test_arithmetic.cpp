@@ -597,4 +597,14 @@ void test_arithmetic()
         if (a1 != a2)
             SLS_ERR("failed!");
     }
+
+    // operator+= for std::vector
+    {
+        vecInt v;
+        v = {1,2,3,4};
+        v += v;
+        v += {5,6,7,8};
+        if (v != vecInt{1,2,3,4,1,2,3,4,5,6,7,8})
+            SLS_ERR("failed!");
+    }
 }

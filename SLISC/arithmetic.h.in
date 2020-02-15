@@ -1958,8 +1958,20 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 }
 //%--------------------------------
 
+// concatinate std::vector
 // get unique elements from a vector
-//% types = {'VecInt'; 'VecLong'; 'vecInt'; 'vecLong';};
+//% types = {'vecInt'; 'vecLong'; 'vecStr'; 'vecStr32';};
+//%---------------------
+//% T = varargin{:};
+inline void operator+=(@T@_IO v, @T@_I v1)
+{
+    v.insert(v.end(), v1.begin(), v1.end());
+}
+//%---------------------
+
+// get unique elements from a vector
+//% types = {'VecInt'; 'VecLong'; 'vecInt'; 'vecLong';
+//%     'vecStr'; 'vecStr32';};
 //%---------------------
 //% T = varargin{:};
 inline void uniq_elm(@T@_IO v)
