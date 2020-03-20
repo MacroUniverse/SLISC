@@ -187,6 +187,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
+//%     'VecDoub', 'SvecDoub';
 //%     'VecComp', 'VecComp';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
