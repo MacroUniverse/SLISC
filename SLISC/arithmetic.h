@@ -5907,6 +5907,20 @@ inline Comp dot(Cmat3Comp_I v1, Cmat3Comp_I v2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
 }
 
+inline Comp dot(Cmat3Comp_I v1, Jcmat3Comp_I v2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    Comp sum = 0;
+    for (Long i = 0; i < v1.n1(); ++i)
+        for (Long j = 0; j < v1.n2(); ++j)
+            for (Long k = 0; k < v1.n3(); ++k)
+                sum += conj(v1(i,j,k)) * v2(i,j,k);
+    return sum;
+}
+
 
 inline void cumsum_vv(Int *v, const Int *v1, Long_I N)
 {

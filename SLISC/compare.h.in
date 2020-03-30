@@ -110,6 +110,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'Cmat3Doub' 'Cmat3Comp';
 //%     'Cmat3Comp' 'Cmat3Doub';
 //%     'Cmat3Comp' 'Cmat3Comp';
+//%     'Cmat3Comp' 'Jcmat3Comp';
 //%     'Mat3Doub' 'Mat3Doub';
 //%     'McooDoub' 'McooDoub';
 //%     'CmatDoub' 'McooDoub';
