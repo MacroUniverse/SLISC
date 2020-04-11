@@ -114,5 +114,23 @@ void test_gsl()
         if (abs(F[3] - 0.103105785225698) > 1e-15)
             SLS_ERR("failed!");
     }
+
+    // logarithm of complex gamma function
+    {
+        // use wolfram alpha to verify
+        Doub zr1 = 1.5, zi1 = 2.5;
+        Doub zr2 = 3.6, zi2 = -2.6;
+        gsl_sf_result lnr, arg;
+        gsl_sf_lngamma_complex_e(zr1, zi1, &lnr, &arg);
+        if (abs(lnr.val + 2.072151270682631) > 1e-14)
+            SLS_ERR("failed!");
+        if (abs(arg.val - 1.180959032907777) > 1e-14)
+            SLS_ERR("failed!");
+        gsl_sf_lngamma_complex_e(zr2, zi2, &lnr, &arg);
+        if (abs(lnr.val - 0.3294311939326557) > 1e-14)
+            SLS_ERR("failed!");
+        if (abs(arg.val - 3.079015254176607) > 1e-14)
+            SLS_ERR("failed!");
+    }
 #endif
 }
