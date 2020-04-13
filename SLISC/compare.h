@@ -221,6 +221,11 @@ inline Bool shape_cmp(DvecLong_I v1, DvecLong_I v2)
     return v1.size() == v2.size();
 }
 
+inline Bool shape_cmp(DvecComp_I v1, SvecDoub_I v2)
+{
+    return v1.size() == v2.size();
+}
+
 inline Bool shape_cmp(MatInt_I v1, MatInt_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();

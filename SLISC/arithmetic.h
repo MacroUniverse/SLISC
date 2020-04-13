@@ -5898,6 +5898,18 @@ inline Comp dot(SvecDoub_I v1, SvecComp_I v2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
 }
 
+inline Comp dot(DvecComp_I v1, SvecDoub_I v2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    Comp sum = 0;
+    for (Long i = 0; i < v1.size(); ++i)
+        sum += conj(v1[i]) * v2[i];
+    return sum;
+}
+
 inline Comp dot(Cmat3Comp_I v1, Cmat3Comp_I v2)
 {
 #ifdef SLS_CHECK_SHAPE

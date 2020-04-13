@@ -1635,6 +1635,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'SvecComp', 'VecComp';
 //%     'VecDoub', 'SvecComp';
 //%     'SvecDoub', 'SvecComp';
+//%     'DvecComp', 'SvecDoub';
 //%     'Cmat3Comp', 'Cmat3Comp';
 //%     'Cmat3Comp', 'Jcmat3Comp';
 //% };
@@ -1650,6 +1651,11 @@ inline @T@ dot(@T1@_I v1, @T2@_I v2)
 #endif
 //% if is_dense(T1) && is_dense(T2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
+//% elseif ndim(T1) == 1
+    @T@ sum = 0;
+    for (Long i = 0; i < v1.size(); ++i)
+        sum += conj(v1[i]) * v2[i];
+    return sum;
 //% elseif ndim(T1) == 2
     @T@ sum = 0;
     for (Long i = 0; i < v1.n1(); ++i)
