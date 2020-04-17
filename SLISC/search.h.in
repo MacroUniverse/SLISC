@@ -9,6 +9,8 @@ namespace slisc {
 //% types = {
 //%     'Int', 'VecInt';
 //%     'Llong', 'VecLlong';
+//%     'Char', 'Str';
+//%     'Char32', 'Str32';
 //%     'Str', 'vecStr';
 //%     'Str32', 'vecStr32';
 //%     'Llong', 'vecLlong';

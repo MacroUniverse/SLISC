@@ -26,6 +26,26 @@ inline Long search(Llong_I s, VecLlong_I v, Long start = 0)
     return -1;
 }
 
+inline Long search(Char_I s, Str_I v, Long start = 0)
+{
+    Long N = size(v);
+    for (Long i = start; i < N; ++i) {
+        if (s == v[i])
+            return i;
+    }
+    return -1;
+}
+
+inline Long search(Char32_I s, Str32_I v, Long start = 0)
+{
+    Long N = size(v);
+    for (Long i = start; i < N; ++i) {
+        if (s == v[i])
+            return i;
+    }
+    return -1;
+}
+
 inline Long search(Str_I s, vecStr_I v, Long start = 0)
 {
     Long N = size(v);
