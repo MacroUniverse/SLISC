@@ -24,7 +24,8 @@ path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 goal: main.x
 
 main.x: main.o $(test_o)
-	$(MAKE) link
+	make link
+	./main.x
 
 h: $(path_gen_headers) # update headers only
 
