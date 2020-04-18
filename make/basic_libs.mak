@@ -1,24 +1,44 @@
 # use g++ with libgsl-dev libblas-dev liblapacke-dev (all available from apt-get)
 # use `dpkg -L dpkg -L lib***` to check the installation directory
 
-libs = -lgsl -llapacke -lblas
-
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -fopenmp -g -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL
+# any change in *.h.in file will cause all *.cpp files to compile
+# to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 compiler = g++
 
-# link
-# choose `$(mkl_dyn_link)` or `$(mkl_stat_link)`
-# strange, order of *.o files doesn't matter?
-goal:main.o
+libs = -lgsl -llapacke -lblas
+
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL
+
+# file lists
+test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
+test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files (no path)
+
+header_in = $(shell cd SLISC && echo *.h.in) # SLISC/*.h.in (no path)
+gen_headers = $(header_in:.h.in=.h) # generated headers in SLISC/ (with path)
+cur_headers = $(shell cd SLISC && echo *.h) # current headers in SLISC/, including hand written ones (no path)
+headers = $(gen_headers) $(cur_headers) # all headers (no path)
+path_headers = $(addprefix SLISC/,$(headers)) # all headers with path
+
+goal: main.x
+
+main.x: main.o $(test_o)
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
-# compile
-main.o:main.cpp
-	$(compiler) $(flags) -std=c++11 -c main.cpp test/*.cpp
+main.o: $(path_headers) main.cpp
+	$(compiler) $(flags) -c main.cpp
 
-h:
+%.o: test/%.cpp $(path_headers)
+	$(compiler) $(flags) -c $<
+
+%.h: %.h.in
+	octave --eval "auto_gen $<"
+
+h: # make all headers
 	octave auto_gen.m
+
+link: # link only
+	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
 	rm -f *.o *.x

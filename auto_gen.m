@@ -1,8 +1,7 @@
 function auto_gen(file)
-cd('SLISC');
-addpath('../preprocessor');
-addpath('../preprocessor/case_conflict');
-in_list = ls('*.in');
+addpath('preprocessor');
+addpath('preprocessor/case_conflict');
+in_list = ls('SLISC/*.in');
 Ntp = size(in_list, 1);
 newline = char(10);
 for i = 1:Ntp
