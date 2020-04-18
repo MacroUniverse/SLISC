@@ -1,4 +1,5 @@
 #include "../SLISC/file.h"
+#include "../SLISC/disp.h"
 
 void test_file()
 {
@@ -88,4 +89,15 @@ void test_file()
 		SLS_ERR("failed!");
 
 	remove("test_bin");
+
+	{ // read matrix from file
+		CmatDoub mat(0, 0), mat1(3, 3);
+		read(mat, "test/test_file_matrix.txt", 2);
+		mat1(0, 0) = 1.315; mat1(0, 1) = -2.531; mat1(0, 2) = -6.65;
+		mat1(1, 0) = 2.351; mat1(1, 1) = 2.265; mat1(1, 2) = -2.376;
+		mat1(2, 0) = -2.53; mat1(2, 1) = 6.65; mat1(2, 2) =  0.28;
+		mat -= mat1;
+		if (max_abs(mat) > 1e-14)
+			SLS_ERR("failed!");
+	}
 }

@@ -302,4 +302,41 @@ inline void read(ifstream &fin, Str32_O str)
         str.resize(count);
 }
 
+// read a table from file
+// two numbers should be separated by space
+// there must be a new line at the end
+// skipt specific number of lines at the beginning
+// matrix will auto-resize
+inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
+{
+    ifstream input(file);
+    if (!input.good())
+        SLS_ERR(file + " does not exist!");
+    for (Long i = 0; i < skip_lines; ++i)
+        input.ignore(100000, '\n');
+    // detect the number of columns
+    Str line;
+    getline(input, line);
+    std::istringstream iss(line);
+    vector<Doub> v;
+    Doub num;
+    while (iss >> num)
+        v.push_back(num);
+    Long N2 = v.size();
+    while (!input.eof()) {
+        input >> num;
+        v.push_back(num);
+    }
+    v.pop_back();
+    if (v.size() % N2 != 0)
+        SLS_ERR(file + ": something wrong! is there a newline at the end? does each line has equal number of columns?");
+    Long N1 = v.size() / N2;
+    mat.resize(N1, N2);
+    for (Long i = 0; i < N1; ++i) {
+        for (Long j = 0; j < N2; ++j) {
+            mat(i, j) = v[N2*i + j];
+        }
+    }
+}
+
 } // namespace slisc
