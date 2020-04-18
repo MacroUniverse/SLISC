@@ -33,6 +33,36 @@ inline void disp(vecLlong_I v, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 
+inline void disp(vecDoub_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
+inline void disp(vecComp_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
 inline void disp(VecInt_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();

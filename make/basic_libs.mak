@@ -25,7 +25,6 @@ goal: main.x
 
 main.x: main.o $(test_o)
 	make link
-	./main.x
 
 h: $(path_gen_headers) # update headers only
 

@@ -267,9 +267,9 @@ inline void read(ifstream &fin, Str32_O str)
 
 // read a table from file
 // two numbers should be separated by space
-// there must be a new line at the end
 // skipt specific number of lines at the beginning
 // matrix will auto-resize
+// 0 to multiple spaces & new line at the end of file are allowed
 inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 {
     ifstream input(file);
@@ -286,13 +286,17 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
     while (iss >> num)
         v.push_back(num);
     Long N2 = v.size();
-    while (!input.eof()) {
+    while (true) {
+        num = NaN;
         input >> num;
+        if (std::isnan(num))
+            break;
         v.push_back(num);
+        if (input.eof())
+            break;
     }
-    v.pop_back();
     if (v.size() % N2 != 0)
-        SLS_ERR(file + ": something wrong! is there a newline at the end? does each line has equal number of columns?");
+        SLS_ERR(file + ": each row might not have equal number of columns!");
     Long N1 = v.size() / N2;
     mat.resize(N1, N2);
     for (Long i = 0; i < N1; ++i) {

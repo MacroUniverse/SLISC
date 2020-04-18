@@ -153,6 +153,14 @@ typedef vecLlong vecLong;
 typedef const vecLong &vecLong_I;
 typedef vecLong &vecLong_O, &vecLong_IO;
 
+typedef vector<Doub> vecDoub;
+typedef const vecDoub &vecDoub_I;
+typedef vecDoub &vecDoub_O, &vecDoub_IO;
+
+typedef vector<Comp> vecComp;
+typedef const vecComp &vecComp_I;
+typedef vecComp &vecComp_O, &vecComp_IO;
+
 typedef vector<Str> vecStr;
 typedef const vecStr &vecStr_I;
 typedef vecStr &vecStr_O, &vecStr_IO;

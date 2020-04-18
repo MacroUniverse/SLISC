@@ -4,7 +4,7 @@
 namespace slisc {
 const Int def_disp_prec = 8;
 //% types = {
-//%     'vecInt'; 'vecLlong';
+//%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
