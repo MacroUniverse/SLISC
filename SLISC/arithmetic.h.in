@@ -433,42 +433,36 @@ inline void abs(@T@_O v, @T1@_I v1)
 }
 //%--------------------
 
-//% types = {'Bool'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% types = {'Bool'; 'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
 //%--------------------
 //% T = varargin{:};
 //% if is_integral(T)
-inline Llong sum_v(const @T@ *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Llong i = 1; i < N; ++i)
-        s += v[i];
-    return s;
-}
+//%     Tret = 'Llong';
 //% else
-inline @T@ sum_v(const @T@ *v, Long_I N)
+//%     Tret = T;
+//% end
+inline @Tret@ sum_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @T@ s = v[0];
+    @Tret@ s = v[0];
     for (Long i = 1; i < N; ++i)
         s += v[i];
     return s;
 }
-//% end
 //%------------------------
 
-//% types = {'VecInt'; 'VecLlong'; 'VecDoub'; 'SvecDoub';
-//%     'MatComp'; 'CmatDoub'; 'CmatComp';};
+//% types = {'VecChar'; 'VecInt'; 'VecLlong';
+//%     'VecDoub'; 'SvecDoub'; 'MatComp';
+//%     'CmatDoub'; 'CmatComp';};
 //%----------------
 //% T = varargin{:};
-//% if is_integral(T)
-//%     Tret = Long;
+//% Ts = contain_type(T);
+//% if is_integral(Ts)
+//%     Tret = 'Llong';
 //% else
-//%     Tret = contain_type(T);
+//%     Tret = Ts;
 //% end
 inline @Tret@ sum(@T@_I v)
 {

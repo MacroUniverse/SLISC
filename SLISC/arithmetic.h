@@ -863,13 +863,24 @@ inline Bool sum_v(const Bool *v, Long_I N)
     return s;
 }
 
+inline Llong sum_v(const Char *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
 inline Llong sum_v(const Int *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
     Llong s = v[0];
-    for (Llong i = 1; i < N; ++i)
+    for (Long i = 1; i < N; ++i)
         s += v[i];
     return s;
 }
@@ -880,7 +891,7 @@ inline Llong sum_v(const Llong *v, Long_I N)
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
     Llong s = v[0];
-    for (Llong i = 1; i < N; ++i)
+    for (Long i = 1; i < N; ++i)
         s += v[i];
     return s;
 }
@@ -908,7 +919,12 @@ inline Comp sum_v(const Comp *v, Long_I N)
 }
 
 
-inline Int sum(VecInt_I v)
+inline Llong sum(VecChar_I v)
+{
+    return sum_v(v.ptr(), v.size());
+}
+
+inline Llong sum(VecInt_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
