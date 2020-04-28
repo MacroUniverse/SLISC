@@ -214,7 +214,7 @@ inline void read(Str_O str, Str_I fname)
     read(&str[0], str.size(), fname);
 }
 
-// read and write from/to ifstrea/ofstream
+// read and write binary data from/to ifstrea/ofstream
 
 //===================================
 // `ofstream::write(p_char, Nbytes)`

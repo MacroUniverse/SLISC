@@ -9,4 +9,5 @@ x64/
 *.o
 *.asv
 test.matt
+test.matb
 cpp_gen.m

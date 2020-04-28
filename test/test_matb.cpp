@@ -75,7 +75,7 @@ void test_matb()
     matb.close();
 
     // read test
-/*
+
     // scalars
     matb.open("test.matb", 'r');
 
@@ -144,5 +144,4 @@ void test_matb()
 
 
     matb.close();
-*/
 }
