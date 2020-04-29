@@ -314,7 +314,7 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 #include <unistd.h>
 #include <time.h>
 #include <stdio.h>
-void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
+inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
     struct tm *time;
     struct stat attrib;
     stat(fname.c_str(), &attrib);
@@ -326,7 +326,7 @@ void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
         num2str(time->tm_sec, 2);
 }
 #else
-void last_modified(Str_O yymmddhhmmss, Str_I fname) {
+inline void last_modified(Str_O yymmddhhmmss, Str_I fname) {
     SLS_ERR("not implemented for windows!");
 }
 #endif
