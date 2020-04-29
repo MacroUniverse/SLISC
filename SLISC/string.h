@@ -7,63 +7,91 @@ namespace slisc {
 
 // string utilities
 
-inline void num2str(Str_O str, Char_I s)
+inline void num2str(Str_O str, Char_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
     if (str.find('.') != Str::npos)
         str.erase(str.find_last_not_of('0') + 1);
+    // 0 padding on the left
+    if (min_len > 0 && (Long)str.size() < min_len) {
+        Str str1;
+        for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+            str1 += '0';
+        str = str1 + str;
+    }
 }
 
-inline Str num2str(Char_I s)
+inline Str num2str(Char_I s, Long_I min_len = -1)
 {
     Str str;
-    num2str(str, s);
+    num2str(str, s, min_len);
     return str;
 }
 
-inline void num2str(Str_O str, Int_I s)
+inline void num2str(Str_O str, Int_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
     if (str.find('.') != Str::npos)
         str.erase(str.find_last_not_of('0') + 1);
+    // 0 padding on the left
+    if (min_len > 0 && (Long)str.size() < min_len) {
+        Str str1;
+        for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+            str1 += '0';
+        str = str1 + str;
+    }
 }
 
-inline Str num2str(Int_I s)
+inline Str num2str(Int_I s, Long_I min_len = -1)
 {
     Str str;
-    num2str(str, s);
+    num2str(str, s, min_len);
     return str;
 }
 
-inline void num2str(Str_O str, Llong_I s)
+inline void num2str(Str_O str, Llong_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
     if (str.find('.') != Str::npos)
         str.erase(str.find_last_not_of('0') + 1);
+    // 0 padding on the left
+    if (min_len > 0 && (Long)str.size() < min_len) {
+        Str str1;
+        for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+            str1 += '0';
+        str = str1 + str;
+    }
 }
 
-inline Str num2str(Llong_I s)
+inline Str num2str(Llong_I s, Long_I min_len = -1)
 {
     Str str;
-    num2str(str, s);
+    num2str(str, s, min_len);
     return str;
 }
 
-inline void num2str(Str_O str, Doub_I s)
+inline void num2str(Str_O str, Doub_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
     if (str.find('.') != Str::npos)
         str.erase(str.find_last_not_of('0') + 1);
+    // 0 padding on the left
+    if (min_len > 0 && (Long)str.size() < min_len) {
+        Str str1;
+        for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+            str1 += '0';
+        str = str1 + str;
+    }
 }
 
-inline Str num2str(Doub_I s)
+inline Str num2str(Doub_I s, Long_I min_len = -1)
 {
     Str str;
-    num2str(str, s);
+    num2str(str, s, min_len);
     return str;
 }
 

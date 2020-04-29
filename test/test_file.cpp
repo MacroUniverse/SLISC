@@ -100,4 +100,12 @@ void test_file()
 		if (max_abs(mat) > 1e-14)
 			SLS_ERR("failed!");
 	}
+
+	// last modified time (local time)
+	{
+		Str yyyymmddhhmmss;
+		last_modified(yyyymmddhhmmss, "main.cpp");
+		if (yyyymmddhhmmss.size() != 14)
+			SLS_ERR("failed!");
+	}
 }

@@ -8,6 +8,8 @@
 #ifdef SLS_HAS_FILESYSTEM
 #include <filesystem>
 #endif
+#include <sys/types.h> // for time_stamp
+#include <sys/stat.h> // for time_stamp
 
 namespace slisc {
 
@@ -306,4 +308,26 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
     }
 }
 
+// get time-stamp of a file
+#ifndef _MSC_VER
+#include <sys/stat.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdio.h>
+void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
+    struct tm *time;
+    struct stat attrib;
+    stat(fname.c_str(), &attrib);
+    time = localtime(&(attrib.st_mtime));
+    yyyymmddhhmmss.clear();
+    yyyymmddhhmmss += num2str(time->tm_year + 1900) +
+        num2str(time->tm_mon + 1, 2) + num2str(time->tm_mday, 2) +
+        num2str(time->tm_hour, 2) + num2str(time->tm_min, 2) +
+        num2str(time->tm_sec, 2);
+}
+#else
+void last_modified(Str_O yymmddhhmmss, Str_I fname) {
+    SLS_ERR("not implemented for windows!");
+}
+#endif
 } // namespace slisc
