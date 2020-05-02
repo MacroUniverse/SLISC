@@ -1,5 +1,7 @@
 function ret = ndim(T)
-if is_Vbase(T) || is_dense_vec(T) || is_Fvec(T) ||...
+if is_scalar(T)
+    ret = 0;
+elseif is_Vbase(T) || is_dense_vec(T) || is_Fvec(T) ||...
     is_Svec(T) || is_Svec_c(T) || is_Dvec(T) || is_vector(T)
     ret =1;
 elseif is_dense_mat(T) || is_sparse_mat(T) ||...
@@ -14,5 +16,5 @@ elseif is_Cmat4(T) || is_Jcmat4(T)
     ret =4;
 else
     error("unknown!");
-    ret = 'e';
+end
 end

@@ -232,7 +232,7 @@ inline void save(@T@_I s, Str_I varname, Matb_IO matb)
     write(fout, s);
 }
 
-inline void save(@T@_I s, Str_I varname, Str_I matb_file)
+inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(s, varname, matb);
@@ -249,7 +249,9 @@ inline void save(@T@_I s, Str_I varname, Str_I matb_file)
 //%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp'; 'DcmatInt';
 //%     'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//%     'Mat3Int'; 'Mat3Llong'; 'Mat3Doub'; 'Mat3Comp';};
+//%     'Mat3Int'; 'Mat3Llong'; 'Mat3Doub'; 'Mat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
+//% };
 //%--------------------
 //% Tv = varargin{:};
 //% Ts = contain_type(Tv);
@@ -284,6 +286,14 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
         for (Long j = 0; j < v.n2(); ++j)
             for (Long i = 0; i < v.n1(); ++i)
                 write(fout, v(i, j, k));
+//% elseif Ndim == '4'
+    write(fout, v.n1()); write(fout, v.n2());
+    write(fout, v.n3()); write(fout, v.n4());
+    for (Long l = 0; l < v.n4(); ++l)
+        for (Long k = 0; k < v.n3(); ++k)
+            for (Long j = 0; j < v.n2(); ++j)
+                for (Long i = 0; i < v.n1(); ++i)
+                    write(fout, v(i, j, k, l));
 //% endif
 }
 
@@ -309,7 +319,8 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%         'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%         'Cmat4Doub'; 'Cmat4Comp';
 //% };
 //%---------------------
 //% T = varargin{:};
@@ -423,7 +434,7 @@ inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
         for (k = 0; k < N3; ++k)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
-                    read(fin, a(i, j, k));
+                    read(fin, a(i, j, k, l));
     return 0;
 }
 //% else
@@ -431,12 +442,74 @@ inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
 //% end
 
 //% % read one var from one file
-inline void load(@T@_O var, Str_I varname, Str_I matb_file)
+inline void load_matb(@T@_O var, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'r');
     load(var, varname, matb);
     matb.close();
 }
 //%------------------------
+
+// ======= convert a single .matb file to .matt file =====
+
+
+inline void matb2matt(Str_I matb_name)
+{
+    Long N = matb_name.size();
+    Str matt_name;
+    if (matb_name.substr(N-4, 4) != ".matb")
+        SLS_ERR(matb_name + " : file does not have .matb extension!");
+    matt_name = matb_name.substr(0, N - 1) + "t";
+    Matb matb(matb_name, 'r');
+    Matt matt(matt_name, "w");
+    Long Nvar = matb.m_name.size();
+    for (Long i = 0; i < Nvar; ++i) {
+        const Long &type = matb.m_type[i];
+        const Str &name = matb.m_name[i];
+
+// scalars
+//% types = {
+//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//% };
+//%----------------------
+//% T = varargin{:};
+//% numT = num2str(type_num(T));
+        if (type == @numT@) {
+            @T@ s;
+            load(s, name, matb); save(s, name, matt);
+            continue;
+        }
+//%---------------------
+
+// containers
+//% types = {
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
+//% };
+//%----------------------
+//% T = varargin{:};
+//% numT = num2str(contain_num(T));
+//% Ndim = ndim(T);
+        if (type == @numT@) {
+//% if Ndim == 0
+            @T@ v;
+//% elseif Ndim == 1
+            @T@ v(0);
+//% elseif Ndim == 2
+            @T@ v(0, 0);
+//% elseif Ndim == 3
+            @T@ v(0, 0, 0);
+//% elseif Ndim == 4
+            @T@ v(0, 0, 0, 0);
+//% end
+            load(v, name, matb); save(v, name, matt);
+            continue;
+        }
+//%--------------------
+    }
+    matb.close(); matt.close();
+}
 
 } // namespace slisc

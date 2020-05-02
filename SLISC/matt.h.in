@@ -99,7 +99,7 @@ inline void matt_read_scalar(@T@_O c, ifstream &m_in)
 //%------------------------
 
 // read the next variable after previous delimiter
-Long scanInverse(ifstream &fin)
+inline Long scanInverse(ifstream &fin)
 {
     Char c;
     Long ind, i, N;
@@ -195,7 +195,7 @@ inline Matt::Matt() {}
 inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 { open(fname, rw, precision); }
 
-void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
+inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 {
     if (isopen())
         close();
@@ -278,6 +278,7 @@ inline Matt::~Matt()
 //%     'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
 //%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
 //% };
@@ -376,7 +377,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% elseif is_Cmat4(T)
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 {
-    Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
+    Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -404,7 +405,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% end
 
 //% % save one var to one file (replace old file)
-inline void save(@T@_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file)
 {
     Matt matt(matt_file, "w");
     save(s, varname, matt);
@@ -425,6 +426,7 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%         'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%         'Cmat4Doub'; 'Cmat4Comp';
 //% };
 //%---------------------
 //% T = varargin{:};
@@ -539,7 +541,7 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
         for (k = 0; k < N3; ++k)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
-                    matt_read_scalar(a(i, j, k), fin);
+                    matt_read_scalar(a(i, j, k, l), fin);
     return 0;
 }
 //% else
@@ -547,7 +549,7 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
 //% end
 
 //% % read one var from one file
-inline void load(@T@_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(@T@_O var, Str_I varname, Str_I matt_file)
 {
     Matt matt(matt_file, "r");
     load(var, varname, matt);

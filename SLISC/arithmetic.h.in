@@ -178,7 +178,8 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 
 //% types = {
 //%     'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub'; 'VecComp';
-//%     'MatComp'; 'CmatDoub'; 'CmatComp'; 'DvecDoub'; 'DvecComp'; 'SvecComp';
+//%     'MatComp'; 'CmatDoub'; 'CmatComp'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'DvecDoub'; 'DvecComp'; 'SvecComp';
 //% };
 //%------------------------------
 //% T = varargin{:}; Tr = rm_comp(contain_type(T));

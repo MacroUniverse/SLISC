@@ -462,6 +462,16 @@ inline Doub max_abs(CmatComp_I v)
     return max_abs_v(v.ptr(), v.size());
 }
 
+inline Doub max_abs(Cmat3Doub_I v)
+{
+    return max_abs_v(v.ptr(), v.size());
+}
+
+inline Doub max_abs(Cmat3Comp_I v)
+{
+    return max_abs_v(v.ptr(), v.size());
+}
+
 inline Doub max_abs(DvecDoub_I v)
 {
     return max_abs_v(v.ptr(), v.size(), v.step());

@@ -1,3 +1,4 @@
+#include "../SLISC/matt.h"
 #include "../SLISC/matb.h"
 #include "../SLISC/random.h"
 
@@ -142,6 +143,14 @@ void test_matb()
     r_CC3 -= CC3;
     if (norm(r_CC3) != 0) SLS_ERR("failed!");
 
+    // matb to matt
+    {
+        matb2matt("test.matb");
+        Cmat3Comp r_CC3(0, 0, 0);
+        load_matt(r_CC3, "CC3", "test.matt");
+        r_CC3 -= CC3;
+        if (max_abs(r_CC3) > 1e-14) SLS_ERR("failed!");
+    }
 
     matb.close();
 }
