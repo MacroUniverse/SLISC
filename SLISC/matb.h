@@ -1,7 +1,7 @@
 // binary version of matt.h
 
 #pragma once
-#include "file.h"
+#include "matt.h"
 #include "bits.h"
 
 namespace slisc {

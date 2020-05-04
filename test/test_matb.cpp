@@ -1,4 +1,3 @@
-#include "../SLISC/matt.h"
 #include "../SLISC/matb.h"
 #include "../SLISC/random.h"
 
