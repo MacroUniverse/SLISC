@@ -52,3 +52,6 @@ void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const ve
 		z[i] = x[i] + y[i];
 }
 ```
+
+## TODO
+* makefiles are not unified

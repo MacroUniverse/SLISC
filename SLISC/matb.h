@@ -2265,31 +2265,31 @@ inline void matt2matb(Str_I matt_name)
         if (Ndim == 0) {
 // scalars
             if (type == 1) {
-                Char s;
+                Char s{};
                 load(s, name, matt); save(s, name, matb);
                 continue;
             }
 
             if (type == 2) {
-                Int s;
+                Int s{};
                 load(s, name, matt); save(s, name, matb);
                 continue;
             }
 
             if (type == 3) {
-                Llong s;
+                Llong s{};
                 load(s, name, matt); save(s, name, matb);
                 continue;
             }
 
             if (type == 21) {
-                Doub s;
+                Doub s{};
                 load(s, name, matt); save(s, name, matb);
                 continue;
             }
 
             if (type == 41) {
-                Comp s;
+                Comp s{};
                 load(s, name, matt); save(s, name, matb);
                 continue;
             }

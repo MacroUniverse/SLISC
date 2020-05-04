@@ -538,7 +538,7 @@ inline void matt2matb(Str_I matt_name)
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
             if (type == @numT@) {
-                @T@ s;
+                @T@ s{};
                 load(s, name, matt); save(s, name, matb);
                 continue;
             }
