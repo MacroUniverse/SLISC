@@ -1865,6 +1865,37 @@ inline void load_matt(CmatComp_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
+inline Int load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
+{
+    Long i, j, k, m, n, q;
+    ifstream &fin = matt.m_in;
+    i = matt.search(varname);
+    if (i < 0)
+        return -1;
+    fin.seekg(matt.m_ind[i]);
+
+    if (2 < matt.m_type[i])
+        SLS_ERR("wrong type!");
+    if (matt.m_size[i].size() != 3)
+        SLS_ERR("wrong dimension!");
+    
+    m = matt.m_size[i][0]; n = matt.m_size[i][1]; q = matt.m_size[i][2];
+    a.resize(m, n, q);
+    // read var data
+    for (k = 0; k < q; ++k)
+        for (j = 0; j < n; ++j)
+            for (i = 0; i < m; ++i)
+                matt_read_scalar(a(i, j, k), fin);
+    return 0;
+}
+
+inline void load_matt(Cmat3Int_O var, Str_I varname, Str_I matt_file)
+{
+    Matt matt(matt_file, "r");
+    load(var, varname, matt);
+    matt.close();
+}
+
 inline Int load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, m, n, q;

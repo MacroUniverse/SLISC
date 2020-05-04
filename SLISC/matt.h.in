@@ -425,7 +425,7 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%         'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%         'Cmat4Doub'; 'Cmat4Comp';
 //% };
 //%---------------------

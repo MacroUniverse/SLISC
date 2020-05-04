@@ -2102,9 +2102,7 @@ inline void load_matb(Cmat4Comp_O var, Str_I varname, Str_I matb_file)
 }
 
 
-// ======= convert a single .matb file to .matt file =====
-
-
+// convert a single .matb file to .matt file
 inline void matb2matt(Str_I matb_name)
 {
     Long N = matb_name.size();
@@ -2247,6 +2245,151 @@ inline void matb2matt(Str_I matb_name)
 
     }
     matb.close(); matt.close();
+}
+
+// convert a single .matb file to .matt file
+inline void matt2matb(Str_I matt_name)
+{
+    Long N = matt_name.size();
+    Str matb_name;
+    if (matt_name.substr(N-5, 5) != ".matt")
+        SLS_ERR(matt_name + " : file does not have .matt extension!");
+    matb_name = matt_name.substr(0, N - 1) + "b";
+    Matt matt(matt_name, "r");
+    Matb matb(matb_name, 'w');
+    Long Nvar = matt.m_name.size();
+    for (Long i = 0; i < Nvar; ++i) {
+        const Long &type = matt.m_type[i];
+        const Str &name = matt.m_name[i];
+        const Long Ndim = matt.m_size[i].size();
+        if (Ndim == 0) {
+// scalars
+            if (type == 1) {
+                Char s;
+                load(s, name, matt); save(s, name, matb);
+                continue;
+            }
+
+            if (type == 2) {
+                Int s;
+                load(s, name, matt); save(s, name, matb);
+                continue;
+            }
+
+            if (type == 3) {
+                Llong s;
+                load(s, name, matt); save(s, name, matb);
+                continue;
+            }
+
+            if (type == 21) {
+                Doub s;
+                load(s, name, matt); save(s, name, matb);
+                continue;
+            }
+
+            if (type == 41) {
+                Comp s;
+                load(s, name, matt); save(s, name, matb);
+                continue;
+            }
+
+            SLS_ERR("not implemented!");
+        }
+
+// containers
+        if (type == 1 && Ndim == 1) {
+            VecChar v(0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 2 && Ndim == 1) {
+            VecInt v(0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 3 && Ndim == 1) {
+            VecLlong v(0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 21 && Ndim == 1) {
+            VecDoub v(0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 41 && Ndim == 1) {
+            VecComp v(0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 2 && Ndim == 2) {
+            CmatInt v(0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 3 && Ndim == 2) {
+            CmatLlong v(0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 21 && Ndim == 2) {
+            CmatDoub v(0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 41 && Ndim == 2) {
+            CmatComp v(0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 2 && Ndim == 3) {
+            Cmat3Int v(0, 0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 3 && Ndim == 3) {
+            Cmat3Llong v(0, 0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 21 && Ndim == 3) {
+            Cmat3Doub v(0, 0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 41 && Ndim == 3) {
+            Cmat3Comp v(0, 0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 21 && Ndim == 4) {
+            Cmat4Doub v(0, 0, 0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+        if (type == 41 && Ndim == 4) {
+            Cmat4Comp v(0, 0, 0, 0);
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+
+    }
+    matt.close(); matb.close();
 }
 
 } // namespace slisc

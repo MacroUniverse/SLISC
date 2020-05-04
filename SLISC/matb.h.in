@@ -450,9 +450,7 @@ inline void load_matb(@T@_O var, Str_I varname, Str_I matb_file)
 }
 //%------------------------
 
-// ======= convert a single .matb file to .matt file =====
-
-
+// convert a single .matb file to .matt file
 inline void matb2matt(Str_I matb_name)
 {
     Long N = matb_name.size();
@@ -514,6 +512,70 @@ inline void matb2matt(Str_I matb_name)
 //%--------------------
     }
     matb.close(); matt.close();
+}
+
+// convert a single .matb file to .matt file
+inline void matt2matb(Str_I matt_name)
+{
+    Long N = matt_name.size();
+    Str matb_name;
+    if (matt_name.substr(N-5, 5) != ".matt")
+        SLS_ERR(matt_name + " : file does not have .matt extension!");
+    matb_name = matt_name.substr(0, N - 1) + "b";
+    Matt matt(matt_name, "r");
+    Matb matb(matb_name, 'w');
+    Long Nvar = matt.m_name.size();
+    for (Long i = 0; i < Nvar; ++i) {
+        const Long &type = matt.m_type[i];
+        const Str &name = matt.m_name[i];
+        const Long Ndim = matt.m_size[i].size();
+        if (Ndim == 0) {
+// scalars
+//% types = {
+//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//% };
+//%----------------------
+//% T = varargin{:};
+//% numT = num2str(type_num(T));
+            if (type == @numT@) {
+                @T@ s;
+                load(s, name, matt); save(s, name, matb);
+                continue;
+            }
+//%---------------------
+            SLS_ERR("not implemented!");
+        }
+
+// containers
+//% types = {
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
+//% };
+//%----------------------
+//% T = varargin{:};
+//% Ndim = num2str(ndim(T));
+//% Ts = contain_type(T);
+//% numTs = num2str(type_num(Ts));
+        if (type == @numTs@ && Ndim == @Ndim@) {
+//% if Ndim == '1'
+            @T@ v(0);
+//% elseif Ndim == '2'
+            @T@ v(0, 0);
+//% elseif Ndim == '3'
+            @T@ v(0, 0, 0);
+//% elseif Ndim == '4'
+            @T@ v(0, 0, 0, 0);
+//% else
+//%         error('not implemented!');
+//% end
+            load(v, name, matt); save(v, name, matb);
+            continue;
+        }
+//%--------------------
+    }
+    matt.close(); matb.close();
 }
 
 } // namespace slisc
