@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 		rm = true;
 		--argc;
 	}
+#pragma omp parallel for schedule(dynamic, 3)
 	for (Long i = 1; i < argc; ++i) {
 		cout << argv[i] << endl;
 		matt2matb(argv[i]);
