@@ -1,4 +1,5 @@
 // convert .matb files into .matt files
+#include <omp.h>
 #define SLS_MATB_REPLACE
 #include "SLISC/matt.h"
 #include "SLISC/matb.h"
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
 		rm = true;
 		--argc;
 	}
+	omp_set_num_threads(8);
 #pragma omp parallel for schedule(dynamic, 3)
 	for (Long i = 1; i < argc; ++i) {
 		cout << argv[i] << endl;
