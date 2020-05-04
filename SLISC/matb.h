@@ -2118,125 +2118,128 @@ inline void matb2matt(Str_I matb_name)
     for (Long i = 0; i < Nvar; ++i) {
         const Long &type = matb.m_type[i];
         const Str &name = matb.m_name[i];
-
+        const Long Ndim = matb.m_size[i].size();
+        if (Ndim == 0) {
 // scalars
-        if (type == 1) {
-            Char s;
-            load(s, name, matb); save(s, name, matt);
-            continue;
-        }
+            if (type == 1) {
+                Char s;
+                load(s, name, matb); save(s, name, matt);
+                continue;
+            }
 
-        if (type == 2) {
-            Int s;
-            load(s, name, matb); save(s, name, matt);
-            continue;
-        }
+            if (type == 2) {
+                Int s;
+                load(s, name, matb); save(s, name, matt);
+                continue;
+            }
 
-        if (type == 3) {
-            Llong s;
-            load(s, name, matb); save(s, name, matt);
-            continue;
-        }
+            if (type == 3) {
+                Llong s;
+                load(s, name, matb); save(s, name, matt);
+                continue;
+            }
 
-        if (type == 21) {
-            Doub s;
-            load(s, name, matb); save(s, name, matt);
-            continue;
-        }
+            if (type == 21) {
+                Doub s;
+                load(s, name, matb); save(s, name, matt);
+                continue;
+            }
 
-        if (type == 41) {
-            Comp s;
-            load(s, name, matb); save(s, name, matt);
-            continue;
-        }
+            if (type == 41) {
+                Comp s;
+                load(s, name, matb); save(s, name, matt);
+                continue;
+            }
 
+            SLS_ERR("not implemented!");
+        }
 
 // containers
-        if (type == 0) {
+        if (type == 1 && Ndim == 1) {
             VecChar v(0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 0) {
+        if (type == 2 && Ndim == 1) {
             VecInt v(0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 0) {
+        if (type == 3 && Ndim == 1) {
             VecLlong v(0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 0) {
+        if (type == 21 && Ndim == 1) {
             VecDoub v(0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 0) {
+        if (type == 41 && Ndim == 1) {
             VecComp v(0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 2) {
+        if (type == 2 && Ndim == 2) {
             CmatInt v(0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 2) {
+        if (type == 3 && Ndim == 2) {
             CmatLlong v(0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 2) {
+        if (type == 21 && Ndim == 2) {
             CmatDoub v(0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 2) {
+        if (type == 41 && Ndim == 2) {
             CmatComp v(0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 4) {
+        if (type == 2 && Ndim == 3) {
             Cmat3Int v(0, 0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 4) {
+        if (type == 3 && Ndim == 3) {
             Cmat3Llong v(0, 0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 4) {
+        if (type == 21 && Ndim == 3) {
             Cmat3Doub v(0, 0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 4) {
+        if (type == 41 && Ndim == 3) {
             Cmat3Comp v(0, 0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 6) {
+        if (type == 21 && Ndim == 4) {
             Cmat4Doub v(0, 0, 0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;
         }
 
-        if (type == 6) {
+        if (type == 41 && Ndim == 4) {
             Cmat4Comp v(0, 0, 0, 0);
             load(v, name, matb); save(v, name, matt);
             continue;

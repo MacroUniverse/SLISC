@@ -457,7 +457,7 @@ inline void matb2matt(Str_I matb_name)
 {
     Long N = matb_name.size();
     Str matt_name;
-    if (matb_name.substr(N-4, 4) != ".matb")
+    if (matb_name.substr(N-5, 5) != ".matb")
         SLS_ERR(matb_name + " : file does not have .matb extension!");
     matt_name = matb_name.substr(0, N - 1) + "t";
     Matb matb(matb_name, 'r');
@@ -466,7 +466,8 @@ inline void matb2matt(Str_I matb_name)
     for (Long i = 0; i < Nvar; ++i) {
         const Long &type = matb.m_type[i];
         const Str &name = matb.m_name[i];
-
+        const Long Ndim = matb.m_size[i].size();
+        if (Ndim == 0) {
 // scalars
 //% types = {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
@@ -474,12 +475,14 @@ inline void matb2matt(Str_I matb_name)
 //%----------------------
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
-        if (type == @numT@) {
-            @T@ s;
-            load(s, name, matb); save(s, name, matt);
-            continue;
-        }
+            if (type == @numT@) {
+                @T@ s;
+                load(s, name, matb); save(s, name, matt);
+                continue;
+            }
 //%---------------------
+            SLS_ERR("not implemented!");
+        }
 
 // containers
 //% types = {
@@ -490,19 +493,20 @@ inline void matb2matt(Str_I matb_name)
 //% };
 //%----------------------
 //% T = varargin{:};
-//% numT = num2str(contain_num(T));
-//% Ndim = ndim(T);
-        if (type == @numT@) {
-//% if Ndim == 0
-            @T@ v;
-//% elseif Ndim == 1
+//% Ndim = num2str(ndim(T));
+//% Ts = contain_type(T);
+//% numTs = num2str(type_num(Ts));
+        if (type == @numTs@ && Ndim == @Ndim@) {
+//% if Ndim == '1'
             @T@ v(0);
-//% elseif Ndim == 2
+//% elseif Ndim == '2'
             @T@ v(0, 0);
-//% elseif Ndim == 3
+//% elseif Ndim == '3'
             @T@ v(0, 0, 0);
-//% elseif Ndim == 4
+//% elseif Ndim == '4'
             @T@ v(0, 0, 0, 0);
+//% else
+//%         error('not implemented!');
 //% end
             load(v, name, matb); save(v, name, matt);
             continue;

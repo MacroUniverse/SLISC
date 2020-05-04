@@ -25,10 +25,12 @@ void test_matb()
     Comp sc(s, -s);
     save(sc, "sc", matb);
 
+    // TODO
     // vectors
-    VecChar v8(3);
-    v8[0] = 1; v8[1] = 2; v8[2] = 3;
-    save(v8, "v8", matb);
+    // VecChar v8(3);
+    // v8[0] = 1; v8[1] = 2; v8[2] = 3;
+    // save(v8, "v8", matb);
+
     VecInt vi(3);
     vi[0] = 1; vi[1] = 2; vi[2] = 3;
     save(vi, "vi", matb);
@@ -143,13 +145,76 @@ void test_matb()
     r_CC3 -= CC3;
     if (norm(r_CC3) != 0) SLS_ERR("failed!");
 
-    // matb to matt
+    // matb2matt: convert matb to matt
     {
+        remove("test.matt");
         matb2matt("test.matb");
+
+        Matt matt("test.matt", "r");
+
+        Int r_si;
+        load(r_si, "si", matt);
+        if (r_si != si) SLS_ERR("failed!");
+
+        Doub r_s;
+        load(r_s, "s", matt);
+        if (abs(r_s-s) > 1e-15) SLS_ERR("failed!");
+
+        Comp r_sc;
+        load(r_sc, "sc", matt);
+        if (abs(r_sc-sc) > 1e-15) SLS_ERR("failed!");
+
+        // vectors
+        // TODO: Char
+        
+        VecInt r_vi(0);
+        load(r_vi, "vi", matt);
+        if (r_vi != vi) SLS_ERR("failed!");
+
+        VecDoub r_v(0);
+        load(r_v, "v", matt);
+        r_v -= v;
+        if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+
+        VecComp r_vc(0);
+        load(r_vc, "vc", matt);
+        r_vc -= vc;
+        if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+
+        // matrices
+        // TODO: Char
+
+        MatInt r_AI(0,0);
+        load(r_AI, "AI", matt);
+        if (r_AI != AI) SLS_ERR("failed!");
+
+        MatDoub r_A(0,0);
+        load(r_A, "A", matt);
+        r_A -= A;
+        if (norm(r_A) > 1e-15) SLS_ERR("failed!");
+
+        MatComp r_C(0,0);
+        load(r_C, "C", matt);
+        r_C -= C;
+        if (norm(r_C) > 1e-15) SLS_ERR("failed!");
+
+        // 3D arrays
+        // Mat3Doub r_A3(0,0,0);
+        // load(r_A3, "A3", matt);
+        // r_A3 -= A3;
+        // if (norm(r_A3) > 1e-15) SLS_ERR("failed!");
+
+        // Mat3Comp r_C3(0,0,0);
+        // load(r_C3, "C3", matt);
+        // r_C3 -= C3;
+        // if (norm(r_C3) > 1e-15) SLS_ERR("failed!");
+
         Cmat3Comp r_CC3(0, 0, 0);
-        load_matt(r_CC3, "CC3", "test.matt");
+        load(r_CC3, "CC3", matt);
         r_CC3 -= CC3;
-        if (max_abs(r_CC3) > 1e-14) SLS_ERR("failed!");
+        if (norm(r_CC3) > 1e-15) SLS_ERR("failed!");
+
+        matt.close();
     }
 
     matb.close();

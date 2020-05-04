@@ -24,10 +24,12 @@ void test_matt()
     Comp sc(s, -s);
     save(sc, "sc", matt);
 
+    // TODO
     // vectors
-    VecChar v8(3);
-    v8[0] = 1; v8[1] = 2; v8[2] = 3;
-    save(v8, "v8", matt);
+    // VecChar v8(3);
+    // v8[0] = 1; v8[1] = 2; v8[2] = 3;
+    // save(v8, "v8", matt);
+
     VecInt vi(3);
     vi[0] = 1; vi[1] = 2; vi[2] = 3;
     save(vi, "vi", matt);
@@ -93,7 +95,7 @@ void test_matt()
 
     // vectors
     // TODO: Char
-
+    
     VecInt r_vi(0);
     load(r_vi, "vi", matt);
     if (r_vi != vi) SLS_ERR("failed!");
