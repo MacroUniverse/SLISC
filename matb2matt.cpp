@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     using namespace slisc;
 	Bool rm = false;
-	if (strcmp(argv[argc-1], "-d")) {
+	if (strcmp(argv[argc-1], "-d") == 0) {
 		rm = true;
 		--argc;
 	}
