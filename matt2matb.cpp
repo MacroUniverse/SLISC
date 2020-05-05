@@ -21,6 +21,7 @@ Int main(Int argc, Char *argv[])
 #pragma omp atomic
 		++N;
 		printf("%s  %i/%i  %es\n", argv[i], N, argc-1, timer.toc());
+		fflush(stdout);
 		matt2matb(argv[i]);
 		if (rm)
 			remove(argv[i]);
