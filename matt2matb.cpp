@@ -3,6 +3,7 @@
 #define SLS_MATB_REPLACE
 #include "SLISC/matt.h"
 #include "SLISC/matb.h"
+#include "SLISC/time.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,9 +14,13 @@ int main(int argc, char *argv[])
 		--argc;
 	}
 	omp_set_num_threads(8);
+	Long N = 0;
+	Timer timer; timer.tic();
 #pragma omp parallel for schedule(dynamic, 3)
 	for (Long i = 1; i < argc; ++i) {
-		cout << argv[i] << endl;
+#pragma omp atomic
+		++N;
+		cout << argv[i] << "  " << N << "/" << argc-1 << "  " << timer.toc() << "s" << endl;
 		matt2matb(argv[i]);
 		if (rm)
 			remove(argv[i]);
