@@ -13,6 +13,11 @@ struct Base_interp
         dj = min(1,(Int)pow((Doub)n,0.25));
     }
 
+	Base_interp(const Doub *x, Long_I Nx, const Doub *y,  Int m)
+        : n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
+        dj = min(1,(Int)pow((Doub)n,0.25));
+    }
+
     Doub interp(Doub x) {
         Int jlo = cor ? hunt(x) : locate(x);
         return rawinterp(jlo,x);
@@ -58,6 +63,10 @@ struct Spline_interp : Base_interp
     Spline_interp(VecDoub_I xv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
     : Base_interp(xv,yv,2), y2(xv.size())
     {sety2(&xv[0],yv,yp1,ypn);}
+
+	Spline_interp(const Doub *xv, Long_I Nxv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
+    : Base_interp(xv,Nxv,yv,2), y2(Nxv)
+    {sety2(xv,yv,yp1,ypn);}
 
     inline void sety2(const Doub *xv, const Doub *yv, Doub_I yp1, Doub_I ypn);
     inline Doub rawinterp(Int jl, Doub xv);
