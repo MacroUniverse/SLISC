@@ -11,7 +11,7 @@ void test_compare(); void test_arithmetic(); void test_disp(); void test_random(
 void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq();
 void test_linux(); void test_file(); void test_matt(); void test_matb(); void test_fedvr();
 void test_mat_fun(); void test_gsl(); void test_coulomb(); void test_unicode(); void test_bits();
-void test_interp1();
+void test_interp1(); void test_sha1sum();
 
 void test_all()
 {
@@ -53,6 +53,7 @@ void test_all()
     cout << "test_coulomb()" << endl; test_coulomb();
     cout << "test_bits()" << endl; test_bits();
     cout << "test_interp1()" << endl; test_interp1();
+	cout << "test_sha1sum()" << endl; test_sha1sum();
     cout << "test_unicode()" << endl; test_unicode();
     
     cout << "do optional tests? (y/n)" << endl;
