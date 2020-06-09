@@ -23,7 +23,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <stdint.h>
-#include "global.h"
+#include "file.h"
+
 namespace slisc {
 	namespace sha1
 	{
@@ -194,13 +195,26 @@ namespace slisc {
 		};
 	} // namespace sha1
 
-	Str sha1sum(Str_I val) {
+	// sha1sum for a block of data
+	Str sha1sum(Char_I *ptr, Long_I N) {
 		sha1::SHA1 s;
-		s.processBytes(val.c_str(), val.size());
+		s.processBytes(ptr, N);
 		uint32_t digest[5];
 		s.getDigest(digest);	
 		char str[48];
 		snprintf(str, 45, "%08x%08x%08x%08x%08x", digest[0], digest[1], digest[2], digest[3], digest[4]);
 		return str;
+	}
+
+	// sha1sum for string
+	Str sha1sum(Str_I str)  {
+		return sha1sum(str.c_str(), str.size());
+	}
+
+	// sha1sum for file
+	Str sha1sum_f(Str_I fname) {
+		Str str;
+		read(str, fname);
+		return sha1sum(str);
 	}
 } // namespace slisc
