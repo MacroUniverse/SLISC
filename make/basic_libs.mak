@@ -47,4 +47,4 @@ main.o: $(path_headers) main.cpp
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in
-	octave --eval "auto_gen $<"
+	octave --no-window-system --eval "auto_gen $<"

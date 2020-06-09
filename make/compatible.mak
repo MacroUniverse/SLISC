@@ -14,7 +14,7 @@ main.o:main.cpp
 	$(compiler) $(flags) -std=c++11 -c main.cpp test/*.cpp
 
 h:
-	octave auto_gen.m
+	octave --no-window-system auto_gen.m
 
 clean:
 	rm -f *.o *.x

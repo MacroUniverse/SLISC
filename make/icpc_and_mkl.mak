@@ -25,7 +25,7 @@ main.o: main.cpp
 	$(compiler) $(compile_flags) -c main.cpp test/*.cpp
 
 h:
-	cd ../ && octave auto_gen.m && cd -
+	cd ../ && octave --no-window-system auto_gen.m && cd -
 
 clean:
 	rm -f *.o *.x *.gch
