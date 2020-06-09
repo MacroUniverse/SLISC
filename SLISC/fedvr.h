@@ -270,7 +270,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 // Ngs: grid points per finite element (including boundaries)
 // `x`, `w` are the global grid points and weights
 // `u` is the maximum value of each basis
-void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
+inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
 {
     Long Nfe = bounds.size() - 1; // number of finite elements
 #ifdef SLS_CHECK_SHAPE
@@ -304,4 +304,5 @@ void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I b
     // Sparse Hamiltonian
     D2_matrix(D2, w0, wFE, df);
 }
+
 } // namespace slisc

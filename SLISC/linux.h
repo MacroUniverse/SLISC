@@ -1,5 +1,6 @@
 // linux utilities
 #pragma once
+#ifndef _MSC_VER
 #include <cstdio>
 #include <iostream>
 #include <memory>
@@ -42,3 +43,4 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
 }
 
 } // namespace slisc
+#endif
