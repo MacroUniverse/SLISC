@@ -74,13 +74,13 @@ inline Bool dir_exist(Str_I path)
 // make multiple level of directory
 inline void mkdir(Str_I path)
 {
-	system(("mkdir -p " + path).c_str());
+	Int ret = system(("mkdir -p " + path).c_str()); ret++;
 }
 
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
-	system(("rmdir -p " + path).c_str());
+	Int ret = system(("rmdir -p " + path).c_str()); ret++;
 }
 
 // make sure the directory (or directory of a file name) exist
