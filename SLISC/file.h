@@ -55,6 +55,44 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 #endif
 }
 
+// check if directory exist
+// `path` must end with '/'
+inline Bool dir_exist(Str_I path)
+{
+	ofstream file;
+	file.open(path + "/sls_test_if_dir_exist");
+	if (file.good()) {
+		file.close();
+		remove((path + "/sls_test_if_dir_exist").c_str());
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+// make multiple level of directory
+inline void mkdir(Str_I path)
+{
+	system(("mkdir -p " + path).c_str());
+}
+
+// remove an empty directory
+inline void rmdir(Str_I path)
+{
+	system(("rmdir -p " + path).c_str());
+}
+
+// make sure the directory (or directory of a file name) exist
+// if not, create the directory
+inline void ensure_dir(Str_I dir_or_file)
+{
+	Long ind = dir_or_file.rfind('/');
+	if (dir_exist(dir_or_file.substr(0, ind)))
+		return;
+	mkdir(dir_or_file.substr(0, ind));
+}
+
 // remove a file
 inline void file_rm(Str_I wildcard_name) {
     system(("rm " + wildcard_name).c_str());

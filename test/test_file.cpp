@@ -108,4 +108,27 @@ void test_file()
 		if (yyyymmddhhmmss.size() != 14)
 			SLS_ERR("failed!");
 	}
+
+	// check if directory exist
+	// `path` must end with '/'
+	{
+		if (!dir_exist("SLISC/"))
+			SLS_ERR("failed!");
+		if (!dir_exist("SLISC"))
+			SLS_ERR("failed!");
+		if (dir_exist("abc/"))
+			SLS_ERR("failed!");
+		if (dir_exist("abc"))
+			SLS_ERR("failed!");
+	}
+
+	// test ensure_dir()
+	{
+		ensure_dir("test_dir");
+		if (!dir_exist("test_dir"))
+			SLS_ERR("failed!");
+		rmdir("test_dir");
+		if (dir_exist("test_dir"))
+			SLS_ERR("failed!");
+	}
 }
