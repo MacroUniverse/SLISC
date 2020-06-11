@@ -197,12 +197,18 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 }
 
 // get number of bytes in file
+// return -1 if not found
 inline Long file_size(Str_I fname)
 {
     if (!file_exist(fname))
-        SLS_ERR("file not found: " + fname);
+        return -1;
     ifstream fin(fname, ifstream::ate | ifstream::binary);
     return fin.tellg();
+}
+
+inline Long file_size(Str32_I fname)
+{
+    return file_size(utf32to8(fname));
 }
 
 // open binary file to write
