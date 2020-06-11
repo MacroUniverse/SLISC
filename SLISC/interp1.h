@@ -6,6 +6,28 @@
 
 namespace slisc {
 
+// evaluate Lgendre interpolation polynomial
+inline Doub legendre_interp_poly(VecDoub_I x, Long_I ind, Doub_I x_q)
+{
+	Doub x_ind = x[ind], prod = 1;
+	for (Long i = 0; i < ind; ++i)
+		prod *= (x_q - x[i])/(x_ind - x[i]);
+	for (Long i = ind + 1; i < x.size(); ++i)
+		prod *= (x_q - x[i])/(x_ind - x[i]);
+	return prod;
+}
+
+inline Doub legendre_interp_poly(SvecDoub_I x, Long_I ind, Doub_I x_q)
+{
+	Doub x_ind = x[ind], prod = 1;
+	for (Long i = 0; i < ind; ++i)
+		prod *= (x_q - x[i])/(x_ind - x[i]);
+	for (Long i = ind + 1; i < x.size(); ++i)
+		prod *= (x_q - x[i])/(x_ind - x[i]);
+	return prod;
+}
+
+
 struct poly_interp1
 {
 	gsl_interp_accel *m_acc;
@@ -21,30 +43,6 @@ struct poly_interp1
 		gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
 	}
 
-	void eval(VecDoub_O y, VecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval(m_spline, x[i], m_acc);
-	}
-
-	void eval_der(VecDoub_O y, VecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval_deriv(m_spline, x[i], m_acc);
-	}
-
-	void eval_der2(VecDoub_O y, VecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval_deriv2(m_spline, x[i], m_acc);
-	}
-
 	poly_interp1(SvecDoub_I x, SvecDoub_I y)
 	{
 		if (x.size() != y.size())
@@ -52,30 +50,6 @@ struct poly_interp1
 		m_acc = gsl_interp_accel_alloc();
 		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
 		gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
-	}
-
-	void eval(SvecDoub_O y, SvecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval(m_spline, x[i], m_acc);
-	}
-
-	void eval_der(SvecDoub_O y, SvecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval_deriv(m_spline, x[i], m_acc);
-	}
-
-	void eval_der2(SvecDoub_O y, SvecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval_deriv2(m_spline, x[i], m_acc);
 	}
 
 	poly_interp1(DvecDoub_I x, DvecDoub_I y)
@@ -87,30 +61,24 @@ struct poly_interp1
 		gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
 	}
 
-	void eval(DvecDoub_O y, DvecDoub_I x)
+
+	// evaluate
+	Doub operator()(Doub_I x)
 	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval(m_spline, x[i], m_acc);
+		return gsl_spline_eval(m_spline, x, m_acc);
 	}
 
-	void eval_der(DvecDoub_O y, DvecDoub_I x)
+	// evaluate derivative
+	Doub der(Doub_I x)
 	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval_deriv(m_spline, x[i], m_acc);
+		return gsl_spline_eval_deriv(m_spline, x, m_acc);
 	}
 
-	void eval_der2(DvecDoub_O y, DvecDoub_I x)
+	// evaluate second derivative
+	Doub der2(Doub_I x)
 	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = gsl_spline_eval_deriv2(m_spline, x[i], m_acc);
+		return gsl_spline_eval_deriv2(m_spline, x, m_acc);
 	}
-
 
 	~poly_interp1()
 	{
@@ -144,33 +112,6 @@ struct poly_comp_interp1
 		gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
 	}
 
-	void eval(VecComp_O y, VecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval(m_spline1, x[i], m_acc1),
-				gsl_spline_eval(m_spline2, x[i], m_acc2));
-	}
-
-	void eval_der(VecComp_O y, VecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval_deriv(m_spline1, x[i], m_acc1),
-				gsl_spline_eval_deriv(m_spline2, x[i], m_acc2));
-	}
-
-	void eval_der2(VecComp_O y, VecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval_deriv2(m_spline1, x[i], m_acc1),
-				gsl_spline_eval_deriv2(m_spline2, x[i], m_acc2));
-	}
-
 	poly_comp_interp1(SvecDoub_I x, SvecComp_I y)
 	{
 		Long N = x.size();
@@ -187,33 +128,6 @@ struct poly_comp_interp1
 		}
 		gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
 		gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
-	}
-
-	void eval(SvecComp_O y, SvecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval(m_spline1, x[i], m_acc1),
-				gsl_spline_eval(m_spline2, x[i], m_acc2));
-	}
-
-	void eval_der(SvecComp_O y, SvecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval_deriv(m_spline1, x[i], m_acc1),
-				gsl_spline_eval_deriv(m_spline2, x[i], m_acc2));
-	}
-
-	void eval_der2(SvecComp_O y, SvecDoub_I x)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval_deriv2(m_spline1, x[i], m_acc1),
-				gsl_spline_eval_deriv2(m_spline2, x[i], m_acc2));
 	}
 
 	poly_comp_interp1(DvecDoub_I x, DvecComp_I y)
@@ -234,33 +148,24 @@ struct poly_comp_interp1
 		gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
 	}
 
-	void eval(DvecComp_O y, DvecDoub_I x)
+
+	Comp operator()(Doub_I x)
 	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval(m_spline1, x[i], m_acc1),
-				gsl_spline_eval(m_spline2, x[i], m_acc2));
+		return Comp(gsl_spline_eval(m_spline1, x, m_acc1),
+				gsl_spline_eval(m_spline2, x, m_acc2));
 	}
 
-	void eval_der(DvecComp_O y, DvecDoub_I x)
+	Comp der(Doub_I x)
 	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval_deriv(m_spline1, x[i], m_acc1),
-				gsl_spline_eval_deriv(m_spline2, x[i], m_acc2));
+		return Comp(gsl_spline_eval_deriv(m_spline1, x, m_acc1),
+				gsl_spline_eval_deriv(m_spline2, x, m_acc2));
 	}
 
-	void eval_der2(DvecComp_O y, DvecDoub_I x)
+	Comp der2(Doub_I x)
 	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		for (Long i = 0; i < x.size(); ++i)
-			y[i] = Comp(gsl_spline_eval_deriv2(m_spline1, x[i], m_acc1),
-				gsl_spline_eval_deriv2(m_spline2, x[i], m_acc2));
+		return Comp(gsl_spline_eval_deriv2(m_spline1, x, m_acc1),
+				gsl_spline_eval_deriv2(m_spline2, x, m_acc2));
 	}
-
 
 	~poly_comp_interp1()
 	{

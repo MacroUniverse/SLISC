@@ -84,6 +84,7 @@ inline void rmdir(Str_I path)
 }
 
 // make sure the directory (or directory of a file name) exist
+// directory must end with '/'
 // if not, create the directory
 inline void ensure_dir(Str_I dir_or_file)
 {

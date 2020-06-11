@@ -1,5 +1,6 @@
 #include "../SLISC/eig.h"
 #include "../SLISC/fedvr.h"
+#include "../SLISC/matt.h"
 
 using namespace slisc;
 
@@ -130,6 +131,32 @@ void test_SHO()
 }
 #endif
 
+void test_fedvr_interp1()
+{
+	// === params ===
+	Long Nfe = 3, Ngs = 6, Nx = Nfe*(Ngs-1)-1;
+	Long ibasis = 13; // index of basis
+	Long Neval = 301; // number of points to eval
+	// ==============
+
+    VecDoub x(Nx), w(Nx), bounds(Nfe+1);
+	VecComp y(Nx);
+	bounds[0] = 0; bounds[1] = 1; bounds[2] = 3; bounds[3] = 6;
+	FEDVR_grid(x, w, bounds, Ngs);
+	copy(y, 0); y[ibasis] = 1;
+	
+	VecDoub xeval(Neval), yeval(Neval);
+	VecComp yeval2(Neval);
+	linspace(xeval, bounds[0], bounds.end());
+	for (Long i = 0; i < Neval; ++i) {
+		yeval[i] = fedvr_basis(x, Ngs, ibasis, xeval[i]);
+		yeval2[i] = fedvr_interp1(x, y, Ngs, xeval[i]);
+	}
+	yeval2 -= yeval;
+	if (max_abs(yeval2) > 1e-10)
+		SLS_ERR("failed!");
+}
+
 void test_fedvr()
 {
     test_gauss();
@@ -138,4 +165,5 @@ void test_fedvr()
     test_SHO();
     test_inf_sqr_well();
 #endif
+	test_fedvr_interp1();
 }

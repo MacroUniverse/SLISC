@@ -46,7 +46,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
-    Long diff = s - v[0];
+    @Ts@ diff = s - v[0];
     if (diff < 0) {
         ind = -1; return false;
     }
@@ -63,7 +63,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
 //% % N > 2 from here
     while (true) {
         ind = (ind1 + ind2) / 2;
-        Long diff = v[ind] - s;
+        @Ts@ diff = v[ind] - s;
         if (diff > 0)
             ind2 = ind;
         else if (diff < 0)
@@ -83,7 +83,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
     if (N < 1)
         SLS_ERR("range error!");
 #endif
-    Long diff = s - v[0];
+    @Ts@ diff = s - v[0];
     if (diff < 0) {
         ind = -1; return false;
     }
@@ -100,7 +100,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 //% % N > 2 from here
     while (true) {
         ind = (ind1 + ind2) / 2;
-        Long diff = v[ind] - s;
+        @Ts@ diff = v[ind] - s;
         if (diff > 0)
             ind2 = ind;
         else if (diff < 0)

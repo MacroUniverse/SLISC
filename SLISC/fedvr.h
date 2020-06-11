@@ -1,5 +1,7 @@
 #pragma once
 #include "sparse_arith.h"
+#include "interp1.h"
+#include "search.h"
 
 namespace slisc {
 
@@ -110,6 +112,159 @@ inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
         w[i] = w[N - i - 1];
 }
 
+// calculate FEDVR global index from FE index and DVR index  
+inline Long indFEDVR(Long_I iFE, Long_I iDVR, Long_I Ngs)
+{ return (Ngs-1) * iFE + iDVR - 1; }
+
+// calculate FE index and DVR index from global FEDVR index
+inline Long indFE(Long_I iFEDVR, Long_I Ngs)
+{ return (iFEDVR + 1) / (Ngs - 1); }
+
+inline Long indDVR(Long_I iFEDVR, Long_I Ngs)
+{ return (iFEDVR + 1) % (Ngs - 1); }
+
+inline Doub fe_min(VecDoub_I x, Long_I Ngs)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (x.size() <= Ngs-2)
+		SLS_ERR("fe_min: x.size() too small!");
+#endif
+	return x[0] - (x[Ngs-2]-x[Ngs-3]);
+}
+
+inline Doub fe_max(VecDoub_I x, Long_I Ngs)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (x.size() <= Ngs-2)
+		SLS_ERR("fe_max: x.size() too small!");
+#endif
+	return x.end() + (x[x.size()-Ngs+2] - x[x.size()-Ngs+1]);
+}
+
+// interp 1D FEDVR grid
+// x does not include both end points
+// bounds include both end points
+inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
+{
+	Long Nx = x.size();
+	if ((Nx+1)%(Ngs-1) != 0)
+		SLS_ERR("(Nx+1)%(Ngs-1) != 0");
+	Long Nb = (Nx+1)/(Ngs-1);
+	// Doub xmin = fe_min(x, Ngs), xmax = fe_max(x, Ngs);
+	Long ix; // grid index
+	if (lookup(ix, x, x_q))
+		return y[ix];
+	Long iFE = indFE(ix, Ngs); // FE index
+	Long start = indFEDVR(iFE, 0, Ngs);
+
+	if (iFE == 0) { // first FE
+		VecDoub x1(Ngs); VecComp y1(Ngs);
+		Doub xmin = fe_min(x, Ngs);
+		if (x_q <= xmin)
+			return 0;
+		x1[0] = xmin;
+		copy(slice(x1, 1, Ngs-1), slice(x, 0, Ngs-1));
+		y1[0] = 0;
+		copy(slice(y1, 1, Ngs-1), slice(y, 0, Ngs-1));
+		poly_comp_interp1 poly(x1, y1);
+		return poly(x_q);
+	}
+	else if (iFE == Nb - 1) { // last FE
+		VecDoub x1(Ngs); VecComp y1(Ngs);
+		Doub xmax = fe_max(x, Ngs);
+		if (x_q >= xmax)
+			return 0;
+		x1.end() = xmax;
+		copy(slice(x1, 0, Ngs-1), slice(x, Nx-Ngs+1, Ngs-1));
+		y1.end() = 0;
+		copy(slice(y1, 0, Ngs-1), slice(y, Nx-Ngs+1, Ngs-1));
+		poly_comp_interp1 poly(x1, y1);
+		return poly(x_q);
+	}
+	else {
+		poly_comp_interp1 poly(slice(x, start, Ngs), slice(y, start, Ngs));
+		return poly(x_q);
+	}
+}
+
+// 2d interp for fedvr
+inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
+	Long_I Ngs, Doub_I x_q, Doub_I y_q)
+{
+	Long Nx = x.size(), Ny = y.size();
+	if ((Nx+1)%(Ngs-1) != 0)
+		SLS_ERR("(Nx+1)%(Ngs-1) != 0");
+	if ((Ny+1)%(Ngs-1) != 0)
+		SLS_ERR("(Ny+1)%(Ngs-1) != 0");
+	Long Nbx = (Nx+1)/(Ngs-1), Nby = (Ny+1)/(Ngs-1);
+	// Doub x_min = fe_min(x, Ngs), x_max = fe_max(x, Ngs);
+	// Doub y_min = fe_min(y, Ngs), y_max = fe_max(y, Ngs);
+	Long ix, iy; // grid index
+	lookup(ix, x, x_q); lookup(iy, y, y_q);
+	Long iFEx = indFE(ix, Ngs), iFEy = indFE(iy, Ngs); // FE index
+	if (iFEx == 0 || iFEy == 0 || iFEx == Nbx - 1 || iFEy == Nby - 1) // 1st FE
+		SLS_ERR("not implemented!");
+	VecDoub y1(Ngs); VecComp val1(Ngs);
+	Long start = indFEDVR(iFEy, 0, Ngs);
+	SvecDoub_c x_sli =  slice(x, ix, Ngs);
+	for (Long j = start; j < start + Ngs; ++j) {
+		poly_comp_interp1 poly(x_sli, slice1(val, ix, Ngs, j));
+		val1[j-start] = poly(x_q);
+		y1[j-start] = y[j];
+	}
+	poly_comp_interp1 poly(y1, val1);
+	return poly(y_q);
+}
+
+// single FEDVR basis function, with maximum 1
+inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
+{
+	Long iDVR = indDVR(ind, Ngs);
+	Long start = ind - iDVR; // left boundary of FE to eval polynomial
+	Doub x_ind = x[ind], poly;
+
+	// x_q on the left half of the bridge function
+	if (iDVR == 0 && x_q <= x[start]) {
+		if (x_q == x[start])
+			return 1;
+		start -= Ngs - 1;
+	}
+		
+	Long end = start + Ngs - 1; // right boundary of FE to eval polynomial
+
+	// left FE boundary
+	if (start == -1) {
+		Doub xmin = fe_min(x, Ngs);
+		if (x_q <= xmin)
+			return 0;
+		poly = (x_q-xmin)/(x_ind-xmin);
+		++start;
+	}
+	else {
+		if (x_q <= x[start])
+			return 0;
+		poly = 1;
+	}
+		
+	// right FE boundary
+	if (end == x.size()) {
+		Doub xmax = fe_max(x, Ngs);
+		if (x_q >= xmax)
+			return 0;
+		poly *= (x_q-xmax)/(x_ind-xmax);
+		--end;
+	}
+	else if (x_q >= x[end]) {
+		return 0;
+	}
+
+	// middle terms of polynomial
+	for (Long i = start; i < ind; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	for (Long i = ind + 1; i <= end; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	return poly;
+}
 
 // get derivatives of legendre interpolation polynomials t abscissas
 // df is an NxN matrix
@@ -146,17 +301,13 @@ inline void legendre_interp_der(CmatDoub_O df, VecDoub_I x)
         }
 }
 
-// calculate FEDVR global index from FE index i and DVR index j
-inline Long indFEDVR(Long_I i, Long_I j, Long_I Ngs)
-{ return (Ngs-1) * i + j - 1; }
-
 // generate FEDVR grid and weight
 // 'Nfe' is the number of finite elements
 // 'Ngs' is the number of abscissas in each element (including 2 boundaries)
 // 'bounds' size = Nfe+1, are the boundary points of finite elements
 // 'x0','w0' are grid points and weights in [-1,1]
 // 'x','w' are the global grid points and weights
-
+// 'xFE','wFE' are middle point and half width of each FE
 inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I wFE, VecDoub_I xFE, VecDoub_I x0, VecDoub_I w0)
 {
     Long i, j, k = 0;
@@ -179,6 +330,19 @@ inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I wFE, VecDoub_I xFE, V
             if (++k == Nx) break;
         }
     }
+}
+
+// simpler interface
+inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I bounds, Long_I Ngs)
+{
+	Long Nfe = bounds.size() - 1;
+	VecDoub x0(Ngs), w0(Ngs), wFE(Nfe), xFE(Nfe);
+	GaussLobatto(x0, w0);
+	for (Long i = 0; i < Nfe; ++i) {
+		wFE[i] = 0.5*(bounds[i+1] - bounds[i]);
+		xFE[i] = 0.5*(bounds[i] + bounds[i+1]);
+	}
+	FEDVR_grid(x, w, wFE, xFE, x0, w0);
 }
 
 // number of non-zero elements in fedvr second derivative matrix

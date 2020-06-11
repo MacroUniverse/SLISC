@@ -18,13 +18,19 @@ void test_interp1()
 		}
 
 		poly_interp1 poly(x0, y0);
-		poly.eval(y_ev, x); y_ev -= y;
+		for (Long i = 0; i < N; ++i)
+			y_ev[i] = poly(x[i]);
+		y_ev -= y;
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
-		poly.eval_der(y_ev, x); y_ev -= y1;
+		for (Long i = 0; i < N; ++i)
+			y_ev[i] = poly.der(x[i]);
+		y_ev -= y1;
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
-		poly.eval_der2(y_ev, x); y_ev -= y2;
+		for (Long i = 0; i < N; ++i)
+			y_ev[i] = poly.der2(x[i]);
+		y_ev -= y2;
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
 	}
@@ -46,13 +52,19 @@ void test_interp1()
 		}
 
 		poly_comp_interp1 poly(x0, y0);
-		poly.eval(y_ev, x); y_ev -= y;
+		for (Long i = 0; i < N; ++i)
+			y_ev[i] = poly(x[i]);
+		y_ev -= y;
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
-		poly.eval_der(y_ev, x); y_ev -= y1;
+		for (Long i = 0; i < N; ++i)
+			y_ev[i] = poly.der(x[i]);
+		y_ev -= y1;
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
-		poly.eval_der2(y_ev, x); y_ev -= y2;
+		for (Long i = 0; i < N; ++i)
+			y_ev[i] = poly.der2(x[i]);
+		y_ev -= y2;
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
 	}
