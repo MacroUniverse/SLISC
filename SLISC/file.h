@@ -206,11 +206,6 @@ inline Long file_size(Str_I fname)
     return fin.tellg();
 }
 
-inline Long file_size(Str32_I fname)
-{
-    return file_size(utf32to8(fname));
-}
-
 // open binary file to write
 inline void open_bin(ofstream &fout, Str_I fname)
 {
