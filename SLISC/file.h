@@ -407,4 +407,11 @@ inline void last_modified(Str_O yymmddhhmmss, Str_I fname) {
     SLS_ERR("not implemented for windows!");
 }
 #endif
+
+// set write buffer
+// can speed up if there are a lot of staggered short reading and writing in the same drive
+inline void set_buff(ofstream &fout, Str_IO buffer)
+{
+	fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
+}
 } // namespace slisc
