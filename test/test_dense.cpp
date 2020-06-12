@@ -10,26 +10,26 @@ void test_dense()
 
     // size initialize
     {
-    VecDoub vDoub(3);
-    if (vDoub.size() != 3) SLS_ERR("failed!");
-    if (vDoub.ptr() != &vDoub[0]) SLS_ERR("failed!");
-    MatDoub aDoub(3, 3);
-    if (aDoub.size() != 9) SLS_ERR("failed!");
-    if (aDoub.n1() != 3) SLS_ERR("failed!");
-    if (aDoub.n2() != 3) SLS_ERR("failed!");
-    if (aDoub.ptr() != &aDoub(0, 0)) SLS_ERR("failed!");
-    Mat3Doub a3Doub(3, 3, 3);
-    if (a3Doub.size() != 27) SLS_ERR("failed!");
-    if (a3Doub.n1() != 3) SLS_ERR("failed!");
-    if (a3Doub.n2() != 3) SLS_ERR("failed!");
-    if (a3Doub.n3() != 3) SLS_ERR("failed!");
-    if (a3Doub.ptr() != &a3Doub(0,0,0)) SLS_ERR("failed!");
-    Cmat3Doub c3Doub(3, 3, 3);
-    if (c3Doub.size() != 27) SLS_ERR("failed!");
-    if (c3Doub.n1() != 3) SLS_ERR("failed!");
-    if (c3Doub.n2() != 3) SLS_ERR("failed!");
-    if (c3Doub.n3() != 3) SLS_ERR("failed!");
-    if (c3Doub.ptr() != &c3Doub(0, 0, 0)) SLS_ERR("failed!");
+        VecDoub vDoub(3);
+        if (vDoub.size() != 3) SLS_ERR("failed!");
+        if (vDoub.ptr() != &vDoub[0]) SLS_ERR("failed!");
+        MatDoub aDoub(3, 3);
+        if (aDoub.size() != 9) SLS_ERR("failed!");
+        if (aDoub.n1() != 3) SLS_ERR("failed!");
+        if (aDoub.n2() != 3) SLS_ERR("failed!");
+        if (aDoub.ptr() != &aDoub(0, 0)) SLS_ERR("failed!");
+        Mat3Doub a3Doub(3, 3, 3);
+        if (a3Doub.size() != 27) SLS_ERR("failed!");
+        if (a3Doub.n1() != 3) SLS_ERR("failed!");
+        if (a3Doub.n2() != 3) SLS_ERR("failed!");
+        if (a3Doub.n3() != 3) SLS_ERR("failed!");
+        if (a3Doub.ptr() != &a3Doub(0,0,0)) SLS_ERR("failed!");
+        Cmat3Doub c3Doub(3, 3, 3);
+        if (c3Doub.size() != 27) SLS_ERR("failed!");
+        if (c3Doub.n1() != 3) SLS_ERR("failed!");
+        if (c3Doub.n2() != 3) SLS_ERR("failed!");
+        if (c3Doub.n3() != 3) SLS_ERR("failed!");
+        if (c3Doub.ptr() != &c3Doub(0, 0, 0)) SLS_ERR("failed!");
     }
 
     // const initialize
@@ -126,7 +126,7 @@ void test_dense()
     if (aDoub != aDoub1) SLS_ERR("failed!");
     Mat3Doub a3Doub1(4, 4, 4);
     copy(a3Doub1, 2);
-    a3Doub = a3Doub1;
+    copy(a3Doub, a3Doub1);
     if (a3Doub != a3Doub1) SLS_ERR("failed!");
     Cmat3Doub c3Doub1(4, 4, 4);
     copy(c3Doub1, 2);
