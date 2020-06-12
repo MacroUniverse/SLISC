@@ -1,4 +1,5 @@
 # use g++ with libgsl-dev libblas-dev liblapacke-dev (all available from apt-get)
+# requires g++8.3 or higher
 # use `dpkg -L dpkg -L lib***` to check the installation directory
 
 # any change in *.h.in file will cause all *.cpp files to compile
@@ -6,9 +7,9 @@
 
 compiler = g++
 
-# libs = -lgsl -llapacke -lblas
+libs = -lgsl -llapacke -lblas
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)

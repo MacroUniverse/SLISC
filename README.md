@@ -36,10 +36,11 @@ int main()
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling
-* All code using C++11 standard.
-* First make sure you have `liblapack-dev` and `liggsl-dev` installed (use `apt install`).
-* In the root directory, run `make` to compile, then use `./main.x` to run all tests.
-* If you don't have any library installed, in `make/basic_libs.mak`, remove `-D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL` then run `make` to compile.
+* All code using C++11 standard, tested with g++8.3 (earlier version might not work)
+* If you don't want to use external libraries, uncomment the first include in `Makefile`, and comment the second include. Some functions will not be available, some others will run slower.
+* If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`).
+* In the root directory, run `make` to compile
+* Use `./main.x` to run all tests.
 
 ## Recommended Programming Style
 * All SLISC containers types (e.g. MatComp, VecDoub) should be returned by reference.
