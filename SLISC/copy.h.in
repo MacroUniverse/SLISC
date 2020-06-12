@@ -200,7 +200,11 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'DvecComp', 'SvecComp';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';
+//%     'MatDoub', 'CmatDoub';
 //%     'MatComp', 'MatComp';
+//%     'Mat3Doub', 'Mat3Doub';
+//%     'Mat3Comp', 'Mat3Comp';
+//%     'Mat3Comp', 'Mat3Doub';
 //%     'CmatLlong', 'CmatLlong';
 //%     'CmatDoub', 'CmatDoub';
 //%     'CmatDoub', 'ScmatDoub';
@@ -208,7 +212,6 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'CmatComp', 'CmatComp';
 //%     'CmatComp', 'ScmatComp';
 //%     'CmatComp', 'DcmatComp';
-//%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
 //%     'Cmat3Int', 'Cmat3Int';
 //%     'Cmat3Doub', 'Cmat3Doub';

@@ -13,6 +13,7 @@ private:
 public:
     Mat3Char(Long_I N1, Long_I N2, Long_I N3);
     Mat3Char(const Mat3Char &rhs) = delete;   // Copy constructor
+    Mat3Char & operator=(const Mat3Char &rhs) = delete;
     void operator<<(Mat3Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Char & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -86,6 +87,7 @@ private:
 public:
     Mat3Int(Long_I N1, Long_I N2, Long_I N3);
     Mat3Int(const Mat3Int &rhs) = delete;   // Copy constructor
+    Mat3Int & operator=(const Mat3Int &rhs) = delete;
     void operator<<(Mat3Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Int & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -159,6 +161,7 @@ private:
 public:
     Mat3Llong(Long_I N1, Long_I N2, Long_I N3);
     Mat3Llong(const Mat3Llong &rhs) = delete;   // Copy constructor
+    Mat3Llong & operator=(const Mat3Llong &rhs) = delete;
     void operator<<(Mat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Llong & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -241,6 +244,7 @@ private:
 public:
     Mat3Float(Long_I N1, Long_I N2, Long_I N3);
     Mat3Float(const Mat3Float &rhs) = delete;   // Copy constructor
+    Mat3Float & operator=(const Mat3Float &rhs) = delete;
     void operator<<(Mat3Float &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Float & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -314,6 +318,7 @@ private:
 public:
     Mat3Doub(Long_I N1, Long_I N2, Long_I N3);
     Mat3Doub(const Mat3Doub &rhs) = delete;   // Copy constructor
+    Mat3Doub & operator=(const Mat3Doub &rhs) = delete;
     void operator<<(Mat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Doub & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
@@ -387,6 +392,7 @@ private:
 public:
     Mat3Comp(Long_I N1, Long_I N2, Long_I N3);
     Mat3Comp(const Mat3Comp &rhs) = delete;   // Copy constructor
+    Mat3Comp & operator=(const Mat3Comp &rhs) = delete;
     void operator<<(Mat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     Comp & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
