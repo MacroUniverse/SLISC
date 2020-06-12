@@ -2,6 +2,7 @@
 
 void test_interp1()
 {
+#ifdef SLS_USE_GSL
 	// real polynomial interp with gsl
 	// extrapolation not allowed
 	{
@@ -68,6 +69,7 @@ void test_interp1()
 		if (max_abs(y_ev) > 1e-10)
 			SLS_ERR("error");
 	}
+#endif
 
 	// spline interp
 	{

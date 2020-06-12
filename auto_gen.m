@@ -1,7 +1,7 @@
 function auto_gen(file)
 addpath('preprocessor');
 addpath('preprocessor/case_conflict');
-in_list = ls('SLISC/*.in');
+in_list = ls('SLISC/*.in', '-1');
 Ntp = size(in_list, 1);
 newline = char(10);
 for i = 1:Ntp
@@ -9,7 +9,6 @@ for i = 1:Ntp
     if nargin > 0 && ~strcmp(in_file, file)
         continue;
     end
-    disp(in_file);
     str = fileread(in_file);
     ind = 1;
     code = cell(1, 1); k = 0;
@@ -42,5 +41,6 @@ for i = 1:Ntp
     code{k} = str(ind:end);
     code_cat = [code{:}];
     filewrite(in_file(1:end-3), code_cat);
+    disp([in_file '  done!']);
 end
 end

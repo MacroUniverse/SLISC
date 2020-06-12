@@ -1,9 +1,11 @@
 #include "../SLISC/arithmetic.h"
+#ifdef SLS_USE_GSL
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_sf_coupling.h>
 #include <gsl/gsl_sf_gamma.h>
 #include <gsl/gsl_sf_legendre.h>
 #include <gsl/gsl_sf_coulomb.h>
+#endif
 
 void test_gsl()
 {

@@ -1,8 +1,10 @@
 #pragma once
-#include "vec.h"
+#include "Vec.h"
 #include "arithmetic.h"
+#ifdef SLS_USE_GSL
 #include <gsl/gsl_interp.h>
 #include <gsl/gsl_spline.h>
+#endif
 
 namespace slisc {
 
@@ -28,6 +30,7 @@ inline Doub legendre_interp_poly(SvecDoub_I x, Long_I ind, Doub_I x_q)
 }
 
 
+#ifdef SLS_USE_GSL
 struct poly_interp1
 {
 	gsl_interp_accel *m_acc;
@@ -86,7 +89,9 @@ struct poly_interp1
 		gsl_interp_accel_free(m_acc);
 	}
 };
+#endif
 
+#ifdef SLS_USE_GSL
 struct poly_comp_interp1
 {
 	gsl_interp_accel *m_acc1, *m_acc2;
@@ -175,6 +180,7 @@ struct poly_comp_interp1
 		gsl_interp_accel_free(m_acc2);
 	}
 };
+#endif
 
 struct Base_interp
 {

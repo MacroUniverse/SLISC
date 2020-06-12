@@ -211,7 +211,7 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 // file copy with user buffer (larger buffer is faster)
 // buffer size used is `buffer.capacity()`, not `buffer.size()`
 // `buffer` resized to 0 after return
-void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
 	// checking
     if (!file_exist(fname_in))
@@ -250,7 +250,7 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 }
 
 // file_move() with user buffer
-void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
 	file_move(fname_out, fname_in, buffer, replace);
 	file_remove(fname_in);

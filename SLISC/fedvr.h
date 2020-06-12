@@ -144,6 +144,7 @@ inline Doub fe_max(VecDoub_I x, Long_I Ngs)
 // interp 1D FEDVR grid
 // x does not include both end points
 // bounds include both end points
+#ifdef SLS_USE_GSL
 inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
 {
 	Long Nx = x.size();
@@ -186,8 +187,10 @@ inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
 		return poly(x_q);
 	}
 }
+#endif
 
 // 2d interp for fedvr
+#ifdef SLS_USE_GSL
 inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
 	Long_I Ngs, Doub_I x_q, Doub_I y_q)
 {
@@ -215,6 +218,7 @@ inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
 	poly_comp_interp1 poly(y1, val1);
 	return poly(y_q);
 }
+#endif
 
 // single FEDVR basis function, with maximum 1
 inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)

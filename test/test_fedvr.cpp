@@ -130,6 +130,7 @@ void test_SHO()
 }
 #endif
 
+#ifdef SLS_USE_GSL
 void test_fedvr_interp1()
 {
 	// === params ===
@@ -155,6 +156,7 @@ void test_fedvr_interp1()
 	if (max_abs(yeval2) > 1e-10)
 		SLS_ERR("failed!");
 }
+#endif
 
 void test_fedvr()
 {
@@ -164,5 +166,7 @@ void test_fedvr()
     test_SHO();
     test_inf_sqr_well();
 #endif
-	test_fedvr_interp1();
+#ifdef SLS_USE_GSL
+    test_fedvr_interp1();
+#endif
 }
