@@ -131,4 +131,29 @@ void test_file()
 		if (dir_exist("test_dir"))
 			SLS_ERR("failed!");
 	}
+
+	// file_copy()
+	{
+		Str file1 = "sls_test_file_copy.txt", str1 = "abcdefg";
+		Str file2 = "sls_test_file_copy2.txt", str2;
+		write(str1, file1);
+		file_copy(file2, file1);
+		read(str2, file2);
+		if (str2 != str1)
+			SLS_ERR("failed!");
+		file_remove(file1); file_remove(file2);
+	}
+
+	// file_copy() with buffer
+	{
+		Str file1 = "sls_test_file_copy.txt", str1 = "abcdefg";
+		Str file2 = "sls_test_file_copy2.txt", str2;
+		Str buff; buff.resize(5);
+		write(str1, file1);
+		file_copy(file2, file1, buff);
+		read(str2, file2);
+		if (str2 != str1)
+			SLS_ERR("failed!");
+		file_remove(file1); file_remove(file2);
+	}
 }

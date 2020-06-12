@@ -16,6 +16,8 @@ namespace slisc {
 using std::stringstream;
 
 inline void file_list(vecStr_O names, Str_I path);
+inline void read(ifstream &fin, Str_O str);
+inline void write(ofstream &fout, Str_I str);
 
 #ifdef SLS_HAS_FILESYSTEM
 // check if a file exist on Windws (case sensitive)
@@ -55,6 +57,13 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 #endif
 }
 
+// remove a file with error handling
+inline void file_remove(Str_I fname)
+{
+	if (remove(fname.c_str()))
+		SLS_ERR("failed to remove, file being used? (" + fname + ")");
+}
+
 // check if directory exist
 // `path` must end with '/'
 inline Bool dir_exist(Str_I path)
@@ -63,7 +72,7 @@ inline Bool dir_exist(Str_I path)
 	file.open(path + "/sls_test_if_dir_exist");
 	if (file.good()) {
 		file.close();
-		remove((path + "/sls_test_if_dir_exist").c_str());
+		file_remove(path + "/sls_test_if_dir_exist");
 		return true;
 	}
 	else {
@@ -173,6 +182,7 @@ inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ex
 }
 
 // copy a file (read then write)
+// use default fstream buffer, not sure about performance
 inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
     if (!file_exist(fname_in))
@@ -191,9 +201,59 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
     }
     ifstream fin(fname_in, std::ios::binary);
     ofstream fout(fname_out, std::ios::binary);
+	if (!fout.good())
+		SLS_ERR("failed to open file, directory not exist? (" + fname_out + ")");
     fout << fin.rdbuf();
     fin.close();
     fout.close();
+}
+
+// file copy with user buffer (larger buffer is faster)
+// buffer size used is `buffer.capacity()`, not `buffer.size()`
+// `buffer` resized to 0 after return
+void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+{
+	// checking
+    if (!file_exist(fname_in))
+        SLS_ERR("file not found!");
+    if (file_exist(fname_out) && !replace) {
+        while (true) {
+            if (file_exist(fname_out)) {
+                SLS_WARN("\n\nfile [" + fname_out + "] already exist! delete file to continue...\n"
+                    "  (set argument `replace = false` to replace file by default)\n\n");
+            }
+            else {
+                break;
+            }
+            pause(10);
+        }
+    }
+	
+	// copy using buffer
+    ifstream fin(fname_in, std::ios::binary);
+    ofstream fout(fname_out, std::ios::binary);
+	if (!fout.good())
+		SLS_ERR("failed to open file, directory not exist? (" + fname_out + ")");
+	Long buf_size = buffer.capacity();
+	buffer.resize(buf_size);
+	while (buffer.size() > 0) {
+		read(fin, buffer);
+		write(fout, buffer);
+	}
+}
+
+// move a file (copy and delete)
+inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
+{
+	file_copy(fname_out, fname_in, replace);
+	file_remove(fname_in);
+}
+
+// file_move() with user buffer
+void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+{
+	file_move(fname_out, fname_in, buffer, replace);
+	file_remove(fname_in);
 }
 
 // get number of bytes in file

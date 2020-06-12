@@ -1,6 +1,5 @@
 #include "../SLISC/eig.h"
 #include "../SLISC/fedvr.h"
-#include "../SLISC/matt.h"
 
 using namespace slisc;
 
