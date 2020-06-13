@@ -569,5 +569,52 @@ inline void copy(@T1@_O a, @T2@_I b)
 //     }
 // }
 
+// copy initializer list to containers
+
+//% types = {
+//%     'VecInt', 'Int';
+//%     'VecLlong', 'Int';
+//%     'VecLlong', 'Llong';
+//%     'VecDoub', 'Int';
+//%     'VecDoub', 'Doub';
+//%     'VecComp', 'Doub';
+//%     'VecComp', 'Comp';
+//%     'SvecInt', 'Int';
+//%     'SvecLlong', 'Int';
+//%     'SvecLlong', 'Llong';
+//%     'SvecDoub', 'Int';
+//%     'SvecDoub', 'Doub';
+//%     'SvecComp', 'Doub';
+//%     'SvecComp', 'Comp';
+//%     'CmatInt', 'Int';
+//%     'CmatLlong', 'Int';
+//%     'CmatLlong', 'Llong';
+//%     'CmatDoub', 'Int';
+//%     'CmatDoub', 'Doub';
+//%     'CmatComp', 'Doub';
+//%     'CmatComp', 'Comp';
+//%     'ScmatInt', 'Int';
+//%     'ScmatLlong', 'Int';
+//%     'ScmatLlong', 'Llong';
+//%     'ScmatDoub', 'Int';
+//%     'ScmatDoub', 'Doub';
+//%     'ScmatComp', 'Doub';
+//%     'ScmatComp', 'Comp';
+//% };
+//%------------------------------
+//% [T, Ts1] = varargin{:};
+//% Ts = contain_type(T);
+void copy(@T@_O v, const std::initializer_list<@Ts1@> &v1)
+{
+	const @Ts1@ *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPE
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+//%------------------------------
 
 } // namespace slisc
