@@ -1,6 +1,6 @@
 # SLISC0
 * Simple Scientific Library in Simple C++, without using `template`s
-* use Matlab/Octave to do metaprogramming (see `## Code generation`)
+* Matlab/Octave is used to do code generation (see `## Code generation`)
 
 ## Introduction
 
@@ -36,7 +36,7 @@ int main()
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling
-* All code using C++11 standard, tested with g++8.3 (earlier version might not work), octave 4.0 & 4.2, in Ubuntu 16.04 & 18.04
+* All code using C++11 standard, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04
 * If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
 * If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
 * In the root directory, run `make` to compile
@@ -58,18 +58,20 @@ When using something in any header file, just including that header file will be
 * `complex_arith.h` defines extra operators used by `std::complex<>`, such as  `+, -, *, /, +=, -=, *=, /=, ==, !=` for mixed complex types.
 * `imag.h` defines a pure imaginary number types `Fimag` (`float`), `Imag` (`double`), and `Limag` (`ldouble`).
 * `scalar_arith.h` defines scalar utilities such as `min()`, `max()`, `sqr()`, `isodd()`, `mod()`.
-* `Vec.h` defines the 1d containers `VecInt`, `VecDoub`, `VecComp` etc.
+* `Vbase.h` defines a base class `Vbase*` for dense containers, do not directly use this.
+* `Vec.h` defines the 1d containers `Vec*`, e.g. `VecInt`, `VecDoub`, `VecComp` etc.
 * `Mat.h` defines the row-major matrix container `Mat*`.
 * `Cmat.h` defines the col-major matrix container `Cmat*`.
 * `Mat3.h` defines the row-major 3D array `Mat3*`.
-* `disp.h` display SLISC containers.
+* `Cmat3.h` defines the col-major 3D array `Cmat3`.
+* `disp.h` display containers in console.
 * `input.h` promp for input, can save input history and repeat input automatically.
 * `matt.h` save/load text-based data files in `.matt` format, can save multiple named scalars and containers to a single ascii text file. Use `matload.m` to load this file to Matlab.
 * `matb.h` same as `matt.h`, for binary data files.
 * `arithmetic.h` has utilities for dense matrices and vectors, e.g. `sum()`, `norm()`, dot product, matrix-vector multiplication.
-* `slice.h` (experimental) matrix slicing, e.g. separate one column of a matrix and name it as a vector.
+* `slice.h` matrix slicing, e.g. slice one column of a matrix to pass into a function that accepts a vector.
 * `random.h` random number utilities
-* `time.h` timing utilities
+* `time.h` timing utilities, including natural time and cpu time
 * `sort.h` sorting utilities
 * `search.h` search elements in containers
 * `string.h` string utilities
@@ -317,7 +319,7 @@ void idft_par(MatComp_O &X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I &Y, Doub 
 * `operator=` for containers (and slice classes!) should work for any possible right hand side type
 * matfile: consider storing complex array using the format of real array.
 
-# Code generation
+## Code generation
 * Read this session if you want to read or modify the code
 
 A template file (`demo.h.in`) looks like

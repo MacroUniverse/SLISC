@@ -2,7 +2,7 @@
 
 #pragma once
 #include "matt.h"
-#include "bits.h"
+#include "Bit.h"
 
 namespace slisc {
 
