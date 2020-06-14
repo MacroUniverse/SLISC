@@ -39,5 +39,10 @@ void test_copy()
 		copy(sa, {7, 8, 9, 0});
 		if (sa[0] != 7 || sa[1] != 8 || sa[2] != 9 || sa[3] != 0)
 			SLS_ERR("failed!");
+
+		CmatComp ac(2, 2);
+		copy(sa, {1.1, 2.2, 3.3, 4.4});
+		if (sa[0] != 1.1 || sa[1] != 2.2 || sa[2] != 3.3 || sa[3] != 4.4)
+			SLS_ERR("failed!");
 	}
 }
