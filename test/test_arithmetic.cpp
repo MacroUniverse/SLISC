@@ -587,7 +587,7 @@ void test_arithmetic()
 
     // uniq_rows()
     {
-        CmatInt a(5, 2), a1(0, 0);
+        CmatInt a(5, 2), a1;
         a[0] = 1; a[1] = 2; a[2] = 3; a[3] = 2; a[4] = 3;
         a[5] = 2; a[6] = 3; a[7] = 4; a[8] = 3; a[9] = 4;
         uniq_rows(a1, a);

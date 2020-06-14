@@ -23,6 +23,7 @@ protected:
 public:
     typedef @T@ value_type;
     // constructors
+    @VbaseT@();
     explicit @VbaseT@(Long_I N);
     @VbaseT@(const @VbaseT@ &rhs); // copy constructor
 
@@ -43,7 +44,18 @@ public:
     ~@VbaseT@();
 };
 
-inline @VbaseT@::@VbaseT@(Long_I N) : m_p(new @T@[N]), m_N(N) {}
+inline @VbaseT@::@VbaseT@() : m_N(0) {}
+
+inline @VbaseT@::@VbaseT@(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new @T@[N];
+}
 
 inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 {

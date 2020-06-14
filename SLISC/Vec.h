@@ -10,6 +10,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    VecChar() = default;
     explicit VecChar(Long_I N);
     VecChar(const VecChar &rhs); // copy constructor
     VecChar & operator=(const VecChar &rhs) = delete;
@@ -38,6 +39,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    VecInt() = default;
     explicit VecInt(Long_I N);
     VecInt(const VecInt &rhs); // copy constructor
     VecInt & operator=(const VecInt &rhs) = delete;
@@ -66,6 +68,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    VecLlong() = default;
     explicit VecLlong(Long_I N);
     VecLlong(const VecLlong &rhs); // copy constructor
     VecLlong & operator=(const VecLlong &rhs) = delete;
@@ -102,6 +105,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    VecFloat() = default;
     explicit VecFloat(Long_I N);
     VecFloat(const VecFloat &rhs); // copy constructor
     VecFloat & operator=(const VecFloat &rhs) = delete;
@@ -130,6 +134,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    VecDoub() = default;
     explicit VecDoub(Long_I N);
     VecDoub(const VecDoub &rhs); // copy constructor
     VecDoub & operator=(const VecDoub &rhs) = delete;
@@ -158,6 +163,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    VecComp() = default;
     explicit VecComp(Long_I N);
     VecComp(const VecComp &rhs); // copy constructor
     VecComp & operator=(const VecComp &rhs) = delete;

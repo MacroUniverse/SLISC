@@ -5,12 +5,13 @@
 namespace slisc {
 class Mat3Char : public VbaseChar
 {
-private:
+protected:
     typedef VbaseChar Base;
     Long m_N1;
     Long m_N2;
     Long m_N3;
 public:
+    Mat3Char(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Char(Long_I N1, Long_I N2, Long_I N3);
     Mat3Char(const Mat3Char &rhs) = delete;   // Copy constructor
     Mat3Char & operator=(const Mat3Char &rhs) = delete;
@@ -79,12 +80,13 @@ typedef Mat3Char & Mat3Char_O, & Mat3Char_IO;
 
 class Mat3Int : public VbaseInt
 {
-private:
+protected:
     typedef VbaseInt Base;
     Long m_N1;
     Long m_N2;
     Long m_N3;
 public:
+    Mat3Int(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Int(Long_I N1, Long_I N2, Long_I N3);
     Mat3Int(const Mat3Int &rhs) = delete;   // Copy constructor
     Mat3Int & operator=(const Mat3Int &rhs) = delete;
@@ -153,12 +155,13 @@ typedef Mat3Int & Mat3Int_O, & Mat3Int_IO;
 
 class Mat3Llong : public VbaseLlong
 {
-private:
+protected:
     typedef VbaseLlong Base;
     Long m_N1;
     Long m_N2;
     Long m_N3;
 public:
+    Mat3Llong(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Llong(Long_I N1, Long_I N2, Long_I N3);
     Mat3Llong(const Mat3Llong &rhs) = delete;   // Copy constructor
     Mat3Llong & operator=(const Mat3Llong &rhs) = delete;
@@ -236,12 +239,13 @@ typedef Mat3Long & Mat3Long_O, & Mat3Long_IO;
 
 class Mat3Float : public VbaseFloat
 {
-private:
+protected:
     typedef VbaseFloat Base;
     Long m_N1;
     Long m_N2;
     Long m_N3;
 public:
+    Mat3Float(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Float(Long_I N1, Long_I N2, Long_I N3);
     Mat3Float(const Mat3Float &rhs) = delete;   // Copy constructor
     Mat3Float & operator=(const Mat3Float &rhs) = delete;
@@ -310,12 +314,13 @@ typedef Mat3Float & Mat3Float_O, & Mat3Float_IO;
 
 class Mat3Doub : public VbaseDoub
 {
-private:
+protected:
     typedef VbaseDoub Base;
     Long m_N1;
     Long m_N2;
     Long m_N3;
 public:
+    Mat3Doub(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Doub(Long_I N1, Long_I N2, Long_I N3);
     Mat3Doub(const Mat3Doub &rhs) = delete;   // Copy constructor
     Mat3Doub & operator=(const Mat3Doub &rhs) = delete;
@@ -384,12 +389,13 @@ typedef Mat3Doub & Mat3Doub_O, & Mat3Doub_IO;
 
 class Mat3Comp : public VbaseComp
 {
-private:
+protected:
     typedef VbaseComp Base;
     Long m_N1;
     Long m_N2;
     Long m_N3;
 public:
+    Mat3Comp(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Comp(Long_I N1, Long_I N2, Long_I N3);
     Mat3Comp(const Mat3Comp &rhs) = delete;   // Copy constructor
     Mat3Comp & operator=(const Mat3Comp &rhs) = delete;

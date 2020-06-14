@@ -134,10 +134,10 @@ void test_dense()
     if (c3Doub != c3Doub1) SLS_ERR("failed!");
 
     // move operator
-    VecDoub vDoub2(0);
-    MatDoub aDoub2(0,0);
-    Mat3Doub a3Doub2(0,0,0);
-    Cmat3Doub c3Doub2(0, 0, 0);
+    VecDoub vDoub2;
+    MatDoub aDoub2;
+    Mat3Doub a3Doub2;
+    Cmat3Doub c3Doub2;
     vDoub2 << vDoub;
     if (vDoub2 != vDoub1) SLS_ERR("failed!");
     if (vDoub.size() != 0) SLS_ERR("failed!");

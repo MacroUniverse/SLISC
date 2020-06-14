@@ -22,6 +22,7 @@ public:
     using Base::resize;
     using Base::operator[];
 
+    @VecT@() = default;
     explicit @VecT@(Long_I N);
     @VecT@(const @VecT@ &rhs); // copy constructor
     @VecT@ & operator=(const @VecT@ &rhs) = delete;

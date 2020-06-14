@@ -10,7 +10,7 @@ namespace slisc {
 //% VbaseT = ['Vbase' T];
 class @Cmat3T@ : public @VbaseT@
 {
-private:
+protected:
     typedef @VbaseT@ Base;
     using Base::m_p;
     using Base::m_N;
@@ -21,6 +21,7 @@ public:
     typedef @T@ value_type;
     using Base::operator();
     using Base::ptr;
+    @Cmat3T@(): m_N1(0), m_N2(0), m_N3(0) {};
     @Cmat3T@(Long_I N1, Long_I N2, Long_I N3);
     @Cmat3T@(const @Cmat3T@ &rhs) = delete;
     @Cmat3T@ & operator=(const @Cmat3T@ &rhs) = delete;

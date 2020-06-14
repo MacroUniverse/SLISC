@@ -77,7 +77,7 @@ void test_inf_sqr_well()
 
     // solve eigen states
     VecDoub eigVal(H.n1()); // eigen values / bound state energies
-    CmatDoub eigVec(0, 0); eigVec.resize(H.n1(), H.n2()); // eigen vectors / bound states wave functions
+    CmatDoub eigVec; eigVec.resize(H.n1(), H.n2()); // eigen vectors / bound states wave functions
     eig_sym(eigVal, eigVec, H);
 
     // test energies
@@ -118,7 +118,7 @@ void test_SHO()
 
     // solve eigen states
     VecDoub eigVal(H.n1()); // eigen values / bound state energies
-    CmatDoub eigVec(0, 0); eigVec.resize(H.n1(), H.n2()); // eigen vectors / bound states wave functions
+    CmatDoub eigVec; eigVec.resize(H.n1(), H.n2()); // eigen vectors / bound states wave functions
     eig_sym(eigVal, eigVec, H);
 
     // test energies

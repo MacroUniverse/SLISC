@@ -13,6 +13,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatChar(): m_Nr(0), m_Nc(0) {};
     CmatChar(Long_I Nr, Long_I Nc);
     CmatChar(const CmatChar &rhs);        // Copy constructor
     CmatChar & operator=(const CmatChar &rhs) = delete;
@@ -84,6 +85,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatInt(): m_Nr(0), m_Nc(0) {};
     CmatInt(Long_I Nr, Long_I Nc);
     CmatInt(const CmatInt &rhs);        // Copy constructor
     CmatInt & operator=(const CmatInt &rhs) = delete;
@@ -155,6 +157,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatLlong(): m_Nr(0), m_Nc(0) {};
     CmatLlong(Long_I Nr, Long_I Nc);
     CmatLlong(const CmatLlong &rhs);        // Copy constructor
     CmatLlong & operator=(const CmatLlong &rhs) = delete;
@@ -235,6 +238,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatFloat(): m_Nr(0), m_Nc(0) {};
     CmatFloat(Long_I Nr, Long_I Nc);
     CmatFloat(const CmatFloat &rhs);        // Copy constructor
     CmatFloat & operator=(const CmatFloat &rhs) = delete;
@@ -306,6 +310,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatDoub(): m_Nr(0), m_Nc(0) {};
     CmatDoub(Long_I Nr, Long_I Nc);
     CmatDoub(const CmatDoub &rhs);        // Copy constructor
     CmatDoub & operator=(const CmatDoub &rhs) = delete;
@@ -377,6 +382,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatComp(): m_Nr(0), m_Nc(0) {};
     CmatComp(Long_I Nr, Long_I Nc);
     CmatComp(const CmatComp &rhs);        // Copy constructor
     CmatComp & operator=(const CmatComp &rhs) = delete;
@@ -448,6 +454,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    CmatImag(): m_Nr(0), m_Nc(0) {};
     CmatImag(Long_I Nr, Long_I Nc);
     CmatImag(const CmatImag &rhs);        // Copy constructor
     CmatImag & operator=(const CmatImag &rhs) = delete;

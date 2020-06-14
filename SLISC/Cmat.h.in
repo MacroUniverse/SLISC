@@ -25,6 +25,7 @@ protected:
 public:
     using Base::ptr;
     using Base::operator();
+    @CmatT@(): m_Nr(0), m_Nc(0) {};
     @CmatT@(Long_I Nr, Long_I Nc);
     @CmatT@(const @CmatT@ &rhs);        // Copy constructor
     @CmatT@ & operator=(const @CmatT@ &rhs) = delete;

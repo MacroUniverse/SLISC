@@ -12,9 +12,9 @@ void test_eig()
     {
         Long N = 20;
         CmatDoub a(N, N);
-        CmatDoub eigVec(0, 0);
+        CmatDoub eigVec;
         VecDoub eigVal(a.n1());
-        CmatDoub eigVec1(0, 0), eigVec2(0, 0);
+        CmatDoub eigVec1, eigVec2;
         for (Long k = 0; k < 5; ++k) {
             // fill upper triangle
             for (Long j = 0; j < N; ++j) {
@@ -42,9 +42,9 @@ void test_eig()
     {
         Long N = 20;
         CmatComp a(N, N);
-        CmatComp eigVec(0, 0);
+        CmatComp eigVec;
         VecDoub eigVal(a.n1());
-        CmatComp eigVec1(0, 0), eigVec2(0, 0);
+        CmatComp eigVec1, eigVec2;
         for (Long k = 0; k < 5; ++k) {
             // fill upper triangle
             for (Long j = 0; j < N; ++j) {

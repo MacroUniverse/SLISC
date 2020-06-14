@@ -36,17 +36,16 @@ int main()
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling
-* All code using C++11 standard, tested with g++8.3 (earlier version might not work)
-* If you don't want to use external libraries, uncomment the first include in `Makefile`, and comment the second include. Some functions will not be available, some others will run slower.
-* If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`).
+* All code using C++11 standard, tested with g++8.3 (earlier version might not work), octave 4.0 & 4.2, in Ubuntu 16.04 & 18.04
+* If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
+* If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
 * In the root directory, run `make` to compile
 * Use `./main.x` to run all tests.
 
 ## Recommended Programming Style
-* All SLISC containers types (e.g. MatComp, VecDoub) should be returned by reference.
-* Avoid using unsigned integer types when possible. They are not supported for now.
-* Generally, functions output arguments can not be any of the input arguments (this is called aliasing).
-* There is no public default constructor for containers.
+* All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference.
+* Avoid using unsigned integer types when possible. They are not supported by the library for now.
+* Generally, functions output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
 
 * Intrinsic types are aliased inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
 

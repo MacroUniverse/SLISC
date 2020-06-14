@@ -5,7 +5,7 @@
 namespace slisc {
 class Cmat4Int : public VbaseInt
 {
-private:
+protected:
     typedef VbaseInt Base;
     using Base::m_p;
     using Base::m_N;
@@ -14,7 +14,7 @@ public:
     typedef Int value_type;
     using Base::operator();
     using Base::ptr;
-    using Base::operator=;
+    Cmat4Int(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Int(const Cmat4Int &rhs) = delete;   // Copy constructor
     void operator<<(Cmat4Int &rhs); // move data and rhs.resize(0, 0, 0)
@@ -88,7 +88,7 @@ typedef Cmat4Int & Cmat4Int_O, & Cmat4Int_IO;
 
 class Cmat4Llong : public VbaseLlong
 {
-private:
+protected:
     typedef VbaseLlong Base;
     using Base::m_p;
     using Base::m_N;
@@ -97,7 +97,7 @@ public:
     typedef Llong value_type;
     using Base::operator();
     using Base::ptr;
-    using Base::operator=;
+    Cmat4Llong(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Llong(const Cmat4Llong &rhs) = delete;   // Copy constructor
     void operator<<(Cmat4Llong &rhs); // move data and rhs.resize(0, 0, 0)
@@ -171,7 +171,7 @@ typedef Cmat4Llong & Cmat4Llong_O, & Cmat4Llong_IO;
 
 class Cmat4Doub : public VbaseDoub
 {
-private:
+protected:
     typedef VbaseDoub Base;
     using Base::m_p;
     using Base::m_N;
@@ -180,7 +180,7 @@ public:
     typedef Doub value_type;
     using Base::operator();
     using Base::ptr;
-    using Base::operator=;
+    Cmat4Doub(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Doub(const Cmat4Doub &rhs) = delete;   // Copy constructor
     void operator<<(Cmat4Doub &rhs); // move data and rhs.resize(0, 0, 0)
@@ -254,7 +254,7 @@ typedef Cmat4Doub & Cmat4Doub_O, & Cmat4Doub_IO;
 
 class Cmat4Comp : public VbaseComp
 {
-private:
+protected:
     typedef VbaseComp Base;
     using Base::m_p;
     using Base::m_N;
@@ -263,7 +263,7 @@ public:
     typedef Comp value_type;
     using Base::operator();
     using Base::ptr;
-    using Base::operator=;
+    Cmat4Comp(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Comp(const Cmat4Comp &rhs) = delete;   // Copy constructor
     void operator<<(Cmat4Comp &rhs); // move data and rhs.resize(0, 0, 0)

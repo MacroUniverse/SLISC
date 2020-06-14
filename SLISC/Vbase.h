@@ -12,6 +12,7 @@ protected:
 public:
     typedef Char value_type;
     // constructors
+    VbaseChar();
     explicit VbaseChar(Long_I N);
     VbaseChar(const VbaseChar &rhs); // copy constructor
 
@@ -32,7 +33,18 @@ public:
     ~VbaseChar();
 };
 
-inline VbaseChar::VbaseChar(Long_I N) : m_p(new Char[N]), m_N(N) {}
+inline VbaseChar::VbaseChar() : m_N(0) {}
+
+inline VbaseChar::VbaseChar(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Char[N];
+}
 
 inline VbaseChar::VbaseChar(const VbaseChar &rhs)
 {
@@ -169,6 +181,7 @@ protected:
 public:
     typedef Int value_type;
     // constructors
+    VbaseInt();
     explicit VbaseInt(Long_I N);
     VbaseInt(const VbaseInt &rhs); // copy constructor
 
@@ -189,7 +202,18 @@ public:
     ~VbaseInt();
 };
 
-inline VbaseInt::VbaseInt(Long_I N) : m_p(new Int[N]), m_N(N) {}
+inline VbaseInt::VbaseInt() : m_N(0) {}
+
+inline VbaseInt::VbaseInt(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Int[N];
+}
 
 inline VbaseInt::VbaseInt(const VbaseInt &rhs)
 {
@@ -326,6 +350,7 @@ protected:
 public:
     typedef Llong value_type;
     // constructors
+    VbaseLlong();
     explicit VbaseLlong(Long_I N);
     VbaseLlong(const VbaseLlong &rhs); // copy constructor
 
@@ -346,7 +371,18 @@ public:
     ~VbaseLlong();
 };
 
-inline VbaseLlong::VbaseLlong(Long_I N) : m_p(new Llong[N]), m_N(N) {}
+inline VbaseLlong::VbaseLlong() : m_N(0) {}
+
+inline VbaseLlong::VbaseLlong(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Llong[N];
+}
 
 inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
 {
@@ -489,6 +525,7 @@ protected:
 public:
     typedef Float value_type;
     // constructors
+    VbaseFloat();
     explicit VbaseFloat(Long_I N);
     VbaseFloat(const VbaseFloat &rhs); // copy constructor
 
@@ -509,7 +546,18 @@ public:
     ~VbaseFloat();
 };
 
-inline VbaseFloat::VbaseFloat(Long_I N) : m_p(new Float[N]), m_N(N) {}
+inline VbaseFloat::VbaseFloat() : m_N(0) {}
+
+inline VbaseFloat::VbaseFloat(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Float[N];
+}
 
 inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
 {
@@ -646,6 +694,7 @@ protected:
 public:
     typedef Doub value_type;
     // constructors
+    VbaseDoub();
     explicit VbaseDoub(Long_I N);
     VbaseDoub(const VbaseDoub &rhs); // copy constructor
 
@@ -666,7 +715,18 @@ public:
     ~VbaseDoub();
 };
 
-inline VbaseDoub::VbaseDoub(Long_I N) : m_p(new Doub[N]), m_N(N) {}
+inline VbaseDoub::VbaseDoub() : m_N(0) {}
+
+inline VbaseDoub::VbaseDoub(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Doub[N];
+}
 
 inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
 {
@@ -803,6 +863,7 @@ protected:
 public:
     typedef Comp value_type;
     // constructors
+    VbaseComp();
     explicit VbaseComp(Long_I N);
     VbaseComp(const VbaseComp &rhs); // copy constructor
 
@@ -823,7 +884,18 @@ public:
     ~VbaseComp();
 };
 
-inline VbaseComp::VbaseComp(Long_I N) : m_p(new Comp[N]), m_N(N) {}
+inline VbaseComp::VbaseComp() : m_N(0) {}
+
+inline VbaseComp::VbaseComp(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Comp[N];
+}
 
 inline VbaseComp::VbaseComp(const VbaseComp &rhs)
 {
@@ -960,6 +1032,7 @@ protected:
 public:
     typedef Imag value_type;
     // constructors
+    VbaseImag();
     explicit VbaseImag(Long_I N);
     VbaseImag(const VbaseImag &rhs); // copy constructor
 
@@ -980,7 +1053,18 @@ public:
     ~VbaseImag();
 };
 
-inline VbaseImag::VbaseImag(Long_I N) : m_p(new Imag[N]), m_N(N) {}
+inline VbaseImag::VbaseImag() : m_N(0) {}
+
+inline VbaseImag::VbaseImag(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Imag[N];
+}
 
 inline VbaseImag::VbaseImag(const VbaseImag &rhs)
 {
