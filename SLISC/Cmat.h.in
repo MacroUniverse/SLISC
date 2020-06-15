@@ -39,10 +39,13 @@ public:
 
 inline @CmatT@::@CmatT@(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
+inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(rhs), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
 {
-    SLS_ERR("Copy constructor or move constructor is forbidden, "
-        "use reference argument for function input or output, and use \"=\" to copy!");
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+    for (Long i = 0; i < m_N; ++i)
+        m_p[i] = rhs.m_p[i];
 }
 
 inline void @CmatT@::operator<<(@CmatT@ &rhs)
@@ -111,10 +114,14 @@ public:
 
 inline CmatBool::CmatBool(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline CmatBool::CmatBool(const CmatBool &rhs) : Base(0)
+inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs.size()), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
 {
-    SLS_ERR("Copy constructor or move constructor is forbidden, "
-        "use reference argument for function input or output, and use \"=\" to copy!");
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+    Long N = size();
+    for (Long i = 0; i < N; ++i)
+        (*this)[i] = rhs[i];
 }
 
 inline void CmatBool::operator<<(CmatBool &rhs)

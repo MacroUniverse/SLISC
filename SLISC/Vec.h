@@ -19,9 +19,11 @@ public:
 
 inline VecChar::VecChar(Long_I N) : Base(N) {}
 
-inline VecChar::VecChar(const VecChar &rhs) : Base(0)
+inline VecChar::VecChar(const VecChar &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecChar::operator<<(VecChar &rhs)
@@ -48,9 +50,11 @@ public:
 
 inline VecInt::VecInt(Long_I N) : Base(N) {}
 
-inline VecInt::VecInt(const VecInt &rhs) : Base(0)
+inline VecInt::VecInt(const VecInt &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecInt::operator<<(VecInt &rhs)
@@ -77,9 +81,11 @@ public:
 
 inline VecLlong::VecLlong(Long_I N) : Base(N) {}
 
-inline VecLlong::VecLlong(const VecLlong &rhs) : Base(0)
+inline VecLlong::VecLlong(const VecLlong &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecLlong::operator<<(VecLlong &rhs)
@@ -114,9 +120,11 @@ public:
 
 inline VecFloat::VecFloat(Long_I N) : Base(N) {}
 
-inline VecFloat::VecFloat(const VecFloat &rhs) : Base(0)
+inline VecFloat::VecFloat(const VecFloat &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecFloat::operator<<(VecFloat &rhs)
@@ -143,9 +151,11 @@ public:
 
 inline VecDoub::VecDoub(Long_I N) : Base(N) {}
 
-inline VecDoub::VecDoub(const VecDoub &rhs) : Base(0)
+inline VecDoub::VecDoub(const VecDoub &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecDoub::operator<<(VecDoub &rhs)
@@ -172,9 +182,11 @@ public:
 
 inline VecComp::VecComp(Long_I N) : Base(N) {}
 
-inline VecComp::VecComp(const VecComp &rhs) : Base(0)
+inline VecComp::VecComp(const VecComp &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecComp::operator<<(VecComp &rhs)
@@ -203,9 +215,11 @@ public:
 
 inline VecBool::VecBool(Long_I N) : Base(N) {}
 
-inline VecBool::VecBool(const VecBool &rhs) : Base(0)
+inline VecBool::VecBool(const VecBool &rhs) : Base(rhs)
 {
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
+#endif
 }
 
 inline void VecBool::operator<<(VecBool &rhs)

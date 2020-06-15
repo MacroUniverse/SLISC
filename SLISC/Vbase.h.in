@@ -59,12 +59,12 @@ inline @VbaseT@::@VbaseT@(Long_I N)
 
 inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 {
-#ifndef SLS_ALLOW_COPY_CONSTRUCTOR
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
-    // m_N = rhs.m_N;
-    // m_p = new @T@[rhs.m_N];
-    // veccpy(m_p, rhs.ptr(), m_N);
+    m_N = rhs.m_N;
+    m_p = new @T@[m_N];
+    memcpy(m_p, rhs.ptr(), m_N);
 }
 
 inline @T@ * @VbaseT@::ptr()
@@ -221,9 +221,9 @@ inline VbaseBool::VbaseBool(Long_I N)
         m_v.resize(N);
 }
 
-inline VbaseBool::VbaseBool(const VbaseBool &rhs)
+inline VbaseBool::VbaseBool(const VbaseBool &rhs): m_v(rhs.m_v)
 {
-#ifndef SLS_ALLOW_COPY_CONSTRUCTOR
+#ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
 }

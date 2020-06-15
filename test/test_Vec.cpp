@@ -1,4 +1,5 @@
 #include "../SLISC/Vec.h"
+#include "../SLISC/compare.h"
 
 void test_Vec()
 {
@@ -33,4 +34,12 @@ void test_Vec()
         if (v.size() != N+1)
             SLS_ERR("failed!");
 	}
+
+    // copy constructor
+    {
+        Long N = 4;
+		VecBool v(N), v1(v);
+        if (v1 != v)
+            SLS_ERR("failed!");
+    }
 }

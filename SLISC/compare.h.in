@@ -34,6 +34,7 @@ inline Bool equals_to_vs(const @T@ *v, @T@_I s, Long_I N)
 //%------------------------
 
 //% types = {
+//%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Llong';
@@ -54,6 +55,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%------------------------
 
 //% types = {
+//%     'VecBool' 'VecBool';
 //%     'VecChar' 'VecChar';
 //%     'VecChar' 'VecInt';
 //%     'VecChar' 'VecLlong';
@@ -177,11 +179,12 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2)
 //%------------------------
 
 //% types = {
+//%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'DvecLlong';
-//%     'VecDoub', 'DvecDoub';
 //%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'DvecDoub';
 //%     'VecDoub', 'VecDoub';
 //%     'VecDoub', 'VecComp';
 //%     'VecComp', 'VecComp';
@@ -245,6 +248,19 @@ inline Bool operator!=(@T1@_I v1, @T2@_I v2)
     return !(v1 == v2);
 }
 //%------------------------
+
+inline Bool operator==(VecBool_I v1, VecBool_I v2)
+{
+    for (Long i = 0; i < v1.size(); ++i)
+        if (v1[i] != v2[i])
+            return false;
+    return true;
+}
+
+inline Bool operator!=(VecBool_I v1, VecBool_I v2)
+{
+    return !(v1 == v2);
+}
 
 //% types = {
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
