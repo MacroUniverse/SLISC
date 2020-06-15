@@ -1699,194 +1699,194 @@ inline void copy(ScmatComp_O a, CbandDoub_I b)
 
 inline void copy(VecInt_O v, const std::initializer_list<Int> &v1)
 {
-	const Int *p1 = v1.begin();
-	Long N = v1.size();
+    const Int *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(VecLlong_O v, const std::initializer_list<Llong> &v1)
 {
-	const Llong *p1 = v1.begin();
-	Long N = v1.size();
+    const Llong *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(VecDoub_O v, const std::initializer_list<Doub> &v1)
 {
-	const Doub *p1 = v1.begin();
-	Long N = v1.size();
+    const Doub *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(VecComp_O v, const std::initializer_list<Comp> &v1)
 {
-	const Comp *p1 = v1.begin();
-	Long N = v1.size();
+    const Comp *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(SvecInt_O v, const std::initializer_list<Int> &v1)
 {
-	const Int *p1 = v1.begin();
-	Long N = v1.size();
+    const Int *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(SvecLlong_O v, const std::initializer_list<Llong> &v1)
 {
-	const Llong *p1 = v1.begin();
-	Long N = v1.size();
+    const Llong *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(SvecDoub_O v, const std::initializer_list<Doub> &v1)
 {
-	const Doub *p1 = v1.begin();
-	Long N = v1.size();
+    const Doub *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(SvecComp_O v, const std::initializer_list<Comp> &v1)
 {
-	const Comp *p1 = v1.begin();
-	Long N = v1.size();
+    const Comp *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(CmatInt_O v, const std::initializer_list<Int> &v1)
 {
-	const Int *p1 = v1.begin();
-	Long N = v1.size();
+    const Int *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(CmatLlong_O v, const std::initializer_list<Llong> &v1)
 {
-	const Llong *p1 = v1.begin();
-	Long N = v1.size();
+    const Llong *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(CmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
-	const Doub *p1 = v1.begin();
-	Long N = v1.size();
+    const Doub *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(CmatComp_O v, const std::initializer_list<Comp> &v1)
 {
-	const Comp *p1 = v1.begin();
-	Long N = v1.size();
+    const Comp *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(ScmatInt_O v, const std::initializer_list<Int> &v1)
 {
-	const Int *p1 = v1.begin();
-	Long N = v1.size();
+    const Int *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(ScmatLlong_O v, const std::initializer_list<Llong> &v1)
 {
-	const Llong *p1 = v1.begin();
-	Long N = v1.size();
+    const Llong *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
-	const Doub *p1 = v1.begin();
-	Long N = v1.size();
+    const Doub *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
 {
-	const Comp *p1 = v1.begin();
-	Long N = v1.size();
+    const Comp *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 
 

@@ -594,14 +594,14 @@ inline void copy(@T1@_O a, @T2@_I b)
 //% Ts = contain_type(T);
 inline void copy(@T@_O v, const std::initializer_list<@Ts1@> &v1)
 {
-	const @Ts1@ *p1 = v1.begin();
-	Long N = v1.size();
+    const @Ts1@ *p1 = v1.begin();
+    Long N = v1.size();
 #ifdef SLS_CHECK_SHAPE
-	if (v.size() != N)
-		SLS_ERR("wrong shape!");
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
 #endif
-	for (Long i = 0; i < N; ++i)
-		v[i] = p1[i];
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
 }
 //%------------------------------
 

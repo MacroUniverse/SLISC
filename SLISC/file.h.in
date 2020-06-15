@@ -60,36 +60,36 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 // remove a file with error handling
 inline void file_remove(Str_I fname)
 {
-	if (remove(fname.c_str()))
-		SLS_ERR("failed to remove, file being used? (" + fname + ")");
+    if (remove(fname.c_str()))
+        SLS_ERR("failed to remove, file being used? (" + fname + ")");
 }
 
 // check if directory exist
 // `path` must end with '/'
 inline Bool dir_exist(Str_I path)
 {
-	ofstream file;
-	file.open(path + "/sls_test_if_dir_exist");
-	if (file.good()) {
-		file.close();
-		file_remove(path + "/sls_test_if_dir_exist");
-		return true;
-	}
-	else {
-		return false;
-	}
+    ofstream file;
+    file.open(path + "/sls_test_if_dir_exist");
+    if (file.good()) {
+        file.close();
+        file_remove(path + "/sls_test_if_dir_exist");
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 // make multiple level of directory
 inline void mkdir(Str_I path)
 {
-	Int ret = system(("mkdir -p " + path).c_str()); ret++;
+    Int ret = system(("mkdir -p " + path).c_str()); ret++;
 }
 
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
-	Int ret = system(("rmdir -p " + path).c_str()); ret++;
+    Int ret = system(("rmdir -p " + path).c_str()); ret++;
 }
 
 // make sure the directory (or directory of a file name) exist
@@ -97,10 +97,10 @@ inline void rmdir(Str_I path)
 // if not, create the directory
 inline void ensure_dir(Str_I dir_or_file)
 {
-	Long ind = dir_or_file.rfind('/');
-	if (dir_exist(dir_or_file.substr(0, ind)))
-		return;
-	mkdir(dir_or_file.substr(0, ind));
+    Long ind = dir_or_file.rfind('/');
+    if (dir_exist(dir_or_file.substr(0, ind)))
+        return;
+    mkdir(dir_or_file.substr(0, ind));
 }
 
 // remove a file
@@ -201,8 +201,8 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
     }
     ifstream fin(fname_in, std::ios::binary);
     ofstream fout(fname_out, std::ios::binary);
-	if (!fout.good())
-		SLS_ERR("failed to open file, directory not exist? (" + fname_out + ")");
+    if (!fout.good())
+        SLS_ERR("failed to open file, directory not exist? (" + fname_out + ")");
     fout << fin.rdbuf();
     fin.close();
     fout.close();
@@ -213,7 +213,7 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 // `buffer` resized to 0 after return
 inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
-	// checking
+    // checking
     if (!file_exist(fname_in))
         SLS_ERR("file not found!");
     if (file_exist(fname_out) && !replace) {
@@ -228,32 +228,32 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
             pause(10);
         }
     }
-	
-	// copy using buffer
+    
+    // copy using buffer
     ifstream fin(fname_in, std::ios::binary);
     ofstream fout(fname_out, std::ios::binary);
-	if (!fout.good())
-		SLS_ERR("failed to open file, directory not exist? (" + fname_out + ")");
-	Long buf_size = buffer.capacity();
-	buffer.resize(buf_size);
-	while (buffer.size() > 0) {
-		read(fin, buffer);
-		write(fout, buffer);
-	}
+    if (!fout.good())
+        SLS_ERR("failed to open file, directory not exist? (" + fname_out + ")");
+    Long buf_size = buffer.capacity();
+    buffer.resize(buf_size);
+    while (buffer.size() > 0) {
+        read(fin, buffer);
+        write(fout, buffer);
+    }
 }
 
 // move a file (copy and delete)
 inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
-	file_copy(fname_out, fname_in, replace);
-	file_remove(fname_in);
+    file_copy(fname_out, fname_in, replace);
+    file_remove(fname_in);
 }
 
 // file_move() with user buffer
 inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
-	file_move(fname_out, fname_in, buffer, replace);
-	file_remove(fname_in);
+    file_move(fname_out, fname_in, buffer, replace);
+    file_remove(fname_in);
 }
 
 // get number of bytes in file
@@ -435,6 +435,6 @@ inline void last_modified(Str_O yymmddhhmmss, Str_I fname) {
 // can speed up if there are a lot of staggered short reading and writing in the same drive
 inline void set_buff(ofstream &fout, Str_IO buffer)
 {
-	fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
+    fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
 }
 } // namespace slisc

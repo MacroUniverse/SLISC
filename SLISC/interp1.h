@@ -11,174 +11,174 @@ namespace slisc {
 // evaluate Lgendre interpolation polynomial
 inline Doub legendre_interp_poly(VecDoub_I x, Long_I ind, Doub_I x_q)
 {
-	Doub x_ind = x[ind], prod = 1;
-	for (Long i = 0; i < ind; ++i)
-		prod *= (x_q - x[i])/(x_ind - x[i]);
-	for (Long i = ind + 1; i < x.size(); ++i)
-		prod *= (x_q - x[i])/(x_ind - x[i]);
-	return prod;
+    Doub x_ind = x[ind], prod = 1;
+    for (Long i = 0; i < ind; ++i)
+        prod *= (x_q - x[i])/(x_ind - x[i]);
+    for (Long i = ind + 1; i < x.size(); ++i)
+        prod *= (x_q - x[i])/(x_ind - x[i]);
+    return prod;
 }
 
 inline Doub legendre_interp_poly(SvecDoub_I x, Long_I ind, Doub_I x_q)
 {
-	Doub x_ind = x[ind], prod = 1;
-	for (Long i = 0; i < ind; ++i)
-		prod *= (x_q - x[i])/(x_ind - x[i]);
-	for (Long i = ind + 1; i < x.size(); ++i)
-		prod *= (x_q - x[i])/(x_ind - x[i]);
-	return prod;
+    Doub x_ind = x[ind], prod = 1;
+    for (Long i = 0; i < ind; ++i)
+        prod *= (x_q - x[i])/(x_ind - x[i]);
+    for (Long i = ind + 1; i < x.size(); ++i)
+        prod *= (x_q - x[i])/(x_ind - x[i]);
+    return prod;
 }
 
 
 #ifdef SLS_USE_GSL
 struct poly_interp1
 {
-	gsl_interp_accel *m_acc;
-	gsl_spline *m_spline;
+    gsl_interp_accel *m_acc;
+    gsl_spline *m_spline;
 
 // real polynomial interpolation using gsl
-	poly_interp1(VecDoub_I x, VecDoub_I y)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		m_acc = gsl_interp_accel_alloc();
-		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-		gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
-	}
+    poly_interp1(VecDoub_I x, VecDoub_I y)
+    {
+        if (x.size() != y.size())
+            SLS_ERR("x, y not the same length!");
+        m_acc = gsl_interp_accel_alloc();
+        m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
+        gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
+    }
 
-	poly_interp1(SvecDoub_I x, SvecDoub_I y)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		m_acc = gsl_interp_accel_alloc();
-		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-		gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
-	}
+    poly_interp1(SvecDoub_I x, SvecDoub_I y)
+    {
+        if (x.size() != y.size())
+            SLS_ERR("x, y not the same length!");
+        m_acc = gsl_interp_accel_alloc();
+        m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
+        gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
+    }
 
-	poly_interp1(DvecDoub_I x, DvecDoub_I y)
-	{
-		if (x.size() != y.size())
-			SLS_ERR("x, y not the same length!");
-		m_acc = gsl_interp_accel_alloc();
-		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-		gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
-	}
+    poly_interp1(DvecDoub_I x, DvecDoub_I y)
+    {
+        if (x.size() != y.size())
+            SLS_ERR("x, y not the same length!");
+        m_acc = gsl_interp_accel_alloc();
+        m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
+        gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
+    }
 
 
-	// evaluate
-	Doub operator()(Doub_I x)
-	{
-		return gsl_spline_eval(m_spline, x, m_acc);
-	}
+    // evaluate
+    Doub operator()(Doub_I x)
+    {
+        return gsl_spline_eval(m_spline, x, m_acc);
+    }
 
-	// evaluate derivative
-	Doub der(Doub_I x)
-	{
-		return gsl_spline_eval_deriv(m_spline, x, m_acc);
-	}
+    // evaluate derivative
+    Doub der(Doub_I x)
+    {
+        return gsl_spline_eval_deriv(m_spline, x, m_acc);
+    }
 
-	// evaluate second derivative
-	Doub der2(Doub_I x)
-	{
-		return gsl_spline_eval_deriv2(m_spline, x, m_acc);
-	}
+    // evaluate second derivative
+    Doub der2(Doub_I x)
+    {
+        return gsl_spline_eval_deriv2(m_spline, x, m_acc);
+    }
 
-	~poly_interp1()
-	{
-		gsl_spline_free(m_spline);
-		gsl_interp_accel_free(m_acc);
-	}
+    ~poly_interp1()
+    {
+        gsl_spline_free(m_spline);
+        gsl_interp_accel_free(m_acc);
+    }
 };
 #endif
 
 #ifdef SLS_USE_GSL
 struct poly_comp_interp1
 {
-	gsl_interp_accel *m_acc1, *m_acc2;
-	gsl_spline *m_spline1, *m_spline2;
-	vecDoub y_real, y_imag;
+    gsl_interp_accel *m_acc1, *m_acc2;
+    gsl_spline *m_spline1, *m_spline2;
+    vecDoub y_real, y_imag;
 
 // complex valued polynomial interpolation using gsl
-	poly_comp_interp1(VecDoub_I x, VecComp_I y)
-	{
-		Long N = x.size();
-		if (N != y.size())
-			SLS_ERR("x, y not the same length!");
-		m_acc1 = gsl_interp_accel_alloc();
-		m_acc2 = gsl_interp_accel_alloc();
-		m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
-		m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
-		y_real.resize(N); y_imag.resize(N);
-		for (Long i = 0; i < N; ++i) {
-			y_real[i] = real(y[i]);
-			y_imag[i] = imag(y[i]);
-		}
-		gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
-		gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
-	}
+    poly_comp_interp1(VecDoub_I x, VecComp_I y)
+    {
+        Long N = x.size();
+        if (N != y.size())
+            SLS_ERR("x, y not the same length!");
+        m_acc1 = gsl_interp_accel_alloc();
+        m_acc2 = gsl_interp_accel_alloc();
+        m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
+        m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
+        y_real.resize(N); y_imag.resize(N);
+        for (Long i = 0; i < N; ++i) {
+            y_real[i] = real(y[i]);
+            y_imag[i] = imag(y[i]);
+        }
+        gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
+        gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
+    }
 
-	poly_comp_interp1(SvecDoub_I x, SvecComp_I y)
-	{
-		Long N = x.size();
-		if (N != y.size())
-			SLS_ERR("x, y not the same length!");
-		m_acc1 = gsl_interp_accel_alloc();
-		m_acc2 = gsl_interp_accel_alloc();
-		m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
-		m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
-		y_real.resize(N); y_imag.resize(N);
-		for (Long i = 0; i < N; ++i) {
-			y_real[i] = real(y[i]);
-			y_imag[i] = imag(y[i]);
-		}
-		gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
-		gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
-	}
+    poly_comp_interp1(SvecDoub_I x, SvecComp_I y)
+    {
+        Long N = x.size();
+        if (N != y.size())
+            SLS_ERR("x, y not the same length!");
+        m_acc1 = gsl_interp_accel_alloc();
+        m_acc2 = gsl_interp_accel_alloc();
+        m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
+        m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
+        y_real.resize(N); y_imag.resize(N);
+        for (Long i = 0; i < N; ++i) {
+            y_real[i] = real(y[i]);
+            y_imag[i] = imag(y[i]);
+        }
+        gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
+        gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
+    }
 
-	poly_comp_interp1(DvecDoub_I x, DvecComp_I y)
-	{
-		Long N = x.size();
-		if (N != y.size())
-			SLS_ERR("x, y not the same length!");
-		m_acc1 = gsl_interp_accel_alloc();
-		m_acc2 = gsl_interp_accel_alloc();
-		m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
-		m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
-		y_real.resize(N); y_imag.resize(N);
-		for (Long i = 0; i < N; ++i) {
-			y_real[i] = real(y[i]);
-			y_imag[i] = imag(y[i]);
-		}
-		gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
-		gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
-	}
+    poly_comp_interp1(DvecDoub_I x, DvecComp_I y)
+    {
+        Long N = x.size();
+        if (N != y.size())
+            SLS_ERR("x, y not the same length!");
+        m_acc1 = gsl_interp_accel_alloc();
+        m_acc2 = gsl_interp_accel_alloc();
+        m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
+        m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
+        y_real.resize(N); y_imag.resize(N);
+        for (Long i = 0; i < N; ++i) {
+            y_real[i] = real(y[i]);
+            y_imag[i] = imag(y[i]);
+        }
+        gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
+        gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
+    }
 
 
-	Comp operator()(Doub_I x)
-	{
-		return Comp(gsl_spline_eval(m_spline1, x, m_acc1),
-				gsl_spline_eval(m_spline2, x, m_acc2));
-	}
+    Comp operator()(Doub_I x)
+    {
+        return Comp(gsl_spline_eval(m_spline1, x, m_acc1),
+                gsl_spline_eval(m_spline2, x, m_acc2));
+    }
 
-	Comp der(Doub_I x)
-	{
-		return Comp(gsl_spline_eval_deriv(m_spline1, x, m_acc1),
-				gsl_spline_eval_deriv(m_spline2, x, m_acc2));
-	}
+    Comp der(Doub_I x)
+    {
+        return Comp(gsl_spline_eval_deriv(m_spline1, x, m_acc1),
+                gsl_spline_eval_deriv(m_spline2, x, m_acc2));
+    }
 
-	Comp der2(Doub_I x)
-	{
-		return Comp(gsl_spline_eval_deriv2(m_spline1, x, m_acc1),
-				gsl_spline_eval_deriv2(m_spline2, x, m_acc2));
-	}
+    Comp der2(Doub_I x)
+    {
+        return Comp(gsl_spline_eval_deriv2(m_spline1, x, m_acc1),
+                gsl_spline_eval_deriv2(m_spline2, x, m_acc2));
+    }
 
-	~poly_comp_interp1()
-	{
-		gsl_spline_free(m_spline1);
-		gsl_spline_free(m_spline2);
-		gsl_interp_accel_free(m_acc1);
-		gsl_interp_accel_free(m_acc2);
-	}
+    ~poly_comp_interp1()
+    {
+        gsl_spline_free(m_spline1);
+        gsl_spline_free(m_spline2);
+        gsl_interp_accel_free(m_acc1);
+        gsl_interp_accel_free(m_acc2);
+    }
 };
 #endif
 
@@ -191,7 +191,7 @@ struct Base_interp
         dj = min(1,(Int)pow((Doub)n,0.25));
     }
 
-	Base_interp(const Doub *x, Long_I Nx, const Doub *y,  Int m)
+    Base_interp(const Doub *x, Long_I Nx, const Doub *y,  Int m)
         : n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
         dj = min(1,(Int)pow((Doub)n,0.25));
     }
@@ -242,7 +242,7 @@ struct Spline_interp : Base_interp
     : Base_interp(xv,yv,2), y2(xv.size())
     {sety2(&xv[0],yv,yp1,ypn);}
 
-	Spline_interp(const Doub *xv, Long_I Nxv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
+    Spline_interp(const Doub *xv, Long_I Nxv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
     : Base_interp(xv,Nxv,yv,2), y2(Nxv)
     {sety2(xv,yv,yp1,ypn);}
 
