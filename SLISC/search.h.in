@@ -19,7 +19,7 @@ namespace slisc {
 //% [Ts, Tv] = varargin{:};
 inline Long search(@Ts@_I s, @Tv@_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -122,7 +122,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 //% T = varargin{:};
 inline Long find_repeat(@T@_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])

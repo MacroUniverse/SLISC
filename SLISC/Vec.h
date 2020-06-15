@@ -185,4 +185,35 @@ inline void VecComp::operator<<(VecComp &rhs)
 typedef const VecComp & VecComp_I;
 typedef VecComp & VecComp_O, & VecComp_IO;
 
+
+class VecBool : VbaseBool
+{
+public:
+    typedef VbaseBool Base;
+    using Base::ref; // bit reference
+    using Base::resize;
+    using Base::operator[];
+
+    VecBool() = default;
+    explicit VecBool(Long_I N);
+    VecBool(const VecBool &rhs); // copy constructor
+    VecBool & operator=(const VecBool &rhs) = delete;
+    void operator<<(VecBool &rhs); // move data and rhs.resize(0)
+};
+
+inline VecBool::VecBool(Long_I N) : Base(N) {}
+
+inline VecBool::VecBool(const VecBool &rhs) : Base(0)
+{
+    SLS_ERR("copy constructor forbidden!");
+}
+
+inline void VecBool::operator<<(VecBool &rhs)
+{
+    Base::operator<<(rhs);
+}
+
+typedef const VecBool & VecBool_I;
+typedef VecBool & VecBool_O, & VecBool_IO;
+
 } // namespace slisc

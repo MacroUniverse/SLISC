@@ -8,7 +8,7 @@ namespace slisc {
 // return -1 if not found
 inline Long search(Int_I s, VecInt_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -18,7 +18,7 @@ inline Long search(Int_I s, VecInt_I v, Long start = 0)
 
 inline Long search(Llong_I s, VecLlong_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -28,7 +28,7 @@ inline Long search(Llong_I s, VecLlong_I v, Long start = 0)
 
 inline Long search(Char_I s, Str_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -38,7 +38,7 @@ inline Long search(Char_I s, Str_I v, Long start = 0)
 
 inline Long search(Char32_I s, Str32_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -48,7 +48,7 @@ inline Long search(Char32_I s, Str32_I v, Long start = 0)
 
 inline Long search(Str_I s, vecStr_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -58,7 +58,7 @@ inline Long search(Str_I s, vecStr_I v, Long start = 0)
 
 inline Long search(Str32_I s, vecStr32_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -68,7 +68,7 @@ inline Long search(Str32_I s, vecStr32_I v, Long start = 0)
 
 inline Long search(Llong_I s, vecLlong_I v, Long start = 0)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
             return i;
@@ -449,7 +449,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 // return -1 if no reapeat
 inline Long find_repeat(vecStr_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
@@ -461,7 +461,7 @@ inline Long find_repeat(vecStr_I v)
 
 inline Long find_repeat(vecStr32_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
@@ -473,7 +473,7 @@ inline Long find_repeat(vecStr32_I v)
 
 inline Long find_repeat(VecChar_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
@@ -485,7 +485,7 @@ inline Long find_repeat(VecChar_I v)
 
 inline Long find_repeat(VecInt_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
@@ -497,7 +497,7 @@ inline Long find_repeat(VecInt_I v)
 
 inline Long find_repeat(VecLlong_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
@@ -509,7 +509,7 @@ inline Long find_repeat(VecLlong_I v)
 
 inline Long find_repeat(vecLlong_I v)
 {
-    Long N = size(v);
+    Long N = v.size();
     for (Long i = 0; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])

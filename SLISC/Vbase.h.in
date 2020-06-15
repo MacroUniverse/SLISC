@@ -185,4 +185,123 @@ inline @VbaseT@::~@VbaseT@()
 }
 //% end
 //%------------------------
+
+class VbaseBool
+{
+protected:
+    std::vector<bool> m_v;
+public:
+    typedef std::vector<bool>::reference ref;
+    // constructors
+    VbaseBool() = default;
+    explicit VbaseBool(Long_I N);
+    VbaseBool(const VbaseBool &rhs); // copy constructor
+
+    // get properties
+    Long size() const;
+    void resize(Long_I N);
+    VbaseBool::ref operator[](Long_I i);
+    Bool operator[](Long_I i) const;
+    VbaseBool::ref operator()(Long_I i);
+    Bool operator()(Long_I i) const;
+    VbaseBool::ref end();
+    Bool end() const;
+    VbaseBool::ref end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    Bool end(Long_I i) const;
+    void operator<<(VbaseBool &rhs); // move data
+};
+
+inline VbaseBool::VbaseBool(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    if (N > 0)
+        m_v.resize(N);
+}
+
+inline VbaseBool::VbaseBool(const VbaseBool &rhs)
+{
+#ifndef SLS_ALLOW_COPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+}
+
+inline Long VbaseBool::size() const
+{
+    return m_v.size();
+}
+
+inline void VbaseBool::resize(Long_I N)
+{
+    m_v.resize(N);
+}
+
+inline void VbaseBool::operator<<(VbaseBool &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    m_v.swap(rhs.m_v);
+}
+
+inline VbaseBool::ref VbaseBool::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=size())
+    SLS_ERR("VbaseBool subscript out of bounds");
+#endif
+    return m_v[i];
+}
+
+inline Bool VbaseBool::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=size())
+        SLS_ERR("VbaseBool subscript out of bounds");
+#endif
+    return m_v[i];
+}
+
+inline VbaseBool::ref VbaseBool::operator()(Long_I i)
+{ return m_v[i]; }
+
+inline Bool VbaseBool::operator()(Long_I i) const
+{ return m_v[i]; }
+
+inline VbaseBool::ref VbaseBool::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_v.empty())
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_v.back();
+}
+
+inline Bool VbaseBool::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_v.empty())
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_v.back();
+}
+
+inline VbaseBool::ref VbaseBool::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > size())
+        SLS_ERR("index out of bound");
+#endif
+    return m_v[size() - i];
+}
+
+inline Bool VbaseBool::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > size())
+        SLS_ERR("index out of bound");
+#endif
+    return m_v[size() - i];
+}
 } // namespace slisc

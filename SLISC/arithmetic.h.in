@@ -5,8 +5,8 @@
 
 namespace slisc {
 
-//% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'Str'; 'Str32';
-//%  'vecLlong'; 'vecStr'; 'vecStr32';};
+//% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
+//%  'Str'; 'Str32'; 'vecStr'; 'vecStr32';};
 //%--------------------------
 //% T = varargin{:};
 inline Long size(@T@_I v)

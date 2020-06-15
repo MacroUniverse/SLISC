@@ -62,7 +62,7 @@ inline Long randLong(Long_I N)
 inline void randPerm(VecInt_O perm, Int_I N)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (size(perm) != N)
+    if (perm.size() != N)
         SLS_ERR("wrong shape!");
 #endif
     VecInt pool(N);
