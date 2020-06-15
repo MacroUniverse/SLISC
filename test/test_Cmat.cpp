@@ -1,4 +1,6 @@
 #include "../SLISC/Cmat.h"
+#include "../SLISC/compare.h"
+#include "../SLISC/random.h"
 
 void test_Cmat()
 {
@@ -12,6 +14,14 @@ void test_Cmat()
 	v(1, 2) = 2;
 	if (v(1, 2) != 2)
 		SLS_ERR("failed!");
+
+	// copy constructor
+	{
+		CmatDoub a; a.resize(4, 3); rand(a);
+		CmatDoub b(a);
+		if (a != b)
+			SLS_ERR("failed!");
+	}
 
 	// CmatBool
 	{
