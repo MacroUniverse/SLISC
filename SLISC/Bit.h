@@ -4,18 +4,6 @@
 
 namespace slisc {
 
-// class Bit
-// {
-// protected:
-//     Char *m_p;
-//     Long m_i;
-// public:
-//     Bit &operator=(Bool_I rhs)
-//     {
-//         set_bitL(m_p, m_i);
-//     }
-// }
-
 // bitwise conversion between uchar and char
 inline Uchar bit2uchar(Char_I c)
 {
@@ -129,27 +117,16 @@ inline Char str2bit(Str_I str)
     return byte;
 }
 
-// test if system use little endian (less significant byte has smaller memory address)
-// for example, shot int(1) will be 00000001 0000000 in little endian
-// there is no concept of "bit endian" since they are not addressable
-// Intel x86 and x64 architechture use little endian
-inline bool little_endian()
-{
-    short int num = 1;
-    Char *b = (Char *)&num;
-    return b[0];
-}
-
-// convert endianness
-inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
-{
-    Long half = elm_size/2;
-    for (Long i = 0; i < Nelm; ++i) {
-        for (Long j = 0; j < half; ++j) {
-            swap(data[j], data[elm_size-j]);
-        }
-        data += elm_size;
-    }
-}
+// class Bit
+// {
+// protected:
+//     Char *m_p;
+//     Long m_i;
+// public:
+//     Bit &operator=(Bool_I rhs)
+//     {
+//         set_bitL(m_p, m_i);
+//     }
+// }
 
 } // namespace slisc

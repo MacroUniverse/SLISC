@@ -89,7 +89,7 @@ inline void mkdir(Str_I path)
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
-    Int ret = system(("rmdir -p " + path).c_str()); ret++;
+    Int ret = system(("rmdir " + path).c_str()); ret++;
 }
 
 // make sure the directory (or directory of a file name) exist
@@ -257,7 +257,7 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 }
 
 // get number of bytes in file
-// return -1 if not found
+// return -1 if file not found
 inline Long file_size(Str_I fname)
 {
     if (!file_exist(fname))
@@ -437,4 +437,28 @@ inline void set_buff(ofstream &fout, Str_IO buffer)
 {
     fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
 }
+
+// test if system use little endian (less significant byte has smaller memory address)
+// for example, shot int(1) will be 00000001 0000000 in little endian
+// there is no concept of "bit endian" since they are not addressable
+// Intel x86 and x64 architechture use little endian
+inline Bool little_endian()
+{
+    short int num = 1;
+    Char *b = (Char *)&num;
+    return b[0];
+}
+
+// convert endianness
+inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
+{
+    Long half = elm_size/2;
+    for (Long i = 0; i < Nelm; ++i) {
+        for (Long j = 0; j < half; ++j) {
+            swap(data[j], data[elm_size-j]);
+        }
+        data += elm_size;
+    }
+}
+
 } // namespace slisc

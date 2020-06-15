@@ -44,7 +44,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 
 ## Recommended Programming Style
 * All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference.
-* Avoid using unsigned integer types when possible. They are not supported by the library for now.
+* Avoid using unsigned integer types when possible. They are not supported by the library for now. Use `size(std::vector<>)` in `arithmetic.h` instead of `vector::size()` when needed.
 * Generally, functions output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
 
 * Intrinsic types are aliased inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
@@ -55,6 +55,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 When using something in any header file, just including that header file will be enough. Header files can be included in any order. Here is some brief introduction for each header file:
 * `slisc.h` includes all the header files in SLISC (except testing)
 * `global.h` has all the container declaration and typedef etc.
+* `Bit.h` defines utilities for single-bit operations, and a pointer for bit
 * `complex_arith.h` defines extra operators used by `std::complex<>`, such as  `+, -, *, /, +=, -=, *=, /=, ==, !=` for mixed complex types.
 * `imag.h` defines a pure imaginary number types `Fimag` (`float`), `Imag` (`double`), and `Limag` (`ldouble`).
 * `scalar_arith.h` defines scalar utilities such as `min()`, `max()`, `sqr()`, `isodd()`, `mod()`.
@@ -66,6 +67,7 @@ When using something in any header file, just including that header file will be
 * `Cmat3.h` defines the col-major 3D array `Cmat3`.
 * `disp.h` display containers in console.
 * `input.h` promp for input, can save input history and repeat input automatically.
+* `file.h` file IO utilities.
 * `matt.h` save/load text-based data files in `.matt` format, can save multiple named scalars and containers to a single ascii text file. Use `matload.m` to load this file to Matlab.
 * `matb.h` same as `matt.h`, for binary data files.
 * `arithmetic.h` has utilities for dense matrices and vectors, e.g. `sum()`, `norm()`, dot product, matrix-vector multiplication.
@@ -146,14 +148,48 @@ TODO.
 ### Vector/Matrix Type Alias
 The typedefs for vector/matrix classes are (each type also comes with "_I", "_O", and "_IO" versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
 
-## algorithm.h
+Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `ptr()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
+
+## arithmetics.h
 * includes basic arithmatics like "==", "+=", "*=", plus(), minus(), etc.
 * Operators `+, -, *, /, +=, -=, *=, /=` are only for container types element-wise operations.
 
-## "disp.h"
+## disp.h
 includes various overloaded "disp()" functions.
 
-## "time.h"
+## file.h
+* `void file_list(vecStr_O names, Str_I path)` list all the files in a folder
+* `void read(ifstream &fin, Str_O str)` reads `str.size()` characters from `ifstream`, `str` will be resized if end if file reached before finishing.
+* `void write(ofstream &fout, Str_I str)` writes str into `ofstream`
+* `Bool file_exist(Str_I fname, Bool_I case_sens = true)` will check if file exists.
+* `void file_remove(Str_I fname)` will remove a file
+* `Bool dir_exist(Str_I path)` will test if a directory exist
+* `void mkdir(Str_I path)` will create a directory recursively
+* `void rmdir(Str_I path)` will remove a directory if it's empty
+* `void ensure_dir(Str_I dir_or_file)` will create a directory if it does not exist
+* `void file_rm(Str_I wildcard_name)` will delete a file
+* `void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true)` choose files with a given extension from a list of files
+* `file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true)` list all files in current directory, with a given extension
+* `void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)` copy a file (read then write), use default fstream buffer, not sure about performance
+* `void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)` file copy with user buffer (larger buffer is faster)
+* `void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)` move a file (copy and delete)
+* `void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)` file_move() with user buffer
+* `Long file_size(Str_I fname)` get number of bytes in file, return -1 if file not found
+* `void open_bin(ofstream &fout, Str_I fname)` open binary file to write
+* `void open_bin(ifstream &fin, Str_I fname)` open binary file to read
+* `void write(const Char *data, Long_I Nbyte, Str_I fname)` write binary file (once)
+* `Long read(Char *data, Long_I Nbyte, Str_I fname)` read binary file (once), return the actual bytes read
+* `void write(Str_I str, Str_I fname)` write Str to file
+* `void read(Str_O str, Str_I fname)` read whole file to Str
+* `void write(ofstream &fout, *_I s)` and `void read(ifstream &fin, *_O s)`, where `*` is a supported scalar type. This will read/write binary data from/to a file.
+* `void write(ofstream &fout, Str32_I str)` and `void read(ifstream &fin, Str32_O str)` are similar, for `utf-32` strings.
+* `void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)` read a table from file, two numbers should be separated by space, skipt specific number of lines at the beginning, matrix will auto-resize, 0 to multiple spaces & new line at the end of file are allowed
+* `void last_modified(Str_O yymmddhhmmss, Str_I fname)` last modified time fo a file
+* `void set_buff(ofstream &fout, Str_IO buffer)`, set write buffer, can speed up if there are a lot of staggered short reading and writing in the same drive
+* `Bool little_endian()` test if system use little endian (less significant byte has smaller memory address)
+* `void change_endian(Char *data, Long_I elm_size, Long_I Nelm)`, convert endianness
+
+## time.h
 time utilities
 
 ```c++

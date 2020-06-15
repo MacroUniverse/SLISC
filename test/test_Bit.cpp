@@ -1,8 +1,10 @@
 #include "../SLISC/Bit.h"
+#include "../SLISC/file.h"
+
 // >> and << operating on signed integer is "undefined"!
 // Char and Uchar reinterpret cast conserves bit, but static cast might not (for older architecture)
 
-void test_bits()
+void test_Bit()
 {
      using namespace slisc;
      if (!little_endian())
