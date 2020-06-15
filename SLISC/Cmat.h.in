@@ -21,12 +21,12 @@ protected:
     typedef @VbaseT@ Base;
     using Base::m_p;
     using Base::m_N;
-    Long m_Nr, m_Nc;
+    Long m_N1, m_N2;
 public:
     using Base::ptr;
     using Base::operator();
-    @CmatT@(): m_Nr(0), m_Nc(0) {};
-    @CmatT@(Long_I Nr, Long_I Nc);
+    @CmatT@(): m_N1(0), m_N2(0) {};
+    @CmatT@(Long_I N1, Long_I N2);
     @CmatT@(const @CmatT@ &rhs);        // Copy constructor
     @CmatT@ & operator=(const @CmatT@ &rhs) = delete;
     void operator<<(@CmatT@ &rhs); // move data and rhs.resize(0, 0)
@@ -34,10 +34,10 @@ public:
     const @T@& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
-    void resize(Long_I Nr, Long_I Nc); // resize (contents not preserved)
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
 };
 
-inline @CmatT@::@CmatT@(Long_I Nr, Long_I Nc) : Base(Nr*Nc), m_Nr(Nr), m_Nc(Nc) {}
+inline @CmatT@::@CmatT@(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
 
 inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
 {
@@ -47,40 +47,40 @@ inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(0)
 
 inline void @CmatT@::operator<<(@CmatT@ &rhs)
 {
-    m_Nr = rhs.m_Nr; m_Nc = rhs.m_Nc;
-    rhs.m_Nr = rhs.m_Nc = 0;
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
     Base::operator<<(rhs);
 }
 
 inline @T@ & @CmatT@::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i+m_Nr*j];
+    return m_p[i+m_N1*j];
 }
 
 inline const @T@ & @CmatT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i+m_Nr*j];
+    return m_p[i+m_N1*j];
 }
 
 inline Long @CmatT@::n1() const
-{ return m_Nr; }
+{ return m_N1; }
 
 inline Long @CmatT@::n2() const
-{ return m_Nc; }
+{ return m_N2; }
 
-inline void @CmatT@::resize(Long_I Nr, Long_I Nc)
+inline void @CmatT@::resize(Long_I N1, Long_I N2)
 {
-    if (Nr != m_Nr || Nc != m_Nc) {
-        Base::resize(Nr*Nc);
-        m_Nr = Nr; m_Nc = Nc;
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
     }
 }
 //% end
@@ -88,4 +88,75 @@ inline void @CmatT@::resize(Long_I Nr, Long_I Nc)
 typedef const @CmatT@ & @CmatT@_I;
 typedef @CmatT@ & @CmatT@_O, & @CmatT@_IO;
 //%----------------------------------------
+
+class CmatBool : public VbaseBool
+{
+protected:
+    typedef VbaseBool Base;
+    using Base::ref;
+    Long m_N1, m_N2;
+public:
+    using Base::operator();
+    CmatBool(): m_N1(0), m_N2(0) {};
+    CmatBool(Long_I N1, Long_I N2);
+    CmatBool(const CmatBool &rhs);        // Copy constructor
+    CmatBool & operator=(const CmatBool &rhs) = delete;
+    void operator<<(CmatBool &rhs); // move data and rhs.resize(0, 0)
+    CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
+    Bool operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline CmatBool::CmatBool(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline CmatBool::CmatBool(const CmatBool &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, "
+        "use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void CmatBool::operator<<(CmatBool &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return (*this)[i+m_N1*j];
+}
+
+inline Bool CmatBool::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return (*this)[i+m_N1*j];
+}
+
+inline Long CmatBool::n1() const
+{ return m_N1; }
+
+inline Long CmatBool::n2() const
+{ return m_N2; }
+
+inline void CmatBool::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const CmatBool & CmatBool_I;
+typedef CmatBool & CmatBool_O, & CmatBool_IO;
+
 } // namespace slisc

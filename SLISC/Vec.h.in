@@ -46,7 +46,7 @@ typedef const @VecT@ & @VecT@_I;
 typedef @VecT@ & @VecT@_O, & @VecT@_IO;
 //%------------------------
 
-class VecBool : VbaseBool
+class VecBool : public VbaseBool
 {
 public:
     typedef VbaseBool Base;

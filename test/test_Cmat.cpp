@@ -12,4 +12,21 @@ void test_Cmat()
 	v(1, 2) = 2;
 	if (v(1, 2) != 2)
 		SLS_ERR("failed!");
+
+	// CmatBool
+	{
+		Long N1 = 2; N2 = 3;
+		CmatBool v(N1, N2);
+		if (v.n1() != N1 || v.n2() != N2)
+			SLS_ERR("failed!");
+		v[0] = 1; v[1] = 0; v[2] = 1; v[3] = 0;
+		if (!v[0] || v[1] || !v[2] || v[3])
+			SLS_ERR("failed!");
+		v(1, 2) = true;
+		if (!v(1, 2))
+			SLS_ERR("failed!");
+        v.resize(N1+1, N2+1);
+        if (v.n1() != N1+1 || v.n2() != N2+1)
+            SLS_ERR("failed!");
+	}
 }

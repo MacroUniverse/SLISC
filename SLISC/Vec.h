@@ -186,7 +186,7 @@ typedef const VecComp & VecComp_I;
 typedef VecComp & VecComp_O, & VecComp_IO;
 
 
-class VecBool : VbaseBool
+class VecBool : public VbaseBool
 {
 public:
     typedef VbaseBool Base;
