@@ -7,65 +7,100 @@ namespace slisc {
 // class Bit
 // {
 // protected:
-// 	Uchar *m_p;
-// 	Long m_i;
+//     Char *m_p;
+//     Long m_i;
 // public:
-// 	Bit &operator=(Bool_I rhs)
-// 	{
-// 		set_bitL(m_p, m_i);
-// 	}
+//     Bit &operator=(Bool_I rhs)
+//     {
+//         set_bitL(m_p, m_i);
+//     }
 // }
 
-// extract a bit at the i-th place from the right
-inline bool bitR(const Uchar *byte, int i)
+// bitwise conversion between uchar and char
+inline Uchar bit2uchar(Char_I c)
 {
-    return (*byte >> i) & Uchar(1);
+    return reinterpret_cast<const Uchar&>(c);
 }
+
+inline Char bit2char(Uchar_I uc)
+{
+    return reinterpret_cast<const Char&>(uc);
+}
+
+// extract a bit at the i-th place from the right
+inline Bool bitR(Char_I byte, Int_I i)
+{
+    return byte & Uchar(1) << i;
+}
+
+inline Bool bitR(const Char *byte, Int_I i)
+{ return bitR(*byte, i); }
 
 // extract a bit at the i-th place from the left
-inline bool bitL(const Uchar *byte, int i)
+inline Bool bitL(Char_I byte, Int_I i)
 {
-    return (*byte << i) & Uchar(128);
+    return byte & Uchar(128) >> i;
 }
+
+inline Bool bitL(const Char *byte, Int_I i)
+{ return bitL(*byte, i); }
 
 // set i-th bit from the right
-inline void set_bitR(Uchar *byte, int i)
+inline void set_bitR(Char_IO byte, Int_I i)
 {
-    *byte |= Uchar(1) << i;
+    byte |= Uchar(1) << i;
 }
+
+inline void set_bitR(Char *byte, Int_I i)
+{ set_bitR(*byte, i); }
 
 // set i-th bit from the left
-inline void set_bitL(Uchar *byte, int i)
+inline void set_bitL(Char_IO byte, Int_I i)
 {
-    *byte |= Uchar(128) >> i;
+    byte |= Uchar(128) >> i;
 }
+
+inline void set_bitL(Char *byte, Int_I i)
+{ set_bitL(*byte, i); }
 
 // unset i-th bit from the right
-inline void unset_bitR(Uchar *byte, int i)
+inline void unset_bitR(Char_IO byte, Int_I i)
 {
-    *byte &= ~(Uchar(1) << i);
+    byte &= ~(Uchar(1) << i);
 }
+
+inline void unset_bitR(Char *byte, Int_I i)
+{ unset_bitR(*byte, i); }
 
 // unset i-th bit from the left
-inline void unset_bitL(Uchar *byte, int i)
+inline void unset_bitL(Char_IO byte, Int_I i)
 {
-    *byte &= ~(Uchar(128) >> i);
+    byte &= ~(Uchar(128) >> i);
 }
+
+inline void unset_bitL(Char *byte, Int_I i)
+{ unset_bitL(*byte, i); }
 
 // change the i-th bit from the right
-inline void toggle_bitR(Uchar *byte, int i)
+inline void toggle_bitR(Char_IO byte, Int_I i)
 {
-    *byte ^= Uchar(1) << i;
+    byte ^= Uchar(1) << i;
 }
+
+inline void toggle_bitR(Char *byte, Int_I i)
+{ toggle_bitR(*byte, i); }
 
 // flip the i-th bit from the left
-inline void toggle_bitL(Uchar *byte, int i)
+inline void toggle_bitL(Char_IO byte, Int_I i)
 {
-    *byte ^= Uchar(128) >> i;
+    byte ^= Uchar(128) >> i;
 }
 
+inline void toggle_bitL(Char *byte, Int_I i)
+{ toggle_bitL(*byte, i); }
+
 // convert byte to 8 char '0' or '1'
-inline Str bit2str(const Uchar *byte)
+inline Str bit2str(Char_I byte)
 {
     Str str; str.resize(8);
     for (Int i = 0; i < 8; ++i) {
@@ -77,11 +112,14 @@ inline Str bit2str(const Uchar *byte)
     return str;
 }
 
+inline Str bit2str(const Char *byte)
+{ return bit2str(*byte); }
+
 // convert 8 char '0' or '1' to byte
-// also consider to use binary literal e.g. `Uchar(10100101b)`
-inline Uchar str2bit(Str_I str)
+// also consider to use binary literal e.g. `Char(10100101b)`
+inline Char str2bit(Str_I str)
 {
-    Uchar byte;
+    Char byte;
     for (Int i = 0; i < 8; ++i) {
         if (str[i] == '1')
             set_bitL(&byte, i);
@@ -98,12 +136,12 @@ inline Uchar str2bit(Str_I str)
 inline bool little_endian()
 {
     short int num = 1;
-    Uchar *b = (Uchar *)&num;
+    Char *b = (Char *)&num;
     return b[0];
 }
 
 // convert endianness
-inline void change_endian(Uchar *data, Long_I elm_size, Long_I Nelm)
+inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
 {
     Long half = elm_size/2;
     for (Long i = 0; i < Nelm; ++i) {
