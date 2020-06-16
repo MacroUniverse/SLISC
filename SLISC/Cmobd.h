@@ -17,6 +17,7 @@ protected:
     Cmat3Int m_data;
     Long m_N1; // m_N2 = m_N2 = (blk_size - 1) * Nblk - 1
 public:
+    CmobdInt();
     CmobdInt(Long_I blk_size, Long_I Nblk);
     const Int &operator()(Long_I i) const;
     Int &operator()(Long_I i);
@@ -37,6 +38,8 @@ public:
 
 typedef const CmobdInt &CmobdInt_I;
 typedef CmobdInt &CmobdInt_O, &CmobdInt_IO;
+
+inline CmobdInt::CmobdInt() : CmobdInt(0, 0) {}
 
 inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)
@@ -185,6 +188,7 @@ protected:
     Cmat3Doub m_data;
     Long m_N1; // m_N2 = m_N2 = (blk_size - 1) * Nblk - 1
 public:
+    CmobdDoub();
     CmobdDoub(Long_I blk_size, Long_I Nblk);
     const Doub &operator()(Long_I i) const;
     Doub &operator()(Long_I i);
@@ -205,6 +209,8 @@ public:
 
 typedef const CmobdDoub &CmobdDoub_I;
 typedef CmobdDoub &CmobdDoub_O, &CmobdDoub_IO;
+
+inline CmobdDoub::CmobdDoub() : CmobdDoub(0, 0) {}
 
 inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)
@@ -353,6 +359,7 @@ protected:
     Cmat3Comp m_data;
     Long m_N1; // m_N2 = m_N2 = (blk_size - 1) * Nblk - 1
 public:
+    CmobdComp();
     CmobdComp(Long_I blk_size, Long_I Nblk);
     const Comp &operator()(Long_I i) const;
     Comp &operator()(Long_I i);
@@ -373,6 +380,8 @@ public:
 
 typedef const CmobdComp &CmobdComp_I;
 typedef CmobdComp &CmobdComp_O, &CmobdComp_IO;
+
+inline CmobdComp::CmobdComp() : CmobdComp(0, 0) {}
 
 inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)

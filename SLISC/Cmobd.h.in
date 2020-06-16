@@ -22,6 +22,7 @@ protected:
     @Cmat3T@ m_data;
     Long m_N1; // m_N2 = m_N2 = (blk_size - 1) * Nblk - 1
 public:
+    @CmobdT@();
     @CmobdT@(Long_I blk_size, Long_I Nblk);
     const @T@ &operator()(Long_I i) const;
     @T@ &operator()(Long_I i);
@@ -42,6 +43,8 @@ public:
 
 typedef const @CmobdT@ &@CmobdT@_I;
 typedef @CmobdT@ &@CmobdT@_O, &@CmobdT@_IO;
+
+inline @CmobdT@::@CmobdT@() : @CmobdT@(0, 0) {}
 
 inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
     : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)

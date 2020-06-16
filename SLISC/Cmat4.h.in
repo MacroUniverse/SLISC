@@ -21,7 +21,7 @@ public:
     using Base::ptr;
     @Cmat4T@(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     @Cmat4T@(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    @Cmat4T@(const @Cmat4T@ &rhs) = delete;   // Copy constructor
+    @Cmat4T@(const @Cmat4T@ &rhs);   // Copy constructor
     void operator<<(@Cmat4T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     @T@ & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -34,6 +34,15 @@ public:
 
 inline @Cmat4T@::@Cmat4T@(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
+
+// Copy constructor
+inline @Cmat4T@::@Cmat4T@(const @Cmat4T@ &rhs): Base(rhs),
+    m_N1(rhs.m_N1), m_N2(rhs.m_N2), m_N3(rhs.m_N3), m_N4(rhs.m_N4)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
 
 inline void @Cmat4T@::operator<<(@Cmat4T@ &rhs)
 {
