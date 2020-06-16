@@ -83,8 +83,8 @@ inline Bool dir_exist(Str_I path)
 inline void mkdir(Str_I path)
 {
     Long ind = path.find("\"");
-    if (ind < 0)
-        SLS_ERR("folder name should not contain double quote!");
+    if (ind >= 0)
+        SLS_ERR("folder name should not contain double quote: " + path);
     Int ret = system(("mkdir -p \"" + path + "\"").c_str()); ret++;
     if (!dir_exist(path))
         SLS_ERR("mkdir failed: " + path);
