@@ -218,14 +218,14 @@ inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
 #endif
         m_rw = 'w';
         m_n = 0;
-        m_out = ofstream(fname);
+        m_out.open(fname);
         if (!m_out.good())
             SLS_ERR("error: file not created (directory does not exist ?): " + fname);
         m_out.precision(precision);
     }
     else {
         m_rw = 'r';
-        m_in = ifstream(fname);
+        m_in.open(fname);
         if (!m_in.good())
             SLS_ERR("error: file not found: " + fname);
         m_in.precision(17);

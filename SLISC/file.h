@@ -4,7 +4,6 @@
 #include "linux.h"
 #include <sstream>
 #include <fstream>
-#include <codecvt>
 #ifdef SLS_HAS_FILESYSTEM
 #include <filesystem>
 #endif

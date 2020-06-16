@@ -3,7 +3,6 @@
 #include <sstream>
 #include <fstream>
 #include <locale>
-#include <codecvt>
 #ifdef _MSC_VER
 #include <Windows.h> // for console unicode output
 #undef max
@@ -13,9 +12,7 @@
 #include "file.h"
 #include "utfcpp/utf8.h"
 
-#ifdef _MSC_VER
 #define SLS_USE_UTFCPP
-#endif
 
 namespace slisc {
 
