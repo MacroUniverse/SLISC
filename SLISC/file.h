@@ -82,7 +82,11 @@ inline Bool dir_exist(Str_I path)
 // make multiple level of directory
 inline void mkdir(Str_I path)
 {
-    Int ret = system(("mkdir -p " + path).c_str()); ret++;
+    if (path.find("\"") >= 0)
+        SLS_ERR("folder name should not contain double quote!");
+    Int ret = system(("mkdir -p \"" + path + "\"").c_str()); ret++;
+    if (!dir_exist(path))
+        SLS_ERR("mkdir failed: " + path);
 }
 
 // remove an empty directory
