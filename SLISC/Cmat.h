@@ -47,7 +47,8 @@ inline Char & CmatChar::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatChar index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -56,7 +57,8 @@ inline const Char & CmatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatChar index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -122,7 +124,8 @@ inline Int & CmatInt::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatInt index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -131,7 +134,8 @@ inline const Int & CmatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatInt index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -197,7 +201,8 @@ inline Llong & CmatLlong::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatLlong index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -206,7 +211,8 @@ inline const Llong & CmatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatLlong index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -281,7 +287,8 @@ inline Float & CmatFloat::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatFloat index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -290,7 +297,8 @@ inline const Float & CmatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatFloat index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -356,7 +364,8 @@ inline Doub & CmatDoub::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatDoub index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -365,7 +374,8 @@ inline const Doub & CmatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatDoub index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -431,7 +441,8 @@ inline Comp & CmatComp::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatComp index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -440,7 +451,8 @@ inline const Comp & CmatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatComp index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -506,7 +518,8 @@ inline Imag & CmatImag::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatImag index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -515,7 +528,8 @@ inline const Imag & CmatImag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatImag index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return m_p[i+m_N1*j];
 }
@@ -581,7 +595,8 @@ inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return (*this)[i+m_N1*j];
 }
@@ -590,7 +605,8 @@ inline Bool CmatBool::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
-        SLS_ERR("Matrix subscript out of bounds");
+        SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
     return (*this)[i+m_N1*j];
 }

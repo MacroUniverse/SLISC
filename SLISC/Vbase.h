@@ -2,6 +2,7 @@
 #pragma once
 #include "global.h"
 #include "Imag.h"
+#include "string.h"
 
 namespace slisc {
 class VbaseChar
@@ -114,7 +115,7 @@ inline Char & VbaseChar::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseChar subscript out of bounds");
+    SLS_ERR("VbaseChar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -123,7 +124,7 @@ inline const Char & VbaseChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseChar subscript out of bounds");
+        SLS_ERR("VbaseChar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -156,7 +157,7 @@ inline Char & VbaseChar::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -165,7 +166,7 @@ inline const Char & VbaseChar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -286,7 +287,7 @@ inline Int & VbaseInt::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseInt subscript out of bounds");
+    SLS_ERR("VbaseInt index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -295,7 +296,7 @@ inline const Int & VbaseInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseInt subscript out of bounds");
+        SLS_ERR("VbaseInt index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -328,7 +329,7 @@ inline Int & VbaseInt::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -337,7 +338,7 @@ inline const Int & VbaseInt::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -458,7 +459,7 @@ inline Llong & VbaseLlong::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseLlong subscript out of bounds");
+    SLS_ERR("VbaseLlong index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -467,7 +468,7 @@ inline const Llong & VbaseLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseLlong subscript out of bounds");
+        SLS_ERR("VbaseLlong index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -500,7 +501,7 @@ inline Llong & VbaseLlong::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -509,7 +510,7 @@ inline const Llong & VbaseLlong::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -636,7 +637,7 @@ inline Float & VbaseFloat::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseFloat subscript out of bounds");
+    SLS_ERR("VbaseFloat index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -645,7 +646,7 @@ inline const Float & VbaseFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseFloat subscript out of bounds");
+        SLS_ERR("VbaseFloat index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -678,7 +679,7 @@ inline Float & VbaseFloat::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -687,7 +688,7 @@ inline const Float & VbaseFloat::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -808,7 +809,7 @@ inline Doub & VbaseDoub::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseDoub subscript out of bounds");
+    SLS_ERR("VbaseDoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -817,7 +818,7 @@ inline const Doub & VbaseDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseDoub subscript out of bounds");
+        SLS_ERR("VbaseDoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -850,7 +851,7 @@ inline Doub & VbaseDoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -859,7 +860,7 @@ inline const Doub & VbaseDoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -980,7 +981,7 @@ inline Comp & VbaseComp::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseComp subscript out of bounds");
+    SLS_ERR("VbaseComp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -989,7 +990,7 @@ inline const Comp & VbaseComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseComp subscript out of bounds");
+        SLS_ERR("VbaseComp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -1022,7 +1023,7 @@ inline Comp & VbaseComp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -1031,7 +1032,7 @@ inline const Comp & VbaseComp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -1152,7 +1153,7 @@ inline Imag & VbaseImag::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
-    SLS_ERR("VbaseImag subscript out of bounds");
+    SLS_ERR("VbaseImag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -1161,7 +1162,7 @@ inline const Imag & VbaseImag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
-        SLS_ERR("VbaseImag subscript out of bounds");
+        SLS_ERR("VbaseImag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
     return m_p[i];
 }
@@ -1194,7 +1195,7 @@ inline Imag & VbaseImag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -1203,7 +1204,7 @@ inline const Imag & VbaseImag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
     return m_p[m_N - i];
 }
@@ -1277,8 +1278,8 @@ inline void VbaseBool::operator<<(VbaseBool &rhs)
 inline VbaseBool::ref VbaseBool::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
-if (i<0 || i>=size())
-    SLS_ERR("VbaseBool subscript out of bounds");
+    if (i<0 || i>=size())
+        SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
     return m_v[i];
 }
@@ -1287,7 +1288,7 @@ inline Bool VbaseBool::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=size())
-        SLS_ERR("VbaseBool subscript out of bounds");
+        SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
     return m_v[i];
 }
@@ -1320,7 +1321,7 @@ inline VbaseBool::ref VbaseBool::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > size())
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
     return m_v[size() - i];
 }
@@ -1329,7 +1330,7 @@ inline Bool VbaseBool::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > size())
-        SLS_ERR("index out of bound");
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
     return m_v[size() - i];
 }
