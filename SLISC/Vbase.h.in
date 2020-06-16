@@ -57,14 +57,17 @@ inline @VbaseT@::@VbaseT@(Long_I N)
         m_p = new @T@[N];
 }
 
+// copy constructor
 inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new @T@[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new @T@[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline @T@ * @VbaseT@::ptr()

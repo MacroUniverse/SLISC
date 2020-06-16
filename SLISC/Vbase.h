@@ -46,14 +46,17 @@ inline VbaseChar::VbaseChar(Long_I N)
         m_p = new Char[N];
 }
 
+// copy constructor
 inline VbaseChar::VbaseChar(const VbaseChar &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Char[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Char[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Char * VbaseChar::ptr()
@@ -215,14 +218,17 @@ inline VbaseInt::VbaseInt(Long_I N)
         m_p = new Int[N];
 }
 
+// copy constructor
 inline VbaseInt::VbaseInt(const VbaseInt &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Int[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Int[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Int * VbaseInt::ptr()
@@ -384,14 +390,17 @@ inline VbaseLlong::VbaseLlong(Long_I N)
         m_p = new Llong[N];
 }
 
+// copy constructor
 inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Llong[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Llong[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Llong * VbaseLlong::ptr()
@@ -559,14 +568,17 @@ inline VbaseFloat::VbaseFloat(Long_I N)
         m_p = new Float[N];
 }
 
+// copy constructor
 inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Float[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Float[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Float * VbaseFloat::ptr()
@@ -728,14 +740,17 @@ inline VbaseDoub::VbaseDoub(Long_I N)
         m_p = new Doub[N];
 }
 
+// copy constructor
 inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Doub[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Doub[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Doub * VbaseDoub::ptr()
@@ -897,14 +912,17 @@ inline VbaseComp::VbaseComp(Long_I N)
         m_p = new Comp[N];
 }
 
+// copy constructor
 inline VbaseComp::VbaseComp(const VbaseComp &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Comp[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Comp[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Comp * VbaseComp::ptr()
@@ -1066,14 +1084,17 @@ inline VbaseImag::VbaseImag(Long_I N)
         m_p = new Imag[N];
 }
 
+// copy constructor
 inline VbaseImag::VbaseImag(const VbaseImag &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
     m_N = rhs.m_N;
-    m_p = new Imag[m_N];
-    memcpy(m_p, rhs.ptr(), m_N);
+    if (m_N > 0) {
+        m_p = new Imag[m_N];
+        memcpy(m_p, rhs.ptr(), m_N);
+    }
 }
 
 inline Imag * VbaseImag::ptr()
