@@ -21,6 +21,10 @@ elseif any(strfind(T, 'Lcomp'))
     ret = 'Lcomp';
 elseif any(strfind(T, 'Imag'))
     ret = 'Imag';
+elseif strcmp(T, 'Str')
+    ret = 'Char';
+elseif strcmp(T, 'Str32')
+    ret = 'Char32';
 else
     error('not implemented');
 end

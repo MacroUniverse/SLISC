@@ -85,4 +85,117 @@ inline Long CRLF_to_LF(Str_IO str)
     }
 }
 
+// convert string to lower case
+//% types = {'Str'; 'Str32'};
+//%----------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+inline void to_lower(@T@_O str)
+{
+    @Ts@ C, diff = 'a' - 'A';
+    Long N = str.size();
+    for (Long i = 0; i < N; ++i) {
+        C = str[i];
+        if (C >= 'A' && C <= 'Z')
+            str[i] = C + diff;
+    }
+}
+//%----------------------------
+
+// convert string to lower case
+//% types = {'Str'; 'Str32'};
+//%----------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+inline void to_lower(@T@_IO str, @T@_I STR)
+{
+    @Ts@ C, diff = 'a' - 'A';
+    Long N = STR.size();
+    str.resize(N);
+    for (Long i = 0; i < N; ++i) {
+        C = STR[i];
+        if (C >= 'A' && C <= 'Z')
+            str[i] = C + diff;
+    }
+}
+//%----------------------------
+
+// convert string to lower case
+//% types = {'Str'; 'Str32'};
+//%----------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+inline void to_upper(@T@_O STR, @T@_I str)
+{
+    @Ts@ c, diff = 'A' - 'a';
+    Long N = str.size();
+    STR.resize(N);
+    for (Long i = 0; i < N; ++i) {
+        c = str[i];
+        if (c >= 'a' && c <= 'z')
+            STR[i] = c + diff;
+    }
+}
+//%----------------------------
+
+// convert string to lower case
+//% types = {'Str'; 'Str32'};
+//%----------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+inline void to_upper(@T@_IO str)
+{
+    @Ts@ c, diff = 'A' - 'a';
+    Long N = str.size();
+    for (Long i = 0; i < N; ++i) {
+        c = str[i];
+        if (c >= 'a' && c <= 'z')
+            str[i] = c + diff;
+    }
+}
+//%----------------------------
+
+//% types = {'vecStr'; 'vecStr32'};
+//%----------------------------
+//% T = varargin{:};
+inline void to_lower(@T@_O vs, @T@_I VS)
+{
+    Long N = VS.size();
+    vs.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_lower(vs[i], VS[i]);
+}
+//%-----------------------------
+
+//% types = {'vecStr'; 'vecStr32'};
+//%----------------------------
+//% T = varargin{:};
+inline void to_lower(@T@_IO vs)
+{
+    Long N = vs.size();
+    for (Long i = 0; i < N; ++i)
+        to_lower(vs[i]);
+}
+//%-----------------------------
+
+//% types = {'vecStr'; 'vecStr32'};
+//%----------------------------
+//% T = varargin{:};
+inline void to_upper(@T@_O VS, @T@_I vs)
+{
+    Long N = vs.size();
+    VS.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_upper(VS[i], vs[i]);
+}
+//%-----------------------------
+
+//% types = {'vecStr'; 'vecStr32'};
+//%----------------------------
+//% T = varargin{:};
+inline void to_upper(@T@_IO vs)
+{
+    Long N = vs.size();
+    vs.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_upper(vs[i]);
+}
+//%-----------------------------
+
 } // namespace slisc

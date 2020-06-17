@@ -148,4 +148,170 @@ inline Long CRLF_to_LF(Str_IO str)
     }
 }
 
+// convert string to lower case
+inline void to_lower(Str_O str)
+{
+    Char C, diff = 'a' - 'A';
+    Long N = str.size();
+    for (Long i = 0; i < N; ++i) {
+        C = str[i];
+        if (C >= 'A' && C <= 'Z')
+            str[i] = C + diff;
+    }
+}
+
+inline void to_lower(Str32_O str)
+{
+    Char32 C, diff = 'a' - 'A';
+    Long N = str.size();
+    for (Long i = 0; i < N; ++i) {
+        C = str[i];
+        if (C >= 'A' && C <= 'Z')
+            str[i] = C + diff;
+    }
+}
+
+
+// convert string to lower case
+inline void to_lower(Str_IO str, Str_I STR)
+{
+    Char C, diff = 'a' - 'A';
+    Long N = STR.size();
+    str.resize(N);
+    for (Long i = 0; i < N; ++i) {
+        C = STR[i];
+        if (C >= 'A' && C <= 'Z')
+            str[i] = C + diff;
+    }
+}
+
+inline void to_lower(Str32_IO str, Str32_I STR)
+{
+    Char32 C, diff = 'a' - 'A';
+    Long N = STR.size();
+    str.resize(N);
+    for (Long i = 0; i < N; ++i) {
+        C = STR[i];
+        if (C >= 'A' && C <= 'Z')
+            str[i] = C + diff;
+    }
+}
+
+
+// convert string to lower case
+inline void to_upper(Str_O STR, Str_I str)
+{
+    Char c, diff = 'A' - 'a';
+    Long N = str.size();
+    STR.resize(N);
+    for (Long i = 0; i < N; ++i) {
+        c = str[i];
+        if (c >= 'a' && c <= 'z')
+            STR[i] = c + diff;
+    }
+}
+
+inline void to_upper(Str32_O STR, Str32_I str)
+{
+    Char32 c, diff = 'A' - 'a';
+    Long N = str.size();
+    STR.resize(N);
+    for (Long i = 0; i < N; ++i) {
+        c = str[i];
+        if (c >= 'a' && c <= 'z')
+            STR[i] = c + diff;
+    }
+}
+
+
+// convert string to lower case
+inline void to_upper(Str_IO str)
+{
+    Char c, diff = 'A' - 'a';
+    Long N = str.size();
+    for (Long i = 0; i < N; ++i) {
+        c = str[i];
+        if (c >= 'a' && c <= 'z')
+            str[i] = c + diff;
+    }
+}
+
+inline void to_upper(Str32_IO str)
+{
+    Char32 c, diff = 'A' - 'a';
+    Long N = str.size();
+    for (Long i = 0; i < N; ++i) {
+        c = str[i];
+        if (c >= 'a' && c <= 'z')
+            str[i] = c + diff;
+    }
+}
+
+
+inline void to_lower(vecStr_O vs, vecStr_I VS)
+{
+    Long N = VS.size();
+    vs.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_lower(vs[i], VS[i]);
+}
+
+inline void to_lower(vecStr32_O vs, vecStr32_I VS)
+{
+    Long N = VS.size();
+    vs.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_lower(vs[i], VS[i]);
+}
+
+
+inline void to_lower(vecStr_IO vs)
+{
+    Long N = vs.size();
+    for (Long i = 0; i < N; ++i)
+        to_lower(vs[i]);
+}
+
+inline void to_lower(vecStr32_IO vs)
+{
+    Long N = vs.size();
+    for (Long i = 0; i < N; ++i)
+        to_lower(vs[i]);
+}
+
+
+inline void to_upper(vecStr_O VS, vecStr_I vs)
+{
+    Long N = vs.size();
+    VS.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_upper(VS[i], vs[i]);
+}
+
+inline void to_upper(vecStr32_O VS, vecStr32_I vs)
+{
+    Long N = vs.size();
+    VS.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_upper(VS[i], vs[i]);
+}
+
+
+inline void to_upper(vecStr_IO vs)
+{
+    Long N = vs.size();
+    vs.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_upper(vs[i]);
+}
+
+inline void to_upper(vecStr32_IO vs)
+{
+    Long N = vs.size();
+    vs.resize(N);
+    for (Long i = 0; i < N; ++i)
+        to_upper(vs[i]);
+}
+
+
 } // namespace slisc
