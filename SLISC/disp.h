@@ -1,5 +1,6 @@
 #pragma once
 #include "arithmetic.h"
+#include "unicode.h"
 
 namespace slisc {
 const Int def_disp_prec = 8;
@@ -482,4 +483,19 @@ inline void disp(CbandComp_I a, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 
+
+// for vector of string
+void disp(vecStr_I v)
+{
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        cout << v[i] << endl;
+}
+
+void disp(vecStr32_I v)
+{
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        cout << utf32to8(v[i]) << endl;
+}
 } // namespace slisc

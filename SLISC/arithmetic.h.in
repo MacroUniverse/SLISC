@@ -691,20 +691,29 @@ inline void flip(@T@_O v, @T1@_I v1)
 //%     'SvecLlong', 'VecLlong';
 //%     'SvecDoub', 'VecLlong';
 //%     'SvecComp', 'VecLlong';
+//%     'vecLlong', 'VecLlong';
+//%     'vecStr', 'VecLlong';
+//%     'vecStr', 'vecLlong';
+//%     'vecStr32', 'VecLlong';
+//%     'vecStr32', 'vecLlong';
 //%     };
 //%---------------------
 //% [Tv, To] = varargin{:};
-//% Tu = ['Vec' contain_type(Tv)];
+//% if ~is_vecStr(Tv) && ~is_vecStr32(Tv)
+//%     Tu = ['Vec' contain_type(Tv)];
+//% else
+//%     Tu = Tv;
+//% end
 inline void reorder(@Tv@_O v, @To@_I order)
 {
-    Long N = v.size();
 #ifdef SLS_CHECK_SHAPE
-    if (order.size() != N)
+    if ((Long)order.size() != (Long)v.size())
         SLS_ERR("wrong shape!");
 #endif
-    static @Tu@ u(N);
-    if (N > u.size())
-        u.resize(max(N, 2*u.size()));
+    Long N = v.size();
+    static @Tu@ u; u.resize(N);
+    if (N > (Long)u.size())
+        u.resize(max(N, Long(2*u.size())));
     for (Long i = 0; i < N; ++i)
         u[i] = v[order[i]];
     for (Long i = 0; i < N; ++i)

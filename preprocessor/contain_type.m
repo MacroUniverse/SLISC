@@ -26,6 +26,6 @@ elseif strcmp(T, 'Str')
 elseif strcmp(T, 'Str32')
     ret = 'Char32';
 else
-    error('not implemented');
+    error('contain_type: not implemented');
 end
 end
