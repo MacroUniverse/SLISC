@@ -44,8 +44,13 @@ void test_sort()
 
 	// sort string
 	{
-		vecStr vs = {"ABC3", "aBC2", "abc1"}, vs1 = {"abc1", "aBC2", "ABC3"};
+		vecStr vs =  {"a", "ab", "bd", "AD", "1234", "A3", "B", "bC"};
+		sort(vs);
+		vecStr vs1 = {"1234", "A3", "AD", "B", "a", "ab", "bC", "bd"};
+		if (vs != vs1)
+			SLS_ERR("failed!");
 		sort_case_insens(vs);
+		vs1 = {"1234", "a", "A3", "ab", "AD", "B", "bC", "bd"};
 		if (vs != vs1)
 			SLS_ERR("failed!");
 	}

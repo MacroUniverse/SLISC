@@ -157,6 +157,8 @@ inline void to_lower(Str_O str)
         C = str[i];
         if (C >= 'A' && C <= 'Z')
             str[i] = C + diff;
+        else
+            str[i] = C;
     }
 }
 
@@ -168,6 +170,8 @@ inline void to_lower(Str32_O str)
         C = str[i];
         if (C >= 'A' && C <= 'Z')
             str[i] = C + diff;
+        else
+            str[i] = C;
     }
 }
 
@@ -182,6 +186,8 @@ inline void to_lower(Str_IO str, Str_I STR)
         C = STR[i];
         if (C >= 'A' && C <= 'Z')
             str[i] = C + diff;
+        else
+            str[i] = C;
     }
 }
 
@@ -194,6 +200,8 @@ inline void to_lower(Str32_IO str, Str32_I STR)
         C = STR[i];
         if (C >= 'A' && C <= 'Z')
             str[i] = C + diff;
+        else
+            str[i] = C;
     }
 }
 
@@ -208,6 +216,8 @@ inline void to_upper(Str_O STR, Str_I str)
         c = str[i];
         if (c >= 'a' && c <= 'z')
             STR[i] = c + diff;
+        else
+            STR[i] = c;
     }
 }
 
@@ -220,6 +230,8 @@ inline void to_upper(Str32_O STR, Str32_I str)
         c = str[i];
         if (c >= 'a' && c <= 'z')
             STR[i] = c + diff;
+        else
+            STR[i] = c;
     }
 }
 
@@ -233,6 +245,8 @@ inline void to_upper(Str_IO str)
         c = str[i];
         if (c >= 'a' && c <= 'z')
             str[i] = c + diff;
+        else
+            str[i] = c;
     }
 }
 
@@ -244,6 +258,8 @@ inline void to_upper(Str32_IO str)
         c = str[i];
         if (c >= 'a' && c <= 'z')
             str[i] = c + diff;
+        else
+            str[i] = c;
     }
 }
 

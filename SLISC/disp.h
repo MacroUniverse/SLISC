@@ -485,14 +485,14 @@ inline void disp(CbandComp_I a, Int_I precision = def_disp_prec)
 
 
 // for vector of string
-void disp(vecStr_I v)
+inline void disp(vecStr_I v)
 {
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
         cout << v[i] << endl;
 }
 
-void disp(vecStr32_I v)
+inline void disp(vecStr32_I v)
 {
     Long N = v.size();
     for (Long i = 0; i < N; ++i)

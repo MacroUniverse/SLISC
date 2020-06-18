@@ -1,16 +1,17 @@
 #pragma once
 #include "compare.h"
 #include "arithmetic.h"
+#include "unicode.h"
 
 namespace slisc {
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(Char *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(Char *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     Char a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -65,14 +66,14 @@ inline void sort_v(Char *arr, Long_I N, Long_I m = -1)
     }
 }
 
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(Int *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(Int *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     Int a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -127,14 +128,14 @@ inline void sort_v(Int *arr, Long_I N, Long_I m = -1)
     }
 }
 
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(Llong *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(Llong *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     Llong a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -189,14 +190,14 @@ inline void sort_v(Llong *arr, Long_I N, Long_I m = -1)
     }
 }
 
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(Doub *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(Doub *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     Doub a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -251,14 +252,14 @@ inline void sort_v(Doub *arr, Long_I N, Long_I m = -1)
     }
 }
 
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(Str *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(Str *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     Str a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -313,14 +314,14 @@ inline void sort_v(Str *arr, Long_I N, Long_I m = -1)
     }
 }
 
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(Str32 *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(Str32 *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     Str32 a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -376,41 +377,29 @@ inline void sort_v(Str32 *arr, Long_I N, Long_I m = -1)
 }
 
 
-// sort first m elements of v
-inline void sort(VecChar_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(VecChar_IO v)
+{ sort_v(&v[0], v.size()); }
 
-// sort first m elements of v
-inline void sort(VecInt_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(VecInt_IO v)
+{ sort_v(&v[0], v.size()); }
 
-// sort first m elements of v
-inline void sort(VecLlong_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(VecLlong_IO v)
+{ sort_v(&v[0], v.size()); }
 
-// sort first m elements of v
-inline void sort(VecDoub_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(VecDoub_IO v)
+{ sort_v(&v[0], v.size()); }
 
-// sort first m elements of v
-inline void sort(vecStr_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(vecStr_IO v)
+{ sort_v(&v[0], v.size()); }
 
-// sort first m elements of v
-inline void sort(vecStr32_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(vecStr32_IO v)
+{ sort_v(&v[0], v.size()); }
 
 
 // sort v while making the same change for v1
@@ -1198,7 +1187,6 @@ inline void sort_case_insens(vecStr32_IO v)
     sort(v_low, v); // case insensitive sorting
 }
 
-
 // case insensitive sorting for string
 // result is independent of the input order
 inline void sort_case_insens(vecStr_IO v, vecStr_IO v1)
@@ -1211,30 +1199,10 @@ inline void sort_case_insens(vecStr_IO v, vecStr_IO v1)
     reorder(v1, order);
 }
 
-inline void sort_case_insens(vecStr32_IO v, vecStr32_IO v1)
-{
-    sort(v, v1);
-    vecStr32 v_low; to_lower(v_low, v);
-    VecLong order; order.resize(v.size());
-    sort(v_low, order); // case insensitive sorting
-    reorder(v, order);
-    reorder(v1, order);
-}
-
 inline void sort_case_insens(vecStr_IO v, vecLlong_IO v1)
 {
     sort(v, v1);
     vecStr v_low; to_lower(v_low, v);
-    VecLong order; order.resize(v.size());
-    sort(v_low, order); // case insensitive sorting
-    reorder(v, order);
-    reorder(v1, order);
-}
-
-inline void sort_case_insens(vecStr32_IO v, vecLlong_IO v1)
-{
-    sort(v, v1);
-    vecStr32 v_low; to_lower(v_low, v);
     VecLong order; order.resize(v.size());
     sort(v_low, order); // case insensitive sorting
     reorder(v, order);

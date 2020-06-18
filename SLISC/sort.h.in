@@ -1,19 +1,20 @@
 #pragma once
 #include "compare.h"
 #include "arithmetic.h"
+#include "unicode.h"
 
 namespace slisc {
 //% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Str'; 'Str32'};
 //%-----------------------------------
 //% T = varargin{:};
-// sort first m elements of arr, quicksort algorithm
-inline void sort_v(@T@ *arr, Long_I N, Long_I m = -1)
+// sort elements of arr
+// adapted from Numerical Recipes 3ed
+inline void sort_v(@T@ *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
-    Long i, ir, j, k, jstack = -1, l = 0, n = N;
+    Long i, ir, j, k, jstack = -1, l = 0;
     @T@ a;
     VecLong istack(NSTACK);
-    if (m>0) n = min(m, n);
     ir = n - 1;
     for (;;) {
         if (ir - l < M) {
@@ -73,11 +74,9 @@ inline void sort_v(@T@ *arr, Long_I N, Long_I m = -1)
 //%          'vecStr'; 'vecStr32'};
 //%---------------------
 //% T = varargin{:};
-// sort first m elements of v
-inline void sort(@T@_IO v, Long_I m = -1)
-{
-    sort_v(&v[0], v.size(), m);
-}
+// sort elements of v
+inline void sort(@T@_IO v)
+{ sort_v(&v[0], v.size()); }
 //%------------------------
 
 // sort v while making the same change for v1
@@ -210,24 +209,26 @@ inline void sort(@T@_IO v, @T1@_IO v1)
 
 // case insensitive sorting for string
 // result is independent of the input order
-//% types = {'vecStr'; 'vecStr32'};
-//%------------------------
-//% T = varargin{:};
-inline void sort_case_insens(@T@_IO v)
+inline void sort_case_insens(vecStr_IO v)
 {
     sort(v);
-    @T@ v_low; to_lower(v_low, v);
+    vecStr v_low; to_lower(v_low, v);
     sort(v_low, v); // case insensitive sorting
 }
-//%------------------------
+
+inline void sort_case_insens(vecStr32_IO v)
+{
+    sort(v);
+    vecStr32 v_low; to_lower(v_low, v);
+    sort(v_low, v); // case insensitive sorting
+}
 
 // case insensitive sorting for string
 // result is independent of the input order
 //% types = {
 //%     'vecStr', 'vecStr';
-//%     'vecStr32', 'vecStr32';
 //%     'vecStr', 'vecLlong';
-//%     'vecStr32', 'vecLlong';};
+//% };
 //%------------------------
 //% [T, T1] = varargin{:};
 inline void sort_case_insens(@T@_IO v, @T1@_IO v1)

@@ -192,10 +192,10 @@ static const Doub NaN = std::numeric_limits<Doub>::quiet_NaN();
 #ifdef _MSC_VER
 struct turn_on_floating_exceptions {
     turn_on_floating_exceptions() {
-        int cw = _controlfp(0, 0);
+        unsigned cw; _controlfp_s(&cw, 0, 0);
         // also: EM_INEXACT, EM_UNDERFLOW
         cw &= ~(EM_INVALID | EM_OVERFLOW | EM_ZERODIVIDE | EM_DENORMAL);
-        _controlfp(cw, MCW_EM);
+        unsigned cw1; _controlfp_s(&cw1, cw, MCW_EM);
     }
 };
 // in case of ODR error, put this in main function;

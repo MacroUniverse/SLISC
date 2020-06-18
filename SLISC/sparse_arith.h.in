@@ -217,7 +217,7 @@ inline void sort_r(@McooT@_IO a)
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
-    sort2(inds, order);
+    sort(inds, order);
     @SvecT@ sli(a.ptr(), Nnz);
     reorder(sli, order);
     SvecLong sli1;

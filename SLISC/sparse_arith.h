@@ -458,7 +458,7 @@ inline void sort_r(McooChar_IO a)
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
-    sort2(inds, order);
+    sort(inds, order);
     SvecChar sli(a.ptr(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
@@ -475,7 +475,7 @@ inline void sort_r(McooInt_IO a)
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
-    sort2(inds, order);
+    sort(inds, order);
     SvecInt sli(a.ptr(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
@@ -492,7 +492,7 @@ inline void sort_r(McooLlong_IO a)
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
-    sort2(inds, order);
+    sort(inds, order);
     SvecLlong sli(a.ptr(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
@@ -509,7 +509,7 @@ inline void sort_r(McooDoub_IO a)
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
-    sort2(inds, order);
+    sort(inds, order);
     SvecDoub sli(a.ptr(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
@@ -526,7 +526,7 @@ inline void sort_r(McooComp_IO a)
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
-    sort2(inds, order);
+    sort(inds, order);
     SvecComp sli(a.ptr(), Nnz);
     reorder(sli, order);
     SvecLong sli1;

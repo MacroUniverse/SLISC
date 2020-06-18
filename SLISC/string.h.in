@@ -97,6 +97,8 @@ inline void to_lower(@T@_O str)
         C = str[i];
         if (C >= 'A' && C <= 'Z')
             str[i] = C + diff;
+        else
+            str[i] = C;
     }
 }
 //%----------------------------
@@ -114,6 +116,8 @@ inline void to_lower(@T@_IO str, @T@_I STR)
         C = STR[i];
         if (C >= 'A' && C <= 'Z')
             str[i] = C + diff;
+        else
+            str[i] = C;
     }
 }
 //%----------------------------
@@ -131,6 +135,8 @@ inline void to_upper(@T@_O STR, @T@_I str)
         c = str[i];
         if (c >= 'a' && c <= 'z')
             STR[i] = c + diff;
+        else
+            STR[i] = c;
     }
 }
 //%----------------------------
@@ -147,6 +153,8 @@ inline void to_upper(@T@_IO str)
         c = str[i];
         if (c >= 'a' && c <= 'z')
             str[i] = c + diff;
+        else
+            str[i] = c;
     }
 }
 //%----------------------------

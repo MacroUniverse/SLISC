@@ -137,7 +137,7 @@ void test_arithmetic()
         rand(v1, N);
         copy(v2, v1);
         linspace(order, 0, N - 1);
-        sort2(v1, order);
+        sort(v1, order);
         reorder(v2, order);
         if (v1 != v2)
             SLS_ERR("failed!");
