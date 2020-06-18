@@ -14,7 +14,12 @@ inline Str hhmmss()
 {
     auto p = std::chrono::system_clock::now();
     std::time_t t = std::chrono::system_clock::to_time_t(p);
+#ifdef _MSC_VER
+    Str str; str.resize(50);
+    ctime_s(&str[0], str.size(), &t);
+#else
     Str str = std::ctime(&t);
+#endif
     return str.substr(str.find(':')-2, 8);
 }
 

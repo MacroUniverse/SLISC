@@ -107,7 +107,7 @@ inline void to_lower(@T@_O str)
 //% types = {'Str'; 'Str32'};
 //%----------------------------
 //% T = varargin{:}; Ts = contain_type(T);
-inline void to_lower(@T@_IO str, @T@_I STR)
+inline void to_lower(@T@_O str, @T@_I STR)
 {
     @Ts@ C, diff = 'a' - 'A';
     Long N = STR.size();

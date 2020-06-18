@@ -6,6 +6,7 @@
 #include <fstream>
 #ifdef SLS_HAS_FILESYSTEM
 #include <filesystem>
+#include "search.h"
 #endif
 #include <sys/types.h> // for time_stamp
 #include <sys/stat.h> // for time_stamp

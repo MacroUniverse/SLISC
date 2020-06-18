@@ -177,7 +177,7 @@ inline void to_lower(Str32_O str)
 
 
 // convert string to lower case
-inline void to_lower(Str_IO str, Str_I STR)
+inline void to_lower(Str_O str, Str_I STR)
 {
     Char C, diff = 'a' - 'A';
     Long N = STR.size();
@@ -191,7 +191,7 @@ inline void to_lower(Str_IO str, Str_I STR)
     }
 }
 
-inline void to_lower(Str32_IO str, Str32_I STR)
+inline void to_lower(Str32_O str, Str32_I STR)
 {
     Char32 C, diff = 'a' - 'A';
     Long N = STR.size();
