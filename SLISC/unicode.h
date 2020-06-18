@@ -254,7 +254,7 @@ inline Str32 num2str32(Doub_I num)
 }
 
 
- // same as str.insert(), but return one index after key after insertion
+// same as str.insert(), but return one index after key after insertion
 inline Long insert(Str32_IO str, Str32_I key, Long start)
 {
     str.insert(start, key);

@@ -176,8 +176,10 @@ inline void read_vec_str(vecStr32_O vec_str, Str32_I fname)
         vec_str.emplace_back();
         ind0 = get_line(vec_str[i], str, ind0);
         if (ind0 < 0)
-            return;
+            break;
     }
+    if (vec_str.back().empty())
+        vec_str.pop_back();
 }
 
 //% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'};
@@ -202,7 +204,7 @@ inline Str32 num2str32(@T@_I num)
 }
 //%--------------
 
- // same as str.insert(), but return one index after key after insertion
+// same as str.insert(), but return one index after key after insertion
 inline Long insert(Str32_IO str, Str32_I key, Long start)
 {
     str.insert(start, key);
@@ -557,10 +559,10 @@ inline Long eatL(Str32& str, Long start, Str32_I chars)
 // Pair right brace to left one (default)
 // or () or [] or anying single character
 // ind is inddex of left brace
-// return index of right brace, -1 if failed
-inline Long pair_brace(Str32_I str, Long ind, Char32_I type = U'{')
+// return index of right brace
+inline Long pair_brace(Str32_I str, Long ind)
 {
-    Char32 left, right;
+    Char32 left, right, type = str[ind];
     if (type == U'{' || type == U'}') {
         left = U'{'; right = U'}';
     }
@@ -570,15 +572,15 @@ inline Long pair_brace(Str32_I str, Long ind, Char32_I type = U'{')
     else if (type == U'[' || type == U']') {
         left = U'['; right = U']';
     }
-    else {// anything else
-        left = type; right = type;
+    else {
+        throw Str32(U"pair_brace: illegal brace");
     }
 
     Char32 c, c0 = ' ';
     Long Nleft = 1;
-    for (Long i = ind + 1; i < size(str); i++)
-    {
-        c = str.at(i);
+    Long N = str.size();
+    for (Long i = ind + 1; i < N; i++) {
+        c = str[i];
         if (c == left && c0 != '\\')
             ++Nleft;
         else if (c == right && c0 != '\\')
@@ -589,7 +591,7 @@ inline Long pair_brace(Str32_I str, Long ind, Char32_I type = U'{')
         }
         c0 = c;
     }
-    return -1;
+    throw Str32(U"pair_brace() failed!");
 }
 
 // match braces
@@ -635,12 +637,24 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
     return Nleft;
 }
 
-// list all files in current directory, with a given extension
-inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I keep_ext = true)
+// UTF-32 version of file_list() in file.h
+inline void file_list(vecStr32_O fnames, Str32_I path, Bool_I append = false)
 {
     vecStr fnames8;
-    fnames.resize(0);
-    file_list_ext(fnames8, utf32to8(path), utf32to8(ext), keep_ext);
+    if (!append)
+        fnames.resize(0);
+    file_list(fnames8, utf32to8(path), append);
+    for (Long i = 0; i < size(fnames8); ++i)
+        fnames.push_back(utf8to32(fnames8[i]));
+}
+
+// list all files in current directory, with a given extension
+inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I keep_ext = true, Bool_I append = false)
+{
+    vecStr fnames8;
+    if (!append)
+        fnames.resize(0);
+    file_list_ext(fnames8, utf32to8(path), utf32to8(ext), keep_ext, append);
     for (Long i = 0; i < size(fnames8); ++i)
         fnames.push_back(utf8to32(fnames8[i]));
 }
@@ -662,6 +676,12 @@ inline Bool is_chinese(Char32_I c)
         (c >= U'\uF900' && c <= U'\uFAAD'))
         return true;
     return false;
+}
+
+inline void last_modified(Str32_O yyyymmddhhmmss, Str32_I fname) {
+    Str str;
+    last_modified(str, utf32to8(fname));
+    yyyymmddhhmmss = utf8to32(str);
 }
 
 } // namespace slisc

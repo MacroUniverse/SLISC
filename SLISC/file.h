@@ -14,7 +14,7 @@ namespace slisc {
 
 using std::stringstream;
 
-inline void file_list(vecStr_O names, Str_I path);
+inline void file_list(vecStr_O names, Str_I path, Bool_I append = false);
 inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
 
@@ -115,8 +115,10 @@ inline void file_rm(Str_I wildcard_name) {
 // list all files in current directory
 // only works for linux
 #ifdef __GNUC__
-inline void file_list(vecStr_O fnames, Str_I path)
-{    
+inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
+{
+    if (!append)
+        fnames.resize(0);
     // save a list of all files (no folder) to temporary file
     std::istringstream iss(exec_str(("ls -p " + path + " | grep -v /").c_str()));
     
@@ -134,8 +136,10 @@ inline void file_list(vecStr_O fnames, Str_I path)
 // std::filesystem implementation of file_list()
 // works in Visual Studio, not gcc 8
 // directory example: "C:/Users/addis/Documents/GitHub/SLISC/"
-inline void file_list(vecStr_O names, Str_I path)
+inline void file_list(vecStr_O names, Str_I path, Bool_I append)
 {
+    if (!append)
+        names.resize(0);
     for (const auto & entry : std::filesystem::directory_iterator(path)) {
         std::stringstream ss;
         if (entry.is_directory())
@@ -149,7 +153,7 @@ inline void file_list(vecStr_O names, Str_I path)
     }
 }
 #else
-inline void file_list(vecStr_O fnames, Str_I path)
+inline void file_list(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
     SLS_ERR("not implemented");
 }
@@ -157,9 +161,10 @@ inline void file_list(vecStr_O fnames, Str_I path)
 #endif
 
 // choose files with a given extension from a list of files
-inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true)
+inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {
-    fnames_ext.resize(0);
+    if (!append)
+        fnames_ext.resize(0);
     Long N_ext = ext.size();
     for (Long i = 0; i < size(fnames); ++i) {
         const Str & str = fnames[i];
@@ -178,9 +183,11 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
 }
 
 // list all files in current directory, with a given extension
-inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true)
+inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {
     vecStr fnames0;
+    if (!append)
+        fnames.resize(0);
     file_list(fnames0, path);
     file_ext(fnames, fnames0, ext, keep_ext);
 }
@@ -261,11 +268,10 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 }
 
 // get number of bytes in file
-// return -1 if file not found
 inline Long file_size(Str_I fname)
 {
     if (!file_exist(fname))
-        return -1;
+        SLS_ERR("file not found: " + fname);
     ifstream fin(fname, ifstream::ate | ifstream::binary);
     return fin.tellg();
 }
