@@ -161,6 +161,26 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append = false)
 #endif
 #endif
 
+// list all files in a directory recursively (containing relative paths)
+#ifdef __GNUC__
+inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
+{
+    if (!append)
+        fnames.resize(0);
+    // save a list of all files (no folder) to temporary file
+    std::istringstream iss(exec_str(("find " + path + " -type f").c_str()));
+    
+    // read the temporary file
+    Str name;
+    while (true) {
+        std::getline(iss, name);
+        if (iss.eof())
+            break;
+        fnames.push_back(name);
+    }
+}
+#endif
+
 // choose files with a given extension from a list of files
 inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {

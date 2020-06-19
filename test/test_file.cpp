@@ -10,6 +10,11 @@ void test_file()
 	if (names.size() < 3)
 		SLS_ERR("failed!");
 
+	// file_list_r
+	file_list_r(names, "test/test_file");
+	if (names[0] != "test/test_file/123.txt" || names[1] != "test/test_file/234.txt" || names[2] != "test/test_file/sub/345.txt")
+		SLS_ERR("failed!");
+
 	// write()
 	Str data = "abcdefghijklmnopqrstuvwxyz";
 	write(data.data(), data.size(), "test_bin");

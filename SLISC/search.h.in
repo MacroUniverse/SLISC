@@ -114,17 +114,29 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 }
 //%------------------------
 
-// check if v[i] == v[j] for any i and j
-// return the index of one of the repeated elements
+// check if v[i] == v[j] for any i and j > i
+// return i >= start
 // return -1 if no reapeat
 //% types = {'vecStr'; 'vecStr32'; 'VecChar'; 'VecInt'; 'VecLlong'; 'vecLlong'};
 //%--------------------------
 //% T = varargin{:};
-inline Long find_repeat(@T@_I v)
+inline Long find_repeat(@T@_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
         }

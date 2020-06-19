@@ -444,13 +444,13 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 }
 
 
-// check if v[i] == v[j] for any i and j
-// return the index of one of the repeated elements
+// check if v[i] == v[j] for any i and j > i
+// return i >= start
 // return -1 if no reapeat
-inline Long find_repeat(vecStr_I v)
+inline Long find_repeat(vecStr_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
@@ -459,10 +459,22 @@ inline Long find_repeat(vecStr_I v)
     return -1;
 }
 
-inline Long find_repeat(vecStr32_I v)
+inline Long find_repeat(Long_O j, vecStr_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(vecStr32_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
@@ -471,10 +483,22 @@ inline Long find_repeat(vecStr32_I v)
     return -1;
 }
 
-inline Long find_repeat(VecChar_I v)
+inline Long find_repeat(Long_O j, vecStr32_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(VecChar_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
@@ -483,10 +507,22 @@ inline Long find_repeat(VecChar_I v)
     return -1;
 }
 
-inline Long find_repeat(VecInt_I v)
+inline Long find_repeat(Long_O j, VecChar_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(VecInt_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
@@ -495,10 +531,22 @@ inline Long find_repeat(VecInt_I v)
     return -1;
 }
 
-inline Long find_repeat(VecLlong_I v)
+inline Long find_repeat(Long_O j, VecInt_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(VecLlong_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
@@ -507,11 +555,35 @@ inline Long find_repeat(VecLlong_I v)
     return -1;
 }
 
-inline Long find_repeat(vecLlong_I v)
+inline Long find_repeat(Long_O j, VecLlong_I v, Long_I start = 0)
 {
     Long N = v.size();
-    for (Long i = 0; i < N; ++i) {
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(vecLlong_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
         for (Long j = i + 1; j < N; ++j) {
+            if (v[i] == v[j])
+                return i;
+        }
+    }
+    return -1;
+}
+
+inline Long find_repeat(Long_O j, vecLlong_I v, Long_I start = 0)
+{
+    Long N = v.size();
+    for (Long i = start; i < N; ++i) {
+        for (j = i + 1; j < N; ++j) {
             if (v[i] == v[j])
                 return i;
         }
