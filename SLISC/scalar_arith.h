@@ -89,31 +89,88 @@ inline Doub to_num(Doub_I x) { return x; }
 inline Comp to_num(Comp_I x) { return x; }
 
 
-inline Int mod(Int_I i, Int_I n)
+// modulus
+// mod operation satisfies "s = div(s,d)*d + mod(s,d)"
+// however, "div" can have different truncation:
+// 1. c++11 operator "/" truncates towards 0, so "s = (s/d)*d + s%d"
+// 2. "mod()" truncates towards negative direction
+// 3. "mod_eu()" always return positive modulus
+// when both numbers are positive, all cases returns the same result
+// see https://en.wikipedia.org/wiki/Modulo_operation
+inline Int mod_fl(Int_I i, Int_I n)
 {
     return (i % n + n) % n;
 }
 
-inline Llong mod(Llong_I i, Llong_I n)
+inline Int mod_eu(Int_I i, Int_I n)
+{
+    Int ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Llong mod_fl(Llong_I i, Llong_I n)
 {
     return (i % n + n) % n;
 }
 
-inline Llong mod(Llong_I i, Int_I n)
+inline Llong mod_eu(Llong_I i, Llong_I n)
+{
+    Llong ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Llong mod_fl(Llong_I i, Int_I n)
 {
     return (i % n + n) % n;
+}
+
+inline Llong mod_eu(Llong_I i, Int_I n)
+{
+    Llong ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Doub mod(Doub_I s, Doub_I d)
+{
+    return s - round(s/d) * d;
+}
+
+// floating point version of "%", s = n * d + return
+inline Doub mod(Long_O n, Doub_I s, Doub_I d)
+{
+    n = round(s/d);
+    return s - n * d;
+}
+
+inline Doub mod_fl(Doub_I s, Doub_I d)
+{
+    return s - floor(s/d) * d;
 }
 
 // s = n * d + return
-inline Doub mod(Long_O n, Doub_I s, Doub_I d)
+inline Doub mod_fl(Long_O n, Doub_I s, Doub_I d)
 {
     n = floor(s/d);
     return s - n * d;
 }
 
-inline Doub mod(Doub_I s, Doub_I d)
+inline Doub mod_eu(Doub_I s, Doub_I d)
 {
-    return s - floor(s/d) * d;
+    Long n = s/d;
+    Doub r = s - n*d;
+    return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
+{
+    n = s/d;
+    Doub r = s - n*d;
+    if (r < 0) {
+        r += abs(d);
+        n -= sign(d);
+    }
+    return r;
 }
 
 

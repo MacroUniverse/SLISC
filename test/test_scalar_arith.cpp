@@ -23,19 +23,46 @@ void test_scalar_arith()
     if (!ispow2(4) || !ispow2(32) || !ispow2(1024) || !ispow2(65536)
         || ispow2(12) || ispow2(48))
         SLS_ERR("failed!");
-    if (mod(7, 4) != 3 || mod(6, 4) != 2 || mod(5, 4) != 1 || mod(4, 4) != 0)
+    // modulus (quotion truncated to 0)
+    if (-5%3 != -2 || -1%3 != -1 || 1%3 != 1 || 5%3 != 2)
         SLS_ERR("failed!");
-    if (mod(3, 4) != 3 || mod(2, 4) != 2 || mod(1, 4) != 1 || mod(0, 4) != 0)
+    if (-5%-3 != -2 || -1%-3 != -1 || 1%-3 != 1 || 5%-3 != 2)
         SLS_ERR("failed!");
-    if (mod(-1, 4) != 3 || mod(-2, 4) != 2 || mod(-3, 4) != 1 || mod(-4, 4) != 0)
+    for (Doub s = -3; s <= 3; s += 0.5) {
+        Long n1, n2;
+        Doub d1 = 0.5, d2 = -0.5;
+        Doub ret1 = mod(n1, s, d1), ret2 = mod(n2, s, d2);
+        if (abs(n1 * d1) > abs(s) || abs(ret1 + n1 * d1 - s) > 2e-15)
+            SLS_ERR("failed!");
+        if (abs(n2 * d2) > abs(s) || abs(ret2 + n2 * d2 - s) > 2e-15)
+            SLS_ERR("failed!");
+    }
+    // modulus (quotion floored)
+    if (mod_fl(-5,3) != 1 || mod_fl(-1,3) != 2 || mod_fl(1,3) != 1 || mod_fl(5,3) != 2)
         SLS_ERR("failed!");
-    if (mod(-5, 4) != 3 || mod(-6, 4) != 2 || mod(-7, 4) != 1 || mod(-8, 4) != 0)
+    if (mod_fl(-5,-3) != -2 || mod_fl(-1,-3) != -1 || mod_fl(1,-3) != -2 || mod_fl(5,-3) != -1)
         SLS_ERR("failed!");
-    for (Doub s = -3; s <= 3; s += 0.1) {
-        Long n;
-        Doub d = 0.5;
-        Doub ret = mod(n, s, d);
-        if (ret < 0 || abs(ret + n * d - s) > 2e-15)
+    for (Doub s = -3; s <= 3; s += 0.5) {
+        Long n1, n2;
+        Doub d1 = 0.5, d2 = -0.5;
+        Doub ret1 = mod_fl(n1, s, d1), ret2 = mod_fl(n2, s, d2);
+        if (ret1 < 0 || abs(ret1 + n1 * d1 - s) > 2e-15)
+            SLS_ERR("failed!");
+        if (ret2 > 0 || abs(ret2 + n2 * d2 - s) > 2e-15)
+            SLS_ERR("failed!");
+    }
+    // modulus (positive modulus, or euclidean)
+    if (mod_eu(-5,3) != 1 || mod_eu(-1,3) != 2 || mod_eu(1,3) != 1 || mod_eu(5,3) != 2)
+        SLS_ERR("failed!");
+    if (mod_eu(-5,-3) != 1 || mod_eu(-1,-3) != 2 || mod_eu(1,-3) != 1 || mod_eu(5,-3) != 2)
+        SLS_ERR("failed!");
+    for (Doub s = -3; s <= 3; s += 0.5) {
+        Long n1, n2;
+        Doub d1 = 0.5, d2 = -0.5;
+        Doub ret1 = mod_eu(n1, s, d1), ret2 = mod_eu(n2, s, d2);
+        if (ret1 < 0 || abs(ret1 + n1 * d1 - s) > 2e-15)
+            SLS_ERR("failed!");
+        if (ret2 < 0 || abs(ret2 + n2 * d2 - s) > 2e-15)
             SLS_ERR("failed!");
     }
 

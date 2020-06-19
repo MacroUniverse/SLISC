@@ -46,6 +46,14 @@ inline @T@ to_num(@T@_I x) { return x; }
 //% end
 //%------------------------
 
+// modulus
+// mod operation satisfies "s = div(s,d)*d + mod(s,d)"
+// however, "div" can have different truncation:
+// 1. c++11 operator "/" truncates towards 0, so "s = (s/d)*d + s%d"
+// 2. "mod()" truncates towards negative direction
+// 3. "mod_eu()" always return positive modulus
+// when both numbers are positive, all cases returns the same result
+// see https://en.wikipedia.org/wiki/Modulo_operation
 //% types = {
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
@@ -56,21 +64,58 @@ inline @T@ to_num(@T@_I x) { return x; }
 //% [T1, T2] = varargin{:};
 //% T = promo_type(T1, T2);
 //% if is_integral(T1) && is_integral(T2)
-inline @T@ mod(@T1@_I i, @T2@_I n)
+inline @T@ mod_fl(@T1@_I i, @T2@_I n)
 {
     return (i % n + n) % n;
 }
+
+inline @T@ mod_eu(@T1@_I i, @T2@_I n)
+{
+    @T@ ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
 //% elseif is_fpt(T1) || is_fpt(T2)
-// s = n * d + return
+inline @T@ mod(@T1@_I s, @T2@_I d)
+{
+    return s - round(s/d) * d;
+}
+
+// floating point version of "%", s = n * d + return
 inline @T@ mod(Long_O n, @T1@_I s, @T2@_I d)
+{
+    n = round(s/d);
+    return s - n * d;
+}
+
+inline @T@ mod_fl(@T1@_I s, @T2@_I d)
+{
+    return s - floor(s/d) * d;
+}
+
+// s = n * d + return
+inline @T@ mod_fl(Long_O n, @T1@_I s, @T2@_I d)
 {
     n = floor(s/d);
     return s - n * d;
 }
 
-inline @T@ mod(@T1@_I s, @T2@_I d)
+inline @T@ mod_eu(@T1@_I s, @T2@_I d)
 {
-    return s - floor(s/d) * d;
+    Long n = s/d;
+    @T@ r = s - n*d;
+    return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline @T@ mod_eu(Long_O n, @T1@_I s, @T2@_I d)
+{
+    n = s/d;
+    @T@ r = s - n*d;
+    if (r < 0) {
+        r += abs(d);
+        n -= sign(d);
+    }
+    return r;
 }
 //% else
 //%     error('not implemented!');
