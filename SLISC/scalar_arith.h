@@ -97,6 +97,11 @@ inline Comp to_num(Comp_I x) { return x; }
 // 3. "mod_eu()" always return positive modulus
 // when both numbers are positive, all cases returns the same result
 // see https://en.wikipedia.org/wiki/Modulo_operation
+inline Int mod(Int_I i, Int_I n)
+{
+    return i % n;
+}
+
 inline Int mod_fl(Int_I i, Int_I n)
 {
     return (i % n + n) % n;
@@ -108,6 +113,11 @@ inline Int mod_eu(Int_I i, Int_I n)
     return ret < 0 ? ret + abs(n) : ret;
 }
 
+inline Llong mod(Llong_I i, Llong_I n)
+{
+    return i % n;
+}
+
 inline Llong mod_fl(Llong_I i, Llong_I n)
 {
     return (i % n + n) % n;
@@ -117,6 +127,11 @@ inline Llong mod_eu(Llong_I i, Llong_I n)
 {
     Llong ret = i % n;
     return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Llong mod(Llong_I i, Int_I n)
+{
+    return i % n;
 }
 
 inline Llong mod_fl(Llong_I i, Int_I n)

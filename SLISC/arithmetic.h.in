@@ -246,60 +246,6 @@ inline void mod(@T1@_O v, @Ts1@_I s)
 }
 //%-------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'};
-//%--------------------
-//% T = varargin{:}; Ts = contain_type(T);
-inline void rem_vs(@T@ *v, @Ts@_I s, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] %= s;
-}
-//%-------------------
-
-//% types = {
-//%     'Char', 'Char';
-//%     'Int', 'Int';
-//%     'Llong', 'Llong';
-//% };
-//%---------------------
-//% [T, T1] = varargin{:}; Ts = contain_type(T1);
-inline void rem_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] % s;
-}
-//%--------------------
-
-//% types = {
-//%     'VecChar'
-//%     'VecInt'
-//%     'VecLlong'
-//% };
-//%---------------------
-//% T = varargin{:}; Ts = contain_type(T);
-inline void rem(@T@_IO v, @Ts@_I s)
-{
-    rem_vs(v.ptr(), s, v.size());
-}
-//%--------------------
-
-//% types = {
-//%     'VecChar', 'VecChar', 'Char';
-//%     'VecInt', 'VecInt', 'Int';
-//%     'VecLlong', 'VecLlong', 'Llong';
-//% };
-//%---------------------
-//% [T, T1] = varargin{:}; Ts = contain_type(T1);
-inline void rem(@T@_O v, @T1@_I v1, @Ts@_I s)
-{
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
-#endif
-    rem_vvs(v.ptr(), v1.ptr(), s, v.size());
-}
-//%--------------------
-
 //% types = {
 //%     'Fcomp'; 'Comp'; 'Lcomp';
 //% };

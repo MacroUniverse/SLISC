@@ -296,19 +296,11 @@ void test_arithmetic()
         if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
     }
 
-    // rem(), mod()
+    // mod()
     {
-        VecInt v(40), v1(40);
-        linspace(v, -20, 19); linspace(v1, 0, 39);
-        mod(v, 5); rem(v1, 5);
-        if (v != v1) SLS_ERR("failed!");
-    }
-
-    {
-        VecLlong v(40), v1(40);
-        linspace(v, -20, 19); linspace(v1, 0, 39);
-        mod(v, 5LL); rem(v1, 5LL);
-        if (v != v1) SLS_ERR("failed!");
+        VecInt v(40);
+        linspace(v, -20, 19);;
+        mod(v, 5);
     }
 
     // plus(), minus(), times(), Devide()

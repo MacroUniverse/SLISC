@@ -40,6 +40,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
 * If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
 * In the root directory, run `make` to compile
+* If you don't want to install octave, just `touch SLISC/*.h` before `make`, you only need to do this one time
 * Use `./main.x` to run all tests.
 
 ## Recommended Programming Style
