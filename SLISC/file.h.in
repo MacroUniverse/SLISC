@@ -218,7 +218,7 @@ inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ex
 inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
     if (!file_exist(fname_in))
-        SLS_ERR("file not found!");
+        SLS_ERR("file not found: " + fname_in);
     if (file_exist(fname_out) && !replace) {
         while (true) {
             if (file_exist(fname_out)) {
@@ -284,7 +284,7 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 // file_move() with user buffer
 inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
-    file_move(fname_out, fname_in, buffer, replace);
+    file_copy(fname_out, fname_in, buffer, replace);
     file_remove(fname_in);
 }
 
