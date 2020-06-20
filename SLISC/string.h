@@ -7,6 +7,14 @@ namespace slisc {
 
 // string utilities
 
+// see if a string match the first part of another string
+inline Bool match_head(Str_I str_short, Str_I str_long)
+{
+    if (str_short.size() > str_long.size())
+        return false;
+    return str_long.substr(0, str_short.size()) == str_short;
+}
+
 inline void num2str(Str_O str, Char_I s, Long_I min_len = -1)
 {
     str = to_string(s);

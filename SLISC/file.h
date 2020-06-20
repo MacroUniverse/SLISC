@@ -80,6 +80,16 @@ inline Bool dir_exist(Str_I path)
     }
 }
 
+// get directory from filename
+inline Str path2dir(Str_I fname)
+{
+    Llong ind = fname.rfind("/");
+    if (ind < 0)
+        return "./";
+    else
+        return fname.substr(0, ind+1);
+}
+
 // make multiple level of directory
 inline void mkdir(Str_I path)
 {
