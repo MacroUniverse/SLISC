@@ -46,5 +46,5 @@ elseif is_comp(T1) && is_Imag(T2)
         ret = 'Lcomp'; return;
     end
 end
-error('not implemented');
+error('promo_type.m: not implemented');
 end

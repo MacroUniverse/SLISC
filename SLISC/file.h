@@ -275,17 +275,34 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 }
 
 // move a file (copy and delete)
-inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
+inline void file_move_cp(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
     file_copy(fname_out, fname_in, replace);
     file_remove(fname_in);
 }
 
-// file_move() with user buffer
-inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+// file_move_cp() with user buffer
+inline void file_move_cp(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
     file_copy(fname_out, fname_in, buffer, replace);
     file_remove(fname_in);
+}
+
+inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
+{
+    Long ind = fname_in.find("\"");
+    if (ind >= 0)
+        SLS_ERR("double quote not supported: " + fname_in);
+    ind = fname_out.find("\"");
+    if (ind >= 0)
+        SLS_ERR("double quote not supported: " + fname_out);
+
+    Int ret;
+    if (replace)
+        ret = system(("mv -n \"" + fname_in + "\" \"" + fname_out + "\"").c_str());
+    else
+        ret = system(("mv \"" + fname_in + "\" \"" + fname_out + "\"").c_str());
+    ++ret;
 }
 
 // get number of bytes in file

@@ -1,5 +1,7 @@
 function ret = contain_type(T)
-if any(strfind(T, 'Char'))
+if any(strfind(T, 'Bool'))
+    ret = 'Bool';
+elseif any(strfind(T, 'Char'))
     ret = 'Char';
 elseif any(strfind(T, 'Int'))
     ret = 'Int';
@@ -26,6 +28,6 @@ elseif strcmp(T, 'Str')
 elseif strcmp(T, 'Str32')
     ret = 'Char32';
 else
-    error('contain_type: not implemented');
+    error('contain_type.m: not implemented');
 end
 end

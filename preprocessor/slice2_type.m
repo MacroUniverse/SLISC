@@ -5,5 +5,5 @@ if is_Cmat(T) || is_Scmat(T) || is_Dcmat(T) || is_Cmat3(T)
 elseif is_Mat(T)
     ret = ['Svec' Ts];
 else
-    error('not implemented!');
+    error('slice2_type.m: not implemented!');
 end

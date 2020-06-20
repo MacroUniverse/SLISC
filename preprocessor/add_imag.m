@@ -8,6 +8,6 @@ elseif is_Doub(T)
 elseif is_Ldoub(T)
     ret = 'Limag';
 else
-    error('not implemented');
+    error('add_imag.m: not implemented');
 end 
 end

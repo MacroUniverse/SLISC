@@ -5,5 +5,5 @@ if is_Cmat3(T) || is_Cmat4(T)
 elseif is_Mat3(T)
     ret = ['Svec' Ts];
 else
-    error('not implemented!');
+    error('slice3_type.m: not implemented!');
 end

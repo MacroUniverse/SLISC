@@ -8,6 +8,6 @@ elseif is_Doub(T)
 elseif is_Ldoub(T)
     ret = 'Lcomp';
 else
-    error('not implemented');
+    error('add_comp.m: not implemented');
 end 
 end

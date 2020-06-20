@@ -9,6 +9,6 @@ elseif is_Cmat(T) || is_Scmat(T) || is_Dcmat(T)
 elseif is_Cmat3(T)
     ret = ['Jcmat3' Ts];
 else
-    error('not implemented!');
+    error('slice_type.m: not implemented!');
 end
 end

@@ -139,8 +139,8 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 
 // scalar to container
 //% types = {
-//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
-//%     'VecComp'; 'SvecLlong'; 'SvecDoub';
+//%     'VecBool'; 'VecChar'; 'VecInt'; 'VecLlong'; 
+//%     'VecDoub'; 'VecComp'; 'SvecLlong'; 'SvecDoub';
 //%     'SvecComp'; 'MatInt'; 'MatDoub';
 //%     'DvecDoub'; 'DvecComp';
 //%     'MatComp'; 'Mat3Doub'; 'CmatInt';
@@ -154,7 +154,11 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //% T = varargin{:}; Ts = contain_type(T);
 inline void copy(@T@_O v, @Ts@_I s)
 {
-//% if is_dense(T)
+//% if is_VecBool(T)
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = s;
+//% elseif is_dense(T)
     vecset(v.ptr(), s, v.size());
 //% elseif is_Dvec(T)
     vecset(v.ptr(), s, v.size(), v.step());
@@ -181,6 +185,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 
 // container to container
 //% types = {
+//%     'VecBool', 'VecBool';
 //%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecInt', 'SvecInt';
@@ -246,7 +251,11 @@ inline void copy(@T@_O v, @T1@_I v1)
 #endif
     if (v.size() == 0)
         return;
-//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+//% if is_VecBool(T) || is_VecBool(T1)
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i];
+//% elseif is_dense(T) && is_dense(T1) && is_same_major(T, T1)
     veccpy(v.ptr(), v1.ptr(), v.size());
 //% elseif is_Dvec(T) && is_Dvec(T1)
     veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());

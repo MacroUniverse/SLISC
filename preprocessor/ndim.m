@@ -15,6 +15,6 @@ elseif is_Mat3(T) || is_Cmat3(T) || is_Jcmat3(T)
 elseif is_Cmat4(T) || is_Jcmat4(T)
     ret =4;
 else
-    error("unknown!");
+    error("ndim.m: unknown!");
 end
 end

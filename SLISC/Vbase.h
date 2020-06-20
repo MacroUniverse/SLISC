@@ -34,7 +34,8 @@ public:
     ~VbaseChar();
 };
 
-inline VbaseChar::VbaseChar() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseChar::VbaseChar() : m_N(0), m_p(nullptr) {}
 
 inline VbaseChar::VbaseChar(Long_I N)
 {
@@ -206,7 +207,8 @@ public:
     ~VbaseInt();
 };
 
-inline VbaseInt::VbaseInt() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseInt::VbaseInt() : m_N(0), m_p(nullptr) {}
 
 inline VbaseInt::VbaseInt(Long_I N)
 {
@@ -378,7 +380,8 @@ public:
     ~VbaseLlong();
 };
 
-inline VbaseLlong::VbaseLlong() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseLlong::VbaseLlong() : m_N(0), m_p(nullptr) {}
 
 inline VbaseLlong::VbaseLlong(Long_I N)
 {
@@ -556,7 +559,8 @@ public:
     ~VbaseFloat();
 };
 
-inline VbaseFloat::VbaseFloat() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseFloat::VbaseFloat() : m_N(0), m_p(nullptr) {}
 
 inline VbaseFloat::VbaseFloat(Long_I N)
 {
@@ -728,7 +732,8 @@ public:
     ~VbaseDoub();
 };
 
-inline VbaseDoub::VbaseDoub() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseDoub::VbaseDoub() : m_N(0), m_p(nullptr) {}
 
 inline VbaseDoub::VbaseDoub(Long_I N)
 {
@@ -900,7 +905,8 @@ public:
     ~VbaseComp();
 };
 
-inline VbaseComp::VbaseComp() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseComp::VbaseComp() : m_N(0), m_p(nullptr) {}
 
 inline VbaseComp::VbaseComp(Long_I N)
 {
@@ -1072,7 +1078,8 @@ public:
     ~VbaseImag();
 };
 
-inline VbaseImag::VbaseImag() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseImag::VbaseImag() : m_N(0), m_p(nullptr) {}
 
 inline VbaseImag::VbaseImag(Long_I N)
 {

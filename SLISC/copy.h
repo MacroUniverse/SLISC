@@ -502,6 +502,13 @@ inline void matcpy_diff_major(Comp *a2, const Comp *a1, Long_I N2, Long_I lda2, 
 // must use pointer version
 
 // scalar to container
+inline void copy(VecBool_O v, Bool_I s)
+{
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = s;
+}
+
 inline void copy(VecChar_O v, Char_I s)
 {
     vecset(v.ptr(), s, v.size());
@@ -648,6 +655,19 @@ inline void copy(Jcmat3Comp_O v, Comp_I s)
 
 
 // container to container
+inline void copy(VecBool_O v, VecBool_I v1)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i];
+}
+
 inline void copy(VecChar_O v, VecChar_I v1)
 {
 #ifdef SLS_CHECK_SHAPE

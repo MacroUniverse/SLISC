@@ -45,7 +45,8 @@ public:
     ~@VbaseT@();
 };
 
-inline @VbaseT@::@VbaseT@() : m_N(0) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline @VbaseT@::@VbaseT@() : m_N(0), m_p(nullptr) {}
 
 inline @VbaseT@::@VbaseT@(Long_I N)
 {
