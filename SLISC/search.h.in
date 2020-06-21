@@ -1,6 +1,7 @@
 #pragma once
 #include "arithmetic.h"
 #include "slice_arith.h"
+#include "string.h"
 
 namespace slisc {
 
@@ -17,11 +18,41 @@ namespace slisc {
 //% };
 //%------------------------
 //% [Ts, Tv] = varargin{:};
-inline Long search(@Ts@_I s, @Tv@_I v, Long start = 0)
+inline Long search(@Ts@_I s, @Tv@_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
+            return i;
+    }
+    return -1;
+}
+//%------------------------
+
+// see if `match_head(s, v[i])`, return i
+// see if `match_head(v[i], s)`, return i
+// return -1 if not found
+//% types = {
+//%     'Str', 'vecStr';
+//%     'Str32', 'vecStr32';
+//% };
+//%------------------------
+//% [Ts, Tv] = varargin{:};
+inline Long search_head(@Ts@_I s_short, @Tv@_I v_long, Long_I start = 0)
+{
+    Long N = v_long.size();
+    for (Long i = start; i < N; ++i) {
+        if (match_head(s_short, v_long[i]))
+            return i;
+    }
+    return -1;
+}
+
+inline Long search_head(@Tv@_I v_short, @Ts@_I s_long, Long_I start = 0)
+{
+    Long N = v_short.size();
+    for (Long i = start; i < N; ++i) {
+        if (match_head(v_short[i], s_long))
             return i;
     }
     return -1;

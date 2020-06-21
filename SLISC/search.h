@@ -1,12 +1,13 @@
 #pragma once
 #include "arithmetic.h"
 #include "slice_arith.h"
+#include "string.h"
 
 namespace slisc {
 
 // see if elm == vec[i], return i
 // return -1 if not found
-inline Long search(Int_I s, VecInt_I v, Long start = 0)
+inline Long search(Int_I s, VecInt_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
@@ -16,7 +17,7 @@ inline Long search(Int_I s, VecInt_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Llong_I s, VecLlong_I v, Long start = 0)
+inline Long search(Llong_I s, VecLlong_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
@@ -26,7 +27,7 @@ inline Long search(Llong_I s, VecLlong_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Char_I s, Str_I v, Long start = 0)
+inline Long search(Char_I s, Str_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
@@ -36,7 +37,7 @@ inline Long search(Char_I s, Str_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Char32_I s, Str32_I v, Long start = 0)
+inline Long search(Char32_I s, Str32_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
@@ -46,7 +47,7 @@ inline Long search(Char32_I s, Str32_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Str_I s, vecStr_I v, Long start = 0)
+inline Long search(Str_I s, vecStr_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
@@ -56,7 +57,7 @@ inline Long search(Str_I s, vecStr_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Str32_I s, vecStr32_I v, Long start = 0)
+inline Long search(Str32_I s, vecStr32_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
@@ -66,11 +67,55 @@ inline Long search(Str32_I s, vecStr32_I v, Long start = 0)
     return -1;
 }
 
-inline Long search(Llong_I s, vecLlong_I v, Long start = 0)
+inline Long search(Llong_I s, vecLlong_I v, Long_I start = 0)
 {
     Long N = v.size();
     for (Long i = start; i < N; ++i) {
         if (s == v[i])
+            return i;
+    }
+    return -1;
+}
+
+
+// see if `match_head(s, v[i])`, return i
+// see if `match_head(v[i], s)`, return i
+// return -1 if not found
+inline Long search_head(Str_I s_short, vecStr_I v_long, Long_I start = 0)
+{
+    Long N = v_long.size();
+    for (Long i = start; i < N; ++i) {
+        if (match_head(s_short, v_long[i]))
+            return i;
+    }
+    return -1;
+}
+
+inline Long search_head(vecStr_I v_short, Str_I s_long, Long_I start = 0)
+{
+    Long N = v_short.size();
+    for (Long i = start; i < N; ++i) {
+        if (match_head(v_short[i], s_long))
+            return i;
+    }
+    return -1;
+}
+
+inline Long search_head(Str32_I s_short, vecStr32_I v_long, Long_I start = 0)
+{
+    Long N = v_long.size();
+    for (Long i = start; i < N; ++i) {
+        if (match_head(s_short, v_long[i]))
+            return i;
+    }
+    return -1;
+}
+
+inline Long search_head(vecStr32_I v_short, Str32_I s_long, Long_I start = 0)
+{
+    Long N = v_short.size();
+    for (Long i = start; i < N; ++i) {
+        if (match_head(v_short[i], s_long))
             return i;
     }
     return -1;

@@ -8,12 +8,18 @@ namespace slisc {
 // string utilities
 
 // see if a string match the first part of another string
-inline Bool match_head(Str_I str_short, Str_I str_long)
+//% types = {
+//%     'Str'; 'Str32';
+//% };
+//%------------------------
+//% T = varargin{:};
+inline Bool match_head(@T@_I str_short, @T@_I str_long)
 {
     if (str_short.size() > str_long.size())
         return false;
     return str_long.substr(0, str_short.size()) == str_short;
 }
+//%------------------------
 
 //% types = {'Char'; 'Int'; 'Llong'; 'Doub';};
 //%---------------------
