@@ -6,30 +6,38 @@
 #include "SLISC/matb.h"
 #include "SLISC/time.h"
 
-    using namespace slisc;
+using namespace slisc;
 Int main(Int argc, Char *argv[])
 {
-	Bool rm = false;
-	Long start = 1;
-	if (strcmp(argv[1], "-d") == 0) {
-		rm = true;
-		++start;
+	Bool rm = false, replace = false;
+	for (Int i = 1; i <= 2; ++i) {
+		if (argc > i && strcmp(argv[i], "-d") == 0)
+			rm = true; // remove original
+		else if (argc > i && strcmp(argv[i], "-r") == 0)
+			replace = true; // output overwrite
 	}
-	omp_set_num_threads(8);
+	cout << "delete original [-d]: " << rm << endl;
+	cout << "replace restination [-r]: " << replace << endl;
+	Int start = 1 + rm + replace;
 	Int N = 0;
 	Timer timer; timer.tic();
+	omp_set_num_threads(8);
 #pragma omp parallel for schedule(dynamic, 3)
 	for (Int i = start; i < argc; ++i) {
-#pragma omp atomic
-		++N;
-		printf("%s  %i/%i  %es\n", argv[i], N, argc-1, timer.toc());
 		fflush(stdout);
-		try {matt2matb(argv[i]);}
+		Long ret;
+		try {ret = matt2matb(argv[i], replace);}
 		catch (...) {
-			cout << "warning: exception found, skipping..." << endl;
+			printf("warning: exception found, skipping... file might be corrupted\n");
 			continue;
 		}
 		if (rm)
 			remove(argv[i]);
+#pragma omp atomic
+		++N;
+		if (ret == 0)
+			printf("%s  %i/%i  %i\n", argv[i], N, argc-start, Int(timer.toc()));
+		if (ret == -1)
+			printf("%s  %i/%i  destination exist, skipped\n", argv[i], N, argc-start);
 	}
 }

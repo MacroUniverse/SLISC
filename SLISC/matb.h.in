@@ -451,13 +451,22 @@ inline void load_matb(@T@_O var, Str_I varname, Str_I matb_file)
 //%------------------------
 
 // convert a single .matb file to .matt file
-inline void matb2matt(Str_I matb_name)
+// if replace = false and destination exists, then nothing will be done
+// return 0 if successful, -1 if skipped
+inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 {
     Long N = matb_name.size();
     Str matt_name;
     if (matb_name.substr(N-5, 5) != ".matb")
         SLS_ERR(matb_name + " : file does not have .matb extension!");
     matt_name = matb_name.substr(0, N - 1) + "t";
+    if (file_exist(matt_name)) {
+        if (replace)
+            file_remove(matt_name);
+        else
+            return -1;
+    }
+
     Matb matb(matb_name, 'r');
     Matt matt(matt_name, "w");
     Long Nvar = matb.m_name.size();
@@ -512,16 +521,25 @@ inline void matb2matt(Str_I matb_name)
 //%--------------------
     }
     matb.close(); matt.close();
+    return 0;
 }
 
 // convert a single .matb file to .matt file
-inline void matt2matb(Str_I matt_name)
+// if replace = false and destination exists, then nothing will be done
+// return 0 if successful, -1 if skipped
+inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 {
     Long N = matt_name.size();
     Str matb_name;
     if (matt_name.substr(N-5, 5) != ".matt")
         SLS_ERR(matt_name + " : file does not have .matt extension!");
     matb_name = matt_name.substr(0, N - 1) + "b";
+    if (file_exist(matb_name)) {
+        if (replace)
+            file_remove(matb_name);
+        else
+            return -1;
+    }
     Matt matt(matt_name, "r");
     Matb matb(matb_name, 'w');
     Long Nvar = matt.m_name.size();
@@ -576,6 +594,7 @@ inline void matt2matb(Str_I matt_name)
 //%--------------------
     }
     matt.close(); matb.close();
+    return 0;
 }
 
 } // namespace slisc
