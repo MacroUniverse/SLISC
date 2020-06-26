@@ -58,10 +58,12 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 }
 
 // remove a file with error handling
+// do nothing if file doesn't exist
 inline void file_remove(Str_I fname)
 {
-    if (remove(fname.c_str()))
-        SLS_ERR("failed to remove, file being used? (" + fname + ")");
+    if (file_exist(fname))
+        if (remove(fname.c_str()))
+            SLS_ERR("failed to remove, file being used? (" + fname + ")");
 }
 
 // check if directory exist

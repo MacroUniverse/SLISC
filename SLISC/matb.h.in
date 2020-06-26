@@ -297,7 +297,7 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
 //% endif
 }
 
-inline void save(@Tv@_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);

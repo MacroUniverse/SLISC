@@ -352,7 +352,7 @@ inline void save(VecChar_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(VecChar_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(VecChar_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -378,7 +378,7 @@ inline void save(VecInt_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(VecInt_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(VecInt_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -404,7 +404,7 @@ inline void save(VecLlong_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(VecLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(VecLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -430,7 +430,7 @@ inline void save(VecDoub_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(VecDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(VecDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -456,7 +456,7 @@ inline void save(VecComp_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(VecComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(VecComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -482,7 +482,7 @@ inline void save(SvecChar_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(SvecChar_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(SvecChar_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -508,7 +508,7 @@ inline void save(SvecLlong_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(SvecLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(SvecLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -534,7 +534,7 @@ inline void save(SvecDoub_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(SvecDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(SvecDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -560,7 +560,7 @@ inline void save(SvecComp_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(SvecComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(SvecComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -586,7 +586,7 @@ inline void save(DvecLlong_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(DvecLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DvecLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -612,7 +612,7 @@ inline void save(DvecDoub_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(DvecDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DvecDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -638,7 +638,7 @@ inline void save(DvecComp_I v, Str_I varname, Matb_IO matb)
         write(fout, v[i]);
 }
 
-inline void save(DvecComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DvecComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -665,7 +665,7 @@ inline void save(CmatChar_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(CmatChar_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(CmatChar_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -692,7 +692,7 @@ inline void save(CmatInt_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(CmatInt_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(CmatInt_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -719,7 +719,7 @@ inline void save(CmatLlong_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(CmatLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(CmatLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -746,7 +746,7 @@ inline void save(CmatDoub_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(CmatDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(CmatDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -773,7 +773,7 @@ inline void save(CmatComp_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(CmatComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(CmatComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -800,7 +800,7 @@ inline void save(MatChar_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(MatChar_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(MatChar_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -827,7 +827,7 @@ inline void save(MatInt_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(MatInt_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(MatInt_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -854,7 +854,7 @@ inline void save(MatLlong_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(MatLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(MatLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -881,7 +881,7 @@ inline void save(MatDoub_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(MatDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(MatDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -908,7 +908,7 @@ inline void save(MatComp_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(MatComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(MatComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -935,7 +935,7 @@ inline void save(ScmatInt_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(ScmatInt_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(ScmatInt_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -962,7 +962,7 @@ inline void save(ScmatLlong_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(ScmatLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(ScmatLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -989,7 +989,7 @@ inline void save(ScmatDoub_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(ScmatDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(ScmatDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1016,7 +1016,7 @@ inline void save(ScmatComp_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(ScmatComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(ScmatComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1043,7 +1043,7 @@ inline void save(DcmatInt_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(DcmatInt_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DcmatInt_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1070,7 +1070,7 @@ inline void save(DcmatLlong_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(DcmatLlong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DcmatLlong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1097,7 +1097,7 @@ inline void save(DcmatDoub_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(DcmatDoub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DcmatDoub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1124,7 +1124,7 @@ inline void save(DcmatComp_I v, Str_I varname, Matb_IO matb)
             write(fout, v(i, j));
 }
 
-inline void save(DcmatComp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(DcmatComp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1152,7 +1152,7 @@ inline void save(Cmat3Int_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Cmat3Int_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Cmat3Int_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1180,7 +1180,7 @@ inline void save(Cmat3Llong_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Cmat3Llong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Cmat3Llong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1208,7 +1208,7 @@ inline void save(Cmat3Doub_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Cmat3Doub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Cmat3Doub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1236,7 +1236,7 @@ inline void save(Cmat3Comp_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Cmat3Comp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Cmat3Comp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1264,7 +1264,7 @@ inline void save(Mat3Int_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Mat3Int_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Mat3Int_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1292,7 +1292,7 @@ inline void save(Mat3Llong_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Mat3Llong_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Mat3Llong_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1320,7 +1320,7 @@ inline void save(Mat3Doub_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Mat3Doub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Mat3Doub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1348,7 +1348,7 @@ inline void save(Mat3Comp_I v, Str_I varname, Matb_IO matb)
                 write(fout, v(i, j, k));
 }
 
-inline void save(Mat3Comp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Mat3Comp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1378,7 +1378,7 @@ inline void save(Cmat4Doub_I v, Str_I varname, Matb_IO matb)
                     write(fout, v(i, j, k, l));
 }
 
-inline void save(Cmat4Doub_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Cmat4Doub_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
@@ -1408,7 +1408,7 @@ inline void save(Cmat4Comp_I v, Str_I varname, Matb_IO matb)
                     write(fout, v(i, j, k, l));
 }
 
-inline void save(Cmat4Comp_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(Cmat4Comp_I v, Str_I varname, Str_I matb_file)
 {
     Matb matb(matb_file, 'w');
     save(v, varname, matb);
