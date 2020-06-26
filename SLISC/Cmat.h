@@ -7,12 +7,8 @@ class CmatChar : public VbaseChar
 {
 protected:
     typedef VbaseChar Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatChar(): m_N1(0), m_N2(0) {};
     CmatChar(Long_I N1, Long_I N2);
     CmatChar(const CmatChar &rhs);        // Copy constructor
@@ -84,12 +80,8 @@ class CmatInt : public VbaseInt
 {
 protected:
     typedef VbaseInt Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatInt(): m_N1(0), m_N2(0) {};
     CmatInt(Long_I N1, Long_I N2);
     CmatInt(const CmatInt &rhs);        // Copy constructor
@@ -161,12 +153,8 @@ class CmatLlong : public VbaseLlong
 {
 protected:
     typedef VbaseLlong Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatLlong(): m_N1(0), m_N2(0) {};
     CmatLlong(Long_I N1, Long_I N2);
     CmatLlong(const CmatLlong &rhs);        // Copy constructor
@@ -247,12 +235,8 @@ class CmatFloat : public VbaseFloat
 {
 protected:
     typedef VbaseFloat Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatFloat(): m_N1(0), m_N2(0) {};
     CmatFloat(Long_I N1, Long_I N2);
     CmatFloat(const CmatFloat &rhs);        // Copy constructor
@@ -324,12 +308,8 @@ class CmatDoub : public VbaseDoub
 {
 protected:
     typedef VbaseDoub Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatDoub(): m_N1(0), m_N2(0) {};
     CmatDoub(Long_I N1, Long_I N2);
     CmatDoub(const CmatDoub &rhs);        // Copy constructor
@@ -401,12 +381,8 @@ class CmatComp : public VbaseComp
 {
 protected:
     typedef VbaseComp Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatComp(): m_N1(0), m_N2(0) {};
     CmatComp(Long_I N1, Long_I N2);
     CmatComp(const CmatComp &rhs);        // Copy constructor
@@ -478,12 +454,8 @@ class CmatImag : public VbaseImag
 {
 protected:
     typedef VbaseImag Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     CmatImag(): m_N1(0), m_N2(0) {};
     CmatImag(Long_I N1, Long_I N2);
     CmatImag(const CmatImag &rhs);        // Copy constructor
@@ -556,10 +528,8 @@ class CmatBool : public VbaseBool
 {
 protected:
     typedef VbaseBool Base;
-    using Base::ref;
     Long m_N1, m_N2;
 public:
-    using Base::operator();
     CmatBool(): m_N1(0), m_N2(0) {};
     CmatBool(Long_I N1, Long_I N2);
     CmatBool(const CmatBool &rhs);        // Copy constructor

@@ -19,13 +19,12 @@ class @VecT@ : public @VbaseT@
 {
 public:
     typedef @VbaseT@ Base;
-    using Base::resize;
-    using Base::operator[];
-
     @VecT@() = default;
     explicit @VecT@(Long_I N);
     @VecT@(const @VecT@ &rhs); // copy constructor
     @VecT@ & operator=(const @VecT@ &rhs) = delete;
+    @T@ & operator()(Long_I i);
+    const @T@ & operator()(Long_I i) const;
     void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
 
@@ -37,6 +36,12 @@ inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(rhs)
     SLS_ERR("copy constructor forbidden!");
 #endif
 }
+
+inline @T@ & @VecT@::operator()(Long_I i)
+{ return (*this)[i]; }
+
+inline const @T@ & @VecT@::operator()(Long_I i) const
+{ return (*this)[i]; }
 
 inline void @VecT@::operator<<(@VecT@ &rhs)
 {
@@ -53,13 +58,13 @@ class VecBool : public VbaseBool
 public:
     typedef VbaseBool Base;
     using Base::ref; // bit reference
-    using Base::resize;
-    using Base::operator[];
 
     VecBool() = default;
     explicit VecBool(Long_I N);
     VecBool(const VecBool &rhs); // copy constructor
     VecBool & operator=(const VecBool &rhs) = delete;
+    ref operator()(Long_I i);
+    Bool operator()(Long_I i) const;
     void operator<<(VecBool &rhs); // move data and rhs.resize(0)
 };
 
@@ -71,6 +76,12 @@ inline VecBool::VecBool(const VecBool &rhs) : Base(rhs)
     SLS_ERR("copy constructor forbidden!");
 #endif
 }
+
+inline VbaseBool::ref VecBool::operator()(Long_I i)
+{ return m_v[i]; }
+
+inline Bool VecBool::operator()(Long_I i) const
+{ return m_v[i]; }
 
 inline void VecBool::operator<<(VecBool &rhs)
 {

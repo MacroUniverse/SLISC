@@ -163,33 +163,33 @@ void test_dense()
     vDoub1[vDoub1.size()-1] = 3.1;
     if (vDoub1.end() != 3.1)  SLS_ERR("failed!");
     if (vDoub1.end(1) != 3.1)  SLS_ERR("failed!");
-    aDoub1(aDoub1.size()-1) = 3.1;
+    aDoub1[aDoub1.size()-1] = 3.1;
     if (aDoub1.end() != 3.1)  SLS_ERR("failed!");
     if (aDoub1.end(1) != 3.1)  SLS_ERR("failed!");
     a3Doub1[a3Doub1.size()-1] = 3.1;
     if (a3Doub1.end() != 3.1)  SLS_ERR("failed!");
     if (a3Doub1.end(1) != 3.1)  SLS_ERR("failed!");
-    c3Doub1(c3Doub1.size() - 1) = 3.1;
+    c3Doub1[c3Doub1.size() - 1] = 3.1;
     if (c3Doub1.end() != 3.1)  SLS_ERR("failed!");
     if (c3Doub1.end(1) != 3.1)  SLS_ERR("failed!");
     vDoub1[vDoub1.size()-2] = 3.2;
     if (vDoub1.end(2) != 3.2)  SLS_ERR("failed!");
-    aDoub1(aDoub1.size()-2) = 3.2;
+    aDoub1[aDoub1.size()-2] = 3.2;
     if (aDoub1.end(2) != 3.2)  SLS_ERR("failed!");
     a3Doub1[a3Doub1.size()-2] = 3.2;
     if (a3Doub1.end(2) != 3.2)  SLS_ERR("failed!");
-    c3Doub1(c3Doub1.size() - 2) = 3.2;
+    c3Doub1[c3Doub1.size() - 2] = 3.2;
     if (c3Doub1.end(2) != 3.2)  SLS_ERR("failed!");
 
     // operator()
     vDoub1[vDoub1.size()-1] = 5.5;
-    if ( vDoub1[vDoub1.size()-1] != 5.5 ) SLS_ERR("failed!");
+    if (vDoub1[vDoub1.size()-1] != 5.5 ) SLS_ERR("failed!");
     if (vDoub1.end() != 5.5)  SLS_ERR("failed!");
     aDoub1(aDoub1.n1()-1, aDoub1.n2()-1) = 5.5;
-    if ( aDoub1(aDoub1.n1()-1, aDoub1.n2()-1) != 5.5 ) SLS_ERR("failed!");
+    if (aDoub1(aDoub1.n1()-1, aDoub1.n2()-1) != 5.5 ) SLS_ERR("failed!");
     if (aDoub1.end() != 5.5)  SLS_ERR("failed!");
     a3Doub1(a3Doub1.n1()-1, a3Doub1.n2()-1, a3Doub1.n3()-1) = 5.5;
-    if ( a3Doub1(a3Doub1.n1()-1, a3Doub1.n2()-1, a3Doub1.n3()-1) != 5.5 ) SLS_ERR("failed!");
+    if (a3Doub1(a3Doub1.n1()-1, a3Doub1.n2()-1, a3Doub1.n3()-1) != 5.5 ) SLS_ERR("failed!");
     if (a3Doub1.end() != 5.5)  SLS_ERR("failed!");
 
     Cmat3Doub c3d(2, 3, 4);

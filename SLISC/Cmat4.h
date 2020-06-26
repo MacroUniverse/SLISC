@@ -7,13 +7,9 @@ class Cmat4Int : public VbaseInt
 {
 protected:
     typedef VbaseInt Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2, m_N3, m_N4;
 public:
     typedef Int value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat4Int(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Int(const Cmat4Int &rhs);   // Copy constructor
@@ -99,13 +95,9 @@ class Cmat4Llong : public VbaseLlong
 {
 protected:
     typedef VbaseLlong Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2, m_N3, m_N4;
 public:
     typedef Llong value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat4Llong(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Llong(const Cmat4Llong &rhs);   // Copy constructor
@@ -191,13 +183,9 @@ class Cmat4Doub : public VbaseDoub
 {
 protected:
     typedef VbaseDoub Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2, m_N3, m_N4;
 public:
     typedef Doub value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat4Doub(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Doub(const Cmat4Doub &rhs);   // Copy constructor
@@ -283,13 +271,9 @@ class Cmat4Comp : public VbaseComp
 {
 protected:
     typedef VbaseComp Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2, m_N3, m_N4;
 public:
     typedef Comp value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat4Comp(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
     Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Cmat4Comp(const Cmat4Comp &rhs);   // Copy constructor

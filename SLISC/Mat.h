@@ -7,12 +7,9 @@ class MatChar : public VbaseChar
 {
 protected:
     typedef VbaseChar Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
     using Base::ptr;
-    using Base::operator();
     MatChar(): m_N1(0), m_N2(0) {};
     MatChar(Long_I N1, Long_I N2);
     MatChar(const MatChar &rhs);        // Copy constructor
@@ -82,12 +79,9 @@ class MatInt : public VbaseInt
 {
 protected:
     typedef VbaseInt Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
     using Base::ptr;
-    using Base::operator();
     MatInt(): m_N1(0), m_N2(0) {};
     MatInt(Long_I N1, Long_I N2);
     MatInt(const MatInt &rhs);        // Copy constructor
@@ -157,12 +151,9 @@ class MatLlong : public VbaseLlong
 {
 protected:
     typedef VbaseLlong Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
     using Base::ptr;
-    using Base::operator();
     MatLlong(): m_N1(0), m_N2(0) {};
     MatLlong(Long_I N1, Long_I N2);
     MatLlong(const MatLlong &rhs);        // Copy constructor
@@ -241,12 +232,9 @@ class MatFloat : public VbaseFloat
 {
 protected:
     typedef VbaseFloat Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
     using Base::ptr;
-    using Base::operator();
     MatFloat(): m_N1(0), m_N2(0) {};
     MatFloat(Long_I N1, Long_I N2);
     MatFloat(const MatFloat &rhs);        // Copy constructor
@@ -316,12 +304,9 @@ class MatDoub : public VbaseDoub
 {
 protected:
     typedef VbaseDoub Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
     using Base::ptr;
-    using Base::operator();
     MatDoub(): m_N1(0), m_N2(0) {};
     MatDoub(Long_I N1, Long_I N2);
     MatDoub(const MatDoub &rhs);        // Copy constructor
@@ -391,12 +376,9 @@ class MatComp : public VbaseComp
 {
 protected:
     typedef VbaseComp Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
     using Base::ptr;
-    using Base::operator();
     MatComp(): m_N1(0), m_N2(0) {};
     MatComp(Long_I N1, Long_I N2);
     MatComp(const MatComp &rhs);        // Copy constructor

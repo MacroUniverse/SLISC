@@ -19,9 +19,7 @@ class @Mat3T@ : public @VbaseT@
 {
 protected:
     typedef @VbaseT@ Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     @Mat3T@(): m_N1(0), m_N2(0), m_N3(0) {};
     @Mat3T@(Long_I N1, Long_I N2, Long_I N3);

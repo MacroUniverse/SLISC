@@ -19,12 +19,8 @@ class @CmatT@ : public @VbaseT@
 {
 protected:
     typedef @VbaseT@ Base;
-    using Base::m_p;
-    using Base::m_N;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
-    using Base::operator();
     @CmatT@(): m_N1(0), m_N2(0) {};
     @CmatT@(Long_I N1, Long_I N2);
     @CmatT@(const @CmatT@ &rhs);        // Copy constructor
@@ -98,10 +94,8 @@ class CmatBool : public VbaseBool
 {
 protected:
     typedef VbaseBool Base;
-    using Base::ref;
     Long m_N1, m_N2;
 public:
-    using Base::operator();
     CmatBool(): m_N1(0), m_N2(0) {};
     CmatBool(Long_I N1, Long_I N2);
     CmatBool(const CmatBool &rhs);        // Copy constructor

@@ -7,9 +7,7 @@ class Mat3Char : public VbaseChar
 {
 protected:
     typedef VbaseChar Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     Mat3Char(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Char(Long_I N1, Long_I N2, Long_I N3);
@@ -82,9 +80,7 @@ class Mat3Int : public VbaseInt
 {
 protected:
     typedef VbaseInt Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     Mat3Int(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Int(Long_I N1, Long_I N2, Long_I N3);
@@ -157,9 +153,7 @@ class Mat3Llong : public VbaseLlong
 {
 protected:
     typedef VbaseLlong Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     Mat3Llong(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Llong(Long_I N1, Long_I N2, Long_I N3);
@@ -241,9 +235,7 @@ class Mat3Float : public VbaseFloat
 {
 protected:
     typedef VbaseFloat Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     Mat3Float(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Float(Long_I N1, Long_I N2, Long_I N3);
@@ -316,9 +308,7 @@ class Mat3Doub : public VbaseDoub
 {
 protected:
     typedef VbaseDoub Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     Mat3Doub(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Doub(Long_I N1, Long_I N2, Long_I N3);
@@ -391,9 +381,7 @@ class Mat3Comp : public VbaseComp
 {
 protected:
     typedef VbaseComp Base;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     Mat3Comp(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Comp(Long_I N1, Long_I N2, Long_I N3);

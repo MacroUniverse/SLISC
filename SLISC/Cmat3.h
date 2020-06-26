@@ -7,15 +7,9 @@ class Cmat3Char : public VbaseChar
 {
 protected:
     typedef VbaseChar Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     typedef Char value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat3Char(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Char(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Char(const Cmat3Char &rhs); // copy constructor
@@ -93,15 +87,9 @@ class Cmat3Int : public VbaseInt
 {
 protected:
     typedef VbaseInt Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     typedef Int value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat3Int(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Int(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Int(const Cmat3Int &rhs); // copy constructor
@@ -179,15 +167,9 @@ class Cmat3Llong : public VbaseLlong
 {
 protected:
     typedef VbaseLlong Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     typedef Llong value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat3Llong(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Llong(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Llong(const Cmat3Llong &rhs); // copy constructor
@@ -265,15 +247,9 @@ class Cmat3Doub : public VbaseDoub
 {
 protected:
     typedef VbaseDoub Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     typedef Doub value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat3Doub(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Doub(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Doub(const Cmat3Doub &rhs); // copy constructor
@@ -351,15 +327,9 @@ class Cmat3Comp : public VbaseComp
 {
 protected:
     typedef VbaseComp Base;
-    using Base::m_p;
-    using Base::m_N;
-    Long m_N1;
-    Long m_N2;
-    Long m_N3;
+    Long m_N1, m_N2, m_N3;
 public:
     typedef Comp value_type;
-    using Base::operator();
-    using Base::ptr;
     Cmat3Comp(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Comp(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Comp(const Cmat3Comp &rhs); // copy constructor
