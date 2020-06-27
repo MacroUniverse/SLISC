@@ -4,7 +4,7 @@
 #include "slice_arith.h"
 
 namespace slisc {
-
+// return signed size instead of unsigned
 //% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
 //%  'Str'; 'Str32'; 'vecStr'; 'vecStr32';};
 //%--------------------------
@@ -15,21 +15,19 @@ inline Long size(@T@_I v)
 }
 //%-------------------------
 
-//% types = {'Int'; 'Llong'; 'Doub'; 'Comp';};
+// sum of absolute values
+//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub';
+//%          'Fcomp'; 'Comp'; 'Lcomp'};
 //%--------------------------
-//% T = varargin{:}; Tr = rm_comp(T);
+//% T = varargin{:};
+//% % decide return type
 //% if is_integral(T)
-inline Llong sum_abs_v(const @T@ *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Llong i = 1; i < N; ++i)
-        s += abs(v[i]);
-    return s;
-}
+//%     Tr = 'Llong';
 //% elseif is_fpt(T) || is_comp(T)
+//%     Tr = rm_comp(T);
+//% else
+//%     error('not implemented!');
+//% end
 inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -40,106 +38,131 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
         s += abs(v[i]);
     return s;
 }
-//% else
-//%     error('not implemented!');
-//% end
 //%---------------------------
 
-//% types = {
-//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'SvecInt'; 'SvecDoub'; 'SvecComp';
-//% };
+// sum of absolute values
+//% types = list_contain_dense();
 //%--------------------------
 //% T = varargin{:}; Ts = contain_type(T);
-//% if is_integral(T)
-//%     Tret = 'Llong';
+//% if is_integral(Ts)
+//%     Tr = 'Llong';
+//% elseif is_fpt(Ts) || is_comp(Ts)
+//%     Tr = rm_comp(Ts);
 //% else
-//%     Tret = rm_comp(Ts);
+//%     error(['sum_abs: not implemented: ' T]);
 //% end
 //% if is_dense(T)
-inline @Tret@ sum_abs(@T@_I v)
+inline @Tr@ sum_abs(@T@_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 //% else
-//%     error('not implemented!');
+//%     error('sum_abs: not implemented!');
 //% end
 //%---------------------------
 
+// maximum/minimum element (pointer version)
+// max_v(), min_v()
 //% types = {
-//%     'Int'; 'Llong'; 'Doub';
+//%     'max', 'Char', '<';   'min', 'Char', '>';
+//%     'max', 'Int', '<';    'min', 'Int', '>';
+//%     'max', 'Llong', '<';  'min', 'Llong', '>';
+//%     'max', 'Float', '<';   'min', 'Float', '>';
+//%     'max', 'Doub', '<';   'min', 'Doub', '>';
+//%     'max', 'Ldoub', '<';  'min', 'Ldoub', '>';
 //% };
 //%--------------------------
-//% T = varargin{:};
+//% [fun, T, oper] = varargin{:};
 //% if is_real(T) && ~is_Bool(T)
-inline @T@ max_v(const @T@ *v, Long_I N)
+inline @T@ @fun@_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
     @T@ s = v[0];
     for (Long i = 1; i < N; ++i) {
-        if (s < v[i])
+        if (s @oper@ v[i])
             s = v[i];
     }
     return s;
 }
 
-inline @T@ max_v(const @T@ *v, Long_I N, Long_I step)
+inline @T@ @fun@_v(const @T@ *v, Long_I N, Long_I step)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
     @T@ s = v[0];
     for (Long i = step; i < N*step; i += step) {
-        if (s < v[i])
+        if (s @oper@ v[i])
             s = v[i];
     }
     return s;
 }
-//% else
-//%     error('not implemented!');
-//% end
-//%-------------------------
 
-//% types = {
-//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'SvecLlong';
-//% };
-//%--------------------------
-//% T = varargin{:}; Ts = contain_type(T);
-//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
-inline @Ts@ max(@T@_I v)
+inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N)
 {
-    return max_v(v.ptr(), v.size());
-}
-//% elseif is_Dvec(T) && is_real(Ts) && ~is_Bool(Ts)
-inline @Ts@ max(@T@_I v)
-{
-    return max_v(v.ptr(), v.size(), v.step());
-}
-//% else
-//%     error('not implemented!');
-//% end
-//%-------------------------
-
-//% types = {
-//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
-//% };
-//%--------------------------
-//% T = varargin{:}; Ts = contain_type(T);
-//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
-inline @Ts@ max(Long_O ind, @T@_I v)
-{
-    Long N = v.size();
-    @Ts@ val = v[0];
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
     for (Long i = 1; i < N; ++i) {
-        if (val < v[i]) {
-            val = v[i]; ind = i;
+        if (s @oper@ v[i]) {
+            s = v[i];  ind = i;
         }
     }
-    return val;
+    return s;
 }
+
+inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s @oper@ v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+//% else
+//%     error(['max_v: not implemented: ' T]);
 //% end
+//%-------------------------
+
+//% types = list_contain_dense_real();
 //%--------------------------
+//% T = varargin{:}; Ts = contain_type(T);
+//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(@T@_I v)
+{ return max_v(v.ptr(), v.size()); }
+
+inline @Ts@ max(Long_O ind, @T@_I v)
+{ return max_v(ind, v.ptr(), v.size()); }
+
+inline @Ts@ min(@T@_I v)
+{ return min_v(v.ptr(), v.size()); }
+
+inline @Ts@ min(Long_O ind, @T@_I v)
+{ return min_v(ind, v.ptr(), v.size()); }
+//% elseif is_Dvec(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(@T@_I v)
+{ return max_v(v.ptr(), v.size(), v.step()); }
+
+inline @Ts@ max(Long_O ind, @T@_I v)
+{ return max_v(v.ptr(), v.size(), v.step()); }
+
+inline @Ts@ min(@T@_I v)
+{ return min_v(v.ptr(), v.size(), v.step()); }
+
+inline @Ts@ min(Long_O ind, @T@_I v)
+{ return min_v(v.ptr(), v.size(), v.step()); }
+//% else
+//%     error(['max: not implemented: ' T]);
+//% end
+//%-------------------------
 
 //% types = {
 //%     'Int'; 'Llong'; 'Float'; 'Doub'; 'Comp';

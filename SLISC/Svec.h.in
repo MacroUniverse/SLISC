@@ -1,20 +1,22 @@
 #pragma once
 #include "global.h"
+#include "Imag.h"
 
 namespace slisc {
 //% types = {
-//%     'Char', true;
-//%     'Char', false;
-//%     'Int', true;
-//%     'Int', false;
-//%     'Llong', true;
-//%     'Llong', false;
-//%     'Long', true;
-//%     'Long', false;
-//%     'Doub', true;
-//%     'Doub', false;
-//%     'Comp', true;
-//%     'Comp', false;
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Fimag', true;  'Fimag', false;
+//%     'Imag', true;   'Imag', false;
+//%     'Limag', true;  'Limag', false;
 //% };
 //%------------------------
 //% [T, constness] = varargin{:};

@@ -219,15 +219,6 @@ inline void MatLlong::resize(Long_I N1, Long_I N2)
 typedef const MatLlong & MatLlong_I;
 typedef MatLlong & MatLlong_O, & MatLlong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef MatInt MatLong;
-#else
-typedef MatLlong MatLong;
-#endif
-
-typedef const MatLong & MatLong_I;
-typedef MatLong & MatLong_O, & MatLong_IO;
-
 class MatFloat : public VbaseFloat
 {
 protected:
@@ -372,6 +363,150 @@ inline void MatDoub::resize(Long_I N1, Long_I N2)
 typedef const MatDoub & MatDoub_I;
 typedef MatDoub & MatDoub_O, & MatDoub_IO;
 
+class MatLdoub : public VbaseLdoub
+{
+protected:
+    typedef VbaseLdoub Base;
+    Long m_N1, m_N2;
+public:
+    using Base::ptr;
+    MatLdoub(): m_N1(0), m_N2(0) {};
+    MatLdoub(Long_I N1, Long_I N2);
+    MatLdoub(const MatLdoub &rhs);        // Copy constructor
+    MatLdoub & operator=(const MatLdoub &rhs) = delete;
+    void operator<<(MatLdoub &rhs); // move data and rhs.resize(0, 0)
+    Ldoub& operator()(Long_I i, Long_I j); // double indexing
+    const Ldoub& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline MatLdoub::MatLdoub(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline MatLdoub::MatLdoub(const MatLdoub &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatLdoub::operator<<(MatLdoub &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Ldoub& MatLdoub::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatLdoub subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline const Ldoub & MatLdoub::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatLdoub subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline Long MatLdoub::n1() const
+{
+    return m_N1;
+}
+
+inline Long MatLdoub::n2() const
+{
+    return m_N2;
+}
+
+inline void MatLdoub::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const MatLdoub & MatLdoub_I;
+typedef MatLdoub & MatLdoub_O, & MatLdoub_IO;
+
+class MatFcomp : public VbaseFcomp
+{
+protected:
+    typedef VbaseFcomp Base;
+    Long m_N1, m_N2;
+public:
+    using Base::ptr;
+    MatFcomp(): m_N1(0), m_N2(0) {};
+    MatFcomp(Long_I N1, Long_I N2);
+    MatFcomp(const MatFcomp &rhs);        // Copy constructor
+    MatFcomp & operator=(const MatFcomp &rhs) = delete;
+    void operator<<(MatFcomp &rhs); // move data and rhs.resize(0, 0)
+    Fcomp& operator()(Long_I i, Long_I j); // double indexing
+    const Fcomp& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline MatFcomp::MatFcomp(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline MatFcomp::MatFcomp(const MatFcomp &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatFcomp::operator<<(MatFcomp &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Fcomp& MatFcomp::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatFcomp subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline const Fcomp & MatFcomp::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatFcomp subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline Long MatFcomp::n1() const
+{
+    return m_N1;
+}
+
+inline Long MatFcomp::n2() const
+{
+    return m_N2;
+}
+
+inline void MatFcomp::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const MatFcomp & MatFcomp_I;
+typedef MatFcomp & MatFcomp_O, & MatFcomp_IO;
+
 class MatComp : public VbaseComp
 {
 protected:
@@ -443,5 +578,293 @@ inline void MatComp::resize(Long_I N1, Long_I N2)
 
 typedef const MatComp & MatComp_I;
 typedef MatComp & MatComp_O, & MatComp_IO;
+
+class MatLcomp : public VbaseLcomp
+{
+protected:
+    typedef VbaseLcomp Base;
+    Long m_N1, m_N2;
+public:
+    using Base::ptr;
+    MatLcomp(): m_N1(0), m_N2(0) {};
+    MatLcomp(Long_I N1, Long_I N2);
+    MatLcomp(const MatLcomp &rhs);        // Copy constructor
+    MatLcomp & operator=(const MatLcomp &rhs) = delete;
+    void operator<<(MatLcomp &rhs); // move data and rhs.resize(0, 0)
+    Lcomp& operator()(Long_I i, Long_I j); // double indexing
+    const Lcomp& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline MatLcomp::MatLcomp(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline MatLcomp::MatLcomp(const MatLcomp &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatLcomp::operator<<(MatLcomp &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Lcomp& MatLcomp::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatLcomp subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline const Lcomp & MatLcomp::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatLcomp subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline Long MatLcomp::n1() const
+{
+    return m_N1;
+}
+
+inline Long MatLcomp::n2() const
+{
+    return m_N2;
+}
+
+inline void MatLcomp::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const MatLcomp & MatLcomp_I;
+typedef MatLcomp & MatLcomp_O, & MatLcomp_IO;
+
+class MatFimag : public VbaseFimag
+{
+protected:
+    typedef VbaseFimag Base;
+    Long m_N1, m_N2;
+public:
+    using Base::ptr;
+    MatFimag(): m_N1(0), m_N2(0) {};
+    MatFimag(Long_I N1, Long_I N2);
+    MatFimag(const MatFimag &rhs);        // Copy constructor
+    MatFimag & operator=(const MatFimag &rhs) = delete;
+    void operator<<(MatFimag &rhs); // move data and rhs.resize(0, 0)
+    Fimag& operator()(Long_I i, Long_I j); // double indexing
+    const Fimag& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline MatFimag::MatFimag(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline MatFimag::MatFimag(const MatFimag &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatFimag::operator<<(MatFimag &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Fimag& MatFimag::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatFimag subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline const Fimag & MatFimag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatFimag subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline Long MatFimag::n1() const
+{
+    return m_N1;
+}
+
+inline Long MatFimag::n2() const
+{
+    return m_N2;
+}
+
+inline void MatFimag::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const MatFimag & MatFimag_I;
+typedef MatFimag & MatFimag_O, & MatFimag_IO;
+
+class MatImag : public VbaseImag
+{
+protected:
+    typedef VbaseImag Base;
+    Long m_N1, m_N2;
+public:
+    using Base::ptr;
+    MatImag(): m_N1(0), m_N2(0) {};
+    MatImag(Long_I N1, Long_I N2);
+    MatImag(const MatImag &rhs);        // Copy constructor
+    MatImag & operator=(const MatImag &rhs) = delete;
+    void operator<<(MatImag &rhs); // move data and rhs.resize(0, 0)
+    Imag& operator()(Long_I i, Long_I j); // double indexing
+    const Imag& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline MatImag::MatImag(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline MatImag::MatImag(const MatImag &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatImag::operator<<(MatImag &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Imag& MatImag::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatImag subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline const Imag & MatImag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatImag subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline Long MatImag::n1() const
+{
+    return m_N1;
+}
+
+inline Long MatImag::n2() const
+{
+    return m_N2;
+}
+
+inline void MatImag::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const MatImag & MatImag_I;
+typedef MatImag & MatImag_O, & MatImag_IO;
+
+class MatLimag : public VbaseLimag
+{
+protected:
+    typedef VbaseLimag Base;
+    Long m_N1, m_N2;
+public:
+    using Base::ptr;
+    MatLimag(): m_N1(0), m_N2(0) {};
+    MatLimag(Long_I N1, Long_I N2);
+    MatLimag(const MatLimag &rhs);        // Copy constructor
+    MatLimag & operator=(const MatLimag &rhs) = delete;
+    void operator<<(MatLimag &rhs); // move data and rhs.resize(0, 0)
+    Limag& operator()(Long_I i, Long_I j); // double indexing
+    const Limag& operator()(Long_I i, Long_I j) const;
+    Long n1() const;
+    Long n2() const;
+    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+};
+
+inline MatLimag::MatLimag(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+
+inline MatLimag::MatLimag(const MatLimag &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatLimag::operator<<(MatLimag &rhs)
+{
+    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Limag& MatLimag::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatLimag subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline const Limag & MatLimag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+        SLS_ERR("MatLimag subscript out of bounds");
+#endif
+    return m_p[m_N2*i+j];
+}
+
+inline Long MatLimag::n1() const
+{
+    return m_N1;
+}
+
+inline Long MatLimag::n2() const
+{
+    return m_N2;
+}
+
+inline void MatLimag::resize(Long_I N1, Long_I N2)
+{
+    if (N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N1*N2);
+        m_N1 = N1; m_N2 = N2;
+    }
+}
+
+typedef const MatLimag & MatLimag_I;
+typedef MatLimag & MatLimag_O, & MatLimag_IO;
 
 } // namespace slisc
