@@ -222,6 +222,15 @@ inline void CmatLlong::resize(Long_I N1, Long_I N2)
 typedef const CmatLlong & CmatLlong_I;
 typedef CmatLlong & CmatLlong_O, & CmatLlong_IO;
 
+#ifdef SLS_USE_INT_AS_LONG
+typedef CmatInt CmatLong;
+#else
+typedef CmatLlong CmatLong;
+#endif
+
+typedef const CmatLong & CmatLong_I;
+typedef CmatLong & CmatLong_O, & CmatLong_IO;
+
 class CmatFloat : public VbaseFloat
 {
 protected:

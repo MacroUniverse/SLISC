@@ -4,7 +4,7 @@
 
 namespace slisc {
 //% types = {
-//%     'Char'; 'Int'; 'Llong';
+//%     'Char'; 'Int'; 'Llong'; 'Long';
 //%     'Float'; 'Doub'; 'Ldoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp';
 //%     'Fimag'; 'Imag'; 'Limag';};
@@ -12,6 +12,13 @@ namespace slisc {
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
 //% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef Cmat3Int Cmat3Long;
+#else
+typedef Cmat3Llong Cmat3Long;
+#endif
+//% else
 class @Cmat3T@ : public @VbaseT@
 {
 protected:
@@ -88,16 +95,9 @@ inline Long @Cmat3T@::n2() const {
 inline Long @Cmat3T@::n3() const {
     return m_N3;
 }
+//% end
 
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef Cmat3Int Cmat3Long;
-#else
-typedef Cmat3Llong Cmat3Long;
-#endif
-//% else
 typedef const @Cmat3T@ & @Cmat3T@_I;
 typedef @Cmat3T@ & @Cmat3T@_O, & @Cmat3T@_IO;
-//% end
 //%--------------------------------
 } // namespace slisc

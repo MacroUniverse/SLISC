@@ -243,6 +243,15 @@ inline Long Cmat3Llong::n3() const {
 typedef const Cmat3Llong & Cmat3Llong_I;
 typedef Cmat3Llong & Cmat3Llong_O, & Cmat3Llong_IO;
 
+#ifdef SLS_USE_INT_AS_LONG
+typedef Cmat3Int Cmat3Long;
+#else
+typedef Cmat3Llong Cmat3Long;
+#endif
+
+typedef const Cmat3Long & Cmat3Long_I;
+typedef Cmat3Long & Cmat3Long_O, & Cmat3Long_IO;
+
 class Cmat3Float : public VbaseFloat
 {
 protected:

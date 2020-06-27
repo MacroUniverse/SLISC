@@ -4,7 +4,7 @@
 
 namespace slisc {
 //% types = {
-//%     'Char'; 'Int'; 'Llong';
+//%     'Char'; 'Int'; 'Llong'; 'Long';
 //%     'Float'; 'Doub'; 'Ldoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp';
 //%     'Fimag'; 'Imag'; 'Limag';};
