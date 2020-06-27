@@ -36,7 +36,7 @@ Int main(Int argc, Char *argv[])
 #pragma omp atomic
 		++N;
 		if (ret == 0)
-			printf("%s  %i/%i  %i\n", argv[i], N, argc-start, Int(timer.toc()));
+			printf("%s  %i/%i  %is\n", argv[i], N, argc-start, Int(timer.toc()));
 		if (ret == -1)
 			printf("%s  %i/%i  destination exist, skipped\n", argv[i], N, argc-start);
 	}
