@@ -271,7 +271,7 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
 //%     };
 //%--------------------------
 //% T = varargin{:};
-//% Ts = contain_type(T);
+//% Ts = value_type(T);
 inline Bool operator==(@T@_I v, @Ts@_I s)
 {
 //% if is_dense(T)

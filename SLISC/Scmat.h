@@ -21,7 +21,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Char *ptr, Long_I N1, Long_I N2);
     void set(const ScmatChar_c &sli);
     ~ScmatChar_c();
@@ -58,7 +58,7 @@ inline Long ScmatChar_c::n2() const
     return m_N2;
 }
 
-inline void ScmatChar_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatChar_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -101,7 +101,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Char *ptr, Long_I N1, Long_I N2);
     void set(const ScmatChar &sli);
     ~ScmatChar();
@@ -142,7 +142,7 @@ inline Long ScmatChar::n2() const
     return m_N2;
 }
 
-inline void ScmatChar::set_size(Long_I N1, Long_I N2)
+inline void ScmatChar::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -184,7 +184,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Int *ptr, Long_I N1, Long_I N2);
     void set(const ScmatInt_c &sli);
     ~ScmatInt_c();
@@ -221,7 +221,7 @@ inline Long ScmatInt_c::n2() const
     return m_N2;
 }
 
-inline void ScmatInt_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatInt_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -264,7 +264,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Int *ptr, Long_I N1, Long_I N2);
     void set(const ScmatInt &sli);
     ~ScmatInt();
@@ -305,7 +305,7 @@ inline Long ScmatInt::n2() const
     return m_N2;
 }
 
-inline void ScmatInt::set_size(Long_I N1, Long_I N2)
+inline void ScmatInt::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -347,7 +347,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Llong *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLlong_c &sli);
     ~ScmatLlong_c();
@@ -384,7 +384,7 @@ inline Long ScmatLlong_c::n2() const
     return m_N2;
 }
 
-inline void ScmatLlong_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatLlong_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -427,7 +427,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Llong *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLlong &sli);
     ~ScmatLlong();
@@ -468,7 +468,7 @@ inline Long ScmatLlong::n2() const
     return m_N2;
 }
 
-inline void ScmatLlong::set_size(Long_I N1, Long_I N2)
+inline void ScmatLlong::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -526,7 +526,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Float *ptr, Long_I N1, Long_I N2);
     void set(const ScmatFloat_c &sli);
     ~ScmatFloat_c();
@@ -563,7 +563,7 @@ inline Long ScmatFloat_c::n2() const
     return m_N2;
 }
 
-inline void ScmatFloat_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatFloat_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -606,7 +606,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Float *ptr, Long_I N1, Long_I N2);
     void set(const ScmatFloat &sli);
     ~ScmatFloat();
@@ -647,7 +647,7 @@ inline Long ScmatFloat::n2() const
     return m_N2;
 }
 
-inline void ScmatFloat::set_size(Long_I N1, Long_I N2)
+inline void ScmatFloat::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -689,7 +689,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Doub *ptr, Long_I N1, Long_I N2);
     void set(const ScmatDoub_c &sli);
     ~ScmatDoub_c();
@@ -726,7 +726,7 @@ inline Long ScmatDoub_c::n2() const
     return m_N2;
 }
 
-inline void ScmatDoub_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatDoub_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -769,7 +769,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Doub *ptr, Long_I N1, Long_I N2);
     void set(const ScmatDoub &sli);
     ~ScmatDoub();
@@ -810,7 +810,7 @@ inline Long ScmatDoub::n2() const
     return m_N2;
 }
 
-inline void ScmatDoub::set_size(Long_I N1, Long_I N2)
+inline void ScmatDoub::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -852,7 +852,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Ldoub *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLdoub_c &sli);
     ~ScmatLdoub_c();
@@ -889,7 +889,7 @@ inline Long ScmatLdoub_c::n2() const
     return m_N2;
 }
 
-inline void ScmatLdoub_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatLdoub_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -932,7 +932,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Ldoub *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLdoub &sli);
     ~ScmatLdoub();
@@ -973,7 +973,7 @@ inline Long ScmatLdoub::n2() const
     return m_N2;
 }
 
-inline void ScmatLdoub::set_size(Long_I N1, Long_I N2)
+inline void ScmatLdoub::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1015,7 +1015,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Fcomp *ptr, Long_I N1, Long_I N2);
     void set(const ScmatFcomp_c &sli);
     ~ScmatFcomp_c();
@@ -1052,7 +1052,7 @@ inline Long ScmatFcomp_c::n2() const
     return m_N2;
 }
 
-inline void ScmatFcomp_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatFcomp_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1095,7 +1095,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Fcomp *ptr, Long_I N1, Long_I N2);
     void set(const ScmatFcomp &sli);
     ~ScmatFcomp();
@@ -1136,7 +1136,7 @@ inline Long ScmatFcomp::n2() const
     return m_N2;
 }
 
-inline void ScmatFcomp::set_size(Long_I N1, Long_I N2)
+inline void ScmatFcomp::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1178,7 +1178,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Comp *ptr, Long_I N1, Long_I N2);
     void set(const ScmatComp_c &sli);
     ~ScmatComp_c();
@@ -1215,7 +1215,7 @@ inline Long ScmatComp_c::n2() const
     return m_N2;
 }
 
-inline void ScmatComp_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatComp_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1258,7 +1258,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Comp *ptr, Long_I N1, Long_I N2);
     void set(const ScmatComp &sli);
     ~ScmatComp();
@@ -1299,7 +1299,7 @@ inline Long ScmatComp::n2() const
     return m_N2;
 }
 
-inline void ScmatComp::set_size(Long_I N1, Long_I N2)
+inline void ScmatComp::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1341,7 +1341,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Lcomp *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLcomp_c &sli);
     ~ScmatLcomp_c();
@@ -1378,7 +1378,7 @@ inline Long ScmatLcomp_c::n2() const
     return m_N2;
 }
 
-inline void ScmatLcomp_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatLcomp_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1421,7 +1421,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Lcomp *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLcomp &sli);
     ~ScmatLcomp();
@@ -1462,7 +1462,7 @@ inline Long ScmatLcomp::n2() const
     return m_N2;
 }
 
-inline void ScmatLcomp::set_size(Long_I N1, Long_I N2)
+inline void ScmatLcomp::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1504,7 +1504,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Fimag *ptr, Long_I N1, Long_I N2);
     void set(const ScmatFimag_c &sli);
     ~ScmatFimag_c();
@@ -1541,7 +1541,7 @@ inline Long ScmatFimag_c::n2() const
     return m_N2;
 }
 
-inline void ScmatFimag_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatFimag_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1584,7 +1584,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Fimag *ptr, Long_I N1, Long_I N2);
     void set(const ScmatFimag &sli);
     ~ScmatFimag();
@@ -1625,7 +1625,7 @@ inline Long ScmatFimag::n2() const
     return m_N2;
 }
 
-inline void ScmatFimag::set_size(Long_I N1, Long_I N2)
+inline void ScmatFimag::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1667,7 +1667,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Imag *ptr, Long_I N1, Long_I N2);
     void set(const ScmatImag_c &sli);
     ~ScmatImag_c();
@@ -1704,7 +1704,7 @@ inline Long ScmatImag_c::n2() const
     return m_N2;
 }
 
-inline void ScmatImag_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatImag_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1747,7 +1747,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Imag *ptr, Long_I N1, Long_I N2);
     void set(const ScmatImag &sli);
     ~ScmatImag();
@@ -1788,7 +1788,7 @@ inline Long ScmatImag::n2() const
     return m_N2;
 }
 
-inline void ScmatImag::set_size(Long_I N1, Long_I N2)
+inline void ScmatImag::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1830,7 +1830,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(const Limag *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLimag_c &sli);
     ~ScmatLimag_c();
@@ -1867,7 +1867,7 @@ inline Long ScmatLimag_c::n2() const
     return m_N2;
 }
 
-inline void ScmatLimag_c::set_size(Long_I N1, Long_I N2)
+inline void ScmatLimag_c::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
@@ -1910,7 +1910,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(Limag *ptr, Long_I N1, Long_I N2);
     void set(const ScmatLimag &sli);
     ~ScmatLimag();
@@ -1951,7 +1951,7 @@ inline Long ScmatLimag::n2() const
     return m_N2;
 }
 
-inline void ScmatLimag::set_size(Long_I N1, Long_I N2)
+inline void ScmatLimag::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");

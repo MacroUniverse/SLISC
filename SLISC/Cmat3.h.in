@@ -32,6 +32,7 @@ public:
     @Cmat3T@ & operator=(const @Cmat3T@ &rhs) = delete;
     void operator<<(@Cmat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N1, Long_I N2, Long_I N3);
     @T@ & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const @T@ & operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
@@ -62,6 +63,16 @@ inline void @Cmat3T@::resize(Long_I N1, Long_I N2, Long_I N3)
         Base::resize(N1*N2*N3);
         m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
+}
+
+inline void @Cmat3T@::reshape(Long_I N1, Long_I N2, Long_I N3)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 * N3 != m_N)
+        SLS_ERR("@Cmat3T@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
+            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline @T@ & @Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)

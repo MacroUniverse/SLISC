@@ -151,7 +151,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //%     'Jcmat3Doub'; 'Jcmat3Comp';
 //% };
 //%-------------------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_VecBool(T)
@@ -240,7 +240,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //% };
 //%---------------------------
 //% [T, T1] = varargin{:};
-//% if ~is_promo(contain_type(T), contain_type(T1))
+//% if ~is_promo(value_type(T), value_type(T1))
 //%     error('illegal types');
 //% end
 inline void copy(@T@_O v, @T1@_I v1)
@@ -470,7 +470,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //%     'CbandDoub'; 'CbandComp';
 //% };
 //%------------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% DcmatTs = ['Dcmat' Ts];
 @DcmatTs@ band(@T@_IO);
 @DcmatTs@_c band(@T@_I);
@@ -512,7 +512,7 @@ inline void copy(@T@_O a, @T@_I b)
 //% };
 //%------------------------------
 //% [T1, T2] = varargin{:};
-//% Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% Ts1 = value_type(T1); Ts2 = value_type(T2);
 //% SvecTs1 = ['Svec' Ts1]; SvecTs2 = ['Svec' Ts2];
 //% if is_Cband(T1)
 inline void copy(@T1@_O b, @T2@_I a)
@@ -600,7 +600,7 @@ inline void copy(@T1@_O a, @T2@_I b)
 //% };
 //%------------------------------
 //% [T, Ts1] = varargin{:};
-//% Ts = contain_type(T);
+//% Ts = value_type(T);
 inline void copy(@T@_O v, const std::initializer_list<@Ts1@> &v1)
 {
     const @Ts1@ *p1 = v1.begin();

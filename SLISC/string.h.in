@@ -102,7 +102,7 @@ inline Long CRLF_to_LF(Str_IO str)
 // convert string to lower case
 //% types = {'Str'; 'Str32'};
 //%----------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 inline void to_lower(@T@_O str)
 {
     @Ts@ C, diff = 'a' - 'A';
@@ -120,7 +120,7 @@ inline void to_lower(@T@_O str)
 // convert string to lower case
 //% types = {'Str'; 'Str32'};
 //%----------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 inline void to_lower(@T@_O str, @T@_I STR)
 {
     @Ts@ C, diff = 'a' - 'A';
@@ -139,7 +139,7 @@ inline void to_lower(@T@_O str, @T@_I STR)
 // convert string to lower case
 //% types = {'Str'; 'Str32'};
 //%----------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 inline void to_upper(@T@_O STR, @T@_I str)
 {
     @Ts@ c, diff = 'A' - 'a';
@@ -158,7 +158,7 @@ inline void to_upper(@T@_O STR, @T@_I str)
 // convert string to lower case
 //% types = {'Str'; 'Str32'};
 //%----------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 inline void to_upper(@T@_IO str)
 {
     @Ts@ c, diff = 'A' - 'a';

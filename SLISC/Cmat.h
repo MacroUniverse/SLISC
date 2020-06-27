@@ -19,6 +19,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatChar::CmatChar(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -73,6 +74,16 @@ inline void CmatChar::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatChar::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatChar reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatChar & CmatChar_I;
 typedef CmatChar & CmatChar_O, & CmatChar_IO;
 
@@ -92,6 +103,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatInt::CmatInt(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -146,6 +158,16 @@ inline void CmatInt::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatInt::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatInt reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatInt & CmatInt_I;
 typedef CmatInt & CmatInt_O, & CmatInt_IO;
 
@@ -165,6 +187,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatLlong::CmatLlong(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -219,6 +242,16 @@ inline void CmatLlong::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatLlong::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatLlong reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatLlong & CmatLlong_I;
 typedef CmatLlong & CmatLlong_O, & CmatLlong_IO;
 
@@ -247,6 +280,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatFloat::CmatFloat(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -301,6 +335,16 @@ inline void CmatFloat::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatFloat::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatFloat reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatFloat & CmatFloat_I;
 typedef CmatFloat & CmatFloat_O, & CmatFloat_IO;
 
@@ -320,6 +364,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatDoub::CmatDoub(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -374,6 +419,16 @@ inline void CmatDoub::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatDoub::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatDoub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatDoub & CmatDoub_I;
 typedef CmatDoub & CmatDoub_O, & CmatDoub_IO;
 
@@ -393,6 +448,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatLdoub::CmatLdoub(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -447,6 +503,16 @@ inline void CmatLdoub::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatLdoub::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatLdoub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatLdoub & CmatLdoub_I;
 typedef CmatLdoub & CmatLdoub_O, & CmatLdoub_IO;
 
@@ -466,6 +532,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatFcomp::CmatFcomp(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -520,6 +587,16 @@ inline void CmatFcomp::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatFcomp::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatFcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatFcomp & CmatFcomp_I;
 typedef CmatFcomp & CmatFcomp_O, & CmatFcomp_IO;
 
@@ -539,6 +616,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatComp::CmatComp(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -593,6 +671,16 @@ inline void CmatComp::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatComp::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatComp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatComp & CmatComp_I;
 typedef CmatComp & CmatComp_O, & CmatComp_IO;
 
@@ -612,6 +700,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatLcomp::CmatLcomp(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -666,6 +755,16 @@ inline void CmatLcomp::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatLcomp::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatLcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatLcomp & CmatLcomp_I;
 typedef CmatLcomp & CmatLcomp_O, & CmatLcomp_IO;
 
@@ -685,6 +784,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatFimag::CmatFimag(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -739,6 +839,16 @@ inline void CmatFimag::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatFimag::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatFimag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatFimag & CmatFimag_I;
 typedef CmatFimag & CmatFimag_O, & CmatFimag_IO;
 
@@ -758,6 +868,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatImag::CmatImag(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -812,6 +923,16 @@ inline void CmatImag::resize(Long_I N1, Long_I N2)
     }
 }
 
+inline void CmatImag::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatImag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
+}
+
 typedef const CmatImag & CmatImag_I;
 typedef CmatImag & CmatImag_O, & CmatImag_IO;
 
@@ -831,6 +952,7 @@ public:
     Long n1() const;
     Long n2() const;
     void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
+    void reshape(Long_I N1, Long_I N2); // reshape (total elm # must be the same)
 };
 
 inline CmatLimag::CmatLimag(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
@@ -883,6 +1005,16 @@ inline void CmatLimag::resize(Long_I N1, Long_I N2)
         Base::resize(N1*N2);
         m_N1 = N1; m_N2 = N2;
     }
+}
+
+inline void CmatLimag::reshape(Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 != m_N)
+        SLS_ERR("CmatLimag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
+            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2;
 }
 
 typedef const CmatLimag & CmatLimag_I;

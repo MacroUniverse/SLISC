@@ -1,5 +1,5 @@
 function ret = slice_type(T)
-Ts = contain_type(T);
+Ts = value_type(T);
 if is_Vec(T) || is_Svec(T)
     ret = ['Svec' Ts];
 elseif is_Dvec(T)

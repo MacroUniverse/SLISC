@@ -39,4 +39,13 @@ void test_Cmat()
         if (v.n1() != N1+1 || v.n2() != N2+1)
             SLS_ERR("failed!");
 	}
+
+	// reshape
+	{
+		Cmat3Doub a3(2, 3, 4), b3(2, 3, 4);
+		copy(b3, a3);
+		a3.reshape(2, 6, 2); a3.reshape(2, 3, 4);
+		if (a3 != b3)
+			SLS_ERR("failed!");
+	}
 }

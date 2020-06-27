@@ -1,4 +1,4 @@
-function ret = contain_type(T)
+function ret = value_type(T)
 if any(strfind(T, 'Bool'))
     ret = 'Bool';
 elseif any(strfind(T, 'Char'))
@@ -28,6 +28,6 @@ elseif strcmp(T, 'Str')
 elseif strcmp(T, 'Str32')
     ret = 'Char32';
 else
-    error('contain_type.m: not implemented');
+    error('value_type.m: not implemented');
 end
 end

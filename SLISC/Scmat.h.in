@@ -67,7 +67,7 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void set_size(Long_I N1, Long_I N2);
+    void reshape(Long_I N1, Long_I N2);
     void set(@CT@ *ptr, Long_I N1, Long_I N2);
     void set(const @Class@ &sli);
     ~@Class@();
@@ -110,7 +110,7 @@ inline Long @Class@::n2() const
     return m_N2;
 }
 
-inline void @Class@::set_size(Long_I N1, Long_I N2)
+inline void @Class@::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
     if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");

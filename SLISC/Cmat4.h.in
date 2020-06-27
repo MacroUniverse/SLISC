@@ -31,6 +31,7 @@ public:
     @Cmat4T@(const @Cmat4T@ &rhs);   // Copy constructor
     void operator<<(@Cmat4T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     @T@ & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const @T@ & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
@@ -64,6 +65,16 @@ inline void @Cmat4T@::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
         Base::resize(N1*N2*N3*N4);
         m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
     }
+}
+
+inline void @Cmat4T@::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (N1 * N2 * N3 != m_N)
+        SLS_ERR("@Cmat4T@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
+            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+#endif
+    m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
 inline @T@ & @Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l)

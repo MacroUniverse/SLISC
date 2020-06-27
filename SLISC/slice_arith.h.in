@@ -21,7 +21,7 @@ namespace slisc {
 //% };
 //%----------------------------
 //% Tv = varargin{:};
-//% T = contain_type(Tv);
+//% T = value_type(Tv);
 //% Tsli = slice_type(Tv);
 //% if ndim(Tv) == 1
 inline @Tsli@ slice(@Tv@_IO v, Long_I start, Long_I N)
@@ -394,7 +394,7 @@ inline @Tsli@_c slice2(@Tv@_I v, Long_I i, Long_I k)
 //%----------------------------
 //% T = varargin{:};
 //% if is_Cmat(T)
-//%     Tsli = ['Dvec' contain_type(T)];
+//%     Tsli = ['Dvec' value_type(T)];
 inline @Tsli@ slice2(@T@_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -415,7 +415,7 @@ inline @Tsli@_c slice2(@T@_I v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 //% elseif is_Cmat3(T)
-//%     Tsli = ['Dvec' contain_type(T)];
+//%     Tsli = ['Dvec' value_type(T)];
 inline @Tsli@ slice2(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -527,7 +527,7 @@ inline @Tsli@_c slice12(@Tv@_I v, Long_I k, Long_I l)
 //% };
 //%----------------------------
 //% T = varargin{:};
-//% Tsli = ['Scmat' contain_type(T)];
+//% Tsli = ['Scmat' value_type(T)];
 //% if is_Cmat3(T)
 inline @Tsli@ slice12(@T@_IO v, Long_I j, Long_I N2, Long_I k)
 {
@@ -559,7 +559,7 @@ inline @Tsli@_c slice12(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% };
 //%----------------------------
 //% T = varargin{:};
-//% Tsli = ['Dcmat' contain_type(T)];
+//% Tsli = ['Dcmat' value_type(T)];
 //% if is_Cmat3(T)
 inline @Tsli@ slice12(@T@_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {

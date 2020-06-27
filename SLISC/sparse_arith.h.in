@@ -266,7 +266,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 // (using maximum absolute sum of columns)
 //% types = {'CmobdInt'; 'CmobdDoub'; 'CmobdComp';};
 //%-----------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% Tr = rm_comp(Ts);
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)

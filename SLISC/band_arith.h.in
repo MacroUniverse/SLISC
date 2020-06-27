@@ -34,7 +34,7 @@ inline @DcmatT@_c band(@CbandT@_I a)
 //%     'CmatDoub'; 'CmatComp'; 'ScmatDoub'; 'ScmatComp';
 //% };
 //%----------------
-//% Tmat = varargin{:}; Ttol = rm_comp(contain_type(Tmat));
+//% Tmat = varargin{:}; Ttol = rm_comp(value_type(Tmat));
 inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
 {
     Bool found = false;
@@ -167,8 +167,8 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
 //% };
 //%------------------
 //% [Ty, Ta, Tx] = varargin{:};
-//% Tsx = contain_type(Tx); Tsy = contain_type(Ty);
-//% Tsa = contain_type(Ta);
+//% Tsx = value_type(Tx); Tsy = value_type(Ty);
+//% Tsa = value_type(Ta);
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 //% if is_dense_vec(Tx)

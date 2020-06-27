@@ -89,7 +89,7 @@ inline Comp randComp()
 //%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //% };
 //%--------------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% if is_Llong(Ts)
 inline void rand(@T@_O v, Long_I N)
 {

@@ -43,7 +43,7 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 // sum of absolute values
 //% types = list_contain_dense();
 //%--------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% if is_integral(Ts)
 //%     Tr = 'Llong';
 //% elseif is_fpt(Ts) || is_comp(Ts)
@@ -134,7 +134,7 @@ inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
 
 //% types = list_contain_dense_real();
 //%--------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
 inline @Ts@ max(@T@_I v)
 { return max_v(v.ptr(), v.size()); }
@@ -205,7 +205,7 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 //%     'DvecDoub'; 'DvecComp'; 'SvecComp';
 //% };
 //%------------------------------
-//% T = varargin{:}; Tr = rm_comp(contain_type(T));
+//% T = varargin{:}; Tr = rm_comp(value_type(T));
 //% if is_dense(T)
 inline @Tr@ max_abs(@T@_I v)
 {
@@ -229,7 +229,7 @@ inline @Tr@ max_abs(@T@_I v)
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
-//% Ts1 = contain_type(T1);
+//% Ts1 = value_type(T1);
 inline void mod_vvs(@T@ *v, const @T1@ *v1, @Ts1@_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -249,8 +249,8 @@ inline void mod_vs(@T1@ *v, @Ts1@_I s, Long_I N)
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
-//% Ts = contain_type(T);
-//% Ts1 = contain_type(T1);
+//% Ts = value_type(T);
+//% Ts1 = value_type(T1);
 //% if ~(is_dense(T) && is_dense(T1) && is_same_major(T, T1) && is_promo(Ts, Ts1))
 //%     error('error types!');
 //% end
@@ -428,7 +428,7 @@ inline @Tret@ sum_v(const @T@ *v, Long_I N)
 //%     'CmatDoub'; 'CmatComp';};
 //%----------------
 //% T = varargin{:};
-//% Ts = contain_type(T);
+//% Ts = value_type(T);
 //% if is_integral(Ts)
 //%     Tret = 'Llong';
 //% else
@@ -446,7 +446,7 @@ inline @Tret@ sum(@T@_I v)
 //% };
 //%-------------------------------
 //% T = varargin{:};
-//% Ts = contain_type(T);
+//% Ts = value_type(T);
 //% Tr = rm_comp(Ts);
 //% if is_dense(T) || is_Dvec(T)
 inline @Tr@ norm2(@T@_I v)
@@ -482,7 +482,7 @@ inline @Tr@ norm(@T@_I v)
 //% types = {'VecInt'; 'VecDoub'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'Cmat3Doub'; 'Cmat3Comp';};
 //%--------------------------------
 //% Tv = varargin{:};
-//% T = contain_type(Tv);
+//% T = value_type(Tv);
 //% if is_Vec(Tv)
 inline void resize_cpy(@Tv@_IO v, Long_I N)
 {
@@ -574,7 +574,7 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 //% };
 //%---------------------------------
 //% Tv = varargin{:};
-//% Ts = contain_type(Tv);
+//% Ts = value_type(Tv);
 //% if ~is_dense(Tv)
 //%     error('illegal types');
 //% end
@@ -617,7 +617,7 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% };
 //%---------------------------------
 //% Tv = varargin{:};
-//% Ts = contain_type(Tv);
+//% Ts = value_type(Tv);
 //% if is_dense(Tv)
 inline void flip(@Tv@_IO v)
 {
@@ -669,7 +669,7 @@ inline void flip(@T@_O v, @T1@_I v1)
 //%---------------------
 //% [Tv, To] = varargin{:};
 //% if ~is_vecStr(Tv) && ~is_vecStr32(Tv)
-//%     Tu = ['Vec' contain_type(Tv)];
+//%     Tu = ['Vec' value_type(Tv)];
 //% else
 //%     Tu = Tv;
 //% end
@@ -761,7 +761,7 @@ inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%        'VecComp'; 'CmatComp'; 'MatComp'; 'DcmatComp';
 //% };
 //%--------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% if ~(is_comp(Ts))
 //%     error('error types!');
 //% end
@@ -799,7 +799,7 @@ inline void conj(@T@_O v, @T1@_I v1)
 //%        'CmatComp'; 'MatComp';
 //% };
 //%--------------------------
-//% T = varargin{:}; Ts = contain_type(T);
+//% T = varargin{:}; Ts = value_type(T);
 //% if ~(is_comp(Ts) && ndim(T) == 2)
 //%     error('error types!');
 //% end
@@ -1313,7 +1313,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% };
 //%------------------------------
 //% [T, T1, Ts2] = varargin{:};
-//% Ts = contain_type(T); Ts1 = contain_type(T1);
+//% Ts = value_type(T); Ts1 = value_type(T1);
 //% if ~is_promo(Ts, Ts1) || ~is_promo(Ts, Ts2)
 //%     error('illegal types');
 //% end
@@ -1401,7 +1401,7 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 //% };
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
-//% Ts = contain_type(T); Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
 //% if ~is_promo(Ts, Ts1) || ~is_promo(Ts, Ts2)
 //%     error('illegal types');
 //% end
@@ -1618,7 +1618,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% };
 //%---------------------
 //% [T1, T2] = varargin{:};
-//% Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% Ts1 = value_type(T1); Ts2 = value_type(T2);
 //% T = promo_type(Ts1, Ts2);
 inline @T@ dot(@T1@_I v1, @T2@_I v2)
 {
@@ -1712,7 +1712,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     };
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
-//% Ts = contain_type(T); Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
 //% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
 //%     error('illegal type!');
 //% end
@@ -1741,7 +1741,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% };
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
-//% Ts = contain_type(T); Ts1 = contain_type(T1); Ts2 = contain_type(T2);
+//% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
 //% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
 //%     error('illegal type!');
 //% end
@@ -1809,7 +1809,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     };
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
-//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+//% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
 inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -1872,7 +1872,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%     };
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
-//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+//% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
 inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPE
@@ -1935,7 +1935,7 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //% };
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
-//% Tsy = contain_type(Ty); Tsa = contain_type(Ta); Tsx = contain_type(Tx);
+//% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
 inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 {
 #ifdef SLS_CHECK_SHAPE

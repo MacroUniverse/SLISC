@@ -284,7 +284,7 @@ inline Matt::~Matt()
 //% };
 //%---------------------
 //% T = varargin{:};
-//% Ts = contain_type(T);
+//% Ts = value_type(T);
 //% numTs = num2str(type_num(Ts));
 //% if is_Char(T) || is_Int(T) || is_Llong(T) || is_Doub(T) || is_Comp(T)
 inline void save(@T@_I s, Str_I varname, Matt_IO matt)
@@ -430,7 +430,7 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 //% };
 //%---------------------
 //% T = varargin{:};
-//% Ts = contain_type(T);
+//% Ts = value_type(T);
 //% numTs = num2str(type_num(Ts));
 //% if ~(is_Char(Ts) || is_Int(Ts) || is_Llong(Ts) || is_Doub(Ts) || is_Comp(Ts))
 //%     error('not implemented!');
