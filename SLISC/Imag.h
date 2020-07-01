@@ -177,12 +177,189 @@ inline Ldoub abs(Limag_I val)
 // imaginary unit
 const Imag I(1);
 
-// operator+
+// imag +-*/ imag
+inline Fimag operator+(Fimag_I z1, Fimag_I z2)
+{
+    return Fimag(imag(z1) + imag(z2));
+}
+
+inline Fimag operator-(Fimag_I z1, Fimag_I z2)
+{
+    return Fimag(imag(z1) + imag(z2));
+}
+
+inline Float operator*(Fimag_I z1, Fimag_I z2)
+{
+    return Float(-imag(z1) * imag(z2));
+}
+
+inline Float operator/(Fimag_I z1, Fimag_I z2)
+{
+    return Float(imag(z1) / imag(z2));
+}
+
+inline Imag operator+(Fimag_I z1, Imag_I z2)
+{
+    return Imag(imag(z1) + imag(z2));
+}
+
+inline Imag operator-(Fimag_I z1, Imag_I z2)
+{
+    return Imag(imag(z1) + imag(z2));
+}
+
+inline Doub operator*(Fimag_I z1, Imag_I z2)
+{
+    return Doub(-imag(z1) * imag(z2));
+}
+
+inline Doub operator/(Fimag_I z1, Imag_I z2)
+{
+    return Doub(imag(z1) / imag(z2));
+}
+
+inline Limag operator+(Fimag_I z1, Limag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Limag operator-(Fimag_I z1, Limag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Ldoub operator*(Fimag_I z1, Limag_I z2)
+{
+    return Ldoub(-imag(z1) * imag(z2));
+}
+
+inline Ldoub operator/(Fimag_I z1, Limag_I z2)
+{
+    return Ldoub(imag(z1) / imag(z2));
+}
+
+inline Imag operator+(Imag_I z1, Fimag_I z2)
+{
+    return Imag(imag(z1) + imag(z2));
+}
+
+inline Imag operator-(Imag_I z1, Fimag_I z2)
+{
+    return Imag(imag(z1) + imag(z2));
+}
+
+inline Doub operator*(Imag_I z1, Fimag_I z2)
+{
+    return Doub(-imag(z1) * imag(z2));
+}
+
+inline Doub operator/(Imag_I z1, Fimag_I z2)
+{
+    return Doub(imag(z1) / imag(z2));
+}
+
 inline Imag operator+(Imag_I z1, Imag_I z2)
 {
     return Imag(imag(z1) + imag(z2));
 }
 
+inline Imag operator-(Imag_I z1, Imag_I z2)
+{
+    return Imag(imag(z1) + imag(z2));
+}
+
+inline Doub operator*(Imag_I z1, Imag_I z2)
+{
+    return Doub(-imag(z1) * imag(z2));
+}
+
+inline Doub operator/(Imag_I z1, Imag_I z2)
+{
+    return Doub(imag(z1) / imag(z2));
+}
+
+inline Limag operator+(Imag_I z1, Limag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Limag operator-(Imag_I z1, Limag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Ldoub operator*(Imag_I z1, Limag_I z2)
+{
+    return Ldoub(-imag(z1) * imag(z2));
+}
+
+inline Ldoub operator/(Imag_I z1, Limag_I z2)
+{
+    return Ldoub(imag(z1) / imag(z2));
+}
+
+inline Limag operator+(Limag_I z1, Fimag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Limag operator-(Limag_I z1, Fimag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Ldoub operator*(Limag_I z1, Fimag_I z2)
+{
+    return Ldoub(-imag(z1) * imag(z2));
+}
+
+inline Ldoub operator/(Limag_I z1, Fimag_I z2)
+{
+    return Ldoub(imag(z1) / imag(z2));
+}
+
+inline Limag operator+(Limag_I z1, Imag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Limag operator-(Limag_I z1, Imag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Ldoub operator*(Limag_I z1, Imag_I z2)
+{
+    return Ldoub(-imag(z1) * imag(z2));
+}
+
+inline Ldoub operator/(Limag_I z1, Imag_I z2)
+{
+    return Ldoub(imag(z1) / imag(z2));
+}
+
+inline Limag operator+(Limag_I z1, Limag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Limag operator-(Limag_I z1, Limag_I z2)
+{
+    return Limag(imag(z1) + imag(z2));
+}
+
+inline Ldoub operator*(Limag_I z1, Limag_I z2)
+{
+    return Ldoub(-imag(z1) * imag(z2));
+}
+
+inline Ldoub operator/(Limag_I z1, Limag_I z2)
+{
+    return Ldoub(imag(z1) / imag(z2));
+}
+
+
+// TODO: use template
 inline Comp operator+(Doub_I x, Imag_I y)
 {
     return Comp(x, imag(y));
@@ -207,11 +384,6 @@ inline Comp operator+(Comp_I z1, Imag_I z2)
 inline Imag operator-(Imag_I z)
 {
     return Imag(-z.imag());
-}
-
-inline Imag operator-(Imag_I z1, Imag_I z2)
-{
-    return Imag(z1.imag() - z2.imag());
 }
 
 inline Comp operator-(Doub_I x, Imag_I z)
@@ -243,11 +415,6 @@ inline Imag operator*(Imag_I z, Doub_I x)
 inline Imag operator*(Doub_I x, Imag_I z)
 {
     return Imag(z.imag()*x);
-}
-
-inline Doub operator*(Imag_I z1, Imag_I z2)
-{
-    return -z1.imag()*z2.imag();
 }
 
 inline Comp operator*(Imag_I z1, Comp_I z2)

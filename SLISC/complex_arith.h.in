@@ -4,10 +4,37 @@
 
 namespace slisc {
 //% types = {
-//%     'Float', 'Comp';
-//%     'Fcomp', 'Comp';
-//%     'Comp', 'Int';
+//%     'Char', 'Fcomp';
+//%     'Char', 'Comp';
+//%     'Char', 'Lcomp';
+//%     'Int', 'Fcomp';
 //%     'Int', 'Comp';
+//%     'Int', 'Lcomp';
+//%     'Float', 'Comp';
+//%     'Float', 'Lcomp';
+//%     'Doub', 'Fcomp';
+//%     'Doub', 'Lcomp';
+//%     'Ldoub', 'Fcomp';
+//%     'Ldoub', 'Comp';
+//% %----------------------
+//%     'Fcomp', 'Char';
+//%     'Comp', 'Char';
+//%     'Lcomp', 'Char';
+//%     'Fcomp', 'Int';
+//%     'Comp', 'Int';
+//%     'Lcomp', 'Int';
+//%     'Comp', 'Float';
+//%     'Lcomp', 'Float';
+//%     'Fcomp', 'Doub';
+//%     'Lcomp', 'Doub';
+//%     'Fcomp', 'Ldoub';
+//%     'Comp', 'Ldoub';
+//% %----------------------
+//%     'Fcomp', 'Comp';
+//%     'Fcomp', 'Lcomp';
+//%     'Comp', 'Fcomp';
+//%     'Comp', 'Lcomp';
+//%     'Lcomp', 'Fcomp';
 //%     'Lcomp', 'Comp';
 //%     };
 //%------------------------
@@ -30,13 +57,22 @@ inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
 //%------------------------
 
 //% types = {
-//%     'Comp', 'Float';
-//%     };
+//%    'Fcomp', 'Doub';
+//%    'Fcomp', 'Ldoub';
+//%    'Comp', 'Float';
+//%    'Comp', 'Ldoub';
+//%    'Lcomp', 'Float';
+//%    'Lcomp', 'Doub';
+//% %------------------
+//%    'Fcomp', 'Comp';
+//%    'Fcomp', 'Lcomp';
+//%    'Comp', 'Fcomp';
+//%    'Comp', 'Lcomp';
+//%    'Lcomp', 'Fcomp';
+//%    'Lcomp', 'Comp';
+//% };
 //%----------------------------------
-//% [T1,T2] = varargin{:};
-//% if ~is_promo(T1, T2)
-//%     error("illegal types!");
-//% end
+//% [T1, T2] = varargin{:};
 //% if is_real(T2);
 //%     T = rm_comp(T1);
 //% else
@@ -64,16 +100,45 @@ inline void operator/=(@T1@_O z, @T2@_I x)
 //%------------------------
 
 //% types = {
-//%     'Float', 'Comp';
-//%     'Comp', 'Int';
+//%     'Char', 'Fcomp';
+//%     'Char', 'Comp';
+//%     'Char', 'Lcomp';
+//%     'Int', 'Fcomp';
 //%     'Int', 'Comp';
+//%     'Int', 'Lcomp';
+//%     'Llong', 'Fcomp';
 //%     'Llong', 'Comp';
-//%     'Comp', 'Llong';
-//%     'Comp', 'Char';
-//%     'Comp', 'Float';
+//%     'Llong', 'Lcomp';
+//%     'Float', 'Comp';
+//%     'Float', 'Lcomp';
 //%     'Doub', 'Fcomp';
+//%     'Doub', 'Lcomp';
+//%     'Ldoub', 'Fcomp';
+//%     'Ldoub', 'Comp';
+//% %-------------------
+//%     'Fcomp', 'Char';
+//%     'Comp', 'Char';
+//%     'Lcomp', 'Char';
+//%     'Fcomp', 'Int';
+//%     'Comp', 'Int';
+//%     'Lcomp', 'Int';
+//%     'Fcomp', 'Llong';
+//%     'Comp', 'Llong';
+//%     'Lcomp', 'Llong';
+//%     'Comp', 'Float';
+//%     'Lcomp', 'Float';
+//%     'Fcomp', 'Doub';
+//%     'Lcomp', 'Doub';
+//%     'Fcomp', 'Ldoub';
+//%     'Comp', 'Ldoub';
+//% %-------------------
 //%     'Fcomp', 'Comp';
-//%     };
+//%     'Fcomp', 'Lcomp';
+//%     'Comp', 'Fcomp';
+//%     'Comp', 'Lcomp';
+//%     'Lcomp', 'Fcomp';
+//%     'Lcomp', 'Comp';
+//% };
 //%-------------------------------------
 //% [T1,T2] = varargin{:};
 //% T = promo_type(T1,T2);

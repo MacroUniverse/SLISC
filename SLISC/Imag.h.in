@@ -70,12 +70,45 @@ inline @T@ abs(@Timag@_I val)
 // imaginary unit
 const Imag I(1);
 
-// operator+
-inline Imag operator+(Imag_I z1, Imag_I z2)
+// imag +-*/ imag
+//% types = {
+//%     'Float', 'Float';
+//%     'Float', 'Doub';
+//%     'Float', 'Ldoub';
+//%     'Doub', 'Float';
+//%     'Doub', 'Doub';
+//%     'Doub', 'Ldoub';
+//%     'Ldoub', 'Float';
+//%     'Ldoub', 'Doub';
+//%     'Ldoub', 'Ldoub';
+//% };
+//%-----------------
+//% [T1, T2] = varargin{:};
+//% Ti1 = add_imag(T1); Ti2 = add_imag(T2);
+//% T = promo_type(T1, T2);
+//% Ti = add_imag(T);
+inline @Ti@ operator+(@Ti1@_I z1, @Ti2@_I z2)
 {
-    return Imag(imag(z1) + imag(z2));
+    return @Ti@(imag(z1) + imag(z2));
 }
 
+inline @Ti@ operator-(@Ti1@_I z1, @Ti2@_I z2)
+{
+    return @Ti@(imag(z1) + imag(z2));
+}
+
+inline @T@ operator*(@Ti1@_I z1, @Ti2@_I z2)
+{
+    return @T@(-imag(z1) * imag(z2));
+}
+
+inline @T@ operator/(@Ti1@_I z1, @Ti2@_I z2)
+{
+    return @T@(imag(z1) / imag(z2));
+}
+//%-----------------
+
+// TODO: use template
 inline Comp operator+(Doub_I x, Imag_I y)
 {
     return Comp(x, imag(y));
@@ -100,11 +133,6 @@ inline Comp operator+(Comp_I z1, Imag_I z2)
 inline Imag operator-(Imag_I z)
 {
     return Imag(-z.imag());
-}
-
-inline Imag operator-(Imag_I z1, Imag_I z2)
-{
-    return Imag(z1.imag() - z2.imag());
 }
 
 inline Comp operator-(Doub_I x, Imag_I z)
@@ -136,11 +164,6 @@ inline Imag operator*(Imag_I z, Doub_I x)
 inline Imag operator*(Doub_I x, Imag_I z)
 {
     return Imag(z.imag()*x);
-}
-
-inline Doub operator*(Imag_I z1, Imag_I z2)
-{
-    return -z1.imag()*z2.imag();
 }
 
 inline Comp operator*(Imag_I z1, Comp_I z2)
