@@ -7,7 +7,8 @@ void test_band()
 {
 	// copy scalar
 	{
-		CbandDoub a(5, 6, 2, 3);
+        CbandDoub a;
+        a.resize(5, 6, 2, 3);
 		copy(a, 3.1);
 		if (a.cmat() != 3.1)
 			SLS_ERR("failed!");

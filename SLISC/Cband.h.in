@@ -18,6 +18,7 @@ public:
     Long m_idiag; // position of diagonal
     @CmatT@ m_a;
 
+    @CbandT@();
     @CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
     @T@ * ptr();
@@ -34,9 +35,13 @@ public:
     @CmatT@ &cmat();
     const @CmatT@ &cmat() const;
     void resize(Long_I lda, Long_I N2);
-    void reshape(Long_I N1, Long_I Nup, Long_I Nlow);
+    void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
     void shift(Long_I idiag);
 };
+
+inline @CbandT@::@CbandT@(): m_N1(0), m_Nup(0), m_Nlow(0), m_idiag(0)
+{}
 
 inline @CbandT@::@CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
     m_N1(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
@@ -129,13 +134,21 @@ inline void @CbandT@::resize(Long_I lda, Long_I N2)
     m_a.resize(lda, N2);
 }
 
-inline void @CbandT@::reshape(Long_I N1, Long_I Nup, Long_I Nlow)
+inline void @CbandT@::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow)
+    if (idiag < Nup || lda() - idiag - 1 < Nlow)
         SLS_ERR("wrong shape!");
 #endif
     m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
+    if (idiag >= 0)
+        m_idiag = idiag;
+}
+
+inline void @CbandT@::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
+{
+    resize(lda, N2);
+    reshape(N1, Nup, Nlow, idiag);
 }
 
 inline void @CbandT@::shift(Long_I idiag)
