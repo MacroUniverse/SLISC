@@ -43,7 +43,9 @@ inline CbandInt::CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I 
 {
 #ifdef SLS_CHECK_SHAPE
     if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
-        SLS_ERR("wrong shape!");
+        SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
+            ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
 #endif
 }
 
@@ -131,26 +133,33 @@ inline void CbandInt::resize(Long_I lda, Long_I N2)
 
 inline void CbandInt::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
-#ifdef SLS_CHECK_SHAPE
-    if (idiag < Nup || lda() - idiag - 1 < Nlow)
-        SLS_ERR("wrong shape!");
-#endif
-    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
     if (idiag >= 0)
         m_idiag = idiag;
+#ifdef SLS_CHECK_SHAPE
+    if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
+        cout << "m_idiag < Nup = " << (m_idiag < Nup) << endl;
+        cout << "lda() - m_idiag - 1 < Nlow = " << (lda() - m_idiag - 1 < Nlow) << endl;
+        SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
+            ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
+    }
+#endif
+    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
 }
 
 inline void CbandInt::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
 {
-    resize(lda, N2);
-    reshape(N1, Nup, Nlow, idiag);
+    resize(lda < 0? Nup+Nlow+1 : lda, N2);
+    reshape(N1, Nup, Nlow, idiag < 0? Nup : idiag);
 }
 
 inline void CbandInt::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPE
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-        SLS_ERR("wrong shape!");
+        SLS_ERR("CbandInt: wrong shape: N1="+num2str(m_N1)+", N2="+num2str(m_a.n2())+
+            ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(idiag));
 #endif
     m_idiag = idiag;
 }
@@ -184,8 +193,8 @@ public:
     CmatDoub &cmat();
     const CmatDoub &cmat() const;
     void resize(Long_I lda, Long_I N2);
-    void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
     void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
     void shift(Long_I idiag);
 };
 
@@ -197,7 +206,9 @@ inline CbandDoub::CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_
 {
 #ifdef SLS_CHECK_SHAPE
     if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
-        SLS_ERR("wrong shape!");
+        SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
+            ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
 #endif
 }
 
@@ -285,13 +296,18 @@ inline void CbandDoub::resize(Long_I lda, Long_I N2)
 
 inline void CbandDoub::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
-#ifdef SLS_CHECK_SHAPE
-    if (idiag < Nup || lda() - idiag - 1 < Nlow)
-        SLS_ERR("wrong shape!");
-#endif
-    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
     if (idiag >= 0)
         m_idiag = idiag;
+#ifdef SLS_CHECK_SHAPE
+    if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
+        cout << "m_idiag < Nup = " << (m_idiag < Nup) << endl;
+        cout << "lda() - m_idiag - 1 < Nlow = " << (lda() - m_idiag - 1 < Nlow) << endl;
+        SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
+            ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
+    }
+#endif
+    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
 }
 
 inline void CbandDoub::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
@@ -304,7 +320,9 @@ inline void CbandDoub::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPE
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-        SLS_ERR("wrong shape!");
+        SLS_ERR("CbandDoub: wrong shape: N1="+num2str(m_N1)+", N2="+num2str(m_a.n2())+
+            ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(idiag));
 #endif
     m_idiag = idiag;
 }
@@ -351,7 +369,9 @@ inline CbandComp::CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_
 {
 #ifdef SLS_CHECK_SHAPE
     if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
-        SLS_ERR("wrong shape!");
+        SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
+            ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
 #endif
 }
 
@@ -439,26 +459,33 @@ inline void CbandComp::resize(Long_I lda, Long_I N2)
 
 inline void CbandComp::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
-#ifdef SLS_CHECK_SHAPE
-    if (idiag < Nup || lda() - idiag - 1 < Nlow)
-        SLS_ERR("wrong shape!");
-#endif
-    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
     if (idiag >= 0)
         m_idiag = idiag;
+#ifdef SLS_CHECK_SHAPE
+    if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
+        cout << "m_idiag < Nup = " << (m_idiag < Nup) << endl;
+        cout << "lda() - m_idiag - 1 < Nlow = " << (lda() - m_idiag - 1 < Nlow) << endl;
+        SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
+            ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
+    }
+#endif
+    m_N1 = N1; m_Nup = Nup; m_Nlow = Nlow;
 }
 
 inline void CbandComp::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
 {
-    resize(lda, N2);
-    reshape(N1, Nup, Nlow, idiag);
+    resize(lda < 0? Nup+Nlow+1 : lda, N2);
+    reshape(N1, Nup, Nlow, idiag < 0? Nup : idiag);
 }
 
 inline void CbandComp::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPE
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-        SLS_ERR("wrong shape!");
+        SLS_ERR("CbandComp: wrong shape: N1="+num2str(m_N1)+", N2="+num2str(m_a.n2())+
+            ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+            ", lda="+num2str(m_a.n1())+", idiag="+num2str(idiag));
 #endif
     m_idiag = idiag;
 }
