@@ -78,7 +78,8 @@ void test_lin_eq()
 
     {
         Long N1 = 10, N2 = 10, Nup = 3, Nlow = 4;
-        CbandComp b(N1, N2, Nup, Nlow, Nup + 2*Nlow + 1, Nlow + Nup);
+        CbandComp b;
+        b.resize(N1, N2, Nup, Nlow, Nup + 2*Nlow + 1, Nlow + Nup);
         VecInt ipiv(N1);
         VecComp x(N2), y(N2);
         rand(x); rand(b.cmat());

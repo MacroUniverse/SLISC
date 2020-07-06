@@ -137,8 +137,6 @@ inline void CbandInt::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
         m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPE
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-        cout << "m_idiag < Nup = " << (m_idiag < Nup) << endl;
-        cout << "lda() - m_idiag - 1 < Nlow = " << (lda() - m_idiag - 1 < Nlow) << endl;
         SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
@@ -300,8 +298,6 @@ inline void CbandDoub::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
         m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPE
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-        cout << "m_idiag < Nup = " << (m_idiag < Nup) << endl;
-        cout << "lda() - m_idiag - 1 < Nlow = " << (lda() - m_idiag - 1 < Nlow) << endl;
         SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));
@@ -463,8 +459,6 @@ inline void CbandComp::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
         m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPE
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-        cout << "m_idiag < Nup = " << (m_idiag < Nup) << endl;
-        cout << "lda() - m_idiag - 1 < Nlow = " << (lda() - m_idiag - 1 < Nlow) << endl;
         SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n1())+", idiag="+num2str(m_idiag));

@@ -142,6 +142,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 //% types = {
 //%     'VecDoub' 'CbandDoub';
 //%     'VecComp' 'CbandComp';
+//%     'SvecComp' 'CbandComp';
 //% };
 //%---------------------
 //% [Tx, Ta] = varargin{:};
@@ -213,6 +214,8 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, @Ti@_IO ipiv)
     if (a1.n1() != a1.n2() || a1.n2() != x.n1())
 //% end
         SLS_ERR("wrong shape!");
+    if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+        SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
 #endif
     Int lda = a1.lda();
 //% if is_Cmat(Tx) || is_Scmat(Tx)

@@ -374,6 +374,30 @@ inline void lin_eq(VecComp_IO x, CbandComp_I a)
     }
 }
 
+inline void lin_eq(SvecComp_IO x, CbandComp_I a)
+{
+#ifdef SLS_CHECK_SHAPE
+    if (a.n1() != a.n2() || a.n2() != x.size())
+        SLS_ERR("wrong shape!");
+#endif
+    static CbandComp a1(a.n1(), a.n2(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+    static VecInt ipiv(a.n1());
+    if (a1.lda() < a.nup() + 2*a.nlow() + 1 || a1.n2() != a.n2())
+        a1.resize(a.nup() + 2*a.nlow() + 1, a.n2());
+    a1.shift(a.nlow() + a.nup()); copy(a1, a);
+    if (a.n1() > ipiv.size())
+        ipiv.resize(a.n1());
+
+    Int lda = a1.lda();
+    Int ldx = x.size(), nrhs = 1;
+
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    if (ret != 0) {
+        cout << "LAPACK returned " << ret << endl;
+        SLS_ERR("something wrong!");
+    }
+}
+
 
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
 // matrix will be replaced with LU decomp
@@ -386,6 +410,8 @@ inline void lin_eq(VecDoub_IO x, CbandDoub_IO a1, VecInt_IO ipiv)
 #ifdef SLS_CHECK_SHAPE
     if (a1.n1() != a1.n2() || a1.n2() != x.size())
         SLS_ERR("wrong shape!");
+    if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+        SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
 #endif
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
@@ -401,6 +427,8 @@ inline void lin_eq(VecComp_IO x, CbandComp_IO a1, VecInt_IO ipiv)
 #ifdef SLS_CHECK_SHAPE
     if (a1.n1() != a1.n2() || a1.n2() != x.size())
         SLS_ERR("wrong shape!");
+    if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+        SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
 #endif
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
@@ -416,6 +444,8 @@ inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 #ifdef SLS_CHECK_SHAPE
     if (a1.n1() != a1.n2() || a1.n2() != x.size())
         SLS_ERR("wrong shape!");
+    if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+        SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
 #endif
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
@@ -431,6 +461,8 @@ inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 #ifdef SLS_CHECK_SHAPE
     if (a1.n1() != a1.n2() || a1.n2() != x.n1())
         SLS_ERR("wrong shape!");
+    if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+        SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
 #endif
     Int lda = a1.lda();
     Int ldx = x.n1(), nrhs = x.n2();
