@@ -47,10 +47,14 @@ class @Class@
 protected:
     @CT@ *m_p;
     Long m_N;
+#ifdef SLS_CHECK_BOUNDS
+    Long m_data_len; // used for debug
+#endif
 public:
     @Class@();
     explicit @Class@(Long_I N);
-    @Class@(@CT@ *ptr, Long_I N);
+    @Class@(@CT@ *data, Long_I N); // unsafe
+    @Class@(@CT@ *data, Long_I data_len, Long_I N);
     @CT@* ptr() const;
     Long size() const;
 //% % resize() is a bad idea, don't try to create it!
@@ -62,26 +66,45 @@ public:
 //% if ~constness
     operator @SvecT_c@() const;
 //% end
-
-    // === other member functions ===
-    // There is no bound checking, use with care
-    void set_size(Long_I N);
-    void set_ptr(@CT@ *ptr);
-    void set(@CT@ *ptr, Long_I N);
+    void set(@CT@ *data, Long_I data_len, Long_I N);
     void set(const @Class@ &sli);
     void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
     
+    // === unsafe operations (unsafe) ===
+    void set_ptr(@CT@ *data);
+    void set_size(Long_I N);
+    void set(@CT@ *data, Long_I N);
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N
+
     ~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(Long_I N) : m_N(N) {}
+inline @Class@::@Class@(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr; m_data_len = 0;
+#endif
+}
 
-inline @Class@::@Class@(@CT@ *ptr, Long_I N)
-    : m_p(ptr), m_N(N) {}
+inline @Class@::@Class@(@CT@ *data, Long_I N)
+    : m_p(data), m_N(N) {
+#ifdef SLS_CHECK_BOUNDS
+    m_data_len = std::numeric_limits<Long>::max();
+#endif
+}
+
+inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N)
+    : m_p(data), m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N > data_len)
+        SLS_ERR("slice out of bound!");
+    m_data_len = data_len;
+#endif
+}
 
 inline @CT@ * @Class@::ptr() const
 {
@@ -104,11 +127,6 @@ inline @CT@ & @Class@::operator[](Long_I i) const
         SLS_ERR("Vbase subscript out of bounds");
 #endif
     return m_p[i];
-}
-
-inline @CT@ & @Class@::operator()(Long_I i) const
-{
-    return (*this)[i];
 }
 
 inline @CT@ & @Class@::end() const
@@ -136,31 +154,55 @@ inline @Class@::operator @SvecT_c@() const
 }
 //% end
 
-inline void @Class@::set_size(Long_I N)
+inline void @Class@::set(@CT@ *data, Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
-    if (N <= 0) SLS_ERR("illegal N!");
+    m_p = data; m_N = N;
+#ifdef SLS_CHECK_BOUNDS
+    m_data_len = std::numeric_limits<Long>::max();
 #endif
-    m_N = N;
 }
 
-inline void @Class@::set_ptr(@CT@ * ptr)
+inline void @Class@::set(@CT@ *data, Long_I data_len, Long_I N)
 {
-    m_p = ptr;
-}
-
-inline void @Class@::set(@CT@ * ptr, Long_I N)
-{
-    m_p = ptr; m_N = N;
+#ifdef SLS_CHECK_BOUNDS
+    if (N > data_len)
+        SLS_ERR("slice out of bound!");
+#endif
+    m_p = data; m_N = N;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
     m_p = sli.m_p; m_N = sli.m_N;
+#ifdef SLS_CHECK_BOUNDS
+    m_data_len = sli.m_data_len;
+#endif
+}
+
+inline void @Class@::set_ptr(@CT@ *data)
+{
+    m_p = data;
+#ifdef SLS_CHECK_BOUNDS
+    m_data_len = std::numeric_limits<Long>::max();
+#endif
+}
+
+inline void @Class@::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N > m_data_len)
+        SLS_ERR("slice out of bound!");
+#endif
+    m_N = N;
 }
 
 inline void @Class@::next()
 {
+#ifdef SLS_CHECK_BOUNDS
+    m_data_len -= m_N;
+    if (m_N > m_data_len)
+        SLS_ERR("slice out of bound!");
+#endif
     m_p += m_N;
 }
 
@@ -171,6 +213,11 @@ inline void @Class@::last()
 
 inline void @Class@::shift(Long_I N)
 {
+#ifdef SLS_CHECK_BOUNDS
+    m_data_len -= m_N;
+    if (m_N > m_data_len)
+        SLS_ERR("slice out of bound!");
+#endif
     m_p += N;
 }
 

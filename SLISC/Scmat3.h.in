@@ -51,8 +51,8 @@ protected:
     Long m_N1, m_N2, m_N3;
 public:
     @Class@();
-    @Class@(Long_I N1, Long_I N2, Long_I N3);
-    @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3);
+    @Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
+    @Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
 //% if ~constness
     operator @Scmat3T_c@() const;
@@ -66,24 +66,20 @@ public:
     Long n3() const;
 
     // resize() is a bad idea, don't try to create it!
-
-    // There is no upper bound checking of N, use with care
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3);
+    void set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
     void set(const @Class@ &sli);
     ~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(Long_I N1, Long_I N2, Long_I N3)
-    : @Base@(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
+    : @Base@(data, N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
-inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3)
-    : @Class@(N1, N2, N3)
-{
-    m_p = ptr;
-}
+inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3)
+    : @Base@(data, data_len, N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 //% if ~constness
 inline @Class@::operator @Scmat3T_c@() const
@@ -119,20 +115,27 @@ inline Long @Class@::n3() const
 inline void @Class@::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (N1 <= 0 || N2 <= 0 || N3 <= 0) SLS_ERR("illegal N1 or N2!");
+    if (N1*N2*N3 != m_N)
+        SLS_ERR("illegal reshape!");
 #endif
-    m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N = N1 * N2 * N3;
+    m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline void @Class@::set(@CT@ * ptr, Long_I N1, Long_I N2, Long_I N3)
+inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
 {
-    m_p = ptr;
-    m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N = N1 * N2 * N3;
+    @Base@::set(data, N1*N2*N3);
+    m_N1 = N1; m_N2 = N2; m_N3 = N3;
+}
+
+inline void @Class@::set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3)
+{
+    @Base@::set(data, data_len, N1*N2*N3);
+    m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
-    m_p = sli.m_p; m_N = sli.m_N;
+    @Base@::set(sli);
     m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
 }
 

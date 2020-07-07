@@ -51,8 +51,8 @@ protected:
     Long m_N1, m_N2;
 public:
     @Class@();
-    @Class@(Long_I N1, Long_I N2);
-    @Class@(@CT@ *ptr, Long_I N1, Long_I N2);
+    @Class@(@CT@ *data, Long_I N1, Long_I N2); // unsafe
+    @Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2);
 
 //% if ~constness
     operator @ScmatT_c@() const;
@@ -68,21 +68,19 @@ public:
 
     // There is no upper bound checking of N, use with care
     void reshape(Long_I N1, Long_I N2);
-    void set(@CT@ *ptr, Long_I N1, Long_I N2);
+    void set(@CT@ *data, Long_I N1, Long_I N2); // unsafe
+    void set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2);
     void set(const @Class@ &sli);
     ~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(Long_I N1, Long_I N2)
-    : @Base@(N1*N2), m_N1(N1), m_N2(N2) {}
+inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2)
+    : @Base@(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
-inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2)
-    : @Class@(N1, N2)
-{
-    m_p = ptr;
-}
+inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2)
+    : @Base@(data, data_len, N1*N2), m_N1(N1), m_N2(N2) {}
 
 //% if ~constness
 inline @Class@::operator @ScmatT_c@() const
@@ -113,20 +111,28 @@ inline Long @Class@::n2() const
 inline void @Class@::reshape(Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPE
-    if (N1 <= 0 || N2 <= 0) SLS_ERR("illegal N1 or N2!");
+    if (N1*N2 != m_N)
+        SLS_ERR("illegal reshape!");
 #endif
-    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+    m_N1 = N1; m_N2 = N2;
 }
 
-inline void @Class@::set(@CT@ * ptr, Long_I N1, Long_I N2)
+inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2)
 {
-    m_p = ptr;
-    m_N1 = N1; m_N2 = N2; m_N = N1 * N2;
+    @Base@::set(data, N1*N2);
+    m_N1 = N1; m_N2 = N2;
+}
+
+inline void @Class@::set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2)
+{
+    @Base@::set(data, data_len, N1*N2);
+    m_N1 = N1; m_N2 = N2;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
-    m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+    @Base@::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline @Class@::~@Class@() {}
