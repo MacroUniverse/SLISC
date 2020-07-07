@@ -114,7 +114,7 @@ inline Long @Class@::n3() const
 
 inline void @Class@::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif

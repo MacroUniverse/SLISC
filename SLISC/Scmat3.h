@@ -62,7 +62,7 @@ inline Long Scmat3Char_c::n3() const
 
 inline void Scmat3Char_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -156,7 +156,7 @@ inline Long Scmat3Char::n3() const
 
 inline void Scmat3Char::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -245,7 +245,7 @@ inline Long Scmat3Int_c::n3() const
 
 inline void Scmat3Int_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -339,7 +339,7 @@ inline Long Scmat3Int::n3() const
 
 inline void Scmat3Int::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -428,7 +428,7 @@ inline Long Scmat3Llong_c::n3() const
 
 inline void Scmat3Llong_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -522,7 +522,7 @@ inline Long Scmat3Llong::n3() const
 
 inline void Scmat3Llong::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -627,7 +627,7 @@ inline Long Scmat3Float_c::n3() const
 
 inline void Scmat3Float_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -721,7 +721,7 @@ inline Long Scmat3Float::n3() const
 
 inline void Scmat3Float::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -810,7 +810,7 @@ inline Long Scmat3Doub_c::n3() const
 
 inline void Scmat3Doub_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -904,7 +904,7 @@ inline Long Scmat3Doub::n3() const
 
 inline void Scmat3Doub::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -993,7 +993,7 @@ inline Long Scmat3Ldoub_c::n3() const
 
 inline void Scmat3Ldoub_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1087,7 +1087,7 @@ inline Long Scmat3Ldoub::n3() const
 
 inline void Scmat3Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1176,7 +1176,7 @@ inline Long Scmat3Fcomp_c::n3() const
 
 inline void Scmat3Fcomp_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1270,7 +1270,7 @@ inline Long Scmat3Fcomp::n3() const
 
 inline void Scmat3Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1359,7 +1359,7 @@ inline Long Scmat3Comp_c::n3() const
 
 inline void Scmat3Comp_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1453,7 +1453,7 @@ inline Long Scmat3Comp::n3() const
 
 inline void Scmat3Comp::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1542,7 +1542,7 @@ inline Long Scmat3Lcomp_c::n3() const
 
 inline void Scmat3Lcomp_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1636,7 +1636,7 @@ inline Long Scmat3Lcomp::n3() const
 
 inline void Scmat3Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1725,7 +1725,7 @@ inline Long Scmat3Fimag_c::n3() const
 
 inline void Scmat3Fimag_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1819,7 +1819,7 @@ inline Long Scmat3Fimag::n3() const
 
 inline void Scmat3Fimag::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -1908,7 +1908,7 @@ inline Long Scmat3Imag_c::n3() const
 
 inline void Scmat3Imag_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -2002,7 +2002,7 @@ inline Long Scmat3Imag::n3() const
 
 inline void Scmat3Imag::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -2091,7 +2091,7 @@ inline Long Scmat3Limag_c::n3() const
 
 inline void Scmat3Limag_c::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
@@ -2185,7 +2185,7 @@ inline Long Scmat3Limag::n3() const
 
 inline void Scmat3Limag::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif

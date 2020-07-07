@@ -1270,7 +1270,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (mat.n1() != mat.n2() || mat.n2() != v.size())
         SLS_ERR("wrong shape!");
 #endif

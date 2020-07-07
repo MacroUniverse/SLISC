@@ -37,7 +37,7 @@ inline VbaseChar::VbaseChar() : m_N(0), m_p(nullptr) {}
 
 inline VbaseChar::VbaseChar(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -202,7 +202,7 @@ inline VbaseInt::VbaseInt() : m_N(0), m_p(nullptr) {}
 
 inline VbaseInt::VbaseInt(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -367,7 +367,7 @@ inline VbaseLlong::VbaseLlong() : m_N(0), m_p(nullptr) {}
 
 inline VbaseLlong::VbaseLlong(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -538,7 +538,7 @@ inline VbaseFloat::VbaseFloat() : m_N(0), m_p(nullptr) {}
 
 inline VbaseFloat::VbaseFloat(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -703,7 +703,7 @@ inline VbaseDoub::VbaseDoub() : m_N(0), m_p(nullptr) {}
 
 inline VbaseDoub::VbaseDoub(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -868,7 +868,7 @@ inline VbaseLdoub::VbaseLdoub() : m_N(0), m_p(nullptr) {}
 
 inline VbaseLdoub::VbaseLdoub(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -1033,7 +1033,7 @@ inline VbaseFcomp::VbaseFcomp() : m_N(0), m_p(nullptr) {}
 
 inline VbaseFcomp::VbaseFcomp(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -1198,7 +1198,7 @@ inline VbaseComp::VbaseComp() : m_N(0), m_p(nullptr) {}
 
 inline VbaseComp::VbaseComp(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -1363,7 +1363,7 @@ inline VbaseLcomp::VbaseLcomp() : m_N(0), m_p(nullptr) {}
 
 inline VbaseLcomp::VbaseLcomp(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -1528,7 +1528,7 @@ inline VbaseFimag::VbaseFimag() : m_N(0), m_p(nullptr) {}
 
 inline VbaseFimag::VbaseFimag(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -1693,7 +1693,7 @@ inline VbaseImag::VbaseImag() : m_N(0), m_p(nullptr) {}
 
 inline VbaseImag::VbaseImag(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -1858,7 +1858,7 @@ inline VbaseLimag::VbaseLimag() : m_N(0), m_p(nullptr) {}
 
 inline VbaseLimag::VbaseLimag(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -2017,7 +2017,7 @@ public:
 
 inline VbaseBool::VbaseBool(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif

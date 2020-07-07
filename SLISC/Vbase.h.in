@@ -52,7 +52,7 @@ inline @VbaseT@::@VbaseT@() : m_N(0), m_p(nullptr) {}
 
 inline @VbaseT@::@VbaseT@(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif
@@ -212,7 +212,7 @@ public:
 
 inline VbaseBool::VbaseBool(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 0)
         SLS_ERR("size less than 0!");
 #endif

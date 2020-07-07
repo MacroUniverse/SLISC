@@ -9,7 +9,7 @@
 
 #ifndef NDEBUG
 #define SLS_CHECK_BOUNDS
-#define SLS_CHECK_SHAPE
+#define SLS_CHECK_SHAPES
 #endif
 
 #include <stdlib.h>

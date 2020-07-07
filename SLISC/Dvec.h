@@ -86,7 +86,7 @@ inline const Int & DvecInt_c::end(Long_I i) const
 
 inline void DvecInt_c::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -213,7 +213,7 @@ inline Int & DvecInt::end(Long_I i) const
 
 inline void DvecInt::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -343,7 +343,7 @@ inline const Llong & DvecLlong_c::end(Long_I i) const
 
 inline void DvecLlong_c::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -470,7 +470,7 @@ inline Llong & DvecLlong::end(Long_I i) const
 
 inline void DvecLlong::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -616,7 +616,7 @@ inline const Doub & DvecDoub_c::end(Long_I i) const
 
 inline void DvecDoub_c::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -743,7 +743,7 @@ inline Doub & DvecDoub::end(Long_I i) const
 
 inline void DvecDoub::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -873,7 +873,7 @@ inline const Comp & DvecComp_c::end(Long_I i) const
 
 inline void DvecComp_c::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;
@@ -1000,7 +1000,7 @@ inline Comp & DvecComp::end(Long_I i) const
 
 inline void DvecComp::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;

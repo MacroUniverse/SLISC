@@ -53,7 +53,7 @@ inline void Cmat4Char::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Char::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Char reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -152,7 +152,7 @@ inline void Cmat4Int::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Int::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Int reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -251,7 +251,7 @@ inline void Cmat4Llong::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Llong::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Llong reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -359,7 +359,7 @@ inline void Cmat4Float::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Float::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Float reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -458,7 +458,7 @@ inline void Cmat4Doub::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Doub::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Doub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -557,7 +557,7 @@ inline void Cmat4Ldoub::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Ldoub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -656,7 +656,7 @@ inline void Cmat4Fcomp::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Fcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -755,7 +755,7 @@ inline void Cmat4Comp::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Comp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Comp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -854,7 +854,7 @@ inline void Cmat4Lcomp::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Lcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -953,7 +953,7 @@ inline void Cmat4Fimag::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Fimag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Fimag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -1052,7 +1052,7 @@ inline void Cmat4Imag::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Imag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Imag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
@@ -1151,7 +1151,7 @@ inline void Cmat4Limag::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void Cmat4Limag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat4Limag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");

@@ -519,7 +519,7 @@ inline void four4x(Doub *data2, const Doub *data, Int_I n, Int_I isign) {
 
 inline void fft4x(VecComp_O data4, VecComp_I data)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (data4.size() != data.size() * 4)
         SLS_ERR("wrong shape!");
 #endif

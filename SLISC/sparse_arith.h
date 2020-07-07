@@ -299,7 +299,7 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Comp *a, Long_I blk_si
 
 inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -308,7 +308,7 @@ inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
 
 inline void mul(VecDoub_O y, CmobdDoub_I a, VecDoub_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -317,7 +317,7 @@ inline void mul(VecDoub_O y, CmobdDoub_I a, VecDoub_I x)
 
 inline void mul(VecComp_O y, CmobdComp_I a, VecComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -326,7 +326,7 @@ inline void mul(VecComp_O y, CmobdComp_I a, VecComp_I x)
 
 inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -335,7 +335,7 @@ inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
 
 inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -345,7 +345,7 @@ inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
 
 inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.size() || a.n1() != y.size())
         SLS_ERR("illegal shape!");
 #endif
@@ -354,7 +354,7 @@ inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
 
 inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.size() || a.n1() != y.size())
         SLS_ERR("illegal shape!");
 #endif
@@ -364,7 +364,7 @@ inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
 
 inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -375,7 +375,7 @@ inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -386,7 +386,7 @@ inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -397,7 +397,7 @@ inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
 
 inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -408,7 +408,7 @@ inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
 
 inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -419,7 +419,7 @@ inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
 
 inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -430,7 +430,7 @@ inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
 
 inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())
@@ -441,7 +441,7 @@ inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
 
 inline void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())

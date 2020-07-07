@@ -11,7 +11,7 @@ namespace slisc {
 //% Ts = value_type(T);
 inline void inv_mat(@T@_IO A)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (A.n1() != A.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -46,7 +46,7 @@ inline void inv_mat(@T@_IO A)
 //% CmatTsa = ['Cmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
 //% if is_dense_vec(Tx)
     if (a.n1() != a.n2() || a.n2() != x.size())
 //% else
@@ -103,7 +103,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% CmatTsa = ['Cmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
 //% if is_dense_vec(Tx)
     if (a.n1() != a.n2() || a.n2() != x.size())
 //% else
@@ -150,7 +150,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 //% CbandTsa = ['Cband' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
 //% if is_dense_vec(Tx)
     if (a.n1() != a.n2() || a.n2() != x.size())
 //% else
@@ -207,7 +207,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% Tsx = value_type(Tx); Tsa = value_type(Ta);
 inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, @Ti@_IO ipiv)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
 //% if is_dense_vec(Tx)
     if (a1.n1() != a1.n2() || a1.n2() != x.size())
 //% else

@@ -69,7 +69,7 @@ inline void @Cmat4T@::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 
 inline void @Cmat4T@::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("@Cmat4T@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");

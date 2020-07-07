@@ -41,7 +41,7 @@ inline CbandInt::CbandInt(): m_N1(0), m_Nup(0), m_Nlow(0), m_idiag(0)
 inline CbandInt::CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
     m_N1(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
         SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
@@ -135,7 +135,7 @@ inline void CbandInt::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
     if (idiag >= 0)
         m_idiag = idiag;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
         SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
@@ -153,7 +153,7 @@ inline void CbandInt::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long
 
 inline void CbandInt::shift(Long_I idiag)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
         SLS_ERR("CbandInt: wrong shape: N1="+num2str(m_N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
@@ -202,7 +202,7 @@ inline CbandDoub::CbandDoub(): m_N1(0), m_Nup(0), m_Nlow(0), m_idiag(0)
 inline CbandDoub::CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
     m_N1(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
         SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
@@ -296,7 +296,7 @@ inline void CbandDoub::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
     if (idiag >= 0)
         m_idiag = idiag;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
         SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
@@ -314,7 +314,7 @@ inline void CbandDoub::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Lon
 
 inline void CbandDoub::shift(Long_I idiag)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
         SLS_ERR("CbandDoub: wrong shape: N1="+num2str(m_N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
@@ -363,7 +363,7 @@ inline CbandComp::CbandComp(): m_N1(0), m_Nup(0), m_Nlow(0), m_idiag(0)
 inline CbandComp::CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
     m_N1(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (m_idiag < m_Nup || m_a.n1() - m_idiag - 1 < m_Nlow)
         SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
@@ -457,7 +457,7 @@ inline void CbandComp::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
     if (idiag >= 0)
         m_idiag = idiag;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
         SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
@@ -475,7 +475,7 @@ inline void CbandComp::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Lon
 
 inline void CbandComp::shift(Long_I idiag)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
         SLS_ERR("CbandComp: wrong shape: N1="+num2str(m_N1)+", N2="+num2str(m_a.n2())+
             ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+

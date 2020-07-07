@@ -145,7 +145,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //% [Ty, Ta, Tx] = varargin{:};
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
@@ -161,7 +161,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //% [T, T1, T2] = varargin{:};
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.size() || a.n1() != y.size())
         SLS_ERR("illegal shape!");
 #endif
@@ -189,7 +189,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% [T, T1, T2] = varargin{:};
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1())
         SLS_ERR("illegal shape!");
     if (y.n1() != a.n1() || y.n2() != x.n2())

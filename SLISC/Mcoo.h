@@ -205,7 +205,7 @@ inline Long McooChar::col(Long_I ind) const
 
 inline void McooChar::trim(Long_I Nnz)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nnz < 0)
         SLS_ERR("McooChar::trim() negative input!");
 #endif
@@ -438,7 +438,7 @@ inline Long McooInt::col(Long_I ind) const
 
 inline void McooInt::trim(Long_I Nnz)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nnz < 0)
         SLS_ERR("McooInt::trim() negative input!");
 #endif
@@ -671,7 +671,7 @@ inline Long McooLlong::col(Long_I ind) const
 
 inline void McooLlong::trim(Long_I Nnz)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nnz < 0)
         SLS_ERR("McooLlong::trim() negative input!");
 #endif
@@ -904,7 +904,7 @@ inline Long McooDoub::col(Long_I ind) const
 
 inline void McooDoub::trim(Long_I Nnz)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nnz < 0)
         SLS_ERR("McooDoub::trim() negative input!");
 #endif
@@ -1137,7 +1137,7 @@ inline Long McooComp::col(Long_I ind) const
 
 inline void McooComp::trim(Long_I Nnz)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nnz < 0)
         SLS_ERR("McooComp::trim() negative input!");
 #endif

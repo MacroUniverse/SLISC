@@ -126,7 +126,7 @@ inline @CT@ & @Class@::end(Long_I i) const
 
 inline void @Class@::set_size(Long_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
 #endif
     m_N = N;

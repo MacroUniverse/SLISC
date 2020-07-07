@@ -91,7 +91,7 @@ inline void @MatT@::resize(Long_I N1, Long_I N2)
 
 inline void @MatT@::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("@MatT@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");

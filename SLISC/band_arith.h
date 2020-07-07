@@ -193,7 +193,7 @@ inline void copy_diag_real(CbandComp_O b, Doub_I s)
 // copy double dense matrix to imag part of band matrix
 inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 {
-    #ifdef SLS_CHECK_SHAPE
+    #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
     #endif
@@ -212,7 +212,7 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 // B = 1/2 + I*dt*A/4
 inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
@@ -236,7 +236,7 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
 // B = 1/2 + dt*A/4
 inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif

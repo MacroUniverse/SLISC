@@ -73,7 +73,7 @@ inline Long search_head(@Tv@_I v_short, @Ts@_I s_long, Long_I start = 0)
 inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
@@ -109,7 +109,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
 
 inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
     if (N < 1)
         SLS_ERR("range error!");
@@ -192,7 +192,7 @@ inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
 //% Tsli = slice2_type(Tmat);
 inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.size() != a.n2())
         SLS_ERR("wrong shape");
 #endif

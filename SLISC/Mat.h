@@ -75,7 +75,7 @@ inline void MatChar::resize(Long_I N1, Long_I N2)
 
 inline void MatChar::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatChar reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -158,7 +158,7 @@ inline void MatInt::resize(Long_I N1, Long_I N2)
 
 inline void MatInt::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatInt reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -241,7 +241,7 @@ inline void MatLlong::resize(Long_I N1, Long_I N2)
 
 inline void MatLlong::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatLlong reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -324,7 +324,7 @@ inline void MatFloat::resize(Long_I N1, Long_I N2)
 
 inline void MatFloat::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatFloat reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -407,7 +407,7 @@ inline void MatDoub::resize(Long_I N1, Long_I N2)
 
 inline void MatDoub::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatDoub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -490,7 +490,7 @@ inline void MatLdoub::resize(Long_I N1, Long_I N2)
 
 inline void MatLdoub::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatLdoub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -573,7 +573,7 @@ inline void MatFcomp::resize(Long_I N1, Long_I N2)
 
 inline void MatFcomp::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatFcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -656,7 +656,7 @@ inline void MatComp::resize(Long_I N1, Long_I N2)
 
 inline void MatComp::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatComp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -739,7 +739,7 @@ inline void MatLcomp::resize(Long_I N1, Long_I N2)
 
 inline void MatLcomp::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatLcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -822,7 +822,7 @@ inline void MatFimag::resize(Long_I N1, Long_I N2)
 
 inline void MatFimag::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatFimag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -905,7 +905,7 @@ inline void MatImag::resize(Long_I N1, Long_I N2)
 
 inline void MatImag::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatImag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
@@ -988,7 +988,7 @@ inline void MatLimag::resize(Long_I N1, Long_I N2)
 
 inline void MatLimag::reshape(Long_I N1, Long_I N2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 != m_N)
         SLS_ERR("MatLimag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");

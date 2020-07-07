@@ -245,7 +245,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //% end
 inline void copy(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -302,7 +302,7 @@ inline void copy(@T@_O v, @T1@_I v1)
 //% McooT = ['Mcoo', T]; McooT1 = ['Mcoo', T1];
 inline void copy(@McooT@_O v, @McooT1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
     if (v.capacity() < v1.nnz())
@@ -334,7 +334,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 //% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];
 inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(lhs, rhs))
         SLS_ERR("wrong shape!");
 #endif
@@ -380,7 +380,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% [T, T1] = varargin{:};
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(lhs, rhs))
         SLS_ERR("wrong shape!");
 #endif
@@ -420,7 +420,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
-// #ifdef SLS_CHECK_SHAPE
+// #ifdef SLS_CHECK_SHAPES
 //     if (!shape_cmp(lhs, rhs))
 //         SLS_ERR("wrong shape!");
 // #endif
@@ -442,7 +442,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 // template <class T, class T1, SLS_IF(is_promo<T, T1>())>
 // void copy(MatCoo<T> &v, const CmatObd<T1> &v1)
 // {
-// #ifdef SLS_CHECK_SHAPE
+// #ifdef SLS_CHECK_SHAPES
 //     if (!shape_cmp(v, v1))
 //         SLS_ERR("wrong shape!");
 //     if (v.capacity() < v1.nnz())
@@ -489,7 +489,7 @@ inline void copy(@T@_O a, @Ts@_I s)
 //% [T, T1] = varargin{:};
 inline void copy(@T@_O a, @T@_I b)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
         SLS_ERR("wrong shape!");
 #endif
@@ -517,7 +517,7 @@ inline void copy(@T@_O a, @T@_I b)
 //% if is_Cband(T1)
 inline void copy(@T1@_O b, @T2@_I a)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
@@ -534,7 +534,7 @@ inline void copy(@T1@_O b, @T2@_I a)
 //% else
 inline void copy(@T1@_O a, @T2@_I b)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
@@ -605,7 +605,7 @@ inline void copy(@T@_O v, const std::initializer_list<@Ts1@> &v1)
 {
     const @Ts1@ *p1 = v1.begin();
     Long N = v1.size();
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.size() != N)
         SLS_ERR("wrong shape!");
 #endif

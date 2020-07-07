@@ -11,7 +11,7 @@ namespace slisc {
 // use 38 digits data in case long double is needed
 inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (x.size() != w.size())
         SLS_ERR("wrong shape!");
 #endif
@@ -277,7 +277,7 @@ inline void legendre_interp_der(CmatDoub_O df, VecDoub_I x)
 {
     Long i, j, k, N{ x.size() };
     Doub t;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (df.n1() != N || df.n2() != N)
         SLS_ERR("wrong shape!");
 #endif
@@ -318,7 +318,7 @@ inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I wFE, VecDoub_I xFE, V
     Long Ngs = x0.size();
     Long Nfe = wFE.size();
     Long Nx = Nfe * (Ngs - 1) - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (x.size() != Nx || w.size() != Nx)
         SLS_ERR("wrong shape!");
 #endif
@@ -361,7 +361,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
     Long i, j, k, m, n, mm, nn;
     Long Nfe = wFE.size();
     Long Ngs = w0.size();
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long Nx = Nfe * (Ngs - 1) - 1;
     if (D2.n1() != Nx || D2.n1() != Nx)
         SLS_ERR("wrong shape!");
@@ -441,7 +441,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
 {
     Long Nfe = bounds.size() - 1; // number of finite elements
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long Nx = Nfe * (Ngs - 1) - 1;
     if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
         D2.n1() != Nx || D2.n1() != Nx)

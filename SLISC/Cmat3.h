@@ -51,7 +51,7 @@ inline void Cmat3Char::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Char::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Char reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -142,7 +142,7 @@ inline void Cmat3Int::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Int::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Int reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -233,7 +233,7 @@ inline void Cmat3Llong::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Llong::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Llong reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -333,7 +333,7 @@ inline void Cmat3Float::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Float::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Float reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -424,7 +424,7 @@ inline void Cmat3Doub::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Doub::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Doub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -515,7 +515,7 @@ inline void Cmat3Ldoub::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Ldoub reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -606,7 +606,7 @@ inline void Cmat3Fcomp::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Fcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -697,7 +697,7 @@ inline void Cmat3Comp::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Comp::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Comp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -788,7 +788,7 @@ inline void Cmat3Lcomp::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Lcomp reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -879,7 +879,7 @@ inline void Cmat3Fimag::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Fimag::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Fimag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -970,7 +970,7 @@ inline void Cmat3Imag::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Imag::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Imag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
@@ -1061,7 +1061,7 @@ inline void Cmat3Limag::resize(Long_I N1, Long_I N2, Long_I N3)
 
 inline void Cmat3Limag::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
         SLS_ERR("Cmat3Limag reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");

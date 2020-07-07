@@ -131,7 +131,7 @@ inline Long search_head(vecStr32_I v_short, Str32_I s_long, Long_I start = 0)
 inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
@@ -166,7 +166,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
 
 inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
     if (N < 1)
         SLS_ERR("range error!");
@@ -203,7 +203,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
@@ -238,7 +238,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 
 inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
     if (N < 1)
         SLS_ERR("range error!");
@@ -275,7 +275,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
@@ -310,7 +310,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 
 inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
     if (N < 1)
         SLS_ERR("range error!");
@@ -347,7 +347,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
@@ -382,7 +382,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 
 inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
     if (N < 1)
         SLS_ERR("range error!");
@@ -419,7 +419,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
 inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (N < 1)
         SLS_ERR("empty container!");
 #endif
@@ -454,7 +454,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 
 inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
     if (N < 1)
         SLS_ERR("range error!");
@@ -642,7 +642,7 @@ inline Long find_repeat(Long_O j, vecLlong_I v, Long_I start = 0)
 // return the row index, return -1 if not found
 inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.size() != a.n2())
         SLS_ERR("wrong shape");
 #endif
@@ -655,7 +655,7 @@ inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
 
 inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.size() != a.n2())
         SLS_ERR("wrong shape");
 #endif
@@ -668,7 +668,7 @@ inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
 
 inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.size() != a.n2())
         SLS_ERR("wrong shape");
 #endif
@@ -681,7 +681,7 @@ inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
 
 inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.size() != a.n2())
         SLS_ERR("wrong shape");
 #endif

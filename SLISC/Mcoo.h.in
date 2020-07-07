@@ -210,7 +210,7 @@ inline Long @McooT@::col(Long_I ind) const
 
 inline void @McooT@::trim(Long_I Nnz)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nnz < 0)
         SLS_ERR("@McooT@::trim() negative input!");
 #endif

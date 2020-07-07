@@ -61,7 +61,7 @@ inline Long randLong(Long_I N)
 // generate a random permutation of {0,1,2,...,N-1}
 inline void randPerm(VecInt_O perm, Int_I N)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (perm.size() != N)
         SLS_ERR("wrong shape!");
 #endif

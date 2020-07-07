@@ -256,7 +256,7 @@ inline void mod_vs(@T1@ *v, @Ts1@_I s, Long_I N)
 //% end
 inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -331,7 +331,7 @@ inline void imag(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void real(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -340,7 +340,7 @@ inline void real(@T@_O v, @T1@_I v1)
 
 inline void imag(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -395,7 +395,7 @@ inline void abs(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void abs(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -640,7 +640,7 @@ inline void flip(@Tv@_IO v)
 //% if is_dense(T) && is_dense(T1)
 inline void flip(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -675,7 +675,7 @@ inline void flip(@T@_O v, @T1@_I v1)
 //% end
 inline void reorder(@Tv@_O v, @To@_I order)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if ((Long)order.size() != (Long)v.size())
         SLS_ERR("wrong shape!");
 #endif
@@ -696,7 +696,7 @@ inline void reorder(@Tv@_O v, @To@_I order)
 //% T = varargin{:};
 inline void trans(@T@_IO v)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.n1() != v.n2())
         SLS_ERR("illegal shape!");
 #endif
@@ -722,7 +722,7 @@ inline void trans(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void trans(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.n1() != v1.n2() || v.n2() != v1.n1())
         SLS_ERR("wrong size!");
 #endif
@@ -787,7 +787,7 @@ inline void conj(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void conj(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -805,7 +805,7 @@ inline void conj(@T@_O v, @T1@_I v1)
 //% end
 inline void her(@T@_IO v)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (v.n1() != v.n2()) SLS_ERR("illegal shape!");
 #endif
     trans(v); conj(v);
@@ -1048,7 +1048,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1057,7 +1057,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1066,7 +1066,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1075,7 +1075,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
 
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1085,7 +1085,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 // v += v
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1096,7 +1096,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 // v -= v
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1107,7 +1107,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 // v *= v
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1118,7 +1118,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
 // v /= v
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1129,7 +1129,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 // v += v (slow!)
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1141,7 +1141,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 // v -= v (slow!)
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1153,7 +1153,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 // v *= v (slow!)
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1165,7 +1165,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
 // v /= v (slow!)
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1320,7 +1320,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1334,7 +1334,7 @@ inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1343,7 +1343,7 @@ inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 
 inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1352,7 +1352,7 @@ inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1366,7 +1366,7 @@ inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1375,7 +1375,7 @@ inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 
 inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1408,7 +1408,7 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 //% if is_dense(T) && is_dense(T1)
 inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
@@ -1417,7 +1417,7 @@ inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 
 inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
@@ -1426,7 +1426,7 @@ inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 
 inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
@@ -1435,7 +1435,7 @@ inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 
 inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
@@ -1475,7 +1475,7 @@ inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void minus(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1557,7 +1557,7 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 //% [T, T1, Ts] = varargin{:};
 inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
@@ -1622,7 +1622,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% T = promo_type(Ts1, Ts2);
 inline @T@ dot(@T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v1, v2))
         SLS_ERR("wrong shape!");
 #endif
@@ -1681,7 +1681,7 @@ inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% [T, T1] = varargin{:};
 inline void cumsum(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("illegal shape!");
 #endif
@@ -1722,7 +1722,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
     Long Nr = a.n1(), Nc = a.n2();
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (Nc != x.size() || y.size() != Nr)
         SLS_ERR("illegal shape!");
 #endif
@@ -1751,7 +1751,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 {
     Long Nr_a = a.n1(), Nc_a = a.n2();
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (x.size() != a.n1() || y.size() != Nc_a)
         SLS_ERR("illegal shape!");
 #endif
@@ -1776,7 +1776,7 @@ inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
     Long Nr_a = a.n1(), Nc_a = a.n2(), Nc_x = x.n2();
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1() || y.n1() != Nr_a || y.n2() != Nc_x)
         SLS_ERR("illegal shape!");
 #endif
@@ -1812,7 +1812,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
 inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (x.size() != a.n2() || y.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
@@ -1875,7 +1875,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
 inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (x.size() != a.n2() || y.size() != a.n1() || x.size() != y.size())
         SLS_ERR("wrong shape!");
 #endif
@@ -1938,7 +1938,7 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
 inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (a.n2() != x.n1() || y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
@@ -2066,7 +2066,7 @@ inline void exp(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void exp(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong size!");
 #endif
