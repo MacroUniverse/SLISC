@@ -353,6 +353,16 @@ inline Bool shape_cmp(CmatComp_I v1, MatComp_I v2)
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }
 
+inline Bool shape_cmp(DcmatChar_I v1, DcmatChar_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(DcmatChar_I v1, DcmatInt_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
 inline Bool shape_cmp(DcmatInt_I v1, DcmatInt_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
@@ -368,12 +378,22 @@ inline Bool shape_cmp(DcmatLlong_I v1, DcmatLlong_I v2)
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }
 
+inline Bool shape_cmp(DcmatFloat_I v1, DcmatFloat_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
 inline Bool shape_cmp(DcmatDoub_I v1, CmatDoub_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }
 
 inline Bool shape_cmp(DcmatDoub_I v1, DcmatDoub_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2();
+}
+
+inline Bool shape_cmp(DcmatLdoub_I v1, DcmatLdoub_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2();
 }
@@ -559,6 +579,12 @@ inline Bool shape_cmp(DvecComp_I v1, SvecComp_I v2)
     return v1.size() == v2.size();
 }
 
+inline Bool shape_cmp(Jcmat3Float_I v1, Jcmat3Float_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2()
+            && v1.n3() == v2.n3();
+}
+
 inline Bool shape_cmp(Jcmat3Doub_I v1, Cmat3Doub_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2()
@@ -571,7 +597,25 @@ inline Bool shape_cmp(Jcmat3Doub_I v1, Jcmat3Doub_I v2)
             && v1.n3() == v2.n3();
 }
 
+inline Bool shape_cmp(Jcmat3Ldoub_I v1, Jcmat3Ldoub_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2()
+            && v1.n3() == v2.n3();
+}
+
+inline Bool shape_cmp(Jcmat3Fcomp_I v1, Jcmat3Fcomp_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2()
+            && v1.n3() == v2.n3();
+}
+
 inline Bool shape_cmp(Jcmat3Comp_I v1, Jcmat3Comp_I v2)
+{
+    return v1.n1() == v2.n1() && v1.n2() == v2.n2()
+            && v1.n3() == v2.n3();
+}
+
+inline Bool shape_cmp(Jcmat3Lcomp_I v1, Jcmat3Lcomp_I v2)
 {
     return v1.n1() == v2.n1() && v1.n2() == v2.n2()
             && v1.n3() == v2.n3();

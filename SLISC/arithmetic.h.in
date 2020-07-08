@@ -479,7 +479,15 @@ inline @Tr@ norm(@T@_I v)
 }
 //%-------------------------
 
-//% types = {'VecInt'; 'VecDoub'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'Cmat3Doub'; 'Cmat3Comp';};
+//% types = {
+//%     'VecChar'; 'VecInt'; 'VecLlong';
+//%     'VecFloat'; 'VecDoub'; 'VecLdoub';
+//%     'VecFcomp'; 'VecComp'; 'VecLcomp';
+//%     'CmatChar'; 'CmatInt'; 'CmatLlong';
+//%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
+//%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
+//%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
+//% };
 //%--------------------------------
 //% Tv = varargin{:};
 //% T = value_type(Tv);

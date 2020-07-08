@@ -9,8 +9,10 @@ namespace slisc {
 //  === pointer interface ===
 
 //% types = {
-//%     'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Comp';
-//%     };
+//%     'Char'; 'Int'; 'Llong';
+//%     'Float'; 'Doub'; 'Ldoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp';
+//% };
 //%-----------------------
 //% T = varargin{:};
 inline void vecset(@T@ *v, @T@_I val, Long_I n)
@@ -28,15 +30,32 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
 
 //% types = {
 //%     'Char', 'Char';
+//%     'Int', 'Char';
 //%     'Int', 'Int';
+//%     'Llong', 'Char';
+//%     'Llong', 'Int';
 //%     'Llong', 'Llong';
-//%     'Doub', 'Llong';
 //%     'Float', 'Float';
+//%     'Doub', 'Int';
+//%     'Doub', 'Llong';
 //%     'Doub', 'Float';
 //%     'Doub', 'Doub';
-//%     'Comp', 'Doub';
+//%     'Ldoub', 'Float';
+//%     'Ldoub', 'Doub';
+//%     'Ldoub', 'Ldoub';
+//%     'Fcomp', 'Int';
+//%     'Fcomp', 'Llong';
+//%     'Fcomp', 'Float';
+//%     'Fcomp', 'Fcomp';
+//%     'Comp', 'Int';
 //%     'Comp', 'Llong';
+//%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
+//%     'Lcomp', 'Int';
+//%     'Lcomp', 'Llong';
+//%     'Lcomp', 'Doub';
+//%     'Lcomp', 'Comp';
+//%     'Lcomp', 'Lcomp';
 //%     };
 //%----------------------------
 //% [T, T1] = varargin{:};
@@ -76,10 +95,15 @@ inline void veccpy(@T@ *v, Long_I step, const @T1@ *v1, Long_I step1, Long_I n)
 //%------------------------
 
 //% types = {
+//%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
+//%     'Float', 'Float';
 //%     'Doub', 'Doub';
+//%     'Ldoub', 'Ldoub';
+//%     'Fcomp', 'Fcomp';
 //%     'Comp', 'Comp';
+//%     'Lcomp', 'Lcomp';
 //%     };
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -140,15 +164,26 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // scalar to container
 //% types = {
 //%     'VecBool'; 'VecChar'; 'VecInt'; 'VecLlong'; 
-//%     'VecDoub'; 'VecComp'; 'SvecLlong'; 'SvecDoub';
-//%     'SvecComp'; 'MatInt'; 'MatDoub';
-//%     'DvecDoub'; 'DvecComp';
-//%     'MatComp'; 'Mat3Doub'; 'CmatInt';
-//%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'Cmat3Int';
-//%     'Cmat3Doub'; 'Cmat3Comp'; 'Cmat4Doub';
+//%     'VecFloat'; 'VecDoub'; 'VecLdoub';
+//%     'VecFcomp'; 'VecComp'; 'VecLcomp';
+//%     'SvecChar'; 'SvecInt'; 'SvecLlong';
+//%     'SvecFloat'; 'SvecDoub'; 'SvecLdoub';
+//%     'SvecFcomp'; 'SvecComp'; 'SvecLcomp';
+//%     'MatChar'; 'MatInt'; 'MatLlong';
+//%     'MatFloat'; 'MatDoub'; 'MatLdoub';
+//%     'DvecFloat'; 'DvecDoub'; 'DvecLdoub';
+//%     'DvecFcomp'; 'DvecComp'; 'DvecLcomp';
+//%     'MatComp'; 'Mat3Doub';
+//%     'CmatChar'; 'CmatInt'; 'CmatLlong';
+//%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
+//%     'CmatFcomp'; 'CmatComp'; 'CmatLcomp';
+//%     'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
+//%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
+//%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
+//%     'Cmat4Doub';
 //%     'DcmatDoub'; 'DcmatComp';
-//%     'Jcmat3Doub'; 'Jcmat3Comp';
+//%     'Jcmat3Float'; 'Jcmat3Doub'; 'Jcmat3Ldoub';
+//%     'Jcmat3Fcomp'; 'Jcmat3Comp'; 'Jcmat3Lcomp';
 //% };
 //%-------------------------------------
 //% T = varargin{:}; Ts = value_type(T);
@@ -228,15 +263,22 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'ScmatDoub', 'ScmatDoub';
 //%     'ScmatComp', 'CmatComp';
 //%     'ScmatComp', 'ScmatComp';
+//%     'DcmatChar', 'DcmatChar';
 //%     'DcmatInt', 'CmatInt';
 //%     'DcmatInt', 'DcmatInt';
 //%     'DcmatLlong', 'DcmatLlong';
+//%     'DcmatFloat', 'DcmatFloat';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'DcmatDoub', 'DcmatDoub';
+//%     'DcmatLdoub', 'DcmatLdoub';
 //%     'DcmatComp', 'CmatComp';
 //%     'DcmatComp', 'DcmatComp';
+//%     'Jcmat3Float', 'Jcmat3Float';
 //%     'Jcmat3Doub', 'Jcmat3Doub';
+//%     'Jcmat3Ldoub', 'Jcmat3Ldoub';
+//%     'Jcmat3Fcomp', 'Jcmat3Fcomp';
 //%     'Jcmat3Comp', 'Jcmat3Comp';
+//%     'Jcmat3Lcomp', 'Jcmat3Lcomp';
 //% };
 //%---------------------------
 //% [T, T1] = varargin{:};

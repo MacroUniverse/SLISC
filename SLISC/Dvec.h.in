@@ -9,10 +9,18 @@ namespace slisc {
 //%     'Llong', false;
 //%     'Long', true;
 //%     'Long', false;
+//%     'Float', true;
+//%     'Float', false;
 //%     'Doub', true;
 //%     'Doub', false;
+//%     'Ldoub', true;
+//%     'Ldoub', false;
+//%     'Fcomp', true;
+//%     'Fcomp', false;
 //%     'Comp', true;
 //%     'Comp', false;
+//%     'Lcomp', true;
+//%     'Lcomp', false;
 //% };
 //%------------------------
 //% [T, constness] = varargin{:};

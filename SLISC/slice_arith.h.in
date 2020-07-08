@@ -15,9 +15,16 @@ namespace slisc {
 //%     'VecDoub'; 'VecComp';
 //%     'SvecDoub'; 'SvecComp';
 //%     'DvecDoub'; 'DvecComp';
-//%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'ScmatDoub'; 'ScmatComp';
-//%     'DcmatInt'; 'CmatInt'; 'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'CmatChar'; 'CmatInt'; 'CmatLlong';
+//%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
+//%     'CmatFcomp'; 'CmatComp'; 'CmatLcomp';
+//%     'ScmatChar'; 'ScmatInt'; 'ScmatLlong';
+//%     'ScmatFloat'; 'ScmatDoub'; 'ScmatLdoub';
+//%     'ScmatFcomp'; 'ScmatComp'; 'ScmatLcomp';
+//%     'DcmatChar'; 'DcmatInt'; 'DcmatLlong';
+//%     'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
+//%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
+//%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
 //% };
 //%----------------------------
 //% Tv = varargin{:};
