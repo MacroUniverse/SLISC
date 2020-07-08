@@ -2510,12 +2510,12 @@ inline Doub norm(DcmatComp_I v)
 }
 
 
-inline void resize_cpy(VecChar_IO v, Long_I N)
+inline void resize_cpy(VecChar_IO v, Long_I N, Char_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2523,7 +2523,7 @@ inline void resize_cpy(VecChar_IO v, Long_I N)
             VecChar v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2532,12 +2532,12 @@ inline void resize_cpy(VecChar_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecInt_IO v, Long_I N)
+inline void resize_cpy(VecInt_IO v, Long_I N, Int_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2545,7 +2545,7 @@ inline void resize_cpy(VecInt_IO v, Long_I N)
             VecInt v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2554,12 +2554,12 @@ inline void resize_cpy(VecInt_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecLlong_IO v, Long_I N)
+inline void resize_cpy(VecLlong_IO v, Long_I N, Llong_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2567,7 +2567,7 @@ inline void resize_cpy(VecLlong_IO v, Long_I N)
             VecLlong v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2576,12 +2576,12 @@ inline void resize_cpy(VecLlong_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecFloat_IO v, Long_I N)
+inline void resize_cpy(VecFloat_IO v, Long_I N, Float_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2589,7 +2589,7 @@ inline void resize_cpy(VecFloat_IO v, Long_I N)
             VecFloat v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2598,12 +2598,12 @@ inline void resize_cpy(VecFloat_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecDoub_IO v, Long_I N)
+inline void resize_cpy(VecDoub_IO v, Long_I N, Doub_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2611,7 +2611,7 @@ inline void resize_cpy(VecDoub_IO v, Long_I N)
             VecDoub v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2620,12 +2620,12 @@ inline void resize_cpy(VecDoub_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecLdoub_IO v, Long_I N)
+inline void resize_cpy(VecLdoub_IO v, Long_I N, Ldoub_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2633,7 +2633,7 @@ inline void resize_cpy(VecLdoub_IO v, Long_I N)
             VecLdoub v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2642,12 +2642,12 @@ inline void resize_cpy(VecLdoub_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecFcomp_IO v, Long_I N)
+inline void resize_cpy(VecFcomp_IO v, Long_I N, Fcomp_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2655,7 +2655,7 @@ inline void resize_cpy(VecFcomp_IO v, Long_I N)
             VecFcomp v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2664,12 +2664,12 @@ inline void resize_cpy(VecFcomp_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecComp_IO v, Long_I N)
+inline void resize_cpy(VecComp_IO v, Long_I N, Comp_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2677,7 +2677,7 @@ inline void resize_cpy(VecComp_IO v, Long_I N)
             VecComp v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2686,12 +2686,12 @@ inline void resize_cpy(VecComp_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(VecLcomp_IO v, Long_I N)
+inline void resize_cpy(VecLcomp_IO v, Long_I N, Lcomp_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -2699,7 +2699,7 @@ inline void resize_cpy(VecLcomp_IO v, Long_I N)
             VecLcomp v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -2708,18 +2708,18 @@ inline void resize_cpy(VecLcomp_IO v, Long_I N)
     }
 }
 
-inline void resize_cpy(CmatChar_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(CmatChar_IO v, Long_I N1, Long_I N2, Char_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            CmatChar v1(N1, N2); copy(v1, 0);
+            CmatChar v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -2728,18 +2728,18 @@ inline void resize_cpy(CmatChar_IO v, Long_I N1, Long_I N2)
     }
 }
 
-inline void resize_cpy(CmatInt_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(CmatInt_IO v, Long_I N1, Long_I N2, Int_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            CmatInt v1(N1, N2); copy(v1, 0);
+            CmatInt v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -2748,18 +2748,18 @@ inline void resize_cpy(CmatInt_IO v, Long_I N1, Long_I N2)
     }
 }
 
-inline void resize_cpy(CmatLlong_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(CmatLlong_IO v, Long_I N1, Long_I N2, Llong_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            CmatLlong v1(N1, N2); copy(v1, 0);
+            CmatLlong v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -2768,18 +2768,18 @@ inline void resize_cpy(CmatLlong_IO v, Long_I N1, Long_I N2)
     }
 }
 
-inline void resize_cpy(CmatFloat_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(CmatFloat_IO v, Long_I N1, Long_I N2, Float_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            CmatFloat v1(N1, N2); copy(v1, 0);
+            CmatFloat v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -2788,18 +2788,18 @@ inline void resize_cpy(CmatFloat_IO v, Long_I N1, Long_I N2)
     }
 }
 
-inline void resize_cpy(CmatDoub_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(CmatDoub_IO v, Long_I N1, Long_I N2, Doub_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            CmatDoub v1(N1, N2); copy(v1, 0);
+            CmatDoub v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -2808,18 +2808,18 @@ inline void resize_cpy(CmatDoub_IO v, Long_I N1, Long_I N2)
     }
 }
 
-inline void resize_cpy(CmatLdoub_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(CmatLdoub_IO v, Long_I N1, Long_I N2, Ldoub_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            CmatLdoub v1(N1, N2); copy(v1, 0);
+            CmatLdoub v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -2828,18 +2828,18 @@ inline void resize_cpy(CmatLdoub_IO v, Long_I N1, Long_I N2)
     }
 }
 
-inline void resize_cpy(Cmat3Float_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(Cmat3Float_IO v, Long_I N1, Long_I N2, Long_I N3, Float_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            Cmat3Float v1(N1, N2, N3); copy(v1, 0);
+            Cmat3Float v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));
@@ -2848,18 +2848,18 @@ inline void resize_cpy(Cmat3Float_IO v, Long_I N1, Long_I N2, Long_I N3)
     }
 }
 
-inline void resize_cpy(Cmat3Doub_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(Cmat3Doub_IO v, Long_I N1, Long_I N2, Long_I N3, Doub_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            Cmat3Doub v1(N1, N2, N3); copy(v1, 0);
+            Cmat3Doub v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));
@@ -2868,18 +2868,18 @@ inline void resize_cpy(Cmat3Doub_IO v, Long_I N1, Long_I N2, Long_I N3)
     }
 }
 
-inline void resize_cpy(Cmat3Ldoub_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(Cmat3Ldoub_IO v, Long_I N1, Long_I N2, Long_I N3, Ldoub_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            Cmat3Ldoub v1(N1, N2, N3); copy(v1, 0);
+            Cmat3Ldoub v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));
@@ -2888,18 +2888,18 @@ inline void resize_cpy(Cmat3Ldoub_IO v, Long_I N1, Long_I N2, Long_I N3)
     }
 }
 
-inline void resize_cpy(Cmat3Fcomp_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(Cmat3Fcomp_IO v, Long_I N1, Long_I N2, Long_I N3, Fcomp_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            Cmat3Fcomp v1(N1, N2, N3); copy(v1, 0);
+            Cmat3Fcomp v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));
@@ -2908,18 +2908,18 @@ inline void resize_cpy(Cmat3Fcomp_IO v, Long_I N1, Long_I N2, Long_I N3)
     }
 }
 
-inline void resize_cpy(Cmat3Comp_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(Cmat3Comp_IO v, Long_I N1, Long_I N2, Long_I N3, Comp_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            Cmat3Comp v1(N1, N2, N3); copy(v1, 0);
+            Cmat3Comp v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));
@@ -2928,18 +2928,18 @@ inline void resize_cpy(Cmat3Comp_IO v, Long_I N1, Long_I N2, Long_I N3)
     }
 }
 
-inline void resize_cpy(Cmat3Lcomp_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(Cmat3Lcomp_IO v, Long_I N1, Long_I N2, Long_I N3, Lcomp_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            Cmat3Lcomp v1(N1, N2, N3); copy(v1, 0);
+            Cmat3Lcomp v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));

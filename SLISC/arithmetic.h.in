@@ -492,12 +492,12 @@ inline @Tr@ norm(@T@_I v)
 //% Tv = varargin{:};
 //% T = value_type(Tv);
 //% if is_Vec(Tv)
-inline void resize_cpy(@Tv@_IO v, Long_I N)
+inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
 {
     Long N0 = v.size();
     if (N != N0) {
         if (N0 == 0) {
-            v.resize(N); copy(v, 0);
+            v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
@@ -505,7 +505,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N)
             @Tv@ v1(N);
             if (N > N0) {
                 veccpy(v1.ptr(), v.ptr(), N0);
-                vecset(v1.ptr() + N0, 0, N - N0);
+                vecset(v1.ptr() + N0, val, N - N0);
             }
             else // N < N0
                 veccpy(v1.ptr(), v.ptr(), N);
@@ -515,18 +515,18 @@ inline void resize_cpy(@Tv@_IO v, Long_I N)
 }
 //% elseif is_Cmat(Tv) || is_Mat(Tv)
 //%     Tsli = slice_type(Tv);
-inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
+inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
-            v.resize(N1, N2); copy(v, 0);
+            v.resize(N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            @Tv@ v1(N1, N2); copy(v1, 0);
+            @Tv@ v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
             copy(slice(v1, 0, N1min, 0, N2min),
                 slice(v, 0, N1min, 0, N2min));
@@ -535,18 +535,18 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2)
     }
 }
 //% elseif is_Cmat3(Tv) || is_Mat3(Tv)
-inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3)
+inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3, @T@_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, 0);
+            v.resize(N1, N2, N3); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            @Tv@ v1(N1, N2, N3); copy(v1, 0);
+            @Tv@ v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
             copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
                 slice(v, 0, N1min, 0, N2min, 0, N3min));
