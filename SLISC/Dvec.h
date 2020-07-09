@@ -2,6 +2,263 @@
 #include "global.h"
 
 namespace slisc {
+class DvecChar_c
+{
+protected:
+    const Char *m_p;
+    Long m_N;
+    Long m_step;
+public:
+    DvecChar_c();
+    DvecChar_c(const Char *ptr, Long_I N, Long_I step);
+    const Char* ptr() const;
+    const Char & operator[](Long_I i) const;
+    const Char & operator()(Long_I i) const;
+    const Char & end() const;
+    const Char & end(Long_I i) const;
+    Long size() const;
+    Long step() const;
+
+    DvecChar_c &operator=(const DvecChar_c &) = delete;
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_ptr(const Char *ptr);
+    void set(const Char *ptr, Long_I N, Long_I step);
+    void set(const DvecChar_c &sli);
+    void set_size(Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    
+    ~DvecChar_c();
+};
+
+inline DvecChar_c::DvecChar_c() {}
+
+inline DvecChar_c::DvecChar_c(const Char *ptr, Long_I N, Long_I step)
+    : m_p(ptr), m_N(N), m_step(step) {}
+
+inline const Char * DvecChar_c::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long DvecChar_c::size() const
+{
+    return m_N;
+}
+
+inline Long DvecChar_c::step() const
+{
+    return m_step;
+}
+
+inline const Char & DvecChar_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[m_step*i];
+}
+
+inline const Char & DvecChar_c::operator()(Long_I i) const
+{ return (*this)[i]; }
+
+inline const Char & DvecChar_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_step*(m_N - 1)];
+}
+
+inline const Char & DvecChar_c::end(Long_I i) const
+{
+    return m_p[m_step*(m_N - i)];
+}
+
+inline void DvecChar_c::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+
+inline void DvecChar_c::set_ptr(const Char * ptr)
+{
+    m_p = ptr;
+}
+
+inline void DvecChar_c::set(const Char * ptr, Long_I N, Long_I step)
+{
+    m_p = ptr; m_N = N; m_step = step;
+}
+
+inline void DvecChar_c::set(const DvecChar_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
+inline void DvecChar_c::next()
+{
+    m_p += m_N;
+}
+
+inline void DvecChar_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void DvecChar_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline DvecChar_c::~DvecChar_c() {}
+
+
+typedef const DvecChar_c & DvecChar_I;
+
+class DvecChar
+{
+protected:
+    Char *m_p;
+    Long m_N;
+    Long m_step;
+public:
+    DvecChar();
+    DvecChar(Char *ptr, Long_I N, Long_I step);
+    Char* ptr() const;
+    Char & operator[](Long_I i) const;
+    Char & operator()(Long_I i) const;
+    Char & end() const;
+    Char & end(Long_I i) const;
+    Long size() const;
+    Long step() const;
+
+    operator DvecChar_c() const;
+    DvecChar &operator=(const DvecChar &) = delete;
+
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set_ptr(Char *ptr);
+    void set(Char *ptr, Long_I N, Long_I step);
+    void set(const DvecChar &sli);
+    void set_size(Long_I N);
+    void next(); // m_ptr += m_N
+    void last(); // m_ptr -= m_N
+    void shift(Long_I N); // m_ptr += N;
+    
+    ~DvecChar();
+};
+
+inline DvecChar::DvecChar() {}
+
+inline DvecChar::DvecChar(Char *ptr, Long_I N, Long_I step)
+    : m_p(ptr), m_N(N), m_step(step) {}
+
+inline Char * DvecChar::ptr() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using ptr() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long DvecChar::size() const
+{
+    return m_N;
+}
+
+inline Long DvecChar::step() const
+{
+    return m_step;
+}
+
+inline Char & DvecChar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[m_step*i];
+}
+
+inline Char & DvecChar::operator()(Long_I i) const
+{ return (*this)[i]; }
+
+inline Char & DvecChar::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_step*(m_N - 1)];
+}
+
+inline Char & DvecChar::end(Long_I i) const
+{
+    return m_p[m_step*(m_N - i)];
+}
+
+inline void DvecChar::set_size(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline DvecChar::operator DvecChar_c() const
+{
+    return *((DvecChar_c *)this);
+}
+
+inline void DvecChar::set_ptr(Char * ptr)
+{
+    m_p = ptr;
+}
+
+inline void DvecChar::set(Char * ptr, Long_I N, Long_I step)
+{
+    m_p = ptr; m_N = N; m_step = step;
+}
+
+inline void DvecChar::set(const DvecChar &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
+inline void DvecChar::next()
+{
+    m_p += m_N;
+}
+
+inline void DvecChar::last()
+{
+    m_p -= m_N;
+}
+
+inline void DvecChar::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline DvecChar::~DvecChar() {}
+
+
+typedef const DvecChar & DvecChar_O, & DvecChar_IO;
+
 class DvecInt_c
 {
 protected:

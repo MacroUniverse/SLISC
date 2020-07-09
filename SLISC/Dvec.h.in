@@ -3,6 +3,8 @@
 
 namespace slisc {
 //% types = {
+//%     'Char', true;
+//%     'Char', false;
 //%     'Int', true;
 //%     'Int', false;
 //%     'Llong', true;

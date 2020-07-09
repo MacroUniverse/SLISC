@@ -43,6 +43,7 @@ void test_Cmat()
 	// reshape
 	{
 		Cmat3Doub a3(2, 3, 4), b3(2, 3, 4);
+		rand(a3);
 		copy(b3, a3);
 		a3.reshape(2, 6, 2); a3.reshape(2, 3, 4);
 		if (a3 != b3)
