@@ -27,8 +27,11 @@ inline void num2str(Str_O str, Char_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
-    if (str.find('.') != Str::npos)
+    if (str.find('.') != Str::npos) {
         str.erase(str.find_last_not_of('0') + 1);
+        if (str.back() == '.')
+            str.pop_back();
+    }
     // 0 padding on the left
     if (min_len > 0 && (Long)str.size() < min_len) {
         Str str1;
@@ -49,8 +52,11 @@ inline void num2str(Str_O str, Int_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
-    if (str.find('.') != Str::npos)
+    if (str.find('.') != Str::npos) {
         str.erase(str.find_last_not_of('0') + 1);
+        if (str.back() == '.')
+            str.pop_back();
+    }
     // 0 padding on the left
     if (min_len > 0 && (Long)str.size() < min_len) {
         Str str1;
@@ -71,8 +77,11 @@ inline void num2str(Str_O str, Llong_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
-    if (str.find('.') != Str::npos)
+    if (str.find('.') != Str::npos) {
         str.erase(str.find_last_not_of('0') + 1);
+        if (str.back() == '.')
+            str.pop_back();
+    }
     // 0 padding on the left
     if (min_len > 0 && (Long)str.size() < min_len) {
         Str str1;
@@ -93,8 +102,11 @@ inline void num2str(Str_O str, Doub_I s, Long_I min_len = -1)
 {
     str = to_string(s);
     // erase trailing zeros
-    if (str.find('.') != Str::npos)
+    if (str.find('.') != Str::npos) {
         str.erase(str.find_last_not_of('0') + 1);
+        if (str.back() == '.')
+            str.pop_back();
+    }
     // 0 padding on the left
     if (min_len > 0 && (Long)str.size() < min_len) {
         Str str1;
