@@ -7860,6 +7860,15 @@ inline Doub dot(VecDoub_I v1, VecDoub_I v2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
 }
 
+inline Comp dot(VecDoub_I v1, SvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    return dot_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+
 inline Comp dot(VecComp_I v1, VecDoub_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -7878,16 +7887,7 @@ inline Comp dot(VecComp_I v1, VecComp_I v2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
 }
 
-inline Comp dot(SvecComp_I v1, VecComp_I v2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v1, v2))
-        SLS_ERR("wrong shape!");
-#endif
-    return dot_vv(v1.ptr(), v2.ptr(), v2.size());
-}
-
-inline Comp dot(VecDoub_I v1, SvecComp_I v2)
+inline Doub dot(SvecDoub_I v1, SvecDoub_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v1, v2))
@@ -7897,6 +7897,15 @@ inline Comp dot(VecDoub_I v1, SvecComp_I v2)
 }
 
 inline Comp dot(SvecDoub_I v1, SvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    return dot_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+
+inline Comp dot(SvecComp_I v1, VecComp_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v1, v2))

@@ -1615,11 +1615,12 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecChar';
 //%     'VecDoub', 'VecDoub';
+//%     'VecDoub', 'SvecComp';
 //%     'VecComp', 'VecDoub';
 //%     'VecComp', 'VecComp';
-//%     'SvecComp', 'VecComp';
-//%     'VecDoub', 'SvecComp';
+//%     'SvecDoub', 'SvecDoub';
 //%     'SvecDoub', 'SvecComp';
+//%     'SvecComp', 'VecComp';
 //%     'DvecComp', 'SvecDoub';
 //%     'Cmat3Comp', 'Cmat3Comp';
 //%     'Cmat3Comp', 'Jcmat3Comp';
