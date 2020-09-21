@@ -56,9 +56,12 @@ void test_band()
 
     // nband()
     {
-        CmatComp a(6, 7); copy(a, 0);
-        a(4, 2) = a(2, 5) = 5;
         Long Nup, Nlow;
+        CmatComp a(6, 7); copy(a, 0);
+        nband(Nup, Nlow, a);
+        if (Nup != 0 && Nlow != 0)
+            SLS_ERR("failed!");
+        a(4, 2) = a(2, 5) = 5;
         nband(Nup, Nlow, a);
         if (Nup != 3 || Nlow != 2)
             SLS_ERR("failed!");
