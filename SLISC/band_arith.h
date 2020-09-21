@@ -49,7 +49,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nup = a.n2() - 1;
+        Nup = 0;
     
     // check lower diagonals
     found = false;
@@ -64,7 +64,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nlow = a.n1() - 1;
+        Nlow = 0;
 }
 
 inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
@@ -82,7 +82,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nup = a.n2() - 1;
+        Nup = 0;
     
     // check lower diagonals
     found = false;
@@ -97,7 +97,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nlow = a.n1() - 1;
+        Nlow = 0;
 }
 
 inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
@@ -115,7 +115,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nup = a.n2() - 1;
+        Nup = 0;
     
     // check lower diagonals
     found = false;
@@ -130,7 +130,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nlow = a.n1() - 1;
+        Nlow = 0;
 }
 
 inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
@@ -148,7 +148,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nup = a.n2() - 1;
+        Nup = 0;
     
     // check lower diagonals
     found = false;
@@ -163,7 +163,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
         }
     }
     if (!found)
-        Nlow = a.n1() - 1;
+        Nlow = 0;
 }
 
 
