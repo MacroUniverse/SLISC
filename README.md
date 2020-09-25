@@ -4,7 +4,7 @@
 
 ## Introduction
 
-SLISC is a header-only library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read and modify while maintaining a relatively high performance. The library currently provides simple class templates for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D matrix (row-major), and basic arithmetics for them. Codes from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.). The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
+SLISC is a header-only library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of slicing classes is supported. Codes from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.). The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
 
 SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed in Linux using g++ and GSL and LAPACK. It can also work for Interl compiler and MKL. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
 
@@ -19,14 +19,15 @@ int main()
 	VecDoub u(3), v(3); // vectors, double type
 	linspace(u, 0, 2); // elements linearly spaced from 0 to 2
 	cout << "u = \n"; disp(u); // display vector/matrix
-	v = 3.14; // set all elements to 3.14
-	u += v; // vector plus vector
-	v += 2; // vector plus scalar
+	copy(v, 3.14); // set all elements to 3.14
+	copy(u, v); // copy values from v to u
+	u += v; // add vector to vector
+	v += 2; // add scalar to vector
 	MatDoub a(0, 0), b(2, 3); // row major matrices of double precision
 	a.resize(2, 3); // resize b to 2 columns and 3 rows
 	a(0, 0) = 1.1; // access element by row and column indices
 	a[3] = 9.9; // access element by a single index
-	a.end() = 5.5; // last element
+	a.end() = 5.5; a.end(-2) = 4.4; // access last element and last but 2 element
 	cout << "a has " << a.n1() << " rows and " << a.n2()
 	<< " columns, and a total of " << a.size() << " elements." << endl;
 	disp(a);
@@ -36,7 +37,7 @@ int main()
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling
-* All code using C++11 standard, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04
+* C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04
 * If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
 * If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
 * In the root directory, run `make` to compile
