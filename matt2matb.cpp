@@ -17,7 +17,7 @@ Int main(Int argc, Char *argv[])
 			replace = true; // output overwrite
 	}
 	cout << "delete original [-d]: " << rm << endl;
-	cout << "replace restination [-r]: " << replace << endl;
+	cout << "replace destination [-r]: " << replace << endl;
 	Int start = 1 + rm + replace;
 	Int N = 0;
 	Timer timer; timer.tic();
