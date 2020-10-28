@@ -6,6 +6,7 @@
 #endif
 
 #define SLS_FP_EXCEPT // turn on floating point exception
+#define SLS_USE_UTFCPP // use utfcpp lib to convert utf8, 16 and 32
 
 #ifndef NDEBUG
 #define SLS_CHECK_BOUNDS

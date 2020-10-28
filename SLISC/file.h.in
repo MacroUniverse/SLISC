@@ -4,12 +4,12 @@
 #include "linux.h"
 #include <sstream>
 #include <fstream>
-#ifdef SLS_HAS_FILESYSTEM
-#include <filesystem>
-#include "search.h"
-#endif
 #include <sys/types.h> // for time_stamp
 #include <sys/stat.h> // for time_stamp
+#include "unicode.h"
+#ifdef _MSC_VER
+#include "search.h"
+#endif
 
 namespace slisc {
 
@@ -18,8 +18,12 @@ using std::stringstream;
 inline void file_list(vecStr_O names, Str_I path, Bool_I append = false);
 inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
+inline void write(Str_I str, Str_I fname);
 
-#ifdef SLS_HAS_FILESYSTEM
+#ifdef _MSC_VER
+inline Str wstr2utf8(const std::wstring& wstr);
+inline std::wstring utf82wstr(Str_I str);
+
 // check if a file exist on Windws (case sensitive)
 inline Bool file_exist_case(Str_I fname)
 {
@@ -43,35 +47,47 @@ inline Bool file_exist_case(Str_I fname)
 #endif
 
 // check if a file exist, default is case sensitive
+// case_sens only works on Windows
 inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
-#ifndef SLS_HAS_FILESYSTEM
+#ifndef _MSC_VER
     ifstream f(fname);
     return f.good();
 #else
     if (case_sens)
         return file_exist_case(fname);
     else {
-        ifstream f(fname);
+        ifstream f(utf82wstr(fname));
         return f.good();
-    }
+}
 #endif
 }
 
+// not case sensitive on Windows, see file_exist_case()
+inline Bool file_exist(Str32_I fname) {
+    return file_exist(utf32to8(fname));
+}
+
 // remove a file with error handling
-// do nothing if file doesn't exist
 inline void file_remove(Str_I fname)
 {
-    if (file_exist(fname))
-        if (remove(fname.c_str()))
-            SLS_ERR("failed to remove, file being used? (" + fname + ")");
+#ifndef _MSC_VER
+    if (remove(fname.c_str()))
+        throw Str("failed to remove, file being used? (" + fname + ")");
+#else
+    if (DeleteFile(utf82wstr(fname).c_str()) == 0)
+        throw Str("failed to remove, file being used? (" + fname + ")");
+#endif
 }
 
 // check if directory exist
 // `path` must end with '/'
 inline Bool dir_exist(Str_I path)
 {
-    ofstream file;
-    file.open(path + "/sls_test_if_dir_exist");
+#ifndef _MSC_VER
+    ofstream file(path + "/sls_test_if_dir_exist");
+#else
+    ofstream file(utf82wstr(path + "/sls_test_if_dir_exist"));
+#endif
     if (file.good()) {
         file.close();
         file_remove(path + "/sls_test_if_dir_exist");
@@ -82,23 +98,18 @@ inline Bool dir_exist(Str_I path)
     }
 }
 
-// get directory from filename
-inline Str path2dir(Str_I fname)
-{
-    Llong ind = fname.rfind("/");
-    if (ind < 0)
-        return "./";
-    else
-        return fname.substr(0, ind+1);
-}
-
 // make multiple level of directory
+
 inline void mkdir(Str_I path)
 {
     Long ind = path.find("\"");
     if (ind >= 0)
-        SLS_ERR("folder name should not contain double quote: " + path);
+        SLS_ERR("folder name should not contain double quote: " + path + ", i = " + num2str(ind));
+#ifndef _MSC_VER
     Int ret = system(("mkdir -p \"" + path + "\"").c_str()); ret++;
+#else
+    CreateDirectory(utf82wstr(path).c_str(), NULL);
+#endif
     if (!dir_exist(path))
         SLS_ERR("mkdir failed: " + path);
 }
@@ -106,7 +117,12 @@ inline void mkdir(Str_I path)
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
+#ifndef _MSC_VER
     Int ret = system(("rmdir " + path).c_str()); ret++;
+#else
+    if (RemoveDirectory(utf82wstr(path).c_str()) == 0)
+        SLS_ERR("cannot remove directory: " + path);
+#endif
 }
 
 // make sure the directory (or directory of a file name) exist
@@ -115,23 +131,28 @@ inline void rmdir(Str_I path)
 inline void ensure_dir(Str_I dir_or_file)
 {
     Long ind = dir_or_file.rfind('/');
-    if (dir_exist(dir_or_file.substr(0, ind)))
+    Str dir = dir_or_file.substr(0, ind);
+    if (dir_exist(dir))
         return;
-    mkdir(dir_or_file.substr(0, ind));
+    mkdir(dir);
+    if (!dir_exist(dir))
+        SLS_ERR("cannot create directory: " + dir);
 }
 
+#ifndef _MSC_VER
 // remove a file
 inline void file_rm(Str_I wildcard_name) {
     system(("rm " + wildcard_name).c_str());
 }
+#endif
 
 // list all files in current directory
 // only works for linux
-#ifdef __GNUC__
+#ifndef _MSC_VER
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
-{
+{    
     if (!append)
-        fnames.resize(0);
+        fnames.clear();
     // save a list of all files (no folder) to temporary file
     std::istringstream iss(exec_str(("ls -p " + path + " | grep -v /").c_str()));
     
@@ -145,32 +166,25 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
     }
 }
 #else
-#ifdef SLS_HAS_FILESYSTEM
-// std::filesystem implementation of file_list()
-// works in Visual Studio, not gcc 8
-// directory example: "C:/Users/addis/Documents/GitHub/SLISC/"
-inline void file_list(vecStr_O names, Str_I path, Bool_I append)
+// path must end with '/'
+inline void file_list(vecStr_O fnames, Str_I path, Bool_I append);
 {
+    WIN32_FIND_DATA data;
+    HANDLE h = FindFirstFile(utf82wstr(path + "*").c_str(), &data);      // DIRECTORY
+    Str fname;
     if (!append)
-        names.resize(0);
-    for (const auto & entry : std::filesystem::directory_iterator(path)) {
-        std::stringstream ss;
-        if (entry.is_directory())
-            continue;
-        auto temp = entry.path().filename();
-        ss << temp;
-        string str = ss.str();
-        str = str.substr(1, str.size() - 2);
-        // str = str.substr(path.size(), str.size()); // remove " " and path
-        names.push_back(str);
+        fnames.clear();
+    if (h != INVALID_HANDLE_VALUE) {
+        do {
+            std::wstring wstr(data.cFileName);
+            fname = wstr2utf8(wstr);
+            if (fname == "." || fname == "..")
+                continue;
+            fnames.push_back(fname);
+        } while (FindNextFile(h, &data));
+        FindClose(h);
     }
 }
-#else
-inline void file_list(vecStr_O fnames, Str_I path, Bool_I append = false)
-{
-    SLS_ERR("not implemented");
-}
-#endif
 #endif
 
 // list all files in a directory recursively (containing relative paths)
@@ -194,10 +208,9 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 #endif
 
 // choose files with a given extension from a list of files
-inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
+inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true)
 {
-    if (!append)
-        fnames_ext.resize(0);
+    fnames_ext.resize(0);
     Long N_ext = ext.size();
     for (Long i = 0; i < size(fnames); ++i) {
         const Str & str = fnames[i];
@@ -216,13 +229,21 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
 }
 
 // list all files in current directory, with a given extension
-inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
+inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true)
 {
     vecStr fnames0;
-    if (!append)
-        fnames.resize(0);
     file_list(fnames0, path);
     file_ext(fnames, fnames0, ext, keep_ext);
+}
+
+// list all files in current directory, with a given extension
+inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I keep_ext = true)
+{
+    vecStr fnames8;
+    fnames.resize(0);
+    file_list_ext(fnames8, utf32to8(path), utf32to8(ext), keep_ext);
+    for (Long i = 0; i < size(fnames8); ++i)
+        fnames.push_back(utf8to32(fnames8[i]));
 }
 
 // copy a file (read then write)
@@ -230,7 +251,7 @@ inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ex
 inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
     if (!file_exist(fname_in))
-        SLS_ERR("file not found: " + fname_in);
+        SLS_ERR("file not found!");
     if (file_exist(fname_out) && !replace) {
         while (true) {
             if (file_exist(fname_out)) {
@@ -250,6 +271,11 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
     fout << fin.rdbuf();
     fin.close();
     fout.close();
+}
+
+inline void file_copy(Str32_I fname_out, Str32_I fname_in, Bool_I replace)
+{
+    file_copy(utf32to8(fname_out), utf32to8(fname_in), replace);
 }
 
 // file copy with user buffer (larger buffer is faster)
@@ -287,42 +313,30 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 }
 
 // move a file (copy and delete)
-inline void file_move_cp(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
+inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
     file_copy(fname_out, fname_in, replace);
     file_remove(fname_in);
 }
 
-// file_move_cp() with user buffer
-inline void file_move_cp(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+// file_move() with user buffer
+inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
-    file_copy(fname_out, fname_in, buffer, replace);
+    file_move(fname_out, fname_in, buffer, replace);
     file_remove(fname_in);
 }
 
-inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
-{
-    Long ind = fname_in.find("\"");
-    if (ind >= 0)
-        SLS_ERR("double quote not supported: " + fname_in);
-    ind = fname_out.find("\"");
-    if (ind >= 0)
-        SLS_ERR("double quote not supported: " + fname_out);
-
-    Int ret;
-    if (replace)
-        ret = system(("mv -n \"" + fname_in + "\" \"" + fname_out + "\"").c_str());
-    else
-        ret = system(("mv \"" + fname_in + "\" \"" + fname_out + "\"").c_str());
-    ++ret;
-}
-
 // get number of bytes in file
+// return -1 if file not found
 inline Long file_size(Str_I fname)
 {
     if (!file_exist(fname))
-        SLS_ERR("file not found: " + fname);
+        return -1;
+#ifndef _MSC_VER
     ifstream fin(fname, ifstream::ate | ifstream::binary);
+#else
+    ifstream fin(utf82wstr(fname), ifstream::ate | ifstream::binary);
+#endif
     return fin.tellg();
 }
 
@@ -331,7 +345,11 @@ inline void open_bin(ofstream &fout, Str_I fname)
 {
     if (fout.is_open())
         fout.close();
+#ifndef _MSC_VER
     fout.open(fname, std::ios::out | std::ios::binary);
+#else
+    fout.open(utf82wstr(fname), std::ios::out | std::ios::binary);
+#endif
 }
 
 // open binary file to read
@@ -339,7 +357,11 @@ inline void open_bin(ifstream &fin, Str_I fname)
 {
     if (fin.is_open())
         fin.close();
+#ifndef _MSC_VER
     fin.open(fname, std::ios::in | std::ios::binary);
+#else
+    fin.open(utf82wstr(fname), std::ios::in | std::ios::binary);
+#endif
 }
 
 // write binary file (once)
@@ -364,16 +386,71 @@ inline Long read(Char *data, Long_I Nbyte, Str_I fname)
 }
 
 // write Str to file
+// this only works when file is opened in binary mode on Windows
 inline void write(Str_I str, Str_I fname)
 {
     write(str.c_str(), str.size(), fname);
 }
 
+// write UTF-32 Str32 into a UTF-8 file
+inline void write(Str32_I str32, Str_I fname)
+{
+    write(utf32to8(str32), fname);
+}
+
+inline void write(Str32_I str32, Str32_I fname)
+{
+    write(str32, utf32to8(fname));
+}
+
+// write a vector of strings to file
+// no `\n` allowed in each string
+// file will be ended by a return
+inline void write_vec_str(vecStr32_I vec_str, Str32_I fname)
+{
+    Str32 str;
+    for (Long i = 0; i < size(vec_str); ++i) {
+        str += vec_str[i] + U'\n';
+    }
+    write(str, fname);
+}
+
 // read whole file to Str
+// this only works when file is opened in binary mode on Windows
 inline void read(Str_O str, Str_I fname)
 {
     str.resize(file_size(fname));
     read(&str[0], str.size(), fname);
+}
+
+// read a UTF-8 file into UTF-32 Str32
+inline void read(Str32_O str32, Str_I fname)
+{
+    Str str;
+    read(str, fname);
+    utf8to32(str32, str);
+}
+
+inline void read(Str32_O str32, Str32_I fname)
+{
+    read(str32, utf32to8(fname));
+}
+
+// read the file written by `write_vec_str()`
+// file must be ended by a return
+inline void read_vec_str(vecStr32_O vec_str, Str32_I fname)
+{
+    Str32 str;
+    vec_str.clear();
+    read(str, fname);
+    CRLF_to_LF(str);
+    Long ind0 = 0;
+    for (Long i = 0; ; ++i) {
+        vec_str.emplace_back();
+        ind0 = get_line(vec_str[i], str, ind0);
+        if (ind0 < 0)
+            return;
+    }
 }
 
 // read and write binary data from/to ifstrea/ofstream
