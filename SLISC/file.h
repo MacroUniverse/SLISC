@@ -178,8 +178,8 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
         do {
             std::wstring wstr(data.cFileName);
             fname = wstr2utf8(wstr);
-            if (fname == "." || fname == "..")
-                continue;
+            if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                continue; // ignore directories
             fnames.push_back(fname);
         } while (FindNextFile(h, &data));
         FindClose(h);
@@ -188,7 +188,7 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 #endif
 
 // list all files in a directory recursively (containing relative paths)
-#ifdef __GNUC__
+#ifndef _MSC_VER
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
     if (!append)
