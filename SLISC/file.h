@@ -167,7 +167,7 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 }
 #else
 // path must end with '/'
-inline void file_list(vecStr_O fnames, Str_I path, Bool_I append);
+inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
     WIN32_FIND_DATA data;
     HANDLE h = FindFirstFile(utf82wstr(path + "*").c_str(), &data);      // DIRECTORY
