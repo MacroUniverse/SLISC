@@ -271,9 +271,10 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 #endif
 
 // choose files with a given extension from a list of files
-inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true)
+inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {
-    fnames_ext.resize(0);
+    if (!append)
+        fnames_ext.clear();
     Long N_ext = ext.size();
     for (Long i = 0; i < size(fnames); ++i) {
         const Str & str = fnames[i];
@@ -292,18 +293,19 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
 }
 
 // list all files in current directory, with a given extension
-inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true)
+inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {
     vecStr fnames0;
     file_list(fnames0, path);
-    file_ext(fnames, fnames0, ext, keep_ext);
+    file_ext(fnames, fnames0, ext, keep_ext, append);
 }
 
 // list all files in current directory, with a given extension
-inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I keep_ext = true)
+inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {
     vecStr fnames8;
-    fnames.resize(0);
+    if (!append)
+        fnames.clear();
     file_list_ext(fnames8, utf32to8(path), utf32to8(ext), keep_ext);
     for (Long i = 0; i < size(fnames8); ++i)
         fnames.push_back(utf8to32(fnames8[i]));
