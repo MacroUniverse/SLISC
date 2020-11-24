@@ -99,6 +99,16 @@ inline Bool dir_exist(Str_I path)
     }
 }
 
+// get directory from filename
+inline Str path2dir(Str_I fname)
+{
+    Llong ind = fname.rfind("/");
+    if (ind < 0)
+        return "./";
+    else
+        return fname.substr(0, ind+1);
+}
+
 // make multiple level of directory
 
 inline void mkdir(Str_I path)
@@ -387,7 +397,7 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 // file_move() with user buffer
 inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
-    file_move(fname_out, fname_in, buffer, replace);
+    file_copy(fname_out, fname_in, buffer, replace);
     file_remove(fname_in);
 }
 

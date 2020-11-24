@@ -344,14 +344,18 @@ inline Long rfind(vecLong_O ikey, Str32_I str, vecStr32_I key, Long_I start)
 // return the index after the key found, return -1 if nothing found.
 inline Long expect(Str32_I str, Str32_I key, Long_I start)
 {
+#ifdef SLS_CHECK_BOUNDS
+    if (start < 0 || start >= size(str))
+        throw Str32(U"内部错误： expect(): out of bound");
+#endif
     Long ind = start;
     Long ind0 = 0;
     Long L = str.size();
     Long L0 = key.size();
     Char32 c0, c;
     while (true) {
-         c0 = key.at(ind0);
-         c = str.at(ind);
+         c0 = key[ind0];
+         c = str[ind];
          if (c == c0) {
              ++ind0;
              if (ind0 == L0)
