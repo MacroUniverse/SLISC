@@ -9,6 +9,7 @@
 #include "unicode.h"
 #ifdef _MSC_VER
 #include "search.h"
+#include "sort.h"
 #endif
 
 namespace slisc {
@@ -187,6 +188,56 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 }
 #endif
 
+// list all files including paths
+// path should end with '/'
+inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
+{
+    if (!append)
+        fnames.clear();
+    vecStr names;
+    file_list(names, path);
+    for (Long i = 0; i < size(names); ++i)
+        fnames.push_back(path + names[i]);
+}
+
+#ifdef _MSC_VER
+
+// path should end with '/'
+// path can be full, relative or empty (./)
+// `folders` will not include `path`
+inline void folder_list(vecStr_O folders, Str_I path, Bool_I append = false)
+{
+    WIN32_FIND_DATA data;
+    HANDLE h = FindFirstFile(utf82wstr(path + "*").c_str(), &data);      // DIRECTORY
+    Str fname;
+    if (!append)
+        folders.clear();
+    if (h != INVALID_HANDLE_VALUE) {
+        do {
+            std::wstring wstr(data.cFileName);
+            fname = wstr2utf8(wstr);
+            if (fname == "." || fname == "..")
+                continue;
+            if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                folders.push_back(fname + "/"); // only include directories
+        } while (FindNextFile(h, &data));
+        FindClose(h);
+    }
+}
+
+// `path` must end with '/'
+// `folders` will include `path`
+inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false)
+{
+    if (!append)
+        folders.clear();
+    vecStr names;
+    folder_list(names, path, append);
+    for (Long i = 0; i < size(names); ++i)
+        folders.push_back(path + names[i]);
+}
+#endif
+
 // list all files in a directory recursively (containing relative paths)
 #ifndef _MSC_VER
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
@@ -204,6 +255,18 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
             break;
         fnames.push_back(name);
     }
+}
+#else
+inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
+{
+    if (!append)
+        fnames.clear();
+    file_list_full(fnames, path, true);
+    vecStr folders;
+    folder_list(folders, path, false);
+    for (Long i = 0; i < size(folders); ++i)
+        file_list_r(fnames, path + folders[i], true);
+    sort(fnames);
 }
 #endif
 
