@@ -72,7 +72,7 @@ inline Bool file_exist(Str32_I fname) {
 inline void file_remove(Str_I fname)
 {
 #ifndef _MSC_VER
-    if (remove(fname.c_str()))
+    if (remove(fname.c_str()) && file_exist(fname))
         throw Str("failed to remove, file being used? (" + fname + ")");
 #else
     if (DeleteFile(utf82wstr(fname).c_str()) == 0)
