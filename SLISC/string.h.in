@@ -119,6 +119,38 @@ inline Long CRLF_to_LF(Str_IO str)
     }
 }
 
+// replace all occurance of "key" with "new_key"
+// return the number of keys replaced
+// works with utf-8
+inline Long replace(Str_IO str, Str_I key, Str_I new_key)
+{
+    Long ind0 = 0, N = 0, Nkey = key.size();;
+    while (true) {
+         ind0 = str.find(key, ind0);
+        if (ind0 < 0) break;
+        str.replace(ind0, Nkey, new_key);
+        ++N; ind0 += new_key.size();
+    }
+    return N;
+}
+
+// replace to new string
+inline Long replace(Str_O str1, Str_I str, Str_I key, Str_I new_key)
+{
+    Long N = 0, ind0 = 0, Nkey = key.size();
+    str1.clear();
+    while (true) {
+        Long ind1 = str.find(key, ind0);
+        if (ind1 < 0) break;
+        str1 += str.substr(ind0, ind1-ind0) + new_key;
+        ind0 = ind1 + Nkey;
+        ++N;
+    }
+    if (ind0 < Long(str.size()))
+        str1 += str.substr(ind0);
+    return N;
+}
+
 // convert string to lower case
 //% types = {'Str'; 'Str32'};
 //%----------------------------

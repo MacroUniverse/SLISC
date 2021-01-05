@@ -10,6 +10,7 @@
 #ifdef _MSC_VER
 #include "search.h"
 #include "sort.h"
+#include "string.h"
 #endif
 
 namespace slisc {
@@ -72,7 +73,7 @@ inline Bool file_exist(Str32_I fname) {
 inline void file_remove(Str_I fname)
 {
 #ifndef _MSC_VER
-    if (remove(fname.c_str()))
+    if (remove(fname.c_str()) && file_exist(fname))
         throw Str("failed to remove, file being used? (" + fname + ")");
 #else
     if (DeleteFile(utf82wstr(fname).c_str()) == 0)
@@ -113,16 +114,15 @@ inline Str path2dir(Str_I fname)
 
 inline void mkdir(Str_I path)
 {
-    Long ind = path.find("\"");
-    if (ind >= 0)
-        SLS_ERR("folder name should not contain double quote: " + path + ", i = " + num2str(ind));
+    Str tmp = path;
+    replace(tmp, "\"", "\\\""); // doesn't matter for utf8, multi-byte encoding all bytes > 127
 #ifndef _MSC_VER
-    Int ret = system(("mkdir -p \"" + path + "\"").c_str()); ret++;
+    Int ret = system(("mkdir -p \"" + tmp + "\"").c_str()); ret++;
 #else
-    CreateDirectory(utf82wstr(path).c_str(), NULL);
+    CreateDirectory(utf82wstr(tmp).c_str(), NULL);
 #endif
-    if (!dir_exist(path))
-        SLS_ERR("mkdir failed: " + path);
+    if (!dir_exist(tmp))
+        SLS_ERR("mkdir failed: " + tmp);
 }
 
 // remove an empty directory

@@ -428,20 +428,35 @@ inline Long find_whole_word(Str32_I str, Str32_I key, Long_I start)
     }
 }
 
-// replace all occurance of "key" with "new_str"
+// replace all occurance of "key" with "new_key"
 // return the number of keys replaced
-inline Long replace(Str32_IO str, Str32_I key, Str32_I new_str)
+// works with utf-8
+inline Long replace(Str32_IO str, Str32_I key, Str32_I new_key)
 {
-    Long ind0 = 0;
-    Long Nkey = key.size();
-    Long N = 0;
+    Long ind0 = 0, N = 0, Nkey = key.size();
     while (true) {
          ind0 = str.find(key, ind0);
         if (ind0 < 0) break;
-        str.erase(ind0, Nkey);
-        str.insert(ind0, new_str);
-        ++N; ind0 += new_str.size();
+        str.replace(ind0, Nkey, new_key);
+        ++N; ind0 += new_key.size();
     }
+    return N;
+}
+
+// replace to new string
+inline Long replace(Str32_O str1, Str32_I str, Str32_I key, Str32_I new_key)
+{
+    Long ind0 = 0, N = 0, Nkey = key.size();
+    str1.clear();
+    while (true) {
+        Long ind1 = str.find(key, ind0);
+        if (ind1 < 0) break;
+        str1 += str.substr(ind0, ind1-ind0) + new_key;
+        ind0 = ind1 + Nkey;
+        ++N;
+    }
+    if (ind0 < size(str))
+        str1 += str.substr(ind0);
     return N;
 }
 

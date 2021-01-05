@@ -103,16 +103,14 @@ inline Str bit2str(Char_I byte)
 inline Str bit2str(const Char *byte)
 { return bit2str(*byte); }
 
-// convert 8 char '0' or '1' to byte
+// convert each char to a bit, '0' is 'false', otherwise 'true'
 // also consider to use binary literal e.g. `Char(10100101b)`
 inline Char str2bit(Str_I str)
 {
-    Char byte;
+    Char byte = 0;
     for (Int i = 0; i < 8; ++i) {
-        if (str[i] == '1')
+        if (str[i] != '0')
             set_bitL(&byte, i);
-        else
-            unset_bitL(&byte, i);
     }
     return byte;
 }

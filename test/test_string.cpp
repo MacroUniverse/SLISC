@@ -11,4 +11,11 @@ void test_string()
 	to_upper(STR1, str);
 	if (STR1 != STR)
 		SLS_ERR("failed!");
+
+	replace(str1, str, "abcd", "12");
+	if (str1 != "12efghijklmnopqrstuvwxyz")
+		SLS_ERR("failed!");
+	replace(str1, "12", "abcd");
+	if (str1 != str)
+		SLS_ERR("failed!");
 }
