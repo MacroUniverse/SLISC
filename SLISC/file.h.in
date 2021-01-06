@@ -158,7 +158,8 @@ inline void file_rm(Str_I wildcard_name) {
 #endif
 
 // list all files in current directory
-// only works for linux
+// path must end with '/'
+// result is sorted
 #ifndef _MSC_VER
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {    
@@ -175,9 +176,9 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
             break;
         fnames.push_back(name);
     }
+    sort(fnames);
 }
 #else
-// path must end with '/'
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
     WIN32_FIND_DATA data;
@@ -195,11 +196,13 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
         } while (FindNextFile(h, &data));
         FindClose(h);
     }
+    sort(fnames);
 }
 #endif
 
 // list all files including paths
 // path should end with '/'
+// result is sorted
 inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
     if (!append)
@@ -215,6 +218,7 @@ inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
 // path should end with '/'
 // path can be full, relative or empty (./)
 // `folders` will not include `path`
+// result is sorted
 inline void folder_list(vecStr_O folders, Str_I path, Bool_I append = false)
 {
     WIN32_FIND_DATA data;
@@ -233,10 +237,12 @@ inline void folder_list(vecStr_O folders, Str_I path, Bool_I append = false)
         } while (FindNextFile(h, &data));
         FindClose(h);
     }
+    sort(folders);
 }
 
 // `path` must end with '/'
 // `folders` will include `path`
+// result is sorted
 inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false)
 {
     if (!append)
@@ -249,6 +255,7 @@ inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false
 #endif
 
 // list all files in a directory recursively (containing relative paths)
+// result is sorted
 #ifndef _MSC_VER
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
@@ -265,6 +272,7 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
             break;
         fnames.push_back(name);
     }
+    sort(fnames);
 }
 #else
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
@@ -303,6 +311,7 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
 }
 
 // list all files in current directory, with a given extension
+// result is sorted
 inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
 {
     vecStr fnames0;
