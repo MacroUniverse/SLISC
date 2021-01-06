@@ -7,9 +7,9 @@
 #include <sys/types.h> // for time_stamp
 #include <sys/stat.h> // for time_stamp
 #include "unicode.h"
+#include "sort.h"
 #ifdef _MSC_VER
 #include "search.h"
-#include "sort.h"
 #include "string.h"
 #endif
 
