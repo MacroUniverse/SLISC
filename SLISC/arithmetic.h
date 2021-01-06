@@ -5,27 +5,27 @@
 
 namespace slisc {
 // return signed size instead of unsigned
-inline Long size(vecBool_I v)
+inline Long size(VecBool_I v)
 {
     return v.size();
 }
 
-inline Long size(vecChar_I v)
+inline Long size(VecChar_I v)
 {
     return v.size();
 }
 
-inline Long size(vecInt_I v)
+inline Long size(VecInt_I v)
 {
     return v.size();
 }
 
-inline Long size(vecLlong_I v)
+inline Long size(VecLlong_I v)
 {
     return v.size();
 }
 
-inline Long size(vecDoub_I v)
+inline Long size(VecDoub_I v)
 {
     return v.size();
 }

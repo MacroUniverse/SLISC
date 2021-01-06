@@ -175,6 +175,38 @@ inline Str32 getline(Str32_I str, Long_I start = 0)
     return str.substr(start, ind - start);
 }
 
+// read a line from a string, from str[start] to 1 char before '\n'
+// return the start of the next line, return -1 if out of bound
+// if the file ends with `\n`, then the line.back() is not empty
+inline Long get_line(Str_O line, Str_I str, Long_I start = 0)
+{
+    Long ind = str.find('\n', start);
+    line = str.substr(start, ind - start);
+    if (ind < 0 || ind == Long(str.size()) - 1)
+        return -1;
+    return ind + 1;
+}
+
+inline Long get_line(Str32_O line, Str32_I str, Long_I start = 0)
+{
+    Long ind = str.find(U'\n', start);
+    line = str.substr(start, ind - start);
+    if (ind < 0 || ind == Long(str.size()) - 1)
+        return -1;
+    return ind + 1;
+}
+
+// skip to the next line
+// return the index after `\n`
+// return -1 if `\n` not found
+inline Long skip_line(Str32_I &str, Long_I start = 0)
+{
+    Long ind = str.find(U'\n', start);
+    if (ind < 0 || ind == Long(str.size()) - 1)
+        return -1;
+    return ind + 1;
+}
+
 // trim both sides
 // e.g. key = "\n " to trim space and '\n'
 inline Long trim(Str_IO str, Str_I key = " ")

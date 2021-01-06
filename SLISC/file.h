@@ -481,6 +481,16 @@ inline void write(Str32_I str32, Str32_I fname)
 // write a vector of strings to file
 // no `\n` allowed in each string
 // file will be ended by a return
+
+inline void write_vec_str(vecStr_I vec_str, Str_I fname)
+{
+    Str str;
+    for (Long i = 0; i < size(vec_str); ++i) {
+        str += vec_str[i] + '\n';
+    }
+    write(str, fname);
+}
+
 inline void write_vec_str(vecStr32_I vec_str, Str32_I fname)
 {
     Str32 str;
@@ -513,6 +523,22 @@ inline void read(Str32_O str32, Str32_I fname)
 
 // read the file written by `write_vec_str()`
 // file must be ended by a return
+
+inline void read_vec_str(vecStr_O vec_str, Str_I fname)
+{
+    Str str;
+    vec_str.clear();
+    read(str, fname);
+    CRLF_to_LF(str);
+    Long ind0 = 0;
+    for (Long i = 0; ; ++i) {
+        vec_str.emplace_back();
+        ind0 = get_line(vec_str[i], str, ind0);
+        if (ind0 < 0)
+            return;
+    }
+}
+
 inline void read_vec_str(vecStr32_O vec_str, Str32_I fname)
 {
     Str32 str;
@@ -527,6 +553,7 @@ inline void read_vec_str(vecStr32_O vec_str, Str32_I fname)
             return;
     }
 }
+
 
 // read and write binary data from/to ifstrea/ofstream
 
