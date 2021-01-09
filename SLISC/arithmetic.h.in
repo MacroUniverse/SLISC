@@ -5,7 +5,7 @@
 
 namespace slisc {
 // return signed size instead of unsigned
-//% types = {'VecBool'; 'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
+//% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
 //%  'Str'; 'Str32'; 'vecStr'; 'vecStr32';};
 //%--------------------------
 //% T = varargin{:};
