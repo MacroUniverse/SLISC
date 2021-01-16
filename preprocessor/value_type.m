@@ -23,11 +23,15 @@ elseif any(strfind(T, 'Lcomp'))
     ret = 'Lcomp';
 elseif any(strfind(T, 'Imag'))
     ret = 'Imag';
+elseif strcmp(T, 'vecStr')
+    ret = 'Str';
+elseif strcmp(T, 'vecStr32')
+    ret = 'Str32';
 elseif strcmp(T, 'Str')
     ret = 'Char';
 elseif strcmp(T, 'Str32')
     ret = 'Char32';
 else
-    error('value_type.m: not implemented');
+    error(['value_type.m: not implemented: ' T]);
 end
 end

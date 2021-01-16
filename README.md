@@ -41,7 +41,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
 * If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
 * In the root directory, run `make` to compile
-* If you don't want to install octave, just `touch SLISC/*.h` before `make`, you only need to do this one time
+* If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time
 * Use `./main.x` to run all tests.
 
 ## Recommended Programming Style
@@ -126,13 +126,13 @@ TODO...
 
 Constructors: Vector() for default, Vector(Long_I n) for vector size, Vector(Long_I n, const T &a) to specify element as well, Vector(Long_I n, const T *a) to initialize from array.
 
-`operator=` : Copy-assignment operator, self-assignment is forbidden. The right hand side can be a scalar.
+`operator=` : all forbidden, use `copy()` to copy, function arguments should be passed by reference.
 
 `operator[]` : for vector, get a reference for the i-th element; for matrix, return a pointer for the second index.
 
 `resize(Long_I)` : resize vector, contents are not preserved. resize() does nothing if size doesn't change.
 
-`resize(Vector<> v)` : resize to the same size of v
+`resize_cpy(Long_I)` : resize vector, contents are preserved, new elements are set to 0.
 
 ## "Mat.h"
 Methods are similar to that of vector class. Matrix is row-major only. 
@@ -145,15 +145,15 @@ Methods are similar to that of vector class. Mat3d is row-major only.
 TODO.
 
 ## "slice.h"
-`Svector<>` inherits `Vector<>` and thus can be casted to a vector when input to a function. `Svector` does not have it's own allocated memory, but use a block of contiguous memory from other dense containers (this is called slicing). For example, if we need to calculate the sum of a column of a `Cmat`, we can create an `Svector` to represent one column of `Cmat`, then use it as input to `sum()` function (need to cast to `Vector<>` first, unless `sum()` accepts `Svector` directly).
+`Svector` does not have it's own allocated memory, but use a block of contiguous memory from other dense containers (this is called slicing). For example, if we need to calculate the sum of a column of a `Cmat`, we can create an `Svector` to represent one column of `Cmat`, then use it as input to `sum()` function.
 
 ### Vector/Matrix Type Alias
-The typedefs for vector/matrix classes are (each type also comes with "_I", "_O", and "_IO" versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
+The typedefs for vector/matrix classes are (each type also comes with `_I`, `_O`, and `_IO` versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
 
 Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `ptr()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
 
 ## arithmetics.h
-* includes basic arithmatics like "==", "+=", "*=", plus(), minus(), etc.
+* includes basic arithmatics like `==`, `+=`, `*=`, `plus()`, `minus()`, etc. for containers.
 * Operators `+, -, *, /, +=, -=, *=, /=` are only for container types element-wise operations.
 
 ## disp.h
