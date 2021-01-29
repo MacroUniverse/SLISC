@@ -85,7 +85,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -95,9 +95,9 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -122,7 +122,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -132,9 +132,9 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;

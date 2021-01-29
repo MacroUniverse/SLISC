@@ -143,7 +143,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -152,9 +152,9 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -179,7 +179,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -188,9 +188,9 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -215,7 +215,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -224,9 +224,9 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -251,7 +251,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -260,9 +260,9 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -287,7 +287,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -296,9 +296,9 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -323,7 +323,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -332,9 +332,9 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -359,7 +359,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -368,9 +368,9 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -395,7 +395,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -404,9 +404,9 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -431,7 +431,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -440,9 +440,9 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -467,7 +467,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -476,9 +476,9 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -503,7 +503,7 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -512,9 +512,9 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -539,7 +539,7 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -548,9 +548,9 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -575,7 +575,7 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = N - 1; return false;
     }
     if (diff == 0) {
@@ -584,9 +584,9 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
@@ -611,7 +611,7 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s, Long ind1, Long ind2)
         ind = 0; return true;
     }
     diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff < 0) {
+    if (diff > 0) {
         ind = ind2; return false;
     }
     if (diff == 0) {
@@ -620,9 +620,9 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s, Long ind1, Long ind2)
     while (true) {
         ind = (ind1 + ind2) / 2;
         diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff > 0)
+        if (diff < 0)
             ind2 = ind;
-        else if (diff < 0)
+        else if (diff > 0)
             ind1 = ind;
         else
             return true;
