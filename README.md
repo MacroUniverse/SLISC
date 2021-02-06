@@ -4,7 +4,7 @@
 
 ## Introduction
 
-SLISC is a header-only library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of slicing classes is supported. Codes from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.). The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
+SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of slicing classes is supported. Codes from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.). The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
 
 SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed in Linux using g++ and GSL and LAPACK. It can also work for Interl compiler and MKL. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
 
@@ -222,8 +222,18 @@ void disp(..., precision)
 If you want to use "disp()" in debugger, add "SLISC/print.cpp" to compiler and use "print()" with the same arguments.
 
 ## "arithmetic.h"
-
 There is no automatic `resize()` inside functions in SLISC, for performance reason and for compatibility with fixed sized containers or container slicing. In `SLS_CHECK_SHAPES` is defined (in debug mode it's defined by default), shapes of matrix/vector will be checked.
+
+## unicode.h
+* Conversion between utf-8, 16 and 32, and windows ANSI etc.
+* don't mess with `locale`
+* don't use `wchar_t`, use `char32_t` (`u32string`) instead as the only data type for unicode
+* Use `u8"..."` for `UTF-8` literal
+* Use `U"..."` for `UTF-32` literal
+* for display, convert everything to `string` with `UTF-8` encoding, then use `cout`
+* Visual Studio does not support `UTF-8` source file without `BOM`, `u8"..."` will fail (`compiler error: newline in literal`). Add `BOM` for files with unicode.
+* TODO: `BOM` must be removed for linux compilation, this can be done automatically with Makefile.
+* `UTF-32` character lookup and convertion to `UTF-8` http://tools.jb51.net/transcoding/decode_encode_tool
 
 ### basic utilities
 ```cpp
@@ -412,3 +422,4 @@ void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const ve
 ## TODO
 * makefiles are not unified
 * consider using selective codegen instead of removing all macros
+* unicode: * Visual Studio does not support `std::codecvt` between `UTF-8` and `UTF-32`, but only to `wchar_t` (link error during compilation). Wait until it does. Use `utfcpp` library to solve this.
