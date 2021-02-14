@@ -354,6 +354,7 @@ void idft_par(MatComp_O &X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I &Y, Doub 
 * use `m_N` to determin if `delete[]` should be used, never set `m_p` to `nullptr`.
 
 ## TODO
+* `file_move()` should use system specific method to implement instead of copy and delete
 * consider replacing `error()` macro with `throw()`
 * incorporate "arb" library for evaluation of some special functions, and for multi-precision arithmetic (does not work for windows yet)
 * put all internal names into "slisc::internal" namespace
