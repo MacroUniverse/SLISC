@@ -119,11 +119,12 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'Cmat3Comp' 'Cmat3Doub';
 //%     'Cmat3Comp' 'Cmat3Comp';
 //%     'Cmat3Comp' 'Jcmat3Comp';
-//%     'McooDoub' 'McooDoub';
 //%     'CmatDoub' 'McooDoub';
-//%     'McooDoub' 'CmatDoub';
 //%     'CmatComp' 'McooComp';
+//%     'McooDoub' 'McooDoub';
+//%     'McooDoub' 'CmatDoub';
 //%     'McooComp' 'CmatComp';
+//%     'McooComp' 'McooDoub';
 //%     'McooComp' 'McooComp';
 //%     'SvecChar' 'SvecChar';
 //%     'SvecInt' 'SvecInt';
@@ -165,6 +166,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'Jcmat3Lcomp' 'Jcmat3Lcomp';
 //%     'CmobdInt' 'McooInt';
 //%     'CmobdDoub' 'McooDoub';
+//%     'CmobdComp' 'McooDoub';
 //%     'CbandDoub' 'CbandDoub';
 //%     'CbandComp' 'CbandComp';
 //%     'CbandDoub' 'CmatDoub';

@@ -682,7 +682,7 @@ inline Doub norm_inf(CmobdComp_I A)
 inline Doub norm_inf(McooDoub_I A)
 {
     VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
-    for (Long i = 0; i <= A.nnz(); ++i) {
+    for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum(A.col(i)) += abs(A(i));
     }
     return max(abs_sum);
@@ -691,7 +691,7 @@ inline Doub norm_inf(McooDoub_I A)
 inline Doub norm_inf(McooComp_I A)
 {
     VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
-    for (Long i = 0; i <= A.nnz(); ++i) {
+    for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum(A.col(i)) += abs(A(i));
     }
     return max(abs_sum);

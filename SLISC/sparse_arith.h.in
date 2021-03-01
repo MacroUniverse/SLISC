@@ -323,7 +323,7 @@ inline @Tr@ norm_inf(@T@_I A)
 inline @Tr@ norm_inf(@T@_I A)
 {
     @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
-    for (Long i = 0; i <= A.nnz(); ++i) {
+    for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum(A.col(i)) += abs(A(i));
     }
     return max(abs_sum);
