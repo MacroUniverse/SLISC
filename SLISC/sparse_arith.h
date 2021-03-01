@@ -542,6 +542,21 @@ inline void operator*=(McooDoub_IO v, Doub_I s)
     times_equals_vs(v.ptr(), s, v.nnz());
 }
 
+inline void operator*=(McooComp_IO v, Doub_I s)
+{
+    times_equals_vs(v.ptr(), s, v.nnz());
+}
+
+inline void operator*=(McooComp_IO v, Imag_I s)
+{
+    times_equals_vs(v.ptr(), s, v.nnz());
+}
+
+inline void operator*=(McooComp_IO v, Comp_I s)
+{
+    times_equals_vs(v.ptr(), s, v.nnz());
+}
+
 
 inline void operator*=(CmobdDoub_IO v, Doub_I s)
 {
@@ -562,6 +577,12 @@ inline void operator*=(CmobdComp_IO v, Comp_I s)
 inline void times(CmobdComp_O v, CmobdDoub_I v1, Imag_I s)
 {
     times(v.cmat3(), v1.cmat3(), s);
+}
+
+
+inline void times(McooComp_O v, McooDoub_I v1, Imag_I s)
+{
+    times_vvs(v.ptr(), v1.ptr(), s, v1.nnz());
 }
 
 
@@ -652,6 +673,26 @@ inline Doub norm_inf(CmobdComp_I A)
     for (Long j = 0; j < N1; ++j) {
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);
+    }
+    return max(abs_sum);
+}
+
+
+// (using maximum absolute sum of columns)
+inline Doub norm_inf(McooDoub_I A)
+{
+    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    for (Long i = 0; i <= A.nnz(); ++i) {
+        abs_sum(A.col(i)) += abs(A(i));
+    }
+    return max(abs_sum);
+}
+
+inline Doub norm_inf(McooComp_I A)
+{
+    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    for (Long i = 0; i <= A.nnz(); ++i) {
+        abs_sum(A.col(i)) += abs(A(i));
     }
     return max(abs_sum);
 }

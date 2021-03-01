@@ -250,7 +250,7 @@ void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-//% types = {'CmobdDoub'; 'CmobdComp';};
+//% types = {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'};
 //%------------------
 //% Tm = varargin{:};
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
@@ -506,7 +506,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-//% types = {'CmobdDoub'; 'CmobdComp';};
+//% types = {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'};
 //%------------------
 //% Tm = varargin{:};
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
@@ -774,7 +774,11 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // use ZGEXPV() for MatCoo<>, ZHEXPV() for MatCooH<>
 // v cannot be empty!
 
-//% types = {'CmobdDoub', 'SvecComp'};
+//% types = {
+//%  'CmobdDoub', 'SvecComp';
+//%  'McooComp', 'SvecComp';
+//%  'McooComp', 'VecComp';
+//% };
 //%----------------------
 //% [Tm, Tv] = varargin{:};
 inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)

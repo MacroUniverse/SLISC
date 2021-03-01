@@ -230,6 +230,9 @@ inline void sort_r(@McooT@_IO a)
 
 //% types = {
 //%     'McooDoub', 'Doub';
+//%     'McooComp', 'Doub';
+//%     'McooComp', 'Imag';
+//%     'McooComp', 'Comp';
 //% };
 //%----------------------------
 //% [T, Ts] = varargin{:};
@@ -260,6 +263,17 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
     times(v.cmat3(), v1.cmat3(), s);
+}
+//%------------------------
+
+//% types = {
+//%     'McooComp', 'McooDoub', 'Imag';
+//% };
+//%----------------------------
+//% [T, T1, Ts] = varargin{:};
+inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
+{
+    times_vvs(v.ptr(), v1.ptr(), s, v1.nnz());
 }
 //%------------------------
 
@@ -295,6 +309,22 @@ inline @Tr@ norm_inf(@T@_I A)
     for (Long j = 0; j < N1; ++j) {
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);
+    }
+    return max(abs_sum);
+}
+//%---------------------
+
+// (using maximum absolute sum of columns)
+//% types = {'McooDoub'; 'McooComp';};
+//%-----------------------------
+//% T = varargin{:}; Ts = value_type(T);
+//% Tr = rm_comp(Ts);
+//% VecTr = ['Vec' Tr];
+inline @Tr@ norm_inf(@T@_I A)
+{
+    @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
+    for (Long i = 0; i <= A.nnz(); ++i) {
+        abs_sum(A.col(i)) += abs(A(i));
     }
     return max(abs_sum);
 }
