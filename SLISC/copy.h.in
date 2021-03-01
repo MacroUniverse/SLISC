@@ -338,6 +338,7 @@ inline void copy(@T@_O v, @T1@_I v1)
 //% types = {
 //%     'Doub', 'Doub';
 //%     'Comp', 'Comp';
+//%     'Comp', 'Doub';
 //% };
 //%----------------------------
 //% [T, T1] = varargin{:};
