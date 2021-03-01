@@ -2327,6 +2327,45 @@ inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
     }
 }
 
+inline void copy(CmobdComp_O lhs, McooDoub_I rhs)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+    auto & c3 = lhs.cmat3();
+    copy(c3, 0);
+    for (Long k = 0; k < rhs.nnz(); ++k) {
+        Long i = rhs.row(k) + 1, j = rhs.col(k) + 1;
+        Long N = lhs.n0() - 1, Nblk = lhs.nblk();
+        Long iblk = i / N, jblk = j / N;
+        Long m = i % N;
+        if (iblk == jblk) {
+            if (iblk == Nblk)
+                c3(N, N, Nblk - 1) = rhs[k];
+            else if (i == j && m == 0 && iblk > 0)
+                c3(0, 0, iblk) = rhs[k];
+            else
+                c3(m, j % N, iblk) = rhs[k];
+            continue;
+        }
+        else if (jblk == iblk - 1) {
+            if (m == 0) {
+                c3(N, j % N, jblk) = rhs[k];
+                continue;
+            }
+        }
+        else if (jblk == iblk + 1) {
+            Long n = j % N;
+            if (n == 0) {
+                c3(m, N, iblk) = rhs[k];
+                continue;
+            }
+        }
+        SLS_ERR("element out of block!");
+    }
+}
+
 
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {

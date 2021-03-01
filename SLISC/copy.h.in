@@ -419,6 +419,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% types = {
 //%     'CmobdInt', 'McooInt';
 //%     'CmobdDoub', 'McooDoub';
+//%     'CmobdComp', 'McooDoub';
 //% };
 //%-----------------------
 //% [T, T1] = varargin{:};

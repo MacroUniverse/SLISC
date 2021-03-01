@@ -2332,5 +2332,25 @@ inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
             iwsp.ptr(), (Int)iwsp.size(), mat, 0, iflag);
 }
 
+inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+        SLS_ERR("wrong shape!");
+#endif
+    Int iflag;
+    VecComp wsp(max(Long(10), sqr(mat.n1()*(Nkrylov + 2) + 5 * (Nkrylov + 2)) + 7));
+    VecInt iwsp(max(Nkrylov + 2, 7));
+
+    if (!her)
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
+            tol, mat_norm, wsp.ptr(), (Int)wsp.size(),
+            iwsp.ptr(), (Int)iwsp.size(), mat, 0, iflag);
+    else
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
+            tol, mat_norm, wsp.ptr(), (Int)wsp.size(),
+            iwsp.ptr(), (Int)iwsp.size(), mat, 0, iflag);
+}
+
 
 } // namespace slisc

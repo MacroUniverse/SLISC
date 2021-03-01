@@ -778,6 +778,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 //%  'CmobdDoub', 'SvecComp';
 //%  'McooComp', 'SvecComp';
 //%  'McooComp', 'VecComp';
+//%  'CmobdComp', 'SvecComp';
 //% };
 //%----------------------
 //% [Tm, Tv] = varargin{:};
