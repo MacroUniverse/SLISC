@@ -39,8 +39,8 @@ public:
     @T@ & ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     @T@ operator()(Long_I i, Long_I j) const;
-    @T@ &operator()(Long_I ind); // return element
-    @T@ operator()(Long_I ind) const;
+    @T@ &operator[](Long_I ind); // return element
+    @T@ operator[](Long_I ind) const;
     Long row(Long_I ind) const; // row index
     Long col(Long_I ind) const; // column index
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
@@ -172,7 +172,7 @@ inline Long @McooT@::capacity() const
     return Base::size();
 }
 
-inline @T@ & @McooT@::operator()(Long_I ind)
+inline @T@ & @McooT@::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -181,7 +181,7 @@ inline @T@ & @McooT@::operator()(Long_I ind)
     return m_p[ind];
 }
 
-inline @T@ @McooT@::operator()(Long_I ind) const
+inline @T@ @McooT@::operator[](Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
