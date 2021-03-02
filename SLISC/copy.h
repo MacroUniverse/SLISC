@@ -2234,21 +2234,6 @@ inline void copy(CmobdComp_O lhs, CmobdDoub_I rhs)
 }
 
 
-inline void copy(CmobdInt_O lhs, Cmat3Int_I rhs)
-{
-    copy(lhs.cmat3(), rhs);
-    Long step = sqr(lhs.n0());
-    vecset(lhs.ptr() + step - 1, 0, lhs.nblk() - 1, step);
-}
-
-inline void copy(CmobdDoub_O lhs, Cmat3Doub_I rhs)
-{
-    copy(lhs.cmat3(), rhs);
-    Long step = sqr(lhs.n0());
-    vecset(lhs.ptr() + step - 1, 0, lhs.nblk() - 1, step);
-}
-
-
 inline void copy(CmobdInt_O lhs, McooInt_I rhs)
 {
 #ifdef SLS_CHECK_SHAPES

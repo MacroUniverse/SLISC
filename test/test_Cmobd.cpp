@@ -10,7 +10,7 @@ void test_Cmobd()
         ScmatInt sli = slice12(a0, k);
         linspace(sli, 1, 9); sli.end() = 1;
     }
-    CmobdInt a(3, 4); copy(a, a0);
+    CmobdInt a(3, 4); a.set(a0);
 
     // construct from Cmat3d
     {
@@ -52,17 +52,20 @@ void test_Cmobd()
             Long ind0 = a.find(i, i);
             if (ind0 != ind[i])
                 SLS_ERR("failed!");
-            if (a(ind0) != diag[i])
+            if (a[ind0] != diag[i] || a(i,i) != diag[i])
                 SLS_ERR("failed!");
             if (i % 2 == 1) {
-                if (a(ind0 - 1) != 0)
+                if (a[ind0 - 1] != 0)
                     SLS_ERR("failed!");
             }
+            a.ref(i,i) = 111;
+            if (a[ind0] != 111)
+                SLS_ERR("failed!");
         }
 
         for (Long i = 0; i < 7; ++i) {
             Long ind0 = a.find(i, i);
-            a(ind0) = 100;
+            a[ind0] = 100;
         }
         for (Long i = 0; i < 7; ++i) {
             if (a(i, i) != 100)

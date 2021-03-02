@@ -403,20 +403,6 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //%-------------------
 
 //% types = {
-//%     'CmobdInt', 'Cmat3Int';
-//%     'CmobdDoub', 'Cmat3Doub';
-//% };
-//%-----------------------
-//% [T, T1] = varargin{:};
-inline void copy(@T@_O lhs, @T1@_I rhs)
-{
-    copy(lhs.cmat3(), rhs);
-    Long step = sqr(lhs.n0());
-    vecset(lhs.ptr() + step - 1, 0, lhs.nblk() - 1, step);
-}
-//%--------------------
-
-//% types = {
 //%     'CmobdInt', 'McooInt';
 //%     'CmobdDoub', 'McooDoub';
 //%     'CmobdComp', 'McooDoub';
