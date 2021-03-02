@@ -586,7 +586,27 @@ inline void times(McooComp_O v, McooDoub_I v1, Imag_I s)
 }
 
 
-// (using maximum absolute sum of columns)
+// infinity norm (using maximum absolute sum of columns)
+inline Doub norm_inf(CmatDoub_I A)
+{
+    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    for (Long j = 0; j < A.n2(); ++j)
+        for (Long i = 0; i < A.n1(); ++i)
+            abs_sum[j] += abs(A(i, j));
+    return max(abs_sum);
+}
+
+inline Doub norm_inf(CmatComp_I A)
+{
+    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    for (Long j = 0; j < A.n2(); ++j)
+        for (Long i = 0; i < A.n1(); ++i)
+            abs_sum[j] += abs(A(i, j));
+    return max(abs_sum);
+}
+
+
+// infinity norm (using maximum absolute sum of columns)
 inline Int norm_inf(CmobdInt_I A)
 {
     Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
@@ -678,7 +698,7 @@ inline Doub norm_inf(CmobdComp_I A)
 }
 
 
-// (using maximum absolute sum of columns)
+// infinity norm (using maximum absolute sum of columns)
 inline Doub norm_inf(McooDoub_I A)
 {
     VecDoub abs_sum(A.n2()); copy(abs_sum, 0);

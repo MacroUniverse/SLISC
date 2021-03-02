@@ -7,7 +7,7 @@
 namespace slisc {
 
 // out = exp(a*s) for symmetric matrix
-void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
+inline void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (a.n1() != a.n2() || !shape_cmp(out, a))
@@ -26,7 +26,7 @@ void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
     mul_gen(out, temp, eigVec);
 }
 
-void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
+inline void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (a.n1() != a.n2() || !shape_cmp(out, a))
