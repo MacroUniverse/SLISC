@@ -2277,6 +2277,19 @@ inline void copy(CmobdComp_O lhs, McooDoub_I rhs)
 }
 
 
+// not optimized
+inline void copy(CmatDoub_O lhs, CmobdDoub_I rhs)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long j = 0; j < lhs.n2(); ++j)
+        for (Long i = 0; i < lhs.n1(); ++i)
+            lhs(i, j) = rhs(i, j);
+}
+
+
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
 // #ifdef SLS_CHECK_SHAPES

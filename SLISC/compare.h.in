@@ -94,11 +94,14 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmatDoub' 'CmatDoub';
 //%     'CmatDoub' 'ScmatDoub';
 //%     'CmatDoub' 'DcmatDoub';
+//%     'CmatDoub' 'MatDoub';
+//%     'CmatDoub' 'McooDoub';
+//%     'CmatDoub' 'CbandDoub';
+//%     'CmatDoub' 'CmobdDoub';
 //%     'CmatComp' 'CmatDoub';
 //%     'CmatComp' 'CmatComp';
 //%     'CmatComp' 'ScmatComp';
 //%     'CmatComp' 'DcmatComp';
-//%     'CmatDoub' 'MatDoub';
 //%     'CmatComp' 'MatComp';
 //%     'DcmatChar' 'DcmatChar';
 //%     'DcmatChar' 'DcmatInt';
@@ -119,7 +122,6 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'Cmat3Comp' 'Cmat3Doub';
 //%     'Cmat3Comp' 'Cmat3Comp';
 //%     'Cmat3Comp' 'Jcmat3Comp';
-//%     'CmatDoub' 'McooDoub';
 //%     'CmatComp' 'McooComp';
 //%     'McooDoub' 'McooDoub';
 //%     'McooDoub' 'CmatDoub';
@@ -171,7 +173,6 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CbandComp' 'CbandComp';
 //%     'CbandDoub' 'CmatDoub';
 //%     'CbandComp' 'CmatComp';
-//%     'CmatDoub' 'CbandDoub';
 //%     'CmatComp' 'CbandComp';
 //% };
 //%---------------------------------
