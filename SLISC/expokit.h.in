@@ -801,24 +801,34 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 //% };
 //%----------------------
 //% [Tm, Tv] = varargin{:};
-inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
     if (mat.n1() != mat.n2() || mat.n2() != v.size())
         SLS_ERR("wrong shape!");
+    if (wsp.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+        SLS_ERR("wrong shape!");
+    if (iwsp.size() < max(Nkrylov + 2, 7))
+        SLS_ERR("wrong shape!");
 #endif
     Int iflag;
-    VecComp wsp(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-    VecInt iwsp(max(Nkrylov + 2, 7));
-
     if (!her)
         ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp.ptr(), (Int)wsp.size(),
-            iwsp.ptr(), (Int)iwsp.size(), mat, 0, iflag);
+            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
+            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
     else
         ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp.ptr(), (Int)wsp.size(),
-            iwsp.ptr(), (Int)iwsp.size(), mat, 0, iflag);
+            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
+            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+}
+
+inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+{
+    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecInt wsp_i(max(Nkrylov + 2, 7));
+    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 //%------------------
 
