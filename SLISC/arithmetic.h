@@ -7204,6 +7204,46 @@ inline void divide(VecComp_O v, VecComp_I v1, VecComp_I v2)
     divide_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
+inline void plus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v1.size(); ++i)
+        v[i] = v1[i] + v2[i];
+}
+
+inline void minus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v1.size(); ++i)
+        v[i] = v1[i] - v2[i];
+}
+
+inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v1.size(); ++i)
+        v[i] = v1[i] * v2[i];
+}
+
+inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v1.size(); ++i)
+        v[i] = v1[i] / v2[i];
+}
+
 inline void plus(CmatInt_O v, CmatInt_I v1, CmatInt_I v2)
 {
 #ifdef SLS_CHECK_SHAPES

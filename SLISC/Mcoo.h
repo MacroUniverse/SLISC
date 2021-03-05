@@ -8,12 +8,13 @@ private:
     typedef VbaseChar Base;
     using Base::m_p;
     using Base::m_N;
-    Long m_Nr, m_Nc, m_Nnz;
+    Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
     using Base::ptr;
-    McooChar(Long_I Nr, Long_I Nc);
-    McooChar(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
+    McooChar(): m_N1(0), m_N2(0), m_Nnz(0) {};
+    McooChar(Long_I N1, Long_I N2);
+    McooChar(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
     McooChar(const McooChar &rhs) = delete;  // Copy constructor
     McooChar &operator=(const McooChar &rhs) = delete;// copy assignment
     Long *row_ptr();
@@ -25,7 +26,7 @@ public:
     void set(Char_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n1() const;
     Long n2() const;
-    Long size() const; // return m_Nr * m_Nc
+    Long size() const; // return m_N1 * m_N2
     Long nnz() const; // return number of non-zero elements
     Long capacity() const;
     // get single index using double index, return -1 if not found
@@ -41,20 +42,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I Nr, Long_I Nc); // change matrix shape
+    void reshape(Long_I N1, Long_I N2); // change matrix shape
 };
 
 typedef const McooChar &McooChar_I;
 typedef McooChar &McooChar_O, &McooChar_IO;
 
-inline McooChar::McooChar(Long_I Nr, Long_I Nc)
-    : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
+inline McooChar::McooChar(Long_I N1, Long_I N2)
+    : Base(0), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooChar::McooChar(Long_I Nr, Long_I Nc, Long_I Ncap) :
-    Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooChar::McooChar(Long_I N1, Long_I N2, Long_I Ncap) :
+    Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooChar::row_ptr()
 {
@@ -88,7 +89,7 @@ inline Long McooChar::find(Long_I i, Long_I j) const
 inline Char& McooChar::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooChar::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -100,7 +101,7 @@ inline Char& McooChar::ref(Long_I i, Long_I j)
 inline Char McooChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooChar::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -112,7 +113,7 @@ inline Char McooChar::operator()(Long_I i, Long_I j) const
 inline void McooChar::push(Char_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
+    if (i<0 || i>=m_N1 || j<0 || j>=m_N2)
         SLS_ERR("McooChar::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
@@ -144,17 +145,17 @@ inline void McooChar::set(Char_I s, Long_I i, Long_I j)
 
 inline Long McooChar::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long McooChar::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
 inline Long McooChar::size() const
 {
-    return m_Nr * m_Nc;
+    return m_N1 * m_N2;
 }
 
 inline Long McooChar::nnz() const
@@ -230,9 +231,9 @@ inline void McooChar::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooChar::reshape(Long_I Nr, Long_I Nc)
+inline void McooChar::reshape(Long_I N1, Long_I N2)
 {
-    m_Nr = Nr; m_Nc = Nc;
+    m_N1 = N1; m_N2 = N2;
 }
 
 class McooInt : public VbaseInt
@@ -241,12 +242,13 @@ private:
     typedef VbaseInt Base;
     using Base::m_p;
     using Base::m_N;
-    Long m_Nr, m_Nc, m_Nnz;
+    Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
     using Base::ptr;
-    McooInt(Long_I Nr, Long_I Nc);
-    McooInt(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
+    McooInt(): m_N1(0), m_N2(0), m_Nnz(0) {};
+    McooInt(Long_I N1, Long_I N2);
+    McooInt(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
     McooInt(const McooInt &rhs) = delete;  // Copy constructor
     McooInt &operator=(const McooInt &rhs) = delete;// copy assignment
     Long *row_ptr();
@@ -258,7 +260,7 @@ public:
     void set(Int_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n1() const;
     Long n2() const;
-    Long size() const; // return m_Nr * m_Nc
+    Long size() const; // return m_N1 * m_N2
     Long nnz() const; // return number of non-zero elements
     Long capacity() const;
     // get single index using double index, return -1 if not found
@@ -274,20 +276,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I Nr, Long_I Nc); // change matrix shape
+    void reshape(Long_I N1, Long_I N2); // change matrix shape
 };
 
 typedef const McooInt &McooInt_I;
 typedef McooInt &McooInt_O, &McooInt_IO;
 
-inline McooInt::McooInt(Long_I Nr, Long_I Nc)
-    : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
+inline McooInt::McooInt(Long_I N1, Long_I N2)
+    : Base(0), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooInt::McooInt(Long_I Nr, Long_I Nc, Long_I Ncap) :
-    Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooInt::McooInt(Long_I N1, Long_I N2, Long_I Ncap) :
+    Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooInt::row_ptr()
 {
@@ -321,7 +323,7 @@ inline Long McooInt::find(Long_I i, Long_I j) const
 inline Int& McooInt::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooInt::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -333,7 +335,7 @@ inline Int& McooInt::ref(Long_I i, Long_I j)
 inline Int McooInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooInt::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -345,7 +347,7 @@ inline Int McooInt::operator()(Long_I i, Long_I j) const
 inline void McooInt::push(Int_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
+    if (i<0 || i>=m_N1 || j<0 || j>=m_N2)
         SLS_ERR("McooInt::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
@@ -377,17 +379,17 @@ inline void McooInt::set(Int_I s, Long_I i, Long_I j)
 
 inline Long McooInt::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long McooInt::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
 inline Long McooInt::size() const
 {
-    return m_Nr * m_Nc;
+    return m_N1 * m_N2;
 }
 
 inline Long McooInt::nnz() const
@@ -463,9 +465,9 @@ inline void McooInt::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooInt::reshape(Long_I Nr, Long_I Nc)
+inline void McooInt::reshape(Long_I N1, Long_I N2)
 {
-    m_Nr = Nr; m_Nc = Nc;
+    m_N1 = N1; m_N2 = N2;
 }
 
 class McooLlong : public VbaseLlong
@@ -474,12 +476,13 @@ private:
     typedef VbaseLlong Base;
     using Base::m_p;
     using Base::m_N;
-    Long m_Nr, m_Nc, m_Nnz;
+    Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
     using Base::ptr;
-    McooLlong(Long_I Nr, Long_I Nc);
-    McooLlong(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
+    McooLlong(): m_N1(0), m_N2(0), m_Nnz(0) {};
+    McooLlong(Long_I N1, Long_I N2);
+    McooLlong(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
     McooLlong(const McooLlong &rhs) = delete;  // Copy constructor
     McooLlong &operator=(const McooLlong &rhs) = delete;// copy assignment
     Long *row_ptr();
@@ -491,7 +494,7 @@ public:
     void set(Llong_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n1() const;
     Long n2() const;
-    Long size() const; // return m_Nr * m_Nc
+    Long size() const; // return m_N1 * m_N2
     Long nnz() const; // return number of non-zero elements
     Long capacity() const;
     // get single index using double index, return -1 if not found
@@ -507,20 +510,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I Nr, Long_I Nc); // change matrix shape
+    void reshape(Long_I N1, Long_I N2); // change matrix shape
 };
 
 typedef const McooLlong &McooLlong_I;
 typedef McooLlong &McooLlong_O, &McooLlong_IO;
 
-inline McooLlong::McooLlong(Long_I Nr, Long_I Nc)
-    : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
+inline McooLlong::McooLlong(Long_I N1, Long_I N2)
+    : Base(0), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooLlong::McooLlong(Long_I Nr, Long_I Nc, Long_I Ncap) :
-    Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooLlong::McooLlong(Long_I N1, Long_I N2, Long_I Ncap) :
+    Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooLlong::row_ptr()
 {
@@ -554,7 +557,7 @@ inline Long McooLlong::find(Long_I i, Long_I j) const
 inline Llong& McooLlong::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooLlong::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -566,7 +569,7 @@ inline Llong& McooLlong::ref(Long_I i, Long_I j)
 inline Llong McooLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooLlong::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -578,7 +581,7 @@ inline Llong McooLlong::operator()(Long_I i, Long_I j) const
 inline void McooLlong::push(Llong_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
+    if (i<0 || i>=m_N1 || j<0 || j>=m_N2)
         SLS_ERR("McooLlong::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
@@ -610,17 +613,17 @@ inline void McooLlong::set(Llong_I s, Long_I i, Long_I j)
 
 inline Long McooLlong::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long McooLlong::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
 inline Long McooLlong::size() const
 {
-    return m_Nr * m_Nc;
+    return m_N1 * m_N2;
 }
 
 inline Long McooLlong::nnz() const
@@ -696,9 +699,9 @@ inline void McooLlong::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooLlong::reshape(Long_I Nr, Long_I Nc)
+inline void McooLlong::reshape(Long_I N1, Long_I N2)
 {
-    m_Nr = Nr; m_Nc = Nc;
+    m_N1 = N1; m_N2 = N2;
 }
 
 class McooDoub : public VbaseDoub
@@ -707,12 +710,13 @@ private:
     typedef VbaseDoub Base;
     using Base::m_p;
     using Base::m_N;
-    Long m_Nr, m_Nc, m_Nnz;
+    Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
     using Base::ptr;
-    McooDoub(Long_I Nr, Long_I Nc);
-    McooDoub(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
+    McooDoub(): m_N1(0), m_N2(0), m_Nnz(0) {};
+    McooDoub(Long_I N1, Long_I N2);
+    McooDoub(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
     McooDoub(const McooDoub &rhs) = delete;  // Copy constructor
     McooDoub &operator=(const McooDoub &rhs) = delete;// copy assignment
     Long *row_ptr();
@@ -724,7 +728,7 @@ public:
     void set(Doub_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n1() const;
     Long n2() const;
-    Long size() const; // return m_Nr * m_Nc
+    Long size() const; // return m_N1 * m_N2
     Long nnz() const; // return number of non-zero elements
     Long capacity() const;
     // get single index using double index, return -1 if not found
@@ -740,20 +744,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I Nr, Long_I Nc); // change matrix shape
+    void reshape(Long_I N1, Long_I N2); // change matrix shape
 };
 
 typedef const McooDoub &McooDoub_I;
 typedef McooDoub &McooDoub_O, &McooDoub_IO;
 
-inline McooDoub::McooDoub(Long_I Nr, Long_I Nc)
-    : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
+inline McooDoub::McooDoub(Long_I N1, Long_I N2)
+    : Base(0), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooDoub::McooDoub(Long_I Nr, Long_I Nc, Long_I Ncap) :
-    Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooDoub::McooDoub(Long_I N1, Long_I N2, Long_I Ncap) :
+    Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooDoub::row_ptr()
 {
@@ -787,7 +791,7 @@ inline Long McooDoub::find(Long_I i, Long_I j) const
 inline Doub& McooDoub::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooDoub::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -799,7 +803,7 @@ inline Doub& McooDoub::ref(Long_I i, Long_I j)
 inline Doub McooDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooDoub::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -811,7 +815,7 @@ inline Doub McooDoub::operator()(Long_I i, Long_I j) const
 inline void McooDoub::push(Doub_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
+    if (i<0 || i>=m_N1 || j<0 || j>=m_N2)
         SLS_ERR("McooDoub::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
@@ -843,17 +847,17 @@ inline void McooDoub::set(Doub_I s, Long_I i, Long_I j)
 
 inline Long McooDoub::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long McooDoub::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
 inline Long McooDoub::size() const
 {
-    return m_Nr * m_Nc;
+    return m_N1 * m_N2;
 }
 
 inline Long McooDoub::nnz() const
@@ -929,9 +933,9 @@ inline void McooDoub::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooDoub::reshape(Long_I Nr, Long_I Nc)
+inline void McooDoub::reshape(Long_I N1, Long_I N2)
 {
-    m_Nr = Nr; m_Nc = Nc;
+    m_N1 = N1; m_N2 = N2;
 }
 
 class McooComp : public VbaseComp
@@ -940,12 +944,13 @@ private:
     typedef VbaseComp Base;
     using Base::m_p;
     using Base::m_N;
-    Long m_Nr, m_Nc, m_Nnz;
+    Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
     using Base::ptr;
-    McooComp(Long_I Nr, Long_I Nc);
-    McooComp(Long_I Nr, Long_I Nc, Long_I Ncap); // reserve Ncap elements
+    McooComp(): m_N1(0), m_N2(0), m_Nnz(0) {};
+    McooComp(Long_I N1, Long_I N2);
+    McooComp(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
     McooComp(const McooComp &rhs) = delete;  // Copy constructor
     McooComp &operator=(const McooComp &rhs) = delete;// copy assignment
     Long *row_ptr();
@@ -957,7 +962,7 @@ public:
     void set(Comp_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n1() const;
     Long n2() const;
-    Long size() const; // return m_Nr * m_Nc
+    Long size() const; // return m_N1 * m_N2
     Long nnz() const; // return number of non-zero elements
     Long capacity() const;
     // get single index using double index, return -1 if not found
@@ -973,20 +978,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I Nr, Long_I Nc); // change matrix shape
+    void reshape(Long_I N1, Long_I N2); // change matrix shape
 };
 
 typedef const McooComp &McooComp_I;
 typedef McooComp &McooComp_O, &McooComp_IO;
 
-inline McooComp::McooComp(Long_I Nr, Long_I Nc)
-    : Base(0), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(0), m_col(0)
+inline McooComp::McooComp(Long_I N1, Long_I N2)
+    : Base(0), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooComp::McooComp(Long_I Nr, Long_I Nc, Long_I Ncap) :
-    Base(Ncap), m_Nr(Nr), m_Nc(Nc), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooComp::McooComp(Long_I N1, Long_I N2, Long_I Ncap) :
+    Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooComp::row_ptr()
 {
@@ -1020,7 +1025,7 @@ inline Long McooComp::find(Long_I i, Long_I j) const
 inline Comp& McooComp::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooComp::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -1032,7 +1037,7 @@ inline Comp& McooComp::ref(Long_I i, Long_I j)
 inline Comp McooComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_Nr || j < 0 || j >= m_Nc)
+    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
         SLS_ERR("McooComp::operator()(i,j): index out of bounds!");
 #endif
     Long n = find(i, j);
@@ -1044,7 +1049,7 @@ inline Comp McooComp::operator()(Long_I i, Long_I j) const
 inline void McooComp::push(Comp_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i<0 || i>=m_Nr || j<0 || j>=m_Nc)
+    if (i<0 || i>=m_N1 || j<0 || j>=m_N2)
         SLS_ERR("McooComp::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
@@ -1076,17 +1081,17 @@ inline void McooComp::set(Comp_I s, Long_I i, Long_I j)
 
 inline Long McooComp::n1() const
 {
-    return m_Nr;
+    return m_N1;
 }
 
 inline Long McooComp::n2() const
 {
-    return m_Nc;
+    return m_N2;
 }
 
 inline Long McooComp::size() const
 {
-    return m_Nr * m_Nc;
+    return m_N1 * m_N2;
 }
 
 inline Long McooComp::nnz() const
@@ -1162,9 +1167,9 @@ inline void McooComp::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooComp::reshape(Long_I Nr, Long_I Nc)
+inline void McooComp::reshape(Long_I N1, Long_I N2)
 {
-    m_Nr = Nr; m_Nc = Nc;
+    m_N1 = N1; m_N2 = N2;
 }
 
 } // namespace slisc

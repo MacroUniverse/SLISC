@@ -159,6 +159,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'DvecDoub' 'DvecDoub';
 //%     'DvecComp' 'SvecDoub';
 //%     'DvecComp' 'SvecComp';
+//%     'DvecComp' 'DvecComp';
 //%     'Jcmat3Float' 'Jcmat3Float';
 //%     'Jcmat3Doub' 'Cmat3Doub';
 //%     'Jcmat3Doub' 'Jcmat3Doub';
