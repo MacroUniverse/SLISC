@@ -171,9 +171,11 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmobdDoub' 'McooDoub';
 //%     'CmobdComp' 'McooDoub';
 //%     'CbandDoub' 'CbandDoub';
-//%     'CbandComp' 'CbandComp';
 //%     'CbandDoub' 'CmatDoub';
+//%     'CbandDoub' 'CbandComp';
+//%     'CbandComp' 'CbandComp';
 //%     'CbandComp' 'CmatComp';
+//%     'CbandComp' 'CbandDoub';
 //%     'CmatComp' 'CbandComp';
 //% };
 //%---------------------------------

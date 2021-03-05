@@ -256,6 +256,17 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     }
 }
 
+inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times(band(v), band(v1), s);
+}
+
+
+
 // matrix-vector multiplication for band matrix
 #ifdef SLS_USE_CBLAS
 inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)

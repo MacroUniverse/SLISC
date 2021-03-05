@@ -6859,6 +6859,94 @@ inline void divide(CmatComp_O v, Comp_I s, CmatComp_I v1)
     divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
 }
 
+inline void plus(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    Comp *p = v.ptr(); const Comp *p1 = v1.ptr();
+    for (Long j = 0; j < v.n2(); ++j) {
+        plus_vvs(p, p1, s, v.n1());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void plus(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
+{
+    plus(v, v1, s);
+}
+
+inline void minus(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    Comp *p = v.ptr(); const Comp *p1 = v1.ptr();
+    for (Long j = 0; j < v.n2(); ++j) {
+        minus_vvs(p, p1, s, v.n1());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void minus(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    Comp *p = v.ptr(); const Comp *p1 = v1.ptr();
+    for (Long j = 0; j < v.n2(); ++j) {
+        minus_vsv(p, s, p1, v.n1());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void times(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    Comp *p = v.ptr(); const Comp *p1 = v1.ptr();
+    for (Long j = 0; j < v.n2(); ++j) {
+        times_vvs(p, p1, s, v.n1());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void times(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
+{
+    times(v, v1, s);
+}
+
+inline void divide(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    Comp *p = v.ptr(); const Comp *p1 = v1.ptr();
+    for (Long j = 0; j < v.n2(); ++j) {
+        divide_vvs(p, p1, s, v.n1());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void divide(DcmatComp_O v, const Doub_I s, DcmatComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong size!");
+#endif
+    Comp *p = v.ptr(); const Comp *p1 = v1.ptr();
+    for (Long j = 0; j < v.n2(); ++j) {
+        divide_vsv(p, s, p1, v.n1());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
 inline void plus(Cmat3Comp_O v, Cmat3Comp_I v1, Comp_I s)
 {
 #ifdef SLS_CHECK_SHAPES
