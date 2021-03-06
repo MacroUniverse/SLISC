@@ -421,6 +421,7 @@ void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const ve
 ```
 
 ## TODO
+* the largest problem with this method is ... just look at `shape_cmp()`, inputing even necessary combinations is painful. Sure, you can generate the list using `combine()` function, but then the generated file will have thousands of lines...
 * makefiles are not unified
 * consider using selective codegen instead of removing all macros
 * unicode: * Visual Studio does not support `std::codecvt` between `UTF-8` and `UTF-32`, but only to `wchar_t` (link error during compilation). Wait until it does. Use `utfcpp` library to solve this.
