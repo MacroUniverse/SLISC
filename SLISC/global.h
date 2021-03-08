@@ -186,6 +186,11 @@ typedef vecStr32 &vecStr32_O, &vecStr32_IO;
 //double NaN = *( double* )proto_nan;
 //Doub NaN = sqrt(-1.);
 static const Doub NaN = std::numeric_limits<Doub>::quiet_NaN();
+inline Bool isnan(Doub s)
+{ return s != s; }
+
+inline Bool isnan(Comp s)
+{ return s != s; }
 
 // Floating Point Exceptions for Microsoft compilers
 // no exception for integer overflow

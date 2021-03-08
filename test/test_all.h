@@ -11,11 +11,12 @@ void test_compare(); void test_arithmetic(); void test_disp(); void test_random(
 void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq();
 void test_linux(); void test_file(); void test_matt(); void test_matb(); void test_fedvr();
 void test_mat_fun(); void test_gsl(); void test_coulomb(); void test_unicode(); void test_Bit();
-void test_interp1(); void test_sha1sum(); void test_string(); void test_expokit();
+void test_interp1(); void test_sha1sum(); void test_string(); void test_expokit(); void test_global();
 
 void test_all()
 {
     using std::cout; using std::endl;
+    cout << "test_global()" << endl; test_global();
     cout << "test_time()" << endl; test_time();
     cout << "test_imag()" << endl; test_Imag();
     cout << "test_scalar_arith()" << endl; test_scalar_arith();

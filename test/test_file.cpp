@@ -103,15 +103,21 @@ void test_file()
 
 	remove("test_bin");
 
-	{ // read matrix from file
+	{ // read matrix/vector from file
 		CmatDoub mat, mat1(3, 3);
 		read(mat, "test/test_file_matrix.txt", 2);
 		mat1(0, 0) = 1.315; mat1(0, 1) = -2.531; mat1(0, 2) = -6.65;
 		mat1(1, 0) = 2.351; mat1(1, 1) = 2.265; mat1(1, 2) = -2.376;
 		mat1(2, 0) = -2.53; mat1(2, 1) = 6.65; mat1(2, 2) =  0.28;
-		mat -= mat1;
-		if (max_abs(mat) > 1e-14)
+		if (mat != mat1)
 			SLS_ERR("failed!");
+		
+		VecDoub v; MatDoub mat2(3, 3); copy(mat2, mat1);
+		read(v, "test/test_file_matrix.txt", 2);
+		for (i = 0; i < mat2.size(); ++i) {
+			if (v[i] != mat2[i])
+				SLS_ERR("failed!");
+		}
 	}
 
 	// last modified time (local time)
