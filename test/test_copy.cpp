@@ -35,7 +35,7 @@ void test_copy()
 		copy(a, {1, 2, 3, 4, 5, 6});
 		if (a[0] != 1 || a[1] != 2 || a[2] != 3 || a[3] != 4 || a[4] != 5 || a[5] != 6)
 			SLS_ERR("failed!");
-		ScmatDoub sa = slice(a, 0, 2);
+		ScmatDoub sa = cut(a, 0, 2);
 		copy(sa, {7, 8, 9, 0});
 		if (sa[0] != 7 || sa[1] != 8 || sa[2] != 9 || sa[3] != 0)
 			SLS_ERR("failed!");

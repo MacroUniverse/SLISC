@@ -1,6 +1,6 @@
 #include "../SLISC/disp.h"
 #include "../SLISC/mat_fun.h"
-#include "../SLISC/slice_arith.h"
+#include "../SLISC/cut.h"
 
 void test_mat_fun()
 {

@@ -164,9 +164,9 @@ inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
         if (x_q <= xmin)
             return 0;
         x1[0] = xmin;
-        copy(slice(x1, 1, Ngs-1), slice(x, 0, Ngs-1));
+        copy(cut(x1, 1, Ngs-1), cut(x, 0, Ngs-1));
         y1[0] = 0;
-        copy(slice(y1, 1, Ngs-1), slice(y, 0, Ngs-1));
+        copy(cut(y1, 1, Ngs-1), cut(y, 0, Ngs-1));
         poly_comp_interp1 poly(x1, y1);
         return poly(x_q);
     }
@@ -176,14 +176,14 @@ inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
         if (x_q >= xmax)
             return 0;
         x1.end() = xmax;
-        copy(slice(x1, 0, Ngs-1), slice(x, Nx-Ngs+1, Ngs-1));
+        copy(cut(x1, 0, Ngs-1), cut(x, Nx-Ngs+1, Ngs-1));
         y1.end() = 0;
-        copy(slice(y1, 0, Ngs-1), slice(y, Nx-Ngs+1, Ngs-1));
+        copy(cut(y1, 0, Ngs-1), cut(y, Nx-Ngs+1, Ngs-1));
         poly_comp_interp1 poly(x1, y1);
         return poly(x_q);
     }
     else {
-        poly_comp_interp1 poly(slice(x, start, Ngs), slice(y, start, Ngs));
+        poly_comp_interp1 poly(cut(x, start, Ngs), cut(y, start, Ngs));
         return poly(x_q);
     }
 }
@@ -209,9 +209,9 @@ inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
         SLS_ERR("not implemented!");
     VecDoub y1(Ngs); VecComp val1(Ngs);
     Long start = indFEDVR(iFEy, 0, Ngs);
-    SvecDoub_c x_sli =  slice(x, ix, Ngs);
+    SvecDoub_c x_sli =  cut(x, ix, Ngs);
     for (Long j = start; j < start + Ngs; ++j) {
-        poly_comp_interp1 poly(x_sli, slice1(val, ix, Ngs, j));
+        poly_comp_interp1 poly(x_sli, cut1(val, ix, Ngs, j));
         val1[j-start] = poly(x_q);
         y1[j-start] = y[j];
     }

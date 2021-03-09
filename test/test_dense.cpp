@@ -1,6 +1,6 @@
 // test dense containers here
 #include "../SLISC/arithmetic.h"
-#include "../SLISC/slice_arith.h"
+#include "../SLISC/cut.h"
 #include "../SLISC/random.h"
 #include "../SLISC/disp.h"
 
@@ -96,7 +96,7 @@ void test_dense()
         CmatDoub a2(4, 5), b2(4, 5);
         linspace(a2, 1, 20); copy(b2, a2);
         resize_cpy(b2, 7, 9);
-        if (slice(b2, 0, 4, 0, 5) != a2)
+        if (cut(b2, 0, 4, 0, 5) != a2)
             SLS_ERR("failed!");
         resize_cpy(b2, 4, 5);
         if (b2 != a2)
@@ -105,7 +105,7 @@ void test_dense()
         Cmat3Doub a3(2, 3, 4), b3(2, 3, 4);
         rand(a3); copy(b3, a3);
         resize_cpy(b3, 3, 4, 5);
-        if (slice(b3, 0, 2, 0, 3, 0, 4) != a3)
+        if (cut(b3, 0, 2, 0, 3, 0, 4) != a3)
             SLS_ERR("failed!");
         resize_cpy(b3, 2, 3, 4);
         if (b3 != a3)

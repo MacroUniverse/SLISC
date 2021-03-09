@@ -2,7 +2,7 @@
 #include "../SLISC/compare.h"
 #include "../SLISC/random.h"
 #include "../SLISC/sort.h"
-#include "../SLISC/slice_arith.h"
+#include "../SLISC/cut.h"
 #include "../SLISC/disp.h"
 
 void test_arithmetic()
@@ -80,14 +80,14 @@ void test_arithmetic()
         linspace(a, 1, 12);
         VecInt vc(3), vr(4);
         for (Long i = 0; i < 3; ++i) {
-            copy(vr, slice2(a, i));
+            copy(vr, cut2(a, i));
             for (Long j = 0; j < 4; ++j) {
                 if (vr[j] != a(i, j))
                     SLS_ERR("failed!");
             }
         }
         for (Long j = 0; j < 4; ++j) {
-            copy(vc, slice1(a, j));
+            copy(vc, cut1(a, j));
             for (Long i = 0; i < 3; ++i) {
                 if (vc[i] != a(i, j))
                     SLS_ERR("failed!");
@@ -100,14 +100,14 @@ void test_arithmetic()
         linspace(a, 1, 12);
         VecInt vc(3), vr(4);
         for (Long i = 0; i < 3; ++i) {
-            copy(vr, slice2(a, i));
+            copy(vr, cut2(a, i));
             for (Long j = 0; j < 4; ++j) {
                 if (vr[j] != a(i, j))
                     SLS_ERR("failed!");
             }
         }
         for (Long j = 0; j < 4; ++j) {
-            copy(vc, slice1(a, j));
+            copy(vc, cut1(a, j));
             for (Long i = 0; i < 3; ++i) {
                 if (vc[i] != a(i, j))
                     SLS_ERR("failed!");
@@ -172,7 +172,7 @@ void test_arithmetic()
         if (sum(e) != Comp(45., -45.)) SLS_ERR("failed!");
         if (max_abs(e) != abs(Comp(9, 9))) SLS_ERR("failed!");
         if (norm2(e) != 285. * 2) SLS_ERR("failed!");
-        if (norm2(slice(e, 0, 2, 0, 2)) != 46. * 2)
+        if (norm2(cut(e, 0, 2, 0, 2)) != 46. * 2)
             SLS_ERR("failed!");;
     }
     // sum_abs
@@ -525,15 +525,15 @@ void test_arithmetic()
         if (max_abs(y1) > 1e-13)
             SLS_ERR("failed!");
 
-        SvecComp sli_x, sli_y, sli_y1;
-        sli_x.set(slice(x, 1, 5));
-        sli_y.set(slice(y, 1, 6));
-        sli_y1.set(slice(y1, 1, 6));
-        DcmatDoub sli_a(slice(a, 2, 6, 2, 5));
-        mul(sli_y, sli_a, sli_x);
-        mul_gen(sli_y1, sli_a, sli_x);
-        sli_y1 -= sli_y;
-        if (max_abs(sli_y1) > 1e-13)
+        SvecComp cut_x, cut_y, cut_y1;
+        cut_x.set(cut(x, 1, 5));
+        cut_y.set(cut(y, 1, 6));
+        cut_y1.set(cut(y1, 1, 6));
+        DcmatDoub cut_a(cut(a, 2, 6, 2, 5));
+        mul(cut_y, cut_a, cut_x);
+        mul_gen(cut_y1, cut_a, cut_x);
+        cut_y1 -= cut_y;
+        if (max_abs(cut_y1) > 1e-13)
             SLS_ERR("failed!");
     }
 
