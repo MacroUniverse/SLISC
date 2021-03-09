@@ -274,7 +274,7 @@ inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     mod_vvs(v.ptr(), v1.ptr(), s, v.size());
 }
@@ -349,7 +349,7 @@ inline void real(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     real_vv(v.ptr(), v1.ptr(), v1.size());
 }
@@ -358,7 +358,7 @@ inline void imag(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     imag_vv(v.ptr(), v1.ptr(), v1.size());
 }
@@ -413,7 +413,7 @@ inline void abs(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     abs_vv(v.ptr(), v1.ptr(), v1.size());
 }
@@ -666,7 +666,7 @@ inline void flip(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     flip_vv(v.ptr(), v1.ptr(), v1.size());
 }
@@ -748,7 +748,7 @@ inline void trans(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (v.n1() != v1.n2() || v.n2() != v1.n1())
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     for (Long i = 0; i < v.n1(); ++i)
         for (Long j = 0; j < v.n2(); ++j)
@@ -813,7 +813,7 @@ inline void conj(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     conj_vv(v.ptr(), v1.ptr(), v.size());
 }
@@ -1369,7 +1369,7 @@ inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     plus_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
@@ -1383,7 +1383,7 @@ inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     minus_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
@@ -1392,7 +1392,7 @@ inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     minus_vsv(v.ptr(), s, v1.ptr(), v1.size());
 }
@@ -1401,7 +1401,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     times_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
@@ -1415,7 +1415,7 @@ inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     divide_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
@@ -1424,7 +1424,7 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
 }
@@ -1433,7 +1433,7 @@ inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
@@ -1451,7 +1451,7 @@ inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
@@ -1464,7 +1464,7 @@ inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
@@ -1477,7 +1477,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
@@ -1495,7 +1495,7 @@ inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
@@ -1508,7 +1508,7 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
@@ -1651,7 +1651,7 @@ inline void minus(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     minus_vv(v.ptr(), v1.ptr(), v1.size());
 }
@@ -1733,7 +1733,7 @@ inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     pow_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
@@ -2246,7 +2246,7 @@ inline void exp(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("wrong size!");
+        SLS_ERR("wrong shape!");
 #endif
     exp_vv(v.ptr(), v1.ptr(), v1.size());
 }
