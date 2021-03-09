@@ -187,10 +187,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void sort(@T@_IO v, @T1@_IO v1)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     sort_vv(v.ptr(), v1.ptr(), v.size());
 }
 //% elseif is_vector(T) || is_Str(T) || is_Str32(T)

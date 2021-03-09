@@ -1064,7 +1064,7 @@ inline void sort_vv(Str32 *v, Str32 *v1, Long_I N)
 // sort v while making the same change for v1
 inline void sort(VecChar_IO v, VecLlong_IO v1)
 {
-#ifdef SLS_CHECK_BOUNDS
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1073,7 +1073,7 @@ inline void sort(VecChar_IO v, VecLlong_IO v1)
 
 inline void sort(VecInt_IO v, VecInt_IO v1)
 {
-#ifdef SLS_CHECK_BOUNDS
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1082,7 +1082,7 @@ inline void sort(VecInt_IO v, VecInt_IO v1)
 
 inline void sort(VecInt_IO v, VecLlong_IO v1)
 {
-#ifdef SLS_CHECK_BOUNDS
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1091,7 +1091,7 @@ inline void sort(VecInt_IO v, VecLlong_IO v1)
 
 inline void sort(VecLlong_IO v, VecLlong_IO v1)
 {
-#ifdef SLS_CHECK_BOUNDS
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
@@ -1100,7 +1100,7 @@ inline void sort(VecLlong_IO v, VecLlong_IO v1)
 
 inline void sort(VecDoub_IO v, VecLlong_IO v1)
 {
-#ifdef SLS_CHECK_BOUNDS
+#ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif

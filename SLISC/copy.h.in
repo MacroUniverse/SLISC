@@ -288,10 +288,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //% end
 inline void copy(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     if (v.size() == 0)
         return;
 //% if is_VecBool(T) || is_VecBool(T1)
@@ -378,10 +375,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 //% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];
 inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(lhs, rhs))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('lhs', 'rhs')@
     copy(lhs, 0);
     for (Long i = 0; i < rhs.nnz(); ++i) {
         lhs(rhs.row(i), rhs.col(i)) = rhs[i];
@@ -411,10 +405,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% [T, T1] = varargin{:};
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(lhs, rhs))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('lhs', 'rhs')@
     auto & c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
@@ -432,10 +423,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% [T, T1] = varargin{:};
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(lhs, rhs))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('lhs', 'rhs')@
     for (Long j = 0; j < lhs.n2(); ++j)
         for (Long i = 0; i < lhs.n1(); ++i)
             lhs(i, j) = rhs(i, j);
@@ -541,10 +529,7 @@ inline void copy(@T@_O a, @T@_I b)
 //% if is_Cband(T1)
 inline void copy(@T1@_O b, @T2@_I a)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(a, b))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('a', 'b')@
     Long N1 = a.n1(), N2 = a.n2();
     for (Long j = 0; j < N2; ++j) {
         @SvecTs1@ sli_b = slice1(b.cmat(), j);
@@ -558,10 +543,7 @@ inline void copy(@T1@_O b, @T2@_I a)
 //% else
 inline void copy(@T1@_O a, @T2@_I b)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(a, b))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('a', 'b')@
     Long N1 = a.n1(), N2 = a.n2();
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;

@@ -182,10 +182,7 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
 //% [Tv, Tv1, Ts] = varargin{:};
 inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     times(band(v), band(v1), s);
 }
 //%------------------------
