@@ -198,92 +198,47 @@ inline Ldoub sum_abs(VecLcomp_I v)
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Llong sum_abs(MatChar_I v)
+inline Llong sum_abs(SvecChar_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Llong sum_abs(MatInt_I v)
+inline Llong sum_abs(SvecInt_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Llong sum_abs(MatLlong_I v)
+inline Llong sum_abs(SvecLlong_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Float sum_abs(MatFloat_I v)
+inline Float sum_abs(SvecFloat_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Doub sum_abs(MatDoub_I v)
+inline Doub sum_abs(SvecDoub_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Ldoub sum_abs(MatLdoub_I v)
+inline Ldoub sum_abs(SvecLdoub_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Float sum_abs(MatFcomp_I v)
+inline Float sum_abs(SvecFcomp_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Doub sum_abs(MatComp_I v)
+inline Doub sum_abs(SvecComp_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Ldoub sum_abs(MatLcomp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(Mat3Char_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(Mat3Int_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(Mat3Llong_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Float sum_abs(Mat3Float_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Doub sum_abs(Mat3Doub_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Ldoub sum_abs(Mat3Ldoub_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Float sum_abs(Mat3Fcomp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Doub sum_abs(Mat3Comp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Ldoub sum_abs(Mat3Lcomp_I v)
+inline Ldoub sum_abs(SvecLcomp_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
@@ -333,96 +288,6 @@ inline Ldoub sum_abs(CmatLcomp_I v)
     return sum_abs_v(v.ptr(), v.size());
 }
 
-inline Llong sum_abs(Cmat3Char_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(Cmat3Int_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(Cmat3Llong_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Float sum_abs(Cmat3Float_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Doub sum_abs(Cmat3Doub_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Ldoub sum_abs(Cmat3Ldoub_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Float sum_abs(Cmat3Fcomp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Doub sum_abs(Cmat3Comp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Ldoub sum_abs(Cmat3Lcomp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(SvecChar_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(SvecInt_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Llong sum_abs(SvecLlong_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Float sum_abs(SvecFloat_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Doub sum_abs(SvecDoub_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Ldoub sum_abs(SvecLdoub_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Float sum_abs(SvecFcomp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Doub sum_abs(SvecComp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
-inline Ldoub sum_abs(SvecLcomp_I v)
-{
-    return sum_abs_v(v.ptr(), v.size());
-}
-
 inline Llong sum_abs(ScmatChar_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
@@ -464,6 +329,96 @@ inline Doub sum_abs(ScmatComp_I v)
 }
 
 inline Ldoub sum_abs(ScmatLcomp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(MatChar_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(MatInt_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(MatLlong_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Float sum_abs(MatFloat_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(MatDoub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Ldoub sum_abs(MatLdoub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Float sum_abs(MatFcomp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(MatComp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Ldoub sum_abs(MatLcomp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(Cmat3Char_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(Cmat3Int_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(Cmat3Llong_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Float sum_abs(Cmat3Float_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(Cmat3Doub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Ldoub sum_abs(Cmat3Ldoub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Float sum_abs(Cmat3Fcomp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(Cmat3Comp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Ldoub sum_abs(Cmat3Lcomp_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
 }
@@ -511,6 +466,64 @@ inline Doub sum_abs(Scmat3Comp_I v)
 inline Ldoub sum_abs(Scmat3Lcomp_I v)
 {
     return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(Mat3Char_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(Mat3Int_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Llong sum_abs(Mat3Llong_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Float sum_abs(Mat3Float_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(Mat3Doub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Ldoub sum_abs(Mat3Ldoub_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Float sum_abs(Mat3Fcomp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Doub sum_abs(Mat3Comp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+inline Ldoub sum_abs(Mat3Lcomp_I v)
+{
+    return sum_abs_v(v.ptr(), v.size());
+}
+
+
+inline Long sum_abs(VecBool_I v)
+{
+    Long N = v.size();
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Long s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
 }
 
 

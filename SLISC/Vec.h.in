@@ -57,6 +57,7 @@ typedef const @VecT@ & @VecT@_I;
 typedef @VecT@ & @VecT@_O, & @VecT@_IO;
 //%------------------------
 
+// implemented with vector<Bool>, not actually a vector of Bool
 class VecBool : public VbaseBool
 {
 public:

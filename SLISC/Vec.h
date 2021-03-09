@@ -444,6 +444,7 @@ typedef const VecLimag & VecLimag_I;
 typedef VecLimag & VecLimag_O, & VecLimag_IO;
 
 
+// implemented with vector<Bool>, not actually a vector of Bool
 class VecBool : public VbaseBool
 {
 public:
