@@ -1,5 +1,5 @@
 function ret = same_shape(v1, v2, v3)
-newline = char(13);
+newline = char(10);
 if nargin == 2
     ret = [
     '#ifdef SLS_CHECK_SHAPES' newline ...

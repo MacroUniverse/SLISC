@@ -8204,36 +8204,36 @@ inline void cumsum(VecInt_O v, VecInt_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("illegal shape!");
+        SLS_ERR("wrong shape!");
 #endif
-        cumsum_vv(v.ptr(), v1.ptr(), v1.size());
+    cumsum_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void cumsum(VecLlong_O v, VecInt_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("illegal shape!");
+        SLS_ERR("wrong shape!");
 #endif
-        cumsum_vv(v.ptr(), v1.ptr(), v1.size());
+    cumsum_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void cumsum(VecLlong_O v, VecLlong_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("illegal shape!");
+        SLS_ERR("wrong shape!");
 #endif
-        cumsum_vv(v.ptr(), v1.ptr(), v1.size());
+    cumsum_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void cumsum(VecDoub_O v, VecDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))
-        SLS_ERR("illegal shape!");
+        SLS_ERR("wrong shape!");
 #endif
-        cumsum_vv(v.ptr(), v1.ptr(), v1.size());
+    cumsum_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 

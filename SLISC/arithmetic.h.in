@@ -272,10 +272,7 @@ inline void mod_vs(@T1@ *v, @Ts1@_I s, Long_I N)
 //% end
 inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     mod_vvs(v.ptr(), v1.ptr(), s, v.size());
 }
 
@@ -347,19 +344,13 @@ inline void imag(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void real(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     real_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void imag(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     imag_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //%--------------------
@@ -411,10 +402,7 @@ inline void abs(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void abs(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     abs_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //%--------------------
@@ -664,10 +652,7 @@ inline void flip(@Tv@_IO v)
 //% if is_dense(T) && is_dense(T1)
 inline void flip(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     flip_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //% else
@@ -811,10 +796,7 @@ inline void conj(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void conj(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     conj_vv(v.ptr(), v1.ptr(), v.size());
 }
 //%----------------------------
@@ -1094,47 +1076,32 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     plus_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     minus_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     times_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     divide_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
 // v += v
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long i = 0; i < v.size(); ++i)
         v[i] += v1[i];
 }
@@ -1142,10 +1109,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 // v -= v
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long i = 0; i < v.size(); ++i)
         v[i] -= v1[i];
 }
@@ -1153,10 +1117,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 // v *= v
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long i = 0; i < v.size(); ++i)
         v[i] *= v1[i];
 }
@@ -1164,10 +1125,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
 // v /= v
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long i = 0; i < v.size(); ++i)
         v[i] /= v1[i];
 }
@@ -1175,10 +1133,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 // v += v (slow!)
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long j = 0; j < v.n2(); ++j)
         for (Long i = 0; i < v.n1(); ++i)
             v(i, j) += v1(i, j);
@@ -1187,10 +1142,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 // v -= v (slow!)
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long j = 0; j < v.n2(); ++j)
         for (Long i = 0; i < v.n1(); ++i)
             v(i, j) -= v1(i, j);
@@ -1199,10 +1151,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 // v *= v (slow!)
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long j = 0; j < v.n2(); ++j)
         for (Long i = 0; i < v.n1(); ++i)
             v(i, j) *= v1(i, j);
@@ -1211,10 +1160,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
 // v /= v (slow!)
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     for (Long j = 0; j < v.n2(); ++j)
         for (Long i = 0; i < v.n1(); ++i)
             v(i, j) /= v1(i, j);
@@ -1367,10 +1313,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     plus_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
 
@@ -1381,28 +1324,19 @@ inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     minus_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
 
 inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     minus_vsv(v.ptr(), s, v1.ptr(), v1.size());
 }
 
 inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     times_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
 
@@ -1413,28 +1347,19 @@ inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     divide_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
 
 inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
 }
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
 inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
         plus_vvs(p, p1, s, v.n1());
@@ -1449,10 +1374,7 @@ inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
         minus_vvs(p, p1, s, v.n1());
@@ -1462,10 +1384,7 @@ inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 
 inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
         minus_vsv(p, s, p1, v.n1());
@@ -1475,10 +1394,7 @@ inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
         times_vvs(p, p1, s, v.n1());
@@ -1493,10 +1409,7 @@ inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
 
 inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
         divide_vvs(p, p1, s, v.n1());
@@ -1506,10 +1419,7 @@ inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 
 inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     @Ts@ *p = v.ptr(); const @Ts1@ *p1 = v1.ptr();
     for (Long j = 0; j < v.n2(); ++j) {
         divide_vsv(p, s, p1, v.n1());
@@ -1544,76 +1454,52 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //% if is_dense(T) && is_dense(T1)
 inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     plus_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
 inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     minus_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
 inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     times_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 
 inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     divide_vvv(v.ptr(), v1.ptr(), v2.ptr(), v.size());
 }
 //% else
 inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     for (Long i = 0; i < v1.size(); ++i)
         v[i] = v1[i] + v2[i];
 }
 
 inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     for (Long i = 0; i < v1.size(); ++i)
         v[i] = v1[i] - v2[i];
 }
 
 inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     for (Long i = 0; i < v1.size(); ++i)
         v[i] = v1[i] * v2[i];
 }
 
 inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1', 'v2')@
     for (Long i = 0; i < v1.size(); ++i)
         v[i] = v1[i] / v2[i];
 }
@@ -1649,10 +1535,7 @@ inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void minus(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     minus_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //% else
@@ -1731,10 +1614,7 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 //% [T, T1, Ts] = varargin{:};
 inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     pow_vvs(v.ptr(), v1.ptr(), s, v1.size());
 }
 //%-------------------------
@@ -1797,10 +1677,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% T = promo_type(Ts1, Ts2);
 inline @T@ dot(@T1@_I v1, @T2@_I v2)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v1, v2))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v1', 'v2')@
 //% if is_dense(T1) && is_dense(T2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
 //% elseif ndim(T1) == 1
@@ -1856,11 +1733,8 @@ inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% [T, T1] = varargin{:};
 inline void cumsum(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("illegal shape!");
-#endif
-        cumsum_vv(v.ptr(), v1.ptr(), v1.size());
+@same_shape('v', 'v1')@
+    cumsum_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //%-------------------------
 
@@ -2244,10 +2118,7 @@ inline void exp(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void exp(@T@_O v, @T1@_I v1)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+@same_shape('v', 'v1')@
     exp_vv(v.ptr(), v1.ptr(), v1.size());
 }
 //%-------------------
