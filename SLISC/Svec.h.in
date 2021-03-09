@@ -101,7 +101,7 @@ inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -166,7 +166,7 @@ inline void @Class@::set(@CT@ *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -191,7 +191,7 @@ inline void @Class@::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -201,7 +201,7 @@ inline void @Class@::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -216,7 +216,7 @@ inline void @Class@::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }

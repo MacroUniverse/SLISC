@@ -1,6 +1,6 @@
 #pragma once
 #include "arithmetic.h"
-#include "slice_arith.h"
+#include "cut.h"
 #include "string.h"
 
 namespace slisc {
@@ -189,7 +189,7 @@ inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
 //% };
 //%--------------------------
 //% [Tv, Tmat] = varargin{:};
-//% Tsli = slice2_type(Tmat);
+//% Tsli = cut2_type(Tmat);
 inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -197,7 +197,7 @@ inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n1(); ++i) {
-        if (v == slice2(a, i))
+        if (v == cut2(a, i))
             return i;
     }
     return -1;

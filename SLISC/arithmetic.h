@@ -1,7 +1,7 @@
 #pragma once
 #include "copy.h"
 #include "scalar_arith.h"
-#include "slice_arith.h"
+#include "cut.h"
 
 namespace slisc {
 // return signed size instead of unsigned
@@ -2734,8 +2734,8 @@ inline void resize_cpy(CmatChar_IO v, Long_I N1, Long_I N2, Char_I val = 0)
         else {
             CmatChar v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -2754,8 +2754,8 @@ inline void resize_cpy(CmatInt_IO v, Long_I N1, Long_I N2, Int_I val = 0)
         else {
             CmatInt v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -2774,8 +2774,8 @@ inline void resize_cpy(CmatLlong_IO v, Long_I N1, Long_I N2, Llong_I val = 0)
         else {
             CmatLlong v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -2794,8 +2794,8 @@ inline void resize_cpy(CmatFloat_IO v, Long_I N1, Long_I N2, Float_I val = 0)
         else {
             CmatFloat v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -2814,8 +2814,8 @@ inline void resize_cpy(CmatDoub_IO v, Long_I N1, Long_I N2, Doub_I val = 0)
         else {
             CmatDoub v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -2834,8 +2834,8 @@ inline void resize_cpy(CmatLdoub_IO v, Long_I N1, Long_I N2, Ldoub_I val = 0)
         else {
             CmatLdoub v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -2854,8 +2854,8 @@ inline void resize_cpy(Cmat3Float_IO v, Long_I N1, Long_I N2, Long_I N3, Float_I
         else {
             Cmat3Float v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -2874,8 +2874,8 @@ inline void resize_cpy(Cmat3Doub_IO v, Long_I N1, Long_I N2, Long_I N3, Doub_I v
         else {
             Cmat3Doub v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -2894,8 +2894,8 @@ inline void resize_cpy(Cmat3Ldoub_IO v, Long_I N1, Long_I N2, Long_I N3, Ldoub_I
         else {
             Cmat3Ldoub v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -2914,8 +2914,8 @@ inline void resize_cpy(Cmat3Fcomp_IO v, Long_I N1, Long_I N2, Long_I N3, Fcomp_I
         else {
             Cmat3Fcomp v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -2934,8 +2934,8 @@ inline void resize_cpy(Cmat3Comp_IO v, Long_I N1, Long_I N2, Long_I N3, Comp_I v
         else {
             Cmat3Comp v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -2954,8 +2954,8 @@ inline void resize_cpy(Cmat3Lcomp_IO v, Long_I N1, Long_I N2, Long_I N3, Lcomp_I
         else {
             Cmat3Lcomp v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -9188,15 +9188,15 @@ inline void uniq_rows(CmatInt_O a, CmatInt_I a1)
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        DvecInt_c sli1 = slice2(a1, i);
+        DvecInt_c sli1 = cut2(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (slice2(a, j) == sli1) {
+            if (cut2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(slice2(a, k), sli1);
+        copy(cut2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());
@@ -9209,15 +9209,15 @@ inline void uniq_rows(CmatLlong_O a, ScmatLlong_I a1)
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        DvecLlong_c sli1 = slice2(a1, i);
+        DvecLlong_c sli1 = cut2(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (slice2(a, j) == sli1) {
+            if (cut2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(slice2(a, k), sli1);
+        copy(cut2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());
@@ -9230,15 +9230,15 @@ inline void uniq_rows(CmatDoub_O a, CmatDoub_I a1)
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        DvecDoub_c sli1 = slice2(a1, i);
+        DvecDoub_c sli1 = cut2(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (slice2(a, j) == sli1) {
+            if (cut2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(slice2(a, k), sli1);
+        copy(cut2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());

@@ -29,9 +29,9 @@ namespace slisc {
 //%----------------------------
 //% Tv = varargin{:};
 //% T = value_type(Tv);
-//% Tsli = slice_type(Tv);
+//% Tsli = cut_type(Tv);
 //% if ndim(Tv) == 1
-inline @Tsli@ slice(@Tv@_IO v, Long_I start, Long_I N)
+inline @Tsli@ cut(@Tv@_IO v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start < 0 || start + N > v.size())
@@ -48,7 +48,7 @@ inline @Tsli@ slice(@Tv@_IO v, Long_I start, Long_I N)
     return sli;
 }
 
-inline @Tsli@_c slice(@Tv@_I v, Long_I start, Long_I N)
+inline @Tsli@_c cut(@Tv@_I v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start < 0 || start + N > v.size())
@@ -65,8 +65,7 @@ inline @Tsli@_c slice(@Tv@_I v, Long_I start, Long_I N)
     return sli;
 }
 //% elseif ndim(Tv) == 2
-inline @Tsli@ slice(@Tv@_IO v,
-    Long_I start1, Long_I N1, Long_I start2, Long_I N2)
+inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start1 < 0 || start1 + N1 > v.n1() ||
@@ -84,7 +83,7 @@ inline @Tsli@ slice(@Tv@_IO v,
     return sli;
 }
 
-inline @Tsli@_c slice(@Tv@_I v,
+inline @Tsli@_c cut(@Tv@_I v,
     Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -104,7 +103,7 @@ inline @Tsli@_c slice(@Tv@_I v,
 }
 //%     if is_Cmat(Tv)
 //%         ScmatT = ['Scmat' T];
-inline @ScmatT@ slice(@Tv@_IO v, Long_I start2, Long_I N2)
+inline @ScmatT@ cut(@Tv@_IO v, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start2 < 0 || start2 + N2 > v.n2())
@@ -114,7 +113,7 @@ inline @ScmatT@ slice(@Tv@_IO v, Long_I start2, Long_I N2)
     return sli;
 }
 
-inline @ScmatT@_c slice(@Tv@_I v, Long_I start2, Long_I N2)
+inline @ScmatT@_c cut(@Tv@_I v, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start2 < 0 || start2 + N2 > v.n2())
@@ -126,7 +125,7 @@ inline @ScmatT@_c slice(@Tv@_I v, Long_I start2, Long_I N2)
 //%     end
 //% elseif ndim(Tv) == 3
 //%     if is_Cmat3(Tv)
-inline @Tsli@ slice(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start1 < 0 || start1 + N1 > v.n1() || start2 < 0 || start2 + N2 > v.n2() || start3 < 0 || start3 + N3 > v.n3())
@@ -136,7 +135,7 @@ inline @Tsli@ slice(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N
     return sli;
 }
 
-inline @Tsli@_c slice(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (start1 < 0 || start1 + N1 > v.n1() || start2 < 0 || start2 + N2 > v.n2() || start3 < 0 || start3 + N3 > v.n3())
@@ -160,9 +159,9 @@ inline @Tsli@_c slice(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I 
 //% };
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = slice1_type(Tv);
+//% Tsli = cut1_type(Tv);
 //% if is_Cmat(Tv) || is_Scmat(Tv)
-inline @Tsli@ slice1(@Tv@_IO v, Long_I j)
+inline @Tsli@ cut1(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())
@@ -172,7 +171,7 @@ inline @Tsli@ slice1(@Tv@_IO v, Long_I j)
     return sli;
 }
 
-inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
+inline @Tsli@_c cut1(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())
@@ -182,7 +181,7 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
     return sli;
 }
 //% elseif is_Dcmat(Tv)
-inline @Tsli@ slice1(@Tv@_IO v, Long_I j)
+inline @Tsli@ cut1(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())
@@ -192,7 +191,7 @@ inline @Tsli@ slice1(@Tv@_IO v, Long_I j)
     return sli;
 }
 
-inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
+inline @Tsli@_c cut1(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())
@@ -202,7 +201,7 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
     return sli;
 }
 //% elseif is_Mat(Tv)
-inline @Tsli@ slice1(@Tv@_IO v, Long_I j)
+inline @Tsli@ cut1(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())
@@ -212,7 +211,7 @@ inline @Tsli@ slice1(@Tv@_IO v, Long_I j)
     return sli;
 }
 
-inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
+inline @Tsli@_c cut1(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())
@@ -222,7 +221,7 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I j)
     return sli;
 }
 //% elseif is_Cmat3(Tv)
-inline @Tsli@ slice1(@Tv@_IO v, Long_I j, Long_I k)
+inline @Tsli@ cut1(@Tv@_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
@@ -232,7 +231,7 @@ inline @Tsli@ slice1(@Tv@_IO v, Long_I j, Long_I k)
     return sli;
 }
 
-inline @Tsli@_c slice1(@Tv@_I v, Long_I j, Long_I k)
+inline @Tsli@_c cut1(@Tv@_I v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
@@ -253,9 +252,9 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I j, Long_I k)
 //% };
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = slice1_type(Tv);
+//% Tsli = cut1_type(Tv);
 //% if is_Cmat(Tv)
-inline @Tsli@ slice1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
+inline @Tsli@ cut1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2())
@@ -265,7 +264,7 @@ inline @Tsli@ slice1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline @Tsli@_c slice1(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
+inline @Tsli@_c cut1(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2())
@@ -275,7 +274,7 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 //% elseif is_Cmat3(Tv)
-inline @Tsli@ slice1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline @Tsli@ cut1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
@@ -285,7 +284,7 @@ inline @Tsli@ slice1(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline @Tsli@_c slice1(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline @Tsli@_c cut1(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n1() || j < 0 || j >= v.n2() || k < 0 || k >= v.n3())
@@ -307,9 +306,9 @@ inline @Tsli@_c slice1(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% };
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = slice2_type(Tv);
+//% Tsli = cut2_type(Tv);
 //% if is_Cmat(Tv) || is_Scmat(Tv)
-inline @Tsli@ slice2(@Tv@_IO v, Long_I i)
+inline @Tsli@ cut2(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1())
@@ -319,7 +318,7 @@ inline @Tsli@ slice2(@Tv@_IO v, Long_I i)
     return sli;
 }
 
-inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
+inline @Tsli@_c cut2(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1())
@@ -329,7 +328,7 @@ inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
     return sli;
 }
 //% elseif is_Dcmat(Tv)
-inline @Tsli@ slice2(@Tv@_IO v, Long_I i)
+inline @Tsli@ cut2(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1())
@@ -339,7 +338,7 @@ inline @Tsli@ slice2(@Tv@_IO v, Long_I i)
     return sli;
 }
 
-inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
+inline @Tsli@_c cut2(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1())
@@ -350,7 +349,7 @@ inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
 }
 
 //% elseif is_Mat(Tv)
-inline @Tsli@ slice2(@Tv@_IO v, Long_I i)
+inline @Tsli@ cut2(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1())
@@ -360,7 +359,7 @@ inline @Tsli@ slice2(@Tv@_IO v, Long_I i)
     return sli;
 }
 
-inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
+inline @Tsli@_c cut2(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1())
@@ -370,7 +369,7 @@ inline @Tsli@_c slice2(@Tv@_I v, Long_I i)
     return sli;
 }
 //% elseif is_Cmat3(Tv)
-inline @Tsli@ slice2(@Tv@_IO v, Long_I i, Long_I k)
+inline @Tsli@ cut2(@Tv@_IO v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || k < 0 || k >= v.n3())
@@ -380,7 +379,7 @@ inline @Tsli@ slice2(@Tv@_IO v, Long_I i, Long_I k)
     return sli;
 }
 
-inline @Tsli@_c slice2(@Tv@_I v, Long_I i, Long_I k)
+inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || k < 0 || k >= v.n3())
@@ -402,7 +401,7 @@ inline @Tsli@_c slice2(@Tv@_I v, Long_I i, Long_I k)
 //% T = varargin{:};
 //% if is_Cmat(T)
 //%     Tsli = ['Dvec' value_type(T)];
-inline @Tsli@ slice2(@T@_IO v, Long_I i, Long_I j, Long_I N2)
+inline @Tsli@ cut2(@T@_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || j < 0 || j + N2 > v.n2())
@@ -412,7 +411,7 @@ inline @Tsli@ slice2(@T@_IO v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline @Tsli@_c slice2(@T@_I v, Long_I i, Long_I j, Long_I N2)
+inline @Tsli@_c cut2(@T@_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || j < 0 || j + N2 > v.n2())
@@ -423,7 +422,7 @@ inline @Tsli@_c slice2(@T@_I v, Long_I i, Long_I j, Long_I N2)
 }
 //% elseif is_Cmat3(T)
 //%     Tsli = ['Dvec' value_type(T)];
-inline @Tsli@ slice2(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline @Tsli@ cut2(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || j < 0 || j + N2 > v.n2() || k < 0 || k >= v.n3())
@@ -433,7 +432,7 @@ inline @Tsli@ slice2(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline @Tsli@_c slice2(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline @Tsli@_c cut2(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || j < 0 || j + N2 > v.n2() || k < 0 || k >= v.n3())
@@ -453,9 +452,9 @@ inline @Tsli@_c slice2(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% };
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = slice3_type(Tv);
+//% Tsli = cut3_type(Tv);
 //% if is_Cmat3(Tv)
-inline @Tsli@ slice3(@Tv@_IO v, Long_I i, Long_I j)
+inline @Tsli@ cut3(@Tv@_IO v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || j < 0 || j >= v.n2())
@@ -465,7 +464,7 @@ inline @Tsli@ slice3(@Tv@_IO v, Long_I i, Long_I j)
     return sli;
 }
 
-inline @Tsli@_c slice3(@Tv@_I v, Long_I i, Long_I j)
+inline @Tsli@_c cut3(@Tv@_I v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n1() || j < 0 || j >= v.n2())
@@ -482,9 +481,9 @@ inline @Tsli@_c slice3(@Tv@_I v, Long_I i, Long_I j)
 //% };
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = slice12_type(Tv);
+//% Tsli = cut12_type(Tv);
 //% if is_Cmat3(Tv) || is_Scmat3(Tv)
-inline @Tsli@ slice12(@Tv@_IO v, Long_I k)
+inline @Tsli@ cut12(@Tv@_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n3())
@@ -494,7 +493,7 @@ inline @Tsli@ slice12(@Tv@_IO v, Long_I k)
     return sli;
 }
 
-inline @Tsli@_c slice12(@Tv@_I v, Long_I k)
+inline @Tsli@_c cut12(@Tv@_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n3())
@@ -504,7 +503,7 @@ inline @Tsli@_c slice12(@Tv@_I v, Long_I k)
     return sli;
 }
 //% elseif is_Cmat4(Tv)
-inline @Tsli@ slice12(@Tv@_IO v, Long_I k, Long_I l)
+inline @Tsli@ cut12(@Tv@_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
@@ -514,7 +513,7 @@ inline @Tsli@ slice12(@Tv@_IO v, Long_I k, Long_I l)
     return sli;
 }
 
-inline @Tsli@_c slice12(@Tv@_I v, Long_I k, Long_I l)
+inline @Tsli@_c cut12(@Tv@_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n3() || l < 0 || l >= v.n4())
@@ -536,7 +535,7 @@ inline @Tsli@_c slice12(@Tv@_I v, Long_I k, Long_I l)
 //% T = varargin{:};
 //% Tsli = ['Scmat' value_type(T)];
 //% if is_Cmat3(T)
-inline @Tsli@ slice12(@T@_IO v, Long_I j, Long_I N2, Long_I k)
+inline @Tsli@ cut12(@T@_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n2() || k < 0 || k >= v.n3())
@@ -546,7 +545,7 @@ inline @Tsli@ slice12(@T@_IO v, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline @Tsli@_c slice12(@T@_I v, Long_I j, Long_I N2, Long_I k)
+inline @Tsli@_c cut12(@T@_I v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n2() || k < 0 || k >= v.n3())
@@ -568,13 +567,13 @@ inline @Tsli@_c slice12(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% T = varargin{:};
 //% Tsli = ['Dcmat' value_type(T)];
 //% if is_Cmat3(T)
-inline @Tsli@ slice12(@T@_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline @Tsli@ cut12(@T@_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     @Tsli@ sli(&v(i, j, k), N1, N2, v.n1());
     return sli;
 }
 
-inline @Tsli@_c slice12(@T@_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline @Tsli@_c cut12(@T@_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     @Tsli@_c sli(&v(i, j, k), N1, N2, v.n1());
     return sli;

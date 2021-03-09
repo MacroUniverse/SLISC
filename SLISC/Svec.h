@@ -58,7 +58,7 @@ inline SvecChar_c::SvecChar_c(const Char *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -117,7 +117,7 @@ inline void SvecChar_c::set(const Char *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -142,7 +142,7 @@ inline void SvecChar_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -152,7 +152,7 @@ inline void SvecChar_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -167,7 +167,7 @@ inline void SvecChar_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -232,7 +232,7 @@ inline SvecChar::SvecChar(Char *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -295,7 +295,7 @@ inline void SvecChar::set(Char *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -320,7 +320,7 @@ inline void SvecChar::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -330,7 +330,7 @@ inline void SvecChar::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -345,7 +345,7 @@ inline void SvecChar::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -409,7 +409,7 @@ inline SvecInt_c::SvecInt_c(const Int *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -468,7 +468,7 @@ inline void SvecInt_c::set(const Int *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -493,7 +493,7 @@ inline void SvecInt_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -503,7 +503,7 @@ inline void SvecInt_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -518,7 +518,7 @@ inline void SvecInt_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -583,7 +583,7 @@ inline SvecInt::SvecInt(Int *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -646,7 +646,7 @@ inline void SvecInt::set(Int *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -671,7 +671,7 @@ inline void SvecInt::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -681,7 +681,7 @@ inline void SvecInt::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -696,7 +696,7 @@ inline void SvecInt::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -760,7 +760,7 @@ inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -819,7 +819,7 @@ inline void SvecLlong_c::set(const Llong *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -844,7 +844,7 @@ inline void SvecLlong_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -854,7 +854,7 @@ inline void SvecLlong_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -869,7 +869,7 @@ inline void SvecLlong_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -934,7 +934,7 @@ inline SvecLlong::SvecLlong(Llong *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -997,7 +997,7 @@ inline void SvecLlong::set(Llong *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -1022,7 +1022,7 @@ inline void SvecLlong::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -1032,7 +1032,7 @@ inline void SvecLlong::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -1047,7 +1047,7 @@ inline void SvecLlong::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -1127,7 +1127,7 @@ inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -1186,7 +1186,7 @@ inline void SvecFloat_c::set(const Float *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -1211,7 +1211,7 @@ inline void SvecFloat_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -1221,7 +1221,7 @@ inline void SvecFloat_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -1236,7 +1236,7 @@ inline void SvecFloat_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -1301,7 +1301,7 @@ inline SvecFloat::SvecFloat(Float *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -1364,7 +1364,7 @@ inline void SvecFloat::set(Float *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -1389,7 +1389,7 @@ inline void SvecFloat::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -1399,7 +1399,7 @@ inline void SvecFloat::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -1414,7 +1414,7 @@ inline void SvecFloat::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -1478,7 +1478,7 @@ inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -1537,7 +1537,7 @@ inline void SvecDoub_c::set(const Doub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -1562,7 +1562,7 @@ inline void SvecDoub_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -1572,7 +1572,7 @@ inline void SvecDoub_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -1587,7 +1587,7 @@ inline void SvecDoub_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -1652,7 +1652,7 @@ inline SvecDoub::SvecDoub(Doub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -1715,7 +1715,7 @@ inline void SvecDoub::set(Doub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -1740,7 +1740,7 @@ inline void SvecDoub::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -1750,7 +1750,7 @@ inline void SvecDoub::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -1765,7 +1765,7 @@ inline void SvecDoub::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -1829,7 +1829,7 @@ inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -1888,7 +1888,7 @@ inline void SvecLdoub_c::set(const Ldoub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -1913,7 +1913,7 @@ inline void SvecLdoub_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -1923,7 +1923,7 @@ inline void SvecLdoub_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -1938,7 +1938,7 @@ inline void SvecLdoub_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -2003,7 +2003,7 @@ inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -2066,7 +2066,7 @@ inline void SvecLdoub::set(Ldoub *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -2091,7 +2091,7 @@ inline void SvecLdoub::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -2101,7 +2101,7 @@ inline void SvecLdoub::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -2116,7 +2116,7 @@ inline void SvecLdoub::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -2180,7 +2180,7 @@ inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -2239,7 +2239,7 @@ inline void SvecFcomp_c::set(const Fcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -2264,7 +2264,7 @@ inline void SvecFcomp_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -2274,7 +2274,7 @@ inline void SvecFcomp_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -2289,7 +2289,7 @@ inline void SvecFcomp_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -2354,7 +2354,7 @@ inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -2417,7 +2417,7 @@ inline void SvecFcomp::set(Fcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -2442,7 +2442,7 @@ inline void SvecFcomp::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -2452,7 +2452,7 @@ inline void SvecFcomp::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -2467,7 +2467,7 @@ inline void SvecFcomp::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -2531,7 +2531,7 @@ inline SvecComp_c::SvecComp_c(const Comp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -2590,7 +2590,7 @@ inline void SvecComp_c::set(const Comp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -2615,7 +2615,7 @@ inline void SvecComp_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -2625,7 +2625,7 @@ inline void SvecComp_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -2640,7 +2640,7 @@ inline void SvecComp_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -2705,7 +2705,7 @@ inline SvecComp::SvecComp(Comp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -2768,7 +2768,7 @@ inline void SvecComp::set(Comp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -2793,7 +2793,7 @@ inline void SvecComp::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -2803,7 +2803,7 @@ inline void SvecComp::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -2818,7 +2818,7 @@ inline void SvecComp::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -2882,7 +2882,7 @@ inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -2941,7 +2941,7 @@ inline void SvecLcomp_c::set(const Lcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -2966,7 +2966,7 @@ inline void SvecLcomp_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -2976,7 +2976,7 @@ inline void SvecLcomp_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -2991,7 +2991,7 @@ inline void SvecLcomp_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -3056,7 +3056,7 @@ inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -3119,7 +3119,7 @@ inline void SvecLcomp::set(Lcomp *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -3144,7 +3144,7 @@ inline void SvecLcomp::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -3154,7 +3154,7 @@ inline void SvecLcomp::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -3169,7 +3169,7 @@ inline void SvecLcomp::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -3233,7 +3233,7 @@ inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -3292,7 +3292,7 @@ inline void SvecFimag_c::set(const Fimag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -3317,7 +3317,7 @@ inline void SvecFimag_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -3327,7 +3327,7 @@ inline void SvecFimag_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -3342,7 +3342,7 @@ inline void SvecFimag_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -3407,7 +3407,7 @@ inline SvecFimag::SvecFimag(Fimag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -3470,7 +3470,7 @@ inline void SvecFimag::set(Fimag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -3495,7 +3495,7 @@ inline void SvecFimag::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -3505,7 +3505,7 @@ inline void SvecFimag::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -3520,7 +3520,7 @@ inline void SvecFimag::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -3584,7 +3584,7 @@ inline SvecImag_c::SvecImag_c(const Imag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -3643,7 +3643,7 @@ inline void SvecImag_c::set(const Imag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -3668,7 +3668,7 @@ inline void SvecImag_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -3678,7 +3678,7 @@ inline void SvecImag_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -3693,7 +3693,7 @@ inline void SvecImag_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -3758,7 +3758,7 @@ inline SvecImag::SvecImag(Imag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -3821,7 +3821,7 @@ inline void SvecImag::set(Imag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -3846,7 +3846,7 @@ inline void SvecImag::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -3856,7 +3856,7 @@ inline void SvecImag::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -3871,7 +3871,7 @@ inline void SvecImag::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -3935,7 +3935,7 @@ inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -3994,7 +3994,7 @@ inline void SvecLimag_c::set(const Limag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -4019,7 +4019,7 @@ inline void SvecLimag_c::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -4029,7 +4029,7 @@ inline void SvecLimag_c::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -4044,7 +4044,7 @@ inline void SvecLimag_c::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }
@@ -4109,7 +4109,7 @@ inline SvecLimag::SvecLimag(Limag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
     m_data_len = data_len;
 #endif
 }
@@ -4172,7 +4172,7 @@ inline void SvecLimag::set(Limag *data, Long_I data_len, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p = data; m_N = N;
 }
@@ -4197,7 +4197,7 @@ inline void SvecLimag::set_size(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_N = N;
 }
@@ -4207,7 +4207,7 @@ inline void SvecLimag::next()
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += m_N;
 }
@@ -4222,7 +4222,7 @@ inline void SvecLimag::shift(Long_I N)
 #ifdef SLS_CHECK_BOUNDS
     m_data_len -= m_N;
     if (m_N > m_data_len)
-        SLS_ERR("slice out of bound!");
+        SLS_ERR("cut out of bound!");
 #endif
     m_p += N;
 }

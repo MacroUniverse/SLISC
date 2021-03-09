@@ -1,6 +1,6 @@
 #pragma once
 #include "arithmetic.h"
-#include "slice_arith.h"
+#include "cut.h"
 #include "Cband.h"
 
 namespace slisc {
@@ -10,7 +10,7 @@ namespace slisc {
 // ref: cBLAS gbmv() routine
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
-// slice the non-zero band
+// cut the non-zero band
 inline DcmatDoub band(CbandDoub_IO a)
 {
     return DcmatDoub(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
@@ -172,11 +172,11 @@ inline void copy_real(CbandComp_O b, Doub_I s)
 {
     Long N1 = b.n1(), N2 = b.n2();
     for (Long j = 0; j < N2; ++j) {
-        SvecComp sli_b = slice1(b.cmat(), j);
+        SvecComp cut_b = cut1(b.cmat(), j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
-            sli_b[k + i].real(s);
+            cut_b[k + i].real(s);
     }
 }
 
@@ -199,12 +199,12 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
     #endif
     Long N1 = a.n1(), N2 = a.n2();
     for (Long j = 0; j < N2; ++j) {
-        SvecComp sli_b = slice1(b.cmat(), j);
-        SvecDoub_c sli_a = slice1(a, j);
+        SvecComp cut_b = cut1(b.cmat(), j);
+        SvecDoub_c cut_a = cut1(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
-            sli_b[k + i].imag(sli_a[i]);
+            cut_b[k + i].imag(cut_a[i]);
     }
 }
 
@@ -219,15 +219,15 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     Long N1 = a.n1(), N2 = a.n2();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N2; ++j) {
-        SvecComp sli_b = slice1(b.cmat(), j);
-        SvecDoub_c sli_a = slice1(a, j);
+        SvecComp cut_b = cut1(b.cmat(), j);
+        SvecDoub_c cut_a = cut1(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i) {
             if (i == j)
-                sli_b[k + i] = Comp(0.5, dt4 * sli_a[i]);
+                cut_b[k + i] = Comp(0.5, dt4 * cut_a[i]);
             else
-                sli_b[k + i] = Comp(0, dt4 * sli_a[i]);
+                cut_b[k + i] = Comp(0, dt4 * cut_a[i]);
         }
     }
 }
@@ -246,7 +246,7 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt)
         Long i = a.row(k), j = a.col(k);
             b(i, j) = dt4*a[k];
     }
-    slice2(b.cmat(), b.idiag()) += 0.5;
+    cut2(b.cmat(), b.idiag()) += 0.5;
 }
 
 // cn_band_mat() for imaginary time propagation
@@ -260,15 +260,15 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     Long N1 = a.n1(), N2 = a.n2();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N2; ++j) {
-        SvecComp sli_b = slice1(b.cmat(), j);
-        SvecDoub_c sli_a = slice1(a, j);
+        SvecComp cut_b = cut1(b.cmat(), j);
+        SvecDoub_c cut_a = cut1(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i) {
             if (i == j)
-                sli_b[k + i] = 0.5 + dt4 * sli_a[i];
+                cut_b[k + i] = 0.5 + dt4 * cut_a[i];
             else
-                sli_b[k + i] = dt4 * sli_a[i];
+                cut_b[k + i] = dt4 * cut_a[i];
         }
     }
 }

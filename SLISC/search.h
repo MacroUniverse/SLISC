@@ -1,6 +1,6 @@
 #pragma once
 #include "arithmetic.h"
-#include "slice_arith.h"
+#include "cut.h"
 #include "string.h"
 
 namespace slisc {
@@ -791,7 +791,7 @@ inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n1(); ++i) {
-        if (v == slice2(a, i))
+        if (v == cut2(a, i))
             return i;
     }
     return -1;
@@ -804,7 +804,7 @@ inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n1(); ++i) {
-        if (v == slice2(a, i))
+        if (v == cut2(a, i))
             return i;
     }
     return -1;
@@ -817,7 +817,7 @@ inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n1(); ++i) {
-        if (v == slice2(a, i))
+        if (v == cut2(a, i))
             return i;
     }
     return -1;
@@ -830,7 +830,7 @@ inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n1(); ++i) {
-        if (v == slice2(a, i))
+        if (v == cut2(a, i))
             return i;
     }
     return -1;

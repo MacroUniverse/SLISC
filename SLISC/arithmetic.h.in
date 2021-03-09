@@ -1,7 +1,7 @@
 #pragma once
 #include "copy.h"
 #include "scalar_arith.h"
-#include "slice_arith.h"
+#include "cut.h"
 
 namespace slisc {
 // return signed size instead of unsigned
@@ -518,7 +518,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
     }
 }
 //% elseif is_Cmat(Tv) || is_Mat(Tv)
-//%     Tsli = slice_type(Tv);
+//%     Tsli = cut_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
 {
     Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
@@ -532,8 +532,8 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
         else {
             @Tv@ v1(N1, N2); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20);
-            copy(slice(v1, 0, N1min, 0, N2min),
-                slice(v, 0, N1min, 0, N2min));
+            copy(cut(v1, 0, N1min, 0, N2min),
+                cut(v, 0, N1min, 0, N2min));
             v << v1;
         }
     }
@@ -552,8 +552,8 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3, @T@_I val = 0
         else {
             @Tv@ v1(N1, N2, N3); copy(v1, val);
             Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
-            copy(slice(v1, 0, N1min, 0, N2min, 0, N3min),
-                slice(v, 0, N1min, 0, N2min, 0, N3min));
+            copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
+                cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;
         }
     }
@@ -2053,7 +2053,7 @@ inline void uniq_elm(@T@_IO v)
 //% };
 //%--------------------
 //% [T, T1] = varargin{:};
-//% Tsli1 = slice2_type(T1);
+//% Tsli1 = cut2_type(T1);
 inline void uniq_rows(@T@_O a, @T1@_I a1)
 {
     Long k = 0;
@@ -2061,15 +2061,15 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
     for (Long i = 0; i < a1.n1(); ++i) {
         // check repeat
         Bool repeat = false;
-        @Tsli1@_c sli1 = slice2(a1, i);
+        @Tsli1@_c sli1 = cut2(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (slice2(a, j) == sli1) {
+            if (cut2(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(slice2(a, k), sli1);
+        copy(cut2(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n2());
