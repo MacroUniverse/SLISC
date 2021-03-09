@@ -851,9 +851,21 @@ inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
         v[i] += s;
 }
 
+inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] += s;
+}
+
 inline void minus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
+        v[i] -= s;
+}
+
+inline void minus_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
         v[i] -= s;
 }
 
@@ -942,6 +954,16 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
     divide_equals_vs(v.ptr(), s, v.size());
 }
 //% elseif is_Dvec(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{
+    plus_equals_vs(v.ptr(), s, v.size(), v.step());
+}
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{
+    minus_equals_vs(v.ptr(), s, v.size(), v.step());
+}
+
 inline void operator*=(@T@_IO v, @Ts@_I s)
 {
     times_equals_vs(v.ptr(), s, v.size(), v.step());

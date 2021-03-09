@@ -232,6 +232,23 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     }
 }
 
+// construct Crank-Nicolson coefficient matrix from hamiltonian
+// B = 1/2 + I*dt*A/4
+inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(a, b))
+        SLS_ERR("wrong shape!");
+#endif
+    Doub dt4 = 0.25*dt;
+    copy(b, 0);
+    for (Long k = 0; k < a.nnz(); ++k) {
+        Long i = a.row(k), j = a.col(k);
+            b(i, j) = dt4*a[k];
+    }
+    slice2(b.cmat(), b.idiag()) += 0.5;
+}
+
 // cn_band_mat() for imaginary time propagation
 // B = 1/2 + dt*A/4
 inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
