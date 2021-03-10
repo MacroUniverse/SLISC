@@ -272,6 +272,10 @@ void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdDoub_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -515,6 +519,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdComp_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -758,6 +766,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooDoub_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -1001,6 +1013,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooComp_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -1244,6 +1260,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatDoub_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -1487,6 +1507,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatComp_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -1740,6 +1764,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdDoub_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -1999,6 +2027,10 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdComp_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -2258,6 +2290,10 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooDoub_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -2517,6 +2553,10 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooComp_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -2776,6 +2816,10 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatDoub_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -3035,6 +3079,10 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatComp_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
