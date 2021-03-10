@@ -144,11 +144,9 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt)
 #endif
     Doub dt4 = 0.25*dt;
     copy(b, 0);
-    for (Long k = 0; k < a.nnz(); ++k) {
-        Long i = a.row(k), j = a.col(k);
-            b(i, j) = dt4*a[k];
-    }
-    cut2(b.cmat(), b.idiag()) += 0.5;
+    copy(cut2(b.cmat(), b.idiag()), 0.5);
+    for (Long k = 0; k < a.nnz(); ++k) 
+        b.ref(a.row(k), a.col(k)).imag(dt4*a[k]);
 }
 
 // cn_band_mat() for imaginary time propagation

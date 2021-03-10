@@ -2470,6 +2470,10 @@ inline Bool shape_cmp(CmobdDoub_I v1, McooDoub_I v2) {return v1.n1() == v2.n1() 
 
 inline Bool shape_cmp(CmobdComp_I v1, McooDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
+inline Bool shape_cmp(CmobdComp_I v1, CmobdDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
+inline Bool shape_cmp(CmobdComp_I v1, CmobdComp_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
 inline Bool shape_cmp(CbandDoub_I v1, CbandDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(CbandDoub_I v1, CmatDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
@@ -2845,6 +2849,22 @@ inline Bool operator==(Cmat3Doub_I v1, Cmat3Doub_I v2)
 }
 
 inline Bool operator!=(Cmat3Doub_I v1, Cmat3Doub_I v2)
+{
+    return !(v1 == v2);
+}
+
+inline Bool operator==(CmobdComp_I v1, CmobdDoub_I v2)
+{
+    if (!shape_cmp(v1, v2))
+        return false;
+    for (Long i = 0; i < v1.n1(); ++i)
+        for (Long j = 0; j < v1.n2(); ++j)
+            if (v1(i, j) != v2(i, j))
+                return false;
+    return true;
+}
+
+inline Bool operator!=(CmobdComp_I v1, CmobdDoub_I v2)
 {
     return !(v1 == v2);
 }

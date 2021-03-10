@@ -150,7 +150,7 @@ void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *wsp, 
     iflag = LAPACKE_zgesv(LAPACK_COL_MAJOR, m, m, (double _Complex*)(wsp + iq), m, ipiv,
         (double _Complex*)(wsp + ip), m);
     if (iflag != 0)
-        SLS_ERR("Problem in ZGESV (within ZGPADM)");
+        SLS_ERR("Problem in ZGESV (within ZGPADM): iflag = " + num2str(iflag));
     cblas_zdscal(mm, 2., wsp + ip, 1);
     for (j = 0; j < m; ++j)
         wsp[ip + j*(m + 1)] = wsp[ip + j*(m + 1)] + one;

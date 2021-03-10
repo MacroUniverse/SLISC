@@ -147,7 +147,7 @@ void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *wsp, 
     iflag = LAPACKE_zgesv(LAPACK_COL_MAJOR, m, m, (double _Complex*)(wsp + iq), m, ipiv,
         (double _Complex*)(wsp + ip), m);
     if (iflag != 0)
-        SLS_ERR("Problem in ZGESV (within ZGPADM)");
+        SLS_ERR("Problem in ZGESV (within ZGPADM): iflag = " + num2str(iflag));
     cblas_zdscal(mm, 2., wsp + ip, 1);
     for (j = 0; j < m; ++j)
         wsp[ip + j*(m + 1)] = wsp[ip + j*(m + 1)] + one;
@@ -272,6 +272,10 @@ void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, @Tm@_I mat, Int_I itrace, Int_O iflag)
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 
@@ -528,6 +532,10 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, @Tm@_I mat, Int_I itrace, Int_O iflag )
 {
+#ifndef NDEBUG
+    if (sum_abs_v(w, n) < 1e-100)
+        SLS_ERR("zero vector is not allowed!");
+#endif
     const Int mxstep = 500, mxreject = 0, ideg = 6;
     Doub delta = 1.2, gamma = 0.9;
 

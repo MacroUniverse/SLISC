@@ -106,6 +106,8 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'CmobdInt' 'McooInt';
 //%     'CmobdDoub' 'McooDoub';
 //%     'CmobdComp' 'McooDoub';
+//%     'CmobdComp' 'CmobdDoub';
+//%     'CmobdComp' 'CmobdComp';
 //%     'CbandDoub' 'CbandDoub';
 //%     'CbandDoub' 'CmatDoub';
 //%     'CbandDoub' 'CbandComp';
@@ -162,6 +164,7 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return v1.n1() == v2.n1() && v1.n2(
 //%     'MatDoub', 'CmatDoub';
 //%     'CmatDoub', 'MatDoub';
 //%     'Cmat3Doub', 'Cmat3Doub';
+//%     'CmobdComp', 'CmobdDoub';
 //%     'Mat3Doub', 'Mat3Doub';
 //%     'DvecInt', 'DvecInt';
 //%     'DvecLong', 'DvecLong';
