@@ -1063,6 +1063,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'Cmat3Comp', 'Cmat3Comp';
 //%     'SvecDoub', 'VecDoub';
 //%     'SvecDoub', 'SvecDoub';
+//%     'SvecComp', 'VecDoub';
 //%     'SvecComp', 'SvecComp';
 //%     'SvecComp', 'DvecComp';
 //%     'ScmatDoub', 'ScmatDoub';

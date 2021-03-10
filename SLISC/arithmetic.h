@@ -4920,6 +4920,42 @@ inline void operator/=(SvecDoub_O &v, SvecDoub_I v1)
     divide_equals_vv(v.ptr(), v1.ptr(), v1.size());
 }
 
+inline void operator+=(SvecComp_O &v, VecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    plus_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+inline void operator-=(SvecComp_O &v, VecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+inline void operator*=(SvecComp_O &v, VecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
+inline void operator/=(SvecComp_O &v, VecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_equals_vv(v.ptr(), v1.ptr(), v1.size());
+}
+
 inline void operator+=(SvecComp_O &v, SvecComp_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
