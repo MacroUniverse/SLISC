@@ -2205,6 +2205,18 @@ inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
     }
 }
 
+inline void copy(ScmatDoub_O lhs, McooDoub_I rhs)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(lhs, rhs))
+        SLS_ERR("wrong shape!");
+#endif
+    copy(lhs, 0);
+    for (Long i = 0; i < rhs.nnz(); ++i) {
+        lhs(rhs.row(i), rhs.col(i)) = rhs[i];
+    }
+}
+
 inline void copy(CmatComp_O lhs, McooComp_I rhs)
 {
 #ifdef SLS_CHECK_SHAPES

@@ -365,6 +365,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 
 //% types = {
 //%     'CmatDoub', 'Doub';
+//%     'ScmatDoub', 'Doub';
 //%     'CmatComp', 'Comp';
 //% };
 //%----------------------------
