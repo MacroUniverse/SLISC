@@ -2193,6 +2193,70 @@ inline void copy(McooComp_O v, McooDoub_I v1)
 }
 
 
+// copy dense matrix to Mcoo matrix
+// abs(s) < tol is considered 0
+
+inline void copy(McooDoub_O v, CmatDoub_I v1, Doub_I tol = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long j = 0; j < v1.n2(); ++j) {
+        for (Long i = 0; i < v1.n1(); ++i) {
+            Doub val = v1(i, j);
+            if (abs(val) > tol)
+                v.push(val, i, j);
+        }
+    }
+}
+
+inline void copy(McooDoub_O v, ScmatDoub_I v1, Doub_I tol = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long j = 0; j < v1.n2(); ++j) {
+        for (Long i = 0; i < v1.n1(); ++i) {
+            Doub val = v1(i, j);
+            if (abs(val) > tol)
+                v.push(val, i, j);
+        }
+    }
+}
+
+inline void copy(McooComp_O v, CmatComp_I v1, Doub_I tol = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long j = 0; j < v1.n2(); ++j) {
+        for (Long i = 0; i < v1.n1(); ++i) {
+            Comp val = v1(i, j);
+            if (abs(val) > tol)
+                v.push(val, i, j);
+        }
+    }
+}
+
+inline void copy(McooComp_O v, ScmatComp_I v1, Doub_I tol = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long j = 0; j < v1.n2(); ++j) {
+        for (Long i = 0; i < v1.n1(); ++i) {
+            Comp val = v1(i, j);
+            if (abs(val) > tol)
+                v.push(val, i, j);
+        }
+    }
+}
+
+
 inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
 {
 #ifdef SLS_CHECK_SHAPES

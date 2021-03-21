@@ -15,8 +15,6 @@ public:
     McooChar(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooChar(Long_I N1, Long_I N2);
     McooChar(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    McooChar(const McooChar &rhs) = delete;  // Copy constructor
-    McooChar &operator=(const McooChar &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -249,8 +247,6 @@ public:
     McooInt(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooInt(Long_I N1, Long_I N2);
     McooInt(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    McooInt(const McooInt &rhs) = delete;  // Copy constructor
-    McooInt &operator=(const McooInt &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -483,8 +479,6 @@ public:
     McooLlong(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooLlong(Long_I N1, Long_I N2);
     McooLlong(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    McooLlong(const McooLlong &rhs) = delete;  // Copy constructor
-    McooLlong &operator=(const McooLlong &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -717,8 +711,6 @@ public:
     McooDoub(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooDoub(Long_I N1, Long_I N2);
     McooDoub(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    McooDoub(const McooDoub &rhs) = delete;  // Copy constructor
-    McooDoub &operator=(const McooDoub &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
@@ -951,8 +943,6 @@ public:
     McooComp(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooComp(Long_I N1, Long_I N2);
     McooComp(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    McooComp(const McooComp &rhs) = delete;  // Copy constructor
-    McooComp &operator=(const McooComp &rhs) = delete;// copy assignment
     Long *row_ptr();
     const Long *row_ptr() const;
     Long *col_ptr();
