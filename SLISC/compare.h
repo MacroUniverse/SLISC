@@ -2420,6 +2420,8 @@ inline Bool shape_cmp(Cmat3Comp_I v1, Jcmat3Comp_I v2) {return v1.n1() == v2.n1(
 
 inline Bool shape_cmp(CmatComp_I v1, McooComp_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
+inline Bool shape_cmp(McooDoub_I v1, ScmatDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
 inline Bool shape_cmp(McooDoub_I v1, McooDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(McooDoub_I v1, CmatDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
@@ -2427,6 +2429,8 @@ inline Bool shape_cmp(McooDoub_I v1, CmatDoub_I v2) {return v1.n1() == v2.n1() &
 inline Bool shape_cmp(McooDoub_I v1, CbandComp_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(McooComp_I v1, CmatComp_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
+inline Bool shape_cmp(McooComp_I v1, ScmatComp_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(McooComp_I v1, McooDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
@@ -2437,6 +2441,8 @@ inline Bool shape_cmp(ScmatInt_I v1, ScmatInt_I v2) {return v1.n1() == v2.n1() &
 inline Bool shape_cmp(ScmatLlong_I v1, ScmatLlong_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(ScmatDoub_I v1, CmatDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
+inline Bool shape_cmp(ScmatDoub_I v1, McooDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(ScmatDoub_I v1, CbandDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
