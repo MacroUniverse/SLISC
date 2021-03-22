@@ -1,6 +1,8 @@
 // band diagonal matrix class
 #pragma once
 #include "Cmat.h"
+#include "Dvec.h"
+#include "Dcmat.h"
 
 namespace slisc {
 
@@ -29,6 +31,10 @@ public:
     Long idiag() const;
     CmatInt &cmat();
     const CmatInt &cmat() const;
+    DcmatInt band();
+    DcmatInt_c band() const;
+    DvecInt diag();
+    DvecInt_c diag() const;
     void resize(Long_I lda, Long_I N2);
     void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
     void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -126,6 +132,26 @@ inline const CmatInt &CbandInt::cmat() const
     return m_a;
 }
 
+inline DcmatInt CbandInt::band()
+{
+    return DcmatInt(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline DcmatInt_c CbandInt::band() const
+{
+    return DcmatInt_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline DvecInt CbandInt::diag()
+{
+    return DvecInt(&m_a[m_idiag], n2(), lda());
+}
+
+inline DvecInt_c CbandInt::diag() const
+{
+    return DvecInt_c(&m_a[m_idiag], n2(), lda());
+}
+
 inline void CbandInt::resize(Long_I lda, Long_I N2)
 {
     m_a.resize(lda, N2);
@@ -190,6 +216,10 @@ public:
     Long idiag() const;
     CmatDoub &cmat();
     const CmatDoub &cmat() const;
+    DcmatDoub band();
+    DcmatDoub_c band() const;
+    DvecDoub diag();
+    DvecDoub_c diag() const;
     void resize(Long_I lda, Long_I N2);
     void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
     void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -287,6 +317,26 @@ inline const CmatDoub &CbandDoub::cmat() const
     return m_a;
 }
 
+inline DcmatDoub CbandDoub::band()
+{
+    return DcmatDoub(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline DcmatDoub_c CbandDoub::band() const
+{
+    return DcmatDoub_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline DvecDoub CbandDoub::diag()
+{
+    return DvecDoub(&m_a[m_idiag], n2(), lda());
+}
+
+inline DvecDoub_c CbandDoub::diag() const
+{
+    return DvecDoub_c(&m_a[m_idiag], n2(), lda());
+}
+
 inline void CbandDoub::resize(Long_I lda, Long_I N2)
 {
     m_a.resize(lda, N2);
@@ -351,6 +401,10 @@ public:
     Long idiag() const;
     CmatComp &cmat();
     const CmatComp &cmat() const;
+    DcmatComp band();
+    DcmatComp_c band() const;
+    DvecComp diag();
+    DvecComp_c diag() const;
     void resize(Long_I lda, Long_I N2);
     void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
     void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -446,6 +500,26 @@ inline CmatComp &CbandComp::cmat()
 inline const CmatComp &CbandComp::cmat() const
 {
     return m_a;
+}
+
+inline DcmatComp CbandComp::band()
+{
+    return DcmatComp(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline DcmatComp_c CbandComp::band() const
+{
+    return DcmatComp_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline DvecComp CbandComp::diag()
+{
+    return DvecComp(&m_a[m_idiag], n2(), lda());
+}
+
+inline DvecComp_c CbandComp::diag() const
+{
+    return DvecComp_c(&m_a[m_idiag], n2(), lda());
 }
 
 inline void CbandComp::resize(Long_I lda, Long_I N2)

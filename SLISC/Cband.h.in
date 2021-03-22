@@ -1,6 +1,8 @@
 // band diagonal matrix class
 #pragma once
 #include "Cmat.h"
+#include "Dvec.h"
+#include "Dcmat.h"
 
 namespace slisc {
 
@@ -9,6 +11,8 @@ namespace slisc {
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
 //% CbandT = ['Cband' T];
+//% DcmatT = ['Dcmat' T];
+//% DvecT = ['Dvec' T];
 class @CbandT@
 {
 public:
@@ -34,6 +38,10 @@ public:
     Long idiag() const;
     @CmatT@ &cmat();
     const @CmatT@ &cmat() const;
+    @DcmatT@ band();
+    @DcmatT@_c band() const;
+    @DvecT@ diag();
+    @DvecT@_c diag() const;
     void resize(Long_I lda, Long_I N2);
     void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
     void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -129,6 +137,26 @@ inline @CmatT@ &@CbandT@::cmat()
 inline const @CmatT@ &@CbandT@::cmat() const
 {
     return m_a;
+}
+
+inline @DcmatT@ @CbandT@::band()
+{
+    return @DcmatT@(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline @DcmatT@_c @CbandT@::band() const
+{
+    return @DcmatT@_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n2(), lda());
+}
+
+inline @DvecT@ @CbandT@::diag()
+{
+    return @DvecT@(&m_a[m_idiag], n2(), lda());
+}
+
+inline @DvecT@_c @CbandT@::diag() const
+{
+    return @DvecT@_c(&m_a[m_idiag], n2(), lda());
 }
 
 inline void @CbandT@::resize(Long_I lda, Long_I N2)

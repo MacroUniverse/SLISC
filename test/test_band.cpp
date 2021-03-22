@@ -67,6 +67,17 @@ void test_band()
             SLS_ERR("failed!");
     }
 
+    // test band() diag()
+    {
+        CbandDoub a(4, 4, 1, 1);
+        DcmatDoub b = a.band();
+        if (b.ptr() != &a.cmat()[a.idiag()-a.nup()] || b.n1() != 3 || b.n2() != 4)
+            SLS_ERR("failed!");
+        DvecDoub v = a.diag();
+        if (v.ptr() != &a.cmat()[a.idiag()] || v.step() != a.lda() || v.size() != 4)
+            SLS_ERR("failed!");
+    }
+
 #ifdef SLS_USE_CBLAS
     // test band matrix-vector multiplication
     {
