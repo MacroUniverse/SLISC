@@ -1878,6 +1878,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'VecDoub', 'CmatDoub', 'SvecDoub';
 //%     'VecComp', 'CmatDoub', 'VecComp';
 //%     'VecComp', 'CmatDoub', 'SvecComp';
+//%     'VecComp', 'CmatComp', 'VecComp';
 //%     'VecComp', 'ScmatDoub', 'VecComp';
 //%     'DvecComp', 'DcmatDoub', 'DvecComp';
 //%     'DvecComp', 'CmatDoub', 'DvecComp';

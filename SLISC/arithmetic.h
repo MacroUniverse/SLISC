@@ -8982,6 +8982,26 @@ inline void mul_gen(VecComp_O &y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, 
 #endif
 }
 
+inline void mul_gen(VecComp_O &y, CmatComp_I a, VecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n2() || y.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
+    incy =  1;
+    lda = a.n1();
+    incx = 1;
+    CBLAS_LAYOUT layout = CblasColMajor;
+
+    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.ptr(),
+        lda, x.ptr(), incx, &beta, y.ptr(), incy);
+#else
+    mul(y, a, x);
+#endif
+}
+
 inline void mul_gen(VecComp_O &y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
