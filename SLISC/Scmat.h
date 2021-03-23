@@ -11,7 +11,6 @@ public:
     ScmatChar_c(const Char *data, Long_I N1, Long_I N2); // unsafe
     ScmatChar_c(const Char *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatChar_c &operator=(const ScmatChar_c &) = delete;
 
     // === Cmat functions ===
     const Char& operator()(Long_I i, Long_I j) const; // double indexing
@@ -97,7 +96,6 @@ public:
     ScmatChar(Char *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatChar_c() const;
-    ScmatChar &operator=(const ScmatChar &) = delete;
 
     // === Cmat functions ===
     Char& operator()(Long_I i, Long_I j) const; // double indexing
@@ -186,7 +184,6 @@ public:
     ScmatInt_c(const Int *data, Long_I N1, Long_I N2); // unsafe
     ScmatInt_c(const Int *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatInt_c &operator=(const ScmatInt_c &) = delete;
 
     // === Cmat functions ===
     const Int& operator()(Long_I i, Long_I j) const; // double indexing
@@ -272,7 +269,6 @@ public:
     ScmatInt(Int *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatInt_c() const;
-    ScmatInt &operator=(const ScmatInt &) = delete;
 
     // === Cmat functions ===
     Int& operator()(Long_I i, Long_I j) const; // double indexing
@@ -361,7 +357,6 @@ public:
     ScmatLlong_c(const Llong *data, Long_I N1, Long_I N2); // unsafe
     ScmatLlong_c(const Llong *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatLlong_c &operator=(const ScmatLlong_c &) = delete;
 
     // === Cmat functions ===
     const Llong& operator()(Long_I i, Long_I j) const; // double indexing
@@ -447,7 +442,6 @@ public:
     ScmatLlong(Llong *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatLlong_c() const;
-    ScmatLlong &operator=(const ScmatLlong &) = delete;
 
     // === Cmat functions ===
     Llong& operator()(Long_I i, Long_I j) const; // double indexing
@@ -552,7 +546,6 @@ public:
     ScmatFloat_c(const Float *data, Long_I N1, Long_I N2); // unsafe
     ScmatFloat_c(const Float *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatFloat_c &operator=(const ScmatFloat_c &) = delete;
 
     // === Cmat functions ===
     const Float& operator()(Long_I i, Long_I j) const; // double indexing
@@ -638,7 +631,6 @@ public:
     ScmatFloat(Float *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatFloat_c() const;
-    ScmatFloat &operator=(const ScmatFloat &) = delete;
 
     // === Cmat functions ===
     Float& operator()(Long_I i, Long_I j) const; // double indexing
@@ -727,7 +719,6 @@ public:
     ScmatDoub_c(const Doub *data, Long_I N1, Long_I N2); // unsafe
     ScmatDoub_c(const Doub *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatDoub_c &operator=(const ScmatDoub_c &) = delete;
 
     // === Cmat functions ===
     const Doub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -813,7 +804,6 @@ public:
     ScmatDoub(Doub *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatDoub_c() const;
-    ScmatDoub &operator=(const ScmatDoub &) = delete;
 
     // === Cmat functions ===
     Doub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -902,7 +892,6 @@ public:
     ScmatLdoub_c(const Ldoub *data, Long_I N1, Long_I N2); // unsafe
     ScmatLdoub_c(const Ldoub *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatLdoub_c &operator=(const ScmatLdoub_c &) = delete;
 
     // === Cmat functions ===
     const Ldoub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -988,7 +977,6 @@ public:
     ScmatLdoub(Ldoub *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatLdoub_c() const;
-    ScmatLdoub &operator=(const ScmatLdoub &) = delete;
 
     // === Cmat functions ===
     Ldoub& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1077,7 +1065,6 @@ public:
     ScmatFcomp_c(const Fcomp *data, Long_I N1, Long_I N2); // unsafe
     ScmatFcomp_c(const Fcomp *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatFcomp_c &operator=(const ScmatFcomp_c &) = delete;
 
     // === Cmat functions ===
     const Fcomp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1163,7 +1150,6 @@ public:
     ScmatFcomp(Fcomp *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatFcomp_c() const;
-    ScmatFcomp &operator=(const ScmatFcomp &) = delete;
 
     // === Cmat functions ===
     Fcomp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1252,7 +1238,6 @@ public:
     ScmatComp_c(const Comp *data, Long_I N1, Long_I N2); // unsafe
     ScmatComp_c(const Comp *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatComp_c &operator=(const ScmatComp_c &) = delete;
 
     // === Cmat functions ===
     const Comp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1338,7 +1323,6 @@ public:
     ScmatComp(Comp *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatComp_c() const;
-    ScmatComp &operator=(const ScmatComp &) = delete;
 
     // === Cmat functions ===
     Comp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1427,7 +1411,6 @@ public:
     ScmatLcomp_c(const Lcomp *data, Long_I N1, Long_I N2); // unsafe
     ScmatLcomp_c(const Lcomp *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatLcomp_c &operator=(const ScmatLcomp_c &) = delete;
 
     // === Cmat functions ===
     const Lcomp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1513,7 +1496,6 @@ public:
     ScmatLcomp(Lcomp *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatLcomp_c() const;
-    ScmatLcomp &operator=(const ScmatLcomp &) = delete;
 
     // === Cmat functions ===
     Lcomp& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1602,7 +1584,6 @@ public:
     ScmatFimag_c(const Fimag *data, Long_I N1, Long_I N2); // unsafe
     ScmatFimag_c(const Fimag *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatFimag_c &operator=(const ScmatFimag_c &) = delete;
 
     // === Cmat functions ===
     const Fimag& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1688,7 +1669,6 @@ public:
     ScmatFimag(Fimag *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatFimag_c() const;
-    ScmatFimag &operator=(const ScmatFimag &) = delete;
 
     // === Cmat functions ===
     Fimag& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1777,7 +1757,6 @@ public:
     ScmatImag_c(const Imag *data, Long_I N1, Long_I N2); // unsafe
     ScmatImag_c(const Imag *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatImag_c &operator=(const ScmatImag_c &) = delete;
 
     // === Cmat functions ===
     const Imag& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1863,7 +1842,6 @@ public:
     ScmatImag(Imag *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatImag_c() const;
-    ScmatImag &operator=(const ScmatImag &) = delete;
 
     // === Cmat functions ===
     Imag& operator()(Long_I i, Long_I j) const; // double indexing
@@ -1952,7 +1930,6 @@ public:
     ScmatLimag_c(const Limag *data, Long_I N1, Long_I N2); // unsafe
     ScmatLimag_c(const Limag *data, Long_I data_len, Long_I N1, Long_I N2);
 
-    ScmatLimag_c &operator=(const ScmatLimag_c &) = delete;
 
     // === Cmat functions ===
     const Limag& operator()(Long_I i, Long_I j) const; // double indexing
@@ -2038,7 +2015,6 @@ public:
     ScmatLimag(Limag *data, Long_I data_len, Long_I N1, Long_I N2);
 
     operator ScmatLimag_c() const;
-    ScmatLimag &operator=(const ScmatLimag &) = delete;
 
     // === Cmat functions ===
     Limag& operator()(Long_I i, Long_I j) const; // double indexing

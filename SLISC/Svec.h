@@ -22,7 +22,6 @@ public:
     const Char & operator()(Long_I i) const;
     const Char & end() const;
     const Char & end(Long_I i) const;
-    SvecChar_c &operator=(const SvecChar_c &) = delete;
     void set(const Char *data, Long_I data_len, Long_I N);
     void set(const SvecChar_c &sli);
     void next(); // m_ptr += m_N
@@ -195,7 +194,6 @@ public:
     Char & operator()(Long_I i) const;
     Char & end() const;
     Char & end(Long_I i) const;
-    SvecChar &operator=(const SvecChar &) = delete;
     operator SvecChar_c() const;
     void set(Char *data, Long_I data_len, Long_I N);
     void set(const SvecChar &sli);
@@ -373,7 +371,6 @@ public:
     const Int & operator()(Long_I i) const;
     const Int & end() const;
     const Int & end(Long_I i) const;
-    SvecInt_c &operator=(const SvecInt_c &) = delete;
     void set(const Int *data, Long_I data_len, Long_I N);
     void set(const SvecInt_c &sli);
     void next(); // m_ptr += m_N
@@ -546,7 +543,6 @@ public:
     Int & operator()(Long_I i) const;
     Int & end() const;
     Int & end(Long_I i) const;
-    SvecInt &operator=(const SvecInt &) = delete;
     operator SvecInt_c() const;
     void set(Int *data, Long_I data_len, Long_I N);
     void set(const SvecInt &sli);
@@ -724,7 +720,6 @@ public:
     const Llong & operator()(Long_I i) const;
     const Llong & end() const;
     const Llong & end(Long_I i) const;
-    SvecLlong_c &operator=(const SvecLlong_c &) = delete;
     void set(const Llong *data, Long_I data_len, Long_I N);
     void set(const SvecLlong_c &sli);
     void next(); // m_ptr += m_N
@@ -897,7 +892,6 @@ public:
     Llong & operator()(Long_I i) const;
     Llong & end() const;
     Llong & end(Long_I i) const;
-    SvecLlong &operator=(const SvecLlong &) = delete;
     operator SvecLlong_c() const;
     void set(Llong *data, Long_I data_len, Long_I N);
     void set(const SvecLlong &sli);
@@ -1091,7 +1085,6 @@ public:
     const Float & operator()(Long_I i) const;
     const Float & end() const;
     const Float & end(Long_I i) const;
-    SvecFloat_c &operator=(const SvecFloat_c &) = delete;
     void set(const Float *data, Long_I data_len, Long_I N);
     void set(const SvecFloat_c &sli);
     void next(); // m_ptr += m_N
@@ -1264,7 +1257,6 @@ public:
     Float & operator()(Long_I i) const;
     Float & end() const;
     Float & end(Long_I i) const;
-    SvecFloat &operator=(const SvecFloat &) = delete;
     operator SvecFloat_c() const;
     void set(Float *data, Long_I data_len, Long_I N);
     void set(const SvecFloat &sli);
@@ -1442,7 +1434,6 @@ public:
     const Doub & operator()(Long_I i) const;
     const Doub & end() const;
     const Doub & end(Long_I i) const;
-    SvecDoub_c &operator=(const SvecDoub_c &) = delete;
     void set(const Doub *data, Long_I data_len, Long_I N);
     void set(const SvecDoub_c &sli);
     void next(); // m_ptr += m_N
@@ -1615,7 +1606,6 @@ public:
     Doub & operator()(Long_I i) const;
     Doub & end() const;
     Doub & end(Long_I i) const;
-    SvecDoub &operator=(const SvecDoub &) = delete;
     operator SvecDoub_c() const;
     void set(Doub *data, Long_I data_len, Long_I N);
     void set(const SvecDoub &sli);
@@ -1793,7 +1783,6 @@ public:
     const Ldoub & operator()(Long_I i) const;
     const Ldoub & end() const;
     const Ldoub & end(Long_I i) const;
-    SvecLdoub_c &operator=(const SvecLdoub_c &) = delete;
     void set(const Ldoub *data, Long_I data_len, Long_I N);
     void set(const SvecLdoub_c &sli);
     void next(); // m_ptr += m_N
@@ -1966,7 +1955,6 @@ public:
     Ldoub & operator()(Long_I i) const;
     Ldoub & end() const;
     Ldoub & end(Long_I i) const;
-    SvecLdoub &operator=(const SvecLdoub &) = delete;
     operator SvecLdoub_c() const;
     void set(Ldoub *data, Long_I data_len, Long_I N);
     void set(const SvecLdoub &sli);
@@ -2144,7 +2132,6 @@ public:
     const Fcomp & operator()(Long_I i) const;
     const Fcomp & end() const;
     const Fcomp & end(Long_I i) const;
-    SvecFcomp_c &operator=(const SvecFcomp_c &) = delete;
     void set(const Fcomp *data, Long_I data_len, Long_I N);
     void set(const SvecFcomp_c &sli);
     void next(); // m_ptr += m_N
@@ -2317,7 +2304,6 @@ public:
     Fcomp & operator()(Long_I i) const;
     Fcomp & end() const;
     Fcomp & end(Long_I i) const;
-    SvecFcomp &operator=(const SvecFcomp &) = delete;
     operator SvecFcomp_c() const;
     void set(Fcomp *data, Long_I data_len, Long_I N);
     void set(const SvecFcomp &sli);
@@ -2495,7 +2481,6 @@ public:
     const Comp & operator()(Long_I i) const;
     const Comp & end() const;
     const Comp & end(Long_I i) const;
-    SvecComp_c &operator=(const SvecComp_c &) = delete;
     void set(const Comp *data, Long_I data_len, Long_I N);
     void set(const SvecComp_c &sli);
     void next(); // m_ptr += m_N
@@ -2668,7 +2653,6 @@ public:
     Comp & operator()(Long_I i) const;
     Comp & end() const;
     Comp & end(Long_I i) const;
-    SvecComp &operator=(const SvecComp &) = delete;
     operator SvecComp_c() const;
     void set(Comp *data, Long_I data_len, Long_I N);
     void set(const SvecComp &sli);
@@ -2846,7 +2830,6 @@ public:
     const Lcomp & operator()(Long_I i) const;
     const Lcomp & end() const;
     const Lcomp & end(Long_I i) const;
-    SvecLcomp_c &operator=(const SvecLcomp_c &) = delete;
     void set(const Lcomp *data, Long_I data_len, Long_I N);
     void set(const SvecLcomp_c &sli);
     void next(); // m_ptr += m_N
@@ -3019,7 +3002,6 @@ public:
     Lcomp & operator()(Long_I i) const;
     Lcomp & end() const;
     Lcomp & end(Long_I i) const;
-    SvecLcomp &operator=(const SvecLcomp &) = delete;
     operator SvecLcomp_c() const;
     void set(Lcomp *data, Long_I data_len, Long_I N);
     void set(const SvecLcomp &sli);
@@ -3197,7 +3179,6 @@ public:
     const Fimag & operator()(Long_I i) const;
     const Fimag & end() const;
     const Fimag & end(Long_I i) const;
-    SvecFimag_c &operator=(const SvecFimag_c &) = delete;
     void set(const Fimag *data, Long_I data_len, Long_I N);
     void set(const SvecFimag_c &sli);
     void next(); // m_ptr += m_N
@@ -3370,7 +3351,6 @@ public:
     Fimag & operator()(Long_I i) const;
     Fimag & end() const;
     Fimag & end(Long_I i) const;
-    SvecFimag &operator=(const SvecFimag &) = delete;
     operator SvecFimag_c() const;
     void set(Fimag *data, Long_I data_len, Long_I N);
     void set(const SvecFimag &sli);
@@ -3548,7 +3528,6 @@ public:
     const Imag & operator()(Long_I i) const;
     const Imag & end() const;
     const Imag & end(Long_I i) const;
-    SvecImag_c &operator=(const SvecImag_c &) = delete;
     void set(const Imag *data, Long_I data_len, Long_I N);
     void set(const SvecImag_c &sli);
     void next(); // m_ptr += m_N
@@ -3721,7 +3700,6 @@ public:
     Imag & operator()(Long_I i) const;
     Imag & end() const;
     Imag & end(Long_I i) const;
-    SvecImag &operator=(const SvecImag &) = delete;
     operator SvecImag_c() const;
     void set(Imag *data, Long_I data_len, Long_I N);
     void set(const SvecImag &sli);
@@ -3899,7 +3877,6 @@ public:
     const Limag & operator()(Long_I i) const;
     const Limag & end() const;
     const Limag & end(Long_I i) const;
-    SvecLimag_c &operator=(const SvecLimag_c &) = delete;
     void set(const Limag *data, Long_I data_len, Long_I N);
     void set(const SvecLimag_c &sli);
     void next(); // m_ptr += m_N
@@ -4072,7 +4049,6 @@ public:
     Limag & operator()(Long_I i) const;
     Limag & end() const;
     Limag & end(Long_I i) const;
-    SvecLimag &operator=(const SvecLimag &) = delete;
     operator SvecLimag_c() const;
     void set(Limag *data, Long_I data_len, Long_I N);
     void set(const SvecLimag &sli);

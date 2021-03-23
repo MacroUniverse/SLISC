@@ -7,6 +7,7 @@
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"
+#include "Scmat3.h"
 #include "Dcmat.h"
 #include "Jcmat3.h"
 
@@ -156,6 +157,7 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'ScmatInt'; 'ScmatDoub'; 'ScmatComp';
+//%     'DcmatInt'; 'DcmatDoub'; 'DcmatComp';
 //% };
 //%----------------------------
 //% Tv = varargin{:};

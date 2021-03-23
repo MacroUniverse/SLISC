@@ -2321,9 +2321,70 @@ inline Comp sum_v(const Comp *v, Long_I N)
 }
 
 
+inline Llong prod_v(const Char *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+
+inline Llong prod_v(const Int *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+
+inline Llong prod_v(const Llong *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Llong s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+
+inline Doub prod_v(const Doub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Doub s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+
+inline Comp prod_v(const Comp *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Comp s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+
+
 inline Llong sum(VecChar_I v)
 {
     return sum_v(v.ptr(), v.size());
+}
+
+inline Llong prod(VecChar_I v)
+{
+    return prod_v(v.ptr(), v.size());
 }
 
 inline Llong sum(VecInt_I v)
@@ -2331,9 +2392,19 @@ inline Llong sum(VecInt_I v)
     return sum_v(v.ptr(), v.size());
 }
 
+inline Llong prod(VecInt_I v)
+{
+    return prod_v(v.ptr(), v.size());
+}
+
 inline Llong sum(VecLlong_I v)
 {
     return sum_v(v.ptr(), v.size());
+}
+
+inline Llong prod(VecLlong_I v)
+{
+    return prod_v(v.ptr(), v.size());
 }
 
 inline Doub sum(VecDoub_I v)
@@ -2341,9 +2412,19 @@ inline Doub sum(VecDoub_I v)
     return sum_v(v.ptr(), v.size());
 }
 
+inline Doub prod(VecDoub_I v)
+{
+    return prod_v(v.ptr(), v.size());
+}
+
 inline Doub sum(SvecDoub_I v)
 {
     return sum_v(v.ptr(), v.size());
+}
+
+inline Doub prod(SvecDoub_I v)
+{
+    return prod_v(v.ptr(), v.size());
 }
 
 inline Comp sum(MatComp_I v)
@@ -2351,14 +2432,29 @@ inline Comp sum(MatComp_I v)
     return sum_v(v.ptr(), v.size());
 }
 
+inline Comp prod(MatComp_I v)
+{
+    return prod_v(v.ptr(), v.size());
+}
+
 inline Doub sum(CmatDoub_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
 
+inline Doub prod(CmatDoub_I v)
+{
+    return prod_v(v.ptr(), v.size());
+}
+
 inline Comp sum(CmatComp_I v)
 {
     return sum_v(v.ptr(), v.size());
+}
+
+inline Comp prod(CmatComp_I v)
+{
+    return prod_v(v.ptr(), v.size());
 }
 
 
@@ -2466,6 +2562,19 @@ inline Doub norm(Cmat3Comp_I v)
     return sqrt(norm2(v));
 }
 
+inline Doub norm2(SvecDoub_I v)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+inline Doub norm(SvecDoub_I v)
+{
+    return sqrt(norm2(v));
+}
+
 inline Doub norm2(SvecComp_I v)
 {
     Long N = v.size();
@@ -2475,6 +2584,19 @@ inline Doub norm2(SvecComp_I v)
     return s2;
 }
 inline Doub norm(SvecComp_I v)
+{
+    return sqrt(norm2(v));
+}
+
+inline Doub norm2(DvecDoub_I v)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+inline Doub norm(DvecDoub_I v)
 {
     return sqrt(norm2(v));
 }
@@ -4118,6 +4240,26 @@ inline void operator*=(SvecDoub_IO v, Doub_I s)
 }
 
 inline void operator/=(SvecDoub_IO v, Doub_I s)
+{
+    divide_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator+=(SvecComp_IO v, Doub_I s)
+{
+    plus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator-=(SvecComp_IO v, Doub_I s)
+{
+    minus_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator*=(SvecComp_IO v, Doub_I s)
+{
+    times_equals_vs(v.ptr(), s, v.size());
+}
+
+inline void operator/=(SvecComp_IO v, Doub_I s)
 {
     divide_equals_vs(v.ptr(), s, v.size());
 }
@@ -6464,6 +6606,70 @@ inline void divide(SvecDoub_O v, Doub_I s, VecDoub_I v1)
     divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
 }
 
+inline void plus(SvecComp_O v, VecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    plus_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void plus(SvecComp_O v, Doub_I s, VecComp_I v1)
+{
+    plus(v, v1, s);
+}
+
+inline void minus(SvecComp_O v, VecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void minus(SvecComp_O v, Doub_I s, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_vsv(v.ptr(), s, v1.ptr(), v1.size());
+}
+
+inline void times(SvecComp_O v, VecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void times(SvecComp_O v, Doub_I s, VecComp_I v1)
+{
+    times(v, v1, s);
+}
+
+inline void divide(SvecComp_O v, VecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_vvs(v.ptr(), v1.ptr(), s, v1.size());
+}
+
+inline void divide(SvecComp_O v, Doub_I s, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_vsv(v.ptr(), s, v1.ptr(), v1.size());
+}
+
 inline void plus(VecComp_O v, VecDoub_I v1, Comp_I s)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -8132,6 +8338,15 @@ inline Comp dot(VecComp_I v1, VecComp_I v2)
     return dot_vv(v1.ptr(), v2.ptr(), v2.size());
 }
 
+inline Doub dot(SvecDoub_I v1, VecDoub_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    return dot_vv(v1.ptr(), v2.ptr(), v2.size());
+}
+
 inline Doub dot(SvecDoub_I v1, SvecDoub_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -8274,6 +8489,20 @@ inline void cumsum(VecDoub_O v, VecDoub_I v1)
 
 
 inline void mul(VecDoub_O y, CmatDoub_I a, VecDoub_I x)
+{
+    Long Nr = a.n1(), Nc = a.n2();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < Nr; ++i) {
+        y[i] = 0;
+        for (Long j = 0; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+}
+
+inline void mul(VecDoub_O y, CmatDoub_I a, SvecDoub_I x)
 {
     Long Nr = a.n1(), Nc = a.n2();
 #ifdef SLS_CHECK_SHAPES
@@ -8685,7 +8914,51 @@ inline void mul_gen(VecDoub_O &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, D
 #endif
 }
 
+inline void mul_gen(VecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n2() || y.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
+    incy =  1;
+    lda = a.n1();
+    incx = 1;
+    CBLAS_LAYOUT layout = CblasColMajor;
+
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, x.ptr(), incx, beta, y.ptr(), incy);
+#else
+    mul(y, a, x);
+#endif
+}
+
 inline void mul_gen(VecComp_O &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n2() || y.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
+    incy =  1;
+    lda = a.n1();
+    incx = 1;
+    CBLAS_LAYOUT layout = CblasColMajor;
+
+    // do real part
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, (Doub*)x.ptr(), 2*incx, beta, (Doub*)y.ptr(), 2*incy);
+    // do imag part
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.ptr(),
+        lda, (Doub*)x.ptr()+1, 2*incx, beta, (Doub*)y.ptr()+1, 2*incy);
+#else
+    mul(y, a, x);
+#endif
+}
+
+inline void mul_gen(VecComp_O &y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
     if (x.size() != a.n2() || y.size() != a.n1())

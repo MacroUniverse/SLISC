@@ -1,5 +1,5 @@
-#include "../SLISC/arithmetic.h"
 #include "../SLISC/cut.h"
+#include "../SLISC/arithmetic.h"
 
 void test_cut()
 {

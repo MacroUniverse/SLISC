@@ -7,6 +7,7 @@
 #include "Svec.h"
 #include "Dvec.h"
 #include "Scmat.h"
+#include "Scmat3.h"
 #include "Dcmat.h"
 #include "Jcmat3.h"
 
@@ -1217,6 +1218,66 @@ inline SvecComp cut1(ScmatComp_IO v, Long_I j)
 }
 
 inline SvecComp_c cut1(ScmatComp_I v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecComp_c sli(&v(0, j), v.n1());
+    return sli;
+}
+
+inline SvecInt cut1(DcmatInt_IO v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecInt sli(&v(0, j), v.n1());
+    return sli;
+}
+
+inline SvecInt_c cut1(DcmatInt_I v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecInt_c sli(&v(0, j), v.n1());
+    return sli;
+}
+
+inline SvecDoub cut1(DcmatDoub_IO v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecDoub sli(&v(0, j), v.n1());
+    return sli;
+}
+
+inline SvecDoub_c cut1(DcmatDoub_I v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecDoub_c sli(&v(0, j), v.n1());
+    return sli;
+}
+
+inline SvecComp cut1(DcmatComp_IO v, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (j < 0 || j >= v.n2())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecComp sli(&v(0, j), v.n1());
+    return sli;
+}
+
+inline SvecComp_c cut1(DcmatComp_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n2())

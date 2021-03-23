@@ -57,7 +57,6 @@ public:
 //% if ~constness
     operator @Scmat3T_c@() const;
 //% end
-    @Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat functions ===
     @CT@& operator()(Long_I i, Long_I j, Long_I k) const;

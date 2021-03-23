@@ -69,6 +69,21 @@ inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
 }
 //%----------------
 
+inline void nband(Long_O Nup, Long_O Nlow, McooDoub_I a, Doub_I tol = 0)
+{
+    Nup = 0; Nlow = 0;
+    for (Long k = 0; k < a.nnz(); ++k) {
+        if (tol > 0 && abs(a[k]) < tol)
+            continue;
+        Long i = a.row(k), j = a.col(k);
+        Long n = j - i;
+        if (n > Nup)
+            Nup = n;
+        else if (-n > Nlow)
+            Nlow = -n;
+    }
+}
+
 // set real part of band matrix to constant
 inline void copy_real(CbandComp_O b, Doub_I s)
 {

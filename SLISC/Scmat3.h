@@ -11,7 +11,6 @@ public:
     Scmat3Char_c(const Char *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Char_c(const Char *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Char_c &operator=(const Scmat3Char_c &) = delete;
 
     // === Cmat functions ===
     const Char& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -101,7 +100,6 @@ public:
     Scmat3Char(Char *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Char_c() const;
-    Scmat3Char &operator=(const Scmat3Char &) = delete;
 
     // === Cmat functions ===
     Char& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -194,7 +192,6 @@ public:
     Scmat3Int_c(const Int *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Int_c(const Int *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Int_c &operator=(const Scmat3Int_c &) = delete;
 
     // === Cmat functions ===
     const Int& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -284,7 +281,6 @@ public:
     Scmat3Int(Int *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Int_c() const;
-    Scmat3Int &operator=(const Scmat3Int &) = delete;
 
     // === Cmat functions ===
     Int& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -377,7 +373,6 @@ public:
     Scmat3Llong_c(const Llong *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Llong_c(const Llong *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Llong_c &operator=(const Scmat3Llong_c &) = delete;
 
     // === Cmat functions ===
     const Llong& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -467,7 +462,6 @@ public:
     Scmat3Llong(Llong *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Llong_c() const;
-    Scmat3Llong &operator=(const Scmat3Llong &) = delete;
 
     // === Cmat functions ===
     Llong& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -576,7 +570,6 @@ public:
     Scmat3Float_c(const Float *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Float_c(const Float *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Float_c &operator=(const Scmat3Float_c &) = delete;
 
     // === Cmat functions ===
     const Float& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -666,7 +659,6 @@ public:
     Scmat3Float(Float *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Float_c() const;
-    Scmat3Float &operator=(const Scmat3Float &) = delete;
 
     // === Cmat functions ===
     Float& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -759,7 +751,6 @@ public:
     Scmat3Doub_c(const Doub *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Doub_c(const Doub *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Doub_c &operator=(const Scmat3Doub_c &) = delete;
 
     // === Cmat functions ===
     const Doub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -849,7 +840,6 @@ public:
     Scmat3Doub(Doub *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Doub_c() const;
-    Scmat3Doub &operator=(const Scmat3Doub &) = delete;
 
     // === Cmat functions ===
     Doub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -942,7 +932,6 @@ public:
     Scmat3Ldoub_c(const Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Ldoub_c(const Ldoub *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Ldoub_c &operator=(const Scmat3Ldoub_c &) = delete;
 
     // === Cmat functions ===
     const Ldoub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1032,7 +1021,6 @@ public:
     Scmat3Ldoub(Ldoub *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Ldoub_c() const;
-    Scmat3Ldoub &operator=(const Scmat3Ldoub &) = delete;
 
     // === Cmat functions ===
     Ldoub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1125,7 +1113,6 @@ public:
     Scmat3Fcomp_c(const Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Fcomp_c(const Fcomp *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Fcomp_c &operator=(const Scmat3Fcomp_c &) = delete;
 
     // === Cmat functions ===
     const Fcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1215,7 +1202,6 @@ public:
     Scmat3Fcomp(Fcomp *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Fcomp_c() const;
-    Scmat3Fcomp &operator=(const Scmat3Fcomp &) = delete;
 
     // === Cmat functions ===
     Fcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1308,7 +1294,6 @@ public:
     Scmat3Comp_c(const Comp *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Comp_c(const Comp *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Comp_c &operator=(const Scmat3Comp_c &) = delete;
 
     // === Cmat functions ===
     const Comp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1398,7 +1383,6 @@ public:
     Scmat3Comp(Comp *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Comp_c() const;
-    Scmat3Comp &operator=(const Scmat3Comp &) = delete;
 
     // === Cmat functions ===
     Comp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1491,7 +1475,6 @@ public:
     Scmat3Lcomp_c(const Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Lcomp_c(const Lcomp *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Lcomp_c &operator=(const Scmat3Lcomp_c &) = delete;
 
     // === Cmat functions ===
     const Lcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1581,7 +1564,6 @@ public:
     Scmat3Lcomp(Lcomp *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Lcomp_c() const;
-    Scmat3Lcomp &operator=(const Scmat3Lcomp &) = delete;
 
     // === Cmat functions ===
     Lcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1674,7 +1656,6 @@ public:
     Scmat3Fimag_c(const Fimag *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Fimag_c(const Fimag *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Fimag_c &operator=(const Scmat3Fimag_c &) = delete;
 
     // === Cmat functions ===
     const Fimag& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1764,7 +1745,6 @@ public:
     Scmat3Fimag(Fimag *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Fimag_c() const;
-    Scmat3Fimag &operator=(const Scmat3Fimag &) = delete;
 
     // === Cmat functions ===
     Fimag& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1857,7 +1837,6 @@ public:
     Scmat3Imag_c(const Imag *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Imag_c(const Imag *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Imag_c &operator=(const Scmat3Imag_c &) = delete;
 
     // === Cmat functions ===
     const Imag& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1947,7 +1926,6 @@ public:
     Scmat3Imag(Imag *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Imag_c() const;
-    Scmat3Imag &operator=(const Scmat3Imag &) = delete;
 
     // === Cmat functions ===
     Imag& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -2040,7 +2018,6 @@ public:
     Scmat3Limag_c(const Limag *data, Long_I N1, Long_I N2, Long_I N3);
     Scmat3Limag_c(const Limag *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
-    Scmat3Limag_c &operator=(const Scmat3Limag_c &) = delete;
 
     // === Cmat functions ===
     const Limag& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -2130,7 +2107,6 @@ public:
     Scmat3Limag(Limag *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Limag_c() const;
-    Scmat3Limag &operator=(const Scmat3Limag &) = delete;
 
     // === Cmat functions ===
     Limag& operator()(Long_I i, Long_I j, Long_I k) const;

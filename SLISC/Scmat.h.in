@@ -57,7 +57,6 @@ public:
 //% if ~constness
     operator @ScmatT_c@() const;
 //% end
-    @Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat functions ===
     @CT@& operator()(Long_I i, Long_I j) const; // double indexing

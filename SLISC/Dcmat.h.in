@@ -64,7 +64,6 @@ public:
 //% if ~constness
     operator @DcmatT_c@() const;
 //% end
-    @Class@ &operator=(const @Class@ &) = delete;
 
     // === Cmat member functions ===
     @CT@& operator[](Long_I i) const;

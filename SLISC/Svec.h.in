@@ -62,7 +62,6 @@ public:
     @CT@ & operator()(Long_I i) const;
     @CT@ & end() const;
     @CT@ & end(Long_I i) const;
-    @Class@ &operator=(const @Class@ &) = delete;
 //% if ~constness
     operator @SvecT_c@() const;
 //% end

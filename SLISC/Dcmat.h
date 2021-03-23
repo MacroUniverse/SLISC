@@ -15,7 +15,6 @@ public:
     void set(const Char *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatChar_c &sli);
 
-    DcmatChar_c &operator=(const DcmatChar_c &) = delete;
 
     // === Cmat member functions ===
     const Char& operator[](Long_I i) const;
@@ -110,7 +109,6 @@ public:
     void set(const DcmatChar &sli);
 
     operator DcmatChar_c() const;
-    DcmatChar &operator=(const DcmatChar &) = delete;
 
     // === Cmat member functions ===
     Char& operator[](Long_I i) const;
@@ -208,7 +206,6 @@ public:
     void set(const Int *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatInt_c &sli);
 
-    DcmatInt_c &operator=(const DcmatInt_c &) = delete;
 
     // === Cmat member functions ===
     const Int& operator[](Long_I i) const;
@@ -303,7 +300,6 @@ public:
     void set(const DcmatInt &sli);
 
     operator DcmatInt_c() const;
-    DcmatInt &operator=(const DcmatInt &) = delete;
 
     // === Cmat member functions ===
     Int& operator[](Long_I i) const;
@@ -401,7 +397,6 @@ public:
     void set(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLlong_c &sli);
 
-    DcmatLlong_c &operator=(const DcmatLlong_c &) = delete;
 
     // === Cmat member functions ===
     const Llong& operator[](Long_I i) const;
@@ -496,7 +491,6 @@ public:
     void set(const DcmatLlong &sli);
 
     operator DcmatLlong_c() const;
-    DcmatLlong &operator=(const DcmatLlong &) = delete;
 
     // === Cmat member functions ===
     Llong& operator[](Long_I i) const;
@@ -610,7 +604,6 @@ public:
     void set(const Float *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatFloat_c &sli);
 
-    DcmatFloat_c &operator=(const DcmatFloat_c &) = delete;
 
     // === Cmat member functions ===
     const Float& operator[](Long_I i) const;
@@ -705,7 +698,6 @@ public:
     void set(const DcmatFloat &sli);
 
     operator DcmatFloat_c() const;
-    DcmatFloat &operator=(const DcmatFloat &) = delete;
 
     // === Cmat member functions ===
     Float& operator[](Long_I i) const;
@@ -803,7 +795,6 @@ public:
     void set(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatDoub_c &sli);
 
-    DcmatDoub_c &operator=(const DcmatDoub_c &) = delete;
 
     // === Cmat member functions ===
     const Doub& operator[](Long_I i) const;
@@ -898,7 +889,6 @@ public:
     void set(const DcmatDoub &sli);
 
     operator DcmatDoub_c() const;
-    DcmatDoub &operator=(const DcmatDoub &) = delete;
 
     // === Cmat member functions ===
     Doub& operator[](Long_I i) const;
@@ -996,7 +986,6 @@ public:
     void set(const Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLdoub_c &sli);
 
-    DcmatLdoub_c &operator=(const DcmatLdoub_c &) = delete;
 
     // === Cmat member functions ===
     const Ldoub& operator[](Long_I i) const;
@@ -1091,7 +1080,6 @@ public:
     void set(const DcmatLdoub &sli);
 
     operator DcmatLdoub_c() const;
-    DcmatLdoub &operator=(const DcmatLdoub &) = delete;
 
     // === Cmat member functions ===
     Ldoub& operator[](Long_I i) const;
@@ -1189,7 +1177,6 @@ public:
     void set(const Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatFcomp_c &sli);
 
-    DcmatFcomp_c &operator=(const DcmatFcomp_c &) = delete;
 
     // === Cmat member functions ===
     const Fcomp& operator[](Long_I i) const;
@@ -1284,7 +1271,6 @@ public:
     void set(const DcmatFcomp &sli);
 
     operator DcmatFcomp_c() const;
-    DcmatFcomp &operator=(const DcmatFcomp &) = delete;
 
     // === Cmat member functions ===
     Fcomp& operator[](Long_I i) const;
@@ -1382,7 +1368,6 @@ public:
     void set(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatComp_c &sli);
 
-    DcmatComp_c &operator=(const DcmatComp_c &) = delete;
 
     // === Cmat member functions ===
     const Comp& operator[](Long_I i) const;
@@ -1477,7 +1462,6 @@ public:
     void set(const DcmatComp &sli);
 
     operator DcmatComp_c() const;
-    DcmatComp &operator=(const DcmatComp &) = delete;
 
     // === Cmat member functions ===
     Comp& operator[](Long_I i) const;
@@ -1575,7 +1559,6 @@ public:
     void set(const Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLcomp_c &sli);
 
-    DcmatLcomp_c &operator=(const DcmatLcomp_c &) = delete;
 
     // === Cmat member functions ===
     const Lcomp& operator[](Long_I i) const;
@@ -1670,7 +1653,6 @@ public:
     void set(const DcmatLcomp &sli);
 
     operator DcmatLcomp_c() const;
-    DcmatLcomp &operator=(const DcmatLcomp &) = delete;
 
     // === Cmat member functions ===
     Lcomp& operator[](Long_I i) const;

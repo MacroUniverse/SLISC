@@ -427,6 +427,26 @@ inline @Tret@ sum_v(const @T@ *v, Long_I N)
 }
 //%------------------------
 
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%--------------------
+//% T = varargin{:};
+//% if is_integral(T)
+//%     Tret = 'Llong';
+//% else
+//%     Tret = T;
+//% end
+inline @Tret@ prod_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tret@ s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+//%------------------------
+
 //% types = {'VecChar'; 'VecInt'; 'VecLlong';
 //%     'VecDoub'; 'SvecDoub'; 'MatComp';
 //%     'CmatDoub'; 'CmatComp';};
@@ -442,11 +462,16 @@ inline @Tret@ sum(@T@_I v)
 {
     return sum_v(v.ptr(), v.size());
 }
+
+inline @Tret@ prod(@T@_I v)
+{
+    return prod_v(v.ptr(), v.size());
+}
 //%-----------------
 
 //% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp';
 //%     'CmatDoub'; 'CmatComp'; 'Cmat3Doub';
-//%     'Cmat3Comp'; 'SvecComp'; 'DvecComp'; 'ScmatDoub'; 'DcmatComp';
+//%     'Cmat3Comp'; 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp'; 'ScmatDoub'; 'DcmatComp';
 //% };
 //%-------------------------------
 //% T = varargin{:};
@@ -920,6 +945,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'ScmatComp', 'Doub';
 //%     'ScmatComp', 'Comp';
 //%     'SvecDoub', 'Doub';
+//%     'SvecComp', 'Doub';
 //%     'DvecComp', 'Doub';
 //%     'DvecComp', 'Comp';
 //%     'DcmatDoub', 'Doub';
@@ -1293,6 +1319,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%        'VecComp', 'SvecDoub', 'Imag';
 //%        'SvecDoub', 'SvecDoub', 'Doub';
 //%        'SvecDoub', 'VecDoub', 'Doub';
+//%        'SvecComp', 'VecComp', 'Doub';
 //%        'VecComp', 'VecDoub', 'Comp';
 //%        'VecComp', 'VecComp', 'Comp';
 //%        'CmatInt', 'CmatInt', 'Int';
@@ -1665,6 +1692,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'VecDoub', 'SvecComp';
 //%     'VecComp', 'VecDoub';
 //%     'VecComp', 'VecComp';
+//%     'SvecDoub', 'VecDoub';
 //%     'SvecDoub', 'SvecDoub';
 //%     'SvecDoub', 'SvecComp';
 //%     'SvecComp', 'VecComp';
@@ -1739,8 +1767,9 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 }
 //%-------------------------
 
-//% types = {'VecDoub' 'CmatDoub' 'VecDoub';
-//%   %  'VecLcomp' 'MatComp' 'VecInt';
+//% types = {
+//%     'VecDoub' 'CmatDoub' 'VecDoub';
+//%     'VecDoub' 'CmatDoub' 'SvecDoub';
 //%     'VecInt' 'CmatInt' 'VecInt';
 //%     'VecComp' 'CmatComp' 'VecComp';
 //%     'VecComp' 'CmatDoub' 'VecComp';
@@ -1846,7 +1875,9 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 // matrix-vector multiplication
 //% types = {
 //%     'VecDoub', 'CmatDoub', 'VecDoub';
+//%     'VecDoub', 'CmatDoub', 'SvecDoub';
 //%     'VecComp', 'CmatDoub', 'VecComp';
+//%     'VecComp', 'CmatDoub', 'SvecComp';
 //%     'VecComp', 'ScmatDoub', 'VecComp';
 //%     'DvecComp', 'DcmatDoub', 'DvecComp';
 //%     'DvecComp', 'CmatDoub', 'DvecComp';
