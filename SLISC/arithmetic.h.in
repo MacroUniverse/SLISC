@@ -1202,7 +1202,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 //%        'Char', 'Char', 'Char';
 //%        'Int', 'Int', 'Int';
 //%        'Llong', 'Llong', 'Llong';
-//%     'Float', 'Float', 'Float';
+//%        'Float', 'Float', 'Float';
 //%        'Doub', 'Doub', 'Doub';
 //%        'Comp', 'Comp', 'Doub';
 //%        'Comp', 'Doub', 'Imag';
@@ -1214,29 +1214,47 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 //% if ~is_promo(T, T1) || ~is_promo(T, T2)
 //%     error('illegal types');
 //% end
-inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
 {
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] + s;
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + s;
+        v += step1; v1 += step2;
+    }
 }
 
-inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
 {
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] - s;
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - s;
+        v += step1; v1 += step2;
+    }
 }
 
-inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
 {
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] * s;
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * s;
+        v += step1; v1 += step2;
+    }
 }
 
-inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+//% if is_integral(T1) && is_integral(T2)
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
 {
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] / s;
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / s;
+        v += step1; v1 += step2;
+    }
 }
+//% elseif is_fpt(T2) || is_comp(T2) || is_imag(T2)
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+{
+    @T2@ inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N);
+}
+//% else
+//%     error(['divide_vvs: not implemented: ' T ' ' T1 ' ' T2]);
+//% end
 //%-------------------------
 
 //% types = {
