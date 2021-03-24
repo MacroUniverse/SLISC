@@ -238,6 +238,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'DvecInt', 'DvecInt';
 //%     'DvecLlong', 'DvecLlong';
 //%     'DvecDoub', 'DvecDoub';
+//%     'DvecComp', 'VecComp';
 //%     'DvecComp', 'SvecComp';
 //%     'MatLlong', 'MatLlong';
 //%     'MatDoub', 'MatDoub';

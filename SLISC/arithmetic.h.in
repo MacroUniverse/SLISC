@@ -1092,6 +1092,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'SvecComp', 'VecDoub';
 //%     'SvecComp', 'SvecComp';
 //%     'SvecComp', 'DvecComp';
+//%     'DvecComp', 'VecComp';
 //%     'ScmatDoub', 'ScmatDoub';
 //%     'ScmatComp', 'CmatDoub';
 //%     'ScmatComp', 'ScmatDoub';
@@ -1885,8 +1886,11 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'VecComp', 'CmatDoub', 'SvecComp';
 //%     'VecComp', 'CmatComp', 'VecComp';
 //%     'VecComp', 'ScmatDoub', 'VecComp';
+//%     'VecComp', 'ScmatComp', 'SvecComp';
 //%     'DvecComp', 'DcmatDoub', 'DvecComp';
 //%     'DvecComp', 'CmatDoub', 'DvecComp';
+//%     'DvecComp', 'ScmatDoub', 'SvecComp';
+//%     'DvecComp', 'ScmatComp', 'SvecComp';
 //%     'SvecDoub', 'CmatDoub', 'SvecDoub';
 //%     'SvecDoub', 'ScmatDoub', 'SvecDoub';
 //%     'SvecComp', 'ScmatDoub', 'SvecComp';
@@ -1896,7 +1900,6 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'SvecComp', 'ScmatDoub', 'DvecComp';
 //%     'SvecComp', 'CmatDoub', 'SvecComp';
 //%     'SvecComp', 'CmatComp', 'SvecComp';  
-//%     'DvecComp', 'ScmatDoub', 'SvecComp';
 //%     };
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};

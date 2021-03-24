@@ -99,6 +99,21 @@ void test_band()
     }
 
     {
+        Long N = 6;
+        CbandDoub a(N, N, 2, 3);
+        rand(a.cmat());
+        CmatDoub d(N, N);
+        copy(d, a);
+        VecComp ya(N), yd(N), x(N);
+        rand(x);
+        mul(ya, a, x);
+        mul(yd, d, x);
+        yd -= ya;
+        if (max_abs(yd) > 1e-8)
+            SLS_ERR("failed!");
+    }
+
+    {
         Long N1 = 5, N2 = 6, Nlow = 2, Nup = 1;
         CmatComp den(N1, N2);
         rand(den);

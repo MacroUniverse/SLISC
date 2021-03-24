@@ -1643,6 +1643,17 @@ inline void copy(DvecDoub_O v, DvecDoub_I v1)
     veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
 }
 
+inline void copy(DvecComp_O v, VecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v.step(), v1.p(), v1.size());
+}
+
 inline void copy(DvecComp_O v, SvecComp_I v1)
 {
 #ifdef SLS_CHECK_SHAPES

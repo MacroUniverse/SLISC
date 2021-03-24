@@ -32,7 +32,7 @@ void test_lanczos()
 
         // test expHdt_v_lanc(), exp_miHdt_v_lanc;
         {
-			VecComp x(3), y(3), y0(3);
+			VecComp x(3), y(3), y0(3), x6(6);
             VecDoub wsp_d(20);
             VecComp wsp_c(20);
 			for (Long i = 0; i < 5; ++i) {
@@ -42,11 +42,19 @@ void test_lanczos()
 				y -= y0;
 				if (max_abs(y) > 1e-8)
 					SLS_ERR("failed!");
-                
+
                 mul(y0, exp_miH, x);
-                exp_miHdt_v_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
+                copy(y, x);
+                exp_miHdt_v_lanc(y, H, 1, 3, wsp_d, wsp_c); // for dense y
                 y -= y0;
                 if (max_abs(y) > 1e-4)
+					SLS_ERR("failed!");
+
+                DvecComp y1(x6.p(), 3, 2);
+                copy(y1, x);
+                exp_miHdt_v_lanc(y1, H, 1, 3, wsp_d, wsp_c); // for Dvec y1
+                y1 -= y0;
+                if (max_abs(y1) > 1e-4)
 					SLS_ERR("failed!");
 			}
         }

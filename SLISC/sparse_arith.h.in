@@ -140,6 +140,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //%     'VecComp', 'CmobdComp', 'VecComp';
 //%     'VecComp', 'CmobdDoub', 'VecComp';
 //%     'VecComp', 'CmobdDoub', 'SvecComp';
+//%     'SvecComp', 'CmobdDoub', 'SvecComp';
 //% };
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};

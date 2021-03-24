@@ -205,8 +205,10 @@ inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
 #ifdef SLS_USE_CBLAS
 //% types = {
 //%     'VecDoub' 'CbandDoub' 'VecDoub';
+//%     'VecComp' 'CbandDoub' 'VecComp';
 //%     'VecComp' 'CbandComp' 'VecComp';
 //%     'VecComp' 'CbandComp' 'SvecComp';
+//%     'SvecComp' 'CbandDoub' 'SvecComp';
 //% };
 //%------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -232,6 +234,14 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
     Comp alpha(1, 0), beta(0, 0);
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
         &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
+//% elseif is_Comp(Tsx) && is_Doub(Tsa) && is_Comp(Tsy)
+    Doub alpha = 1, beta = 0;
+    // real part
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+        alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p(), incx*2, beta, (Doub*)y.p(), incy*2);
+    // imag part
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+        alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
 //% else
 //%     error('not implemented!');
 //% end

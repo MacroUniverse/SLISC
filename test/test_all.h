@@ -36,6 +36,7 @@ void test_all()
     cout << "test_ylm()" << endl; test_ylm();
     cout << "test_anglib()" << endl; test_anglib();
     cout << "test_expokit()" << endl; test_expokit();
+    cout << "test_lanczos()" << endl; test_lanczos();
     cout << "test_search()" << endl; test_search();
     cout << "test_lin_eq()" << endl; test_lin_eq();
     cout << "test_linux()" << endl; test_linux();
@@ -48,8 +49,7 @@ void test_all()
     cout << "test_coulomb()" << endl; test_coulomb();
     cout << "test_Bit()" << endl; test_Bit();
     cout << "test_interp1()" << endl; test_interp1();
-    cout << "test_lanczos()" << endl; test_lanczos();
-	cout << "test_sha1sum()" << endl; test_sha1sum();
+    cout << "test_sha1sum()" << endl; test_sha1sum();
     cout << "test_unicode()" << endl; test_unicode();
     cout << "test_string()" << endl; test_string();
     
