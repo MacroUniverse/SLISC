@@ -29,11 +29,11 @@ inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Lo
     Doub *pd = wsp_d.p();
     SvecDoub alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
     SvecDoub beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
-    ScmatDoub eigV(pd, Nk, Nk); pd += eigV.size(); // eigen vectors
+    ScmatDoub eigV(pd, Nk, Nk); // eigen vectors
     
     Comp *pc = wsp_c.p();
     SvecComp vc(pc, N); pc += vc.size(); // temp vec
-    ScmatComp bases(pc, N, Nk); pc += bases.size(); // Krylov bases
+    ScmatComp bases(pc, N, Nk); // Krylov bases
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(x);
@@ -95,12 +95,12 @@ inline Doub exp_miHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt,
     Doub *pd = wsp_d.p();
     SvecDoub alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
     SvecDoub beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
-    ScmatDoub eigV(pd, Nk, Nk); pd += eigV.size(); // eigen vectors
+    ScmatDoub eigV(pd, Nk, Nk); // eigen vectors
     
     Comp *pc = wsp_c.p();
     SvecComp vc(pc, N); pc += vc.size(); // temp vec
     SvecComp vc1(pc, Nk); pc += vc1.size(); // temp vec
-    ScmatComp bases(pc, N, Nk); pc += bases.size(); // Krylov bases
+    ScmatComp bases(pc, N, Nk); // Krylov bases
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(x);
