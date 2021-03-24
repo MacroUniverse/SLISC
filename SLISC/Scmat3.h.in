@@ -52,7 +52,6 @@ protected:
 public:
     @Class@();
     @Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
-    @Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
 
 //% if ~constness
     operator @Scmat3T_c@() const;
@@ -67,8 +66,6 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
-    void set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3);
-    void set(const @Class@ &sli);
     ~@Class@();
 };
 
@@ -76,9 +73,6 @@ inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
     : @Base@(data, N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
-
-inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3)
-    : @Base@(data, data_len, N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 //% if ~constness
 inline @Class@::operator @Scmat3T_c@() const
@@ -124,18 +118,6 @@ inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
 {
     @Base@::set(data, N1*N2*N3);
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
-}
-
-inline void @Class@::set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2, Long_I N3)
-{
-    @Base@::set(data, data_len, N1*N2*N3);
-    m_N1 = N1; m_N2 = N2; m_N3 = N3;
-}
-
-inline void @Class@::set(const @Class@ &sli)
-{
-    @Base@::set(sli);
-    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
 }
 
 inline @Class@::~@Class@() {}

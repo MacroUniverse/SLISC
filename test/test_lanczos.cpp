@@ -25,10 +25,12 @@ void test_lanczos()
         // test expv_lanc();
         {
 			VecComp x(3), y(3), y0(3);
+            VecDoub wsp_d(15);
+            VecComp wsp_c(12);
 			for (Long i = 0; i < 5; ++i) {
 				rand(x);
 				mul(y0, expH, x);
-				expv_lanc(y, H, x, 1, 3);
+				expv_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
 				y -= y0;
 				if (max_abs(y) > 1e-8)
 					SLS_ERR("failed!");

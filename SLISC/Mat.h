@@ -13,7 +13,6 @@ public:
     MatChar(): m_N1(0), m_N2(0) {};
     MatChar(Long_I N1, Long_I N2);
     MatChar(const MatChar &rhs);        // Copy constructor
-    MatChar & operator=(const MatChar &rhs) = delete;
     void operator<<(MatChar &rhs); // move data and rhs.resize(0, 0)
     Char& operator()(Long_I i, Long_I j); // double indexing
     const Char& operator()(Long_I i, Long_I j) const;
@@ -96,7 +95,6 @@ public:
     MatInt(): m_N1(0), m_N2(0) {};
     MatInt(Long_I N1, Long_I N2);
     MatInt(const MatInt &rhs);        // Copy constructor
-    MatInt & operator=(const MatInt &rhs) = delete;
     void operator<<(MatInt &rhs); // move data and rhs.resize(0, 0)
     Int& operator()(Long_I i, Long_I j); // double indexing
     const Int& operator()(Long_I i, Long_I j) const;
@@ -179,7 +177,6 @@ public:
     MatLlong(): m_N1(0), m_N2(0) {};
     MatLlong(Long_I N1, Long_I N2);
     MatLlong(const MatLlong &rhs);        // Copy constructor
-    MatLlong & operator=(const MatLlong &rhs) = delete;
     void operator<<(MatLlong &rhs); // move data and rhs.resize(0, 0)
     Llong& operator()(Long_I i, Long_I j); // double indexing
     const Llong& operator()(Long_I i, Long_I j) const;
@@ -262,7 +259,6 @@ public:
     MatFloat(): m_N1(0), m_N2(0) {};
     MatFloat(Long_I N1, Long_I N2);
     MatFloat(const MatFloat &rhs);        // Copy constructor
-    MatFloat & operator=(const MatFloat &rhs) = delete;
     void operator<<(MatFloat &rhs); // move data and rhs.resize(0, 0)
     Float& operator()(Long_I i, Long_I j); // double indexing
     const Float& operator()(Long_I i, Long_I j) const;
@@ -345,7 +341,6 @@ public:
     MatDoub(): m_N1(0), m_N2(0) {};
     MatDoub(Long_I N1, Long_I N2);
     MatDoub(const MatDoub &rhs);        // Copy constructor
-    MatDoub & operator=(const MatDoub &rhs) = delete;
     void operator<<(MatDoub &rhs); // move data and rhs.resize(0, 0)
     Doub& operator()(Long_I i, Long_I j); // double indexing
     const Doub& operator()(Long_I i, Long_I j) const;
@@ -428,7 +423,6 @@ public:
     MatLdoub(): m_N1(0), m_N2(0) {};
     MatLdoub(Long_I N1, Long_I N2);
     MatLdoub(const MatLdoub &rhs);        // Copy constructor
-    MatLdoub & operator=(const MatLdoub &rhs) = delete;
     void operator<<(MatLdoub &rhs); // move data and rhs.resize(0, 0)
     Ldoub& operator()(Long_I i, Long_I j); // double indexing
     const Ldoub& operator()(Long_I i, Long_I j) const;
@@ -511,7 +505,6 @@ public:
     MatFcomp(): m_N1(0), m_N2(0) {};
     MatFcomp(Long_I N1, Long_I N2);
     MatFcomp(const MatFcomp &rhs);        // Copy constructor
-    MatFcomp & operator=(const MatFcomp &rhs) = delete;
     void operator<<(MatFcomp &rhs); // move data and rhs.resize(0, 0)
     Fcomp& operator()(Long_I i, Long_I j); // double indexing
     const Fcomp& operator()(Long_I i, Long_I j) const;
@@ -594,7 +587,6 @@ public:
     MatComp(): m_N1(0), m_N2(0) {};
     MatComp(Long_I N1, Long_I N2);
     MatComp(const MatComp &rhs);        // Copy constructor
-    MatComp & operator=(const MatComp &rhs) = delete;
     void operator<<(MatComp &rhs); // move data and rhs.resize(0, 0)
     Comp& operator()(Long_I i, Long_I j); // double indexing
     const Comp& operator()(Long_I i, Long_I j) const;
@@ -677,7 +669,6 @@ public:
     MatLcomp(): m_N1(0), m_N2(0) {};
     MatLcomp(Long_I N1, Long_I N2);
     MatLcomp(const MatLcomp &rhs);        // Copy constructor
-    MatLcomp & operator=(const MatLcomp &rhs) = delete;
     void operator<<(MatLcomp &rhs); // move data and rhs.resize(0, 0)
     Lcomp& operator()(Long_I i, Long_I j); // double indexing
     const Lcomp& operator()(Long_I i, Long_I j) const;
@@ -760,7 +751,6 @@ public:
     MatFimag(): m_N1(0), m_N2(0) {};
     MatFimag(Long_I N1, Long_I N2);
     MatFimag(const MatFimag &rhs);        // Copy constructor
-    MatFimag & operator=(const MatFimag &rhs) = delete;
     void operator<<(MatFimag &rhs); // move data and rhs.resize(0, 0)
     Fimag& operator()(Long_I i, Long_I j); // double indexing
     const Fimag& operator()(Long_I i, Long_I j) const;
@@ -843,7 +833,6 @@ public:
     MatImag(): m_N1(0), m_N2(0) {};
     MatImag(Long_I N1, Long_I N2);
     MatImag(const MatImag &rhs);        // Copy constructor
-    MatImag & operator=(const MatImag &rhs) = delete;
     void operator<<(MatImag &rhs); // move data and rhs.resize(0, 0)
     Imag& operator()(Long_I i, Long_I j); // double indexing
     const Imag& operator()(Long_I i, Long_I j) const;
@@ -926,7 +915,6 @@ public:
     MatLimag(): m_N1(0), m_N2(0) {};
     MatLimag(Long_I N1, Long_I N2);
     MatLimag(const MatLimag &rhs);        // Copy constructor
-    MatLimag & operator=(const MatLimag &rhs) = delete;
     void operator<<(MatLimag &rhs); // move data and rhs.resize(0, 0)
     Limag& operator()(Long_I i, Long_I j); // double indexing
     const Limag& operator()(Long_I i, Long_I j) const;

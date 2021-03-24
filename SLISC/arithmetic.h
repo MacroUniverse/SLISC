@@ -8374,6 +8374,15 @@ inline Comp dot(SvecComp_I v1, VecComp_I v2)
     return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
+inline Comp dot(SvecComp_I v1, SvecComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+    return dot_vv(v1.p(), v2.p(), v2.size());
+}
+
 inline Comp dot(DvecComp_I v1, SvecDoub_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -8643,6 +8652,20 @@ inline void mul(VecComp_O y, MatDoub_I a, VecComp_I x)
 }
 
 inline void mul(VecComp_O y, ScmatDoub_I a, VecComp_I x)
+{
+    Long Nr = a.n1(), Nc = a.n2();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < Nr; ++i) {
+        y[i] = 0;
+        for (Long j = 0; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+}
+
+inline void mul(VecComp_O y, ScmatComp_I a, SvecDoub_I x)
 {
     Long Nr = a.n1(), Nc = a.n2();
 #ifdef SLS_CHECK_SHAPES
@@ -9103,6 +9126,26 @@ inline void mul_gen(DvecComp_O &y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1,
 }
 
 inline void mul_gen(SvecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n2() || y.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
+    incy =  1;
+    lda = a.n1();
+    incx = 1;
+    CBLAS_LAYOUT layout = CblasColMajor;
+
+    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
+        lda, x.p(), incx, beta, y.p(), incy);
+#else
+    mul(y, a, x);
+#endif
+}
+
+inline void mul_gen(SvecDoub_O &y, ScmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
     if (x.size() != a.n2() || y.size() != a.n1())

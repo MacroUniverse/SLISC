@@ -52,7 +52,6 @@ protected:
 public:
     @Class@();
     @Class@(@CT@ *data, Long_I N1, Long_I N2); // unsafe
-    @Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2);
 
 //% if ~constness
     operator @ScmatT_c@() const;
@@ -67,9 +66,7 @@ public:
 
     // There is no upper bound checking of N, use with care
     void reshape(Long_I N1, Long_I N2);
-    void set(@CT@ *data, Long_I N1, Long_I N2); // unsafe
-    void set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2);
-    void set(const @Class@ &sli);
+    void set(@CT@ *data, Long_I N1, Long_I N2);
     ~@Class@();
 };
 
@@ -77,9 +74,6 @@ inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2)
     : @Base@(data, N1*N2), m_N1(N1), m_N2(N2) {}
-
-inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2)
-    : @Base@(data, data_len, N1*N2), m_N1(N1), m_N2(N2) {}
 
 //% if ~constness
 inline @Class@::operator @ScmatT_c@() const
@@ -120,18 +114,6 @@ inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2)
 {
     @Base@::set(data, N1*N2);
     m_N1 = N1; m_N2 = N2;
-}
-
-inline void @Class@::set(@CT@ *data, Long_I data_len, Long_I N1, Long_I N2)
-{
-    @Base@::set(data, data_len, N1*N2);
-    m_N1 = N1; m_N2 = N2;
-}
-
-inline void @Class@::set(const @Class@ &sli)
-{
-    @Base@::set(sli);
-    m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline @Class@::~@Class@() {}

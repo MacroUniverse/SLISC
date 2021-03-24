@@ -1,6 +1,7 @@
 #pragma once
 #include "global.h"
 #include "Imag.h"
+// this class is not memory safe!
 
 namespace slisc {
 class SvecChar_c
@@ -8,27 +9,21 @@ class SvecChar_c
 protected:
     const Char *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecChar_c();
     explicit SvecChar_c(Long_I N);
     SvecChar_c(const Char *data, Long_I N); // unsafe
-    SvecChar_c(const Char *data, Long_I data_len, Long_I N);
     const Char* p() const;
     Long size() const;
     const Char & operator[](Long_I i) const;
     const Char & operator()(Long_I i) const;
     const Char & end() const;
     const Char & end(Long_I i) const;
-    void set(const Char *data, Long_I data_len, Long_I N);
-    void set(const SvecChar_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Char *data);
-    void set_size(Long_I N);
+    void set(const Char *data);
+    void resize(Long_I N);
     void set(const Char *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -41,26 +36,12 @@ inline SvecChar_c::SvecChar_c() {}
 inline SvecChar_c::SvecChar_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecChar_c::SvecChar_c(const Char *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecChar_c::SvecChar_c(const Char *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Char * SvecChar_c::p() const
 {
@@ -107,52 +88,20 @@ inline const Char & SvecChar_c::end(Long_I i) const
 inline void SvecChar_c::set(const Char *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecChar_c::set(const Char *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecChar_c::set(const SvecChar_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecChar_c::set_p(const Char *data)
+inline void SvecChar_c::set(const Char *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecChar_c::set_size(Long_I N)
+inline void SvecChar_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecChar_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -163,11 +112,6 @@ inline void SvecChar_c::last()
 
 inline void SvecChar_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -180,14 +124,10 @@ class SvecChar
 protected:
     Char *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecChar();
     explicit SvecChar(Long_I N);
     SvecChar(Char *data, Long_I N); // unsafe
-    SvecChar(Char *data, Long_I data_len, Long_I N);
     Char* p() const;
     Long size() const;
     Char & operator[](Long_I i) const;
@@ -195,13 +135,11 @@ public:
     Char & end() const;
     Char & end(Long_I i) const;
     operator SvecChar_c() const;
-    void set(Char *data, Long_I data_len, Long_I N);
-    void set(const SvecChar &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Char *data);
-    void set_size(Long_I N);
+    void set(Char *data);
+    void resize(Long_I N);
     void set(Char *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -214,26 +152,12 @@ inline SvecChar::SvecChar() {}
 inline SvecChar::SvecChar(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecChar::SvecChar(Char *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecChar::SvecChar(Char *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Char * SvecChar::p() const
 {
@@ -284,52 +208,20 @@ inline SvecChar::operator SvecChar_c() const
 inline void SvecChar::set(Char *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecChar::set(Char *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecChar::set(const SvecChar &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecChar::set_p(Char *data)
+inline void SvecChar::set(Char *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecChar::set_size(Long_I N)
+inline void SvecChar::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecChar::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -340,11 +232,6 @@ inline void SvecChar::last()
 
 inline void SvecChar::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -357,27 +244,21 @@ class SvecInt_c
 protected:
     const Int *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecInt_c();
     explicit SvecInt_c(Long_I N);
     SvecInt_c(const Int *data, Long_I N); // unsafe
-    SvecInt_c(const Int *data, Long_I data_len, Long_I N);
     const Int* p() const;
     Long size() const;
     const Int & operator[](Long_I i) const;
     const Int & operator()(Long_I i) const;
     const Int & end() const;
     const Int & end(Long_I i) const;
-    void set(const Int *data, Long_I data_len, Long_I N);
-    void set(const SvecInt_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Int *data);
-    void set_size(Long_I N);
+    void set(const Int *data);
+    void resize(Long_I N);
     void set(const Int *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -390,26 +271,12 @@ inline SvecInt_c::SvecInt_c() {}
 inline SvecInt_c::SvecInt_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecInt_c::SvecInt_c(const Int *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecInt_c::SvecInt_c(const Int *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Int * SvecInt_c::p() const
 {
@@ -456,52 +323,20 @@ inline const Int & SvecInt_c::end(Long_I i) const
 inline void SvecInt_c::set(const Int *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecInt_c::set(const Int *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecInt_c::set(const SvecInt_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecInt_c::set_p(const Int *data)
+inline void SvecInt_c::set(const Int *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecInt_c::set_size(Long_I N)
+inline void SvecInt_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecInt_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -512,11 +347,6 @@ inline void SvecInt_c::last()
 
 inline void SvecInt_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -529,14 +359,10 @@ class SvecInt
 protected:
     Int *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecInt();
     explicit SvecInt(Long_I N);
     SvecInt(Int *data, Long_I N); // unsafe
-    SvecInt(Int *data, Long_I data_len, Long_I N);
     Int* p() const;
     Long size() const;
     Int & operator[](Long_I i) const;
@@ -544,13 +370,11 @@ public:
     Int & end() const;
     Int & end(Long_I i) const;
     operator SvecInt_c() const;
-    void set(Int *data, Long_I data_len, Long_I N);
-    void set(const SvecInt &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Int *data);
-    void set_size(Long_I N);
+    void set(Int *data);
+    void resize(Long_I N);
     void set(Int *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -563,26 +387,12 @@ inline SvecInt::SvecInt() {}
 inline SvecInt::SvecInt(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecInt::SvecInt(Int *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecInt::SvecInt(Int *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Int * SvecInt::p() const
 {
@@ -633,52 +443,20 @@ inline SvecInt::operator SvecInt_c() const
 inline void SvecInt::set(Int *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecInt::set(Int *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecInt::set(const SvecInt &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecInt::set_p(Int *data)
+inline void SvecInt::set(Int *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecInt::set_size(Long_I N)
+inline void SvecInt::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecInt::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -689,11 +467,6 @@ inline void SvecInt::last()
 
 inline void SvecInt::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -706,27 +479,21 @@ class SvecLlong_c
 protected:
     const Llong *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLlong_c();
     explicit SvecLlong_c(Long_I N);
     SvecLlong_c(const Llong *data, Long_I N); // unsafe
-    SvecLlong_c(const Llong *data, Long_I data_len, Long_I N);
     const Llong* p() const;
     Long size() const;
     const Llong & operator[](Long_I i) const;
     const Llong & operator()(Long_I i) const;
     const Llong & end() const;
     const Llong & end(Long_I i) const;
-    void set(const Llong *data, Long_I data_len, Long_I N);
-    void set(const SvecLlong_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Llong *data);
-    void set_size(Long_I N);
+    void set(const Llong *data);
+    void resize(Long_I N);
     void set(const Llong *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -739,26 +506,12 @@ inline SvecLlong_c::SvecLlong_c() {}
 inline SvecLlong_c::SvecLlong_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Llong * SvecLlong_c::p() const
 {
@@ -805,52 +558,20 @@ inline const Llong & SvecLlong_c::end(Long_I i) const
 inline void SvecLlong_c::set(const Llong *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLlong_c::set(const Llong *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLlong_c::set(const SvecLlong_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLlong_c::set_p(const Llong *data)
+inline void SvecLlong_c::set(const Llong *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLlong_c::set_size(Long_I N)
+inline void SvecLlong_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLlong_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -861,11 +582,6 @@ inline void SvecLlong_c::last()
 
 inline void SvecLlong_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -878,14 +594,10 @@ class SvecLlong
 protected:
     Llong *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLlong();
     explicit SvecLlong(Long_I N);
     SvecLlong(Llong *data, Long_I N); // unsafe
-    SvecLlong(Llong *data, Long_I data_len, Long_I N);
     Llong* p() const;
     Long size() const;
     Llong & operator[](Long_I i) const;
@@ -893,13 +605,11 @@ public:
     Llong & end() const;
     Llong & end(Long_I i) const;
     operator SvecLlong_c() const;
-    void set(Llong *data, Long_I data_len, Long_I N);
-    void set(const SvecLlong &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Llong *data);
-    void set_size(Long_I N);
+    void set(Llong *data);
+    void resize(Long_I N);
     void set(Llong *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -912,26 +622,12 @@ inline SvecLlong::SvecLlong() {}
 inline SvecLlong::SvecLlong(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLlong::SvecLlong(Llong *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLlong::SvecLlong(Llong *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Llong * SvecLlong::p() const
 {
@@ -982,52 +678,20 @@ inline SvecLlong::operator SvecLlong_c() const
 inline void SvecLlong::set(Llong *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLlong::set(Llong *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLlong::set(const SvecLlong &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLlong::set_p(Llong *data)
+inline void SvecLlong::set(Llong *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLlong::set_size(Long_I N)
+inline void SvecLlong::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLlong::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -1038,11 +702,6 @@ inline void SvecLlong::last()
 
 inline void SvecLlong::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -1071,27 +730,21 @@ class SvecFloat_c
 protected:
     const Float *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecFloat_c();
     explicit SvecFloat_c(Long_I N);
     SvecFloat_c(const Float *data, Long_I N); // unsafe
-    SvecFloat_c(const Float *data, Long_I data_len, Long_I N);
     const Float* p() const;
     Long size() const;
     const Float & operator[](Long_I i) const;
     const Float & operator()(Long_I i) const;
     const Float & end() const;
     const Float & end(Long_I i) const;
-    void set(const Float *data, Long_I data_len, Long_I N);
-    void set(const SvecFloat_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Float *data);
-    void set_size(Long_I N);
+    void set(const Float *data);
+    void resize(Long_I N);
     void set(const Float *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1104,26 +757,12 @@ inline SvecFloat_c::SvecFloat_c() {}
 inline SvecFloat_c::SvecFloat_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Float * SvecFloat_c::p() const
 {
@@ -1170,52 +809,20 @@ inline const Float & SvecFloat_c::end(Long_I i) const
 inline void SvecFloat_c::set(const Float *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFloat_c::set(const Float *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecFloat_c::set(const SvecFloat_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecFloat_c::set_p(const Float *data)
+inline void SvecFloat_c::set(const Float *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFloat_c::set_size(Long_I N)
+inline void SvecFloat_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecFloat_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -1226,11 +833,6 @@ inline void SvecFloat_c::last()
 
 inline void SvecFloat_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -1243,14 +845,10 @@ class SvecFloat
 protected:
     Float *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecFloat();
     explicit SvecFloat(Long_I N);
     SvecFloat(Float *data, Long_I N); // unsafe
-    SvecFloat(Float *data, Long_I data_len, Long_I N);
     Float* p() const;
     Long size() const;
     Float & operator[](Long_I i) const;
@@ -1258,13 +856,11 @@ public:
     Float & end() const;
     Float & end(Long_I i) const;
     operator SvecFloat_c() const;
-    void set(Float *data, Long_I data_len, Long_I N);
-    void set(const SvecFloat &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Float *data);
-    void set_size(Long_I N);
+    void set(Float *data);
+    void resize(Long_I N);
     void set(Float *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1277,26 +873,12 @@ inline SvecFloat::SvecFloat() {}
 inline SvecFloat::SvecFloat(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecFloat::SvecFloat(Float *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecFloat::SvecFloat(Float *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Float * SvecFloat::p() const
 {
@@ -1347,52 +929,20 @@ inline SvecFloat::operator SvecFloat_c() const
 inline void SvecFloat::set(Float *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFloat::set(Float *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecFloat::set(const SvecFloat &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecFloat::set_p(Float *data)
+inline void SvecFloat::set(Float *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFloat::set_size(Long_I N)
+inline void SvecFloat::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecFloat::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -1403,11 +953,6 @@ inline void SvecFloat::last()
 
 inline void SvecFloat::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -1420,27 +965,21 @@ class SvecDoub_c
 protected:
     const Doub *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecDoub_c();
     explicit SvecDoub_c(Long_I N);
     SvecDoub_c(const Doub *data, Long_I N); // unsafe
-    SvecDoub_c(const Doub *data, Long_I data_len, Long_I N);
     const Doub* p() const;
     Long size() const;
     const Doub & operator[](Long_I i) const;
     const Doub & operator()(Long_I i) const;
     const Doub & end() const;
     const Doub & end(Long_I i) const;
-    void set(const Doub *data, Long_I data_len, Long_I N);
-    void set(const SvecDoub_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Doub *data);
-    void set_size(Long_I N);
+    void set(const Doub *data);
+    void resize(Long_I N);
     void set(const Doub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1453,26 +992,12 @@ inline SvecDoub_c::SvecDoub_c() {}
 inline SvecDoub_c::SvecDoub_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Doub * SvecDoub_c::p() const
 {
@@ -1519,52 +1044,20 @@ inline const Doub & SvecDoub_c::end(Long_I i) const
 inline void SvecDoub_c::set(const Doub *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecDoub_c::set(const Doub *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecDoub_c::set(const SvecDoub_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecDoub_c::set_p(const Doub *data)
+inline void SvecDoub_c::set(const Doub *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecDoub_c::set_size(Long_I N)
+inline void SvecDoub_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecDoub_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -1575,11 +1068,6 @@ inline void SvecDoub_c::last()
 
 inline void SvecDoub_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -1592,14 +1080,10 @@ class SvecDoub
 protected:
     Doub *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecDoub();
     explicit SvecDoub(Long_I N);
     SvecDoub(Doub *data, Long_I N); // unsafe
-    SvecDoub(Doub *data, Long_I data_len, Long_I N);
     Doub* p() const;
     Long size() const;
     Doub & operator[](Long_I i) const;
@@ -1607,13 +1091,11 @@ public:
     Doub & end() const;
     Doub & end(Long_I i) const;
     operator SvecDoub_c() const;
-    void set(Doub *data, Long_I data_len, Long_I N);
-    void set(const SvecDoub &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Doub *data);
-    void set_size(Long_I N);
+    void set(Doub *data);
+    void resize(Long_I N);
     void set(Doub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1626,26 +1108,12 @@ inline SvecDoub::SvecDoub() {}
 inline SvecDoub::SvecDoub(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecDoub::SvecDoub(Doub *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecDoub::SvecDoub(Doub *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Doub * SvecDoub::p() const
 {
@@ -1696,52 +1164,20 @@ inline SvecDoub::operator SvecDoub_c() const
 inline void SvecDoub::set(Doub *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecDoub::set(Doub *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecDoub::set(const SvecDoub &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecDoub::set_p(Doub *data)
+inline void SvecDoub::set(Doub *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecDoub::set_size(Long_I N)
+inline void SvecDoub::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecDoub::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -1752,11 +1188,6 @@ inline void SvecDoub::last()
 
 inline void SvecDoub::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -1769,27 +1200,21 @@ class SvecLdoub_c
 protected:
     const Ldoub *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLdoub_c();
     explicit SvecLdoub_c(Long_I N);
     SvecLdoub_c(const Ldoub *data, Long_I N); // unsafe
-    SvecLdoub_c(const Ldoub *data, Long_I data_len, Long_I N);
     const Ldoub* p() const;
     Long size() const;
     const Ldoub & operator[](Long_I i) const;
     const Ldoub & operator()(Long_I i) const;
     const Ldoub & end() const;
     const Ldoub & end(Long_I i) const;
-    void set(const Ldoub *data, Long_I data_len, Long_I N);
-    void set(const SvecLdoub_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Ldoub *data);
-    void set_size(Long_I N);
+    void set(const Ldoub *data);
+    void resize(Long_I N);
     void set(const Ldoub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1802,26 +1227,12 @@ inline SvecLdoub_c::SvecLdoub_c() {}
 inline SvecLdoub_c::SvecLdoub_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Ldoub * SvecLdoub_c::p() const
 {
@@ -1868,52 +1279,20 @@ inline const Ldoub & SvecLdoub_c::end(Long_I i) const
 inline void SvecLdoub_c::set(const Ldoub *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLdoub_c::set(const Ldoub *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLdoub_c::set(const SvecLdoub_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLdoub_c::set_p(const Ldoub *data)
+inline void SvecLdoub_c::set(const Ldoub *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLdoub_c::set_size(Long_I N)
+inline void SvecLdoub_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLdoub_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -1924,11 +1303,6 @@ inline void SvecLdoub_c::last()
 
 inline void SvecLdoub_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -1941,14 +1315,10 @@ class SvecLdoub
 protected:
     Ldoub *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLdoub();
     explicit SvecLdoub(Long_I N);
     SvecLdoub(Ldoub *data, Long_I N); // unsafe
-    SvecLdoub(Ldoub *data, Long_I data_len, Long_I N);
     Ldoub* p() const;
     Long size() const;
     Ldoub & operator[](Long_I i) const;
@@ -1956,13 +1326,11 @@ public:
     Ldoub & end() const;
     Ldoub & end(Long_I i) const;
     operator SvecLdoub_c() const;
-    void set(Ldoub *data, Long_I data_len, Long_I N);
-    void set(const SvecLdoub &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Ldoub *data);
-    void set_size(Long_I N);
+    void set(Ldoub *data);
+    void resize(Long_I N);
     void set(Ldoub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1975,26 +1343,12 @@ inline SvecLdoub::SvecLdoub() {}
 inline SvecLdoub::SvecLdoub(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Ldoub * SvecLdoub::p() const
 {
@@ -2045,52 +1399,20 @@ inline SvecLdoub::operator SvecLdoub_c() const
 inline void SvecLdoub::set(Ldoub *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLdoub::set(Ldoub *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLdoub::set(const SvecLdoub &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLdoub::set_p(Ldoub *data)
+inline void SvecLdoub::set(Ldoub *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLdoub::set_size(Long_I N)
+inline void SvecLdoub::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLdoub::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -2101,11 +1423,6 @@ inline void SvecLdoub::last()
 
 inline void SvecLdoub::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -2118,27 +1435,21 @@ class SvecFcomp_c
 protected:
     const Fcomp *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecFcomp_c();
     explicit SvecFcomp_c(Long_I N);
     SvecFcomp_c(const Fcomp *data, Long_I N); // unsafe
-    SvecFcomp_c(const Fcomp *data, Long_I data_len, Long_I N);
     const Fcomp* p() const;
     Long size() const;
     const Fcomp & operator[](Long_I i) const;
     const Fcomp & operator()(Long_I i) const;
     const Fcomp & end() const;
     const Fcomp & end(Long_I i) const;
-    void set(const Fcomp *data, Long_I data_len, Long_I N);
-    void set(const SvecFcomp_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Fcomp *data);
-    void set_size(Long_I N);
+    void set(const Fcomp *data);
+    void resize(Long_I N);
     void set(const Fcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2151,26 +1462,12 @@ inline SvecFcomp_c::SvecFcomp_c() {}
 inline SvecFcomp_c::SvecFcomp_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Fcomp * SvecFcomp_c::p() const
 {
@@ -2217,52 +1514,20 @@ inline const Fcomp & SvecFcomp_c::end(Long_I i) const
 inline void SvecFcomp_c::set(const Fcomp *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFcomp_c::set(const Fcomp *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecFcomp_c::set(const SvecFcomp_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecFcomp_c::set_p(const Fcomp *data)
+inline void SvecFcomp_c::set(const Fcomp *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFcomp_c::set_size(Long_I N)
+inline void SvecFcomp_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecFcomp_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -2273,11 +1538,6 @@ inline void SvecFcomp_c::last()
 
 inline void SvecFcomp_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -2290,14 +1550,10 @@ class SvecFcomp
 protected:
     Fcomp *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecFcomp();
     explicit SvecFcomp(Long_I N);
     SvecFcomp(Fcomp *data, Long_I N); // unsafe
-    SvecFcomp(Fcomp *data, Long_I data_len, Long_I N);
     Fcomp* p() const;
     Long size() const;
     Fcomp & operator[](Long_I i) const;
@@ -2305,13 +1561,11 @@ public:
     Fcomp & end() const;
     Fcomp & end(Long_I i) const;
     operator SvecFcomp_c() const;
-    void set(Fcomp *data, Long_I data_len, Long_I N);
-    void set(const SvecFcomp &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Fcomp *data);
-    void set_size(Long_I N);
+    void set(Fcomp *data);
+    void resize(Long_I N);
     void set(Fcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2324,26 +1578,12 @@ inline SvecFcomp::SvecFcomp() {}
 inline SvecFcomp::SvecFcomp(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Fcomp * SvecFcomp::p() const
 {
@@ -2394,52 +1634,20 @@ inline SvecFcomp::operator SvecFcomp_c() const
 inline void SvecFcomp::set(Fcomp *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFcomp::set(Fcomp *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecFcomp::set(const SvecFcomp &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecFcomp::set_p(Fcomp *data)
+inline void SvecFcomp::set(Fcomp *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFcomp::set_size(Long_I N)
+inline void SvecFcomp::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecFcomp::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -2450,11 +1658,6 @@ inline void SvecFcomp::last()
 
 inline void SvecFcomp::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -2467,27 +1670,21 @@ class SvecComp_c
 protected:
     const Comp *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecComp_c();
     explicit SvecComp_c(Long_I N);
     SvecComp_c(const Comp *data, Long_I N); // unsafe
-    SvecComp_c(const Comp *data, Long_I data_len, Long_I N);
     const Comp* p() const;
     Long size() const;
     const Comp & operator[](Long_I i) const;
     const Comp & operator()(Long_I i) const;
     const Comp & end() const;
     const Comp & end(Long_I i) const;
-    void set(const Comp *data, Long_I data_len, Long_I N);
-    void set(const SvecComp_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Comp *data);
-    void set_size(Long_I N);
+    void set(const Comp *data);
+    void resize(Long_I N);
     void set(const Comp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2500,26 +1697,12 @@ inline SvecComp_c::SvecComp_c() {}
 inline SvecComp_c::SvecComp_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecComp_c::SvecComp_c(const Comp *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecComp_c::SvecComp_c(const Comp *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Comp * SvecComp_c::p() const
 {
@@ -2566,52 +1749,20 @@ inline const Comp & SvecComp_c::end(Long_I i) const
 inline void SvecComp_c::set(const Comp *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecComp_c::set(const Comp *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecComp_c::set(const SvecComp_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecComp_c::set_p(const Comp *data)
+inline void SvecComp_c::set(const Comp *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecComp_c::set_size(Long_I N)
+inline void SvecComp_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecComp_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -2622,11 +1773,6 @@ inline void SvecComp_c::last()
 
 inline void SvecComp_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -2639,14 +1785,10 @@ class SvecComp
 protected:
     Comp *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecComp();
     explicit SvecComp(Long_I N);
     SvecComp(Comp *data, Long_I N); // unsafe
-    SvecComp(Comp *data, Long_I data_len, Long_I N);
     Comp* p() const;
     Long size() const;
     Comp & operator[](Long_I i) const;
@@ -2654,13 +1796,11 @@ public:
     Comp & end() const;
     Comp & end(Long_I i) const;
     operator SvecComp_c() const;
-    void set(Comp *data, Long_I data_len, Long_I N);
-    void set(const SvecComp &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Comp *data);
-    void set_size(Long_I N);
+    void set(Comp *data);
+    void resize(Long_I N);
     void set(Comp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2673,26 +1813,12 @@ inline SvecComp::SvecComp() {}
 inline SvecComp::SvecComp(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecComp::SvecComp(Comp *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecComp::SvecComp(Comp *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Comp * SvecComp::p() const
 {
@@ -2743,52 +1869,20 @@ inline SvecComp::operator SvecComp_c() const
 inline void SvecComp::set(Comp *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecComp::set(Comp *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecComp::set(const SvecComp &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecComp::set_p(Comp *data)
+inline void SvecComp::set(Comp *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecComp::set_size(Long_I N)
+inline void SvecComp::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecComp::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -2799,11 +1893,6 @@ inline void SvecComp::last()
 
 inline void SvecComp::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -2816,27 +1905,21 @@ class SvecLcomp_c
 protected:
     const Lcomp *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLcomp_c();
     explicit SvecLcomp_c(Long_I N);
     SvecLcomp_c(const Lcomp *data, Long_I N); // unsafe
-    SvecLcomp_c(const Lcomp *data, Long_I data_len, Long_I N);
     const Lcomp* p() const;
     Long size() const;
     const Lcomp & operator[](Long_I i) const;
     const Lcomp & operator()(Long_I i) const;
     const Lcomp & end() const;
     const Lcomp & end(Long_I i) const;
-    void set(const Lcomp *data, Long_I data_len, Long_I N);
-    void set(const SvecLcomp_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Lcomp *data);
-    void set_size(Long_I N);
+    void set(const Lcomp *data);
+    void resize(Long_I N);
     void set(const Lcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2849,26 +1932,12 @@ inline SvecLcomp_c::SvecLcomp_c() {}
 inline SvecLcomp_c::SvecLcomp_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Lcomp * SvecLcomp_c::p() const
 {
@@ -2915,52 +1984,20 @@ inline const Lcomp & SvecLcomp_c::end(Long_I i) const
 inline void SvecLcomp_c::set(const Lcomp *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLcomp_c::set(const Lcomp *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLcomp_c::set(const SvecLcomp_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLcomp_c::set_p(const Lcomp *data)
+inline void SvecLcomp_c::set(const Lcomp *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLcomp_c::set_size(Long_I N)
+inline void SvecLcomp_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLcomp_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -2971,11 +2008,6 @@ inline void SvecLcomp_c::last()
 
 inline void SvecLcomp_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -2988,14 +2020,10 @@ class SvecLcomp
 protected:
     Lcomp *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLcomp();
     explicit SvecLcomp(Long_I N);
     SvecLcomp(Lcomp *data, Long_I N); // unsafe
-    SvecLcomp(Lcomp *data, Long_I data_len, Long_I N);
     Lcomp* p() const;
     Long size() const;
     Lcomp & operator[](Long_I i) const;
@@ -3003,13 +2031,11 @@ public:
     Lcomp & end() const;
     Lcomp & end(Long_I i) const;
     operator SvecLcomp_c() const;
-    void set(Lcomp *data, Long_I data_len, Long_I N);
-    void set(const SvecLcomp &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Lcomp *data);
-    void set_size(Long_I N);
+    void set(Lcomp *data);
+    void resize(Long_I N);
     void set(Lcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -3022,26 +2048,12 @@ inline SvecLcomp::SvecLcomp() {}
 inline SvecLcomp::SvecLcomp(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Lcomp * SvecLcomp::p() const
 {
@@ -3092,52 +2104,20 @@ inline SvecLcomp::operator SvecLcomp_c() const
 inline void SvecLcomp::set(Lcomp *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLcomp::set(Lcomp *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLcomp::set(const SvecLcomp &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLcomp::set_p(Lcomp *data)
+inline void SvecLcomp::set(Lcomp *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLcomp::set_size(Long_I N)
+inline void SvecLcomp::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLcomp::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -3148,11 +2128,6 @@ inline void SvecLcomp::last()
 
 inline void SvecLcomp::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -3165,27 +2140,21 @@ class SvecFimag_c
 protected:
     const Fimag *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecFimag_c();
     explicit SvecFimag_c(Long_I N);
     SvecFimag_c(const Fimag *data, Long_I N); // unsafe
-    SvecFimag_c(const Fimag *data, Long_I data_len, Long_I N);
     const Fimag* p() const;
     Long size() const;
     const Fimag & operator[](Long_I i) const;
     const Fimag & operator()(Long_I i) const;
     const Fimag & end() const;
     const Fimag & end(Long_I i) const;
-    void set(const Fimag *data, Long_I data_len, Long_I N);
-    void set(const SvecFimag_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Fimag *data);
-    void set_size(Long_I N);
+    void set(const Fimag *data);
+    void resize(Long_I N);
     void set(const Fimag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -3198,26 +2167,12 @@ inline SvecFimag_c::SvecFimag_c() {}
 inline SvecFimag_c::SvecFimag_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Fimag * SvecFimag_c::p() const
 {
@@ -3264,52 +2219,20 @@ inline const Fimag & SvecFimag_c::end(Long_I i) const
 inline void SvecFimag_c::set(const Fimag *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFimag_c::set(const Fimag *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecFimag_c::set(const SvecFimag_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecFimag_c::set_p(const Fimag *data)
+inline void SvecFimag_c::set(const Fimag *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFimag_c::set_size(Long_I N)
+inline void SvecFimag_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecFimag_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -3320,11 +2243,6 @@ inline void SvecFimag_c::last()
 
 inline void SvecFimag_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -3337,14 +2255,10 @@ class SvecFimag
 protected:
     Fimag *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecFimag();
     explicit SvecFimag(Long_I N);
     SvecFimag(Fimag *data, Long_I N); // unsafe
-    SvecFimag(Fimag *data, Long_I data_len, Long_I N);
     Fimag* p() const;
     Long size() const;
     Fimag & operator[](Long_I i) const;
@@ -3352,13 +2266,11 @@ public:
     Fimag & end() const;
     Fimag & end(Long_I i) const;
     operator SvecFimag_c() const;
-    void set(Fimag *data, Long_I data_len, Long_I N);
-    void set(const SvecFimag &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Fimag *data);
-    void set_size(Long_I N);
+    void set(Fimag *data);
+    void resize(Long_I N);
     void set(Fimag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -3371,26 +2283,12 @@ inline SvecFimag::SvecFimag() {}
 inline SvecFimag::SvecFimag(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecFimag::SvecFimag(Fimag *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecFimag::SvecFimag(Fimag *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Fimag * SvecFimag::p() const
 {
@@ -3441,52 +2339,20 @@ inline SvecFimag::operator SvecFimag_c() const
 inline void SvecFimag::set(Fimag *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFimag::set(Fimag *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecFimag::set(const SvecFimag &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecFimag::set_p(Fimag *data)
+inline void SvecFimag::set(Fimag *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecFimag::set_size(Long_I N)
+inline void SvecFimag::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecFimag::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -3497,11 +2363,6 @@ inline void SvecFimag::last()
 
 inline void SvecFimag::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -3514,27 +2375,21 @@ class SvecImag_c
 protected:
     const Imag *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecImag_c();
     explicit SvecImag_c(Long_I N);
     SvecImag_c(const Imag *data, Long_I N); // unsafe
-    SvecImag_c(const Imag *data, Long_I data_len, Long_I N);
     const Imag* p() const;
     Long size() const;
     const Imag & operator[](Long_I i) const;
     const Imag & operator()(Long_I i) const;
     const Imag & end() const;
     const Imag & end(Long_I i) const;
-    void set(const Imag *data, Long_I data_len, Long_I N);
-    void set(const SvecImag_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Imag *data);
-    void set_size(Long_I N);
+    void set(const Imag *data);
+    void resize(Long_I N);
     void set(const Imag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -3547,26 +2402,12 @@ inline SvecImag_c::SvecImag_c() {}
 inline SvecImag_c::SvecImag_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecImag_c::SvecImag_c(const Imag *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecImag_c::SvecImag_c(const Imag *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Imag * SvecImag_c::p() const
 {
@@ -3613,52 +2454,20 @@ inline const Imag & SvecImag_c::end(Long_I i) const
 inline void SvecImag_c::set(const Imag *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecImag_c::set(const Imag *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecImag_c::set(const SvecImag_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecImag_c::set_p(const Imag *data)
+inline void SvecImag_c::set(const Imag *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecImag_c::set_size(Long_I N)
+inline void SvecImag_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecImag_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -3669,11 +2478,6 @@ inline void SvecImag_c::last()
 
 inline void SvecImag_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -3686,14 +2490,10 @@ class SvecImag
 protected:
     Imag *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecImag();
     explicit SvecImag(Long_I N);
     SvecImag(Imag *data, Long_I N); // unsafe
-    SvecImag(Imag *data, Long_I data_len, Long_I N);
     Imag* p() const;
     Long size() const;
     Imag & operator[](Long_I i) const;
@@ -3701,13 +2501,11 @@ public:
     Imag & end() const;
     Imag & end(Long_I i) const;
     operator SvecImag_c() const;
-    void set(Imag *data, Long_I data_len, Long_I N);
-    void set(const SvecImag &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Imag *data);
-    void set_size(Long_I N);
+    void set(Imag *data);
+    void resize(Long_I N);
     void set(Imag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -3720,26 +2518,12 @@ inline SvecImag::SvecImag() {}
 inline SvecImag::SvecImag(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecImag::SvecImag(Imag *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecImag::SvecImag(Imag *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Imag * SvecImag::p() const
 {
@@ -3790,52 +2574,20 @@ inline SvecImag::operator SvecImag_c() const
 inline void SvecImag::set(Imag *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecImag::set(Imag *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecImag::set(const SvecImag &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecImag::set_p(Imag *data)
+inline void SvecImag::set(Imag *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecImag::set_size(Long_I N)
+inline void SvecImag::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecImag::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -3846,11 +2598,6 @@ inline void SvecImag::last()
 
 inline void SvecImag::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -3863,27 +2610,21 @@ class SvecLimag_c
 protected:
     const Limag *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLimag_c();
     explicit SvecLimag_c(Long_I N);
     SvecLimag_c(const Limag *data, Long_I N); // unsafe
-    SvecLimag_c(const Limag *data, Long_I data_len, Long_I N);
     const Limag* p() const;
     Long size() const;
     const Limag & operator[](Long_I i) const;
     const Limag & operator()(Long_I i) const;
     const Limag & end() const;
     const Limag & end(Long_I i) const;
-    void set(const Limag *data, Long_I data_len, Long_I N);
-    void set(const SvecLimag_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(const Limag *data);
-    void set_size(Long_I N);
+    void set(const Limag *data);
+    void resize(Long_I N);
     void set(const Limag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -3896,26 +2637,12 @@ inline SvecLimag_c::SvecLimag_c() {}
 inline SvecLimag_c::SvecLimag_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline const Limag * SvecLimag_c::p() const
 {
@@ -3962,52 +2689,20 @@ inline const Limag & SvecLimag_c::end(Long_I i) const
 inline void SvecLimag_c::set(const Limag *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLimag_c::set(const Limag *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLimag_c::set(const SvecLimag_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLimag_c::set_p(const Limag *data)
+inline void SvecLimag_c::set(const Limag *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLimag_c::set_size(Long_I N)
+inline void SvecLimag_c::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLimag_c::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -4018,11 +2713,6 @@ inline void SvecLimag_c::last()
 
 inline void SvecLimag_c::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 
@@ -4035,14 +2725,10 @@ class SvecLimag
 protected:
     Limag *m_p;
     Long m_N;
-#ifdef SLS_CHECK_BOUNDS
-    Long m_data_len; // used for debug
-#endif
 public:
     SvecLimag();
     explicit SvecLimag(Long_I N);
     SvecLimag(Limag *data, Long_I N); // unsafe
-    SvecLimag(Limag *data, Long_I data_len, Long_I N);
     Limag* p() const;
     Long size() const;
     Limag & operator[](Long_I i) const;
@@ -4050,13 +2736,11 @@ public:
     Limag & end() const;
     Limag & end(Long_I i) const;
     operator SvecLimag_c() const;
-    void set(Limag *data, Long_I data_len, Long_I N);
-    void set(const SvecLimag &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_p(Limag *data);
-    void set_size(Long_I N);
+    void set(Limag *data);
+    void resize(Long_I N);
     void set(Limag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -4069,26 +2753,12 @@ inline SvecLimag::SvecLimag() {}
 inline SvecLimag::SvecLimag(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr; m_data_len = 0;
+    m_p = nullptr;
 #endif
 }
 
 inline SvecLimag::SvecLimag(Limag *data, Long_I N)
-    : m_p(data), m_N(N) {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
-}
-
-inline SvecLimag::SvecLimag(Limag *data, Long_I data_len, Long_I N)
-    : m_p(data), m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-    m_data_len = data_len;
-#endif
-}
+    : m_p(data), m_N(N) {}
 
 inline Limag * SvecLimag::p() const
 {
@@ -4139,52 +2809,20 @@ inline SvecLimag::operator SvecLimag_c() const
 inline void SvecLimag::set(Limag *data, Long_I N)
 {
     m_p = data; m_N = N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLimag::set(Limag *data, Long_I data_len, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N > data_len)
-        SLS_ERR("cut out of bound!");
-#endif
-    m_p = data; m_N = N;
-}
-
-inline void SvecLimag::set(const SvecLimag &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = sli.m_data_len;
-#endif
-}
-
-inline void SvecLimag::set_p(Limag *data)
+inline void SvecLimag::set(Limag *data)
 {
     m_p = data;
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len = std::numeric_limits<Long>::max();
-#endif
 }
 
-inline void SvecLimag::set_size(Long_I N)
+inline void SvecLimag::resize(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    if (N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_N = N;
 }
 
 inline void SvecLimag::next()
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += m_N;
 }
 
@@ -4195,11 +2833,6 @@ inline void SvecLimag::last()
 
 inline void SvecLimag::shift(Long_I N)
 {
-#ifdef SLS_CHECK_BOUNDS
-    m_data_len -= m_N;
-    if (m_N > m_data_len)
-        SLS_ERR("cut out of bound!");
-#endif
     m_p += N;
 }
 

@@ -1696,6 +1696,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'SvecDoub', 'SvecDoub';
 //%     'SvecDoub', 'SvecComp';
 //%     'SvecComp', 'VecComp';
+//%     'SvecComp', 'SvecComp';
 //%     'DvecComp', 'SvecDoub';
 //%     'Cmat3Comp', 'Cmat3Comp';
 //%     'Cmat3Comp', 'Jcmat3Comp';
@@ -1780,6 +1781,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'VecComp' 'CmatImag' 'VecComp';
 //%     'VecComp' 'MatDoub' 'VecComp';
 //%     'VecComp' 'ScmatDoub' 'VecComp';
+//%     'VecComp' 'ScmatComp' 'SvecDoub';
 //%     'DvecComp' 'DcmatDoub' 'DvecComp';
 //%     'SvecComp' 'ScmatDoub' 'SvecComp';
 //%     'SvecComp' 'ScmatDoub' 'DvecComp';
@@ -1885,6 +1887,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'DvecComp', 'DcmatDoub', 'DvecComp';
 //%     'DvecComp', 'CmatDoub', 'DvecComp';
 //%     'SvecDoub', 'CmatDoub', 'SvecDoub';
+//%     'SvecDoub', 'ScmatDoub', 'SvecDoub';
 //%     'SvecComp', 'ScmatDoub', 'SvecComp';
 //%     'SvecComp', 'ScmatComp', 'SvecComp';
 //%     'SvecComp', 'ScmatComp', 'DvecComp';

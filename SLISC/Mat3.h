@@ -11,8 +11,6 @@ protected:
 public:
     Mat3Char(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Char(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Char(const Mat3Char &rhs) = delete;   // Copy constructor
-    Mat3Char & operator=(const Mat3Char &rhs) = delete;
     void operator<<(Mat3Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -95,8 +93,6 @@ protected:
 public:
     Mat3Int(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Int(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Int(const Mat3Int &rhs) = delete;   // Copy constructor
-    Mat3Int & operator=(const Mat3Int &rhs) = delete;
     void operator<<(Mat3Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -179,8 +175,6 @@ protected:
 public:
     Mat3Llong(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Llong(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Llong(const Mat3Llong &rhs) = delete;   // Copy constructor
-    Mat3Llong & operator=(const Mat3Llong &rhs) = delete;
     void operator<<(Mat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -263,8 +257,6 @@ protected:
 public:
     Mat3Float(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Float(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Float(const Mat3Float &rhs) = delete;   // Copy constructor
-    Mat3Float & operator=(const Mat3Float &rhs) = delete;
     void operator<<(Mat3Float &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -347,8 +339,6 @@ protected:
 public:
     Mat3Doub(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Doub(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Doub(const Mat3Doub &rhs) = delete;   // Copy constructor
-    Mat3Doub & operator=(const Mat3Doub &rhs) = delete;
     void operator<<(Mat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -431,8 +421,6 @@ protected:
 public:
     Mat3Ldoub(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Ldoub(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Ldoub(const Mat3Ldoub &rhs) = delete;   // Copy constructor
-    Mat3Ldoub & operator=(const Mat3Ldoub &rhs) = delete;
     void operator<<(Mat3Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -515,8 +503,6 @@ protected:
 public:
     Mat3Fcomp(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Fcomp(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Fcomp(const Mat3Fcomp &rhs) = delete;   // Copy constructor
-    Mat3Fcomp & operator=(const Mat3Fcomp &rhs) = delete;
     void operator<<(Mat3Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -599,8 +585,6 @@ protected:
 public:
     Mat3Comp(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Comp(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Comp(const Mat3Comp &rhs) = delete;   // Copy constructor
-    Mat3Comp & operator=(const Mat3Comp &rhs) = delete;
     void operator<<(Mat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -683,8 +667,6 @@ protected:
 public:
     Mat3Lcomp(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Lcomp(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Lcomp(const Mat3Lcomp &rhs) = delete;   // Copy constructor
-    Mat3Lcomp & operator=(const Mat3Lcomp &rhs) = delete;
     void operator<<(Mat3Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -767,8 +749,6 @@ protected:
 public:
     Mat3Fimag(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Fimag(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Fimag(const Mat3Fimag &rhs) = delete;   // Copy constructor
-    Mat3Fimag & operator=(const Mat3Fimag &rhs) = delete;
     void operator<<(Mat3Fimag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -851,8 +831,6 @@ protected:
 public:
     Mat3Imag(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Imag(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Imag(const Mat3Imag &rhs) = delete;   // Copy constructor
-    Mat3Imag & operator=(const Mat3Imag &rhs) = delete;
     void operator<<(Mat3Imag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -935,8 +913,6 @@ protected:
 public:
     Mat3Limag(): m_N1(0), m_N2(0), m_N3(0) {};
     Mat3Limag(Long_I N1, Long_I N2, Long_I N3);
-    Mat3Limag(const Mat3Limag &rhs) = delete;   // Copy constructor
-    Mat3Limag & operator=(const Mat3Limag &rhs) = delete;
     void operator<<(Mat3Limag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);

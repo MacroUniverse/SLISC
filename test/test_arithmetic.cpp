@@ -526,9 +526,9 @@ void test_arithmetic()
             SLS_ERR("failed!");
 
         SvecComp cut_x, cut_y, cut_y1;
-        cut_x.set(cut(x, 1, 5));
-        cut_y.set(cut(y, 1, 6));
-        cut_y1.set(cut(y1, 1, 6));
+        cut_x = cut(x, 1, 5);
+        cut_y = cut(y, 1, 6);
+        cut_y1 = cut(y1, 1, 6);
         DcmatDoub cut_a(cut(a, 2, 6, 2, 5));
         mul(cut_y, cut_a, cut_x);
         mul_gen(cut_y1, cut_a, cut_x);

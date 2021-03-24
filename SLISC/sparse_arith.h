@@ -464,7 +464,7 @@ inline void sort_r(McooChar_IO a)
     SvecLong sli1;
     sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_p(a.col_p());
+    sli1.set(a.col_p());
     reorder(sli1, order);
 }
 
@@ -481,7 +481,7 @@ inline void sort_r(McooInt_IO a)
     SvecLong sli1;
     sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_p(a.col_p());
+    sli1.set(a.col_p());
     reorder(sli1, order);
 }
 
@@ -498,7 +498,7 @@ inline void sort_r(McooLlong_IO a)
     SvecLong sli1;
     sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_p(a.col_p());
+    sli1.set(a.col_p());
     reorder(sli1, order);
 }
 
@@ -515,7 +515,7 @@ inline void sort_r(McooDoub_IO a)
     SvecLong sli1;
     sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_p(a.col_p());
+    sli1.set(a.col_p());
     reorder(sli1, order);
 }
 
@@ -532,7 +532,7 @@ inline void sort_r(McooComp_IO a)
     SvecLong sli1;
     sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_p(a.col_p());
+    sli1.set(a.col_p());
     reorder(sli1, order);
 }
 
@@ -620,7 +620,7 @@ inline Int norm_inf(CmobdInt_I A)
     }
     --k;
     // middle blocks
-    sli.set_size(N0); sli.shift(-1);
+    sli.resize(N0); sli.shift(-1);
     for (Long blk = 1; blk < Nblk - 1; ++blk) {
         for (Long j = 0; j < N0; ++j) {
             abs_sum[k] += sum_abs(sli);
@@ -629,7 +629,7 @@ inline Int norm_inf(CmobdInt_I A)
         --k;
     }
     // last block
-    sli.set_size(N1);
+    sli.resize(N1);
     for (Long j = 0; j < N1; ++j) {
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);
@@ -650,7 +650,7 @@ inline Doub norm_inf(CmobdDoub_I A)
     }
     --k;
     // middle blocks
-    sli.set_size(N0); sli.shift(-1);
+    sli.resize(N0); sli.shift(-1);
     for (Long blk = 1; blk < Nblk - 1; ++blk) {
         for (Long j = 0; j < N0; ++j) {
             abs_sum[k] += sum_abs(sli);
@@ -659,7 +659,7 @@ inline Doub norm_inf(CmobdDoub_I A)
         --k;
     }
     // last block
-    sli.set_size(N1);
+    sli.resize(N1);
     for (Long j = 0; j < N1; ++j) {
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);
@@ -680,7 +680,7 @@ inline Doub norm_inf(CmobdComp_I A)
     }
     --k;
     // middle blocks
-    sli.set_size(N0); sli.shift(-1);
+    sli.resize(N0); sli.shift(-1);
     for (Long blk = 1; blk < Nblk - 1; ++blk) {
         for (Long j = 0; j < N0; ++j) {
             abs_sum[k] += sum_abs(sli);
@@ -689,7 +689,7 @@ inline Doub norm_inf(CmobdComp_I A)
         --k;
     }
     // last block
-    sli.set_size(N1);
+    sli.resize(N1);
     for (Long j = 0; j < N1; ++j) {
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);

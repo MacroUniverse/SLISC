@@ -27,8 +27,6 @@ protected:
 public:
     @Mat3T@(): m_N1(0), m_N2(0), m_N3(0) {};
     @Mat3T@(Long_I N1, Long_I N2, Long_I N3);
-    @Mat3T@(const @Mat3T@ &rhs) = delete;   // Copy constructor
-    @Mat3T@ & operator=(const @Mat3T@ &rhs) = delete;
     void operator<<(@Mat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);

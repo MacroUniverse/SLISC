@@ -19,14 +19,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecChar_c &operator=(const DvecChar_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Char *p);
+    void set(const Char *p);
     void set(const Char *p, Long_I N, Long_I step);
     void set(const DvecChar_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -84,7 +83,7 @@ inline const Char & DvecChar_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecChar_c::set_size(Long_I N)
+inline void DvecChar_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -93,7 +92,7 @@ inline void DvecChar_c::set_size(Long_I N)
 }
 
 
-inline void DvecChar_c::set_p(const Char * p)
+inline void DvecChar_c::set(const Char * p)
 {
     m_p = p;
 }
@@ -146,14 +145,13 @@ public:
     Long step() const;
 
     operator DvecChar_c() const;
-    DvecChar &operator=(const DvecChar &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Char *p);
+    void set(Char *p);
     void set(Char *p, Long_I N, Long_I step);
     void set(const DvecChar &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -211,7 +209,7 @@ inline Char & DvecChar::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecChar::set_size(Long_I N)
+inline void DvecChar::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -224,7 +222,7 @@ inline DvecChar::operator DvecChar_c() const
     return *((DvecChar_c *)this);
 }
 
-inline void DvecChar::set_p(Char * p)
+inline void DvecChar::set(Char * p)
 {
     m_p = p;
 }
@@ -276,14 +274,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecInt_c &operator=(const DvecInt_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Int *p);
+    void set(const Int *p);
     void set(const Int *p, Long_I N, Long_I step);
     void set(const DvecInt_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -341,7 +338,7 @@ inline const Int & DvecInt_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecInt_c::set_size(Long_I N)
+inline void DvecInt_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -350,7 +347,7 @@ inline void DvecInt_c::set_size(Long_I N)
 }
 
 
-inline void DvecInt_c::set_p(const Int * p)
+inline void DvecInt_c::set(const Int * p)
 {
     m_p = p;
 }
@@ -403,14 +400,13 @@ public:
     Long step() const;
 
     operator DvecInt_c() const;
-    DvecInt &operator=(const DvecInt &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Int *p);
+    void set(Int *p);
     void set(Int *p, Long_I N, Long_I step);
     void set(const DvecInt &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -468,7 +464,7 @@ inline Int & DvecInt::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecInt::set_size(Long_I N)
+inline void DvecInt::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -481,7 +477,7 @@ inline DvecInt::operator DvecInt_c() const
     return *((DvecInt_c *)this);
 }
 
-inline void DvecInt::set_p(Int * p)
+inline void DvecInt::set(Int * p)
 {
     m_p = p;
 }
@@ -533,14 +529,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecLlong_c &operator=(const DvecLlong_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Llong *p);
+    void set(const Llong *p);
     void set(const Llong *p, Long_I N, Long_I step);
     void set(const DvecLlong_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -598,7 +593,7 @@ inline const Llong & DvecLlong_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecLlong_c::set_size(Long_I N)
+inline void DvecLlong_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -607,7 +602,7 @@ inline void DvecLlong_c::set_size(Long_I N)
 }
 
 
-inline void DvecLlong_c::set_p(const Llong * p)
+inline void DvecLlong_c::set(const Llong * p)
 {
     m_p = p;
 }
@@ -660,14 +655,13 @@ public:
     Long step() const;
 
     operator DvecLlong_c() const;
-    DvecLlong &operator=(const DvecLlong &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Llong *p);
+    void set(Llong *p);
     void set(Llong *p, Long_I N, Long_I step);
     void set(const DvecLlong &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -725,7 +719,7 @@ inline Llong & DvecLlong::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecLlong::set_size(Long_I N)
+inline void DvecLlong::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -738,7 +732,7 @@ inline DvecLlong::operator DvecLlong_c() const
     return *((DvecLlong_c *)this);
 }
 
-inline void DvecLlong::set_p(Llong * p)
+inline void DvecLlong::set(Llong * p)
 {
     m_p = p;
 }
@@ -806,14 +800,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecFloat_c &operator=(const DvecFloat_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Float *p);
+    void set(const Float *p);
     void set(const Float *p, Long_I N, Long_I step);
     void set(const DvecFloat_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -871,7 +864,7 @@ inline const Float & DvecFloat_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecFloat_c::set_size(Long_I N)
+inline void DvecFloat_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -880,7 +873,7 @@ inline void DvecFloat_c::set_size(Long_I N)
 }
 
 
-inline void DvecFloat_c::set_p(const Float * p)
+inline void DvecFloat_c::set(const Float * p)
 {
     m_p = p;
 }
@@ -933,14 +926,13 @@ public:
     Long step() const;
 
     operator DvecFloat_c() const;
-    DvecFloat &operator=(const DvecFloat &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Float *p);
+    void set(Float *p);
     void set(Float *p, Long_I N, Long_I step);
     void set(const DvecFloat &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -998,7 +990,7 @@ inline Float & DvecFloat::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecFloat::set_size(Long_I N)
+inline void DvecFloat::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1011,7 +1003,7 @@ inline DvecFloat::operator DvecFloat_c() const
     return *((DvecFloat_c *)this);
 }
 
-inline void DvecFloat::set_p(Float * p)
+inline void DvecFloat::set(Float * p)
 {
     m_p = p;
 }
@@ -1063,14 +1055,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecDoub_c &operator=(const DvecDoub_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Doub *p);
+    void set(const Doub *p);
     void set(const Doub *p, Long_I N, Long_I step);
     void set(const DvecDoub_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1128,7 +1119,7 @@ inline const Doub & DvecDoub_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecDoub_c::set_size(Long_I N)
+inline void DvecDoub_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1137,7 +1128,7 @@ inline void DvecDoub_c::set_size(Long_I N)
 }
 
 
-inline void DvecDoub_c::set_p(const Doub * p)
+inline void DvecDoub_c::set(const Doub * p)
 {
     m_p = p;
 }
@@ -1190,14 +1181,13 @@ public:
     Long step() const;
 
     operator DvecDoub_c() const;
-    DvecDoub &operator=(const DvecDoub &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Doub *p);
+    void set(Doub *p);
     void set(Doub *p, Long_I N, Long_I step);
     void set(const DvecDoub &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1255,7 +1245,7 @@ inline Doub & DvecDoub::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecDoub::set_size(Long_I N)
+inline void DvecDoub::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1268,7 +1258,7 @@ inline DvecDoub::operator DvecDoub_c() const
     return *((DvecDoub_c *)this);
 }
 
-inline void DvecDoub::set_p(Doub * p)
+inline void DvecDoub::set(Doub * p)
 {
     m_p = p;
 }
@@ -1320,14 +1310,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecLdoub_c &operator=(const DvecLdoub_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Ldoub *p);
+    void set(const Ldoub *p);
     void set(const Ldoub *p, Long_I N, Long_I step);
     void set(const DvecLdoub_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1385,7 +1374,7 @@ inline const Ldoub & DvecLdoub_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecLdoub_c::set_size(Long_I N)
+inline void DvecLdoub_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1394,7 +1383,7 @@ inline void DvecLdoub_c::set_size(Long_I N)
 }
 
 
-inline void DvecLdoub_c::set_p(const Ldoub * p)
+inline void DvecLdoub_c::set(const Ldoub * p)
 {
     m_p = p;
 }
@@ -1447,14 +1436,13 @@ public:
     Long step() const;
 
     operator DvecLdoub_c() const;
-    DvecLdoub &operator=(const DvecLdoub &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Ldoub *p);
+    void set(Ldoub *p);
     void set(Ldoub *p, Long_I N, Long_I step);
     void set(const DvecLdoub &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1512,7 +1500,7 @@ inline Ldoub & DvecLdoub::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecLdoub::set_size(Long_I N)
+inline void DvecLdoub::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1525,7 +1513,7 @@ inline DvecLdoub::operator DvecLdoub_c() const
     return *((DvecLdoub_c *)this);
 }
 
-inline void DvecLdoub::set_p(Ldoub * p)
+inline void DvecLdoub::set(Ldoub * p)
 {
     m_p = p;
 }
@@ -1577,14 +1565,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecFcomp_c &operator=(const DvecFcomp_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Fcomp *p);
+    void set(const Fcomp *p);
     void set(const Fcomp *p, Long_I N, Long_I step);
     void set(const DvecFcomp_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1642,7 +1629,7 @@ inline const Fcomp & DvecFcomp_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecFcomp_c::set_size(Long_I N)
+inline void DvecFcomp_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1651,7 +1638,7 @@ inline void DvecFcomp_c::set_size(Long_I N)
 }
 
 
-inline void DvecFcomp_c::set_p(const Fcomp * p)
+inline void DvecFcomp_c::set(const Fcomp * p)
 {
     m_p = p;
 }
@@ -1704,14 +1691,13 @@ public:
     Long step() const;
 
     operator DvecFcomp_c() const;
-    DvecFcomp &operator=(const DvecFcomp &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Fcomp *p);
+    void set(Fcomp *p);
     void set(Fcomp *p, Long_I N, Long_I step);
     void set(const DvecFcomp &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1769,7 +1755,7 @@ inline Fcomp & DvecFcomp::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecFcomp::set_size(Long_I N)
+inline void DvecFcomp::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1782,7 +1768,7 @@ inline DvecFcomp::operator DvecFcomp_c() const
     return *((DvecFcomp_c *)this);
 }
 
-inline void DvecFcomp::set_p(Fcomp * p)
+inline void DvecFcomp::set(Fcomp * p)
 {
     m_p = p;
 }
@@ -1834,14 +1820,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecComp_c &operator=(const DvecComp_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Comp *p);
+    void set(const Comp *p);
     void set(const Comp *p, Long_I N, Long_I step);
     void set(const DvecComp_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -1899,7 +1884,7 @@ inline const Comp & DvecComp_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecComp_c::set_size(Long_I N)
+inline void DvecComp_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -1908,7 +1893,7 @@ inline void DvecComp_c::set_size(Long_I N)
 }
 
 
-inline void DvecComp_c::set_p(const Comp * p)
+inline void DvecComp_c::set(const Comp * p)
 {
     m_p = p;
 }
@@ -1961,14 +1946,13 @@ public:
     Long step() const;
 
     operator DvecComp_c() const;
-    DvecComp &operator=(const DvecComp &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Comp *p);
+    void set(Comp *p);
     void set(Comp *p, Long_I N, Long_I step);
     void set(const DvecComp &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -2026,7 +2010,7 @@ inline Comp & DvecComp::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecComp::set_size(Long_I N)
+inline void DvecComp::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -2039,7 +2023,7 @@ inline DvecComp::operator DvecComp_c() const
     return *((DvecComp_c *)this);
 }
 
-inline void DvecComp::set_p(Comp * p)
+inline void DvecComp::set(Comp * p)
 {
     m_p = p;
 }
@@ -2091,14 +2075,13 @@ public:
     Long size() const;
     Long step() const;
 
-    DvecLcomp_c &operator=(const DvecLcomp_c &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(const Lcomp *p);
+    void set(const Lcomp *p);
     void set(const Lcomp *p, Long_I N, Long_I step);
     void set(const DvecLcomp_c &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -2156,7 +2139,7 @@ inline const Lcomp & DvecLcomp_c::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecLcomp_c::set_size(Long_I N)
+inline void DvecLcomp_c::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -2165,7 +2148,7 @@ inline void DvecLcomp_c::set_size(Long_I N)
 }
 
 
-inline void DvecLcomp_c::set_p(const Lcomp * p)
+inline void DvecLcomp_c::set(const Lcomp * p)
 {
     m_p = p;
 }
@@ -2218,14 +2201,13 @@ public:
     Long step() const;
 
     operator DvecLcomp_c() const;
-    DvecLcomp &operator=(const DvecLcomp &) = delete;
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_p(Lcomp *p);
+    void set(Lcomp *p);
     void set(Lcomp *p, Long_I N, Long_I step);
     void set(const DvecLcomp &sli);
-    void set_size(Long_I N);
+    void resize(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -2283,7 +2265,7 @@ inline Lcomp & DvecLcomp::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void DvecLcomp::set_size(Long_I N)
+inline void DvecLcomp::resize(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
@@ -2296,7 +2278,7 @@ inline DvecLcomp::operator DvecLcomp_c() const
     return *((DvecLcomp_c *)this);
 }
 
-inline void DvecLcomp::set_p(Lcomp * p)
+inline void DvecLcomp::set(Lcomp * p)
 {
     m_p = p;
 }
