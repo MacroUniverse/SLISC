@@ -18,8 +18,8 @@ public:
     CbandInt();
     CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
-    Int * ptr();
-    const Int * ptr() const;
+    Int * p();
+    const Int * p() const;
     Int operator()(Long_I i, Long_I j) const;
     Int &ref(Long_I i, Long_I j);
     Long n1() const;
@@ -55,14 +55,14 @@ inline CbandInt::CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I 
 #endif
 }
 
-inline Int * CbandInt::ptr()
+inline Int * CbandInt::p()
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
-inline const Int * CbandInt::ptr() const
+inline const Int * CbandInt::p() const
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
 inline Int CbandInt::operator()(Long_I i, Long_I j) const
@@ -203,8 +203,8 @@ public:
     CbandDoub();
     CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
-    Doub * ptr();
-    const Doub * ptr() const;
+    Doub * p();
+    const Doub * p() const;
     Doub operator()(Long_I i, Long_I j) const;
     Doub &ref(Long_I i, Long_I j);
     Long n1() const;
@@ -240,14 +240,14 @@ inline CbandDoub::CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_
 #endif
 }
 
-inline Doub * CbandDoub::ptr()
+inline Doub * CbandDoub::p()
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
-inline const Doub * CbandDoub::ptr() const
+inline const Doub * CbandDoub::p() const
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
 inline Doub CbandDoub::operator()(Long_I i, Long_I j) const
@@ -388,8 +388,8 @@ public:
     CbandComp();
     CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
-    Comp * ptr();
-    const Comp * ptr() const;
+    Comp * p();
+    const Comp * p() const;
     Comp operator()(Long_I i, Long_I j) const;
     Comp &ref(Long_I i, Long_I j);
     Long n1() const;
@@ -425,14 +425,14 @@ inline CbandComp::CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_
 #endif
 }
 
-inline Comp * CbandComp::ptr()
+inline Comp * CbandComp::p()
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
-inline const Comp * CbandComp::ptr() const
+inline const Comp * CbandComp::p() const
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
 inline Comp CbandComp::operator()(Long_I i, Long_I j) const

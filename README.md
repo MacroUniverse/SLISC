@@ -150,7 +150,7 @@ TODO.
 ### Vector/Matrix Type Alias
 The typedefs for vector/matrix classes are (each type also comes with `_I`, `_O`, and `_IO` versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
 
-Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `ptr()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
+Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `p()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
 
 ## arithmetics.h
 * includes basic arithmatics like `==`, `+=`, `*=`, `plus()`, `minus()`, etc. for containers.
@@ -360,10 +360,9 @@ void idft_par(MatComp_O &X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I &Y, Doub 
 * put all internal names into "slisc::internal" namespace
 * test `randInt()`
 * update from Go-Solver project
-* ptr_arith.h functions must support N = 0
+* pointer arith functions must support N = 0
 * test "meta.h" for ImagNum<T> types
 * modify "meta.h" so that `Svector` could be used as function arguments without casting to `Vector` first.
-* change `ptr()` function to `data()` for containers, like `std::vector<>`
 * `container.resize(container)` should support every possible container
 * `operator=` for containers (and slice classes!) should work for any possible right hand side type
 * matfile: consider storing complex array using the format of real array.

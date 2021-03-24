@@ -16,7 +16,7 @@ public:
     explicit SvecChar_c(Long_I N);
     SvecChar_c(const Char *data, Long_I N); // unsafe
     SvecChar_c(const Char *data, Long_I data_len, Long_I N);
-    const Char* ptr() const;
+    const Char* p() const;
     Long size() const;
     const Char & operator[](Long_I i) const;
     const Char & operator()(Long_I i) const;
@@ -24,14 +24,14 @@ public:
     const Char & end(Long_I i) const;
     void set(const Char *data, Long_I data_len, Long_I N);
     void set(const SvecChar_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Char *data);
+    void set_p(const Char *data);
     void set_size(Long_I N);
     void set(const Char *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecChar_c();
 };
@@ -62,11 +62,11 @@ inline SvecChar_c::SvecChar_c(const Char *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Char * SvecChar_c::ptr() const
+inline const Char * SvecChar_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -129,7 +129,7 @@ inline void SvecChar_c::set(const SvecChar_c &sli)
 #endif
 }
 
-inline void SvecChar_c::set_ptr(const Char *data)
+inline void SvecChar_c::set_p(const Char *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -188,7 +188,7 @@ public:
     explicit SvecChar(Long_I N);
     SvecChar(Char *data, Long_I N); // unsafe
     SvecChar(Char *data, Long_I data_len, Long_I N);
-    Char* ptr() const;
+    Char* p() const;
     Long size() const;
     Char & operator[](Long_I i) const;
     Char & operator()(Long_I i) const;
@@ -197,14 +197,14 @@ public:
     operator SvecChar_c() const;
     void set(Char *data, Long_I data_len, Long_I N);
     void set(const SvecChar &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Char *data);
+    void set_p(Char *data);
     void set_size(Long_I N);
     void set(Char *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecChar();
 };
@@ -235,11 +235,11 @@ inline SvecChar::SvecChar(Char *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Char * SvecChar::ptr() const
+inline Char * SvecChar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -306,7 +306,7 @@ inline void SvecChar::set(const SvecChar &sli)
 #endif
 }
 
-inline void SvecChar::set_ptr(Char *data)
+inline void SvecChar::set_p(Char *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -365,7 +365,7 @@ public:
     explicit SvecInt_c(Long_I N);
     SvecInt_c(const Int *data, Long_I N); // unsafe
     SvecInt_c(const Int *data, Long_I data_len, Long_I N);
-    const Int* ptr() const;
+    const Int* p() const;
     Long size() const;
     const Int & operator[](Long_I i) const;
     const Int & operator()(Long_I i) const;
@@ -373,14 +373,14 @@ public:
     const Int & end(Long_I i) const;
     void set(const Int *data, Long_I data_len, Long_I N);
     void set(const SvecInt_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Int *data);
+    void set_p(const Int *data);
     void set_size(Long_I N);
     void set(const Int *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecInt_c();
 };
@@ -411,11 +411,11 @@ inline SvecInt_c::SvecInt_c(const Int *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Int * SvecInt_c::ptr() const
+inline const Int * SvecInt_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -478,7 +478,7 @@ inline void SvecInt_c::set(const SvecInt_c &sli)
 #endif
 }
 
-inline void SvecInt_c::set_ptr(const Int *data)
+inline void SvecInt_c::set_p(const Int *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -537,7 +537,7 @@ public:
     explicit SvecInt(Long_I N);
     SvecInt(Int *data, Long_I N); // unsafe
     SvecInt(Int *data, Long_I data_len, Long_I N);
-    Int* ptr() const;
+    Int* p() const;
     Long size() const;
     Int & operator[](Long_I i) const;
     Int & operator()(Long_I i) const;
@@ -546,14 +546,14 @@ public:
     operator SvecInt_c() const;
     void set(Int *data, Long_I data_len, Long_I N);
     void set(const SvecInt &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Int *data);
+    void set_p(Int *data);
     void set_size(Long_I N);
     void set(Int *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecInt();
 };
@@ -584,11 +584,11 @@ inline SvecInt::SvecInt(Int *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Int * SvecInt::ptr() const
+inline Int * SvecInt::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -655,7 +655,7 @@ inline void SvecInt::set(const SvecInt &sli)
 #endif
 }
 
-inline void SvecInt::set_ptr(Int *data)
+inline void SvecInt::set_p(Int *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -714,7 +714,7 @@ public:
     explicit SvecLlong_c(Long_I N);
     SvecLlong_c(const Llong *data, Long_I N); // unsafe
     SvecLlong_c(const Llong *data, Long_I data_len, Long_I N);
-    const Llong* ptr() const;
+    const Llong* p() const;
     Long size() const;
     const Llong & operator[](Long_I i) const;
     const Llong & operator()(Long_I i) const;
@@ -722,14 +722,14 @@ public:
     const Llong & end(Long_I i) const;
     void set(const Llong *data, Long_I data_len, Long_I N);
     void set(const SvecLlong_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Llong *data);
+    void set_p(const Llong *data);
     void set_size(Long_I N);
     void set(const Llong *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLlong_c();
 };
@@ -760,11 +760,11 @@ inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Llong * SvecLlong_c::ptr() const
+inline const Llong * SvecLlong_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -827,7 +827,7 @@ inline void SvecLlong_c::set(const SvecLlong_c &sli)
 #endif
 }
 
-inline void SvecLlong_c::set_ptr(const Llong *data)
+inline void SvecLlong_c::set_p(const Llong *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -886,7 +886,7 @@ public:
     explicit SvecLlong(Long_I N);
     SvecLlong(Llong *data, Long_I N); // unsafe
     SvecLlong(Llong *data, Long_I data_len, Long_I N);
-    Llong* ptr() const;
+    Llong* p() const;
     Long size() const;
     Llong & operator[](Long_I i) const;
     Llong & operator()(Long_I i) const;
@@ -895,14 +895,14 @@ public:
     operator SvecLlong_c() const;
     void set(Llong *data, Long_I data_len, Long_I N);
     void set(const SvecLlong &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Llong *data);
+    void set_p(Llong *data);
     void set_size(Long_I N);
     void set(Llong *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLlong();
 };
@@ -933,11 +933,11 @@ inline SvecLlong::SvecLlong(Llong *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Llong * SvecLlong::ptr() const
+inline Llong * SvecLlong::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1004,7 +1004,7 @@ inline void SvecLlong::set(const SvecLlong &sli)
 #endif
 }
 
-inline void SvecLlong::set_ptr(Llong *data)
+inline void SvecLlong::set_p(Llong *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -1079,7 +1079,7 @@ public:
     explicit SvecFloat_c(Long_I N);
     SvecFloat_c(const Float *data, Long_I N); // unsafe
     SvecFloat_c(const Float *data, Long_I data_len, Long_I N);
-    const Float* ptr() const;
+    const Float* p() const;
     Long size() const;
     const Float & operator[](Long_I i) const;
     const Float & operator()(Long_I i) const;
@@ -1087,14 +1087,14 @@ public:
     const Float & end(Long_I i) const;
     void set(const Float *data, Long_I data_len, Long_I N);
     void set(const SvecFloat_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Float *data);
+    void set_p(const Float *data);
     void set_size(Long_I N);
     void set(const Float *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecFloat_c();
 };
@@ -1125,11 +1125,11 @@ inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Float * SvecFloat_c::ptr() const
+inline const Float * SvecFloat_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1192,7 +1192,7 @@ inline void SvecFloat_c::set(const SvecFloat_c &sli)
 #endif
 }
 
-inline void SvecFloat_c::set_ptr(const Float *data)
+inline void SvecFloat_c::set_p(const Float *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -1251,7 +1251,7 @@ public:
     explicit SvecFloat(Long_I N);
     SvecFloat(Float *data, Long_I N); // unsafe
     SvecFloat(Float *data, Long_I data_len, Long_I N);
-    Float* ptr() const;
+    Float* p() const;
     Long size() const;
     Float & operator[](Long_I i) const;
     Float & operator()(Long_I i) const;
@@ -1260,14 +1260,14 @@ public:
     operator SvecFloat_c() const;
     void set(Float *data, Long_I data_len, Long_I N);
     void set(const SvecFloat &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Float *data);
+    void set_p(Float *data);
     void set_size(Long_I N);
     void set(Float *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecFloat();
 };
@@ -1298,11 +1298,11 @@ inline SvecFloat::SvecFloat(Float *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Float * SvecFloat::ptr() const
+inline Float * SvecFloat::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1369,7 +1369,7 @@ inline void SvecFloat::set(const SvecFloat &sli)
 #endif
 }
 
-inline void SvecFloat::set_ptr(Float *data)
+inline void SvecFloat::set_p(Float *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -1428,7 +1428,7 @@ public:
     explicit SvecDoub_c(Long_I N);
     SvecDoub_c(const Doub *data, Long_I N); // unsafe
     SvecDoub_c(const Doub *data, Long_I data_len, Long_I N);
-    const Doub* ptr() const;
+    const Doub* p() const;
     Long size() const;
     const Doub & operator[](Long_I i) const;
     const Doub & operator()(Long_I i) const;
@@ -1436,14 +1436,14 @@ public:
     const Doub & end(Long_I i) const;
     void set(const Doub *data, Long_I data_len, Long_I N);
     void set(const SvecDoub_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Doub *data);
+    void set_p(const Doub *data);
     void set_size(Long_I N);
     void set(const Doub *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecDoub_c();
 };
@@ -1474,11 +1474,11 @@ inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Doub * SvecDoub_c::ptr() const
+inline const Doub * SvecDoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1541,7 +1541,7 @@ inline void SvecDoub_c::set(const SvecDoub_c &sli)
 #endif
 }
 
-inline void SvecDoub_c::set_ptr(const Doub *data)
+inline void SvecDoub_c::set_p(const Doub *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -1600,7 +1600,7 @@ public:
     explicit SvecDoub(Long_I N);
     SvecDoub(Doub *data, Long_I N); // unsafe
     SvecDoub(Doub *data, Long_I data_len, Long_I N);
-    Doub* ptr() const;
+    Doub* p() const;
     Long size() const;
     Doub & operator[](Long_I i) const;
     Doub & operator()(Long_I i) const;
@@ -1609,14 +1609,14 @@ public:
     operator SvecDoub_c() const;
     void set(Doub *data, Long_I data_len, Long_I N);
     void set(const SvecDoub &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Doub *data);
+    void set_p(Doub *data);
     void set_size(Long_I N);
     void set(Doub *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecDoub();
 };
@@ -1647,11 +1647,11 @@ inline SvecDoub::SvecDoub(Doub *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Doub * SvecDoub::ptr() const
+inline Doub * SvecDoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1718,7 +1718,7 @@ inline void SvecDoub::set(const SvecDoub &sli)
 #endif
 }
 
-inline void SvecDoub::set_ptr(Doub *data)
+inline void SvecDoub::set_p(Doub *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -1777,7 +1777,7 @@ public:
     explicit SvecLdoub_c(Long_I N);
     SvecLdoub_c(const Ldoub *data, Long_I N); // unsafe
     SvecLdoub_c(const Ldoub *data, Long_I data_len, Long_I N);
-    const Ldoub* ptr() const;
+    const Ldoub* p() const;
     Long size() const;
     const Ldoub & operator[](Long_I i) const;
     const Ldoub & operator()(Long_I i) const;
@@ -1785,14 +1785,14 @@ public:
     const Ldoub & end(Long_I i) const;
     void set(const Ldoub *data, Long_I data_len, Long_I N);
     void set(const SvecLdoub_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Ldoub *data);
+    void set_p(const Ldoub *data);
     void set_size(Long_I N);
     void set(const Ldoub *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLdoub_c();
 };
@@ -1823,11 +1823,11 @@ inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Ldoub * SvecLdoub_c::ptr() const
+inline const Ldoub * SvecLdoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1890,7 +1890,7 @@ inline void SvecLdoub_c::set(const SvecLdoub_c &sli)
 #endif
 }
 
-inline void SvecLdoub_c::set_ptr(const Ldoub *data)
+inline void SvecLdoub_c::set_p(const Ldoub *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -1949,7 +1949,7 @@ public:
     explicit SvecLdoub(Long_I N);
     SvecLdoub(Ldoub *data, Long_I N); // unsafe
     SvecLdoub(Ldoub *data, Long_I data_len, Long_I N);
-    Ldoub* ptr() const;
+    Ldoub* p() const;
     Long size() const;
     Ldoub & operator[](Long_I i) const;
     Ldoub & operator()(Long_I i) const;
@@ -1958,14 +1958,14 @@ public:
     operator SvecLdoub_c() const;
     void set(Ldoub *data, Long_I data_len, Long_I N);
     void set(const SvecLdoub &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Ldoub *data);
+    void set_p(Ldoub *data);
     void set_size(Long_I N);
     void set(Ldoub *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLdoub();
 };
@@ -1996,11 +1996,11 @@ inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Ldoub * SvecLdoub::ptr() const
+inline Ldoub * SvecLdoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2067,7 +2067,7 @@ inline void SvecLdoub::set(const SvecLdoub &sli)
 #endif
 }
 
-inline void SvecLdoub::set_ptr(Ldoub *data)
+inline void SvecLdoub::set_p(Ldoub *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -2126,7 +2126,7 @@ public:
     explicit SvecFcomp_c(Long_I N);
     SvecFcomp_c(const Fcomp *data, Long_I N); // unsafe
     SvecFcomp_c(const Fcomp *data, Long_I data_len, Long_I N);
-    const Fcomp* ptr() const;
+    const Fcomp* p() const;
     Long size() const;
     const Fcomp & operator[](Long_I i) const;
     const Fcomp & operator()(Long_I i) const;
@@ -2134,14 +2134,14 @@ public:
     const Fcomp & end(Long_I i) const;
     void set(const Fcomp *data, Long_I data_len, Long_I N);
     void set(const SvecFcomp_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Fcomp *data);
+    void set_p(const Fcomp *data);
     void set_size(Long_I N);
     void set(const Fcomp *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecFcomp_c();
 };
@@ -2172,11 +2172,11 @@ inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Fcomp * SvecFcomp_c::ptr() const
+inline const Fcomp * SvecFcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2239,7 +2239,7 @@ inline void SvecFcomp_c::set(const SvecFcomp_c &sli)
 #endif
 }
 
-inline void SvecFcomp_c::set_ptr(const Fcomp *data)
+inline void SvecFcomp_c::set_p(const Fcomp *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -2298,7 +2298,7 @@ public:
     explicit SvecFcomp(Long_I N);
     SvecFcomp(Fcomp *data, Long_I N); // unsafe
     SvecFcomp(Fcomp *data, Long_I data_len, Long_I N);
-    Fcomp* ptr() const;
+    Fcomp* p() const;
     Long size() const;
     Fcomp & operator[](Long_I i) const;
     Fcomp & operator()(Long_I i) const;
@@ -2307,14 +2307,14 @@ public:
     operator SvecFcomp_c() const;
     void set(Fcomp *data, Long_I data_len, Long_I N);
     void set(const SvecFcomp &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Fcomp *data);
+    void set_p(Fcomp *data);
     void set_size(Long_I N);
     void set(Fcomp *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecFcomp();
 };
@@ -2345,11 +2345,11 @@ inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Fcomp * SvecFcomp::ptr() const
+inline Fcomp * SvecFcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2416,7 +2416,7 @@ inline void SvecFcomp::set(const SvecFcomp &sli)
 #endif
 }
 
-inline void SvecFcomp::set_ptr(Fcomp *data)
+inline void SvecFcomp::set_p(Fcomp *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -2475,7 +2475,7 @@ public:
     explicit SvecComp_c(Long_I N);
     SvecComp_c(const Comp *data, Long_I N); // unsafe
     SvecComp_c(const Comp *data, Long_I data_len, Long_I N);
-    const Comp* ptr() const;
+    const Comp* p() const;
     Long size() const;
     const Comp & operator[](Long_I i) const;
     const Comp & operator()(Long_I i) const;
@@ -2483,14 +2483,14 @@ public:
     const Comp & end(Long_I i) const;
     void set(const Comp *data, Long_I data_len, Long_I N);
     void set(const SvecComp_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Comp *data);
+    void set_p(const Comp *data);
     void set_size(Long_I N);
     void set(const Comp *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecComp_c();
 };
@@ -2521,11 +2521,11 @@ inline SvecComp_c::SvecComp_c(const Comp *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Comp * SvecComp_c::ptr() const
+inline const Comp * SvecComp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2588,7 +2588,7 @@ inline void SvecComp_c::set(const SvecComp_c &sli)
 #endif
 }
 
-inline void SvecComp_c::set_ptr(const Comp *data)
+inline void SvecComp_c::set_p(const Comp *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -2647,7 +2647,7 @@ public:
     explicit SvecComp(Long_I N);
     SvecComp(Comp *data, Long_I N); // unsafe
     SvecComp(Comp *data, Long_I data_len, Long_I N);
-    Comp* ptr() const;
+    Comp* p() const;
     Long size() const;
     Comp & operator[](Long_I i) const;
     Comp & operator()(Long_I i) const;
@@ -2656,14 +2656,14 @@ public:
     operator SvecComp_c() const;
     void set(Comp *data, Long_I data_len, Long_I N);
     void set(const SvecComp &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Comp *data);
+    void set_p(Comp *data);
     void set_size(Long_I N);
     void set(Comp *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecComp();
 };
@@ -2694,11 +2694,11 @@ inline SvecComp::SvecComp(Comp *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Comp * SvecComp::ptr() const
+inline Comp * SvecComp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2765,7 +2765,7 @@ inline void SvecComp::set(const SvecComp &sli)
 #endif
 }
 
-inline void SvecComp::set_ptr(Comp *data)
+inline void SvecComp::set_p(Comp *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -2824,7 +2824,7 @@ public:
     explicit SvecLcomp_c(Long_I N);
     SvecLcomp_c(const Lcomp *data, Long_I N); // unsafe
     SvecLcomp_c(const Lcomp *data, Long_I data_len, Long_I N);
-    const Lcomp* ptr() const;
+    const Lcomp* p() const;
     Long size() const;
     const Lcomp & operator[](Long_I i) const;
     const Lcomp & operator()(Long_I i) const;
@@ -2832,14 +2832,14 @@ public:
     const Lcomp & end(Long_I i) const;
     void set(const Lcomp *data, Long_I data_len, Long_I N);
     void set(const SvecLcomp_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Lcomp *data);
+    void set_p(const Lcomp *data);
     void set_size(Long_I N);
     void set(const Lcomp *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLcomp_c();
 };
@@ -2870,11 +2870,11 @@ inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Lcomp * SvecLcomp_c::ptr() const
+inline const Lcomp * SvecLcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2937,7 +2937,7 @@ inline void SvecLcomp_c::set(const SvecLcomp_c &sli)
 #endif
 }
 
-inline void SvecLcomp_c::set_ptr(const Lcomp *data)
+inline void SvecLcomp_c::set_p(const Lcomp *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -2996,7 +2996,7 @@ public:
     explicit SvecLcomp(Long_I N);
     SvecLcomp(Lcomp *data, Long_I N); // unsafe
     SvecLcomp(Lcomp *data, Long_I data_len, Long_I N);
-    Lcomp* ptr() const;
+    Lcomp* p() const;
     Long size() const;
     Lcomp & operator[](Long_I i) const;
     Lcomp & operator()(Long_I i) const;
@@ -3005,14 +3005,14 @@ public:
     operator SvecLcomp_c() const;
     void set(Lcomp *data, Long_I data_len, Long_I N);
     void set(const SvecLcomp &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Lcomp *data);
+    void set_p(Lcomp *data);
     void set_size(Long_I N);
     void set(Lcomp *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLcomp();
 };
@@ -3043,11 +3043,11 @@ inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Lcomp * SvecLcomp::ptr() const
+inline Lcomp * SvecLcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -3114,7 +3114,7 @@ inline void SvecLcomp::set(const SvecLcomp &sli)
 #endif
 }
 
-inline void SvecLcomp::set_ptr(Lcomp *data)
+inline void SvecLcomp::set_p(Lcomp *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -3173,7 +3173,7 @@ public:
     explicit SvecFimag_c(Long_I N);
     SvecFimag_c(const Fimag *data, Long_I N); // unsafe
     SvecFimag_c(const Fimag *data, Long_I data_len, Long_I N);
-    const Fimag* ptr() const;
+    const Fimag* p() const;
     Long size() const;
     const Fimag & operator[](Long_I i) const;
     const Fimag & operator()(Long_I i) const;
@@ -3181,14 +3181,14 @@ public:
     const Fimag & end(Long_I i) const;
     void set(const Fimag *data, Long_I data_len, Long_I N);
     void set(const SvecFimag_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Fimag *data);
+    void set_p(const Fimag *data);
     void set_size(Long_I N);
     void set(const Fimag *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecFimag_c();
 };
@@ -3219,11 +3219,11 @@ inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Fimag * SvecFimag_c::ptr() const
+inline const Fimag * SvecFimag_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -3286,7 +3286,7 @@ inline void SvecFimag_c::set(const SvecFimag_c &sli)
 #endif
 }
 
-inline void SvecFimag_c::set_ptr(const Fimag *data)
+inline void SvecFimag_c::set_p(const Fimag *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -3345,7 +3345,7 @@ public:
     explicit SvecFimag(Long_I N);
     SvecFimag(Fimag *data, Long_I N); // unsafe
     SvecFimag(Fimag *data, Long_I data_len, Long_I N);
-    Fimag* ptr() const;
+    Fimag* p() const;
     Long size() const;
     Fimag & operator[](Long_I i) const;
     Fimag & operator()(Long_I i) const;
@@ -3354,14 +3354,14 @@ public:
     operator SvecFimag_c() const;
     void set(Fimag *data, Long_I data_len, Long_I N);
     void set(const SvecFimag &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Fimag *data);
+    void set_p(Fimag *data);
     void set_size(Long_I N);
     void set(Fimag *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecFimag();
 };
@@ -3392,11 +3392,11 @@ inline SvecFimag::SvecFimag(Fimag *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Fimag * SvecFimag::ptr() const
+inline Fimag * SvecFimag::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -3463,7 +3463,7 @@ inline void SvecFimag::set(const SvecFimag &sli)
 #endif
 }
 
-inline void SvecFimag::set_ptr(Fimag *data)
+inline void SvecFimag::set_p(Fimag *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -3522,7 +3522,7 @@ public:
     explicit SvecImag_c(Long_I N);
     SvecImag_c(const Imag *data, Long_I N); // unsafe
     SvecImag_c(const Imag *data, Long_I data_len, Long_I N);
-    const Imag* ptr() const;
+    const Imag* p() const;
     Long size() const;
     const Imag & operator[](Long_I i) const;
     const Imag & operator()(Long_I i) const;
@@ -3530,14 +3530,14 @@ public:
     const Imag & end(Long_I i) const;
     void set(const Imag *data, Long_I data_len, Long_I N);
     void set(const SvecImag_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Imag *data);
+    void set_p(const Imag *data);
     void set_size(Long_I N);
     void set(const Imag *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecImag_c();
 };
@@ -3568,11 +3568,11 @@ inline SvecImag_c::SvecImag_c(const Imag *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Imag * SvecImag_c::ptr() const
+inline const Imag * SvecImag_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -3635,7 +3635,7 @@ inline void SvecImag_c::set(const SvecImag_c &sli)
 #endif
 }
 
-inline void SvecImag_c::set_ptr(const Imag *data)
+inline void SvecImag_c::set_p(const Imag *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -3694,7 +3694,7 @@ public:
     explicit SvecImag(Long_I N);
     SvecImag(Imag *data, Long_I N); // unsafe
     SvecImag(Imag *data, Long_I data_len, Long_I N);
-    Imag* ptr() const;
+    Imag* p() const;
     Long size() const;
     Imag & operator[](Long_I i) const;
     Imag & operator()(Long_I i) const;
@@ -3703,14 +3703,14 @@ public:
     operator SvecImag_c() const;
     void set(Imag *data, Long_I data_len, Long_I N);
     void set(const SvecImag &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Imag *data);
+    void set_p(Imag *data);
     void set_size(Long_I N);
     void set(Imag *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecImag();
 };
@@ -3741,11 +3741,11 @@ inline SvecImag::SvecImag(Imag *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Imag * SvecImag::ptr() const
+inline Imag * SvecImag::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -3812,7 +3812,7 @@ inline void SvecImag::set(const SvecImag &sli)
 #endif
 }
 
-inline void SvecImag::set_ptr(Imag *data)
+inline void SvecImag::set_p(Imag *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -3871,7 +3871,7 @@ public:
     explicit SvecLimag_c(Long_I N);
     SvecLimag_c(const Limag *data, Long_I N); // unsafe
     SvecLimag_c(const Limag *data, Long_I data_len, Long_I N);
-    const Limag* ptr() const;
+    const Limag* p() const;
     Long size() const;
     const Limag & operator[](Long_I i) const;
     const Limag & operator()(Long_I i) const;
@@ -3879,14 +3879,14 @@ public:
     const Limag & end(Long_I i) const;
     void set(const Limag *data, Long_I data_len, Long_I N);
     void set(const SvecLimag_c &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(const Limag *data);
+    void set_p(const Limag *data);
     void set_size(Long_I N);
     void set(const Limag *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLimag_c();
 };
@@ -3917,11 +3917,11 @@ inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline const Limag * SvecLimag_c::ptr() const
+inline const Limag * SvecLimag_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -3984,7 +3984,7 @@ inline void SvecLimag_c::set(const SvecLimag_c &sli)
 #endif
 }
 
-inline void SvecLimag_c::set_ptr(const Limag *data)
+inline void SvecLimag_c::set_p(const Limag *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS
@@ -4043,7 +4043,7 @@ public:
     explicit SvecLimag(Long_I N);
     SvecLimag(Limag *data, Long_I N); // unsafe
     SvecLimag(Limag *data, Long_I data_len, Long_I N);
-    Limag* ptr() const;
+    Limag* p() const;
     Long size() const;
     Limag & operator[](Long_I i) const;
     Limag & operator()(Long_I i) const;
@@ -4052,14 +4052,14 @@ public:
     operator SvecLimag_c() const;
     void set(Limag *data, Long_I data_len, Long_I N);
     void set(const SvecLimag &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(Limag *data);
+    void set_p(Limag *data);
     void set_size(Long_I N);
     void set(Limag *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~SvecLimag();
 };
@@ -4090,11 +4090,11 @@ inline SvecLimag::SvecLimag(Limag *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline Limag * SvecLimag::ptr() const
+inline Limag * SvecLimag::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -4161,7 +4161,7 @@ inline void SvecLimag::set(const SvecLimag &sli)
 #endif
 }
 
-inline void SvecLimag::set_ptr(Limag *data)
+inline void SvecLimag::set_p(Limag *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS

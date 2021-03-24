@@ -184,10 +184,10 @@ inline void four1(Doub *data, Int_I n, Int_I isign) {
 }
 
 inline void fft(VecComp_IO data)
-{ four1((Doub*)data.ptr(), data.size(), -1); }
+{ four1((Doub*)data.p(), data.size(), -1); }
 
 inline void ifft(VecComp_IO data)
-{ four1((Doub*)data.ptr(), data.size(), 1); }
+{ four1((Doub*)data.p(), data.size(), 1); }
 
 // fft for each column of matrix
 // not optimized, very slow
@@ -451,13 +451,13 @@ inline void four2x(Doub *data2, const Doub *data, Int_I n, Int_I isign) {
 inline void fft2x(VecComp_O data2, VecComp_I data)
 {
     data2.resize(data.size()*2);
-    four2x((Doub*)data2.ptr(), (Doub*)data.ptr(), data.size(), -1);
+    four2x((Doub*)data2.p(), (Doub*)data.p(), data.size(), -1);
 }
 
 inline void ifft2x(VecComp_O data2, VecComp_I data)
 {
     data2.resize(data.size()*2);
-    four2x((Doub*)data2.ptr(), (Doub*)data.ptr(), data.size(), 1);
+    four2x((Doub*)data2.p(), (Doub*)data.p(), data.size(), 1);
 }
 
 // optimized 4x zero padding: four1([data, 0, 0 ,0, 0, 0, 0, data]);
@@ -523,13 +523,13 @@ inline void fft4x(VecComp_O data4, VecComp_I data)
     if (data4.size() != data.size() * 4)
         SLS_ERR("wrong shape!");
 #endif
-    four4x((Doub*)data4.ptr(), (Doub*)data.ptr(), data.size(), -1);
+    four4x((Doub*)data4.p(), (Doub*)data.p(), data.size(), -1);
 }
 
 inline void ifft4x(VecComp_O data4, VecComp_I data)
 {
     data4.resize(data.size()*4);
-    four4x((Doub*)data4.ptr(), (Doub*)data.ptr(), data.size(), 1);
+    four4x((Doub*)data4.p(), (Doub*)data.p(), data.size(), 1);
 }
 
 inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub xmin, Doub xmax)
@@ -540,11 +540,11 @@ inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub 
     Comp *pyj, factor, expo, dexpo;
     Y.resize(Nk, Nc); copy(Y, 0);
     for (j = 0; j < Nk; ++j) {
-        pyj = Y.ptr() + Nc*j;
+        pyj = Y.p() + Nc*j;
         expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
         dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
         for (i = 0; i < Nx; ++i) {
-            pxi = X.ptr() + Nc*i;
+            pxi = X.p() + Nc*i;
             expo *= dexpo;
             for (k = 0; k < Nc; ++k)
                 pyj[k] += expo*pxi[k];
@@ -563,11 +563,11 @@ inline void dft_par(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, D
         Long i, k;
         const Comp *pxi;
         Comp *pyj, factor, expo, dexpo;
-        pyj = Y.ptr() + Nc*j;
+        pyj = Y.p() + Nc*j;
         expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
         dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
         for (i = 0; i < Nx; ++i) {
-            pxi = X.ptr() + Nc*i;
+            pxi = X.p() + Nc*i;
             expo *= dexpo;
             for (k = 0; k < Nc; ++k)
                 pyj[k] += expo*pxi[k];
@@ -583,11 +583,11 @@ inline void idft(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub
     Comp *pxj, factor, expo, dexpo;
     X.resize(Nx, Nc); copy(X, 0);
     for (j = 0; j < Nx; ++j) {
-        pxj = X.ptr() + Nc*j;
+        pxj = X.p() + Nc*j;
         expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
         dexpo = exp(Comp(0, (xmin + dx*j)*dk));
         for (i = 0; i < Nk; ++i) {
-            pyi = Y.ptr() + Nc*i;
+            pyi = Y.p() + Nc*i;
             expo *= dexpo;
             for (k = 0; k < Nc; ++k)
                 pxj[k] += expo*pyi[k];
@@ -605,11 +605,11 @@ inline void idft_par(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, 
         Long i, k;
         const Comp *pyi;
         Comp *pxj, factor, expo, dexpo;
-        pxj = X.ptr() + Nc*j;
+        pxj = X.p() + Nc*j;
         expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
         dexpo = exp(Comp(0, (xmin + dx*j)*dk));
         for (i = 0; i < Nk; ++i) {
-            pyi = Y.ptr() + Nc*i;
+            pyi = Y.p() + Nc*i;
             expo *= dexpo;
             for (k = 0; k < Nc; ++k)
                 pxj[k] += expo*pyi[k];

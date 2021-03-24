@@ -29,8 +29,8 @@ public:
     const @T@ &operator[](Long_I i) const;
     @T@ &operator[](Long_I i);
     Long find(Long_I i, Long_I j) const; // return single index to m_data, -1 if out of blocks
-    const @T@ * ptr() const; // not the first element!
-    @T@ * ptr();
+    const @T@ * p() const; // not the first element!
+    @T@ * p();
     Long n1() const;
     Long n2() const;
     Long size() const;
@@ -56,7 +56,7 @@ inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
     Long step = sqr(n0());
     // set the first overlapped element to 0
     if (m_data.size() > 0)
-        vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+        vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const @T@ & @CmobdT@::operator[](Long_I i) const
@@ -97,14 +97,14 @@ inline Long @CmobdT@::find(Long_I i1, Long_I i2) const
     return -1;
 }
 
-inline const @T@ * @CmobdT@::ptr() const
+inline const @T@ * @CmobdT@::p() const
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
-inline @T@ * @CmobdT@::ptr()
+inline @T@ * @CmobdT@::p()
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
 inline Long @CmobdT@::n1() const
@@ -140,10 +140,10 @@ inline @Cmat3T@& @CmobdT@::cmat3()
 
 inline void @CmobdT@::set(@Cmat3T@_I a3)
 {
-    veccpy(m_data.ptr(), a3.ptr(), a3.size());
+    veccpy(m_data.p(), a3.p(), a3.size());
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, nblk() - 1, step);
+    vecset(m_data.p() + step - 1, 0, nblk() - 1, step);
 }
 
 inline Long @CmobdT@::n0() const
@@ -181,7 +181,7 @@ inline void @CmobdT@::resize(Long_I blk_size, Long_I Nblk)
     m_N1 = (blk_size - 1) * Nblk - 1;
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 //%----------------------
 } // namespace slisc

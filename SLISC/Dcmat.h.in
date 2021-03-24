@@ -57,8 +57,8 @@ protected:
 public:
     typedef @CT@ value_type;
     @Class@();
-    @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda);
+    @Class@(@CT@ *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(@CT@ *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const @Class@ &sli);
 
 //% if ~constness
@@ -73,18 +73,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    @CT@ *ptr() const;
+    @CT@ *p() const;
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline @Class@::@Class@(@CT@ *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void @Class@::set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void @Class@::set(@CT@ *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void @Class@::set(const @Class@ &sli)
@@ -142,7 +142,7 @@ inline Long @Class@::size() const
     return m_N;
 }
 
-inline @CT@ * @Class@::ptr() const
+inline @CT@ * @Class@::p() const
 {
     return m_p;
 }

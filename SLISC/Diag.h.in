@@ -37,7 +37,7 @@ inline @DiagT@::@DiagT@(Long_I N) : Base(N) {}
 
 inline @DiagT@::@DiagT@(@VecT@_I v) : Base(v.size())
 {
-    veccpy(m_p, v.ptr(), m_N);
+    veccpy(m_p, v.p(), m_N);
 }
 
 inline Long @DiagT@::size() const

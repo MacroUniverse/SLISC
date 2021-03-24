@@ -18,11 +18,11 @@ inline void inv_mat(@T@_IO A)
     Int N = (Int)A.n1();
     VecInt ipiv(N);
 //% if is_dense_mat(T) && is_Doub(Ts)
-    LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
-    LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
+    LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+    LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
 //% elseif is_dense_mat(T) && is_Comp(Ts)
-    LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
-    LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.ptr(), N, (double _Complex*)ipiv.ptr());
+    LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+    LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.p(), N, (double _Complex*)ipiv.p());
 //% else
 //%     error('not implemented (1)!');
 //% end
@@ -71,9 +71,9 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% end
 
 //% if is_Doub(Tsa) && is_Doub(Tsx)
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
 //% elseif is_Comp(Tsa) && is_Comp(Tsx)
-    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');
@@ -123,9 +123,9 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 //% end
 
 //% if is_Doub(Tsa) && is_Doub(Tsx)
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.p(), lda, ipiv.p(), x.p(), ldx);
 //% elseif is_Comp(Tsa) && is_Comp(Tsx)
-    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');
@@ -176,9 +176,9 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% end
 
 //% if is_Doub(Tsx) && is_Doub(Tsa)
-    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
 //% elseif is_Comp(Tsx) && is_Comp(Tsa)
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');
@@ -226,9 +226,9 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, @Ti@_IO ipiv)
     Int ldx = x.size(), nrhs = 1;
 //% end
 //% if is_Doub(Tsx) && is_Doub(Tsa)
-    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
 //% elseif is_Comp(Tsx) && is_Comp(Tsa)
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');

@@ -13,8 +13,8 @@ inline void inv_mat(CmatDoub_IO A)
 #endif
     Int N = (Int)A.n1();
     VecInt ipiv(N);
-    LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
-    LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
+    LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+    LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
 }
 
 inline void inv_mat(ScmatDoub_IO A)
@@ -25,8 +25,8 @@ inline void inv_mat(ScmatDoub_IO A)
 #endif
     Int N = (Int)A.n1();
     VecInt ipiv(N);
-    LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.ptr(), N, ipiv.ptr());
-    LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.ptr(), N, ipiv.ptr());
+    LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+    LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
 }
 
 
@@ -48,7 +48,7 @@ inline void lin_eq(CmatDoub_IO x, CmatDoub_I a)
     Int lda = a1.n1();
     Int ldx = x.n1(), nrhs = x.n2();
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -71,7 +71,7 @@ inline void lin_eq(ScmatDoub_IO x, CmatDoub_I a)
     Int lda = a1.n1();
     Int ldx = x.n1(), nrhs = x.n2();
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -94,7 +94,7 @@ inline void lin_eq(ScmatDoub_IO x, ScmatDoub_I a)
     Int lda = a1.n1();
     Int ldx = x.n1(), nrhs = x.n2();
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -117,7 +117,7 @@ inline void lin_eq(VecDoub_IO x, CmatDoub_I a)
     Int lda = a1.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -140,7 +140,7 @@ inline void lin_eq(SvecDoub_IO x, CmatDoub_I a)
     Int lda = a1.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -163,7 +163,7 @@ inline void lin_eq(VecComp_IO x, CmatComp_I a)
     Int lda = a1.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -186,7 +186,7 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_I a)
     Int lda = a1.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a1.n1(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -208,7 +208,7 @@ inline void lin_eq(CmatDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.n1(), nrhs = x.n2();
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -226,7 +226,7 @@ inline void lin_eq(ScmatDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.n1(), nrhs = x.n2();
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -244,7 +244,7 @@ inline void lin_eq(ScmatDoub_IO x, ScmatDoub_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.n1(), nrhs = x.n2();
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -262,7 +262,7 @@ inline void lin_eq(VecDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -280,7 +280,7 @@ inline void lin_eq(SvecDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, a.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -298,7 +298,7 @@ inline void lin_eq(VecComp_IO x, CmatComp_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -316,7 +316,7 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_IO a, SvecInt_IO ipiv)
     Int lda = a.n1();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgesv(LAPACK_COL_MAJOR, a.n1(), nrhs, (double _Complex*)a.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -343,7 +343,7 @@ inline void lin_eq(VecDoub_IO x, CbandDoub_I a)
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -367,7 +367,7 @@ inline void lin_eq(VecComp_IO x, CbandComp_I a)
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -391,7 +391,7 @@ inline void lin_eq(SvecComp_IO x, CbandComp_I a)
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
 
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -415,7 +415,7 @@ inline void lin_eq(VecDoub_IO x, CbandDoub_IO a1, VecInt_IO ipiv)
 #endif
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
-    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.ptr(), lda, ipiv.ptr(), x.ptr(), ldx);
+    Int ret = LAPACKE_dgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, a1.p(), lda, ipiv.p(), x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -432,7 +432,7 @@ inline void lin_eq(VecComp_IO x, CbandComp_IO a1, VecInt_IO ipiv)
 #endif
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -449,7 +449,7 @@ inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 #endif
     Int lda = a1.lda();
     Int ldx = x.size(), nrhs = 1;
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");
@@ -466,7 +466,7 @@ inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 #endif
     Int lda = a1.lda();
     Int ldx = x.n1(), nrhs = x.n2();
-    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.ptr(), lda, ipiv.ptr(), (double _Complex*)x.ptr(), ldx);
+    Int ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n1(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
     if (ret != 0) {
         cout << "LAPACK returned " << ret << endl;
         SLS_ERR("something wrong!");

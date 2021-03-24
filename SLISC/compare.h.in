@@ -181,7 +181,7 @@ inline Bool operator==(@T1@_I v1, @T2@_I v2)
 {
 //% if is_dense(T1) && is_dense(T2) && is_same_major(T1, T2)
     return shape_cmp(v1, v2) &&
-        equals_to_vv(v1.ptr(), v2.ptr(), v2.size());
+        equals_to_vv(v1.p(), v2.p(), v2.size());
 //% elseif ndim(T1) == 1 && ndim(T2) == 1
     if (!shape_cmp(v1, v2))
         return false;
@@ -244,10 +244,10 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
 inline Bool operator==(@T@_I v, @Ts@_I s)
 {
 //% if is_dense(T)
-    return equals_to_vs(v.ptr(), s, v.size());
+    return equals_to_vs(v.p(), s, v.size());
 //% elseif is_Dcmat(T)
     for (Long j = 0; j < v.n2(); ++j)
-        if !equals_to_vs(v.ptr() + v.n1()*j, s, v.n1());
+        if !equals_to_vs(v.p() + v.n1()*j, s, v.n1());
             return false
     return true;
 //% else

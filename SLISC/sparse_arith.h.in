@@ -149,7 +149,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
 }
 //%------------------------------
 
@@ -166,9 +166,9 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
         SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
-    mul_v_coo_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
-    mul_v_cooh_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
+    mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
 //% else
 //%     error('not implemented!');
 //% end
@@ -196,9 +196,9 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
         SLS_ERR("illegal shape!");
 #endif
 //% if is_dense(T) && is_cmajor(T) && is_dense(T1) && is_cmajor(T1) && is_Diag(T2)
-    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
 //% elseif is_dense(T) && is_cmajor(T) && is_Diag(T1) && is_dense(T2) && is_cmajor(T2)
-    mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
 //% else
 //%     error('not implemented!');
 //% end
@@ -218,12 +218,12 @@ inline void sort_r(@McooT@_IO a)
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
     sort(inds, order);
-    @SvecT@ sli(a.ptr(), Nnz);
+    @SvecT@ sli(a.p(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
-    sli1.set(a.row_ptr(), Nnz);
+    sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_ptr(a.col_ptr());
+    sli1.set_p(a.col_p());
     reorder(sli1, order);
 }
 //%------------------------
@@ -238,7 +238,7 @@ inline void sort_r(@McooT@_IO a)
 //% [T, Ts] = varargin{:};
 inline void operator*=(@T@_IO v, @Ts@_I s)
 {
-    times_equals_vs(v.ptr(), s, v.nnz());
+    times_equals_vs(v.p(), s, v.nnz());
 }
 //%------------------------
 
@@ -273,7 +273,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 //% [T, T1, Ts] = varargin{:};
 inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-    times_vvs(v.ptr(), v1.ptr(), s, v1.nnz());
+    times_vvs(v.p(), v1.p(), s, v1.nnz());
 }
 //%------------------------
 
@@ -304,7 +304,7 @@ inline @Tr@ norm_inf(@T@_I A)
     Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
     @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
     Long k = 0;
-    @SvecTs_c@ sli(A.ptr() + N0 + 1, N1);
+    @SvecTs_c@ sli(A.p() + N0 + 1, N1);
     // first block
     for (Long j = 1; j < N0; ++j) {
         abs_sum[k] += sum_abs(sli);

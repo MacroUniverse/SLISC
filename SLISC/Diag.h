@@ -25,7 +25,7 @@ inline DiagInt::DiagInt(Long_I N) : Base(N) {}
 
 inline DiagInt::DiagInt(VecInt_I v) : Base(v.size())
 {
-    veccpy(m_p, v.ptr(), m_N);
+    veccpy(m_p, v.p(), m_N);
 }
 
 inline Long DiagInt::size() const
@@ -93,7 +93,7 @@ inline DiagLlong::DiagLlong(Long_I N) : Base(N) {}
 
 inline DiagLlong::DiagLlong(VecLlong_I v) : Base(v.size())
 {
-    veccpy(m_p, v.ptr(), m_N);
+    veccpy(m_p, v.p(), m_N);
 }
 
 inline Long DiagLlong::size() const
@@ -170,7 +170,7 @@ inline DiagDoub::DiagDoub(Long_I N) : Base(N) {}
 
 inline DiagDoub::DiagDoub(VecDoub_I v) : Base(v.size())
 {
-    veccpy(m_p, v.ptr(), m_N);
+    veccpy(m_p, v.p(), m_N);
 }
 
 inline Long DiagDoub::size() const
@@ -238,7 +238,7 @@ inline DiagComp::DiagComp(Long_I N) : Base(N) {}
 
 inline DiagComp::DiagComp(VecComp_I v) : Base(v.size())
 {
-    veccpy(m_p, v.ptr(), m_N);
+    veccpy(m_p, v.p(), m_N);
 }
 
 inline Long DiagComp::size() const

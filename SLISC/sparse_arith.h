@@ -303,7 +303,7 @@ inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 inline void mul(VecDoub_O y, CmobdDoub_I a, VecDoub_I x)
@@ -312,7 +312,7 @@ inline void mul(VecDoub_O y, CmobdDoub_I a, VecDoub_I x)
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 inline void mul(VecComp_O y, CmobdComp_I a, VecComp_I x)
@@ -321,7 +321,7 @@ inline void mul(VecComp_O y, CmobdComp_I a, VecComp_I x)
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
@@ -330,7 +330,7 @@ inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
@@ -339,7 +339,7 @@ inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
     if (y.size() != a.n1() || x.size() != a.n2())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.ptr(), x.ptr(), a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 
@@ -349,7 +349,7 @@ inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
     if (a.n2() != x.size() || a.n1() != y.size())
         SLS_ERR("illegal shape!");
 #endif
-    mul_v_coo_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
 }
 
 inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
@@ -358,7 +358,7 @@ inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
     if (a.n2() != x.size() || a.n1() != y.size())
         SLS_ERR("illegal shape!");
 #endif
-    mul_v_coo_v(y.ptr(), a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x.ptr());
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
 }
 
 
@@ -370,7 +370,7 @@ inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
 }
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
@@ -381,7 +381,7 @@ inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
 }
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
@@ -392,7 +392,7 @@ inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
 }
 
 inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
@@ -403,7 +403,7 @@ inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.ptr(), a.ptr(), a.n1(), a.n2(), x.ptr());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
 }
 
 inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
@@ -414,7 +414,7 @@ inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
 }
 
 inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
@@ -425,7 +425,7 @@ inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
 }
 
 inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
@@ -436,7 +436,7 @@ inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
 }
 
 inline void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
@@ -447,7 +447,7 @@ inline void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
     if (y.n1() != a.n1() || y.n2() != x.n2())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.ptr(), a.ptr(), x.ptr(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
 }
 
 
@@ -459,12 +459,12 @@ inline void sort_r(McooChar_IO a)
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
     sort(inds, order);
-    SvecChar sli(a.ptr(), Nnz);
+    SvecChar sli(a.p(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
-    sli1.set(a.row_ptr(), Nnz);
+    sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_ptr(a.col_ptr());
+    sli1.set_p(a.col_p());
     reorder(sli1, order);
 }
 
@@ -476,12 +476,12 @@ inline void sort_r(McooInt_IO a)
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
     sort(inds, order);
-    SvecInt sli(a.ptr(), Nnz);
+    SvecInt sli(a.p(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
-    sli1.set(a.row_ptr(), Nnz);
+    sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_ptr(a.col_ptr());
+    sli1.set_p(a.col_p());
     reorder(sli1, order);
 }
 
@@ -493,12 +493,12 @@ inline void sort_r(McooLlong_IO a)
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
     sort(inds, order);
-    SvecLlong sli(a.ptr(), Nnz);
+    SvecLlong sli(a.p(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
-    sli1.set(a.row_ptr(), Nnz);
+    sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_ptr(a.col_ptr());
+    sli1.set_p(a.col_p());
     reorder(sli1, order);
 }
 
@@ -510,12 +510,12 @@ inline void sort_r(McooDoub_IO a)
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
     sort(inds, order);
-    SvecDoub sli(a.ptr(), Nnz);
+    SvecDoub sli(a.p(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
-    sli1.set(a.row_ptr(), Nnz);
+    sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_ptr(a.col_ptr());
+    sli1.set_p(a.col_p());
     reorder(sli1, order);
 }
 
@@ -527,34 +527,34 @@ inline void sort_r(McooComp_IO a)
     for (Long i = 0; i < Nnz; ++i)
         inds[i] = a.n2() * a.row(i) + a.col(i);
     sort(inds, order);
-    SvecComp sli(a.ptr(), Nnz);
+    SvecComp sli(a.p(), Nnz);
     reorder(sli, order);
     SvecLong sli1;
-    sli1.set(a.row_ptr(), Nnz);
+    sli1.set(a.row_p(), Nnz);
     reorder(sli1, order);
-    sli1.set_ptr(a.col_ptr());
+    sli1.set_p(a.col_p());
     reorder(sli1, order);
 }
 
 
 inline void operator*=(McooDoub_IO v, Doub_I s)
 {
-    times_equals_vs(v.ptr(), s, v.nnz());
+    times_equals_vs(v.p(), s, v.nnz());
 }
 
 inline void operator*=(McooComp_IO v, Doub_I s)
 {
-    times_equals_vs(v.ptr(), s, v.nnz());
+    times_equals_vs(v.p(), s, v.nnz());
 }
 
 inline void operator*=(McooComp_IO v, Imag_I s)
 {
-    times_equals_vs(v.ptr(), s, v.nnz());
+    times_equals_vs(v.p(), s, v.nnz());
 }
 
 inline void operator*=(McooComp_IO v, Comp_I s)
 {
-    times_equals_vs(v.ptr(), s, v.nnz());
+    times_equals_vs(v.p(), s, v.nnz());
 }
 
 
@@ -582,7 +582,7 @@ inline void times(CmobdComp_O v, CmobdDoub_I v1, Imag_I s)
 
 inline void times(McooComp_O v, McooDoub_I v1, Imag_I s)
 {
-    times_vvs(v.ptr(), v1.ptr(), s, v1.nnz());
+    times_vvs(v.p(), v1.p(), s, v1.nnz());
 }
 
 
@@ -612,7 +612,7 @@ inline Int norm_inf(CmobdInt_I A)
     Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
     VecInt abs_sum(A.n2()); copy(abs_sum, 0);
     Long k = 0;
-    SvecInt_c sli(A.ptr() + N0 + 1, N1);
+    SvecInt_c sli(A.p() + N0 + 1, N1);
     // first block
     for (Long j = 1; j < N0; ++j) {
         abs_sum[k] += sum_abs(sli);
@@ -642,7 +642,7 @@ inline Doub norm_inf(CmobdDoub_I A)
     Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
     VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
     Long k = 0;
-    SvecDoub_c sli(A.ptr() + N0 + 1, N1);
+    SvecDoub_c sli(A.p() + N0 + 1, N1);
     // first block
     for (Long j = 1; j < N0; ++j) {
         abs_sum[k] += sum_abs(sli);
@@ -672,7 +672,7 @@ inline Doub norm_inf(CmobdComp_I A)
     Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
     VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
     Long k = 0;
-    SvecComp_c sli(A.ptr() + N0 + 1, N1);
+    SvecComp_c sli(A.p() + N0 + 1, N1);
     // first block
     for (Long j = 1; j < N0; ++j) {
         abs_sum[k] += sum_abs(sli);

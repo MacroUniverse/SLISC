@@ -1068,7 +1068,7 @@ inline void sort(VecChar_IO v, VecLlong_IO v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    sort_vv(v.ptr(), v1.ptr(), v.size());
+    sort_vv(v.p(), v1.p(), v.size());
 }
 
 inline void sort(VecInt_IO v, VecInt_IO v1)
@@ -1077,7 +1077,7 @@ inline void sort(VecInt_IO v, VecInt_IO v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    sort_vv(v.ptr(), v1.ptr(), v.size());
+    sort_vv(v.p(), v1.p(), v.size());
 }
 
 inline void sort(VecInt_IO v, VecLlong_IO v1)
@@ -1086,7 +1086,7 @@ inline void sort(VecInt_IO v, VecLlong_IO v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    sort_vv(v.ptr(), v1.ptr(), v.size());
+    sort_vv(v.p(), v1.p(), v.size());
 }
 
 inline void sort(VecLlong_IO v, VecLlong_IO v1)
@@ -1095,7 +1095,7 @@ inline void sort(VecLlong_IO v, VecLlong_IO v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    sort_vv(v.ptr(), v1.ptr(), v.size());
+    sort_vv(v.p(), v1.p(), v.size());
 }
 
 inline void sort(VecDoub_IO v, VecLlong_IO v1)
@@ -1104,7 +1104,7 @@ inline void sort(VecDoub_IO v, VecLlong_IO v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    sort_vv(v.ptr(), v1.ptr(), v.size());
+    sort_vv(v.p(), v1.p(), v.size());
 }
 
 inline void sort(vecLlong_IO v, vecLlong_IO v1)

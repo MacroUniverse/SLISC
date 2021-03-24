@@ -6,10 +6,10 @@ void test_Scmat3()
 	using namespace slisc;
 	Long N1 = 3, N2 = 4, N3 = 5;
 	Cmat3Doub a(N1, N2, N3); rand(a);
-	Scmat3Doub sli; sli.set(a.ptr(), N1, N2, N3);
+	Scmat3Doub sli; sli.set(a.p(), N1, N2, N3);
 	if (sli.n1() != N1 || sli.n2() != N2 || sli.n3() != N3)
 		SLS_ERR("failed!");
-	if (sli.ptr() != a.ptr())
+	if (sli.p() != a.p())
 		SLS_ERR("failed!");
 	for (Long k = 0; k < N3; ++k) {
 		for (Long j = 0; j < N2; ++j) {
@@ -22,6 +22,6 @@ void test_Scmat3()
 	Scmat3Doub sli1(sli);
 	if (sli1.n1() != N1 || sli1.n2() != N2 || sli1.n3() != N3)
 		SLS_ERR("failed!");
-	if (sli1.ptr() != a.ptr())
+	if (sli1.p() != a.p())
 		SLS_ERR("failed!");
 }

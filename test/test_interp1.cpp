@@ -83,7 +83,7 @@ void test_interp1()
 			y1[i] = sin(x1[i]);
 		}
 			
-		Spline_interp spline(x0.ptr(), x0.size(), y0.ptr());
+		Spline_interp spline(x0.p(), x0.size(), y0.p());
 		for (Long i = 0; i < N0; ++i) {
 			if (abs(spline.interp(x1[i]) - y1[i]) > 1e-5)
 				SLS_ERR("failed!");

@@ -11,14 +11,14 @@ private:
     Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
-    using Base::ptr;
+    using Base::p;
     McooChar(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooChar(Long_I N1, Long_I N2);
     McooChar(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    Long *row_ptr();
-    const Long *row_ptr() const;
-    Long *col_ptr();
-    const Long *col_ptr() const;
+    Long *row_p();
+    const Long *row_p() const;
+    Long *col_p();
+    const Long *col_p() const;
     // inline void operator<<(McooChar &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
     void push(Char_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Char_I s, Long_I i, Long_I j); // change existing element or push new element
@@ -55,24 +55,24 @@ inline McooChar::McooChar(Long_I N1, Long_I N2)
 inline McooChar::McooChar(Long_I N1, Long_I N2, Long_I Ncap) :
     Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-inline Long * McooChar::row_ptr()
+inline Long * McooChar::row_p()
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline const Long *McooChar::row_ptr() const
+inline const Long *McooChar::row_p() const
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline Long * McooChar::col_ptr()
+inline Long * McooChar::col_p()
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
-inline const Long *McooChar::col_ptr() const
+inline const Long *McooChar::col_p() const
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
 inline Long McooChar::find(Long_I i, Long_I j) const
@@ -243,14 +243,14 @@ private:
     Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
-    using Base::ptr;
+    using Base::p;
     McooInt(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooInt(Long_I N1, Long_I N2);
     McooInt(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    Long *row_ptr();
-    const Long *row_ptr() const;
-    Long *col_ptr();
-    const Long *col_ptr() const;
+    Long *row_p();
+    const Long *row_p() const;
+    Long *col_p();
+    const Long *col_p() const;
     // inline void operator<<(McooInt &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
     void push(Int_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Int_I s, Long_I i, Long_I j); // change existing element or push new element
@@ -287,24 +287,24 @@ inline McooInt::McooInt(Long_I N1, Long_I N2)
 inline McooInt::McooInt(Long_I N1, Long_I N2, Long_I Ncap) :
     Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-inline Long * McooInt::row_ptr()
+inline Long * McooInt::row_p()
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline const Long *McooInt::row_ptr() const
+inline const Long *McooInt::row_p() const
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline Long * McooInt::col_ptr()
+inline Long * McooInt::col_p()
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
-inline const Long *McooInt::col_ptr() const
+inline const Long *McooInt::col_p() const
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
 inline Long McooInt::find(Long_I i, Long_I j) const
@@ -475,14 +475,14 @@ private:
     Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
-    using Base::ptr;
+    using Base::p;
     McooLlong(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooLlong(Long_I N1, Long_I N2);
     McooLlong(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    Long *row_ptr();
-    const Long *row_ptr() const;
-    Long *col_ptr();
-    const Long *col_ptr() const;
+    Long *row_p();
+    const Long *row_p() const;
+    Long *col_p();
+    const Long *col_p() const;
     // inline void operator<<(McooLlong &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
     void push(Llong_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Llong_I s, Long_I i, Long_I j); // change existing element or push new element
@@ -519,24 +519,24 @@ inline McooLlong::McooLlong(Long_I N1, Long_I N2)
 inline McooLlong::McooLlong(Long_I N1, Long_I N2, Long_I Ncap) :
     Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-inline Long * McooLlong::row_ptr()
+inline Long * McooLlong::row_p()
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline const Long *McooLlong::row_ptr() const
+inline const Long *McooLlong::row_p() const
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline Long * McooLlong::col_ptr()
+inline Long * McooLlong::col_p()
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
-inline const Long *McooLlong::col_ptr() const
+inline const Long *McooLlong::col_p() const
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
 inline Long McooLlong::find(Long_I i, Long_I j) const
@@ -707,14 +707,14 @@ private:
     Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
-    using Base::ptr;
+    using Base::p;
     McooDoub(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooDoub(Long_I N1, Long_I N2);
     McooDoub(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    Long *row_ptr();
-    const Long *row_ptr() const;
-    Long *col_ptr();
-    const Long *col_ptr() const;
+    Long *row_p();
+    const Long *row_p() const;
+    Long *col_p();
+    const Long *col_p() const;
     // inline void operator<<(McooDoub &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
     void push(Doub_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Doub_I s, Long_I i, Long_I j); // change existing element or push new element
@@ -751,24 +751,24 @@ inline McooDoub::McooDoub(Long_I N1, Long_I N2)
 inline McooDoub::McooDoub(Long_I N1, Long_I N2, Long_I Ncap) :
     Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-inline Long * McooDoub::row_ptr()
+inline Long * McooDoub::row_p()
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline const Long *McooDoub::row_ptr() const
+inline const Long *McooDoub::row_p() const
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline Long * McooDoub::col_ptr()
+inline Long * McooDoub::col_p()
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
-inline const Long *McooDoub::col_ptr() const
+inline const Long *McooDoub::col_p() const
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
 inline Long McooDoub::find(Long_I i, Long_I j) const
@@ -939,14 +939,14 @@ private:
     Long m_N1, m_N2, m_Nnz;
     VecLong m_row, m_col;
 public:
-    using Base::ptr;
+    using Base::p;
     McooComp(): m_N1(0), m_N2(0), m_Nnz(0) {};
     McooComp(Long_I N1, Long_I N2);
     McooComp(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
-    Long *row_ptr();
-    const Long *row_ptr() const;
-    Long *col_ptr();
-    const Long *col_ptr() const;
+    Long *row_p();
+    const Long *row_p() const;
+    Long *col_p();
+    const Long *col_p() const;
     // inline void operator<<(McooComp &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
     void push(Comp_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Comp_I s, Long_I i, Long_I j); // change existing element or push new element
@@ -983,24 +983,24 @@ inline McooComp::McooComp(Long_I N1, Long_I N2)
 inline McooComp::McooComp(Long_I N1, Long_I N2, Long_I Ncap) :
     Base(Ncap), m_N1(N1), m_N2(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
-inline Long * McooComp::row_ptr()
+inline Long * McooComp::row_p()
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline const Long *McooComp::row_ptr() const
+inline const Long *McooComp::row_p() const
 {
-    return m_row.ptr();
+    return m_row.p();
 }
 
-inline Long * McooComp::col_ptr()
+inline Long * McooComp::col_p()
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
-inline const Long *McooComp::col_ptr() const
+inline const Long *McooComp::col_p() const
 {
-    return m_col.ptr();
+    return m_col.p();
 }
 
 inline Long McooComp::find(Long_I i, Long_I j) const

@@ -8,23 +8,23 @@ namespace slisc {
 
 void expokit_mul(Comp *y, McooDoub_I a, Comp *x)
 {
-    mul_v_coo_v(y, a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x);
+    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x);
 }
 
 void expokit_mul(Comp *y, McooComp_I a, Comp *x)
 {
-    mul_v_coo_v(y, a.ptr(), a.row_ptr(), a.col_ptr(), a.n1(), a.nnz(), x);
+    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x);
 }
 
 
 void expokit_mul(Comp *y, CmobdDoub_I a, Comp *x)
 {
-    mul_v_cmatobd_v(y, x, a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 void expokit_mul(Comp *y, CmobdComp_I a, Comp *x)
 {
-    mul_v_cmatobd_v(y, x, a.ptr(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n1());
 }
 
 
@@ -3357,21 +3357,21 @@ inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
@@ -3387,21 +3387,21 @@ inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
@@ -3417,21 +3417,21 @@ inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I 
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
@@ -3447,21 +3447,21 @@ inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
@@ -3477,21 +3477,21 @@ inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
@@ -3507,21 +3507,21 @@ inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
@@ -3537,21 +3537,21 @@ inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 #endif
     Int iflag;
     if (!her)
-        ZGEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
     else
-        ZHEXPV((Int)v.size(), Nkrylov, t, v.ptr(),
-            tol, mat_norm, wsp_c.ptr(), (Int)wsp_c.size(),
-            wsp_i.ptr(), (Int)wsp_i.size(), mat, 0, iflag);
+        ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
+            tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
+            wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
     VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
-    SvecComp s_wsp_c(wsp_c.ptr(), wsp_c.size());
-    SvecInt s_wsp_i(wsp_i.ptr(), wsp_i.size());
+    SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
+    SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
     expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 

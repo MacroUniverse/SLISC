@@ -56,8 +56,8 @@ protected:
     Long m_step;
 public:
     @Class@();
-    @Class@(@CT@ *ptr, Long_I N, Long_I step);
-    @CT@* ptr() const;
+    @Class@(@CT@ *p, Long_I N, Long_I step);
+    @CT@* p() const;
     @CT@ & operator[](Long_I i) const;
     @CT@ & operator()(Long_I i) const;
     @CT@ & end() const;
@@ -73,27 +73,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(@CT@ *ptr);
-    void set(@CT@ *ptr, Long_I N, Long_I step);
+    void set_p(@CT@ *p);
+    void set(@CT@ *p, Long_I N, Long_I step);
     void set(const @Class@ &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(@CT@ *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline @Class@::@Class@(@CT@ *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline @CT@ * @Class@::ptr() const
+inline @CT@ * @Class@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -149,14 +149,14 @@ inline @Class@::operator @DvecT_c@() const
 }
 //% end
 
-inline void @Class@::set_ptr(@CT@ * ptr)
+inline void @Class@::set_p(@CT@ * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void @Class@::set(@CT@ * ptr, Long_I N, Long_I step)
+inline void @Class@::set(@CT@ * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void @Class@::set(const @Class@ &sli)

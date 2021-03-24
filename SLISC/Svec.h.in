@@ -55,7 +55,7 @@ public:
     explicit @Class@(Long_I N);
     @Class@(@CT@ *data, Long_I N); // unsafe
     @Class@(@CT@ *data, Long_I data_len, Long_I N);
-    @CT@* ptr() const;
+    @CT@* p() const;
     Long size() const;
 //% % resize() is a bad idea, don't try to create it!
     @CT@ & operator[](Long_I i) const;
@@ -67,14 +67,14 @@ public:
 //% end
     void set(@CT@ *data, Long_I data_len, Long_I N);
     void set(const @Class@ &sli);
-    void next(); // m_ptr += m_N
+    void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
-    void set_ptr(@CT@ *data);
+    void set_p(@CT@ *data);
     void set_size(Long_I N);
     void set(@CT@ *data, Long_I N);
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
 
     ~@Class@();
 };
@@ -105,11 +105,11 @@ inline @Class@::@Class@(@CT@ *data, Long_I data_len, Long_I N)
 #endif
 }
 
-inline @CT@ * @Class@::ptr() const
+inline @CT@ * @Class@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -178,7 +178,7 @@ inline void @Class@::set(const @Class@ &sli)
 #endif
 }
 
-inline void @Class@::set_ptr(@CT@ *data)
+inline void @Class@::set_p(@CT@ *data)
 {
     m_p = data;
 #ifdef SLS_CHECK_BOUNDS

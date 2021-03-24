@@ -26,9 +26,9 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
     Int N = (Int)A.n2();
     Int ret;
 //% if is_cmajor(Tm)
-    ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.ptr(), N, eigVal.ptr());
+    ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
 //% else
-    ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.ptr(), N, eigVal.ptr());
+    ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
 //% end
     if (ret != 0)
         SLS_ERR("failed!");
@@ -51,7 +51,7 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
     Int N = (Int)A.n2();
     eigVal.resize(N);
     Int ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
-        (double _Complex*)eigVec.ptr(), N, eigVal.ptr());
+        (double _Complex*)eigVec.p(), N, eigVal.p());
     if (ret != 0)
         SLS_ERR("failed!");
 }

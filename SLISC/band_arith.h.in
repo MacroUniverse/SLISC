@@ -227,11 +227,11 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //% if is_Doub(Tsx) && is_Doub(Tsa) && is_Doub(Tsy)
     Doub alpha = 1, beta = 0;
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, beta, y.ptr(), incy);
+        alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, beta, y.p(), incy);
 //% elseif is_Comp(Tsx) && is_Comp(Tsa) && is_Comp(Tsy)
     Comp alpha(1, 0), beta(0, 0);
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        &alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, &beta, y.ptr(), incy);
+        &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 //% else
 //%     error('not implemented!');
 //% end

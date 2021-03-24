@@ -8,7 +8,7 @@ void test_copy()
 	Long N = 3;
 	VecDoub v1(N), v(N);
 	v[0] = 1; v[1] = 2; v[2] = 3;
-	veccpy(v1.ptr(), v.ptr(), N);
+	veccpy(v1.p(), v.p(), N);
 	if (v1[0] != 1 || v1[1] != 2 || v1[2] != 3)
 		SLS_ERR("failed!");
 	

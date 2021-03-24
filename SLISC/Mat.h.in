@@ -25,7 +25,7 @@ protected:
     typedef @VbaseT@ Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     @MatT@(): m_N1(0), m_N2(0) {};
     @MatT@(Long_I N1, Long_I N2);
     @MatT@(const @MatT@ &rhs);        // Copy constructor

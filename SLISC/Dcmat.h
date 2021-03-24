@@ -11,8 +11,8 @@ protected:
 public:
     typedef const Char value_type;
     DcmatChar_c();
-    DcmatChar_c(const Char *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Char *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatChar_c(const Char *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Char *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatChar_c &sli);
 
 
@@ -24,18 +24,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Char *ptr() const;
+    const Char *p() const;
 };
 
 inline DcmatChar_c::DcmatChar_c() {}
 
-inline DcmatChar_c::DcmatChar_c(const Char *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatChar_c::DcmatChar_c(const Char *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatChar_c::set(const Char *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatChar_c::set(const Char *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatChar_c::set(const DcmatChar_c &sli)
@@ -87,7 +87,7 @@ inline Long DcmatChar_c::size() const
     return m_N;
 }
 
-inline const Char * DcmatChar_c::ptr() const
+inline const Char * DcmatChar_c::p() const
 {
     return m_p;
 }
@@ -104,8 +104,8 @@ protected:
 public:
     typedef Char value_type;
     DcmatChar();
-    DcmatChar(Char *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Char *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatChar(Char *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Char *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatChar &sli);
 
     operator DcmatChar_c() const;
@@ -118,18 +118,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Char *ptr() const;
+    Char *p() const;
 };
 
 inline DcmatChar::DcmatChar() {}
 
-inline DcmatChar::DcmatChar(Char *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatChar::DcmatChar(Char *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatChar::set(Char *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatChar::set(Char *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatChar::set(const DcmatChar &sli)
@@ -185,7 +185,7 @@ inline Long DcmatChar::size() const
     return m_N;
 }
 
-inline Char * DcmatChar::ptr() const
+inline Char * DcmatChar::p() const
 {
     return m_p;
 }
@@ -202,8 +202,8 @@ protected:
 public:
     typedef const Int value_type;
     DcmatInt_c();
-    DcmatInt_c(const Int *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Int *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatInt_c(const Int *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Int *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatInt_c &sli);
 
 
@@ -215,18 +215,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Int *ptr() const;
+    const Int *p() const;
 };
 
 inline DcmatInt_c::DcmatInt_c() {}
 
-inline DcmatInt_c::DcmatInt_c(const Int *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatInt_c::DcmatInt_c(const Int *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatInt_c::set(const Int *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatInt_c::set(const Int *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatInt_c::set(const DcmatInt_c &sli)
@@ -278,7 +278,7 @@ inline Long DcmatInt_c::size() const
     return m_N;
 }
 
-inline const Int * DcmatInt_c::ptr() const
+inline const Int * DcmatInt_c::p() const
 {
     return m_p;
 }
@@ -295,8 +295,8 @@ protected:
 public:
     typedef Int value_type;
     DcmatInt();
-    DcmatInt(Int *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Int *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatInt(Int *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Int *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatInt &sli);
 
     operator DcmatInt_c() const;
@@ -309,18 +309,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Int *ptr() const;
+    Int *p() const;
 };
 
 inline DcmatInt::DcmatInt() {}
 
-inline DcmatInt::DcmatInt(Int *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatInt::DcmatInt(Int *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatInt::set(Int *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatInt::set(Int *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatInt::set(const DcmatInt &sli)
@@ -376,7 +376,7 @@ inline Long DcmatInt::size() const
     return m_N;
 }
 
-inline Int * DcmatInt::ptr() const
+inline Int * DcmatInt::p() const
 {
     return m_p;
 }
@@ -393,8 +393,8 @@ protected:
 public:
     typedef const Llong value_type;
     DcmatLlong_c();
-    DcmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatLlong_c(const Llong *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Llong *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLlong_c &sli);
 
 
@@ -406,18 +406,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Llong *ptr() const;
+    const Llong *p() const;
 };
 
 inline DcmatLlong_c::DcmatLlong_c() {}
 
-inline DcmatLlong_c::DcmatLlong_c(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatLlong_c::DcmatLlong_c(const Llong *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatLlong_c::set(const Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatLlong_c::set(const Llong *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatLlong_c::set(const DcmatLlong_c &sli)
@@ -469,7 +469,7 @@ inline Long DcmatLlong_c::size() const
     return m_N;
 }
 
-inline const Llong * DcmatLlong_c::ptr() const
+inline const Llong * DcmatLlong_c::p() const
 {
     return m_p;
 }
@@ -486,8 +486,8 @@ protected:
 public:
     typedef Llong value_type;
     DcmatLlong();
-    DcmatLlong(Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Llong *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatLlong(Llong *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Llong *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLlong &sli);
 
     operator DcmatLlong_c() const;
@@ -500,18 +500,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Llong *ptr() const;
+    Llong *p() const;
 };
 
 inline DcmatLlong::DcmatLlong() {}
 
-inline DcmatLlong::DcmatLlong(Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatLlong::DcmatLlong(Llong *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatLlong::set(Llong *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatLlong::set(Llong *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatLlong::set(const DcmatLlong &sli)
@@ -567,7 +567,7 @@ inline Long DcmatLlong::size() const
     return m_N;
 }
 
-inline Llong * DcmatLlong::ptr() const
+inline Llong * DcmatLlong::p() const
 {
     return m_p;
 }
@@ -600,8 +600,8 @@ protected:
 public:
     typedef const Float value_type;
     DcmatFloat_c();
-    DcmatFloat_c(const Float *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Float *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatFloat_c(const Float *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Float *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatFloat_c &sli);
 
 
@@ -613,18 +613,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Float *ptr() const;
+    const Float *p() const;
 };
 
 inline DcmatFloat_c::DcmatFloat_c() {}
 
-inline DcmatFloat_c::DcmatFloat_c(const Float *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatFloat_c::DcmatFloat_c(const Float *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatFloat_c::set(const Float *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatFloat_c::set(const Float *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatFloat_c::set(const DcmatFloat_c &sli)
@@ -676,7 +676,7 @@ inline Long DcmatFloat_c::size() const
     return m_N;
 }
 
-inline const Float * DcmatFloat_c::ptr() const
+inline const Float * DcmatFloat_c::p() const
 {
     return m_p;
 }
@@ -693,8 +693,8 @@ protected:
 public:
     typedef Float value_type;
     DcmatFloat();
-    DcmatFloat(Float *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Float *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatFloat(Float *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Float *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatFloat &sli);
 
     operator DcmatFloat_c() const;
@@ -707,18 +707,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Float *ptr() const;
+    Float *p() const;
 };
 
 inline DcmatFloat::DcmatFloat() {}
 
-inline DcmatFloat::DcmatFloat(Float *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatFloat::DcmatFloat(Float *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatFloat::set(Float *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatFloat::set(Float *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatFloat::set(const DcmatFloat &sli)
@@ -774,7 +774,7 @@ inline Long DcmatFloat::size() const
     return m_N;
 }
 
-inline Float * DcmatFloat::ptr() const
+inline Float * DcmatFloat::p() const
 {
     return m_p;
 }
@@ -791,8 +791,8 @@ protected:
 public:
     typedef const Doub value_type;
     DcmatDoub_c();
-    DcmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatDoub_c(const Doub *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Doub *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatDoub_c &sli);
 
 
@@ -804,18 +804,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Doub *ptr() const;
+    const Doub *p() const;
 };
 
 inline DcmatDoub_c::DcmatDoub_c() {}
 
-inline DcmatDoub_c::DcmatDoub_c(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatDoub_c::DcmatDoub_c(const Doub *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatDoub_c::set(const Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatDoub_c::set(const Doub *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatDoub_c::set(const DcmatDoub_c &sli)
@@ -867,7 +867,7 @@ inline Long DcmatDoub_c::size() const
     return m_N;
 }
 
-inline const Doub * DcmatDoub_c::ptr() const
+inline const Doub * DcmatDoub_c::p() const
 {
     return m_p;
 }
@@ -884,8 +884,8 @@ protected:
 public:
     typedef Doub value_type;
     DcmatDoub();
-    DcmatDoub(Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Doub *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatDoub(Doub *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Doub *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatDoub &sli);
 
     operator DcmatDoub_c() const;
@@ -898,18 +898,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Doub *ptr() const;
+    Doub *p() const;
 };
 
 inline DcmatDoub::DcmatDoub() {}
 
-inline DcmatDoub::DcmatDoub(Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatDoub::DcmatDoub(Doub *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatDoub::set(Doub *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatDoub::set(Doub *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatDoub::set(const DcmatDoub &sli)
@@ -965,7 +965,7 @@ inline Long DcmatDoub::size() const
     return m_N;
 }
 
-inline Doub * DcmatDoub::ptr() const
+inline Doub * DcmatDoub::p() const
 {
     return m_p;
 }
@@ -982,8 +982,8 @@ protected:
 public:
     typedef const Ldoub value_type;
     DcmatLdoub_c();
-    DcmatLdoub_c(const Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatLdoub_c(const Ldoub *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Ldoub *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLdoub_c &sli);
 
 
@@ -995,18 +995,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Ldoub *ptr() const;
+    const Ldoub *p() const;
 };
 
 inline DcmatLdoub_c::DcmatLdoub_c() {}
 
-inline DcmatLdoub_c::DcmatLdoub_c(const Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatLdoub_c::DcmatLdoub_c(const Ldoub *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatLdoub_c::set(const Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatLdoub_c::set(const Ldoub *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatLdoub_c::set(const DcmatLdoub_c &sli)
@@ -1058,7 +1058,7 @@ inline Long DcmatLdoub_c::size() const
     return m_N;
 }
 
-inline const Ldoub * DcmatLdoub_c::ptr() const
+inline const Ldoub * DcmatLdoub_c::p() const
 {
     return m_p;
 }
@@ -1075,8 +1075,8 @@ protected:
 public:
     typedef Ldoub value_type;
     DcmatLdoub();
-    DcmatLdoub(Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatLdoub(Ldoub *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Ldoub *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLdoub &sli);
 
     operator DcmatLdoub_c() const;
@@ -1089,18 +1089,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Ldoub *ptr() const;
+    Ldoub *p() const;
 };
 
 inline DcmatLdoub::DcmatLdoub() {}
 
-inline DcmatLdoub::DcmatLdoub(Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatLdoub::DcmatLdoub(Ldoub *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatLdoub::set(Ldoub *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatLdoub::set(Ldoub *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatLdoub::set(const DcmatLdoub &sli)
@@ -1156,7 +1156,7 @@ inline Long DcmatLdoub::size() const
     return m_N;
 }
 
-inline Ldoub * DcmatLdoub::ptr() const
+inline Ldoub * DcmatLdoub::p() const
 {
     return m_p;
 }
@@ -1173,8 +1173,8 @@ protected:
 public:
     typedef const Fcomp value_type;
     DcmatFcomp_c();
-    DcmatFcomp_c(const Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatFcomp_c(const Fcomp *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Fcomp *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatFcomp_c &sli);
 
 
@@ -1186,18 +1186,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Fcomp *ptr() const;
+    const Fcomp *p() const;
 };
 
 inline DcmatFcomp_c::DcmatFcomp_c() {}
 
-inline DcmatFcomp_c::DcmatFcomp_c(const Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatFcomp_c::DcmatFcomp_c(const Fcomp *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatFcomp_c::set(const Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatFcomp_c::set(const Fcomp *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatFcomp_c::set(const DcmatFcomp_c &sli)
@@ -1249,7 +1249,7 @@ inline Long DcmatFcomp_c::size() const
     return m_N;
 }
 
-inline const Fcomp * DcmatFcomp_c::ptr() const
+inline const Fcomp * DcmatFcomp_c::p() const
 {
     return m_p;
 }
@@ -1266,8 +1266,8 @@ protected:
 public:
     typedef Fcomp value_type;
     DcmatFcomp();
-    DcmatFcomp(Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatFcomp(Fcomp *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Fcomp *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatFcomp &sli);
 
     operator DcmatFcomp_c() const;
@@ -1280,18 +1280,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Fcomp *ptr() const;
+    Fcomp *p() const;
 };
 
 inline DcmatFcomp::DcmatFcomp() {}
 
-inline DcmatFcomp::DcmatFcomp(Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatFcomp::DcmatFcomp(Fcomp *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatFcomp::set(Fcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatFcomp::set(Fcomp *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatFcomp::set(const DcmatFcomp &sli)
@@ -1347,7 +1347,7 @@ inline Long DcmatFcomp::size() const
     return m_N;
 }
 
-inline Fcomp * DcmatFcomp::ptr() const
+inline Fcomp * DcmatFcomp::p() const
 {
     return m_p;
 }
@@ -1364,8 +1364,8 @@ protected:
 public:
     typedef const Comp value_type;
     DcmatComp_c();
-    DcmatComp_c(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatComp_c(const Comp *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Comp *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatComp_c &sli);
 
 
@@ -1377,18 +1377,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Comp *ptr() const;
+    const Comp *p() const;
 };
 
 inline DcmatComp_c::DcmatComp_c() {}
 
-inline DcmatComp_c::DcmatComp_c(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatComp_c::DcmatComp_c(const Comp *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatComp_c::set(const Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatComp_c::set(const Comp *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatComp_c::set(const DcmatComp_c &sli)
@@ -1440,7 +1440,7 @@ inline Long DcmatComp_c::size() const
     return m_N;
 }
 
-inline const Comp * DcmatComp_c::ptr() const
+inline const Comp * DcmatComp_c::p() const
 {
     return m_p;
 }
@@ -1457,8 +1457,8 @@ protected:
 public:
     typedef Comp value_type;
     DcmatComp();
-    DcmatComp(Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Comp *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatComp(Comp *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Comp *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatComp &sli);
 
     operator DcmatComp_c() const;
@@ -1471,18 +1471,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Comp *ptr() const;
+    Comp *p() const;
 };
 
 inline DcmatComp::DcmatComp() {}
 
-inline DcmatComp::DcmatComp(Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatComp::DcmatComp(Comp *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatComp::set(Comp *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatComp::set(Comp *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatComp::set(const DcmatComp &sli)
@@ -1538,7 +1538,7 @@ inline Long DcmatComp::size() const
     return m_N;
 }
 
-inline Comp * DcmatComp::ptr() const
+inline Comp * DcmatComp::p() const
 {
     return m_p;
 }
@@ -1555,8 +1555,8 @@ protected:
 public:
     typedef const Lcomp value_type;
     DcmatLcomp_c();
-    DcmatLcomp_c(const Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(const Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatLcomp_c(const Lcomp *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(const Lcomp *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLcomp_c &sli);
 
 
@@ -1568,18 +1568,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    const Lcomp *ptr() const;
+    const Lcomp *p() const;
 };
 
 inline DcmatLcomp_c::DcmatLcomp_c() {}
 
-inline DcmatLcomp_c::DcmatLcomp_c(const Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatLcomp_c::DcmatLcomp_c(const Lcomp *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatLcomp_c::set(const Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatLcomp_c::set(const Lcomp *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatLcomp_c::set(const DcmatLcomp_c &sli)
@@ -1631,7 +1631,7 @@ inline Long DcmatLcomp_c::size() const
     return m_N;
 }
 
-inline const Lcomp * DcmatLcomp_c::ptr() const
+inline const Lcomp * DcmatLcomp_c::p() const
 {
     return m_p;
 }
@@ -1648,8 +1648,8 @@ protected:
 public:
     typedef Lcomp value_type;
     DcmatLcomp();
-    DcmatLcomp(Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
-    void set(Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda);
+    DcmatLcomp(Lcomp *p, Long_I N1, Long_I N2, Long_I lda);
+    void set(Lcomp *p, Long_I N1, Long_I N2, Long_I lda);
     void set(const DcmatLcomp &sli);
 
     operator DcmatLcomp_c() const;
@@ -1662,18 +1662,18 @@ public:
     Long n2() const;
     Long lda() const;
     Long size() const;
-    Lcomp *ptr() const;
+    Lcomp *p() const;
 };
 
 inline DcmatLcomp::DcmatLcomp() {}
 
-inline DcmatLcomp::DcmatLcomp(Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline DcmatLcomp::DcmatLcomp(Lcomp *p, Long_I N1, Long_I N2, Long_I lda)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
 {}
 
-inline void DcmatLcomp::set(Lcomp *ptr, Long_I N1, Long_I N2, Long_I lda)
+inline void DcmatLcomp::set(Lcomp *p, Long_I N1, Long_I N2, Long_I lda)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
 }
 
 inline void DcmatLcomp::set(const DcmatLcomp &sli)
@@ -1729,7 +1729,7 @@ inline Long DcmatLcomp::size() const
     return m_N;
 }
 
-inline Lcomp * DcmatLcomp::ptr() const
+inline Lcomp * DcmatLcomp::p() const
 {
     return m_p;
 }

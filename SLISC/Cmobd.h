@@ -24,8 +24,8 @@ public:
     const Int &operator[](Long_I i) const;
     Int &operator[](Long_I i);
     Long find(Long_I i, Long_I j) const; // return single index to m_data, -1 if out of blocks
-    const Int * ptr() const; // not the first element!
-    Int * ptr();
+    const Int * p() const; // not the first element!
+    Int * p();
     Long n1() const;
     Long n2() const;
     Long size() const;
@@ -51,7 +51,7 @@ inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
     Long step = sqr(n0());
     // set the first overlapped element to 0
     if (m_data.size() > 0)
-        vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+        vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Int & CmobdInt::operator[](Long_I i) const
@@ -92,14 +92,14 @@ inline Long CmobdInt::find(Long_I i1, Long_I i2) const
     return -1;
 }
 
-inline const Int * CmobdInt::ptr() const
+inline const Int * CmobdInt::p() const
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
-inline Int * CmobdInt::ptr()
+inline Int * CmobdInt::p()
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
 inline Long CmobdInt::n1() const
@@ -135,10 +135,10 @@ inline Cmat3Int& CmobdInt::cmat3()
 
 inline void CmobdInt::set(Cmat3Int_I a3)
 {
-    veccpy(m_data.ptr(), a3.ptr(), a3.size());
+    veccpy(m_data.p(), a3.p(), a3.size());
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, nblk() - 1, step);
+    vecset(m_data.p() + step - 1, 0, nblk() - 1, step);
 }
 
 inline Long CmobdInt::n0() const
@@ -176,7 +176,7 @@ inline void CmobdInt::resize(Long_I blk_size, Long_I Nblk)
     m_N1 = (blk_size - 1) * Nblk - 1;
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 void vecset(Doub *, Doub_I, Llong_I, Llong_I);
@@ -193,8 +193,8 @@ public:
     const Doub &operator[](Long_I i) const;
     Doub &operator[](Long_I i);
     Long find(Long_I i, Long_I j) const; // return single index to m_data, -1 if out of blocks
-    const Doub * ptr() const; // not the first element!
-    Doub * ptr();
+    const Doub * p() const; // not the first element!
+    Doub * p();
     Long n1() const;
     Long n2() const;
     Long size() const;
@@ -220,7 +220,7 @@ inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
     Long step = sqr(n0());
     // set the first overlapped element to 0
     if (m_data.size() > 0)
-        vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+        vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Doub & CmobdDoub::operator[](Long_I i) const
@@ -261,14 +261,14 @@ inline Long CmobdDoub::find(Long_I i1, Long_I i2) const
     return -1;
 }
 
-inline const Doub * CmobdDoub::ptr() const
+inline const Doub * CmobdDoub::p() const
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
-inline Doub * CmobdDoub::ptr()
+inline Doub * CmobdDoub::p()
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
 inline Long CmobdDoub::n1() const
@@ -304,10 +304,10 @@ inline Cmat3Doub& CmobdDoub::cmat3()
 
 inline void CmobdDoub::set(Cmat3Doub_I a3)
 {
-    veccpy(m_data.ptr(), a3.ptr(), a3.size());
+    veccpy(m_data.p(), a3.p(), a3.size());
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, nblk() - 1, step);
+    vecset(m_data.p() + step - 1, 0, nblk() - 1, step);
 }
 
 inline Long CmobdDoub::n0() const
@@ -345,7 +345,7 @@ inline void CmobdDoub::resize(Long_I blk_size, Long_I Nblk)
     m_N1 = (blk_size - 1) * Nblk - 1;
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 void vecset(Comp *, Comp_I, Llong_I, Llong_I);
@@ -362,8 +362,8 @@ public:
     const Comp &operator[](Long_I i) const;
     Comp &operator[](Long_I i);
     Long find(Long_I i, Long_I j) const; // return single index to m_data, -1 if out of blocks
-    const Comp * ptr() const; // not the first element!
-    Comp * ptr();
+    const Comp * p() const; // not the first element!
+    Comp * p();
     Long n1() const;
     Long n2() const;
     Long size() const;
@@ -389,7 +389,7 @@ inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
     Long step = sqr(n0());
     // set the first overlapped element to 0
     if (m_data.size() > 0)
-        vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+        vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Comp & CmobdComp::operator[](Long_I i) const
@@ -430,14 +430,14 @@ inline Long CmobdComp::find(Long_I i1, Long_I i2) const
     return -1;
 }
 
-inline const Comp * CmobdComp::ptr() const
+inline const Comp * CmobdComp::p() const
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
-inline Comp * CmobdComp::ptr()
+inline Comp * CmobdComp::p()
 {
-    return m_data.ptr();
+    return m_data.p();
 }
 
 inline Long CmobdComp::n1() const
@@ -473,10 +473,10 @@ inline Cmat3Comp& CmobdComp::cmat3()
 
 inline void CmobdComp::set(Cmat3Comp_I a3)
 {
-    veccpy(m_data.ptr(), a3.ptr(), a3.size());
+    veccpy(m_data.p(), a3.p(), a3.size());
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, nblk() - 1, step);
+    vecset(m_data.p() + step - 1, 0, nblk() - 1, step);
 }
 
 inline Long CmobdComp::n0() const
@@ -514,7 +514,7 @@ inline void CmobdComp::resize(Long_I blk_size, Long_I Nblk)
     m_N1 = (blk_size - 1) * Nblk - 1;
     // set the first overlapped element to 0
     Long step = sqr(n0());
-    vecset(m_data.ptr() + step - 1, 0, Nblk - 1, step);
+    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 } // namespace slisc

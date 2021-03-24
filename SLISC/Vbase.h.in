@@ -33,8 +33,8 @@ public:
     @VbaseT@(const @VbaseT@ &rhs); // copy constructor
 
     // get properties
-    @T@* ptr(); // get pointer
-    const @T@* ptr() const;
+    @T@* p(); // get pointer
+    const @T@* p() const;
     Long size() const;
     void resize(Long_I N);
     @T@ & operator[](Long_I i);
@@ -70,24 +70,24 @@ inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new @T@[m_N];
-        memcpy(m_p, rhs.ptr(), m_N);
+        memcpy(m_p, rhs.p(), m_N);
     }
 }
 
-inline @T@ * @VbaseT@::ptr()
+inline @T@ * @VbaseT@::p()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
 
-inline const @T@ * @VbaseT@::ptr() const
+inline const @T@ * @VbaseT@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }

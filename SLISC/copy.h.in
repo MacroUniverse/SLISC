@@ -194,9 +194,9 @@ inline void copy(@T@_O v, @Ts@_I s)
     for (Long i = 0; i < N; ++i)
         v[i] = s;
 //% elseif is_dense(T)
-    vecset(v.ptr(), s, v.size());
+    vecset(v.p(), s, v.size());
 //% elseif is_Dvec(T)
-    vecset(v.ptr(), s, v.size(), v.step());
+    vecset(v.p(), s, v.size(), v.step());
 //% elseif is_Dcmat(T)
     Long N1 = v.n1(), N2 = v.n2();
     for (Long j = 0; j < N2; ++j)
@@ -296,27 +296,27 @@ inline void copy(@T@_O v, @T1@_I v1)
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i];
 //% elseif is_dense(T) && is_dense(T1) && is_same_major(T, T1)
-    veccpy(v.ptr(), v1.ptr(), v.size());
+    veccpy(v.p(), v1.p(), v.size());
 //% elseif is_Dvec(T) && is_Dvec(T1)
-    veccpy(v.ptr(), v.step(), v1.ptr(), v1.step(), v.size());
+    veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
 //% elseif is_dense_vec(T) && is_Dvec(T1)
-    veccpy(v.ptr(), v1.ptr(), v1.step(), v1.size());
+    veccpy(v.p(), v1.p(), v1.step(), v1.size());
 //% elseif is_Dvec(T) && is_dense_vec(T1)
-    veccpy(v.ptr(), v.step(), v1.ptr(), v1.size());
+    veccpy(v.p(), v.step(), v1.p(), v1.size());
 //% elseif is_dense_mat(T) && is_dense_mat(T1) && is_diff_major(T, T1)
 //%     if is_cmajor(T)
-    matcpy_diff_major(v.ptr(), v1.ptr(), v.n1(), v.n2());
+    matcpy_diff_major(v.p(), v1.p(), v.n1(), v.n2());
 //%     else
-    matcpy_diff_major(v.ptr(), v1.ptr(), v.n2(), v.n1());
+    matcpy_diff_major(v.p(), v1.p(), v.n2(), v.n1());
 //%     end
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
-    matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n1(), v.n2());
 //% elseif is_Dmat(T) && is_Dmat(T1)
-    matcpy(v.ptr(), v.lda(), v1.ptr(), v1.lda(), v.n2(), v.n1());
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n2(), v.n1());
 //% elseif is_Cmat(T) && is_Dcmat(T1)
-    matcpy(v.ptr(), v.n1(), v1.ptr(), v1.lda(), v.n1(), v.n2());
+    matcpy(v.p(), v.n1(), v1.p(), v1.lda(), v.n1(), v.n2());
 //% elseif is_Dcmat(T) && is_Cmat(T1)
-    matcpy(v.ptr(), v.lda(), v1.ptr(), v.n1(), v.n1(), v.n2());
+    matcpy(v.p(), v.lda(), v1.p(), v.n1(), v.n1(), v.n2());
 //% elseif ndim(T) == 3 && ndim(T1) == 3
     // slow
     if (v1.size() != 0)
@@ -352,14 +352,14 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
     if (v1.nnz() == 0)
         return;
 //% if is_same(T, T1)
-    if (v.ptr() == v1.ptr())
+    if (v.p() == v1.p())
         SLS_ERR("self assignment is forbidden!");
 //% end
     Long Nnz = v1.nnz();
     v.resize(Nnz);
-    veccpy(v.ptr(), v1.ptr(), Nnz);
-    veccpy(v.row_ptr(), v1.row_ptr(), Nnz);
-    veccpy(v.col_ptr(), v1.col_ptr(), Nnz);
+    veccpy(v.p(), v1.p(), Nnz);
+    veccpy(v.row_p(), v1.row_p(), Nnz);
+    veccpy(v.col_p(), v1.col_p(), Nnz);
 }
 //%------------------------
 

@@ -12,24 +12,24 @@ void test_dense()
     {
         VecDoub vDoub(3);
         if (vDoub.size() != 3) SLS_ERR("failed!");
-        if (vDoub.ptr() != &vDoub[0]) SLS_ERR("failed!");
+        if (vDoub.p() != &vDoub[0]) SLS_ERR("failed!");
         MatDoub aDoub(3, 3);
         if (aDoub.size() != 9) SLS_ERR("failed!");
         if (aDoub.n1() != 3) SLS_ERR("failed!");
         if (aDoub.n2() != 3) SLS_ERR("failed!");
-        if (aDoub.ptr() != &aDoub(0, 0)) SLS_ERR("failed!");
+        if (aDoub.p() != &aDoub(0, 0)) SLS_ERR("failed!");
         Mat3Doub a3Doub(3, 3, 3);
         if (a3Doub.size() != 27) SLS_ERR("failed!");
         if (a3Doub.n1() != 3) SLS_ERR("failed!");
         if (a3Doub.n2() != 3) SLS_ERR("failed!");
         if (a3Doub.n3() != 3) SLS_ERR("failed!");
-        if (a3Doub.ptr() != &a3Doub(0,0,0)) SLS_ERR("failed!");
+        if (a3Doub.p() != &a3Doub(0,0,0)) SLS_ERR("failed!");
         Cmat3Doub c3Doub(3, 3, 3);
         if (c3Doub.size() != 27) SLS_ERR("failed!");
         if (c3Doub.n1() != 3) SLS_ERR("failed!");
         if (c3Doub.n2() != 3) SLS_ERR("failed!");
         if (c3Doub.n3() != 3) SLS_ERR("failed!");
-        if (c3Doub.ptr() != &c3Doub(0, 0, 0)) SLS_ERR("failed!");
+        if (c3Doub.p() != &c3Doub(0, 0, 0)) SLS_ERR("failed!");
     }
 
     // const initialize
@@ -47,7 +47,7 @@ void test_dense()
     if (vDoub.size() != 0) SLS_ERR("failed!");
     vDoub.resize(4);
     if (vDoub.size() != 4) SLS_ERR("failed!");
-    if (vDoub.ptr() != &vDoub[0]) SLS_ERR("failed!");
+    if (vDoub.p() != &vDoub[0]) SLS_ERR("failed!");
     aDoub.resize(0, 3);
     if (aDoub.size() != 0) SLS_ERR("failed!");
     aDoub.resize(3, 0);
@@ -56,7 +56,7 @@ void test_dense()
     if (aDoub.size() != 16) SLS_ERR("failed!");
     if (aDoub.n1() != 4) SLS_ERR("failed!");
     if (aDoub.n2() != 4) SLS_ERR("failed!");
-    if (aDoub.ptr() != &aDoub(0,0)) SLS_ERR("failed!");
+    if (aDoub.p() != &aDoub(0,0)) SLS_ERR("failed!");
     a3Doub.resize(0, 0, 4);
     if (a3Doub.size() != 0) SLS_ERR("failed!");
     a3Doub.resize(0, 4, 0);
@@ -68,7 +68,7 @@ void test_dense()
     if (a3Doub.n1() != 4) SLS_ERR("failed!");
     if (a3Doub.n2() != 4) SLS_ERR("failed!");
     if (a3Doub.n3() != 4) SLS_ERR("failed!");
-    if (a3Doub.ptr() != &a3Doub(0,0,0)) SLS_ERR("failed!");
+    if (a3Doub.p() != &a3Doub(0,0,0)) SLS_ERR("failed!");
     c3Doub.resize(0, 0, 4);
     if (c3Doub.size() != 0) SLS_ERR("failed!");
     c3Doub.resize(0, 4, 0);
@@ -80,7 +80,7 @@ void test_dense()
     if (c3Doub.n1() != 4) SLS_ERR("failed!");
     if (c3Doub.n2() != 4) SLS_ERR("failed!");
     if (c3Doub.n3() != 4) SLS_ERR("failed!");
-    if (c3Doub.ptr() != &c3Doub(0, 0, 0)) SLS_ERR("failed!");
+    if (c3Doub.p() != &c3Doub(0, 0, 0)) SLS_ERR("failed!");
 
     // resize and copy old data
     {

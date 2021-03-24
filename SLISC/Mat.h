@@ -9,7 +9,7 @@ protected:
     typedef VbaseChar Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatChar(): m_N1(0), m_N2(0) {};
     MatChar(Long_I N1, Long_I N2);
     MatChar(const MatChar &rhs);        // Copy constructor
@@ -92,7 +92,7 @@ protected:
     typedef VbaseInt Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatInt(): m_N1(0), m_N2(0) {};
     MatInt(Long_I N1, Long_I N2);
     MatInt(const MatInt &rhs);        // Copy constructor
@@ -175,7 +175,7 @@ protected:
     typedef VbaseLlong Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatLlong(): m_N1(0), m_N2(0) {};
     MatLlong(Long_I N1, Long_I N2);
     MatLlong(const MatLlong &rhs);        // Copy constructor
@@ -258,7 +258,7 @@ protected:
     typedef VbaseFloat Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatFloat(): m_N1(0), m_N2(0) {};
     MatFloat(Long_I N1, Long_I N2);
     MatFloat(const MatFloat &rhs);        // Copy constructor
@@ -341,7 +341,7 @@ protected:
     typedef VbaseDoub Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatDoub(): m_N1(0), m_N2(0) {};
     MatDoub(Long_I N1, Long_I N2);
     MatDoub(const MatDoub &rhs);        // Copy constructor
@@ -424,7 +424,7 @@ protected:
     typedef VbaseLdoub Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatLdoub(): m_N1(0), m_N2(0) {};
     MatLdoub(Long_I N1, Long_I N2);
     MatLdoub(const MatLdoub &rhs);        // Copy constructor
@@ -507,7 +507,7 @@ protected:
     typedef VbaseFcomp Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatFcomp(): m_N1(0), m_N2(0) {};
     MatFcomp(Long_I N1, Long_I N2);
     MatFcomp(const MatFcomp &rhs);        // Copy constructor
@@ -590,7 +590,7 @@ protected:
     typedef VbaseComp Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatComp(): m_N1(0), m_N2(0) {};
     MatComp(Long_I N1, Long_I N2);
     MatComp(const MatComp &rhs);        // Copy constructor
@@ -673,7 +673,7 @@ protected:
     typedef VbaseLcomp Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatLcomp(): m_N1(0), m_N2(0) {};
     MatLcomp(Long_I N1, Long_I N2);
     MatLcomp(const MatLcomp &rhs);        // Copy constructor
@@ -756,7 +756,7 @@ protected:
     typedef VbaseFimag Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatFimag(): m_N1(0), m_N2(0) {};
     MatFimag(Long_I N1, Long_I N2);
     MatFimag(const MatFimag &rhs);        // Copy constructor
@@ -839,7 +839,7 @@ protected:
     typedef VbaseImag Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatImag(): m_N1(0), m_N2(0) {};
     MatImag(Long_I N1, Long_I N2);
     MatImag(const MatImag &rhs);        // Copy constructor
@@ -922,7 +922,7 @@ protected:
     typedef VbaseLimag Base;
     Long m_N1, m_N2;
 public:
-    using Base::ptr;
+    using Base::p;
     MatLimag(): m_N1(0), m_N2(0) {};
     MatLimag(Long_I N1, Long_I N2);
     MatLimag(const MatLimag &rhs);        // Copy constructor

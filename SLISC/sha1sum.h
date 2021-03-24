@@ -196,9 +196,9 @@ namespace slisc {
     } // namespace sha1
 
     // sha1sum for a block of data
-    Str sha1sum(Char_I *ptr, Long_I N) {
+    Str sha1sum(Char_I *p, Long_I N) {
         sha1::SHA1 s;
-        s.processBytes(ptr, N);
+        s.processBytes(p, N);
         uint32_t digest[5];
         s.getDigest(digest);    
         char str[48];

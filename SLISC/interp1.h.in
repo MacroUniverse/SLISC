@@ -41,7 +41,7 @@ struct poly_interp1
             SLS_ERR("x, y not the same length!");
         m_acc = gsl_interp_accel_alloc();
         m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-        gsl_spline_init(m_spline, x.ptr(), y.ptr(), x.size());
+        gsl_spline_init(m_spline, x.p(), y.p(), x.size());
     }
 //%-----------------------------
 
@@ -98,8 +98,8 @@ struct poly_comp_interp1
             y_real[i] = real(y[i]);
             y_imag[i] = imag(y[i]);
         }
-        gsl_spline_init(m_spline1, x.ptr(), y_real.data(), N);
-        gsl_spline_init(m_spline2, x.ptr(), y_imag.data(), N);
+        gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
+        gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
     }
 //%-----------------------------
 

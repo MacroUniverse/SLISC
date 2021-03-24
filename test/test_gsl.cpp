@@ -42,7 +42,7 @@ void test_gsl()
         Int lmax = 3;
         Int n = gsl_sf_legendre_array_n(lmax);
         VecDoub legen_arr(n);
-        gsl_sf_legendre_array(GSL_SF_LEGENDRE_NONE, lmax, 0.6, legen_arr.ptr());
+        gsl_sf_legendre_array(GSL_SF_LEGENDRE_NONE, lmax, 0.6, legen_arr.p());
         ret = legen_arr[gsl_sf_legendre_array_index(3, 2)];
         if (abs(ret - 5.76) > 1e-14)
             SLS_ERR("failed!");
@@ -104,7 +104,7 @@ void test_gsl()
         Doub F_exponent;
         Doub lmin = 0, kmax = 3, eta = 1, rho = 2.6;
         // see also gsl_sf_coulomb_wave_FG_array
-        Int ret = gsl_sf_coulomb_wave_F_array(lmin, kmax, eta, rho, F.ptr(), &F_exponent);
+        Int ret = gsl_sf_coulomb_wave_F_array(lmin, kmax, eta, rho, F.p(), &F_exponent);
         if (ret == GSL_EOVRFLW)
             SLS_ERR("failed!");
         if (abs(F[0] - 0.938149544359976) > 1e-15)

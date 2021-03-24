@@ -54,7 +54,7 @@ inline Doub expv(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Long_I Nkry
     disp(beta);
 
     lapack_int info =
-    LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nkrylov, alpha.ptr(), beta.ptr()+1, eig_vec.ptr(), Nkrylov);
+    LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nkrylov, alpha.p(), beta.p()+1, eig_vec.p(), Nkrylov);
     if (info != 0)
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     // alpha is now eigen value vector

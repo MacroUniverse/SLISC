@@ -25,8 +25,8 @@ public:
     @CbandT@();
     @CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
-    @T@ * ptr();
-    const @T@ * ptr() const;
+    @T@ * p();
+    const @T@ * p() const;
     @T@ operator()(Long_I i, Long_I j) const;
     @T@ &ref(Long_I i, Long_I j);
     Long n1() const;
@@ -62,14 +62,14 @@ inline @CbandT@::@CbandT@(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I 
 #endif
 }
 
-inline @T@ * @CbandT@::ptr()
+inline @T@ * @CbandT@::p()
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
-inline const @T@ * @CbandT@::ptr() const
+inline const @T@ * @CbandT@::p() const
 {
-    return m_a.ptr();
+    return m_a.p();
 }
 
 inline @T@ @CbandT@::operator()(Long_I i, Long_I j) const

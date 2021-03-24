@@ -305,7 +305,7 @@ inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
     Long incy = 1;
     Doub alpha = 1, beta = 0;
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, beta, y.ptr(), incy);
+        alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, beta, y.p(), incy);
 }
 
 inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
@@ -314,7 +314,7 @@ inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
     Long incy = 1;
     Comp alpha(1, 0), beta(0, 0);
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        &alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, &beta, y.ptr(), incy);
+        &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
 inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
@@ -323,7 +323,7 @@ inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
     Long incy = 1;
     Comp alpha(1, 0), beta(0, 0);
     cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
-        &alpha, a.ptr() + a.idiag() - a.nup(), a.lda(), x.ptr(), incx, &beta, y.ptr(), incy);
+        &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
 #endif

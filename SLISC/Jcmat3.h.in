@@ -57,8 +57,8 @@ protected:
     Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     @Class@();
-    @Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
-    void set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
+    @Class@(@CT@ *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
+    void set(@CT@ *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const @Class@ &sli);
 //% if ~constness
     operator @Jcmat3T_c@() const;
@@ -75,18 +75,18 @@ public:
     Long step3() const;
     Long size() const;
 
-    @CT@ *ptr() const;
+    @CT@ *p() const;
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3)
-    : m_p(ptr), m_N1(N1), m_N2(N2), m_N3(N3), m_N(N1*N2*N3), m_step1(step1), m_step2(step2), m_step3(step3)
+inline @Class@::@Class@(@CT@ *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3)
+    : m_p(p), m_N1(N1), m_N2(N2), m_N3(N3), m_N(N1*N2*N3), m_step1(step1), m_step2(step2), m_step3(step3)
 {}
 
-inline void @Class@::set(@CT@ *ptr, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3)
+inline void @Class@::set(@CT@ *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3)
 {
-    m_p = ptr; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    m_p = p; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     m_step1 = step1; m_step2 = step2; m_step3 = step3;
     m_N = N1 * N2 * N3;
 }
@@ -163,7 +163,7 @@ inline Long @Class@::size() const
     return m_N;
 }
 
-inline @CT@ * @Class@::ptr() const
+inline @CT@ * @Class@::p() const
 {
     return m_p;
 }

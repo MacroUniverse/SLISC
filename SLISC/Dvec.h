@@ -10,8 +10,8 @@ protected:
     Long m_step;
 public:
     DvecChar_c();
-    DvecChar_c(const Char *ptr, Long_I N, Long_I step);
-    const Char* ptr() const;
+    DvecChar_c(const Char *p, Long_I N, Long_I step);
+    const Char* p() const;
     const Char & operator[](Long_I i) const;
     const Char & operator()(Long_I i) const;
     const Char & end() const;
@@ -23,27 +23,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Char *ptr);
-    void set(const Char *ptr, Long_I N, Long_I step);
+    void set_p(const Char *p);
+    void set(const Char *p, Long_I N, Long_I step);
     void set(const DvecChar_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecChar_c();
 };
 
 inline DvecChar_c::DvecChar_c() {}
 
-inline DvecChar_c::DvecChar_c(const Char *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecChar_c::DvecChar_c(const Char *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Char * DvecChar_c::ptr() const
+inline const Char * DvecChar_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -93,14 +93,14 @@ inline void DvecChar_c::set_size(Long_I N)
 }
 
 
-inline void DvecChar_c::set_ptr(const Char * ptr)
+inline void DvecChar_c::set_p(const Char * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecChar_c::set(const Char * ptr, Long_I N, Long_I step)
+inline void DvecChar_c::set(const Char * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecChar_c::set(const DvecChar_c &sli)
@@ -136,8 +136,8 @@ protected:
     Long m_step;
 public:
     DvecChar();
-    DvecChar(Char *ptr, Long_I N, Long_I step);
-    Char* ptr() const;
+    DvecChar(Char *p, Long_I N, Long_I step);
+    Char* p() const;
     Char & operator[](Long_I i) const;
     Char & operator()(Long_I i) const;
     Char & end() const;
@@ -150,27 +150,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Char *ptr);
-    void set(Char *ptr, Long_I N, Long_I step);
+    void set_p(Char *p);
+    void set(Char *p, Long_I N, Long_I step);
     void set(const DvecChar &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecChar();
 };
 
 inline DvecChar::DvecChar() {}
 
-inline DvecChar::DvecChar(Char *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecChar::DvecChar(Char *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Char * DvecChar::ptr() const
+inline Char * DvecChar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -224,14 +224,14 @@ inline DvecChar::operator DvecChar_c() const
     return *((DvecChar_c *)this);
 }
 
-inline void DvecChar::set_ptr(Char * ptr)
+inline void DvecChar::set_p(Char * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecChar::set(Char * ptr, Long_I N, Long_I step)
+inline void DvecChar::set(Char * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecChar::set(const DvecChar &sli)
@@ -267,8 +267,8 @@ protected:
     Long m_step;
 public:
     DvecInt_c();
-    DvecInt_c(const Int *ptr, Long_I N, Long_I step);
-    const Int* ptr() const;
+    DvecInt_c(const Int *p, Long_I N, Long_I step);
+    const Int* p() const;
     const Int & operator[](Long_I i) const;
     const Int & operator()(Long_I i) const;
     const Int & end() const;
@@ -280,27 +280,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Int *ptr);
-    void set(const Int *ptr, Long_I N, Long_I step);
+    void set_p(const Int *p);
+    void set(const Int *p, Long_I N, Long_I step);
     void set(const DvecInt_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecInt_c();
 };
 
 inline DvecInt_c::DvecInt_c() {}
 
-inline DvecInt_c::DvecInt_c(const Int *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecInt_c::DvecInt_c(const Int *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Int * DvecInt_c::ptr() const
+inline const Int * DvecInt_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -350,14 +350,14 @@ inline void DvecInt_c::set_size(Long_I N)
 }
 
 
-inline void DvecInt_c::set_ptr(const Int * ptr)
+inline void DvecInt_c::set_p(const Int * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecInt_c::set(const Int * ptr, Long_I N, Long_I step)
+inline void DvecInt_c::set(const Int * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecInt_c::set(const DvecInt_c &sli)
@@ -393,8 +393,8 @@ protected:
     Long m_step;
 public:
     DvecInt();
-    DvecInt(Int *ptr, Long_I N, Long_I step);
-    Int* ptr() const;
+    DvecInt(Int *p, Long_I N, Long_I step);
+    Int* p() const;
     Int & operator[](Long_I i) const;
     Int & operator()(Long_I i) const;
     Int & end() const;
@@ -407,27 +407,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Int *ptr);
-    void set(Int *ptr, Long_I N, Long_I step);
+    void set_p(Int *p);
+    void set(Int *p, Long_I N, Long_I step);
     void set(const DvecInt &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecInt();
 };
 
 inline DvecInt::DvecInt() {}
 
-inline DvecInt::DvecInt(Int *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecInt::DvecInt(Int *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Int * DvecInt::ptr() const
+inline Int * DvecInt::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -481,14 +481,14 @@ inline DvecInt::operator DvecInt_c() const
     return *((DvecInt_c *)this);
 }
 
-inline void DvecInt::set_ptr(Int * ptr)
+inline void DvecInt::set_p(Int * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecInt::set(Int * ptr, Long_I N, Long_I step)
+inline void DvecInt::set(Int * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecInt::set(const DvecInt &sli)
@@ -524,8 +524,8 @@ protected:
     Long m_step;
 public:
     DvecLlong_c();
-    DvecLlong_c(const Llong *ptr, Long_I N, Long_I step);
-    const Llong* ptr() const;
+    DvecLlong_c(const Llong *p, Long_I N, Long_I step);
+    const Llong* p() const;
     const Llong & operator[](Long_I i) const;
     const Llong & operator()(Long_I i) const;
     const Llong & end() const;
@@ -537,27 +537,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Llong *ptr);
-    void set(const Llong *ptr, Long_I N, Long_I step);
+    void set_p(const Llong *p);
+    void set(const Llong *p, Long_I N, Long_I step);
     void set(const DvecLlong_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecLlong_c();
 };
 
 inline DvecLlong_c::DvecLlong_c() {}
 
-inline DvecLlong_c::DvecLlong_c(const Llong *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecLlong_c::DvecLlong_c(const Llong *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Llong * DvecLlong_c::ptr() const
+inline const Llong * DvecLlong_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -607,14 +607,14 @@ inline void DvecLlong_c::set_size(Long_I N)
 }
 
 
-inline void DvecLlong_c::set_ptr(const Llong * ptr)
+inline void DvecLlong_c::set_p(const Llong * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecLlong_c::set(const Llong * ptr, Long_I N, Long_I step)
+inline void DvecLlong_c::set(const Llong * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecLlong_c::set(const DvecLlong_c &sli)
@@ -650,8 +650,8 @@ protected:
     Long m_step;
 public:
     DvecLlong();
-    DvecLlong(Llong *ptr, Long_I N, Long_I step);
-    Llong* ptr() const;
+    DvecLlong(Llong *p, Long_I N, Long_I step);
+    Llong* p() const;
     Llong & operator[](Long_I i) const;
     Llong & operator()(Long_I i) const;
     Llong & end() const;
@@ -664,27 +664,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Llong *ptr);
-    void set(Llong *ptr, Long_I N, Long_I step);
+    void set_p(Llong *p);
+    void set(Llong *p, Long_I N, Long_I step);
     void set(const DvecLlong &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecLlong();
 };
 
 inline DvecLlong::DvecLlong() {}
 
-inline DvecLlong::DvecLlong(Llong *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecLlong::DvecLlong(Llong *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Llong * DvecLlong::ptr() const
+inline Llong * DvecLlong::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -738,14 +738,14 @@ inline DvecLlong::operator DvecLlong_c() const
     return *((DvecLlong_c *)this);
 }
 
-inline void DvecLlong::set_ptr(Llong * ptr)
+inline void DvecLlong::set_p(Llong * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecLlong::set(Llong * ptr, Long_I N, Long_I step)
+inline void DvecLlong::set(Llong * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecLlong::set(const DvecLlong &sli)
@@ -797,8 +797,8 @@ protected:
     Long m_step;
 public:
     DvecFloat_c();
-    DvecFloat_c(const Float *ptr, Long_I N, Long_I step);
-    const Float* ptr() const;
+    DvecFloat_c(const Float *p, Long_I N, Long_I step);
+    const Float* p() const;
     const Float & operator[](Long_I i) const;
     const Float & operator()(Long_I i) const;
     const Float & end() const;
@@ -810,27 +810,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Float *ptr);
-    void set(const Float *ptr, Long_I N, Long_I step);
+    void set_p(const Float *p);
+    void set(const Float *p, Long_I N, Long_I step);
     void set(const DvecFloat_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecFloat_c();
 };
 
 inline DvecFloat_c::DvecFloat_c() {}
 
-inline DvecFloat_c::DvecFloat_c(const Float *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecFloat_c::DvecFloat_c(const Float *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Float * DvecFloat_c::ptr() const
+inline const Float * DvecFloat_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -880,14 +880,14 @@ inline void DvecFloat_c::set_size(Long_I N)
 }
 
 
-inline void DvecFloat_c::set_ptr(const Float * ptr)
+inline void DvecFloat_c::set_p(const Float * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecFloat_c::set(const Float * ptr, Long_I N, Long_I step)
+inline void DvecFloat_c::set(const Float * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecFloat_c::set(const DvecFloat_c &sli)
@@ -923,8 +923,8 @@ protected:
     Long m_step;
 public:
     DvecFloat();
-    DvecFloat(Float *ptr, Long_I N, Long_I step);
-    Float* ptr() const;
+    DvecFloat(Float *p, Long_I N, Long_I step);
+    Float* p() const;
     Float & operator[](Long_I i) const;
     Float & operator()(Long_I i) const;
     Float & end() const;
@@ -937,27 +937,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Float *ptr);
-    void set(Float *ptr, Long_I N, Long_I step);
+    void set_p(Float *p);
+    void set(Float *p, Long_I N, Long_I step);
     void set(const DvecFloat &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecFloat();
 };
 
 inline DvecFloat::DvecFloat() {}
 
-inline DvecFloat::DvecFloat(Float *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecFloat::DvecFloat(Float *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Float * DvecFloat::ptr() const
+inline Float * DvecFloat::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1011,14 +1011,14 @@ inline DvecFloat::operator DvecFloat_c() const
     return *((DvecFloat_c *)this);
 }
 
-inline void DvecFloat::set_ptr(Float * ptr)
+inline void DvecFloat::set_p(Float * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecFloat::set(Float * ptr, Long_I N, Long_I step)
+inline void DvecFloat::set(Float * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecFloat::set(const DvecFloat &sli)
@@ -1054,8 +1054,8 @@ protected:
     Long m_step;
 public:
     DvecDoub_c();
-    DvecDoub_c(const Doub *ptr, Long_I N, Long_I step);
-    const Doub* ptr() const;
+    DvecDoub_c(const Doub *p, Long_I N, Long_I step);
+    const Doub* p() const;
     const Doub & operator[](Long_I i) const;
     const Doub & operator()(Long_I i) const;
     const Doub & end() const;
@@ -1067,27 +1067,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Doub *ptr);
-    void set(const Doub *ptr, Long_I N, Long_I step);
+    void set_p(const Doub *p);
+    void set(const Doub *p, Long_I N, Long_I step);
     void set(const DvecDoub_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecDoub_c();
 };
 
 inline DvecDoub_c::DvecDoub_c() {}
 
-inline DvecDoub_c::DvecDoub_c(const Doub *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecDoub_c::DvecDoub_c(const Doub *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Doub * DvecDoub_c::ptr() const
+inline const Doub * DvecDoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1137,14 +1137,14 @@ inline void DvecDoub_c::set_size(Long_I N)
 }
 
 
-inline void DvecDoub_c::set_ptr(const Doub * ptr)
+inline void DvecDoub_c::set_p(const Doub * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecDoub_c::set(const Doub * ptr, Long_I N, Long_I step)
+inline void DvecDoub_c::set(const Doub * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecDoub_c::set(const DvecDoub_c &sli)
@@ -1180,8 +1180,8 @@ protected:
     Long m_step;
 public:
     DvecDoub();
-    DvecDoub(Doub *ptr, Long_I N, Long_I step);
-    Doub* ptr() const;
+    DvecDoub(Doub *p, Long_I N, Long_I step);
+    Doub* p() const;
     Doub & operator[](Long_I i) const;
     Doub & operator()(Long_I i) const;
     Doub & end() const;
@@ -1194,27 +1194,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Doub *ptr);
-    void set(Doub *ptr, Long_I N, Long_I step);
+    void set_p(Doub *p);
+    void set(Doub *p, Long_I N, Long_I step);
     void set(const DvecDoub &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecDoub();
 };
 
 inline DvecDoub::DvecDoub() {}
 
-inline DvecDoub::DvecDoub(Doub *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecDoub::DvecDoub(Doub *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Doub * DvecDoub::ptr() const
+inline Doub * DvecDoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1268,14 +1268,14 @@ inline DvecDoub::operator DvecDoub_c() const
     return *((DvecDoub_c *)this);
 }
 
-inline void DvecDoub::set_ptr(Doub * ptr)
+inline void DvecDoub::set_p(Doub * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecDoub::set(Doub * ptr, Long_I N, Long_I step)
+inline void DvecDoub::set(Doub * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecDoub::set(const DvecDoub &sli)
@@ -1311,8 +1311,8 @@ protected:
     Long m_step;
 public:
     DvecLdoub_c();
-    DvecLdoub_c(const Ldoub *ptr, Long_I N, Long_I step);
-    const Ldoub* ptr() const;
+    DvecLdoub_c(const Ldoub *p, Long_I N, Long_I step);
+    const Ldoub* p() const;
     const Ldoub & operator[](Long_I i) const;
     const Ldoub & operator()(Long_I i) const;
     const Ldoub & end() const;
@@ -1324,27 +1324,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Ldoub *ptr);
-    void set(const Ldoub *ptr, Long_I N, Long_I step);
+    void set_p(const Ldoub *p);
+    void set(const Ldoub *p, Long_I N, Long_I step);
     void set(const DvecLdoub_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecLdoub_c();
 };
 
 inline DvecLdoub_c::DvecLdoub_c() {}
 
-inline DvecLdoub_c::DvecLdoub_c(const Ldoub *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecLdoub_c::DvecLdoub_c(const Ldoub *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Ldoub * DvecLdoub_c::ptr() const
+inline const Ldoub * DvecLdoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1394,14 +1394,14 @@ inline void DvecLdoub_c::set_size(Long_I N)
 }
 
 
-inline void DvecLdoub_c::set_ptr(const Ldoub * ptr)
+inline void DvecLdoub_c::set_p(const Ldoub * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecLdoub_c::set(const Ldoub * ptr, Long_I N, Long_I step)
+inline void DvecLdoub_c::set(const Ldoub * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecLdoub_c::set(const DvecLdoub_c &sli)
@@ -1437,8 +1437,8 @@ protected:
     Long m_step;
 public:
     DvecLdoub();
-    DvecLdoub(Ldoub *ptr, Long_I N, Long_I step);
-    Ldoub* ptr() const;
+    DvecLdoub(Ldoub *p, Long_I N, Long_I step);
+    Ldoub* p() const;
     Ldoub & operator[](Long_I i) const;
     Ldoub & operator()(Long_I i) const;
     Ldoub & end() const;
@@ -1451,27 +1451,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Ldoub *ptr);
-    void set(Ldoub *ptr, Long_I N, Long_I step);
+    void set_p(Ldoub *p);
+    void set(Ldoub *p, Long_I N, Long_I step);
     void set(const DvecLdoub &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecLdoub();
 };
 
 inline DvecLdoub::DvecLdoub() {}
 
-inline DvecLdoub::DvecLdoub(Ldoub *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecLdoub::DvecLdoub(Ldoub *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Ldoub * DvecLdoub::ptr() const
+inline Ldoub * DvecLdoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1525,14 +1525,14 @@ inline DvecLdoub::operator DvecLdoub_c() const
     return *((DvecLdoub_c *)this);
 }
 
-inline void DvecLdoub::set_ptr(Ldoub * ptr)
+inline void DvecLdoub::set_p(Ldoub * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecLdoub::set(Ldoub * ptr, Long_I N, Long_I step)
+inline void DvecLdoub::set(Ldoub * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecLdoub::set(const DvecLdoub &sli)
@@ -1568,8 +1568,8 @@ protected:
     Long m_step;
 public:
     DvecFcomp_c();
-    DvecFcomp_c(const Fcomp *ptr, Long_I N, Long_I step);
-    const Fcomp* ptr() const;
+    DvecFcomp_c(const Fcomp *p, Long_I N, Long_I step);
+    const Fcomp* p() const;
     const Fcomp & operator[](Long_I i) const;
     const Fcomp & operator()(Long_I i) const;
     const Fcomp & end() const;
@@ -1581,27 +1581,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Fcomp *ptr);
-    void set(const Fcomp *ptr, Long_I N, Long_I step);
+    void set_p(const Fcomp *p);
+    void set(const Fcomp *p, Long_I N, Long_I step);
     void set(const DvecFcomp_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecFcomp_c();
 };
 
 inline DvecFcomp_c::DvecFcomp_c() {}
 
-inline DvecFcomp_c::DvecFcomp_c(const Fcomp *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecFcomp_c::DvecFcomp_c(const Fcomp *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Fcomp * DvecFcomp_c::ptr() const
+inline const Fcomp * DvecFcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1651,14 +1651,14 @@ inline void DvecFcomp_c::set_size(Long_I N)
 }
 
 
-inline void DvecFcomp_c::set_ptr(const Fcomp * ptr)
+inline void DvecFcomp_c::set_p(const Fcomp * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecFcomp_c::set(const Fcomp * ptr, Long_I N, Long_I step)
+inline void DvecFcomp_c::set(const Fcomp * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecFcomp_c::set(const DvecFcomp_c &sli)
@@ -1694,8 +1694,8 @@ protected:
     Long m_step;
 public:
     DvecFcomp();
-    DvecFcomp(Fcomp *ptr, Long_I N, Long_I step);
-    Fcomp* ptr() const;
+    DvecFcomp(Fcomp *p, Long_I N, Long_I step);
+    Fcomp* p() const;
     Fcomp & operator[](Long_I i) const;
     Fcomp & operator()(Long_I i) const;
     Fcomp & end() const;
@@ -1708,27 +1708,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Fcomp *ptr);
-    void set(Fcomp *ptr, Long_I N, Long_I step);
+    void set_p(Fcomp *p);
+    void set(Fcomp *p, Long_I N, Long_I step);
     void set(const DvecFcomp &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecFcomp();
 };
 
 inline DvecFcomp::DvecFcomp() {}
 
-inline DvecFcomp::DvecFcomp(Fcomp *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecFcomp::DvecFcomp(Fcomp *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Fcomp * DvecFcomp::ptr() const
+inline Fcomp * DvecFcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1782,14 +1782,14 @@ inline DvecFcomp::operator DvecFcomp_c() const
     return *((DvecFcomp_c *)this);
 }
 
-inline void DvecFcomp::set_ptr(Fcomp * ptr)
+inline void DvecFcomp::set_p(Fcomp * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecFcomp::set(Fcomp * ptr, Long_I N, Long_I step)
+inline void DvecFcomp::set(Fcomp * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecFcomp::set(const DvecFcomp &sli)
@@ -1825,8 +1825,8 @@ protected:
     Long m_step;
 public:
     DvecComp_c();
-    DvecComp_c(const Comp *ptr, Long_I N, Long_I step);
-    const Comp* ptr() const;
+    DvecComp_c(const Comp *p, Long_I N, Long_I step);
+    const Comp* p() const;
     const Comp & operator[](Long_I i) const;
     const Comp & operator()(Long_I i) const;
     const Comp & end() const;
@@ -1838,27 +1838,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Comp *ptr);
-    void set(const Comp *ptr, Long_I N, Long_I step);
+    void set_p(const Comp *p);
+    void set(const Comp *p, Long_I N, Long_I step);
     void set(const DvecComp_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecComp_c();
 };
 
 inline DvecComp_c::DvecComp_c() {}
 
-inline DvecComp_c::DvecComp_c(const Comp *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecComp_c::DvecComp_c(const Comp *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Comp * DvecComp_c::ptr() const
+inline const Comp * DvecComp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -1908,14 +1908,14 @@ inline void DvecComp_c::set_size(Long_I N)
 }
 
 
-inline void DvecComp_c::set_ptr(const Comp * ptr)
+inline void DvecComp_c::set_p(const Comp * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecComp_c::set(const Comp * ptr, Long_I N, Long_I step)
+inline void DvecComp_c::set(const Comp * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecComp_c::set(const DvecComp_c &sli)
@@ -1951,8 +1951,8 @@ protected:
     Long m_step;
 public:
     DvecComp();
-    DvecComp(Comp *ptr, Long_I N, Long_I step);
-    Comp* ptr() const;
+    DvecComp(Comp *p, Long_I N, Long_I step);
+    Comp* p() const;
     Comp & operator[](Long_I i) const;
     Comp & operator()(Long_I i) const;
     Comp & end() const;
@@ -1965,27 +1965,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Comp *ptr);
-    void set(Comp *ptr, Long_I N, Long_I step);
+    void set_p(Comp *p);
+    void set(Comp *p, Long_I N, Long_I step);
     void set(const DvecComp &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecComp();
 };
 
 inline DvecComp::DvecComp() {}
 
-inline DvecComp::DvecComp(Comp *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecComp::DvecComp(Comp *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Comp * DvecComp::ptr() const
+inline Comp * DvecComp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2039,14 +2039,14 @@ inline DvecComp::operator DvecComp_c() const
     return *((DvecComp_c *)this);
 }
 
-inline void DvecComp::set_ptr(Comp * ptr)
+inline void DvecComp::set_p(Comp * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecComp::set(Comp * ptr, Long_I N, Long_I step)
+inline void DvecComp::set(Comp * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecComp::set(const DvecComp &sli)
@@ -2082,8 +2082,8 @@ protected:
     Long m_step;
 public:
     DvecLcomp_c();
-    DvecLcomp_c(const Lcomp *ptr, Long_I N, Long_I step);
-    const Lcomp* ptr() const;
+    DvecLcomp_c(const Lcomp *p, Long_I N, Long_I step);
+    const Lcomp* p() const;
     const Lcomp & operator[](Long_I i) const;
     const Lcomp & operator()(Long_I i) const;
     const Lcomp & end() const;
@@ -2095,27 +2095,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(const Lcomp *ptr);
-    void set(const Lcomp *ptr, Long_I N, Long_I step);
+    void set_p(const Lcomp *p);
+    void set(const Lcomp *p, Long_I N, Long_I step);
     void set(const DvecLcomp_c &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecLcomp_c();
 };
 
 inline DvecLcomp_c::DvecLcomp_c() {}
 
-inline DvecLcomp_c::DvecLcomp_c(const Lcomp *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecLcomp_c::DvecLcomp_c(const Lcomp *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline const Lcomp * DvecLcomp_c::ptr() const
+inline const Lcomp * DvecLcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2165,14 +2165,14 @@ inline void DvecLcomp_c::set_size(Long_I N)
 }
 
 
-inline void DvecLcomp_c::set_ptr(const Lcomp * ptr)
+inline void DvecLcomp_c::set_p(const Lcomp * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecLcomp_c::set(const Lcomp * ptr, Long_I N, Long_I step)
+inline void DvecLcomp_c::set(const Lcomp * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecLcomp_c::set(const DvecLcomp_c &sli)
@@ -2208,8 +2208,8 @@ protected:
     Long m_step;
 public:
     DvecLcomp();
-    DvecLcomp(Lcomp *ptr, Long_I N, Long_I step);
-    Lcomp* ptr() const;
+    DvecLcomp(Lcomp *p, Long_I N, Long_I step);
+    Lcomp* p() const;
     Lcomp & operator[](Long_I i) const;
     Lcomp & operator()(Long_I i) const;
     Lcomp & end() const;
@@ -2222,27 +2222,27 @@ public:
 
     // === other member functions ===
     // There is no bound checking, use with care
-    void set_ptr(Lcomp *ptr);
-    void set(Lcomp *ptr, Long_I N, Long_I step);
+    void set_p(Lcomp *p);
+    void set(Lcomp *p, Long_I N, Long_I step);
     void set(const DvecLcomp &sli);
     void set_size(Long_I N);
-    void next(); // m_ptr += m_N
-    void last(); // m_ptr -= m_N
-    void shift(Long_I N); // m_ptr += N;
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
     
     ~DvecLcomp();
 };
 
 inline DvecLcomp::DvecLcomp() {}
 
-inline DvecLcomp::DvecLcomp(Lcomp *ptr, Long_I N, Long_I step)
-    : m_p(ptr), m_N(N), m_step(step) {}
+inline DvecLcomp::DvecLcomp(Lcomp *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
 
-inline Lcomp * DvecLcomp::ptr() const
+inline Lcomp * DvecLcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
-        SLS_ERR("using ptr() for empty container!");
+        SLS_ERR("using p() for empty container!");
 #endif
     return m_p;
 }
@@ -2296,14 +2296,14 @@ inline DvecLcomp::operator DvecLcomp_c() const
     return *((DvecLcomp_c *)this);
 }
 
-inline void DvecLcomp::set_ptr(Lcomp * ptr)
+inline void DvecLcomp::set_p(Lcomp * p)
 {
-    m_p = ptr;
+    m_p = p;
 }
 
-inline void DvecLcomp::set(Lcomp * ptr, Long_I N, Long_I step)
+inline void DvecLcomp::set(Lcomp * p, Long_I N, Long_I step)
 {
-    m_p = ptr; m_N = N; m_step = step;
+    m_p = p; m_N = N; m_step = step;
 }
 
 inline void DvecLcomp::set(const DvecLcomp &sli)
