@@ -1776,6 +1776,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'VecComp' 'CmatComp' 'SvecDoub';
 //%     'VecComp' 'CmatComp' 'VecComp';
 //%     'VecComp' 'CmatDoub' 'VecComp';
+//%     'VecComp' 'ScmatComp' 'SvecComp';
 //%     'VecComp' 'MatComp' 'VecDoub';
 //%     'VecComp' 'MatComp' 'VecComp';
 //%     'VecComp' 'CmatImag' 'VecComp';

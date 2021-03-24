@@ -22,17 +22,31 @@ void test_lanczos()
         expH(0, 2) = expH(2, 0) = 3.792041496895060e2;
         expH(1, 2) = expH(2, 1) = -4.382106846116269e2;
 
-        // test expv_lanc();
+        CmatComp exp_miH(3, 3);
+        exp_miH(0, 0) = Comp(0.543799, 0.341283);
+        exp_miH(1, 1) = Comp(0.0664594, -0.0295234);
+        exp_miH(2, 2) = Comp(-0.274497, -0.294385);
+        exp_miH(0, 1) = exp_miH(1, 0) = Comp(0.229334, 0.565395);
+        exp_miH(0, 2) = exp_miH(2, 0) = Comp(0.337912, -0.318369);
+        exp_miH(1, 2) = exp_miH(2, 1) = Comp(-0.768775, 0.177287);
+
+        // test expHdt_v_lanc(), exp_miHdt_v_lanc;
         {
 			VecComp x(3), y(3), y0(3);
-            VecDoub wsp_d(15);
-            VecComp wsp_c(12);
+            VecDoub wsp_d(20);
+            VecComp wsp_c(20);
 			for (Long i = 0; i < 5; ++i) {
 				rand(x);
 				mul(y0, expH, x);
-				expv_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
+				expHdt_v_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
 				y -= y0;
 				if (max_abs(y) > 1e-8)
+					SLS_ERR("failed!");
+                
+                mul(y0, exp_miH, x);
+                exp_miHdt_v_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
+                y -= y0;
+                if (max_abs(y) > 1e-4)
 					SLS_ERR("failed!");
 			}
         }
