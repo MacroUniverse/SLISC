@@ -1321,6 +1321,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%        'SvecDoub', 'SvecDoub', 'Doub';
 //%        'SvecDoub', 'VecDoub', 'Doub';
 //%        'SvecComp', 'VecComp', 'Doub';
+//%        'SvecComp', 'DvecComp', 'Doub';
 //%        'VecComp', 'VecDoub', 'Comp';
 //%        'VecComp', 'VecComp', 'Comp';
 //%        'CmatInt', 'CmatInt', 'Int';
@@ -1456,7 +1457,50 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
     }
 }
 //% else
-//%     error('not implemented!');
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    plus(v, v1, s);
+}
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+@same_shape('v', 'v1')@
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = s - v1[i];
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    times(v, v1, s);
+}
+
+inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+@same_shape('v', 'v1')@
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = s / v1[i];
+}
 //% end
 //%-------------------------
 

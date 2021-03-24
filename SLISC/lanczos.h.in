@@ -118,9 +118,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO v, @Tm@_I H, Doub_I dt, Long_I Nkrylov, Vec
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(v);
-    Doub inv_b0 = 1/beta[0];
-    for (Long i = 0; i < N; ++i)
-        v0[i] = v[i] * inv_b0;
+    times(v0, v, 1/beta[0]);
     @mul_fun@(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)

@@ -6714,6 +6714,66 @@ inline void divide(SvecComp_O v, Doub_I s, VecComp_I v1)
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
+inline void plus(SvecComp_O v, DvecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus(SvecComp_O v, Doub_I s, DvecComp_I v1)
+{
+    plus(v, v1, s);
+}
+
+inline void minus(SvecComp_O v, DvecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus(SvecComp_O v, Doub_I s, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = s - v1[i];
+}
+
+inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times(SvecComp_O v, Doub_I s, DvecComp_I v1)
+{
+    times(v, v1, s);
+}
+
+inline void divide(SvecComp_O v, Doub_I s, DvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] = s / v1[i];
+}
+
 inline void plus(VecComp_O v, VecDoub_I v1, Comp_I s)
 {
 #ifdef SLS_CHECK_SHAPES

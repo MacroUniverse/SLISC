@@ -105,9 +105,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO v, CmatDoub_I H, Doub_I dt, Long_I Nkryl
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(v);
-    Doub inv_b0 = 1/beta[0];
-    for (Long i = 0; i < N; ++i)
-        v0[i] = v[i] * inv_b0;
+    times(v0, v, 1/beta[0]);
     mul_gen(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -170,9 +168,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO v, CmatDoub_I H, Doub_I dt, Long_I Nkry
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(v);
-    Doub inv_b0 = 1/beta[0];
-    for (Long i = 0; i < N; ++i)
-        v0[i] = v[i] * inv_b0;
+    times(v0, v, 1/beta[0]);
     mul_gen(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -235,9 +231,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO v, CmobdDoub_I H, Doub_I dt, Long_I Nkr
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(v);
-    Doub inv_b0 = 1/beta[0];
-    for (Long i = 0; i < N; ++i)
-        v0[i] = v[i] * inv_b0;
+    times(v0, v, 1/beta[0]);
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -300,9 +294,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO v, CbandDoub_I H, Doub_I dt, Long_I Nkr
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
     beta[0] = norm(v);
-    Doub inv_b0 = 1/beta[0];
-    for (Long i = 0; i < N; ++i)
-        v0[i] = v[i] * inv_b0;
+    times(v0, v, 1/beta[0]);
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
