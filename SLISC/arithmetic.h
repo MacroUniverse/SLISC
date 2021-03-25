@@ -5415,7 +5415,13 @@ inline void operator/=(DcmatComp_O &v, DcmatDoub_I v1)
 }
 
 
-inline void plus_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void plus_vvs(Char *v, const Char *v1, Char_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5423,7 +5429,13 @@ inline void plus_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void minus_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Char *v, const Char *v1, Char_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5431,7 +5443,13 @@ inline void minus_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void times_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Char *v, const Char *v1, Char_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5439,7 +5457,13 @@ inline void times_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void divide_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Char *v, const Char *v1, Char_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / s;
+}
+
+inline void divide_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / s;
@@ -5447,7 +5471,13 @@ inline void divide_vvs(Char *v, const Char *v1, Char_I s, Long_I N, Long_I step1
     }
 }
 
-inline void plus_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void plus_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5455,7 +5485,13 @@ inline void plus_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1,
     }
 }
 
-inline void minus_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5463,7 +5499,13 @@ inline void minus_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1
     }
 }
 
-inline void times_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5471,7 +5513,13 @@ inline void times_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1
     }
 }
 
-inline void divide_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / s;
+}
+
+inline void divide_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / s;
@@ -5479,7 +5527,13 @@ inline void divide_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1 = 
     }
 }
 
-inline void plus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void plus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5487,7 +5541,13 @@ inline void plus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step
     }
 }
 
-inline void minus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5495,7 +5555,13 @@ inline void minus_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I ste
     }
 }
 
-inline void times_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5503,7 +5569,13 @@ inline void times_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I ste
     }
 }
 
-inline void divide_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / s;
+}
+
+inline void divide_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / s;
@@ -5511,7 +5583,13 @@ inline void divide_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I st
     }
 }
 
-inline void plus_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void plus_vvs(Float *v, const Float *v1, Float_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5519,7 +5597,13 @@ inline void plus_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step
     }
 }
 
-inline void minus_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Float *v, const Float *v1, Float_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5527,7 +5611,13 @@ inline void minus_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I ste
     }
 }
 
-inline void times_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Float *v, const Float *v1, Float_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5535,13 +5625,25 @@ inline void times_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I ste
     }
 }
 
-inline void divide_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Float *v, const Float *v1, Float_I s, Long_I N)
 {
     Float inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
 }
 
-inline void plus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Float *v, const Float *v1, Float_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Float inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
+}
+
+inline void plus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5549,7 +5651,13 @@ inline void plus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void minus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5557,7 +5665,13 @@ inline void minus_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void times_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5565,13 +5679,25 @@ inline void times_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void divide_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N)
 {
     Doub inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
 }
 
-inline void plus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Doub inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
+}
+
+inline void plus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5579,7 +5705,13 @@ inline void plus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void minus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5587,7 +5719,13 @@ inline void minus_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void times_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5595,13 +5733,25 @@ inline void times_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void divide_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N)
 {
     Doub inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
 }
 
-inline void plus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Doub inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
+}
+
+inline void plus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5609,7 +5759,13 @@ inline void plus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void minus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5617,7 +5773,13 @@ inline void minus_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void times_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5625,13 +5787,25 @@ inline void times_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void divide_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
 {
     Imag inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
 }
 
-inline void plus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Imag inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
+}
+
+inline void plus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5639,7 +5813,13 @@ inline void plus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void minus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5647,7 +5827,13 @@ inline void minus_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void times_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5655,13 +5841,25 @@ inline void times_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void divide_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
 {
     Comp inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
 }
 
-inline void plus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Comp inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
+}
+
+inline void plus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -5669,7 +5867,13 @@ inline void plus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void minus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -5677,7 +5881,13 @@ inline void minus_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void times_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -5685,10 +5895,16 @@ inline void times_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 
     }
 }
 
-inline void divide_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
 {
     Comp inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
+}
+
+inline void divide_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Comp inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
 }
 
 
@@ -5698,10 +5914,26 @@ inline void minus_vsv(Char *v, const Char &s, const Char *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Char *v, const Char &s, const Char *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Char *v, const Char &s, const Char *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Char *v, const Char &s, const Char *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Int *v, const Int &s, const Int *v1, Long_I N)
@@ -5710,10 +5942,26 @@ inline void minus_vsv(Int *v, const Int &s, const Int *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Int *v, const Int &s, const Int *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Int *v, const Int &s, const Int *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Int *v, const Int &s, const Int *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N)
@@ -5722,10 +5970,26 @@ inline void minus_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Float *v, const Float &s, const Float *v1, Long_I N)
@@ -5734,10 +5998,26 @@ inline void minus_vsv(Float *v, const Float &s, const Float *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Float *v, const Float &s, const Float *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Float *v, const Float &s, const Float *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Float *v, const Float &s, const Float *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N)
@@ -5746,10 +6026,26 @@ inline void minus_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Comp *v, const Comp &s, const Doub *v1, Long_I N)
@@ -5758,10 +6054,26 @@ inline void minus_vsv(Comp *v, const Comp &s, const Doub *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Comp *v, const Comp &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Comp *v, const Comp &s, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Comp *v, const Comp &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
@@ -5770,10 +6082,26 @@ inline void minus_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 inline void minus_vsv(Comp *v, const Comp &s, const Comp *v1, Long_I N)
@@ -5782,10 +6110,26 @@ inline void minus_vsv(Comp *v, const Comp &s, const Comp *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(Comp *v, const Comp &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(Comp *v, const Comp &s, const Comp *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(Comp *v, const Comp &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 
 
@@ -5795,10 +6139,26 @@ inline void plus_vvv(Char *v, const Char *v1, const Char *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Char *v, const Char *v1, const Char *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Char *v, const Char *v1, const Char *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Char *v, const Char *v1, const Char *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Char *v, const Char *v1, const Char *v2, Long_I N)
@@ -5807,10 +6167,26 @@ inline void times_vvv(Char *v, const Char *v1, const Char *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Char *v, const Char *v1, const Char *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Char *v, const Char *v1, const Char *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Char *v, const Char *v1, const Char *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
@@ -5819,10 +6195,26 @@ inline void plus_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Int *v, const Int *v1, const Int *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Int *v, const Int *v1, const Int *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
@@ -5831,10 +6223,26 @@ inline void times_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Int *v, const Int *v1, const Int *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Int *v, const Int *v1, const Int *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
@@ -5843,10 +6251,26 @@ inline void plus_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
@@ -5855,10 +6279,26 @@ inline void times_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Float *v, const Float *v1, const Float *v2, Long_I N)
@@ -5867,10 +6307,26 @@ inline void plus_vvv(Float *v, const Float *v1, const Float *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Float *v, const Float *v1, const Float *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Float *v, const Float *v1, const Float *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Float *v, const Float *v1, const Float *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Float *v, const Float *v1, const Float *v2, Long_I N)
@@ -5879,10 +6335,26 @@ inline void times_vvv(Float *v, const Float *v1, const Float *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Float *v, const Float *v1, const Float *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Float *v, const Float *v1, const Float *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Float *v, const Float *v1, const Float *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N)
@@ -5891,10 +6363,26 @@ inline void plus_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N)
@@ -5903,10 +6391,26 @@ inline void times_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N)
@@ -5915,10 +6419,26 @@ inline void plus_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N)
@@ -5927,10 +6447,26 @@ inline void times_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Comp *v, const Doub *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N)
@@ -5939,10 +6475,26 @@ inline void plus_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N)
@@ -5951,10 +6503,26 @@ inline void times_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
@@ -5963,10 +6531,26 @@ inline void plus_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
@@ -5975,10 +6559,26 @@ inline void times_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void plus_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
@@ -5987,10 +6587,26 @@ inline void plus_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
@@ -5999,10 +6615,26 @@ inline void times_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 
@@ -6780,8 +7412,9 @@ inline void plus(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = v1[i] + s;
+    Long step = 1;
+    Long step1 = v1.step();
+    plus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
 }
 
 inline void plus(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -6795,8 +7428,9 @@ inline void minus(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = v1[i] - s;
+    Long step = 1;
+    Long step1 = v1.step();
+    minus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
 }
 
 inline void minus(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -6805,8 +7439,9 @@ inline void minus(SvecComp_O v, Doub_I s, DvecComp_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = s - v1[i];
+    Long step = 1;
+    Long step1 = v1.step();
+    minus_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
 }
 
 inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
@@ -6815,13 +7450,25 @@ inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = v1[i] * s;
+    Long step = 1;
+    Long step1 = v1.step();
+    times_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
 }
 
 inline void times(SvecComp_O v, Doub_I s, DvecComp_I v1)
 {
     times(v, v1, s);
+}
+
+inline void divide(SvecComp_O v, DvecComp_I v1, Doub_I s)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    Long step = 1;
+    Long step1 = v1.step();
+    divide_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
 }
 
 inline void divide(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -6830,8 +7477,9 @@ inline void divide(SvecComp_O v, Doub_I s, DvecComp_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = s / v1[i];
+    Long step = 1;
+    Long step1 = v1.step();
+    divide_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
 }
 
 inline void plus(VecComp_O v, VecDoub_I v1, Comp_I s)
@@ -7785,8 +8433,10 @@ inline void plus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] + v2[i];
+    Long step = v.step();
+    Long step1 = 1;
+    Long step2 = 1;
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void minus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
@@ -7795,8 +8445,10 @@ inline void minus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] - v2[i];
+    Long step = v.step();
+    Long step1 = 1;
+    Long step2 = 1;
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
@@ -7805,8 +8457,10 @@ inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] * v2[i];
+    Long step = v.step();
+    Long step1 = 1;
+    Long step2 = 1;
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
@@ -7815,8 +8469,10 @@ inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] / v2[i];
+    Long step = v.step();
+    Long step1 = 1;
+    Long step2 = 1;
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void plus(CmatInt_O v, CmatInt_I v1, CmatInt_I v2)

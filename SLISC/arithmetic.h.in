@@ -1214,7 +1214,13 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 //% if ~is_promo(T, T1) || ~is_promo(T, T2)
 //%     error('illegal types');
 //% end
-inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -1222,7 +1228,13 @@ inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 
     }
 }
 
-inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -1230,7 +1242,13 @@ inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 =
     }
 }
 
-inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -1239,7 +1257,13 @@ inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 =
 }
 
 //% if is_integral(T1) && is_integral(T2)
-inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / s;
+}
+
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / s;
@@ -1247,10 +1271,16 @@ inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 
     }
 }
 //% elseif is_fpt(T2) || is_comp(T2) || is_imag(T2)
-inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1 = 1, Long_I step2 = 1)
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
     @T2@ inv_s = 1./s;
     times_vvs(v, v1, inv_s, N);
+}
+
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, Long_I step1)
+{
+    @T2@ inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
 }
 //% else
 //%     error(['divide_vvs: not implemented: ' T ' ' T1 ' ' T2]);
@@ -1278,10 +1308,26 @@ inline void minus_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
         v[i] = s - v1[i];
 }
 
+inline void minus_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
 inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
+}
+
+inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
 }
 //%-------------------------
 
@@ -1307,10 +1353,26 @@ inline void plus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
         v[i] = v1[i] + v2[i];
 }
 
+inline void plus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void minus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 
 inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
@@ -1319,10 +1381,26 @@ inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
         v[i] = v1[i] * v2[i];
 }
 
+inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
 inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
 }
 //%-------------------------
 
@@ -1404,6 +1482,112 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 @same_shape('v', 'v1')@
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
+//% elseif ndim(T) == 1 && ndim(T1) == 1
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+    plus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    plus(v, v1, s);
+}
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+    minus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+@same_shape('v', 'v1')@
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+    minus_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+    times_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    times(v, v1, s);
+}
+
+inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+@same_shape('v', 'v1')@
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+    divide_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+}
+
+inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+@same_shape('v', 'v1')@
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+    divide_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
+}
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
 inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
@@ -1474,51 +1658,6 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
         p += v.lda(); p1 += v1.lda();
     }
 }
-//% else
-inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
-{
-@same_shape('v', 'v1')@
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = v1[i] + s;
-}
-
-inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{
-    plus(v, v1, s);
-}
-
-inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
-{
-@same_shape('v', 'v1')@
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = v1[i] - s;
-}
-
-inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{
-@same_shape('v', 'v1')@
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = s - v1[i];
-}
-
-inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
-{
-@same_shape('v', 'v1')@
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = v1[i] * s;
-}
-
-inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{
-    times(v, v1, s);
-}
-
-inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{
-@same_shape('v', 'v1')@
-    for (Long i = 0; i < v.size(); ++i)
-        v[i] = s / v1[i];
-}
 //% end
 //%-------------------------
 
@@ -1566,33 +1705,89 @@ inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 @same_shape('v', 'v1', 'v2')@
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
-//% else
+//% elseif ndim(T) == 1 && ndim(T1) == 1
 inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] + v2[i];
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step2 = v2.step();
+//%     else
+    Long step2 = 1;
+//%     end
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] - v2[i];
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step2 = v2.step();
+//%     else
+    Long step2 = 1;
+//%     end
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] * v2[i];
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step2 = v2.step();
+//%     else
+    Long step2 = 1;
+//%     end
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 
 inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-    for (Long i = 0; i < v1.size(); ++i)
-        v[i] = v1[i] / v2[i];
+//%     if is_Dvec(T)
+    Long step = v.step();
+//%     else
+    Long step = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step1 = v1.step();
+//%     else
+    Long step1 = 1;
+//%     end
+//%     if is_Dvec(T1)
+    Long step2 = v2.step();
+//%     else
+    Long step2 = 1;
+//%     end
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
 }
 //% end
 //%--------------------------
