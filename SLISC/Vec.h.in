@@ -26,6 +26,7 @@ public:
     @VecT@() = default;
     explicit @VecT@(Long_I N);
     @VecT@(const @VecT@ &rhs); // copy constructor
+    @VecT@ & operator=(const @VecT@ &rhs) = delete;
     @T@ & operator()(Long_I i);
     const @T@ & operator()(Long_I i) const;
     void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
@@ -66,6 +67,7 @@ public:
     VecBool() = default;
     explicit VecBool(Long_I N);
     VecBool(const VecBool &rhs); // copy constructor
+    VecBool & operator=(const VecBool &rhs) = delete;
     ref operator()(Long_I i);
     Bool operator()(Long_I i) const;
     void operator<<(VecBool &rhs); // move data and rhs.resize(0)

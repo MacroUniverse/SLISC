@@ -10,6 +10,7 @@ public:
     VecChar() = default;
     explicit VecChar(Long_I N);
     VecChar(const VecChar &rhs); // copy constructor
+    VecChar & operator=(const VecChar &rhs) = delete;
     Char & operator()(Long_I i);
     const Char & operator()(Long_I i) const;
     void operator<<(VecChar &rhs); // move data and rhs.resize(0)
@@ -45,6 +46,7 @@ public:
     VecInt() = default;
     explicit VecInt(Long_I N);
     VecInt(const VecInt &rhs); // copy constructor
+    VecInt & operator=(const VecInt &rhs) = delete;
     Int & operator()(Long_I i);
     const Int & operator()(Long_I i) const;
     void operator<<(VecInt &rhs); // move data and rhs.resize(0)
@@ -80,6 +82,7 @@ public:
     VecLlong() = default;
     explicit VecLlong(Long_I N);
     VecLlong(const VecLlong &rhs); // copy constructor
+    VecLlong & operator=(const VecLlong &rhs) = delete;
     Llong & operator()(Long_I i);
     const Llong & operator()(Long_I i) const;
     void operator<<(VecLlong &rhs); // move data and rhs.resize(0)
@@ -123,6 +126,7 @@ public:
     VecFloat() = default;
     explicit VecFloat(Long_I N);
     VecFloat(const VecFloat &rhs); // copy constructor
+    VecFloat & operator=(const VecFloat &rhs) = delete;
     Float & operator()(Long_I i);
     const Float & operator()(Long_I i) const;
     void operator<<(VecFloat &rhs); // move data and rhs.resize(0)
@@ -158,6 +162,7 @@ public:
     VecDoub() = default;
     explicit VecDoub(Long_I N);
     VecDoub(const VecDoub &rhs); // copy constructor
+    VecDoub & operator=(const VecDoub &rhs) = delete;
     Doub & operator()(Long_I i);
     const Doub & operator()(Long_I i) const;
     void operator<<(VecDoub &rhs); // move data and rhs.resize(0)
@@ -193,6 +198,7 @@ public:
     VecLdoub() = default;
     explicit VecLdoub(Long_I N);
     VecLdoub(const VecLdoub &rhs); // copy constructor
+    VecLdoub & operator=(const VecLdoub &rhs) = delete;
     Ldoub & operator()(Long_I i);
     const Ldoub & operator()(Long_I i) const;
     void operator<<(VecLdoub &rhs); // move data and rhs.resize(0)
@@ -228,6 +234,7 @@ public:
     VecFcomp() = default;
     explicit VecFcomp(Long_I N);
     VecFcomp(const VecFcomp &rhs); // copy constructor
+    VecFcomp & operator=(const VecFcomp &rhs) = delete;
     Fcomp & operator()(Long_I i);
     const Fcomp & operator()(Long_I i) const;
     void operator<<(VecFcomp &rhs); // move data and rhs.resize(0)
@@ -263,6 +270,7 @@ public:
     VecComp() = default;
     explicit VecComp(Long_I N);
     VecComp(const VecComp &rhs); // copy constructor
+    VecComp & operator=(const VecComp &rhs) = delete;
     Comp & operator()(Long_I i);
     const Comp & operator()(Long_I i) const;
     void operator<<(VecComp &rhs); // move data and rhs.resize(0)
@@ -298,6 +306,7 @@ public:
     VecLcomp() = default;
     explicit VecLcomp(Long_I N);
     VecLcomp(const VecLcomp &rhs); // copy constructor
+    VecLcomp & operator=(const VecLcomp &rhs) = delete;
     Lcomp & operator()(Long_I i);
     const Lcomp & operator()(Long_I i) const;
     void operator<<(VecLcomp &rhs); // move data and rhs.resize(0)
@@ -333,6 +342,7 @@ public:
     VecFimag() = default;
     explicit VecFimag(Long_I N);
     VecFimag(const VecFimag &rhs); // copy constructor
+    VecFimag & operator=(const VecFimag &rhs) = delete;
     Fimag & operator()(Long_I i);
     const Fimag & operator()(Long_I i) const;
     void operator<<(VecFimag &rhs); // move data and rhs.resize(0)
@@ -368,6 +378,7 @@ public:
     VecImag() = default;
     explicit VecImag(Long_I N);
     VecImag(const VecImag &rhs); // copy constructor
+    VecImag & operator=(const VecImag &rhs) = delete;
     Imag & operator()(Long_I i);
     const Imag & operator()(Long_I i) const;
     void operator<<(VecImag &rhs); // move data and rhs.resize(0)
@@ -403,6 +414,7 @@ public:
     VecLimag() = default;
     explicit VecLimag(Long_I N);
     VecLimag(const VecLimag &rhs); // copy constructor
+    VecLimag & operator=(const VecLimag &rhs) = delete;
     Limag & operator()(Long_I i);
     const Limag & operator()(Long_I i) const;
     void operator<<(VecLimag &rhs); // move data and rhs.resize(0)
@@ -442,6 +454,7 @@ public:
     VecBool() = default;
     explicit VecBool(Long_I N);
     VecBool(const VecBool &rhs); // copy constructor
+    VecBool & operator=(const VecBool &rhs) = delete;
     ref operator()(Long_I i);
     Bool operator()(Long_I i) const;
     void operator<<(VecBool &rhs); // move data and rhs.resize(0)

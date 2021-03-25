@@ -29,6 +29,7 @@ public:
     @MatT@(): m_N1(0), m_N2(0) {};
     @MatT@(Long_I N1, Long_I N2);
     @MatT@(const @MatT@ &rhs);        // Copy constructor
+    @MatT@ & operator=(const @MatT@ &rhs) = delete;
     void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
     @T@& operator()(Long_I i, Long_I j); // double indexing
     const @T@& operator()(Long_I i, Long_I j) const;

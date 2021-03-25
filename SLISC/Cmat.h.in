@@ -28,6 +28,7 @@ public:
     @CmatT@(): m_N1(0), m_N2(0) {};
     @CmatT@(Long_I N1, Long_I N2);
     @CmatT@(const @CmatT@ &rhs);        // Copy constructor
+    @CmatT@ & operator=(const @CmatT@ &rhs) = delete;
     void operator<<(@CmatT@ &rhs); // move data and rhs.resize(0, 0)
     @T@& operator()(Long_I i, Long_I j);    // double indexing
     const @T@& operator()(Long_I i, Long_I j) const;

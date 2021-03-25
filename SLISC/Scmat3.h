@@ -20,6 +20,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Char *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Char_c &sli);
     ~Scmat3Char_c();
 };
 
@@ -68,6 +69,12 @@ inline void Scmat3Char_c::set(const Char *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Char_c::set(const Scmat3Char_c &sli)
+{
+    SvecChar_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Char_c::~Scmat3Char_c() {}
 
 typedef const Scmat3Char_c & Scmat3Char_I;
@@ -91,6 +98,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Char *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Char &sli);
     ~Scmat3Char();
 };
 
@@ -143,6 +151,12 @@ inline void Scmat3Char::set(Char *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Char::set(const Scmat3Char &sli)
+{
+    SvecChar::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Char::~Scmat3Char() {}
 
 typedef const Scmat3Char & Scmat3Char_O, & Scmat3Char_IO;
@@ -165,6 +179,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Int *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Int_c &sli);
     ~Scmat3Int_c();
 };
 
@@ -213,6 +228,12 @@ inline void Scmat3Int_c::set(const Int *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Int_c::set(const Scmat3Int_c &sli)
+{
+    SvecInt_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Int_c::~Scmat3Int_c() {}
 
 typedef const Scmat3Int_c & Scmat3Int_I;
@@ -236,6 +257,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Int *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Int &sli);
     ~Scmat3Int();
 };
 
@@ -288,6 +310,12 @@ inline void Scmat3Int::set(Int *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Int::set(const Scmat3Int &sli)
+{
+    SvecInt::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Int::~Scmat3Int() {}
 
 typedef const Scmat3Int & Scmat3Int_O, & Scmat3Int_IO;
@@ -310,6 +338,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Llong *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Llong_c &sli);
     ~Scmat3Llong_c();
 };
 
@@ -358,6 +387,12 @@ inline void Scmat3Llong_c::set(const Llong *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Llong_c::set(const Scmat3Llong_c &sli)
+{
+    SvecLlong_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Llong_c::~Scmat3Llong_c() {}
 
 typedef const Scmat3Llong_c & Scmat3Llong_I;
@@ -381,6 +416,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Llong *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Llong &sli);
     ~Scmat3Llong();
 };
 
@@ -433,6 +469,12 @@ inline void Scmat3Llong::set(Llong *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Llong::set(const Scmat3Llong &sli)
+{
+    SvecLlong::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Llong::~Scmat3Llong() {}
 
 typedef const Scmat3Llong & Scmat3Llong_O, & Scmat3Llong_IO;
@@ -471,6 +513,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Float *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Float_c &sli);
     ~Scmat3Float_c();
 };
 
@@ -519,6 +562,12 @@ inline void Scmat3Float_c::set(const Float *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Float_c::set(const Scmat3Float_c &sli)
+{
+    SvecFloat_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Float_c::~Scmat3Float_c() {}
 
 typedef const Scmat3Float_c & Scmat3Float_I;
@@ -542,6 +591,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Float *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Float &sli);
     ~Scmat3Float();
 };
 
@@ -594,6 +644,12 @@ inline void Scmat3Float::set(Float *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Float::set(const Scmat3Float &sli)
+{
+    SvecFloat::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Float::~Scmat3Float() {}
 
 typedef const Scmat3Float & Scmat3Float_O, & Scmat3Float_IO;
@@ -616,6 +672,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Doub *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Doub_c &sli);
     ~Scmat3Doub_c();
 };
 
@@ -664,6 +721,12 @@ inline void Scmat3Doub_c::set(const Doub *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Doub_c::set(const Scmat3Doub_c &sli)
+{
+    SvecDoub_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Doub_c::~Scmat3Doub_c() {}
 
 typedef const Scmat3Doub_c & Scmat3Doub_I;
@@ -687,6 +750,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Doub *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Doub &sli);
     ~Scmat3Doub();
 };
 
@@ -739,6 +803,12 @@ inline void Scmat3Doub::set(Doub *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Doub::set(const Scmat3Doub &sli)
+{
+    SvecDoub::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Doub::~Scmat3Doub() {}
 
 typedef const Scmat3Doub & Scmat3Doub_O, & Scmat3Doub_IO;
@@ -761,6 +831,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Ldoub_c &sli);
     ~Scmat3Ldoub_c();
 };
 
@@ -809,6 +880,12 @@ inline void Scmat3Ldoub_c::set(const Ldoub *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Ldoub_c::set(const Scmat3Ldoub_c &sli)
+{
+    SvecLdoub_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Ldoub_c::~Scmat3Ldoub_c() {}
 
 typedef const Scmat3Ldoub_c & Scmat3Ldoub_I;
@@ -832,6 +909,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Ldoub &sli);
     ~Scmat3Ldoub();
 };
 
@@ -884,6 +962,12 @@ inline void Scmat3Ldoub::set(Ldoub *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Ldoub::set(const Scmat3Ldoub &sli)
+{
+    SvecLdoub::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Ldoub::~Scmat3Ldoub() {}
 
 typedef const Scmat3Ldoub & Scmat3Ldoub_O, & Scmat3Ldoub_IO;
@@ -906,6 +990,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Fcomp_c &sli);
     ~Scmat3Fcomp_c();
 };
 
@@ -954,6 +1039,12 @@ inline void Scmat3Fcomp_c::set(const Fcomp *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Fcomp_c::set(const Scmat3Fcomp_c &sli)
+{
+    SvecFcomp_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Fcomp_c::~Scmat3Fcomp_c() {}
 
 typedef const Scmat3Fcomp_c & Scmat3Fcomp_I;
@@ -977,6 +1068,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Fcomp &sli);
     ~Scmat3Fcomp();
 };
 
@@ -1029,6 +1121,12 @@ inline void Scmat3Fcomp::set(Fcomp *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Fcomp::set(const Scmat3Fcomp &sli)
+{
+    SvecFcomp::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Fcomp::~Scmat3Fcomp() {}
 
 typedef const Scmat3Fcomp & Scmat3Fcomp_O, & Scmat3Fcomp_IO;
@@ -1051,6 +1149,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Comp *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Comp_c &sli);
     ~Scmat3Comp_c();
 };
 
@@ -1099,6 +1198,12 @@ inline void Scmat3Comp_c::set(const Comp *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Comp_c::set(const Scmat3Comp_c &sli)
+{
+    SvecComp_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Comp_c::~Scmat3Comp_c() {}
 
 typedef const Scmat3Comp_c & Scmat3Comp_I;
@@ -1122,6 +1227,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Comp *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Comp &sli);
     ~Scmat3Comp();
 };
 
@@ -1174,6 +1280,12 @@ inline void Scmat3Comp::set(Comp *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Comp::set(const Scmat3Comp &sli)
+{
+    SvecComp::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Comp::~Scmat3Comp() {}
 
 typedef const Scmat3Comp & Scmat3Comp_O, & Scmat3Comp_IO;
@@ -1196,6 +1308,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Lcomp_c &sli);
     ~Scmat3Lcomp_c();
 };
 
@@ -1244,6 +1357,12 @@ inline void Scmat3Lcomp_c::set(const Lcomp *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Lcomp_c::set(const Scmat3Lcomp_c &sli)
+{
+    SvecLcomp_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Lcomp_c::~Scmat3Lcomp_c() {}
 
 typedef const Scmat3Lcomp_c & Scmat3Lcomp_I;
@@ -1267,6 +1386,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Lcomp &sli);
     ~Scmat3Lcomp();
 };
 
@@ -1319,6 +1439,12 @@ inline void Scmat3Lcomp::set(Lcomp *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Lcomp::set(const Scmat3Lcomp &sli)
+{
+    SvecLcomp::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Lcomp::~Scmat3Lcomp() {}
 
 typedef const Scmat3Lcomp & Scmat3Lcomp_O, & Scmat3Lcomp_IO;
@@ -1341,6 +1467,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Fimag *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Fimag_c &sli);
     ~Scmat3Fimag_c();
 };
 
@@ -1389,6 +1516,12 @@ inline void Scmat3Fimag_c::set(const Fimag *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Fimag_c::set(const Scmat3Fimag_c &sli)
+{
+    SvecFimag_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Fimag_c::~Scmat3Fimag_c() {}
 
 typedef const Scmat3Fimag_c & Scmat3Fimag_I;
@@ -1412,6 +1545,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Fimag *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Fimag &sli);
     ~Scmat3Fimag();
 };
 
@@ -1464,6 +1598,12 @@ inline void Scmat3Fimag::set(Fimag *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Fimag::set(const Scmat3Fimag &sli)
+{
+    SvecFimag::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Fimag::~Scmat3Fimag() {}
 
 typedef const Scmat3Fimag & Scmat3Fimag_O, & Scmat3Fimag_IO;
@@ -1486,6 +1626,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Imag *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Imag_c &sli);
     ~Scmat3Imag_c();
 };
 
@@ -1534,6 +1675,12 @@ inline void Scmat3Imag_c::set(const Imag *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Imag_c::set(const Scmat3Imag_c &sli)
+{
+    SvecImag_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Imag_c::~Scmat3Imag_c() {}
 
 typedef const Scmat3Imag_c & Scmat3Imag_I;
@@ -1557,6 +1704,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Imag *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Imag &sli);
     ~Scmat3Imag();
 };
 
@@ -1609,6 +1757,12 @@ inline void Scmat3Imag::set(Imag *data, Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Imag::set(const Scmat3Imag &sli)
+{
+    SvecImag::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Imag::~Scmat3Imag() {}
 
 typedef const Scmat3Imag & Scmat3Imag_O, & Scmat3Imag_IO;
@@ -1631,6 +1785,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(const Limag *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Limag_c &sli);
     ~Scmat3Limag_c();
 };
 
@@ -1679,6 +1834,12 @@ inline void Scmat3Limag_c::set(const Limag *data, Long_I N1, Long_I N2, Long_I N
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
+inline void Scmat3Limag_c::set(const Scmat3Limag_c &sli)
+{
+    SvecLimag_c::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+}
+
 inline Scmat3Limag_c::~Scmat3Limag_c() {}
 
 typedef const Scmat3Limag_c & Scmat3Limag_I;
@@ -1702,6 +1863,7 @@ public:
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
     void set(Limag *data, Long_I N1, Long_I N2, Long_I N3);
+    void set(const Scmat3Limag &sli);
     ~Scmat3Limag();
 };
 
@@ -1752,6 +1914,12 @@ inline void Scmat3Limag::set(Limag *data, Long_I N1, Long_I N2, Long_I N3)
 {
     SvecLimag::set(data, N1*N2*N3);
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
+}
+
+inline void Scmat3Limag::set(const Scmat3Limag &sli)
+{
+    SvecLimag::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
 }
 
 inline Scmat3Limag::~Scmat3Limag() {}

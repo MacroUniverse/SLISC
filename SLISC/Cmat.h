@@ -12,6 +12,7 @@ public:
     CmatChar(): m_N1(0), m_N2(0) {};
     CmatChar(Long_I N1, Long_I N2);
     CmatChar(const CmatChar &rhs);        // Copy constructor
+    CmatChar & operator=(const CmatChar &rhs) = delete;
     void operator<<(CmatChar &rhs); // move data and rhs.resize(0, 0)
     Char& operator()(Long_I i, Long_I j);    // double indexing
     const Char& operator()(Long_I i, Long_I j) const;
@@ -95,6 +96,7 @@ public:
     CmatInt(): m_N1(0), m_N2(0) {};
     CmatInt(Long_I N1, Long_I N2);
     CmatInt(const CmatInt &rhs);        // Copy constructor
+    CmatInt & operator=(const CmatInt &rhs) = delete;
     void operator<<(CmatInt &rhs); // move data and rhs.resize(0, 0)
     Int& operator()(Long_I i, Long_I j);    // double indexing
     const Int& operator()(Long_I i, Long_I j) const;
@@ -178,6 +180,7 @@ public:
     CmatLlong(): m_N1(0), m_N2(0) {};
     CmatLlong(Long_I N1, Long_I N2);
     CmatLlong(const CmatLlong &rhs);        // Copy constructor
+    CmatLlong & operator=(const CmatLlong &rhs) = delete;
     void operator<<(CmatLlong &rhs); // move data and rhs.resize(0, 0)
     Llong& operator()(Long_I i, Long_I j);    // double indexing
     const Llong& operator()(Long_I i, Long_I j) const;
@@ -270,6 +273,7 @@ public:
     CmatFloat(): m_N1(0), m_N2(0) {};
     CmatFloat(Long_I N1, Long_I N2);
     CmatFloat(const CmatFloat &rhs);        // Copy constructor
+    CmatFloat & operator=(const CmatFloat &rhs) = delete;
     void operator<<(CmatFloat &rhs); // move data and rhs.resize(0, 0)
     Float& operator()(Long_I i, Long_I j);    // double indexing
     const Float& operator()(Long_I i, Long_I j) const;
@@ -353,6 +357,7 @@ public:
     CmatDoub(): m_N1(0), m_N2(0) {};
     CmatDoub(Long_I N1, Long_I N2);
     CmatDoub(const CmatDoub &rhs);        // Copy constructor
+    CmatDoub & operator=(const CmatDoub &rhs) = delete;
     void operator<<(CmatDoub &rhs); // move data and rhs.resize(0, 0)
     Doub& operator()(Long_I i, Long_I j);    // double indexing
     const Doub& operator()(Long_I i, Long_I j) const;
@@ -436,6 +441,7 @@ public:
     CmatLdoub(): m_N1(0), m_N2(0) {};
     CmatLdoub(Long_I N1, Long_I N2);
     CmatLdoub(const CmatLdoub &rhs);        // Copy constructor
+    CmatLdoub & operator=(const CmatLdoub &rhs) = delete;
     void operator<<(CmatLdoub &rhs); // move data and rhs.resize(0, 0)
     Ldoub& operator()(Long_I i, Long_I j);    // double indexing
     const Ldoub& operator()(Long_I i, Long_I j) const;
@@ -519,6 +525,7 @@ public:
     CmatFcomp(): m_N1(0), m_N2(0) {};
     CmatFcomp(Long_I N1, Long_I N2);
     CmatFcomp(const CmatFcomp &rhs);        // Copy constructor
+    CmatFcomp & operator=(const CmatFcomp &rhs) = delete;
     void operator<<(CmatFcomp &rhs); // move data and rhs.resize(0, 0)
     Fcomp& operator()(Long_I i, Long_I j);    // double indexing
     const Fcomp& operator()(Long_I i, Long_I j) const;
@@ -602,6 +609,7 @@ public:
     CmatComp(): m_N1(0), m_N2(0) {};
     CmatComp(Long_I N1, Long_I N2);
     CmatComp(const CmatComp &rhs);        // Copy constructor
+    CmatComp & operator=(const CmatComp &rhs) = delete;
     void operator<<(CmatComp &rhs); // move data and rhs.resize(0, 0)
     Comp& operator()(Long_I i, Long_I j);    // double indexing
     const Comp& operator()(Long_I i, Long_I j) const;
@@ -685,6 +693,7 @@ public:
     CmatLcomp(): m_N1(0), m_N2(0) {};
     CmatLcomp(Long_I N1, Long_I N2);
     CmatLcomp(const CmatLcomp &rhs);        // Copy constructor
+    CmatLcomp & operator=(const CmatLcomp &rhs) = delete;
     void operator<<(CmatLcomp &rhs); // move data and rhs.resize(0, 0)
     Lcomp& operator()(Long_I i, Long_I j);    // double indexing
     const Lcomp& operator()(Long_I i, Long_I j) const;
@@ -768,6 +777,7 @@ public:
     CmatFimag(): m_N1(0), m_N2(0) {};
     CmatFimag(Long_I N1, Long_I N2);
     CmatFimag(const CmatFimag &rhs);        // Copy constructor
+    CmatFimag & operator=(const CmatFimag &rhs) = delete;
     void operator<<(CmatFimag &rhs); // move data and rhs.resize(0, 0)
     Fimag& operator()(Long_I i, Long_I j);    // double indexing
     const Fimag& operator()(Long_I i, Long_I j) const;
@@ -851,6 +861,7 @@ public:
     CmatImag(): m_N1(0), m_N2(0) {};
     CmatImag(Long_I N1, Long_I N2);
     CmatImag(const CmatImag &rhs);        // Copy constructor
+    CmatImag & operator=(const CmatImag &rhs) = delete;
     void operator<<(CmatImag &rhs); // move data and rhs.resize(0, 0)
     Imag& operator()(Long_I i, Long_I j);    // double indexing
     const Imag& operator()(Long_I i, Long_I j) const;
@@ -934,6 +945,7 @@ public:
     CmatLimag(): m_N1(0), m_N2(0) {};
     CmatLimag(Long_I N1, Long_I N2);
     CmatLimag(const CmatLimag &rhs);        // Copy constructor
+    CmatLimag & operator=(const CmatLimag &rhs) = delete;
     void operator<<(CmatLimag &rhs); // move data and rhs.resize(0, 0)
     Limag& operator()(Long_I i, Long_I j);    // double indexing
     const Limag& operator()(Long_I i, Long_I j) const;

@@ -66,6 +66,7 @@ public:
 
     // There is no upper bound checking of N, use with care
     void reshape(Long_I N1, Long_I N2);
+    void set(const @Class@ &sli);
     void set(@CT@ *data, Long_I N1, Long_I N2);
     ~@Class@();
 };
@@ -114,6 +115,12 @@ inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2)
 {
     @Base@::set(data, N1*N2);
     m_N1 = N1; m_N2 = N2;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+    @Base@::set(sli);
+    m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline @Class@::~@Class@() {}

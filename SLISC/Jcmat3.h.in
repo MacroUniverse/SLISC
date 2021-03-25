@@ -63,6 +63,7 @@ public:
 //% if ~constness
     operator @Jcmat3T_c@() const;
 //% end
+    @Class@ &operator=(const @Class@ &) = delete;
     @CT@& operator[](Long_I i) const;
     @CT@& operator()(Long_I i) const;
     @CT@& operator()(Long_I i, Long_I j, Long_I k) const;

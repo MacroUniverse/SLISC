@@ -14,6 +14,7 @@ public:
     Jcmat3Char_c(const Char *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Char *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Char_c &sli);
+    Jcmat3Char_c &operator=(const Jcmat3Char_c &) = delete;
     const Char& operator[](Long_I i) const;
     const Char& operator()(Long_I i) const;
     const Char& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -127,6 +128,7 @@ public:
     void set(Char *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Char &sli);
     operator Jcmat3Char_c() const;
+    Jcmat3Char &operator=(const Jcmat3Char &) = delete;
     Char& operator[](Long_I i) const;
     Char& operator()(Long_I i) const;
     Char& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -243,6 +245,7 @@ public:
     Jcmat3Int_c(const Int *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Int *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Int_c &sli);
+    Jcmat3Int_c &operator=(const Jcmat3Int_c &) = delete;
     const Int& operator[](Long_I i) const;
     const Int& operator()(Long_I i) const;
     const Int& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -356,6 +359,7 @@ public:
     void set(Int *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Int &sli);
     operator Jcmat3Int_c() const;
+    Jcmat3Int &operator=(const Jcmat3Int &) = delete;
     Int& operator[](Long_I i) const;
     Int& operator()(Long_I i) const;
     Int& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -472,6 +476,7 @@ public:
     Jcmat3Llong_c(const Llong *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Llong *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Llong_c &sli);
+    Jcmat3Llong_c &operator=(const Jcmat3Llong_c &) = delete;
     const Llong& operator[](Long_I i) const;
     const Llong& operator()(Long_I i) const;
     const Llong& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -585,6 +590,7 @@ public:
     void set(Llong *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Llong &sli);
     operator Jcmat3Llong_c() const;
+    Jcmat3Llong &operator=(const Jcmat3Llong &) = delete;
     Llong& operator[](Long_I i) const;
     Llong& operator()(Long_I i) const;
     Llong& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -717,6 +723,7 @@ public:
     Jcmat3Float_c(const Float *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Float *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Float_c &sli);
+    Jcmat3Float_c &operator=(const Jcmat3Float_c &) = delete;
     const Float& operator[](Long_I i) const;
     const Float& operator()(Long_I i) const;
     const Float& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -830,6 +837,7 @@ public:
     void set(Float *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Float &sli);
     operator Jcmat3Float_c() const;
+    Jcmat3Float &operator=(const Jcmat3Float &) = delete;
     Float& operator[](Long_I i) const;
     Float& operator()(Long_I i) const;
     Float& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -946,6 +954,7 @@ public:
     Jcmat3Doub_c(const Doub *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Doub *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Doub_c &sli);
+    Jcmat3Doub_c &operator=(const Jcmat3Doub_c &) = delete;
     const Doub& operator[](Long_I i) const;
     const Doub& operator()(Long_I i) const;
     const Doub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1059,6 +1068,7 @@ public:
     void set(Doub *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Doub &sli);
     operator Jcmat3Doub_c() const;
+    Jcmat3Doub &operator=(const Jcmat3Doub &) = delete;
     Doub& operator[](Long_I i) const;
     Doub& operator()(Long_I i) const;
     Doub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1175,6 +1185,7 @@ public:
     Jcmat3Ldoub_c(const Ldoub *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Ldoub *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Ldoub_c &sli);
+    Jcmat3Ldoub_c &operator=(const Jcmat3Ldoub_c &) = delete;
     const Ldoub& operator[](Long_I i) const;
     const Ldoub& operator()(Long_I i) const;
     const Ldoub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1288,6 +1299,7 @@ public:
     void set(Ldoub *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Ldoub &sli);
     operator Jcmat3Ldoub_c() const;
+    Jcmat3Ldoub &operator=(const Jcmat3Ldoub &) = delete;
     Ldoub& operator[](Long_I i) const;
     Ldoub& operator()(Long_I i) const;
     Ldoub& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1404,6 +1416,7 @@ public:
     Jcmat3Fcomp_c(const Fcomp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Fcomp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Fcomp_c &sli);
+    Jcmat3Fcomp_c &operator=(const Jcmat3Fcomp_c &) = delete;
     const Fcomp& operator[](Long_I i) const;
     const Fcomp& operator()(Long_I i) const;
     const Fcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1517,6 +1530,7 @@ public:
     void set(Fcomp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Fcomp &sli);
     operator Jcmat3Fcomp_c() const;
+    Jcmat3Fcomp &operator=(const Jcmat3Fcomp &) = delete;
     Fcomp& operator[](Long_I i) const;
     Fcomp& operator()(Long_I i) const;
     Fcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1633,6 +1647,7 @@ public:
     Jcmat3Comp_c(const Comp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Comp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Comp_c &sli);
+    Jcmat3Comp_c &operator=(const Jcmat3Comp_c &) = delete;
     const Comp& operator[](Long_I i) const;
     const Comp& operator()(Long_I i) const;
     const Comp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1746,6 +1761,7 @@ public:
     void set(Comp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Comp &sli);
     operator Jcmat3Comp_c() const;
+    Jcmat3Comp &operator=(const Jcmat3Comp &) = delete;
     Comp& operator[](Long_I i) const;
     Comp& operator()(Long_I i) const;
     Comp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1862,6 +1878,7 @@ public:
     Jcmat3Lcomp_c(const Lcomp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Lcomp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Lcomp_c &sli);
+    Jcmat3Lcomp_c &operator=(const Jcmat3Lcomp_c &) = delete;
     const Lcomp& operator[](Long_I i) const;
     const Lcomp& operator()(Long_I i) const;
     const Lcomp& operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1975,6 +1992,7 @@ public:
     void set(Lcomp *p, Long_I N1, Long_I N2, Long_I N3, Long_I step1, Long_I step2, Long_I step3);
     void set(const Jcmat3Lcomp &sli);
     operator Jcmat3Lcomp_c() const;
+    Jcmat3Lcomp &operator=(const Jcmat3Lcomp &) = delete;
     Lcomp& operator[](Long_I i) const;
     Lcomp& operator()(Long_I i) const;
     Lcomp& operator()(Long_I i, Long_I j, Long_I k) const;

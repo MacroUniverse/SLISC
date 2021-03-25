@@ -15,15 +15,17 @@ public:
     SvecChar_c(const Char *data, Long_I N); // unsafe
     const Char* p() const;
     Long size() const;
+    SvecChar_c & operator=(const SvecChar_c &rhs) = delete;
     const Char & operator[](Long_I i) const;
     const Char & operator()(Long_I i) const;
     const Char & end() const;
     const Char & end(Long_I i) const;
+    void set(const SvecChar_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Char *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Char *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -95,7 +97,7 @@ inline void SvecChar_c::set(const Char *data)
     m_p = data;
 }
 
-inline void SvecChar_c::resize(Long_I N)
+inline void SvecChar_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -115,6 +117,11 @@ inline void SvecChar_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecChar_c::set(const SvecChar_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecChar_c::~SvecChar_c() {}
 
 typedef const SvecChar_c & SvecChar_I;
@@ -130,16 +137,18 @@ public:
     SvecChar(Char *data, Long_I N); // unsafe
     Char* p() const;
     Long size() const;
+    SvecChar & operator=(const SvecChar &rhs) = delete;
     Char & operator[](Long_I i) const;
     Char & operator()(Long_I i) const;
     Char & end() const;
     Char & end(Long_I i) const;
     operator SvecChar_c() const;
+    void set(const SvecChar &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Char *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Char *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -215,7 +224,7 @@ inline void SvecChar::set(Char *data)
     m_p = data;
 }
 
-inline void SvecChar::resize(Long_I N)
+inline void SvecChar::set(Long_I N)
 {
     m_N = N;
 }
@@ -235,6 +244,11 @@ inline void SvecChar::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecChar::set(const SvecChar &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecChar::~SvecChar() {}
 
 typedef const SvecChar & SvecChar_O, & SvecChar_IO;
@@ -250,15 +264,17 @@ public:
     SvecInt_c(const Int *data, Long_I N); // unsafe
     const Int* p() const;
     Long size() const;
+    SvecInt_c & operator=(const SvecInt_c &rhs) = delete;
     const Int & operator[](Long_I i) const;
     const Int & operator()(Long_I i) const;
     const Int & end() const;
     const Int & end(Long_I i) const;
+    void set(const SvecInt_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Int *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Int *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -330,7 +346,7 @@ inline void SvecInt_c::set(const Int *data)
     m_p = data;
 }
 
-inline void SvecInt_c::resize(Long_I N)
+inline void SvecInt_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -350,6 +366,11 @@ inline void SvecInt_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecInt_c::set(const SvecInt_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecInt_c::~SvecInt_c() {}
 
 typedef const SvecInt_c & SvecInt_I;
@@ -365,16 +386,18 @@ public:
     SvecInt(Int *data, Long_I N); // unsafe
     Int* p() const;
     Long size() const;
+    SvecInt & operator=(const SvecInt &rhs) = delete;
     Int & operator[](Long_I i) const;
     Int & operator()(Long_I i) const;
     Int & end() const;
     Int & end(Long_I i) const;
     operator SvecInt_c() const;
+    void set(const SvecInt &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Int *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Int *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -450,7 +473,7 @@ inline void SvecInt::set(Int *data)
     m_p = data;
 }
 
-inline void SvecInt::resize(Long_I N)
+inline void SvecInt::set(Long_I N)
 {
     m_N = N;
 }
@@ -470,6 +493,11 @@ inline void SvecInt::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecInt::set(const SvecInt &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecInt::~SvecInt() {}
 
 typedef const SvecInt & SvecInt_O, & SvecInt_IO;
@@ -485,15 +513,17 @@ public:
     SvecLlong_c(const Llong *data, Long_I N); // unsafe
     const Llong* p() const;
     Long size() const;
+    SvecLlong_c & operator=(const SvecLlong_c &rhs) = delete;
     const Llong & operator[](Long_I i) const;
     const Llong & operator()(Long_I i) const;
     const Llong & end() const;
     const Llong & end(Long_I i) const;
+    void set(const SvecLlong_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Llong *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Llong *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -565,7 +595,7 @@ inline void SvecLlong_c::set(const Llong *data)
     m_p = data;
 }
 
-inline void SvecLlong_c::resize(Long_I N)
+inline void SvecLlong_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -585,6 +615,11 @@ inline void SvecLlong_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecLlong_c::set(const SvecLlong_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecLlong_c::~SvecLlong_c() {}
 
 typedef const SvecLlong_c & SvecLlong_I;
@@ -600,16 +635,18 @@ public:
     SvecLlong(Llong *data, Long_I N); // unsafe
     Llong* p() const;
     Long size() const;
+    SvecLlong & operator=(const SvecLlong &rhs) = delete;
     Llong & operator[](Long_I i) const;
     Llong & operator()(Long_I i) const;
     Llong & end() const;
     Llong & end(Long_I i) const;
     operator SvecLlong_c() const;
+    void set(const SvecLlong &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Llong *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Llong *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -685,7 +722,7 @@ inline void SvecLlong::set(Llong *data)
     m_p = data;
 }
 
-inline void SvecLlong::resize(Long_I N)
+inline void SvecLlong::set(Long_I N)
 {
     m_N = N;
 }
@@ -703,6 +740,11 @@ inline void SvecLlong::last()
 inline void SvecLlong::shift(Long_I N)
 {
     m_p += N;
+}
+
+inline void SvecLlong::set(const SvecLlong &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline SvecLlong::~SvecLlong() {}
@@ -736,15 +778,17 @@ public:
     SvecFloat_c(const Float *data, Long_I N); // unsafe
     const Float* p() const;
     Long size() const;
+    SvecFloat_c & operator=(const SvecFloat_c &rhs) = delete;
     const Float & operator[](Long_I i) const;
     const Float & operator()(Long_I i) const;
     const Float & end() const;
     const Float & end(Long_I i) const;
+    void set(const SvecFloat_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Float *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Float *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -816,7 +860,7 @@ inline void SvecFloat_c::set(const Float *data)
     m_p = data;
 }
 
-inline void SvecFloat_c::resize(Long_I N)
+inline void SvecFloat_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -836,6 +880,11 @@ inline void SvecFloat_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecFloat_c::set(const SvecFloat_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecFloat_c::~SvecFloat_c() {}
 
 typedef const SvecFloat_c & SvecFloat_I;
@@ -851,16 +900,18 @@ public:
     SvecFloat(Float *data, Long_I N); // unsafe
     Float* p() const;
     Long size() const;
+    SvecFloat & operator=(const SvecFloat &rhs) = delete;
     Float & operator[](Long_I i) const;
     Float & operator()(Long_I i) const;
     Float & end() const;
     Float & end(Long_I i) const;
     operator SvecFloat_c() const;
+    void set(const SvecFloat &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Float *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Float *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -936,7 +987,7 @@ inline void SvecFloat::set(Float *data)
     m_p = data;
 }
 
-inline void SvecFloat::resize(Long_I N)
+inline void SvecFloat::set(Long_I N)
 {
     m_N = N;
 }
@@ -956,6 +1007,11 @@ inline void SvecFloat::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecFloat::set(const SvecFloat &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecFloat::~SvecFloat() {}
 
 typedef const SvecFloat & SvecFloat_O, & SvecFloat_IO;
@@ -971,15 +1027,17 @@ public:
     SvecDoub_c(const Doub *data, Long_I N); // unsafe
     const Doub* p() const;
     Long size() const;
+    SvecDoub_c & operator=(const SvecDoub_c &rhs) = delete;
     const Doub & operator[](Long_I i) const;
     const Doub & operator()(Long_I i) const;
     const Doub & end() const;
     const Doub & end(Long_I i) const;
+    void set(const SvecDoub_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Doub *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Doub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1051,7 +1109,7 @@ inline void SvecDoub_c::set(const Doub *data)
     m_p = data;
 }
 
-inline void SvecDoub_c::resize(Long_I N)
+inline void SvecDoub_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -1071,6 +1129,11 @@ inline void SvecDoub_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecDoub_c::set(const SvecDoub_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecDoub_c::~SvecDoub_c() {}
 
 typedef const SvecDoub_c & SvecDoub_I;
@@ -1086,16 +1149,18 @@ public:
     SvecDoub(Doub *data, Long_I N); // unsafe
     Doub* p() const;
     Long size() const;
+    SvecDoub & operator=(const SvecDoub &rhs) = delete;
     Doub & operator[](Long_I i) const;
     Doub & operator()(Long_I i) const;
     Doub & end() const;
     Doub & end(Long_I i) const;
     operator SvecDoub_c() const;
+    void set(const SvecDoub &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Doub *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Doub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1171,7 +1236,7 @@ inline void SvecDoub::set(Doub *data)
     m_p = data;
 }
 
-inline void SvecDoub::resize(Long_I N)
+inline void SvecDoub::set(Long_I N)
 {
     m_N = N;
 }
@@ -1191,6 +1256,11 @@ inline void SvecDoub::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecDoub::set(const SvecDoub &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecDoub::~SvecDoub() {}
 
 typedef const SvecDoub & SvecDoub_O, & SvecDoub_IO;
@@ -1206,15 +1276,17 @@ public:
     SvecLdoub_c(const Ldoub *data, Long_I N); // unsafe
     const Ldoub* p() const;
     Long size() const;
+    SvecLdoub_c & operator=(const SvecLdoub_c &rhs) = delete;
     const Ldoub & operator[](Long_I i) const;
     const Ldoub & operator()(Long_I i) const;
     const Ldoub & end() const;
     const Ldoub & end(Long_I i) const;
+    void set(const SvecLdoub_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Ldoub *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Ldoub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1286,7 +1358,7 @@ inline void SvecLdoub_c::set(const Ldoub *data)
     m_p = data;
 }
 
-inline void SvecLdoub_c::resize(Long_I N)
+inline void SvecLdoub_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -1306,6 +1378,11 @@ inline void SvecLdoub_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecLdoub_c::set(const SvecLdoub_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecLdoub_c::~SvecLdoub_c() {}
 
 typedef const SvecLdoub_c & SvecLdoub_I;
@@ -1321,16 +1398,18 @@ public:
     SvecLdoub(Ldoub *data, Long_I N); // unsafe
     Ldoub* p() const;
     Long size() const;
+    SvecLdoub & operator=(const SvecLdoub &rhs) = delete;
     Ldoub & operator[](Long_I i) const;
     Ldoub & operator()(Long_I i) const;
     Ldoub & end() const;
     Ldoub & end(Long_I i) const;
     operator SvecLdoub_c() const;
+    void set(const SvecLdoub &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Ldoub *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Ldoub *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1406,7 +1485,7 @@ inline void SvecLdoub::set(Ldoub *data)
     m_p = data;
 }
 
-inline void SvecLdoub::resize(Long_I N)
+inline void SvecLdoub::set(Long_I N)
 {
     m_N = N;
 }
@@ -1426,6 +1505,11 @@ inline void SvecLdoub::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecLdoub::set(const SvecLdoub &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecLdoub::~SvecLdoub() {}
 
 typedef const SvecLdoub & SvecLdoub_O, & SvecLdoub_IO;
@@ -1441,15 +1525,17 @@ public:
     SvecFcomp_c(const Fcomp *data, Long_I N); // unsafe
     const Fcomp* p() const;
     Long size() const;
+    SvecFcomp_c & operator=(const SvecFcomp_c &rhs) = delete;
     const Fcomp & operator[](Long_I i) const;
     const Fcomp & operator()(Long_I i) const;
     const Fcomp & end() const;
     const Fcomp & end(Long_I i) const;
+    void set(const SvecFcomp_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Fcomp *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Fcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1521,7 +1607,7 @@ inline void SvecFcomp_c::set(const Fcomp *data)
     m_p = data;
 }
 
-inline void SvecFcomp_c::resize(Long_I N)
+inline void SvecFcomp_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -1541,6 +1627,11 @@ inline void SvecFcomp_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecFcomp_c::set(const SvecFcomp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecFcomp_c::~SvecFcomp_c() {}
 
 typedef const SvecFcomp_c & SvecFcomp_I;
@@ -1556,16 +1647,18 @@ public:
     SvecFcomp(Fcomp *data, Long_I N); // unsafe
     Fcomp* p() const;
     Long size() const;
+    SvecFcomp & operator=(const SvecFcomp &rhs) = delete;
     Fcomp & operator[](Long_I i) const;
     Fcomp & operator()(Long_I i) const;
     Fcomp & end() const;
     Fcomp & end(Long_I i) const;
     operator SvecFcomp_c() const;
+    void set(const SvecFcomp &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Fcomp *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Fcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1641,7 +1734,7 @@ inline void SvecFcomp::set(Fcomp *data)
     m_p = data;
 }
 
-inline void SvecFcomp::resize(Long_I N)
+inline void SvecFcomp::set(Long_I N)
 {
     m_N = N;
 }
@@ -1661,6 +1754,11 @@ inline void SvecFcomp::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecFcomp::set(const SvecFcomp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecFcomp::~SvecFcomp() {}
 
 typedef const SvecFcomp & SvecFcomp_O, & SvecFcomp_IO;
@@ -1676,15 +1774,17 @@ public:
     SvecComp_c(const Comp *data, Long_I N); // unsafe
     const Comp* p() const;
     Long size() const;
+    SvecComp_c & operator=(const SvecComp_c &rhs) = delete;
     const Comp & operator[](Long_I i) const;
     const Comp & operator()(Long_I i) const;
     const Comp & end() const;
     const Comp & end(Long_I i) const;
+    void set(const SvecComp_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Comp *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Comp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1756,7 +1856,7 @@ inline void SvecComp_c::set(const Comp *data)
     m_p = data;
 }
 
-inline void SvecComp_c::resize(Long_I N)
+inline void SvecComp_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -1776,6 +1876,11 @@ inline void SvecComp_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecComp_c::set(const SvecComp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecComp_c::~SvecComp_c() {}
 
 typedef const SvecComp_c & SvecComp_I;
@@ -1791,16 +1896,18 @@ public:
     SvecComp(Comp *data, Long_I N); // unsafe
     Comp* p() const;
     Long size() const;
+    SvecComp & operator=(const SvecComp &rhs) = delete;
     Comp & operator[](Long_I i) const;
     Comp & operator()(Long_I i) const;
     Comp & end() const;
     Comp & end(Long_I i) const;
     operator SvecComp_c() const;
+    void set(const SvecComp &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Comp *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Comp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1876,7 +1983,7 @@ inline void SvecComp::set(Comp *data)
     m_p = data;
 }
 
-inline void SvecComp::resize(Long_I N)
+inline void SvecComp::set(Long_I N)
 {
     m_N = N;
 }
@@ -1896,6 +2003,11 @@ inline void SvecComp::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecComp::set(const SvecComp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecComp::~SvecComp() {}
 
 typedef const SvecComp & SvecComp_O, & SvecComp_IO;
@@ -1911,15 +2023,17 @@ public:
     SvecLcomp_c(const Lcomp *data, Long_I N); // unsafe
     const Lcomp* p() const;
     Long size() const;
+    SvecLcomp_c & operator=(const SvecLcomp_c &rhs) = delete;
     const Lcomp & operator[](Long_I i) const;
     const Lcomp & operator()(Long_I i) const;
     const Lcomp & end() const;
     const Lcomp & end(Long_I i) const;
+    void set(const SvecLcomp_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Lcomp *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Lcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -1991,7 +2105,7 @@ inline void SvecLcomp_c::set(const Lcomp *data)
     m_p = data;
 }
 
-inline void SvecLcomp_c::resize(Long_I N)
+inline void SvecLcomp_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -2011,6 +2125,11 @@ inline void SvecLcomp_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecLcomp_c::set(const SvecLcomp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecLcomp_c::~SvecLcomp_c() {}
 
 typedef const SvecLcomp_c & SvecLcomp_I;
@@ -2026,16 +2145,18 @@ public:
     SvecLcomp(Lcomp *data, Long_I N); // unsafe
     Lcomp* p() const;
     Long size() const;
+    SvecLcomp & operator=(const SvecLcomp &rhs) = delete;
     Lcomp & operator[](Long_I i) const;
     Lcomp & operator()(Long_I i) const;
     Lcomp & end() const;
     Lcomp & end(Long_I i) const;
     operator SvecLcomp_c() const;
+    void set(const SvecLcomp &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Lcomp *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Lcomp *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2111,7 +2232,7 @@ inline void SvecLcomp::set(Lcomp *data)
     m_p = data;
 }
 
-inline void SvecLcomp::resize(Long_I N)
+inline void SvecLcomp::set(Long_I N)
 {
     m_N = N;
 }
@@ -2131,6 +2252,11 @@ inline void SvecLcomp::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecLcomp::set(const SvecLcomp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecLcomp::~SvecLcomp() {}
 
 typedef const SvecLcomp & SvecLcomp_O, & SvecLcomp_IO;
@@ -2146,15 +2272,17 @@ public:
     SvecFimag_c(const Fimag *data, Long_I N); // unsafe
     const Fimag* p() const;
     Long size() const;
+    SvecFimag_c & operator=(const SvecFimag_c &rhs) = delete;
     const Fimag & operator[](Long_I i) const;
     const Fimag & operator()(Long_I i) const;
     const Fimag & end() const;
     const Fimag & end(Long_I i) const;
+    void set(const SvecFimag_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Fimag *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Fimag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2226,7 +2354,7 @@ inline void SvecFimag_c::set(const Fimag *data)
     m_p = data;
 }
 
-inline void SvecFimag_c::resize(Long_I N)
+inline void SvecFimag_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -2246,6 +2374,11 @@ inline void SvecFimag_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecFimag_c::set(const SvecFimag_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecFimag_c::~SvecFimag_c() {}
 
 typedef const SvecFimag_c & SvecFimag_I;
@@ -2261,16 +2394,18 @@ public:
     SvecFimag(Fimag *data, Long_I N); // unsafe
     Fimag* p() const;
     Long size() const;
+    SvecFimag & operator=(const SvecFimag &rhs) = delete;
     Fimag & operator[](Long_I i) const;
     Fimag & operator()(Long_I i) const;
     Fimag & end() const;
     Fimag & end(Long_I i) const;
     operator SvecFimag_c() const;
+    void set(const SvecFimag &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Fimag *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Fimag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2346,7 +2481,7 @@ inline void SvecFimag::set(Fimag *data)
     m_p = data;
 }
 
-inline void SvecFimag::resize(Long_I N)
+inline void SvecFimag::set(Long_I N)
 {
     m_N = N;
 }
@@ -2366,6 +2501,11 @@ inline void SvecFimag::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecFimag::set(const SvecFimag &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecFimag::~SvecFimag() {}
 
 typedef const SvecFimag & SvecFimag_O, & SvecFimag_IO;
@@ -2381,15 +2521,17 @@ public:
     SvecImag_c(const Imag *data, Long_I N); // unsafe
     const Imag* p() const;
     Long size() const;
+    SvecImag_c & operator=(const SvecImag_c &rhs) = delete;
     const Imag & operator[](Long_I i) const;
     const Imag & operator()(Long_I i) const;
     const Imag & end() const;
     const Imag & end(Long_I i) const;
+    void set(const SvecImag_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Imag *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Imag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2461,7 +2603,7 @@ inline void SvecImag_c::set(const Imag *data)
     m_p = data;
 }
 
-inline void SvecImag_c::resize(Long_I N)
+inline void SvecImag_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -2481,6 +2623,11 @@ inline void SvecImag_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecImag_c::set(const SvecImag_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecImag_c::~SvecImag_c() {}
 
 typedef const SvecImag_c & SvecImag_I;
@@ -2496,16 +2643,18 @@ public:
     SvecImag(Imag *data, Long_I N); // unsafe
     Imag* p() const;
     Long size() const;
+    SvecImag & operator=(const SvecImag &rhs) = delete;
     Imag & operator[](Long_I i) const;
     Imag & operator()(Long_I i) const;
     Imag & end() const;
     Imag & end(Long_I i) const;
     operator SvecImag_c() const;
+    void set(const SvecImag &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Imag *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Imag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2581,7 +2730,7 @@ inline void SvecImag::set(Imag *data)
     m_p = data;
 }
 
-inline void SvecImag::resize(Long_I N)
+inline void SvecImag::set(Long_I N)
 {
     m_N = N;
 }
@@ -2601,6 +2750,11 @@ inline void SvecImag::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecImag::set(const SvecImag &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecImag::~SvecImag() {}
 
 typedef const SvecImag & SvecImag_O, & SvecImag_IO;
@@ -2616,15 +2770,17 @@ public:
     SvecLimag_c(const Limag *data, Long_I N); // unsafe
     const Limag* p() const;
     Long size() const;
+    SvecLimag_c & operator=(const SvecLimag_c &rhs) = delete;
     const Limag & operator[](Long_I i) const;
     const Limag & operator()(Long_I i) const;
     const Limag & end() const;
     const Limag & end(Long_I i) const;
+    void set(const SvecLimag_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(const Limag *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(const Limag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2696,7 +2852,7 @@ inline void SvecLimag_c::set(const Limag *data)
     m_p = data;
 }
 
-inline void SvecLimag_c::resize(Long_I N)
+inline void SvecLimag_c::set(Long_I N)
 {
     m_N = N;
 }
@@ -2716,6 +2872,11 @@ inline void SvecLimag_c::shift(Long_I N)
     m_p += N;
 }
 
+inline void SvecLimag_c::set(const SvecLimag_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
 inline SvecLimag_c::~SvecLimag_c() {}
 
 typedef const SvecLimag_c & SvecLimag_I;
@@ -2731,16 +2892,18 @@ public:
     SvecLimag(Limag *data, Long_I N); // unsafe
     Limag* p() const;
     Long size() const;
+    SvecLimag & operator=(const SvecLimag &rhs) = delete;
     Limag & operator[](Long_I i) const;
     Limag & operator()(Long_I i) const;
     Limag & end() const;
     Limag & end(Long_I i) const;
     operator SvecLimag_c() const;
+    void set(const SvecLimag &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
     void set(Limag *data);
-    void resize(Long_I N);
+    void set(Long_I N);
     void set(Limag *data, Long_I N);
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
@@ -2816,7 +2979,7 @@ inline void SvecLimag::set(Limag *data)
     m_p = data;
 }
 
-inline void SvecLimag::resize(Long_I N)
+inline void SvecLimag::set(Long_I N)
 {
     m_N = N;
 }
@@ -2834,6 +2997,11 @@ inline void SvecLimag::last()
 inline void SvecLimag::shift(Long_I N)
 {
     m_p += N;
+}
+
+inline void SvecLimag::set(const SvecLimag &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline SvecLimag::~SvecLimag() {}

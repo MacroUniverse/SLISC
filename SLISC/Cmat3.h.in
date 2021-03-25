@@ -29,6 +29,7 @@ public:
     @Cmat3T@(): m_N1(0), m_N2(0), m_N3(0) {};
     @Cmat3T@(Long_I N1, Long_I N2, Long_I N3);
     @Cmat3T@(const @Cmat3T@ &rhs); // copy constructor
+    @Cmat3T@ & operator=(const @Cmat3T@ &rhs) = delete;
     void operator<<(@Cmat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);

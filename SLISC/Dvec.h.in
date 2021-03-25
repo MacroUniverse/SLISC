@@ -64,18 +64,18 @@ public:
     @CT@ & end(Long_I i) const;
     Long size() const;
     Long step() const;
-//% % resize() is a bad idea, don't try to create it!
 
 //% if ~constness
     operator @DvecT_c@() const;
 //% end
-
+    @Class@ &operator=(const @Class@ &) = delete;
     // === other member functions ===
     // There is no bound checking, use with care
     void set(@CT@ *p);
     void set(@CT@ *p, Long_I N, Long_I step);
     void set(const @Class@ &sli);
-    void resize(Long_I N);
+//% % resize() is a bad name, don't try to use it!
+    void set(Long_I N);
     void next(); // m_p += m_N
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N;
@@ -133,7 +133,7 @@ inline @CT@ & @Class@::end(Long_I i) const
     return m_p[m_step*(m_N - i)];
 }
 
-inline void @Class@::resize(Long_I N)
+inline void @Class@::set(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N <= 0) SLS_ERR("illegal N!");
