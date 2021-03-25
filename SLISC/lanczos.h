@@ -19,7 +19,7 @@ namespace slisc {
 // calculate v = exp(-i*H*dt) * v
 // H is a hermitian matrix
 // return error
-inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -82,7 +82,7 @@ inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lon
     return err;
 }
 
-inline Doub expHdt_v_lanc(DvecComp_O y, CmatDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmatDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -145,7 +145,7 @@ inline Doub expHdt_v_lanc(DvecComp_O y, CmatDoub_I H, DvecComp_I x, Doub_I dt, L
     return err;
 }
 
-inline Doub expHdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -208,7 +208,7 @@ inline Doub expHdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt, 
     return err;
 }
 
-inline Doub expHdt_v_lanc(DvecComp_O y, CbandDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_Hdt_v_lanc(DvecComp_O y, CbandDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES

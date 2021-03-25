@@ -38,7 +38,7 @@ void test_lanczos()
 			for (Long i = 0; i < 5; ++i) {
 				rand(x);
 				mul(y0, expH, x);
-				expHdt_v_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
+				exp_Hdt_v_lanc(y, H, x, 1, 3, wsp_d, wsp_c);
 				y -= y0;
 				if (max_abs(y) > 1e-8)
 					SLS_ERR("failed!");
