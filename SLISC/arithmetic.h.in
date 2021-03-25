@@ -1483,20 +1483,20 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
+//%     if is_Dvec(T)
+//%         step = 'v.step()';
+//%     else
+//%         step = '1';
+//%     end
+//%     if is_Dvec(T1)
+//%         step1 = 'v1.step()';
+//%     else
+//%         step1 = '1';
+//%     end
 inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-    plus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    plus_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
 inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
@@ -1507,49 +1507,19 @@ inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-    minus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    minus_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
 inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-    minus_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
+    minus_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
 }
 
 inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-    times_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    times_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
 inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
@@ -1560,33 +1530,13 @@ inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-    divide_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    divide_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
 inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-    divide_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
+    divide_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
 }
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
 inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
@@ -1706,88 +1656,43 @@ inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
+//%     if is_Dvec(T)
+//%         step = 'v.step()';
+//%     else
+//%         step = '1';
+//%     end
+//%     if is_Dvec(T1)
+//%         step1 = 'v1.step()';
+//%     else
+//%         step1 = '1';
+//%     end
+//%     if is_Dvec(T2)
+//%         step2 = 'v2.step()';
+//%     else
+//%         step2 = '1';
+//%     end
 inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step2 = v2.step();
-//%     else
-    Long step2 = 1;
-//%     end
-    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
 inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step2 = v2.step();
-//%     else
-    Long step2 = 1;
-//%     end
-    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
 inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step2 = v2.step();
-//%     else
-    Long step2 = 1;
-//%     end
-    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
 inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
 @same_shape('v', 'v1', 'v2')@
-//%     if is_Dvec(T)
-    Long step = v.step();
-//%     else
-    Long step = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step1 = v1.step();
-//%     else
-    Long step1 = 1;
-//%     end
-//%     if is_Dvec(T1)
-    Long step2 = v2.step();
-//%     else
-    Long step2 = 1;
-//%     end
-    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 //% end
 //%--------------------------
@@ -2161,6 +2066,26 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
+//% if is_dense_vec(Ty)
+//%     incy =  '1';
+//% else
+//%     incy = 'y.step()';
+//% end
+//% if is_dense_mat(Ta)
+//%     lda = 'a.n1()';
+//% else
+//%     lda = 'a.lda()';
+//% end
+//% if is_dense_vec(Tx)
+//%     incx = '1';
+//% else
+//%     incx = 'x.step()';
+//% end
+//% if is_cmajor(Ta)
+//%     layout = 'CblasColMajor';
+//% else
+//%     layout = 'CblasRowMajor';
+//% end
 inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -2168,44 +2093,22 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-//% if is_dense_vec(Ty)
-    incy =  1;
-//% else
-    incy = y.step();
-//% end
-//% if is_dense_mat(Ta)
-    lda = a.n1();
-//% else
-    lda = a.lda();
-//% end
-//% if is_dense_vec(Tx)
-    incx = 1;
-//% else
-    incx = x.step();
-//% end
-//% if is_cmajor(Ta)
-    CBLAS_LAYOUT layout = CblasColMajor;
-//% else
-    CBLAS_LAYOUT layout = CblasRowMajor;
-//% end
-
 //% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
-    cblas_sgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_sgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        @lda@, x.p(), @incx@, &beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (@Tsa@*)x.p(), 2*incx, beta, (@Tsa@*)y.p(), 2*incy);
+    cblas_dgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (@Tsa@*)x.p()+1, 2*incx, beta, (@Tsa@*)y.p()+1, 2*incy);
+    cblas_dgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
 //%     error('not implemented!');
 //% end
@@ -2224,6 +2127,26 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
+//% if is_dense_vec(Ty)
+//%     incy =  '1';
+//% else
+//%     incy = 'y.step()';
+//% end
+//% if is_dense_mat(Ta)
+//%     lda = 'a.n1()';
+//% else
+//%     lda = 'a.lda()';
+//% end
+//% if is_dense_vec(Tx)
+//%     incx = '1';
+//% else
+//%     incx = 'x.step()';
+//% end
+//% if is_cmajor(Ta)
+//%     layout = 'CblasColMajor';
+//% else
+//%     layout = 'CblasRowMajor';
+//% end
 inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -2231,44 +2154,22 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), lda, incx, incy;
-//% if is_dense_vec(Ty)
-    incy =  1;
-//% else
-    incy = y.step();
-//% end
-//% if is_dense_mat(Ta)
-    lda = a.n1();
-//% else
-    lda = a.lda();
-//% end
-//% if is_dense_vec(Tx)
-    incx = 1;
-//% else
-    incx = x.step();
-//% end
-//% if is_cmajor(Ta)
-    CBLAS_LAYOUT layout = CblasColMajor;
-//% else
-    CBLAS_LAYOUT layout = CblasRowMajor;
-//% end
-
 //% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
-    cblas_ssymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_ssymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
-    cblas_dsymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dsymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
-    cblas_zsymv(layout, CblasUpper, N1, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zsymv(@layout@, CblasUpper, a.n1(), &alpha, a.p(),
+        @lda@, x.p(), @incx@, &beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
     // do real part
-    cblas_dsymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, (@Tsa@*)x.p(), 2*incx, beta, (@Tsa@*)y.p(), 2*incy);
+    cblas_dsymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
     // do imag part
-    cblas_dsymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, (@Tsa@*)x.p()+1, 2*incx, beta, (@Tsa@*)y.p()+1, 2*incy);
+    cblas_dsymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
 //%     error('not implemented!');
 //% end

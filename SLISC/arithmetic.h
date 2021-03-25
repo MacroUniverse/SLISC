@@ -7412,9 +7412,7 @@ inline void plus(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = 1;
-    Long step1 = v1.step();
-    plus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    plus_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
 inline void plus(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -7428,9 +7426,7 @@ inline void minus(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = 1;
-    Long step1 = v1.step();
-    minus_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    minus_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
 inline void minus(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -7439,9 +7435,7 @@ inline void minus(SvecComp_O v, Doub_I s, DvecComp_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = 1;
-    Long step1 = v1.step();
-    minus_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
+    minus_vsv(v.p(), s, v1.p(), v1.size(), 1, v1.step());
 }
 
 inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
@@ -7450,9 +7444,7 @@ inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = 1;
-    Long step1 = v1.step();
-    times_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    times_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
 inline void times(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -7466,9 +7458,7 @@ inline void divide(SvecComp_O v, DvecComp_I v1, Doub_I s)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = 1;
-    Long step1 = v1.step();
-    divide_vvs(v.p(), v1.p(), s, v1.size(), step, step1);
+    divide_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
 inline void divide(SvecComp_O v, Doub_I s, DvecComp_I v1)
@@ -7477,9 +7467,7 @@ inline void divide(SvecComp_O v, Doub_I s, DvecComp_I v1)
     if (!shape_cmp(v, v1))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = 1;
-    Long step1 = v1.step();
-    divide_vsv(v.p(), s, v1.p(), v1.size(), step, step1);
+    divide_vsv(v.p(), s, v1.p(), v1.size(), 1, v1.step());
 }
 
 inline void plus(VecComp_O v, VecDoub_I v1, Comp_I s)
@@ -8433,10 +8421,7 @@ inline void plus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = v.step();
-    Long step1 = 1;
-    Long step2 = 1;
-    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
 inline void minus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
@@ -8445,10 +8430,7 @@ inline void minus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = v.step();
-    Long step1 = 1;
-    Long step2 = 1;
-    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
 inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
@@ -8457,10 +8439,7 @@ inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = v.step();
-    Long step1 = 1;
-    Long step2 = 1;
-    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
 inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
@@ -8469,10 +8448,7 @@ inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     if (!shape_cmp(v, v1) || !shape_cmp(v, v2))
         SLS_ERR("wrong shape!");
 #endif
-    Long step = v.step();
-    Long step1 = 1;
-    Long step2 = 1;
-    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), step, step1, step2);
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
 inline void plus(CmatInt_O v, CmatInt_I v1, CmatInt_I v2)
@@ -9786,14 +9762,8 @@ inline void mul_gen(VecDoub_O &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, D
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), x.p(), 1, beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -9806,14 +9776,8 @@ inline void mul_gen(VecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, 
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), x.p(), 1, beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -9826,18 +9790,12 @@ inline void mul_gen(VecComp_O &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, D
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -9850,18 +9808,12 @@ inline void mul_gen(VecComp_O &y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, 
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -9874,14 +9826,8 @@ inline void mul_gen(VecComp_O &y, CmatComp_I a, VecComp_I x, Comp_I alpha = 1, C
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        a.n1(), x.p(), 1, &beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -9894,18 +9840,12 @@ inline void mul_gen(VecComp_O &y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, 
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -9918,14 +9858,8 @@ inline void mul_gen(VecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1,
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        a.n1(), x.p(), 1, &beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -9938,18 +9872,12 @@ inline void mul_gen(DvecComp_O &y, DcmatDoub_I a, DvecComp_I x, Doub_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy = y.step();
-    lda = a.lda();
-    incx = x.step();
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.lda(), (Doub*)x.p(), 2*x.step(), beta, (Doub*)y.p(), 2*y.step());
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.lda(), (Doub*)x.p()+1, 2*x.step(), beta, (Doub*)y.p()+1, 2*y.step());
 #else
     mul(y, a, x);
 #endif
@@ -9962,18 +9890,12 @@ inline void mul_gen(DvecComp_O &y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1,
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy = y.step();
-    lda = a.n1();
-    incx = x.step();
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*x.step(), beta, (Doub*)y.p(), 2*y.step());
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*x.step(), beta, (Doub*)y.p()+1, 2*y.step());
 #else
     mul(y, a, x);
 #endif
@@ -9986,18 +9908,12 @@ inline void mul_gen(DvecComp_O &y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy = y.step();
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*y.step());
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*y.step());
 #else
     mul(y, a, x);
 #endif
@@ -10010,14 +9926,8 @@ inline void mul_gen(DvecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy = y.step();
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        a.n1(), x.p(), 1, &beta, y.p(), y.step());
 #else
     mul(y, a, x);
 #endif
@@ -10030,14 +9940,8 @@ inline void mul_gen(SvecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1,
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), x.p(), 1, beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -10050,14 +9954,8 @@ inline void mul_gen(SvecDoub_O &y, ScmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), x.p(), 1, beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -10070,18 +9968,12 @@ inline void mul_gen(SvecComp_O &y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -10094,14 +9986,8 @@ inline void mul_gen(SvecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        a.n1(), x.p(), 1, &beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -10114,14 +10000,8 @@ inline void mul_gen(SvecComp_O &y, ScmatComp_I a, DvecComp_I x, Comp_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = x.step();
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        a.n1(), x.p(), x.step(), &beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -10134,18 +10014,12 @@ inline void mul_gen(SvecComp_O &y, DcmatDoub_I a, SvecComp_I x, Doub_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.lda();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.lda(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.lda(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -10158,18 +10032,12 @@ inline void mul_gen(SvecComp_O &y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = x.step();
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*x.step(), beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*x.step(), beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -10182,18 +10050,12 @@ inline void mul_gen(SvecComp_O &y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1,
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dgemv(layout, CblasNoTrans, N1, N2, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
@@ -10206,14 +10068,8 @@ inline void mul_gen(SvecComp_O &y, CmatComp_I a, SvecComp_I x, Comp_I alpha = 1,
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), N2 = a.n2(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_zgemv(layout, CblasNoTrans, N1, N2, &alpha, a.p(),
-        lda, x.p(), incx, &beta, y.p(), incy);
+    cblas_zgemv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+        a.n1(), x.p(), 1, &beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -10227,14 +10083,8 @@ inline void mul_sym(VecDoub_O &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, D
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
-    cblas_dsymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, x.p(), incx, beta, y.p(), incy);
+    cblas_dsymv(CblasColMajor, CblasUpper, a.n1(), alpha, a.p(),
+        a.n1(), x.p(), 1, beta, y.p(), 1);
 #else
     mul(y, a, x);
 #endif
@@ -10247,18 +10097,12 @@ inline void mul_sym(VecComp_O &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, D
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
-    Long N1 = a.n1(), lda, incx, incy;
-    incy =  1;
-    lda = a.n1();
-    incx = 1;
-    CBLAS_LAYOUT layout = CblasColMajor;
-
     // do real part
-    cblas_dsymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, (Doub*)x.p(), 2*incx, beta, (Doub*)y.p(), 2*incy);
+    cblas_dsymv(CblasColMajor, CblasUpper, a.n1(), alpha, a.p(),
+        a.n1(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
     // do imag part
-    cblas_dsymv(layout, CblasUpper, N1, alpha, a.p(),
-        lda, (Doub*)x.p()+1, 2*incx, beta, (Doub*)y.p()+1, 2*incy);
+    cblas_dsymv(CblasColMajor, CblasUpper, a.n1(), alpha, a.p(),
+        a.n1(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
     mul(y, a, x);
 #endif
