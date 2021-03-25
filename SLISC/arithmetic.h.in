@@ -1973,10 +1973,62 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
     if (Nc != x.size() || y.size() != Nr)
         SLS_ERR("illegal shape!");
 #endif
+//% if is_rmajor(T1)
     for (Long i = 0; i < Nr; ++i) {
-        y[i] = 0;
+        y[i] = a(i, 0) * x[0];
+        for (Long j = 1; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+//% else
+    for (Long i = 0; i < Nr; ++i)
+        y[i] = a(i, 0) * x[0];
+    for (Long j = 1; j < Nc; ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] += a(i, j) * x[j];
+    }
+//% end
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
+{
+    Long Nr = a.n1(), Nc = a.n2();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    
+    // y = beta/alpha *y
+    if (beta == 0) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] = 0;
+    }
+    else {
+        @Ts@ b_a = beta/alpha;
+        if (b_a != 1) {
+            for (Long i = 0; i < Nr; ++i)
+                y[i] *= b_a;
+        }
+    }
+    
+    // y += A*x
+//% if is_rmajor(T1)
+    for (Long i = 0; i < Nr; ++i) {
         for (Long j = 0; j < Nc; ++j)
             y[i] += a(i, j) * x[j];
+    }
+//% else
+    for (Long j = 0; j < Nc; ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] += a(i, j) * x[j];
+    }
+//% end
+
+    // y *= alpha
+    if (alpha != 1) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] *= alpha;
     }
 }
 //%-------------------------
@@ -2086,6 +2138,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% else
 //%     layout = 'CblasRowMajor';
 //% end
+// y = alpha*A*x + beta*y
 inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -2113,7 +2166,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%     error('not implemented!');
 //% end
 #else
-    mul(y, a, x);
+    mul(y, a, x, alpha, beta);
 #endif
 }
 //%-------------------------
@@ -2147,7 +2200,8 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //% else
 //%     layout = 'CblasRowMajor';
 //% end
-inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+// y = alpha*A*x + beta*y
+inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
     if (x.size() != a.n2() || y.size() != a.n1() || x.size() != y.size())
@@ -2174,7 +2228,7 @@ inline void mul_sym(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%     error('not implemented!');
 //% end
 #else
-    mul(y, a, x);
+    mul(y, a, x, alpha, beta);
 #endif
 }
 //%--------------------------------
