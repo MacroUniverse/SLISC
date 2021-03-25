@@ -13,9 +13,26 @@
 namespace slisc {
 
 // calculate y = exp(H*dt) * x
+// x, y can be the same object
 // H is a hermitian matrix
 // return error
-inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+// calculate v = exp(-i*H*dt) * v
+// H is a hermitian matrix
+// return error
+//% types = {
+//%   'VecComp' 'CmatDoub';
+//%   'DvecComp' 'CmatDoub';
+//%   'DvecComp' 'CmobdDoub';
+//%   'DvecComp' 'CbandDoub';
+//% };
+//%-------------------------------
+//% [Tv, Tm] = varargin{:};
+//% if is_Cmat(Tm)
+//%     mul_fun = 'mul_gen';
+//% else
+//%     mul_fun = 'mul';
+//% end
+inline Doub expHdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -40,24 +57,24 @@ inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Lo
     beta[0] = norm(x);
     times(v0, x, 1/beta[0]); 
 
-    mul_gen(vc, H, v0);
+    @mul_fun@(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
         v1[i] = vc[i] - alpha[0] * v0[i];
     beta[1] = norm(v1);
     v1 /= beta[1];
-    mul_gen(vc, H, v1);
+    @mul_fun@(vc, H, v1);
     alpha[1] = real(dot(v1, vc));
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul_gen(v2, H, v1); // ???
+        @mul_fun@(v2, H, v1); // ???
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
         beta[j2] = norm(v2);
         v2 /= beta[j2];
-        mul_gen(vc, H, v2);
+        @mul_fun@(vc, H, v2);
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
@@ -77,8 +94,10 @@ inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Lo
 
     return err;
 }
+//%-------------------------------
 
-// calculate v = exp(-i*H*dt) * v
+// calculate y = exp(-i*H*dt) * x
+// x, y can be the same object
 // H is a hermitian matrix
 // return error
 //% types = {
@@ -94,9 +113,9 @@ inline Doub expHdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Lo
 //% else
 //%     mul_fun = 'mul';
 //% end
-inline Doub exp_miHdt_v_lanc(@Tv@_IO v, @Tm@_I H, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
-    Long N = v.size(), Nk = Nkrylov;
+    Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
     if (Nk > N)
         SLS_ERR("Nk > N !");
@@ -117,8 +136,8 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO v, @Tm@_I H, Doub_I dt, Long_I Nkrylov, Vec
     ScmatComp bases(pc, N, Nk); // Krylov bases
     
     SvecComp v0 = cut1(bases, 0), v1 = cut1(bases, 1), v2 = cut1(bases, 2);
-    beta[0] = norm(v);
-    times(v0, v, 1/beta[0]);
+    beta[0] = norm(x);
+    times(v0, x, 1/beta[0]);
     @mul_fun@(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -152,7 +171,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO v, @Tm@_I H, Doub_I dt, Long_I Nkrylov, Vec
     for (Long i = 0; i < Nk; ++i)
         vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
     mul_gen(vc1, eigV, vc2);
-    mul_gen(v, bases, vc1);
+    mul_gen(y, bases, vc1);
 
     return err;
 }

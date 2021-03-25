@@ -45,14 +45,14 @@ void test_lanczos()
 
                 mul(y0, exp_miH, x);
                 copy(y, x);
-                exp_miHdt_v_lanc(y, H, 1, 3, wsp_d, wsp_c); // for dense y
+                exp_miHdt_v_lanc(y, H, y, 1, 3, wsp_d, wsp_c); // for dense y
                 y -= y0;
                 if (max_abs(y) > 1e-4)
 					SLS_ERR("failed!");
 
                 DvecComp y1(x6.p(), 3, 2);
                 copy(y1, x);
-                exp_miHdt_v_lanc(y1, H, 1, 3, wsp_d, wsp_c); // for Dvec y1
+                exp_miHdt_v_lanc(y1, H, y1, 1, 3, wsp_d, wsp_c); // for Dvec y1
                 y1 -= y0;
                 if (max_abs(y1) > 1e-4)
 					SLS_ERR("failed!");
