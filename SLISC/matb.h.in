@@ -294,7 +294,7 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
             for (Long j = 0; j < v.n2(); ++j)
                 for (Long i = 0; i < v.n1(); ++i)
                     write(fout, v(i, j, k, l));
-//% endif
+//% end
 }
 
 inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file)

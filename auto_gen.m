@@ -1,12 +1,22 @@
-function auto_gen(file)
+% if input filename, only that file is processed
+% otherwise, all '.in' files will be processed
+function auto_gen(path, file)
 addpath('preprocessor');
 addpath('preprocessor/case_conflict');
-in_list = ls('SLISC/*.in', '-1');
-Ntp = size(in_list, 1);
+old_path = cd();
+cd(path);
 newline = char(10);
+if in_octave
+    in_list = ls('*.in', '-1');
+else
+    in_list = ls('*.in');
+end
+Ntp = size(in_list, 1);
+
 for i = 1:Ntp
     in_file = strtrim(in_list(i,:));
-    if nargin > 0 && ~strcmp(in_file, file)
+    fprintf([in_file '...']);
+    if nargin > 1 && ~strcmp(in_file, file)
         continue;
     end
     str = fileread(in_file);
@@ -41,6 +51,7 @@ for i = 1:Ntp
     code{k} = str(ind:end);
     code_cat = [code{:}];
     filewrite(in_file(1:end-3), code_cat);
-    disp([in_file '  done!']);
+    fprintf('done!\n');
 end
+cd(old_path);
 end
