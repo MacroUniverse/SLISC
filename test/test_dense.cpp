@@ -85,12 +85,12 @@ void test_dense()
     // resize and copy old data
     {
         VecInt v(3);
-        v(0) = 100; v(1) = 101; v(2) = 102;
+        v[0] = 100; v[1] = 101; v[2] = 102;
         resize_cpy(v, 5);
         if (v[0] != 100 || v[1] != 101 || v[2] != 102 || v[3] != 0 || v[4] != 0)
             SLS_ERR("failed!");
         resize_cpy(v, 2);
-        if (v(0) != 100 || v(1) != 101)
+        if (v[0] != 100 || v[1] != 101)
             SLS_ERR("failed!");
 
         CmatDoub a2(4, 5), b2(4, 5);

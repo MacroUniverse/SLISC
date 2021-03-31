@@ -1977,7 +1977,7 @@ inline void load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
-    if (matt.m_size[i].size() != 3)
+    if (matt.m_size[i].size() != 4)
         SLS_ERR("wrong dimension!");
     
     N1 = matt.m_size[i][0]; N2 = matt.m_size[i][1]; N3 = matt.m_size[i][2]; N4 = matt.m_size[i][3];
@@ -2008,7 +2008,7 @@ inline void load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
-    if (matt.m_size[i].size() != 3)
+    if (matt.m_size[i].size() != 4)
         SLS_ERR("wrong dimension!");
     
     N1 = matt.m_size[i][0]; N2 = matt.m_size[i][1]; N3 = matt.m_size[i][2]; N4 = matt.m_size[i][3];

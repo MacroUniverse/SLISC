@@ -324,10 +324,10 @@ inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I wFE, VecDoub_I xFE, V
 #endif
     Doub a, b;
     for (i = 0; i < Nfe; ++i) {
-        a = wFE(i);
-        b = xFE(i);
+        a = wFE[i];
+        b = xFE[i];
         if (i > 0)
-            w[k-1] += a*w0(0);
+            w[k-1] += a*w0[0];
         for (j = 1; j < Ngs; ++j) {
             x[k] = a*x0[j] + b;
             w[k] = a*w0[j];
@@ -375,7 +375,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
         for (i = 0; i <= j; ++i) {
             s = 0.;
             for (k = 0; k < Ngs; ++k)
-                s += w0(k) * df(k, i) * df(k, j);
+                s += w0[k] * df(k, i) * df(k, j);
             block(i, j) = s;
         }
     }
@@ -385,7 +385,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
     for (i = 0; i < Nfe; ++i) {
         // blocks without boundary
         for (n = 1; n < Ngs - 1; ++n) {
-            coeff = -1. / sqr(wFE(i));
+            coeff = -1. / sqr(wFE[i]);
             for (m = 1; m <= n; ++m) {
                 mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
                 s = coeff * block(m,n);
@@ -400,7 +400,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
     for (i = 0; i < Nfe - 1; ++i) {
         // block right boundary
         n = Ngs - 1;
-        coeff = -1. / (pow(wFE(i), 1.5) * ::sqrt(wFE(i) + wFE(i + 1)));
+        coeff = -1. / (pow(wFE[i], 1.5) * ::sqrt(wFE[i] + wFE[i + 1]));
         for (m = 1; m < n; ++m) {
             mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
             s = coeff * block(m, n);
@@ -409,13 +409,13 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 
         // block lower right corner
         m = Ngs - 1;
-        coeff = -1. / (wFE(i) + wFE(i + 1));
+        coeff = -1. / (wFE[i] + wFE[i+1]);
         mm = indFEDVR(i, m, Ngs);
-        s = coeff*(block(m,n)/wFE(i) + block(0,0)/wFE(i+1));
+        s = coeff*(block(m,n)/wFE[i] + block(0,0)/wFE[i+1]);
         D2.push(s, mm, mm);
 
         // block upper boundary
-        coeff = -1. / (pow(wFE(i + 1), 1.5) * ::sqrt(wFE(i) + wFE(i + 1)));
+        coeff = -1. / (pow(wFE[i+1], 1.5) * ::sqrt(wFE[i] + wFE[i+1]));
         for (n = 1; n < Ngs - 1; ++n) {
             mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
             s = coeff * block(0, n);
@@ -425,7 +425,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 
     for (i = 0; i < Nfe - 2; ++i) {
         // block upper right corner
-        coeff = -1. / (wFE(i + 1) * ::sqrt((wFE(i) + wFE(i + 1))*(wFE(i + 1) + wFE(i + 2))));
+        coeff = -1. / (wFE[i+1] * ::sqrt((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
         mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
         s = coeff * block(0, Ngs - 1);
         D2.push(s, mm, nn); D2.push(s, nn, mm);
@@ -456,14 +456,14 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
     legendre_interp_der(df, x0);
     for (Long i = 0; i < Ngs; ++i)
         for (Long j = 0; j < Ngs; ++j)
-            df(j, i) *= f0(i);
+            df(j, i) *= f0[i];
 
     // midpoints, widths and bounds of finite elements
     VecDoub xFE(Nfe), wFE(Nfe);
 
     for (Long i = 0; i < Nfe; ++i) {
-        wFE(i) = 0.5*(bounds(i + 1) - bounds(i));
-        xFE(i) = 0.5*(bounds(i) + bounds(i + 1));
+        wFE[i] = 0.5*(bounds[i+1] - bounds[i]);
+        xFE[i] = 0.5*(bounds[i] + bounds[i+1]);
     }
 
     FEDVR_grid(x, w, wFE, xFE, x0, w0);
