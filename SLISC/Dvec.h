@@ -1,5 +1,6 @@
 #pragma once
 #include "global.h"
+// "_c" means lower level const
 
 namespace slisc {
 class DvecChar_c
@@ -13,7 +14,6 @@ public:
     DvecChar_c(const Char *p, Long_I N, Long_I step);
     const Char* p() const;
     const Char &operator[](Long_I i) const;
-    const Char &operator()(Long_I i) const;
     const Char &end() const;
     const Char &end(Long_I i) const;
     Long size() const;
@@ -65,9 +65,6 @@ inline const Char &DvecChar_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Char &DvecChar_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Char &DvecChar_c::end() const
 {
@@ -138,7 +135,6 @@ public:
     DvecChar(Char *p, Long_I N, Long_I step);
     Char* p() const;
     Char &operator[](Long_I i) const;
-    Char &operator()(Long_I i) const;
     Char &end() const;
     Char &end(Long_I i) const;
     Long size() const;
@@ -191,9 +187,6 @@ inline Char &DvecChar::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Char &DvecChar::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Char &DvecChar::end() const
 {
@@ -255,6 +248,7 @@ inline void DvecChar::shift(Long_I N)
 inline DvecChar::~DvecChar() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecChar &DvecChar_O, &DvecChar_IO;
 
 class DvecInt_c
@@ -268,7 +262,6 @@ public:
     DvecInt_c(const Int *p, Long_I N, Long_I step);
     const Int* p() const;
     const Int &operator[](Long_I i) const;
-    const Int &operator()(Long_I i) const;
     const Int &end() const;
     const Int &end(Long_I i) const;
     Long size() const;
@@ -320,9 +313,6 @@ inline const Int &DvecInt_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Int &DvecInt_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Int &DvecInt_c::end() const
 {
@@ -393,7 +383,6 @@ public:
     DvecInt(Int *p, Long_I N, Long_I step);
     Int* p() const;
     Int &operator[](Long_I i) const;
-    Int &operator()(Long_I i) const;
     Int &end() const;
     Int &end(Long_I i) const;
     Long size() const;
@@ -446,9 +435,6 @@ inline Int &DvecInt::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Int &DvecInt::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Int &DvecInt::end() const
 {
@@ -510,6 +496,7 @@ inline void DvecInt::shift(Long_I N)
 inline DvecInt::~DvecInt() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecInt &DvecInt_O, &DvecInt_IO;
 
 class DvecLlong_c
@@ -523,7 +510,6 @@ public:
     DvecLlong_c(const Llong *p, Long_I N, Long_I step);
     const Llong* p() const;
     const Llong &operator[](Long_I i) const;
-    const Llong &operator()(Long_I i) const;
     const Llong &end() const;
     const Llong &end(Long_I i) const;
     Long size() const;
@@ -575,9 +561,6 @@ inline const Llong &DvecLlong_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Llong &DvecLlong_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Llong &DvecLlong_c::end() const
 {
@@ -648,7 +631,6 @@ public:
     DvecLlong(Llong *p, Long_I N, Long_I step);
     Llong* p() const;
     Llong &operator[](Long_I i) const;
-    Llong &operator()(Long_I i) const;
     Llong &end() const;
     Llong &end(Long_I i) const;
     Long size() const;
@@ -701,9 +683,6 @@ inline Llong &DvecLlong::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Llong &DvecLlong::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Llong &DvecLlong::end() const
 {
@@ -765,6 +744,7 @@ inline void DvecLlong::shift(Long_I N)
 inline DvecLlong::~DvecLlong() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecLlong &DvecLlong_O, &DvecLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -781,6 +761,7 @@ typedef DvecInt DvecLong;
 typedef DvecLlong DvecLong;
 #endif
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecLong &DvecLong_O, &DvecLong_IO;
 
 class DvecFloat_c
@@ -794,7 +775,6 @@ public:
     DvecFloat_c(const Float *p, Long_I N, Long_I step);
     const Float* p() const;
     const Float &operator[](Long_I i) const;
-    const Float &operator()(Long_I i) const;
     const Float &end() const;
     const Float &end(Long_I i) const;
     Long size() const;
@@ -846,9 +826,6 @@ inline const Float &DvecFloat_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Float &DvecFloat_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Float &DvecFloat_c::end() const
 {
@@ -919,7 +896,6 @@ public:
     DvecFloat(Float *p, Long_I N, Long_I step);
     Float* p() const;
     Float &operator[](Long_I i) const;
-    Float &operator()(Long_I i) const;
     Float &end() const;
     Float &end(Long_I i) const;
     Long size() const;
@@ -972,9 +948,6 @@ inline Float &DvecFloat::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Float &DvecFloat::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Float &DvecFloat::end() const
 {
@@ -1036,6 +1009,7 @@ inline void DvecFloat::shift(Long_I N)
 inline DvecFloat::~DvecFloat() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecFloat &DvecFloat_O, &DvecFloat_IO;
 
 class DvecDoub_c
@@ -1049,7 +1023,6 @@ public:
     DvecDoub_c(const Doub *p, Long_I N, Long_I step);
     const Doub* p() const;
     const Doub &operator[](Long_I i) const;
-    const Doub &operator()(Long_I i) const;
     const Doub &end() const;
     const Doub &end(Long_I i) const;
     Long size() const;
@@ -1101,9 +1074,6 @@ inline const Doub &DvecDoub_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Doub &DvecDoub_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Doub &DvecDoub_c::end() const
 {
@@ -1174,7 +1144,6 @@ public:
     DvecDoub(Doub *p, Long_I N, Long_I step);
     Doub* p() const;
     Doub &operator[](Long_I i) const;
-    Doub &operator()(Long_I i) const;
     Doub &end() const;
     Doub &end(Long_I i) const;
     Long size() const;
@@ -1227,9 +1196,6 @@ inline Doub &DvecDoub::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Doub &DvecDoub::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Doub &DvecDoub::end() const
 {
@@ -1291,6 +1257,7 @@ inline void DvecDoub::shift(Long_I N)
 inline DvecDoub::~DvecDoub() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecDoub &DvecDoub_O, &DvecDoub_IO;
 
 class DvecLdoub_c
@@ -1304,7 +1271,6 @@ public:
     DvecLdoub_c(const Ldoub *p, Long_I N, Long_I step);
     const Ldoub* p() const;
     const Ldoub &operator[](Long_I i) const;
-    const Ldoub &operator()(Long_I i) const;
     const Ldoub &end() const;
     const Ldoub &end(Long_I i) const;
     Long size() const;
@@ -1356,9 +1322,6 @@ inline const Ldoub &DvecLdoub_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Ldoub &DvecLdoub_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Ldoub &DvecLdoub_c::end() const
 {
@@ -1429,7 +1392,6 @@ public:
     DvecLdoub(Ldoub *p, Long_I N, Long_I step);
     Ldoub* p() const;
     Ldoub &operator[](Long_I i) const;
-    Ldoub &operator()(Long_I i) const;
     Ldoub &end() const;
     Ldoub &end(Long_I i) const;
     Long size() const;
@@ -1482,9 +1444,6 @@ inline Ldoub &DvecLdoub::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Ldoub &DvecLdoub::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Ldoub &DvecLdoub::end() const
 {
@@ -1546,6 +1505,7 @@ inline void DvecLdoub::shift(Long_I N)
 inline DvecLdoub::~DvecLdoub() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecLdoub &DvecLdoub_O, &DvecLdoub_IO;
 
 class DvecFcomp_c
@@ -1559,7 +1519,6 @@ public:
     DvecFcomp_c(const Fcomp *p, Long_I N, Long_I step);
     const Fcomp* p() const;
     const Fcomp &operator[](Long_I i) const;
-    const Fcomp &operator()(Long_I i) const;
     const Fcomp &end() const;
     const Fcomp &end(Long_I i) const;
     Long size() const;
@@ -1611,9 +1570,6 @@ inline const Fcomp &DvecFcomp_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Fcomp &DvecFcomp_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Fcomp &DvecFcomp_c::end() const
 {
@@ -1684,7 +1640,6 @@ public:
     DvecFcomp(Fcomp *p, Long_I N, Long_I step);
     Fcomp* p() const;
     Fcomp &operator[](Long_I i) const;
-    Fcomp &operator()(Long_I i) const;
     Fcomp &end() const;
     Fcomp &end(Long_I i) const;
     Long size() const;
@@ -1737,9 +1692,6 @@ inline Fcomp &DvecFcomp::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Fcomp &DvecFcomp::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Fcomp &DvecFcomp::end() const
 {
@@ -1801,6 +1753,7 @@ inline void DvecFcomp::shift(Long_I N)
 inline DvecFcomp::~DvecFcomp() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecFcomp &DvecFcomp_O, &DvecFcomp_IO;
 
 class DvecComp_c
@@ -1814,7 +1767,6 @@ public:
     DvecComp_c(const Comp *p, Long_I N, Long_I step);
     const Comp* p() const;
     const Comp &operator[](Long_I i) const;
-    const Comp &operator()(Long_I i) const;
     const Comp &end() const;
     const Comp &end(Long_I i) const;
     Long size() const;
@@ -1866,9 +1818,6 @@ inline const Comp &DvecComp_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Comp &DvecComp_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Comp &DvecComp_c::end() const
 {
@@ -1939,7 +1888,6 @@ public:
     DvecComp(Comp *p, Long_I N, Long_I step);
     Comp* p() const;
     Comp &operator[](Long_I i) const;
-    Comp &operator()(Long_I i) const;
     Comp &end() const;
     Comp &end(Long_I i) const;
     Long size() const;
@@ -1992,9 +1940,6 @@ inline Comp &DvecComp::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Comp &DvecComp::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Comp &DvecComp::end() const
 {
@@ -2056,6 +2001,7 @@ inline void DvecComp::shift(Long_I N)
 inline DvecComp::~DvecComp() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecComp &DvecComp_O, &DvecComp_IO;
 
 class DvecLcomp_c
@@ -2069,7 +2015,6 @@ public:
     DvecLcomp_c(const Lcomp *p, Long_I N, Long_I step);
     const Lcomp* p() const;
     const Lcomp &operator[](Long_I i) const;
-    const Lcomp &operator()(Long_I i) const;
     const Lcomp &end() const;
     const Lcomp &end(Long_I i) const;
     Long size() const;
@@ -2121,9 +2066,6 @@ inline const Lcomp &DvecLcomp_c::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline const Lcomp &DvecLcomp_c::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline const Lcomp &DvecLcomp_c::end() const
 {
@@ -2194,7 +2136,6 @@ public:
     DvecLcomp(Lcomp *p, Long_I N, Long_I step);
     Lcomp* p() const;
     Lcomp &operator[](Long_I i) const;
-    Lcomp &operator()(Long_I i) const;
     Lcomp &end() const;
     Lcomp &end(Long_I i) const;
     Long size() const;
@@ -2247,9 +2188,6 @@ inline Lcomp &DvecLcomp::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline Lcomp &DvecLcomp::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline Lcomp &DvecLcomp::end() const
 {
@@ -2311,6 +2249,7 @@ inline void DvecLcomp::shift(Long_I N)
 inline DvecLcomp::~DvecLcomp() {}
 
 
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const DvecLcomp &DvecLcomp_O, &DvecLcomp_IO;
 
 } // namespace slisc

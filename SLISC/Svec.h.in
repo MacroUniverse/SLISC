@@ -177,6 +177,7 @@ inline @Class@::~@Class@() {}
 //% if constness
 typedef const @Class@ &@SvecT@_I;
 //% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
 //% end
 //%------------------------

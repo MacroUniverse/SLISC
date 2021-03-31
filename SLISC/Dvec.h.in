@@ -1,5 +1,6 @@
 #pragma once
 #include "global.h"
+// "_c" means lower level const
 
 namespace slisc {
 //% types = {
@@ -59,7 +60,6 @@ public:
     @Class@(@CT@ *p, Long_I N, Long_I step);
     @CT@* p() const;
     @CT@ &operator[](Long_I i) const;
-    @CT@ &operator()(Long_I i) const;
     @CT@ &end() const;
     @CT@ &end(Long_I i) const;
     Long size() const;
@@ -115,9 +115,6 @@ inline @CT@ &@Class@::operator[](Long_I i) const
 #endif
     return m_p[m_step*i];
 }
-
-inline @CT@ &@Class@::operator()(Long_I i) const
-{ return (*this)[i]; }
 
 inline @CT@ &@Class@::end() const
 {
@@ -185,6 +182,7 @@ inline @Class@::~@Class@() {}
 //% if constness
 typedef const @Class@ &@DvecT@_I;
 //% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const @Class@ &@DvecT@_O, &@DvecT@_IO;
 //% end
 //%------------------------

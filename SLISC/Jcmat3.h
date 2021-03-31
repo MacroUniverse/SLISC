@@ -1,5 +1,6 @@
 #pragma once
 #include "global.h"
+// "_c" means lower level const
 
 namespace slisc {
 class Jcmat3Char_c

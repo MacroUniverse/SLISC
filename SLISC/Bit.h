@@ -18,7 +18,7 @@ inline Char bit2char(Uchar_I uc)
 // extract a bit at the i-th place from the right
 inline Bool bitR(Char_I byte, Int_I i)
 {
-    return byte & Uchar(1) << i;
+    return byte &Uchar(1) << i;
 }
 
 inline Bool bitR(const Char *byte, Int_I i)
@@ -27,7 +27,7 @@ inline Bool bitR(const Char *byte, Int_I i)
 // extract a bit at the i-th place from the left
 inline Bool bitL(Char_I byte, Int_I i)
 {
-    return byte & Uchar(128) >> i;
+    return byte &Uchar(128) >> i;
 }
 
 inline Bool bitL(const Char *byte, Int_I i)

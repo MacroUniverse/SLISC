@@ -42,4 +42,4 @@ main.o: $(path_headers) main.cpp
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in
-	octave --eval "auto_gen SLISC $$(basename $<)"
+	octave --no-window-system --eval "auto_gen SLISC $$(basename $<)"

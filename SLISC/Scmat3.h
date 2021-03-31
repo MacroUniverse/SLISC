@@ -88,9 +88,8 @@ public:
     Scmat3Char(Char *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Char_c() const;
-    Char &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Char &operator()(Long_I i, Long_I j, Long_I k) const;
+    Char &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -113,16 +112,7 @@ inline Scmat3Char::operator Scmat3Char_c() const
     return *((Scmat3Char_c *)this);
 }
 
-inline Char &Scmat3Char::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Char &Scmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
+inline Char &Scmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -169,7 +159,8 @@ inline void Scmat3Char::set(const Scmat3Char &sli)
 
 inline Scmat3Char::~Scmat3Char() {}
 
-typedef Scmat3Char &Scmat3Char_O, &Scmat3Char_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Char &Scmat3Char_O, &Scmat3Char_IO;
 
 class Scmat3Int_c : public SvecInt_c
 {
@@ -257,9 +248,8 @@ public:
     Scmat3Int(Int *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Int_c() const;
-    Int &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Int &operator()(Long_I i, Long_I j, Long_I k) const;
+    Int &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -282,16 +272,7 @@ inline Scmat3Int::operator Scmat3Int_c() const
     return *((Scmat3Int_c *)this);
 }
 
-inline Int &Scmat3Int::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Int &Scmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
+inline Int &Scmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -338,7 +319,8 @@ inline void Scmat3Int::set(const Scmat3Int &sli)
 
 inline Scmat3Int::~Scmat3Int() {}
 
-typedef Scmat3Int &Scmat3Int_O, &Scmat3Int_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Int &Scmat3Int_O, &Scmat3Int_IO;
 
 class Scmat3Llong_c : public SvecLlong_c
 {
@@ -426,9 +408,8 @@ public:
     Scmat3Llong(Llong *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Llong_c() const;
-    Llong &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
+    Llong &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -451,16 +432,7 @@ inline Scmat3Llong::operator Scmat3Llong_c() const
     return *((Scmat3Llong_c *)this);
 }
 
-inline Llong &Scmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Llong &Scmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
+inline Llong &Scmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -507,7 +479,8 @@ inline void Scmat3Llong::set(const Scmat3Llong &sli)
 
 inline Scmat3Llong::~Scmat3Llong() {}
 
-typedef Scmat3Llong &Scmat3Llong_O, &Scmat3Llong_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Llong &Scmat3Llong_O, &Scmat3Llong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef Scmat3Int_c Scmat3Long_c;
@@ -523,7 +496,8 @@ typedef Scmat3Int Scmat3Long;
 typedef Scmat3Llong Scmat3Long;
 #endif
 
-typedef Scmat3Long &Scmat3Long_O, &Scmat3Long_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Long &Scmat3Long_O, &Scmat3Long_IO;
 
 class Scmat3Float_c : public SvecFloat_c
 {
@@ -611,9 +585,8 @@ public:
     Scmat3Float(Float *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Float_c() const;
-    Float &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Float &operator()(Long_I i, Long_I j, Long_I k) const;
+    Float &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -636,16 +609,7 @@ inline Scmat3Float::operator Scmat3Float_c() const
     return *((Scmat3Float_c *)this);
 }
 
-inline Float &Scmat3Float::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Float &Scmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
+inline Float &Scmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -692,7 +656,8 @@ inline void Scmat3Float::set(const Scmat3Float &sli)
 
 inline Scmat3Float::~Scmat3Float() {}
 
-typedef Scmat3Float &Scmat3Float_O, &Scmat3Float_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Float &Scmat3Float_O, &Scmat3Float_IO;
 
 class Scmat3Doub_c : public SvecDoub_c
 {
@@ -780,9 +745,8 @@ public:
     Scmat3Doub(Doub *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Doub_c() const;
-    Doub &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
+    Doub &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -805,16 +769,7 @@ inline Scmat3Doub::operator Scmat3Doub_c() const
     return *((Scmat3Doub_c *)this);
 }
 
-inline Doub &Scmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Doub &Scmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
+inline Doub &Scmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -861,7 +816,8 @@ inline void Scmat3Doub::set(const Scmat3Doub &sli)
 
 inline Scmat3Doub::~Scmat3Doub() {}
 
-typedef Scmat3Doub &Scmat3Doub_O, &Scmat3Doub_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Doub &Scmat3Doub_O, &Scmat3Doub_IO;
 
 class Scmat3Ldoub_c : public SvecLdoub_c
 {
@@ -949,9 +905,8 @@ public:
     Scmat3Ldoub(Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Ldoub_c() const;
-    Ldoub &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
+    Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -974,16 +929,7 @@ inline Scmat3Ldoub::operator Scmat3Ldoub_c() const
     return *((Scmat3Ldoub_c *)this);
 }
 
-inline Ldoub &Scmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Ldoub &Scmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
+inline Ldoub &Scmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1030,7 +976,8 @@ inline void Scmat3Ldoub::set(const Scmat3Ldoub &sli)
 
 inline Scmat3Ldoub::~Scmat3Ldoub() {}
 
-typedef Scmat3Ldoub &Scmat3Ldoub_O, &Scmat3Ldoub_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Ldoub &Scmat3Ldoub_O, &Scmat3Ldoub_IO;
 
 class Scmat3Fcomp_c : public SvecFcomp_c
 {
@@ -1118,9 +1065,8 @@ public:
     Scmat3Fcomp(Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Fcomp_c() const;
-    Fcomp &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
+    Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -1143,16 +1089,7 @@ inline Scmat3Fcomp::operator Scmat3Fcomp_c() const
     return *((Scmat3Fcomp_c *)this);
 }
 
-inline Fcomp &Scmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Fcomp &Scmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
+inline Fcomp &Scmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1199,7 +1136,8 @@ inline void Scmat3Fcomp::set(const Scmat3Fcomp &sli)
 
 inline Scmat3Fcomp::~Scmat3Fcomp() {}
 
-typedef Scmat3Fcomp &Scmat3Fcomp_O, &Scmat3Fcomp_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Fcomp &Scmat3Fcomp_O, &Scmat3Fcomp_IO;
 
 class Scmat3Comp_c : public SvecComp_c
 {
@@ -1287,9 +1225,8 @@ public:
     Scmat3Comp(Comp *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Comp_c() const;
-    Comp &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
+    Comp &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -1312,16 +1249,7 @@ inline Scmat3Comp::operator Scmat3Comp_c() const
     return *((Scmat3Comp_c *)this);
 }
 
-inline Comp &Scmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Comp &Scmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
+inline Comp &Scmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1368,7 +1296,8 @@ inline void Scmat3Comp::set(const Scmat3Comp &sli)
 
 inline Scmat3Comp::~Scmat3Comp() {}
 
-typedef Scmat3Comp &Scmat3Comp_O, &Scmat3Comp_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Comp &Scmat3Comp_O, &Scmat3Comp_IO;
 
 class Scmat3Lcomp_c : public SvecLcomp_c
 {
@@ -1456,9 +1385,8 @@ public:
     Scmat3Lcomp(Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Lcomp_c() const;
-    Lcomp &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
+    Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -1481,16 +1409,7 @@ inline Scmat3Lcomp::operator Scmat3Lcomp_c() const
     return *((Scmat3Lcomp_c *)this);
 }
 
-inline Lcomp &Scmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Lcomp &Scmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
+inline Lcomp &Scmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1537,7 +1456,8 @@ inline void Scmat3Lcomp::set(const Scmat3Lcomp &sli)
 
 inline Scmat3Lcomp::~Scmat3Lcomp() {}
 
-typedef Scmat3Lcomp &Scmat3Lcomp_O, &Scmat3Lcomp_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Lcomp &Scmat3Lcomp_O, &Scmat3Lcomp_IO;
 
 class Scmat3Fimag_c : public SvecFimag_c
 {
@@ -1625,9 +1545,8 @@ public:
     Scmat3Fimag(Fimag *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Fimag_c() const;
-    Fimag &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
+    Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -1650,16 +1569,7 @@ inline Scmat3Fimag::operator Scmat3Fimag_c() const
     return *((Scmat3Fimag_c *)this);
 }
 
-inline Fimag &Scmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Fimag &Scmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
+inline Fimag &Scmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1706,7 +1616,8 @@ inline void Scmat3Fimag::set(const Scmat3Fimag &sli)
 
 inline Scmat3Fimag::~Scmat3Fimag() {}
 
-typedef Scmat3Fimag &Scmat3Fimag_O, &Scmat3Fimag_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Fimag &Scmat3Fimag_O, &Scmat3Fimag_IO;
 
 class Scmat3Imag_c : public SvecImag_c
 {
@@ -1794,9 +1705,8 @@ public:
     Scmat3Imag(Imag *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Imag_c() const;
-    Imag &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
+    Imag &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -1819,16 +1729,7 @@ inline Scmat3Imag::operator Scmat3Imag_c() const
     return *((Scmat3Imag_c *)this);
 }
 
-inline Imag &Scmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Imag &Scmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
+inline Imag &Scmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1875,7 +1776,8 @@ inline void Scmat3Imag::set(const Scmat3Imag &sli)
 
 inline Scmat3Imag::~Scmat3Imag() {}
 
-typedef Scmat3Imag &Scmat3Imag_O, &Scmat3Imag_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Imag &Scmat3Imag_O, &Scmat3Imag_IO;
 
 class Scmat3Limag_c : public SvecLimag_c
 {
@@ -1963,9 +1865,8 @@ public:
     Scmat3Limag(Limag *data, Long_I N1, Long_I N2, Long_I N3);
 
     operator Scmat3Limag_c() const;
-    Limag &operator()(Long_I i, Long_I j, Long_I k);
 
-    const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
+    Limag &operator()(Long_I i, Long_I j, Long_I k) const;
 
     Long n1() const;
     Long n2() const;
@@ -1988,16 +1889,7 @@ inline Scmat3Limag::operator Scmat3Limag_c() const
     return *((Scmat3Limag_c *)this);
 }
 
-inline Limag &Scmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
-        SLS_ERR("Matrix subscript out of bounds");
-#endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
-}
-
-inline const Limag &Scmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
+inline Limag &Scmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -2044,6 +1936,7 @@ inline void Scmat3Limag::set(const Scmat3Limag &sli)
 
 inline Scmat3Limag::~Scmat3Limag() {}
 
-typedef Scmat3Limag &Scmat3Limag_O, &Scmat3Limag_IO;
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+typedef const Scmat3Limag &Scmat3Limag_O, &Scmat3Limag_IO;
 
 } // namespace slisc

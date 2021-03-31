@@ -144,6 +144,7 @@ inline @CT@ * @Class@::p() const
 //% if constness
 typedef const @Class@ &@DcmatT@_I;
 //% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
 typedef const @Class@ &@DcmatT@_O, &@DcmatT@_IO;
 //% end
 //%------------------------
