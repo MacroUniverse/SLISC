@@ -2,6 +2,7 @@
 #include "global.h"
 #include "Imag.h"
 // this class is not memory safe!
+// "_c" means lower level const
 
 namespace slisc {
 //% types = {
@@ -54,11 +55,10 @@ public:
     @Class@(@CT@ *data, Long_I N); // unsafe
     @CT@* p() const;
     Long size() const;
-    @Class@ & operator=(const @Class@ &rhs) = delete;
-    @CT@ & operator[](Long_I i) const;
-    @CT@ & operator()(Long_I i) const;
-    @CT@ & end() const;
-    @CT@ & end(Long_I i) const;
+    @Class@ &operator=(const @Class@ &rhs) = delete;
+    @CT@ &operator[](Long_I i) const;
+    @CT@ &end() const;
+    @CT@ &end(Long_I i) const;
 //% if ~constness
     operator @SvecT_c@() const;
 //% end
@@ -102,7 +102,7 @@ inline Long @Class@::size() const
     return m_N;
 }
 
-inline @CT@ & @Class@::operator[](Long_I i) const
+inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -111,7 +111,7 @@ inline @CT@ & @Class@::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline @CT@ & @Class@::end() const
+inline @CT@ &@Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -120,7 +120,7 @@ inline @CT@ & @Class@::end() const
     return m_p[m_N - 1];
 }
 
-inline @CT@ & @Class@::end(Long_I i) const
+inline @CT@ &@Class@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -175,9 +175,9 @@ inline @Class@::~@Class@() {}
 //% end
 
 //% if constness
-typedef const @Class@ & @SvecT@_I;
+typedef const @Class@ &@SvecT@_I;
 //% else
-typedef const @Class@ & @SvecT@_O, & @SvecT@_IO;
+typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
 //% end
 //%------------------------
 } // namespace slisc

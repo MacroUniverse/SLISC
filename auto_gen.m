@@ -1,10 +1,10 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 function auto_gen(path, file)
-addpath('preprocessor');
-addpath('preprocessor/case_conflict');
-old_path = cd();
+paths = {'../preprocessor', '../preprocessor/case_conflict'};
+old_path = pwd;
 cd(path);
+addpath(paths{:});
 newline = char(10);
 if in_octave
     in_list = ls('*.in', '-1');
@@ -15,10 +15,10 @@ Ntp = size(in_list, 1);
 
 for i = 1:Ntp
     in_file = strtrim(in_list(i,:));
-    fprintf([in_file '...']);
     if nargin > 1 && ~strcmp(in_file, file)
         continue;
     end
+    fprintf([in_file '...']);
     str = fileread(in_file);
     ind = 1;
     code = cell(1, 1); k = 0;
@@ -53,5 +53,6 @@ for i = 1:Ntp
     filewrite(in_file(1:end-3), code_cat);
     fprintf('done!\n');
 end
+rmpath(paths{:});
 cd(old_path);
 end

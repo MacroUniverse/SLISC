@@ -13,7 +13,7 @@ public:
     MatChar(): m_N1(0), m_N2(0) {};
     MatChar(Long_I N1, Long_I N2);
     MatChar(const MatChar &rhs);        // Copy constructor
-    MatChar & operator=(const MatChar &rhs) = delete;
+    MatChar &operator=(const MatChar &rhs) = delete;
     void operator<<(MatChar &rhs); // move data and rhs.resize(0, 0)
     Char& operator()(Long_I i, Long_I j); // double indexing
     const Char& operator()(Long_I i, Long_I j) const;
@@ -46,7 +46,7 @@ inline Char& MatChar::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Char & MatChar::operator()(Long_I i, Long_I j) const
+inline const Char &MatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -83,8 +83,8 @@ inline void MatChar::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatChar & MatChar_I;
-typedef MatChar & MatChar_O, & MatChar_IO;
+typedef const MatChar &MatChar_I;
+typedef MatChar &MatChar_O, &MatChar_IO;
 
 class MatInt : public VbaseInt
 {
@@ -96,7 +96,7 @@ public:
     MatInt(): m_N1(0), m_N2(0) {};
     MatInt(Long_I N1, Long_I N2);
     MatInt(const MatInt &rhs);        // Copy constructor
-    MatInt & operator=(const MatInt &rhs) = delete;
+    MatInt &operator=(const MatInt &rhs) = delete;
     void operator<<(MatInt &rhs); // move data and rhs.resize(0, 0)
     Int& operator()(Long_I i, Long_I j); // double indexing
     const Int& operator()(Long_I i, Long_I j) const;
@@ -129,7 +129,7 @@ inline Int& MatInt::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Int & MatInt::operator()(Long_I i, Long_I j) const
+inline const Int &MatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -166,8 +166,8 @@ inline void MatInt::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatInt & MatInt_I;
-typedef MatInt & MatInt_O, & MatInt_IO;
+typedef const MatInt &MatInt_I;
+typedef MatInt &MatInt_O, &MatInt_IO;
 
 class MatLlong : public VbaseLlong
 {
@@ -179,7 +179,7 @@ public:
     MatLlong(): m_N1(0), m_N2(0) {};
     MatLlong(Long_I N1, Long_I N2);
     MatLlong(const MatLlong &rhs);        // Copy constructor
-    MatLlong & operator=(const MatLlong &rhs) = delete;
+    MatLlong &operator=(const MatLlong &rhs) = delete;
     void operator<<(MatLlong &rhs); // move data and rhs.resize(0, 0)
     Llong& operator()(Long_I i, Long_I j); // double indexing
     const Llong& operator()(Long_I i, Long_I j) const;
@@ -212,7 +212,7 @@ inline Llong& MatLlong::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Llong & MatLlong::operator()(Long_I i, Long_I j) const
+inline const Llong &MatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -249,8 +249,8 @@ inline void MatLlong::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatLlong & MatLlong_I;
-typedef MatLlong & MatLlong_O, & MatLlong_IO;
+typedef const MatLlong &MatLlong_I;
+typedef MatLlong &MatLlong_O, &MatLlong_IO;
 
 class MatFloat : public VbaseFloat
 {
@@ -262,7 +262,7 @@ public:
     MatFloat(): m_N1(0), m_N2(0) {};
     MatFloat(Long_I N1, Long_I N2);
     MatFloat(const MatFloat &rhs);        // Copy constructor
-    MatFloat & operator=(const MatFloat &rhs) = delete;
+    MatFloat &operator=(const MatFloat &rhs) = delete;
     void operator<<(MatFloat &rhs); // move data and rhs.resize(0, 0)
     Float& operator()(Long_I i, Long_I j); // double indexing
     const Float& operator()(Long_I i, Long_I j) const;
@@ -295,7 +295,7 @@ inline Float& MatFloat::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Float & MatFloat::operator()(Long_I i, Long_I j) const
+inline const Float &MatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -332,8 +332,8 @@ inline void MatFloat::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatFloat & MatFloat_I;
-typedef MatFloat & MatFloat_O, & MatFloat_IO;
+typedef const MatFloat &MatFloat_I;
+typedef MatFloat &MatFloat_O, &MatFloat_IO;
 
 class MatDoub : public VbaseDoub
 {
@@ -345,7 +345,7 @@ public:
     MatDoub(): m_N1(0), m_N2(0) {};
     MatDoub(Long_I N1, Long_I N2);
     MatDoub(const MatDoub &rhs);        // Copy constructor
-    MatDoub & operator=(const MatDoub &rhs) = delete;
+    MatDoub &operator=(const MatDoub &rhs) = delete;
     void operator<<(MatDoub &rhs); // move data and rhs.resize(0, 0)
     Doub& operator()(Long_I i, Long_I j); // double indexing
     const Doub& operator()(Long_I i, Long_I j) const;
@@ -378,7 +378,7 @@ inline Doub& MatDoub::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Doub & MatDoub::operator()(Long_I i, Long_I j) const
+inline const Doub &MatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -415,8 +415,8 @@ inline void MatDoub::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatDoub & MatDoub_I;
-typedef MatDoub & MatDoub_O, & MatDoub_IO;
+typedef const MatDoub &MatDoub_I;
+typedef MatDoub &MatDoub_O, &MatDoub_IO;
 
 class MatLdoub : public VbaseLdoub
 {
@@ -428,7 +428,7 @@ public:
     MatLdoub(): m_N1(0), m_N2(0) {};
     MatLdoub(Long_I N1, Long_I N2);
     MatLdoub(const MatLdoub &rhs);        // Copy constructor
-    MatLdoub & operator=(const MatLdoub &rhs) = delete;
+    MatLdoub &operator=(const MatLdoub &rhs) = delete;
     void operator<<(MatLdoub &rhs); // move data and rhs.resize(0, 0)
     Ldoub& operator()(Long_I i, Long_I j); // double indexing
     const Ldoub& operator()(Long_I i, Long_I j) const;
@@ -461,7 +461,7 @@ inline Ldoub& MatLdoub::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Ldoub & MatLdoub::operator()(Long_I i, Long_I j) const
+inline const Ldoub &MatLdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -498,8 +498,8 @@ inline void MatLdoub::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatLdoub & MatLdoub_I;
-typedef MatLdoub & MatLdoub_O, & MatLdoub_IO;
+typedef const MatLdoub &MatLdoub_I;
+typedef MatLdoub &MatLdoub_O, &MatLdoub_IO;
 
 class MatFcomp : public VbaseFcomp
 {
@@ -511,7 +511,7 @@ public:
     MatFcomp(): m_N1(0), m_N2(0) {};
     MatFcomp(Long_I N1, Long_I N2);
     MatFcomp(const MatFcomp &rhs);        // Copy constructor
-    MatFcomp & operator=(const MatFcomp &rhs) = delete;
+    MatFcomp &operator=(const MatFcomp &rhs) = delete;
     void operator<<(MatFcomp &rhs); // move data and rhs.resize(0, 0)
     Fcomp& operator()(Long_I i, Long_I j); // double indexing
     const Fcomp& operator()(Long_I i, Long_I j) const;
@@ -544,7 +544,7 @@ inline Fcomp& MatFcomp::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Fcomp & MatFcomp::operator()(Long_I i, Long_I j) const
+inline const Fcomp &MatFcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -581,8 +581,8 @@ inline void MatFcomp::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatFcomp & MatFcomp_I;
-typedef MatFcomp & MatFcomp_O, & MatFcomp_IO;
+typedef const MatFcomp &MatFcomp_I;
+typedef MatFcomp &MatFcomp_O, &MatFcomp_IO;
 
 class MatComp : public VbaseComp
 {
@@ -594,7 +594,7 @@ public:
     MatComp(): m_N1(0), m_N2(0) {};
     MatComp(Long_I N1, Long_I N2);
     MatComp(const MatComp &rhs);        // Copy constructor
-    MatComp & operator=(const MatComp &rhs) = delete;
+    MatComp &operator=(const MatComp &rhs) = delete;
     void operator<<(MatComp &rhs); // move data and rhs.resize(0, 0)
     Comp& operator()(Long_I i, Long_I j); // double indexing
     const Comp& operator()(Long_I i, Long_I j) const;
@@ -627,7 +627,7 @@ inline Comp& MatComp::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Comp & MatComp::operator()(Long_I i, Long_I j) const
+inline const Comp &MatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -664,8 +664,8 @@ inline void MatComp::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatComp & MatComp_I;
-typedef MatComp & MatComp_O, & MatComp_IO;
+typedef const MatComp &MatComp_I;
+typedef MatComp &MatComp_O, &MatComp_IO;
 
 class MatLcomp : public VbaseLcomp
 {
@@ -677,7 +677,7 @@ public:
     MatLcomp(): m_N1(0), m_N2(0) {};
     MatLcomp(Long_I N1, Long_I N2);
     MatLcomp(const MatLcomp &rhs);        // Copy constructor
-    MatLcomp & operator=(const MatLcomp &rhs) = delete;
+    MatLcomp &operator=(const MatLcomp &rhs) = delete;
     void operator<<(MatLcomp &rhs); // move data and rhs.resize(0, 0)
     Lcomp& operator()(Long_I i, Long_I j); // double indexing
     const Lcomp& operator()(Long_I i, Long_I j) const;
@@ -710,7 +710,7 @@ inline Lcomp& MatLcomp::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Lcomp & MatLcomp::operator()(Long_I i, Long_I j) const
+inline const Lcomp &MatLcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -747,8 +747,8 @@ inline void MatLcomp::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatLcomp & MatLcomp_I;
-typedef MatLcomp & MatLcomp_O, & MatLcomp_IO;
+typedef const MatLcomp &MatLcomp_I;
+typedef MatLcomp &MatLcomp_O, &MatLcomp_IO;
 
 class MatFimag : public VbaseFimag
 {
@@ -760,7 +760,7 @@ public:
     MatFimag(): m_N1(0), m_N2(0) {};
     MatFimag(Long_I N1, Long_I N2);
     MatFimag(const MatFimag &rhs);        // Copy constructor
-    MatFimag & operator=(const MatFimag &rhs) = delete;
+    MatFimag &operator=(const MatFimag &rhs) = delete;
     void operator<<(MatFimag &rhs); // move data and rhs.resize(0, 0)
     Fimag& operator()(Long_I i, Long_I j); // double indexing
     const Fimag& operator()(Long_I i, Long_I j) const;
@@ -793,7 +793,7 @@ inline Fimag& MatFimag::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Fimag & MatFimag::operator()(Long_I i, Long_I j) const
+inline const Fimag &MatFimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -830,8 +830,8 @@ inline void MatFimag::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatFimag & MatFimag_I;
-typedef MatFimag & MatFimag_O, & MatFimag_IO;
+typedef const MatFimag &MatFimag_I;
+typedef MatFimag &MatFimag_O, &MatFimag_IO;
 
 class MatImag : public VbaseImag
 {
@@ -843,7 +843,7 @@ public:
     MatImag(): m_N1(0), m_N2(0) {};
     MatImag(Long_I N1, Long_I N2);
     MatImag(const MatImag &rhs);        // Copy constructor
-    MatImag & operator=(const MatImag &rhs) = delete;
+    MatImag &operator=(const MatImag &rhs) = delete;
     void operator<<(MatImag &rhs); // move data and rhs.resize(0, 0)
     Imag& operator()(Long_I i, Long_I j); // double indexing
     const Imag& operator()(Long_I i, Long_I j) const;
@@ -876,7 +876,7 @@ inline Imag& MatImag::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Imag & MatImag::operator()(Long_I i, Long_I j) const
+inline const Imag &MatImag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -913,8 +913,8 @@ inline void MatImag::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatImag & MatImag_I;
-typedef MatImag & MatImag_O, & MatImag_IO;
+typedef const MatImag &MatImag_I;
+typedef MatImag &MatImag_O, &MatImag_IO;
 
 class MatLimag : public VbaseLimag
 {
@@ -926,7 +926,7 @@ public:
     MatLimag(): m_N1(0), m_N2(0) {};
     MatLimag(Long_I N1, Long_I N2);
     MatLimag(const MatLimag &rhs);        // Copy constructor
-    MatLimag & operator=(const MatLimag &rhs) = delete;
+    MatLimag &operator=(const MatLimag &rhs) = delete;
     void operator<<(MatLimag &rhs); // move data and rhs.resize(0, 0)
     Limag& operator()(Long_I i, Long_I j); // double indexing
     const Limag& operator()(Long_I i, Long_I j) const;
@@ -959,7 +959,7 @@ inline Limag& MatLimag::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const Limag & MatLimag::operator()(Long_I i, Long_I j) const
+inline const Limag &MatLimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -996,7 +996,7 @@ inline void MatLimag::reshape(Long_I N1, Long_I N2)
     m_N1 = N1; m_N2 = N2;
 }
 
-typedef const MatLimag & MatLimag_I;
-typedef MatLimag & MatLimag_O, & MatLimag_IO;
+typedef const MatLimag &MatLimag_I;
+typedef MatLimag &MatLimag_O, &MatLimag_IO;
 
 } // namespace slisc

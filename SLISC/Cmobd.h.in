@@ -59,12 +59,12 @@ inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
         vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-inline const @T@ & @CmobdT@::operator[](Long_I i) const
+inline const @T@ &@CmobdT@::operator[](Long_I i) const
 {
     return m_data[i];
 }
 
-inline @T@ & @CmobdT@::operator[](Long_I i)
+inline @T@ &@CmobdT@::operator[](Long_I i)
 {
     return m_data[i];
 }

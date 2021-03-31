@@ -29,12 +29,12 @@ public:
     @Cmat3T@(): m_N1(0), m_N2(0), m_N3(0) {};
     @Cmat3T@(Long_I N1, Long_I N2, Long_I N3);
     @Cmat3T@(const @Cmat3T@ &rhs); // copy constructor
-    @Cmat3T@ & operator=(const @Cmat3T@ &rhs) = delete;
+    @Cmat3T@ &operator=(const @Cmat3T@ &rhs) = delete;
     void operator<<(@Cmat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    @T@ & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const @T@ & operator()(Long_I i, Long_I j, Long_I k) const;
+    @T@ &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const @T@ &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -75,7 +75,7 @@ inline void @Cmat3T@::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline @T@ & @Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)
+inline @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -85,7 +85,7 @@ inline @T@ & @Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const @T@ & @Cmat3T@::operator()(Long_I i, Long_I j, Long_I k) const
+inline const @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -108,7 +108,7 @@ inline Long @Cmat3T@::n3() const {
 }
 //% end
 
-typedef const @Cmat3T@ & @Cmat3T@_I;
-typedef @Cmat3T@ & @Cmat3T@_O, & @Cmat3T@_IO;
+typedef const @Cmat3T@ &@Cmat3T@_I;
+typedef @Cmat3T@ &@Cmat3T@_O, &@Cmat3T@_IO;
 //%--------------------------------
 } // namespace slisc

@@ -29,7 +29,7 @@ public:
     @MatT@(): m_N1(0), m_N2(0) {};
     @MatT@(Long_I N1, Long_I N2);
     @MatT@(const @MatT@ &rhs);        // Copy constructor
-    @MatT@ & operator=(const @MatT@ &rhs) = delete;
+    @MatT@ &operator=(const @MatT@ &rhs) = delete;
     void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
     @T@& operator()(Long_I i, Long_I j); // double indexing
     const @T@& operator()(Long_I i, Long_I j) const;
@@ -62,7 +62,7 @@ inline @T@& @MatT@::operator()(Long_I i, Long_I j)
     return m_p[m_N2*i+j];
 }
 
-inline const @T@ & @MatT@::operator()(Long_I i, Long_I j) const
+inline const @T@ &@MatT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -100,7 +100,7 @@ inline void @MatT@::reshape(Long_I N1, Long_I N2)
 }
 //% end
 
-typedef const @MatT@ & @MatT@_I;
-typedef @MatT@ & @MatT@_O, & @MatT@_IO;
+typedef const @MatT@ &@MatT@_I;
+typedef @MatT@ &@MatT@_O, &@MatT@_IO;
 //%------------------------
 } // namespace slisc

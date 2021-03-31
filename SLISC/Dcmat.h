@@ -16,9 +16,7 @@ public:
     void set(const DcmatChar_c &sli);
 
 
-    // === Cmat member functions ===
     const Char& operator[](Long_I i) const;
-    const Char& operator()(Long_I i) const;
     const Char& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -44,7 +42,7 @@ inline void DcmatChar_c::set(const DcmatChar_c &sli)
 }
 
 
-inline const Char & DcmatChar_c::operator[](Long_I i) const
+inline const Char &DcmatChar_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -53,12 +51,7 @@ inline const Char & DcmatChar_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Char & DcmatChar_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Char & DcmatChar_c::operator()(Long_I i, Long_I j) const
+inline const Char &DcmatChar_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -92,7 +85,7 @@ inline const Char * DcmatChar_c::p() const
     return m_p;
 }
 
-typedef const DcmatChar_c & DcmatChar_I;
+typedef const DcmatChar_c &DcmatChar_I;
 
 class DcmatChar
 {
@@ -110,9 +103,7 @@ public:
 
     operator DcmatChar_c() const;
 
-    // === Cmat member functions ===
     Char& operator[](Long_I i) const;
-    Char& operator()(Long_I i) const;
     Char& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -142,7 +133,7 @@ inline DcmatChar::operator DcmatChar_c() const
     return *((DcmatChar_c *)this);
 }
 
-inline Char & DcmatChar::operator[](Long_I i) const
+inline Char &DcmatChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -151,12 +142,7 @@ inline Char & DcmatChar::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Char & DcmatChar::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Char & DcmatChar::operator()(Long_I i, Long_I j) const
+inline Char &DcmatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -190,7 +176,7 @@ inline Char * DcmatChar::p() const
     return m_p;
 }
 
-typedef const DcmatChar & DcmatChar_O, & DcmatChar_IO;
+typedef const DcmatChar &DcmatChar_O, &DcmatChar_IO;
 
 class DcmatInt_c
 {
@@ -207,9 +193,7 @@ public:
     void set(const DcmatInt_c &sli);
 
 
-    // === Cmat member functions ===
     const Int& operator[](Long_I i) const;
-    const Int& operator()(Long_I i) const;
     const Int& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -235,7 +219,7 @@ inline void DcmatInt_c::set(const DcmatInt_c &sli)
 }
 
 
-inline const Int & DcmatInt_c::operator[](Long_I i) const
+inline const Int &DcmatInt_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -244,12 +228,7 @@ inline const Int & DcmatInt_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Int & DcmatInt_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Int & DcmatInt_c::operator()(Long_I i, Long_I j) const
+inline const Int &DcmatInt_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -283,7 +262,7 @@ inline const Int * DcmatInt_c::p() const
     return m_p;
 }
 
-typedef const DcmatInt_c & DcmatInt_I;
+typedef const DcmatInt_c &DcmatInt_I;
 
 class DcmatInt
 {
@@ -301,9 +280,7 @@ public:
 
     operator DcmatInt_c() const;
 
-    // === Cmat member functions ===
     Int& operator[](Long_I i) const;
-    Int& operator()(Long_I i) const;
     Int& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -333,7 +310,7 @@ inline DcmatInt::operator DcmatInt_c() const
     return *((DcmatInt_c *)this);
 }
 
-inline Int & DcmatInt::operator[](Long_I i) const
+inline Int &DcmatInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -342,12 +319,7 @@ inline Int & DcmatInt::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Int & DcmatInt::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Int & DcmatInt::operator()(Long_I i, Long_I j) const
+inline Int &DcmatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -381,7 +353,7 @@ inline Int * DcmatInt::p() const
     return m_p;
 }
 
-typedef const DcmatInt & DcmatInt_O, & DcmatInt_IO;
+typedef const DcmatInt &DcmatInt_O, &DcmatInt_IO;
 
 class DcmatLlong_c
 {
@@ -398,9 +370,7 @@ public:
     void set(const DcmatLlong_c &sli);
 
 
-    // === Cmat member functions ===
     const Llong& operator[](Long_I i) const;
-    const Llong& operator()(Long_I i) const;
     const Llong& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -426,7 +396,7 @@ inline void DcmatLlong_c::set(const DcmatLlong_c &sli)
 }
 
 
-inline const Llong & DcmatLlong_c::operator[](Long_I i) const
+inline const Llong &DcmatLlong_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -435,12 +405,7 @@ inline const Llong & DcmatLlong_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Llong & DcmatLlong_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Llong & DcmatLlong_c::operator()(Long_I i, Long_I j) const
+inline const Llong &DcmatLlong_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -474,7 +439,7 @@ inline const Llong * DcmatLlong_c::p() const
     return m_p;
 }
 
-typedef const DcmatLlong_c & DcmatLlong_I;
+typedef const DcmatLlong_c &DcmatLlong_I;
 
 class DcmatLlong
 {
@@ -492,9 +457,7 @@ public:
 
     operator DcmatLlong_c() const;
 
-    // === Cmat member functions ===
     Llong& operator[](Long_I i) const;
-    Llong& operator()(Long_I i) const;
     Llong& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -524,7 +487,7 @@ inline DcmatLlong::operator DcmatLlong_c() const
     return *((DcmatLlong_c *)this);
 }
 
-inline Llong & DcmatLlong::operator[](Long_I i) const
+inline Llong &DcmatLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -533,12 +496,7 @@ inline Llong & DcmatLlong::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Llong & DcmatLlong::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Llong & DcmatLlong::operator()(Long_I i, Long_I j) const
+inline Llong &DcmatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -572,7 +530,7 @@ inline Llong * DcmatLlong::p() const
     return m_p;
 }
 
-typedef const DcmatLlong & DcmatLlong_O, & DcmatLlong_IO;
+typedef const DcmatLlong &DcmatLlong_O, &DcmatLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DcmatInt_c DcmatLong_c;
@@ -580,7 +538,7 @@ typedef DcmatInt_c DcmatLong_c;
 typedef DcmatLlong_c DcmatLong_c;
 #endif
 
-typedef const DcmatLong_c & DcmatLong_I;
+typedef const DcmatLong_c &DcmatLong_I;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DcmatInt DcmatLong;
@@ -588,7 +546,7 @@ typedef DcmatInt DcmatLong;
 typedef DcmatLlong DcmatLong;
 #endif
 
-typedef const DcmatLong & DcmatLong_O, & DcmatLong_IO;
+typedef const DcmatLong &DcmatLong_O, &DcmatLong_IO;
 
 class DcmatFloat_c
 {
@@ -605,9 +563,7 @@ public:
     void set(const DcmatFloat_c &sli);
 
 
-    // === Cmat member functions ===
     const Float& operator[](Long_I i) const;
-    const Float& operator()(Long_I i) const;
     const Float& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -633,7 +589,7 @@ inline void DcmatFloat_c::set(const DcmatFloat_c &sli)
 }
 
 
-inline const Float & DcmatFloat_c::operator[](Long_I i) const
+inline const Float &DcmatFloat_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -642,12 +598,7 @@ inline const Float & DcmatFloat_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Float & DcmatFloat_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Float & DcmatFloat_c::operator()(Long_I i, Long_I j) const
+inline const Float &DcmatFloat_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -681,7 +632,7 @@ inline const Float * DcmatFloat_c::p() const
     return m_p;
 }
 
-typedef const DcmatFloat_c & DcmatFloat_I;
+typedef const DcmatFloat_c &DcmatFloat_I;
 
 class DcmatFloat
 {
@@ -699,9 +650,7 @@ public:
 
     operator DcmatFloat_c() const;
 
-    // === Cmat member functions ===
     Float& operator[](Long_I i) const;
-    Float& operator()(Long_I i) const;
     Float& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -731,7 +680,7 @@ inline DcmatFloat::operator DcmatFloat_c() const
     return *((DcmatFloat_c *)this);
 }
 
-inline Float & DcmatFloat::operator[](Long_I i) const
+inline Float &DcmatFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -740,12 +689,7 @@ inline Float & DcmatFloat::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Float & DcmatFloat::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Float & DcmatFloat::operator()(Long_I i, Long_I j) const
+inline Float &DcmatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -779,7 +723,7 @@ inline Float * DcmatFloat::p() const
     return m_p;
 }
 
-typedef const DcmatFloat & DcmatFloat_O, & DcmatFloat_IO;
+typedef const DcmatFloat &DcmatFloat_O, &DcmatFloat_IO;
 
 class DcmatDoub_c
 {
@@ -796,9 +740,7 @@ public:
     void set(const DcmatDoub_c &sli);
 
 
-    // === Cmat member functions ===
     const Doub& operator[](Long_I i) const;
-    const Doub& operator()(Long_I i) const;
     const Doub& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -824,7 +766,7 @@ inline void DcmatDoub_c::set(const DcmatDoub_c &sli)
 }
 
 
-inline const Doub & DcmatDoub_c::operator[](Long_I i) const
+inline const Doub &DcmatDoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -833,12 +775,7 @@ inline const Doub & DcmatDoub_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Doub & DcmatDoub_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Doub & DcmatDoub_c::operator()(Long_I i, Long_I j) const
+inline const Doub &DcmatDoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -872,7 +809,7 @@ inline const Doub * DcmatDoub_c::p() const
     return m_p;
 }
 
-typedef const DcmatDoub_c & DcmatDoub_I;
+typedef const DcmatDoub_c &DcmatDoub_I;
 
 class DcmatDoub
 {
@@ -890,9 +827,7 @@ public:
 
     operator DcmatDoub_c() const;
 
-    // === Cmat member functions ===
     Doub& operator[](Long_I i) const;
-    Doub& operator()(Long_I i) const;
     Doub& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -922,7 +857,7 @@ inline DcmatDoub::operator DcmatDoub_c() const
     return *((DcmatDoub_c *)this);
 }
 
-inline Doub & DcmatDoub::operator[](Long_I i) const
+inline Doub &DcmatDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -931,12 +866,7 @@ inline Doub & DcmatDoub::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Doub & DcmatDoub::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Doub & DcmatDoub::operator()(Long_I i, Long_I j) const
+inline Doub &DcmatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -970,7 +900,7 @@ inline Doub * DcmatDoub::p() const
     return m_p;
 }
 
-typedef const DcmatDoub & DcmatDoub_O, & DcmatDoub_IO;
+typedef const DcmatDoub &DcmatDoub_O, &DcmatDoub_IO;
 
 class DcmatLdoub_c
 {
@@ -987,9 +917,7 @@ public:
     void set(const DcmatLdoub_c &sli);
 
 
-    // === Cmat member functions ===
     const Ldoub& operator[](Long_I i) const;
-    const Ldoub& operator()(Long_I i) const;
     const Ldoub& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1015,7 +943,7 @@ inline void DcmatLdoub_c::set(const DcmatLdoub_c &sli)
 }
 
 
-inline const Ldoub & DcmatLdoub_c::operator[](Long_I i) const
+inline const Ldoub &DcmatLdoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1024,12 +952,7 @@ inline const Ldoub & DcmatLdoub_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Ldoub & DcmatLdoub_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Ldoub & DcmatLdoub_c::operator()(Long_I i, Long_I j) const
+inline const Ldoub &DcmatLdoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1063,7 +986,7 @@ inline const Ldoub * DcmatLdoub_c::p() const
     return m_p;
 }
 
-typedef const DcmatLdoub_c & DcmatLdoub_I;
+typedef const DcmatLdoub_c &DcmatLdoub_I;
 
 class DcmatLdoub
 {
@@ -1081,9 +1004,7 @@ public:
 
     operator DcmatLdoub_c() const;
 
-    // === Cmat member functions ===
     Ldoub& operator[](Long_I i) const;
-    Ldoub& operator()(Long_I i) const;
     Ldoub& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1113,7 +1034,7 @@ inline DcmatLdoub::operator DcmatLdoub_c() const
     return *((DcmatLdoub_c *)this);
 }
 
-inline Ldoub & DcmatLdoub::operator[](Long_I i) const
+inline Ldoub &DcmatLdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1122,12 +1043,7 @@ inline Ldoub & DcmatLdoub::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Ldoub & DcmatLdoub::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Ldoub & DcmatLdoub::operator()(Long_I i, Long_I j) const
+inline Ldoub &DcmatLdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1161,7 +1077,7 @@ inline Ldoub * DcmatLdoub::p() const
     return m_p;
 }
 
-typedef const DcmatLdoub & DcmatLdoub_O, & DcmatLdoub_IO;
+typedef const DcmatLdoub &DcmatLdoub_O, &DcmatLdoub_IO;
 
 class DcmatFcomp_c
 {
@@ -1178,9 +1094,7 @@ public:
     void set(const DcmatFcomp_c &sli);
 
 
-    // === Cmat member functions ===
     const Fcomp& operator[](Long_I i) const;
-    const Fcomp& operator()(Long_I i) const;
     const Fcomp& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1206,7 +1120,7 @@ inline void DcmatFcomp_c::set(const DcmatFcomp_c &sli)
 }
 
 
-inline const Fcomp & DcmatFcomp_c::operator[](Long_I i) const
+inline const Fcomp &DcmatFcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1215,12 +1129,7 @@ inline const Fcomp & DcmatFcomp_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Fcomp & DcmatFcomp_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Fcomp & DcmatFcomp_c::operator()(Long_I i, Long_I j) const
+inline const Fcomp &DcmatFcomp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1254,7 +1163,7 @@ inline const Fcomp * DcmatFcomp_c::p() const
     return m_p;
 }
 
-typedef const DcmatFcomp_c & DcmatFcomp_I;
+typedef const DcmatFcomp_c &DcmatFcomp_I;
 
 class DcmatFcomp
 {
@@ -1272,9 +1181,7 @@ public:
 
     operator DcmatFcomp_c() const;
 
-    // === Cmat member functions ===
     Fcomp& operator[](Long_I i) const;
-    Fcomp& operator()(Long_I i) const;
     Fcomp& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1304,7 +1211,7 @@ inline DcmatFcomp::operator DcmatFcomp_c() const
     return *((DcmatFcomp_c *)this);
 }
 
-inline Fcomp & DcmatFcomp::operator[](Long_I i) const
+inline Fcomp &DcmatFcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1313,12 +1220,7 @@ inline Fcomp & DcmatFcomp::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Fcomp & DcmatFcomp::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Fcomp & DcmatFcomp::operator()(Long_I i, Long_I j) const
+inline Fcomp &DcmatFcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1352,7 +1254,7 @@ inline Fcomp * DcmatFcomp::p() const
     return m_p;
 }
 
-typedef const DcmatFcomp & DcmatFcomp_O, & DcmatFcomp_IO;
+typedef const DcmatFcomp &DcmatFcomp_O, &DcmatFcomp_IO;
 
 class DcmatComp_c
 {
@@ -1369,9 +1271,7 @@ public:
     void set(const DcmatComp_c &sli);
 
 
-    // === Cmat member functions ===
     const Comp& operator[](Long_I i) const;
-    const Comp& operator()(Long_I i) const;
     const Comp& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1397,7 +1297,7 @@ inline void DcmatComp_c::set(const DcmatComp_c &sli)
 }
 
 
-inline const Comp & DcmatComp_c::operator[](Long_I i) const
+inline const Comp &DcmatComp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1406,12 +1306,7 @@ inline const Comp & DcmatComp_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Comp & DcmatComp_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Comp & DcmatComp_c::operator()(Long_I i, Long_I j) const
+inline const Comp &DcmatComp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1445,7 +1340,7 @@ inline const Comp * DcmatComp_c::p() const
     return m_p;
 }
 
-typedef const DcmatComp_c & DcmatComp_I;
+typedef const DcmatComp_c &DcmatComp_I;
 
 class DcmatComp
 {
@@ -1463,9 +1358,7 @@ public:
 
     operator DcmatComp_c() const;
 
-    // === Cmat member functions ===
     Comp& operator[](Long_I i) const;
-    Comp& operator()(Long_I i) const;
     Comp& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1495,7 +1388,7 @@ inline DcmatComp::operator DcmatComp_c() const
     return *((DcmatComp_c *)this);
 }
 
-inline Comp & DcmatComp::operator[](Long_I i) const
+inline Comp &DcmatComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1504,12 +1397,7 @@ inline Comp & DcmatComp::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Comp & DcmatComp::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Comp & DcmatComp::operator()(Long_I i, Long_I j) const
+inline Comp &DcmatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1543,7 +1431,7 @@ inline Comp * DcmatComp::p() const
     return m_p;
 }
 
-typedef const DcmatComp & DcmatComp_O, & DcmatComp_IO;
+typedef const DcmatComp &DcmatComp_O, &DcmatComp_IO;
 
 class DcmatLcomp_c
 {
@@ -1560,9 +1448,7 @@ public:
     void set(const DcmatLcomp_c &sli);
 
 
-    // === Cmat member functions ===
     const Lcomp& operator[](Long_I i) const;
-    const Lcomp& operator()(Long_I i) const;
     const Lcomp& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1588,7 +1474,7 @@ inline void DcmatLcomp_c::set(const DcmatLcomp_c &sli)
 }
 
 
-inline const Lcomp & DcmatLcomp_c::operator[](Long_I i) const
+inline const Lcomp &DcmatLcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1597,12 +1483,7 @@ inline const Lcomp & DcmatLcomp_c::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline const Lcomp & DcmatLcomp_c::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline const Lcomp & DcmatLcomp_c::operator()(Long_I i, Long_I j) const
+inline const Lcomp &DcmatLcomp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1636,7 +1517,7 @@ inline const Lcomp * DcmatLcomp_c::p() const
     return m_p;
 }
 
-typedef const DcmatLcomp_c & DcmatLcomp_I;
+typedef const DcmatLcomp_c &DcmatLcomp_I;
 
 class DcmatLcomp
 {
@@ -1654,9 +1535,7 @@ public:
 
     operator DcmatLcomp_c() const;
 
-    // === Cmat member functions ===
     Lcomp& operator[](Long_I i) const;
-    Lcomp& operator()(Long_I i) const;
     Lcomp& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -1686,7 +1565,7 @@ inline DcmatLcomp::operator DcmatLcomp_c() const
     return *((DcmatLcomp_c *)this);
 }
 
-inline Lcomp & DcmatLcomp::operator[](Long_I i) const
+inline Lcomp &DcmatLcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1695,12 +1574,7 @@ inline Lcomp & DcmatLcomp::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline Lcomp & DcmatLcomp::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline Lcomp & DcmatLcomp::operator()(Long_I i, Long_I j) const
+inline Lcomp &DcmatLcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1734,6 +1608,6 @@ inline Lcomp * DcmatLcomp::p() const
     return m_p;
 }
 
-typedef const DcmatLcomp & DcmatLcomp_O, & DcmatLcomp_IO;
+typedef const DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
 
 } // namespace slisc

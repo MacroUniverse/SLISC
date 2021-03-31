@@ -1,5 +1,6 @@
 #pragma once
 #include "Svec.h"
+// "_c" means lower level const
 
 namespace slisc {
 //% types = {
@@ -57,8 +58,7 @@ public:
     operator @ScmatT_c@() const;
 //% end
 
-    // === Cmat functions ===
-    @CT@& operator()(Long_I i, Long_I j) const; // double indexing
+    @CT@ &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -83,7 +83,7 @@ inline @Class@::operator @ScmatT_c@() const
 }
 //% end
 
-inline @CT@ & @Class@::operator()(Long_I i, Long_I j) const
+inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -127,9 +127,9 @@ inline @Class@::~@Class@() {}
 //% end
 
 //% if constness
-typedef const @Class@ & @ScmatT@_I;
+typedef const @Class@ &@ScmatT@_I;
 //% else
-typedef const @Class@ & @ScmatT@_O, & @ScmatT@_IO;
+typedef const @Class@ &@ScmatT@_O, &@ScmatT@_IO;
 //% end
 //%------------------------
 } // namespace slisc

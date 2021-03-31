@@ -23,8 +23,8 @@ public:
     void imag(@T@_I val);
 };
 
-typedef const @Timag@ & @Timag@_I;
-typedef @Timag@ & @Timag@_O, & @Timag@_IO;
+typedef const @Timag@ &@Timag@_I;
+typedef @Timag@ &@Timag@_O, &@Timag@_IO;
 
 inline @Timag@::@Timag@(const @T@ &val): m_s(val) {}
 

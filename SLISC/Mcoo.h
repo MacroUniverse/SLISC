@@ -30,7 +30,7 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    Char & ref(Long_I i, Long_I j);
+    Char &ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     Char operator()(Long_I i, Long_I j) const;
     Char &operator[](Long_I ind); // return element
@@ -166,7 +166,7 @@ inline Long McooChar::capacity() const
     return Base::size();
 }
 
-inline Char & McooChar::operator[](Long_I ind)
+inline Char &McooChar::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -262,7 +262,7 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    Int & ref(Long_I i, Long_I j);
+    Int &ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     Int operator()(Long_I i, Long_I j) const;
     Int &operator[](Long_I ind); // return element
@@ -398,7 +398,7 @@ inline Long McooInt::capacity() const
     return Base::size();
 }
 
-inline Int & McooInt::operator[](Long_I ind)
+inline Int &McooInt::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -494,7 +494,7 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    Llong & ref(Long_I i, Long_I j);
+    Llong &ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     Llong operator()(Long_I i, Long_I j) const;
     Llong &operator[](Long_I ind); // return element
@@ -630,7 +630,7 @@ inline Long McooLlong::capacity() const
     return Base::size();
 }
 
-inline Llong & McooLlong::operator[](Long_I ind)
+inline Llong &McooLlong::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -726,7 +726,7 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    Doub & ref(Long_I i, Long_I j);
+    Doub &ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     Doub operator()(Long_I i, Long_I j) const;
     Doub &operator[](Long_I ind); // return element
@@ -862,7 +862,7 @@ inline Long McooDoub::capacity() const
     return Base::size();
 }
 
-inline Doub & McooDoub::operator[](Long_I ind)
+inline Doub &McooDoub::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -958,7 +958,7 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    Comp & ref(Long_I i, Long_I j);
+    Comp &ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     Comp operator()(Long_I i, Long_I j) const;
     Comp &operator[](Long_I ind); // return element
@@ -1094,7 +1094,7 @@ inline Long McooComp::capacity() const
     return Base::size();
 }
 
-inline Comp & McooComp::operator[](Long_I ind)
+inline Comp &McooComp::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)

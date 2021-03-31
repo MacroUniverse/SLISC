@@ -18,8 +18,8 @@ public:
     void imag(Float_I val);
 };
 
-typedef const Fimag & Fimag_I;
-typedef Fimag & Fimag_O, & Fimag_IO;
+typedef const Fimag &Fimag_I;
+typedef Fimag &Fimag_O, &Fimag_IO;
 
 inline Fimag::Fimag(const Float &val): m_s(val) {}
 
@@ -74,8 +74,8 @@ public:
     void imag(Doub_I val);
 };
 
-typedef const Imag & Imag_I;
-typedef Imag & Imag_O, & Imag_IO;
+typedef const Imag &Imag_I;
+typedef Imag &Imag_O, &Imag_IO;
 
 inline Imag::Imag(const Doub &val): m_s(val) {}
 
@@ -130,8 +130,8 @@ public:
     void imag(Ldoub_I val);
 };
 
-typedef const Limag & Limag_I;
-typedef Limag & Limag_O, & Limag_IO;
+typedef const Limag &Limag_I;
+typedef Limag &Limag_O, &Limag_IO;
 
 inline Limag::Limag(const Ldoub &val): m_s(val) {}
 

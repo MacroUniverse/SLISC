@@ -58,10 +58,10 @@ public:
     @Class@();
     @Class@(@CT@ *p, Long_I N, Long_I step);
     @CT@* p() const;
-    @CT@ & operator[](Long_I i) const;
-    @CT@ & operator()(Long_I i) const;
-    @CT@ & end() const;
-    @CT@ & end(Long_I i) const;
+    @CT@ &operator[](Long_I i) const;
+    @CT@ &operator()(Long_I i) const;
+    @CT@ &end() const;
+    @CT@ &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -107,7 +107,7 @@ inline Long @Class@::step() const
     return m_step;
 }
 
-inline @CT@ & @Class@::operator[](Long_I i) const
+inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -116,10 +116,10 @@ inline @CT@ & @Class@::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline @CT@ & @Class@::operator()(Long_I i) const
+inline @CT@ &@Class@::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline @CT@ & @Class@::end() const
+inline @CT@ &@Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -128,7 +128,7 @@ inline @CT@ & @Class@::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline @CT@ & @Class@::end(Long_I i) const
+inline @CT@ &@Class@::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -183,9 +183,9 @@ inline @Class@::~@Class@() {}
 //% end
 
 //% if constness
-typedef const @Class@ & @DvecT@_I;
+typedef const @Class@ &@DvecT@_I;
 //% else
-typedef const @Class@ & @DvecT@_O, & @DvecT@_IO;
+typedef const @Class@ &@DvecT@_O, &@DvecT@_IO;
 //% end
 //%------------------------
 } // namespace slisc

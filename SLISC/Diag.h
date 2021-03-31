@@ -69,8 +69,8 @@ inline const DiagInt &diag(VecInt_I v)
     return (DiagInt&)v;
 }
 
-typedef const DiagInt & DiagInt_I;
-typedef DiagInt & DiagInt_O, & DiagInt_IO;
+typedef const DiagInt &DiagInt_I;
+typedef DiagInt &DiagInt_O, &DiagInt_IO;
 
 void veccpy(Llong *, const Llong *, Llong_I);
 
@@ -137,8 +137,8 @@ inline const DiagLlong &diag(VecLlong_I v)
     return (DiagLlong&)v;
 }
 
-typedef const DiagLlong & DiagLlong_I;
-typedef DiagLlong & DiagLlong_O, & DiagLlong_IO;
+typedef const DiagLlong &DiagLlong_I;
+typedef DiagLlong &DiagLlong_O, &DiagLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DiagInt DiagLong;
@@ -146,8 +146,8 @@ typedef DiagInt DiagLong;
 typedef DiagLlong DiagLong;
 #endif
 
-typedef const DiagLong & DiagLong_I;
-typedef DiagLong & DiagLong_O, & DiagLong_IO;
+typedef const DiagLong &DiagLong_I;
+typedef DiagLong &DiagLong_O, &DiagLong_IO;
 
 void veccpy(Doub *, const Doub *, Llong_I);
 
@@ -214,8 +214,8 @@ inline const DiagDoub &diag(VecDoub_I v)
     return (DiagDoub&)v;
 }
 
-typedef const DiagDoub & DiagDoub_I;
-typedef DiagDoub & DiagDoub_O, & DiagDoub_IO;
+typedef const DiagDoub &DiagDoub_I;
+typedef DiagDoub &DiagDoub_O, &DiagDoub_IO;
 
 void veccpy(Comp *, const Comp *, Llong_I);
 
@@ -282,7 +282,7 @@ inline const DiagComp &diag(VecComp_I v)
     return (DiagComp&)v;
 }
 
-typedef const DiagComp & DiagComp_I;
-typedef DiagComp & DiagComp_O, & DiagComp_IO;
+typedef const DiagComp &DiagComp_I;
+typedef DiagComp &DiagComp_O, &DiagComp_IO;
 
 } // namespace slisc

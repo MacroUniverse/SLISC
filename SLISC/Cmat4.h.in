@@ -32,8 +32,8 @@ public:
     void operator<<(@Cmat4T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    @T@ & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const @T@ & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    @T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const @T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -77,7 +77,7 @@ inline void @Cmat4T@::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline @T@ & @Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline @T@ &@Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -88,7 +88,7 @@ inline @T@ & @Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const @T@ & @Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const @T@ &@Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -116,7 +116,7 @@ inline Long @Cmat4T@::n4() const {
 }
 //% end
 
-typedef const @Cmat4T@ & @Cmat4T@_I;
-typedef @Cmat4T@ & @Cmat4T@_O, & @Cmat4T@_IO;
+typedef const @Cmat4T@ &@Cmat4T@_I;
+typedef @Cmat4T@ &@Cmat4T@_O, &@Cmat4T@_IO;
 //%-----------------------------
 } // namespace slisc

@@ -82,7 +82,7 @@ inline const @DiagT@ &diag(@VecT@_I v)
 }
 //% end
 
-typedef const @DiagT@ & @DiagT@_I;
-typedef @DiagT@ & @DiagT@_O, & @DiagT@_IO;
+typedef const @DiagT@ &@DiagT@_I;
+typedef @DiagT@ &@DiagT@_O, &@DiagT@_IO;
 //%------------------------
 } // namespace slisc

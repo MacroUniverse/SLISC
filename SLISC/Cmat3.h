@@ -13,12 +13,12 @@ public:
     Cmat3Char(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Char(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Char(const Cmat3Char &rhs); // copy constructor
-    Cmat3Char & operator=(const Cmat3Char &rhs) = delete;
+    Cmat3Char &operator=(const Cmat3Char &rhs) = delete;
     void operator<<(Cmat3Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Char & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Char & operator()(Long_I i, Long_I j, Long_I k) const;
+    Char &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Char &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -59,7 +59,7 @@ inline void Cmat3Char::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Char & Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
+inline Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -69,7 +69,7 @@ inline Char & Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Char & Cmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -91,8 +91,8 @@ inline Long Cmat3Char::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Char & Cmat3Char_I;
-typedef Cmat3Char & Cmat3Char_O, & Cmat3Char_IO;
+typedef const Cmat3Char &Cmat3Char_I;
+typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
 class Cmat3Int : public VbaseInt
 {
@@ -104,12 +104,12 @@ public:
     Cmat3Int(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Int(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Int(const Cmat3Int &rhs); // copy constructor
-    Cmat3Int & operator=(const Cmat3Int &rhs) = delete;
+    Cmat3Int &operator=(const Cmat3Int &rhs) = delete;
     void operator<<(Cmat3Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Int & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Int & operator()(Long_I i, Long_I j, Long_I k) const;
+    Int &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Int &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -150,7 +150,7 @@ inline void Cmat3Int::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Int & Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
+inline Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -160,7 +160,7 @@ inline Int & Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Int & Cmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -182,8 +182,8 @@ inline Long Cmat3Int::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Int & Cmat3Int_I;
-typedef Cmat3Int & Cmat3Int_O, & Cmat3Int_IO;
+typedef const Cmat3Int &Cmat3Int_I;
+typedef Cmat3Int &Cmat3Int_O, &Cmat3Int_IO;
 
 class Cmat3Llong : public VbaseLlong
 {
@@ -195,12 +195,12 @@ public:
     Cmat3Llong(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Llong(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Llong(const Cmat3Llong &rhs); // copy constructor
-    Cmat3Llong & operator=(const Cmat3Llong &rhs) = delete;
+    Cmat3Llong &operator=(const Cmat3Llong &rhs) = delete;
     void operator<<(Cmat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Llong & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Llong & operator()(Long_I i, Long_I j, Long_I k) const;
+    Llong &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -241,7 +241,7 @@ inline void Cmat3Llong::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Llong & Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
+inline Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -251,7 +251,7 @@ inline Llong & Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Llong & Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -273,8 +273,8 @@ inline Long Cmat3Llong::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Llong & Cmat3Llong_I;
-typedef Cmat3Llong & Cmat3Llong_O, & Cmat3Llong_IO;
+typedef const Cmat3Llong &Cmat3Llong_I;
+typedef Cmat3Llong &Cmat3Llong_O, &Cmat3Llong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef Cmat3Int Cmat3Long;
@@ -282,8 +282,8 @@ typedef Cmat3Int Cmat3Long;
 typedef Cmat3Llong Cmat3Long;
 #endif
 
-typedef const Cmat3Long & Cmat3Long_I;
-typedef Cmat3Long & Cmat3Long_O, & Cmat3Long_IO;
+typedef const Cmat3Long &Cmat3Long_I;
+typedef Cmat3Long &Cmat3Long_O, &Cmat3Long_IO;
 
 class Cmat3Float : public VbaseFloat
 {
@@ -295,12 +295,12 @@ public:
     Cmat3Float(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Float(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Float(const Cmat3Float &rhs); // copy constructor
-    Cmat3Float & operator=(const Cmat3Float &rhs) = delete;
+    Cmat3Float &operator=(const Cmat3Float &rhs) = delete;
     void operator<<(Cmat3Float &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Float & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Float & operator()(Long_I i, Long_I j, Long_I k) const;
+    Float &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Float &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -341,7 +341,7 @@ inline void Cmat3Float::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Float & Cmat3Float::operator()(Long_I i, Long_I j, Long_I k)
+inline Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -351,7 +351,7 @@ inline Float & Cmat3Float::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Float & Cmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -373,8 +373,8 @@ inline Long Cmat3Float::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Float & Cmat3Float_I;
-typedef Cmat3Float & Cmat3Float_O, & Cmat3Float_IO;
+typedef const Cmat3Float &Cmat3Float_I;
+typedef Cmat3Float &Cmat3Float_O, &Cmat3Float_IO;
 
 class Cmat3Doub : public VbaseDoub
 {
@@ -386,12 +386,12 @@ public:
     Cmat3Doub(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Doub(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Doub(const Cmat3Doub &rhs); // copy constructor
-    Cmat3Doub & operator=(const Cmat3Doub &rhs) = delete;
+    Cmat3Doub &operator=(const Cmat3Doub &rhs) = delete;
     void operator<<(Cmat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Doub & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Doub & operator()(Long_I i, Long_I j, Long_I k) const;
+    Doub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -432,7 +432,7 @@ inline void Cmat3Doub::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Doub & Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
+inline Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -442,7 +442,7 @@ inline Doub & Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Doub & Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -464,8 +464,8 @@ inline Long Cmat3Doub::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Doub & Cmat3Doub_I;
-typedef Cmat3Doub & Cmat3Doub_O, & Cmat3Doub_IO;
+typedef const Cmat3Doub &Cmat3Doub_I;
+typedef Cmat3Doub &Cmat3Doub_O, &Cmat3Doub_IO;
 
 class Cmat3Ldoub : public VbaseLdoub
 {
@@ -477,12 +477,12 @@ public:
     Cmat3Ldoub(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Ldoub(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Ldoub(const Cmat3Ldoub &rhs); // copy constructor
-    Cmat3Ldoub & operator=(const Cmat3Ldoub &rhs) = delete;
+    Cmat3Ldoub &operator=(const Cmat3Ldoub &rhs) = delete;
     void operator<<(Cmat3Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Ldoub & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Ldoub & operator()(Long_I i, Long_I j, Long_I k) const;
+    Ldoub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -523,7 +523,7 @@ inline void Cmat3Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Ldoub & Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
+inline Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -533,7 +533,7 @@ inline Ldoub & Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Ldoub & Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -555,8 +555,8 @@ inline Long Cmat3Ldoub::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Ldoub & Cmat3Ldoub_I;
-typedef Cmat3Ldoub & Cmat3Ldoub_O, & Cmat3Ldoub_IO;
+typedef const Cmat3Ldoub &Cmat3Ldoub_I;
+typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
 
 class Cmat3Fcomp : public VbaseFcomp
 {
@@ -568,12 +568,12 @@ public:
     Cmat3Fcomp(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Fcomp(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Fcomp(const Cmat3Fcomp &rhs); // copy constructor
-    Cmat3Fcomp & operator=(const Cmat3Fcomp &rhs) = delete;
+    Cmat3Fcomp &operator=(const Cmat3Fcomp &rhs) = delete;
     void operator<<(Cmat3Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Fcomp & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Fcomp & operator()(Long_I i, Long_I j, Long_I k) const;
+    Fcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -614,7 +614,7 @@ inline void Cmat3Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Fcomp & Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
+inline Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -624,7 +624,7 @@ inline Fcomp & Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Fcomp & Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -646,8 +646,8 @@ inline Long Cmat3Fcomp::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Fcomp & Cmat3Fcomp_I;
-typedef Cmat3Fcomp & Cmat3Fcomp_O, & Cmat3Fcomp_IO;
+typedef const Cmat3Fcomp &Cmat3Fcomp_I;
+typedef Cmat3Fcomp &Cmat3Fcomp_O, &Cmat3Fcomp_IO;
 
 class Cmat3Comp : public VbaseComp
 {
@@ -659,12 +659,12 @@ public:
     Cmat3Comp(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Comp(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Comp(const Cmat3Comp &rhs); // copy constructor
-    Cmat3Comp & operator=(const Cmat3Comp &rhs) = delete;
+    Cmat3Comp &operator=(const Cmat3Comp &rhs) = delete;
     void operator<<(Cmat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Comp & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Comp & operator()(Long_I i, Long_I j, Long_I k) const;
+    Comp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -705,7 +705,7 @@ inline void Cmat3Comp::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Comp & Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
+inline Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -715,7 +715,7 @@ inline Comp & Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Comp & Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -737,8 +737,8 @@ inline Long Cmat3Comp::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Comp & Cmat3Comp_I;
-typedef Cmat3Comp & Cmat3Comp_O, & Cmat3Comp_IO;
+typedef const Cmat3Comp &Cmat3Comp_I;
+typedef Cmat3Comp &Cmat3Comp_O, &Cmat3Comp_IO;
 
 class Cmat3Lcomp : public VbaseLcomp
 {
@@ -750,12 +750,12 @@ public:
     Cmat3Lcomp(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Lcomp(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Lcomp(const Cmat3Lcomp &rhs); // copy constructor
-    Cmat3Lcomp & operator=(const Cmat3Lcomp &rhs) = delete;
+    Cmat3Lcomp &operator=(const Cmat3Lcomp &rhs) = delete;
     void operator<<(Cmat3Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Lcomp & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Lcomp & operator()(Long_I i, Long_I j, Long_I k) const;
+    Lcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -796,7 +796,7 @@ inline void Cmat3Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Lcomp & Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
+inline Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -806,7 +806,7 @@ inline Lcomp & Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Lcomp & Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -828,8 +828,8 @@ inline Long Cmat3Lcomp::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Lcomp & Cmat3Lcomp_I;
-typedef Cmat3Lcomp & Cmat3Lcomp_O, & Cmat3Lcomp_IO;
+typedef const Cmat3Lcomp &Cmat3Lcomp_I;
+typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
 
 class Cmat3Fimag : public VbaseFimag
 {
@@ -841,12 +841,12 @@ public:
     Cmat3Fimag(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Fimag(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Fimag(const Cmat3Fimag &rhs); // copy constructor
-    Cmat3Fimag & operator=(const Cmat3Fimag &rhs) = delete;
+    Cmat3Fimag &operator=(const Cmat3Fimag &rhs) = delete;
     void operator<<(Cmat3Fimag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Fimag & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Fimag & operator()(Long_I i, Long_I j, Long_I k) const;
+    Fimag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -887,7 +887,7 @@ inline void Cmat3Fimag::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Fimag & Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
+inline Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -897,7 +897,7 @@ inline Fimag & Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Fimag & Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -919,8 +919,8 @@ inline Long Cmat3Fimag::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Fimag & Cmat3Fimag_I;
-typedef Cmat3Fimag & Cmat3Fimag_O, & Cmat3Fimag_IO;
+typedef const Cmat3Fimag &Cmat3Fimag_I;
+typedef Cmat3Fimag &Cmat3Fimag_O, &Cmat3Fimag_IO;
 
 class Cmat3Imag : public VbaseImag
 {
@@ -932,12 +932,12 @@ public:
     Cmat3Imag(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Imag(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Imag(const Cmat3Imag &rhs); // copy constructor
-    Cmat3Imag & operator=(const Cmat3Imag &rhs) = delete;
+    Cmat3Imag &operator=(const Cmat3Imag &rhs) = delete;
     void operator<<(Cmat3Imag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Imag & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Imag & operator()(Long_I i, Long_I j, Long_I k) const;
+    Imag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -978,7 +978,7 @@ inline void Cmat3Imag::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Imag & Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
+inline Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -988,7 +988,7 @@ inline Imag & Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Imag & Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1010,8 +1010,8 @@ inline Long Cmat3Imag::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Imag & Cmat3Imag_I;
-typedef Cmat3Imag & Cmat3Imag_O, & Cmat3Imag_IO;
+typedef const Cmat3Imag &Cmat3Imag_I;
+typedef Cmat3Imag &Cmat3Imag_O, &Cmat3Imag_IO;
 
 class Cmat3Limag : public VbaseLimag
 {
@@ -1023,12 +1023,12 @@ public:
     Cmat3Limag(): m_N1(0), m_N2(0), m_N3(0) {};
     Cmat3Limag(Long_I N1, Long_I N2, Long_I N3);
     Cmat3Limag(const Cmat3Limag &rhs); // copy constructor
-    Cmat3Limag & operator=(const Cmat3Limag &rhs) = delete;
+    Cmat3Limag &operator=(const Cmat3Limag &rhs) = delete;
     void operator<<(Cmat3Limag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3);
     void reshape(Long_I N1, Long_I N2, Long_I N3);
-    Limag & operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
-    const Limag & operator()(Long_I i, Long_I j, Long_I k) const;
+    Limag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -1069,7 +1069,7 @@ inline void Cmat3Limag::reshape(Long_I N1, Long_I N2, Long_I N3)
     m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
-inline Limag & Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
+inline Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1079,7 +1079,7 @@ inline Limag & Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
     return m_p[i + m_N1*j + m_N1*m_N2*k];
 }
 
-inline const Limag & Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
+inline const Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
@@ -1101,7 +1101,7 @@ inline Long Cmat3Limag::n3() const {
     return m_N3;
 }
 
-typedef const Cmat3Limag & Cmat3Limag_I;
-typedef Cmat3Limag & Cmat3Limag_O, & Cmat3Limag_IO;
+typedef const Cmat3Limag &Cmat3Limag_I;
+typedef Cmat3Limag &Cmat3Limag_O, &Cmat3Limag_IO;
 
 } // namespace slisc

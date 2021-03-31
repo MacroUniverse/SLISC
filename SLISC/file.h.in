@@ -295,7 +295,7 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
         fnames_ext.clear();
     Long N_ext = ext.size();
     for (Long i = 0; i < size(fnames); ++i) {
-        const Str & str = fnames[i];
+        const Str &str = fnames[i];
         // check position of '.'
         Long ind = fnames[i].size() - N_ext - 1;
         if (ind < 0 || str[ind] != '.')

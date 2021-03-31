@@ -35,7 +35,7 @@ public:
     // get single index using double index, return -1 if not found
     Long find(Long_I i, Long_I j) const;
     // reference to an element (element must exist)
-    @T@ & ref(Long_I i, Long_I j);
+    @T@ &ref(Long_I i, Long_I j);
     // double indexing (element need not exist)
     @T@ operator()(Long_I i, Long_I j) const;
     @T@ &operator[](Long_I ind); // return element
@@ -171,7 +171,7 @@ inline Long @McooT@::capacity() const
     return Base::size();
 }
 
-inline @T@ & @McooT@::operator[](Long_I ind)
+inline @T@ &@McooT@::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)

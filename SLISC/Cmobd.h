@@ -54,12 +54,12 @@ inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
         vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-inline const Int & CmobdInt::operator[](Long_I i) const
+inline const Int &CmobdInt::operator[](Long_I i) const
 {
     return m_data[i];
 }
 
-inline Int & CmobdInt::operator[](Long_I i)
+inline Int &CmobdInt::operator[](Long_I i)
 {
     return m_data[i];
 }
@@ -223,12 +223,12 @@ inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
         vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-inline const Doub & CmobdDoub::operator[](Long_I i) const
+inline const Doub &CmobdDoub::operator[](Long_I i) const
 {
     return m_data[i];
 }
 
-inline Doub & CmobdDoub::operator[](Long_I i)
+inline Doub &CmobdDoub::operator[](Long_I i)
 {
     return m_data[i];
 }
@@ -392,12 +392,12 @@ inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
         vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-inline const Comp & CmobdComp::operator[](Long_I i) const
+inline const Comp &CmobdComp::operator[](Long_I i) const
 {
     return m_data[i];
 }
 
-inline Comp & CmobdComp::operator[](Long_I i)
+inline Comp &CmobdComp::operator[](Long_I i)
 {
     return m_data[i];
 }

@@ -430,10 +430,11 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% };
 //%-----------------------
 //% [T, T1] = varargin{:};
+//% Cmat3T = ['Cmat3' value_type(T)];
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
 @same_shape('lhs', 'rhs')@
-    auto & c3 = lhs.cmat3();
+    @Cmat3T@ &c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);

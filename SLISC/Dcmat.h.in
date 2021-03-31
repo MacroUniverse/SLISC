@@ -65,9 +65,7 @@ public:
     operator @DcmatT_c@() const;
 //% end
 
-    // === Cmat member functions ===
     @CT@& operator[](Long_I i) const;
-    @CT@& operator()(Long_I i) const;
     @CT@& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
@@ -99,7 +97,7 @@ inline @Class@::operator @DcmatT_c@() const
 }
 //% end
 
-inline @CT@ & @Class@::operator[](Long_I i) const
+inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -108,12 +106,7 @@ inline @CT@ & @Class@::operator[](Long_I i) const
     return m_p[i % m_N2 + m_lda * i / m_N2];
 }
 
-inline @CT@ & @Class@::operator()(Long_I i) const
-{
-    return operator[](i);
-}
-
-inline @CT@ & @Class@::operator()(Long_I i, Long_I j) const
+inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -149,9 +142,9 @@ inline @CT@ * @Class@::p() const
 //% end
 
 //% if constness
-typedef const @Class@ & @DcmatT@_I;
+typedef const @Class@ &@DcmatT@_I;
 //% else
-typedef const @Class@ & @DcmatT@_O, & @DcmatT@_IO;
+typedef const @Class@ &@DcmatT@_O, &@DcmatT@_IO;
 //% end
 //%------------------------
 } // namespace slisc

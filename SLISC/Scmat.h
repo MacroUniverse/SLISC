@@ -1,5 +1,6 @@
 #pragma once
 #include "Svec.h"
+// "_c" means lower level const
 
 namespace slisc {
 class ScmatChar_c : public SvecChar_c
@@ -11,8 +12,7 @@ public:
     ScmatChar_c(const Char *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Char& operator()(Long_I i, Long_I j) const; // double indexing
+    const Char &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -31,7 +31,7 @@ inline ScmatChar_c::ScmatChar_c(const Char *data, Long_I N1, Long_I N2)
     : SvecChar_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Char & ScmatChar_c::operator()(Long_I i, Long_I j) const
+inline const Char &ScmatChar_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -73,7 +73,7 @@ inline void ScmatChar_c::set(const ScmatChar_c &sli)
 
 inline ScmatChar_c::~ScmatChar_c() {}
 
-typedef const ScmatChar_c & ScmatChar_I;
+typedef const ScmatChar_c &ScmatChar_I;
 
 class ScmatChar : public SvecChar
 {
@@ -85,8 +85,7 @@ public:
 
     operator ScmatChar_c() const;
 
-    // === Cmat functions ===
-    Char& operator()(Long_I i, Long_I j) const; // double indexing
+    Char &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -109,7 +108,7 @@ inline ScmatChar::operator ScmatChar_c() const
     return *((ScmatChar_c *)this);
 }
 
-inline Char & ScmatChar::operator()(Long_I i, Long_I j) const
+inline Char &ScmatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -151,7 +150,7 @@ inline void ScmatChar::set(const ScmatChar &sli)
 
 inline ScmatChar::~ScmatChar() {}
 
-typedef const ScmatChar & ScmatChar_O, & ScmatChar_IO;
+typedef const ScmatChar &ScmatChar_O, &ScmatChar_IO;
 
 class ScmatInt_c : public SvecInt_c
 {
@@ -162,8 +161,7 @@ public:
     ScmatInt_c(const Int *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Int& operator()(Long_I i, Long_I j) const; // double indexing
+    const Int &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -182,7 +180,7 @@ inline ScmatInt_c::ScmatInt_c(const Int *data, Long_I N1, Long_I N2)
     : SvecInt_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Int & ScmatInt_c::operator()(Long_I i, Long_I j) const
+inline const Int &ScmatInt_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -224,7 +222,7 @@ inline void ScmatInt_c::set(const ScmatInt_c &sli)
 
 inline ScmatInt_c::~ScmatInt_c() {}
 
-typedef const ScmatInt_c & ScmatInt_I;
+typedef const ScmatInt_c &ScmatInt_I;
 
 class ScmatInt : public SvecInt
 {
@@ -236,8 +234,7 @@ public:
 
     operator ScmatInt_c() const;
 
-    // === Cmat functions ===
-    Int& operator()(Long_I i, Long_I j) const; // double indexing
+    Int &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -260,7 +257,7 @@ inline ScmatInt::operator ScmatInt_c() const
     return *((ScmatInt_c *)this);
 }
 
-inline Int & ScmatInt::operator()(Long_I i, Long_I j) const
+inline Int &ScmatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -302,7 +299,7 @@ inline void ScmatInt::set(const ScmatInt &sli)
 
 inline ScmatInt::~ScmatInt() {}
 
-typedef const ScmatInt & ScmatInt_O, & ScmatInt_IO;
+typedef const ScmatInt &ScmatInt_O, &ScmatInt_IO;
 
 class ScmatLlong_c : public SvecLlong_c
 {
@@ -313,8 +310,7 @@ public:
     ScmatLlong_c(const Llong *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Llong& operator()(Long_I i, Long_I j) const; // double indexing
+    const Llong &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -333,7 +329,7 @@ inline ScmatLlong_c::ScmatLlong_c(const Llong *data, Long_I N1, Long_I N2)
     : SvecLlong_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Llong & ScmatLlong_c::operator()(Long_I i, Long_I j) const
+inline const Llong &ScmatLlong_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -375,7 +371,7 @@ inline void ScmatLlong_c::set(const ScmatLlong_c &sli)
 
 inline ScmatLlong_c::~ScmatLlong_c() {}
 
-typedef const ScmatLlong_c & ScmatLlong_I;
+typedef const ScmatLlong_c &ScmatLlong_I;
 
 class ScmatLlong : public SvecLlong
 {
@@ -387,8 +383,7 @@ public:
 
     operator ScmatLlong_c() const;
 
-    // === Cmat functions ===
-    Llong& operator()(Long_I i, Long_I j) const; // double indexing
+    Llong &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -411,7 +406,7 @@ inline ScmatLlong::operator ScmatLlong_c() const
     return *((ScmatLlong_c *)this);
 }
 
-inline Llong & ScmatLlong::operator()(Long_I i, Long_I j) const
+inline Llong &ScmatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -453,7 +448,7 @@ inline void ScmatLlong::set(const ScmatLlong &sli)
 
 inline ScmatLlong::~ScmatLlong() {}
 
-typedef const ScmatLlong & ScmatLlong_O, & ScmatLlong_IO;
+typedef const ScmatLlong &ScmatLlong_O, &ScmatLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef ScmatInt_c ScmatLong_c;
@@ -461,7 +456,7 @@ typedef ScmatInt_c ScmatLong_c;
 typedef ScmatLlong_c ScmatLong_c;
 #endif
 
-typedef const ScmatLong_c & ScmatLong_I;
+typedef const ScmatLong_c &ScmatLong_I;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef ScmatInt ScmatLong;
@@ -469,7 +464,7 @@ typedef ScmatInt ScmatLong;
 typedef ScmatLlong ScmatLong;
 #endif
 
-typedef const ScmatLong & ScmatLong_O, & ScmatLong_IO;
+typedef const ScmatLong &ScmatLong_O, &ScmatLong_IO;
 
 class ScmatFloat_c : public SvecFloat_c
 {
@@ -480,8 +475,7 @@ public:
     ScmatFloat_c(const Float *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Float& operator()(Long_I i, Long_I j) const; // double indexing
+    const Float &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -500,7 +494,7 @@ inline ScmatFloat_c::ScmatFloat_c(const Float *data, Long_I N1, Long_I N2)
     : SvecFloat_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Float & ScmatFloat_c::operator()(Long_I i, Long_I j) const
+inline const Float &ScmatFloat_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -542,7 +536,7 @@ inline void ScmatFloat_c::set(const ScmatFloat_c &sli)
 
 inline ScmatFloat_c::~ScmatFloat_c() {}
 
-typedef const ScmatFloat_c & ScmatFloat_I;
+typedef const ScmatFloat_c &ScmatFloat_I;
 
 class ScmatFloat : public SvecFloat
 {
@@ -554,8 +548,7 @@ public:
 
     operator ScmatFloat_c() const;
 
-    // === Cmat functions ===
-    Float& operator()(Long_I i, Long_I j) const; // double indexing
+    Float &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -578,7 +571,7 @@ inline ScmatFloat::operator ScmatFloat_c() const
     return *((ScmatFloat_c *)this);
 }
 
-inline Float & ScmatFloat::operator()(Long_I i, Long_I j) const
+inline Float &ScmatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -620,7 +613,7 @@ inline void ScmatFloat::set(const ScmatFloat &sli)
 
 inline ScmatFloat::~ScmatFloat() {}
 
-typedef const ScmatFloat & ScmatFloat_O, & ScmatFloat_IO;
+typedef const ScmatFloat &ScmatFloat_O, &ScmatFloat_IO;
 
 class ScmatDoub_c : public SvecDoub_c
 {
@@ -631,8 +624,7 @@ public:
     ScmatDoub_c(const Doub *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Doub& operator()(Long_I i, Long_I j) const; // double indexing
+    const Doub &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -651,7 +643,7 @@ inline ScmatDoub_c::ScmatDoub_c(const Doub *data, Long_I N1, Long_I N2)
     : SvecDoub_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Doub & ScmatDoub_c::operator()(Long_I i, Long_I j) const
+inline const Doub &ScmatDoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -693,7 +685,7 @@ inline void ScmatDoub_c::set(const ScmatDoub_c &sli)
 
 inline ScmatDoub_c::~ScmatDoub_c() {}
 
-typedef const ScmatDoub_c & ScmatDoub_I;
+typedef const ScmatDoub_c &ScmatDoub_I;
 
 class ScmatDoub : public SvecDoub
 {
@@ -705,8 +697,7 @@ public:
 
     operator ScmatDoub_c() const;
 
-    // === Cmat functions ===
-    Doub& operator()(Long_I i, Long_I j) const; // double indexing
+    Doub &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -729,7 +720,7 @@ inline ScmatDoub::operator ScmatDoub_c() const
     return *((ScmatDoub_c *)this);
 }
 
-inline Doub & ScmatDoub::operator()(Long_I i, Long_I j) const
+inline Doub &ScmatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -771,7 +762,7 @@ inline void ScmatDoub::set(const ScmatDoub &sli)
 
 inline ScmatDoub::~ScmatDoub() {}
 
-typedef const ScmatDoub & ScmatDoub_O, & ScmatDoub_IO;
+typedef const ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
 
 class ScmatLdoub_c : public SvecLdoub_c
 {
@@ -782,8 +773,7 @@ public:
     ScmatLdoub_c(const Ldoub *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Ldoub& operator()(Long_I i, Long_I j) const; // double indexing
+    const Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -802,7 +792,7 @@ inline ScmatLdoub_c::ScmatLdoub_c(const Ldoub *data, Long_I N1, Long_I N2)
     : SvecLdoub_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Ldoub & ScmatLdoub_c::operator()(Long_I i, Long_I j) const
+inline const Ldoub &ScmatLdoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -844,7 +834,7 @@ inline void ScmatLdoub_c::set(const ScmatLdoub_c &sli)
 
 inline ScmatLdoub_c::~ScmatLdoub_c() {}
 
-typedef const ScmatLdoub_c & ScmatLdoub_I;
+typedef const ScmatLdoub_c &ScmatLdoub_I;
 
 class ScmatLdoub : public SvecLdoub
 {
@@ -856,8 +846,7 @@ public:
 
     operator ScmatLdoub_c() const;
 
-    // === Cmat functions ===
-    Ldoub& operator()(Long_I i, Long_I j) const; // double indexing
+    Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -880,7 +869,7 @@ inline ScmatLdoub::operator ScmatLdoub_c() const
     return *((ScmatLdoub_c *)this);
 }
 
-inline Ldoub & ScmatLdoub::operator()(Long_I i, Long_I j) const
+inline Ldoub &ScmatLdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -922,7 +911,7 @@ inline void ScmatLdoub::set(const ScmatLdoub &sli)
 
 inline ScmatLdoub::~ScmatLdoub() {}
 
-typedef const ScmatLdoub & ScmatLdoub_O, & ScmatLdoub_IO;
+typedef const ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
 
 class ScmatFcomp_c : public SvecFcomp_c
 {
@@ -933,8 +922,7 @@ public:
     ScmatFcomp_c(const Fcomp *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Fcomp& operator()(Long_I i, Long_I j) const; // double indexing
+    const Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -953,7 +941,7 @@ inline ScmatFcomp_c::ScmatFcomp_c(const Fcomp *data, Long_I N1, Long_I N2)
     : SvecFcomp_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Fcomp & ScmatFcomp_c::operator()(Long_I i, Long_I j) const
+inline const Fcomp &ScmatFcomp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -995,7 +983,7 @@ inline void ScmatFcomp_c::set(const ScmatFcomp_c &sli)
 
 inline ScmatFcomp_c::~ScmatFcomp_c() {}
 
-typedef const ScmatFcomp_c & ScmatFcomp_I;
+typedef const ScmatFcomp_c &ScmatFcomp_I;
 
 class ScmatFcomp : public SvecFcomp
 {
@@ -1007,8 +995,7 @@ public:
 
     operator ScmatFcomp_c() const;
 
-    // === Cmat functions ===
-    Fcomp& operator()(Long_I i, Long_I j) const; // double indexing
+    Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1031,7 +1018,7 @@ inline ScmatFcomp::operator ScmatFcomp_c() const
     return *((ScmatFcomp_c *)this);
 }
 
-inline Fcomp & ScmatFcomp::operator()(Long_I i, Long_I j) const
+inline Fcomp &ScmatFcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1073,7 +1060,7 @@ inline void ScmatFcomp::set(const ScmatFcomp &sli)
 
 inline ScmatFcomp::~ScmatFcomp() {}
 
-typedef const ScmatFcomp & ScmatFcomp_O, & ScmatFcomp_IO;
+typedef const ScmatFcomp &ScmatFcomp_O, &ScmatFcomp_IO;
 
 class ScmatComp_c : public SvecComp_c
 {
@@ -1084,8 +1071,7 @@ public:
     ScmatComp_c(const Comp *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Comp& operator()(Long_I i, Long_I j) const; // double indexing
+    const Comp &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1104,7 +1090,7 @@ inline ScmatComp_c::ScmatComp_c(const Comp *data, Long_I N1, Long_I N2)
     : SvecComp_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Comp & ScmatComp_c::operator()(Long_I i, Long_I j) const
+inline const Comp &ScmatComp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1146,7 +1132,7 @@ inline void ScmatComp_c::set(const ScmatComp_c &sli)
 
 inline ScmatComp_c::~ScmatComp_c() {}
 
-typedef const ScmatComp_c & ScmatComp_I;
+typedef const ScmatComp_c &ScmatComp_I;
 
 class ScmatComp : public SvecComp
 {
@@ -1158,8 +1144,7 @@ public:
 
     operator ScmatComp_c() const;
 
-    // === Cmat functions ===
-    Comp& operator()(Long_I i, Long_I j) const; // double indexing
+    Comp &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1182,7 +1167,7 @@ inline ScmatComp::operator ScmatComp_c() const
     return *((ScmatComp_c *)this);
 }
 
-inline Comp & ScmatComp::operator()(Long_I i, Long_I j) const
+inline Comp &ScmatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1224,7 +1209,7 @@ inline void ScmatComp::set(const ScmatComp &sli)
 
 inline ScmatComp::~ScmatComp() {}
 
-typedef const ScmatComp & ScmatComp_O, & ScmatComp_IO;
+typedef const ScmatComp &ScmatComp_O, &ScmatComp_IO;
 
 class ScmatLcomp_c : public SvecLcomp_c
 {
@@ -1235,8 +1220,7 @@ public:
     ScmatLcomp_c(const Lcomp *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Lcomp& operator()(Long_I i, Long_I j) const; // double indexing
+    const Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1255,7 +1239,7 @@ inline ScmatLcomp_c::ScmatLcomp_c(const Lcomp *data, Long_I N1, Long_I N2)
     : SvecLcomp_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Lcomp & ScmatLcomp_c::operator()(Long_I i, Long_I j) const
+inline const Lcomp &ScmatLcomp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1297,7 +1281,7 @@ inline void ScmatLcomp_c::set(const ScmatLcomp_c &sli)
 
 inline ScmatLcomp_c::~ScmatLcomp_c() {}
 
-typedef const ScmatLcomp_c & ScmatLcomp_I;
+typedef const ScmatLcomp_c &ScmatLcomp_I;
 
 class ScmatLcomp : public SvecLcomp
 {
@@ -1309,8 +1293,7 @@ public:
 
     operator ScmatLcomp_c() const;
 
-    // === Cmat functions ===
-    Lcomp& operator()(Long_I i, Long_I j) const; // double indexing
+    Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1333,7 +1316,7 @@ inline ScmatLcomp::operator ScmatLcomp_c() const
     return *((ScmatLcomp_c *)this);
 }
 
-inline Lcomp & ScmatLcomp::operator()(Long_I i, Long_I j) const
+inline Lcomp &ScmatLcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1375,7 +1358,7 @@ inline void ScmatLcomp::set(const ScmatLcomp &sli)
 
 inline ScmatLcomp::~ScmatLcomp() {}
 
-typedef const ScmatLcomp & ScmatLcomp_O, & ScmatLcomp_IO;
+typedef const ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
 
 class ScmatFimag_c : public SvecFimag_c
 {
@@ -1386,8 +1369,7 @@ public:
     ScmatFimag_c(const Fimag *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Fimag& operator()(Long_I i, Long_I j) const; // double indexing
+    const Fimag &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1406,7 +1388,7 @@ inline ScmatFimag_c::ScmatFimag_c(const Fimag *data, Long_I N1, Long_I N2)
     : SvecFimag_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Fimag & ScmatFimag_c::operator()(Long_I i, Long_I j) const
+inline const Fimag &ScmatFimag_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1448,7 +1430,7 @@ inline void ScmatFimag_c::set(const ScmatFimag_c &sli)
 
 inline ScmatFimag_c::~ScmatFimag_c() {}
 
-typedef const ScmatFimag_c & ScmatFimag_I;
+typedef const ScmatFimag_c &ScmatFimag_I;
 
 class ScmatFimag : public SvecFimag
 {
@@ -1460,8 +1442,7 @@ public:
 
     operator ScmatFimag_c() const;
 
-    // === Cmat functions ===
-    Fimag& operator()(Long_I i, Long_I j) const; // double indexing
+    Fimag &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1484,7 +1465,7 @@ inline ScmatFimag::operator ScmatFimag_c() const
     return *((ScmatFimag_c *)this);
 }
 
-inline Fimag & ScmatFimag::operator()(Long_I i, Long_I j) const
+inline Fimag &ScmatFimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1526,7 +1507,7 @@ inline void ScmatFimag::set(const ScmatFimag &sli)
 
 inline ScmatFimag::~ScmatFimag() {}
 
-typedef const ScmatFimag & ScmatFimag_O, & ScmatFimag_IO;
+typedef const ScmatFimag &ScmatFimag_O, &ScmatFimag_IO;
 
 class ScmatImag_c : public SvecImag_c
 {
@@ -1537,8 +1518,7 @@ public:
     ScmatImag_c(const Imag *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Imag& operator()(Long_I i, Long_I j) const; // double indexing
+    const Imag &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1557,7 +1537,7 @@ inline ScmatImag_c::ScmatImag_c(const Imag *data, Long_I N1, Long_I N2)
     : SvecImag_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Imag & ScmatImag_c::operator()(Long_I i, Long_I j) const
+inline const Imag &ScmatImag_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1599,7 +1579,7 @@ inline void ScmatImag_c::set(const ScmatImag_c &sli)
 
 inline ScmatImag_c::~ScmatImag_c() {}
 
-typedef const ScmatImag_c & ScmatImag_I;
+typedef const ScmatImag_c &ScmatImag_I;
 
 class ScmatImag : public SvecImag
 {
@@ -1611,8 +1591,7 @@ public:
 
     operator ScmatImag_c() const;
 
-    // === Cmat functions ===
-    Imag& operator()(Long_I i, Long_I j) const; // double indexing
+    Imag &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1635,7 +1614,7 @@ inline ScmatImag::operator ScmatImag_c() const
     return *((ScmatImag_c *)this);
 }
 
-inline Imag & ScmatImag::operator()(Long_I i, Long_I j) const
+inline Imag &ScmatImag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1677,7 +1656,7 @@ inline void ScmatImag::set(const ScmatImag &sli)
 
 inline ScmatImag::~ScmatImag() {}
 
-typedef const ScmatImag & ScmatImag_O, & ScmatImag_IO;
+typedef const ScmatImag &ScmatImag_O, &ScmatImag_IO;
 
 class ScmatLimag_c : public SvecLimag_c
 {
@@ -1688,8 +1667,7 @@ public:
     ScmatLimag_c(const Limag *data, Long_I N1, Long_I N2); // unsafe
 
 
-    // === Cmat functions ===
-    const Limag& operator()(Long_I i, Long_I j) const; // double indexing
+    const Limag &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1708,7 +1686,7 @@ inline ScmatLimag_c::ScmatLimag_c(const Limag *data, Long_I N1, Long_I N2)
     : SvecLimag_c(data, N1*N2), m_N1(N1), m_N2(N2) {}
 
 
-inline const Limag & ScmatLimag_c::operator()(Long_I i, Long_I j) const
+inline const Limag &ScmatLimag_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1750,7 +1728,7 @@ inline void ScmatLimag_c::set(const ScmatLimag_c &sli)
 
 inline ScmatLimag_c::~ScmatLimag_c() {}
 
-typedef const ScmatLimag_c & ScmatLimag_I;
+typedef const ScmatLimag_c &ScmatLimag_I;
 
 class ScmatLimag : public SvecLimag
 {
@@ -1762,8 +1740,7 @@ public:
 
     operator ScmatLimag_c() const;
 
-    // === Cmat functions ===
-    Limag& operator()(Long_I i, Long_I j) const; // double indexing
+    Limag &operator()(Long_I i, Long_I j) const; // double indexing
     Long n1() const;
     Long n2() const;
 
@@ -1786,7 +1763,7 @@ inline ScmatLimag::operator ScmatLimag_c() const
     return *((ScmatLimag_c *)this);
 }
 
-inline Limag & ScmatLimag::operator()(Long_I i, Long_I j) const
+inline Limag &ScmatLimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -1828,6 +1805,6 @@ inline void ScmatLimag::set(const ScmatLimag &sli)
 
 inline ScmatLimag::~ScmatLimag() {}
 
-typedef const ScmatLimag & ScmatLimag_O, & ScmatLimag_IO;
+typedef const ScmatLimag &ScmatLimag_O, &ScmatLimag_IO;
 
 } // namespace slisc

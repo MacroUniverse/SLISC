@@ -2327,7 +2327,7 @@ inline void copy(CmobdInt_O lhs, McooInt_I rhs)
     if (!shape_cmp(lhs, rhs))
         SLS_ERR("wrong shape!");
 #endif
-    auto & c3 = lhs.cmat3();
+    Cmat3Int &c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);
@@ -2341,7 +2341,7 @@ inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
     if (!shape_cmp(lhs, rhs))
         SLS_ERR("wrong shape!");
 #endif
-    auto & c3 = lhs.cmat3();
+    Cmat3Doub &c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);
@@ -2355,7 +2355,7 @@ inline void copy(CmobdComp_O lhs, McooDoub_I rhs)
     if (!shape_cmp(lhs, rhs))
         SLS_ERR("wrong shape!");
 #endif
-    auto & c3 = lhs.cmat3();
+    Cmat3Comp &c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);

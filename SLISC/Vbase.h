@@ -22,8 +22,8 @@ public:
     const Char* p() const;
     Long size() const;
     void resize(Long_I N);
-    Char & operator[](Long_I i);
-    const Char & operator[](Long_I i) const;
+    Char &operator[](Long_I i);
+    const Char &operator[](Long_I i) const;
     Char& end();
     const Char& end() const;
     Char& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -110,7 +110,7 @@ inline void VbaseChar::operator<<(VbaseChar &rhs)
     m_p = rhs.m_p;
 }
 
-inline Char & VbaseChar::operator[](Long_I i)
+inline Char &VbaseChar::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -119,7 +119,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Char & VbaseChar::operator[](Long_I i) const
+inline const Char &VbaseChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -128,7 +128,7 @@ inline const Char & VbaseChar::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Char & VbaseChar::end()
+inline Char &VbaseChar::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -137,7 +137,7 @@ inline Char & VbaseChar::end()
     return m_p[m_N - 1];
 }
 
-inline const Char & VbaseChar::end() const
+inline const Char &VbaseChar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -146,7 +146,7 @@ inline const Char & VbaseChar::end() const
     return m_p[m_N - 1];
 }
 
-inline Char & VbaseChar::end(Long_I i)
+inline Char &VbaseChar::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -155,7 +155,7 @@ inline Char & VbaseChar::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Char & VbaseChar::end(Long_I i) const
+inline const Char &VbaseChar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -187,8 +187,8 @@ public:
     const Int* p() const;
     Long size() const;
     void resize(Long_I N);
-    Int & operator[](Long_I i);
-    const Int & operator[](Long_I i) const;
+    Int &operator[](Long_I i);
+    const Int &operator[](Long_I i) const;
     Int& end();
     const Int& end() const;
     Int& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -275,7 +275,7 @@ inline void VbaseInt::operator<<(VbaseInt &rhs)
     m_p = rhs.m_p;
 }
 
-inline Int & VbaseInt::operator[](Long_I i)
+inline Int &VbaseInt::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -284,7 +284,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Int & VbaseInt::operator[](Long_I i) const
+inline const Int &VbaseInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -293,7 +293,7 @@ inline const Int & VbaseInt::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Int & VbaseInt::end()
+inline Int &VbaseInt::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -302,7 +302,7 @@ inline Int & VbaseInt::end()
     return m_p[m_N - 1];
 }
 
-inline const Int & VbaseInt::end() const
+inline const Int &VbaseInt::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -311,7 +311,7 @@ inline const Int & VbaseInt::end() const
     return m_p[m_N - 1];
 }
 
-inline Int & VbaseInt::end(Long_I i)
+inline Int &VbaseInt::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -320,7 +320,7 @@ inline Int & VbaseInt::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Int & VbaseInt::end(Long_I i) const
+inline const Int &VbaseInt::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -352,8 +352,8 @@ public:
     const Llong* p() const;
     Long size() const;
     void resize(Long_I N);
-    Llong & operator[](Long_I i);
-    const Llong & operator[](Long_I i) const;
+    Llong &operator[](Long_I i);
+    const Llong &operator[](Long_I i) const;
     Llong& end();
     const Llong& end() const;
     Llong& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -440,7 +440,7 @@ inline void VbaseLlong::operator<<(VbaseLlong &rhs)
     m_p = rhs.m_p;
 }
 
-inline Llong & VbaseLlong::operator[](Long_I i)
+inline Llong &VbaseLlong::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -449,7 +449,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Llong & VbaseLlong::operator[](Long_I i) const
+inline const Llong &VbaseLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -458,7 +458,7 @@ inline const Llong & VbaseLlong::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Llong & VbaseLlong::end()
+inline Llong &VbaseLlong::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -467,7 +467,7 @@ inline Llong & VbaseLlong::end()
     return m_p[m_N - 1];
 }
 
-inline const Llong & VbaseLlong::end() const
+inline const Llong &VbaseLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -476,7 +476,7 @@ inline const Llong & VbaseLlong::end() const
     return m_p[m_N - 1];
 }
 
-inline Llong & VbaseLlong::end(Long_I i)
+inline Llong &VbaseLlong::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -485,7 +485,7 @@ inline Llong & VbaseLlong::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Llong & VbaseLlong::end(Long_I i) const
+inline const Llong &VbaseLlong::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -523,8 +523,8 @@ public:
     const Float* p() const;
     Long size() const;
     void resize(Long_I N);
-    Float & operator[](Long_I i);
-    const Float & operator[](Long_I i) const;
+    Float &operator[](Long_I i);
+    const Float &operator[](Long_I i) const;
     Float& end();
     const Float& end() const;
     Float& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -611,7 +611,7 @@ inline void VbaseFloat::operator<<(VbaseFloat &rhs)
     m_p = rhs.m_p;
 }
 
-inline Float & VbaseFloat::operator[](Long_I i)
+inline Float &VbaseFloat::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -620,7 +620,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Float & VbaseFloat::operator[](Long_I i) const
+inline const Float &VbaseFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -629,7 +629,7 @@ inline const Float & VbaseFloat::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Float & VbaseFloat::end()
+inline Float &VbaseFloat::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -638,7 +638,7 @@ inline Float & VbaseFloat::end()
     return m_p[m_N - 1];
 }
 
-inline const Float & VbaseFloat::end() const
+inline const Float &VbaseFloat::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -647,7 +647,7 @@ inline const Float & VbaseFloat::end() const
     return m_p[m_N - 1];
 }
 
-inline Float & VbaseFloat::end(Long_I i)
+inline Float &VbaseFloat::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -656,7 +656,7 @@ inline Float & VbaseFloat::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Float & VbaseFloat::end(Long_I i) const
+inline const Float &VbaseFloat::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -688,8 +688,8 @@ public:
     const Doub* p() const;
     Long size() const;
     void resize(Long_I N);
-    Doub & operator[](Long_I i);
-    const Doub & operator[](Long_I i) const;
+    Doub &operator[](Long_I i);
+    const Doub &operator[](Long_I i) const;
     Doub& end();
     const Doub& end() const;
     Doub& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -776,7 +776,7 @@ inline void VbaseDoub::operator<<(VbaseDoub &rhs)
     m_p = rhs.m_p;
 }
 
-inline Doub & VbaseDoub::operator[](Long_I i)
+inline Doub &VbaseDoub::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -785,7 +785,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Doub & VbaseDoub::operator[](Long_I i) const
+inline const Doub &VbaseDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -794,7 +794,7 @@ inline const Doub & VbaseDoub::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Doub & VbaseDoub::end()
+inline Doub &VbaseDoub::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -803,7 +803,7 @@ inline Doub & VbaseDoub::end()
     return m_p[m_N - 1];
 }
 
-inline const Doub & VbaseDoub::end() const
+inline const Doub &VbaseDoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -812,7 +812,7 @@ inline const Doub & VbaseDoub::end() const
     return m_p[m_N - 1];
 }
 
-inline Doub & VbaseDoub::end(Long_I i)
+inline Doub &VbaseDoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -821,7 +821,7 @@ inline Doub & VbaseDoub::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Doub & VbaseDoub::end(Long_I i) const
+inline const Doub &VbaseDoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -853,8 +853,8 @@ public:
     const Ldoub* p() const;
     Long size() const;
     void resize(Long_I N);
-    Ldoub & operator[](Long_I i);
-    const Ldoub & operator[](Long_I i) const;
+    Ldoub &operator[](Long_I i);
+    const Ldoub &operator[](Long_I i) const;
     Ldoub& end();
     const Ldoub& end() const;
     Ldoub& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -941,7 +941,7 @@ inline void VbaseLdoub::operator<<(VbaseLdoub &rhs)
     m_p = rhs.m_p;
 }
 
-inline Ldoub & VbaseLdoub::operator[](Long_I i)
+inline Ldoub &VbaseLdoub::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -950,7 +950,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Ldoub & VbaseLdoub::operator[](Long_I i) const
+inline const Ldoub &VbaseLdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -959,7 +959,7 @@ inline const Ldoub & VbaseLdoub::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Ldoub & VbaseLdoub::end()
+inline Ldoub &VbaseLdoub::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -968,7 +968,7 @@ inline Ldoub & VbaseLdoub::end()
     return m_p[m_N - 1];
 }
 
-inline const Ldoub & VbaseLdoub::end() const
+inline const Ldoub &VbaseLdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -977,7 +977,7 @@ inline const Ldoub & VbaseLdoub::end() const
     return m_p[m_N - 1];
 }
 
-inline Ldoub & VbaseLdoub::end(Long_I i)
+inline Ldoub &VbaseLdoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -986,7 +986,7 @@ inline Ldoub & VbaseLdoub::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Ldoub & VbaseLdoub::end(Long_I i) const
+inline const Ldoub &VbaseLdoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1018,8 +1018,8 @@ public:
     const Fcomp* p() const;
     Long size() const;
     void resize(Long_I N);
-    Fcomp & operator[](Long_I i);
-    const Fcomp & operator[](Long_I i) const;
+    Fcomp &operator[](Long_I i);
+    const Fcomp &operator[](Long_I i) const;
     Fcomp& end();
     const Fcomp& end() const;
     Fcomp& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -1106,7 +1106,7 @@ inline void VbaseFcomp::operator<<(VbaseFcomp &rhs)
     m_p = rhs.m_p;
 }
 
-inline Fcomp & VbaseFcomp::operator[](Long_I i)
+inline Fcomp &VbaseFcomp::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -1115,7 +1115,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Fcomp & VbaseFcomp::operator[](Long_I i) const
+inline const Fcomp &VbaseFcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -1124,7 +1124,7 @@ inline const Fcomp & VbaseFcomp::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Fcomp & VbaseFcomp::end()
+inline Fcomp &VbaseFcomp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1133,7 +1133,7 @@ inline Fcomp & VbaseFcomp::end()
     return m_p[m_N - 1];
 }
 
-inline const Fcomp & VbaseFcomp::end() const
+inline const Fcomp &VbaseFcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1142,7 +1142,7 @@ inline const Fcomp & VbaseFcomp::end() const
     return m_p[m_N - 1];
 }
 
-inline Fcomp & VbaseFcomp::end(Long_I i)
+inline Fcomp &VbaseFcomp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1151,7 +1151,7 @@ inline Fcomp & VbaseFcomp::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Fcomp & VbaseFcomp::end(Long_I i) const
+inline const Fcomp &VbaseFcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1183,8 +1183,8 @@ public:
     const Comp* p() const;
     Long size() const;
     void resize(Long_I N);
-    Comp & operator[](Long_I i);
-    const Comp & operator[](Long_I i) const;
+    Comp &operator[](Long_I i);
+    const Comp &operator[](Long_I i) const;
     Comp& end();
     const Comp& end() const;
     Comp& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -1271,7 +1271,7 @@ inline void VbaseComp::operator<<(VbaseComp &rhs)
     m_p = rhs.m_p;
 }
 
-inline Comp & VbaseComp::operator[](Long_I i)
+inline Comp &VbaseComp::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -1280,7 +1280,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Comp & VbaseComp::operator[](Long_I i) const
+inline const Comp &VbaseComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -1289,7 +1289,7 @@ inline const Comp & VbaseComp::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Comp & VbaseComp::end()
+inline Comp &VbaseComp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1298,7 +1298,7 @@ inline Comp & VbaseComp::end()
     return m_p[m_N - 1];
 }
 
-inline const Comp & VbaseComp::end() const
+inline const Comp &VbaseComp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1307,7 +1307,7 @@ inline const Comp & VbaseComp::end() const
     return m_p[m_N - 1];
 }
 
-inline Comp & VbaseComp::end(Long_I i)
+inline Comp &VbaseComp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1316,7 +1316,7 @@ inline Comp & VbaseComp::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Comp & VbaseComp::end(Long_I i) const
+inline const Comp &VbaseComp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1348,8 +1348,8 @@ public:
     const Lcomp* p() const;
     Long size() const;
     void resize(Long_I N);
-    Lcomp & operator[](Long_I i);
-    const Lcomp & operator[](Long_I i) const;
+    Lcomp &operator[](Long_I i);
+    const Lcomp &operator[](Long_I i) const;
     Lcomp& end();
     const Lcomp& end() const;
     Lcomp& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -1436,7 +1436,7 @@ inline void VbaseLcomp::operator<<(VbaseLcomp &rhs)
     m_p = rhs.m_p;
 }
 
-inline Lcomp & VbaseLcomp::operator[](Long_I i)
+inline Lcomp &VbaseLcomp::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -1445,7 +1445,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Lcomp & VbaseLcomp::operator[](Long_I i) const
+inline const Lcomp &VbaseLcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -1454,7 +1454,7 @@ inline const Lcomp & VbaseLcomp::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Lcomp & VbaseLcomp::end()
+inline Lcomp &VbaseLcomp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1463,7 +1463,7 @@ inline Lcomp & VbaseLcomp::end()
     return m_p[m_N - 1];
 }
 
-inline const Lcomp & VbaseLcomp::end() const
+inline const Lcomp &VbaseLcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1472,7 +1472,7 @@ inline const Lcomp & VbaseLcomp::end() const
     return m_p[m_N - 1];
 }
 
-inline Lcomp & VbaseLcomp::end(Long_I i)
+inline Lcomp &VbaseLcomp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1481,7 +1481,7 @@ inline Lcomp & VbaseLcomp::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Lcomp & VbaseLcomp::end(Long_I i) const
+inline const Lcomp &VbaseLcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1513,8 +1513,8 @@ public:
     const Fimag* p() const;
     Long size() const;
     void resize(Long_I N);
-    Fimag & operator[](Long_I i);
-    const Fimag & operator[](Long_I i) const;
+    Fimag &operator[](Long_I i);
+    const Fimag &operator[](Long_I i) const;
     Fimag& end();
     const Fimag& end() const;
     Fimag& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -1601,7 +1601,7 @@ inline void VbaseFimag::operator<<(VbaseFimag &rhs)
     m_p = rhs.m_p;
 }
 
-inline Fimag & VbaseFimag::operator[](Long_I i)
+inline Fimag &VbaseFimag::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -1610,7 +1610,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Fimag & VbaseFimag::operator[](Long_I i) const
+inline const Fimag &VbaseFimag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -1619,7 +1619,7 @@ inline const Fimag & VbaseFimag::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Fimag & VbaseFimag::end()
+inline Fimag &VbaseFimag::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1628,7 +1628,7 @@ inline Fimag & VbaseFimag::end()
     return m_p[m_N - 1];
 }
 
-inline const Fimag & VbaseFimag::end() const
+inline const Fimag &VbaseFimag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1637,7 +1637,7 @@ inline const Fimag & VbaseFimag::end() const
     return m_p[m_N - 1];
 }
 
-inline Fimag & VbaseFimag::end(Long_I i)
+inline Fimag &VbaseFimag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1646,7 +1646,7 @@ inline Fimag & VbaseFimag::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Fimag & VbaseFimag::end(Long_I i) const
+inline const Fimag &VbaseFimag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1678,8 +1678,8 @@ public:
     const Imag* p() const;
     Long size() const;
     void resize(Long_I N);
-    Imag & operator[](Long_I i);
-    const Imag & operator[](Long_I i) const;
+    Imag &operator[](Long_I i);
+    const Imag &operator[](Long_I i) const;
     Imag& end();
     const Imag& end() const;
     Imag& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -1766,7 +1766,7 @@ inline void VbaseImag::operator<<(VbaseImag &rhs)
     m_p = rhs.m_p;
 }
 
-inline Imag & VbaseImag::operator[](Long_I i)
+inline Imag &VbaseImag::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -1775,7 +1775,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Imag & VbaseImag::operator[](Long_I i) const
+inline const Imag &VbaseImag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -1784,7 +1784,7 @@ inline const Imag & VbaseImag::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Imag & VbaseImag::end()
+inline Imag &VbaseImag::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1793,7 +1793,7 @@ inline Imag & VbaseImag::end()
     return m_p[m_N - 1];
 }
 
-inline const Imag & VbaseImag::end() const
+inline const Imag &VbaseImag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1802,7 +1802,7 @@ inline const Imag & VbaseImag::end() const
     return m_p[m_N - 1];
 }
 
-inline Imag & VbaseImag::end(Long_I i)
+inline Imag &VbaseImag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1811,7 +1811,7 @@ inline Imag & VbaseImag::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Imag & VbaseImag::end(Long_I i) const
+inline const Imag &VbaseImag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1843,8 +1843,8 @@ public:
     const Limag* p() const;
     Long size() const;
     void resize(Long_I N);
-    Limag & operator[](Long_I i);
-    const Limag & operator[](Long_I i) const;
+    Limag &operator[](Long_I i);
+    const Limag &operator[](Long_I i) const;
     Limag& end();
     const Limag& end() const;
     Limag& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
@@ -1931,7 +1931,7 @@ inline void VbaseLimag::operator<<(VbaseLimag &rhs)
     m_p = rhs.m_p;
 }
 
-inline Limag & VbaseLimag::operator[](Long_I i)
+inline Limag &VbaseLimag::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 if (i<0 || i>=m_N)
@@ -1940,7 +1940,7 @@ if (i<0 || i>=m_N)
     return m_p[i];
 }
 
-inline const Limag & VbaseLimag::operator[](Long_I i) const
+inline const Limag &VbaseLimag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i<0 || i>=m_N)
@@ -1949,7 +1949,7 @@ inline const Limag & VbaseLimag::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Limag & VbaseLimag::end()
+inline Limag &VbaseLimag::end()
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1958,7 +1958,7 @@ inline Limag & VbaseLimag::end()
     return m_p[m_N - 1];
 }
 
-inline const Limag & VbaseLimag::end() const
+inline const Limag &VbaseLimag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1967,7 +1967,7 @@ inline const Limag & VbaseLimag::end() const
     return m_p[m_N - 1];
 }
 
-inline Limag & VbaseLimag::end(Long_I i)
+inline Limag &VbaseLimag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -1976,7 +1976,7 @@ inline Limag & VbaseLimag::end(Long_I i)
     return m_p[m_N - i];
 }
 
-inline const Limag & VbaseLimag::end(Long_I i) const
+inline const Limag &VbaseLimag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)

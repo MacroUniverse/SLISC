@@ -12,10 +12,10 @@ public:
     DvecChar_c();
     DvecChar_c(const Char *p, Long_I N, Long_I step);
     const Char* p() const;
-    const Char & operator[](Long_I i) const;
-    const Char & operator()(Long_I i) const;
-    const Char & end() const;
-    const Char & end(Long_I i) const;
+    const Char &operator[](Long_I i) const;
+    const Char &operator()(Long_I i) const;
+    const Char &end() const;
+    const Char &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -57,7 +57,7 @@ inline Long DvecChar_c::step() const
     return m_step;
 }
 
-inline const Char & DvecChar_c::operator[](Long_I i) const
+inline const Char &DvecChar_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -66,10 +66,10 @@ inline const Char & DvecChar_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Char & DvecChar_c::operator()(Long_I i) const
+inline const Char &DvecChar_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Char & DvecChar_c::end() const
+inline const Char &DvecChar_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -78,7 +78,7 @@ inline const Char & DvecChar_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Char & DvecChar_c::end(Long_I i) const
+inline const Char &DvecChar_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -125,7 +125,7 @@ inline void DvecChar_c::shift(Long_I N)
 inline DvecChar_c::~DvecChar_c() {}
 
 
-typedef const DvecChar_c & DvecChar_I;
+typedef const DvecChar_c &DvecChar_I;
 
 class DvecChar
 {
@@ -137,10 +137,10 @@ public:
     DvecChar();
     DvecChar(Char *p, Long_I N, Long_I step);
     Char* p() const;
-    Char & operator[](Long_I i) const;
-    Char & operator()(Long_I i) const;
-    Char & end() const;
-    Char & end(Long_I i) const;
+    Char &operator[](Long_I i) const;
+    Char &operator()(Long_I i) const;
+    Char &end() const;
+    Char &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -183,7 +183,7 @@ inline Long DvecChar::step() const
     return m_step;
 }
 
-inline Char & DvecChar::operator[](Long_I i) const
+inline Char &DvecChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -192,10 +192,10 @@ inline Char & DvecChar::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Char & DvecChar::operator()(Long_I i) const
+inline Char &DvecChar::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Char & DvecChar::end() const
+inline Char &DvecChar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -204,7 +204,7 @@ inline Char & DvecChar::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Char & DvecChar::end(Long_I i) const
+inline Char &DvecChar::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -255,7 +255,7 @@ inline void DvecChar::shift(Long_I N)
 inline DvecChar::~DvecChar() {}
 
 
-typedef const DvecChar & DvecChar_O, & DvecChar_IO;
+typedef const DvecChar &DvecChar_O, &DvecChar_IO;
 
 class DvecInt_c
 {
@@ -267,10 +267,10 @@ public:
     DvecInt_c();
     DvecInt_c(const Int *p, Long_I N, Long_I step);
     const Int* p() const;
-    const Int & operator[](Long_I i) const;
-    const Int & operator()(Long_I i) const;
-    const Int & end() const;
-    const Int & end(Long_I i) const;
+    const Int &operator[](Long_I i) const;
+    const Int &operator()(Long_I i) const;
+    const Int &end() const;
+    const Int &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -312,7 +312,7 @@ inline Long DvecInt_c::step() const
     return m_step;
 }
 
-inline const Int & DvecInt_c::operator[](Long_I i) const
+inline const Int &DvecInt_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -321,10 +321,10 @@ inline const Int & DvecInt_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Int & DvecInt_c::operator()(Long_I i) const
+inline const Int &DvecInt_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Int & DvecInt_c::end() const
+inline const Int &DvecInt_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -333,7 +333,7 @@ inline const Int & DvecInt_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Int & DvecInt_c::end(Long_I i) const
+inline const Int &DvecInt_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -380,7 +380,7 @@ inline void DvecInt_c::shift(Long_I N)
 inline DvecInt_c::~DvecInt_c() {}
 
 
-typedef const DvecInt_c & DvecInt_I;
+typedef const DvecInt_c &DvecInt_I;
 
 class DvecInt
 {
@@ -392,10 +392,10 @@ public:
     DvecInt();
     DvecInt(Int *p, Long_I N, Long_I step);
     Int* p() const;
-    Int & operator[](Long_I i) const;
-    Int & operator()(Long_I i) const;
-    Int & end() const;
-    Int & end(Long_I i) const;
+    Int &operator[](Long_I i) const;
+    Int &operator()(Long_I i) const;
+    Int &end() const;
+    Int &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -438,7 +438,7 @@ inline Long DvecInt::step() const
     return m_step;
 }
 
-inline Int & DvecInt::operator[](Long_I i) const
+inline Int &DvecInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -447,10 +447,10 @@ inline Int & DvecInt::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Int & DvecInt::operator()(Long_I i) const
+inline Int &DvecInt::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Int & DvecInt::end() const
+inline Int &DvecInt::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -459,7 +459,7 @@ inline Int & DvecInt::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Int & DvecInt::end(Long_I i) const
+inline Int &DvecInt::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -510,7 +510,7 @@ inline void DvecInt::shift(Long_I N)
 inline DvecInt::~DvecInt() {}
 
 
-typedef const DvecInt & DvecInt_O, & DvecInt_IO;
+typedef const DvecInt &DvecInt_O, &DvecInt_IO;
 
 class DvecLlong_c
 {
@@ -522,10 +522,10 @@ public:
     DvecLlong_c();
     DvecLlong_c(const Llong *p, Long_I N, Long_I step);
     const Llong* p() const;
-    const Llong & operator[](Long_I i) const;
-    const Llong & operator()(Long_I i) const;
-    const Llong & end() const;
-    const Llong & end(Long_I i) const;
+    const Llong &operator[](Long_I i) const;
+    const Llong &operator()(Long_I i) const;
+    const Llong &end() const;
+    const Llong &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -567,7 +567,7 @@ inline Long DvecLlong_c::step() const
     return m_step;
 }
 
-inline const Llong & DvecLlong_c::operator[](Long_I i) const
+inline const Llong &DvecLlong_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -576,10 +576,10 @@ inline const Llong & DvecLlong_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Llong & DvecLlong_c::operator()(Long_I i) const
+inline const Llong &DvecLlong_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Llong & DvecLlong_c::end() const
+inline const Llong &DvecLlong_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -588,7 +588,7 @@ inline const Llong & DvecLlong_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Llong & DvecLlong_c::end(Long_I i) const
+inline const Llong &DvecLlong_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -635,7 +635,7 @@ inline void DvecLlong_c::shift(Long_I N)
 inline DvecLlong_c::~DvecLlong_c() {}
 
 
-typedef const DvecLlong_c & DvecLlong_I;
+typedef const DvecLlong_c &DvecLlong_I;
 
 class DvecLlong
 {
@@ -647,10 +647,10 @@ public:
     DvecLlong();
     DvecLlong(Llong *p, Long_I N, Long_I step);
     Llong* p() const;
-    Llong & operator[](Long_I i) const;
-    Llong & operator()(Long_I i) const;
-    Llong & end() const;
-    Llong & end(Long_I i) const;
+    Llong &operator[](Long_I i) const;
+    Llong &operator()(Long_I i) const;
+    Llong &end() const;
+    Llong &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -693,7 +693,7 @@ inline Long DvecLlong::step() const
     return m_step;
 }
 
-inline Llong & DvecLlong::operator[](Long_I i) const
+inline Llong &DvecLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -702,10 +702,10 @@ inline Llong & DvecLlong::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Llong & DvecLlong::operator()(Long_I i) const
+inline Llong &DvecLlong::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Llong & DvecLlong::end() const
+inline Llong &DvecLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -714,7 +714,7 @@ inline Llong & DvecLlong::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Llong & DvecLlong::end(Long_I i) const
+inline Llong &DvecLlong::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -765,7 +765,7 @@ inline void DvecLlong::shift(Long_I N)
 inline DvecLlong::~DvecLlong() {}
 
 
-typedef const DvecLlong & DvecLlong_O, & DvecLlong_IO;
+typedef const DvecLlong &DvecLlong_O, &DvecLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DvecInt_c DvecLong_c;
@@ -773,7 +773,7 @@ typedef DvecInt_c DvecLong_c;
 typedef DvecLlong_c DvecLong_c;
 #endif
 
-typedef const DvecLong_c & DvecLong_I;
+typedef const DvecLong_c &DvecLong_I;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DvecInt DvecLong;
@@ -781,7 +781,7 @@ typedef DvecInt DvecLong;
 typedef DvecLlong DvecLong;
 #endif
 
-typedef const DvecLong & DvecLong_O, & DvecLong_IO;
+typedef const DvecLong &DvecLong_O, &DvecLong_IO;
 
 class DvecFloat_c
 {
@@ -793,10 +793,10 @@ public:
     DvecFloat_c();
     DvecFloat_c(const Float *p, Long_I N, Long_I step);
     const Float* p() const;
-    const Float & operator[](Long_I i) const;
-    const Float & operator()(Long_I i) const;
-    const Float & end() const;
-    const Float & end(Long_I i) const;
+    const Float &operator[](Long_I i) const;
+    const Float &operator()(Long_I i) const;
+    const Float &end() const;
+    const Float &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -838,7 +838,7 @@ inline Long DvecFloat_c::step() const
     return m_step;
 }
 
-inline const Float & DvecFloat_c::operator[](Long_I i) const
+inline const Float &DvecFloat_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -847,10 +847,10 @@ inline const Float & DvecFloat_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Float & DvecFloat_c::operator()(Long_I i) const
+inline const Float &DvecFloat_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Float & DvecFloat_c::end() const
+inline const Float &DvecFloat_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -859,7 +859,7 @@ inline const Float & DvecFloat_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Float & DvecFloat_c::end(Long_I i) const
+inline const Float &DvecFloat_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -906,7 +906,7 @@ inline void DvecFloat_c::shift(Long_I N)
 inline DvecFloat_c::~DvecFloat_c() {}
 
 
-typedef const DvecFloat_c & DvecFloat_I;
+typedef const DvecFloat_c &DvecFloat_I;
 
 class DvecFloat
 {
@@ -918,10 +918,10 @@ public:
     DvecFloat();
     DvecFloat(Float *p, Long_I N, Long_I step);
     Float* p() const;
-    Float & operator[](Long_I i) const;
-    Float & operator()(Long_I i) const;
-    Float & end() const;
-    Float & end(Long_I i) const;
+    Float &operator[](Long_I i) const;
+    Float &operator()(Long_I i) const;
+    Float &end() const;
+    Float &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -964,7 +964,7 @@ inline Long DvecFloat::step() const
     return m_step;
 }
 
-inline Float & DvecFloat::operator[](Long_I i) const
+inline Float &DvecFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -973,10 +973,10 @@ inline Float & DvecFloat::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Float & DvecFloat::operator()(Long_I i) const
+inline Float &DvecFloat::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Float & DvecFloat::end() const
+inline Float &DvecFloat::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -985,7 +985,7 @@ inline Float & DvecFloat::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Float & DvecFloat::end(Long_I i) const
+inline Float &DvecFloat::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1036,7 +1036,7 @@ inline void DvecFloat::shift(Long_I N)
 inline DvecFloat::~DvecFloat() {}
 
 
-typedef const DvecFloat & DvecFloat_O, & DvecFloat_IO;
+typedef const DvecFloat &DvecFloat_O, &DvecFloat_IO;
 
 class DvecDoub_c
 {
@@ -1048,10 +1048,10 @@ public:
     DvecDoub_c();
     DvecDoub_c(const Doub *p, Long_I N, Long_I step);
     const Doub* p() const;
-    const Doub & operator[](Long_I i) const;
-    const Doub & operator()(Long_I i) const;
-    const Doub & end() const;
-    const Doub & end(Long_I i) const;
+    const Doub &operator[](Long_I i) const;
+    const Doub &operator()(Long_I i) const;
+    const Doub &end() const;
+    const Doub &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1093,7 +1093,7 @@ inline Long DvecDoub_c::step() const
     return m_step;
 }
 
-inline const Doub & DvecDoub_c::operator[](Long_I i) const
+inline const Doub &DvecDoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1102,10 +1102,10 @@ inline const Doub & DvecDoub_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Doub & DvecDoub_c::operator()(Long_I i) const
+inline const Doub &DvecDoub_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Doub & DvecDoub_c::end() const
+inline const Doub &DvecDoub_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1114,7 +1114,7 @@ inline const Doub & DvecDoub_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Doub & DvecDoub_c::end(Long_I i) const
+inline const Doub &DvecDoub_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1161,7 +1161,7 @@ inline void DvecDoub_c::shift(Long_I N)
 inline DvecDoub_c::~DvecDoub_c() {}
 
 
-typedef const DvecDoub_c & DvecDoub_I;
+typedef const DvecDoub_c &DvecDoub_I;
 
 class DvecDoub
 {
@@ -1173,10 +1173,10 @@ public:
     DvecDoub();
     DvecDoub(Doub *p, Long_I N, Long_I step);
     Doub* p() const;
-    Doub & operator[](Long_I i) const;
-    Doub & operator()(Long_I i) const;
-    Doub & end() const;
-    Doub & end(Long_I i) const;
+    Doub &operator[](Long_I i) const;
+    Doub &operator()(Long_I i) const;
+    Doub &end() const;
+    Doub &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1219,7 +1219,7 @@ inline Long DvecDoub::step() const
     return m_step;
 }
 
-inline Doub & DvecDoub::operator[](Long_I i) const
+inline Doub &DvecDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1228,10 +1228,10 @@ inline Doub & DvecDoub::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Doub & DvecDoub::operator()(Long_I i) const
+inline Doub &DvecDoub::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Doub & DvecDoub::end() const
+inline Doub &DvecDoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1240,7 +1240,7 @@ inline Doub & DvecDoub::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Doub & DvecDoub::end(Long_I i) const
+inline Doub &DvecDoub::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1291,7 +1291,7 @@ inline void DvecDoub::shift(Long_I N)
 inline DvecDoub::~DvecDoub() {}
 
 
-typedef const DvecDoub & DvecDoub_O, & DvecDoub_IO;
+typedef const DvecDoub &DvecDoub_O, &DvecDoub_IO;
 
 class DvecLdoub_c
 {
@@ -1303,10 +1303,10 @@ public:
     DvecLdoub_c();
     DvecLdoub_c(const Ldoub *p, Long_I N, Long_I step);
     const Ldoub* p() const;
-    const Ldoub & operator[](Long_I i) const;
-    const Ldoub & operator()(Long_I i) const;
-    const Ldoub & end() const;
-    const Ldoub & end(Long_I i) const;
+    const Ldoub &operator[](Long_I i) const;
+    const Ldoub &operator()(Long_I i) const;
+    const Ldoub &end() const;
+    const Ldoub &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1348,7 +1348,7 @@ inline Long DvecLdoub_c::step() const
     return m_step;
 }
 
-inline const Ldoub & DvecLdoub_c::operator[](Long_I i) const
+inline const Ldoub &DvecLdoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1357,10 +1357,10 @@ inline const Ldoub & DvecLdoub_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Ldoub & DvecLdoub_c::operator()(Long_I i) const
+inline const Ldoub &DvecLdoub_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Ldoub & DvecLdoub_c::end() const
+inline const Ldoub &DvecLdoub_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1369,7 +1369,7 @@ inline const Ldoub & DvecLdoub_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Ldoub & DvecLdoub_c::end(Long_I i) const
+inline const Ldoub &DvecLdoub_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1416,7 +1416,7 @@ inline void DvecLdoub_c::shift(Long_I N)
 inline DvecLdoub_c::~DvecLdoub_c() {}
 
 
-typedef const DvecLdoub_c & DvecLdoub_I;
+typedef const DvecLdoub_c &DvecLdoub_I;
 
 class DvecLdoub
 {
@@ -1428,10 +1428,10 @@ public:
     DvecLdoub();
     DvecLdoub(Ldoub *p, Long_I N, Long_I step);
     Ldoub* p() const;
-    Ldoub & operator[](Long_I i) const;
-    Ldoub & operator()(Long_I i) const;
-    Ldoub & end() const;
-    Ldoub & end(Long_I i) const;
+    Ldoub &operator[](Long_I i) const;
+    Ldoub &operator()(Long_I i) const;
+    Ldoub &end() const;
+    Ldoub &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1474,7 +1474,7 @@ inline Long DvecLdoub::step() const
     return m_step;
 }
 
-inline Ldoub & DvecLdoub::operator[](Long_I i) const
+inline Ldoub &DvecLdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1483,10 +1483,10 @@ inline Ldoub & DvecLdoub::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Ldoub & DvecLdoub::operator()(Long_I i) const
+inline Ldoub &DvecLdoub::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Ldoub & DvecLdoub::end() const
+inline Ldoub &DvecLdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1495,7 +1495,7 @@ inline Ldoub & DvecLdoub::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Ldoub & DvecLdoub::end(Long_I i) const
+inline Ldoub &DvecLdoub::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1546,7 +1546,7 @@ inline void DvecLdoub::shift(Long_I N)
 inline DvecLdoub::~DvecLdoub() {}
 
 
-typedef const DvecLdoub & DvecLdoub_O, & DvecLdoub_IO;
+typedef const DvecLdoub &DvecLdoub_O, &DvecLdoub_IO;
 
 class DvecFcomp_c
 {
@@ -1558,10 +1558,10 @@ public:
     DvecFcomp_c();
     DvecFcomp_c(const Fcomp *p, Long_I N, Long_I step);
     const Fcomp* p() const;
-    const Fcomp & operator[](Long_I i) const;
-    const Fcomp & operator()(Long_I i) const;
-    const Fcomp & end() const;
-    const Fcomp & end(Long_I i) const;
+    const Fcomp &operator[](Long_I i) const;
+    const Fcomp &operator()(Long_I i) const;
+    const Fcomp &end() const;
+    const Fcomp &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1603,7 +1603,7 @@ inline Long DvecFcomp_c::step() const
     return m_step;
 }
 
-inline const Fcomp & DvecFcomp_c::operator[](Long_I i) const
+inline const Fcomp &DvecFcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1612,10 +1612,10 @@ inline const Fcomp & DvecFcomp_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Fcomp & DvecFcomp_c::operator()(Long_I i) const
+inline const Fcomp &DvecFcomp_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Fcomp & DvecFcomp_c::end() const
+inline const Fcomp &DvecFcomp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1624,7 +1624,7 @@ inline const Fcomp & DvecFcomp_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Fcomp & DvecFcomp_c::end(Long_I i) const
+inline const Fcomp &DvecFcomp_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1671,7 +1671,7 @@ inline void DvecFcomp_c::shift(Long_I N)
 inline DvecFcomp_c::~DvecFcomp_c() {}
 
 
-typedef const DvecFcomp_c & DvecFcomp_I;
+typedef const DvecFcomp_c &DvecFcomp_I;
 
 class DvecFcomp
 {
@@ -1683,10 +1683,10 @@ public:
     DvecFcomp();
     DvecFcomp(Fcomp *p, Long_I N, Long_I step);
     Fcomp* p() const;
-    Fcomp & operator[](Long_I i) const;
-    Fcomp & operator()(Long_I i) const;
-    Fcomp & end() const;
-    Fcomp & end(Long_I i) const;
+    Fcomp &operator[](Long_I i) const;
+    Fcomp &operator()(Long_I i) const;
+    Fcomp &end() const;
+    Fcomp &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1729,7 +1729,7 @@ inline Long DvecFcomp::step() const
     return m_step;
 }
 
-inline Fcomp & DvecFcomp::operator[](Long_I i) const
+inline Fcomp &DvecFcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1738,10 +1738,10 @@ inline Fcomp & DvecFcomp::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Fcomp & DvecFcomp::operator()(Long_I i) const
+inline Fcomp &DvecFcomp::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Fcomp & DvecFcomp::end() const
+inline Fcomp &DvecFcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1750,7 +1750,7 @@ inline Fcomp & DvecFcomp::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Fcomp & DvecFcomp::end(Long_I i) const
+inline Fcomp &DvecFcomp::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1801,7 +1801,7 @@ inline void DvecFcomp::shift(Long_I N)
 inline DvecFcomp::~DvecFcomp() {}
 
 
-typedef const DvecFcomp & DvecFcomp_O, & DvecFcomp_IO;
+typedef const DvecFcomp &DvecFcomp_O, &DvecFcomp_IO;
 
 class DvecComp_c
 {
@@ -1813,10 +1813,10 @@ public:
     DvecComp_c();
     DvecComp_c(const Comp *p, Long_I N, Long_I step);
     const Comp* p() const;
-    const Comp & operator[](Long_I i) const;
-    const Comp & operator()(Long_I i) const;
-    const Comp & end() const;
-    const Comp & end(Long_I i) const;
+    const Comp &operator[](Long_I i) const;
+    const Comp &operator()(Long_I i) const;
+    const Comp &end() const;
+    const Comp &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1858,7 +1858,7 @@ inline Long DvecComp_c::step() const
     return m_step;
 }
 
-inline const Comp & DvecComp_c::operator[](Long_I i) const
+inline const Comp &DvecComp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1867,10 +1867,10 @@ inline const Comp & DvecComp_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Comp & DvecComp_c::operator()(Long_I i) const
+inline const Comp &DvecComp_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Comp & DvecComp_c::end() const
+inline const Comp &DvecComp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -1879,7 +1879,7 @@ inline const Comp & DvecComp_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Comp & DvecComp_c::end(Long_I i) const
+inline const Comp &DvecComp_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -1926,7 +1926,7 @@ inline void DvecComp_c::shift(Long_I N)
 inline DvecComp_c::~DvecComp_c() {}
 
 
-typedef const DvecComp_c & DvecComp_I;
+typedef const DvecComp_c &DvecComp_I;
 
 class DvecComp
 {
@@ -1938,10 +1938,10 @@ public:
     DvecComp();
     DvecComp(Comp *p, Long_I N, Long_I step);
     Comp* p() const;
-    Comp & operator[](Long_I i) const;
-    Comp & operator()(Long_I i) const;
-    Comp & end() const;
-    Comp & end(Long_I i) const;
+    Comp &operator[](Long_I i) const;
+    Comp &operator()(Long_I i) const;
+    Comp &end() const;
+    Comp &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -1984,7 +1984,7 @@ inline Long DvecComp::step() const
     return m_step;
 }
 
-inline Comp & DvecComp::operator[](Long_I i) const
+inline Comp &DvecComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -1993,10 +1993,10 @@ inline Comp & DvecComp::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Comp & DvecComp::operator()(Long_I i) const
+inline Comp &DvecComp::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Comp & DvecComp::end() const
+inline Comp &DvecComp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -2005,7 +2005,7 @@ inline Comp & DvecComp::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Comp & DvecComp::end(Long_I i) const
+inline Comp &DvecComp::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -2056,7 +2056,7 @@ inline void DvecComp::shift(Long_I N)
 inline DvecComp::~DvecComp() {}
 
 
-typedef const DvecComp & DvecComp_O, & DvecComp_IO;
+typedef const DvecComp &DvecComp_O, &DvecComp_IO;
 
 class DvecLcomp_c
 {
@@ -2068,10 +2068,10 @@ public:
     DvecLcomp_c();
     DvecLcomp_c(const Lcomp *p, Long_I N, Long_I step);
     const Lcomp* p() const;
-    const Lcomp & operator[](Long_I i) const;
-    const Lcomp & operator()(Long_I i) const;
-    const Lcomp & end() const;
-    const Lcomp & end(Long_I i) const;
+    const Lcomp &operator[](Long_I i) const;
+    const Lcomp &operator()(Long_I i) const;
+    const Lcomp &end() const;
+    const Lcomp &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -2113,7 +2113,7 @@ inline Long DvecLcomp_c::step() const
     return m_step;
 }
 
-inline const Lcomp & DvecLcomp_c::operator[](Long_I i) const
+inline const Lcomp &DvecLcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -2122,10 +2122,10 @@ inline const Lcomp & DvecLcomp_c::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline const Lcomp & DvecLcomp_c::operator()(Long_I i) const
+inline const Lcomp &DvecLcomp_c::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline const Lcomp & DvecLcomp_c::end() const
+inline const Lcomp &DvecLcomp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -2134,7 +2134,7 @@ inline const Lcomp & DvecLcomp_c::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline const Lcomp & DvecLcomp_c::end(Long_I i) const
+inline const Lcomp &DvecLcomp_c::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -2181,7 +2181,7 @@ inline void DvecLcomp_c::shift(Long_I N)
 inline DvecLcomp_c::~DvecLcomp_c() {}
 
 
-typedef const DvecLcomp_c & DvecLcomp_I;
+typedef const DvecLcomp_c &DvecLcomp_I;
 
 class DvecLcomp
 {
@@ -2193,10 +2193,10 @@ public:
     DvecLcomp();
     DvecLcomp(Lcomp *p, Long_I N, Long_I step);
     Lcomp* p() const;
-    Lcomp & operator[](Long_I i) const;
-    Lcomp & operator()(Long_I i) const;
-    Lcomp & end() const;
-    Lcomp & end(Long_I i) const;
+    Lcomp &operator[](Long_I i) const;
+    Lcomp &operator()(Long_I i) const;
+    Lcomp &end() const;
+    Lcomp &end(Long_I i) const;
     Long size() const;
     Long step() const;
 
@@ -2239,7 +2239,7 @@ inline Long DvecLcomp::step() const
     return m_step;
 }
 
-inline Lcomp & DvecLcomp::operator[](Long_I i) const
+inline Lcomp &DvecLcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -2248,10 +2248,10 @@ inline Lcomp & DvecLcomp::operator[](Long_I i) const
     return m_p[m_step*i];
 }
 
-inline Lcomp & DvecLcomp::operator()(Long_I i) const
+inline Lcomp &DvecLcomp::operator()(Long_I i) const
 { return (*this)[i]; }
 
-inline Lcomp & DvecLcomp::end() const
+inline Lcomp &DvecLcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -2260,7 +2260,7 @@ inline Lcomp & DvecLcomp::end() const
     return m_p[m_step*(m_N - 1)];
 }
 
-inline Lcomp & DvecLcomp::end(Long_I i) const
+inline Lcomp &DvecLcomp::end(Long_I i) const
 {
     return m_p[m_step*(m_N - i)];
 }
@@ -2311,6 +2311,6 @@ inline void DvecLcomp::shift(Long_I N)
 inline DvecLcomp::~DvecLcomp() {}
 
 
-typedef const DvecLcomp & DvecLcomp_O, & DvecLcomp_IO;
+typedef const DvecLcomp &DvecLcomp_O, &DvecLcomp_IO;
 
 } // namespace slisc

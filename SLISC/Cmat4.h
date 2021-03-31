@@ -16,8 +16,8 @@ public:
     void operator<<(Cmat4Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Char & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Char & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -61,7 +61,7 @@ inline void Cmat4Char::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Char & Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Char &Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -72,7 +72,7 @@ inline Char & Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Char & Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Char &Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -99,8 +99,8 @@ inline Long Cmat4Char::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Char & Cmat4Char_I;
-typedef Cmat4Char & Cmat4Char_O, & Cmat4Char_IO;
+typedef const Cmat4Char &Cmat4Char_I;
+typedef Cmat4Char &Cmat4Char_O, &Cmat4Char_IO;
 
 class Cmat4Int : public VbaseInt
 {
@@ -115,8 +115,8 @@ public:
     void operator<<(Cmat4Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Int & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Int & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -160,7 +160,7 @@ inline void Cmat4Int::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Int & Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Int &Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -171,7 +171,7 @@ inline Int & Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Int & Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Int &Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -198,8 +198,8 @@ inline Long Cmat4Int::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Int & Cmat4Int_I;
-typedef Cmat4Int & Cmat4Int_O, & Cmat4Int_IO;
+typedef const Cmat4Int &Cmat4Int_I;
+typedef Cmat4Int &Cmat4Int_O, &Cmat4Int_IO;
 
 class Cmat4Llong : public VbaseLlong
 {
@@ -214,8 +214,8 @@ public:
     void operator<<(Cmat4Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Llong & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Llong & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -259,7 +259,7 @@ inline void Cmat4Llong::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Llong & Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Llong &Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -270,7 +270,7 @@ inline Llong & Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Llong & Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Llong &Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -297,8 +297,8 @@ inline Long Cmat4Llong::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Llong & Cmat4Llong_I;
-typedef Cmat4Llong & Cmat4Llong_O, & Cmat4Llong_IO;
+typedef const Cmat4Llong &Cmat4Llong_I;
+typedef Cmat4Llong &Cmat4Llong_O, &Cmat4Llong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef Cmat4Int Cmat4Long;
@@ -306,8 +306,8 @@ typedef Cmat4Int Cmat4Long;
 typedef Cmat4Llong Cmat4Long;
 #endif
 
-typedef const Cmat4Long & Cmat4Long_I;
-typedef Cmat4Long & Cmat4Long_O, & Cmat4Long_IO;
+typedef const Cmat4Long &Cmat4Long_I;
+typedef Cmat4Long &Cmat4Long_O, &Cmat4Long_IO;
 
 class Cmat4Float : public VbaseFloat
 {
@@ -322,8 +322,8 @@ public:
     void operator<<(Cmat4Float &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Float & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Float & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -367,7 +367,7 @@ inline void Cmat4Float::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Float & Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Float &Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -378,7 +378,7 @@ inline Float & Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Float & Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Float &Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -405,8 +405,8 @@ inline Long Cmat4Float::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Float & Cmat4Float_I;
-typedef Cmat4Float & Cmat4Float_O, & Cmat4Float_IO;
+typedef const Cmat4Float &Cmat4Float_I;
+typedef Cmat4Float &Cmat4Float_O, &Cmat4Float_IO;
 
 class Cmat4Doub : public VbaseDoub
 {
@@ -421,8 +421,8 @@ public:
     void operator<<(Cmat4Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Doub & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Doub & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -466,7 +466,7 @@ inline void Cmat4Doub::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Doub & Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Doub &Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -477,7 +477,7 @@ inline Doub & Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Doub & Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Doub &Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -504,8 +504,8 @@ inline Long Cmat4Doub::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Doub & Cmat4Doub_I;
-typedef Cmat4Doub & Cmat4Doub_O, & Cmat4Doub_IO;
+typedef const Cmat4Doub &Cmat4Doub_I;
+typedef Cmat4Doub &Cmat4Doub_O, &Cmat4Doub_IO;
 
 class Cmat4Ldoub : public VbaseLdoub
 {
@@ -520,8 +520,8 @@ public:
     void operator<<(Cmat4Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Ldoub & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Ldoub & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -565,7 +565,7 @@ inline void Cmat4Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Ldoub & Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Ldoub &Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -576,7 +576,7 @@ inline Ldoub & Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Ldoub & Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Ldoub &Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -603,8 +603,8 @@ inline Long Cmat4Ldoub::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Ldoub & Cmat4Ldoub_I;
-typedef Cmat4Ldoub & Cmat4Ldoub_O, & Cmat4Ldoub_IO;
+typedef const Cmat4Ldoub &Cmat4Ldoub_I;
+typedef Cmat4Ldoub &Cmat4Ldoub_O, &Cmat4Ldoub_IO;
 
 class Cmat4Fcomp : public VbaseFcomp
 {
@@ -619,8 +619,8 @@ public:
     void operator<<(Cmat4Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Fcomp & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Fcomp & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -664,7 +664,7 @@ inline void Cmat4Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Fcomp & Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Fcomp &Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -675,7 +675,7 @@ inline Fcomp & Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Fcomp & Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Fcomp &Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -702,8 +702,8 @@ inline Long Cmat4Fcomp::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Fcomp & Cmat4Fcomp_I;
-typedef Cmat4Fcomp & Cmat4Fcomp_O, & Cmat4Fcomp_IO;
+typedef const Cmat4Fcomp &Cmat4Fcomp_I;
+typedef Cmat4Fcomp &Cmat4Fcomp_O, &Cmat4Fcomp_IO;
 
 class Cmat4Comp : public VbaseComp
 {
@@ -718,8 +718,8 @@ public:
     void operator<<(Cmat4Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Comp & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Comp & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -763,7 +763,7 @@ inline void Cmat4Comp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Comp & Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Comp &Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -774,7 +774,7 @@ inline Comp & Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Comp & Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Comp &Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -801,8 +801,8 @@ inline Long Cmat4Comp::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Comp & Cmat4Comp_I;
-typedef Cmat4Comp & Cmat4Comp_O, & Cmat4Comp_IO;
+typedef const Cmat4Comp &Cmat4Comp_I;
+typedef Cmat4Comp &Cmat4Comp_O, &Cmat4Comp_IO;
 
 class Cmat4Lcomp : public VbaseLcomp
 {
@@ -817,8 +817,8 @@ public:
     void operator<<(Cmat4Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Lcomp & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Lcomp & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -862,7 +862,7 @@ inline void Cmat4Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Lcomp & Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Lcomp &Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -873,7 +873,7 @@ inline Lcomp & Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Lcomp & Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Lcomp &Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -900,8 +900,8 @@ inline Long Cmat4Lcomp::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Lcomp & Cmat4Lcomp_I;
-typedef Cmat4Lcomp & Cmat4Lcomp_O, & Cmat4Lcomp_IO;
+typedef const Cmat4Lcomp &Cmat4Lcomp_I;
+typedef Cmat4Lcomp &Cmat4Lcomp_O, &Cmat4Lcomp_IO;
 
 class Cmat4Fimag : public VbaseFimag
 {
@@ -916,8 +916,8 @@ public:
     void operator<<(Cmat4Fimag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Fimag & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Fimag & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -961,7 +961,7 @@ inline void Cmat4Fimag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Fimag & Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Fimag &Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -972,7 +972,7 @@ inline Fimag & Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Fimag & Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Fimag &Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -999,8 +999,8 @@ inline Long Cmat4Fimag::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Fimag & Cmat4Fimag_I;
-typedef Cmat4Fimag & Cmat4Fimag_O, & Cmat4Fimag_IO;
+typedef const Cmat4Fimag &Cmat4Fimag_I;
+typedef Cmat4Fimag &Cmat4Fimag_O, &Cmat4Fimag_IO;
 
 class Cmat4Imag : public VbaseImag
 {
@@ -1015,8 +1015,8 @@ public:
     void operator<<(Cmat4Imag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Imag & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Imag & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -1060,7 +1060,7 @@ inline void Cmat4Imag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Imag & Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Imag &Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -1071,7 +1071,7 @@ inline Imag & Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Imag & Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Imag &Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -1098,8 +1098,8 @@ inline Long Cmat4Imag::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Imag & Cmat4Imag_I;
-typedef Cmat4Imag & Cmat4Imag_O, & Cmat4Imag_IO;
+typedef const Cmat4Imag &Cmat4Imag_I;
+typedef Cmat4Imag &Cmat4Imag_O, &Cmat4Imag_IO;
 
 class Cmat4Limag : public VbaseLimag
 {
@@ -1114,8 +1114,8 @@ public:
     void operator<<(Cmat4Limag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    Limag & operator()(Long_I i, Long_I j, Long_I k, Long_I l);
-    const Limag & operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
@@ -1159,7 +1159,7 @@ inline void Cmat4Limag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
     m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
 }
 
-inline Limag & Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+inline Limag &Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -1170,7 +1170,7 @@ inline Limag & Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
 }
 
-inline const Limag & Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+inline const Limag &Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
@@ -1197,7 +1197,7 @@ inline Long Cmat4Limag::n4() const {
     return m_N4;
 }
 
-typedef const Cmat4Limag & Cmat4Limag_I;
-typedef Cmat4Limag & Cmat4Limag_O, & Cmat4Limag_IO;
+typedef const Cmat4Limag &Cmat4Limag_I;
+typedef Cmat4Limag &Cmat4Limag_O, &Cmat4Limag_IO;
 
 } // namespace slisc

@@ -28,7 +28,7 @@ public:
     @CmatT@(): m_N1(0), m_N2(0) {};
     @CmatT@(Long_I N1, Long_I N2);
     @CmatT@(const @CmatT@ &rhs);        // Copy constructor
-    @CmatT@ & operator=(const @CmatT@ &rhs) = delete;
+    @CmatT@ &operator=(const @CmatT@ &rhs) = delete;
     void operator<<(@CmatT@ &rhs); // move data and rhs.resize(0, 0)
     @T@& operator()(Long_I i, Long_I j);    // double indexing
     const @T@& operator()(Long_I i, Long_I j) const;
@@ -56,7 +56,7 @@ inline void @CmatT@::operator<<(@CmatT@ &rhs)
     Base::operator<<(rhs);
 }
 
-inline @T@ & @CmatT@::operator()(Long_I i, Long_I j)
+inline @T@ &@CmatT@::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -66,7 +66,7 @@ inline @T@ & @CmatT@::operator()(Long_I i, Long_I j)
     return m_p[i+m_N1*j];
 }
 
-inline const @T@ & @CmatT@::operator()(Long_I i, Long_I j) const
+inline const @T@ &@CmatT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
@@ -101,8 +101,8 @@ inline void @CmatT@::reshape(Long_I N1, Long_I N2)
 }
 //% end
 
-typedef const @CmatT@ & @CmatT@_I;
-typedef @CmatT@ & @CmatT@_O, & @CmatT@_IO;
+typedef const @CmatT@ &@CmatT@_I;
+typedef @CmatT@ &@CmatT@_O, &@CmatT@_IO;
 //%----------------------------------------
 
 class CmatBool : public VbaseBool
@@ -114,7 +114,7 @@ public:
     CmatBool(): m_N1(0), m_N2(0) {};
     CmatBool(Long_I N1, Long_I N2);
     CmatBool(const CmatBool &rhs);        // Copy constructor
-    CmatBool & operator=(const CmatBool &rhs) = delete;
+    CmatBool &operator=(const CmatBool &rhs) = delete;
     void operator<<(CmatBool &rhs); // move data and rhs.resize(0, 0)
     CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
     Bool operator()(Long_I i, Long_I j) const;
@@ -176,7 +176,7 @@ inline void CmatBool::resize(Long_I N1, Long_I N2)
     }
 }
 
-typedef const CmatBool & CmatBool_I;
-typedef CmatBool & CmatBool_O, & CmatBool_IO;
+typedef const CmatBool &CmatBool_I;
+typedef CmatBool &CmatBool_O, &CmatBool_IO;
 
 } // namespace slisc

@@ -195,7 +195,7 @@ inline void @CbandT@::shift(Long_I idiag)
     m_idiag = idiag;
 }
 
-typedef const @CbandT@ & @CbandT@_I;
-typedef @CbandT@ & @CbandT@_O, & @CbandT@_IO;
+typedef const @CbandT@ &@CbandT@_I;
+typedef @CbandT@ &@CbandT@_O, &@CbandT@_IO;
 //%-----------------------
 } // namespace slisc
