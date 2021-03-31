@@ -420,7 +420,6 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 }
 
 // read matt files
-// return 0 if successful, -1 if variable not found
 //% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
@@ -436,13 +435,13 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 //%     error('not implemented!');
 //% end
 //% if is_scalar(T)
-inline Int load(@T@_O s, Str_I varname, Matt_IO matt)
+inline void load(@T@_O s, Str_I varname, Matt_IO matt)
 {
     Long i;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (@numTs@ < matt.m_type[i])
@@ -451,15 +450,14 @@ inline Int load(@T@_O s, Str_I varname, Matt_IO matt)
         SLS_ERR("wrong dimension!");
 
     matt_read_scalar(s, fin);
-    return 0;
 }
 //% elseif is_Vec(T) == 1
-inline Int load(@T@_O v, Str_I varname, Matt_IO matt)
+inline void load(@T@_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
     Long i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (@numTs@ < matt.m_type[i])
@@ -471,16 +469,15 @@ inline Int load(@T@_O v, Str_I varname, Matt_IO matt)
     // read var data
     for (Long i = 0; i < n; ++i)
         matt_read_scalar(v[i], fin);
-    return 0;
 }
 //% elseif is_Mat(T) || is_Cmat(T)
-inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
+inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (@numTs@ < matt.m_type[i])
@@ -493,16 +490,15 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 //% elseif is_Mat3(T) || is_Cmat3(T)
-inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
+inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (@numTs@ < matt.m_type[i])
@@ -517,16 +513,15 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 matt_read_scalar(a(i, j, k), fin);
-    return 0;
 }
 //% elseif is_Cmat4(T)
-inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
+inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, l, N1, N2, N3, N4;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (@numTs@ < matt.m_type[i])
@@ -542,7 +537,6 @@ inline Int load(@T@_O a, Str_I varname, Matt_IO matt)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
                     matt_read_scalar(a(i, j, k, l), fin);
-    return 0;
 }
 //% else
 //%     disp(T); error('not implemented!');

@@ -330,12 +330,12 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 //%     error('not implemented!');
 //% end
 //% if is_scalar(T)
-inline Int load(@T@_O s, Str_I varname, Matb_IO matb)
+inline void load(@T@_O s, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (@numTs@ < matb.m_type[i])
@@ -344,15 +344,14 @@ inline Int load(@T@_O s, Str_I varname, Matb_IO matb)
         SLS_ERR("wrong dimension!");
 
     read(fin, s);
-    return 0;
 }
 //% elseif is_Vec(T) == 1
-inline Int load(@T@_O v, Str_I varname, Matb_IO matb)
+inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (@numTs@ < matb.m_type[i])
@@ -364,16 +363,15 @@ inline Int load(@T@_O v, Str_I varname, Matb_IO matb)
     // read var data
     for (Long i = 0; i < n; ++i)
         read(fin, v[i]);
-    return 0;
 }
 //% elseif is_Mat(T) || is_Cmat(T)
-inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
+inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (@numTs@ < matb.m_type[i])
@@ -386,16 +384,15 @@ inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 //% elseif is_Mat3(T) || is_Cmat3(T)
-inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
+inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (@numTs@ < matb.m_type[i])
@@ -410,16 +407,15 @@ inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 read(fin, a(i, j, k));
-    return 0;
 }
 //% elseif is_Cmat4(T)
-inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
+inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, l, N1, N2, N3, N4;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (@numTs@ < matb.m_type[i])
@@ -435,7 +431,6 @@ inline Int load(@T@_O a, Str_I varname, Matb_IO matb)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
                     read(fin, a(i, j, k, l));
-    return 0;
 }
 //% else
 //%     disp(T); error('not implemented!');

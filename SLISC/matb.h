@@ -1426,12 +1426,12 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 
 // read matb files
 // return 0 if successful, -1 if variable not found
-inline Int load(Char_O s, Str_I varname, Matb_IO matb)
+inline void load(Char_O s, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (1 < matb.m_type[i])
@@ -1440,7 +1440,6 @@ inline Int load(Char_O s, Str_I varname, Matb_IO matb)
         SLS_ERR("wrong dimension!");
 
     read(fin, s);
-    return 0;
 }
 
 inline void load_matb(Char_O var, Str_I varname, Str_I matb_file)
@@ -1450,12 +1449,12 @@ inline void load_matb(Char_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Int_O s, Str_I varname, Matb_IO matb)
+inline void load(Int_O s, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (2 < matb.m_type[i])
@@ -1464,7 +1463,6 @@ inline Int load(Int_O s, Str_I varname, Matb_IO matb)
         SLS_ERR("wrong dimension!");
 
     read(fin, s);
-    return 0;
 }
 
 inline void load_matb(Int_O var, Str_I varname, Str_I matb_file)
@@ -1474,12 +1472,12 @@ inline void load_matb(Int_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Llong_O s, Str_I varname, Matb_IO matb)
+inline void load(Llong_O s, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (3 < matb.m_type[i])
@@ -1488,7 +1486,6 @@ inline Int load(Llong_O s, Str_I varname, Matb_IO matb)
         SLS_ERR("wrong dimension!");
 
     read(fin, s);
-    return 0;
 }
 
 inline void load_matb(Llong_O var, Str_I varname, Str_I matb_file)
@@ -1498,12 +1495,12 @@ inline void load_matb(Llong_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Doub_O s, Str_I varname, Matb_IO matb)
+inline void load(Doub_O s, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (21 < matb.m_type[i])
@@ -1512,7 +1509,6 @@ inline Int load(Doub_O s, Str_I varname, Matb_IO matb)
         SLS_ERR("wrong dimension!");
 
     read(fin, s);
-    return 0;
 }
 
 inline void load_matb(Doub_O var, Str_I varname, Str_I matb_file)
@@ -1522,12 +1518,12 @@ inline void load_matb(Doub_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Comp_O s, Str_I varname, Matb_IO matb)
+inline void load(Comp_O s, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (41 < matb.m_type[i])
@@ -1536,7 +1532,6 @@ inline Int load(Comp_O s, Str_I varname, Matb_IO matb)
         SLS_ERR("wrong dimension!");
 
     read(fin, s);
-    return 0;
 }
 
 inline void load_matb(Comp_O var, Str_I varname, Str_I matb_file)
@@ -1546,12 +1541,12 @@ inline void load_matb(Comp_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(VecChar_O v, Str_I varname, Matb_IO matb)
+inline void load(VecChar_O v, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (1 < matb.m_type[i])
@@ -1563,7 +1558,6 @@ inline Int load(VecChar_O v, Str_I varname, Matb_IO matb)
     // read var data
     for (Long i = 0; i < n; ++i)
         read(fin, v[i]);
-    return 0;
 }
 
 inline void load_matb(VecChar_O var, Str_I varname, Str_I matb_file)
@@ -1573,12 +1567,12 @@ inline void load_matb(VecChar_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(VecInt_O v, Str_I varname, Matb_IO matb)
+inline void load(VecInt_O v, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (2 < matb.m_type[i])
@@ -1590,7 +1584,6 @@ inline Int load(VecInt_O v, Str_I varname, Matb_IO matb)
     // read var data
     for (Long i = 0; i < n; ++i)
         read(fin, v[i]);
-    return 0;
 }
 
 inline void load_matb(VecInt_O var, Str_I varname, Str_I matb_file)
@@ -1600,12 +1593,12 @@ inline void load_matb(VecInt_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(VecLlong_O v, Str_I varname, Matb_IO matb)
+inline void load(VecLlong_O v, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (3 < matb.m_type[i])
@@ -1617,7 +1610,6 @@ inline Int load(VecLlong_O v, Str_I varname, Matb_IO matb)
     // read var data
     for (Long i = 0; i < n; ++i)
         read(fin, v[i]);
-    return 0;
 }
 
 inline void load_matb(VecLlong_O var, Str_I varname, Str_I matb_file)
@@ -1627,12 +1619,12 @@ inline void load_matb(VecLlong_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(VecDoub_O v, Str_I varname, Matb_IO matb)
+inline void load(VecDoub_O v, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (21 < matb.m_type[i])
@@ -1644,7 +1636,6 @@ inline Int load(VecDoub_O v, Str_I varname, Matb_IO matb)
     // read var data
     for (Long i = 0; i < n; ++i)
         read(fin, v[i]);
-    return 0;
 }
 
 inline void load_matb(VecDoub_O var, Str_I varname, Str_I matb_file)
@@ -1654,12 +1645,12 @@ inline void load_matb(VecDoub_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(VecComp_O v, Str_I varname, Matb_IO matb)
+inline void load(VecComp_O v, Str_I varname, Matb_IO matb)
 {
     ifstream &fin = matb.m_in;
     Long i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (41 < matb.m_type[i])
@@ -1671,7 +1662,6 @@ inline Int load(VecComp_O v, Str_I varname, Matb_IO matb)
     // read var data
     for (Long i = 0; i < n; ++i)
         read(fin, v[i]);
-    return 0;
 }
 
 inline void load_matb(VecComp_O var, Str_I varname, Str_I matb_file)
@@ -1681,13 +1671,13 @@ inline void load_matb(VecComp_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(MatInt_O a, Str_I varname, Matb_IO matb)
+inline void load(MatInt_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (2 < matb.m_type[i])
@@ -1700,7 +1690,6 @@ inline Int load(MatInt_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(MatInt_O var, Str_I varname, Str_I matb_file)
@@ -1710,13 +1699,13 @@ inline void load_matb(MatInt_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(MatLlong_O a, Str_I varname, Matb_IO matb)
+inline void load(MatLlong_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (3 < matb.m_type[i])
@@ -1729,7 +1718,6 @@ inline Int load(MatLlong_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(MatLlong_O var, Str_I varname, Str_I matb_file)
@@ -1739,13 +1727,13 @@ inline void load_matb(MatLlong_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(MatDoub_O a, Str_I varname, Matb_IO matb)
+inline void load(MatDoub_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (21 < matb.m_type[i])
@@ -1758,7 +1746,6 @@ inline Int load(MatDoub_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(MatDoub_O var, Str_I varname, Str_I matb_file)
@@ -1768,13 +1755,13 @@ inline void load_matb(MatDoub_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(MatComp_O a, Str_I varname, Matb_IO matb)
+inline void load(MatComp_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (41 < matb.m_type[i])
@@ -1787,7 +1774,6 @@ inline Int load(MatComp_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(MatComp_O var, Str_I varname, Str_I matb_file)
@@ -1797,13 +1783,13 @@ inline void load_matb(MatComp_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(CmatInt_O a, Str_I varname, Matb_IO matb)
+inline void load(CmatInt_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (2 < matb.m_type[i])
@@ -1816,7 +1802,6 @@ inline Int load(CmatInt_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(CmatInt_O var, Str_I varname, Str_I matb_file)
@@ -1826,13 +1811,13 @@ inline void load_matb(CmatInt_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(CmatLlong_O a, Str_I varname, Matb_IO matb)
+inline void load(CmatLlong_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (3 < matb.m_type[i])
@@ -1845,7 +1830,6 @@ inline Int load(CmatLlong_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(CmatLlong_O var, Str_I varname, Str_I matb_file)
@@ -1855,13 +1839,13 @@ inline void load_matb(CmatLlong_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(CmatDoub_O a, Str_I varname, Matb_IO matb)
+inline void load(CmatDoub_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (21 < matb.m_type[i])
@@ -1874,7 +1858,6 @@ inline Int load(CmatDoub_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(CmatDoub_O var, Str_I varname, Str_I matb_file)
@@ -1884,13 +1867,13 @@ inline void load_matb(CmatDoub_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(CmatComp_O a, Str_I varname, Matb_IO matb)
+inline void load(CmatComp_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, m, n;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (41 < matb.m_type[i])
@@ -1903,7 +1886,6 @@ inline Int load(CmatComp_O a, Str_I varname, Matb_IO matb)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             read(fin, a(i, j));
-    return 0;
 }
 
 inline void load_matb(CmatComp_O var, Str_I varname, Str_I matb_file)
@@ -1913,13 +1895,13 @@ inline void load_matb(CmatComp_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Cmat3Int_O a, Str_I varname, Matb_IO matb)
+inline void load(Cmat3Int_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (2 < matb.m_type[i])
@@ -1934,7 +1916,6 @@ inline Int load(Cmat3Int_O a, Str_I varname, Matb_IO matb)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 read(fin, a(i, j, k));
-    return 0;
 }
 
 inline void load_matb(Cmat3Int_O var, Str_I varname, Str_I matb_file)
@@ -1944,13 +1925,13 @@ inline void load_matb(Cmat3Int_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Cmat3Llong_O a, Str_I varname, Matb_IO matb)
+inline void load(Cmat3Llong_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (3 < matb.m_type[i])
@@ -1965,7 +1946,6 @@ inline Int load(Cmat3Llong_O a, Str_I varname, Matb_IO matb)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 read(fin, a(i, j, k));
-    return 0;
 }
 
 inline void load_matb(Cmat3Llong_O var, Str_I varname, Str_I matb_file)
@@ -1975,13 +1955,13 @@ inline void load_matb(Cmat3Llong_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Cmat3Doub_O a, Str_I varname, Matb_IO matb)
+inline void load(Cmat3Doub_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (21 < matb.m_type[i])
@@ -1996,7 +1976,6 @@ inline Int load(Cmat3Doub_O a, Str_I varname, Matb_IO matb)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 read(fin, a(i, j, k));
-    return 0;
 }
 
 inline void load_matb(Cmat3Doub_O var, Str_I varname, Str_I matb_file)
@@ -2006,13 +1985,13 @@ inline void load_matb(Cmat3Doub_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Cmat3Comp_O a, Str_I varname, Matb_IO matb)
+inline void load(Cmat3Comp_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (41 < matb.m_type[i])
@@ -2027,7 +2006,6 @@ inline Int load(Cmat3Comp_O a, Str_I varname, Matb_IO matb)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 read(fin, a(i, j, k));
-    return 0;
 }
 
 inline void load_matb(Cmat3Comp_O var, Str_I varname, Str_I matb_file)
@@ -2037,13 +2015,13 @@ inline void load_matb(Cmat3Comp_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Cmat4Doub_O a, Str_I varname, Matb_IO matb)
+inline void load(Cmat4Doub_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, l, N1, N2, N3, N4;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (21 < matb.m_type[i])
@@ -2059,7 +2037,6 @@ inline Int load(Cmat4Doub_O a, Str_I varname, Matb_IO matb)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
                     read(fin, a(i, j, k, l));
-    return 0;
 }
 
 inline void load_matb(Cmat4Doub_O var, Str_I varname, Str_I matb_file)
@@ -2069,13 +2046,13 @@ inline void load_matb(Cmat4Doub_O var, Str_I varname, Str_I matb_file)
     matb.close();
 }
 
-inline Int load(Cmat4Comp_O a, Str_I varname, Matb_IO matb)
+inline void load(Cmat4Comp_O a, Str_I varname, Matb_IO matb)
 {
     Long i, j, k, l, N1, N2, N3, N4;
     ifstream &fin = matb.m_in;
     i = matb.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matb.m_ind[i]);
 
     if (41 < matb.m_type[i])
@@ -2091,7 +2068,6 @@ inline Int load(Cmat4Comp_O a, Str_I varname, Matb_IO matb)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
                     read(fin, a(i, j, k, l));
-    return 0;
 }
 
 inline void load_matb(Cmat4Comp_O var, Str_I varname, Str_I matb_file)

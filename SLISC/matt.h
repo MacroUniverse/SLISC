@@ -1372,14 +1372,13 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 }
 
 // read matt files
-// return 0 if successful, -1 if variable not found
-inline Int load(Char_O s, Str_I varname, Matt_IO matt)
+inline void load(Char_O s, Str_I varname, Matt_IO matt)
 {
     Long i;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (1 < matt.m_type[i])
@@ -1388,7 +1387,6 @@ inline Int load(Char_O s, Str_I varname, Matt_IO matt)
         SLS_ERR("wrong dimension!");
 
     matt_read_scalar(s, fin);
-    return 0;
 }
 
 inline void load_matt(Char_O var, Str_I varname, Str_I matt_file)
@@ -1398,13 +1396,13 @@ inline void load_matt(Char_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Int_O s, Str_I varname, Matt_IO matt)
+inline void load(Int_O s, Str_I varname, Matt_IO matt)
 {
     Long i;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (2 < matt.m_type[i])
@@ -1413,7 +1411,6 @@ inline Int load(Int_O s, Str_I varname, Matt_IO matt)
         SLS_ERR("wrong dimension!");
 
     matt_read_scalar(s, fin);
-    return 0;
 }
 
 inline void load_matt(Int_O var, Str_I varname, Str_I matt_file)
@@ -1423,13 +1420,13 @@ inline void load_matt(Int_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Llong_O s, Str_I varname, Matt_IO matt)
+inline void load(Llong_O s, Str_I varname, Matt_IO matt)
 {
     Long i;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (3 < matt.m_type[i])
@@ -1438,7 +1435,6 @@ inline Int load(Llong_O s, Str_I varname, Matt_IO matt)
         SLS_ERR("wrong dimension!");
 
     matt_read_scalar(s, fin);
-    return 0;
 }
 
 inline void load_matt(Llong_O var, Str_I varname, Str_I matt_file)
@@ -1448,13 +1444,13 @@ inline void load_matt(Llong_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Doub_O s, Str_I varname, Matt_IO matt)
+inline void load(Doub_O s, Str_I varname, Matt_IO matt)
 {
     Long i;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (21 < matt.m_type[i])
@@ -1463,7 +1459,6 @@ inline Int load(Doub_O s, Str_I varname, Matt_IO matt)
         SLS_ERR("wrong dimension!");
 
     matt_read_scalar(s, fin);
-    return 0;
 }
 
 inline void load_matt(Doub_O var, Str_I varname, Str_I matt_file)
@@ -1473,13 +1468,13 @@ inline void load_matt(Doub_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Comp_O s, Str_I varname, Matt_IO matt)
+inline void load(Comp_O s, Str_I varname, Matt_IO matt)
 {
     Long i;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (41 < matt.m_type[i])
@@ -1488,7 +1483,6 @@ inline Int load(Comp_O s, Str_I varname, Matt_IO matt)
         SLS_ERR("wrong dimension!");
 
     matt_read_scalar(s, fin);
-    return 0;
 }
 
 inline void load_matt(Comp_O var, Str_I varname, Str_I matt_file)
@@ -1498,12 +1492,12 @@ inline void load_matt(Comp_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(VecChar_O v, Str_I varname, Matt_IO matt)
+inline void load(VecChar_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
     Long i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (1 < matt.m_type[i])
@@ -1515,7 +1509,6 @@ inline Int load(VecChar_O v, Str_I varname, Matt_IO matt)
     // read var data
     for (Long i = 0; i < n; ++i)
         matt_read_scalar(v[i], fin);
-    return 0;
 }
 
 inline void load_matt(VecChar_O var, Str_I varname, Str_I matt_file)
@@ -1525,12 +1518,12 @@ inline void load_matt(VecChar_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(VecInt_O v, Str_I varname, Matt_IO matt)
+inline void load(VecInt_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
     Long i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (2 < matt.m_type[i])
@@ -1542,7 +1535,6 @@ inline Int load(VecInt_O v, Str_I varname, Matt_IO matt)
     // read var data
     for (Long i = 0; i < n; ++i)
         matt_read_scalar(v[i], fin);
-    return 0;
 }
 
 inline void load_matt(VecInt_O var, Str_I varname, Str_I matt_file)
@@ -1552,12 +1544,12 @@ inline void load_matt(VecInt_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(VecLlong_O v, Str_I varname, Matt_IO matt)
+inline void load(VecLlong_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
     Long i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (3 < matt.m_type[i])
@@ -1569,7 +1561,6 @@ inline Int load(VecLlong_O v, Str_I varname, Matt_IO matt)
     // read var data
     for (Long i = 0; i < n; ++i)
         matt_read_scalar(v[i], fin);
-    return 0;
 }
 
 inline void load_matt(VecLlong_O var, Str_I varname, Str_I matt_file)
@@ -1579,12 +1570,12 @@ inline void load_matt(VecLlong_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(VecDoub_O v, Str_I varname, Matt_IO matt)
+inline void load(VecDoub_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
     Long i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (21 < matt.m_type[i])
@@ -1596,7 +1587,6 @@ inline Int load(VecDoub_O v, Str_I varname, Matt_IO matt)
     // read var data
     for (Long i = 0; i < n; ++i)
         matt_read_scalar(v[i], fin);
-    return 0;
 }
 
 inline void load_matt(VecDoub_O var, Str_I varname, Str_I matt_file)
@@ -1606,12 +1596,12 @@ inline void load_matt(VecDoub_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(VecComp_O v, Str_I varname, Matt_IO matt)
+inline void load(VecComp_O v, Str_I varname, Matt_IO matt)
 {
     ifstream &fin = matt.m_in;
     Long i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (41 < matt.m_type[i])
@@ -1623,7 +1613,6 @@ inline Int load(VecComp_O v, Str_I varname, Matt_IO matt)
     // read var data
     for (Long i = 0; i < n; ++i)
         matt_read_scalar(v[i], fin);
-    return 0;
 }
 
 inline void load_matt(VecComp_O var, Str_I varname, Str_I matt_file)
@@ -1633,13 +1622,13 @@ inline void load_matt(VecComp_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(MatInt_O a, Str_I varname, Matt_IO matt)
+inline void load(MatInt_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (2 < matt.m_type[i])
@@ -1652,7 +1641,6 @@ inline Int load(MatInt_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(MatInt_O var, Str_I varname, Str_I matt_file)
@@ -1662,13 +1650,13 @@ inline void load_matt(MatInt_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(MatLlong_O a, Str_I varname, Matt_IO matt)
+inline void load(MatLlong_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (3 < matt.m_type[i])
@@ -1681,7 +1669,6 @@ inline Int load(MatLlong_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(MatLlong_O var, Str_I varname, Str_I matt_file)
@@ -1691,13 +1678,13 @@ inline void load_matt(MatLlong_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(MatDoub_O a, Str_I varname, Matt_IO matt)
+inline void load(MatDoub_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (21 < matt.m_type[i])
@@ -1710,7 +1697,6 @@ inline Int load(MatDoub_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(MatDoub_O var, Str_I varname, Str_I matt_file)
@@ -1720,13 +1706,13 @@ inline void load_matt(MatDoub_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(MatComp_O a, Str_I varname, Matt_IO matt)
+inline void load(MatComp_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (41 < matt.m_type[i])
@@ -1739,7 +1725,6 @@ inline Int load(MatComp_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(MatComp_O var, Str_I varname, Str_I matt_file)
@@ -1749,13 +1734,13 @@ inline void load_matt(MatComp_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(CmatInt_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatInt_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (2 < matt.m_type[i])
@@ -1768,7 +1753,6 @@ inline Int load(CmatInt_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(CmatInt_O var, Str_I varname, Str_I matt_file)
@@ -1778,13 +1762,13 @@ inline void load_matt(CmatInt_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(CmatLlong_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatLlong_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (3 < matt.m_type[i])
@@ -1797,7 +1781,6 @@ inline Int load(CmatLlong_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(CmatLlong_O var, Str_I varname, Str_I matt_file)
@@ -1807,13 +1790,13 @@ inline void load_matt(CmatLlong_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(CmatDoub_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatDoub_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (21 < matt.m_type[i])
@@ -1826,7 +1809,6 @@ inline Int load(CmatDoub_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(CmatDoub_O var, Str_I varname, Str_I matt_file)
@@ -1836,13 +1818,13 @@ inline void load_matt(CmatDoub_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(CmatComp_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatComp_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, m, n;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (41 < matt.m_type[i])
@@ -1855,7 +1837,6 @@ inline Int load(CmatComp_O a, Str_I varname, Matt_IO matt)
     for (j = 0; j < n; ++j)
         for (i = 0; i < m; ++i)
             matt_read_scalar(a(i, j), fin);
-    return 0;
 }
 
 inline void load_matt(CmatComp_O var, Str_I varname, Str_I matt_file)
@@ -1865,13 +1846,13 @@ inline void load_matt(CmatComp_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (2 < matt.m_type[i])
@@ -1886,7 +1867,6 @@ inline Int load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 matt_read_scalar(a(i, j, k), fin);
-    return 0;
 }
 
 inline void load_matt(Cmat3Int_O var, Str_I varname, Str_I matt_file)
@@ -1896,13 +1876,13 @@ inline void load_matt(Cmat3Int_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (3 < matt.m_type[i])
@@ -1917,7 +1897,6 @@ inline Int load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 matt_read_scalar(a(i, j, k), fin);
-    return 0;
 }
 
 inline void load_matt(Cmat3Llong_O var, Str_I varname, Str_I matt_file)
@@ -1927,13 +1906,13 @@ inline void load_matt(Cmat3Llong_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (21 < matt.m_type[i])
@@ -1948,7 +1927,6 @@ inline Int load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 matt_read_scalar(a(i, j, k), fin);
-    return 0;
 }
 
 inline void load_matt(Cmat3Doub_O var, Str_I varname, Str_I matt_file)
@@ -1958,13 +1936,13 @@ inline void load_matt(Cmat3Doub_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, m, n, q;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (41 < matt.m_type[i])
@@ -1979,7 +1957,6 @@ inline Int load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
         for (j = 0; j < n; ++j)
             for (i = 0; i < m; ++i)
                 matt_read_scalar(a(i, j, k), fin);
-    return 0;
 }
 
 inline void load_matt(Cmat3Comp_O var, Str_I varname, Str_I matt_file)
@@ -1989,13 +1966,13 @@ inline void load_matt(Cmat3Comp_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, l, N1, N2, N3, N4;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (21 < matt.m_type[i])
@@ -2011,7 +1988,6 @@ inline Int load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
                     matt_read_scalar(a(i, j, k, l), fin);
-    return 0;
 }
 
 inline void load_matt(Cmat4Doub_O var, Str_I varname, Str_I matt_file)
@@ -2021,13 +1997,13 @@ inline void load_matt(Cmat4Doub_O var, Str_I varname, Str_I matt_file)
     matt.close();
 }
 
-inline Int load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
 {
     Long i, j, k, l, N1, N2, N3, N4;
     ifstream &fin = matt.m_in;
     i = matt.search(varname);
     if (i < 0)
-        return -1;
+        throw Str("variable not found!");
     fin.seekg(matt.m_ind[i]);
 
     if (41 < matt.m_type[i])
@@ -2043,7 +2019,6 @@ inline Int load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
             for (j = 0; j < N2; ++j)
                 for (i = 0; i < N1; ++i)
                     matt_read_scalar(a(i, j, k, l), fin);
-    return 0;
 }
 
 inline void load_matt(Cmat4Comp_O var, Str_I varname, Str_I matt_file)
