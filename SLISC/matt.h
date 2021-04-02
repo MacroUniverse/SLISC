@@ -33,8 +33,8 @@ public:
     // ===== internal functions =====
 
     // get var names and positions from the end of the file
-    // after return, matt.m_ind[i] points to the first matrix element;
     void get_profile();
+    Long data_pos(Long_I var_ind); // find position of the ind-th variable, i.e. seekg() of the first element
 
     // search a variable by name, return index to m_name[i]
     // return -1 if not found
@@ -138,24 +138,23 @@ inline void Matt::get_profile()
     Int i, j, n, temp;
     vector<Long> size;
     Str name;
-    ifstream &fin = m_in;
 
     // read number of variables and their positions
-    fin.seekg(0, fin.end);
-    Long gmax = fin.tellg();
+    m_in.seekg(0, m_in.end);
+    Long gmax = m_in.tellg();
     // check end mark
-    fin.seekg(gmax-2);
-    Char c1 = fin.get(), c2 = fin.get();
+    m_in.seekg(gmax-2);
+    Char c1 = m_in.get(), c2 = m_in.get();
     if (c1 != Matt::dlm || c2 != Matt::dlm) {
         throw Matt_file_not_complete();
     }
-    fin.seekg(gmax-2);
-    m_n = (Int)scanInverse(fin);
+    m_in.seekg(gmax-2);
+    m_n = (Int)scanInverse(m_in);
     if (m_n < 1)
         SLS_ERR("unknown!");
     m_ind.resize(m_n);
     for (i = 0; i < m_n; ++i) {
-        m_ind[i] = scanInverse(fin);
+        m_ind[i] = scanInverse(m_in);
         if (m_ind[i] >= gmax || m_ind[i] < 0)
             SLS_ERR("unknown!");
         if (i > 0 && m_ind[i] <= m_ind[i - 1])
@@ -164,36 +163,54 @@ inline void Matt::get_profile()
 
     // loop through each variable
     for (i = 0; i < m_n; ++i) {
-        fin.seekg(m_ind[i]);
+        m_in.seekg(m_ind[i]);
         // read var name
-        fin >> n;
+        m_in >> n;
         name.resize(0);
         for (j = 0; j < n; ++j) {
-            fin >> temp;
+            m_in >> temp;
             if (temp <= 0 || temp > 127)
                 SLS_ERR("unknown!");
             name.push_back((Char)temp);
         }
         m_name.push_back(name);
         // read var type
-        fin >> temp;
+        m_in >> temp;
         if (temp < 0 || temp > 100)
             SLS_ERR("unknown!");
         m_type.push_back(temp);
         // read var dim
-        fin >> n;
+        m_in >> n;
         if (n < 0 || n > 10)
             SLS_ERR("unknown!");
         size.resize(0);
         for (j = 0; j < n; ++j) {
-            fin >> temp;
+            m_in >> temp;
             if (temp < 0)
                 SLS_ERR("unknown!");
             size.push_back(temp);
         }
         m_size.push_back(size);
-        m_ind[i] = fin.tellg();
     }
+}
+
+inline Long Matt::data_pos(Long_I i)
+{
+    Int temp, n;
+    if (m_rw != 'r')
+        SLS_ERR("not implemented!");
+    m_in.seekg(m_ind[i]);
+    // read var name
+    m_in >> n;
+    for (Long j = 0; j < n; ++j)
+        m_in >> temp;
+    // read var type
+    m_in >> temp;
+    // read var dim
+    m_in >> n;
+    for (Long j = 0; j < n; ++j)
+        m_in >> temp;
+    return m_in.tellg();
 }
 
 // search variable in file by name
@@ -202,7 +219,6 @@ inline Int Matt::search(Str_I name)
     for (Int i = 0; i < m_n; ++i)
         if (name == m_name[i])
             return i;
-    SLS_WARN("variable name not found: " + name + ", file : " + fname);
     return -1;
 }
 
@@ -289,9 +305,12 @@ inline Matt::~Matt()
 // save() functions
 inline void save(Char_I s, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -316,9 +335,12 @@ inline void save_matt(Char_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Int_I s, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -343,9 +365,12 @@ inline void save_matt(Int_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Llong_I s, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -370,9 +395,12 @@ inline void save_matt(Llong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Doub_I s, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -397,9 +425,12 @@ inline void save_matt(Doub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Comp_I s, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -424,9 +455,12 @@ inline void save_matt(Comp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(VecChar_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -453,9 +487,12 @@ inline void save_matt(VecChar_I s, Str_I varname, Str_I matt_file)
 
 inline void save(VecInt_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -482,9 +519,12 @@ inline void save_matt(VecInt_I s, Str_I varname, Str_I matt_file)
 
 inline void save(VecLlong_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -511,9 +551,12 @@ inline void save_matt(VecLlong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(VecDoub_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -540,9 +583,12 @@ inline void save_matt(VecDoub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(VecComp_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -569,9 +615,12 @@ inline void save_matt(VecComp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(SvecChar_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -598,9 +647,12 @@ inline void save_matt(SvecChar_I s, Str_I varname, Str_I matt_file)
 
 inline void save(SvecInt_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -627,9 +679,12 @@ inline void save_matt(SvecInt_I s, Str_I varname, Str_I matt_file)
 
 inline void save(SvecLlong_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -656,9 +711,12 @@ inline void save_matt(SvecLlong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(SvecDoub_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -685,9 +743,12 @@ inline void save_matt(SvecDoub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(SvecComp_I v, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -714,10 +775,13 @@ inline void save_matt(SvecComp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(MatInt_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -743,10 +807,13 @@ inline void save_matt(MatInt_I s, Str_I varname, Str_I matt_file)
 
 inline void save(MatLlong_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -772,10 +839,13 @@ inline void save_matt(MatLlong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(MatDoub_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -801,10 +871,13 @@ inline void save_matt(MatDoub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(MatComp_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -830,10 +903,13 @@ inline void save_matt(MatComp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(CmatInt_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -859,10 +935,13 @@ inline void save_matt(CmatInt_I s, Str_I varname, Str_I matt_file)
 
 inline void save(CmatLlong_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -888,10 +967,13 @@ inline void save_matt(CmatLlong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(CmatDoub_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -917,10 +999,13 @@ inline void save_matt(CmatDoub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(CmatComp_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -946,10 +1031,13 @@ inline void save_matt(CmatComp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -977,10 +1065,13 @@ inline void save_matt(Cmat3Int_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1008,10 +1099,13 @@ inline void save_matt(Cmat3Llong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1039,10 +1133,13 @@ inline void save_matt(Cmat3Doub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1070,10 +1167,13 @@ inline void save_matt(Cmat3Comp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Cmat4Doub_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1102,10 +1202,13 @@ inline void save_matt(Cmat4Doub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(Cmat4Comp_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1134,10 +1237,13 @@ inline void save_matt(Cmat4Comp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(ScmatInt_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1163,10 +1269,13 @@ inline void save_matt(ScmatInt_I s, Str_I varname, Str_I matt_file)
 
 inline void save(ScmatLlong_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1192,10 +1301,13 @@ inline void save_matt(ScmatLlong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(ScmatDoub_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1221,10 +1333,13 @@ inline void save_matt(ScmatDoub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(ScmatComp_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1250,10 +1365,13 @@ inline void save_matt(ScmatComp_I s, Str_I varname, Str_I matt_file)
 
 inline void save(DcmatInt_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1279,10 +1397,13 @@ inline void save_matt(DcmatInt_I s, Str_I varname, Str_I matt_file)
 
 inline void save(DcmatLlong_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1308,10 +1429,13 @@ inline void save_matt(DcmatLlong_I s, Str_I varname, Str_I matt_file)
 
 inline void save(DcmatDoub_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1337,10 +1461,13 @@ inline void save_matt(DcmatDoub_I s, Str_I varname, Str_I matt_file)
 
 inline void save(DcmatComp_I a, Str_I varname, Matt_IO matt)
 {
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
     ++matt.m_n; matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
@@ -1379,7 +1506,7 @@ inline void load(Char_O s, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (1 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1403,7 +1530,7 @@ inline void load(Int_O s, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (2 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1427,7 +1554,7 @@ inline void load(Llong_O s, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (3 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1451,7 +1578,7 @@ inline void load(Doub_O s, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1475,7 +1602,7 @@ inline void load(Comp_O s, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1498,7 +1625,7 @@ inline void load(VecChar_O v, Str_I varname, Matt_IO matt)
     Long i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (1 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1524,7 +1651,7 @@ inline void load(VecInt_O v, Str_I varname, Matt_IO matt)
     Long i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (2 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1550,7 +1677,7 @@ inline void load(VecLlong_O v, Str_I varname, Matt_IO matt)
     Long i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (3 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1576,7 +1703,7 @@ inline void load(VecDoub_O v, Str_I varname, Matt_IO matt)
     Long i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1602,7 +1729,7 @@ inline void load(VecComp_O v, Str_I varname, Matt_IO matt)
     Long i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1629,7 +1756,7 @@ inline void load(MatInt_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (2 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1657,7 +1784,7 @@ inline void load(MatLlong_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (3 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1685,7 +1812,7 @@ inline void load(MatDoub_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1713,7 +1840,7 @@ inline void load(MatComp_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1741,7 +1868,7 @@ inline void load(CmatInt_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (2 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1769,7 +1896,7 @@ inline void load(CmatLlong_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (3 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1797,7 +1924,7 @@ inline void load(CmatDoub_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1825,7 +1952,7 @@ inline void load(CmatComp_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1853,7 +1980,7 @@ inline void load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (2 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1883,7 +2010,7 @@ inline void load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (3 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1913,7 +2040,7 @@ inline void load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1943,7 +2070,7 @@ inline void load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -1973,7 +2100,7 @@ inline void load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (21 < matt.m_type[i])
         SLS_ERR("wrong type!");
@@ -2004,7 +2131,7 @@ inline void load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
     i = matt.search(varname);
     if (i < 0)
         throw Str("variable not found!");
-    fin.seekg(matt.m_ind[i]);
+    fin.seekg(matt.data_pos(i));
 
     if (41 < matt.m_type[i])
         SLS_ERR("wrong type!");
