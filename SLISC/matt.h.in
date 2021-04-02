@@ -289,6 +289,8 @@ inline Matt::~Matt()
 //% if is_Char(T) || is_Int(T) || is_Llong(T) || is_Doub(T) || is_Comp(T)
 inline void save(@T@_I s, Str_I varname, Matt_IO matt)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
@@ -309,6 +311,8 @@ inline void save(@T@_I s, Str_I varname, Matt_IO matt)
 //% elseif ndim(T) == 1 && is_scalar(Ts)
 inline void save(@T@_I v, Str_I varname, Matt_IO matt)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -331,6 +335,8 @@ inline void save(@T@_I v, Str_I varname, Matt_IO matt)
 //% elseif ndim(T) == 2
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long N1 = a.n1(), N2 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
@@ -353,6 +359,8 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% elseif is_Cmat3(T) || is_Mat3(T)
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
@@ -377,6 +385,8 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% elseif is_Cmat4(T)
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())

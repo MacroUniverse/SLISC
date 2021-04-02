@@ -2,9 +2,8 @@
 // usage: `find ... -exec matb2matt [-d] {} +`
 #include <omp.h>
 #define SLS_MATB_REPLACE
-#include "SLISC/matt.h"
-#include "SLISC/matb.h"
-#include "SLISC/time.h"
+#include "../SLISC/matb.h"
+#include "../SLISC/time.h"
 
 using namespace slisc;
 Int main(Int argc, Char *argv[])

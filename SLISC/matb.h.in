@@ -216,6 +216,8 @@ inline Matb::~Matb()
 //% T = varargin{:};
 inline void save(@T@_I s, Str_I varname, Matb_IO matb)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matb.m_out;
     if (!fout.is_open())
         SLS_ERR("matb file not open: " + matb.fname);
@@ -259,6 +261,8 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file)
 //% numT = num2str(type_num(Ts));
 inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matb.m_out;
     if (!fout.is_open())
         SLS_ERR("matb file not open!");
@@ -308,6 +312,8 @@ inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file)
 // save string as VecChar
 inline void save(Str_I str, Str_I varname, Matb_IO matb)
 {
+    if (search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
     SvecChar_c sli; sli.set(str.data(), str.size());
     save(sli, varname, matb);
 }
