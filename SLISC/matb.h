@@ -238,7 +238,7 @@ inline void save(Char_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname));
+    write(fout, Llong(size(varname)));
     write(fout, varname);
     // write data type info
     write(fout, Llong(1));
@@ -265,7 +265,7 @@ inline void save(Int_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname));
+    write(fout, Llong(size(varname)));
     write(fout, varname);
     // write data type info
     write(fout, Llong(2));
@@ -292,7 +292,7 @@ inline void save(Llong_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname));
+    write(fout, Llong(size(varname)));
     write(fout, varname);
     // write data type info
     write(fout, Llong(3));
@@ -319,7 +319,7 @@ inline void save(Doub_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname));
+    write(fout, Llong(size(varname)));
     write(fout, varname);
     // write data type info
     write(fout, Llong(21));
@@ -346,7 +346,7 @@ inline void save(Comp_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname));
+    write(fout, Llong(size(varname)));
     write(fout, varname);
     // write data type info
     write(fout, Llong(41));

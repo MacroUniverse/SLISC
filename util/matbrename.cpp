@@ -5,26 +5,22 @@ using namespace slisc;
 // usage: matbrename <filename.matb> <varname> <newname>
 int main(int argc, char **argv)
 {
-	Str file = argv[1], varname = argv[2], newname = argv[3];
-	cout << file << ": " << varname << " -> " << newname << endl;
-	cout << "file size = " << file_size(file) << endl;
-	Matb matb(file, 'r');
+	Str fname = argv[1], varname = argv[2], newname = argv[3];
+	cout << fname << ": " << varname << " -> " << newname << endl;
+	if (varname.size() != newname.size())
+		SLS_ERR("cuttently only support rename to same size name!");
+	Matb matb(fname, 'r');
 	Long ind = matb.search(varname);
-	cout << "variable # " << ind << endl;
 	if (ind < 0)
-		SLS_ERR("var not found!");
-	Str data; read(data, file);
-	
-	matb.m_in.seekg(0, std::ios::beg);
-	cout << "begin of file tellg() = " << matb.m_in.tellg() << endl;
+		SLS_ERR("variable not found!");
+	Long name_pos = matb.m_ind[ind] + 8;
 
-	Long name_ind0 = data.find(varname);
-	cout << "name_ind0 = " << name_ind0 << endl;
+	Str data; read(data, fname);
+	if (data.substr(name_pos, varname.size()) != varname)
+		SLS_ERR("unknow!");
+	data.replace(name_pos, varname.size(), newname);
 
-	Long name_ind = matb.m_ind[ind] + 8;
-	cout << "name_ind = " << name_ind << endl;
-	cout << "is this varname? " << data.substr(name_ind, varname.size()) << endl;
-
-	Long data_ind = matb.data_pos(ind);
-	cout << "data_ind = " << data_ind << endl;
+	ofstream fout; open_bin(fout, "renamed-" + fname);
+	write(fout, data);
+	fout.close();
 }

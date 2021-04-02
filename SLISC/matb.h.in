@@ -241,7 +241,7 @@ inline void save(@T@_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname));
+    write(fout, Llong(size(varname)));
     write(fout, varname);
     // write data type info
 //% tmp = num2str(type_num(T));

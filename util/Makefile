@@ -12,3 +12,7 @@ matb2matt: matb2matt.cpp
 matbrename: matbrename.cpp
 	cd ..; make h; cd -;
 	g++ $(flags) matbrename.cpp -o matbrename
+
+matbinfo: matbinfo.cpp
+	cd ..; make h; cd -;
+	g++ $(flags) matbinfo.cpp -o matbinfo
