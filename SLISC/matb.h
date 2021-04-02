@@ -14,7 +14,6 @@ public:
     Char m_rw; // 'r' for read 'w' for write
     ifstream m_in; // read file
     ofstream m_out; // write file
-    Llong m_n; // variable numbers
     Str fname; // name of the opened file
     vecStr m_name; // variable names
     vecLlong m_type; // variable types
@@ -33,6 +32,7 @@ public:
     // ===== internal functions =====
 
     // get var names and positions from the end of the file
+    Long size();
     void get_profile();
     Long data_pos(Long_I var_ind); // find position of the ind-th variable, i.e. seekg() of the first element
 
@@ -60,6 +60,11 @@ Llong lastLlong(ifstream &fin)
     return num;
 }
 
+inline Long Matb::size()
+{
+    return m_ind.size();
+}
+
 inline void Matb::get_profile()
 {
     vecLlong size;
@@ -76,11 +81,11 @@ inline void Matb::get_profile()
     if (mark != "Matb_End_of_File")
         throw Matb_file_not_complete();
     fin.seekg(gmax-strlen("Matb_End_of_File"));
-    m_n = lastLlong(fin);
-    if (m_n < 1)
+    Long Nvar = lastLlong(fin);
+    if (Nvar < 1)
         SLS_ERR("unknown!");
-    m_ind.resize(m_n);
-    for (Long i = 0; i < m_n; ++i) {
+    m_ind.resize(Nvar);
+    for (Long i = 0; i < Nvar; ++i) {
         m_ind[i] = lastLlong(fin);
         if (m_ind[i] >= gmax || m_ind[i] < 0)
             SLS_ERR("unknown!");
@@ -89,8 +94,8 @@ inline void Matb::get_profile()
     }
 
     // loop through each variable
-    m_size.resize(m_n);
-    for (Long i = 0; i < m_n; ++i) {
+    m_size.resize(Nvar);
+    for (Long i = 0; i < Nvar; ++i) {
         fin.seekg(m_ind[i]);
         // read var name
         Llong n;
@@ -138,7 +143,7 @@ inline Long Matb::data_pos(Long_I i)
 // return index of m_name, return -1 if not found
 inline Long Matb::search(Str_I name)
 {
-    for (Long i = 0; i < m_n; ++i)
+    for (Long i = 0; i < size(); ++i)
         if (name == m_name[i])
             return i;
     return -1;
@@ -172,7 +177,6 @@ inline void Matb::open(Str_I fname, Char_I rw)
         }
 #endif
         m_rw = 'w';
-        m_n = 0;
         open_bin(m_out, fname);
         if (!m_out.good())
             SLS_ERR("error: file not created (does directory exist?): " + fname);
@@ -198,7 +202,7 @@ inline void Matb::close()
         for (Long i = m_ind.size() - 1; i >= 0; --i)
             write(m_out, m_ind[i]);
         // write number of variables
-        write(m_out, m_n);
+        write(m_out, size());
         // mark end-of-file
         write(m_out, "Matb_End_of_File");
         m_out.close();
@@ -207,7 +211,6 @@ inline void Matb::close()
         m_in.close();
     }
     m_rw = '\0';
-    m_n = 0;
     m_name.clear();
     m_type.clear();
     m_size.clear();
@@ -233,7 +236,7 @@ inline void save(Char_I s, Str_I varname, Matb_IO matb)
     if (!fout.is_open())
         SLS_ERR("matb file not open: " + matb.fname);
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname));
     write(fout, varname);
@@ -260,7 +263,7 @@ inline void save(Int_I s, Str_I varname, Matb_IO matb)
     if (!fout.is_open())
         SLS_ERR("matb file not open: " + matb.fname);
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname));
     write(fout, varname);
@@ -287,7 +290,7 @@ inline void save(Llong_I s, Str_I varname, Matb_IO matb)
     if (!fout.is_open())
         SLS_ERR("matb file not open: " + matb.fname);
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname));
     write(fout, varname);
@@ -314,7 +317,7 @@ inline void save(Doub_I s, Str_I varname, Matb_IO matb)
     if (!fout.is_open())
         SLS_ERR("matb file not open: " + matb.fname);
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname));
     write(fout, varname);
@@ -341,7 +344,7 @@ inline void save(Comp_I s, Str_I varname, Matb_IO matb)
     if (!fout.is_open())
         SLS_ERR("matb file not open: " + matb.fname);
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname));
     write(fout, varname);
@@ -371,7 +374,7 @@ inline void save(VecChar_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -400,7 +403,7 @@ inline void save(VecInt_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -429,7 +432,7 @@ inline void save(VecLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -458,7 +461,7 @@ inline void save(VecDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -487,7 +490,7 @@ inline void save(VecComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -516,7 +519,7 @@ inline void save(SvecChar_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -545,7 +548,7 @@ inline void save(SvecLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -574,7 +577,7 @@ inline void save(SvecDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -603,7 +606,7 @@ inline void save(SvecComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -632,7 +635,7 @@ inline void save(DvecLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -661,7 +664,7 @@ inline void save(DvecDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -690,7 +693,7 @@ inline void save(DvecComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -719,7 +722,7 @@ inline void save(CmatChar_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -749,7 +752,7 @@ inline void save(CmatInt_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -779,7 +782,7 @@ inline void save(CmatLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -809,7 +812,7 @@ inline void save(CmatDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -839,7 +842,7 @@ inline void save(CmatComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -869,7 +872,7 @@ inline void save(MatChar_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -899,7 +902,7 @@ inline void save(MatInt_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -929,7 +932,7 @@ inline void save(MatLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -959,7 +962,7 @@ inline void save(MatDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -989,7 +992,7 @@ inline void save(MatComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1019,7 +1022,7 @@ inline void save(ScmatInt_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1049,7 +1052,7 @@ inline void save(ScmatLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1079,7 +1082,7 @@ inline void save(ScmatDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1109,7 +1112,7 @@ inline void save(ScmatComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1139,7 +1142,7 @@ inline void save(DcmatInt_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1169,7 +1172,7 @@ inline void save(DcmatLlong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1199,7 +1202,7 @@ inline void save(DcmatDoub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1229,7 +1232,7 @@ inline void save(DcmatComp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1259,7 +1262,7 @@ inline void save(Cmat3Int_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1290,7 +1293,7 @@ inline void save(Cmat3Llong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1321,7 +1324,7 @@ inline void save(Cmat3Doub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1352,7 +1355,7 @@ inline void save(Cmat3Comp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1383,7 +1386,7 @@ inline void save(Mat3Int_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1414,7 +1417,7 @@ inline void save(Mat3Llong_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1445,7 +1448,7 @@ inline void save(Mat3Doub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1476,7 +1479,7 @@ inline void save(Mat3Comp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1507,7 +1510,7 @@ inline void save(Cmat4Doub_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info
@@ -1540,7 +1543,7 @@ inline void save(Cmat4Comp_I v, Str_I varname, Matb_IO matb)
         SLS_ERR("matb file not open!");
     // record position
     matb.m_name.push_back(varname);
-    ++matb.m_n; matb.m_ind.push_back(fout.tellp());
+    matb.m_ind.push_back(fout.tellp());
     // write variable name info
     write(fout, size(varname)); write(fout, varname);
     // write data type info

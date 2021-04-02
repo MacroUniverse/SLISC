@@ -15,7 +15,6 @@ public:
     Char m_rw; // 'r' for read 'w' for write
     ifstream m_in; // read file
     ofstream m_out; // write file
-    Int m_n; // variable numbers
     Str fname; // name of the opened file
     vector<Str> m_name; // variable names
     vector<Int> m_type; // variable types
@@ -33,6 +32,7 @@ public:
     // ===== internal functions =====
 
     // get var names and positions from the end of the file
+    Long size();
     void get_profile();
     Long data_pos(Long_I var_ind); // find position of the ind-th variable, i.e. seekg() of the first element
 
@@ -133,6 +133,11 @@ inline Long scanInverse(ifstream &fin)
 
 struct Matt_file_not_complete {};
 
+inline Long Matt::size()
+{
+    return m_ind.size();
+}
+
 inline void Matt::get_profile()
 {
     Int i, j, n, temp;
@@ -149,11 +154,11 @@ inline void Matt::get_profile()
         throw Matt_file_not_complete();
     }
     m_in.seekg(gmax-2);
-    m_n = (Int)scanInverse(m_in);
-    if (m_n < 1)
+    Long Nvar = scanInverse(m_in);
+    if (Nvar < 1)
         SLS_ERR("unknown!");
-    m_ind.resize(m_n);
-    for (i = 0; i < m_n; ++i) {
+    m_ind.resize(Nvar);
+    for (i = 0; i < Nvar; ++i) {
         m_ind[i] = scanInverse(m_in);
         if (m_ind[i] >= gmax || m_ind[i] < 0)
             SLS_ERR("unknown!");
@@ -162,7 +167,7 @@ inline void Matt::get_profile()
     }
 
     // loop through each variable
-    for (i = 0; i < m_n; ++i) {
+    for (i = 0; i < Nvar; ++i) {
         m_in.seekg(m_ind[i]);
         // read var name
         m_in >> n;
@@ -216,7 +221,7 @@ inline Long Matt::data_pos(Long_I i)
 // search variable in file by name
 inline Int Matt::search(Str_I name)
 {
-    for (Int i = 0; i < m_n; ++i)
+    for (Int i = 0; i < size(); ++i)
         if (name == m_name[i])
             return i;
     return -1;
@@ -249,7 +254,6 @@ inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
         }
 #endif
         m_rw = 'w';
-        m_n = 0;
         m_out.open(fname);
         if (!m_out.good())
             SLS_ERR("error: file not created (directory does not exist ?): " + fname);
@@ -278,7 +282,7 @@ inline void Matt::close()
         for (Long i = m_ind.size() - 1; i >= 0; --i)
             fout << m_ind[i] << dlm;
         // write number of variables
-        fout << m_n;
+        fout << size();
         // mark end-of-file
         fout << Matt::dlm << Matt::dlm;
         m_out.close();
@@ -287,7 +291,6 @@ inline void Matt::close()
         m_in.close();
     }
     m_rw = '\0';
-    m_n = 0;
     m_name.clear();
     m_type.clear();
     m_size.clear();
@@ -311,7 +314,7 @@ inline void save(Char_I s, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -341,7 +344,7 @@ inline void save(Int_I s, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -371,7 +374,7 @@ inline void save(Llong_I s, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -401,7 +404,7 @@ inline void save(Doub_I s, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -431,7 +434,7 @@ inline void save(Comp_I s, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open: " + matt.fname);
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -461,7 +464,7 @@ inline void save(VecChar_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -493,7 +496,7 @@ inline void save(VecInt_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -525,7 +528,7 @@ inline void save(VecLlong_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -557,7 +560,7 @@ inline void save(VecDoub_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -589,7 +592,7 @@ inline void save(VecComp_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -621,7 +624,7 @@ inline void save(SvecChar_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -653,7 +656,7 @@ inline void save(SvecInt_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -685,7 +688,7 @@ inline void save(SvecLlong_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -717,7 +720,7 @@ inline void save(SvecDoub_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -749,7 +752,7 @@ inline void save(SvecComp_I v, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -782,7 +785,7 @@ inline void save(MatInt_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -814,7 +817,7 @@ inline void save(MatLlong_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -846,7 +849,7 @@ inline void save(MatDoub_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -878,7 +881,7 @@ inline void save(MatComp_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -910,7 +913,7 @@ inline void save(CmatInt_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -942,7 +945,7 @@ inline void save(CmatLlong_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -974,7 +977,7 @@ inline void save(CmatDoub_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1006,7 +1009,7 @@ inline void save(CmatComp_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1038,7 +1041,7 @@ inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1072,7 +1075,7 @@ inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1106,7 +1109,7 @@ inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1140,7 +1143,7 @@ inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1174,7 +1177,7 @@ inline void save(Cmat4Doub_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1209,7 +1212,7 @@ inline void save(Cmat4Comp_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1244,7 +1247,7 @@ inline void save(ScmatInt_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1276,7 +1279,7 @@ inline void save(ScmatLlong_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1308,7 +1311,7 @@ inline void save(ScmatDoub_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1340,7 +1343,7 @@ inline void save(ScmatComp_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1372,7 +1375,7 @@ inline void save(DcmatInt_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1404,7 +1407,7 @@ inline void save(DcmatLlong_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1436,7 +1439,7 @@ inline void save(DcmatDoub_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
@@ -1468,7 +1471,7 @@ inline void save(DcmatComp_I a, Str_I varname, Matt_IO matt)
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
     matt.m_name.push_back(varname);
-    ++matt.m_n; matt.m_ind.push_back(fout.tellp());
+    matt.m_ind.push_back(fout.tellp());
     // write variable name info
     Long n = varname.size();
     fout << n << Matt::dlm;
