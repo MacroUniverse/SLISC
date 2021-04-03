@@ -10,7 +10,10 @@ x64/
 *.asv
 test.matt
 test.matb
+test1.matb
 cpp_gen.m
 matb2matt
 matt2matb
 SLISC/test
+util/matbinfo
+util/matbrename
