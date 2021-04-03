@@ -14,8 +14,10 @@ public:
     Char m_rw; // 'r' for read 'w' for write
     ifstream m_in; // read file
     ofstream m_out; // write file
-    Str fname; // name of the opened file
+    Llong m_filesize; // file size
+    Str m_fname; // name of the opened file
     vecStr m_name; // variable names
+    vecStr m_data; // data cache, only useful in 'm' mode
     vecLlong m_type; // variable types
     vector<vecLlong> m_size; // variable dimensions
     vecLlong m_ind; // variable positions (from the first byte of file)
@@ -26,15 +28,20 @@ public:
     // check if file is open
     Bool isopen();
 
+    // read all data into cache
+    void read_data();
+    void write_data(Str_I fname);
+
     // close a file, if not called, will be called in destructor
     void close();
 
     // ===== internal functions =====
 
     // get var names and positions from the end of the file
-    Long size();
+    Long size() const;
+    Long data_size(Long_I i) const;
     void get_profile();
-    Long data_pos(Long_I var_ind); // find position of the ind-th variable, i.e. seekg() of the first element
+    Long data_pos(Long_I var_ind) const; // find position of the ind-th variable, i.e. seekg() of the first element
 
     // search a variable by name, return index to m_name[i]
     // return -1 if not found
@@ -60,34 +67,33 @@ Llong lastLlong(ifstream &fin)
     return num;
 }
 
-inline Long Matb::size()
+inline Long Matb::size() const
 {
     return m_ind.size();
 }
 
 inline void Matb::get_profile()
 {
-    vecLlong size;
     Str name;
     ifstream &fin = m_in;
 
     // read number of variables and their positions
     fin.seekg(0, fin.end);
-    Long gmax = fin.tellg();
+    m_filesize = fin.tellg();
     // check end of file mark
-    fin.seekg(gmax-strlen("Matb_End_of_File"));
+    fin.seekg(m_filesize-strlen("Matb_End_of_File"));
     Str mark; mark.resize(strlen("Matb_End_of_File"));
     read(fin, mark);
     if (mark != "Matb_End_of_File")
         throw Matb_file_not_complete();
-    fin.seekg(gmax-strlen("Matb_End_of_File"));
+    fin.seekg(m_filesize-strlen("Matb_End_of_File"));
     Long Nvar = lastLlong(fin);
     if (Nvar < 1)
         SLS_ERR("unknown!");
     m_ind.resize(Nvar);
     for (Long i = 0; i < Nvar; ++i) {
         m_ind[i] = lastLlong(fin);
-        if (m_ind[i] >= gmax || m_ind[i] < 0)
+        if (m_ind[i] >= m_filesize || m_ind[i] < 0)
             SLS_ERR("unknown!");
         if (i > 0 && m_ind[i] <= m_ind[i-1])
             SLS_ERR("unknown!");
@@ -112,31 +118,22 @@ inline void Matb::get_profile()
         read(fin, n);
         if (n < 0)
             SLS_ERR("unknown!");
-        size.resize(n);
+        m_size[i].resize(n);
         for (Long j = 0; j < n; ++j) {
-            Llong temp;
-            read(fin, temp);
-            if (temp < 0)
+            read(fin, m_size[i][j]);
+            if (m_size[i][j] < 0)
                 SLS_ERR("unknown!");
-            size[j] = temp;
         }
-        m_size[i] = size;
     }
 }
 
-inline Long Matb::data_pos(Long_I i)
+inline Long Matb::data_pos(Long_I i) const
 {
-    if (m_rw != 'r')
-        SLS_ERR("not implemented!");
-    m_in.seekg(m_ind[i]);
-    // skip var name
-    Llong n; read(m_in, n);
-    m_in.seekg(Long(m_in.tellg()) + n);
-    // skip var type
-    m_in.seekg(Long(m_in.tellg()) + 8);
-    // skip var dim
-    read(m_in, n);
-    return Long(m_in.tellg()) + 8*n;
+#ifdef SLS_CHECK_BOUND
+    if (i <0 || i >= size())
+        SLS_ERR("out of bound!");
+#endif
+    return m_ind[i] + 8 + m_name[i].size() + 8 + 8 + (Long)m_size[i].size() * 8;
 }
 
 // search variable in file by name
@@ -160,13 +157,14 @@ inline void Matb::open(Str_I fname, Char_I rw)
         SLS_ERR("only support little endian for now!");
     if (isopen())
         close();
-    this->fname = fname;
+    m_rw = rw;
+    m_fname = fname;
     if (rw == 'w') {
 #ifndef SLS_MATB_REPLACE
-        if (file_exist(fname)) {
+        if (file_exist(m_fname)) {
             while (true) {
-                if (file_exist(fname)) {
-                    SLS_WARN("\n\nfile [" + fname + "] already exist! delete file to continue...\n"
+                if (file_exist(m_fname)) {
+                    SLS_WARN("\n\nfile [" + m_fname + "] already exist! delete file to continue...\n"
                         "  (define SLS_MATB_REPLACE to replace file by default)\n\n");
                 }
                 else {
@@ -176,23 +174,79 @@ inline void Matb::open(Str_I fname, Char_I rw)
             }
         }
 #endif
-        m_rw = 'w';
-        open_bin(m_out, fname);
+        open_bin(m_out, m_fname);
         if (!m_out.good())
-            SLS_ERR("error: file not created (does directory exist?): " + fname);
+            SLS_ERR("error: file not created (does directory exist?): " + m_fname);
     }
-    else {
-        m_rw = 'r';
-        open_bin(m_in, fname);
+    else if (rw == 'r' || 'm') {
+        open_bin(m_in, m_fname);
         if (!m_in.good())
-            SLS_ERR("error: file not found: " + fname);
+            SLS_ERR("error: file not found: " + m_fname);
         get_profile(); // get var names
     }
+    else
+        SLS_ERR("illegal mode!");
+}
+
+inline Long Matb::data_size(Long_I i) const
+{
+    Long len;
+    if (i+1 < size())
+        len = m_ind[i+1] - data_pos(i);
+    else {
+        Long end = m_filesize - strlen("Matb_End_of_File") - 8*(size() + 1);
+        len = end - data_pos(i);
+    }
+    return len;
 }
 
 inline Bool Matb::isopen()
 {
     return m_in.is_open() != m_out.is_open();
+}
+
+inline void Matb::read_data()
+{
+    if (m_rw != 'm')
+        SLS_ERR("read_data() can only be used in 'm' mode!");
+    for (Long i = 0; i < size(); ++i) {
+        m_data.push_back(Str()); m_data[i].resize(data_size(i));
+        m_in.seekg(data_pos(i));
+        read(m_in, m_data[i]);
+        if (Long(m_data[i].size()) != data_size(i))
+            SLS_ERR("unknown!");
+    }
+}
+
+inline void Matb::write_data(Str_I fname)
+{
+    if (m_rw != 'm')
+        SLS_ERR("write_data() can only be used in 'm' mode!");
+    m_in.close();
+    open_bin(m_out, fname);
+    m_out.seekp(0, std::ios::beg);
+    for (Long i = 0; i < size(); ++i) {
+        // debug
+        if (m_ind[i] != m_out.tellp())
+            SLS_ERR("unknown!");
+        write(m_out, Llong(m_name[i].size()));
+        write(m_out, m_name[i]); // name
+        write(m_out, m_type[i]);
+        Llong Ndim = m_size[i].size();
+        write(m_out, Ndim); // dim
+        for (Long j = 0; j < Ndim; ++j)
+            write(m_out, m_size[i][j]);
+        write(m_out, m_data[i]);
+    }
+    // write position of variables
+    for (Long i = size() - 1; i >= 0; --i)
+        write(m_out, m_ind[i]);
+    // write number of variables
+    write(m_out, (Llong)size());
+    // mark end-of-file
+    write(m_out, "Matb_End_of_File");
+    m_out.close();
+    open_bin(m_in, m_fname);
 }
 
 inline void Matb::close()
@@ -237,7 +291,7 @@ inline void save(@T@_I s, Str_I varname, Matb_IO matb)
         SLS_ERR("variable already exist: " + varname);
     ofstream &fout = matb.m_out;
     if (!fout.is_open())
-        SLS_ERR("matb file not open: " + matb.fname);
+        SLS_ERR("matb file not open: " + matb.m_fname);
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
@@ -342,7 +396,7 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 // return 0 if successful, -1 if variable not found
 //% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
+//%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%         'Cmat4Doub'; 'Cmat4Comp';

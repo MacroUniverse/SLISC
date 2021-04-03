@@ -2510,6 +2510,32 @@ inline Doub norm(MatComp_I v)
     return sqrt(norm2(v));
 }
 
+inline Doub norm2(Mat3Doub_I v)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+inline Doub norm(Mat3Doub_I v)
+{
+    return sqrt(norm2(v));
+}
+
+inline Doub norm2(Mat3Comp_I v)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+inline Doub norm(Mat3Comp_I v)
+{
+    return sqrt(norm2(v));
+}
+
 inline Doub norm2(CmatDoub_I v)
 {
     Long N = v.size();
@@ -4910,6 +4936,78 @@ inline void operator*=(CmatComp_O &v, CmatComp_I v1)
 }
 
 inline void operator/=(CmatComp_O &v, CmatComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator+=(Mat3Doub_O &v, Mat3Doub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    plus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator-=(Mat3Doub_O &v, Mat3Doub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator*=(Mat3Doub_O &v, Mat3Doub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator/=(Mat3Doub_O &v, Mat3Doub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator+=(Mat3Comp_O &v, Mat3Comp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    plus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator-=(Mat3Comp_O &v, Mat3Comp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator*=(Mat3Comp_O &v, Mat3Comp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator/=(Mat3Comp_O &v, Mat3Comp_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v, v1))

@@ -1,5 +1,7 @@
 #include "../SLISC/matb.h"
 #include "../SLISC/random.h"
+#include "../SLISC/disp.h"
+#include "../SLISC/sha1sum.h"
 
 void test_matb()
 {
@@ -76,10 +78,40 @@ void test_matb()
 
     matb.close();
 
-    // read test
+
+    // test 'c' mode
+    {
+        matb.open("test.matb", 'm');
+        matb.read_data();
+        matb.write_data("test1.matb");
+        matb.close();
+
+        Str data, data1;
+        data.resize(file_size("test.matb"));
+        data1.resize(file_size("test1.matb"));
+        cout << data.size() << "  " << data1.size() << endl;
+        ifstream fin;
+        open_bin(fin, "test.matb");
+        read(fin, data);
+        ifstream fin1;
+        open_bin(fin1, "test1.matb");
+
+        read(fin1, data1);
+        cout << data.size() << "  " << data1.size() << endl;
+        for (Long i = 0; i < data.size(); ++i){
+            if (data[i] != data1[i]) {
+                cout << i << "-th byte are different!" << endl;
+                cout << Uint(data[i]) << "   " << Uint(data1[i]) << endl;
+            }
+        }
+        cout << "sha1sum data  " << sha1sum(data) << endl;
+        cout << "sha1sum data1  " << sha1sum(data1) << endl;
+    }
+
+    // -----------  read test -------------
 
     // scalars
-    matb.open("test.matb", 'r');
+    matb.open("test1.matb", 'r');
 
 
     Int r_si;
@@ -99,17 +131,20 @@ void test_matb()
 
     VecInt r_vi(0);
     load(r_vi, "vi", matb);
-    if (r_vi != vi) SLS_ERR("failed!");
+    if (r_vi != vi)
+        SLS_ERR("failed!");
 
     VecDoub r_v(0);
     load(r_v, "v", matb);
     r_v -= v;
-    if (norm(r_v) != 0) SLS_ERR("failed!");
+    if (norm(r_v) != 0)
+        SLS_ERR("failed!");
 
     VecComp r_vc(0);
     load(r_vc, "vc", matb);
     r_vc -= vc;
-    if (norm(r_v) != 0) SLS_ERR("failed!");
+    if (norm(r_v) != 0)
+        SLS_ERR("failed!");
 
     // matrices
     // TODO: Char
@@ -129,15 +164,15 @@ void test_matb()
     if (norm(r_C) != 0) SLS_ERR("failed!");
 
     // 3D arrays
-    // Mat3Doub r_A3(0,0,0);
-    // load(r_A3, "A3", matb);
-    // r_A3 -= A3;
-    // if (norm(r_A3) != 0) SLS_ERR("failed!");
+    Mat3Doub r_A3(0,0,0);
+    load(r_A3, "A3", matb);
+    r_A3 -= A3;
+    if (norm(r_A3) != 0) SLS_ERR("failed!");
 
-    // Mat3Comp r_C3(0,0,0);
-    // load(r_C3, "C3", matb);
-    // r_C3 -= C3;
-    // if (norm(r_C3) != 0) SLS_ERR("failed!");
+    Mat3Comp r_C3(0,0,0);
+    load(r_C3, "C3", matb);
+    r_C3 -= C3;
+    if (norm(r_C3) != 0) SLS_ERR("failed!");
 
     Cmat3Comp r_CC3(0, 0, 0);
     load(r_CC3, "CC3", matb);
