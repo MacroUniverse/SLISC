@@ -85,27 +85,6 @@ void test_matb()
         matb.read_data();
         matb.write_data("test1.matb");
         matb.close();
-
-        Str data, data1;
-        data.resize(file_size("test.matb"));
-        data1.resize(file_size("test1.matb"));
-        cout << data.size() << "  " << data1.size() << endl;
-        ifstream fin;
-        open_bin(fin, "test.matb");
-        read(fin, data);
-        ifstream fin1;
-        open_bin(fin1, "test1.matb");
-
-        read(fin1, data1);
-        cout << data.size() << "  " << data1.size() << endl;
-        for (Long i = 0; i < data.size(); ++i){
-            if (data[i] != data1[i]) {
-                cout << i << "-th byte are different!" << endl;
-                cout << Uint(data[i]) << "   " << Uint(data1[i]) << endl;
-            }
-        }
-        cout << "sha1sum data  " << sha1sum(data) << endl;
-        cout << "sha1sum data1  " << sha1sum(data1) << endl;
     }
 
     // -----------  read test -------------
