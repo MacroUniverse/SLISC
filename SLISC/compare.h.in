@@ -67,6 +67,8 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'MatDoub' 'CmatDoub';
 //%     'MatComp' 'CmatComp';
 //%     'CmatInt' 'MatChar';
+//%     'CmatLlong' 'ScmatLlong';
+//%     'ScmatLlong' 'CmatLlong';
 //%     'CmatDoub' 'ScmatDoub';
 //%     'CmatDoub' 'DcmatDoub';
 //%     'CmatDoub' 'MatDoub';

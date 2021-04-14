@@ -1753,6 +1753,28 @@ inline void copy(CmatLlong_O v, CmatLlong_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(CmatLlong_O v, ScmatLlong_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(ScmatLlong_O v, CmatLlong_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(CmatDoub_O v, CmatDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPES

@@ -2392,6 +2392,10 @@ inline Bool shape_cmp(MatComp_I v1, CmatComp_I v2) {return v1.n1() == v2.n1() &&
 
 inline Bool shape_cmp(CmatInt_I v1, MatChar_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
+inline Bool shape_cmp(CmatLlong_I v1, ScmatLlong_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
+inline Bool shape_cmp(ScmatLlong_I v1, CmatLlong_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
 inline Bool shape_cmp(CmatDoub_I v1, ScmatDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(CmatDoub_I v1, DcmatDoub_I v2) {return v1.n1() == v2.n1() && v1.n2() == v2.n2();}

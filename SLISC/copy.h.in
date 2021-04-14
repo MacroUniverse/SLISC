@@ -248,6 +248,8 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'Mat3Comp', 'Mat3Comp';
 //%     'Mat3Comp', 'Mat3Doub';
 //%     'CmatLlong', 'CmatLlong';
+//%     'CmatLlong', 'ScmatLlong';
+//%     'ScmatLlong', 'CmatLlong';
 //%     'CmatDoub', 'CmatDoub';
 //%     'CmatDoub', 'ScmatDoub';
 //%     'CmatDoub', 'DcmatDoub';
