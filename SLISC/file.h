@@ -657,6 +657,78 @@ inline void read(ifstream &fin, Str32_O str)
 // skipt specific number of lines at the beginning
 // matrix will auto-resize
 // spaces & new line at the end of file are allowed
+inline void read(CmatInt_O mat, Str_I file, Long_I skip_lines = 0)
+{
+    ifstream input(file);
+    if (!input.good())
+        SLS_ERR(file + " does not exist!");
+    for (Long i = 0; i < skip_lines; ++i)
+        input.ignore(1000000, '\n');
+    // detect the number of columns
+    Str line;
+    getline(input, line);
+    std::istringstream iss(line);
+    vector<Int> v;
+    Doub num;
+    while (iss >> num)
+        v.push_back(num);
+    Long N2 = v.size();
+    while (true) {
+        num = NaN;
+        input >> num;
+        if (std::isnan(num))
+            break;
+        v.push_back(num);
+        if (input.eof())
+            break;
+    }
+    if (v.size() % N2 != 0)
+        SLS_ERR(file + ": each row might not have equal number of columns!");
+    Long N1 = v.size() / N2;
+    mat.resize(N1, N2);
+    for (Long i = 0; i < N1; ++i) {
+        for (Long j = 0; j < N2; ++j) {
+            mat(i, j) = v[N2*i + j];
+        }
+    }
+}
+
+inline void read(CmatLlong_O mat, Str_I file, Long_I skip_lines = 0)
+{
+    ifstream input(file);
+    if (!input.good())
+        SLS_ERR(file + " does not exist!");
+    for (Long i = 0; i < skip_lines; ++i)
+        input.ignore(1000000, '\n');
+    // detect the number of columns
+    Str line;
+    getline(input, line);
+    std::istringstream iss(line);
+    vector<Llong> v;
+    Doub num;
+    while (iss >> num)
+        v.push_back(num);
+    Long N2 = v.size();
+    while (true) {
+        num = NaN;
+        input >> num;
+        if (std::isnan(num))
+            break;
+        v.push_back(num);
+        if (input.eof())
+            break;
+    }
+    if (v.size() % N2 != 0)
+        SLS_ERR(file + ": each row might not have equal number of columns!");
+    Long N1 = v.size() / N2;
+    mat.resize(N1, N2);
+    for (Long i = 0; i < N1; ++i) {
+        for (Long j = 0; j < N2; ++j) {
+            mat(i, j) = v[N2*i + j];
+        }
+    }
+}
+
 inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 {
     ifstream input(file);
@@ -692,6 +764,7 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
         }
     }
 }
+
 
 // read a vector from a text file
 // two numbers should be separated by space or enter
