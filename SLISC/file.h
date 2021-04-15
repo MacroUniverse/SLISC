@@ -470,7 +470,6 @@ inline Long read(Char *data, Long_I Nbyte, Str_I fname)
 }
 
 // write Str to file
-// this only works when file is opened in binary mode on Windows
 inline void write(Str_I str, Str_I fname)
 {
     write(str.c_str(), str.size(), fname);
@@ -490,7 +489,6 @@ inline void write(Str32_I str32, Str32_I fname)
 // write a vector of strings to file
 // no `\n` allowed in each string
 // file will be ended by a return
-
 inline void write_vec_str(vecStr_I vec_str, Str_I fname)
 {
     Str str;
@@ -510,7 +508,6 @@ inline void write_vec_str(vecStr32_I vec_str, Str32_I fname)
 }
 
 // read whole file to Str
-// this only works when file is opened in binary mode on Windows
 inline void read(Str_O str, Str_I fname)
 {
     str.resize(file_size(fname));
