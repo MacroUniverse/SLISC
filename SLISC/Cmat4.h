@@ -11,11 +11,11 @@ protected:
 public:
     typedef Char value_type;
     Cmat4Char(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Char(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Char(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Char(const Cmat4Char &rhs);   // Copy constructor
     void operator<<(Cmat4Char &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -24,8 +24,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Char::Cmat4Char(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Char::Cmat4Char(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Char::Cmat4Char(const Cmat4Char &rhs): Base(rhs),
@@ -43,22 +43,22 @@ inline void Cmat4Char::operator<<(Cmat4Char &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Char::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Char::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Char::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Char::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Char reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Char &Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -110,11 +110,11 @@ protected:
 public:
     typedef Int value_type;
     Cmat4Int(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Int(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Int(const Cmat4Int &rhs);   // Copy constructor
     void operator<<(Cmat4Int &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -123,8 +123,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Int::Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Int::Cmat4Int(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Int::Cmat4Int(const Cmat4Int &rhs): Base(rhs),
@@ -142,22 +142,22 @@ inline void Cmat4Int::operator<<(Cmat4Int &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Int::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Int::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Int::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Int::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Int reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Int &Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -209,11 +209,11 @@ protected:
 public:
     typedef Llong value_type;
     Cmat4Llong(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Llong(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Llong(const Cmat4Llong &rhs);   // Copy constructor
     void operator<<(Cmat4Llong &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -222,8 +222,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Llong::Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Llong::Cmat4Llong(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Llong::Cmat4Llong(const Cmat4Llong &rhs): Base(rhs),
@@ -241,22 +241,22 @@ inline void Cmat4Llong::operator<<(Cmat4Llong &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Llong::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Llong::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Llong::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Llong::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Llong reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Llong &Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -317,11 +317,11 @@ protected:
 public:
     typedef Float value_type;
     Cmat4Float(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Float(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Float(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Float(const Cmat4Float &rhs);   // Copy constructor
     void operator<<(Cmat4Float &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -330,8 +330,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Float::Cmat4Float(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Float::Cmat4Float(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Float::Cmat4Float(const Cmat4Float &rhs): Base(rhs),
@@ -349,22 +349,22 @@ inline void Cmat4Float::operator<<(Cmat4Float &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Float::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Float::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Float::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Float::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Float reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Float &Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -416,11 +416,11 @@ protected:
 public:
     typedef Doub value_type;
     Cmat4Doub(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Doub(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Doub(const Cmat4Doub &rhs);   // Copy constructor
     void operator<<(Cmat4Doub &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -429,8 +429,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Doub::Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Doub::Cmat4Doub(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Doub::Cmat4Doub(const Cmat4Doub &rhs): Base(rhs),
@@ -448,22 +448,22 @@ inline void Cmat4Doub::operator<<(Cmat4Doub &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Doub::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Doub::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Doub::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Doub::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Doub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Doub &Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -515,11 +515,11 @@ protected:
 public:
     typedef Ldoub value_type;
     Cmat4Ldoub(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Ldoub(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Ldoub(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Ldoub(const Cmat4Ldoub &rhs);   // Copy constructor
     void operator<<(Cmat4Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -528,8 +528,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Ldoub::Cmat4Ldoub(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Ldoub::Cmat4Ldoub(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Ldoub::Cmat4Ldoub(const Cmat4Ldoub &rhs): Base(rhs),
@@ -547,22 +547,22 @@ inline void Cmat4Ldoub::operator<<(Cmat4Ldoub &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Ldoub::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Ldoub::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Ldoub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Ldoub &Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -614,11 +614,11 @@ protected:
 public:
     typedef Fcomp value_type;
     Cmat4Fcomp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Fcomp(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Fcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Fcomp(const Cmat4Fcomp &rhs);   // Copy constructor
     void operator<<(Cmat4Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -627,8 +627,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Fcomp::Cmat4Fcomp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Fcomp::Cmat4Fcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Fcomp::Cmat4Fcomp(const Cmat4Fcomp &rhs): Base(rhs),
@@ -646,22 +646,22 @@ inline void Cmat4Fcomp::operator<<(Cmat4Fcomp &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Fcomp::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Fcomp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Fcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Fcomp &Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -713,11 +713,11 @@ protected:
 public:
     typedef Comp value_type;
     Cmat4Comp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Comp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Comp(const Cmat4Comp &rhs);   // Copy constructor
     void operator<<(Cmat4Comp &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -726,8 +726,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Comp::Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Comp::Cmat4Comp(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Comp::Cmat4Comp(const Cmat4Comp &rhs): Base(rhs),
@@ -745,22 +745,22 @@ inline void Cmat4Comp::operator<<(Cmat4Comp &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Comp::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Comp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Comp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Comp::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Comp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Comp &Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -812,11 +812,11 @@ protected:
 public:
     typedef Lcomp value_type;
     Cmat4Lcomp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Lcomp(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Lcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Lcomp(const Cmat4Lcomp &rhs);   // Copy constructor
     void operator<<(Cmat4Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -825,8 +825,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Lcomp::Cmat4Lcomp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Lcomp::Cmat4Lcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Lcomp::Cmat4Lcomp(const Cmat4Lcomp &rhs): Base(rhs),
@@ -844,22 +844,22 @@ inline void Cmat4Lcomp::operator<<(Cmat4Lcomp &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Lcomp::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Lcomp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Lcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Lcomp &Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -911,11 +911,11 @@ protected:
 public:
     typedef Fimag value_type;
     Cmat4Fimag(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Fimag(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Fimag(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Fimag(const Cmat4Fimag &rhs);   // Copy constructor
     void operator<<(Cmat4Fimag &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -924,8 +924,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Fimag::Cmat4Fimag(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Fimag::Cmat4Fimag(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Fimag::Cmat4Fimag(const Cmat4Fimag &rhs): Base(rhs),
@@ -943,22 +943,22 @@ inline void Cmat4Fimag::operator<<(Cmat4Fimag &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Fimag::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Fimag::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Fimag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Fimag::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Fimag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Fimag &Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -1010,11 +1010,11 @@ protected:
 public:
     typedef Imag value_type;
     Cmat4Imag(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Imag(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Imag(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Imag(const Cmat4Imag &rhs);   // Copy constructor
     void operator<<(Cmat4Imag &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -1023,8 +1023,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Imag::Cmat4Imag(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Imag::Cmat4Imag(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Imag::Cmat4Imag(const Cmat4Imag &rhs): Base(rhs),
@@ -1042,22 +1042,22 @@ inline void Cmat4Imag::operator<<(Cmat4Imag &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Imag::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Imag::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Imag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Imag::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Imag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Imag &Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
@@ -1109,11 +1109,11 @@ protected:
 public:
     typedef Limag value_type;
     Cmat4Limag(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
-    Cmat4Limag(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    Cmat4Limag(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Cmat4Limag(const Cmat4Limag &rhs);   // Copy constructor
     void operator<<(Cmat4Limag &rhs); // move data and rhs.resize(0, 0, 0)
-    void resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
-    void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
     Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
     Long n0() const;
@@ -1122,8 +1122,8 @@ public:
     Long n3() const;
 };
 
-inline Cmat4Limag::Cmat4Limag(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
+inline Cmat4Limag::Cmat4Limag(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
 
 // Copy constructor
 inline Cmat4Limag::Cmat4Limag(const Cmat4Limag &rhs): Base(rhs),
@@ -1141,22 +1141,22 @@ inline void Cmat4Limag::operator<<(Cmat4Limag &rhs)
     Base::operator<<(rhs);
 }
 
-inline void Cmat4Limag::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Limag::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
-        Base::resize(N1*N2*N3*N4);
-        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
     }
 }
 
-inline void Cmat4Limag::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
+inline void Cmat4Limag::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 * N3 != m_N)
+    if (N0 * N1 * N2 != m_N)
         SLS_ERR("Cmat4Limag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
-            +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
+            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 }
 
 inline Limag &Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)

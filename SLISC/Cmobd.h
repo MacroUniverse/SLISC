@@ -119,8 +119,8 @@ inline Long CmobdInt::size() const
 
 inline Long CmobdInt::nnz() const
 {
-    Long N0 = nblk0(), Nblk = nblk();
-    return (N0*N0 - 1)*Nblk - 4 * N0 + 3;
+    Long N = nblk0(), Nblk = nblk();
+    return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
 inline const Cmat3Int& CmobdInt::cmat3() const
@@ -288,8 +288,8 @@ inline Long CmobdDoub::size() const
 
 inline Long CmobdDoub::nnz() const
 {
-    Long N0 = nblk0(), Nblk = nblk();
-    return (N0*N0 - 1)*Nblk - 4 * N0 + 3;
+    Long N = nblk0(), Nblk = nblk();
+    return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
 inline const Cmat3Doub& CmobdDoub::cmat3() const
@@ -457,8 +457,8 @@ inline Long CmobdComp::size() const
 
 inline Long CmobdComp::nnz() const
 {
-    Long N0 = nblk0(), Nblk = nblk();
-    return (N0*N0 - 1)*Nblk - 4 * N0 + 3;
+    Long N = nblk0(), Nblk = nblk();
+    return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
 inline const Cmat3Comp& CmobdComp::cmat3() const

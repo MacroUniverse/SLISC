@@ -16,7 +16,7 @@ public:
     CmatInt m_a;
 
     CbandInt();
-    CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    CbandInt(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
     Int * p();
     const Int * p() const;
@@ -35,21 +35,21 @@ public:
     DcmatInt_c band() const;
     DvecInt diag();
     DvecInt_c diag() const;
-    void resize(Long_I lda, Long_I N2);
-    void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
-    void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
+    void resize(Long_I lda, Long_I N1);
+    void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
     void shift(Long_I idiag);
 };
 
 inline CbandInt::CbandInt(): m_N0(0), m_Nup(0), m_Nlow(0), m_idiag(0)
 {}
 
-inline CbandInt::CbandInt(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
-    m_N0(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
+inline CbandInt::CbandInt(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
+    m_N0(N0), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
-        SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
+        SLS_ERR("CbandInt: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 #endif
@@ -152,36 +152,36 @@ inline DvecInt_c CbandInt::diag() const
     return DvecInt_c(&m_a[m_idiag], n1(), lda());
 }
 
-inline void CbandInt::resize(Long_I lda, Long_I N2)
+inline void CbandInt::resize(Long_I lda, Long_I N1)
 {
-    m_a.resize(lda, N2);
+    m_a.resize(lda, N1);
 }
 
-inline void CbandInt::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
+inline void CbandInt::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
     if (idiag >= 0)
         m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPES
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-        SLS_ERR("CbandInt: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n1())+
+        SLS_ERR("CbandInt: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
     }
 #endif
-    m_N0 = N1; m_Nup = Nup; m_Nlow = Nlow;
+    m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
 }
 
-inline void CbandInt::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
+inline void CbandInt::resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
 {
-    resize(lda < 0? Nup+Nlow+1 : lda, N2);
-    reshape(N1, Nup, Nlow, idiag < 0? Nup : idiag);
+    resize(lda < 0? Nup+Nlow+1 : lda, N1);
+    reshape(N0, Nup, Nlow, idiag < 0? Nup : idiag);
 }
 
 inline void CbandInt::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPES
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-        SLS_ERR("CbandInt: wrong shape: N1="+num2str(m_N0)+", N2="+num2str(m_a.n1())+
+        SLS_ERR("CbandInt: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
             ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
 #endif
@@ -201,7 +201,7 @@ public:
     CmatDoub m_a;
 
     CbandDoub();
-    CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    CbandDoub(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
     Doub * p();
     const Doub * p() const;
@@ -220,21 +220,21 @@ public:
     DcmatDoub_c band() const;
     DvecDoub diag();
     DvecDoub_c diag() const;
-    void resize(Long_I lda, Long_I N2);
-    void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
-    void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
+    void resize(Long_I lda, Long_I N1);
+    void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
     void shift(Long_I idiag);
 };
 
 inline CbandDoub::CbandDoub(): m_N0(0), m_Nup(0), m_Nlow(0), m_idiag(0)
 {}
 
-inline CbandDoub::CbandDoub(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
-    m_N0(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
+inline CbandDoub::CbandDoub(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
+    m_N0(N0), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
-        SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
+        SLS_ERR("CbandDoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 #endif
@@ -337,36 +337,36 @@ inline DvecDoub_c CbandDoub::diag() const
     return DvecDoub_c(&m_a[m_idiag], n1(), lda());
 }
 
-inline void CbandDoub::resize(Long_I lda, Long_I N2)
+inline void CbandDoub::resize(Long_I lda, Long_I N1)
 {
-    m_a.resize(lda, N2);
+    m_a.resize(lda, N1);
 }
 
-inline void CbandDoub::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
+inline void CbandDoub::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
     if (idiag >= 0)
         m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPES
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-        SLS_ERR("CbandDoub: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n1())+
+        SLS_ERR("CbandDoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
     }
 #endif
-    m_N0 = N1; m_Nup = Nup; m_Nlow = Nlow;
+    m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
 }
 
-inline void CbandDoub::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
+inline void CbandDoub::resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
 {
-    resize(lda < 0? Nup+Nlow+1 : lda, N2);
-    reshape(N1, Nup, Nlow, idiag < 0? Nup : idiag);
+    resize(lda < 0? Nup+Nlow+1 : lda, N1);
+    reshape(N0, Nup, Nlow, idiag < 0? Nup : idiag);
 }
 
 inline void CbandDoub::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPES
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-        SLS_ERR("CbandDoub: wrong shape: N1="+num2str(m_N0)+", N2="+num2str(m_a.n1())+
+        SLS_ERR("CbandDoub: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
             ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
 #endif
@@ -386,7 +386,7 @@ public:
     CmatComp m_a;
 
     CbandComp();
-    CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    CbandComp(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 
     Comp * p();
     const Comp * p() const;
@@ -405,21 +405,21 @@ public:
     DcmatComp_c band() const;
     DvecComp diag();
     DvecComp_c diag() const;
-    void resize(Long_I lda, Long_I N2);
-    void resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
-    void reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
+    void resize(Long_I lda, Long_I N1);
+    void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+    void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
     void shift(Long_I idiag);
 };
 
 inline CbandComp::CbandComp(): m_N0(0), m_Nup(0), m_Nlow(0), m_idiag(0)
 {}
 
-inline CbandComp::CbandComp(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
-    m_N0(N1), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N2)
+inline CbandComp::CbandComp(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
+    m_N0(N0), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N1)
 {
 #ifdef SLS_CHECK_SHAPES
     if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
-        SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(N2)+
+        SLS_ERR("CbandComp: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 #endif
@@ -522,36 +522,36 @@ inline DvecComp_c CbandComp::diag() const
     return DvecComp_c(&m_a[m_idiag], n1(), lda());
 }
 
-inline void CbandComp::resize(Long_I lda, Long_I N2)
+inline void CbandComp::resize(Long_I lda, Long_I N1)
 {
-    m_a.resize(lda, N2);
+    m_a.resize(lda, N1);
 }
 
-inline void CbandComp::reshape(Long_I N1, Long_I Nup, Long_I Nlow, Long_I idiag)
+inline void CbandComp::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
     if (idiag >= 0)
         m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPES
     if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-        SLS_ERR("CbandComp: wrong shape: N1="+num2str(N1)+", N2="+num2str(m_a.n1())+
+        SLS_ERR("CbandComp: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
             ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
     }
 #endif
-    m_N0 = N1; m_Nup = Nup; m_Nlow = Nlow;
+    m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
 }
 
-inline void CbandComp::resize(Long_I N1, Long_I N2, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
+inline void CbandComp::resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
 {
-    resize(lda < 0? Nup+Nlow+1 : lda, N2);
-    reshape(N1, Nup, Nlow, idiag < 0? Nup : idiag);
+    resize(lda < 0? Nup+Nlow+1 : lda, N1);
+    reshape(N0, Nup, Nlow, idiag < 0? Nup : idiag);
 }
 
 inline void CbandComp::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPES
     if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-        SLS_ERR("CbandComp: wrong shape: N1="+num2str(m_N0)+", N2="+num2str(m_a.n1())+
+        SLS_ERR("CbandComp: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
             ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
             ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
 #endif

@@ -51,7 +51,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     @Class@();
-    @Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
+    @Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);
 
 //% if ~constness
     operator @Scmat3T_c@() const;
@@ -64,16 +64,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const @Class@ &sli);
     ~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
-    : @Base@(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
+    : @Base@(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 //% if ~constness
 inline @Class@::operator @Scmat3T_c@() const
@@ -106,19 +106,19 @@ inline Long @Class@::n2() const
     return m_N2;
 }
 
-inline void @Class@::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void @Class@::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
+inline void @Class@::set(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    @Base@::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    @Base@::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void @Class@::set(const @Class@ &sli)

@@ -124,8 +124,8 @@ inline Long @CmobdT@::size() const
 
 inline Long @CmobdT@::nnz() const
 {
-    Long N0 = nblk0(), Nblk = nblk();
-    return (N0*N0 - 1)*Nblk - 4 * N0 + 3;
+    Long N = nblk0(), Nblk = nblk();
+    return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
 inline const @Cmat3T@& @CmobdT@::cmat3() const

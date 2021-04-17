@@ -8,7 +8,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Char_c();
-    Scmat3Char_c(const Char *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Char_c(const Char *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Char &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -18,16 +18,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Char *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Char *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Char_c &sli);
     ~Scmat3Char_c();
 };
 
 inline Scmat3Char_c::Scmat3Char_c() {}
 
-inline Scmat3Char_c::Scmat3Char_c(const Char *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecChar_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Char_c::Scmat3Char_c(const Char *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecChar_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Char &Scmat3Char_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -54,19 +54,19 @@ inline Long Scmat3Char_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Char_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Char_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Char_c::set(const Char *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Char_c::set(const Char *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecChar_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecChar_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Char_c::set(const Scmat3Char_c &sli)
@@ -85,7 +85,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Char();
-    Scmat3Char(Char *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Char_c() const;
 
@@ -96,16 +96,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Char *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Char *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Char &sli);
     ~Scmat3Char();
 };
 
 inline Scmat3Char::Scmat3Char() {}
 
-inline Scmat3Char::Scmat3Char(Char *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecChar(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Char::Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecChar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Char::operator Scmat3Char_c() const
 {
@@ -136,19 +136,19 @@ inline Long Scmat3Char::n2() const
     return m_N2;
 }
 
-inline void Scmat3Char::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Char::set(Char *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Char::set(Char *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecChar::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecChar::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Char::set(const Scmat3Char &sli)
@@ -168,7 +168,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Int_c();
-    Scmat3Int_c(const Int *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Int_c(const Int *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Int &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -178,16 +178,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Int *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Int *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Int_c &sli);
     ~Scmat3Int_c();
 };
 
 inline Scmat3Int_c::Scmat3Int_c() {}
 
-inline Scmat3Int_c::Scmat3Int_c(const Int *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecInt_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Int_c::Scmat3Int_c(const Int *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecInt_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Int &Scmat3Int_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -214,19 +214,19 @@ inline Long Scmat3Int_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Int_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Int_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Int_c::set(const Int *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Int_c::set(const Int *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecInt_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecInt_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Int_c::set(const Scmat3Int_c &sli)
@@ -245,7 +245,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Int();
-    Scmat3Int(Int *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Int_c() const;
 
@@ -256,16 +256,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Int *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Int *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Int &sli);
     ~Scmat3Int();
 };
 
 inline Scmat3Int::Scmat3Int() {}
 
-inline Scmat3Int::Scmat3Int(Int *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecInt(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Int::Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecInt(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Int::operator Scmat3Int_c() const
 {
@@ -296,19 +296,19 @@ inline Long Scmat3Int::n2() const
     return m_N2;
 }
 
-inline void Scmat3Int::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Int::set(Int *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Int::set(Int *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecInt::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecInt::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Int::set(const Scmat3Int &sli)
@@ -328,7 +328,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Llong_c();
-    Scmat3Llong_c(const Llong *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Llong_c(const Llong *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -338,16 +338,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Llong *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Llong *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Llong_c &sli);
     ~Scmat3Llong_c();
 };
 
 inline Scmat3Llong_c::Scmat3Llong_c() {}
 
-inline Scmat3Llong_c::Scmat3Llong_c(const Llong *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLlong_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Llong_c::Scmat3Llong_c(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLlong_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Llong &Scmat3Llong_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -374,19 +374,19 @@ inline Long Scmat3Llong_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Llong_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Llong_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Llong_c::set(const Llong *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Llong_c::set(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLlong_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLlong_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Llong_c::set(const Scmat3Llong_c &sli)
@@ -405,7 +405,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Llong();
-    Scmat3Llong(Llong *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Llong_c() const;
 
@@ -416,16 +416,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Llong *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Llong *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Llong &sli);
     ~Scmat3Llong();
 };
 
 inline Scmat3Llong::Scmat3Llong() {}
 
-inline Scmat3Llong::Scmat3Llong(Llong *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLlong(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Llong::Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLlong(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Llong::operator Scmat3Llong_c() const
 {
@@ -456,19 +456,19 @@ inline Long Scmat3Llong::n2() const
     return m_N2;
 }
 
-inline void Scmat3Llong::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Llong::set(Llong *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Llong::set(Llong *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLlong::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLlong::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Llong::set(const Scmat3Llong &sli)
@@ -505,7 +505,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Float_c();
-    Scmat3Float_c(const Float *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Float_c(const Float *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Float &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -515,16 +515,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Float *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Float *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Float_c &sli);
     ~Scmat3Float_c();
 };
 
 inline Scmat3Float_c::Scmat3Float_c() {}
 
-inline Scmat3Float_c::Scmat3Float_c(const Float *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecFloat_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Float_c::Scmat3Float_c(const Float *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecFloat_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Float &Scmat3Float_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -551,19 +551,19 @@ inline Long Scmat3Float_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Float_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Float_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Float_c::set(const Float *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Float_c::set(const Float *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecFloat_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecFloat_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Float_c::set(const Scmat3Float_c &sli)
@@ -582,7 +582,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Float();
-    Scmat3Float(Float *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Float_c() const;
 
@@ -593,16 +593,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Float *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Float *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Float &sli);
     ~Scmat3Float();
 };
 
 inline Scmat3Float::Scmat3Float() {}
 
-inline Scmat3Float::Scmat3Float(Float *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecFloat(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Float::Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecFloat(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Float::operator Scmat3Float_c() const
 {
@@ -633,19 +633,19 @@ inline Long Scmat3Float::n2() const
     return m_N2;
 }
 
-inline void Scmat3Float::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Float::set(Float *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Float::set(Float *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecFloat::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecFloat::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Float::set(const Scmat3Float &sli)
@@ -665,7 +665,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Doub_c();
-    Scmat3Doub_c(const Doub *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Doub_c(const Doub *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -675,16 +675,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Doub *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Doub *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Doub_c &sli);
     ~Scmat3Doub_c();
 };
 
 inline Scmat3Doub_c::Scmat3Doub_c() {}
 
-inline Scmat3Doub_c::Scmat3Doub_c(const Doub *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecDoub_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Doub_c::Scmat3Doub_c(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecDoub_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Doub &Scmat3Doub_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -711,19 +711,19 @@ inline Long Scmat3Doub_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Doub_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Doub_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Doub_c::set(const Doub *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Doub_c::set(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecDoub_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecDoub_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Doub_c::set(const Scmat3Doub_c &sli)
@@ -742,7 +742,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Doub();
-    Scmat3Doub(Doub *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Doub_c() const;
 
@@ -753,16 +753,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Doub *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Doub *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Doub &sli);
     ~Scmat3Doub();
 };
 
 inline Scmat3Doub::Scmat3Doub() {}
 
-inline Scmat3Doub::Scmat3Doub(Doub *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecDoub(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Doub::Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecDoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Doub::operator Scmat3Doub_c() const
 {
@@ -793,19 +793,19 @@ inline Long Scmat3Doub::n2() const
     return m_N2;
 }
 
-inline void Scmat3Doub::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Doub::set(Doub *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Doub::set(Doub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecDoub::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecDoub::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Doub::set(const Scmat3Doub &sli)
@@ -825,7 +825,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Ldoub_c();
-    Scmat3Ldoub_c(const Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Ldoub_c(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -835,16 +835,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Ldoub_c &sli);
     ~Scmat3Ldoub_c();
 };
 
 inline Scmat3Ldoub_c::Scmat3Ldoub_c() {}
 
-inline Scmat3Ldoub_c::Scmat3Ldoub_c(const Ldoub *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLdoub_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Ldoub_c::Scmat3Ldoub_c(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLdoub_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Ldoub &Scmat3Ldoub_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -871,19 +871,19 @@ inline Long Scmat3Ldoub_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Ldoub_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Ldoub_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Ldoub_c::set(const Ldoub *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Ldoub_c::set(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLdoub_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLdoub_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Ldoub_c::set(const Scmat3Ldoub_c &sli)
@@ -902,7 +902,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Ldoub();
-    Scmat3Ldoub(Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Ldoub_c() const;
 
@@ -913,16 +913,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Ldoub *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Ldoub &sli);
     ~Scmat3Ldoub();
 };
 
 inline Scmat3Ldoub::Scmat3Ldoub() {}
 
-inline Scmat3Ldoub::Scmat3Ldoub(Ldoub *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLdoub(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Ldoub::Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Ldoub::operator Scmat3Ldoub_c() const
 {
@@ -953,19 +953,19 @@ inline Long Scmat3Ldoub::n2() const
     return m_N2;
 }
 
-inline void Scmat3Ldoub::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Ldoub::set(Ldoub *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Ldoub::set(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLdoub::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLdoub::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Ldoub::set(const Scmat3Ldoub &sli)
@@ -985,7 +985,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Fcomp_c();
-    Scmat3Fcomp_c(const Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Fcomp_c(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -995,16 +995,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Fcomp_c &sli);
     ~Scmat3Fcomp_c();
 };
 
 inline Scmat3Fcomp_c::Scmat3Fcomp_c() {}
 
-inline Scmat3Fcomp_c::Scmat3Fcomp_c(const Fcomp *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecFcomp_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Fcomp_c::Scmat3Fcomp_c(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecFcomp_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Fcomp &Scmat3Fcomp_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1031,19 +1031,19 @@ inline Long Scmat3Fcomp_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Fcomp_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fcomp_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Fcomp_c::set(const Fcomp *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fcomp_c::set(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecFcomp_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecFcomp_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Fcomp_c::set(const Scmat3Fcomp_c &sli)
@@ -1062,7 +1062,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Fcomp();
-    Scmat3Fcomp(Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Fcomp_c() const;
 
@@ -1073,16 +1073,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Fcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Fcomp &sli);
     ~Scmat3Fcomp();
 };
 
 inline Scmat3Fcomp::Scmat3Fcomp() {}
 
-inline Scmat3Fcomp::Scmat3Fcomp(Fcomp *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecFcomp(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Fcomp::Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecFcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Fcomp::operator Scmat3Fcomp_c() const
 {
@@ -1113,19 +1113,19 @@ inline Long Scmat3Fcomp::n2() const
     return m_N2;
 }
 
-inline void Scmat3Fcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Fcomp::set(Fcomp *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fcomp::set(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecFcomp::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecFcomp::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Fcomp::set(const Scmat3Fcomp &sli)
@@ -1145,7 +1145,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Comp_c();
-    Scmat3Comp_c(const Comp *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Comp_c(const Comp *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1155,16 +1155,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Comp *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Comp *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Comp_c &sli);
     ~Scmat3Comp_c();
 };
 
 inline Scmat3Comp_c::Scmat3Comp_c() {}
 
-inline Scmat3Comp_c::Scmat3Comp_c(const Comp *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecComp_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Comp_c::Scmat3Comp_c(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecComp_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Comp &Scmat3Comp_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1191,19 +1191,19 @@ inline Long Scmat3Comp_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Comp_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Comp_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Comp_c::set(const Comp *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Comp_c::set(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecComp_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecComp_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Comp_c::set(const Scmat3Comp_c &sli)
@@ -1222,7 +1222,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Comp();
-    Scmat3Comp(Comp *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Comp_c() const;
 
@@ -1233,16 +1233,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Comp *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Comp *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Comp &sli);
     ~Scmat3Comp();
 };
 
 inline Scmat3Comp::Scmat3Comp() {}
 
-inline Scmat3Comp::Scmat3Comp(Comp *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecComp(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Comp::Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecComp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Comp::operator Scmat3Comp_c() const
 {
@@ -1273,19 +1273,19 @@ inline Long Scmat3Comp::n2() const
     return m_N2;
 }
 
-inline void Scmat3Comp::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Comp::set(Comp *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Comp::set(Comp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecComp::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecComp::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Comp::set(const Scmat3Comp &sli)
@@ -1305,7 +1305,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Lcomp_c();
-    Scmat3Lcomp_c(const Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Lcomp_c(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1315,16 +1315,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Lcomp_c &sli);
     ~Scmat3Lcomp_c();
 };
 
 inline Scmat3Lcomp_c::Scmat3Lcomp_c() {}
 
-inline Scmat3Lcomp_c::Scmat3Lcomp_c(const Lcomp *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLcomp_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Lcomp_c::Scmat3Lcomp_c(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLcomp_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Lcomp &Scmat3Lcomp_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1351,19 +1351,19 @@ inline Long Scmat3Lcomp_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Lcomp_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Lcomp_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Lcomp_c::set(const Lcomp *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Lcomp_c::set(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLcomp_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLcomp_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Lcomp_c::set(const Scmat3Lcomp_c &sli)
@@ -1382,7 +1382,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Lcomp();
-    Scmat3Lcomp(Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Lcomp_c() const;
 
@@ -1393,16 +1393,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Lcomp *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Lcomp &sli);
     ~Scmat3Lcomp();
 };
 
 inline Scmat3Lcomp::Scmat3Lcomp() {}
 
-inline Scmat3Lcomp::Scmat3Lcomp(Lcomp *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLcomp(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Lcomp::Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Lcomp::operator Scmat3Lcomp_c() const
 {
@@ -1433,19 +1433,19 @@ inline Long Scmat3Lcomp::n2() const
     return m_N2;
 }
 
-inline void Scmat3Lcomp::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Lcomp::set(Lcomp *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Lcomp::set(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLcomp::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLcomp::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Lcomp::set(const Scmat3Lcomp &sli)
@@ -1465,7 +1465,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Fimag_c();
-    Scmat3Fimag_c(const Fimag *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Fimag_c(const Fimag *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1475,16 +1475,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Fimag *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Fimag *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Fimag_c &sli);
     ~Scmat3Fimag_c();
 };
 
 inline Scmat3Fimag_c::Scmat3Fimag_c() {}
 
-inline Scmat3Fimag_c::Scmat3Fimag_c(const Fimag *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecFimag_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Fimag_c::Scmat3Fimag_c(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecFimag_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Fimag &Scmat3Fimag_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1511,19 +1511,19 @@ inline Long Scmat3Fimag_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Fimag_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fimag_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Fimag_c::set(const Fimag *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fimag_c::set(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecFimag_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecFimag_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Fimag_c::set(const Scmat3Fimag_c &sli)
@@ -1542,7 +1542,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Fimag();
-    Scmat3Fimag(Fimag *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Fimag_c() const;
 
@@ -1553,16 +1553,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Fimag *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Fimag *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Fimag &sli);
     ~Scmat3Fimag();
 };
 
 inline Scmat3Fimag::Scmat3Fimag() {}
 
-inline Scmat3Fimag::Scmat3Fimag(Fimag *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecFimag(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Fimag::Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecFimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Fimag::operator Scmat3Fimag_c() const
 {
@@ -1593,19 +1593,19 @@ inline Long Scmat3Fimag::n2() const
     return m_N2;
 }
 
-inline void Scmat3Fimag::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Fimag::set(Fimag *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Fimag::set(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecFimag::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecFimag::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Fimag::set(const Scmat3Fimag &sli)
@@ -1625,7 +1625,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Imag_c();
-    Scmat3Imag_c(const Imag *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Imag_c(const Imag *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1635,16 +1635,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Imag *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Imag *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Imag_c &sli);
     ~Scmat3Imag_c();
 };
 
 inline Scmat3Imag_c::Scmat3Imag_c() {}
 
-inline Scmat3Imag_c::Scmat3Imag_c(const Imag *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecImag_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Imag_c::Scmat3Imag_c(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecImag_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Imag &Scmat3Imag_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1671,19 +1671,19 @@ inline Long Scmat3Imag_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Imag_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Imag_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Imag_c::set(const Imag *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Imag_c::set(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecImag_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecImag_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Imag_c::set(const Scmat3Imag_c &sli)
@@ -1702,7 +1702,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Imag();
-    Scmat3Imag(Imag *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Imag_c() const;
 
@@ -1713,16 +1713,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Imag *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Imag *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Imag &sli);
     ~Scmat3Imag();
 };
 
 inline Scmat3Imag::Scmat3Imag() {}
 
-inline Scmat3Imag::Scmat3Imag(Imag *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecImag(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Imag::Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecImag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Imag::operator Scmat3Imag_c() const
 {
@@ -1753,19 +1753,19 @@ inline Long Scmat3Imag::n2() const
     return m_N2;
 }
 
-inline void Scmat3Imag::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Imag::set(Imag *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Imag::set(Imag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecImag::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecImag::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Imag::set(const Scmat3Imag &sli)
@@ -1785,7 +1785,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Limag_c();
-    Scmat3Limag_c(const Limag *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Limag_c(const Limag *data, Long_I N0, Long_I N1, Long_I N2);
 
 
     const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1795,16 +1795,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(const Limag *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(const Limag *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Limag_c &sli);
     ~Scmat3Limag_c();
 };
 
 inline Scmat3Limag_c::Scmat3Limag_c() {}
 
-inline Scmat3Limag_c::Scmat3Limag_c(const Limag *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLimag_c(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Limag_c::Scmat3Limag_c(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLimag_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 
 inline const Limag &Scmat3Limag_c::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1831,19 +1831,19 @@ inline Long Scmat3Limag_c::n2() const
     return m_N2;
 }
 
-inline void Scmat3Limag_c::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Limag_c::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Limag_c::set(const Limag *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Limag_c::set(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLimag_c::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLimag_c::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Limag_c::set(const Scmat3Limag_c &sli)
@@ -1862,7 +1862,7 @@ protected:
     Long m_N0, m_N1, m_N2;
 public:
     Scmat3Limag();
-    Scmat3Limag(Limag *data, Long_I N1, Long_I N2, Long_I N3);
+    Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2);
 
     operator Scmat3Limag_c() const;
 
@@ -1873,16 +1873,16 @@ public:
     Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
-    void reshape(Long_I N1, Long_I N2, Long_I N3);
-    void set(Limag *data, Long_I N1, Long_I N2, Long_I N3);
+    void reshape(Long_I N0, Long_I N1, Long_I N2);
+    void set(Limag *data, Long_I N0, Long_I N1, Long_I N2);
     void set(const Scmat3Limag &sli);
     ~Scmat3Limag();
 };
 
 inline Scmat3Limag::Scmat3Limag() {}
 
-inline Scmat3Limag::Scmat3Limag(Limag *data, Long_I N1, Long_I N2, Long_I N3)
-    : SvecLimag(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
+inline Scmat3Limag::Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2)
+    : SvecLimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Limag::operator Scmat3Limag_c() const
 {
@@ -1913,19 +1913,19 @@ inline Long Scmat3Limag::n2() const
     return m_N2;
 }
 
-inline void Scmat3Limag::reshape(Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2*N3 != m_N)
+    if (N0*N1*N2 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Limag::set(Limag *data, Long_I N1, Long_I N2, Long_I N3)
+inline void Scmat3Limag::set(Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-    SvecLimag::set(data, N1*N2*N3);
-    m_N0 = N1; m_N1 = N2; m_N2 = N3;
+    SvecLimag::set(data, N0*N1*N2);
+    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Limag::set(const Scmat3Limag &sli)

@@ -523,20 +523,20 @@ inline @Tr@ norm(@T@_I v)
 //% if is_Vec(Tv)
 inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
 {
-    Long N0 = v.size();
-    if (N != N0) {
-        if (N0 == 0) {
+    Long Nold = v.size();
+    if (N != Nold) {
+        if (Nold == 0) {
             v.resize(N); copy(v, val);
         }
         else if (N == 0)
             v.resize(0);
         else {
             @Tv@ v1(N);
-            if (N > N0) {
-                veccpy(v1.p(), v.p(), N0);
-                vecset(v1.p() + N0, val, N - N0);
+            if (N > Nold) {
+                veccpy(v1.p(), v.p(), Nold);
+                vecset(v1.p() + Nold, val, N - Nold);
             }
-            else // N < N0
+            else // N < Nold
                 veccpy(v1.p(), v.p(), N);
             v << v1;
         }
@@ -544,19 +544,19 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
 }
 //% elseif is_Cmat(Tv) || is_Mat(Tv)
 //%     Tsli = cut_type(Tv);
-inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
+inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
 {
-    Long N10 = v.n0(), N20 = v.n1(), N0 = N1*N2;
-    Long N = N1 * N2;
-    if (N1 != N10 || N2 != N20) {
-        if (N0 == 0) {
-            v.resize(N1, N2); copy(v, val);
+    Long N10 = v.n0(), N20 = v.n1(), Nold = N0*N1;
+    Long N = N0 * N1;
+    if (N0 != N10 || N1 != N20) {
+        if (Nold == 0) {
+            v.resize(N0, N1); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0);
         else {
-            @Tv@ v1(N1, N2); copy(v1, val);
-            Long N1min = min(N1, N10), N2min = min(N2, N20);
+            @Tv@ v1(N0, N1); copy(v1, val);
+            Long N1min = min(N0, N10), N2min = min(N1, N20);
             copy(cut(v1, 0, N1min, 0, N2min),
                 cut(v, 0, N1min, 0, N2min));
             v << v1;
@@ -564,19 +564,19 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
     }
 }
 //% elseif is_Cmat3(Tv) || is_Mat3(Tv)
-inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3, @T@_I val = 0)
+inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0)
 {
-    Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), N0 = N1*N2;
-    Long N = N1 * N2 * N3;
-    if (N1 != N10 || N2 != N20 || N3 != N30) {
-        if (N0 == 0) {
-            v.resize(N1, N2, N3); copy(v, val);
+    Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), Nold = N0*N1;
+    Long N = N0 * N1 * N2;
+    if (N0 != N10 || N1 != N20 || N2 != N30) {
+        if (Nold == 0) {
+            v.resize(N0, N1, N2); copy(v, val);
         }
         else if (N == 0)
             v.resize(0, 0, 0);
         else {
-            @Tv@ v1(N1, N2, N3); copy(v1, val);
-            Long N1min = min(N1, N10), N2min = min(N2, N20), N3min = min(N3, N30);
+            @Tv@ v1(N0, N1, N2); copy(v1, val);
+            Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
             copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
                 cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;

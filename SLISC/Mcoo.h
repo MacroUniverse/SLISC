@@ -13,8 +13,8 @@ private:
 public:
     using Base::p;
     McooChar(): m_N0(0), m_N1(0), m_Nnz(0) {};
-    McooChar(Long_I N1, Long_I N2);
-    McooChar(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
+    McooChar(Long_I N0, Long_I N1);
+    McooChar(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
     Long *row_p();
     const Long *row_p() const;
     Long *col_p();
@@ -40,20 +40,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I N1, Long_I N2); // change matrix shape
+    void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
 typedef const McooChar &McooChar_I;
 typedef McooChar &McooChar_O, &McooChar_IO;
 
-inline McooChar::McooChar(Long_I N1, Long_I N2)
-    : Base(0), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(0), m_col(0)
+inline McooChar::McooChar(Long_I N0, Long_I N1)
+    : Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooChar::McooChar(Long_I N1, Long_I N2, Long_I Ncap) :
-    Base(Ncap), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooChar::McooChar(Long_I N0, Long_I N1, Long_I Ncap) :
+    Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooChar::row_p()
 {
@@ -229,9 +229,9 @@ inline void McooChar::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooChar::reshape(Long_I N1, Long_I N2)
+inline void McooChar::reshape(Long_I N0, Long_I N1)
 {
-    m_N0 = N1; m_N1 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 
 class McooInt : public VbaseInt
@@ -245,8 +245,8 @@ private:
 public:
     using Base::p;
     McooInt(): m_N0(0), m_N1(0), m_Nnz(0) {};
-    McooInt(Long_I N1, Long_I N2);
-    McooInt(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
+    McooInt(Long_I N0, Long_I N1);
+    McooInt(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
     Long *row_p();
     const Long *row_p() const;
     Long *col_p();
@@ -272,20 +272,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I N1, Long_I N2); // change matrix shape
+    void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
 typedef const McooInt &McooInt_I;
 typedef McooInt &McooInt_O, &McooInt_IO;
 
-inline McooInt::McooInt(Long_I N1, Long_I N2)
-    : Base(0), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(0), m_col(0)
+inline McooInt::McooInt(Long_I N0, Long_I N1)
+    : Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooInt::McooInt(Long_I N1, Long_I N2, Long_I Ncap) :
-    Base(Ncap), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooInt::McooInt(Long_I N0, Long_I N1, Long_I Ncap) :
+    Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooInt::row_p()
 {
@@ -461,9 +461,9 @@ inline void McooInt::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooInt::reshape(Long_I N1, Long_I N2)
+inline void McooInt::reshape(Long_I N0, Long_I N1)
 {
-    m_N0 = N1; m_N1 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 
 class McooLlong : public VbaseLlong
@@ -477,8 +477,8 @@ private:
 public:
     using Base::p;
     McooLlong(): m_N0(0), m_N1(0), m_Nnz(0) {};
-    McooLlong(Long_I N1, Long_I N2);
-    McooLlong(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
+    McooLlong(Long_I N0, Long_I N1);
+    McooLlong(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
     Long *row_p();
     const Long *row_p() const;
     Long *col_p();
@@ -504,20 +504,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I N1, Long_I N2); // change matrix shape
+    void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
 typedef const McooLlong &McooLlong_I;
 typedef McooLlong &McooLlong_O, &McooLlong_IO;
 
-inline McooLlong::McooLlong(Long_I N1, Long_I N2)
-    : Base(0), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(0), m_col(0)
+inline McooLlong::McooLlong(Long_I N0, Long_I N1)
+    : Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooLlong::McooLlong(Long_I N1, Long_I N2, Long_I Ncap) :
-    Base(Ncap), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooLlong::McooLlong(Long_I N0, Long_I N1, Long_I Ncap) :
+    Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooLlong::row_p()
 {
@@ -693,9 +693,9 @@ inline void McooLlong::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooLlong::reshape(Long_I N1, Long_I N2)
+inline void McooLlong::reshape(Long_I N0, Long_I N1)
 {
-    m_N0 = N1; m_N1 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 
 class McooDoub : public VbaseDoub
@@ -709,8 +709,8 @@ private:
 public:
     using Base::p;
     McooDoub(): m_N0(0), m_N1(0), m_Nnz(0) {};
-    McooDoub(Long_I N1, Long_I N2);
-    McooDoub(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
+    McooDoub(Long_I N0, Long_I N1);
+    McooDoub(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
     Long *row_p();
     const Long *row_p() const;
     Long *col_p();
@@ -736,20 +736,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I N1, Long_I N2); // change matrix shape
+    void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
 typedef const McooDoub &McooDoub_I;
 typedef McooDoub &McooDoub_O, &McooDoub_IO;
 
-inline McooDoub::McooDoub(Long_I N1, Long_I N2)
-    : Base(0), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(0), m_col(0)
+inline McooDoub::McooDoub(Long_I N0, Long_I N1)
+    : Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooDoub::McooDoub(Long_I N1, Long_I N2, Long_I Ncap) :
-    Base(Ncap), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooDoub::McooDoub(Long_I N0, Long_I N1, Long_I Ncap) :
+    Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooDoub::row_p()
 {
@@ -925,9 +925,9 @@ inline void McooDoub::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooDoub::reshape(Long_I N1, Long_I N2)
+inline void McooDoub::reshape(Long_I N0, Long_I N1)
 {
-    m_N0 = N1; m_N1 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 
 class McooComp : public VbaseComp
@@ -941,8 +941,8 @@ private:
 public:
     using Base::p;
     McooComp(): m_N0(0), m_N1(0), m_Nnz(0) {};
-    McooComp(Long_I N1, Long_I N2);
-    McooComp(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
+    McooComp(Long_I N0, Long_I N1);
+    McooComp(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
     Long *row_p();
     const Long *row_p() const;
     Long *col_p();
@@ -968,20 +968,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I N1, Long_I N2); // change matrix shape
+    void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
 typedef const McooComp &McooComp_I;
 typedef McooComp &McooComp_O, &McooComp_IO;
 
-inline McooComp::McooComp(Long_I N1, Long_I N2)
-    : Base(0), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(0), m_col(0)
+inline McooComp::McooComp(Long_I N0, Long_I N1)
+    : Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline McooComp::McooComp(Long_I N1, Long_I N2, Long_I Ncap) :
-    Base(Ncap), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline McooComp::McooComp(Long_I N0, Long_I N1, Long_I Ncap) :
+    Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * McooComp::row_p()
 {
@@ -1157,9 +1157,9 @@ inline void McooComp::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void McooComp::reshape(Long_I N1, Long_I N2)
+inline void McooComp::reshape(Long_I N0, Long_I N1)
 {
-    m_N0 = N1; m_N1 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 
 } // namespace slisc

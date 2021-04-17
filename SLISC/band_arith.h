@@ -185,11 +185,11 @@ inline void nband(Long_O Nup, Long_O Nlow, McooDoub_I a, Doub_I tol = 0)
 // set real part of band matrix to constant
 inline void copy_real(CbandComp_O b, Doub_I s)
 {
-    Long N1 = b.n0(), N2 = b.n1();
-    for (Long j = 0; j < N2; ++j) {
+    Long N0 = b.n0(), N1 = b.n1();
+    for (Long j = 0; j < N1; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
         Long k = b.idiag() - j;
-        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
             cut_b[k + i].real(s);
     }
@@ -212,12 +212,12 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
     #endif
-    Long N1 = a.n0(), N2 = a.n1();
-    for (Long j = 0; j < N2; ++j) {
+    Long N0 = a.n0(), N1 = a.n1();
+    for (Long j = 0; j < N1; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
         SvecDoub_c cut_a = cut1(a, j);
         Long k = b.idiag() - j;
-        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
             cut_b[k + i].imag(cut_a[i]);
     }
@@ -231,13 +231,13 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
-    Long N1 = a.n0(), N2 = a.n1();
+    Long N0 = a.n0(), N1 = a.n1();
     Doub dt4 = 0.25*dt;
-    for (Long j = 0; j < N2; ++j) {
+    for (Long j = 0; j < N1; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
         SvecDoub_c cut_a = cut1(a, j);
         Long k = b.idiag() - j;
-        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i) {
             if (i == j)
                 cut_b[k + i] = Comp(0.5, dt4 * cut_a[i]);
@@ -270,13 +270,13 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
-    Long N1 = a.n0(), N2 = a.n1();
+    Long N0 = a.n0(), N1 = a.n1();
     Doub dt4 = 0.25*dt;
-    for (Long j = 0; j < N2; ++j) {
+    for (Long j = 0; j < N1; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
         SvecDoub_c cut_a = cut1(a, j);
         Long k = b.idiag() - j;
-        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
+        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i) {
             if (i == j)
                 cut_b[k + i] = 0.5 + dt4 * cut_a[i];

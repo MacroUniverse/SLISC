@@ -18,8 +18,8 @@ private:
 public:
     using Base::p;
     @McooT@(): m_N0(0), m_N1(0), m_Nnz(0) {};
-    @McooT@(Long_I N1, Long_I N2);
-    @McooT@(Long_I N1, Long_I N2, Long_I Ncap); // reserve Ncap elements
+    @McooT@(Long_I N0, Long_I N1);
+    @McooT@(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
     Long *row_p();
     const Long *row_p() const;
     Long *col_p();
@@ -45,20 +45,20 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
-    void reshape(Long_I N1, Long_I N2); // change matrix shape
+    void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
 typedef const @McooT@ &@McooT@_I;
 typedef @McooT@ &@McooT@_O, &@McooT@_IO;
 
-inline @McooT@::@McooT@(Long_I N1, Long_I N2)
-    : Base(0), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(0), m_col(0)
+inline @McooT@::@McooT@(Long_I N0, Long_I N1)
+    : Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
 {
     m_N = 0;
 }
 
-inline @McooT@::@McooT@(Long_I N1, Long_I N2, Long_I Ncap) :
-    Base(Ncap), m_N0(N1), m_N1(N2), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+inline @McooT@::@McooT@(Long_I N0, Long_I N1, Long_I Ncap) :
+    Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline Long * @McooT@::row_p()
 {
@@ -234,9 +234,9 @@ inline void @McooT@::reserve(Long_I N)
     m_Nnz = 0;
 }
 
-inline void @McooT@::reshape(Long_I N1, Long_I N2)
+inline void @McooT@::reshape(Long_I N0, Long_I N1)
 {
-    m_N0 = N1; m_N1 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 //%------------------------
 } // namespace slisc
