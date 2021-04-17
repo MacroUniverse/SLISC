@@ -23,9 +23,9 @@ class @Mat3T@ : public @VbaseT@
 {
 protected:
     typedef @VbaseT@ Base;
-    Long m_N1, m_N2, m_N3;
+    Long m_N0, m_N1, m_N2;
 public:
-    @Mat3T@(): m_N1(0), m_N2(0), m_N3(0) {};
+    @Mat3T@(): m_N0(0), m_N1(0), m_N2(0) {};
     @Mat3T@(Long_I N1, Long_I N2, Long_I N3);
     @Mat3T@ &operator=(const @Mat3T@ &rhs) = delete;
     void operator<<(@Mat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
@@ -39,20 +39,20 @@ public:
 };
 
 inline @Mat3T@::@Mat3T@(Long_I N1, Long_I N2, Long_I N3) :
-    Base(N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    Base(N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
 
 inline void @Mat3T@::operator<<(@Mat3T@ &rhs)
 {
-    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
-    rhs.m_N1 = rhs.m_N2 = rhs.m_N3 = 0;
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
     Base::operator<<(rhs);
 }
 
 inline void @Mat3T@::resize(Long_I N1, Long_I N2, Long_I N3)
 {
-    if (N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2) {
         Base::resize(N1*N2*N3);
-        m_N1 = N1; m_N2 = N2; m_N3 = N3;
+        m_N0 = N1; m_N1 = N2; m_N2 = N3;
     }
 }
 
@@ -60,43 +60,43 @@ inline void @Mat3T@::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
-        SLS_ERR("@Mat3T@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
+        SLS_ERR("@Mat3T@ reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+"), element number not the same!");
 #endif
-    m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    m_N0 = N1; m_N1 = N2; m_N2 = N3;
 }
 
 inline @T@ &@Mat3T@::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[m_N2*m_N3*i + m_N3*j + k];
+    return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
 
 inline const @T@ &@Mat3T@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[m_N2*m_N3*i + m_N3*j + k];
+    return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
 
 inline Long @Mat3T@::n1() const
 {
-    return m_N1;
+    return m_N0;
 }
 
 inline Long @Mat3T@::n2() const
 {
-    return m_N2;
+    return m_N1;
 }
 
 inline Long @Mat3T@::n3() const
 {
-    return m_N3;
+    return m_N2;
 }
 //% end
 

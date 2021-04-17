@@ -52,13 +52,13 @@ class @Class@
 protected:
     @CT@ *m_p;
     Long m_N;
-    Long m_N1, m_N2;
-    Long m_lda; // leading dimension (here is m_N1 of host matrix)
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
     typedef @CT@ value_type;
     @Class@();
-    @Class@(@CT@ *p, Long_I N1, Long_I N2, Long_I lda);
-    void set(@CT@ *p, Long_I N1, Long_I N2, Long_I lda);
+    @Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(@CT@ *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const @Class@ &sli);
 
 //% if ~constness
@@ -76,18 +76,18 @@ public:
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(@CT@ *p, Long_I N1, Long_I N2, Long_I lda)
-    : m_p(p), m_N1(N1), m_N2(N2), m_N(N1*N2), m_lda(lda)
+inline @Class@::@Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void @Class@::set(@CT@ *p, Long_I N1, Long_I N2, Long_I lda)
+inline void @Class@::set(@CT@ *p, Long_I N0, Long_I N1, Long_I lda)
 {
-    m_p = p; m_N1 = N1; m_N2 = N2; m_N = N1 * N2; m_lda = lda;
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
-    m_p = sli.m_p; m_N = sli.m_N; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_lda = sli.m_lda;
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 //% if ~constness
@@ -103,13 +103,13 @@ inline @CT@ &@Class@::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N2 + m_lda * i / m_N2];
+    return m_p[i % m_N1 + m_lda * i / m_N1];
 }
 
 inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
     return m_p[i + m_lda * j];
@@ -117,12 +117,12 @@ inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 
 inline Long @Class@::n1() const
 {
-    return m_N1;
+    return m_N0;
 }
 
 inline Long @Class@::n2() const
 {
-    return m_N2;
+    return m_N1;
 }
 
 inline Long @Class@::lda() const

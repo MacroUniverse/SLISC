@@ -23,10 +23,10 @@ class @Cmat4T@ : public @VbaseT@
 {
 protected:
     typedef @VbaseT@ Base;
-    Long m_N1, m_N2, m_N3, m_N4;
+    Long m_N0, m_N1, m_N2, m_N3;
 public:
     typedef @T@ value_type;
-    @Cmat4T@(): m_N1(0), m_N2(0), m_N3(0), m_N4(0) {};
+    @Cmat4T@(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
     @Cmat4T@(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     @Cmat4T@(const @Cmat4T@ &rhs);   // Copy constructor
     void operator<<(@Cmat4T@ &rhs); // move data and rhs.resize(0, 0, 0)
@@ -41,11 +41,11 @@ public:
 };
 
 inline @Cmat4T@::@Cmat4T@(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
-    : Base(N1*N2*N3*N4), m_N1(N1), m_N2(N2), m_N3(N3), m_N4(N4) {}
+    : Base(N1*N2*N3*N4), m_N0(N1), m_N1(N2), m_N2(N3), m_N3(N4) {}
 
 // Copy constructor
 inline @Cmat4T@::@Cmat4T@(const @Cmat4T@ &rhs): Base(rhs),
-    m_N1(rhs.m_N1), m_N2(rhs.m_N2), m_N3(rhs.m_N3), m_N4(rhs.m_N4)
+    m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2), m_N3(rhs.m_N3)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
     SLS_ERR("copy constructor forbidden!");
@@ -54,16 +54,16 @@ inline @Cmat4T@::@Cmat4T@(const @Cmat4T@ &rhs): Base(rhs),
 
 inline void @Cmat4T@::operator<<(@Cmat4T@ &rhs)
 {
-    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
-    rhs.m_N1 = rhs.m_N2 = rhs.m_N3 = 0;
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
     Base::operator<<(rhs);
 }
 
 inline void @Cmat4T@::resize(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
-    if (N1 != m_N1 || N2 != m_N2 || N3 != m_N3 || N4 != m_N4) {
+    if (N1 != m_N0 || N2 != m_N1 || N3 != m_N2 || N4 != m_N3) {
         Base::resize(N1*N2*N3*N4);
-        m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
+        m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
     }
 }
 
@@ -71,48 +71,48 @@ inline void @Cmat4T@::reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N1 * N2 * N3 != m_N)
-        SLS_ERR("@Cmat4T@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)+", "+num2str(m_N4)
+        SLS_ERR("@Cmat4T@ reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+", "+num2str(m_N3)
             +") to ("+num2str(N1)+", "+num2str(N2)+", "+num2str(N3)+", "+num2str(N4)+"), element number not the same!");
 #endif
-    m_N1 = N1; m_N2 = N2; m_N3 = N3; m_N4 = N4;
+    m_N0 = N1; m_N1 = N2; m_N2 = N3; m_N3 = N4;
 }
 
 inline @T@ &@Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
-        k < 0 || k >= m_N3 || l < 0 || l >= m_N4)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
+        k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    Long N1N2 = m_N1 * m_N2;
-    return m_p[i + m_N1*j + N1N2 *k + N1N2 *m_N3*l];
+    Long N1N2 = m_N0 * m_N1;
+    return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
 }
 
 inline const @T@ &@Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 ||
-        k < 0 || k >= m_N3 || l < 0 || l >= m_N4)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
+        k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    Long N1N2 = m_N1 * m_N2;
-    return m_p[i + m_N1 * j + N1N2 * k + N1N2 * m_N3*l];
+    Long N1N2 = m_N0 * m_N1;
+    return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
 inline Long @Cmat4T@::n1() const {
-    return m_N1;
+    return m_N0;
 }
 
 inline Long @Cmat4T@::n2() const {
-    return m_N2;
+    return m_N1;
 }
 
 inline Long @Cmat4T@::n3() const {
-    return m_N3;
+    return m_N2;
 }
 
 inline Long @Cmat4T@::n4() const {
-    return m_N4;
+    return m_N3;
 }
 //% end
 

@@ -23,11 +23,11 @@ class @MatT@ : public @VbaseT@
 {
 protected:
     typedef @VbaseT@ Base;
-    Long m_N1, m_N2;
+    Long m_N0, m_N1;
 public:
     using Base::p;
-    @MatT@(): m_N1(0), m_N2(0) {};
-    @MatT@(Long_I N1, Long_I N2);
+    @MatT@(): m_N0(0), m_N1(0) {};
+    @MatT@(Long_I N0, Long_I N1);
     @MatT@(const @MatT@ &rhs);        // Copy constructor
     @MatT@ &operator=(const @MatT@ &rhs) = delete;
     void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
@@ -35,11 +35,11 @@ public:
     const @T@& operator()(Long_I i, Long_I j) const;
     Long n1() const;
     Long n2() const;
-    void resize(Long_I N1, Long_I N2); // resize (contents not preserved)
-    void reshape(Long_I N1, Long_I N2);
+    void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
+    void reshape(Long_I N0, Long_I N1);
 };
 
-inline @MatT@::@MatT@(Long_I N1, Long_I N2) : Base(N1*N2), m_N1(N1), m_N2(N2) {}
+inline @MatT@::@MatT@(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline @MatT@::@MatT@(const @MatT@ &rhs) : Base(0)
 {
@@ -48,55 +48,55 @@ inline @MatT@::@MatT@(const @MatT@ &rhs) : Base(0)
 
 inline void @MatT@::operator<<(@MatT@ &rhs)
 {
-    m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-    rhs.m_N1 = rhs.m_N2 = 0;
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
+    rhs.m_N0 = rhs.m_N1 = 0;
     Base::operator<<(rhs);
 }
 
 inline @T@& @MatT@::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
         SLS_ERR("@MatT@ subscript out of bounds");
 #endif
-    return m_p[m_N2*i+j];
+    return m_p[m_N1*i+j];
 }
 
 inline const @T@ &@MatT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
         SLS_ERR("@MatT@ subscript out of bounds");
 #endif
-    return m_p[m_N2*i+j];
+    return m_p[m_N1*i+j];
 }
 
 inline Long @MatT@::n1() const
 {
-    return m_N1;
+    return m_N0;
 }
 
 inline Long @MatT@::n2() const
 {
-    return m_N2;
+    return m_N1;
 }
 
-inline void @MatT@::resize(Long_I N1, Long_I N2)
+inline void @MatT@::resize(Long_I N0, Long_I N1)
 {
-    if (N1 != m_N1 || N2 != m_N2) {
-        Base::resize(N1*N2);
-        m_N1 = N1; m_N2 = N2;
+    if (N0 != m_N0 || N1 != m_N1) {
+        Base::resize(N0*N1);
+        m_N0 = N0; m_N1 = N1;
     }
 }
 
-inline void @MatT@::reshape(Long_I N1, Long_I N2)
+inline void @MatT@::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1 * N2 != m_N)
-        SLS_ERR("@MatT@ reshaping from ("+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
+    if (N0 * N1 != m_N)
+        SLS_ERR("@MatT@ reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
+            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
 #endif
-    m_N1 = N1; m_N2 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 //% end
 

@@ -49,10 +49,10 @@ typedef ScmatLlong ScmatLong;
 class @Class@ : public @Base@
 {
 protected:
-    Long m_N1, m_N2;
+    Long m_N0, m_N1;
 public:
     @Class@();
-    @Class@(@CT@ *data, Long_I N1, Long_I N2); // unsafe
+    @Class@(@CT@ *data, Long_I N0, Long_I N1); // unsafe
 
 //% if ~constness
     operator @ScmatT_c@() const;
@@ -65,16 +65,16 @@ public:
     // resize() is a bad idea, don't try to create it!
 
     // There is no upper bound checking of N, use with care
-    void reshape(Long_I N1, Long_I N2);
+    void reshape(Long_I N0, Long_I N1);
     void set(const @Class@ &sli);
-    void set(@CT@ *data, Long_I N1, Long_I N2);
+    void set(@CT@ *data, Long_I N0, Long_I N1);
     ~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
-inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2)
-    : @Base@(data, N1*N2), m_N1(N1), m_N2(N2) {}
+inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1)
+    : @Base@(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 //% if ~constness
 inline @Class@::operator @ScmatT_c@() const
@@ -86,41 +86,41 @@ inline @Class@::operator @ScmatT_c@() const
 inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_N1 * j];
+    return m_p[i + m_N0 * j];
 }
 
 inline Long @Class@::n1() const
 {
-    return m_N1;
+    return m_N0;
 }
 
 inline Long @Class@::n2() const
 {
-    return m_N2;
+    return m_N1;
 }
 
-inline void @Class@::reshape(Long_I N1, Long_I N2)
+inline void @Class@::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N1*N2 != m_N)
+    if (N0*N1 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N1 = N1; m_N2 = N2;
+    m_N0 = N0; m_N1 = N1;
 }
 
-inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2)
+inline void @Class@::set(@CT@ *data, Long_I N0, Long_I N1)
 {
-    @Base@::set(data, N1*N2);
-    m_N1 = N1; m_N2 = N2;
+    @Base@::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
     @Base@::set(sli);
-    m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
 inline @Class@::~@Class@() {}

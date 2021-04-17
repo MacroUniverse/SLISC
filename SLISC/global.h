@@ -60,6 +60,18 @@ using std::sinh; using std::cosh; using std::tanh;
 
 // Scalar types
 
+typedef char Char;
+typedef const Char Char_I; // 8 bit integer
+typedef Char &Char_O, &Char_IO;
+
+typedef unsigned char Uchar;
+typedef const Uchar Uchar_I;
+typedef Uchar &Uchar_O, &Uchar_IO;
+
+typedef short Short;
+typedef const Short Short_I; // 16 bit integer
+typedef Short &Short_O, &Short_IO;
+
 typedef int Int;
 typedef const Int Int_I; // 32 bit integer
 typedef Int &Int_O, &Int_IO;
@@ -88,14 +100,6 @@ typedef Llong Long;
 #endif
 typedef const Long Long_I;
 typedef Long &Long_O, &Long_IO;
-
-typedef char Char;
-typedef const Char Char_I; // 8 bit integer
-typedef Char &Char_O, &Char_IO;
-
-typedef unsigned char Uchar;
-typedef const Uchar Uchar_I;
-typedef Uchar &Uchar_O, &Uchar_IO;
 
 typedef float Float;
 typedef const Float Float_I; // default floating type
