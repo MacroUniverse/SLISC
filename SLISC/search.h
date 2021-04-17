@@ -787,10 +787,10 @@ inline Long find_repeat(Long_O j, vecLlong_I v, Long_I start = 0)
 inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.size() != a.n2())
+    if (v.size() != a.n1())
         SLS_ERR("wrong shape");
 #endif
-    for (Long i = start; i < a.n1(); ++i) {
+    for (Long i = start; i < a.n0(); ++i) {
         if (v == cut2(a, i))
             return i;
     }
@@ -800,10 +800,10 @@ inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
 inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.size() != a.n2())
+    if (v.size() != a.n1())
         SLS_ERR("wrong shape");
 #endif
-    for (Long i = start; i < a.n1(); ++i) {
+    for (Long i = start; i < a.n0(); ++i) {
         if (v == cut2(a, i))
             return i;
     }
@@ -813,10 +813,10 @@ inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
 inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.size() != a.n2())
+    if (v.size() != a.n1())
         SLS_ERR("wrong shape");
 #endif
-    for (Long i = start; i < a.n1(); ++i) {
+    for (Long i = start; i < a.n0(); ++i) {
         if (v == cut2(a, i))
             return i;
     }
@@ -826,10 +826,10 @@ inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
 inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.size() != a.n2())
+    if (v.size() != a.n1())
         SLS_ERR("wrong shape");
 #endif
-    for (Long i = start; i < a.n1(); ++i) {
+    for (Long i = start; i < a.n0(); ++i) {
         if (v == cut2(a, i))
             return i;
     }

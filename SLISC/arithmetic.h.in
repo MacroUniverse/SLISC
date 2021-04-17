@@ -490,9 +490,9 @@ inline @Tr@ norm2(@T@_I v)
 inline @Tr@ norm2(@T@_I a)
 {
     const @Ts@ *p = a.p();
-    Long Nr = a.n1(), lda = a.lda();
+    Long Nr = a.n0(), lda = a.lda();
     @Tr@ s2 = 0;
-    for (Long j = 0; j < a.n2(); ++j) {
+    for (Long j = 0; j < a.n1(); ++j) {
         for (Long i = 0; i < Nr; ++i)
             s2 += abs2(p[i]);
         p += lda;
@@ -546,7 +546,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
 //%     Tsli = cut_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
 {
-    Long N10 = v.n1(), N20 = v.n2(), N0 = N1*N2;
+    Long N10 = v.n0(), N20 = v.n1(), N0 = N1*N2;
     Long N = N1 * N2;
     if (N1 != N10 || N2 != N20) {
         if (N0 == 0) {
@@ -566,7 +566,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, @T@_I val = 0)
 //% elseif is_Cmat3(Tv) || is_Mat3(Tv)
 inline void resize_cpy(@Tv@_IO v, Long_I N1, Long_I N2, Long_I N3, @T@_I val = 0)
 {
-    Long N10 = v.n1(), N20 = v.n2(), N30 = v.n3(), N0 = N1*N2;
+    Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), N0 = N1*N2;
     Long N = N1 * N2 * N3;
     if (N1 != N10 || N2 != N20 || N3 != N30) {
         if (N0 == 0) {
@@ -731,10 +731,10 @@ inline void reorder(@Tv@_O v, @To@_I order)
 inline void trans(@T@_IO v)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.n1() != v.n2())
+    if (v.n0() != v.n1())
         SLS_ERR("illegal shape!");
 #endif
-    for (Long i = 0; i < v.n1(); ++i)
+    for (Long i = 0; i < v.n0(); ++i)
         for (Long j = 0; j < i; ++j)
             swap(v(i, j), v(j, i));
 }
@@ -757,11 +757,11 @@ inline void trans(@T@_IO v)
 inline void trans(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.n1() != v1.n2() || v.n2() != v1.n1())
+    if (v.n0() != v1.n1() || v.n1() != v1.n0())
         SLS_ERR("wrong shape!");
 #endif
-    for (Long i = 0; i < v.n1(); ++i)
-        for (Long j = 0; j < v.n2(); ++j)
+    for (Long i = 0; i < v.n0(); ++i)
+        for (Long j = 0; j < v.n1(); ++j)
             v(i, j) = v1(j, i);
 }
 //%-------------------------
@@ -807,8 +807,8 @@ inline void conj(@T@_IO v)
 //% elseif is_Dcmat(T)
 inline void conj(@T@_IO v)
 {
-    for (Long j = 0; j < v.n2(); ++j)
-        conj_v(v.p(), v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        conj_v(v.p(), v.n0());
 }
 //% end
 //%----------------------------
@@ -837,7 +837,7 @@ inline void conj(@T@_O v, @T1@_I v1)
 inline void her(@T@_IO v)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.n1() != v.n2()) SLS_ERR("illegal shape!");
+    if (v.n0() != v.n1()) SLS_ERR("illegal shape!");
 #endif
     trans(v); conj(v);
 }
@@ -1000,26 +1000,26 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //% elseif is_Dcmat(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 {
-    for (Long j = 0; j < v.n2(); ++j)
-        plus_equals_vs(&v(0,j), s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        plus_equals_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator-=(@T@_IO v, @Ts@_I s)
 {
-    for (Long j = 0; j < v.n2(); ++j)
-        minus_equals_vs(&v(0,j), s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        minus_equals_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
 {
-    for (Long j = 0; j < v.n2(); ++j)
-        times_equals_vs(&v(0,j), s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        times_equals_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
 {
-    for (Long j = 0; j < v.n2(); ++j)
-        divide_equals_vs(&v(0,j), s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        divide_equals_vs(&v(0,j), s, v.n0());
 }
 //% elseif is_Dvec(T) && is_scalar(Ts)
 inline void operator*=(@T@_IO v, @Ts@_I s)
@@ -1164,8 +1164,8 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             v(i, j) += v1(i, j);
 }
 
@@ -1173,8 +1173,8 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             v(i, j) -= v1(i, j);
 }
 
@@ -1182,8 +1182,8 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             v(i, j) *= v1(i, j);
 }
 
@@ -1191,8 +1191,8 @@ inline void operator*=(@T@_O &v, @T1@_I v1)
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             v(i, j) /= v1(i, j);
 }
 //% else
@@ -1545,8 +1545,8 @@ inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
-    for (Long j = 0; j < v.n2(); ++j) {
-        plus_vvs(p, p1, s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j) {
+        plus_vvs(p, p1, s, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
@@ -1560,8 +1560,8 @@ inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
-    for (Long j = 0; j < v.n2(); ++j) {
-        minus_vvs(p, p1, s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j) {
+        minus_vvs(p, p1, s, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
@@ -1570,8 +1570,8 @@ inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
-    for (Long j = 0; j < v.n2(); ++j) {
-        minus_vsv(p, s, p1, v.n1());
+    for (Long j = 0; j < v.n1(); ++j) {
+        minus_vsv(p, s, p1, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
@@ -1580,8 +1580,8 @@ inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
-    for (Long j = 0; j < v.n2(); ++j) {
-        times_vvs(p, p1, s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j) {
+        times_vvs(p, p1, s, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
@@ -1595,8 +1595,8 @@ inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 @same_shape('v', 'v1')@
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
-    for (Long j = 0; j < v.n2(); ++j) {
-        divide_vvs(p, p1, s, v.n1());
+    for (Long j = 0; j < v.n1(); ++j) {
+        divide_vvs(p, p1, s, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
@@ -1605,8 +1605,8 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
-    for (Long j = 0; j < v.n2(); ++j) {
-        divide_vsv(p, s, p1, v.n1());
+    for (Long j = 0; j < v.n1(); ++j) {
+        divide_vsv(p, s, p1, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
@@ -1882,15 +1882,15 @@ inline @T@ dot(@T1@_I v1, @T2@_I v2)
     return sum;
 //% elseif ndim(T1) == 2
     @T@ sum = 0;
-    for (Long i = 0; i < v1.n1(); ++i)
-        for (Long j = 0; j < v1.n2(); ++j)
+    for (Long i = 0; i < v1.n0(); ++i)
+        for (Long j = 0; j < v1.n1(); ++j)
                 sum += conj(v1(i,j)) * v2(i,j);
     return sum;
 //% elseif ndim(T1) == 3
     @T@ sum = 0;
-    for (Long i = 0; i < v1.n1(); ++i)
-        for (Long j = 0; j < v1.n2(); ++j)
-            for (Long k = 0; k < v1.n3(); ++k)
+    for (Long i = 0; i < v1.n0(); ++i)
+        for (Long j = 0; j < v1.n1(); ++j)
+            for (Long k = 0; k < v1.n2(); ++k)
                 sum += conj(v1(i,j,k)) * v2(i,j,k);
     return sum;
 //% else
@@ -1971,7 +1971,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //% end
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
-    Long Nr = a.n1(), Nc = a.n2();
+    Long Nr = a.n0(), Nc = a.n1();
 #ifdef SLS_CHECK_SHAPES
     if (Nc != x.size() || y.size() != Nr)
         SLS_ERR("illegal shape!");
@@ -1996,7 +1996,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 // algorithm: y = alpha*(A*x + beta/alpha *y)
 inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 {
-    Long Nr = a.n1(), Nc = a.n2();
+    Long Nr = a.n0(), Nc = a.n1();
 #ifdef SLS_CHECK_SHAPES
     if (Nc != x.size() || y.size() != Nr)
         SLS_ERR("illegal shape!");
@@ -2052,9 +2052,9 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 //% end
 inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 {
-    Long Nr_a = a.n1(), Nc_a = a.n2();
+    Long Nr_a = a.n0(), Nc_a = a.n1();
 #ifdef SLS_CHECK_SHAPES
-    if (x.size() != a.n1() || y.size() != Nc_a)
+    if (x.size() != a.n0() || y.size() != Nc_a)
         SLS_ERR("illegal shape!");
 #endif
     vecset(y.p(), 0, Nc_a);
@@ -2077,9 +2077,9 @@ inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 //% if ndim(T) == 2 && ndim(T1) == 2 && ndim(T2) == 2
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
-    Long Nr_a = a.n1(), Nc_a = a.n2(), Nc_x = x.n2();
+    Long Nr_a = a.n0(), Nc_a = a.n1(), Nc_x = x.n1();
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1() || y.n1() != Nr_a || y.n2() != Nc_x)
+    if (a.n1() != x.n0() || y.n0() != Nr_a || y.n1() != Nc_x)
         SLS_ERR("illegal shape!");
 #endif
     vecset(y.p(), 0, Nr_a*Nc_x);
@@ -2127,7 +2127,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     incy = 'y.step()';
 //% end
 //% if is_dense_mat(Ta)
-//%     lda = 'a.n1()';
+//%     lda = 'a.n0()';
 //% else
 //%     lda = 'a.lda()';
 //% end
@@ -2145,25 +2145,25 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (x.size() != a.n2() || y.size() != a.n1())
+    if (x.size() != a.n1() || y.size() != a.n0())
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
 //% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
-    cblas_sgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+    cblas_sgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
         @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
-    cblas_dgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+    cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
         @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
-    cblas_zgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), &alpha, a.p(),
+    cblas_zgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), &alpha, a.p(),
         @lda@, x.p(), @incx@, &beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
     // do real part
-    cblas_dgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+    cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
     // do imag part
-    cblas_dgemv(@layout@, CblasNoTrans, a.n1(), a.n2(), alpha, a.p(),
+    cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
 //%     error('not implemented!');
@@ -2189,7 +2189,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%     incy = 'y.step()';
 //% end
 //% if is_dense_mat(Ta)
-//%     lda = 'a.n1()';
+//%     lda = 'a.n0()';
 //% else
 //%     lda = 'a.lda()';
 //% end
@@ -2207,25 +2207,25 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (x.size() != a.n2() || y.size() != a.n1() || x.size() != y.size())
+    if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
         SLS_ERR("wrong shape!");
 #endif
 #ifdef SLS_USE_CBLAS
 //% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
-    cblas_ssymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+    cblas_ssymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
         @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
-    cblas_dsymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+    cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
         @lda@, x.p(), @incx@, beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
-    cblas_zsymv(@layout@, CblasUpper, a.n1(), &alpha, a.p(),
+    cblas_zsymv(@layout@, CblasUpper, a.n0(), &alpha, a.p(),
         @lda@, x.p(), @incx@, &beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
     // do real part
-    cblas_dsymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+    cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
     // do imag part
-    cblas_dsymv(@layout@, CblasUpper, a.n1(), alpha, a.p(),
+    cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
 //%     error('not implemented!');
@@ -2248,15 +2248,15 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1() || y.n1() != a.n1() || y.n2() != x.n2())
+    if (a.n1() != x.n0() || y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
 #ifdef SLS_USE_CBLAS
 //% if is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), 1, (Doub*)a.p(), a.n1(), (Doub*)x.p(), a.n2(), 0, (Doub*)y.p(), a.n1());
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n0(), x.n1(), a.n1(), 1, (Doub*)a.p(), a.n0(), (Doub*)x.p(), a.n1(), 0, (Doub*)y.p(), a.n0());
 //% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
         Comp alpha(1,0), beta(0,0);
-        cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n1(), x.n2(), a.n2(), &alpha, a.p(), a.n1(), x.p(), a.n2(), &beta, y.p(), a.n1());
+        cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n0(), x.n1(), a.n1(), &alpha, a.p(), a.n0(), x.p(), a.n1(), &beta, y.p(), a.n0());
 //% else
         SLS_WARN("not implemented with cBLAS, using slow version");
         mul(y, a, x);
@@ -2314,8 +2314,8 @@ inline void uniq_elm(@T@_IO v)
 inline void uniq_rows(@T@_O a, @T1@_I a1)
 {
     Long k = 0;
-    a.resize(a1.n1(), a1.n2());
-    for (Long i = 0; i < a1.n1(); ++i) {
+    a.resize(a1.n0(), a1.n1());
+    for (Long i = 0; i < a1.n0(); ++i) {
         // check repeat
         Bool repeat = false;
         @Tsli1@_c sli1 = cut2(a1, i);
@@ -2329,7 +2329,7 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
         copy(cut2(a, k), sli1);
         ++k;
     }
-    resize_cpy(a, k, a1.n2());
+    resize_cpy(a, k, a1.n1());
 }
 //%---------------------------
 

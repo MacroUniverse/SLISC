@@ -10,10 +10,10 @@ namespace slisc {
 inline void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n1() != a.n2() || !shape_cmp(out, a))
+    if (a.n0() != a.n1() || !shape_cmp(out, a))
         SLS_ERR("not a square matrix!");
 #endif
-    Long N = a.n1();
+    Long N = a.n0();
     VecDoub eigVal(N);
     CmatDoub eigVec(N, N);
     eig_sym(eigVal, eigVec, a);
@@ -29,10 +29,10 @@ inline void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
 inline void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n1() != a.n2() || !shape_cmp(out, a))
+    if (a.n0() != a.n1() || !shape_cmp(out, a))
         SLS_ERR("not a square matrix!");
 #endif
-    Long N = a.n1();
+    Long N = a.n0();
     VecDoub eigVal(N);
     VecComp eigValComp(N);
     CmatDoub eigVec(N, N);

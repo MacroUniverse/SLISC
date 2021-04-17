@@ -33,8 +33,8 @@ public:
     void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
     @T@& operator()(Long_I i, Long_I j); // double indexing
     const @T@& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -71,12 +71,12 @@ inline const @T@ &@MatT@::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long @MatT@::n1() const
+inline Long @MatT@::n0() const
 {
     return m_N0;
 }
 
-inline Long @MatT@::n2() const
+inline Long @MatT@::n1() const
 {
     return m_N1;
 }

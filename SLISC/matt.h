@@ -780,7 +780,7 @@ inline void save(MatInt_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -812,7 +812,7 @@ inline void save(MatLlong_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -844,7 +844,7 @@ inline void save(MatDoub_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -876,7 +876,7 @@ inline void save(MatComp_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -908,7 +908,7 @@ inline void save(CmatInt_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -940,7 +940,7 @@ inline void save(CmatLlong_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -972,7 +972,7 @@ inline void save(CmatDoub_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1004,7 +1004,7 @@ inline void save(CmatComp_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1036,7 +1036,7 @@ inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
+    Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1070,7 +1070,7 @@ inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
+    Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1104,7 +1104,7 @@ inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
+    Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1138,7 +1138,7 @@ inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long i, j, k, N1 = a.n1(), N2 = a.n2(), N3 = a.n3();
+    Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1172,7 +1172,7 @@ inline void save(Cmat4Doub_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
+    Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1207,7 +1207,7 @@ inline void save(Cmat4Comp_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
+    Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1242,7 +1242,7 @@ inline void save(ScmatInt_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1274,7 +1274,7 @@ inline void save(ScmatLlong_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1306,7 +1306,7 @@ inline void save(ScmatDoub_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1338,7 +1338,7 @@ inline void save(ScmatComp_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1370,7 +1370,7 @@ inline void save(DcmatInt_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1402,7 +1402,7 @@ inline void save(DcmatLlong_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1434,7 +1434,7 @@ inline void save(DcmatDoub_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");
@@ -1466,7 +1466,7 @@ inline void save(DcmatComp_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)
         SLS_ERR("variable already exist: " + varname);
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     ofstream &fout = matt.m_out;
     if (!fout.is_open())
         SLS_ERR("matt file not open!");

@@ -300,163 +300,163 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Comp *a, Long_I blk_si
 inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 inline void mul(VecDoub_O y, CmobdDoub_I a, VecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 inline void mul(VecComp_O y, CmobdComp_I a, VecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 
 inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.size() || a.n1() != y.size())
+    if (a.n1() != x.size() || a.n0() != y.size())
         SLS_ERR("illegal shape!");
 #endif
-    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
 inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.size() || a.n1() != y.size())
+    if (a.n1() != x.size() || a.n0() != y.size())
         SLS_ERR("illegal shape!");
 #endif
-    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
 
 inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
 inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
 inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
 inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 }
 
 inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 }
 
 inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 }
 
 inline void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 }
 
 
@@ -466,7 +466,7 @@ inline void sort_r(McooChar_IO a)
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n2() * a.row(i) + a.col(i);
+        inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     SvecChar sli(a.p(), Nnz);
     reorder(sli, order);
@@ -483,7 +483,7 @@ inline void sort_r(McooInt_IO a)
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n2() * a.row(i) + a.col(i);
+        inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     SvecInt sli(a.p(), Nnz);
     reorder(sli, order);
@@ -500,7 +500,7 @@ inline void sort_r(McooLlong_IO a)
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n2() * a.row(i) + a.col(i);
+        inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     SvecLlong sli(a.p(), Nnz);
     reorder(sli, order);
@@ -517,7 +517,7 @@ inline void sort_r(McooDoub_IO a)
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n2() * a.row(i) + a.col(i);
+        inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     SvecDoub sli(a.p(), Nnz);
     reorder(sli, order);
@@ -534,7 +534,7 @@ inline void sort_r(McooComp_IO a)
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n2() * a.row(i) + a.col(i);
+        inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     SvecComp sli(a.p(), Nnz);
     reorder(sli, order);
@@ -598,18 +598,18 @@ inline void times(McooComp_O v, McooDoub_I v1, Imag_I s)
 // infinity norm (using maximum absolute sum of columns)
 inline Doub norm_inf(CmatDoub_I A)
 {
-    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
-    for (Long j = 0; j < A.n2(); ++j)
-        for (Long i = 0; i < A.n1(); ++i)
+    VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
+    for (Long j = 0; j < A.n1(); ++j)
+        for (Long i = 0; i < A.n0(); ++i)
             abs_sum[j] += abs(A(i, j));
     return max(abs_sum);
 }
 
 inline Doub norm_inf(CmatComp_I A)
 {
-    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
-    for (Long j = 0; j < A.n2(); ++j)
-        for (Long i = 0; i < A.n1(); ++i)
+    VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
+    for (Long j = 0; j < A.n1(); ++j)
+        for (Long i = 0; i < A.n0(); ++i)
             abs_sum[j] += abs(A(i, j));
     return max(abs_sum);
 }
@@ -618,8 +618,8 @@ inline Doub norm_inf(CmatComp_I A)
 // infinity norm (using maximum absolute sum of columns)
 inline Int norm_inf(CmobdInt_I A)
 {
-    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
-    VecInt abs_sum(A.n2()); copy(abs_sum, 0);
+    Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
+    VecInt abs_sum(A.n1()); copy(abs_sum, 0);
     Long k = 0;
     SvecInt_c sli(A.p() + N0 + 1, N1);
     // first block
@@ -648,8 +648,8 @@ inline Int norm_inf(CmobdInt_I A)
 
 inline Doub norm_inf(CmobdDoub_I A)
 {
-    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
-    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
+    VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
     Long k = 0;
     SvecDoub_c sli(A.p() + N0 + 1, N1);
     // first block
@@ -678,8 +678,8 @@ inline Doub norm_inf(CmobdDoub_I A)
 
 inline Doub norm_inf(CmobdComp_I A)
 {
-    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
-    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
+    VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
     Long k = 0;
     SvecComp_c sli(A.p() + N0 + 1, N1);
     // first block
@@ -710,7 +710,7 @@ inline Doub norm_inf(CmobdComp_I A)
 // infinity norm (using maximum absolute sum of columns)
 inline Doub norm_inf(McooDoub_I A)
 {
-    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
     for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum[A.col(i)] += abs(A[i]);
     }
@@ -719,7 +719,7 @@ inline Doub norm_inf(McooDoub_I A)
 
 inline Doub norm_inf(McooComp_I A)
 {
-    VecDoub abs_sum(A.n2()); copy(abs_sum, 0);
+    VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
     for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum[A.col(i)] += abs(A[i]);
     }

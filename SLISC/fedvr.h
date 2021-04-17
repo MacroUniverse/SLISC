@@ -278,7 +278,7 @@ inline void legendre_interp_der(CmatDoub_O df, VecDoub_I x)
     Long i, j, k, N{ x.size() };
     Doub t;
 #ifdef SLS_CHECK_SHAPES
-    if (df.n1() != N || df.n2() != N)
+    if (df.n0() != N || df.n1() != N)
         SLS_ERR("wrong shape!");
 #endif
     for (i = 0; i < N; ++i)
@@ -363,7 +363,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
     Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
     Long Nx = Nfe * (Ngs - 1) - 1;
-    if (D2.n1() != Nx || D2.n1() != Nx)
+    if (D2.n0() != Nx || D2.n0() != Nx)
         SLS_ERR("wrong shape!");
 #endif
 
@@ -444,7 +444,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 #ifdef SLS_CHECK_SHAPES
     Long Nx = Nfe * (Ngs - 1) - 1;
     if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
-        D2.n1() != Nx || D2.n1() != Nx)
+        D2.n0() != Nx || D2.n0() != Nx)
         SLS_ERR("wrong shape!");
 #endif
 

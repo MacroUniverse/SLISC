@@ -18,8 +18,8 @@ public:
 
     const Char& operator[](Long_I i) const;
     const Char& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Char *p() const;
@@ -60,12 +60,12 @@ inline const Char &DcmatChar_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatChar_c::n1() const
+inline Long DcmatChar_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatChar_c::n2() const
+inline Long DcmatChar_c::n1() const
 {
     return m_N1;
 }
@@ -105,8 +105,8 @@ public:
 
     Char& operator[](Long_I i) const;
     Char& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Char *p() const;
@@ -151,12 +151,12 @@ inline Char &DcmatChar::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatChar::n1() const
+inline Long DcmatChar::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatChar::n2() const
+inline Long DcmatChar::n1() const
 {
     return m_N1;
 }
@@ -196,8 +196,8 @@ public:
 
     const Int& operator[](Long_I i) const;
     const Int& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Int *p() const;
@@ -238,12 +238,12 @@ inline const Int &DcmatInt_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatInt_c::n1() const
+inline Long DcmatInt_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatInt_c::n2() const
+inline Long DcmatInt_c::n1() const
 {
     return m_N1;
 }
@@ -283,8 +283,8 @@ public:
 
     Int& operator[](Long_I i) const;
     Int& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Int *p() const;
@@ -329,12 +329,12 @@ inline Int &DcmatInt::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatInt::n1() const
+inline Long DcmatInt::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatInt::n2() const
+inline Long DcmatInt::n1() const
 {
     return m_N1;
 }
@@ -374,8 +374,8 @@ public:
 
     const Llong& operator[](Long_I i) const;
     const Llong& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Llong *p() const;
@@ -416,12 +416,12 @@ inline const Llong &DcmatLlong_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLlong_c::n1() const
+inline Long DcmatLlong_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatLlong_c::n2() const
+inline Long DcmatLlong_c::n1() const
 {
     return m_N1;
 }
@@ -461,8 +461,8 @@ public:
 
     Llong& operator[](Long_I i) const;
     Llong& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Llong *p() const;
@@ -507,12 +507,12 @@ inline Llong &DcmatLlong::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLlong::n1() const
+inline Long DcmatLlong::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatLlong::n2() const
+inline Long DcmatLlong::n1() const
 {
     return m_N1;
 }
@@ -569,8 +569,8 @@ public:
 
     const Float& operator[](Long_I i) const;
     const Float& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Float *p() const;
@@ -611,12 +611,12 @@ inline const Float &DcmatFloat_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatFloat_c::n1() const
+inline Long DcmatFloat_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatFloat_c::n2() const
+inline Long DcmatFloat_c::n1() const
 {
     return m_N1;
 }
@@ -656,8 +656,8 @@ public:
 
     Float& operator[](Long_I i) const;
     Float& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Float *p() const;
@@ -702,12 +702,12 @@ inline Float &DcmatFloat::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatFloat::n1() const
+inline Long DcmatFloat::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatFloat::n2() const
+inline Long DcmatFloat::n1() const
 {
     return m_N1;
 }
@@ -747,8 +747,8 @@ public:
 
     const Doub& operator[](Long_I i) const;
     const Doub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Doub *p() const;
@@ -789,12 +789,12 @@ inline const Doub &DcmatDoub_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatDoub_c::n1() const
+inline Long DcmatDoub_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatDoub_c::n2() const
+inline Long DcmatDoub_c::n1() const
 {
     return m_N1;
 }
@@ -834,8 +834,8 @@ public:
 
     Doub& operator[](Long_I i) const;
     Doub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Doub *p() const;
@@ -880,12 +880,12 @@ inline Doub &DcmatDoub::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatDoub::n1() const
+inline Long DcmatDoub::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatDoub::n2() const
+inline Long DcmatDoub::n1() const
 {
     return m_N1;
 }
@@ -925,8 +925,8 @@ public:
 
     const Ldoub& operator[](Long_I i) const;
     const Ldoub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Ldoub *p() const;
@@ -967,12 +967,12 @@ inline const Ldoub &DcmatLdoub_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLdoub_c::n1() const
+inline Long DcmatLdoub_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatLdoub_c::n2() const
+inline Long DcmatLdoub_c::n1() const
 {
     return m_N1;
 }
@@ -1012,8 +1012,8 @@ public:
 
     Ldoub& operator[](Long_I i) const;
     Ldoub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Ldoub *p() const;
@@ -1058,12 +1058,12 @@ inline Ldoub &DcmatLdoub::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLdoub::n1() const
+inline Long DcmatLdoub::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatLdoub::n2() const
+inline Long DcmatLdoub::n1() const
 {
     return m_N1;
 }
@@ -1103,8 +1103,8 @@ public:
 
     const Fcomp& operator[](Long_I i) const;
     const Fcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Fcomp *p() const;
@@ -1145,12 +1145,12 @@ inline const Fcomp &DcmatFcomp_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatFcomp_c::n1() const
+inline Long DcmatFcomp_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatFcomp_c::n2() const
+inline Long DcmatFcomp_c::n1() const
 {
     return m_N1;
 }
@@ -1190,8 +1190,8 @@ public:
 
     Fcomp& operator[](Long_I i) const;
     Fcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Fcomp *p() const;
@@ -1236,12 +1236,12 @@ inline Fcomp &DcmatFcomp::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatFcomp::n1() const
+inline Long DcmatFcomp::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatFcomp::n2() const
+inline Long DcmatFcomp::n1() const
 {
     return m_N1;
 }
@@ -1281,8 +1281,8 @@ public:
 
     const Comp& operator[](Long_I i) const;
     const Comp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Comp *p() const;
@@ -1323,12 +1323,12 @@ inline const Comp &DcmatComp_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatComp_c::n1() const
+inline Long DcmatComp_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatComp_c::n2() const
+inline Long DcmatComp_c::n1() const
 {
     return m_N1;
 }
@@ -1368,8 +1368,8 @@ public:
 
     Comp& operator[](Long_I i) const;
     Comp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Comp *p() const;
@@ -1414,12 +1414,12 @@ inline Comp &DcmatComp::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatComp::n1() const
+inline Long DcmatComp::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatComp::n2() const
+inline Long DcmatComp::n1() const
 {
     return m_N1;
 }
@@ -1459,8 +1459,8 @@ public:
 
     const Lcomp& operator[](Long_I i) const;
     const Lcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     const Lcomp *p() const;
@@ -1501,12 +1501,12 @@ inline const Lcomp &DcmatLcomp_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLcomp_c::n1() const
+inline Long DcmatLcomp_c::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatLcomp_c::n2() const
+inline Long DcmatLcomp_c::n1() const
 {
     return m_N1;
 }
@@ -1546,8 +1546,8 @@ public:
 
     Lcomp& operator[](Long_I i) const;
     Lcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long lda() const;
     Long size() const;
     Lcomp *p() const;
@@ -1592,12 +1592,12 @@ inline Lcomp &DcmatLcomp::operator()(Long_I i, Long_I j) const
     return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLcomp::n1() const
+inline Long DcmatLcomp::n0() const
 {
     return m_N0;
 }
 
-inline Long DcmatLcomp::n2() const
+inline Long DcmatLcomp::n1() const
 {
     return m_N1;
 }

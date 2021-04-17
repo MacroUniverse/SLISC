@@ -137,7 +137,7 @@ inline void fftshift(DvecComp_IO v)
 
 inline void fftshift(MatDoub_IO a, Int_I dim = 1)
 {
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     if (dim == 1) {
         if (isodd(N1))
             SLS_ERR("fftshift only supports even rows!");
@@ -162,7 +162,7 @@ inline void fftshift(MatDoub_IO a, Int_I dim = 1)
 
 inline void fftshift(MatComp_IO a, Int_I dim = 1)
 {
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     if (dim == 1) {
         if (isodd(N1))
             SLS_ERR("fftshift only supports even rows!");
@@ -187,7 +187,7 @@ inline void fftshift(MatComp_IO a, Int_I dim = 1)
 
 inline void fftshift(CmatDoub_IO a, Int_I dim = 1)
 {
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     if (dim == 1) {
         if (isodd(N1))
             SLS_ERR("fftshift only supports even rows!");
@@ -212,7 +212,7 @@ inline void fftshift(CmatDoub_IO a, Int_I dim = 1)
 
 inline void fftshift(CmatComp_IO a, Int_I dim = 1)
 {
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     if (dim == 1) {
         if (isodd(N1))
             SLS_ERR("fftshift only supports even rows!");
@@ -300,7 +300,7 @@ inline void ifft(VecComp_IO data)
 // not optimized, very slow
 inline void fft(MatComp_IO data)
 {
-    Long i, j, m{ data.n1() }, n{ data.n2() };
+    Long i, j, m{ data.n0() }, n{ data.n1() };
     VecComp column(m);
     for (j = 0; j < n; ++j) {
         for (i = 0; i < m; ++i)
@@ -313,7 +313,7 @@ inline void fft(MatComp_IO data)
 
 inline void ifft(MatComp_IO data)
 {
-    Long i, j, m{ data.n1() }, n{ data.n2() };
+    Long i, j, m{ data.n0() }, n{ data.n1() };
     VecComp column(m);
     for (j = 0; j < n; ++j) {
         for (i = 0; i < m; ++i)
@@ -641,7 +641,7 @@ inline void ifft4x(VecComp_O data4, VecComp_I data)
 
 inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub xmin, Doub xmax)
 {
-    Long i, j, k, Nx = X.n1(), Nc = X.n2();
+    Long i, j, k, Nx = X.n0(), Nc = X.n1();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pxi;
     Comp *pyj, factor, expo, dexpo;
@@ -662,7 +662,7 @@ inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub 
 // parallel version
 inline void dft_par(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub xmin, Doub xmax)
 {
-    Long j, Nx = X.n1(), Nc = X.n2();
+    Long j, Nx = X.n0(), Nc = X.n1();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     Y.resize(Nk, Nc); copy(Y, 0);
 #pragma omp parallel for
@@ -684,7 +684,7 @@ inline void dft_par(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, D
 
 inline void idft(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub kmin, Doub kmax)
 {
-    Long i, j, k, Nk = Y.n1(), Nc = Y.n2();
+    Long i, j, k, Nk = Y.n0(), Nc = Y.n1();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pyi;
     Comp *pxj, factor, expo, dexpo;
@@ -704,7 +704,7 @@ inline void idft(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub
 
 inline void idft_par(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub kmin, Doub kmax)
 {
-    Long j, Nk = Y.n1(), Nc = Y.n2();
+    Long j, Nk = Y.n0(), Nc = Y.n1();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     X.resize(Nx, Nc); copy(X, 0);
 #pragma omp parallel for

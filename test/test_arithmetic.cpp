@@ -204,7 +204,7 @@ void test_arithmetic()
         linspace(a, Comp(0, 0), Comp(5, 5));
         b.resize(3, 2);
         linspace(b, Comp(0, 0), Comp(5, 5));
-        MatComp c(a.n2(), a.n1()); trans(c, a);
+        MatComp c(a.n1(), a.n0()); trans(c, a);
         if (c != b)  SLS_ERR("failed!");
     }
 
@@ -219,7 +219,7 @@ void test_arithmetic()
         linspace(a, Comp(0, 0), Comp(5, 5));
         b.resize(3, 2);
         linspace(b, Comp(0, 0), Comp(5, -5));
-        MatComp c(a.n2(), a.n1()); her(c, a);
+        MatComp c(a.n1(), a.n0()); her(c, a);
         if (c != b)  SLS_ERR("failed!");
     }
 
@@ -495,7 +495,7 @@ void test_arithmetic()
     {
         MatComp a(4,7); linspace(a, Comp(1, -1), Comp(28, -28));
         VecDoub v(7); linspace(v, 1, 7);
-        VecComp v1(4), v2(a.n1());
+        VecComp v1(4), v2(a.n0());
         v1[0] = Comp(140, -140); v1[1] = Comp(336, -336);
         v1[2] = Comp(532, -532); v1[3] = Comp(728, -728);
         mul(v2, a, v);
@@ -541,7 +541,7 @@ void test_arithmetic()
     {
         MatComp a(7,4); linspace(a, Comp(1, -1), Comp(28, -28));
         VecDoub v(7); linspace(v, 1, 7);
-        VecComp v1(4), v2(a.n2());
+        VecComp v1(4), v2(a.n1());
         v1[0] = Comp(476, -476); v1[1] = Comp(504, -504);
         v1[2] = Comp(532, -532); v1[3] = Comp(560, -560);
         mul(v2, v, a);
@@ -552,7 +552,7 @@ void test_arithmetic()
     {
         MatComp a(7,4); linspace(a, Comp(1, -1), Comp(28, -28));
         CmatComp b(4, 7); her(b, a);
-        CmatComp c(b.n1(), a.n2());
+        CmatComp c(b.n0(), a.n1());
         mul(c, b, a);
         if (c(0, 0) != 3262 || c(0, 2) != 3626 || c(1, 1) != 3640 || c(1, 3) != 4032 ||
             c(2, 2) != 4046 || c(2, 3) != 4256 || c(3, 3) != 4480)

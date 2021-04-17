@@ -22,7 +22,7 @@ class @CmobdT@
 {
 protected:
     @Cmat3T@ m_data;
-    Long m_N1; // m_N1 = m_N2 = (blk_size - 1) * Nblk - 1
+    Long m_N0; // m_N0 = m_N1 = (blk_size - 1) * Nblk - 1
 public:
     @CmobdT@();
     @CmobdT@(Long_I blk_size, Long_I Nblk);
@@ -31,15 +31,15 @@ public:
     Long find(Long_I i, Long_I j) const; // return single index to m_data, -1 if out of blocks
     const @T@ * p() const; // not the first element!
     @T@ * p();
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Long size() const;
     Long nnz() const;
     const @Cmat3T@ &cmat3() const;
     @Cmat3T@ &cmat3();
     void set(@Cmat3T@_I a3); // set data from Cmat3
-    Long n0() const; // n0() = m_data.n1() = m_data.n2()
-    Long nblk() const; // m_data.n3()
+    Long nblk0() const; // nblk0() = m_data.n0() = m_data.n1()
+    Long nblk() const; // m_data.n2()
     @T@ operator()(Long_I i, Long_I j) const;
     @T@ &ref(Long_I i, Long_I j);
     void resize(Long_I blk_size, Long_I Nblk);
@@ -51,9 +51,9 @@ typedef @CmobdT@ &@CmobdT@_O, &@CmobdT@_IO;
 inline @CmobdT@::@CmobdT@() : @CmobdT@(0, 0) {}
 
 inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
-    : m_data(blk_size, blk_size, Nblk), m_N1((blk_size - 1) * Nblk - 1)
+    : m_data(blk_size, blk_size, Nblk), m_N0((blk_size - 1) * Nblk - 1)
 {
-    Long step = sqr(n0());
+    Long step = sqr(nblk0());
     // set the first overlapped element to 0
     if (m_data.size() > 0)
         vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
@@ -72,14 +72,14 @@ inline @T@ &@CmobdT@::operator[](Long_I i)
 inline Long @CmobdT@::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i1 < 0 || i1 >= m_N1 || i2 < 0 || i2 >= m_N1)
+    if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
         SLS_ERR("out of bound!");
 #endif
     Long i = i1 + 1; Long j = i2 + 1;
-    Long N = n0() - 1;
+    Long N = nblk0() - 1;
     Long iblk = i / N, jblk = j / N;
     Long m = i % N;
-    Long step2 = n0(), step3 = step2 * step2;
+    Long step2 = nblk0(), step3 = step2 * step2;
     if (iblk == jblk) {
         if (i == j && m == 0 && iblk > 0)
             return step3 * iblk;
@@ -107,24 +107,24 @@ inline @T@ * @CmobdT@::p()
     return m_data.p();
 }
 
-inline Long @CmobdT@::n1() const
+inline Long @CmobdT@::n0() const
 {
-    return m_N1;
+    return m_N0;
 }
 
-inline Long @CmobdT@::n2() const
+inline Long @CmobdT@::n1() const
 {
-    return m_N1;
+    return m_N0;
 }
 
 inline Long @CmobdT@::size() const
 {
-    return m_N1 * m_N1;
+    return m_N0 * m_N0;
 }
 
 inline Long @CmobdT@::nnz() const
 {
-    Long N0 = n0(), Nblk = nblk();
+    Long N0 = nblk0(), Nblk = nblk();
     return (N0*N0 - 1)*Nblk - 4 * N0 + 3;
 }
 
@@ -142,18 +142,18 @@ inline void @CmobdT@::set(@Cmat3T@_I a3)
 {
     veccpy(m_data.p(), a3.p(), a3.size());
     // set the first overlapped element to 0
-    Long step = sqr(n0());
+    Long step = sqr(nblk0());
     vecset(m_data.p() + step - 1, 0, nblk() - 1, step);
 }
 
-inline Long @CmobdT@::n0() const
+inline Long @CmobdT@::nblk0() const
 {
-    return m_data.n1();
+    return m_data.n0();
 }
 
 inline Long @CmobdT@::nblk() const
 {
-    return m_data.n3();
+    return m_data.n2();
 }
 
 inline @T@ @CmobdT@::operator()(Long_I i1, Long_I i2) const
@@ -178,9 +178,9 @@ inline @T@& @CmobdT@::ref(Long_I i, Long_I j)
 inline void @CmobdT@::resize(Long_I blk_size, Long_I Nblk)
 {
     m_data.resize(blk_size, blk_size, Nblk);
-    m_N1 = (blk_size - 1) * Nblk - 1;
+    m_N0 = (blk_size - 1) * Nblk - 1;
     // set the first overlapped element to 0
-    Long step = sqr(n0());
+    Long step = sqr(nblk0());
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 //%----------------------

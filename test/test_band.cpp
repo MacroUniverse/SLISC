@@ -71,7 +71,7 @@ void test_band()
     {
         CbandDoub a(4, 4, 1, 1);
         DcmatDoub b = a.band();
-        if (b.p() != &a.cmat()[a.idiag()-a.nup()] || b.n1() != 3 || b.n2() != 4)
+        if (b.p() != &a.cmat()[a.idiag()-a.nup()] || b.n0() != 3 || b.n1() != 4)
             SLS_ERR("failed!");
         DvecDoub v = a.diag();
         if (v.p() != &a.cmat()[a.idiag()] || v.step() != a.lda() || v.size() != 4)

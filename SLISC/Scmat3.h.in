@@ -48,7 +48,7 @@ typedef Scmat3Llong Scmat3Long;
 class @Class@ : public @Base@
 {
 protected:
-    Long m_N1, m_N2, m_N3;
+    Long m_N0, m_N1, m_N2;
 public:
     @Class@();
     @Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3);
@@ -59,9 +59,9 @@ public:
 
     @CT@ &operator()(Long_I i, Long_I j, Long_I k) const;
 
+    Long n0() const;
     Long n1() const;
     Long n2() const;
-    Long n3() const;
 
     // resize() is a bad idea, don't try to create it!
     void reshape(Long_I N1, Long_I N2, Long_I N3);
@@ -73,7 +73,7 @@ public:
 inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
-    : @Base@(data, N1*N2*N3), m_N1(N1), m_N2(N2), m_N3(N3) {}
+    : @Base@(data, N1*N2*N3), m_N0(N1), m_N1(N2), m_N2(N3) {}
 
 //% if ~constness
 inline @Class@::operator @Scmat3T_c@() const
@@ -85,10 +85,15 @@ inline @Class@::operator @Scmat3T_c@() const
 inline @CT@ &@Class@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N1 || j < 0 || j >= m_N2 || k < 0 || k >= m_N3)
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i + m_N1*j + m_N1*m_N2*k];
+    return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long @Class@::n0() const
+{
+    return m_N0;
 }
 
 inline Long @Class@::n1() const
@@ -101,30 +106,25 @@ inline Long @Class@::n2() const
     return m_N2;
 }
 
-inline Long @Class@::n3() const
-{
-    return m_N3;
-}
-
 inline void @Class@::reshape(Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
     if (N1*N2*N3 != m_N)
         SLS_ERR("illegal reshape!");
 #endif
-    m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    m_N0 = N1; m_N1 = N2; m_N2 = N3;
 }
 
 inline void @Class@::set(@CT@ *data, Long_I N1, Long_I N2, Long_I N3)
 {
     @Base@::set(data, N1*N2*N3);
-    m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    m_N0 = N1; m_N1 = N2; m_N2 = N3;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
     @Base@::set(sli);
-    m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_N3 = sli.m_N3;
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline @Class@::~@Class@() {}

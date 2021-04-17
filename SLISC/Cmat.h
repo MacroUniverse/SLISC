@@ -16,8 +16,8 @@ public:
     void operator<<(CmatChar &rhs); // move data and rhs.resize(0, 0)
     Char& operator()(Long_I i, Long_I j);    // double indexing
     const Char& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -60,10 +60,10 @@ inline const Char &CmatChar::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatChar::n1() const
+inline Long CmatChar::n0() const
 { return m_N0; }
 
-inline Long CmatChar::n2() const
+inline Long CmatChar::n1() const
 { return m_N1; }
 
 inline void CmatChar::resize(Long_I N0, Long_I N1)
@@ -100,8 +100,8 @@ public:
     void operator<<(CmatInt &rhs); // move data and rhs.resize(0, 0)
     Int& operator()(Long_I i, Long_I j);    // double indexing
     const Int& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -144,10 +144,10 @@ inline const Int &CmatInt::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatInt::n1() const
+inline Long CmatInt::n0() const
 { return m_N0; }
 
-inline Long CmatInt::n2() const
+inline Long CmatInt::n1() const
 { return m_N1; }
 
 inline void CmatInt::resize(Long_I N0, Long_I N1)
@@ -184,8 +184,8 @@ public:
     void operator<<(CmatLlong &rhs); // move data and rhs.resize(0, 0)
     Llong& operator()(Long_I i, Long_I j);    // double indexing
     const Llong& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -228,10 +228,10 @@ inline const Llong &CmatLlong::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatLlong::n1() const
+inline Long CmatLlong::n0() const
 { return m_N0; }
 
-inline Long CmatLlong::n2() const
+inline Long CmatLlong::n1() const
 { return m_N1; }
 
 inline void CmatLlong::resize(Long_I N0, Long_I N1)
@@ -277,8 +277,8 @@ public:
     void operator<<(CmatFloat &rhs); // move data and rhs.resize(0, 0)
     Float& operator()(Long_I i, Long_I j);    // double indexing
     const Float& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -321,10 +321,10 @@ inline const Float &CmatFloat::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatFloat::n1() const
+inline Long CmatFloat::n0() const
 { return m_N0; }
 
-inline Long CmatFloat::n2() const
+inline Long CmatFloat::n1() const
 { return m_N1; }
 
 inline void CmatFloat::resize(Long_I N0, Long_I N1)
@@ -361,8 +361,8 @@ public:
     void operator<<(CmatDoub &rhs); // move data and rhs.resize(0, 0)
     Doub& operator()(Long_I i, Long_I j);    // double indexing
     const Doub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -405,10 +405,10 @@ inline const Doub &CmatDoub::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatDoub::n1() const
+inline Long CmatDoub::n0() const
 { return m_N0; }
 
-inline Long CmatDoub::n2() const
+inline Long CmatDoub::n1() const
 { return m_N1; }
 
 inline void CmatDoub::resize(Long_I N0, Long_I N1)
@@ -445,8 +445,8 @@ public:
     void operator<<(CmatLdoub &rhs); // move data and rhs.resize(0, 0)
     Ldoub& operator()(Long_I i, Long_I j);    // double indexing
     const Ldoub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -489,10 +489,10 @@ inline const Ldoub &CmatLdoub::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatLdoub::n1() const
+inline Long CmatLdoub::n0() const
 { return m_N0; }
 
-inline Long CmatLdoub::n2() const
+inline Long CmatLdoub::n1() const
 { return m_N1; }
 
 inline void CmatLdoub::resize(Long_I N0, Long_I N1)
@@ -529,8 +529,8 @@ public:
     void operator<<(CmatFcomp &rhs); // move data and rhs.resize(0, 0)
     Fcomp& operator()(Long_I i, Long_I j);    // double indexing
     const Fcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -573,10 +573,10 @@ inline const Fcomp &CmatFcomp::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatFcomp::n1() const
+inline Long CmatFcomp::n0() const
 { return m_N0; }
 
-inline Long CmatFcomp::n2() const
+inline Long CmatFcomp::n1() const
 { return m_N1; }
 
 inline void CmatFcomp::resize(Long_I N0, Long_I N1)
@@ -613,8 +613,8 @@ public:
     void operator<<(CmatComp &rhs); // move data and rhs.resize(0, 0)
     Comp& operator()(Long_I i, Long_I j);    // double indexing
     const Comp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -657,10 +657,10 @@ inline const Comp &CmatComp::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatComp::n1() const
+inline Long CmatComp::n0() const
 { return m_N0; }
 
-inline Long CmatComp::n2() const
+inline Long CmatComp::n1() const
 { return m_N1; }
 
 inline void CmatComp::resize(Long_I N0, Long_I N1)
@@ -697,8 +697,8 @@ public:
     void operator<<(CmatLcomp &rhs); // move data and rhs.resize(0, 0)
     Lcomp& operator()(Long_I i, Long_I j);    // double indexing
     const Lcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -741,10 +741,10 @@ inline const Lcomp &CmatLcomp::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatLcomp::n1() const
+inline Long CmatLcomp::n0() const
 { return m_N0; }
 
-inline Long CmatLcomp::n2() const
+inline Long CmatLcomp::n1() const
 { return m_N1; }
 
 inline void CmatLcomp::resize(Long_I N0, Long_I N1)
@@ -781,8 +781,8 @@ public:
     void operator<<(CmatFimag &rhs); // move data and rhs.resize(0, 0)
     Fimag& operator()(Long_I i, Long_I j);    // double indexing
     const Fimag& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -825,10 +825,10 @@ inline const Fimag &CmatFimag::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatFimag::n1() const
+inline Long CmatFimag::n0() const
 { return m_N0; }
 
-inline Long CmatFimag::n2() const
+inline Long CmatFimag::n1() const
 { return m_N1; }
 
 inline void CmatFimag::resize(Long_I N0, Long_I N1)
@@ -865,8 +865,8 @@ public:
     void operator<<(CmatImag &rhs); // move data and rhs.resize(0, 0)
     Imag& operator()(Long_I i, Long_I j);    // double indexing
     const Imag& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -909,10 +909,10 @@ inline const Imag &CmatImag::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatImag::n1() const
+inline Long CmatImag::n0() const
 { return m_N0; }
 
-inline Long CmatImag::n2() const
+inline Long CmatImag::n1() const
 { return m_N1; }
 
 inline void CmatImag::resize(Long_I N0, Long_I N1)
@@ -949,8 +949,8 @@ public:
     void operator<<(CmatLimag &rhs); // move data and rhs.resize(0, 0)
     Limag& operator()(Long_I i, Long_I j);    // double indexing
     const Limag& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
 };
@@ -993,10 +993,10 @@ inline const Limag &CmatLimag::operator()(Long_I i, Long_I j) const
     return m_p[i+m_N0*j];
 }
 
-inline Long CmatLimag::n1() const
+inline Long CmatLimag::n0() const
 { return m_N0; }
 
-inline Long CmatLimag::n2() const
+inline Long CmatLimag::n1() const
 { return m_N1; }
 
 inline void CmatLimag::resize(Long_I N0, Long_I N1)
@@ -1034,8 +1034,8 @@ public:
     void operator<<(CmatBool &rhs); // move data and rhs.resize(0, 0)
     CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
     Bool operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
 };
 
@@ -1078,10 +1078,10 @@ inline Bool CmatBool::operator()(Long_I i, Long_I j) const
     return (*this)[i+m_N0*j];
 }
 
-inline Long CmatBool::n1() const
+inline Long CmatBool::n0() const
 { return m_N0; }
 
-inline Long CmatBool::n2() const
+inline Long CmatBool::n1() const
 { return m_N1; }
 
 inline void CmatBool::resize(Long_I N0, Long_I N1)

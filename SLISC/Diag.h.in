@@ -27,8 +27,8 @@ public:
     @DiagT@(@VecT@_I v);
     Long size() const;
     Long nnz() const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     @T@ &ref(Long_I i, Long_I j);
     @T@ operator()(Long_I i, Long_I j) const;
 };
@@ -51,12 +51,12 @@ inline Long @DiagT@::nnz() const
     return Base::size();
 }
 
-inline Long @DiagT@::n1() const
+inline Long @DiagT@::n0() const
 {
     return Base::size();
 }
 
-inline Long @DiagT@::n2() const
+inline Long @DiagT@::n1() const
 {
     return Base::size();
 }

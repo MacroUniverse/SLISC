@@ -7,13 +7,13 @@ void test_Cmat4()
 	{
 		Long N1 = 3, N2 = 4, N3 = 2, N4 = 3;
 		Cmat4Doub v(N1, N2, N3, N4);
-		if (v.n1() != N1)
+		if (v.n0() != N1)
 			SLS_ERR("failed!");
-		if (v.n2() != N2)
+		if (v.n1() != N2)
 			SLS_ERR("failed!");
-		if (v.n3() != N3)
+		if (v.n2() != N3)
 			SLS_ERR("failed!");
-		if (v.n4() != N4)
+		if (v.n3() != N4)
 			SLS_ERR("failed!");
 		v(1, 2, 1, 2) = 2;
 		if (v(1, 2, 1, 2) != 2)
@@ -22,8 +22,8 @@ void test_Cmat4()
 
     Cmat4Int a(2, 3, 4, 5);
     linspace(a, 1, a.size());
-    if (a.n1() != 2 || a.n2() != 3 ||
-        a.n3() != 4 || a.n4() != 5)
+    if (a.n0() != 2 || a.n1() != 3 ||
+        a.n2() != 4 || a.n3() != 5)
         SLS_ERR("failed!");
 
     Long ind = 0;

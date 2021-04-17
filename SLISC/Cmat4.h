@@ -18,10 +18,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Char::Cmat4Char(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -83,19 +83,19 @@ inline const Char &Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Char::n1() const {
+inline Long Cmat4Char::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Char::n2() const {
+inline Long Cmat4Char::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Char::n3() const {
+inline Long Cmat4Char::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Char::n4() const {
+inline Long Cmat4Char::n3() const {
     return m_N3;
 }
 
@@ -117,10 +117,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Int::Cmat4Int(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -182,19 +182,19 @@ inline const Int &Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l) c
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Int::n1() const {
+inline Long Cmat4Int::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Int::n2() const {
+inline Long Cmat4Int::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Int::n3() const {
+inline Long Cmat4Int::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Int::n4() const {
+inline Long Cmat4Int::n3() const {
     return m_N3;
 }
 
@@ -216,10 +216,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Llong::Cmat4Llong(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -281,19 +281,19 @@ inline const Llong &Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Llong::n1() const {
+inline Long Cmat4Llong::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Llong::n2() const {
+inline Long Cmat4Llong::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Llong::n3() const {
+inline Long Cmat4Llong::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Llong::n4() const {
+inline Long Cmat4Llong::n3() const {
     return m_N3;
 }
 
@@ -324,10 +324,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Float::Cmat4Float(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -389,19 +389,19 @@ inline const Float &Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Float::n1() const {
+inline Long Cmat4Float::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Float::n2() const {
+inline Long Cmat4Float::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Float::n3() const {
+inline Long Cmat4Float::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Float::n4() const {
+inline Long Cmat4Float::n3() const {
     return m_N3;
 }
 
@@ -423,10 +423,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Doub::Cmat4Doub(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -488,19 +488,19 @@ inline const Doub &Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Doub::n1() const {
+inline Long Cmat4Doub::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Doub::n2() const {
+inline Long Cmat4Doub::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Doub::n3() const {
+inline Long Cmat4Doub::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Doub::n4() const {
+inline Long Cmat4Doub::n3() const {
     return m_N3;
 }
 
@@ -522,10 +522,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Ldoub::Cmat4Ldoub(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -587,19 +587,19 @@ inline const Ldoub &Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Ldoub::n1() const {
+inline Long Cmat4Ldoub::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Ldoub::n2() const {
+inline Long Cmat4Ldoub::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Ldoub::n3() const {
+inline Long Cmat4Ldoub::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Ldoub::n4() const {
+inline Long Cmat4Ldoub::n3() const {
     return m_N3;
 }
 
@@ -621,10 +621,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Fcomp::Cmat4Fcomp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -686,19 +686,19 @@ inline const Fcomp &Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Fcomp::n1() const {
+inline Long Cmat4Fcomp::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Fcomp::n2() const {
+inline Long Cmat4Fcomp::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Fcomp::n3() const {
+inline Long Cmat4Fcomp::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Fcomp::n4() const {
+inline Long Cmat4Fcomp::n3() const {
     return m_N3;
 }
 
@@ -720,10 +720,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Comp::Cmat4Comp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -785,19 +785,19 @@ inline const Comp &Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Comp::n1() const {
+inline Long Cmat4Comp::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Comp::n2() const {
+inline Long Cmat4Comp::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Comp::n3() const {
+inline Long Cmat4Comp::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Comp::n4() const {
+inline Long Cmat4Comp::n3() const {
     return m_N3;
 }
 
@@ -819,10 +819,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Lcomp::Cmat4Lcomp(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -884,19 +884,19 @@ inline const Lcomp &Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Lcomp::n1() const {
+inline Long Cmat4Lcomp::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Lcomp::n2() const {
+inline Long Cmat4Lcomp::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Lcomp::n3() const {
+inline Long Cmat4Lcomp::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Lcomp::n4() const {
+inline Long Cmat4Lcomp::n3() const {
     return m_N3;
 }
 
@@ -918,10 +918,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Fimag::Cmat4Fimag(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -983,19 +983,19 @@ inline const Fimag &Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Fimag::n1() const {
+inline Long Cmat4Fimag::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Fimag::n2() const {
+inline Long Cmat4Fimag::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Fimag::n3() const {
+inline Long Cmat4Fimag::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Fimag::n4() const {
+inline Long Cmat4Fimag::n3() const {
     return m_N3;
 }
 
@@ -1017,10 +1017,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Imag::Cmat4Imag(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -1082,19 +1082,19 @@ inline const Imag &Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Imag::n1() const {
+inline Long Cmat4Imag::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Imag::n2() const {
+inline Long Cmat4Imag::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Imag::n3() const {
+inline Long Cmat4Imag::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Imag::n4() const {
+inline Long Cmat4Imag::n3() const {
     return m_N3;
 }
 
@@ -1116,10 +1116,10 @@ public:
     void reshape(Long_I N1, Long_I N2, Long_I N3, Long_I N4);
     Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
     const Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
     Long n1() const;
     Long n2() const;
     Long n3() const;
-    Long n4() const;
 };
 
 inline Cmat4Limag::Cmat4Limag(Long_I N1, Long_I N2, Long_I N3, Long_I N4)
@@ -1181,19 +1181,19 @@ inline const Limag &Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I 
     return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
 }
 
-inline Long Cmat4Limag::n1() const {
+inline Long Cmat4Limag::n0() const {
     return m_N0;
 }
 
-inline Long Cmat4Limag::n2() const {
+inline Long Cmat4Limag::n1() const {
     return m_N1;
 }
 
-inline Long Cmat4Limag::n3() const {
+inline Long Cmat4Limag::n2() const {
     return m_N2;
 }
 
-inline Long Cmat4Limag::n4() const {
+inline Long Cmat4Limag::n3() const {
     return m_N3;
 }
 

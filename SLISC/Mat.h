@@ -17,8 +17,8 @@ public:
     void operator<<(MatChar &rhs); // move data and rhs.resize(0, 0)
     Char& operator()(Long_I i, Long_I j); // double indexing
     const Char& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -55,12 +55,12 @@ inline const Char &MatChar::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatChar::n1() const
+inline Long MatChar::n0() const
 {
     return m_N0;
 }
 
-inline Long MatChar::n2() const
+inline Long MatChar::n1() const
 {
     return m_N1;
 }
@@ -100,8 +100,8 @@ public:
     void operator<<(MatInt &rhs); // move data and rhs.resize(0, 0)
     Int& operator()(Long_I i, Long_I j); // double indexing
     const Int& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -138,12 +138,12 @@ inline const Int &MatInt::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatInt::n1() const
+inline Long MatInt::n0() const
 {
     return m_N0;
 }
 
-inline Long MatInt::n2() const
+inline Long MatInt::n1() const
 {
     return m_N1;
 }
@@ -183,8 +183,8 @@ public:
     void operator<<(MatLlong &rhs); // move data and rhs.resize(0, 0)
     Llong& operator()(Long_I i, Long_I j); // double indexing
     const Llong& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -221,12 +221,12 @@ inline const Llong &MatLlong::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatLlong::n1() const
+inline Long MatLlong::n0() const
 {
     return m_N0;
 }
 
-inline Long MatLlong::n2() const
+inline Long MatLlong::n1() const
 {
     return m_N1;
 }
@@ -266,8 +266,8 @@ public:
     void operator<<(MatFloat &rhs); // move data and rhs.resize(0, 0)
     Float& operator()(Long_I i, Long_I j); // double indexing
     const Float& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -304,12 +304,12 @@ inline const Float &MatFloat::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatFloat::n1() const
+inline Long MatFloat::n0() const
 {
     return m_N0;
 }
 
-inline Long MatFloat::n2() const
+inline Long MatFloat::n1() const
 {
     return m_N1;
 }
@@ -349,8 +349,8 @@ public:
     void operator<<(MatDoub &rhs); // move data and rhs.resize(0, 0)
     Doub& operator()(Long_I i, Long_I j); // double indexing
     const Doub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -387,12 +387,12 @@ inline const Doub &MatDoub::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatDoub::n1() const
+inline Long MatDoub::n0() const
 {
     return m_N0;
 }
 
-inline Long MatDoub::n2() const
+inline Long MatDoub::n1() const
 {
     return m_N1;
 }
@@ -432,8 +432,8 @@ public:
     void operator<<(MatLdoub &rhs); // move data and rhs.resize(0, 0)
     Ldoub& operator()(Long_I i, Long_I j); // double indexing
     const Ldoub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -470,12 +470,12 @@ inline const Ldoub &MatLdoub::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatLdoub::n1() const
+inline Long MatLdoub::n0() const
 {
     return m_N0;
 }
 
-inline Long MatLdoub::n2() const
+inline Long MatLdoub::n1() const
 {
     return m_N1;
 }
@@ -515,8 +515,8 @@ public:
     void operator<<(MatFcomp &rhs); // move data and rhs.resize(0, 0)
     Fcomp& operator()(Long_I i, Long_I j); // double indexing
     const Fcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -553,12 +553,12 @@ inline const Fcomp &MatFcomp::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatFcomp::n1() const
+inline Long MatFcomp::n0() const
 {
     return m_N0;
 }
 
-inline Long MatFcomp::n2() const
+inline Long MatFcomp::n1() const
 {
     return m_N1;
 }
@@ -598,8 +598,8 @@ public:
     void operator<<(MatComp &rhs); // move data and rhs.resize(0, 0)
     Comp& operator()(Long_I i, Long_I j); // double indexing
     const Comp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -636,12 +636,12 @@ inline const Comp &MatComp::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatComp::n1() const
+inline Long MatComp::n0() const
 {
     return m_N0;
 }
 
-inline Long MatComp::n2() const
+inline Long MatComp::n1() const
 {
     return m_N1;
 }
@@ -681,8 +681,8 @@ public:
     void operator<<(MatLcomp &rhs); // move data and rhs.resize(0, 0)
     Lcomp& operator()(Long_I i, Long_I j); // double indexing
     const Lcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -719,12 +719,12 @@ inline const Lcomp &MatLcomp::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatLcomp::n1() const
+inline Long MatLcomp::n0() const
 {
     return m_N0;
 }
 
-inline Long MatLcomp::n2() const
+inline Long MatLcomp::n1() const
 {
     return m_N1;
 }
@@ -764,8 +764,8 @@ public:
     void operator<<(MatFimag &rhs); // move data and rhs.resize(0, 0)
     Fimag& operator()(Long_I i, Long_I j); // double indexing
     const Fimag& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -802,12 +802,12 @@ inline const Fimag &MatFimag::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatFimag::n1() const
+inline Long MatFimag::n0() const
 {
     return m_N0;
 }
 
-inline Long MatFimag::n2() const
+inline Long MatFimag::n1() const
 {
     return m_N1;
 }
@@ -847,8 +847,8 @@ public:
     void operator<<(MatImag &rhs); // move data and rhs.resize(0, 0)
     Imag& operator()(Long_I i, Long_I j); // double indexing
     const Imag& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -885,12 +885,12 @@ inline const Imag &MatImag::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatImag::n1() const
+inline Long MatImag::n0() const
 {
     return m_N0;
 }
 
-inline Long MatImag::n2() const
+inline Long MatImag::n1() const
 {
     return m_N1;
 }
@@ -930,8 +930,8 @@ public:
     void operator<<(MatLimag &rhs); // move data and rhs.resize(0, 0)
     Limag& operator()(Long_I i, Long_I j); // double indexing
     const Limag& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
     void reshape(Long_I N0, Long_I N1);
 };
@@ -968,12 +968,12 @@ inline const Limag &MatLimag::operator()(Long_I i, Long_I j) const
     return m_p[m_N1*i+j];
 }
 
-inline Long MatLimag::n1() const
+inline Long MatLimag::n0() const
 {
     return m_N0;
 }
 
-inline Long MatLimag::n2() const
+inline Long MatLimag::n1() const
 {
     return m_N1;
 }

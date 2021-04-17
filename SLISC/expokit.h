@@ -8,42 +8,42 @@ namespace slisc {
 
 void expokit_mul(Comp *y, McooDoub_I a, Comp *x)
 {
-    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x);
+    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x);
 }
 
 void expokit_mul(Comp *y, McooComp_I a, Comp *x)
 {
-    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x);
+    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x);
 }
 
 
 void expokit_mul(Comp *y, CmobdDoub_I a, Comp *x)
 {
-    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0());
 }
 
 void expokit_mul(Comp *y, CmobdComp_I a, Comp *x)
 {
-    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0());
 }
 
 
 // not optimized for symmetric or Hermitian matrix
 void expokit_mul(Comp *y, CmatDoub_I a, Comp *x)
 {
-    SvecComp vx(x, a.n2()); SvecComp vy(y, a.n1());
+    SvecComp vx(x, a.n1()); SvecComp vy(y, a.n0());
     mul_gen(vy, a, vx);
 }
 
 void expokit_mul(Comp *y, CmatComp_I a, Comp *x)
 {
-    SvecComp vx(x, a.n2()); SvecComp vy(y, a.n1());
+    SvecComp vx(x, a.n1()); SvecComp vy(y, a.n0());
     mul_gen(vy, a, vx);
 }
 
 void expokit_mul(Doub *y, CmatDoub_I a, Doub *x)
 {
-    SvecDoub vx(x, a.n2()); SvecDoub vy(y, a.n1());
+    SvecDoub vx(x, a.n1()); SvecDoub vy(y, a.n0());
     mul_gen(vy, a, vx);
 }
 
@@ -3348,9 +3348,9 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3368,7 +3368,7 @@ inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 
 inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
@@ -3378,9 +3378,9 @@ inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3398,7 +3398,7 @@ inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 
 inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
@@ -3408,9 +3408,9 @@ inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3428,7 +3428,7 @@ inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I 
 
 inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
@@ -3438,9 +3438,9 @@ inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I 
 inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3458,7 +3458,7 @@ inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 
 inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
@@ -3468,9 +3468,9 @@ inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3488,7 +3488,7 @@ inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 
 inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
@@ -3498,9 +3498,9 @@ inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3518,7 +3518,7 @@ inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 
 inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
@@ -3528,9 +3528,9 @@ inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (mat.n1() != mat.n2() || mat.n2() != v.size())
+    if (mat.n0() != mat.n1() || mat.n1() != v.size())
         SLS_ERR("wrong shape!");
-    if (wsp_c.size() < max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+    if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
         SLS_ERR("wrong shape!");
     if (wsp_i.size() < max(Nkrylov + 2, 7))
         SLS_ERR("wrong shape!");
@@ -3548,7 +3548,7 @@ inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 
 inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-    VecComp wsp_c(max(Long(10), mat.n1()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+    VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
     VecInt wsp_i(max(Nkrylov + 2, 7));
     SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
     SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());

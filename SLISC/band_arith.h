@@ -13,22 +13,22 @@ namespace slisc {
 // cut the non-zero band
 inline DcmatDoub band(CbandDoub_IO a)
 {
-    return DcmatDoub(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+    return DcmatDoub(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 inline DcmatDoub_c band(CbandDoub_I a)
 {
-    return DcmatDoub_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+    return DcmatDoub_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 inline DcmatComp band(CbandComp_IO a)
 {
-    return DcmatComp(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+    return DcmatComp(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 inline DcmatComp_c band(CbandComp_I a)
 {
-    return DcmatComp_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n2(), a.lda());
+    return DcmatComp_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 
@@ -38,10 +38,10 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
 {
     Bool found = false;
     // check upper diagonals
-    for (Long k = a.n2() - 1; k > 0 && !found; --k) {
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
         Long i = 0;
-        for (Long j = k; j < a.n2() && !found; ++j) {
-            if (i > a.n1()) break;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
             if (abs(a(i, j)) > tol)  {
                 Nup = k; found = true;
             }
@@ -53,10 +53,10 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
     
     // check lower diagonals
     found = false;
-    for (Long k = a.n1() - 1; k > 0  && !found; --k) {
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
         Long j = 0;
-        for (Long i = k; i < a.n1() && !found; ++i) {
-            if (j > a.n2()) break;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
             if (abs(a(i, j)) > tol) {
                 Nlow = k; found = true;
             }
@@ -71,10 +71,10 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
 {
     Bool found = false;
     // check upper diagonals
-    for (Long k = a.n2() - 1; k > 0 && !found; --k) {
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
         Long i = 0;
-        for (Long j = k; j < a.n2() && !found; ++j) {
-            if (i > a.n1()) break;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
             if (abs(a(i, j)) > tol)  {
                 Nup = k; found = true;
             }
@@ -86,10 +86,10 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
     
     // check lower diagonals
     found = false;
-    for (Long k = a.n1() - 1; k > 0  && !found; --k) {
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
         Long j = 0;
-        for (Long i = k; i < a.n1() && !found; ++i) {
-            if (j > a.n2()) break;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
             if (abs(a(i, j)) > tol) {
                 Nlow = k; found = true;
             }
@@ -104,10 +104,10 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
 {
     Bool found = false;
     // check upper diagonals
-    for (Long k = a.n2() - 1; k > 0 && !found; --k) {
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
         Long i = 0;
-        for (Long j = k; j < a.n2() && !found; ++j) {
-            if (i > a.n1()) break;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
             if (abs(a(i, j)) > tol)  {
                 Nup = k; found = true;
             }
@@ -119,10 +119,10 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
     
     // check lower diagonals
     found = false;
-    for (Long k = a.n1() - 1; k > 0  && !found; --k) {
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
         Long j = 0;
-        for (Long i = k; i < a.n1() && !found; ++i) {
-            if (j > a.n2()) break;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
             if (abs(a(i, j)) > tol) {
                 Nlow = k; found = true;
             }
@@ -137,10 +137,10 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
 {
     Bool found = false;
     // check upper diagonals
-    for (Long k = a.n2() - 1; k > 0 && !found; --k) {
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
         Long i = 0;
-        for (Long j = k; j < a.n2() && !found; ++j) {
-            if (i > a.n1()) break;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
             if (abs(a(i, j)) > tol)  {
                 Nup = k; found = true;
             }
@@ -152,10 +152,10 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
     
     // check lower diagonals
     found = false;
-    for (Long k = a.n1() - 1; k > 0  && !found; --k) {
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
         Long j = 0;
-        for (Long i = k; i < a.n1() && !found; ++i) {
-            if (j > a.n2()) break;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
             if (abs(a(i, j)) > tol) {
                 Nlow = k; found = true;
             }
@@ -185,7 +185,7 @@ inline void nband(Long_O Nup, Long_O Nlow, McooDoub_I a, Doub_I tol = 0)
 // set real part of band matrix to constant
 inline void copy_real(CbandComp_O b, Doub_I s)
 {
-    Long N1 = b.n1(), N2 = b.n2();
+    Long N1 = b.n0(), N2 = b.n1();
     for (Long j = 0; j < N2; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
         Long k = b.idiag() - j;
@@ -198,7 +198,7 @@ inline void copy_real(CbandComp_O b, Doub_I s)
 // set real part of band matrix diagonal to constant
 inline void copy_diag_real(CbandComp_O b, Doub_I s)
 {
-    Long lda = 2*b.lda(), N = min(b.n1(), b.n2());
+    Long lda = 2*b.lda(), N = min(b.n0(), b.n1());
     Doub *p_diag = (Doub *)&b.cmat()(b.idiag(), 0);
     Doub *p_end = p_diag + lda * N;
     for (; p_diag < p_end; p_diag += lda)
@@ -212,7 +212,7 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
     #endif
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
         SvecDoub_c cut_a = cut1(a, j);
@@ -231,7 +231,7 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N2; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
@@ -270,7 +270,7 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     if (!shape_cmp(a, b))
         SLS_ERR("wrong shape!");
 #endif
-    Long N1 = a.n1(), N2 = a.n2();
+    Long N1 = a.n0(), N2 = a.n1();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N2; ++j) {
         SvecComp cut_b = cut1(b.cmat(), j);
@@ -304,7 +304,7 @@ inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
     Long incx = 1;
     Long incy = 1;
     Doub alpha = 1, beta = 0;
-    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, beta, y.p(), incy);
 }
 
@@ -314,10 +314,10 @@ inline void mul(VecComp_O y, CbandDoub_I a, VecComp_I x)
     Long incy = 1;
     Doub alpha = 1, beta = 0;
     // real part
-    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p(), incx*2, beta, (Doub*)y.p(), incy*2);
     // imag part
-    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
 }
 
@@ -326,7 +326,7 @@ inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
     Long incx = 1;
     Long incy = 1;
     Comp alpha(1, 0), beta(0, 0);
-    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
@@ -335,7 +335,7 @@ inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
     Long incx = 1;
     Long incy = 1;
     Comp alpha(1, 0), beta(0, 0);
-    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
@@ -345,10 +345,10 @@ inline void mul(SvecComp_O y, CbandDoub_I a, SvecComp_I x)
     Long incy = 1;
     Doub alpha = 1, beta = 0;
     // real part
-    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p(), incx*2, beta, (Doub*)y.p(), incy*2);
     // imag part
-    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n1(), a.n2(), a.nlow(), a.nup(),
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
 }
 

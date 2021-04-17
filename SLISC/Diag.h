@@ -15,8 +15,8 @@ public:
     DiagInt(VecInt_I v);
     Long size() const;
     Long nnz() const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Int &ref(Long_I i, Long_I j);
     Int operator()(Long_I i, Long_I j) const;
 };
@@ -39,12 +39,12 @@ inline Long DiagInt::nnz() const
     return Base::size();
 }
 
-inline Long DiagInt::n1() const
+inline Long DiagInt::n0() const
 {
     return Base::size();
 }
 
-inline Long DiagInt::n2() const
+inline Long DiagInt::n1() const
 {
     return Base::size();
 }
@@ -83,8 +83,8 @@ public:
     DiagLlong(VecLlong_I v);
     Long size() const;
     Long nnz() const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Llong &ref(Long_I i, Long_I j);
     Llong operator()(Long_I i, Long_I j) const;
 };
@@ -107,12 +107,12 @@ inline Long DiagLlong::nnz() const
     return Base::size();
 }
 
-inline Long DiagLlong::n1() const
+inline Long DiagLlong::n0() const
 {
     return Base::size();
 }
 
-inline Long DiagLlong::n2() const
+inline Long DiagLlong::n1() const
 {
     return Base::size();
 }
@@ -160,8 +160,8 @@ public:
     DiagDoub(VecDoub_I v);
     Long size() const;
     Long nnz() const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Doub &ref(Long_I i, Long_I j);
     Doub operator()(Long_I i, Long_I j) const;
 };
@@ -184,12 +184,12 @@ inline Long DiagDoub::nnz() const
     return Base::size();
 }
 
-inline Long DiagDoub::n1() const
+inline Long DiagDoub::n0() const
 {
     return Base::size();
 }
 
-inline Long DiagDoub::n2() const
+inline Long DiagDoub::n1() const
 {
     return Base::size();
 }
@@ -228,8 +228,8 @@ public:
     DiagComp(VecComp_I v);
     Long size() const;
     Long nnz() const;
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
     Comp &ref(Long_I i, Long_I j);
     Comp operator()(Long_I i, Long_I j) const;
 };
@@ -252,12 +252,12 @@ inline Long DiagComp::nnz() const
     return Base::size();
 }
 
-inline Long DiagComp::n1() const
+inline Long DiagComp::n0() const
 {
     return Base::size();
 }
 
-inline Long DiagComp::n2() const
+inline Long DiagComp::n1() const
 {
     return Base::size();
 }

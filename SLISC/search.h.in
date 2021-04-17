@@ -193,10 +193,10 @@ inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
 inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (v.size() != a.n2())
+    if (v.size() != a.n1())
         SLS_ERR("wrong shape");
 #endif
-    for (Long i = start; i < a.n1(); ++i) {
+    for (Long i = start; i < a.n0(); ++i) {
         if (v == cut2(a, i))
             return i;
     }

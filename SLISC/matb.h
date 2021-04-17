@@ -784,9 +784,9 @@ inline void save(CmatChar_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -814,9 +814,9 @@ inline void save(CmatInt_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -844,9 +844,9 @@ inline void save(CmatLlong_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -874,9 +874,9 @@ inline void save(CmatDoub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -904,9 +904,9 @@ inline void save(CmatComp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -934,9 +934,9 @@ inline void save(MatChar_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -964,9 +964,9 @@ inline void save(MatInt_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -994,9 +994,9 @@ inline void save(MatLlong_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1024,9 +1024,9 @@ inline void save(MatDoub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1054,9 +1054,9 @@ inline void save(MatComp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1084,9 +1084,9 @@ inline void save(ScmatInt_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1114,9 +1114,9 @@ inline void save(ScmatLlong_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1144,9 +1144,9 @@ inline void save(ScmatDoub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1174,9 +1174,9 @@ inline void save(ScmatComp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1204,9 +1204,9 @@ inline void save(DcmatInt_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1234,9 +1234,9 @@ inline void save(DcmatLlong_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1264,9 +1264,9 @@ inline void save(DcmatDoub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1294,9 +1294,9 @@ inline void save(DcmatComp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(2));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    for (Long j = 0; j < v.n2(); ++j)
-        for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 }
 
@@ -1324,10 +1324,10 @@ inline void save(Cmat3Int_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1355,10 +1355,10 @@ inline void save(Cmat3Llong_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1386,10 +1386,10 @@ inline void save(Cmat3Doub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1417,10 +1417,10 @@ inline void save(Cmat3Comp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1448,10 +1448,10 @@ inline void save(Mat3Int_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1479,10 +1479,10 @@ inline void save(Mat3Llong_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1510,10 +1510,10 @@ inline void save(Mat3Doub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1541,10 +1541,10 @@ inline void save(Mat3Comp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(3));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2()); write(fout, v.n3());
-    for (Long k = 0; k < v.n3(); ++k)
-        for (Long j = 0; j < v.n2(); ++j)
-            for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 }
 
@@ -1572,12 +1572,12 @@ inline void save(Cmat4Doub_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(4));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    write(fout, v.n3()); write(fout, v.n4());
-    for (Long l = 0; l < v.n4(); ++l)
-        for (Long k = 0; k < v.n3(); ++k)
-            for (Long j = 0; j < v.n2(); ++j)
-                for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    write(fout, v.n2()); write(fout, v.n3());
+    for (Long l = 0; l < v.n3(); ++l)
+        for (Long k = 0; k < v.n2(); ++k)
+            for (Long j = 0; j < v.n1(); ++j)
+                for (Long i = 0; i < v.n0(); ++i)
                     write(fout, v(i, j, k, l));
 }
 
@@ -1605,12 +1605,12 @@ inline void save(Cmat4Comp_I v, Str_I varname, Matb_IO matb)
     // write shape info
     write(fout, Llong(4));
     // write matrix data
-    write(fout, v.n1()); write(fout, v.n2());
-    write(fout, v.n3()); write(fout, v.n4());
-    for (Long l = 0; l < v.n4(); ++l)
-        for (Long k = 0; k < v.n3(); ++k)
-            for (Long j = 0; j < v.n2(); ++j)
-                for (Long i = 0; i < v.n1(); ++i)
+    write(fout, v.n0()); write(fout, v.n1());
+    write(fout, v.n2()); write(fout, v.n3());
+    for (Long l = 0; l < v.n3(); ++l)
+        for (Long k = 0; k < v.n2(); ++k)
+            for (Long j = 0; j < v.n1(); ++j)
+                for (Long i = 0; i < v.n0(); ++i)
                     write(fout, v(i, j, k, l));
 }
 

@@ -35,7 +35,7 @@ inline void disp(@T@_I v, Int_I precision = def_disp_prec)
 //% elseif ndim(T) == 2
 inline void disp(@T@_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -51,7 +51,7 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec)
 }
 //% elseif ndim(T) == 3
 inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
-    Long i, j, k, m{ a.n1() }, n{ a.n2() }, q{ a.n3() };
+    Long i, j, k, m{ a.n0() }, n{ a.n1() }, q{ a.n2() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -70,7 +70,7 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
 }
 //% elseif ndim(T) == 4
 inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
-    Long i, j, k, l, N1 = a.n1(), N2 = a.n2(), N3 = a.n3(), N4 = a.n4();
+    Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0)

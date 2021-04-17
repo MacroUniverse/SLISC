@@ -13,8 +13,8 @@ public:
 
 
     const Char &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -40,12 +40,12 @@ inline const Char &ScmatChar_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatChar_c::n1() const
+inline Long ScmatChar_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatChar_c::n2() const
+inline Long ScmatChar_c::n1() const
 {
     return m_N1;
 }
@@ -86,8 +86,8 @@ public:
     operator ScmatChar_c() const;
 
     Char &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -117,12 +117,12 @@ inline Char &ScmatChar::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatChar::n1() const
+inline Long ScmatChar::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatChar::n2() const
+inline Long ScmatChar::n1() const
 {
     return m_N1;
 }
@@ -163,8 +163,8 @@ public:
 
 
     const Int &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -190,12 +190,12 @@ inline const Int &ScmatInt_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatInt_c::n1() const
+inline Long ScmatInt_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatInt_c::n2() const
+inline Long ScmatInt_c::n1() const
 {
     return m_N1;
 }
@@ -236,8 +236,8 @@ public:
     operator ScmatInt_c() const;
 
     Int &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -267,12 +267,12 @@ inline Int &ScmatInt::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatInt::n1() const
+inline Long ScmatInt::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatInt::n2() const
+inline Long ScmatInt::n1() const
 {
     return m_N1;
 }
@@ -313,8 +313,8 @@ public:
 
 
     const Llong &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -340,12 +340,12 @@ inline const Llong &ScmatLlong_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLlong_c::n1() const
+inline Long ScmatLlong_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLlong_c::n2() const
+inline Long ScmatLlong_c::n1() const
 {
     return m_N1;
 }
@@ -386,8 +386,8 @@ public:
     operator ScmatLlong_c() const;
 
     Llong &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -417,12 +417,12 @@ inline Llong &ScmatLlong::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLlong::n1() const
+inline Long ScmatLlong::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLlong::n2() const
+inline Long ScmatLlong::n1() const
 {
     return m_N1;
 }
@@ -480,8 +480,8 @@ public:
 
 
     const Float &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -507,12 +507,12 @@ inline const Float &ScmatFloat_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFloat_c::n1() const
+inline Long ScmatFloat_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatFloat_c::n2() const
+inline Long ScmatFloat_c::n1() const
 {
     return m_N1;
 }
@@ -553,8 +553,8 @@ public:
     operator ScmatFloat_c() const;
 
     Float &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -584,12 +584,12 @@ inline Float &ScmatFloat::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFloat::n1() const
+inline Long ScmatFloat::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatFloat::n2() const
+inline Long ScmatFloat::n1() const
 {
     return m_N1;
 }
@@ -630,8 +630,8 @@ public:
 
 
     const Doub &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -657,12 +657,12 @@ inline const Doub &ScmatDoub_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatDoub_c::n1() const
+inline Long ScmatDoub_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatDoub_c::n2() const
+inline Long ScmatDoub_c::n1() const
 {
     return m_N1;
 }
@@ -703,8 +703,8 @@ public:
     operator ScmatDoub_c() const;
 
     Doub &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -734,12 +734,12 @@ inline Doub &ScmatDoub::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatDoub::n1() const
+inline Long ScmatDoub::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatDoub::n2() const
+inline Long ScmatDoub::n1() const
 {
     return m_N1;
 }
@@ -780,8 +780,8 @@ public:
 
 
     const Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -807,12 +807,12 @@ inline const Ldoub &ScmatLdoub_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLdoub_c::n1() const
+inline Long ScmatLdoub_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLdoub_c::n2() const
+inline Long ScmatLdoub_c::n1() const
 {
     return m_N1;
 }
@@ -853,8 +853,8 @@ public:
     operator ScmatLdoub_c() const;
 
     Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -884,12 +884,12 @@ inline Ldoub &ScmatLdoub::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLdoub::n1() const
+inline Long ScmatLdoub::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLdoub::n2() const
+inline Long ScmatLdoub::n1() const
 {
     return m_N1;
 }
@@ -930,8 +930,8 @@ public:
 
 
     const Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -957,12 +957,12 @@ inline const Fcomp &ScmatFcomp_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFcomp_c::n1() const
+inline Long ScmatFcomp_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatFcomp_c::n2() const
+inline Long ScmatFcomp_c::n1() const
 {
     return m_N1;
 }
@@ -1003,8 +1003,8 @@ public:
     operator ScmatFcomp_c() const;
 
     Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1034,12 +1034,12 @@ inline Fcomp &ScmatFcomp::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFcomp::n1() const
+inline Long ScmatFcomp::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatFcomp::n2() const
+inline Long ScmatFcomp::n1() const
 {
     return m_N1;
 }
@@ -1080,8 +1080,8 @@ public:
 
 
     const Comp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1107,12 +1107,12 @@ inline const Comp &ScmatComp_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatComp_c::n1() const
+inline Long ScmatComp_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatComp_c::n2() const
+inline Long ScmatComp_c::n1() const
 {
     return m_N1;
 }
@@ -1153,8 +1153,8 @@ public:
     operator ScmatComp_c() const;
 
     Comp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1184,12 +1184,12 @@ inline Comp &ScmatComp::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatComp::n1() const
+inline Long ScmatComp::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatComp::n2() const
+inline Long ScmatComp::n1() const
 {
     return m_N1;
 }
@@ -1230,8 +1230,8 @@ public:
 
 
     const Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1257,12 +1257,12 @@ inline const Lcomp &ScmatLcomp_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLcomp_c::n1() const
+inline Long ScmatLcomp_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLcomp_c::n2() const
+inline Long ScmatLcomp_c::n1() const
 {
     return m_N1;
 }
@@ -1303,8 +1303,8 @@ public:
     operator ScmatLcomp_c() const;
 
     Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1334,12 +1334,12 @@ inline Lcomp &ScmatLcomp::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLcomp::n1() const
+inline Long ScmatLcomp::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLcomp::n2() const
+inline Long ScmatLcomp::n1() const
 {
     return m_N1;
 }
@@ -1380,8 +1380,8 @@ public:
 
 
     const Fimag &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1407,12 +1407,12 @@ inline const Fimag &ScmatFimag_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFimag_c::n1() const
+inline Long ScmatFimag_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatFimag_c::n2() const
+inline Long ScmatFimag_c::n1() const
 {
     return m_N1;
 }
@@ -1453,8 +1453,8 @@ public:
     operator ScmatFimag_c() const;
 
     Fimag &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1484,12 +1484,12 @@ inline Fimag &ScmatFimag::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFimag::n1() const
+inline Long ScmatFimag::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatFimag::n2() const
+inline Long ScmatFimag::n1() const
 {
     return m_N1;
 }
@@ -1530,8 +1530,8 @@ public:
 
 
     const Imag &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1557,12 +1557,12 @@ inline const Imag &ScmatImag_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatImag_c::n1() const
+inline Long ScmatImag_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatImag_c::n2() const
+inline Long ScmatImag_c::n1() const
 {
     return m_N1;
 }
@@ -1603,8 +1603,8 @@ public:
     operator ScmatImag_c() const;
 
     Imag &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1634,12 +1634,12 @@ inline Imag &ScmatImag::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatImag::n1() const
+inline Long ScmatImag::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatImag::n2() const
+inline Long ScmatImag::n1() const
 {
     return m_N1;
 }
@@ -1680,8 +1680,8 @@ public:
 
 
     const Limag &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1707,12 +1707,12 @@ inline const Limag &ScmatLimag_c::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLimag_c::n1() const
+inline Long ScmatLimag_c::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLimag_c::n2() const
+inline Long ScmatLimag_c::n1() const
 {
     return m_N1;
 }
@@ -1753,8 +1753,8 @@ public:
     operator ScmatLimag_c() const;
 
     Limag &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
     Long n1() const;
-    Long n2() const;
 
     // resize() is a bad idea, don't try to create it!
 
@@ -1784,12 +1784,12 @@ inline Limag &ScmatLimag::operator()(Long_I i, Long_I j) const
     return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLimag::n1() const
+inline Long ScmatLimag::n0() const
 {
     return m_N0;
 }
 
-inline Long ScmatLimag::n2() const
+inline Long ScmatLimag::n1() const
 {
     return m_N1;
 }

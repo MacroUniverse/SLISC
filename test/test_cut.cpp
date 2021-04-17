@@ -23,7 +23,7 @@ void test_cut()
 		ScmatDoub sli = cut(v, 0, N2 - 2);
 		if (sli.p() != v.p())
 			SLS_ERR("failed!");
-		if (sli.n1() != N1 || sli.n2() != N2 - 2)
+		if (sli.n0() != N1 || sli.n1() != N2 - 2)
 			SLS_ERR("failed!");
 	}
 
@@ -33,7 +33,7 @@ void test_cut()
 		DcmatDoub sli = cut(v, 0, N1 - 2, 0, N2 - 2);
 		if (sli.p() != v.p())
 			SLS_ERR("failed!");
-		if (sli.n1() != N1 - 2 || sli.n2() != N2 - 2)
+		if (sli.n0() != N1 - 2 || sli.n1() != N2 - 2)
 			SLS_ERR("failed!");
 	}
 }

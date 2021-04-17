@@ -126,7 +126,7 @@ inline void disp(VecComp_I v, Int_I precision = def_disp_prec)
 
 inline void disp(MatLlong_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -143,7 +143,7 @@ inline void disp(MatLlong_I a, Int_I precision = def_disp_prec)
 
 inline void disp(MatDoub_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -160,7 +160,7 @@ inline void disp(MatDoub_I a, Int_I precision = def_disp_prec)
 
 inline void disp(MatComp_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -177,7 +177,7 @@ inline void disp(MatComp_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmatInt_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -194,7 +194,7 @@ inline void disp(CmatInt_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmatLlong_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -211,7 +211,7 @@ inline void disp(CmatLlong_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmatDoub_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -228,7 +228,7 @@ inline void disp(CmatDoub_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmatComp_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -244,7 +244,7 @@ inline void disp(CmatComp_I a, Int_I precision = def_disp_prec)
 }
 
 inline void disp(Cmat3Int_I a, Int_I precision = def_disp_prec) {
-    Long i, j, k, m{ a.n1() }, n{ a.n2() }, q{ a.n3() };
+    Long i, j, k, m{ a.n0() }, n{ a.n1() }, q{ a.n2() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -263,7 +263,7 @@ inline void disp(Cmat3Int_I a, Int_I precision = def_disp_prec) {
 }
 
 inline void disp(Cmat3Llong_I a, Int_I precision = def_disp_prec) {
-    Long i, j, k, m{ a.n1() }, n{ a.n2() }, q{ a.n3() };
+    Long i, j, k, m{ a.n0() }, n{ a.n1() }, q{ a.n2() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -282,7 +282,7 @@ inline void disp(Cmat3Llong_I a, Int_I precision = def_disp_prec) {
 }
 
 inline void disp(Cmat3Doub_I a, Int_I precision = def_disp_prec) {
-    Long i, j, k, m{ a.n1() }, n{ a.n2() }, q{ a.n3() };
+    Long i, j, k, m{ a.n0() }, n{ a.n1() }, q{ a.n2() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -301,7 +301,7 @@ inline void disp(Cmat3Doub_I a, Int_I precision = def_disp_prec) {
 }
 
 inline void disp(Cmat3Comp_I a, Int_I precision = def_disp_prec) {
-    Long i, j, k, m{ a.n1() }, n{ a.n2() }, q{ a.n3() };
+    Long i, j, k, m{ a.n0() }, n{ a.n1() }, q{ a.n2() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -366,7 +366,7 @@ inline void disp(SvecComp_I v, Int_I precision = def_disp_prec)
 
 inline void disp(DcmatInt_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -383,7 +383,7 @@ inline void disp(DcmatInt_I a, Int_I precision = def_disp_prec)
 
 inline void disp(DcmatLlong_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -400,7 +400,7 @@ inline void disp(DcmatLlong_I a, Int_I precision = def_disp_prec)
 
 inline void disp(DcmatDoub_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -417,7 +417,7 @@ inline void disp(DcmatDoub_I a, Int_I precision = def_disp_prec)
 
 inline void disp(DcmatComp_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -434,7 +434,7 @@ inline void disp(DcmatComp_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmobdInt_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -451,7 +451,7 @@ inline void disp(CmobdInt_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmobdDoub_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -468,7 +468,7 @@ inline void disp(CmobdDoub_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CmobdComp_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -485,7 +485,7 @@ inline void disp(CmobdComp_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CbandDoub_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -502,7 +502,7 @@ inline void disp(CbandDoub_I a, Int_I precision = def_disp_prec)
 
 inline void disp(CbandComp_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -519,7 +519,7 @@ inline void disp(CbandComp_I a, Int_I precision = def_disp_prec)
 
 inline void disp(McooInt_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -536,7 +536,7 @@ inline void disp(McooInt_I a, Int_I precision = def_disp_prec)
 
 inline void disp(McooDoub_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";
@@ -553,7 +553,7 @@ inline void disp(McooDoub_I a, Int_I precision = def_disp_prec)
 
 inline void disp(McooComp_I a, Int_I precision = def_disp_prec)
 {
-    Long i, j, m{ a.n1() }, n{ a.n2() };
+    Long i, j, m{ a.n0() }, n{ a.n1() };
     auto oldPrecision = cout.precision();
     cout.precision(precision);
     if (a.size() == 0) cout << "empty";

@@ -147,10 +147,10 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n1() || x.size() != a.n2())
+    if (y.size() != a.n0() || x.size() != a.n1())
         SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.n0(), a.nblk(), a.n1());
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 //%------------------------------
 
@@ -163,13 +163,13 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.size() || a.n1() != y.size())
+    if (a.n1() != x.size() || a.n0() != y.size())
         SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
-    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
-    mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n1(), a.nnz(), x.p());
+    mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% else
 //%     error('not implemented!');
 //% end
@@ -191,15 +191,15 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n2() != x.n1())
+    if (a.n1() != x.n0())
         SLS_ERR("illegal shape!");
-    if (y.n1() != a.n1() || y.n2() != x.n2())
+    if (y.n0() != a.n0() || y.n1() != x.n1())
         SLS_ERR("illegal shape!");
 #endif
 //% if is_dense(T) && is_cmajor(T) && is_dense(T1) && is_cmajor(T1) && is_Diag(T2)
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n1(), a.n2(), x.p());
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 //% elseif is_dense(T) && is_cmajor(T) && is_Diag(T1) && is_dense(T2) && is_cmajor(T2)
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n1(), x.n2());
+    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 //% else
 //%     error('not implemented!');
 //% end
@@ -217,7 +217,7 @@ inline void sort_r(@McooT@_IO a)
     VecLong inds(Nnz), order(Nnz);
     linspace(order, 0, Nnz - 1);
     for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n2() * a.row(i) + a.col(i);
+        inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     @SvecT@ sli(a.p(), Nnz);
     reorder(sli, order);
@@ -286,9 +286,9 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)
 {
-    @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
-    for (Long j = 0; j < A.n2(); ++j)
-        for (Long i = 0; i < A.n1(); ++i)
+    @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
+    for (Long j = 0; j < A.n1(); ++j)
+        for (Long i = 0; i < A.n0(); ++i)
             abs_sum[j] += abs(A(i, j));
     return max(abs_sum);
 }
@@ -302,8 +302,8 @@ inline @Tr@ norm_inf(@T@_I A)
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)
 {
-    Long N0 = A.n0(), N1 = N0 - 1, Nblk = A.nblk();
-    @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
+    Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
+    @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
     Long k = 0;
     @SvecTs_c@ sli(A.p() + N0 + 1, N1);
     // first block
@@ -339,7 +339,7 @@ inline @Tr@ norm_inf(@T@_I A)
 //% VecTr = ['Vec' Tr];
 inline @Tr@ norm_inf(@T@_I A)
 {
-    @VecTr@ abs_sum(A.n2()); copy(abs_sum, 0);
+    @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
     for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum[A.col(i)] += abs(A[i]);
     }
