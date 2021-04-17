@@ -197,7 +197,7 @@ inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n0(); ++i) {
-        if (v == cut2(a, i))
+        if (v == cut1(a, i))
             return i;
     }
     return -1;

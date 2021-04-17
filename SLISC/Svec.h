@@ -250,7 +250,7 @@ inline void SvecChar::set(const SvecChar &sli)
 
 inline SvecChar::~SvecChar() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecChar &SvecChar_O, &SvecChar_IO;
 
 class SvecInt_c
@@ -498,7 +498,7 @@ inline void SvecInt::set(const SvecInt &sli)
 
 inline SvecInt::~SvecInt() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecInt &SvecInt_O, &SvecInt_IO;
 
 class SvecLlong_c
@@ -746,7 +746,7 @@ inline void SvecLlong::set(const SvecLlong &sli)
 
 inline SvecLlong::~SvecLlong() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLlong &SvecLlong_O, &SvecLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -763,7 +763,7 @@ typedef SvecInt SvecLong;
 typedef SvecLlong SvecLong;
 #endif
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 
 class SvecFloat_c
@@ -1011,7 +1011,7 @@ inline void SvecFloat::set(const SvecFloat &sli)
 
 inline SvecFloat::~SvecFloat() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFloat &SvecFloat_O, &SvecFloat_IO;
 
 class SvecDoub_c
@@ -1259,7 +1259,7 @@ inline void SvecDoub::set(const SvecDoub &sli)
 
 inline SvecDoub::~SvecDoub() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecDoub &SvecDoub_O, &SvecDoub_IO;
 
 class SvecLdoub_c
@@ -1507,7 +1507,7 @@ inline void SvecLdoub::set(const SvecLdoub &sli)
 
 inline SvecLdoub::~SvecLdoub() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
 
 class SvecFcomp_c
@@ -1755,7 +1755,7 @@ inline void SvecFcomp::set(const SvecFcomp &sli)
 
 inline SvecFcomp::~SvecFcomp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFcomp &SvecFcomp_O, &SvecFcomp_IO;
 
 class SvecComp_c
@@ -2003,7 +2003,7 @@ inline void SvecComp::set(const SvecComp &sli)
 
 inline SvecComp::~SvecComp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecComp &SvecComp_O, &SvecComp_IO;
 
 class SvecLcomp_c
@@ -2251,7 +2251,7 @@ inline void SvecLcomp::set(const SvecLcomp &sli)
 
 inline SvecLcomp::~SvecLcomp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
 
 class SvecFimag_c
@@ -2499,7 +2499,7 @@ inline void SvecFimag::set(const SvecFimag &sli)
 
 inline SvecFimag::~SvecFimag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFimag &SvecFimag_O, &SvecFimag_IO;
 
 class SvecImag_c
@@ -2747,7 +2747,7 @@ inline void SvecImag::set(const SvecImag &sli)
 
 inline SvecImag::~SvecImag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecImag &SvecImag_O, &SvecImag_IO;
 
 class SvecLimag_c
@@ -2995,7 +2995,7 @@ inline void SvecLimag::set(const SvecLimag &sli)
 
 inline SvecLimag::~SvecLimag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
 
 } // namespace slisc

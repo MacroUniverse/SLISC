@@ -2493,8 +2493,8 @@ inline void copy(CbandDoub_O b, CmatDoub_I a)
 #endif
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-        SvecDoub cut_b = cut1(b.cmat(), j);
-        SvecDoub_c cut_a = cut1(a, j);
+        SvecDoub cut_b = cut0(b.cmat(), j);
+        SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -2512,8 +2512,8 @@ inline void copy(CmatDoub_O a, CbandDoub_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        SvecDoub cut_a = cut1(a, j);
-        SvecDoub_c cut_b = cut1(b.cmat(), j);
+        SvecDoub cut_a = cut0(a, j);
+        SvecDoub_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             cut_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)
@@ -2531,8 +2531,8 @@ inline void copy(CbandDoub_O b, ScmatDoub_I a)
 #endif
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-        SvecDoub cut_b = cut1(b.cmat(), j);
-        SvecDoub_c cut_a = cut1(a, j);
+        SvecDoub cut_b = cut0(b.cmat(), j);
+        SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -2550,8 +2550,8 @@ inline void copy(ScmatDoub_O a, CbandDoub_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        SvecDoub cut_a = cut1(a, j);
-        SvecDoub_c cut_b = cut1(b.cmat(), j);
+        SvecDoub cut_a = cut0(a, j);
+        SvecDoub_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             cut_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)
@@ -2569,8 +2569,8 @@ inline void copy(CbandComp_O b, CmatComp_I a)
 #endif
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
-        SvecComp_c cut_a = cut1(a, j);
+        SvecComp cut_b = cut0(b.cmat(), j);
+        SvecComp_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -2588,8 +2588,8 @@ inline void copy(CmatComp_O a, CbandComp_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        SvecComp cut_a = cut1(a, j);
-        SvecComp_c cut_b = cut1(b.cmat(), j);
+        SvecComp cut_a = cut0(a, j);
+        SvecComp_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             cut_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)
@@ -2607,8 +2607,8 @@ inline void copy(CbandComp_O b, ScmatComp_I a)
 #endif
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
-        SvecComp_c cut_a = cut1(a, j);
+        SvecComp cut_b = cut0(b.cmat(), j);
+        SvecComp_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -2626,8 +2626,8 @@ inline void copy(ScmatComp_O a, CbandComp_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        SvecComp cut_a = cut1(a, j);
-        SvecComp_c cut_b = cut1(b.cmat(), j);
+        SvecComp cut_a = cut0(a, j);
+        SvecComp_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             cut_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)
@@ -2645,8 +2645,8 @@ inline void copy(CbandComp_O b, ScmatDoub_I a)
 #endif
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
-        SvecDoub_c cut_a = cut1(a, j);
+        SvecComp cut_b = cut0(b.cmat(), j);
+        SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -2664,8 +2664,8 @@ inline void copy(ScmatComp_O a, CbandDoub_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        SvecComp cut_a = cut1(a, j);
-        SvecDoub_c cut_b = cut1(b.cmat(), j);
+        SvecComp cut_a = cut0(a, j);
+        SvecDoub_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             cut_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)

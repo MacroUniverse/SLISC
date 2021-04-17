@@ -562,8 +562,8 @@ inline void copy(@T1@_O b, @T2@_I a)
 @same_shape('a', 'b')@
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-        @SvecTs1@ cut_b = cut1(b.cmat(), j);
-        @SvecTs2@_c cut_a = cut1(a, j);
+        @SvecTs1@ cut_b = cut0(b.cmat(), j);
+        @SvecTs2@_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -578,8 +578,8 @@ inline void copy(@T1@_O a, @T2@_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-        @SvecTs1@ cut_a = cut1(a, j);
-        @SvecTs2@_c cut_b = cut1(b.cmat(), j);
+        @SvecTs1@ cut_a = cut0(a, j);
+        @SvecTs2@_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)
             cut_a[i] = 0;
         for (Long i = i_beg; i < i_end; i++)

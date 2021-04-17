@@ -211,7 +211,7 @@ inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
     Long start = indFEDVR(iFEy, 0, Ngs);
     SvecDoub_c x_sli =  cut(x, ix, Ngs);
     for (Long j = start; j < start + Ngs; ++j) {
-        poly_comp_interp1 poly(x_sli, cut1(val, ix, Ngs, j));
+        poly_comp_interp1 poly(x_sli, cut0(val, ix, Ngs, j));
         val1[j-start] = poly(x_q);
         y1[j-start] = y[j];
     }

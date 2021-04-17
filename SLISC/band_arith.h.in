@@ -89,7 +89,7 @@ inline void copy_real(CbandComp_O b, Doub_I s)
 {
     Long N0 = b.n0(), N1 = b.n1();
     for (Long j = 0; j < N1; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
+        SvecComp cut_b = cut0(b.cmat(), j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -116,8 +116,8 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
     #endif
     Long N0 = a.n0(), N1 = a.n1();
     for (Long j = 0; j < N1; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
-        SvecDoub_c cut_a = cut1(a, j);
+        SvecComp cut_b = cut0(b.cmat(), j);
+        SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i)
@@ -136,8 +136,8 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     Long N0 = a.n0(), N1 = a.n1();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N1; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
-        SvecDoub_c cut_a = cut1(a, j);
+        SvecComp cut_b = cut0(b.cmat(), j);
+        SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i) {
@@ -159,7 +159,7 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt)
 #endif
     Doub dt4 = 0.25*dt;
     copy(b, 0);
-    copy(cut2(b.cmat(), b.idiag()), 0.5);
+    copy(cut1(b.cmat(), b.idiag()), 0.5);
     for (Long k = 0; k < a.nnz(); ++k) 
         b.ref(a.row(k), a.col(k)).imag(dt4*a[k]);
 }
@@ -175,8 +175,8 @@ inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
     Long N0 = a.n0(), N1 = a.n1();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N1; ++j) {
-        SvecComp cut_b = cut1(b.cmat(), j);
-        SvecDoub_c cut_a = cut1(a, j);
+        SvecComp cut_b = cut0(b.cmat(), j);
+        SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
         for (Long i = i_beg; i < i_end; ++i) {

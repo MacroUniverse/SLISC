@@ -176,7 +176,7 @@ inline Char * DcmatChar::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatChar &DcmatChar_O, &DcmatChar_IO;
 
 class DcmatInt_c
@@ -354,7 +354,7 @@ inline Int * DcmatInt::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatInt &DcmatInt_O, &DcmatInt_IO;
 
 class DcmatLlong_c
@@ -532,7 +532,7 @@ inline Llong * DcmatLlong::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLlong &DcmatLlong_O, &DcmatLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -549,7 +549,7 @@ typedef DcmatInt DcmatLong;
 typedef DcmatLlong DcmatLong;
 #endif
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLong &DcmatLong_O, &DcmatLong_IO;
 
 class DcmatFloat_c
@@ -727,7 +727,7 @@ inline Float * DcmatFloat::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatFloat &DcmatFloat_O, &DcmatFloat_IO;
 
 class DcmatDoub_c
@@ -905,7 +905,7 @@ inline Doub * DcmatDoub::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatDoub &DcmatDoub_O, &DcmatDoub_IO;
 
 class DcmatLdoub_c
@@ -1083,7 +1083,7 @@ inline Ldoub * DcmatLdoub::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLdoub &DcmatLdoub_O, &DcmatLdoub_IO;
 
 class DcmatFcomp_c
@@ -1261,7 +1261,7 @@ inline Fcomp * DcmatFcomp::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatFcomp &DcmatFcomp_O, &DcmatFcomp_IO;
 
 class DcmatComp_c
@@ -1439,7 +1439,7 @@ inline Comp * DcmatComp::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatComp &DcmatComp_O, &DcmatComp_IO;
 
 class DcmatLcomp_c
@@ -1617,7 +1617,7 @@ inline Lcomp * DcmatLcomp::p() const
     return m_p;
 }
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
 
 } // namespace slisc

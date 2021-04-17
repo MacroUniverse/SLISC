@@ -159,7 +159,7 @@ inline void Scmat3Char::set(const Scmat3Char &sli)
 
 inline Scmat3Char::~Scmat3Char() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Char &Scmat3Char_O, &Scmat3Char_IO;
 
 class Scmat3Int_c : public SvecInt_c
@@ -319,7 +319,7 @@ inline void Scmat3Int::set(const Scmat3Int &sli)
 
 inline Scmat3Int::~Scmat3Int() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Int &Scmat3Int_O, &Scmat3Int_IO;
 
 class Scmat3Llong_c : public SvecLlong_c
@@ -479,7 +479,7 @@ inline void Scmat3Llong::set(const Scmat3Llong &sli)
 
 inline Scmat3Llong::~Scmat3Llong() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Llong &Scmat3Llong_O, &Scmat3Llong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -496,7 +496,7 @@ typedef Scmat3Int Scmat3Long;
 typedef Scmat3Llong Scmat3Long;
 #endif
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Long &Scmat3Long_O, &Scmat3Long_IO;
 
 class Scmat3Float_c : public SvecFloat_c
@@ -656,7 +656,7 @@ inline void Scmat3Float::set(const Scmat3Float &sli)
 
 inline Scmat3Float::~Scmat3Float() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Float &Scmat3Float_O, &Scmat3Float_IO;
 
 class Scmat3Doub_c : public SvecDoub_c
@@ -816,7 +816,7 @@ inline void Scmat3Doub::set(const Scmat3Doub &sli)
 
 inline Scmat3Doub::~Scmat3Doub() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Doub &Scmat3Doub_O, &Scmat3Doub_IO;
 
 class Scmat3Ldoub_c : public SvecLdoub_c
@@ -976,7 +976,7 @@ inline void Scmat3Ldoub::set(const Scmat3Ldoub &sli)
 
 inline Scmat3Ldoub::~Scmat3Ldoub() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Ldoub &Scmat3Ldoub_O, &Scmat3Ldoub_IO;
 
 class Scmat3Fcomp_c : public SvecFcomp_c
@@ -1136,7 +1136,7 @@ inline void Scmat3Fcomp::set(const Scmat3Fcomp &sli)
 
 inline Scmat3Fcomp::~Scmat3Fcomp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Fcomp &Scmat3Fcomp_O, &Scmat3Fcomp_IO;
 
 class Scmat3Comp_c : public SvecComp_c
@@ -1296,7 +1296,7 @@ inline void Scmat3Comp::set(const Scmat3Comp &sli)
 
 inline Scmat3Comp::~Scmat3Comp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Comp &Scmat3Comp_O, &Scmat3Comp_IO;
 
 class Scmat3Lcomp_c : public SvecLcomp_c
@@ -1456,7 +1456,7 @@ inline void Scmat3Lcomp::set(const Scmat3Lcomp &sli)
 
 inline Scmat3Lcomp::~Scmat3Lcomp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Lcomp &Scmat3Lcomp_O, &Scmat3Lcomp_IO;
 
 class Scmat3Fimag_c : public SvecFimag_c
@@ -1616,7 +1616,7 @@ inline void Scmat3Fimag::set(const Scmat3Fimag &sli)
 
 inline Scmat3Fimag::~Scmat3Fimag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Fimag &Scmat3Fimag_O, &Scmat3Fimag_IO;
 
 class Scmat3Imag_c : public SvecImag_c
@@ -1776,7 +1776,7 @@ inline void Scmat3Imag::set(const Scmat3Imag &sli)
 
 inline Scmat3Imag::~Scmat3Imag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Imag &Scmat3Imag_O, &Scmat3Imag_IO;
 
 class Scmat3Limag_c : public SvecLimag_c
@@ -1936,7 +1936,7 @@ inline void Scmat3Limag::set(const Scmat3Limag &sli)
 
 inline Scmat3Limag::~Scmat3Limag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Limag &Scmat3Limag_O, &Scmat3Limag_IO;
 
 } // namespace slisc

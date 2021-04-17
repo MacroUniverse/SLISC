@@ -248,7 +248,7 @@ inline void DvecChar::shift(Long_I N)
 inline DvecChar::~DvecChar() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecChar &DvecChar_O, &DvecChar_IO;
 
 class DvecInt_c
@@ -496,7 +496,7 @@ inline void DvecInt::shift(Long_I N)
 inline DvecInt::~DvecInt() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecInt &DvecInt_O, &DvecInt_IO;
 
 class DvecLlong_c
@@ -744,7 +744,7 @@ inline void DvecLlong::shift(Long_I N)
 inline DvecLlong::~DvecLlong() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLlong &DvecLlong_O, &DvecLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -761,7 +761,7 @@ typedef DvecInt DvecLong;
 typedef DvecLlong DvecLong;
 #endif
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLong &DvecLong_O, &DvecLong_IO;
 
 class DvecFloat_c
@@ -1009,7 +1009,7 @@ inline void DvecFloat::shift(Long_I N)
 inline DvecFloat::~DvecFloat() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecFloat &DvecFloat_O, &DvecFloat_IO;
 
 class DvecDoub_c
@@ -1257,7 +1257,7 @@ inline void DvecDoub::shift(Long_I N)
 inline DvecDoub::~DvecDoub() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecDoub &DvecDoub_O, &DvecDoub_IO;
 
 class DvecLdoub_c
@@ -1505,7 +1505,7 @@ inline void DvecLdoub::shift(Long_I N)
 inline DvecLdoub::~DvecLdoub() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLdoub &DvecLdoub_O, &DvecLdoub_IO;
 
 class DvecFcomp_c
@@ -1753,7 +1753,7 @@ inline void DvecFcomp::shift(Long_I N)
 inline DvecFcomp::~DvecFcomp() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecFcomp &DvecFcomp_O, &DvecFcomp_IO;
 
 class DvecComp_c
@@ -2001,7 +2001,7 @@ inline void DvecComp::shift(Long_I N)
 inline DvecComp::~DvecComp() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecComp &DvecComp_O, &DvecComp_IO;
 
 class DvecLcomp_c
@@ -2249,7 +2249,7 @@ inline void DvecLcomp::shift(Long_I N)
 inline DvecLcomp::~DvecLcomp() {}
 
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut1(a), cut1(b))
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLcomp &DvecLcomp_O, &DvecLcomp_IO;
 
 } // namespace slisc

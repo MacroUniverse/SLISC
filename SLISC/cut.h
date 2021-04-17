@@ -967,7 +967,7 @@ inline Jcmat3Lcomp_c cut(Cmat3Lcomp_I v, Long_I start1, Long_I N1, Long_I start2
 }
 
 
-inline DvecInt cut1(MatInt_IO v, Long_I j)
+inline DvecInt cut0(MatInt_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -977,7 +977,7 @@ inline DvecInt cut1(MatInt_IO v, Long_I j)
     return sli;
 }
 
-inline DvecInt_c cut1(MatInt_I v, Long_I j)
+inline DvecInt_c cut0(MatInt_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -987,7 +987,7 @@ inline DvecInt_c cut1(MatInt_I v, Long_I j)
     return sli;
 }
 
-inline DvecDoub cut1(MatDoub_IO v, Long_I j)
+inline DvecDoub cut0(MatDoub_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -997,7 +997,7 @@ inline DvecDoub cut1(MatDoub_IO v, Long_I j)
     return sli;
 }
 
-inline DvecDoub_c cut1(MatDoub_I v, Long_I j)
+inline DvecDoub_c cut0(MatDoub_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1007,7 +1007,7 @@ inline DvecDoub_c cut1(MatDoub_I v, Long_I j)
     return sli;
 }
 
-inline DvecComp cut1(MatComp_IO v, Long_I j)
+inline DvecComp cut0(MatComp_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1017,7 +1017,7 @@ inline DvecComp cut1(MatComp_IO v, Long_I j)
     return sli;
 }
 
-inline DvecComp_c cut1(MatComp_I v, Long_I j)
+inline DvecComp_c cut0(MatComp_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1027,7 +1027,7 @@ inline DvecComp_c cut1(MatComp_I v, Long_I j)
     return sli;
 }
 
-inline SvecInt cut1(CmatInt_IO v, Long_I j)
+inline SvecInt cut0(CmatInt_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1037,7 +1037,7 @@ inline SvecInt cut1(CmatInt_IO v, Long_I j)
     return sli;
 }
 
-inline SvecInt_c cut1(CmatInt_I v, Long_I j)
+inline SvecInt_c cut0(CmatInt_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1047,7 +1047,7 @@ inline SvecInt_c cut1(CmatInt_I v, Long_I j)
     return sli;
 }
 
-inline SvecLlong cut1(CmatLlong_IO v, Long_I j)
+inline SvecLlong cut0(CmatLlong_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1057,7 +1057,7 @@ inline SvecLlong cut1(CmatLlong_IO v, Long_I j)
     return sli;
 }
 
-inline SvecLlong_c cut1(CmatLlong_I v, Long_I j)
+inline SvecLlong_c cut0(CmatLlong_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1067,7 +1067,7 @@ inline SvecLlong_c cut1(CmatLlong_I v, Long_I j)
     return sli;
 }
 
-inline SvecDoub cut1(CmatDoub_IO v, Long_I j)
+inline SvecDoub cut0(CmatDoub_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1077,7 +1077,7 @@ inline SvecDoub cut1(CmatDoub_IO v, Long_I j)
     return sli;
 }
 
-inline SvecDoub_c cut1(CmatDoub_I v, Long_I j)
+inline SvecDoub_c cut0(CmatDoub_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1087,7 +1087,7 @@ inline SvecDoub_c cut1(CmatDoub_I v, Long_I j)
     return sli;
 }
 
-inline SvecComp cut1(CmatComp_IO v, Long_I j)
+inline SvecComp cut0(CmatComp_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1097,7 +1097,7 @@ inline SvecComp cut1(CmatComp_IO v, Long_I j)
     return sli;
 }
 
-inline SvecComp_c cut1(CmatComp_I v, Long_I j)
+inline SvecComp_c cut0(CmatComp_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1107,7 +1107,7 @@ inline SvecComp_c cut1(CmatComp_I v, Long_I j)
     return sli;
 }
 
-inline SvecInt cut1(Cmat3Int_IO v, Long_I j, Long_I k)
+inline SvecInt cut0(Cmat3Int_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1117,7 +1117,7 @@ inline SvecInt cut1(Cmat3Int_IO v, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecInt_c cut1(Cmat3Int_I v, Long_I j, Long_I k)
+inline SvecInt_c cut0(Cmat3Int_I v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1127,7 +1127,7 @@ inline SvecInt_c cut1(Cmat3Int_I v, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecDoub cut1(Cmat3Doub_IO v, Long_I j, Long_I k)
+inline SvecDoub cut0(Cmat3Doub_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1137,7 +1137,7 @@ inline SvecDoub cut1(Cmat3Doub_IO v, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecDoub_c cut1(Cmat3Doub_I v, Long_I j, Long_I k)
+inline SvecDoub_c cut0(Cmat3Doub_I v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1147,7 +1147,7 @@ inline SvecDoub_c cut1(Cmat3Doub_I v, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecComp cut1(Cmat3Comp_IO v, Long_I j, Long_I k)
+inline SvecComp cut0(Cmat3Comp_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1157,7 +1157,7 @@ inline SvecComp cut1(Cmat3Comp_IO v, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecComp_c cut1(Cmat3Comp_I v, Long_I j, Long_I k)
+inline SvecComp_c cut0(Cmat3Comp_I v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1167,7 +1167,7 @@ inline SvecComp_c cut1(Cmat3Comp_I v, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecInt cut1(ScmatInt_IO v, Long_I j)
+inline SvecInt cut0(ScmatInt_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1177,7 +1177,7 @@ inline SvecInt cut1(ScmatInt_IO v, Long_I j)
     return sli;
 }
 
-inline SvecInt_c cut1(ScmatInt_I v, Long_I j)
+inline SvecInt_c cut0(ScmatInt_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1187,7 +1187,7 @@ inline SvecInt_c cut1(ScmatInt_I v, Long_I j)
     return sli;
 }
 
-inline SvecDoub cut1(ScmatDoub_IO v, Long_I j)
+inline SvecDoub cut0(ScmatDoub_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1197,7 +1197,7 @@ inline SvecDoub cut1(ScmatDoub_IO v, Long_I j)
     return sli;
 }
 
-inline SvecDoub_c cut1(ScmatDoub_I v, Long_I j)
+inline SvecDoub_c cut0(ScmatDoub_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1207,7 +1207,7 @@ inline SvecDoub_c cut1(ScmatDoub_I v, Long_I j)
     return sli;
 }
 
-inline SvecComp cut1(ScmatComp_IO v, Long_I j)
+inline SvecComp cut0(ScmatComp_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1217,7 +1217,7 @@ inline SvecComp cut1(ScmatComp_IO v, Long_I j)
     return sli;
 }
 
-inline SvecComp_c cut1(ScmatComp_I v, Long_I j)
+inline SvecComp_c cut0(ScmatComp_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1227,7 +1227,7 @@ inline SvecComp_c cut1(ScmatComp_I v, Long_I j)
     return sli;
 }
 
-inline SvecInt cut1(DcmatInt_IO v, Long_I j)
+inline SvecInt cut0(DcmatInt_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1237,7 +1237,7 @@ inline SvecInt cut1(DcmatInt_IO v, Long_I j)
     return sli;
 }
 
-inline SvecInt_c cut1(DcmatInt_I v, Long_I j)
+inline SvecInt_c cut0(DcmatInt_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1247,7 +1247,7 @@ inline SvecInt_c cut1(DcmatInt_I v, Long_I j)
     return sli;
 }
 
-inline SvecDoub cut1(DcmatDoub_IO v, Long_I j)
+inline SvecDoub cut0(DcmatDoub_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1257,7 +1257,7 @@ inline SvecDoub cut1(DcmatDoub_IO v, Long_I j)
     return sli;
 }
 
-inline SvecDoub_c cut1(DcmatDoub_I v, Long_I j)
+inline SvecDoub_c cut0(DcmatDoub_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1267,7 +1267,7 @@ inline SvecDoub_c cut1(DcmatDoub_I v, Long_I j)
     return sli;
 }
 
-inline SvecComp cut1(DcmatComp_IO v, Long_I j)
+inline SvecComp cut0(DcmatComp_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1277,7 +1277,7 @@ inline SvecComp cut1(DcmatComp_IO v, Long_I j)
     return sli;
 }
 
-inline SvecComp_c cut1(DcmatComp_I v, Long_I j)
+inline SvecComp_c cut0(DcmatComp_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j >= v.n1())
@@ -1288,7 +1288,7 @@ inline SvecComp_c cut1(DcmatComp_I v, Long_I j)
 }
 
 
-inline SvecInt cut1(CmatInt_IO v, Long_I i, Long_I N1, Long_I j)
+inline SvecInt cut0(CmatInt_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1298,7 +1298,7 @@ inline SvecInt cut1(CmatInt_IO v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecInt_c cut1(CmatInt_I v, Long_I i, Long_I N1, Long_I j)
+inline SvecInt_c cut0(CmatInt_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1308,7 +1308,7 @@ inline SvecInt_c cut1(CmatInt_I v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecLlong cut1(CmatLlong_IO v, Long_I i, Long_I N1, Long_I j)
+inline SvecLlong cut0(CmatLlong_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1318,7 +1318,7 @@ inline SvecLlong cut1(CmatLlong_IO v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecLlong_c cut1(CmatLlong_I v, Long_I i, Long_I N1, Long_I j)
+inline SvecLlong_c cut0(CmatLlong_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1328,7 +1328,7 @@ inline SvecLlong_c cut1(CmatLlong_I v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecDoub cut1(CmatDoub_IO v, Long_I i, Long_I N1, Long_I j)
+inline SvecDoub cut0(CmatDoub_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1338,7 +1338,7 @@ inline SvecDoub cut1(CmatDoub_IO v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecDoub_c cut1(CmatDoub_I v, Long_I i, Long_I N1, Long_I j)
+inline SvecDoub_c cut0(CmatDoub_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1348,7 +1348,7 @@ inline SvecDoub_c cut1(CmatDoub_I v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecComp cut1(CmatComp_IO v, Long_I i, Long_I N1, Long_I j)
+inline SvecComp cut0(CmatComp_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1358,7 +1358,7 @@ inline SvecComp cut1(CmatComp_IO v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecComp_c cut1(CmatComp_I v, Long_I i, Long_I N1, Long_I j)
+inline SvecComp_c cut0(CmatComp_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
@@ -1368,7 +1368,7 @@ inline SvecComp_c cut1(CmatComp_I v, Long_I i, Long_I N1, Long_I j)
     return sli;
 }
 
-inline SvecInt cut1(Cmat3Int_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecInt cut0(Cmat3Int_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1378,7 +1378,7 @@ inline SvecInt cut1(Cmat3Int_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecInt_c cut1(Cmat3Int_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecInt_c cut0(Cmat3Int_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1388,7 +1388,7 @@ inline SvecInt_c cut1(Cmat3Int_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecLlong cut1(Cmat3Llong_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecLlong cut0(Cmat3Llong_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1398,7 +1398,7 @@ inline SvecLlong cut1(Cmat3Llong_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecLlong_c cut1(Cmat3Llong_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecLlong_c cut0(Cmat3Llong_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1408,7 +1408,7 @@ inline SvecLlong_c cut1(Cmat3Llong_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecDoub cut1(Cmat3Doub_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecDoub cut0(Cmat3Doub_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1418,7 +1418,7 @@ inline SvecDoub cut1(Cmat3Doub_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecDoub_c cut1(Cmat3Doub_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecDoub_c cut0(Cmat3Doub_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1428,7 +1428,7 @@ inline SvecDoub_c cut1(Cmat3Doub_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecComp cut1(Cmat3Comp_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecComp cut0(Cmat3Comp_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1438,7 +1438,7 @@ inline SvecComp cut1(Cmat3Comp_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
     return sli;
 }
 
-inline SvecComp_c cut1(Cmat3Comp_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline SvecComp_c cut0(Cmat3Comp_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
@@ -1449,7 +1449,7 @@ inline SvecComp_c cut1(Cmat3Comp_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 }
 
 
-inline DvecInt cut2(CmatInt_IO v, Long_I i)
+inline DvecInt cut1(CmatInt_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1459,7 +1459,7 @@ inline DvecInt cut2(CmatInt_IO v, Long_I i)
     return sli;
 }
 
-inline DvecInt_c cut2(CmatInt_I v, Long_I i)
+inline DvecInt_c cut1(CmatInt_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1469,7 +1469,7 @@ inline DvecInt_c cut2(CmatInt_I v, Long_I i)
     return sli;
 }
 
-inline DvecLlong cut2(CmatLlong_IO v, Long_I i)
+inline DvecLlong cut1(CmatLlong_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1479,7 +1479,7 @@ inline DvecLlong cut2(CmatLlong_IO v, Long_I i)
     return sli;
 }
 
-inline DvecLlong_c cut2(CmatLlong_I v, Long_I i)
+inline DvecLlong_c cut1(CmatLlong_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1489,7 +1489,7 @@ inline DvecLlong_c cut2(CmatLlong_I v, Long_I i)
     return sli;
 }
 
-inline DvecDoub cut2(CmatDoub_IO v, Long_I i)
+inline DvecDoub cut1(CmatDoub_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1499,7 +1499,7 @@ inline DvecDoub cut2(CmatDoub_IO v, Long_I i)
     return sli;
 }
 
-inline DvecDoub_c cut2(CmatDoub_I v, Long_I i)
+inline DvecDoub_c cut1(CmatDoub_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1509,7 +1509,7 @@ inline DvecDoub_c cut2(CmatDoub_I v, Long_I i)
     return sli;
 }
 
-inline DvecComp cut2(CmatComp_IO v, Long_I i)
+inline DvecComp cut1(CmatComp_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1519,7 +1519,7 @@ inline DvecComp cut2(CmatComp_IO v, Long_I i)
     return sli;
 }
 
-inline DvecComp_c cut2(CmatComp_I v, Long_I i)
+inline DvecComp_c cut1(CmatComp_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1529,7 +1529,7 @@ inline DvecComp_c cut2(CmatComp_I v, Long_I i)
     return sli;
 }
 
-inline DvecLlong cut2(ScmatLlong_IO v, Long_I i)
+inline DvecLlong cut1(ScmatLlong_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1539,7 +1539,7 @@ inline DvecLlong cut2(ScmatLlong_IO v, Long_I i)
     return sli;
 }
 
-inline DvecLlong_c cut2(ScmatLlong_I v, Long_I i)
+inline DvecLlong_c cut1(ScmatLlong_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1549,7 +1549,7 @@ inline DvecLlong_c cut2(ScmatLlong_I v, Long_I i)
     return sli;
 }
 
-inline DvecDoub cut2(ScmatDoub_IO v, Long_I i)
+inline DvecDoub cut1(ScmatDoub_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1559,7 +1559,7 @@ inline DvecDoub cut2(ScmatDoub_IO v, Long_I i)
     return sli;
 }
 
-inline DvecDoub_c cut2(ScmatDoub_I v, Long_I i)
+inline DvecDoub_c cut1(ScmatDoub_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1569,7 +1569,7 @@ inline DvecDoub_c cut2(ScmatDoub_I v, Long_I i)
     return sli;
 }
 
-inline DvecComp cut2(ScmatComp_IO v, Long_I i)
+inline DvecComp cut1(ScmatComp_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1579,7 +1579,7 @@ inline DvecComp cut2(ScmatComp_IO v, Long_I i)
     return sli;
 }
 
-inline DvecComp_c cut2(ScmatComp_I v, Long_I i)
+inline DvecComp_c cut1(ScmatComp_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1589,7 +1589,7 @@ inline DvecComp_c cut2(ScmatComp_I v, Long_I i)
     return sli;
 }
 
-inline SvecInt cut2(MatInt_IO v, Long_I i)
+inline SvecInt cut1(MatInt_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1599,7 +1599,7 @@ inline SvecInt cut2(MatInt_IO v, Long_I i)
     return sli;
 }
 
-inline SvecInt_c cut2(MatInt_I v, Long_I i)
+inline SvecInt_c cut1(MatInt_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1609,7 +1609,7 @@ inline SvecInt_c cut2(MatInt_I v, Long_I i)
     return sli;
 }
 
-inline SvecDoub cut2(MatDoub_IO v, Long_I i)
+inline SvecDoub cut1(MatDoub_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1619,7 +1619,7 @@ inline SvecDoub cut2(MatDoub_IO v, Long_I i)
     return sli;
 }
 
-inline SvecDoub_c cut2(MatDoub_I v, Long_I i)
+inline SvecDoub_c cut1(MatDoub_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1629,7 +1629,7 @@ inline SvecDoub_c cut2(MatDoub_I v, Long_I i)
     return sli;
 }
 
-inline SvecComp cut2(MatComp_IO v, Long_I i)
+inline SvecComp cut1(MatComp_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1639,7 +1639,7 @@ inline SvecComp cut2(MatComp_IO v, Long_I i)
     return sli;
 }
 
-inline SvecComp_c cut2(MatComp_I v, Long_I i)
+inline SvecComp_c cut1(MatComp_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0())
@@ -1649,7 +1649,7 @@ inline SvecComp_c cut2(MatComp_I v, Long_I i)
     return sli;
 }
 
-inline DvecComp cut2(Cmat3Comp_IO v, Long_I i, Long_I k)
+inline DvecComp cut1(Cmat3Comp_IO v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
@@ -1659,7 +1659,7 @@ inline DvecComp cut2(Cmat3Comp_IO v, Long_I i, Long_I k)
     return sli;
 }
 
-inline DvecComp_c cut2(Cmat3Comp_I v, Long_I i, Long_I k)
+inline DvecComp_c cut1(Cmat3Comp_I v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
@@ -1670,7 +1670,7 @@ inline DvecComp_c cut2(Cmat3Comp_I v, Long_I i, Long_I k)
 }
 
 
-inline DvecInt cut2(CmatInt_IO v, Long_I i, Long_I j, Long_I N2)
+inline DvecInt cut1(CmatInt_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1680,7 +1680,7 @@ inline DvecInt cut2(CmatInt_IO v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecInt_c cut2(CmatInt_I v, Long_I i, Long_I j, Long_I N2)
+inline DvecInt_c cut1(CmatInt_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1690,7 +1690,7 @@ inline DvecInt_c cut2(CmatInt_I v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecLlong cut2(CmatLlong_IO v, Long_I i, Long_I j, Long_I N2)
+inline DvecLlong cut1(CmatLlong_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1700,7 +1700,7 @@ inline DvecLlong cut2(CmatLlong_IO v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecLlong_c cut2(CmatLlong_I v, Long_I i, Long_I j, Long_I N2)
+inline DvecLlong_c cut1(CmatLlong_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1710,7 +1710,7 @@ inline DvecLlong_c cut2(CmatLlong_I v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecDoub cut2(CmatDoub_IO v, Long_I i, Long_I j, Long_I N2)
+inline DvecDoub cut1(CmatDoub_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1720,7 +1720,7 @@ inline DvecDoub cut2(CmatDoub_IO v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecDoub_c cut2(CmatDoub_I v, Long_I i, Long_I j, Long_I N2)
+inline DvecDoub_c cut1(CmatDoub_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1730,7 +1730,7 @@ inline DvecDoub_c cut2(CmatDoub_I v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecComp cut2(CmatComp_IO v, Long_I i, Long_I j, Long_I N2)
+inline DvecComp cut1(CmatComp_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1740,7 +1740,7 @@ inline DvecComp cut2(CmatComp_IO v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecComp_c cut2(CmatComp_I v, Long_I i, Long_I j, Long_I N2)
+inline DvecComp_c cut1(CmatComp_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
@@ -1750,7 +1750,7 @@ inline DvecComp_c cut2(CmatComp_I v, Long_I i, Long_I j, Long_I N2)
     return sli;
 }
 
-inline DvecInt cut2(Cmat3Int_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecInt cut1(Cmat3Int_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1760,7 +1760,7 @@ inline DvecInt cut2(Cmat3Int_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecInt_c cut2(Cmat3Int_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecInt_c cut1(Cmat3Int_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1770,7 +1770,7 @@ inline DvecInt_c cut2(Cmat3Int_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecLlong cut2(Cmat3Llong_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecLlong cut1(Cmat3Llong_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1780,7 +1780,7 @@ inline DvecLlong cut2(Cmat3Llong_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecLlong_c cut2(Cmat3Llong_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecLlong_c cut1(Cmat3Llong_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1790,7 +1790,7 @@ inline DvecLlong_c cut2(Cmat3Llong_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecDoub cut2(Cmat3Doub_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecDoub cut1(Cmat3Doub_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1800,7 +1800,7 @@ inline DvecDoub cut2(Cmat3Doub_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecDoub_c cut2(Cmat3Doub_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecDoub_c cut1(Cmat3Doub_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1810,7 +1810,7 @@ inline DvecDoub_c cut2(Cmat3Doub_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecComp cut2(Cmat3Comp_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecComp cut1(Cmat3Comp_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1820,7 +1820,7 @@ inline DvecComp cut2(Cmat3Comp_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline DvecComp_c cut2(Cmat3Comp_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline DvecComp_c cut1(Cmat3Comp_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -1831,7 +1831,7 @@ inline DvecComp_c cut2(Cmat3Comp_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 }
 
 
-inline DvecDoub cut3(Cmat3Doub_IO v, Long_I i, Long_I j)
+inline DvecDoub cut2(Cmat3Doub_IO v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
@@ -1841,7 +1841,7 @@ inline DvecDoub cut3(Cmat3Doub_IO v, Long_I i, Long_I j)
     return sli;
 }
 
-inline DvecDoub_c cut3(Cmat3Doub_I v, Long_I i, Long_I j)
+inline DvecDoub_c cut2(Cmat3Doub_I v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
@@ -1851,7 +1851,7 @@ inline DvecDoub_c cut3(Cmat3Doub_I v, Long_I i, Long_I j)
     return sli;
 }
 
-inline DvecComp cut3(Cmat3Comp_IO v, Long_I i, Long_I j)
+inline DvecComp cut2(Cmat3Comp_IO v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
@@ -1861,7 +1861,7 @@ inline DvecComp cut3(Cmat3Comp_IO v, Long_I i, Long_I j)
     return sli;
 }
 
-inline DvecComp_c cut3(Cmat3Comp_I v, Long_I i, Long_I j)
+inline DvecComp_c cut2(Cmat3Comp_I v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
@@ -1872,7 +1872,7 @@ inline DvecComp_c cut3(Cmat3Comp_I v, Long_I i, Long_I j)
 }
 
 
-inline ScmatInt cut12(Cmat3Int_IO v, Long_I k)
+inline ScmatInt cut01(Cmat3Int_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1882,7 +1882,7 @@ inline ScmatInt cut12(Cmat3Int_IO v, Long_I k)
     return sli;
 }
 
-inline ScmatInt_c cut12(Cmat3Int_I v, Long_I k)
+inline ScmatInt_c cut01(Cmat3Int_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1892,7 +1892,7 @@ inline ScmatInt_c cut12(Cmat3Int_I v, Long_I k)
     return sli;
 }
 
-inline ScmatDoub cut12(Cmat3Doub_IO v, Long_I k)
+inline ScmatDoub cut01(Cmat3Doub_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1902,7 +1902,7 @@ inline ScmatDoub cut12(Cmat3Doub_IO v, Long_I k)
     return sli;
 }
 
-inline ScmatDoub_c cut12(Cmat3Doub_I v, Long_I k)
+inline ScmatDoub_c cut01(Cmat3Doub_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1912,7 +1912,7 @@ inline ScmatDoub_c cut12(Cmat3Doub_I v, Long_I k)
     return sli;
 }
 
-inline ScmatComp cut12(Cmat3Comp_IO v, Long_I k)
+inline ScmatComp cut01(Cmat3Comp_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1922,7 +1922,7 @@ inline ScmatComp cut12(Cmat3Comp_IO v, Long_I k)
     return sli;
 }
 
-inline ScmatComp_c cut12(Cmat3Comp_I v, Long_I k)
+inline ScmatComp_c cut01(Cmat3Comp_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1932,7 +1932,7 @@ inline ScmatComp_c cut12(Cmat3Comp_I v, Long_I k)
     return sli;
 }
 
-inline ScmatDoub cut12(Scmat3Doub_IO v, Long_I k)
+inline ScmatDoub cut01(Scmat3Doub_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1942,7 +1942,7 @@ inline ScmatDoub cut12(Scmat3Doub_IO v, Long_I k)
     return sli;
 }
 
-inline ScmatDoub_c cut12(Scmat3Doub_I v, Long_I k)
+inline ScmatDoub_c cut01(Scmat3Doub_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1952,7 +1952,7 @@ inline ScmatDoub_c cut12(Scmat3Doub_I v, Long_I k)
     return sli;
 }
 
-inline ScmatComp cut12(Scmat3Comp_IO v, Long_I k)
+inline ScmatComp cut01(Scmat3Comp_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1962,7 +1962,7 @@ inline ScmatComp cut12(Scmat3Comp_IO v, Long_I k)
     return sli;
 }
 
-inline ScmatComp_c cut12(Scmat3Comp_I v, Long_I k)
+inline ScmatComp_c cut01(Scmat3Comp_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2())
@@ -1972,7 +1972,7 @@ inline ScmatComp_c cut12(Scmat3Comp_I v, Long_I k)
     return sli;
 }
 
-inline ScmatInt cut12(Cmat4Int_IO v, Long_I k, Long_I l)
+inline ScmatInt cut01(Cmat4Int_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -1982,7 +1982,7 @@ inline ScmatInt cut12(Cmat4Int_IO v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatInt_c cut12(Cmat4Int_I v, Long_I k, Long_I l)
+inline ScmatInt_c cut01(Cmat4Int_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -1992,7 +1992,7 @@ inline ScmatInt_c cut12(Cmat4Int_I v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatLlong cut12(Cmat4Llong_IO v, Long_I k, Long_I l)
+inline ScmatLlong cut01(Cmat4Llong_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -2002,7 +2002,7 @@ inline ScmatLlong cut12(Cmat4Llong_IO v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatLlong_c cut12(Cmat4Llong_I v, Long_I k, Long_I l)
+inline ScmatLlong_c cut01(Cmat4Llong_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -2012,7 +2012,7 @@ inline ScmatLlong_c cut12(Cmat4Llong_I v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatDoub cut12(Cmat4Doub_IO v, Long_I k, Long_I l)
+inline ScmatDoub cut01(Cmat4Doub_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -2022,7 +2022,7 @@ inline ScmatDoub cut12(Cmat4Doub_IO v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatDoub_c cut12(Cmat4Doub_I v, Long_I k, Long_I l)
+inline ScmatDoub_c cut01(Cmat4Doub_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -2032,7 +2032,7 @@ inline ScmatDoub_c cut12(Cmat4Doub_I v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatComp cut12(Cmat4Comp_IO v, Long_I k, Long_I l)
+inline ScmatComp cut01(Cmat4Comp_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -2042,7 +2042,7 @@ inline ScmatComp cut12(Cmat4Comp_IO v, Long_I k, Long_I l)
     return sli;
 }
 
-inline ScmatComp_c cut12(Cmat4Comp_I v, Long_I k, Long_I l)
+inline ScmatComp_c cut01(Cmat4Comp_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
@@ -2053,7 +2053,7 @@ inline ScmatComp_c cut12(Cmat4Comp_I v, Long_I k, Long_I l)
 }
 
 
-inline ScmatInt cut12(Cmat3Int_IO v, Long_I j, Long_I N2, Long_I k)
+inline ScmatInt cut01(Cmat3Int_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -2063,7 +2063,7 @@ inline ScmatInt cut12(Cmat3Int_IO v, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline ScmatInt_c cut12(Cmat3Int_I v, Long_I j, Long_I N2, Long_I k)
+inline ScmatInt_c cut01(Cmat3Int_I v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -2073,7 +2073,7 @@ inline ScmatInt_c cut12(Cmat3Int_I v, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline ScmatDoub cut12(Cmat3Doub_IO v, Long_I j, Long_I N2, Long_I k)
+inline ScmatDoub cut01(Cmat3Doub_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -2083,7 +2083,7 @@ inline ScmatDoub cut12(Cmat3Doub_IO v, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline ScmatDoub_c cut12(Cmat3Doub_I v, Long_I j, Long_I N2, Long_I k)
+inline ScmatDoub_c cut01(Cmat3Doub_I v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -2093,7 +2093,7 @@ inline ScmatDoub_c cut12(Cmat3Doub_I v, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline ScmatComp cut12(Cmat3Comp_IO v, Long_I j, Long_I N2, Long_I k)
+inline ScmatComp cut01(Cmat3Comp_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -2103,7 +2103,7 @@ inline ScmatComp cut12(Cmat3Comp_IO v, Long_I j, Long_I N2, Long_I k)
     return sli;
 }
 
-inline ScmatComp_c cut12(Cmat3Comp_I v, Long_I j, Long_I N2, Long_I k)
+inline ScmatComp_c cut01(Cmat3Comp_I v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
@@ -2114,37 +2114,37 @@ inline ScmatComp_c cut12(Cmat3Comp_I v, Long_I j, Long_I N2, Long_I k)
 }
 
 
-inline DcmatInt cut12(Cmat3Int_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline DcmatInt cut01(Cmat3Int_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     DcmatInt sli(&v(i, j, k), N1, N2, v.n0());
     return sli;
 }
 
-inline DcmatInt_c cut12(Cmat3Int_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline DcmatInt_c cut01(Cmat3Int_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     DcmatInt_c sli(&v(i, j, k), N1, N2, v.n0());
     return sli;
 }
 
-inline DcmatDoub cut12(Cmat3Doub_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline DcmatDoub cut01(Cmat3Doub_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     DcmatDoub sli(&v(i, j, k), N1, N2, v.n0());
     return sli;
 }
 
-inline DcmatDoub_c cut12(Cmat3Doub_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline DcmatDoub_c cut01(Cmat3Doub_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     DcmatDoub_c sli(&v(i, j, k), N1, N2, v.n0());
     return sli;
 }
 
-inline DcmatComp cut12(Cmat3Comp_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline DcmatComp cut01(Cmat3Comp_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     DcmatComp sli(&v(i, j, k), N1, N2, v.n0());
     return sli;
 }
 
-inline DcmatComp_c cut12(Cmat3Comp_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline DcmatComp_c cut01(Cmat3Comp_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
     DcmatComp_c sli(&v(i, j, k), N1, N2, v.n0());
     return sli;

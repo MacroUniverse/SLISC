@@ -11361,15 +11361,15 @@ inline void uniq_rows(CmatInt_O a, CmatInt_I a1)
     for (Long i = 0; i < a1.n0(); ++i) {
         // check repeat
         Bool repeat = false;
-        DvecInt_c sli1 = cut2(a1, i);
+        DvecInt_c sli1 = cut1(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (cut2(a, j) == sli1) {
+            if (cut1(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(cut2(a, k), sli1);
+        copy(cut1(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n1());
@@ -11382,15 +11382,15 @@ inline void uniq_rows(CmatLlong_O a, ScmatLlong_I a1)
     for (Long i = 0; i < a1.n0(); ++i) {
         // check repeat
         Bool repeat = false;
-        DvecLlong_c sli1 = cut2(a1, i);
+        DvecLlong_c sli1 = cut1(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (cut2(a, j) == sli1) {
+            if (cut1(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(cut2(a, k), sli1);
+        copy(cut1(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n1());
@@ -11403,15 +11403,15 @@ inline void uniq_rows(CmatDoub_O a, CmatDoub_I a1)
     for (Long i = 0; i < a1.n0(); ++i) {
         // check repeat
         Bool repeat = false;
-        DvecDoub_c sli1 = cut2(a1, i);
+        DvecDoub_c sli1 = cut1(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (cut2(a, j) == sli1) {
+            if (cut1(a, j) == sli1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(cut2(a, k), sli1);
+        copy(cut1(a, k), sli1);
         ++k;
     }
     resize_cpy(a, k, a1.n1());

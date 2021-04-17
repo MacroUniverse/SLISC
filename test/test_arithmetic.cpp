@@ -80,14 +80,14 @@ void test_arithmetic()
         linspace(a, 1, 12);
         VecInt vc(3), vr(4);
         for (Long i = 0; i < 3; ++i) {
-            copy(vr, cut2(a, i));
+            copy(vr, cut1(a, i));
             for (Long j = 0; j < 4; ++j) {
                 if (vr[j] != a(i, j))
                     SLS_ERR("failed!");
             }
         }
         for (Long j = 0; j < 4; ++j) {
-            copy(vc, cut1(a, j));
+            copy(vc, cut0(a, j));
             for (Long i = 0; i < 3; ++i) {
                 if (vc[i] != a(i, j))
                     SLS_ERR("failed!");
@@ -100,14 +100,14 @@ void test_arithmetic()
         linspace(a, 1, 12);
         VecInt vc(3), vr(4);
         for (Long i = 0; i < 3; ++i) {
-            copy(vr, cut2(a, i));
+            copy(vr, cut1(a, i));
             for (Long j = 0; j < 4; ++j) {
                 if (vr[j] != a(i, j))
                     SLS_ERR("failed!");
             }
         }
         for (Long j = 0; j < 4; ++j) {
-            copy(vc, cut1(a, j));
+            copy(vc, cut0(a, j));
             for (Long i = 0; i < 3; ++i) {
                 if (vc[i] != a(i, j))
                     SLS_ERR("failed!");

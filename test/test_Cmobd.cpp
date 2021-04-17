@@ -7,7 +7,7 @@ void test_Cmobd()
 
     Cmat3Int a0(3, 3, 4);
     for (Long k = 0; k < 4; ++k) {
-        ScmatInt sli = cut12(a0, k);
+        ScmatInt sli = cut01(a0, k);
         linspace(sli, 1, 9); sli.end() = 1;
     }
     CmobdInt a(3, 4); a.set(a0);
