@@ -174,21 +174,15 @@ inline Str32 operator+(Str_I str, Str32_I str32)
 //% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'};
 //%-----------------
 //% T = varargin{:};
-inline void num2str(Str32_O str, @T@_I num)
+inline void num2str(Str32_O str, @T@_I num, Long_I min_len = -1)
 {
-    Str str0;
-    num2str(str0, num);
-    utf8to32(str, str0);
+    utf8to32(str, num2str(num, min_len));
 }
-//%--------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'};
-//%-----------------
-//% T = varargin{:};
-inline Str32 num2str32(@T@_I num)
+inline Str32 num2str32(@T@_I num, Long_I min_len = -1)
 {
     Str32 str;
-    num2str(str, num);
+    num2str(str, num, min_len);
     return str;
 }
 //%--------------
