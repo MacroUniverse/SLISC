@@ -1941,6 +1941,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'VecComp' 'CmatComp' 'SvecDoub';
 //%     'VecComp' 'CmatComp' 'VecComp';
 //%     'VecComp' 'CmatDoub' 'VecComp';
+//%     'VecComp' 'CmatDoub' 'SvecComp';
 //%     'VecComp' 'ScmatComp' 'SvecComp';
 //%     'VecComp' 'MatComp' 'VecDoub';
 //%     'VecComp' 'MatComp' 'VecComp';
@@ -1948,12 +1949,14 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'VecComp' 'MatDoub' 'VecComp';
 //%     'VecComp' 'ScmatDoub' 'VecComp';
 //%     'VecComp' 'ScmatComp' 'SvecDoub';
+//%     'SvecDoub' 'CmatDoub' 'SvecDoub';
 //%     'DvecComp' 'DcmatDoub' 'DvecComp';
-//%     'SvecComp' 'ScmatDoub' 'SvecComp';
-//%     'SvecComp' 'ScmatDoub' 'DvecComp';
 //%     'DvecComp' 'CmatDoub' 'DvecComp';
 //%     'DvecComp' 'ScmatDoub' 'SvecComp';
 //%     'DvecComp' 'ScmatComp' 'SvecDoub';
+//%     'DvecComp' 'ScmatComp' 'SvecComp';
+//%     'SvecComp' 'ScmatDoub' 'SvecComp';
+//%     'SvecComp' 'ScmatDoub' 'DvecComp';
 //%     'SvecComp' 'MatDoub' 'VecComp';
 //%     'SvecComp' 'ScmatComp' 'SvecComp';
 //%     'SvecComp' 'ScmatComp' 'DvecComp';

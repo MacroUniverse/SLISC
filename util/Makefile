@@ -16,3 +16,7 @@ matbrename: matbrename.cpp
 matbinfo: matbinfo.cpp
 	cd ..; make h; cd -;
 	g++ $(flags) matbinfo.cpp -o matbinfo
+
+cat_files: cat_files.cpp
+	cd ..; make h; cd -;
+	g++ $(flags) cat_files.cpp -o cat_files
