@@ -1,5 +1,5 @@
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -static -std=c++11 -fopenmp -g -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL # -D NDEBUG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -static -std=c++11 -fopenmp -O3 -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL # -D NDEBUG
 
 matt2matb: matt2matb.cpp
 	cd ..; make h; cd -;

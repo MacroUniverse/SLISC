@@ -12,7 +12,7 @@ int main()
 {
 	// === settings ===
 	Long Nfile = 22;
-	Long fsize = 5000000, fsize1 = 800000;
+	Long fsize = 5000000000, fsize1 = 2000000000;
 	Str prefix = "plot-k32", suffix = ".plot";
 	// ================
 
@@ -40,6 +40,7 @@ int main()
 		for (Long i = 0; i < Nfile; ++i) {
 			fname_i = fname + "-" + num2str(i, 2);
 			if (!file_exist(fname_i)) {
+				cout << "not_complete: " << fname_i << endl;
 				ensure_dir("not_complete");
 				exec_str("mv " + fname + "-* -t not_complete/");
 				restart = true;
@@ -55,8 +56,8 @@ int main()
 			Long sz = file_size(fname_i);
 			if ((i < Nfile-1 && sz != fsize)
 				|| (i == Nfile-1 && sz < fsize1)) {
-				ensure_dir("bad_size_files");
 				cout << "wrong file size: " << fname_i << endl;
+				ensure_dir("bad_size_files");
 				exec_str("mv " + fname + "-* -t bad_size_files/");
 				restart = true;
 				break;
