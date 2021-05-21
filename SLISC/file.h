@@ -76,7 +76,7 @@ inline void file_remove(Str_I fname)
     if (remove(fname.c_str()) && file_exist(fname))
         throw Str("failed to remove, file being used? (" + fname + ")");
 #else
-    if (DeleteFile(utf82wstr(fname).c_str()) == 0)
+    if (file_exist(fname) && DeleteFile(utf82wstr(fname).c_str()) == 0)
         throw Str("failed to remove, file being used? (" + fname + ")");
 #endif
 }

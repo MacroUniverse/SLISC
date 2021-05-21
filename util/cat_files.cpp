@@ -12,7 +12,8 @@ int main()
 {
 	// === settings ===
 	Long Nfile = 22;
-	Long fsize = 5000000000, fsize1 = 2000000000;
+	Long fsize = 5000000, fsize1 = 800000;
+	Str prefix = "plot-k32", suffix = ".plot";
 	// ================
 
 	Str fname, fname_i;
@@ -22,12 +23,17 @@ int main()
 		restart = false;
 		file_list(names, "./");
 
-		// find a plot-k32*.plot-*
+		// find a prefix*suffix-XX
+		Bool found = false;
 		for (Long i = 0; i < size(names); ++i) {
-			if (names[i].substr(0, 8) != "plot-k32")
+			if (names[i].substr(0, prefix.size()) != prefix || names[i].substr(names[i].size()-3-suffix.size(), suffix.size()) != suffix)
 				continue;
 			fname = names[i];
 			fname.pop_back(); fname.pop_back(); fname.pop_back();
+			found = true; break;
+		}
+		if (found == false) {
+			cout << "finished!" << endl; break;
 		}
 
 		// check file number
@@ -45,11 +51,13 @@ int main()
 		
 		// check file size
 		for (Long i = 0; i < Nfile; ++i) {
-			if ((i < Nfile-1 && file_size(fname_i) != fsize)
-				|| (i == Nfile-1 && file_size(fname_i) < fsize1)) {
+			fname_i = fname + "-" + num2str(i, 2);
+			Long sz = file_size(fname_i);
+			if ((i < Nfile-1 && sz != fsize)
+				|| (i == Nfile-1 && sz < fsize1)) {
 				ensure_dir("bad_size_files");
 				cout << "wrong file size: " << fname_i << endl;
-				exec_str("mv " + fname + "-* -t bad_files/");
+				exec_str("mv " + fname + "-* -t bad_size_files/");
 				restart = true;
 				break;
 			}
