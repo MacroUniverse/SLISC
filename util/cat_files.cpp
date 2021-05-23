@@ -12,7 +12,7 @@ int main()
 {
 	// === settings ===
 	Long Nfile = 22;
-	Long fsize = 5000000000, fsize1 = 2000000000;
+	Long fsize = 5000000000, fsize1 = 3700000000;
 	Str prefix = "plot-k32", suffix = ".plot";
 	// ================
 
