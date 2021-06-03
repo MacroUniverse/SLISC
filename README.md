@@ -1,6 +1,6 @@
 # SLISC0
 * Simple Scientific Library in Simple C++, without using `template`s
-* Matlab/Octave is used to do code generation (see `## Code generation`)
+* Matlab/Octave is used for code generation (see `## Code generation`)
 
 ## Introduction
 
@@ -23,8 +23,8 @@ int main()
 	copy(u, v); // copy values from v to u
 	u += v; // add vector to vector
 	v += 2; // add scalar to vector
-	MatDoub a(0, 0), b(2, 3); // row major matrices of double precision
-	a.resize(2, 3); // resize b to 2 columns and 3 rows
+	MatDoub a, b(2, 3); // row major matrices of double precision
+	a.resize(2, 3); // resize a to 2 rows and 3 columns
 	a(0, 0) = 1.1; // access element by row and column indices
 	a[3] = 9.9; // access element by a single index
 	a.end() = 5.5; a.end(-2) = 4.4; // access last element and last but 2 element
@@ -40,7 +40,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04
 * If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
 * If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
-* In the root directory, run `make` to compile
+* Run `make` to compile
 * If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time
 * Use `./main.x` to run all tests.
 
@@ -55,7 +55,6 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 
 ## Headers Introduction
 When using something in any header file, just including that header file will be enough. Header files can be included in any order. Here is some brief introduction for each header file:
-* `slisc.h` includes all the header files in SLISC (except testing)
 * `global.h` has all the container declaration and typedef etc.
 * `Bit.h` defines utilities for single-bit operations, and a pointer for bit
 * `complex_arith.h` defines extra operators used by `std::complex<>`, such as  `+, -, *, /, +=, -=, *=, /=, ==, !=` for mixed complex types.
@@ -73,7 +72,7 @@ When using something in any header file, just including that header file will be
 * `matt.h` save/load text-based data files in `.matt` format, can save multiple named scalars and containers to a single ascii text file. Use `matload.m` to load this file to Matlab.
 * `matb.h` same as `matt.h`, for binary data files.
 * `arithmetic.h` has utilities for dense matrices and vectors, e.g. `sum()`, `norm()`, dot product, matrix-vector multiplication.
-* `slice.h` matrix slicing, e.g. slice one column of a matrix to pass into a function that accepts a vector.
+* `cut.h` matrix slicing, e.g. slice one column of a matrix to pass into a function that accepts a vector.
 * `random.h` random number utilities
 * `time.h` timing utilities, including natural time and cpu time
 * `sort.h` sorting utilities
@@ -114,15 +113,15 @@ TODO...
 
 ### Common Members for Vector, Matrix, Mat3d Templates
 * `size()`: return total number of elements.
-* `n1(), n2()`: return number of rows or columns.
-* `operator[][i], operator()(i)` : return a reference for the i-th element.
+* `n0(), n1()`: return number of rows or columns.
+* `operator[](i), operator()(i)` : return a reference for the i-th element.
 * `operator()(i,j), (i,j,k)` : return a reference for an element.
 * `end()` : return a reference for the last element.
 * `operator<<` : transfer data to another container.
 * `step1(), step2(), etc` : step size for each dimension of vector/matrix, e.g. for dense vector, `step1()` is 1, for matrix, "leading dimension" is step2().
 * TODO...
 
-### Vector Class Template
+### Vector Class
 
 Constructors: Vector() for default, Vector(Long_I n) for vector size, Vector(Long_I n, const T &a) to specify element as well, Vector(Long_I n, const T *a) to initialize from array.
 
@@ -144,11 +143,11 @@ Methods are similar to that of vector class. Mat3d is row-major only.
 
 TODO.
 
-## "slice.h"
-`Svector` does not have it's own allocated memory, but use a block of contiguous memory from other dense containers (this is called slicing). For example, if we need to calculate the sum of a column of a `Cmat`, we can create an `Svector` to represent one column of `Cmat`, then use it as input to `sum()` function.
+## "cut.h"
+`Svector` does not have it's own allocated memory, but use a block of contiguous memory from other dense containers (this is called slicing or view). For example, if we need to calculate the sum of a column of a `Cmat`, we can create an `Svector` to represent one column of `Cmat`, then use it as input to `sum()` function.
 
-### Vector/Matrix Type Alias
-The typedefs for vector/matrix classes are (each type also comes with `_I`, `_O`, and `_IO` versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
+### Vector/Matrix Types
+The vector/matrix classes are (each type also comes with `_I`, `_O`, and `_IO` versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
 
 Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `p()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
 
@@ -265,10 +264,10 @@ void idiagonals(Matrix<T> &a) // inverse of diagonals(), shift the i-th line i t
 operator ==, != // compare size and each element, right hand side can also be a scalar.
 operators +,-,*,/ scalar/vec/mat, whenever make sense (inefficient!).
 operators +=,-=,*=,/= scalar/vec/mat, whenever make sense
-void Plus(out, in, in) //for scalar/vec/mat, whenever make sense.
-void Minus(out, in, in) // binary "-" operator
-void Minus(in_out) // unary "-" operator
-void Minus(out, in)
+void plus(out, in, in) //for scalar/vec/mat, whenever make sense.
+void minus(out, in, in) // binary "-" operator
+void minus(in_out) // unary "-" operator
+void minus(out, in)
 Times, Divide
 void real(MatDoub_O &rc, MatComplex_I &c)
 void imag(MatDoub_O &ic, MatComplex_I &c)
@@ -331,11 +330,11 @@ void idft_par(MatComp_O &X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I &Y, Doub 
 * .matt is a text based format that I designed to immitate Matlab's .mat file.
 * can write many variables and matrices to a single file, with names.
 * can find and read any number of stored variables/matrices from a file by name without scanning through the whole file (the overhead is negligible). Thus, reading a large file is fast.
-* the read in value type T2 can be different from the written value type T1, if T1 can be losslessly converted to T2 (see `is_promo<T1,T2>()`).
+* the read in value type T2 can be different from the written value type T1, if T1 can be losslessly converted to T2
 * there is a Matlab function `save()` that works similar to `load()` to read this file into Matlab workspace. This reading subroutine can be easily implemented for any other language.
 * Matrices are stored in column major order. Memory access speed is negaligible comparing to hard-drive.
 
-### implementation
+**implementation**
 * every variable/matrix has several parts: length of name, every character of name in ascii, type number (defined in meta.h), dimension of matrix (i.e. number of idices), leng of each dimension, list of elements in column major
 * at the end of file, there is a list of position (character number) of the start of every variable, and finally, the number of variables
 
@@ -344,7 +343,6 @@ void idft_par(MatComp_O &X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I &Y, Doub 
 * See MatFile project for saving and reading "Vector" or "Matrix" to/from Matlab data file ".mat", or text based file ".matt".
 
 ## Internal Coding Rules
-* C++14/17 features used: `if constexpr`
 * Code should be easy to understand and modify.
 * Interface and implementation should separated.
 * Class members variables should start with `m_` for clearity, and avoid name confliction with member function arguments.
@@ -422,6 +420,4 @@ void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const ve
 ## TODO
 * the largest problem with this method is ... just look at `shape_cmp()`, inputing even necessary combinations is painful. Sure, you can generate the list using `combine()` function, but then the generated file will have thousands of lines...
 * makefiles are not unified
-* consider using selective codegen instead of removing all macros
-* unicode: * Visual Studio does not support `std::codecvt` between `UTF-8` and `UTF-32`, but only to `wchar_t` (link error during compilation). Wait until it does. Use `utfcpp` library to solve this.
-* dimension name starts from 0, not 1!
+* unicode: * Visual Studio does not support `std::codecvt` between `UTF-8` and `UTF-32`, but only to `wchar_t` (link error during compilation). Using `utfcpp` library for now.

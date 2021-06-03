@@ -1,9 +1,9 @@
 # choose one of the following makefiles for different compilers and libraries
 
-# the most compatible build, no libraries are required
+# the most compatible build, only g++ is required
 # include make/compatible.mak
 
-# blas lapacke gsl are required
+# g++ blas lapacke gsl are required
 include make/basic_libs.mak
 
 # MKL and gsl are required
