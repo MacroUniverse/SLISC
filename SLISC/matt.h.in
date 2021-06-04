@@ -22,7 +22,7 @@ public:
     vector<Long> m_ind; // variable positions (line indices)
 
     // open a file
-    void open(Str_I fname, Char_I *rw, Int_I precision = 17);
+    void open(Str_I fname, Char_I *rw, Int_I precision = 17, Bool_I replace = false);
 
     Bool isopen();
 
@@ -216,7 +216,7 @@ inline Matt::Matt() {}
 inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 { open(fname, rw, precision); }
 
-inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace = false)
+inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
 {
     if (isopen())
         close();

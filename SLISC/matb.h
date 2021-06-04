@@ -23,7 +23,7 @@ public:
     vecLlong m_ind; // variable positions (from the first byte of file)
 
     // open a file
-    void open(Str_I fname, Char_I rw);
+    void open(Str_I fname, Char_I rw, Bool_I replace = false);
 
     // check if file is open
     Bool isopen();
@@ -151,7 +151,7 @@ inline Matb::Matb() {}
 inline Matb::Matb(Str_I fname, Char_I rw)
 { open(fname, rw); }
 
-inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace = false)
+inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
 {
     if (!little_endian())
         SLS_ERR("only support little endian for now!");
