@@ -151,7 +151,7 @@ inline Matb::Matb() {}
 inline Matb::Matb(Str_I fname, Char_I rw)
 { open(fname, rw); }
 
-inline void Matb::open(Str_I fname, Char_I rw)
+inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace = false)
 {
     if (!little_endian())
         SLS_ERR("only support little endian for now!");
@@ -161,7 +161,7 @@ inline void Matb::open(Str_I fname, Char_I rw)
     m_fname = fname;
     if (rw == 'w') {
 #ifndef SLS_MATB_REPLACE
-        if (file_exist(m_fname)) {
+        if (!replace && file_exist(m_fname)) {
             while (true) {
                 if (file_exist(m_fname)) {
                     SLS_WARN("\n\nfile [" + m_fname + "] already exist! delete file to continue...\n"
