@@ -10,7 +10,7 @@ namespace slisc {
 class Matb {
 public:
     Matb();
-    Matb(Str_I fname, Char_I rw);
+    Matb(Str_I fname, Char_I rw, Bool_I replace = false);
     Char m_rw; // 'r' for read 'w' for write
     ifstream m_in; // read file
     ofstream m_out; // write file
@@ -148,8 +148,8 @@ inline Long Matb::search(Str_I name)
 
 inline Matb::Matb() {}
 
-inline Matb::Matb(Str_I fname, Char_I rw)
-{ open(fname, rw); }
+inline Matb::Matb(Str_I fname, Char_I rw, Bool_I replace)
+{ open(fname, rw, replace); }
 
 inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
 {

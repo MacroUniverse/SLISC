@@ -9,7 +9,7 @@ namespace slisc {
 class Matt {
 public:
     Matt();
-    Matt(Str_I fname, Char_I *rw, Int_I precision = 17);
+    Matt(Str_I fname, Char_I *rw, Int_I precision = 17, Bool_I replace = false);
     // delimiter between two numbers, can only be ' ' for now.
     static const Char dlm = ' ';
     Char m_rw; // 'r' for read 'w' for write
@@ -229,8 +229,8 @@ inline Int Matt::search(Str_I name)
 
 inline Matt::Matt() {}
 
-inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
-{ open(fname, rw, precision); }
+inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision, Bool_I replace)
+{ open(fname, rw, precision, replace); }
 
 inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
 {
