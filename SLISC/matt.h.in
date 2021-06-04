@@ -216,7 +216,7 @@ inline Matt::Matt() {}
 inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision)
 { open(fname, rw, precision); }
 
-inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
+inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace = false)
 {
     if (isopen())
         close();
@@ -224,7 +224,7 @@ inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision)
     if (rw[0] == 'w') {
 
 #ifndef SLS_MATT_REPLACE
-        if (file_exist(fname)) {
+        if (!replace && file_exist(fname)) {
             while (true) {
                 if (file_exist(fname)) {
                     SLS_WARN("\n\nfile [" + fname + "] already exist! delete file to continue...\n"
