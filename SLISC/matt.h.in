@@ -439,9 +439,9 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% end
 
 //% % save one var to one file (replace old file)
-inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }

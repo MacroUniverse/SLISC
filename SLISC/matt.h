@@ -329,9 +329,9 @@ inline void save(Char_I s, Str_I varname, Matt_IO matt)
     matt_write_scalar(s, fout);
 }
 
-inline void save_matt(Char_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Char_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -359,9 +359,9 @@ inline void save(Int_I s, Str_I varname, Matt_IO matt)
     matt_write_scalar(s, fout);
 }
 
-inline void save_matt(Int_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Int_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -389,9 +389,9 @@ inline void save(Llong_I s, Str_I varname, Matt_IO matt)
     matt_write_scalar(s, fout);
 }
 
-inline void save_matt(Llong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Llong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -419,9 +419,9 @@ inline void save(Doub_I s, Str_I varname, Matt_IO matt)
     matt_write_scalar(s, fout);
 }
 
-inline void save_matt(Doub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Doub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -449,9 +449,9 @@ inline void save(Comp_I s, Str_I varname, Matt_IO matt)
     matt_write_scalar(s, fout);
 }
 
-inline void save_matt(Comp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Comp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -481,9 +481,9 @@ inline void save(VecChar_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecChar_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(VecChar_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -513,9 +513,9 @@ inline void save(VecInt_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecInt_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(VecInt_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -545,9 +545,9 @@ inline void save(VecLlong_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecLlong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(VecLlong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -577,9 +577,9 @@ inline void save(VecDoub_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecDoub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(VecDoub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -609,9 +609,9 @@ inline void save(VecComp_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecComp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(VecComp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -641,9 +641,9 @@ inline void save(SvecChar_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecChar_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(SvecChar_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -673,9 +673,9 @@ inline void save(SvecInt_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecInt_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(SvecInt_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -705,9 +705,9 @@ inline void save(SvecLlong_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecLlong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(SvecLlong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -737,9 +737,9 @@ inline void save(SvecDoub_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecDoub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(SvecDoub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -769,9 +769,9 @@ inline void save(SvecComp_I v, Str_I varname, Matt_IO matt)
         matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecComp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(SvecComp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -801,9 +801,9 @@ inline void save(MatInt_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatInt_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(MatInt_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -833,9 +833,9 @@ inline void save(MatLlong_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatLlong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(MatLlong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -865,9 +865,9 @@ inline void save(MatDoub_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatDoub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(MatDoub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -897,9 +897,9 @@ inline void save(MatComp_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatComp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(MatComp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -929,9 +929,9 @@ inline void save(CmatInt_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatInt_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(CmatInt_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -961,9 +961,9 @@ inline void save(CmatLlong_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatLlong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(CmatLlong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -993,9 +993,9 @@ inline void save(CmatDoub_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatDoub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(CmatDoub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1025,9 +1025,9 @@ inline void save(CmatComp_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatComp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(CmatComp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1059,9 +1059,9 @@ inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
                 matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Int_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Cmat3Int_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1093,9 +1093,9 @@ inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
                 matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Llong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Cmat3Llong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1127,9 +1127,9 @@ inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
                 matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Doub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Cmat3Doub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1161,9 +1161,9 @@ inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
                 matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Comp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Cmat3Comp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1196,9 +1196,9 @@ inline void save(Cmat4Doub_I a, Str_I varname, Matt_IO matt)
                     matt_write_scalar(a(i, j, k, l), fout);
 }
 
-inline void save_matt(Cmat4Doub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Cmat4Doub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1231,9 +1231,9 @@ inline void save(Cmat4Comp_I a, Str_I varname, Matt_IO matt)
                     matt_write_scalar(a(i, j, k, l), fout);
 }
 
-inline void save_matt(Cmat4Comp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(Cmat4Comp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1263,9 +1263,9 @@ inline void save(ScmatInt_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatInt_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(ScmatInt_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1295,9 +1295,9 @@ inline void save(ScmatLlong_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatLlong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(ScmatLlong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1327,9 +1327,9 @@ inline void save(ScmatDoub_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatDoub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(ScmatDoub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1359,9 +1359,9 @@ inline void save(ScmatComp_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatComp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(ScmatComp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1391,9 +1391,9 @@ inline void save(DcmatInt_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatInt_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(DcmatInt_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1423,9 +1423,9 @@ inline void save(DcmatLlong_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatLlong_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(DcmatLlong_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1455,9 +1455,9 @@ inline void save(DcmatDoub_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatDoub_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(DcmatDoub_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }
@@ -1487,9 +1487,9 @@ inline void save(DcmatComp_I a, Str_I varname, Matt_IO matt)
             matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file)
+inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file, Bool_I replace = false)
 {
-    Matt matt(matt_file, "w");
+    Matt matt(matt_file, "w", replace);
     save(s, varname, matt);
     matt.close();
 }

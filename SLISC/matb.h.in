@@ -306,9 +306,9 @@ inline void save(@T@_I s, Str_I varname, Matb_IO matb)
     write(fout, s);
 }
 
-inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file)
+inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w');
+    Matb matb(matb_file, 'w', replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -374,9 +374,9 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
 //% end
 }
 
-inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file)
+inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w');
+    Matb matb(matb_file, 'w', replace);
     save(v, varname, matb);
     matb.close();
 }
