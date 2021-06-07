@@ -63,11 +63,19 @@ inline void matt_write_scalar(Llong_I s, ofstream &m_out)
 
 inline void matt_write_scalar(Doub_I s, ofstream &m_out)
 {
+    if (isinf(s))
+        SLS_ERR("infinity is not supported in matt file!");
+    if (isnan(s))
+        SLS_ERR("NaN is not supported in matt file!");
     m_out << to_num(s) << Matt::dlm;
 }
 
 inline void matt_write_scalar(Comp_I s, ofstream &m_out)
 {
+    if (isinf(real(s)) || isinf(imag(s)))
+        SLS_ERR("infinity is not supported in matt file!");
+    if (isnan(real(s)) || isnan(imag(s)))
+        SLS_ERR("NaN is not supported in matt file!");
     if (imag(s) == 0)
         m_out << real(s) << Matt::dlm;
     else if (imag(s) < 0)

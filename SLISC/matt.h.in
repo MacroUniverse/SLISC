@@ -52,8 +52,18 @@ typedef Matt &Matt_O, &Matt_IO;
 inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 {
 //% if is_real(T)
+//%     if is_Doub(T)
+    if (isinf(s))
+        SLS_ERR("infinity is not supported in matt file!");
+    if (isnan(s))
+        SLS_ERR("NaN is not supported in matt file!");
+//%     end
     m_out << to_num(s) << Matt::dlm;
 //% elseif is_comp(T)
+    if (isinf(real(s)) || isinf(imag(s)))
+        SLS_ERR("infinity is not supported in matt file!");
+    if (isnan(real(s)) || isnan(imag(s)))
+        SLS_ERR("NaN is not supported in matt file!");
     if (imag(s) == 0)
         m_out << real(s) << Matt::dlm;
     else if (imag(s) < 0)
