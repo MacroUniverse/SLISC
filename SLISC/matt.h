@@ -87,26 +87,36 @@ inline void matt_write_scalar(Comp_I s, ofstream &m_out)
 
 inline void matt_read_scalar(Char_O s, ifstream &m_in)
 {
+    if (!m_in.good())
+        SLS_ERR("unknown!");
     Int temp; m_in >> temp; s = (Char)temp;
 }
 
 inline void matt_read_scalar(Int_O s, ifstream &m_in)
 {
+    if (!m_in.good())
+        SLS_ERR("unknown!");
     m_in >> s;
 }
 
 inline void matt_read_scalar(Llong_O s, ifstream &m_in)
 {
+    if (!m_in.good())
+        SLS_ERR("unknown!");
     m_in >> s;
 }
 
 inline void matt_read_scalar(Doub_O s, ifstream &m_in)
 {
+    if (!m_in.good())
+        SLS_ERR("unknown!");
     m_in >> s;
 }
 
 inline void matt_read_scalar(Comp_O c, ifstream &m_in)
 {
+    if (!m_in.good())
+        SLS_ERR("unknown!");
     Doub cr = 0, ci = 0;
     Char ch;
     m_in >> cr;
