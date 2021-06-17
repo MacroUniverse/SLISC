@@ -255,6 +255,8 @@ inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
     if (isopen())
         close();
     this->fname = fname;
+    if (fname.substr(fname.size()-5) != ".matt")
+        SLS_ERR("file must have \".matt\" extension!");
     if (rw[0] == 'w') {
 
 #ifndef SLS_MATT_REPLACE

@@ -157,6 +157,8 @@ inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
         SLS_ERR("only support little endian for now!");
     if (isopen())
         close();
+    if (fname.substr(fname.size()-5) != ".matb")
+        SLS_ERR("file must have \".matb\" extension!");
     m_rw = rw;
     m_fname = fname;
     if (rw == 'w') {
