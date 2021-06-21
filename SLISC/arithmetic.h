@@ -3267,6 +3267,18 @@ inline void flip_v(Comp *v, Long_I N)
         swap(v[i], v[N - i - 1]);
 }
 
+inline void flip_v(Str *v, Long_I N)
+{
+    for (Long i = 0; i < N / 2; ++i)
+        swap(v[i], v[N - i - 1]);
+}
+
+inline void flip_v(Str32 *v, Long_I N)
+{
+    for (Long i = 0; i < N / 2; ++i)
+        swap(v[i], v[N - i - 1]);
+}
+
 
 inline void flip_vv(Char *v, const Char *v1, Long_I N)
 {
@@ -3301,27 +3313,62 @@ inline void flip_vv(Comp *v, const Comp *v1, Long_I N)
 
 inline void flip(VecChar_IO v)
 {
-    flip_v(v.p(), v.size());
+    flip_v(&v[0], v.size());
 }
 
 inline void flip(VecInt_IO v)
 {
-    flip_v(v.p(), v.size());
+    flip_v(&v[0], v.size());
 }
 
 inline void flip(VecLlong_IO v)
 {
-    flip_v(v.p(), v.size());
+    flip_v(&v[0], v.size());
 }
 
 inline void flip(VecDoub_IO v)
 {
-    flip_v(v.p(), v.size());
+    flip_v(&v[0], v.size());
 }
 
 inline void flip(VecComp_IO v)
 {
-    flip_v(v.p(), v.size());
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecChar_IO v)
+{
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecInt_IO v)
+{
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecLlong_IO v)
+{
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecDoub_IO v)
+{
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecComp_IO v)
+{
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecStr_IO v)
+{
+    flip_v(&v[0], v.size());
+}
+
+inline void flip(vecStr32_IO v)
+{
+    flip_v(&v[0], v.size());
 }
 
 

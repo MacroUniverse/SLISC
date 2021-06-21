@@ -85,6 +85,7 @@ inline void sort(@T@_IO v)
 //%     'Int', 'Int';
 //%     'Int', 'Llong';
 //%     'Llong', 'Llong';
+//%     'Llong', 'Str';
 //%     'Doub', 'Llong';
 //%     'Str', 'Llong';
 //%     'Str', 'Str';
@@ -175,6 +176,8 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
 //%     'vecLlong', 'vecLlong';
+//%     'vecLlong', 'VecLlong';
+//%     'vecLlong', 'vecStr';
 //%     'vecStr',  'VecLlong';
 //%     'vecStr',  'vecLlong';
 //%     'vecStr',  'vecStr';

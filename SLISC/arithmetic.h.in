@@ -622,7 +622,7 @@ inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
 //%-------------------------
 
 //% types = {
-//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'; 'Str'; 'Str32';
 //% };
 //%---------------------------------
 //% T = varargin{:};
@@ -651,6 +651,8 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 
 //% types = {
 //%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
+//%     'vecStr'; 'vecStr32';
 //% };
 //%---------------------------------
 //% Tv = varargin{:};
@@ -658,10 +660,10 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% if is_dense(Tv)
 inline void flip(@Tv@_IO v)
 {
-    flip_v(v.p(), v.size());
+    flip_v(&v[0], v.size());
 }
 //% else
-//%     error('not implemented!');
+//%     error('flip: not implemented!');
 //% end
 //%---------------------------
 
