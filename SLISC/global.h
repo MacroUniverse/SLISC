@@ -49,7 +49,7 @@ namespace slisc {
 using std::complex;
 using std::vector; using std::string; using std::to_string;
 using std::cin; using std::cout; using std::cerr; using std::endl;
-using std::ifstream; using std::ofstream;
+using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap;
 using std::isinf;
 using std::abs; using std::real; using std::imag;
