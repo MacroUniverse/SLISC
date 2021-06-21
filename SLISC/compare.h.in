@@ -62,6 +62,16 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     combine(list_Cmat3, list_Cmat3);
 //%     combine(list_Mat3, list_Mat3);
 //%    {
+//%     'vecLlong' 'vecLlong';
+//%     'vecLlong' 'VecLlong';
+//%     'vecLlong' 'vecStr';
+//%     'vecStr' 'vecStr';
+//%     'vecStr' 'vecLlong';
+//%     'vecStr' 'VecLlong';
+//%     'vecStr32' 'vecStr32';
+//%     'vecStr32' 'VecLlong';
+//%     'vecStr32' 'vecLlong';
+//%     'VecLlong' 'vecStr';
 //%     'VecBool' 'VecBool';
 //%     'CmatBool' 'CmatBool';
 //%     'MatDoub' 'CmatDoub';
@@ -127,13 +137,13 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% if N1 ~= N2
 inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return false;}
 //% elseif N1 == 1
-inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return v1.size() == v2.size();}
+inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return (Long)v1.size() == (Long)v2.size();}
 //% elseif N1 == 2
-inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
+inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 //% elseif N1 == 3
-inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1() && (Long)v1.n2() == (Long)v2.n2();}
 //% elseif N1 == 4
-inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2() && v1.n3() == v2.n3();}
+inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1() && (Long)v1.n2() == (Long)v2.n2() && (Long)v1.n3() == (Long)v2.n3();}
 //% else
 //%     error('not implemented!');
 //% end
