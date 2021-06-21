@@ -191,7 +191,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 inline void sort(@T@_IO v, @T1@_IO v1)
 {
 @same_shape('v', 'v1')@
-    sort_vv(v.p(), v1.p(), v.size());
+    sort_vv(&v[0], &v1[0], v.size());
 }
 //% elseif is_vector(T) || is_Str(T) || is_Str32(T)
 inline void sort(@T@_IO v, @T1@_IO v1)
