@@ -42,5 +42,26 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
     }
 }
 
+// mem usage by this program in KiB
+// works on computer cluster
+Long ram_usage() {
+    FILE* file = fopen("/proc/self/status", "r");
+    Char line[128];
+
+    Long i = -1;
+    while (fgets(line, 128, file) != NULL) {
+        if (strncmp(line, "VmRSS:", 6) == 0){
+            i = strlen(line);
+            const Char* p = line;
+            while (*p <'0' || *p > '9') p++;
+            line[i-3] = '\0';
+            i = atoi(p);
+            break;
+        }
+    }
+    fclose(file);
+    return i;
+}
+
 } // namespace slisc
 #endif

@@ -36,4 +36,18 @@ void test_linux()
 			}
 		}
 	}
+
+	// test ram_usage();
+	{
+		Long old_ram = ram_usage();
+		Long N = 1024*1024*100; // 100 Mib
+		Char *s = new Char[N];
+		s[0] = 0;
+		for (Long i = 1; i < N; ++i)
+			s[i] = s[i-1] + 1;
+		Long new_ram = ram_usage();
+		if (abs((new_ram - old_ram)/1024 - 100.) > 1.)
+			SLS_ERR("failed!");
+		delete [] s;
+	}
 }
