@@ -45,7 +45,7 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
 // mem usage by this program in KiB
 // works on computer cluster
 // run time about 5e-5s
-Long ram_usage() {
+inline Long ram_usage() {
     FILE* file = fopen("/proc/self/status", "r");
     Char line[128];
 
