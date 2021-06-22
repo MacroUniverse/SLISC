@@ -14,14 +14,14 @@ Comp ylm(Int_I l, Int_I m, Doub_I theta, Doub_I phi)
 {
     Doub A, ret0;
     Long n;
-    Doub th = mod(n, theta, 2 * PI);
+    Doub th = mod_fl(n, theta, 2 * PI);
     Doub ph;
     if (th > PI) {
         th = 2 * PI - th;
-        ph = mod(n, phi + PI, 2 * PI);
+        ph = mod_fl(n, phi + PI, 2 * PI);
     }
     else
-        ph = mod(n, phi, 2 * PI);
+        ph = mod_fl(n, phi, 2 * PI);
 
     if (m >= 0) {
         A = sqrt((2 * l + 1)*factorial(l - m) / (4 * PI * factorial(l + m)));
