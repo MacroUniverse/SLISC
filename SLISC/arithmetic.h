@@ -2466,9 +2466,23 @@ inline Doub norm2(VecDoub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(VecDoub_I v, VecDoub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(VecDoub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(VecDoub_I v, VecDoub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(VecComp_I v)
@@ -2479,9 +2493,23 @@ inline Doub norm2(VecComp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(VecComp_I v, VecComp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(VecComp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(VecComp_I v, VecComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(MatDoub_I v)
@@ -2492,9 +2520,23 @@ inline Doub norm2(MatDoub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(MatDoub_I v, MatDoub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(MatDoub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(MatDoub_I v, MatDoub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(MatComp_I v)
@@ -2505,9 +2547,23 @@ inline Doub norm2(MatComp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(MatComp_I v, MatComp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(MatComp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(MatComp_I v, MatComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(Mat3Doub_I v)
@@ -2518,9 +2574,23 @@ inline Doub norm2(Mat3Doub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(Mat3Doub_I v, Mat3Doub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(Mat3Doub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(Mat3Doub_I v, Mat3Doub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(Mat3Comp_I v)
@@ -2531,9 +2601,23 @@ inline Doub norm2(Mat3Comp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(Mat3Comp_I v, Mat3Comp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(Mat3Comp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(Mat3Comp_I v, Mat3Comp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(CmatDoub_I v)
@@ -2544,9 +2628,23 @@ inline Doub norm2(CmatDoub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(CmatDoub_I v, CmatDoub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(CmatDoub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(CmatDoub_I v, CmatDoub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(CmatComp_I v)
@@ -2557,9 +2655,23 @@ inline Doub norm2(CmatComp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(CmatComp_I v, CmatComp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(CmatComp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(CmatComp_I v, CmatComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(Cmat3Doub_I v)
@@ -2570,9 +2682,23 @@ inline Doub norm2(Cmat3Doub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(Cmat3Doub_I v, Cmat3Doub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(Cmat3Doub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(Cmat3Doub_I v, Cmat3Doub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(Cmat3Comp_I v)
@@ -2583,9 +2709,23 @@ inline Doub norm2(Cmat3Comp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(Cmat3Comp_I v, Cmat3Comp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(Cmat3Comp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(Cmat3Comp_I v, Cmat3Comp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(SvecDoub_I v)
@@ -2596,9 +2736,23 @@ inline Doub norm2(SvecDoub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(SvecDoub_I v, SvecDoub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(SvecDoub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(SvecDoub_I v, SvecDoub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(SvecComp_I v)
@@ -2609,9 +2763,23 @@ inline Doub norm2(SvecComp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(SvecComp_I v, SvecComp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(SvecComp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(SvecComp_I v, SvecComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(DvecDoub_I v)
@@ -2622,9 +2790,23 @@ inline Doub norm2(DvecDoub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(DvecDoub_I v, DvecDoub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(DvecDoub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(DvecDoub_I v, DvecDoub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(DvecComp_I v)
@@ -2635,9 +2817,23 @@ inline Doub norm2(DvecComp_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(DvecComp_I v, DvecComp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(DvecComp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(DvecComp_I v, DvecComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(ScmatDoub_I v)
@@ -2648,9 +2844,23 @@ inline Doub norm2(ScmatDoub_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline Doub norm2_dif(ScmatDoub_I v, ScmatDoub_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 inline Doub norm(ScmatDoub_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(ScmatDoub_I v, ScmatDoub_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 inline Doub norm2(DcmatComp_I a)
@@ -2665,9 +2875,27 @@ inline Doub norm2(DcmatComp_I a)
     }
     return s2;
 }
+
+inline Doub norm2_dif(DcmatComp_I a, DcmatComp_I a1)
+{
+    const Comp *p = a.p(), *p1 = a1.p();
+    Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
+    Doub s2 = 0;
+    for (Long j = 0; j < a.n1(); ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            s2 += abs2(p[i] - p1[i]);
+        p += lda; p1 += lda1;
+    }
+    return s2;
+}
 inline Doub norm(DcmatComp_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(DcmatComp_I v, DcmatComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 
 

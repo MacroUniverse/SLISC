@@ -486,6 +486,15 @@ inline @Tr@ norm2(@T@_I v)
         s2 += abs2(v[i]);
     return s2;
 }
+
+inline @Tr@ norm2_dif(@T@_I v, @T@_I v1)
+{
+    Long N = v.size();
+    @Tr@ s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
 //% elseif is_Dcmat(T)
 inline @Tr@ norm2(@T@_I a)
 {
@@ -499,12 +508,30 @@ inline @Tr@ norm2(@T@_I a)
     }
     return s2;
 }
+
+inline @Tr@ norm2_dif(@T@_I a, @T@_I a1)
+{
+    const @Ts@ *p = a.p(), *p1 = a1.p();
+    Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
+    @Tr@ s2 = 0;
+    for (Long j = 0; j < a.n1(); ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            s2 += abs2(p[i] - p1[i]);
+        p += lda; p1 += lda1;
+    }
+    return s2;
+}
 //% else
 //%     error('not implemented!');
 //% end
 inline @Tr@ norm(@T@_I v)
 {
     return sqrt(norm2(v));
+}
+
+inline @Tr@ norm_dif(@T@_I v, @T@_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
 }
 //%-------------------------
 
