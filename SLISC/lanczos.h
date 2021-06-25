@@ -284,7 +284,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_IO x, Doub_I dt
         SLS_ERR("Nk > N !");
     if (wsp_d.size() < Nk*Nk + 2*Nk)
         SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N)
+    if (wsp_c.size() < N*Nk + N + Nk)
         SLS_ERR("wsp_c too short!");
 #endif
 
@@ -347,7 +347,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_IO x, Doub_I 
         SLS_ERR("Nk > N !");
     if (wsp_d.size() < Nk*Nk + 2*Nk)
         SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N)
+    if (wsp_c.size() < N*Nk + N + Nk)
         SLS_ERR("wsp_c too short!");
 #endif
 
@@ -410,7 +410,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_IO x, Doub_I
         SLS_ERR("Nk > N !");
     if (wsp_d.size() < Nk*Nk + 2*Nk)
         SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N)
+    if (wsp_c.size() < N*Nk + N + Nk)
         SLS_ERR("wsp_c too short!");
 #endif
 
@@ -473,7 +473,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_IO x, Doub_I
         SLS_ERR("Nk > N !");
     if (wsp_d.size() < Nk*Nk + 2*Nk)
         SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N)
+    if (wsp_c.size() < N*Nk + N + Nk)
         SLS_ERR("wsp_c too short!");
 #endif
 
