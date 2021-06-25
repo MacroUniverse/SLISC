@@ -1448,6 +1448,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 //%        'SvecDoub', 'SvecDoub', 'Doub';
 //%        'SvecDoub', 'VecDoub', 'Doub';
 //%        'SvecComp', 'VecComp', 'Doub';
+//%        'SvecComp', 'SvecComp', 'Doub';
 //%        'SvecComp', 'DvecComp', 'Doub';
 //%        'VecComp', 'VecDoub', 'Comp';
 //%        'VecComp', 'VecComp', 'Comp';
@@ -1962,6 +1963,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 }
 //%-------------------------
 
+
 //% types = {
 //%     'VecDoub' 'CmatDoub' 'VecDoub';
 //%     'VecDoub' 'CmatDoub' 'SvecDoub';
@@ -1971,13 +1973,13 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'VecComp' 'CmatComp' 'VecComp';
 //%     'VecComp' 'CmatDoub' 'VecComp';
 //%     'VecComp' 'CmatDoub' 'SvecComp';
+//%     'VecComp' 'ScmatComp' 'SvecDoub';
 //%     'VecComp' 'ScmatComp' 'SvecComp';
 //%     'VecComp' 'MatComp' 'VecDoub';
 //%     'VecComp' 'MatComp' 'VecComp';
 //%     'VecComp' 'CmatImag' 'VecComp';
 //%     'VecComp' 'MatDoub' 'VecComp';
 //%     'VecComp' 'ScmatDoub' 'VecComp';
-//%     'VecComp' 'ScmatComp' 'SvecDoub';
 //%     'SvecDoub' 'CmatDoub' 'SvecDoub';
 //%     'DvecComp' 'DcmatDoub' 'DvecComp';
 //%     'DvecComp' 'CmatDoub' 'DvecComp';
@@ -1987,6 +1989,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'SvecComp' 'ScmatDoub' 'SvecComp';
 //%     'SvecComp' 'ScmatDoub' 'DvecComp';
 //%     'SvecComp' 'MatDoub' 'VecComp';
+//%     'SvecComp' 'ScmatComp' 'SvecDoub';
 //%     'SvecComp' 'ScmatComp' 'SvecComp';
 //%     'SvecComp' 'ScmatComp' 'DvecComp';
 //%     'SvecComp' 'DcmatComp' 'SvecComp';
