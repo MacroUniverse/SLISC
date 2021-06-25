@@ -121,7 +121,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
         SLS_ERR("Nk > N !");
     if (wsp_d.size() < Nk*Nk + 2*Nk)
         SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N)
+    if (wsp_c.size() < N*Nk + N + Nk)
         SLS_ERR("wsp_c too short!");
 #endif
 
