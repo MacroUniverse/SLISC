@@ -1,8 +1,6 @@
-// partly translated from anglib.f90
-// as directly as possible! all vars values unchanged.
-
-// anglib.f90: angular momentum coupling coefficients in Fortran 90
-// Copyright (C) 1998  Paul Stevenson
+// lanczos algorithm to propagate wave function by exp(-iH dt)
+// for error estimation, see 4.51 of Johannes Feist's thesis: prod(beta) * (dt^Nk / Nk!)
+// however, (dt^Nk / Nk!) is extremely small and omitted.
 
 #pragma once
 #include "cut.h"
@@ -55,7 +53,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul_gen(v2, H, v1); // ???
+        mul_gen(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -65,7 +63,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -118,7 +116,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul_gen(v2, H, v1); // ???
+        mul_gen(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -128,7 +126,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -181,7 +179,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul(v2, H, v1); // ???
+        mul(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -191,7 +189,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -244,7 +242,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmatDoub_I H, DvecComp_I x, Doub_I dt, 
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul_gen(v2, H, v1); // ???
+        mul_gen(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -254,7 +252,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmatDoub_I H, DvecComp_I x, Doub_I dt, 
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -307,7 +305,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul(v2, H, v1); // ???
+        mul(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -317,7 +315,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -370,7 +368,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul(v2, H, v1); // ???
+        mul(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -380,7 +378,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -433,7 +431,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CbandDoub_I H, DvecComp_I x, Doub_I dt,
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul(v2, H, v1); // ???
+        mul(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -443,7 +441,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CbandDoub_I H, DvecComp_I x, Doub_I dt,
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -496,7 +494,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CbandDoub_I H, DvecComp_I x, Doub_I dt,
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        mul(v2, H, v1); // ???
+        mul(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -506,7 +504,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CbandDoub_I H, DvecComp_I x, Doub_I dt,
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -574,7 +572,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_IO x, Doub_I dt
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -637,7 +635,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_IO x, Doub_I dt
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -700,7 +698,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_IO x, Doub_I
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -763,7 +761,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_IO x, Doub_I 
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -826,7 +824,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_IO x, Doub_I
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -889,7 +887,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_IO x, Doub_I
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -952,7 +950,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_IO x, Doub_I
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -1015,7 +1013,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_IO x, Doub_I
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);

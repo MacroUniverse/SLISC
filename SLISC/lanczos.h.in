@@ -1,8 +1,6 @@
-// partly translated from anglib.f90
-// as directly as possible! all vars values unchanged.
-
-// anglib.f90: angular momentum coupling coefficients in Fortran 90
-// Copyright (C) 1998  Paul Stevenson
+// lanczos algorithm to propagate wave function by exp(-iH dt)
+// for error estimation, see 4.51 of Johannes Feist's thesis: prod(beta) * (dt^Nk / Nk!)
+// however, (dt^Nk / Nk!) is extremely small and omitted.
 
 #pragma once
 #include "cut.h"
@@ -72,7 +70,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 
     for (Long j = 0; j < Nk-2; ++j) {
         Long j1 = j+1, j2 = j+2;
-        @mul_fun@(v2, H, v1); // ???
+        @mul_fun@(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
             v2[i] -= a * v1[i] + b * v0[i];
@@ -82,7 +80,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
@@ -167,7 +165,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
-    Doub err = prod(beta) * pow(dt, N) / factorial(N);
+    Doub err = prod(beta);
 
     lapack_int info =
     LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
