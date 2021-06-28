@@ -7,6 +7,7 @@ namespace slisc {
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
 //% VbaseT = ['Vbase', T];
+//% VecT = ['Vec', T];
 class @McooT@ : public @VbaseT@
 {
 private:
@@ -40,8 +41,10 @@ public:
     @T@ operator()(Long_I i, Long_I j) const;
     @T@ &operator[](Long_I ind); // return element
     @T@ operator[](Long_I ind) const;
-    Long row(Long_I ind) const; // row index
-    Long col(Long_I ind) const; // column index
+    const Long &row(Long_I ind) const; // row index
+    Long &row(Long_I ind);
+    const Long &col(Long_I ind) const; // column index
+    Long &col(Long_I ind);
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
@@ -191,7 +194,7 @@ inline @T@ @McooT@::operator[](Long_I ind) const
     return m_p[ind];
 }
 
-inline Long @McooT@::row(Long_I ind) const
+inline const Long &@McooT@::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind<0 || ind>=m_Nnz)
@@ -200,7 +203,25 @@ inline Long @McooT@::row(Long_I ind) const
     return m_row[ind];
 }
 
-inline Long @McooT@::col(Long_I ind) const
+inline Long &@McooT@::row(Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (ind<0 || ind>=m_Nnz)
+        SLS_ERR("@McooT@::row() subscript out of bounds");
+#endif
+    return m_row[ind];
+}
+
+inline const Long &@McooT@::col(Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (ind < 0 || ind >= m_Nnz)
+        SLS_ERR("@McooT@::col() subscript out of bounds");
+#endif
+    return m_col[ind];
+}
+
+inline Long &@McooT@::col(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (ind < 0 || ind >= m_Nnz)

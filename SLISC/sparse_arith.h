@@ -555,6 +555,184 @@ inline void sort_r(McooComp_IO a)
 }
 
 
+// sort to column major and combine elements, the i-th element is moved to desk[i]-th element
+// desk[i] might repeat
+inline Long sort_col_dry(VecLong_O dest, McooChar_I coo)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (dest.size() != coo.nnz())
+        SLS_ERR("wrong shape!");
+#endif
+    VecLong ind(coo.nnz()), order(coo.nnz());
+    linspace(order, 0, order.size()-1);
+    for (Long i = 0; i < coo.nnz(); ++i)
+        ind[i] = coo.row(i) + coo.n0() * coo.col(i);
+    sort(ind, order);
+    Long k = 0;
+    // i loop through sorted ind, k is the index for unique ind
+    for (Long i = 0; i < coo.nnz()-1; ++i) {
+        dest[order[i]] = k;
+        if (ind[i+1] != ind[i])
+            ++k;
+    }
+    dest[order[coo.nnz()-1]] = k;
+    return k + 1;
+}
+
+inline void reorder(McooChar_O new_coo, McooChar_O coo, VecLong_I dest, Long_I new_Nnz)
+{
+    new_coo.resize(new_Nnz);
+    for (Long i = 0; i < new_Nnz; ++i)
+        new_coo[i] = 0;
+    for (Long i = 0; i < coo.nnz(); ++i) {
+        Long j = dest[i];
+        new_coo[j] += coo[i];
+        new_coo.row(j) = coo.row(i);
+        new_coo.col(j) = coo.col(i);
+    }
+}
+
+inline Long sort_col_dry(VecLong_O dest, McooInt_I coo)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (dest.size() != coo.nnz())
+        SLS_ERR("wrong shape!");
+#endif
+    VecLong ind(coo.nnz()), order(coo.nnz());
+    linspace(order, 0, order.size()-1);
+    for (Long i = 0; i < coo.nnz(); ++i)
+        ind[i] = coo.row(i) + coo.n0() * coo.col(i);
+    sort(ind, order);
+    Long k = 0;
+    // i loop through sorted ind, k is the index for unique ind
+    for (Long i = 0; i < coo.nnz()-1; ++i) {
+        dest[order[i]] = k;
+        if (ind[i+1] != ind[i])
+            ++k;
+    }
+    dest[order[coo.nnz()-1]] = k;
+    return k + 1;
+}
+
+inline void reorder(McooInt_O new_coo, McooInt_O coo, VecLong_I dest, Long_I new_Nnz)
+{
+    new_coo.resize(new_Nnz);
+    for (Long i = 0; i < new_Nnz; ++i)
+        new_coo[i] = 0;
+    for (Long i = 0; i < coo.nnz(); ++i) {
+        Long j = dest[i];
+        new_coo[j] += coo[i];
+        new_coo.row(j) = coo.row(i);
+        new_coo.col(j) = coo.col(i);
+    }
+}
+
+inline Long sort_col_dry(VecLong_O dest, McooLlong_I coo)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (dest.size() != coo.nnz())
+        SLS_ERR("wrong shape!");
+#endif
+    VecLong ind(coo.nnz()), order(coo.nnz());
+    linspace(order, 0, order.size()-1);
+    for (Long i = 0; i < coo.nnz(); ++i)
+        ind[i] = coo.row(i) + coo.n0() * coo.col(i);
+    sort(ind, order);
+    Long k = 0;
+    // i loop through sorted ind, k is the index for unique ind
+    for (Long i = 0; i < coo.nnz()-1; ++i) {
+        dest[order[i]] = k;
+        if (ind[i+1] != ind[i])
+            ++k;
+    }
+    dest[order[coo.nnz()-1]] = k;
+    return k + 1;
+}
+
+inline void reorder(McooLlong_O new_coo, McooLlong_O coo, VecLong_I dest, Long_I new_Nnz)
+{
+    new_coo.resize(new_Nnz);
+    for (Long i = 0; i < new_Nnz; ++i)
+        new_coo[i] = 0;
+    for (Long i = 0; i < coo.nnz(); ++i) {
+        Long j = dest[i];
+        new_coo[j] += coo[i];
+        new_coo.row(j) = coo.row(i);
+        new_coo.col(j) = coo.col(i);
+    }
+}
+
+inline Long sort_col_dry(VecLong_O dest, McooDoub_I coo)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (dest.size() != coo.nnz())
+        SLS_ERR("wrong shape!");
+#endif
+    VecLong ind(coo.nnz()), order(coo.nnz());
+    linspace(order, 0, order.size()-1);
+    for (Long i = 0; i < coo.nnz(); ++i)
+        ind[i] = coo.row(i) + coo.n0() * coo.col(i);
+    sort(ind, order);
+    Long k = 0;
+    // i loop through sorted ind, k is the index for unique ind
+    for (Long i = 0; i < coo.nnz()-1; ++i) {
+        dest[order[i]] = k;
+        if (ind[i+1] != ind[i])
+            ++k;
+    }
+    dest[order[coo.nnz()-1]] = k;
+    return k + 1;
+}
+
+inline void reorder(McooDoub_O new_coo, McooDoub_O coo, VecLong_I dest, Long_I new_Nnz)
+{
+    new_coo.resize(new_Nnz);
+    for (Long i = 0; i < new_Nnz; ++i)
+        new_coo[i] = 0;
+    for (Long i = 0; i < coo.nnz(); ++i) {
+        Long j = dest[i];
+        new_coo[j] += coo[i];
+        new_coo.row(j) = coo.row(i);
+        new_coo.col(j) = coo.col(i);
+    }
+}
+
+inline Long sort_col_dry(VecLong_O dest, McooComp_I coo)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (dest.size() != coo.nnz())
+        SLS_ERR("wrong shape!");
+#endif
+    VecLong ind(coo.nnz()), order(coo.nnz());
+    linspace(order, 0, order.size()-1);
+    for (Long i = 0; i < coo.nnz(); ++i)
+        ind[i] = coo.row(i) + coo.n0() * coo.col(i);
+    sort(ind, order);
+    Long k = 0;
+    // i loop through sorted ind, k is the index for unique ind
+    for (Long i = 0; i < coo.nnz()-1; ++i) {
+        dest[order[i]] = k;
+        if (ind[i+1] != ind[i])
+            ++k;
+    }
+    dest[order[coo.nnz()-1]] = k;
+    return k + 1;
+}
+
+inline void reorder(McooComp_O new_coo, McooComp_O coo, VecLong_I dest, Long_I new_Nnz)
+{
+    new_coo.resize(new_Nnz);
+    for (Long i = 0; i < new_Nnz; ++i)
+        new_coo[i] = 0;
+    for (Long i = 0; i < coo.nnz(); ++i) {
+        Long j = dest[i];
+        new_coo[j] += coo[i];
+        new_coo.row(j) = coo.row(i);
+        new_coo.col(j) = coo.col(i);
+    }
+}
+
+
 inline void operator*=(McooDoub_IO v, Doub_I s)
 {
     times_equals_vs(v.p(), s, v.nnz());
@@ -734,5 +912,6 @@ inline Doub norm_inf(McooComp_I A)
     }
     return max(abs_sum);
 }
+
 
 } // namespace slisc
