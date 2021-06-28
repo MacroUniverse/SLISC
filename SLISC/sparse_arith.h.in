@@ -157,6 +157,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //% types = {
 //%     'VecDoub', 'McooDoub', 'VecDoub';
 //%     'VecComp', 'McooComp', 'VecComp';
+//%     'SvecComp', 'McooDoub', 'SvecComp';
 //% };
 //%------------------------------
 //% [T, T1, T2] = varargin{:};

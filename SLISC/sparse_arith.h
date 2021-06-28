@@ -370,6 +370,15 @@ inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
     mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.size() || a.n0() != y.size())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+}
+
 
 inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
 {

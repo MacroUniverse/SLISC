@@ -126,7 +126,8 @@ inline void @McooT@::push(@T@_I s, Long_I i, Long_I j)
             SLS_ERR("@McooT@::push(s,i,j): element already exists!");
     }
 #endif
-    if (m_Nnz == m_N) SLS_ERR("@McooT@::add(): out of memory, please reserve!");
+    if (m_Nnz == m_N)
+        SLS_ERR("@McooT@::add(): out of memory, please reserve!");
     m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
     ++m_Nnz;
 }
@@ -141,7 +142,8 @@ inline void @McooT@::set(@T@_I s, Long_I i, Long_I j)
         }
     }
     // push
-    if (m_Nnz == m_N) SLS_ERR("@McooT@::add(): out of memory, please reserve!");
+    if (m_Nnz == m_N)
+        SLS_ERR("@McooT@::add(): out of memory, please reserve!");
     m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
     ++m_Nnz;
 }
