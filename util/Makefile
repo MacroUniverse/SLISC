@@ -17,6 +17,10 @@ matbinfo: matbinfo.cpp
 	cd ..; make h; cd -;
 	g++ $(flags) matbinfo.cpp -o matbinfo
 
+mattinfo: mattinfo.cpp
+	cd ..; make h; cd -;
+	g++ $(flags) mattinfo.cpp -o mattinfo
+
 cat_files: cat_files.cpp
 	cd ..; make h; cd -;
 	g++ $(flags) cat_files.cpp -o cat_files
