@@ -304,6 +304,38 @@ inline constexpr Bool operator!=(Lcomp_I s1, Comp_I s2)
 }
 
 
+// reference to real/imaginary part
+inline Float &real_r(Fcomp &c)
+{
+    return *((Float*)&c);
+}
+
+inline Float &imag_r(Fcomp &c)
+{
+    return *((Float*)&c + 1);
+}
+
+inline Doub &real_r(Comp &c)
+{
+    return *((Doub*)&c);
+}
+
+inline Doub &imag_r(Comp &c)
+{
+    return *((Doub*)&c + 1);
+}
+
+inline Ldoub &real_r(Lcomp &c)
+{
+    return *((Ldoub*)&c);
+}
+
+inline Ldoub &imag_r(Lcomp &c)
+{
+    return *((Ldoub*)&c + 1);
+}
+
+
 inline void operator+=(Fcomp_O z, Doub_I x)
 {
     z += (Float)x;

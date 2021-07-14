@@ -56,6 +56,24 @@ inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
 }
 //%------------------------
 
+// reference to real/imaginary part
+//% types = {
+//%    'Fcomp'; 'Comp'; 'Lcomp';
+//% };
+//%----------------------------------
+//% Tc = varargin{:};
+//% Tr = rm_comp(Tc);
+inline @Tr@ &real_r(@Tc@ &c)
+{
+    return *((@Tr@*)&c);
+}
+
+inline @Tr@ &imag_r(@Tc@ &c)
+{
+    return *((@Tr@*)&c + 1);
+}
+//%----------------------------------
+
 //% types = {
 //%    'Fcomp', 'Doub';
 //%    'Fcomp', 'Ldoub';
