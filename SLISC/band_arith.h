@@ -259,7 +259,7 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_tim
 
 // construct Crank-Nicolson coefficient matrix from hamiltonian
 // B = 1/2 + I*dt*A/4
-inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I append = false)
+inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I imag_time, Bool_I append = false)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
@@ -270,8 +270,12 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I append = 
         copy(b, 0);
         copy(cut1(b.cmat(), b.idiag()), 0.5);
     }
-    for (Long k = 0; k < a.nnz(); ++k) 
-        b.ref(a.row(k), a.col(k)).imag(dt4*a[k]);
+    if (!imag_time)
+        for (Long k = 0; k < a.nnz(); ++k) 
+            imag_r(b.ref(a.row(k), a.col(k))) += dt4*a[k];
+    else
+        for (Long k = 0; k < a.nnz(); ++k) 
+            real_r(b.ref(a.row(k), a.col(k))) += dt4*a[k];
 }
 
 // construct Crank-Nicolson coefficient matrix from hamiltonian
