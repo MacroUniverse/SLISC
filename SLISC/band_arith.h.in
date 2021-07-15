@@ -126,8 +126,8 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 }
 
 // construct Crank-Nicolson coefficient matrix from hamiltonian
-// B = 1/2 + I*dt*A/4
-inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
+// b = 1/2 + I*dt*a/4
+inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_time)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(a, b))
@@ -140,11 +140,21 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
         SvecDoub_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
-        for (Long i = i_beg; i < i_end; ++i) {
-            if (i == j)
-                cut_b[k + i] = Comp(0.5, dt4 * cut_a[i]);
-            else
-                cut_b[k + i] = Comp(0, dt4 * cut_a[i]);
+        if (!imag_time) {
+            for (Long i = i_beg; i < i_end; ++i) {
+                if (i == j)
+                    cut_b[k + i] = Comp(0.5, dt4 * cut_a[i]);
+                else
+                    cut_b[k + i] = Comp(0, dt4 * cut_a[i]);
+            }
+        }
+        else {
+            for (Long i = i_beg; i < i_end; ++i) {
+                if (i == j)
+                    cut_b[k + i] = 0.5 + dt4 * cut_a[i];
+                else
+                    cut_b[k + i] = dt4 * cut_a[i];
+            }
         }
     }
 }
@@ -167,8 +177,9 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I append = 
 }
 
 // construct Crank-Nicolson coefficient matrix from hamiltonian
-// B = 1/2 + I*dt*(\sum_l coeff[l] a[l])/4
-inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> &a, Doub_I dt, Bool_I append = false)
+// b = 1/2 + I*dt*(\sum_l coeff[l] a[l])/4 for !imag_time
+// b = 1/2 +   dt*(\sum_l coeff[l] a[l])/4 for  imag_time
+inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> &a, Doub_I dt, Bool_I imag_time, Bool_I append)
 {
 #ifdef SLS_CHECK_SHAPES
     for (Long l = 0; l < (Long)a.size(); ++l)
@@ -182,33 +193,18 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
         copy(b, 0);
         copy(cut1(b.cmat(), b.idiag()), 0.5);
     }
-    for (Long i = 0; i < coeff.size(); ++i) {
-        const McooDoub &a1 = a[i];
-        for (Long k = 0; k < a1.nnz(); ++k)
-            imag_r(b.ref(a1.row(k), a1.col(k))) += dt4*coeff[i]*a1[k];
+    if (!imag_time) {
+        for (Long i = 0; i < coeff.size(); ++i) {
+            const McooDoub &a1 = a[i];
+            for (Long k = 0; k < a1.nnz(); ++k)
+                imag_r(b.ref(a1.row(k), a1.col(k))) += dt4*coeff[i]*a1[k];
+        }
     }
-}
-
-// cn_band_mat() for imaginary time propagation
-// B = 1/2 + dt*A/4
-inline void cn_band_mat_imag_time(CbandComp_O b, ScmatDoub_I a, Doub_I dt)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(a, b))
-        SLS_ERR("wrong shape!");
-#endif
-    Long N0 = a.n0(), N1 = a.n1();
-    Doub dt4 = 0.25*dt;
-    for (Long j = 0; j < N1; ++j) {
-        SvecComp cut_b = cut0(b.cmat(), j);
-        SvecDoub_c cut_a = cut0(a, j);
-        Long k = b.idiag() - j;
-        Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
-        for (Long i = i_beg; i < i_end; ++i) {
-            if (i == j)
-                cut_b[k + i] = 0.5 + dt4 * cut_a[i];
-            else
-                cut_b[k + i] = dt4 * cut_a[i];
+    else {
+        for (Long i = 0; i < coeff.size(); ++i) {
+            const McooDoub &a1 = a[i];
+            for (Long k = 0; k < a1.nnz(); ++k)
+                real_r(b.ref(a1.row(k), a1.col(k))) += dt4*coeff[i]*a1[k];
         }
     }
 }
