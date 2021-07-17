@@ -279,6 +279,7 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I imag_time
 }
 
 // construct Crank-Nicolson coefficient matrix from hamiltonian
+// l = 0 is ignored!!!!!!!!!!!
 // b = 1/2 + I*dt*(\sum_l coeff[l] a[l])/4 for !imag_time
 // b = 1/2 +   dt*(\sum_l coeff[l] a[l])/4 for  imag_time
 inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> &a, Doub_I dt, Bool_I imag_time, Bool_I append)
@@ -290,23 +291,22 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
     if (coeff.size() != (Long)a.size())
         SLS_ERR("wrong shape!");
 #endif
-    Doub dt4 = 0.25*dt;
     if (!append) {
         copy(b, 0);
         copy(cut1(b.cmat(), b.idiag()), 0.5);
     }
     if (!imag_time) {
-        for (Long i = 0; i < coeff.size(); ++i) {
-            const McooDoub &a1 = a[i];
+        for (Long l = 1; l < coeff.size(); ++l) {
+            const McooDoub &a1 = a[l]; Doub c = 0.25*dt*coeff[l];
             for (Long k = 0; k < a1.nnz(); ++k)
-                imag_r(b.ref(a1.row(k), a1.col(k))) += dt4*coeff[i]*a1[k];
+                imag_r(b.ref(a1.row(k), a1.col(k))) += c*a1[k];
         }
     }
     else {
-        for (Long i = 0; i < coeff.size(); ++i) {
-            const McooDoub &a1 = a[i];
+        for (Long l = 1; l < coeff.size(); ++l) {
+            const McooDoub &a1 = a[l]; Doub c = 0.25*dt*coeff[l];
             for (Long k = 0; k < a1.nnz(); ++k)
-                real_r(b.ref(a1.row(k), a1.col(k))) += dt4*coeff[i]*a1[k];
+                real_r(b.ref(a1.row(k), a1.col(k))) += c*a1[k];
         }
     }
 }
