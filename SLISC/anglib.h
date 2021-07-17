@@ -33,6 +33,40 @@ inline void cgTableDim(Long_O Ndim, Long_O m1_max, Long_I l1, Long_I l2, Long_I 
         m1_max = l2 + M;
 }
 
+// clebsch gordan coefficient [j1,m1,j2,m2,j,m] for integer numbers
+inline Doub cleb_int(Long_I j1, Long_I m1, Long_I j2, Long_I m2, Long_I j, Long_I m) {
+    Doub cleb, factor, sum;
+    Long par, z, zmin, zmax;
+
+    if (j1 < 0 || j2 < 0 || j < 0 ||
+        abs(m1)>j1 || abs(m2)>j2 || abs(m)>j ||
+        j>j1+j2 || j<abs(j1-j2) || m1+m2!=m) {
+        cleb = 0;
+    }
+    else if (isodd(j1+j2+j)) {
+        if ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))
+            cleb = 0;
+    }
+    else {
+        factor = binom(2*j1, j1 + j2 - j) / binom(j1 + j2 + j + 1, j1 + j2 - j);
+        factor *= binom(2*j2, j1 + j2 - j) / binom(2*j1, j1 - m1);
+        factor /= binom(2*j2, j2 - m2) * binom(2*j, j - m);
+        factor = sqrt(factor);
+
+        zmin = max(Long(0), max(2*j2 + j1 - m1 - (j1 + j2 + j), 2*j1 + j2 + m2 - (j1 + j2 + j)));
+        zmax = min(j1 + j2 - j, min(j1 - m1, j2 + m2));
+
+        sum = 0.;
+        for (z = zmin; z <= zmax; ++z) {
+            par = isodd(z)? -1: 1;
+            sum += par * binom(j1 + j2 - j, z)*binom(j1 - j2 + j, j1 - m1 - z)
+                * binom(-j1 + j2 + j, j2 + m2 - z);
+        }
+        cleb = factor * sum;
+    }
+    return cleb;
+}
+
 // clebsch gordan coefficient [two_j1/2,two_m1/2,two_j2/2,two_m2/2,two_j/2,two_m/2]
 inline Doub cleb(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_m2, Long_I two_j, Long_I two_m) {
 
@@ -45,10 +79,13 @@ inline Doub cleb(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_m2, Lon
         2 * (j / 2) - Long(2 * (j / 2.0)) != 2 * (abs(m) / 2) - Long(2 * (abs(m) / 2.0)) ||
         j1<0 || j2<0  || j<0 || abs(m1)>j1 || abs(m2)>j2 ||
         abs(m)>j || j1 + j2<j || abs(j1 - j2)>j || m1 + m2 != m) {
-        cleb = 0.;
+        cleb = 0;
+    }
+    else if (!isodd(j1) && !isodd(j2) && !isodd(j) && isodd(j1+j2+j)) {
+        if ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))
+            cleb = 0;
     }
     else {
-        factor = 0.0;
         factor = binom(j1, (j1 + j2 - j) / 2) / binom((j1 + j2 + j + 2) / 2, (j1 + j2 - j) / 2);
         factor = factor * binom(j2, (j1 + j2 - j) / 2) / binom(j1, (j1 - m1) / 2);
         factor = factor / binom(j2, (j2 - m2) / 2) / binom(j, (j - m) / 2);
@@ -57,7 +94,7 @@ inline Doub cleb(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_m2, Lon
         zmin = max(Long(0), max(j2 + (j1 - m1) / 2 - (j1 + j2 + j) / 2, j1 + (j2 + m2) / 2 - (j1 + j2 + j) / 2));
         zmax = min((j1 + j2 - j) / 2, min((j1 - m1) / 2, (j2 + m2) / 2));
 
-        sum = 0.0;
+        sum = 0;
         for (z = zmin; z <= zmax; ++z) {
             par = 1;
                 if (2 * (z / 2) - int(2 * (z / 2.0)) != 0)
@@ -68,6 +105,13 @@ inline Doub cleb(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_m2, Lon
         cleb = factor * sum;
     }
     return cleb;
+}
+
+// 3j symbol [j1,m1,j2,m2,j,m]
+// written by me
+inline Doub threej_int(Long_I j1, Long_I m1, Long_I j2, Long_I m2, Long_I j3, Long_I m3)
+{
+    return pow(-1, j1 -j2 -m3) / sqrt(2*j3+1) * cleb_int(j1, m1, j2, m2, j3, -m3);
 }
 
 // 3j symbol [j1/2,m1/2,j2/2,m2/2,j/2,m/2]
