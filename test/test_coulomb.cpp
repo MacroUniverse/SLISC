@@ -16,5 +16,25 @@ void test_coulomb()
     ret = coulomb_sigma(4, -2. / 9);
     if (abs(ret + 0.3347819876751476) > 1e-15)
         SLS_ERR("failed!");
+
+    Long Nr = 20;
+    VecDoub r(Nr); linspace(r, 0, 200);
+    Doub k = 0.5, F_exp = 0; //  = 3.1415; // F_exp = 0;
+    VecDoub F(Nr);
+    for (Long l = 50; l < 52; ++l) {
+        // ret = gsl_sf_coulomb_wave_F_array(l, 0, eta, k*r[i], &F, &F_exp);
+        // cout << "l = " << l << endl;
+        coulombF(F, l, k, r);
+        for (Long i = 0; i < r.size(); ++i) {
+            if (isnan(F[i])) {
+                cout << "(ret, l, i, F_exp) = " << ret << ", " << l << ", " << i << ", " << F_exp << endl;
+                SLS_ERR("failed!");
+            }
+            if (isinf(F[i])) {
+                cout << "(ret, l, i, F_exp) = " << ret << ", " << l << ", " << i << ", " << F_exp << endl;
+                SLS_ERR("failed!");
+            }
+        }
+    }
 #endif
 }
