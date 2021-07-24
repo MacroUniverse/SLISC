@@ -17,7 +17,7 @@ public:
     void operator<<(Cmat3Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Char &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Char &operator()(Long_I i, Long_I j, Long_I k);
     const Char &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -108,7 +108,7 @@ public:
     void operator<<(Cmat3Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Int &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Int &operator()(Long_I i, Long_I j, Long_I k);
     const Int &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -199,7 +199,7 @@ public:
     void operator<<(Cmat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Llong &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Llong &operator()(Long_I i, Long_I j, Long_I k);
     const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -299,7 +299,7 @@ public:
     void operator<<(Cmat3Float &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Float &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Float &operator()(Long_I i, Long_I j, Long_I k);
     const Float &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -390,7 +390,7 @@ public:
     void operator<<(Cmat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Doub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Doub &operator()(Long_I i, Long_I j, Long_I k);
     const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -481,7 +481,7 @@ public:
     void operator<<(Cmat3Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Ldoub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Ldoub &operator()(Long_I i, Long_I j, Long_I k);
     const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -572,7 +572,7 @@ public:
     void operator<<(Cmat3Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Fcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Fcomp &operator()(Long_I i, Long_I j, Long_I k);
     const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -663,7 +663,7 @@ public:
     void operator<<(Cmat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Comp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Comp &operator()(Long_I i, Long_I j, Long_I k);
     const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -754,7 +754,7 @@ public:
     void operator<<(Cmat3Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Lcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Lcomp &operator()(Long_I i, Long_I j, Long_I k);
     const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -845,7 +845,7 @@ public:
     void operator<<(Cmat3Fimag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Fimag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Fimag &operator()(Long_I i, Long_I j, Long_I k);
     const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -936,7 +936,7 @@ public:
     void operator<<(Cmat3Imag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Imag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Imag &operator()(Long_I i, Long_I j, Long_I k);
     const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
@@ -1027,7 +1027,7 @@ public:
     void operator<<(Cmat3Limag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    Limag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    Limag &operator()(Long_I i, Long_I j, Long_I k);
     const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;

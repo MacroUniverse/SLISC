@@ -364,6 +364,51 @@ inline void disp(SvecComp_I v, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 
+inline void disp(DvecLlong_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
+inline void disp(DvecDoub_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
+inline void disp(DvecComp_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+
 inline void disp(DcmatInt_I a, Int_I precision = def_disp_prec)
 {
     Long i, j, m{ a.n0() }, n{ a.n1() };

@@ -11,6 +11,7 @@ const Int def_disp_prec = 8;
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'DvecLlong'; 'DvecDoub'; 'DvecComp';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
 //%     'CmobdInt'; 'CmobdDoub'; 'CmobdComp'; 'CbandDoub'; 'CbandComp';
 //%     'McooInt'; 'McooDoub'; 'McooComp';

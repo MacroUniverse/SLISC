@@ -33,7 +33,7 @@ public:
     void operator<<(@Cmat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
     void reshape(Long_I N0, Long_I N1, Long_I N2);
-    @T@ &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
+    @T@ &operator()(Long_I i, Long_I j, Long_I k);
     const @T@ &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
     Long n1() const;
