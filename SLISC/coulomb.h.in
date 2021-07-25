@@ -52,6 +52,25 @@ inline Comp arb_gamma(Comp_I z)
 	return res;
 }
 
+inline Comp arb_lngamma(Comp_I z)
+{
+    Comp res;
+    acb_t z1, res1;
+    arb_t temp1;
+    acb_init(z1); acb_init(res1); arb_init(temp1);
+    acb_set_d_d(z1, real(z), imag(z));
+    acb_lgamma(res1, z1, 64);
+    int digits = acb_rel_accuracy_bits(res1)/3.321928;
+	if (digits < 15)
+		SLS_WARN("warning: arb_gamma error too large!");
+	acb_get_real(temp1, res1);
+	res.real(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
+	acb_get_imag(temp1, res1);
+	res.imag(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
+	acb_clear(z1); acb_clear(res1); arb_clear(temp1);
+	return res;
+}
+
 inline Comp arb_ln_gamma(Comp_I c)
 {
     SLS_ERR("not implemented!");
