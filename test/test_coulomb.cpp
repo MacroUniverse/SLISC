@@ -49,5 +49,9 @@ void test_coulomb()
     val1 = Comp(-3.5626977297536895250, 1.8006407379666919011);
     if (abs((arb_lngamma(Comp(1.2, 3.4))-val1)/val1) > 1e-14)
         SLS_ERR("failed!");
+
+    val = -1.8006407379666919011;
+    if (abs(arb_coulomb_sigma(0.2, -3.4) - val)/val > 1e-14)
+        SLS_ERR("failed!");
 #endif
 }

@@ -71,6 +71,13 @@ inline Comp arb_lngamma(Comp_I z)
 	return res;
 }
 
+inline Doub arb_coulomb_sigma(Doub_I l, Doub_I eta)
+{
+    if (eta > 0)
+        SLS_ERR("are you sure?");
+    return imag(arb_lngamma(Comp(l + 1, eta)));
+}
+
 inline Comp arb_ln_gamma(Comp_I c)
 {
     SLS_ERR("not implemented!");
@@ -167,7 +174,7 @@ inline void coulombF(SvecDoub_O F, Int_I l, Doub_I k, SvecDoub_I r, Doub_I Z = -
 
 #ifdef SLS_USE_GSL
 // === coulomb phase shift ===
-Doub coulomb_sigma(Int_I l, Doub_I eta)
+inline Doub coulomb_sigma(Int_I l, Doub_I eta)
 {
     if (eta > 0)
         SLS_ERR("are you sure?");
