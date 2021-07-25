@@ -43,9 +43,8 @@ inline Doub cleb_int(Long_I j1, Long_I m1, Long_I j2, Long_I m2, Long_I j, Long_
         j>j1+j2 || j<abs(j1-j2) || m1+m2!=m) {
         cleb = 0;
     }
-    else if (isodd(j1+j2+j)) {
-        if ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))
-            cleb = 0;
+    else if (isodd(j1+j2+j) && ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))) {
+        cleb = 0;
     }
     else {
         factor = binom(2*j1, j1 + j2 - j) / binom(j1 + j2 + j + 1, j1 + j2 - j);
@@ -81,9 +80,8 @@ inline Doub cleb(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_m2, Lon
         abs(m)>j || j1 + j2<j || abs(j1 - j2)>j || m1 + m2 != m) {
         cleb = 0;
     }
-    else if (!isodd(j1) && !isodd(j2) && !isodd(j) && isodd((j1+j2+j)/2)) {
-        if ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))
-            cleb = 0;
+    else if (!isodd(j1) && !isodd(j2) && !isodd(j) && isodd((j1+j2+j)/2) && ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))) {
+        cleb = 0;
     }
     else {
         factor = binom(j1, (j1 + j2 - j) / 2) / binom((j1 + j2 + j + 2) / 2, (j1 + j2 - j) / 2);
