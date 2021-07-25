@@ -39,9 +39,11 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 ## Compiling
 * C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04
 * If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
-* If you want to use everything, make sure you have `liblapacke-dev` and `liggsl-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
-* Run `make` to compile
-* If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time
+* If you want to use everything, make sure you have `liblapacke-dev`, `libgsl-dev` and `libflint-arb-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
+* `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
+* If you want to use only some of the libraries, include some of `-D SLS_USE_CBLAS`, `-D SLS_USE_LAPACKE`, `-D SLS_USE_GSL` and `-D SLS_USE_ARB` flags in makefiles.
+* Run `make` to compile, uncomment one of the `include` in Makefile.
+* If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time.
 * Use `./main.x` to run all tests.
 
 ## Recommended Programming Style

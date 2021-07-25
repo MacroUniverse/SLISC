@@ -26,7 +26,7 @@ void test_coulomb()
         // cout << "l = " << l << endl;
         coulombF(F, l, k, r);
         for (Long i = 0; i < r.size(); ++i) {
-            if (isnan(F[i])) {
+            if (slisc::isnan(F[i])) {
                 cout << "(ret, l, i, F_exp) = " << ret << ", " << l << ", " << i << ", " << F_exp << endl;
                 SLS_ERR("failed!");
             }
@@ -36,5 +36,10 @@ void test_coulomb()
             }
         }
     }
+#endif
+#ifdef SLS_USE_ARB
+    Doub val = 4.5882301380287637784e-286;
+    if (abs((arb_coulombF(203, -0.1, 6) - val)/val) > 1e-14)
+        SLS_ERR("failed!");
 #endif
 }

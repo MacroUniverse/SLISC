@@ -1,5 +1,9 @@
 #pragma once
 #include "global.h"
+#ifdef SLS_USE_ARB
+#include "arb_hypgeom.h" // real functions
+#include "acb_hypgeom.h" // complex functions
+#endif
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_specfunc.h>
 #include <gsl/gsl_sf_gamma.h>
@@ -9,6 +13,39 @@
 
 namespace slisc {
 using cwfcomp::Coulomb_wave_functions;
+
+#ifdef SLS_USE_ARB
+// Coulomb function (normalized)
+inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
+{
+	slong prec = 64; // set precision bit (log10/log2 = 3.322)
+	Doub F = 0;
+	arb_t l1, eta1, x1, F1;
+	arb_init(l1); arb_init(eta1); arb_init(x1); arb_init(F1);
+	arb_set_d(l1, l); arb_set_d(eta1, eta);
+	arb_set_d(x1, x); arb_set_d(F1, F);
+
+	arb_hypgeom_coulomb(F1, NULL, l1, eta1, x1, prec);
+
+	Int digits = arb_rel_accuracy_bits(F1)/3.321928;
+	if (digits < 15) {
+		cout << "warning: hypergeom1F1 error too large : " << digits << " digits" << endl;
+	}
+	F = arf_get_d(arb_midref(F1), ARF_RND_NEAR);
+	arb_clear(l1); arb_clear(eta1); arb_clear(x1); arb_clear(F1);
+	return F;
+}
+
+inline Comp arb_gamma(Comp_I c)
+{
+    SLS_ERR("not implemented!");
+}
+
+inline Comp arb_ln_gamma(Comp_I c)
+{
+    SLS_ERR("not implemented!");
+}
+#endif
 
 #ifdef SLS_USE_GSL
 // === coulomb phase shift ===
