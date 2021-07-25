@@ -41,5 +41,9 @@ void test_coulomb()
     Doub val = 4.5882301380287637784e-286;
     if (abs((arb_coulombF(203, -0.1, 6) - val)/val) > 1e-14)
         SLS_ERR("failed!");
+    
+    Comp val1(-0.006461649191133419760, 0.027616334359445151916);
+    if (abs((arb_gamma(Comp(1.2, 3.4))-val1)/val1) > 1e-14)
+        SLS_ERR("failed!");
 #endif
 }

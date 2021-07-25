@@ -43,6 +43,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
 * If you want to use only some of the libraries, include some of `-D SLS_USE_CBLAS`, `-D SLS_USE_LAPACKE`, `-D SLS_USE_GSL` and `-D SLS_USE_ARB` flags in makefiles.
 * Run `make` to compile, uncomment one of the `include` in Makefile.
+* If you want to recompile just one test, use `make main.o test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time.
 * Use `./main.x` to run all tests.
 
