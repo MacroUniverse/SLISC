@@ -16,18 +16,21 @@ namespace slisc {
 // Coulomb function (normalized)
 inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 {
-	slong prec = 64; // set precision bit (log10/log2 = 3.322)
+	slong prec = 80; // set precision bit (log10/log2 = 3.322)
 	Doub F = 0;
 	arb_t l1, eta1, x1, F1;
 	arb_init(l1); arb_init(eta1); arb_init(x1); arb_init(F1);
 	arb_set_d(l1, l); arb_set_d(eta1, eta); arb_set_d(x1, x);
-
-	arb_hypgeom_coulomb(F1, NULL, l1, eta1, x1, prec);
-
-	Int digits = arb_rel_accuracy_bits(F1)/3.321928;
-	if (digits < 15) {
-		cout << "warning: hypergeom1F1 error too large : " << digits << " digits" << endl;
-	}
+    Int digits;
+    for (Long i = 0; i < 6; ++i) {
+        prec *= 2;
+        arb_hypgeom_coulomb(F1, NULL, l1, eta1, x1, prec);
+        digits = arb_rel_accuracy_bits(F1)/3.321928;
+	    if (digits >= 16)
+            break;
+    }
+    if (digits < 16)
+	    SLS_WARN("arb_coulombF error too large : " + num2str(digits) + " digits");
 	F = arf_get_d(arb_midref(F1), ARF_RND_NEAR);
 	arb_clear(l1); arb_clear(eta1); arb_clear(x1); arb_clear(F1);
 	return F;

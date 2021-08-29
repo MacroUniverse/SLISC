@@ -39,7 +39,10 @@ void test_coulomb()
 #endif
 #ifdef SLS_USE_ARB
     Doub val = 4.5882301380287637784e-286;
-    if (abs((arb_coulombF(203, -0.1, 6) - val)/val) > 1e-14)
+    if (abs((arb_coulombF(203, -0.1, 6) - val)/val) > 1e-15)
+        SLS_ERR("failed!");
+    val = -0.22430046820226034798;
+    if (abs((arb_coulombF(204, -1.3, 1000) - val)/val) > 1e-15)
         SLS_ERR("failed!");
     
     Comp val1(-0.006461649191133419760, 0.027616334359445151916);
