@@ -23,14 +23,14 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 	arb_set_d(l1, l); arb_set_d(eta1, eta); arb_set_d(x1, x);
     Int digits;
     for (Long i = 0; i < 6; ++i) {
-        prec *= 2;
         arb_hypgeom_coulomb(F1, NULL, l1, eta1, x1, prec);
         digits = arb_rel_accuracy_bits(F1)/3.321928;
 	    if (digits >= 16)
             break;
+        prec *= 2;
     }
     if (digits < 16)
-	    SLS_WARN("arb_coulombF error too large : " + num2str(digits) + " digits");
+	    SLS_ERR("arb_coulombF error too large : " + num2str(digits) + " digits");
 	F = arf_get_d(arb_midref(F1), ARF_RND_NEAR);
 	arb_clear(l1); arb_clear(eta1); arb_clear(x1); arb_clear(F1);
 	return F;
@@ -38,15 +38,22 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 
 inline Comp arb_gamma(Comp_I z)
 {
+    slong prec = 80;
     Comp res;
     acb_t z1, res1;
     arb_t temp1;
+    Int digits;
     acb_init(z1); acb_init(res1); arb_init(temp1);
     acb_set_d_d(z1, real(z), imag(z));
-    acb_gamma(res1, z1, 64);
-    int digits = acb_rel_accuracy_bits(res1)/3.321928;
-	if (digits < 15)
-		SLS_WARN("warning: arb_gamma error too large!");
+    for (Long i = 0; i < 6; ++i) {
+        acb_gamma(res1, z1, prec);
+        digits = acb_rel_accuracy_bits(res1)/3.321928;
+        if (digits >= 16)
+            break;
+        prec *= 2;
+    }
+    if (digits < 16)
+	    SLS_ERR("arb_gamma error too large : " + num2str(digits) + " digits");
 	acb_get_real(temp1, res1);
 	res.real(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
 	acb_get_imag(temp1, res1);
@@ -57,15 +64,22 @@ inline Comp arb_gamma(Comp_I z)
 
 inline Comp arb_lngamma(Comp_I z)
 {
+    slong prec = 80;
     Comp res;
     acb_t z1, res1;
     arb_t temp1;
+    Int digits;
     acb_init(z1); acb_init(res1); arb_init(temp1);
     acb_set_d_d(z1, real(z), imag(z));
-    acb_lgamma(res1, z1, 64);
-    int digits = acb_rel_accuracy_bits(res1)/3.321928;
-	if (digits < 15)
-		SLS_WARN("warning: arb_gamma error too large!");
+    for (Long i = 0; i < 6; ++i) {
+        acb_lgamma(res1, z1, prec);
+        digits = acb_rel_accuracy_bits(res1)/3.321928;
+        if (digits >= 16)
+            break;
+        prec *= 2;
+    }
+	if (digits < 16)
+		SLS_ERR("arb_lngamma error too large : " + num2str(digits) + " digits");
 	acb_get_real(temp1, res1);
 	res.real(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
 	acb_get_imag(temp1, res1);
@@ -79,11 +93,6 @@ inline Doub arb_coulomb_sigma(Doub_I l, Doub_I eta)
     if (eta > 0)
         SLS_ERR("are you sure?");
     return imag(arb_lngamma(Comp(l + 1, eta)));
-}
-
-inline Comp arb_ln_gamma(Comp_I c)
-{
-    SLS_ERR("not implemented!");
 }
 #endif
 

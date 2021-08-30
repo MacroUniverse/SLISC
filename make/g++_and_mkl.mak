@@ -14,7 +14,7 @@ libs = -lgsl -larb
 
 no_warn = -Wno-reorder -Wno-misleading-indentation -fmax-errors=1 # supress warning about initializer list order
 
-flags = -Wall $(no_warn) -fopenmp -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB
+flags = -Wall $(no_warn) -fopenmp -O3 -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D NDEBUG
 
 # link
 # choose `$(mkl_dyn_link)` or `$(mkl_stat_link)`
