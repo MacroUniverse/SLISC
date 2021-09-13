@@ -7,7 +7,7 @@
 
 compiler = g++
 
-libs = -lgsl -llapacke -lblas -larb -lboost_system -lboost_filesystem
+libs = -lgsl -llapacke -lblas -lflint -larb -lboost_system -lboost_filesystem
 
 flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL -D SLS_USE_ARB -D SLS_USE_BOOST #-D NDEBUG
 

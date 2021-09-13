@@ -15,7 +15,7 @@ compile_flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp
 
 link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl -larb
 
-link_mkl_dynamic = -lpthread -lm -ldl -larb -lboost_system -lboost_filesystem
+link_mkl_dynamic = -lpthread -lm -ldl -lflint -larb -lboost_system -lboost_filesystem
 
 # goal
 goal: clean main.o

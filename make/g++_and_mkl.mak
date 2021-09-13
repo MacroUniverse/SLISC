@@ -10,7 +10,7 @@ mkl_compile =  -m64 -I${MKLROOT}/include
 
 # use `sudo apt install libgsl-dev` to install GNU scientific library
 # use `dpkg -L dpkg -L libgsl-dev` to check the installation directory
-libs = -lgsl -larb -lboost_system -lboost_filesystem
+libs = -lgsl -lflint -larb -lboost_system -lboost_filesystem
 
 no_warn = -Wno-reorder -Wno-misleading-indentation -fmax-errors=1 # supress warning about initializer list order
 
