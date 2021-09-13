@@ -1,11 +1,16 @@
 #ifdef SLS_USE_BOOST
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/json/src.hpp>
 #include "../SLISC/file.h"
+#endif
 
 void test_boost()
 {
+	#ifdef SLS_USE_BOOST
 	using namespace slisc;
+
+	// ================ file system =====================
 	using boost::filesystem::file_size; using boost::filesystem::rename;
 	using boost::system::error_code; using boost::filesystem::last_write_time;
 	using boost::filesystem::current_path;
@@ -56,5 +61,44 @@ void test_boost()
 		SLS_ERR("failed!");
 	if (p.parent_path() != "abc/def") // no slash at the end!
 		SLS_ERR("failed!");
+	
+	// ============== json ===================
+	using boost::json::value; using boost::json::parse;
+	// object obj;                                                     // construct an empty object
+	// obj[ "pi" ] = 3.141;                                            // insert a double
+	// obj[ "happy" ] = true;                                          // insert a bool
+	// obj[ "name" ] = "Boost";                                        // insert a string
+	// obj[ "nothing" ] = nullptr;                                     // insert a null
+	// obj[ "answer" ].emplace_object()["everything"] = 42;            // insert an object with 1 element
+	// obj[ "list" ] = { 1, 0, 2 };                                    // insert an array with 3 elements
+	// obj[ "object" ] = { {"currency", "USD"}, {"value", 42.99} };    // insert an object with 2 elements
+	
+	value jv1 = {
+    { "pi", 3.141 },
+    { "happy", true },
+    { "name", "Boost" },
+    { "nothing", nullptr },
+    { "answer", {
+        { "everything", 42 } } },
+    {"list", {1, 0, 2}}, // [1, 0, 2]
+    {"object", {
+        { "currency", "USD" },
+        { "value", 42.99 }
+            } }
+    };
+
+	string s1 = serialize(jv1);
+	// cout << jv1 << "\n\n\n" << endl; // uncomment
+	value jv2 = parse(s1, ec);
+	// cout << jv2 << "\n\n\n" << endl; // uncomment
+	if(ec)
+    	SLS_ERR("failed: " + ec.message());
+	if (jv1 != jv2)
+		SLS_ERR("failed!");
+	string s2 = serialize(jv2);
+	// cout << s1 << endl;
+	// cout << s2 << endl;
+	if (s1 != s2)
+		SLS_ERR("failed!");
+	#endif
 }
-#endif
