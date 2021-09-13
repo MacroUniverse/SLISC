@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "string.h"
 #ifdef SLS_USE_ARB
 #include "arb_hypgeom.h" // real functions
 #include "acb_hypgeom.h" // complex functions

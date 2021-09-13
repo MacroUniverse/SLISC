@@ -138,13 +138,17 @@ inline void Int2baseN(Uchar *p, Int_I N, Int_I base, Int_I n)
 }
 
 // convert 4 bytes to one of the 85 character sets that can be typed by keyboard and easy to distinguish
-Str b85 = "!#$%&()*+,-.123456789:;<=>?@ABCDEFGHJKLMNPQRSTUVWXYZ[]^_abcdefghijkmnopqrstuvwxyz{|}~";
+inline Char b85(Long_I i)
+{
+    static Str s = "!#$%&()*+,-.123456789:;<=>?@ABCDEFGHJKLMNPQRSTUVWXYZ[]^_abcdefghijkmnopqrstuvwxyz{|}~";
+    return s[i];
+}
 
 // search index of b85, return -1 if not found
 inline Long b85_ind(Char_I c)
 {
     for (Long i = 0; i < 85; ++i)
-        if (c == b85[i])
+        if (c == b85(i))
             return i;
     return -1;
 }
@@ -164,10 +168,10 @@ inline Int b852Int(const Char *p)
 inline void Int2b85(Char *p, Int_I n)
 {
     Int m = n;
-    p[0] = b85[m % 85];
+    p[0] = b85(m % 85);
     for (Int i = 1; i < 5; ++i) {
         m /= 85;
-        p[i] = b85[m % 85];
+        p[i] = b85(m % 85);
     }
 }
 
@@ -182,7 +186,7 @@ inline void Int2b85(Char *p, Int_I n)
 // 	for (Long i = 0; i < iend; ++i) {
 // 		n = ip[i];
 // 		for (Int j = 0; j < 5; ++j) {
-// 			str85[k] = b85[n % 85];
+// 			str85[k] = b85(n % 85);
 // 			n /= 85; ++k;
 // 		}
 // 	}
@@ -191,7 +195,7 @@ inline void Int2b85(Char *p, Int_I n)
 // 	for (Int i = 0; i < Int(data.size() % 4); ++i)
 // 		n = n*256 + data[4*iend+i];
 // 	for (Int j = 0; j < 5; ++j) {
-// 		str85[k] = b85[n % 85];
+// 		str85[k] = b85(n % 85);
 // 		n /= 85; ++k;
 // 	}
 // }
@@ -205,12 +209,12 @@ inline void Int2b85(Char *p, Int_I n)
 // 	Long k = 0, iend = str85.size()/5;
 // 	for (Long i = 0; i < iend; ++i) {
 //         for (Int j = 0; j < 5; ++j) {
-//             // str85[k] = b85[i*5+n % 85];
+//             // str85[k] = b85(i*5+n % 85);
 //             n /= 85; ++k;
 //         }
 // 		// n = ip[i];
 // 		for (Int j = 0; j < 5; ++j) {
-// 			str85[k] = b85[n % 85];
+// 			str85[k] = b85(n % 85);
 // 			n /= 85; ++k;
 // 		}
 // 	}
@@ -219,7 +223,7 @@ inline void Int2b85(Char *p, Int_I n)
 // 	for (Int i = 0; i < Int(data.size() % 4); ++i)
 // 		n = n*256 + data[4*iend+i];
 // 	for (Int j = 0; j < 5; ++j) {
-// 		str85[k] = b85[n % 85];
+// 		str85[k] = b85(n % 85);
 // 		n /= 85; ++k;
 // 	}
 // }
