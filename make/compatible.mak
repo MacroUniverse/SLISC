@@ -3,7 +3,7 @@
 
 compiler = g++
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -I ../boost-headers -g -fmax-errors=1
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)

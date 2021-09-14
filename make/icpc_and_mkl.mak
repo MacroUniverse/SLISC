@@ -7,7 +7,7 @@ compiler = icpc
 gsl_dir = /thummscratch/Hongyu/gsl/
 link_gsl = -L $(gsl_dir)lib/ -lgsl
 
-compile_flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_BOOST
+compile_flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -I ../boost-headers -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_BOOST
 # -g # debug
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
