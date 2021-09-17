@@ -9,7 +9,7 @@ protected:
     const Char *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Char_c();
     Jcmat3Char_c(const Char *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -116,7 +116,7 @@ protected:
     Char *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Char();
     Jcmat3Char(Char *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -228,7 +228,7 @@ protected:
     const Int *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Int_c();
     Jcmat3Int_c(const Int *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -335,7 +335,7 @@ protected:
     Int *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Int();
     Jcmat3Int(Int *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -447,7 +447,7 @@ protected:
     const Llong *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Llong_c();
     Jcmat3Llong_c(const Llong *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -554,7 +554,7 @@ protected:
     Llong *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Llong();
     Jcmat3Llong(Llong *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -682,7 +682,7 @@ protected:
     const Float *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Float_c();
     Jcmat3Float_c(const Float *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -789,7 +789,7 @@ protected:
     Float *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Float();
     Jcmat3Float(Float *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -901,7 +901,7 @@ protected:
     const Doub *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Doub_c();
     Jcmat3Doub_c(const Doub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1008,7 +1008,7 @@ protected:
     Doub *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Doub();
     Jcmat3Doub(Doub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1120,7 +1120,7 @@ protected:
     const Ldoub *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Ldoub_c();
     Jcmat3Ldoub_c(const Ldoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1227,7 +1227,7 @@ protected:
     Ldoub *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Ldoub();
     Jcmat3Ldoub(Ldoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1339,7 +1339,7 @@ protected:
     const Fcomp *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Fcomp_c();
     Jcmat3Fcomp_c(const Fcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1446,7 +1446,7 @@ protected:
     Fcomp *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Fcomp();
     Jcmat3Fcomp(Fcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1558,7 +1558,7 @@ protected:
     const Comp *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Comp_c();
     Jcmat3Comp_c(const Comp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1665,7 +1665,7 @@ protected:
     Comp *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Comp();
     Jcmat3Comp(Comp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1777,7 +1777,7 @@ protected:
     const Lcomp *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Lcomp_c();
     Jcmat3Lcomp_c(const Lcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
@@ -1884,7 +1884,7 @@ protected:
     Lcomp *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     Jcmat3Lcomp();
     Jcmat3Lcomp(Lcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);

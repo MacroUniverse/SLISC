@@ -55,7 +55,7 @@ protected:
     @CT@ *m_p;
     Long m_N;
     Long m_N0, m_N1, m_N2;
-    Long m_step1, m_step2, m_step3; // a(i,j) = m_p + m_step1*i + m_step2*j + m_step*k
+    Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
 public:
     @Class@();
     @Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
