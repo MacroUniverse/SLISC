@@ -18,7 +18,7 @@ namespace slisc {
 //% };
 //%-----------------------
 //% [Tv, Tv1] = varargin{:};
-// scaled hydrogen bound state radial wave function
+// scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 {
 #ifdef SLS_CHECK_SHAPES
