@@ -2220,7 +2220,17 @@ inline void abs(VecDoub_IO v)
     abs_v(v.p(), v.size());
 }
 
+inline void abs(SvecDoub_IO v)
+{
+    abs_v(v.p(), v.size());
+}
+
 inline void abs(VecComp_IO v)
+{
+    abs_v(v.p(), v.size());
+}
+
+inline void abs(SvecComp_IO v)
 {
     abs_v(v.p(), v.size());
 }
@@ -5073,6 +5083,94 @@ inline void operator/=(VecComp_O &v, VecDoub_I v1)
         SLS_ERR("wrong shape!");
 #endif
     divide_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+// v += v
+inline void operator+=(DvecDoub_O &v, SvecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] += v1[i];
+}
+
+// v -= v
+inline void operator-=(DvecDoub_O &v, SvecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] -= v1[i];
+}
+
+// v *= v
+inline void operator*=(DvecDoub_O &v, SvecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] *= v1[i];
+}
+
+// v /= v
+inline void operator/=(DvecDoub_O &v, SvecDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] /= v1[i];
+}
+
+// v += v
+inline void operator+=(DvecComp_O &v, SvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] += v1[i];
+}
+
+// v -= v
+inline void operator-=(DvecComp_O &v, SvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] -= v1[i];
+}
+
+// v *= v
+inline void operator*=(DvecComp_O &v, SvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] *= v1[i];
+}
+
+// v /= v
+inline void operator/=(DvecComp_O &v, SvecComp_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] /= v1[i];
 }
 
 inline void operator+=(MatDoub_O &v, MatDoub_I v1)

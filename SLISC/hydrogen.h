@@ -10,7 +10,7 @@ namespace slisc {
 
 // === coulomb phase shift ===
 #ifdef SLS_USE_GSL
-// scaled hydrogen bound state radial wave function
+// scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -36,7 +36,7 @@ inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 	gsl_set_error_handler(NULL);
 }
 
-// scaled hydrogen bound state radial wave function
+// scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -62,7 +62,7 @@ inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 	gsl_set_error_handler(NULL);
 }
 
-// scaled hydrogen bound state radial wave function
+// scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -88,7 +88,7 @@ inline void hydrogen_R(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 	gsl_set_error_handler(NULL);
 }
 
-// scaled hydrogen bound state radial wave function
+// scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
 #ifdef SLS_CHECK_SHAPES

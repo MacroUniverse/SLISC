@@ -383,7 +383,7 @@ inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%---------------------
 
 //% types = {
-//%     'VecDoub'; 'VecComp';
+//%     'VecDoub'; 'SvecDoub'; 'VecComp'; 'SvecComp';
 //% };
 //%---------------------
 //% T = varargin{:};
@@ -1110,6 +1110,8 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'VecDoub', 'SvecDoub';
 //%     'VecComp', 'VecComp';
 //%     'VecComp', 'VecDoub';
+//%     'DvecDoub', 'SvecDoub';
+//%     'DvecComp', 'SvecComp';
 //%     'MatDoub', 'MatDoub';
 //%     'MatComp', 'MatComp';
 //%     'CmatDoub', 'CmatDoub';
