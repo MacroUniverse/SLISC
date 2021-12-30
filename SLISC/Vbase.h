@@ -85,7 +85,7 @@ inline Long VbaseChar::size() const
 inline void VbaseChar::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Char[N];
         }
         else { // m_N != 0
@@ -250,7 +250,7 @@ inline Long VbaseInt::size() const
 inline void VbaseInt::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Int[N];
         }
         else { // m_N != 0
@@ -415,7 +415,7 @@ inline Long VbaseLlong::size() const
 inline void VbaseLlong::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Llong[N];
         }
         else { // m_N != 0
@@ -586,7 +586,7 @@ inline Long VbaseFloat::size() const
 inline void VbaseFloat::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Float[N];
         }
         else { // m_N != 0
@@ -751,7 +751,7 @@ inline Long VbaseDoub::size() const
 inline void VbaseDoub::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Doub[N];
         }
         else { // m_N != 0
@@ -916,7 +916,7 @@ inline Long VbaseLdoub::size() const
 inline void VbaseLdoub::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Ldoub[N];
         }
         else { // m_N != 0
@@ -1081,7 +1081,7 @@ inline Long VbaseFcomp::size() const
 inline void VbaseFcomp::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Fcomp[N];
         }
         else { // m_N != 0
@@ -1246,7 +1246,7 @@ inline Long VbaseComp::size() const
 inline void VbaseComp::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Comp[N];
         }
         else { // m_N != 0
@@ -1411,7 +1411,7 @@ inline Long VbaseLcomp::size() const
 inline void VbaseLcomp::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Lcomp[N];
         }
         else { // m_N != 0
@@ -1576,7 +1576,7 @@ inline Long VbaseFimag::size() const
 inline void VbaseFimag::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Fimag[N];
         }
         else { // m_N != 0
@@ -1741,7 +1741,7 @@ inline Long VbaseImag::size() const
 inline void VbaseImag::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Imag[N];
         }
         else { // m_N != 0
@@ -1906,7 +1906,7 @@ inline Long VbaseLimag::size() const
 inline void VbaseLimag::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new Limag[N];
         }
         else { // m_N != 0

@@ -100,7 +100,7 @@ inline Long @VbaseT@::size() const
 inline void @VbaseT@::resize(Long_I N)
 {
     if (N != m_N) {
-        if (m_N == 0) {
+        if (m_N == 0) { // N != 0
             m_N = N; m_p = new @T@[N];
         }
         else { // m_N != 0

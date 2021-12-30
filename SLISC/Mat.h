@@ -20,7 +20,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatChar::MatChar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -73,16 +72,6 @@ inline void MatChar::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatChar::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatChar reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatChar &MatChar_I;
 typedef MatChar &MatChar_O, &MatChar_IO;
 
@@ -103,7 +92,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatInt::MatInt(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -156,16 +144,6 @@ inline void MatInt::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatInt::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatInt reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatInt &MatInt_I;
 typedef MatInt &MatInt_O, &MatInt_IO;
 
@@ -186,7 +164,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatLlong::MatLlong(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -239,16 +216,6 @@ inline void MatLlong::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatLlong::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatLlong reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatLlong &MatLlong_I;
 typedef MatLlong &MatLlong_O, &MatLlong_IO;
 
@@ -269,7 +236,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatFloat::MatFloat(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -322,16 +288,6 @@ inline void MatFloat::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatFloat::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatFloat reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatFloat &MatFloat_I;
 typedef MatFloat &MatFloat_O, &MatFloat_IO;
 
@@ -352,7 +308,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatDoub::MatDoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -405,16 +360,6 @@ inline void MatDoub::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatDoub::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatDoub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatDoub &MatDoub_I;
 typedef MatDoub &MatDoub_O, &MatDoub_IO;
 
@@ -435,7 +380,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatLdoub::MatLdoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -488,16 +432,6 @@ inline void MatLdoub::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatLdoub::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatLdoub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatLdoub &MatLdoub_I;
 typedef MatLdoub &MatLdoub_O, &MatLdoub_IO;
 
@@ -518,7 +452,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatFcomp::MatFcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -571,16 +504,6 @@ inline void MatFcomp::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatFcomp::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatFcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatFcomp &MatFcomp_I;
 typedef MatFcomp &MatFcomp_O, &MatFcomp_IO;
 
@@ -601,7 +524,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatComp::MatComp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -654,16 +576,6 @@ inline void MatComp::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatComp::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatComp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatComp &MatComp_I;
 typedef MatComp &MatComp_O, &MatComp_IO;
 
@@ -684,7 +596,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatLcomp::MatLcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -737,16 +648,6 @@ inline void MatLcomp::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatLcomp::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatLcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatLcomp &MatLcomp_I;
 typedef MatLcomp &MatLcomp_O, &MatLcomp_IO;
 
@@ -767,7 +668,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatFimag::MatFimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -820,16 +720,6 @@ inline void MatFimag::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatFimag::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatFimag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatFimag &MatFimag_I;
 typedef MatFimag &MatFimag_O, &MatFimag_IO;
 
@@ -850,7 +740,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatImag::MatImag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -903,16 +792,6 @@ inline void MatImag::resize(Long_I N0, Long_I N1)
     }
 }
 
-inline void MatImag::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatImag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
-}
-
 typedef const MatImag &MatImag_I;
 typedef MatImag &MatImag_O, &MatImag_IO;
 
@@ -933,7 +812,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline MatLimag::MatLimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -984,16 +862,6 @@ inline void MatLimag::resize(Long_I N0, Long_I N1)
         Base::resize(N0*N1);
         m_N0 = N0; m_N1 = N1;
     }
-}
-
-inline void MatLimag::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("MatLimag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
 }
 
 typedef const MatLimag &MatLimag_I;

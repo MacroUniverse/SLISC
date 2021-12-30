@@ -36,7 +36,6 @@ public:
     Long n0() const;
     Long n1() const;
     void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-    void reshape(Long_I N0, Long_I N1);
 };
 
 inline @MatT@::@MatT@(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -87,16 +86,6 @@ inline void @MatT@::resize(Long_I N0, Long_I N1)
         Base::resize(N0*N1);
         m_N0 = N0; m_N1 = N1;
     }
-}
-
-inline void @MatT@::reshape(Long_I N0, Long_I N1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 != m_N)
-        SLS_ERR("@MatT@ reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1;
 }
 //% end
 

@@ -14,7 +14,6 @@ public:
     Mat3Char &operator=(const Mat3Char &rhs) = delete;
     void operator<<(Mat3Char &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Char &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Char &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -38,16 +37,6 @@ inline void Mat3Char::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Char reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Char &Mat3Char::operator()(Long_I i, Long_I j, Long_I k)
@@ -97,7 +86,6 @@ public:
     Mat3Int &operator=(const Mat3Int &rhs) = delete;
     void operator<<(Mat3Int &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Int &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Int &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -121,16 +109,6 @@ inline void Mat3Int::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Int reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Int &Mat3Int::operator()(Long_I i, Long_I j, Long_I k)
@@ -180,7 +158,6 @@ public:
     Mat3Llong &operator=(const Mat3Llong &rhs) = delete;
     void operator<<(Mat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Llong &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -204,16 +181,6 @@ inline void Mat3Llong::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Llong reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Llong &Mat3Llong::operator()(Long_I i, Long_I j, Long_I k)
@@ -263,7 +230,6 @@ public:
     Mat3Float &operator=(const Mat3Float &rhs) = delete;
     void operator<<(Mat3Float &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Float &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Float &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -287,16 +253,6 @@ inline void Mat3Float::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Float reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Float &Mat3Float::operator()(Long_I i, Long_I j, Long_I k)
@@ -346,7 +302,6 @@ public:
     Mat3Doub &operator=(const Mat3Doub &rhs) = delete;
     void operator<<(Mat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Doub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -370,16 +325,6 @@ inline void Mat3Doub::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Doub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Doub &Mat3Doub::operator()(Long_I i, Long_I j, Long_I k)
@@ -429,7 +374,6 @@ public:
     Mat3Ldoub &operator=(const Mat3Ldoub &rhs) = delete;
     void operator<<(Mat3Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Ldoub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -453,16 +397,6 @@ inline void Mat3Ldoub::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Ldoub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Ldoub &Mat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
@@ -512,7 +446,6 @@ public:
     Mat3Fcomp &operator=(const Mat3Fcomp &rhs) = delete;
     void operator<<(Mat3Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Fcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -536,16 +469,6 @@ inline void Mat3Fcomp::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Fcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Fcomp &Mat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
@@ -595,7 +518,6 @@ public:
     Mat3Comp &operator=(const Mat3Comp &rhs) = delete;
     void operator<<(Mat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Comp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -619,16 +541,6 @@ inline void Mat3Comp::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Comp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Comp &Mat3Comp::operator()(Long_I i, Long_I j, Long_I k)
@@ -678,7 +590,6 @@ public:
     Mat3Lcomp &operator=(const Mat3Lcomp &rhs) = delete;
     void operator<<(Mat3Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Lcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -702,16 +613,6 @@ inline void Mat3Lcomp::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Lcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Lcomp &Mat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
@@ -761,7 +662,6 @@ public:
     Mat3Fimag &operator=(const Mat3Fimag &rhs) = delete;
     void operator<<(Mat3Fimag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Fimag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -785,16 +685,6 @@ inline void Mat3Fimag::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Fimag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Fimag &Mat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
@@ -844,7 +734,6 @@ public:
     Mat3Imag &operator=(const Mat3Imag &rhs) = delete;
     void operator<<(Mat3Imag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Imag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -868,16 +757,6 @@ inline void Mat3Imag::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Imag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Imag &Mat3Imag::operator()(Long_I i, Long_I j, Long_I k)
@@ -927,7 +806,6 @@ public:
     Mat3Limag &operator=(const Mat3Limag &rhs) = delete;
     void operator<<(Mat3Limag &rhs); // move data and rhs.resize(0, 0, 0)
     void resize(Long_I N0, Long_I N1, Long_I N2);
-    void reshape(Long_I N0, Long_I N1, Long_I N2);
     Limag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
     const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
     Long n0() const;
@@ -951,16 +829,6 @@ inline void Mat3Limag::resize(Long_I N0, Long_I N1, Long_I N2)
         Base::resize(N0*N1*N2);
         m_N0 = N0; m_N1 = N1; m_N2 = N2;
     }
-}
-
-inline void Mat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N0 * N1 * N2 != m_N)
-        SLS_ERR("Mat3Limag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)
-            +") to ("+num2str(N0)+", "+num2str(N1)+", "+num2str(N2)+"), element number not the same!");
-#endif
-    m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline Limag &Mat3Limag::operator()(Long_I i, Long_I j, Long_I k)
