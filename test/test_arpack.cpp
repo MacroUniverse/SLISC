@@ -1,3 +1,4 @@
+#ifdef SLS_USE_ARPACK
 #include "../../Arpack_test/include/arssym.h"
 // #include "../../Arpack_test/examples/product/sym/symsol.h"
 #include "../SLISC/arithmetic.h"
@@ -44,15 +45,18 @@ public:
 		return sqrt(nrm2);
 	}
 };
+#endif
 
 void test_arpack()
 {
+#ifdef SLS_USE_ARPACK
 	Long N = 10, Nsol = 3;
 	MyMatrix a(N);
   	ARSymStdEig<Doub, MyMatrix> dprob(N, Nsol, &a, &MyMatrix::mul, "SM");
-	dprob.ChangeMaxit(1000000);
-	dprob.ChangeTol(1e-2); // ||Av - lambda v|| is usually 10-100 times smaller thant Tol
-	dprob.FindEigenvectors();
+	dprob.ChangeMaxit(1000000); // set max iteration
+	dprob.ChangeTol(1e-2); // set tolerance (termination condition), resulting ||Av - lambda v|| is usually 10-100 times smaller thant Tol
+	dprob.FindEigenvectors(); // main iterations
+
 	// cout << "\n\n============ done ===============\n\n" << endl;
 
 	// print solution:
@@ -80,4 +84,5 @@ void test_arpack()
 		if (err > 1e-2)
 			SLS_ERR("failed!");
 	}
+#endif
 }

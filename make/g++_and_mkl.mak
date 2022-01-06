@@ -14,7 +14,7 @@ libs = -lgsl -lflint -larb -lboost_system -lboost_filesystem
 
 no_warn = -Wno-reorder -Wno-misleading-indentation -fmax-errors=1 # supress warning about initializer list order
 
-flags = -Wall $(no_warn) -fopenmp -I ../boost-headers -O3 -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_BOOST -D NDEBUG
+flags = -Wall $(no_warn) -fopenmp -I ../boost-headers -O3 -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_BOOST -D SLS_USE_ARPACK -D NDEBUG
 
 # link
 # choose `$(mkl_dyn_link)` or `$(mkl_stat_link)`
