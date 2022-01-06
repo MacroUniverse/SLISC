@@ -249,7 +249,8 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j, Long_I k)
 //%------------------------
 
 //% types = {
-//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp'; 'ScmatComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'ScmatDoub'; 'ScmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //% };
 //%----------------------------

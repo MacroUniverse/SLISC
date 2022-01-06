@@ -140,6 +140,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //%     'VecComp', 'CmobdComp', 'VecComp';
 //%     'VecComp', 'CmobdDoub', 'VecComp';
 //%     'VecComp', 'CmobdDoub', 'SvecComp';
+//%     'SvecDoub', 'CmobdDoub', 'SvecDoub';
 //%     'SvecComp', 'CmobdDoub', 'SvecComp';
 //% };
 //%------------------------------
@@ -157,6 +158,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //% types = {
 //%     'VecDoub', 'McooDoub', 'VecDoub';
 //%     'VecComp', 'McooComp', 'VecComp';
+//%     'SvecDoub', 'McooDoub', 'SvecDoub';
 //%     'SvecComp', 'McooDoub', 'SvecComp';
 //% };
 //%------------------------------

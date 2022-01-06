@@ -342,6 +342,15 @@ inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
     mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+inline void mul(SvecDoub_O y, CmobdDoub_I a, SvecDoub_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (y.size() != a.n0() || x.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+}
+
 inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -362,6 +371,15 @@ inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
 }
 
 inline void mul(VecComp_O y, McooComp_I a, VecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.size() || a.n0() != y.size())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+}
+
+inline void mul(SvecDoub_O y, McooDoub_I a, SvecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
     if (a.n1() != x.size() || a.n0() != y.size())

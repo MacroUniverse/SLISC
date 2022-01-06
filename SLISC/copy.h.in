@@ -231,6 +231,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'VecComp', 'VecComp';
 //%     'SvecDoub', 'SvecDoub';
 //%     'SvecDoub', 'VecDoub';
+//%     'SvecDoub', 'DvecDoub';
 //%     'SvecComp', 'SvecDoub';
 //%     'SvecComp', 'SvecComp';
 //%     'SvecComp', 'DvecComp';
