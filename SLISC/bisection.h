@@ -16,7 +16,7 @@ inline Doub bisection(Tfun f, Doub_I x1, Doub_I x2, Doub_I tol_x)
 	if (fl * fr > 0)
 		SLS_ERR("bisection: function have the same sign on both side!");
 
-	while(b - a > tol_x) {
+	do {
 		mid = 0.5*(a + b);
 		fm = f(mid);
 		if (fm * fl > 0)
@@ -25,7 +25,7 @@ inline Doub bisection(Tfun f, Doub_I x1, Doub_I x2, Doub_I tol_x)
 			b = mid;
 		else
 			break;
-	}
+	} while(b - a > tol_x);
 	return mid;
 }
 
