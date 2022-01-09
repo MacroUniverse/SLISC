@@ -54,16 +54,16 @@ inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 //% if is_real(T)
 //%     if is_Doub(T)
     if (isinf(s))
-        SLS_ERR("infinity is not supported in matt file!");
+        throw Str("infinity is not supported in matt file!");
     if (isnan(s))
-        SLS_ERR("NaN is not supported in matt file!");
+        throw Str("NaN is not supported in matt file!");
 //%     end
     m_out << to_num(s) << Matt::dlm;
 //% elseif is_comp(T)
     if (isinf(real(s)) || isinf(imag(s)))
-        SLS_ERR("infinity is not supported in matt file!");
+        throw Str("infinity is not supported in matt file!");
     if (isnan(real(s)) || isnan(imag(s)))
-        SLS_ERR("NaN is not supported in matt file!");
+        throw Str("NaN is not supported in matt file!");
     if (imag(s) == 0)
         m_out << real(s) << Matt::dlm;
     else if (imag(s) < 0)
@@ -344,7 +344,10 @@ inline void save(@T@_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-    matt_write_scalar(s, fout);
+    try {matt_write_scalar(s, fout);}
+    catch (Str msg) {
+        SLS_ERR("error while saving '" + varname + "': " + msg);
+    }
 }
 //% elseif ndim(T) == 1 && is_scalar(Ts)
 inline void save(@T@_I v, Str_I varname, Matt_IO matt)

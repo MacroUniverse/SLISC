@@ -64,18 +64,18 @@ inline void matt_write_scalar(Llong_I s, ofstream &m_out)
 inline void matt_write_scalar(Doub_I s, ofstream &m_out)
 {
     if (isinf(s))
-        SLS_ERR("infinity is not supported in matt file!");
+        throw Str("infinity is not supported in matt file!");
     if (isnan(s))
-        SLS_ERR("NaN is not supported in matt file!");
+        throw Str("NaN is not supported in matt file!");
     m_out << to_num(s) << Matt::dlm;
 }
 
 inline void matt_write_scalar(Comp_I s, ofstream &m_out)
 {
     if (isinf(real(s)) || isinf(imag(s)))
-        SLS_ERR("infinity is not supported in matt file!");
+        throw Str("infinity is not supported in matt file!");
     if (isnan(real(s)) || isnan(imag(s)))
-        SLS_ERR("NaN is not supported in matt file!");
+        throw Str("NaN is not supported in matt file!");
     if (imag(s) == 0)
         m_out << real(s) << Matt::dlm;
     else if (imag(s) < 0)
@@ -346,7 +346,10 @@ inline void save(Char_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-    matt_write_scalar(s, fout);
+    try {matt_write_scalar(s, fout);}
+    catch (Str msg) {
+        SLS_ERR("error while saving '" + varname + "': " + msg);
+    }
 }
 
 inline void save_matt(Char_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
@@ -376,7 +379,10 @@ inline void save(Int_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-    matt_write_scalar(s, fout);
+    try {matt_write_scalar(s, fout);}
+    catch (Str msg) {
+        SLS_ERR("error while saving '" + varname + "': " + msg);
+    }
 }
 
 inline void save_matt(Int_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
@@ -406,7 +412,10 @@ inline void save(Llong_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-    matt_write_scalar(s, fout);
+    try {matt_write_scalar(s, fout);}
+    catch (Str msg) {
+        SLS_ERR("error while saving '" + varname + "': " + msg);
+    }
 }
 
 inline void save_matt(Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
@@ -436,7 +445,10 @@ inline void save(Doub_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-    matt_write_scalar(s, fout);
+    try {matt_write_scalar(s, fout);}
+    catch (Str msg) {
+        SLS_ERR("error while saving '" + varname + "': " + msg);
+    }
 }
 
 inline void save_matt(Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
@@ -466,7 +478,10 @@ inline void save(Comp_I s, Str_I varname, Matt_IO matt)
     // write dimension info
     fout << 0 << Matt::dlm;
     // write matrix data
-    matt_write_scalar(s, fout);
+    try {matt_write_scalar(s, fout);}
+    catch (Str msg) {
+        SLS_ERR("error while saving '" + varname + "': " + msg);
+    }
 }
 
 inline void save_matt(Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
