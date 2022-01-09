@@ -32,6 +32,11 @@ inline Doub arb_hypergeom1F1(Doub_I a, Doub_I b, Doub_I z)
 	return res;
 }
 
+inline Doub arb_WhittakerM(Doub_I ka, Doub_I mu, Doub_I x)
+{
+	return exp(-0.5*x)*pow(x, mu+0.5)*arb_hypergeom1F1(mu - ka + 0.5, 1 + 2*mu, x);
+}
+
 // 1F1 with complex arguments
 inline Comp arb_hypergeom1F1(Comp_I a, Comp_I b, Comp_I z)
 {

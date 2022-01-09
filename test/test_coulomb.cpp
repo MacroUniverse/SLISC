@@ -56,5 +56,7 @@ void test_coulomb()
     val = -1.8006407379666919011;
     if (abs(arb_coulomb_sigma(0.2, -3.4) - val)/val > 1e-14)
         SLS_ERR("failed!");
+
+    // cout << acb_coulombF(204, Comp(-1.3,1), Comp(1000,1)) << endl;
 #endif
 }

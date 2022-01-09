@@ -36,6 +36,33 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 	return F;
 }
 
+// complex version
+// warning: this function differs from my Mathematica definition (FlCode.tex)
+inline Comp acb_coulombF(Comp_I l, Comp_I eta, Comp_I x)
+{
+	slong prec = 80; // set precision bit (log10/log2 = 3.322)
+	acb_t l1, eta1, x1, F1; arb_t F1_re, F1_im;
+	acb_init(l1); acb_init(eta1); acb_init(x1); acb_init(F1);
+    arb_init(F1_re); arb_init(F1_im);
+	acb_set_d_d(l1, l.real(), l.imag());
+    acb_set_d_d(eta1, eta.real(), eta.imag()); acb_set_d_d(x1, x.real(), x.imag());
+    Int digits;
+    for (Long i = 0; i < 6; ++i) {
+        acb_hypgeom_coulomb(F1, NULL, NULL, NULL, l1, eta1, x1, prec);
+        digits = acb_rel_accuracy_bits(F1)/3.321928;
+	    if (digits >= 16)
+            break;
+        prec *= 2;
+    }
+    if (digits < 16)
+	    SLS_ERR("arb_coulombF error too large : " + num2str(digits) + " digits");
+    acb_get_real(F1_re, F1); acb_get_imag(F1_im, F1);
+	Comp F(arf_get_d(arb_midref(F1_re), ARF_RND_NEAR), arf_get_d(arb_midref(F1_im), ARF_RND_NEAR));
+	acb_clear(l1); acb_clear(eta1); acb_clear(x1); acb_clear(F1);
+    arb_clear(F1_re); arb_clear(F1_im);
+	return F;
+}
+
 inline Comp arb_gamma(Comp_I z)
 {
     slong prec = 80;
