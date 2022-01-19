@@ -1442,6 +1442,1661 @@ inline void copy(Jcmat3Lcomp_O v, Lcomp_I s)
 }
 
 
+// assign value to containers
+inline void assign(vecBool_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Bool);
+    va_end(args);
+}
+
+inline void assign2(vecBool_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Bool);
+    va_end(args);
+}
+
+inline void assign(vecChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(vecChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(vecInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(vecInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(vecLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(vecLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(vecDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(vecDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(Str_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(Str_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(Str32_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char32);
+    va_end(args);
+}
+
+inline void assign2(Str32_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char32);
+    va_end(args);
+}
+
+inline void assign(vecStr_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Str);
+    va_end(args);
+}
+
+inline void assign2(vecStr_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Str);
+    va_end(args);
+}
+
+inline void assign(vecStr32_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Str32);
+    va_end(args);
+}
+
+inline void assign2(vecStr32_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Str32);
+    va_end(args);
+}
+
+inline void assign(VecChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(VecChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(VecInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(VecInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(VecLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(VecLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(VecFloat_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(VecFloat_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(VecDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(VecDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(VecLdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(VecLdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(VecFcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(VecFcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(VecComp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(VecComp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(VecLcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(VecLcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(VecFimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign2(VecFimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign(VecImag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign2(VecImag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign(VecLimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign2(VecLimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign(SvecChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(SvecChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(SvecInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(SvecInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(SvecLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(SvecLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(SvecFloat_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(SvecFloat_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(SvecDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(SvecDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(SvecLdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(SvecLdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(SvecFcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(SvecFcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(SvecComp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(SvecComp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(SvecLcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(SvecLcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(SvecFimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign2(SvecFimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign(SvecImag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign2(SvecImag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign(SvecLimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign2(SvecLimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign(DvecChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(DvecChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(DvecInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(DvecInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(DvecLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(DvecLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(DvecFloat_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(DvecFloat_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(DvecDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(DvecDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(DvecLdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(DvecLdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(DvecFcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(DvecFcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(DvecComp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(DvecComp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(DvecLcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(DvecLcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(CmatChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(CmatChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(CmatInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(CmatInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(CmatLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(CmatLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(CmatFloat_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(CmatFloat_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(CmatDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(CmatDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(CmatLdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(CmatLdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(CmatFcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(CmatFcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(CmatComp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(CmatComp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(CmatLcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(CmatLcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(CmatFimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign2(CmatFimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign(CmatImag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign2(CmatImag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign(CmatLimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign2(CmatLimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign(ScmatChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(ScmatChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(ScmatInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(ScmatInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(ScmatLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(ScmatLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(ScmatFloat_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(ScmatFloat_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(ScmatDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(ScmatDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(ScmatLdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(ScmatLdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(ScmatFcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(ScmatFcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(ScmatComp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(ScmatComp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(ScmatLcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(ScmatLcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(ScmatFimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign2(ScmatFimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign(ScmatImag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign2(ScmatImag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign(ScmatLimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign2(ScmatLimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign(DcmatChar_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(DcmatChar_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(DcmatInt_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(DcmatInt_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(DcmatLlong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(DcmatLlong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(DcmatFloat_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(DcmatFloat_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(DcmatDoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(DcmatDoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(DcmatLdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(DcmatLdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(DcmatFcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(DcmatFcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(DcmatComp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(DcmatComp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(DcmatLcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(DcmatLcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(Cmat3Char_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Char_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Char);
+    va_end(args);
+}
+
+inline void assign(Cmat3Int_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Int_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Int);
+    va_end(args);
+}
+
+inline void assign(Cmat3Llong_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Llong_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Llong);
+    va_end(args);
+}
+
+inline void assign(Cmat3Float_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Float_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Float);
+    va_end(args);
+}
+
+inline void assign(Cmat3Doub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Doub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Doub);
+    va_end(args);
+}
+
+inline void assign(Cmat3Ldoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Ldoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Ldoub);
+    va_end(args);
+}
+
+inline void assign(Cmat3Fcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Fcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fcomp);
+    va_end(args);
+}
+
+inline void assign(Cmat3Comp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Comp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Comp);
+    va_end(args);
+}
+
+inline void assign(Cmat3Lcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Lcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Lcomp);
+    va_end(args);
+}
+
+inline void assign(Cmat3Fimag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Fimag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Fimag);
+    va_end(args);
+}
+
+inline void assign(Cmat3Imag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Imag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Imag);
+    va_end(args);
+}
+
+inline void assign(Cmat3Limag_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Limag_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Limag);
+    va_end(args);
+}
+
+
 // container to container
 inline void copy(VecBool_O v, VecBool_I v1)
 {

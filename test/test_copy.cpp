@@ -1,10 +1,29 @@
 #include "../SLISC/copy.h"
+#include "../SLISC/cut.h"
 #include "../SLISC/arithmetic.h"
 #include "../SLISC/compare.h"
 
 void test_copy()
 {
 	using namespace slisc;
+	// test assign() assign2()
+	{
+        VecDoub v(4);
+        assign(v, 1.1, 2.2, 3.3, 4.4);
+        if (v[0] != 1.1 || v[1] != 2.2 || v[2] != 3.3 || v[3] != 4.4)
+            SLS_ERR("failed!");
+        assign2(v, 1, 2, 5.5, 6.6);
+        if (v[1] != 5.5 || v[2] != 6.6)
+            SLS_ERR("failed!");
+		assign(cut(v, 2, 2), 7.7, 8.8);
+		if (v[2] != 7.7 || v[3] != 8.8)
+			SLS_ERR("failed!");
+        CmatDoub a(2, 3);
+        assign(a, 1., 2., 3., 4., 5., 6.);
+        if (a[0] != 1. || a[2] != 3. || a[4] != 5. || a[5] != 6.)
+            SLS_ERR("failed!");
+    }
+
 	Long N = 3;
 	VecDoub v1(N), v(N);
 	v[0] = 1; v[1] = 2; v[2] = 3;

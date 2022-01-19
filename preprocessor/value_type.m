@@ -21,8 +21,12 @@ elseif any(strfind(T, 'Comp'))
     ret = 'Comp';
 elseif any(strfind(T, 'Lcomp'))
     ret = 'Lcomp';
+elseif any(strfind(T, 'Fimag'))
+    ret = 'Fimag';
 elseif any(strfind(T, 'Imag'))
     ret = 'Imag';
+elseif any(strfind(T, 'Limag'))
+    ret = 'Limag';
 elseif strcmp(T, 'vecStr')
     ret = 'Str';
 elseif strcmp(T, 'vecStr32')

@@ -218,6 +218,57 @@ inline void copy(@T@_O v, @Ts@_I s)
 }
 //%------------------------
 
+// assign value to containers
+//% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
+//%     'Str'; 'Str32'; 'vecStr'; 'vecStr32';
+//%     'VecChar'; 'VecInt'; 'VecLlong';
+//%     'VecFloat'; 'VecDoub'; 'VecLdoub';
+//%     'VecFcomp'; 'VecComp'; 'VecLcomp';
+//%     'VecFimag'; 'VecImag'; 'VecLimag';
+//%     'SvecChar'; 'SvecInt'; 'SvecLlong';
+//%     'SvecFloat'; 'SvecDoub'; 'SvecLdoub';
+//%     'SvecFcomp'; 'SvecComp'; 'SvecLcomp';
+//%     'SvecFimag'; 'SvecImag'; 'SvecLimag';
+//%     'DvecChar'; 'DvecInt'; 'DvecLlong';
+//%     'DvecFloat'; 'DvecDoub'; 'DvecLdoub';
+//%     'DvecFcomp'; 'DvecComp'; 'DvecLcomp';
+//%     'CmatChar'; 'CmatInt'; 'CmatLlong';
+//%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
+//%     'CmatFcomp'; 'CmatComp'; 'CmatLcomp';
+//%     'CmatFimag'; 'CmatImag'; 'CmatLimag';
+//%     'ScmatChar'; 'ScmatInt'; 'ScmatLlong';
+//%     'ScmatFloat'; 'ScmatDoub'; 'ScmatLdoub';
+//%     'ScmatFcomp'; 'ScmatComp'; 'ScmatLcomp';
+//%     'ScmatFimag'; 'ScmatImag'; 'ScmatLimag';
+//%     'DcmatChar'; 'DcmatInt'; 'DcmatLlong';
+//%     'DcmatFloat'; 'DcmatDoub'; 'DcmatLdoub';
+//%     'DcmatFcomp'; 'DcmatComp'; 'DcmatLcomp';
+//%     'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
+//%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
+//%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
+//%     'Cmat3Fimag'; 'Cmat3Imag'; 'Cmat3Limag';};
+//%--------------------------
+//% T = varargin{:}; Ts = value_type(T);
+inline void assign(@T@_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, @Ts@);
+    va_end(args);
+}
+
+inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, @Ts@);
+    va_end(args);
+}
+//%-------------------------
+
 // container to container
 //% types = {
 //%     'VecBool', 'VecBool';
