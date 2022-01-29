@@ -1449,7 +1449,7 @@ inline void assign(vecBool_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Bool);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1458,7 +1458,7 @@ inline void assign2(vecBool_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Bool);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1468,7 +1468,7 @@ inline void assign(vecChar_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1477,7 +1477,7 @@ inline void assign2(vecChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1544,7 +1544,7 @@ inline void assign(Str_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1553,26 +1553,7 @@ inline void assign2(Str_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
-    va_end(args);
-}
-
-inline void assign(Str32_O v, ...)
-{
-    va_list args;
-    va_start(args, v);
-    Long N = v.size();
-    for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char32);
-    va_end(args);
-}
-
-inline void assign2(Str32_IO v, Long_I ind, Long_I N, ...)
-{
-    va_list args;
-    va_start(args, N);
-    for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char32);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1595,32 +1576,13 @@ inline void assign2(vecStr_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
-inline void assign(vecStr32_O v, ...)
-{
-    va_list args;
-    va_start(args, v);
-    Long N = v.size();
-    for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Str32);
-    va_end(args);
-}
-
-inline void assign2(vecStr32_IO v, Long_I ind, Long_I N, ...)
-{
-    va_list args;
-    va_start(args, N);
-    for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Str32);
-    va_end(args);
-}
-
 inline void assign(VecChar_O v, ...)
 {
     va_list args;
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1629,7 +1591,7 @@ inline void assign2(VecChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1677,7 +1639,7 @@ inline void assign(VecFloat_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -1686,7 +1648,7 @@ inline void assign2(VecFloat_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -1848,7 +1810,7 @@ inline void assign(SvecChar_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1857,7 +1819,7 @@ inline void assign2(SvecChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -1905,7 +1867,7 @@ inline void assign(SvecFloat_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -1914,7 +1876,7 @@ inline void assign2(SvecFloat_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2076,7 +2038,7 @@ inline void assign(DvecChar_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2085,7 +2047,7 @@ inline void assign2(DvecChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2133,7 +2095,7 @@ inline void assign(DvecFloat_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2142,7 +2104,7 @@ inline void assign2(DvecFloat_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2247,7 +2209,7 @@ inline void assign(CmatChar_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2256,7 +2218,7 @@ inline void assign2(CmatChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2304,7 +2266,7 @@ inline void assign(CmatFloat_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2313,7 +2275,7 @@ inline void assign2(CmatFloat_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2475,7 +2437,7 @@ inline void assign(ScmatChar_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2484,7 +2446,7 @@ inline void assign2(ScmatChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2532,7 +2494,7 @@ inline void assign(ScmatFloat_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2541,7 +2503,7 @@ inline void assign2(ScmatFloat_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2703,7 +2665,7 @@ inline void assign(DcmatChar_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2712,7 +2674,7 @@ inline void assign2(DcmatChar_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2760,7 +2722,7 @@ inline void assign(DcmatFloat_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2769,7 +2731,7 @@ inline void assign2(DcmatFloat_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2874,7 +2836,7 @@ inline void assign(Cmat3Char_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2883,7 +2845,7 @@ inline void assign2(Cmat3Char_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Char);
+        v[i] = va_arg(args, Int);
     va_end(args);
 }
 
@@ -2931,7 +2893,7 @@ inline void assign(Cmat3Float_O v, ...)
     va_start(args, v);
     Long N = v.size();
     for (Long i = 0; i < N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 
@@ -2940,7 +2902,7 @@ inline void assign2(Cmat3Float_IO v, Long_I ind, Long_I N, ...)
     va_list args;
     va_start(args, N);
     for (Long i = ind; i < ind+N; ++i)
-        v[i] = va_arg(args, Float);
+        v[i] = va_arg(args, Doub);
     va_end(args);
 }
 

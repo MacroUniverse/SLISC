@@ -220,7 +220,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 
 // assign value to containers
 //% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
-//%     'Str'; 'Str32'; 'vecStr'; 'vecStr32';
+//%     'Str'; 'vecStr';
 //%     'VecChar'; 'VecInt'; 'VecLlong';
 //%     'VecFloat'; 'VecDoub'; 'VecLdoub';
 //%     'VecFcomp'; 'VecComp'; 'VecLcomp';
@@ -249,6 +249,11 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     'Cmat3Fimag'; 'Cmat3Imag'; 'Cmat3Limag';};
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
+//% if is_Bool(Ts) || is_Char(Ts)
+//%     Ts = 'Int'; % ... will promote these types, might give warning
+//% elseif is_Float(Ts)
+//%     Ts = 'Doub'; % ... will promote these types, might give warning
+//% end
 inline void assign(@T@_O v, ...)
 {
     va_list args;
