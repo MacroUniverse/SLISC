@@ -811,6 +811,134 @@ inline void save_matt(SvecComp_I s, Str_I varname, Str_I matt_file, Int_I precis
     matt.close();
 }
 
+inline void save(vecInt_I v, Str_I varname, Matt_IO matt)
+{
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
+    ofstream &fout = matt.m_out;
+    if (!fout.is_open())
+        SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
+    matt.m_ind.push_back(fout.tellp());
+    // write variable name info
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (Long i = 0; i < n; ++i) {
+        fout << to_num(varname.at(i)) << Matt::dlm;
+    }
+    // write data type info
+    fout << 2 << Matt::dlm;
+    // write dimension info
+    n = v.size();
+    fout << 1 << Matt::dlm << n << Matt::dlm;
+    // write matrix data
+    for (Long i = 0; i < n; ++i)
+        matt_write_scalar(v[i], fout);
+}
+
+inline void save_matt(vecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+{
+    Matt matt(matt_file, "w", precision, replace);
+    save(s, varname, matt);
+    matt.close();
+}
+
+inline void save(vecLlong_I v, Str_I varname, Matt_IO matt)
+{
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
+    ofstream &fout = matt.m_out;
+    if (!fout.is_open())
+        SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
+    matt.m_ind.push_back(fout.tellp());
+    // write variable name info
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (Long i = 0; i < n; ++i) {
+        fout << to_num(varname.at(i)) << Matt::dlm;
+    }
+    // write data type info
+    fout << 3 << Matt::dlm;
+    // write dimension info
+    n = v.size();
+    fout << 1 << Matt::dlm << n << Matt::dlm;
+    // write matrix data
+    for (Long i = 0; i < n; ++i)
+        matt_write_scalar(v[i], fout);
+}
+
+inline void save_matt(vecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+{
+    Matt matt(matt_file, "w", precision, replace);
+    save(s, varname, matt);
+    matt.close();
+}
+
+inline void save(vecDoub_I v, Str_I varname, Matt_IO matt)
+{
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
+    ofstream &fout = matt.m_out;
+    if (!fout.is_open())
+        SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
+    matt.m_ind.push_back(fout.tellp());
+    // write variable name info
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (Long i = 0; i < n; ++i) {
+        fout << to_num(varname.at(i)) << Matt::dlm;
+    }
+    // write data type info
+    fout << 21 << Matt::dlm;
+    // write dimension info
+    n = v.size();
+    fout << 1 << Matt::dlm << n << Matt::dlm;
+    // write matrix data
+    for (Long i = 0; i < n; ++i)
+        matt_write_scalar(v[i], fout);
+}
+
+inline void save_matt(vecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+{
+    Matt matt(matt_file, "w", precision, replace);
+    save(s, varname, matt);
+    matt.close();
+}
+
+inline void save(vecComp_I v, Str_I varname, Matt_IO matt)
+{
+    if (matt.search(varname) >= 0)
+        SLS_ERR("variable already exist: " + varname);
+    ofstream &fout = matt.m_out;
+    if (!fout.is_open())
+        SLS_ERR("matt file not open!");
+    matt.m_name.push_back(varname);
+    matt.m_ind.push_back(fout.tellp());
+    // write variable name info
+    Long n = varname.size();
+    fout << n << Matt::dlm;
+    for (Long i = 0; i < n; ++i) {
+        fout << to_num(varname.at(i)) << Matt::dlm;
+    }
+    // write data type info
+    fout << 41 << Matt::dlm;
+    // write dimension info
+    n = v.size();
+    fout << 1 << Matt::dlm << n << Matt::dlm;
+    // write matrix data
+    for (Long i = 0; i < n; ++i)
+        matt_write_scalar(v[i], fout);
+}
+
+inline void save_matt(vecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+{
+    Matt matt(matt_file, "w", precision, replace);
+    save(s, varname, matt);
+    matt.close();
+}
+
 inline void save(MatInt_I a, Str_I varname, Matt_IO matt)
 {
     if (matt.search(varname) >= 0)

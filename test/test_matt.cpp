@@ -41,6 +41,9 @@ void test_matt()
         vc[i] = 1 + (Doub)i - I * (Doub)i;
     save(vc, "vc", matt);
 
+    vecDoub vd(3); vd[0] = 1.1; vd[1] = 2.2; vd[2] = 3.3;
+    save(vd, "vd", matt);
+
     // matrices
 
     MatInt AI(2, 3); copy(AI, 0);
@@ -109,6 +112,11 @@ void test_matt()
     load(r_vc, "vc", matt);
     r_vc -= vc;
     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+
+    VecDoub r_vd(0);
+    load(r_vd, "vd", matt);
+    if (r_vd[0] != 1.1 || r_vd[1] != 2.2 || r_vd[2] != 3.3)
+        SLS_ERR("failed!");
 
     // matrices
     // TODO: Char

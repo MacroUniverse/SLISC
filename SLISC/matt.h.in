@@ -312,6 +312,7 @@ inline Matt::~Matt()
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';

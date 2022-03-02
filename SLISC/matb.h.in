@@ -319,6 +319,7 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 // save() for containers
 //% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'SvecChar'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'DvecLlong'; 'DvecDoub'; 'DvecComp'; 'CmatChar'; 'CmatInt';
 //%     'CmatLlong'; 'CmatDoub'; 'CmatComp'; 'MatChar'; 'MatInt';
 //%     'MatLlong'; 'MatDoub'; 'MatComp'; 'ScmatInt';
@@ -351,8 +352,8 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
     write(fout, Llong(@Ndim@));
     // write matrix data
 //% if Ndim == '1'
-    write(fout, v.size());
-    for (Long i = 0; i < v.size(); ++i)
+    write(fout, (Long)v.size());
+    for (Long i = 0; i < (Long)v.size(); ++i)
         write(fout, v[i]);
 //% elseif Ndim == '2'
     write(fout, v.n0()); write(fout, v.n1());
