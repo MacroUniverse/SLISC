@@ -1,4 +1,6 @@
+#ifdef SLS_USE_ARB
 #include <flint/fmpz.h>
+#endif
 #include "../SLISC/global.h"
 
 void test_arb()
