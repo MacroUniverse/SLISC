@@ -1,4 +1,5 @@
 #pragma once
+#ifdef SLS_USE_CBLAS
 #include "sparse_arith.h"
 #include "arithmetic.h"
 
@@ -3557,3 +3558,5 @@ inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 
 
 } // namespace slisc
+
+#endif

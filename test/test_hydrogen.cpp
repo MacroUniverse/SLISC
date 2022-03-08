@@ -3,6 +3,7 @@
 
 void test_hydrogen()
 {
+#ifdef SLS_USE_GSL
 	using namespace slisc;
 	Long Nr = 2000;
 	VecDoub r(Nr), rR1(Nr), rR2(Nr);
@@ -18,4 +19,5 @@ void test_hydrogen()
 		SLS_ERR("failed!");
 	if (abs(dot(rR1, rR2)*dr) > 1e-8)
 		SLS_ERR("failed!");
+#endif
 }

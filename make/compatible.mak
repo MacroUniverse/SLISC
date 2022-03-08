@@ -3,7 +3,7 @@
 
 compiler = g++
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -I ../boost-headers -g -fmax-errors=1
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 #-D NDEBUG
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
@@ -24,7 +24,7 @@ main.x: main.o $(test_o)
 h: $(path_gen_headers) # update headers only
 
 link: # link only
-	$(compiler) $(flags) -o main.x main.o test_*.o
+	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
 	rm -f *.o *.x $(path_gen_headers)
@@ -36,4 +36,4 @@ main.o: $(path_headers) main.cpp
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in
-	octave --no-window-system --eval "auto_gen $<"
+	octave --no-window-system --eval "auto_gen SLISC $$(basename $<)"

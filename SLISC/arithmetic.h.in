@@ -1984,11 +1984,14 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'VecComp' 'MatDoub' 'VecComp';
 //%     'VecComp' 'ScmatDoub' 'VecComp';
 //%     'SvecDoub' 'CmatDoub' 'SvecDoub';
+//%     'SvecDoub' 'ScmatDoub' 'SvecDoub';
 //%     'DvecComp' 'DcmatDoub' 'DvecComp';
 //%     'DvecComp' 'CmatDoub' 'DvecComp';
 //%     'DvecComp' 'ScmatDoub' 'SvecComp';
 //%     'DvecComp' 'ScmatComp' 'SvecDoub';
 //%     'DvecComp' 'ScmatComp' 'SvecComp';
+//%     'SvecComp' 'CmatDoub' 'SvecComp';
+//%     'SvecComp' 'CmatComp' 'SvecComp';
 //%     'SvecComp' 'ScmatDoub' 'SvecComp';
 //%     'SvecComp' 'ScmatDoub' 'DvecComp';
 //%     'SvecComp' 'MatDoub' 'VecComp';

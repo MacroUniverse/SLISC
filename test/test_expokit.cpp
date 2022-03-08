@@ -8,6 +8,7 @@
 
 void test_expokit()
 {
+#ifdef SLS_USE_CBLAS
 	using namespace slisc;
 
     // === params ===========
@@ -69,4 +70,5 @@ void test_expokit()
         if (max_abs(y2) > 5e-12)
             SLS_ERR("failed!");
     }
+#endif
 }

@@ -3,6 +3,7 @@
 
 void test_arb()
 {
+#ifdef SLS_USE_ARB
 	using namespace slisc;
 	// test fmpz_t: arbitrary length integer from flint library, with performance for small number
     fmpz_t f, g, h;
@@ -25,4 +26,5 @@ void test_arb()
     s = fmpz_get_str(NULL, 10, f);
     if (s != "12345678901234567890123456789012345678901234567890")
         SLS_ERR("failed!");
+#endif
 }

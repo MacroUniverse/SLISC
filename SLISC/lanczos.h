@@ -3,6 +3,7 @@
 // however, (dt^Nk / Nk!) is extremely small and omitted.
 
 #pragma once
+#ifdef SLS_USE_LAPACKE
 #include "cut.h"
 #include "sparse_arith.h"
 #include "band_arith.h"
@@ -1284,3 +1285,5 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_IO x, Doub_I 
 
 
 } // namespace slisc
+
+#endif

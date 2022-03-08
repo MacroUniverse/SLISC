@@ -8,8 +8,8 @@
 #include <gsl/gsl_specfunc.h>
 #include <gsl/gsl_sf_gamma.h>
 #include <gsl/gsl_errno.h>
-#include "cwfcomp/cwfcomp.h"
 #endif
+#include "cwfcomp/cwfcomp.h"
 
 namespace slisc {
 #ifdef SLS_USE_ARB
