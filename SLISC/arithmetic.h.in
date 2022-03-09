@@ -471,7 +471,8 @@ inline @Tret@ prod(@T@_I v)
 
 //% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
 //%     'CmatDoub'; 'CmatComp'; 'Cmat3Doub';
-//%     'Cmat3Comp'; 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp'; 'ScmatDoub'; 'DcmatComp';
+//%     'Cmat3Comp'; 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp';
+//%     'ScmatDoub'; 'ScmatComp'; 'DcmatComp';
 //% };
 //%-------------------------------
 //% T = varargin{:};

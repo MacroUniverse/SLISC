@@ -2873,6 +2873,33 @@ inline Doub norm_dif(ScmatDoub_I v, ScmatDoub_I v1)
     return sqrt(norm2_dif(v, v1));
 }
 
+inline Doub norm2(ScmatComp_I v)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+
+inline Doub norm2_dif(ScmatComp_I v, ScmatComp_I v1)
+{
+    Long N = v.size();
+    Doub s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
+inline Doub norm(ScmatComp_I v)
+{
+    return sqrt(norm2(v));
+}
+
+inline Doub norm_dif(ScmatComp_I v, ScmatComp_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
+}
+
 inline Doub norm2(DcmatComp_I a)
 {
     const Comp *p = a.p();
