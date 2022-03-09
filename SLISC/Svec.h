@@ -124,8 +124,6 @@ inline void SvbaseChar_c::set(const SvbaseChar_c &sli)
 
 inline SvbaseChar_c::~SvbaseChar_c() {}
 
-typedef const SvbaseChar_c &SvbaseChar_I;
-
 class SvbaseChar
 {
 protected:
@@ -250,9 +248,6 @@ inline void SvbaseChar::set(const SvbaseChar &sli)
 
 inline SvbaseChar::~SvbaseChar() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseChar &SvbaseChar_O, &SvbaseChar_IO;
-
 class SvbaseInt_c
 {
 protected:
@@ -371,8 +366,6 @@ inline void SvbaseInt_c::set(const SvbaseInt_c &sli)
 }
 
 inline SvbaseInt_c::~SvbaseInt_c() {}
-
-typedef const SvbaseInt_c &SvbaseInt_I;
 
 class SvbaseInt
 {
@@ -498,9 +491,6 @@ inline void SvbaseInt::set(const SvbaseInt &sli)
 
 inline SvbaseInt::~SvbaseInt() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseInt &SvbaseInt_O, &SvbaseInt_IO;
-
 class SvbaseLlong_c
 {
 protected:
@@ -619,8 +609,6 @@ inline void SvbaseLlong_c::set(const SvbaseLlong_c &sli)
 }
 
 inline SvbaseLlong_c::~SvbaseLlong_c() {}
-
-typedef const SvbaseLlong_c &SvbaseLlong_I;
 
 class SvbaseLlong
 {
@@ -746,25 +734,17 @@ inline void SvbaseLlong::set(const SvbaseLlong &sli)
 
 inline SvbaseLlong::~SvbaseLlong() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseLlong &SvbaseLlong_O, &SvbaseLlong_IO;
-
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvbaseInt_c SvbaseLong_c;
 #else
 typedef SvbaseLlong_c SvbaseLong_c;
 #endif
 
-typedef const SvbaseLong_c &SvbaseLong_I;
-
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvbaseInt SvbaseLong;
 #else
 typedef SvbaseLlong SvbaseLong;
 #endif
-
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseLong &SvbaseLong_O, &SvbaseLong_IO;
 
 class SvbaseFloat_c
 {
@@ -884,8 +864,6 @@ inline void SvbaseFloat_c::set(const SvbaseFloat_c &sli)
 }
 
 inline SvbaseFloat_c::~SvbaseFloat_c() {}
-
-typedef const SvbaseFloat_c &SvbaseFloat_I;
 
 class SvbaseFloat
 {
@@ -1011,9 +989,6 @@ inline void SvbaseFloat::set(const SvbaseFloat &sli)
 
 inline SvbaseFloat::~SvbaseFloat() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseFloat &SvbaseFloat_O, &SvbaseFloat_IO;
-
 class SvbaseDoub_c
 {
 protected:
@@ -1132,8 +1107,6 @@ inline void SvbaseDoub_c::set(const SvbaseDoub_c &sli)
 }
 
 inline SvbaseDoub_c::~SvbaseDoub_c() {}
-
-typedef const SvbaseDoub_c &SvbaseDoub_I;
 
 class SvbaseDoub
 {
@@ -1259,9 +1232,6 @@ inline void SvbaseDoub::set(const SvbaseDoub &sli)
 
 inline SvbaseDoub::~SvbaseDoub() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseDoub &SvbaseDoub_O, &SvbaseDoub_IO;
-
 class SvbaseLdoub_c
 {
 protected:
@@ -1380,8 +1350,6 @@ inline void SvbaseLdoub_c::set(const SvbaseLdoub_c &sli)
 }
 
 inline SvbaseLdoub_c::~SvbaseLdoub_c() {}
-
-typedef const SvbaseLdoub_c &SvbaseLdoub_I;
 
 class SvbaseLdoub
 {
@@ -1507,9 +1475,6 @@ inline void SvbaseLdoub::set(const SvbaseLdoub &sli)
 
 inline SvbaseLdoub::~SvbaseLdoub() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseLdoub &SvbaseLdoub_O, &SvbaseLdoub_IO;
-
 class SvbaseFcomp_c
 {
 protected:
@@ -1628,8 +1593,6 @@ inline void SvbaseFcomp_c::set(const SvbaseFcomp_c &sli)
 }
 
 inline SvbaseFcomp_c::~SvbaseFcomp_c() {}
-
-typedef const SvbaseFcomp_c &SvbaseFcomp_I;
 
 class SvbaseFcomp
 {
@@ -1755,9 +1718,6 @@ inline void SvbaseFcomp::set(const SvbaseFcomp &sli)
 
 inline SvbaseFcomp::~SvbaseFcomp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseFcomp &SvbaseFcomp_O, &SvbaseFcomp_IO;
-
 class SvbaseComp_c
 {
 protected:
@@ -1876,8 +1836,6 @@ inline void SvbaseComp_c::set(const SvbaseComp_c &sli)
 }
 
 inline SvbaseComp_c::~SvbaseComp_c() {}
-
-typedef const SvbaseComp_c &SvbaseComp_I;
 
 class SvbaseComp
 {
@@ -2003,9 +1961,6 @@ inline void SvbaseComp::set(const SvbaseComp &sli)
 
 inline SvbaseComp::~SvbaseComp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseComp &SvbaseComp_O, &SvbaseComp_IO;
-
 class SvbaseLcomp_c
 {
 protected:
@@ -2124,8 +2079,6 @@ inline void SvbaseLcomp_c::set(const SvbaseLcomp_c &sli)
 }
 
 inline SvbaseLcomp_c::~SvbaseLcomp_c() {}
-
-typedef const SvbaseLcomp_c &SvbaseLcomp_I;
 
 class SvbaseLcomp
 {
@@ -2251,9 +2204,6 @@ inline void SvbaseLcomp::set(const SvbaseLcomp &sli)
 
 inline SvbaseLcomp::~SvbaseLcomp() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseLcomp &SvbaseLcomp_O, &SvbaseLcomp_IO;
-
 class SvbaseFimag_c
 {
 protected:
@@ -2372,8 +2322,6 @@ inline void SvbaseFimag_c::set(const SvbaseFimag_c &sli)
 }
 
 inline SvbaseFimag_c::~SvbaseFimag_c() {}
-
-typedef const SvbaseFimag_c &SvbaseFimag_I;
 
 class SvbaseFimag
 {
@@ -2499,9 +2447,6 @@ inline void SvbaseFimag::set(const SvbaseFimag &sli)
 
 inline SvbaseFimag::~SvbaseFimag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseFimag &SvbaseFimag_O, &SvbaseFimag_IO;
-
 class SvbaseImag_c
 {
 protected:
@@ -2620,8 +2565,6 @@ inline void SvbaseImag_c::set(const SvbaseImag_c &sli)
 }
 
 inline SvbaseImag_c::~SvbaseImag_c() {}
-
-typedef const SvbaseImag_c &SvbaseImag_I;
 
 class SvbaseImag
 {
@@ -2747,9 +2690,6 @@ inline void SvbaseImag::set(const SvbaseImag &sli)
 
 inline SvbaseImag::~SvbaseImag() {}
 
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseImag &SvbaseImag_O, &SvbaseImag_IO;
-
 class SvbaseLimag_c
 {
 protected:
@@ -2868,8 +2808,6 @@ inline void SvbaseLimag_c::set(const SvbaseLimag_c &sli)
 }
 
 inline SvbaseLimag_c::~SvbaseLimag_c() {}
-
-typedef const SvbaseLimag_c &SvbaseLimag_I;
 
 class SvbaseLimag
 {
@@ -2994,9 +2932,6 @@ inline void SvbaseLimag::set(const SvbaseLimag &sli)
 }
 
 inline SvbaseLimag::~SvbaseLimag() {}
-
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvbaseLimag &SvbaseLimag_O, &SvbaseLimag_IO;
 
 
 class SvecChar_c : public SvbaseChar_c

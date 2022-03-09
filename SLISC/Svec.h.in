@@ -173,13 +173,6 @@ inline void @Class@::set(const @Class@ &sli)
 
 inline @Class@::~@Class@() {}
 //% end
-
-//% if constness
-typedef const @Class@ &@SvbaseT@_I;
-//% else
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const @Class@ &@SvbaseT@_O, &@SvbaseT@_IO;
-//% end
 //%------------------------
 
 //% types = {
