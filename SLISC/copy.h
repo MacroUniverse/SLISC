@@ -1317,6 +1317,51 @@ inline void copy(CmatLcomp_O v, Lcomp_I s)
     vecset(v.p(), s, v.size());
 }
 
+inline void copy(ScmatChar_O v, Char_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatFloat_O v, Float_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatLdoub_O v, Ldoub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatFcomp_O v, Fcomp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatLcomp_O v, Lcomp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
 inline void copy(Cmat3Char_O v, Char_I s)
 {
     vecset(v.p(), s, v.size());
@@ -1358,6 +1403,51 @@ inline void copy(Cmat3Comp_O v, Comp_I s)
 }
 
 inline void copy(Cmat3Lcomp_O v, Lcomp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Char_O v, Char_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Int_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Llong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Float_O v, Float_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Doub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Ldoub_O v, Ldoub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Fcomp_O v, Fcomp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Comp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Scmat3Lcomp_O v, Lcomp_I s)
 {
     vecset(v.p(), s, v.size());
 }

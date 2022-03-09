@@ -19,17 +19,17 @@ namespace slisc {
 //% };
 //%------------------------
 //% [T, constness] = varargin{:};
-//% SvecT = ['Svec' T];
-//% SvecT_c = [SvecT '_c'];
+//% SvbaseT = ['Svbase' T];
+//% SvbaseT_c = [SvbaseT '_c'];
 //% Scmat3T = ['Scmat3' T];
 //% Scmat3T_c = [Scmat3T '_c'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Base = SvecT_c;
+//%     Base = SvbaseT_c;
 //%     Class = Scmat3T_c;
 //% else
 //%     CT = T;
-//%     Base = SvecT;
+//%     Base = SvbaseT;
 //%     Class = Scmat3T;
 //% end
 //% if is_Long(T) && constness

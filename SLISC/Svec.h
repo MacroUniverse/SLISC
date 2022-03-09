@@ -5,22 +5,22 @@
 // "_c" means lower level const
 
 namespace slisc {
-class SvecChar_c
+class SvbaseChar_c
 {
 protected:
     const Char *m_p;
     Long m_N;
 public:
-    SvecChar_c();
-    explicit SvecChar_c(Long_I N);
-    SvecChar_c(const Char *data, Long_I N); // unsafe
+    SvbaseChar_c();
+    explicit SvbaseChar_c(Long_I N);
+    SvbaseChar_c(const Char *data, Long_I N); // unsafe
     const Char* p() const;
     Long size() const;
-    SvecChar_c &operator=(const SvecChar_c &rhs) = delete;
+    SvbaseChar_c &operator=(const SvbaseChar_c &rhs) = delete;
     const Char &operator[](Long_I i) const;
     const Char &end() const;
     const Char &end(Long_I i) const;
-    void set(const SvecChar_c &sli);
+    void set(const SvbaseChar_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
@@ -30,22 +30,22 @@ public:
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
 
-    ~SvecChar_c();
+    ~SvbaseChar_c();
 };
 
-inline SvecChar_c::SvecChar_c() {}
+inline SvbaseChar_c::SvbaseChar_c() {}
 
-inline SvecChar_c::SvecChar_c(Long_I N) : m_N(N)
+inline SvbaseChar_c::SvbaseChar_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
     m_p = nullptr;
 #endif
 }
 
-inline SvecChar_c::SvecChar_c(const Char *data, Long_I N)
+inline SvbaseChar_c::SvbaseChar_c(const Char *data, Long_I N)
     : m_p(data), m_N(N) {}
 
-inline const Char * SvecChar_c::p() const
+inline const Char * SvbaseChar_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -54,12 +54,12 @@ inline const Char * SvecChar_c::p() const
     return m_p;
 }
 
-inline Long SvecChar_c::size() const
+inline Long SvbaseChar_c::size() const
 {
     return m_N;
 }
 
-inline const Char &SvecChar_c::operator[](Long_I i) const
+inline const Char &SvbaseChar_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -68,7 +68,7 @@ inline const Char &SvecChar_c::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline const Char &SvecChar_c::end() const
+inline const Char &SvbaseChar_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -77,7 +77,7 @@ inline const Char &SvecChar_c::end() const
     return m_p[m_N - 1];
 }
 
-inline const Char &SvecChar_c::end(Long_I i) const
+inline const Char &SvbaseChar_c::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -87,62 +87,62 @@ inline const Char &SvecChar_c::end(Long_I i) const
 }
 
 
-inline void SvecChar_c::set(const Char *data, Long_I N)
+inline void SvbaseChar_c::set(const Char *data, Long_I N)
 {
     m_p = data; m_N = N;
 }
 
-inline void SvecChar_c::set(const Char *data)
+inline void SvbaseChar_c::set(const Char *data)
 {
     m_p = data;
 }
 
-inline void SvecChar_c::set(Long_I N)
+inline void SvbaseChar_c::set(Long_I N)
 {
     m_N = N;
 }
 
-inline void SvecChar_c::next()
+inline void SvbaseChar_c::next()
 {
     m_p += m_N;
 }
 
-inline void SvecChar_c::last()
+inline void SvbaseChar_c::last()
 {
     m_p -= m_N;
 }
 
-inline void SvecChar_c::shift(Long_I N)
+inline void SvbaseChar_c::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline void SvecChar_c::set(const SvecChar_c &sli)
+inline void SvbaseChar_c::set(const SvbaseChar_c &sli)
 {
     m_p = sli.m_p; m_N = sli.m_N;
 }
 
-inline SvecChar_c::~SvecChar_c() {}
+inline SvbaseChar_c::~SvbaseChar_c() {}
 
-typedef const SvecChar_c &SvecChar_I;
+typedef const SvbaseChar_c &SvbaseChar_I;
 
-class SvecChar
+class SvbaseChar
 {
 protected:
     Char *m_p;
     Long m_N;
 public:
-    SvecChar();
-    explicit SvecChar(Long_I N);
-    SvecChar(Char *data, Long_I N); // unsafe
+    SvbaseChar();
+    explicit SvbaseChar(Long_I N);
+    SvbaseChar(Char *data, Long_I N); // unsafe
     Char* p() const;
     Long size() const;
-    SvecChar &operator=(const SvecChar &rhs) = delete;
+    SvbaseChar &operator=(const SvbaseChar &rhs) = delete;
     Char &operator[](Long_I i) const;
     Char &end() const;
     Char &end(Long_I i) const;
-    operator SvecChar_c() const;
-    void set(const SvecChar &sli);
+    operator SvbaseChar_c() const;
+    void set(const SvbaseChar &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
@@ -152,22 +152,22 @@ public:
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
 
-    ~SvecChar();
+    ~SvbaseChar();
 };
 
-inline SvecChar::SvecChar() {}
+inline SvbaseChar::SvbaseChar() {}
 
-inline SvecChar::SvecChar(Long_I N) : m_N(N)
+inline SvbaseChar::SvbaseChar(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
     m_p = nullptr;
 #endif
 }
 
-inline SvecChar::SvecChar(Char *data, Long_I N)
+inline SvbaseChar::SvbaseChar(Char *data, Long_I N)
     : m_p(data), m_N(N) {}
 
-inline Char * SvecChar::p() const
+inline Char * SvbaseChar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -176,12 +176,12 @@ inline Char * SvecChar::p() const
     return m_p;
 }
 
-inline Long SvecChar::size() const
+inline Long SvbaseChar::size() const
 {
     return m_N;
 }
 
-inline Char &SvecChar::operator[](Long_I i) const
+inline Char &SvbaseChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -190,7 +190,7 @@ inline Char &SvecChar::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Char &SvecChar::end() const
+inline Char &SvbaseChar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -199,7 +199,7 @@ inline Char &SvecChar::end() const
     return m_p[m_N - 1];
 }
 
-inline Char &SvecChar::end(Long_I i) const
+inline Char &SvbaseChar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -208,67 +208,67 @@ inline Char &SvecChar::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline SvecChar::operator SvecChar_c() const
+inline SvbaseChar::operator SvbaseChar_c() const
 {
-    return *((SvecChar_c *)this);
+    return *((SvbaseChar_c *)this);
 }
 
-inline void SvecChar::set(Char *data, Long_I N)
+inline void SvbaseChar::set(Char *data, Long_I N)
 {
     m_p = data; m_N = N;
 }
 
-inline void SvecChar::set(Char *data)
+inline void SvbaseChar::set(Char *data)
 {
     m_p = data;
 }
 
-inline void SvecChar::set(Long_I N)
+inline void SvbaseChar::set(Long_I N)
 {
     m_N = N;
 }
 
-inline void SvecChar::next()
+inline void SvbaseChar::next()
 {
     m_p += m_N;
 }
 
-inline void SvecChar::last()
+inline void SvbaseChar::last()
 {
     m_p -= m_N;
 }
 
-inline void SvecChar::shift(Long_I N)
+inline void SvbaseChar::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline void SvecChar::set(const SvecChar &sli)
+inline void SvbaseChar::set(const SvbaseChar &sli)
 {
     m_p = sli.m_p; m_N = sli.m_N;
 }
 
-inline SvecChar::~SvecChar() {}
+inline SvbaseChar::~SvbaseChar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvecChar &SvecChar_O, &SvecChar_IO;
+typedef const SvbaseChar &SvbaseChar_O, &SvbaseChar_IO;
 
-class SvecInt_c
+class SvbaseInt_c
 {
 protected:
     const Int *m_p;
     Long m_N;
 public:
-    SvecInt_c();
-    explicit SvecInt_c(Long_I N);
-    SvecInt_c(const Int *data, Long_I N); // unsafe
+    SvbaseInt_c();
+    explicit SvbaseInt_c(Long_I N);
+    SvbaseInt_c(const Int *data, Long_I N); // unsafe
     const Int* p() const;
     Long size() const;
-    SvecInt_c &operator=(const SvecInt_c &rhs) = delete;
+    SvbaseInt_c &operator=(const SvbaseInt_c &rhs) = delete;
     const Int &operator[](Long_I i) const;
     const Int &end() const;
     const Int &end(Long_I i) const;
-    void set(const SvecInt_c &sli);
+    void set(const SvbaseInt_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
@@ -278,22 +278,22 @@ public:
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
 
-    ~SvecInt_c();
+    ~SvbaseInt_c();
 };
 
-inline SvecInt_c::SvecInt_c() {}
+inline SvbaseInt_c::SvbaseInt_c() {}
 
-inline SvecInt_c::SvecInt_c(Long_I N) : m_N(N)
+inline SvbaseInt_c::SvbaseInt_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
     m_p = nullptr;
 #endif
 }
 
-inline SvecInt_c::SvecInt_c(const Int *data, Long_I N)
+inline SvbaseInt_c::SvbaseInt_c(const Int *data, Long_I N)
     : m_p(data), m_N(N) {}
 
-inline const Int * SvecInt_c::p() const
+inline const Int * SvbaseInt_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -302,12 +302,12 @@ inline const Int * SvecInt_c::p() const
     return m_p;
 }
 
-inline Long SvecInt_c::size() const
+inline Long SvbaseInt_c::size() const
 {
     return m_N;
 }
 
-inline const Int &SvecInt_c::operator[](Long_I i) const
+inline const Int &SvbaseInt_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -316,7 +316,7 @@ inline const Int &SvecInt_c::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline const Int &SvecInt_c::end() const
+inline const Int &SvbaseInt_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -325,7 +325,7 @@ inline const Int &SvecInt_c::end() const
     return m_p[m_N - 1];
 }
 
-inline const Int &SvecInt_c::end(Long_I i) const
+inline const Int &SvbaseInt_c::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -335,62 +335,62 @@ inline const Int &SvecInt_c::end(Long_I i) const
 }
 
 
-inline void SvecInt_c::set(const Int *data, Long_I N)
+inline void SvbaseInt_c::set(const Int *data, Long_I N)
 {
     m_p = data; m_N = N;
 }
 
-inline void SvecInt_c::set(const Int *data)
+inline void SvbaseInt_c::set(const Int *data)
 {
     m_p = data;
 }
 
-inline void SvecInt_c::set(Long_I N)
+inline void SvbaseInt_c::set(Long_I N)
 {
     m_N = N;
 }
 
-inline void SvecInt_c::next()
+inline void SvbaseInt_c::next()
 {
     m_p += m_N;
 }
 
-inline void SvecInt_c::last()
+inline void SvbaseInt_c::last()
 {
     m_p -= m_N;
 }
 
-inline void SvecInt_c::shift(Long_I N)
+inline void SvbaseInt_c::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline void SvecInt_c::set(const SvecInt_c &sli)
+inline void SvbaseInt_c::set(const SvbaseInt_c &sli)
 {
     m_p = sli.m_p; m_N = sli.m_N;
 }
 
-inline SvecInt_c::~SvecInt_c() {}
+inline SvbaseInt_c::~SvbaseInt_c() {}
 
-typedef const SvecInt_c &SvecInt_I;
+typedef const SvbaseInt_c &SvbaseInt_I;
 
-class SvecInt
+class SvbaseInt
 {
 protected:
     Int *m_p;
     Long m_N;
 public:
-    SvecInt();
-    explicit SvecInt(Long_I N);
-    SvecInt(Int *data, Long_I N); // unsafe
+    SvbaseInt();
+    explicit SvbaseInt(Long_I N);
+    SvbaseInt(Int *data, Long_I N); // unsafe
     Int* p() const;
     Long size() const;
-    SvecInt &operator=(const SvecInt &rhs) = delete;
+    SvbaseInt &operator=(const SvbaseInt &rhs) = delete;
     Int &operator[](Long_I i) const;
     Int &end() const;
     Int &end(Long_I i) const;
-    operator SvecInt_c() const;
-    void set(const SvecInt &sli);
+    operator SvbaseInt_c() const;
+    void set(const SvbaseInt &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
@@ -400,22 +400,22 @@ public:
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
 
-    ~SvecInt();
+    ~SvbaseInt();
 };
 
-inline SvecInt::SvecInt() {}
+inline SvbaseInt::SvbaseInt() {}
 
-inline SvecInt::SvecInt(Long_I N) : m_N(N)
+inline SvbaseInt::SvbaseInt(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
     m_p = nullptr;
 #endif
 }
 
-inline SvecInt::SvecInt(Int *data, Long_I N)
+inline SvbaseInt::SvbaseInt(Int *data, Long_I N)
     : m_p(data), m_N(N) {}
 
-inline Int * SvecInt::p() const
+inline Int * SvbaseInt::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -424,12 +424,12 @@ inline Int * SvecInt::p() const
     return m_p;
 }
 
-inline Long SvecInt::size() const
+inline Long SvbaseInt::size() const
 {
     return m_N;
 }
 
-inline Int &SvecInt::operator[](Long_I i) const
+inline Int &SvbaseInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -438,7 +438,7 @@ inline Int &SvecInt::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Int &SvecInt::end() const
+inline Int &SvbaseInt::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -447,7 +447,7 @@ inline Int &SvecInt::end() const
     return m_p[m_N - 1];
 }
 
-inline Int &SvecInt::end(Long_I i) const
+inline Int &SvbaseInt::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -456,67 +456,67 @@ inline Int &SvecInt::end(Long_I i) const
     return m_p[m_N - i];
 }
 
-inline SvecInt::operator SvecInt_c() const
+inline SvbaseInt::operator SvbaseInt_c() const
 {
-    return *((SvecInt_c *)this);
+    return *((SvbaseInt_c *)this);
 }
 
-inline void SvecInt::set(Int *data, Long_I N)
+inline void SvbaseInt::set(Int *data, Long_I N)
 {
     m_p = data; m_N = N;
 }
 
-inline void SvecInt::set(Int *data)
+inline void SvbaseInt::set(Int *data)
 {
     m_p = data;
 }
 
-inline void SvecInt::set(Long_I N)
+inline void SvbaseInt::set(Long_I N)
 {
     m_N = N;
 }
 
-inline void SvecInt::next()
+inline void SvbaseInt::next()
 {
     m_p += m_N;
 }
 
-inline void SvecInt::last()
+inline void SvbaseInt::last()
 {
     m_p -= m_N;
 }
 
-inline void SvecInt::shift(Long_I N)
+inline void SvbaseInt::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline void SvecInt::set(const SvecInt &sli)
+inline void SvbaseInt::set(const SvbaseInt &sli)
 {
     m_p = sli.m_p; m_N = sli.m_N;
 }
 
-inline SvecInt::~SvecInt() {}
+inline SvbaseInt::~SvbaseInt() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvecInt &SvecInt_O, &SvecInt_IO;
+typedef const SvbaseInt &SvbaseInt_O, &SvbaseInt_IO;
 
-class SvecLlong_c
+class SvbaseLlong_c
 {
 protected:
     const Llong *m_p;
     Long m_N;
 public:
-    SvecLlong_c();
-    explicit SvecLlong_c(Long_I N);
-    SvecLlong_c(const Llong *data, Long_I N); // unsafe
+    SvbaseLlong_c();
+    explicit SvbaseLlong_c(Long_I N);
+    SvbaseLlong_c(const Llong *data, Long_I N); // unsafe
     const Llong* p() const;
     Long size() const;
-    SvecLlong_c &operator=(const SvecLlong_c &rhs) = delete;
+    SvbaseLlong_c &operator=(const SvbaseLlong_c &rhs) = delete;
     const Llong &operator[](Long_I i) const;
     const Llong &end() const;
     const Llong &end(Long_I i) const;
-    void set(const SvecLlong_c &sli);
+    void set(const SvbaseLlong_c &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
@@ -526,22 +526,22 @@ public:
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
 
-    ~SvecLlong_c();
+    ~SvbaseLlong_c();
 };
 
-inline SvecLlong_c::SvecLlong_c() {}
+inline SvbaseLlong_c::SvbaseLlong_c() {}
 
-inline SvecLlong_c::SvecLlong_c(Long_I N) : m_N(N)
+inline SvbaseLlong_c::SvbaseLlong_c(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
     m_p = nullptr;
 #endif
 }
 
-inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I N)
+inline SvbaseLlong_c::SvbaseLlong_c(const Llong *data, Long_I N)
     : m_p(data), m_N(N) {}
 
-inline const Llong * SvecLlong_c::p() const
+inline const Llong * SvbaseLlong_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -550,12 +550,12 @@ inline const Llong * SvecLlong_c::p() const
     return m_p;
 }
 
-inline Long SvecLlong_c::size() const
+inline Long SvbaseLlong_c::size() const
 {
     return m_N;
 }
 
-inline const Llong &SvecLlong_c::operator[](Long_I i) const
+inline const Llong &SvbaseLlong_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -564,7 +564,7 @@ inline const Llong &SvecLlong_c::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline const Llong &SvecLlong_c::end() const
+inline const Llong &SvbaseLlong_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -573,7 +573,7 @@ inline const Llong &SvecLlong_c::end() const
     return m_p[m_N - 1];
 }
 
-inline const Llong &SvecLlong_c::end(Long_I i) const
+inline const Llong &SvbaseLlong_c::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -583,62 +583,62 @@ inline const Llong &SvecLlong_c::end(Long_I i) const
 }
 
 
-inline void SvecLlong_c::set(const Llong *data, Long_I N)
+inline void SvbaseLlong_c::set(const Llong *data, Long_I N)
 {
     m_p = data; m_N = N;
 }
 
-inline void SvecLlong_c::set(const Llong *data)
+inline void SvbaseLlong_c::set(const Llong *data)
 {
     m_p = data;
 }
 
-inline void SvecLlong_c::set(Long_I N)
+inline void SvbaseLlong_c::set(Long_I N)
 {
     m_N = N;
 }
 
-inline void SvecLlong_c::next()
+inline void SvbaseLlong_c::next()
 {
     m_p += m_N;
 }
 
-inline void SvecLlong_c::last()
+inline void SvbaseLlong_c::last()
 {
     m_p -= m_N;
 }
 
-inline void SvecLlong_c::shift(Long_I N)
+inline void SvbaseLlong_c::shift(Long_I N)
 {
     m_p += N;
 }
 
-inline void SvecLlong_c::set(const SvecLlong_c &sli)
+inline void SvbaseLlong_c::set(const SvbaseLlong_c &sli)
 {
     m_p = sli.m_p; m_N = sli.m_N;
 }
 
-inline SvecLlong_c::~SvecLlong_c() {}
+inline SvbaseLlong_c::~SvbaseLlong_c() {}
 
-typedef const SvecLlong_c &SvecLlong_I;
+typedef const SvbaseLlong_c &SvbaseLlong_I;
 
-class SvecLlong
+class SvbaseLlong
 {
 protected:
     Llong *m_p;
     Long m_N;
 public:
-    SvecLlong();
-    explicit SvecLlong(Long_I N);
-    SvecLlong(Llong *data, Long_I N); // unsafe
+    SvbaseLlong();
+    explicit SvbaseLlong(Long_I N);
+    SvbaseLlong(Llong *data, Long_I N); // unsafe
     Llong* p() const;
     Long size() const;
-    SvecLlong &operator=(const SvecLlong &rhs) = delete;
+    SvbaseLlong &operator=(const SvbaseLlong &rhs) = delete;
     Llong &operator[](Long_I i) const;
     Llong &end() const;
     Llong &end(Long_I i) const;
-    operator SvecLlong_c() const;
-    void set(const SvecLlong &sli);
+    operator SvbaseLlong_c() const;
+    void set(const SvbaseLlong &sli);
     void next(); // m_p += m_N
     
     // === unsafe operations (unsafe) ===
@@ -648,22 +648,22 @@ public:
     void last(); // m_p -= m_N
     void shift(Long_I N); // m_p += N
 
-    ~SvecLlong();
+    ~SvbaseLlong();
 };
 
-inline SvecLlong::SvecLlong() {}
+inline SvbaseLlong::SvbaseLlong() {}
 
-inline SvecLlong::SvecLlong(Long_I N) : m_N(N)
+inline SvbaseLlong::SvbaseLlong(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
     m_p = nullptr;
 #endif
 }
 
-inline SvecLlong::SvecLlong(Llong *data, Long_I N)
+inline SvbaseLlong::SvbaseLlong(Llong *data, Long_I N)
     : m_p(data), m_N(N) {}
 
-inline Llong * SvecLlong::p() const
+inline Llong * SvbaseLlong::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -672,12 +672,12 @@ inline Llong * SvecLlong::p() const
     return m_p;
 }
 
-inline Long SvecLlong::size() const
+inline Long SvbaseLlong::size() const
 {
     return m_N;
 }
 
-inline Llong &SvecLlong::operator[](Long_I i) const
+inline Llong &SvbaseLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
@@ -686,7 +686,7 @@ inline Llong &SvecLlong::operator[](Long_I i) const
     return m_p[i];
 }
 
-inline Llong &SvecLlong::end() const
+inline Llong &SvbaseLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (m_N == 0)
@@ -695,7 +695,7 @@ inline Llong &SvecLlong::end() const
     return m_p[m_N - 1];
 }
 
-inline Llong &SvecLlong::end(Long_I i) const
+inline Llong &SvbaseLlong::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i <= 0 || i > m_N)
@@ -704,47 +704,2429 @@ inline Llong &SvecLlong::end(Long_I i) const
     return m_p[m_N - i];
 }
 
+inline SvbaseLlong::operator SvbaseLlong_c() const
+{
+    return *((SvbaseLlong_c *)this);
+}
+
+inline void SvbaseLlong::set(Llong *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLlong::set(Llong *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLlong::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLlong::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLlong::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLlong::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLlong::set(const SvbaseLlong &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLlong::~SvbaseLlong() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseLlong &SvbaseLlong_O, &SvbaseLlong_IO;
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvbaseInt_c SvbaseLong_c;
+#else
+typedef SvbaseLlong_c SvbaseLong_c;
+#endif
+
+typedef const SvbaseLong_c &SvbaseLong_I;
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvbaseInt SvbaseLong;
+#else
+typedef SvbaseLlong SvbaseLong;
+#endif
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseLong &SvbaseLong_O, &SvbaseLong_IO;
+
+class SvbaseFloat_c
+{
+protected:
+    const Float *m_p;
+    Long m_N;
+public:
+    SvbaseFloat_c();
+    explicit SvbaseFloat_c(Long_I N);
+    SvbaseFloat_c(const Float *data, Long_I N); // unsafe
+    const Float* p() const;
+    Long size() const;
+    SvbaseFloat_c &operator=(const SvbaseFloat_c &rhs) = delete;
+    const Float &operator[](Long_I i) const;
+    const Float &end() const;
+    const Float &end(Long_I i) const;
+    void set(const SvbaseFloat_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Float *data);
+    void set(Long_I N);
+    void set(const Float *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseFloat_c();
+};
+
+inline SvbaseFloat_c::SvbaseFloat_c() {}
+
+inline SvbaseFloat_c::SvbaseFloat_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseFloat_c::SvbaseFloat_c(const Float *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Float * SvbaseFloat_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseFloat_c::size() const
+{
+    return m_N;
+}
+
+inline const Float &SvbaseFloat_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Float &SvbaseFloat_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Float &SvbaseFloat_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseFloat_c::set(const Float *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseFloat_c::set(const Float *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseFloat_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseFloat_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseFloat_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseFloat_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseFloat_c::set(const SvbaseFloat_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseFloat_c::~SvbaseFloat_c() {}
+
+typedef const SvbaseFloat_c &SvbaseFloat_I;
+
+class SvbaseFloat
+{
+protected:
+    Float *m_p;
+    Long m_N;
+public:
+    SvbaseFloat();
+    explicit SvbaseFloat(Long_I N);
+    SvbaseFloat(Float *data, Long_I N); // unsafe
+    Float* p() const;
+    Long size() const;
+    SvbaseFloat &operator=(const SvbaseFloat &rhs) = delete;
+    Float &operator[](Long_I i) const;
+    Float &end() const;
+    Float &end(Long_I i) const;
+    operator SvbaseFloat_c() const;
+    void set(const SvbaseFloat &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Float *data);
+    void set(Long_I N);
+    void set(Float *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseFloat();
+};
+
+inline SvbaseFloat::SvbaseFloat() {}
+
+inline SvbaseFloat::SvbaseFloat(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseFloat::SvbaseFloat(Float *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Float * SvbaseFloat::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseFloat::size() const
+{
+    return m_N;
+}
+
+inline Float &SvbaseFloat::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Float &SvbaseFloat::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Float &SvbaseFloat::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseFloat::operator SvbaseFloat_c() const
+{
+    return *((SvbaseFloat_c *)this);
+}
+
+inline void SvbaseFloat::set(Float *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseFloat::set(Float *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseFloat::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseFloat::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseFloat::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseFloat::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseFloat::set(const SvbaseFloat &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseFloat::~SvbaseFloat() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseFloat &SvbaseFloat_O, &SvbaseFloat_IO;
+
+class SvbaseDoub_c
+{
+protected:
+    const Doub *m_p;
+    Long m_N;
+public:
+    SvbaseDoub_c();
+    explicit SvbaseDoub_c(Long_I N);
+    SvbaseDoub_c(const Doub *data, Long_I N); // unsafe
+    const Doub* p() const;
+    Long size() const;
+    SvbaseDoub_c &operator=(const SvbaseDoub_c &rhs) = delete;
+    const Doub &operator[](Long_I i) const;
+    const Doub &end() const;
+    const Doub &end(Long_I i) const;
+    void set(const SvbaseDoub_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Doub *data);
+    void set(Long_I N);
+    void set(const Doub *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseDoub_c();
+};
+
+inline SvbaseDoub_c::SvbaseDoub_c() {}
+
+inline SvbaseDoub_c::SvbaseDoub_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseDoub_c::SvbaseDoub_c(const Doub *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Doub * SvbaseDoub_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseDoub_c::size() const
+{
+    return m_N;
+}
+
+inline const Doub &SvbaseDoub_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Doub &SvbaseDoub_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Doub &SvbaseDoub_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseDoub_c::set(const Doub *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseDoub_c::set(const Doub *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseDoub_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseDoub_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseDoub_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseDoub_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseDoub_c::set(const SvbaseDoub_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseDoub_c::~SvbaseDoub_c() {}
+
+typedef const SvbaseDoub_c &SvbaseDoub_I;
+
+class SvbaseDoub
+{
+protected:
+    Doub *m_p;
+    Long m_N;
+public:
+    SvbaseDoub();
+    explicit SvbaseDoub(Long_I N);
+    SvbaseDoub(Doub *data, Long_I N); // unsafe
+    Doub* p() const;
+    Long size() const;
+    SvbaseDoub &operator=(const SvbaseDoub &rhs) = delete;
+    Doub &operator[](Long_I i) const;
+    Doub &end() const;
+    Doub &end(Long_I i) const;
+    operator SvbaseDoub_c() const;
+    void set(const SvbaseDoub &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Doub *data);
+    void set(Long_I N);
+    void set(Doub *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseDoub();
+};
+
+inline SvbaseDoub::SvbaseDoub() {}
+
+inline SvbaseDoub::SvbaseDoub(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseDoub::SvbaseDoub(Doub *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Doub * SvbaseDoub::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseDoub::size() const
+{
+    return m_N;
+}
+
+inline Doub &SvbaseDoub::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Doub &SvbaseDoub::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Doub &SvbaseDoub::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseDoub::operator SvbaseDoub_c() const
+{
+    return *((SvbaseDoub_c *)this);
+}
+
+inline void SvbaseDoub::set(Doub *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseDoub::set(Doub *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseDoub::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseDoub::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseDoub::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseDoub::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseDoub::set(const SvbaseDoub &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseDoub::~SvbaseDoub() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseDoub &SvbaseDoub_O, &SvbaseDoub_IO;
+
+class SvbaseLdoub_c
+{
+protected:
+    const Ldoub *m_p;
+    Long m_N;
+public:
+    SvbaseLdoub_c();
+    explicit SvbaseLdoub_c(Long_I N);
+    SvbaseLdoub_c(const Ldoub *data, Long_I N); // unsafe
+    const Ldoub* p() const;
+    Long size() const;
+    SvbaseLdoub_c &operator=(const SvbaseLdoub_c &rhs) = delete;
+    const Ldoub &operator[](Long_I i) const;
+    const Ldoub &end() const;
+    const Ldoub &end(Long_I i) const;
+    void set(const SvbaseLdoub_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Ldoub *data);
+    void set(Long_I N);
+    void set(const Ldoub *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseLdoub_c();
+};
+
+inline SvbaseLdoub_c::SvbaseLdoub_c() {}
+
+inline SvbaseLdoub_c::SvbaseLdoub_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseLdoub_c::SvbaseLdoub_c(const Ldoub *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Ldoub * SvbaseLdoub_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseLdoub_c::size() const
+{
+    return m_N;
+}
+
+inline const Ldoub &SvbaseLdoub_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Ldoub &SvbaseLdoub_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Ldoub &SvbaseLdoub_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseLdoub_c::set(const Ldoub *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLdoub_c::set(const Ldoub *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLdoub_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLdoub_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLdoub_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLdoub_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLdoub_c::set(const SvbaseLdoub_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLdoub_c::~SvbaseLdoub_c() {}
+
+typedef const SvbaseLdoub_c &SvbaseLdoub_I;
+
+class SvbaseLdoub
+{
+protected:
+    Ldoub *m_p;
+    Long m_N;
+public:
+    SvbaseLdoub();
+    explicit SvbaseLdoub(Long_I N);
+    SvbaseLdoub(Ldoub *data, Long_I N); // unsafe
+    Ldoub* p() const;
+    Long size() const;
+    SvbaseLdoub &operator=(const SvbaseLdoub &rhs) = delete;
+    Ldoub &operator[](Long_I i) const;
+    Ldoub &end() const;
+    Ldoub &end(Long_I i) const;
+    operator SvbaseLdoub_c() const;
+    void set(const SvbaseLdoub &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Ldoub *data);
+    void set(Long_I N);
+    void set(Ldoub *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseLdoub();
+};
+
+inline SvbaseLdoub::SvbaseLdoub() {}
+
+inline SvbaseLdoub::SvbaseLdoub(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseLdoub::SvbaseLdoub(Ldoub *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Ldoub * SvbaseLdoub::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseLdoub::size() const
+{
+    return m_N;
+}
+
+inline Ldoub &SvbaseLdoub::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Ldoub &SvbaseLdoub::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Ldoub &SvbaseLdoub::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseLdoub::operator SvbaseLdoub_c() const
+{
+    return *((SvbaseLdoub_c *)this);
+}
+
+inline void SvbaseLdoub::set(Ldoub *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLdoub::set(Ldoub *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLdoub::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLdoub::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLdoub::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLdoub::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLdoub::set(const SvbaseLdoub &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLdoub::~SvbaseLdoub() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseLdoub &SvbaseLdoub_O, &SvbaseLdoub_IO;
+
+class SvbaseFcomp_c
+{
+protected:
+    const Fcomp *m_p;
+    Long m_N;
+public:
+    SvbaseFcomp_c();
+    explicit SvbaseFcomp_c(Long_I N);
+    SvbaseFcomp_c(const Fcomp *data, Long_I N); // unsafe
+    const Fcomp* p() const;
+    Long size() const;
+    SvbaseFcomp_c &operator=(const SvbaseFcomp_c &rhs) = delete;
+    const Fcomp &operator[](Long_I i) const;
+    const Fcomp &end() const;
+    const Fcomp &end(Long_I i) const;
+    void set(const SvbaseFcomp_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Fcomp *data);
+    void set(Long_I N);
+    void set(const Fcomp *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseFcomp_c();
+};
+
+inline SvbaseFcomp_c::SvbaseFcomp_c() {}
+
+inline SvbaseFcomp_c::SvbaseFcomp_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseFcomp_c::SvbaseFcomp_c(const Fcomp *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Fcomp * SvbaseFcomp_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseFcomp_c::size() const
+{
+    return m_N;
+}
+
+inline const Fcomp &SvbaseFcomp_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Fcomp &SvbaseFcomp_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Fcomp &SvbaseFcomp_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseFcomp_c::set(const Fcomp *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseFcomp_c::set(const Fcomp *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseFcomp_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseFcomp_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseFcomp_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseFcomp_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseFcomp_c::set(const SvbaseFcomp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseFcomp_c::~SvbaseFcomp_c() {}
+
+typedef const SvbaseFcomp_c &SvbaseFcomp_I;
+
+class SvbaseFcomp
+{
+protected:
+    Fcomp *m_p;
+    Long m_N;
+public:
+    SvbaseFcomp();
+    explicit SvbaseFcomp(Long_I N);
+    SvbaseFcomp(Fcomp *data, Long_I N); // unsafe
+    Fcomp* p() const;
+    Long size() const;
+    SvbaseFcomp &operator=(const SvbaseFcomp &rhs) = delete;
+    Fcomp &operator[](Long_I i) const;
+    Fcomp &end() const;
+    Fcomp &end(Long_I i) const;
+    operator SvbaseFcomp_c() const;
+    void set(const SvbaseFcomp &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Fcomp *data);
+    void set(Long_I N);
+    void set(Fcomp *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseFcomp();
+};
+
+inline SvbaseFcomp::SvbaseFcomp() {}
+
+inline SvbaseFcomp::SvbaseFcomp(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseFcomp::SvbaseFcomp(Fcomp *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Fcomp * SvbaseFcomp::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseFcomp::size() const
+{
+    return m_N;
+}
+
+inline Fcomp &SvbaseFcomp::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Fcomp &SvbaseFcomp::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Fcomp &SvbaseFcomp::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseFcomp::operator SvbaseFcomp_c() const
+{
+    return *((SvbaseFcomp_c *)this);
+}
+
+inline void SvbaseFcomp::set(Fcomp *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseFcomp::set(Fcomp *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseFcomp::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseFcomp::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseFcomp::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseFcomp::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseFcomp::set(const SvbaseFcomp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseFcomp::~SvbaseFcomp() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseFcomp &SvbaseFcomp_O, &SvbaseFcomp_IO;
+
+class SvbaseComp_c
+{
+protected:
+    const Comp *m_p;
+    Long m_N;
+public:
+    SvbaseComp_c();
+    explicit SvbaseComp_c(Long_I N);
+    SvbaseComp_c(const Comp *data, Long_I N); // unsafe
+    const Comp* p() const;
+    Long size() const;
+    SvbaseComp_c &operator=(const SvbaseComp_c &rhs) = delete;
+    const Comp &operator[](Long_I i) const;
+    const Comp &end() const;
+    const Comp &end(Long_I i) const;
+    void set(const SvbaseComp_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Comp *data);
+    void set(Long_I N);
+    void set(const Comp *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseComp_c();
+};
+
+inline SvbaseComp_c::SvbaseComp_c() {}
+
+inline SvbaseComp_c::SvbaseComp_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseComp_c::SvbaseComp_c(const Comp *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Comp * SvbaseComp_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseComp_c::size() const
+{
+    return m_N;
+}
+
+inline const Comp &SvbaseComp_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Comp &SvbaseComp_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Comp &SvbaseComp_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseComp_c::set(const Comp *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseComp_c::set(const Comp *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseComp_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseComp_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseComp_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseComp_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseComp_c::set(const SvbaseComp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseComp_c::~SvbaseComp_c() {}
+
+typedef const SvbaseComp_c &SvbaseComp_I;
+
+class SvbaseComp
+{
+protected:
+    Comp *m_p;
+    Long m_N;
+public:
+    SvbaseComp();
+    explicit SvbaseComp(Long_I N);
+    SvbaseComp(Comp *data, Long_I N); // unsafe
+    Comp* p() const;
+    Long size() const;
+    SvbaseComp &operator=(const SvbaseComp &rhs) = delete;
+    Comp &operator[](Long_I i) const;
+    Comp &end() const;
+    Comp &end(Long_I i) const;
+    operator SvbaseComp_c() const;
+    void set(const SvbaseComp &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Comp *data);
+    void set(Long_I N);
+    void set(Comp *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseComp();
+};
+
+inline SvbaseComp::SvbaseComp() {}
+
+inline SvbaseComp::SvbaseComp(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseComp::SvbaseComp(Comp *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Comp * SvbaseComp::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseComp::size() const
+{
+    return m_N;
+}
+
+inline Comp &SvbaseComp::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Comp &SvbaseComp::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Comp &SvbaseComp::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseComp::operator SvbaseComp_c() const
+{
+    return *((SvbaseComp_c *)this);
+}
+
+inline void SvbaseComp::set(Comp *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseComp::set(Comp *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseComp::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseComp::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseComp::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseComp::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseComp::set(const SvbaseComp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseComp::~SvbaseComp() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseComp &SvbaseComp_O, &SvbaseComp_IO;
+
+class SvbaseLcomp_c
+{
+protected:
+    const Lcomp *m_p;
+    Long m_N;
+public:
+    SvbaseLcomp_c();
+    explicit SvbaseLcomp_c(Long_I N);
+    SvbaseLcomp_c(const Lcomp *data, Long_I N); // unsafe
+    const Lcomp* p() const;
+    Long size() const;
+    SvbaseLcomp_c &operator=(const SvbaseLcomp_c &rhs) = delete;
+    const Lcomp &operator[](Long_I i) const;
+    const Lcomp &end() const;
+    const Lcomp &end(Long_I i) const;
+    void set(const SvbaseLcomp_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Lcomp *data);
+    void set(Long_I N);
+    void set(const Lcomp *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseLcomp_c();
+};
+
+inline SvbaseLcomp_c::SvbaseLcomp_c() {}
+
+inline SvbaseLcomp_c::SvbaseLcomp_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseLcomp_c::SvbaseLcomp_c(const Lcomp *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Lcomp * SvbaseLcomp_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseLcomp_c::size() const
+{
+    return m_N;
+}
+
+inline const Lcomp &SvbaseLcomp_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Lcomp &SvbaseLcomp_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Lcomp &SvbaseLcomp_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseLcomp_c::set(const Lcomp *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLcomp_c::set(const Lcomp *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLcomp_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLcomp_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLcomp_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLcomp_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLcomp_c::set(const SvbaseLcomp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLcomp_c::~SvbaseLcomp_c() {}
+
+typedef const SvbaseLcomp_c &SvbaseLcomp_I;
+
+class SvbaseLcomp
+{
+protected:
+    Lcomp *m_p;
+    Long m_N;
+public:
+    SvbaseLcomp();
+    explicit SvbaseLcomp(Long_I N);
+    SvbaseLcomp(Lcomp *data, Long_I N); // unsafe
+    Lcomp* p() const;
+    Long size() const;
+    SvbaseLcomp &operator=(const SvbaseLcomp &rhs) = delete;
+    Lcomp &operator[](Long_I i) const;
+    Lcomp &end() const;
+    Lcomp &end(Long_I i) const;
+    operator SvbaseLcomp_c() const;
+    void set(const SvbaseLcomp &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Lcomp *data);
+    void set(Long_I N);
+    void set(Lcomp *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseLcomp();
+};
+
+inline SvbaseLcomp::SvbaseLcomp() {}
+
+inline SvbaseLcomp::SvbaseLcomp(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseLcomp::SvbaseLcomp(Lcomp *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Lcomp * SvbaseLcomp::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseLcomp::size() const
+{
+    return m_N;
+}
+
+inline Lcomp &SvbaseLcomp::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Lcomp &SvbaseLcomp::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Lcomp &SvbaseLcomp::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseLcomp::operator SvbaseLcomp_c() const
+{
+    return *((SvbaseLcomp_c *)this);
+}
+
+inline void SvbaseLcomp::set(Lcomp *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLcomp::set(Lcomp *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLcomp::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLcomp::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLcomp::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLcomp::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLcomp::set(const SvbaseLcomp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLcomp::~SvbaseLcomp() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseLcomp &SvbaseLcomp_O, &SvbaseLcomp_IO;
+
+class SvbaseFimag_c
+{
+protected:
+    const Fimag *m_p;
+    Long m_N;
+public:
+    SvbaseFimag_c();
+    explicit SvbaseFimag_c(Long_I N);
+    SvbaseFimag_c(const Fimag *data, Long_I N); // unsafe
+    const Fimag* p() const;
+    Long size() const;
+    SvbaseFimag_c &operator=(const SvbaseFimag_c &rhs) = delete;
+    const Fimag &operator[](Long_I i) const;
+    const Fimag &end() const;
+    const Fimag &end(Long_I i) const;
+    void set(const SvbaseFimag_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Fimag *data);
+    void set(Long_I N);
+    void set(const Fimag *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseFimag_c();
+};
+
+inline SvbaseFimag_c::SvbaseFimag_c() {}
+
+inline SvbaseFimag_c::SvbaseFimag_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseFimag_c::SvbaseFimag_c(const Fimag *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Fimag * SvbaseFimag_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseFimag_c::size() const
+{
+    return m_N;
+}
+
+inline const Fimag &SvbaseFimag_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Fimag &SvbaseFimag_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Fimag &SvbaseFimag_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseFimag_c::set(const Fimag *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseFimag_c::set(const Fimag *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseFimag_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseFimag_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseFimag_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseFimag_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseFimag_c::set(const SvbaseFimag_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseFimag_c::~SvbaseFimag_c() {}
+
+typedef const SvbaseFimag_c &SvbaseFimag_I;
+
+class SvbaseFimag
+{
+protected:
+    Fimag *m_p;
+    Long m_N;
+public:
+    SvbaseFimag();
+    explicit SvbaseFimag(Long_I N);
+    SvbaseFimag(Fimag *data, Long_I N); // unsafe
+    Fimag* p() const;
+    Long size() const;
+    SvbaseFimag &operator=(const SvbaseFimag &rhs) = delete;
+    Fimag &operator[](Long_I i) const;
+    Fimag &end() const;
+    Fimag &end(Long_I i) const;
+    operator SvbaseFimag_c() const;
+    void set(const SvbaseFimag &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Fimag *data);
+    void set(Long_I N);
+    void set(Fimag *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseFimag();
+};
+
+inline SvbaseFimag::SvbaseFimag() {}
+
+inline SvbaseFimag::SvbaseFimag(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseFimag::SvbaseFimag(Fimag *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Fimag * SvbaseFimag::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseFimag::size() const
+{
+    return m_N;
+}
+
+inline Fimag &SvbaseFimag::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Fimag &SvbaseFimag::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Fimag &SvbaseFimag::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseFimag::operator SvbaseFimag_c() const
+{
+    return *((SvbaseFimag_c *)this);
+}
+
+inline void SvbaseFimag::set(Fimag *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseFimag::set(Fimag *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseFimag::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseFimag::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseFimag::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseFimag::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseFimag::set(const SvbaseFimag &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseFimag::~SvbaseFimag() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseFimag &SvbaseFimag_O, &SvbaseFimag_IO;
+
+class SvbaseImag_c
+{
+protected:
+    const Imag *m_p;
+    Long m_N;
+public:
+    SvbaseImag_c();
+    explicit SvbaseImag_c(Long_I N);
+    SvbaseImag_c(const Imag *data, Long_I N); // unsafe
+    const Imag* p() const;
+    Long size() const;
+    SvbaseImag_c &operator=(const SvbaseImag_c &rhs) = delete;
+    const Imag &operator[](Long_I i) const;
+    const Imag &end() const;
+    const Imag &end(Long_I i) const;
+    void set(const SvbaseImag_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Imag *data);
+    void set(Long_I N);
+    void set(const Imag *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseImag_c();
+};
+
+inline SvbaseImag_c::SvbaseImag_c() {}
+
+inline SvbaseImag_c::SvbaseImag_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseImag_c::SvbaseImag_c(const Imag *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Imag * SvbaseImag_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseImag_c::size() const
+{
+    return m_N;
+}
+
+inline const Imag &SvbaseImag_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Imag &SvbaseImag_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Imag &SvbaseImag_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseImag_c::set(const Imag *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseImag_c::set(const Imag *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseImag_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseImag_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseImag_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseImag_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseImag_c::set(const SvbaseImag_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseImag_c::~SvbaseImag_c() {}
+
+typedef const SvbaseImag_c &SvbaseImag_I;
+
+class SvbaseImag
+{
+protected:
+    Imag *m_p;
+    Long m_N;
+public:
+    SvbaseImag();
+    explicit SvbaseImag(Long_I N);
+    SvbaseImag(Imag *data, Long_I N); // unsafe
+    Imag* p() const;
+    Long size() const;
+    SvbaseImag &operator=(const SvbaseImag &rhs) = delete;
+    Imag &operator[](Long_I i) const;
+    Imag &end() const;
+    Imag &end(Long_I i) const;
+    operator SvbaseImag_c() const;
+    void set(const SvbaseImag &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Imag *data);
+    void set(Long_I N);
+    void set(Imag *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseImag();
+};
+
+inline SvbaseImag::SvbaseImag() {}
+
+inline SvbaseImag::SvbaseImag(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseImag::SvbaseImag(Imag *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Imag * SvbaseImag::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseImag::size() const
+{
+    return m_N;
+}
+
+inline Imag &SvbaseImag::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Imag &SvbaseImag::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Imag &SvbaseImag::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseImag::operator SvbaseImag_c() const
+{
+    return *((SvbaseImag_c *)this);
+}
+
+inline void SvbaseImag::set(Imag *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseImag::set(Imag *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseImag::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseImag::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseImag::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseImag::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseImag::set(const SvbaseImag &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseImag::~SvbaseImag() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseImag &SvbaseImag_O, &SvbaseImag_IO;
+
+class SvbaseLimag_c
+{
+protected:
+    const Limag *m_p;
+    Long m_N;
+public:
+    SvbaseLimag_c();
+    explicit SvbaseLimag_c(Long_I N);
+    SvbaseLimag_c(const Limag *data, Long_I N); // unsafe
+    const Limag* p() const;
+    Long size() const;
+    SvbaseLimag_c &operator=(const SvbaseLimag_c &rhs) = delete;
+    const Limag &operator[](Long_I i) const;
+    const Limag &end() const;
+    const Limag &end(Long_I i) const;
+    void set(const SvbaseLimag_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Limag *data);
+    void set(Long_I N);
+    void set(const Limag *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseLimag_c();
+};
+
+inline SvbaseLimag_c::SvbaseLimag_c() {}
+
+inline SvbaseLimag_c::SvbaseLimag_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseLimag_c::SvbaseLimag_c(const Limag *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Limag * SvbaseLimag_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseLimag_c::size() const
+{
+    return m_N;
+}
+
+inline const Limag &SvbaseLimag_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Limag &SvbaseLimag_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Limag &SvbaseLimag_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseLimag_c::set(const Limag *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLimag_c::set(const Limag *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLimag_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLimag_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLimag_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLimag_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLimag_c::set(const SvbaseLimag_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLimag_c::~SvbaseLimag_c() {}
+
+typedef const SvbaseLimag_c &SvbaseLimag_I;
+
+class SvbaseLimag
+{
+protected:
+    Limag *m_p;
+    Long m_N;
+public:
+    SvbaseLimag();
+    explicit SvbaseLimag(Long_I N);
+    SvbaseLimag(Limag *data, Long_I N); // unsafe
+    Limag* p() const;
+    Long size() const;
+    SvbaseLimag &operator=(const SvbaseLimag &rhs) = delete;
+    Limag &operator[](Long_I i) const;
+    Limag &end() const;
+    Limag &end(Long_I i) const;
+    operator SvbaseLimag_c() const;
+    void set(const SvbaseLimag &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Limag *data);
+    void set(Long_I N);
+    void set(Limag *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseLimag();
+};
+
+inline SvbaseLimag::SvbaseLimag() {}
+
+inline SvbaseLimag::SvbaseLimag(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseLimag::SvbaseLimag(Limag *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Limag * SvbaseLimag::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseLimag::size() const
+{
+    return m_N;
+}
+
+inline Limag &SvbaseLimag::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Limag &SvbaseLimag::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Limag &SvbaseLimag::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseLimag::operator SvbaseLimag_c() const
+{
+    return *((SvbaseLimag_c *)this);
+}
+
+inline void SvbaseLimag::set(Limag *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseLimag::set(Limag *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseLimag::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseLimag::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseLimag::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseLimag::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseLimag::set(const SvbaseLimag &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseLimag::~SvbaseLimag() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvbaseLimag &SvbaseLimag_O, &SvbaseLimag_IO;
+
+
+class SvecChar_c : public SvbaseChar_c
+{
+public:
+    SvecChar_c() = default;
+    explicit SvecChar_c(Long_I N);
+    SvecChar_c(const Char *data, Long_I N); // unsafe
+    SvecChar_c &operator=(const SvecChar_c &rhs) = delete;
+};
+
+inline SvecChar_c::SvecChar_c(Long_I N) : SvbaseChar_c(N)
+{}
+
+inline SvecChar_c::SvecChar_c(const Char *data, Long_I N)
+    : SvbaseChar_c(data, N) {}
+
+
+
+typedef const SvecChar_c &SvecChar_I;
+
+class SvecChar : public SvbaseChar
+{
+public:
+    SvecChar() = default;
+    explicit SvecChar(Long_I N);
+    SvecChar(Char *data, Long_I N); // unsafe
+    SvecChar &operator=(const SvecChar &rhs) = delete;
+    operator SvecChar_c() const;
+};
+
+inline SvecChar::SvecChar(Long_I N) : SvbaseChar(N)
+{}
+
+inline SvecChar::SvecChar(Char *data, Long_I N)
+    : SvbaseChar(data, N) {}
+
+inline SvecChar::operator SvecChar_c() const
+{
+    return *((SvecChar_c *)this);
+}
+
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecChar &SvecChar_O, &SvecChar_IO;
+
+class SvecInt_c : public SvbaseInt_c
+{
+public:
+    SvecInt_c() = default;
+    explicit SvecInt_c(Long_I N);
+    SvecInt_c(const Int *data, Long_I N); // unsafe
+    SvecInt_c &operator=(const SvecInt_c &rhs) = delete;
+};
+
+inline SvecInt_c::SvecInt_c(Long_I N) : SvbaseInt_c(N)
+{}
+
+inline SvecInt_c::SvecInt_c(const Int *data, Long_I N)
+    : SvbaseInt_c(data, N) {}
+
+
+
+typedef const SvecInt_c &SvecInt_I;
+
+class SvecInt : public SvbaseInt
+{
+public:
+    SvecInt() = default;
+    explicit SvecInt(Long_I N);
+    SvecInt(Int *data, Long_I N); // unsafe
+    SvecInt &operator=(const SvecInt &rhs) = delete;
+    operator SvecInt_c() const;
+};
+
+inline SvecInt::SvecInt(Long_I N) : SvbaseInt(N)
+{}
+
+inline SvecInt::SvecInt(Int *data, Long_I N)
+    : SvbaseInt(data, N) {}
+
+inline SvecInt::operator SvecInt_c() const
+{
+    return *((SvecInt_c *)this);
+}
+
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecInt &SvecInt_O, &SvecInt_IO;
+
+class SvecLlong_c : public SvbaseLlong_c
+{
+public:
+    SvecLlong_c() = default;
+    explicit SvecLlong_c(Long_I N);
+    SvecLlong_c(const Llong *data, Long_I N); // unsafe
+    SvecLlong_c &operator=(const SvecLlong_c &rhs) = delete;
+};
+
+inline SvecLlong_c::SvecLlong_c(Long_I N) : SvbaseLlong_c(N)
+{}
+
+inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I N)
+    : SvbaseLlong_c(data, N) {}
+
+
+
+typedef const SvecLlong_c &SvecLlong_I;
+
+class SvecLlong : public SvbaseLlong
+{
+public:
+    SvecLlong() = default;
+    explicit SvecLlong(Long_I N);
+    SvecLlong(Llong *data, Long_I N); // unsafe
+    SvecLlong &operator=(const SvecLlong &rhs) = delete;
+    operator SvecLlong_c() const;
+};
+
+inline SvecLlong::SvecLlong(Long_I N) : SvbaseLlong(N)
+{}
+
+inline SvecLlong::SvecLlong(Llong *data, Long_I N)
+    : SvbaseLlong(data, N) {}
+
 inline SvecLlong::operator SvecLlong_c() const
 {
     return *((SvecLlong_c *)this);
 }
 
-inline void SvecLlong::set(Llong *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLlong::set(Llong *data)
-{
-    m_p = data;
-}
-
-inline void SvecLlong::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLlong::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLlong::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLlong::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLlong::set(const SvecLlong &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLlong::~SvecLlong() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLlong &SvecLlong_O, &SvecLlong_IO;
@@ -766,2236 +3148,401 @@ typedef SvecLlong SvecLong;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 
-class SvecFloat_c
+class SvecFloat_c : public SvbaseFloat_c
 {
-protected:
-    const Float *m_p;
-    Long m_N;
 public:
-    SvecFloat_c();
+    SvecFloat_c() = default;
     explicit SvecFloat_c(Long_I N);
     SvecFloat_c(const Float *data, Long_I N); // unsafe
-    const Float* p() const;
-    Long size() const;
     SvecFloat_c &operator=(const SvecFloat_c &rhs) = delete;
-    const Float &operator[](Long_I i) const;
-    const Float &end() const;
-    const Float &end(Long_I i) const;
-    void set(const SvecFloat_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Float *data);
-    void set(Long_I N);
-    void set(const Float *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecFloat_c();
 };
 
-inline SvecFloat_c::SvecFloat_c() {}
-
-inline SvecFloat_c::SvecFloat_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecFloat_c::SvecFloat_c(Long_I N) : SvbaseFloat_c(N)
+{}
 
 inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Float * SvecFloat_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecFloat_c::size() const
-{
-    return m_N;
-}
-
-inline const Float &SvecFloat_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Float &SvecFloat_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Float &SvecFloat_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseFloat_c(data, N) {}
 
 
-inline void SvecFloat_c::set(const Float *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecFloat_c::set(const Float *data)
-{
-    m_p = data;
-}
-
-inline void SvecFloat_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecFloat_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecFloat_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecFloat_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecFloat_c::set(const SvecFloat_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecFloat_c::~SvecFloat_c() {}
 
 typedef const SvecFloat_c &SvecFloat_I;
 
-class SvecFloat
+class SvecFloat : public SvbaseFloat
 {
-protected:
-    Float *m_p;
-    Long m_N;
 public:
-    SvecFloat();
+    SvecFloat() = default;
     explicit SvecFloat(Long_I N);
     SvecFloat(Float *data, Long_I N); // unsafe
-    Float* p() const;
-    Long size() const;
     SvecFloat &operator=(const SvecFloat &rhs) = delete;
-    Float &operator[](Long_I i) const;
-    Float &end() const;
-    Float &end(Long_I i) const;
     operator SvecFloat_c() const;
-    void set(const SvecFloat &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Float *data);
-    void set(Long_I N);
-    void set(Float *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecFloat();
 };
 
-inline SvecFloat::SvecFloat() {}
-
-inline SvecFloat::SvecFloat(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecFloat::SvecFloat(Long_I N) : SvbaseFloat(N)
+{}
 
 inline SvecFloat::SvecFloat(Float *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Float * SvecFloat::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecFloat::size() const
-{
-    return m_N;
-}
-
-inline Float &SvecFloat::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Float &SvecFloat::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Float &SvecFloat::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseFloat(data, N) {}
 
 inline SvecFloat::operator SvecFloat_c() const
 {
     return *((SvecFloat_c *)this);
 }
 
-inline void SvecFloat::set(Float *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecFloat::set(Float *data)
-{
-    m_p = data;
-}
-
-inline void SvecFloat::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecFloat::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecFloat::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecFloat::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecFloat::set(const SvecFloat &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecFloat::~SvecFloat() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFloat &SvecFloat_O, &SvecFloat_IO;
 
-class SvecDoub_c
+class SvecDoub_c : public SvbaseDoub_c
 {
-protected:
-    const Doub *m_p;
-    Long m_N;
 public:
-    SvecDoub_c();
+    SvecDoub_c() = default;
     explicit SvecDoub_c(Long_I N);
     SvecDoub_c(const Doub *data, Long_I N); // unsafe
-    const Doub* p() const;
-    Long size() const;
     SvecDoub_c &operator=(const SvecDoub_c &rhs) = delete;
-    const Doub &operator[](Long_I i) const;
-    const Doub &end() const;
-    const Doub &end(Long_I i) const;
-    void set(const SvecDoub_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Doub *data);
-    void set(Long_I N);
-    void set(const Doub *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecDoub_c();
 };
 
-inline SvecDoub_c::SvecDoub_c() {}
-
-inline SvecDoub_c::SvecDoub_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecDoub_c::SvecDoub_c(Long_I N) : SvbaseDoub_c(N)
+{}
 
 inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Doub * SvecDoub_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecDoub_c::size() const
-{
-    return m_N;
-}
-
-inline const Doub &SvecDoub_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Doub &SvecDoub_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Doub &SvecDoub_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseDoub_c(data, N) {}
 
 
-inline void SvecDoub_c::set(const Doub *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecDoub_c::set(const Doub *data)
-{
-    m_p = data;
-}
-
-inline void SvecDoub_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecDoub_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecDoub_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecDoub_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecDoub_c::set(const SvecDoub_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecDoub_c::~SvecDoub_c() {}
 
 typedef const SvecDoub_c &SvecDoub_I;
 
-class SvecDoub
+class SvecDoub : public SvbaseDoub
 {
-protected:
-    Doub *m_p;
-    Long m_N;
 public:
-    SvecDoub();
+    SvecDoub() = default;
     explicit SvecDoub(Long_I N);
     SvecDoub(Doub *data, Long_I N); // unsafe
-    Doub* p() const;
-    Long size() const;
     SvecDoub &operator=(const SvecDoub &rhs) = delete;
-    Doub &operator[](Long_I i) const;
-    Doub &end() const;
-    Doub &end(Long_I i) const;
     operator SvecDoub_c() const;
-    void set(const SvecDoub &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Doub *data);
-    void set(Long_I N);
-    void set(Doub *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecDoub();
 };
 
-inline SvecDoub::SvecDoub() {}
-
-inline SvecDoub::SvecDoub(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecDoub::SvecDoub(Long_I N) : SvbaseDoub(N)
+{}
 
 inline SvecDoub::SvecDoub(Doub *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Doub * SvecDoub::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecDoub::size() const
-{
-    return m_N;
-}
-
-inline Doub &SvecDoub::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Doub &SvecDoub::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Doub &SvecDoub::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseDoub(data, N) {}
 
 inline SvecDoub::operator SvecDoub_c() const
 {
     return *((SvecDoub_c *)this);
 }
 
-inline void SvecDoub::set(Doub *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecDoub::set(Doub *data)
-{
-    m_p = data;
-}
-
-inline void SvecDoub::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecDoub::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecDoub::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecDoub::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecDoub::set(const SvecDoub &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecDoub::~SvecDoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecDoub &SvecDoub_O, &SvecDoub_IO;
 
-class SvecLdoub_c
+class SvecLdoub_c : public SvbaseLdoub_c
 {
-protected:
-    const Ldoub *m_p;
-    Long m_N;
 public:
-    SvecLdoub_c();
+    SvecLdoub_c() = default;
     explicit SvecLdoub_c(Long_I N);
     SvecLdoub_c(const Ldoub *data, Long_I N); // unsafe
-    const Ldoub* p() const;
-    Long size() const;
     SvecLdoub_c &operator=(const SvecLdoub_c &rhs) = delete;
-    const Ldoub &operator[](Long_I i) const;
-    const Ldoub &end() const;
-    const Ldoub &end(Long_I i) const;
-    void set(const SvecLdoub_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Ldoub *data);
-    void set(Long_I N);
-    void set(const Ldoub *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecLdoub_c();
 };
 
-inline SvecLdoub_c::SvecLdoub_c() {}
-
-inline SvecLdoub_c::SvecLdoub_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecLdoub_c::SvecLdoub_c(Long_I N) : SvbaseLdoub_c(N)
+{}
 
 inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Ldoub * SvecLdoub_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecLdoub_c::size() const
-{
-    return m_N;
-}
-
-inline const Ldoub &SvecLdoub_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Ldoub &SvecLdoub_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Ldoub &SvecLdoub_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseLdoub_c(data, N) {}
 
 
-inline void SvecLdoub_c::set(const Ldoub *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLdoub_c::set(const Ldoub *data)
-{
-    m_p = data;
-}
-
-inline void SvecLdoub_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLdoub_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLdoub_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLdoub_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLdoub_c::set(const SvecLdoub_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLdoub_c::~SvecLdoub_c() {}
 
 typedef const SvecLdoub_c &SvecLdoub_I;
 
-class SvecLdoub
+class SvecLdoub : public SvbaseLdoub
 {
-protected:
-    Ldoub *m_p;
-    Long m_N;
 public:
-    SvecLdoub();
+    SvecLdoub() = default;
     explicit SvecLdoub(Long_I N);
     SvecLdoub(Ldoub *data, Long_I N); // unsafe
-    Ldoub* p() const;
-    Long size() const;
     SvecLdoub &operator=(const SvecLdoub &rhs) = delete;
-    Ldoub &operator[](Long_I i) const;
-    Ldoub &end() const;
-    Ldoub &end(Long_I i) const;
     operator SvecLdoub_c() const;
-    void set(const SvecLdoub &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Ldoub *data);
-    void set(Long_I N);
-    void set(Ldoub *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecLdoub();
 };
 
-inline SvecLdoub::SvecLdoub() {}
-
-inline SvecLdoub::SvecLdoub(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecLdoub::SvecLdoub(Long_I N) : SvbaseLdoub(N)
+{}
 
 inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Ldoub * SvecLdoub::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecLdoub::size() const
-{
-    return m_N;
-}
-
-inline Ldoub &SvecLdoub::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Ldoub &SvecLdoub::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Ldoub &SvecLdoub::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseLdoub(data, N) {}
 
 inline SvecLdoub::operator SvecLdoub_c() const
 {
     return *((SvecLdoub_c *)this);
 }
 
-inline void SvecLdoub::set(Ldoub *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLdoub::set(Ldoub *data)
-{
-    m_p = data;
-}
-
-inline void SvecLdoub::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLdoub::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLdoub::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLdoub::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLdoub::set(const SvecLdoub &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLdoub::~SvecLdoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
 
-class SvecFcomp_c
+class SvecFcomp_c : public SvbaseFcomp_c
 {
-protected:
-    const Fcomp *m_p;
-    Long m_N;
 public:
-    SvecFcomp_c();
+    SvecFcomp_c() = default;
     explicit SvecFcomp_c(Long_I N);
     SvecFcomp_c(const Fcomp *data, Long_I N); // unsafe
-    const Fcomp* p() const;
-    Long size() const;
     SvecFcomp_c &operator=(const SvecFcomp_c &rhs) = delete;
-    const Fcomp &operator[](Long_I i) const;
-    const Fcomp &end() const;
-    const Fcomp &end(Long_I i) const;
-    void set(const SvecFcomp_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Fcomp *data);
-    void set(Long_I N);
-    void set(const Fcomp *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecFcomp_c();
 };
 
-inline SvecFcomp_c::SvecFcomp_c() {}
-
-inline SvecFcomp_c::SvecFcomp_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecFcomp_c::SvecFcomp_c(Long_I N) : SvbaseFcomp_c(N)
+{}
 
 inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Fcomp * SvecFcomp_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecFcomp_c::size() const
-{
-    return m_N;
-}
-
-inline const Fcomp &SvecFcomp_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Fcomp &SvecFcomp_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Fcomp &SvecFcomp_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseFcomp_c(data, N) {}
 
 
-inline void SvecFcomp_c::set(const Fcomp *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecFcomp_c::set(const Fcomp *data)
-{
-    m_p = data;
-}
-
-inline void SvecFcomp_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecFcomp_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecFcomp_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecFcomp_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecFcomp_c::set(const SvecFcomp_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecFcomp_c::~SvecFcomp_c() {}
 
 typedef const SvecFcomp_c &SvecFcomp_I;
 
-class SvecFcomp
+class SvecFcomp : public SvbaseFcomp
 {
-protected:
-    Fcomp *m_p;
-    Long m_N;
 public:
-    SvecFcomp();
+    SvecFcomp() = default;
     explicit SvecFcomp(Long_I N);
     SvecFcomp(Fcomp *data, Long_I N); // unsafe
-    Fcomp* p() const;
-    Long size() const;
     SvecFcomp &operator=(const SvecFcomp &rhs) = delete;
-    Fcomp &operator[](Long_I i) const;
-    Fcomp &end() const;
-    Fcomp &end(Long_I i) const;
     operator SvecFcomp_c() const;
-    void set(const SvecFcomp &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Fcomp *data);
-    void set(Long_I N);
-    void set(Fcomp *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecFcomp();
 };
 
-inline SvecFcomp::SvecFcomp() {}
-
-inline SvecFcomp::SvecFcomp(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecFcomp::SvecFcomp(Long_I N) : SvbaseFcomp(N)
+{}
 
 inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Fcomp * SvecFcomp::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecFcomp::size() const
-{
-    return m_N;
-}
-
-inline Fcomp &SvecFcomp::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Fcomp &SvecFcomp::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Fcomp &SvecFcomp::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseFcomp(data, N) {}
 
 inline SvecFcomp::operator SvecFcomp_c() const
 {
     return *((SvecFcomp_c *)this);
 }
 
-inline void SvecFcomp::set(Fcomp *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecFcomp::set(Fcomp *data)
-{
-    m_p = data;
-}
-
-inline void SvecFcomp::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecFcomp::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecFcomp::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecFcomp::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecFcomp::set(const SvecFcomp &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecFcomp::~SvecFcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFcomp &SvecFcomp_O, &SvecFcomp_IO;
 
-class SvecComp_c
+class SvecComp_c : public SvbaseComp_c
 {
-protected:
-    const Comp *m_p;
-    Long m_N;
 public:
-    SvecComp_c();
+    SvecComp_c() = default;
     explicit SvecComp_c(Long_I N);
     SvecComp_c(const Comp *data, Long_I N); // unsafe
-    const Comp* p() const;
-    Long size() const;
     SvecComp_c &operator=(const SvecComp_c &rhs) = delete;
-    const Comp &operator[](Long_I i) const;
-    const Comp &end() const;
-    const Comp &end(Long_I i) const;
-    void set(const SvecComp_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Comp *data);
-    void set(Long_I N);
-    void set(const Comp *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecComp_c();
 };
 
-inline SvecComp_c::SvecComp_c() {}
-
-inline SvecComp_c::SvecComp_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecComp_c::SvecComp_c(Long_I N) : SvbaseComp_c(N)
+{}
 
 inline SvecComp_c::SvecComp_c(const Comp *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Comp * SvecComp_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecComp_c::size() const
-{
-    return m_N;
-}
-
-inline const Comp &SvecComp_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Comp &SvecComp_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Comp &SvecComp_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseComp_c(data, N) {}
 
 
-inline void SvecComp_c::set(const Comp *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecComp_c::set(const Comp *data)
-{
-    m_p = data;
-}
-
-inline void SvecComp_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecComp_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecComp_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecComp_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecComp_c::set(const SvecComp_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecComp_c::~SvecComp_c() {}
 
 typedef const SvecComp_c &SvecComp_I;
 
-class SvecComp
+class SvecComp : public SvbaseComp
 {
-protected:
-    Comp *m_p;
-    Long m_N;
 public:
-    SvecComp();
+    SvecComp() = default;
     explicit SvecComp(Long_I N);
     SvecComp(Comp *data, Long_I N); // unsafe
-    Comp* p() const;
-    Long size() const;
     SvecComp &operator=(const SvecComp &rhs) = delete;
-    Comp &operator[](Long_I i) const;
-    Comp &end() const;
-    Comp &end(Long_I i) const;
     operator SvecComp_c() const;
-    void set(const SvecComp &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Comp *data);
-    void set(Long_I N);
-    void set(Comp *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecComp();
 };
 
-inline SvecComp::SvecComp() {}
-
-inline SvecComp::SvecComp(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecComp::SvecComp(Long_I N) : SvbaseComp(N)
+{}
 
 inline SvecComp::SvecComp(Comp *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Comp * SvecComp::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecComp::size() const
-{
-    return m_N;
-}
-
-inline Comp &SvecComp::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Comp &SvecComp::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Comp &SvecComp::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseComp(data, N) {}
 
 inline SvecComp::operator SvecComp_c() const
 {
     return *((SvecComp_c *)this);
 }
 
-inline void SvecComp::set(Comp *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecComp::set(Comp *data)
-{
-    m_p = data;
-}
-
-inline void SvecComp::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecComp::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecComp::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecComp::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecComp::set(const SvecComp &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecComp::~SvecComp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecComp &SvecComp_O, &SvecComp_IO;
 
-class SvecLcomp_c
+class SvecLcomp_c : public SvbaseLcomp_c
 {
-protected:
-    const Lcomp *m_p;
-    Long m_N;
 public:
-    SvecLcomp_c();
+    SvecLcomp_c() = default;
     explicit SvecLcomp_c(Long_I N);
     SvecLcomp_c(const Lcomp *data, Long_I N); // unsafe
-    const Lcomp* p() const;
-    Long size() const;
     SvecLcomp_c &operator=(const SvecLcomp_c &rhs) = delete;
-    const Lcomp &operator[](Long_I i) const;
-    const Lcomp &end() const;
-    const Lcomp &end(Long_I i) const;
-    void set(const SvecLcomp_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Lcomp *data);
-    void set(Long_I N);
-    void set(const Lcomp *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecLcomp_c();
 };
 
-inline SvecLcomp_c::SvecLcomp_c() {}
-
-inline SvecLcomp_c::SvecLcomp_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecLcomp_c::SvecLcomp_c(Long_I N) : SvbaseLcomp_c(N)
+{}
 
 inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Lcomp * SvecLcomp_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecLcomp_c::size() const
-{
-    return m_N;
-}
-
-inline const Lcomp &SvecLcomp_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Lcomp &SvecLcomp_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Lcomp &SvecLcomp_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseLcomp_c(data, N) {}
 
 
-inline void SvecLcomp_c::set(const Lcomp *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLcomp_c::set(const Lcomp *data)
-{
-    m_p = data;
-}
-
-inline void SvecLcomp_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLcomp_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLcomp_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLcomp_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLcomp_c::set(const SvecLcomp_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLcomp_c::~SvecLcomp_c() {}
 
 typedef const SvecLcomp_c &SvecLcomp_I;
 
-class SvecLcomp
+class SvecLcomp : public SvbaseLcomp
 {
-protected:
-    Lcomp *m_p;
-    Long m_N;
 public:
-    SvecLcomp();
+    SvecLcomp() = default;
     explicit SvecLcomp(Long_I N);
     SvecLcomp(Lcomp *data, Long_I N); // unsafe
-    Lcomp* p() const;
-    Long size() const;
     SvecLcomp &operator=(const SvecLcomp &rhs) = delete;
-    Lcomp &operator[](Long_I i) const;
-    Lcomp &end() const;
-    Lcomp &end(Long_I i) const;
     operator SvecLcomp_c() const;
-    void set(const SvecLcomp &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Lcomp *data);
-    void set(Long_I N);
-    void set(Lcomp *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecLcomp();
 };
 
-inline SvecLcomp::SvecLcomp() {}
-
-inline SvecLcomp::SvecLcomp(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecLcomp::SvecLcomp(Long_I N) : SvbaseLcomp(N)
+{}
 
 inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Lcomp * SvecLcomp::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecLcomp::size() const
-{
-    return m_N;
-}
-
-inline Lcomp &SvecLcomp::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Lcomp &SvecLcomp::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Lcomp &SvecLcomp::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseLcomp(data, N) {}
 
 inline SvecLcomp::operator SvecLcomp_c() const
 {
     return *((SvecLcomp_c *)this);
 }
 
-inline void SvecLcomp::set(Lcomp *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLcomp::set(Lcomp *data)
-{
-    m_p = data;
-}
-
-inline void SvecLcomp::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLcomp::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLcomp::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLcomp::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLcomp::set(const SvecLcomp &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLcomp::~SvecLcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
 
-class SvecFimag_c
+class SvecFimag_c : public SvbaseFimag_c
 {
-protected:
-    const Fimag *m_p;
-    Long m_N;
 public:
-    SvecFimag_c();
+    SvecFimag_c() = default;
     explicit SvecFimag_c(Long_I N);
     SvecFimag_c(const Fimag *data, Long_I N); // unsafe
-    const Fimag* p() const;
-    Long size() const;
     SvecFimag_c &operator=(const SvecFimag_c &rhs) = delete;
-    const Fimag &operator[](Long_I i) const;
-    const Fimag &end() const;
-    const Fimag &end(Long_I i) const;
-    void set(const SvecFimag_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Fimag *data);
-    void set(Long_I N);
-    void set(const Fimag *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecFimag_c();
 };
 
-inline SvecFimag_c::SvecFimag_c() {}
-
-inline SvecFimag_c::SvecFimag_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecFimag_c::SvecFimag_c(Long_I N) : SvbaseFimag_c(N)
+{}
 
 inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Fimag * SvecFimag_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecFimag_c::size() const
-{
-    return m_N;
-}
-
-inline const Fimag &SvecFimag_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Fimag &SvecFimag_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Fimag &SvecFimag_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseFimag_c(data, N) {}
 
 
-inline void SvecFimag_c::set(const Fimag *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecFimag_c::set(const Fimag *data)
-{
-    m_p = data;
-}
-
-inline void SvecFimag_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecFimag_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecFimag_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecFimag_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecFimag_c::set(const SvecFimag_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecFimag_c::~SvecFimag_c() {}
 
 typedef const SvecFimag_c &SvecFimag_I;
 
-class SvecFimag
+class SvecFimag : public SvbaseFimag
 {
-protected:
-    Fimag *m_p;
-    Long m_N;
 public:
-    SvecFimag();
+    SvecFimag() = default;
     explicit SvecFimag(Long_I N);
     SvecFimag(Fimag *data, Long_I N); // unsafe
-    Fimag* p() const;
-    Long size() const;
     SvecFimag &operator=(const SvecFimag &rhs) = delete;
-    Fimag &operator[](Long_I i) const;
-    Fimag &end() const;
-    Fimag &end(Long_I i) const;
     operator SvecFimag_c() const;
-    void set(const SvecFimag &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Fimag *data);
-    void set(Long_I N);
-    void set(Fimag *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecFimag();
 };
 
-inline SvecFimag::SvecFimag() {}
-
-inline SvecFimag::SvecFimag(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecFimag::SvecFimag(Long_I N) : SvbaseFimag(N)
+{}
 
 inline SvecFimag::SvecFimag(Fimag *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Fimag * SvecFimag::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecFimag::size() const
-{
-    return m_N;
-}
-
-inline Fimag &SvecFimag::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Fimag &SvecFimag::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Fimag &SvecFimag::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseFimag(data, N) {}
 
 inline SvecFimag::operator SvecFimag_c() const
 {
     return *((SvecFimag_c *)this);
 }
 
-inline void SvecFimag::set(Fimag *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecFimag::set(Fimag *data)
-{
-    m_p = data;
-}
-
-inline void SvecFimag::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecFimag::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecFimag::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecFimag::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecFimag::set(const SvecFimag &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecFimag::~SvecFimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFimag &SvecFimag_O, &SvecFimag_IO;
 
-class SvecImag_c
+class SvecImag_c : public SvbaseImag_c
 {
-protected:
-    const Imag *m_p;
-    Long m_N;
 public:
-    SvecImag_c();
+    SvecImag_c() = default;
     explicit SvecImag_c(Long_I N);
     SvecImag_c(const Imag *data, Long_I N); // unsafe
-    const Imag* p() const;
-    Long size() const;
     SvecImag_c &operator=(const SvecImag_c &rhs) = delete;
-    const Imag &operator[](Long_I i) const;
-    const Imag &end() const;
-    const Imag &end(Long_I i) const;
-    void set(const SvecImag_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Imag *data);
-    void set(Long_I N);
-    void set(const Imag *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecImag_c();
 };
 
-inline SvecImag_c::SvecImag_c() {}
-
-inline SvecImag_c::SvecImag_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecImag_c::SvecImag_c(Long_I N) : SvbaseImag_c(N)
+{}
 
 inline SvecImag_c::SvecImag_c(const Imag *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Imag * SvecImag_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecImag_c::size() const
-{
-    return m_N;
-}
-
-inline const Imag &SvecImag_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Imag &SvecImag_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Imag &SvecImag_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseImag_c(data, N) {}
 
 
-inline void SvecImag_c::set(const Imag *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecImag_c::set(const Imag *data)
-{
-    m_p = data;
-}
-
-inline void SvecImag_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecImag_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecImag_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecImag_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecImag_c::set(const SvecImag_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecImag_c::~SvecImag_c() {}
 
 typedef const SvecImag_c &SvecImag_I;
 
-class SvecImag
+class SvecImag : public SvbaseImag
 {
-protected:
-    Imag *m_p;
-    Long m_N;
 public:
-    SvecImag();
+    SvecImag() = default;
     explicit SvecImag(Long_I N);
     SvecImag(Imag *data, Long_I N); // unsafe
-    Imag* p() const;
-    Long size() const;
     SvecImag &operator=(const SvecImag &rhs) = delete;
-    Imag &operator[](Long_I i) const;
-    Imag &end() const;
-    Imag &end(Long_I i) const;
     operator SvecImag_c() const;
-    void set(const SvecImag &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Imag *data);
-    void set(Long_I N);
-    void set(Imag *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecImag();
 };
 
-inline SvecImag::SvecImag() {}
-
-inline SvecImag::SvecImag(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecImag::SvecImag(Long_I N) : SvbaseImag(N)
+{}
 
 inline SvecImag::SvecImag(Imag *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Imag * SvecImag::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecImag::size() const
-{
-    return m_N;
-}
-
-inline Imag &SvecImag::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Imag &SvecImag::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Imag &SvecImag::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseImag(data, N) {}
 
 inline SvecImag::operator SvecImag_c() const
 {
     return *((SvecImag_c *)this);
 }
 
-inline void SvecImag::set(Imag *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecImag::set(Imag *data)
-{
-    m_p = data;
-}
-
-inline void SvecImag::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecImag::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecImag::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecImag::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecImag::set(const SvecImag &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecImag::~SvecImag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecImag &SvecImag_O, &SvecImag_IO;
 
-class SvecLimag_c
+class SvecLimag_c : public SvbaseLimag_c
 {
-protected:
-    const Limag *m_p;
-    Long m_N;
 public:
-    SvecLimag_c();
+    SvecLimag_c() = default;
     explicit SvecLimag_c(Long_I N);
     SvecLimag_c(const Limag *data, Long_I N); // unsafe
-    const Limag* p() const;
-    Long size() const;
     SvecLimag_c &operator=(const SvecLimag_c &rhs) = delete;
-    const Limag &operator[](Long_I i) const;
-    const Limag &end() const;
-    const Limag &end(Long_I i) const;
-    void set(const SvecLimag_c &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(const Limag *data);
-    void set(Long_I N);
-    void set(const Limag *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecLimag_c();
 };
 
-inline SvecLimag_c::SvecLimag_c() {}
-
-inline SvecLimag_c::SvecLimag_c(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecLimag_c::SvecLimag_c(Long_I N) : SvbaseLimag_c(N)
+{}
 
 inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline const Limag * SvecLimag_c::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecLimag_c::size() const
-{
-    return m_N;
-}
-
-inline const Limag &SvecLimag_c::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline const Limag &SvecLimag_c::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline const Limag &SvecLimag_c::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseLimag_c(data, N) {}
 
 
-inline void SvecLimag_c::set(const Limag *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLimag_c::set(const Limag *data)
-{
-    m_p = data;
-}
-
-inline void SvecLimag_c::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLimag_c::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLimag_c::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLimag_c::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLimag_c::set(const SvecLimag_c &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLimag_c::~SvecLimag_c() {}
 
 typedef const SvecLimag_c &SvecLimag_I;
 
-class SvecLimag
+class SvecLimag : public SvbaseLimag
 {
-protected:
-    Limag *m_p;
-    Long m_N;
 public:
-    SvecLimag();
+    SvecLimag() = default;
     explicit SvecLimag(Long_I N);
     SvecLimag(Limag *data, Long_I N); // unsafe
-    Limag* p() const;
-    Long size() const;
     SvecLimag &operator=(const SvecLimag &rhs) = delete;
-    Limag &operator[](Long_I i) const;
-    Limag &end() const;
-    Limag &end(Long_I i) const;
     operator SvecLimag_c() const;
-    void set(const SvecLimag &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(Limag *data);
-    void set(Long_I N);
-    void set(Limag *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
-
-    ~SvecLimag();
 };
 
-inline SvecLimag::SvecLimag() {}
-
-inline SvecLimag::SvecLimag(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
-#endif
-}
+inline SvecLimag::SvecLimag(Long_I N) : SvbaseLimag(N)
+{}
 
 inline SvecLimag::SvecLimag(Limag *data, Long_I N)
-    : m_p(data), m_N(N) {}
-
-inline Limag * SvecLimag::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
-#endif
-    return m_p;
-}
-
-inline Long SvecLimag::size() const
-{
-    return m_N;
-}
-
-inline Limag &SvecLimag::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
-#endif
-    return m_p[i];
-}
-
-inline Limag &SvecLimag::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
-#endif
-    return m_p[m_N - 1];
-}
-
-inline Limag &SvecLimag::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
-#endif
-    return m_p[m_N - i];
-}
+    : SvbaseLimag(data, N) {}
 
 inline SvecLimag::operator SvecLimag_c() const
 {
     return *((SvecLimag_c *)this);
 }
 
-inline void SvecLimag::set(Limag *data, Long_I N)
-{
-    m_p = data; m_N = N;
-}
-
-inline void SvecLimag::set(Limag *data)
-{
-    m_p = data;
-}
-
-inline void SvecLimag::set(Long_I N)
-{
-    m_N = N;
-}
-
-inline void SvecLimag::next()
-{
-    m_p += m_N;
-}
-
-inline void SvecLimag::last()
-{
-    m_p -= m_N;
-}
-
-inline void SvecLimag::shift(Long_I N)
-{
-    m_p += N;
-}
-
-inline void SvecLimag::set(const SvecLimag &sli)
-{
-    m_p = sli.m_p; m_N = sli.m_N;
-}
-
-inline SvecLimag::~SvecLimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
+
 
 } // namespace slisc

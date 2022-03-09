@@ -22,26 +22,26 @@ namespace slisc {
 //% };
 //%------------------------
 //% [T, constness] = varargin{:};
-//% SvecT = ['Svec' T];
-//% SvecT_c = [SvecT '_c'];
+//% SvbaseT = ['Svbase' T];
+//% SvbaseT_c = [SvbaseT '_c'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = SvecT_c;
+//%     Class = SvbaseT_c;
 //% else
 //%     CT = T;
-//%     Class = SvecT;
+//%     Class = SvbaseT;
 //% end
 //% if is_Long(T) && constness
 #ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt_c SvecLong_c;
+typedef SvbaseInt_c SvbaseLong_c;
 #else
-typedef SvecLlong_c SvecLong_c;
+typedef SvbaseLlong_c SvbaseLong_c;
 #endif
 //% elseif is_Long(T) && ~constness
 #ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt SvecLong;
+typedef SvbaseInt SvbaseLong;
 #else
-typedef SvecLlong SvecLong;
+typedef SvbaseLlong SvbaseLong;
 #endif
 //% else
 class @Class@
@@ -60,7 +60,7 @@ public:
     @CT@ &end() const;
     @CT@ &end(Long_I i) const;
 //% if ~constness
-    operator @SvecT_c@() const;
+    operator @SvbaseT_c@() const;
 //% end
     void set(const @Class@ &sli);
     void next(); // m_p += m_N
@@ -130,9 +130,9 @@ inline @CT@ &@Class@::end(Long_I i) const
 }
 
 //% if ~constness
-inline @Class@::operator @SvecT_c@() const
+inline @Class@::operator @SvbaseT_c@() const
 {
-    return *((@SvecT_c@ *)this);
+    return *((@SvbaseT_c@ *)this);
 }
 //% end
 
@@ -175,10 +175,85 @@ inline @Class@::~@Class@() {}
 //% end
 
 //% if constness
+typedef const @Class@ &@SvbaseT@_I;
+//% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const @Class@ &@SvbaseT@_O, &@SvbaseT@_IO;
+//% end
+//%------------------------
+
+//% types = {
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Fimag', true;  'Fimag', false;
+//%     'Imag', true;   'Imag', false;
+//%     'Limag', true;  'Limag', false;
+//% };
+//%------------------------
+//% [T, constness] = varargin{:};
+//% SvecT = ['Svec' T]; SvbaseT = ['Svbase' T];
+//% SvecT_c = [SvecT '_c']; SvbaseT_c = [SvbaseT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = SvecT_c; Base = SvbaseT_c;
+//% else
+//%     CT = T;
+//%     Class = SvecT; Base = SvbaseT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong_c SvecLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+#else
+typedef SvecLlong SvecLong;
+#endif
+//% else
+class @Class@ : public @Base@
+{
+public:
+    @Class@() = default;
+    explicit @Class@(Long_I N);
+    @Class@(@CT@ *data, Long_I N); // unsafe
+    @Class@ &operator=(const @Class@ &rhs) = delete;
+//% if ~constness
+    operator @SvecT_c@() const;
+//% end
+};
+
+inline @Class@::@Class@(Long_I N) : @Base@(N)
+{}
+
+inline @Class@::@Class@(@CT@ *data, Long_I N)
+    : @Base@(data, N) {}
+
+//% if ~constness
+inline @Class@::operator @SvecT_c@() const
+{
+    return *((@SvecT_c@ *)this);
+}
+//% end
+
+//% end
+
+//% if constness
 typedef const @Class@ &@SvecT@_I;
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
 //% end
 //%------------------------
+
 } // namespace slisc

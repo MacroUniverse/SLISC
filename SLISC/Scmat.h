@@ -3,7 +3,7 @@
 // "_c" means lower level const
 
 namespace slisc {
-class ScmatChar_c : public SvecChar_c
+class ScmatChar_c : public SvbaseChar_c
 {
 protected:
     Long m_N0, m_N1;
@@ -28,7 +28,7 @@ public:
 inline ScmatChar_c::ScmatChar_c() {}
 
 inline ScmatChar_c::ScmatChar_c(const Char *data, Long_I N0, Long_I N1)
-    : SvecChar_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseChar_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Char &ScmatChar_c::operator()(Long_I i, Long_I j) const
@@ -61,13 +61,13 @@ inline void ScmatChar_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatChar_c::set(const Char *data, Long_I N0, Long_I N1)
 {
-    SvecChar_c::set(data, N0*N1);
+    SvbaseChar_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatChar_c::set(const ScmatChar_c &sli)
 {
-    SvecChar_c::set(sli);
+    SvbaseChar_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -75,7 +75,7 @@ inline ScmatChar_c::~ScmatChar_c() {}
 
 typedef const ScmatChar_c &ScmatChar_I;
 
-class ScmatChar : public SvecChar
+class ScmatChar : public SvbaseChar
 {
 protected:
     Long m_N0, m_N1;
@@ -101,7 +101,7 @@ public:
 inline ScmatChar::ScmatChar() {}
 
 inline ScmatChar::ScmatChar(Char *data, Long_I N0, Long_I N1)
-    : SvecChar(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseChar(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatChar::operator ScmatChar_c() const
 {
@@ -138,13 +138,13 @@ inline void ScmatChar::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatChar::set(Char *data, Long_I N0, Long_I N1)
 {
-    SvecChar::set(data, N0*N1);
+    SvbaseChar::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatChar::set(const ScmatChar &sli)
 {
-    SvecChar::set(sli);
+    SvbaseChar::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -153,7 +153,7 @@ inline ScmatChar::~ScmatChar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatChar &ScmatChar_O, &ScmatChar_IO;
 
-class ScmatInt_c : public SvecInt_c
+class ScmatInt_c : public SvbaseInt_c
 {
 protected:
     Long m_N0, m_N1;
@@ -178,7 +178,7 @@ public:
 inline ScmatInt_c::ScmatInt_c() {}
 
 inline ScmatInt_c::ScmatInt_c(const Int *data, Long_I N0, Long_I N1)
-    : SvecInt_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseInt_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Int &ScmatInt_c::operator()(Long_I i, Long_I j) const
@@ -211,13 +211,13 @@ inline void ScmatInt_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatInt_c::set(const Int *data, Long_I N0, Long_I N1)
 {
-    SvecInt_c::set(data, N0*N1);
+    SvbaseInt_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatInt_c::set(const ScmatInt_c &sli)
 {
-    SvecInt_c::set(sli);
+    SvbaseInt_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -225,7 +225,7 @@ inline ScmatInt_c::~ScmatInt_c() {}
 
 typedef const ScmatInt_c &ScmatInt_I;
 
-class ScmatInt : public SvecInt
+class ScmatInt : public SvbaseInt
 {
 protected:
     Long m_N0, m_N1;
@@ -251,7 +251,7 @@ public:
 inline ScmatInt::ScmatInt() {}
 
 inline ScmatInt::ScmatInt(Int *data, Long_I N0, Long_I N1)
-    : SvecInt(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseInt(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatInt::operator ScmatInt_c() const
 {
@@ -288,13 +288,13 @@ inline void ScmatInt::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatInt::set(Int *data, Long_I N0, Long_I N1)
 {
-    SvecInt::set(data, N0*N1);
+    SvbaseInt::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatInt::set(const ScmatInt &sli)
 {
-    SvecInt::set(sli);
+    SvbaseInt::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -303,7 +303,7 @@ inline ScmatInt::~ScmatInt() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatInt &ScmatInt_O, &ScmatInt_IO;
 
-class ScmatLlong_c : public SvecLlong_c
+class ScmatLlong_c : public SvbaseLlong_c
 {
 protected:
     Long m_N0, m_N1;
@@ -328,7 +328,7 @@ public:
 inline ScmatLlong_c::ScmatLlong_c() {}
 
 inline ScmatLlong_c::ScmatLlong_c(const Llong *data, Long_I N0, Long_I N1)
-    : SvecLlong_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLlong_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Llong &ScmatLlong_c::operator()(Long_I i, Long_I j) const
@@ -361,13 +361,13 @@ inline void ScmatLlong_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLlong_c::set(const Llong *data, Long_I N0, Long_I N1)
 {
-    SvecLlong_c::set(data, N0*N1);
+    SvbaseLlong_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLlong_c::set(const ScmatLlong_c &sli)
 {
-    SvecLlong_c::set(sli);
+    SvbaseLlong_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -375,7 +375,7 @@ inline ScmatLlong_c::~ScmatLlong_c() {}
 
 typedef const ScmatLlong_c &ScmatLlong_I;
 
-class ScmatLlong : public SvecLlong
+class ScmatLlong : public SvbaseLlong
 {
 protected:
     Long m_N0, m_N1;
@@ -401,7 +401,7 @@ public:
 inline ScmatLlong::ScmatLlong() {}
 
 inline ScmatLlong::ScmatLlong(Llong *data, Long_I N0, Long_I N1)
-    : SvecLlong(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLlong(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatLlong::operator ScmatLlong_c() const
 {
@@ -438,13 +438,13 @@ inline void ScmatLlong::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLlong::set(Llong *data, Long_I N0, Long_I N1)
 {
-    SvecLlong::set(data, N0*N1);
+    SvbaseLlong::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLlong::set(const ScmatLlong &sli)
 {
-    SvecLlong::set(sli);
+    SvbaseLlong::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -470,7 +470,7 @@ typedef ScmatLlong ScmatLong;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLong &ScmatLong_O, &ScmatLong_IO;
 
-class ScmatFloat_c : public SvecFloat_c
+class ScmatFloat_c : public SvbaseFloat_c
 {
 protected:
     Long m_N0, m_N1;
@@ -495,7 +495,7 @@ public:
 inline ScmatFloat_c::ScmatFloat_c() {}
 
 inline ScmatFloat_c::ScmatFloat_c(const Float *data, Long_I N0, Long_I N1)
-    : SvecFloat_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseFloat_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Float &ScmatFloat_c::operator()(Long_I i, Long_I j) const
@@ -528,13 +528,13 @@ inline void ScmatFloat_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatFloat_c::set(const Float *data, Long_I N0, Long_I N1)
 {
-    SvecFloat_c::set(data, N0*N1);
+    SvbaseFloat_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatFloat_c::set(const ScmatFloat_c &sli)
 {
-    SvecFloat_c::set(sli);
+    SvbaseFloat_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -542,7 +542,7 @@ inline ScmatFloat_c::~ScmatFloat_c() {}
 
 typedef const ScmatFloat_c &ScmatFloat_I;
 
-class ScmatFloat : public SvecFloat
+class ScmatFloat : public SvbaseFloat
 {
 protected:
     Long m_N0, m_N1;
@@ -568,7 +568,7 @@ public:
 inline ScmatFloat::ScmatFloat() {}
 
 inline ScmatFloat::ScmatFloat(Float *data, Long_I N0, Long_I N1)
-    : SvecFloat(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseFloat(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatFloat::operator ScmatFloat_c() const
 {
@@ -605,13 +605,13 @@ inline void ScmatFloat::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatFloat::set(Float *data, Long_I N0, Long_I N1)
 {
-    SvecFloat::set(data, N0*N1);
+    SvbaseFloat::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatFloat::set(const ScmatFloat &sli)
 {
-    SvecFloat::set(sli);
+    SvbaseFloat::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -620,7 +620,7 @@ inline ScmatFloat::~ScmatFloat() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFloat &ScmatFloat_O, &ScmatFloat_IO;
 
-class ScmatDoub_c : public SvecDoub_c
+class ScmatDoub_c : public SvbaseDoub_c
 {
 protected:
     Long m_N0, m_N1;
@@ -645,7 +645,7 @@ public:
 inline ScmatDoub_c::ScmatDoub_c() {}
 
 inline ScmatDoub_c::ScmatDoub_c(const Doub *data, Long_I N0, Long_I N1)
-    : SvecDoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseDoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Doub &ScmatDoub_c::operator()(Long_I i, Long_I j) const
@@ -678,13 +678,13 @@ inline void ScmatDoub_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatDoub_c::set(const Doub *data, Long_I N0, Long_I N1)
 {
-    SvecDoub_c::set(data, N0*N1);
+    SvbaseDoub_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatDoub_c::set(const ScmatDoub_c &sli)
 {
-    SvecDoub_c::set(sli);
+    SvbaseDoub_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -692,7 +692,7 @@ inline ScmatDoub_c::~ScmatDoub_c() {}
 
 typedef const ScmatDoub_c &ScmatDoub_I;
 
-class ScmatDoub : public SvecDoub
+class ScmatDoub : public SvbaseDoub
 {
 protected:
     Long m_N0, m_N1;
@@ -718,7 +718,7 @@ public:
 inline ScmatDoub::ScmatDoub() {}
 
 inline ScmatDoub::ScmatDoub(Doub *data, Long_I N0, Long_I N1)
-    : SvecDoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseDoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatDoub::operator ScmatDoub_c() const
 {
@@ -755,13 +755,13 @@ inline void ScmatDoub::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatDoub::set(Doub *data, Long_I N0, Long_I N1)
 {
-    SvecDoub::set(data, N0*N1);
+    SvbaseDoub::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatDoub::set(const ScmatDoub &sli)
 {
-    SvecDoub::set(sli);
+    SvbaseDoub::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -770,7 +770,7 @@ inline ScmatDoub::~ScmatDoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
 
-class ScmatLdoub_c : public SvecLdoub_c
+class ScmatLdoub_c : public SvbaseLdoub_c
 {
 protected:
     Long m_N0, m_N1;
@@ -795,7 +795,7 @@ public:
 inline ScmatLdoub_c::ScmatLdoub_c() {}
 
 inline ScmatLdoub_c::ScmatLdoub_c(const Ldoub *data, Long_I N0, Long_I N1)
-    : SvecLdoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLdoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Ldoub &ScmatLdoub_c::operator()(Long_I i, Long_I j) const
@@ -828,13 +828,13 @@ inline void ScmatLdoub_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLdoub_c::set(const Ldoub *data, Long_I N0, Long_I N1)
 {
-    SvecLdoub_c::set(data, N0*N1);
+    SvbaseLdoub_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLdoub_c::set(const ScmatLdoub_c &sli)
 {
-    SvecLdoub_c::set(sli);
+    SvbaseLdoub_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -842,7 +842,7 @@ inline ScmatLdoub_c::~ScmatLdoub_c() {}
 
 typedef const ScmatLdoub_c &ScmatLdoub_I;
 
-class ScmatLdoub : public SvecLdoub
+class ScmatLdoub : public SvbaseLdoub
 {
 protected:
     Long m_N0, m_N1;
@@ -868,7 +868,7 @@ public:
 inline ScmatLdoub::ScmatLdoub() {}
 
 inline ScmatLdoub::ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1)
-    : SvecLdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatLdoub::operator ScmatLdoub_c() const
 {
@@ -905,13 +905,13 @@ inline void ScmatLdoub::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLdoub::set(Ldoub *data, Long_I N0, Long_I N1)
 {
-    SvecLdoub::set(data, N0*N1);
+    SvbaseLdoub::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLdoub::set(const ScmatLdoub &sli)
 {
-    SvecLdoub::set(sli);
+    SvbaseLdoub::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -920,7 +920,7 @@ inline ScmatLdoub::~ScmatLdoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
 
-class ScmatFcomp_c : public SvecFcomp_c
+class ScmatFcomp_c : public SvbaseFcomp_c
 {
 protected:
     Long m_N0, m_N1;
@@ -945,7 +945,7 @@ public:
 inline ScmatFcomp_c::ScmatFcomp_c() {}
 
 inline ScmatFcomp_c::ScmatFcomp_c(const Fcomp *data, Long_I N0, Long_I N1)
-    : SvecFcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseFcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Fcomp &ScmatFcomp_c::operator()(Long_I i, Long_I j) const
@@ -978,13 +978,13 @@ inline void ScmatFcomp_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatFcomp_c::set(const Fcomp *data, Long_I N0, Long_I N1)
 {
-    SvecFcomp_c::set(data, N0*N1);
+    SvbaseFcomp_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatFcomp_c::set(const ScmatFcomp_c &sli)
 {
-    SvecFcomp_c::set(sli);
+    SvbaseFcomp_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -992,7 +992,7 @@ inline ScmatFcomp_c::~ScmatFcomp_c() {}
 
 typedef const ScmatFcomp_c &ScmatFcomp_I;
 
-class ScmatFcomp : public SvecFcomp
+class ScmatFcomp : public SvbaseFcomp
 {
 protected:
     Long m_N0, m_N1;
@@ -1018,7 +1018,7 @@ public:
 inline ScmatFcomp::ScmatFcomp() {}
 
 inline ScmatFcomp::ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1)
-    : SvecFcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseFcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatFcomp::operator ScmatFcomp_c() const
 {
@@ -1055,13 +1055,13 @@ inline void ScmatFcomp::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatFcomp::set(Fcomp *data, Long_I N0, Long_I N1)
 {
-    SvecFcomp::set(data, N0*N1);
+    SvbaseFcomp::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatFcomp::set(const ScmatFcomp &sli)
 {
-    SvecFcomp::set(sli);
+    SvbaseFcomp::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1070,7 +1070,7 @@ inline ScmatFcomp::~ScmatFcomp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFcomp &ScmatFcomp_O, &ScmatFcomp_IO;
 
-class ScmatComp_c : public SvecComp_c
+class ScmatComp_c : public SvbaseComp_c
 {
 protected:
     Long m_N0, m_N1;
@@ -1095,7 +1095,7 @@ public:
 inline ScmatComp_c::ScmatComp_c() {}
 
 inline ScmatComp_c::ScmatComp_c(const Comp *data, Long_I N0, Long_I N1)
-    : SvecComp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseComp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Comp &ScmatComp_c::operator()(Long_I i, Long_I j) const
@@ -1128,13 +1128,13 @@ inline void ScmatComp_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatComp_c::set(const Comp *data, Long_I N0, Long_I N1)
 {
-    SvecComp_c::set(data, N0*N1);
+    SvbaseComp_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatComp_c::set(const ScmatComp_c &sli)
 {
-    SvecComp_c::set(sli);
+    SvbaseComp_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1142,7 +1142,7 @@ inline ScmatComp_c::~ScmatComp_c() {}
 
 typedef const ScmatComp_c &ScmatComp_I;
 
-class ScmatComp : public SvecComp
+class ScmatComp : public SvbaseComp
 {
 protected:
     Long m_N0, m_N1;
@@ -1168,7 +1168,7 @@ public:
 inline ScmatComp::ScmatComp() {}
 
 inline ScmatComp::ScmatComp(Comp *data, Long_I N0, Long_I N1)
-    : SvecComp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseComp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatComp::operator ScmatComp_c() const
 {
@@ -1205,13 +1205,13 @@ inline void ScmatComp::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatComp::set(Comp *data, Long_I N0, Long_I N1)
 {
-    SvecComp::set(data, N0*N1);
+    SvbaseComp::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatComp::set(const ScmatComp &sli)
 {
-    SvecComp::set(sli);
+    SvbaseComp::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1220,7 +1220,7 @@ inline ScmatComp::~ScmatComp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatComp &ScmatComp_O, &ScmatComp_IO;
 
-class ScmatLcomp_c : public SvecLcomp_c
+class ScmatLcomp_c : public SvbaseLcomp_c
 {
 protected:
     Long m_N0, m_N1;
@@ -1245,7 +1245,7 @@ public:
 inline ScmatLcomp_c::ScmatLcomp_c() {}
 
 inline ScmatLcomp_c::ScmatLcomp_c(const Lcomp *data, Long_I N0, Long_I N1)
-    : SvecLcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Lcomp &ScmatLcomp_c::operator()(Long_I i, Long_I j) const
@@ -1278,13 +1278,13 @@ inline void ScmatLcomp_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLcomp_c::set(const Lcomp *data, Long_I N0, Long_I N1)
 {
-    SvecLcomp_c::set(data, N0*N1);
+    SvbaseLcomp_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLcomp_c::set(const ScmatLcomp_c &sli)
 {
-    SvecLcomp_c::set(sli);
+    SvbaseLcomp_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1292,7 +1292,7 @@ inline ScmatLcomp_c::~ScmatLcomp_c() {}
 
 typedef const ScmatLcomp_c &ScmatLcomp_I;
 
-class ScmatLcomp : public SvecLcomp
+class ScmatLcomp : public SvbaseLcomp
 {
 protected:
     Long m_N0, m_N1;
@@ -1318,7 +1318,7 @@ public:
 inline ScmatLcomp::ScmatLcomp() {}
 
 inline ScmatLcomp::ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1)
-    : SvecLcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatLcomp::operator ScmatLcomp_c() const
 {
@@ -1355,13 +1355,13 @@ inline void ScmatLcomp::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLcomp::set(Lcomp *data, Long_I N0, Long_I N1)
 {
-    SvecLcomp::set(data, N0*N1);
+    SvbaseLcomp::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLcomp::set(const ScmatLcomp &sli)
 {
-    SvecLcomp::set(sli);
+    SvbaseLcomp::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1370,7 +1370,7 @@ inline ScmatLcomp::~ScmatLcomp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
 
-class ScmatFimag_c : public SvecFimag_c
+class ScmatFimag_c : public SvbaseFimag_c
 {
 protected:
     Long m_N0, m_N1;
@@ -1395,7 +1395,7 @@ public:
 inline ScmatFimag_c::ScmatFimag_c() {}
 
 inline ScmatFimag_c::ScmatFimag_c(const Fimag *data, Long_I N0, Long_I N1)
-    : SvecFimag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseFimag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Fimag &ScmatFimag_c::operator()(Long_I i, Long_I j) const
@@ -1428,13 +1428,13 @@ inline void ScmatFimag_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatFimag_c::set(const Fimag *data, Long_I N0, Long_I N1)
 {
-    SvecFimag_c::set(data, N0*N1);
+    SvbaseFimag_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatFimag_c::set(const ScmatFimag_c &sli)
 {
-    SvecFimag_c::set(sli);
+    SvbaseFimag_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1442,7 +1442,7 @@ inline ScmatFimag_c::~ScmatFimag_c() {}
 
 typedef const ScmatFimag_c &ScmatFimag_I;
 
-class ScmatFimag : public SvecFimag
+class ScmatFimag : public SvbaseFimag
 {
 protected:
     Long m_N0, m_N1;
@@ -1468,7 +1468,7 @@ public:
 inline ScmatFimag::ScmatFimag() {}
 
 inline ScmatFimag::ScmatFimag(Fimag *data, Long_I N0, Long_I N1)
-    : SvecFimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseFimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatFimag::operator ScmatFimag_c() const
 {
@@ -1505,13 +1505,13 @@ inline void ScmatFimag::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatFimag::set(Fimag *data, Long_I N0, Long_I N1)
 {
-    SvecFimag::set(data, N0*N1);
+    SvbaseFimag::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatFimag::set(const ScmatFimag &sli)
 {
-    SvecFimag::set(sli);
+    SvbaseFimag::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1520,7 +1520,7 @@ inline ScmatFimag::~ScmatFimag() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFimag &ScmatFimag_O, &ScmatFimag_IO;
 
-class ScmatImag_c : public SvecImag_c
+class ScmatImag_c : public SvbaseImag_c
 {
 protected:
     Long m_N0, m_N1;
@@ -1545,7 +1545,7 @@ public:
 inline ScmatImag_c::ScmatImag_c() {}
 
 inline ScmatImag_c::ScmatImag_c(const Imag *data, Long_I N0, Long_I N1)
-    : SvecImag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseImag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Imag &ScmatImag_c::operator()(Long_I i, Long_I j) const
@@ -1578,13 +1578,13 @@ inline void ScmatImag_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatImag_c::set(const Imag *data, Long_I N0, Long_I N1)
 {
-    SvecImag_c::set(data, N0*N1);
+    SvbaseImag_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatImag_c::set(const ScmatImag_c &sli)
 {
-    SvecImag_c::set(sli);
+    SvbaseImag_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1592,7 +1592,7 @@ inline ScmatImag_c::~ScmatImag_c() {}
 
 typedef const ScmatImag_c &ScmatImag_I;
 
-class ScmatImag : public SvecImag
+class ScmatImag : public SvbaseImag
 {
 protected:
     Long m_N0, m_N1;
@@ -1618,7 +1618,7 @@ public:
 inline ScmatImag::ScmatImag() {}
 
 inline ScmatImag::ScmatImag(Imag *data, Long_I N0, Long_I N1)
-    : SvecImag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseImag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatImag::operator ScmatImag_c() const
 {
@@ -1655,13 +1655,13 @@ inline void ScmatImag::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatImag::set(Imag *data, Long_I N0, Long_I N1)
 {
-    SvecImag::set(data, N0*N1);
+    SvbaseImag::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatImag::set(const ScmatImag &sli)
 {
-    SvecImag::set(sli);
+    SvbaseImag::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1670,7 +1670,7 @@ inline ScmatImag::~ScmatImag() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatImag &ScmatImag_O, &ScmatImag_IO;
 
-class ScmatLimag_c : public SvecLimag_c
+class ScmatLimag_c : public SvbaseLimag_c
 {
 protected:
     Long m_N0, m_N1;
@@ -1695,7 +1695,7 @@ public:
 inline ScmatLimag_c::ScmatLimag_c() {}
 
 inline ScmatLimag_c::ScmatLimag_c(const Limag *data, Long_I N0, Long_I N1)
-    : SvecLimag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLimag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
 inline const Limag &ScmatLimag_c::operator()(Long_I i, Long_I j) const
@@ -1728,13 +1728,13 @@ inline void ScmatLimag_c::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLimag_c::set(const Limag *data, Long_I N0, Long_I N1)
 {
-    SvecLimag_c::set(data, N0*N1);
+    SvbaseLimag_c::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLimag_c::set(const ScmatLimag_c &sli)
 {
-    SvecLimag_c::set(sli);
+    SvbaseLimag_c::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
@@ -1742,7 +1742,7 @@ inline ScmatLimag_c::~ScmatLimag_c() {}
 
 typedef const ScmatLimag_c &ScmatLimag_I;
 
-class ScmatLimag : public SvecLimag
+class ScmatLimag : public SvbaseLimag
 {
 protected:
     Long m_N0, m_N1;
@@ -1768,7 +1768,7 @@ public:
 inline ScmatLimag::ScmatLimag() {}
 
 inline ScmatLimag::ScmatLimag(Limag *data, Long_I N0, Long_I N1)
-    : SvecLimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+    : SvbaseLimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 inline ScmatLimag::operator ScmatLimag_c() const
 {
@@ -1805,13 +1805,13 @@ inline void ScmatLimag::reshape(Long_I N0, Long_I N1)
 
 inline void ScmatLimag::set(Limag *data, Long_I N0, Long_I N1)
 {
-    SvecLimag::set(data, N0*N1);
+    SvbaseLimag::set(data, N0*N1);
     m_N0 = N0; m_N1 = N1;
 }
 
 inline void ScmatLimag::set(const ScmatLimag &sli)
 {
-    SvecLimag::set(sli);
+    SvbaseLimag::set(sli);
     m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 

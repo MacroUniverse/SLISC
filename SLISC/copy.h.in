@@ -177,9 +177,15 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //%     'CmatChar'; 'CmatInt'; 'CmatLlong';
 //%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
 //%     'CmatFcomp'; 'CmatComp'; 'CmatLcomp';
+//%     'ScmatChar'; 'ScmatInt'; 'ScmatLlong';
+//%     'ScmatFloat'; 'ScmatDoub'; 'ScmatLdoub';
+//%     'ScmatFcomp'; 'ScmatComp'; 'ScmatLcomp';
 //%     'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
 //%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
 //%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
+//%     'Scmat3Char'; 'Scmat3Int'; 'Scmat3Llong';
+//%     'Scmat3Float'; 'Scmat3Doub'; 'Scmat3Ldoub';
+//%     'Scmat3Fcomp'; 'Scmat3Comp'; 'Scmat3Lcomp';
 //%     'Cmat4Doub';
 //%     'DcmatDoub'; 'DcmatComp';
 //%     'Jcmat3Float'; 'Jcmat3Doub'; 'Jcmat3Ldoub';

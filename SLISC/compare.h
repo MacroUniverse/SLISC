@@ -2466,6 +2466,10 @@ inline Bool shape_cmp(ScmatLlong_I v1, ScmatLlong_I v2) {return (Long)v1.n0() ==
 
 inline Bool shape_cmp(ScmatDoub_I v1, CmatDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 
+inline Bool shape_cmp(ScmatDoub_I v1, ScmatDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
+
+inline Bool shape_cmp(ScmatDoub_I v1, ScmatComp_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
+
 inline Bool shape_cmp(ScmatDoub_I v1, McooDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 
 inline Bool shape_cmp(ScmatDoub_I v1, CbandDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
@@ -2475,6 +2479,10 @@ inline Bool shape_cmp(ScmatDoub_I v1, CbandComp_I v2) {return (Long)v1.n0() == (
 inline Bool shape_cmp(ScmatComp_I v1, CmatDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 
 inline Bool shape_cmp(ScmatComp_I v1, CmatComp_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
+
+inline Bool shape_cmp(ScmatComp_I v1, ScmatDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
+
+inline Bool shape_cmp(ScmatComp_I v1, ScmatComp_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 
 inline Bool shape_cmp(ScmatComp_I v1, CbandDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 
