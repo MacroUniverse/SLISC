@@ -706,4 +706,14 @@ inline Bool is_chinese(Char32_I c)
     return false;
 }
 
+// check if is a chinese character
+// include punctuations
+inline Bool is_chinese_punc(Char32_I c)
+{
+    static Str32 s = U"，。？！、：；“”‘’（）【】…—《》￥·";
+    if ((Long)s.find(c) >= 0)
+        return true;
+    return false;
+}
+
 } // namespace slisc
