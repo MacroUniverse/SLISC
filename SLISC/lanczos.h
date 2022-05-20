@@ -3,6 +3,7 @@
 // however, (dt^Nk / Nk!) is extremely small and omitted.
 
 #pragma once
+#include "global.h"
 #ifdef SLS_USE_LAPACKE
 #include "cut.h"
 #include "sparse_arith.h"

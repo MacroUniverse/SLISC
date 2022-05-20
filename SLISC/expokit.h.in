@@ -1,4 +1,5 @@
 #pragma once
+#include "global.h"
 #ifdef SLS_USE_CBLAS
 #include "sparse_arith.h"
 #include "arithmetic.h"

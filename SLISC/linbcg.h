@@ -17,7 +17,7 @@ struct Linbcg {
 void Linbcg::solve(VecDoub_I b, VecDoub_IO x, const Int itol, const Doub tol,
 	const Int itmax, Int &iter, Doub &err)
 {
-	Doub ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm;
+	Doub ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
 	const Doub EPS=1.0e-14;
 	Int j,n=b.size();
 	VecDoub p(n),pp(n),r(n),rr(n),z(n),zz(n);
