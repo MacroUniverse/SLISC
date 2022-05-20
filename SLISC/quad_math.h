@@ -97,3 +97,30 @@ inline slisc::Qcomp sqrt(slisc::Qcomp_I x) { return csqrtq(x); }
 inline slisc::Qdoub tan(slisc::Qdoub_I x) { return tanq(x); }
 
 } // namespace std
+
+// extension for Eigen library
+namespace Eigen {
+  template<> struct NumTraits<Qdoub> : GenericNumTraits<Qdoub>
+  {
+    typedef Qdoub Real;
+    typedef Qdoub NonInteger;
+    typedef Qdoub Nested;
+ 
+    static inline Real epsilon() { return FLT128_EPSILON; }
+    static inline Real dummy_precision() { return 0; }
+    static inline int digits10() { return FLT128_DIG; }
+ 
+    enum {
+      IsInteger = 0,
+      IsSigned = 1,
+      IsComplex = 0,
+      RequireInitialization = 1,
+      ReadCost = 2,
+      AddCost = 2,
+      MulCost = 6
+    };
+  };
+
+  typedef Matrix<Qdoub, Dynamic, Dynamic> MatrixXq;
+  typedef Matrix<Qdoub, Dynamic, 1> VectorXq;
+} // namespace Eigen
