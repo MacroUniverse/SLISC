@@ -8,6 +8,7 @@
 #include <sys/stat.h> // for time_stamp
 #include "unicode.h"
 #include "sort.h"
+#include "Bit.h"
 #ifdef _MSC_VER
 #include "search.h"
 #include "string.h"
@@ -824,29 +825,6 @@ inline void last_modified(Str_O yymmddhhmmss, Str_I fname) {
 inline void set_buff(ofstream &fout, Str_IO buffer)
 {
     fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
-}
-
-// test if system use little endian (less significant byte has smaller memory address)
-// for example, shot int(1) will be 00000001 0000000 in little endian
-// there is no concept of "bit endian" since they are not addressable
-// Intel x86 and x64 architechture use little endian
-inline Bool little_endian()
-{
-    short int num = 1;
-    Char *b = (Char *)&num;
-    return b[0];
-}
-
-// convert endianness
-inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
-{
-    Long half = elm_size/2;
-    for (Long i = 0; i < Nelm; ++i) {
-        for (Long j = 0; j < half; ++j) {
-            swap(data[j], data[elm_size-j]);
-        }
-        data += elm_size;
-    }
 }
 
 } // namespace slisc

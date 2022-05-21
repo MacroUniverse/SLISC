@@ -1,5 +1,6 @@
 #include "../SLISC/Bit.h"
 #include "../SLISC/file.h"
+#include "../SLISC/quad_math.h"
 
 // >> and << operating on signed integer is "undefined"!
 // Char and Uchar reinterpret cast conserves bit, but static cast might not (for older architecture)
@@ -16,7 +17,7 @@ void test_Bit()
             SLS_ERR("failed!");
     }
 
-    if (bit2str(bit2char(128)) != "10000000")
+    if (to_bitstr(bit2char(128)) != "10000000")
         SLS_ERR("failed!");
 
     for (Long i = 0; i < 8; ++i) {
@@ -38,11 +39,11 @@ void test_Bit()
     }
 
     Char ui[] = {Char(255), Char(128), 85};
-    if (bit2str(ui) != "11111111")
+    if (to_bitstr(ui) != "11111111")
         SLS_ERR("failed!");
-    if (bit2str(ui+1) != "10000000")
+    if (to_bitstr(ui+1) != "10000000")
         SLS_ERR("failed!");
-    if (bit2str(ui+2) != "01010101")
+    if (to_bitstr(ui+2) != "01010101")
         SLS_ERR("failed!");
     if (str2bit("10100101") != bit2char(0b10100101))
         SLS_ERR("failed!");

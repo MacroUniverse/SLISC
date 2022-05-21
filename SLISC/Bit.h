@@ -1,8 +1,31 @@
-// bit operations and endian relatedb
+// bit operations and endian related
 #pragma once
 #include "global.h"
 
 namespace slisc {
+
+// test if system use little endian (less significant byte has smaller memory address)
+// for example, shot int(1) will be 00000001 0000000 in little endian
+// there is no concept of "bit endian" since they are not addressable
+// Intel x86 and x64 architechture use little endian
+inline Bool little_endian()
+{
+    short int num = 1;
+    Char *b = (Char *)&num;
+    return b[0];
+}
+
+// convert endianness
+inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
+{
+    Long half = elm_size/2;
+    for (Long i = 0; i < Nelm; ++i) {
+        for (Long j = 0; j < half; ++j) {
+            swap(data[j], data[elm_size-j]);
+        }
+        data += elm_size;
+    }
+}
 
 // bitwise conversion between uchar and char
 inline Uchar bit2uchar(Char_I c)
@@ -87,8 +110,8 @@ inline void toggle_bitL(Char_IO byte, Int_I i)
 inline void toggle_bitL(Char *byte, Int_I i)
 { toggle_bitL(*byte, i); }
 
-// convert byte to 8 char '0' or '1'
-inline Str bit2str(Char_I byte)
+// convert a byte to bit string (8 char '0' or '1')
+inline Str to_bitstr(Char_I byte)
 {
     Str str; str.resize(8);
     for (Int i = 0; i < 8; ++i) {
@@ -100,8 +123,39 @@ inline Str bit2str(Char_I byte)
     return str;
 }
 
-inline Str bit2str(const Char *byte)
-{ return bit2str(*byte); }
+// convert memory to bit string
+inline Str to_bitstr(const void *byte, Int_I Nbyte = 1, Bool add_space = true, Bool auto_endian = false)
+{
+    Char *p = (Char *)byte;
+    Str str;
+    if (!auto_endian || (!little_endian() && auto_endian)) {
+        if (!add_space) {
+            str.reserve(8*Nbyte);
+            for (Int i = 0; i < Nbyte; ++i)
+                str += to_bitstr(p[i]);
+        }
+        else {
+            str.reserve(9*Nbyte);
+            for (Int i = 0; i < Nbyte; ++i)
+                str += to_bitstr(p[i]) + ' ';
+            str.pop_back();
+        }
+    }
+    else {
+        if (!add_space) {
+            str.reserve(8*Nbyte);
+            for (Int i = Nbyte-1; i >= 0; --i)
+                str += to_bitstr(p[i]);
+        }
+        else {
+            str.reserve(9*Nbyte);
+            for (Int i = Nbyte-1; i >= 0; --i)
+                str += to_bitstr(p[i]) + ' ';
+            str.pop_back();
+        }
+    }
+    return str;
+}
 
 // convert each char to a bit, '0' is 'false', otherwise 'true'
 // also consider to use binary literal e.g. `Char(10100101b)`
