@@ -38,4 +38,16 @@ void test_random()
 		if (find_repeat(v) >= 0)
 			SLS_ERR("failed!");
 	}
+
+#ifdef SLS_USE_QUAD_MATH
+	{
+		cout.precision(35);
+		Qdoub q;
+		for (Long i = 0; i < 20; ++i) {
+			q = randQdoub();
+			if (q < 0 || q > 1)
+				SLS_ERR("failed!");
+		}
+	}
+#endif
 }

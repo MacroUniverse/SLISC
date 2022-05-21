@@ -3,6 +3,9 @@
 #pragma once
 #include "arithmetic.h"
 #include <ctime>
+#ifdef SLS_USE_QUAD_MATH
+#include "quad_math.h"
+#endif
 
 #ifndef SLS_RAND_SEED
 // default random seed, update every second
@@ -36,6 +39,14 @@ namespace internal
             w = v; int64();
         }
         Doub doub() { return 5.42101086242752217E-20 * int64(); }
+#ifdef SLS_USE_QUAD_MATH
+        Qdoub qdoub() {
+            // random int128 = int64()*2^64 + int64()
+            Qdoub q = int64()*18446744073709551616.0Q + int64();
+            q *= 2.9387358770557187699218413430556142e-39Q; // q *= 2^-128
+            return q;
+        }
+#endif
     };
 }
 
@@ -45,6 +56,15 @@ inline Doub randDoub()
     static internal::Ran rand_gen;
     return rand_gen.doub();
 }
+
+#ifdef SLS_USE_QUAD_MATH
+// generate random Qdoub in [0, 1]
+inline Qdoub randQdoub()
+{
+    static internal::Ran rand_gen;
+    return rand_gen.qdoub();
+}
+#endif
 
 // generate random Int in {0,1,2,...,N-1}
 inline Int randInt(Int_I N)
