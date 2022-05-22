@@ -14,7 +14,7 @@ cblas_lib = -lblas
 lapacke_flag = -D SLS_USE_LAPACKE
 lapacke_lib = -llapacke
 # Arpack
-arpack_flag = -I ../Arpack_test/include -D SLS_USE_ARPACK
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
 arpack_lib = -larpack -lgfortran
 # GSL
 gsl_flag = -D SLS_USE_GSL
@@ -26,7 +26,7 @@ arb_lib = -lflint -lmpfr -lgmp -larb
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
 # Boost
-boost_flag = -I ../boost-headers -D SLS_USE_BOOST
+boost_flag = -D SLS_USE_BOOST -I ../boost-headers
 boost_lib = -lboost_system -lboost_filesystem
 # All
 flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) #-D NDEBUG
