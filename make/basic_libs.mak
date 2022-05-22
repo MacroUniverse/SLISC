@@ -7,9 +7,11 @@
 
 compiler = g++
 
-libs = -lgsl -llapacke -lblas -lflint -larb -lboost_system -lboost_filesystem -larpack -lgfortran -lquadmath
+libs = -lgsl -llapacke -lblas -lflint -larb -larpack -lgfortran -lquadmath
+# -lboost_system -lboost_filesystem
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 -fext-numeric-literals -I ../boost-headers -I ../Arpack_test/include -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL -D SLS_USE_ARB -D SLS_USE_BOOST -D SLS_USE_QUAD_MATH #-D NDEBUG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=1 -fext-numeric-literals -I ../Arpack_test/include -D SLS_USE_CBLAS -D SLS_USE_LAPACKE -D SLS_USE_GSL -D SLS_USE_ARB -D SLS_USE_QUAD_MATH #-D NDEBUG -D SLS_USE_BOOST
+# -I ../boost-headers
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
