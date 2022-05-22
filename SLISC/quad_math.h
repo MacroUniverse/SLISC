@@ -1,11 +1,12 @@
 #pragma once
-#ifndef __GNUC__
-#error quad_math.h only supports g++ compiler
+#if !defined(__GNUC__) && !defined(__ICC)
+#error quad_math.h only supports g++ compiler or intel compiler
 #endif
 #include "global.h"
 #include <quadmath.h>
 
 namespace slisc {
+
 typedef __float128 Qdoub;
 typedef const Qdoub Qdoub_I;
 typedef Qdoub &Qdoub_O, &Qdoub_IO;

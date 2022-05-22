@@ -4,7 +4,7 @@ compiler = icpc
 
 gsl_dir = /thummscratch/Hongyu/gsl/
 
-flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -I ../boost-headers -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB
+flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I ../boost-headers -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_QUAD_MATH
 # -g # debug
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
@@ -15,7 +15,7 @@ link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_
 
 link_mkl_dynamic = -lpthread -lm -ldl  
 
-other_libs = -L $(gsl_dir)lib/ -lgsl -larb -lflint -lmpfr -lgmp
+other_libs = -L $(gsl_dir)lib/ -lgsl -larb -lflint -lmpfr -lgmp -lquadmath
 # -lboost_system -lboost_filesystem
 
 # file lists
