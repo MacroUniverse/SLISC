@@ -7,8 +7,8 @@
 namespace slisc {
 //% types = {
 //%     'Char'; 'Int'; 'Llong'; 'Long';
-//%     'Float'; 'Doub'; 'Ldoub';
-//%     'Fcomp'; 'Comp'; 'Lcomp';
+//%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag';};
 //%----------------------------------------------
 //% T = varargin{:};
@@ -20,6 +20,9 @@ typedef VbaseInt VbaseLong;
 typedef VbaseLlong VbaseLong;
 #endif
 //% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
 class @VbaseT@
 {
 protected:
@@ -184,6 +187,9 @@ inline @VbaseT@::~@VbaseT@()
     if (m_N != 0)
         delete[] m_p;
 }
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
 //% end
 //%------------------------
 

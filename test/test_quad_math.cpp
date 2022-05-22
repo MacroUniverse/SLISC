@@ -1,6 +1,7 @@
 #ifdef SLS_USE_QUAD_MATH
 #include "../SLISC/quad_math.h"
 #endif
+#include "../SLISC/Cmat.h"
 
 void test_quad_math()
 {
@@ -21,5 +22,14 @@ void test_quad_math()
 	cout.precision(34);
 	if (sqrt(3.Q) != 1.7320508075688772935274463415058724Q)
 		SLS_ERR("failed!");
+	
+	// CmatQdoub qmat(2, 2);
+	// for (Long i = 0; i < 4; ++i) {
+	// 	qmat[i] = i + PI;
+	// 	cout << qmat[i] << endl;
+	// }
+
+	// Qcomp q2 = Qcomp(2, 3);
+	// cout << q2 << endl;
 #endif
 }
