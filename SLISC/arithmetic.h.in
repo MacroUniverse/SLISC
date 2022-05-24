@@ -782,10 +782,15 @@ inline void reorder(@Tv@_O v, @To@_I order)
 }
 //%-------------------------
 
-//% types = {'CmatDoub'; 'CmatComp';
-//%     'MatComp'; 'DcmatDoub'; 'DcmatComp'};
+//% types = {'CmatDoub'; 'CmatQdoub';
+//%    'CmatComp'; 'CmatQcomp';
+//%    'MatComp'; 'DcmatDoub'; 'DcmatComp'};
 //%--------------------------
 //% T = varargin{:};
+//% Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline void trans(@T@_IO v)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -796,11 +801,15 @@ inline void trans(@T@_IO v)
         for (Long j = 0; j < i; ++j)
             swap(v(i, j), v(j, i));
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%-------------------------
 
 //% types = {
 //%        'CmatLlong' 'CmatLlong';
 //%        'CmatDoub' 'CmatDoub';
+//%        'CmatQdoub' 'CmatQdoub';
 //%        'MatComp' 'CmatComp';
 //%        'CmatComp' 'CmatComp';
 //%        'CmatComp' 'MatComp';
@@ -812,6 +821,10 @@ inline void trans(@T@_IO v)
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
+//% Ts = value_type(T); Ts1 = value_type(T);
+//% if is_Qdoub(Ts) || is_Qdoub(Ts1) || is_Qcomp(Ts) || is_Qcomp(Ts1)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline void trans(@T@_O v, @T1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -822,6 +835,9 @@ inline void trans(@T@_O v, @T1@_I v1)
         for (Long j = 0; j < v.n1(); ++j)
             v(i, j) = v1(j, i);
 }
+//% if is_Qdoub(Ts) || is_Qdoub(Ts1) || is_Qcomp(Ts) || is_Qcomp(Ts1)
+#endif
+//% end
 //%-------------------------
 
 //% types = {
@@ -919,12 +935,17 @@ inline void her(@T@_O v, @T1@_I v1)
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Doub', 'Doub';
+//%     'Qdoub', 'Qdoub';
 //%     'Comp', 'Comp';
+//%     'Qcomp', 'Qcomp';
 //%     };
 //%-------------------
 //% [T, Ts] = varargin{:};
 //% if ~is_promo(T, Ts)
 //%     error('illegal types');
+//% end
+//% if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
 //% end
 inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
@@ -977,16 +998,19 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //% elseif is_fpt(Ts) || is_comp(Ts)
 inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
-    times_equals_vs(v, 1/s, N);
+    times_equals_vs(v, (@Ts@)1/s, N);
 }
 
 inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 {
-    times_equals_vs(v, 1/s, N, step);
+    times_equals_vs(v, (@Ts@)1/s, N, step);
 }
 //% else
 //%     disp(T); disp(Ts);
 //%     error('not implemented (10)');
+//% end
+//% if is_Qdoub(T) || is_Qcomp(T)
+#endif
 //% end
 //%-------------------------
 
@@ -994,6 +1018,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'VecChar', 'Char';
 //%     'VecInt', 'Int';
 //%     'VecDoub', 'Doub';
+//%     'VecQdoub', 'Qdoub';
 //%     'VecComp', 'Comp';
 //%     'CmatChar', 'Char';
 //%     'CmatInt', 'Int';
@@ -1015,6 +1040,9 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //% };
 //%-------------------
 //% [T, Ts] = varargin{:};
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 //% if is_dense(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 {
@@ -1093,19 +1121,27 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //%     disp(T); disp(Ts);
 //%     error('not implemented (11)');
 //% end
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%-------------------------
 
 //% types = {
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Doub', 'Doub';
+//%     'Qdoub', 'Qdoub';
 //%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
+//%     'Qcomp', 'Qcomp';
 //%     };
 //%-------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1)
 //%     error('illegal types');
+//% end
+//% if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
 //% end
 inline void plus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
@@ -1130,12 +1166,16 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
     for (Long i = 0; i < N; ++i)
         v[i] /= v1[i];
 }
+//% if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//% end
 //%-------------------------
 
 //% types = {
 //%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecDoub', 'VecDoub';
+//%     'VecQdoub', 'VecQdoub';
 //%     'VecDoub', 'SvecDoub';
 //%     'VecComp', 'VecComp';
 //%     'VecComp', 'VecDoub';
@@ -1163,6 +1203,10 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% };
 //%-------------------
 //% [T, T1] = varargin{:};
+//% Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void operator+=(@T@_O &v, @T1@_I v1)
 {
@@ -1257,6 +1301,9 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 }
 //% else
 //%     error('not implemented (12)!');
+//% end
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
 //% end
 //%-------------------------
 

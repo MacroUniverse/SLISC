@@ -40,6 +40,16 @@ inline Bool equals_to_vs(const Doub *v, Doub_I s, Long_I N)
     return true;
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline Bool equals_to_vs(const Qdoub *v, Qdoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v[i] != s)
+            return false;
+    return true;
+}
+#endif
+
 inline Bool equals_to_vs(const Comp *v, Comp_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -47,6 +57,16 @@ inline Bool equals_to_vs(const Comp *v, Comp_I s, Long_I N)
             return false;
     return true;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Bool equals_to_vs(const Qcomp *v, Qcomp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v[i] != s)
+            return false;
+    return true;
+}
+#endif
 
 
 inline Bool equals_to_vv(const Char *v1, const Char *v2, Long_I N)
@@ -97,6 +117,16 @@ inline Bool equals_to_vv(const Doub *v1, const Comp *v2, Long_I N)
     return true;
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline Bool equals_to_vv(const Qdoub *v1, const Qdoub *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v1[i] != v2[i])
+            return false;
+    return true;
+}
+#endif
+
 inline Bool equals_to_vv(const Comp *v1, const Doub *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -112,6 +142,16 @@ inline Bool equals_to_vv(const Comp *v1, const Comp *v2, Long_I N)
             return false;
     return true;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Bool equals_to_vv(const Qcomp *v1, const Qcomp *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v1[i] != v2[i])
+            return false;
+    return true;
+}
+#endif
 
 
 inline Bool shape_cmp(VecChar_I v1, VecChar_I v2) {return (Long)v1.size() == (Long)v2.size();}
@@ -2404,6 +2444,10 @@ inline Bool shape_cmp(VecLlong_I v1, vecStr_I v2) {return (Long)v1.size() == (Lo
 
 inline Bool shape_cmp(VecBool_I v1, VecBool_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
+#ifdef SLS_USE_QUAD_MATH
+inline Bool shape_cmp(VecQdoub_I v1, VecQdoub_I v2) {return (Long)v1.size() == (Long)v2.size();}
+#endif
+
 inline Bool shape_cmp(CmatBool_I v1, CmatBool_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
 
 inline Bool shape_cmp(MatDoub_I v1, CmatDoub_I v2) {return (Long)v1.n0() == (Long)v2.n0() && (Long)v1.n1() == (Long)v2.n1();}
@@ -2629,6 +2673,19 @@ inline Bool operator!=(VecDoub_I v1, VecComp_I v2)
 {
     return !(v1 == v2);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Bool operator==(VecQdoub_I v1, VecQdoub_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(VecQdoub_I v1, VecQdoub_I v2)
+{
+    return !(v1 == v2);
+}
+#endif
 
 inline Bool operator==(VecComp_I v1, VecComp_I v2)
 {

@@ -58,13 +58,16 @@ using std::vector; using std::string; using std::to_string;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap;
-using std::isinf;
+using std::isinf; using std::round; using std::ceil; using std::floor;
 using std::abs; using std::real; using std::imag;
 using std::conj; using std::pow;
 using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
+#ifdef SLS_USE_QUAD_MATH
+using std::sqr;
+#endif
 
 // Scalar types
 

@@ -4226,6 +4226,19 @@ inline void trans(CmatDoub_IO v)
             swap(v(i, j), v(j, i));
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void trans(CmatQdoub_IO v)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (v.n0() != v.n1())
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < v.n0(); ++i)
+        for (Long j = 0; j < i; ++j)
+            swap(v(i, j), v(j, i));
+}
+#endif
+
 inline void trans(CmatComp_IO v)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -4236,6 +4249,19 @@ inline void trans(CmatComp_IO v)
         for (Long j = 0; j < i; ++j)
             swap(v(i, j), v(j, i));
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void trans(CmatQcomp_IO v)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (v.n0() != v.n1())
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < v.n0(); ++i)
+        for (Long j = 0; j < i; ++j)
+            swap(v(i, j), v(j, i));
+}
+#endif
 
 inline void trans(MatComp_IO v)
 {
@@ -4292,6 +4318,19 @@ inline void trans(CmatDoub_O v, CmatDoub_I v1)
         for (Long j = 0; j < v.n1(); ++j)
             v(i, j) = v1(j, i);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void trans(CmatQdoub_O v, CmatQdoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (v.n0() != v1.n1() || v.n1() != v1.n0())
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < v.n0(); ++i)
+        for (Long j = 0; j < v.n1(); ++j)
+            v(i, j) = v1(j, i);
+}
+#endif
 
 inline void trans(MatComp_O v, CmatComp_I v1)
 {
@@ -4610,13 +4649,61 @@ inline void times_equals_vs(Doub *v, Doub_I s, Long_I N, Long step)
 
 inline void divide_equals_vs(Doub *v, Doub_I s, Long_I N)
 {
-    times_equals_vs(v, 1/s, N);
+    times_equals_vs(v, (Doub)1/s, N);
 }
 
 inline void divide_equals_vs(Doub *v, Doub_I s, Long_I N, Long_I step)
 {
-    times_equals_vs(v, 1/s, N, step);
+    times_equals_vs(v, (Doub)1/s, N, step);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void plus_equals_vs(Qdoub *v, Qdoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += s;
+}
+
+inline void plus_equals_vs(Qdoub *v, Qdoub_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] += s;
+}
+
+inline void minus_equals_vs(Qdoub *v, Qdoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= s;
+}
+
+inline void minus_equals_vs(Qdoub *v, Qdoub_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] -= s;
+}
+
+inline void times_equals_vs(Qdoub *v, Qdoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= s;
+}
+
+inline void times_equals_vs(Qdoub *v, Qdoub_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] *= s;
+}
+
+inline void divide_equals_vs(Qdoub *v, Qdoub_I s, Long_I N)
+{
+    times_equals_vs(v, (Qdoub)1/s, N);
+}
+
+inline void divide_equals_vs(Qdoub *v, Qdoub_I s, Long_I N, Long_I step)
+{
+    times_equals_vs(v, (Qdoub)1/s, N, step);
+}
+#endif
 
 inline void plus_equals_vs(Comp *v, Comp_I s, Long_I N)
 {
@@ -4656,13 +4743,61 @@ inline void times_equals_vs(Comp *v, Comp_I s, Long_I N, Long step)
 
 inline void divide_equals_vs(Comp *v, Comp_I s, Long_I N)
 {
-    times_equals_vs(v, 1/s, N);
+    times_equals_vs(v, (Comp)1/s, N);
 }
 
 inline void divide_equals_vs(Comp *v, Comp_I s, Long_I N, Long_I step)
 {
-    times_equals_vs(v, 1/s, N, step);
+    times_equals_vs(v, (Comp)1/s, N, step);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void plus_equals_vs(Qcomp *v, Qcomp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += s;
+}
+
+inline void plus_equals_vs(Qcomp *v, Qcomp_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] += s;
+}
+
+inline void minus_equals_vs(Qcomp *v, Qcomp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= s;
+}
+
+inline void minus_equals_vs(Qcomp *v, Qcomp_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] -= s;
+}
+
+inline void times_equals_vs(Qcomp *v, Qcomp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= s;
+}
+
+inline void times_equals_vs(Qcomp *v, Qcomp_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] *= s;
+}
+
+inline void divide_equals_vs(Qcomp *v, Qcomp_I s, Long_I N)
+{
+    times_equals_vs(v, (Qcomp)1/s, N);
+}
+
+inline void divide_equals_vs(Qcomp *v, Qcomp_I s, Long_I N, Long_I step)
+{
+    times_equals_vs(v, (Qcomp)1/s, N, step);
+}
+#endif
 
 
 inline void operator+=(VecChar_IO v, Char_I s)
@@ -4724,6 +4859,28 @@ inline void operator/=(VecDoub_IO v, Doub_I s)
 {
     divide_equals_vs(v.p(), s, v.size());
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void operator+=(VecQdoub_IO v, Qdoub_I s)
+{
+    plus_equals_vs(v.p(), s, v.size());
+}
+
+inline void operator-=(VecQdoub_IO v, Qdoub_I s)
+{
+    minus_equals_vs(v.p(), s, v.size());
+}
+
+inline void operator*=(VecQdoub_IO v, Qdoub_I s)
+{
+    times_equals_vs(v.p(), s, v.size());
+}
+
+inline void operator/=(VecQdoub_IO v, Qdoub_I s)
+{
+    divide_equals_vs(v.p(), s, v.size());
+}
+#endif
 
 inline void operator+=(VecComp_IO v, Comp_I s)
 {
@@ -5170,6 +5327,32 @@ inline void divide_equals_vv(Doub *v, const Doub *v1, Long_I N)
         v[i] /= v1[i];
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void plus_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += v1[i];
+}
+
+inline void minus_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= v1[i];
+}
+
+inline void times_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= v1[i];
+}
+
+inline void divide_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= v1[i];
+}
+#endif
+
 inline void plus_equals_vv(Comp *v, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -5217,6 +5400,32 @@ inline void divide_equals_vv(Comp *v, const Comp *v1, Long_I N)
     for (Long i = 0; i < N; ++i)
         v[i] /= v1[i];
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void plus_equals_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += v1[i];
+}
+
+inline void minus_equals_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= v1[i];
+}
+
+inline void times_equals_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= v1[i];
+}
+
+inline void divide_equals_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= v1[i];
+}
+#endif
 
 
 inline void operator+=(VecChar_O &v, VecChar_I v1)
@@ -5326,6 +5535,44 @@ inline void operator/=(VecDoub_O &v, VecDoub_I v1)
 #endif
     divide_equals_vv(v.p(), v1.p(), v1.size());
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void operator+=(VecQdoub_O &v, VecQdoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    plus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator-=(VecQdoub_O &v, VecQdoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    minus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator*=(VecQdoub_O &v, VecQdoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    times_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator/=(VecQdoub_O &v, VecQdoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    divide_equals_vv(v.p(), v1.p(), v1.size());
+}
+#endif
 
 inline void operator+=(VecDoub_O &v, SvecDoub_I v1)
 {

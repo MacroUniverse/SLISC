@@ -10,11 +10,14 @@ namespace slisc {
 
 //% types = {
 //%     'Char'; 'Int'; 'Llong';
-//%     'Float'; 'Doub'; 'Ldoub';
-//%     'Fcomp'; 'Comp'; 'Lcomp';
+//%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //% };
 //%-----------------------
 //% T = varargin{:};
+//% if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline void vecset(@T@ *v, @T@_I val, Long_I n)
 {
     for (@T@ *p = v; p < v + n; ++p)
@@ -26,6 +29,9 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
     for (@T@ *p = v; p < v + n*step; p += step)
         *p = val;
 }
+//% if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//% end
 //%------------------------
 
 //% types = {
@@ -43,6 +49,7 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
 //%     'Ldoub', 'Float';
 //%     'Ldoub', 'Doub';
 //%     'Ldoub', 'Ldoub';
+//%     'Qdoub', 'Qdoub';
 //%     'Fcomp', 'Int';
 //%     'Fcomp', 'Llong';
 //%     'Fcomp', 'Float';
@@ -56,6 +63,7 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
 //%     'Lcomp', 'Doub';
 //%     'Lcomp', 'Comp';
 //%     'Lcomp', 'Lcomp';
+//%     'Qcomp', 'Qcomp';
 //%     };
 //%----------------------------
 //% [T, T1] = varargin{:};
@@ -164,8 +172,8 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // scalar to container
 //% types = {
 //%     'VecBool'; 'VecChar'; 'VecInt'; 'VecLlong'; 
-//%     'VecFloat'; 'VecDoub'; 'VecLdoub';
-//%     'VecFcomp'; 'VecComp'; 'VecLcomp';
+//%     'VecFloat'; 'VecDoub'; 'VecLdoub'; 'VecQdoub';
+//%     'VecFcomp'; 'VecComp'; 'VecLcomp'; 'VecQcomp';
 //%     'SvecChar'; 'SvecInt'; 'SvecLlong';
 //%     'SvecFloat'; 'SvecDoub'; 'SvecLdoub';
 //%     'SvecFcomp'; 'SvecComp'; 'SvecLcomp';
@@ -193,6 +201,9 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //% };
 //%-------------------------------------
 //% T = varargin{:}; Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_VecBool(T)
@@ -222,36 +233,39 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     error('not implemented!');
 //% end
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%------------------------
 
 // assign value to containers
 //% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
 //%     'Str'; 'vecStr';
 //%     'VecChar'; 'VecInt'; 'VecLlong';
-//%     'VecFloat'; 'VecDoub'; 'VecLdoub';
-//%     'VecFcomp'; 'VecComp'; 'VecLcomp';
+//%     'VecFloat'; 'VecDoub'; 'VecLdoub'; 'VecQdoub';
+//%     'VecFcomp'; 'VecComp'; 'VecLcomp'; 'VecQcomp';
 //%     'VecFimag'; 'VecImag'; 'VecLimag';
 //%     'SvecChar'; 'SvecInt'; 'SvecLlong';
-//%     'SvecFloat'; 'SvecDoub'; 'SvecLdoub';
-//%     'SvecFcomp'; 'SvecComp'; 'SvecLcomp';
+//%     'SvecFloat'; 'SvecDoub'; 'SvecLdoub'; 'SvecQdoub';
+//%     'SvecFcomp'; 'SvecComp'; 'SvecLcomp'; 'SvecQcomp';
 //%     'SvecFimag'; 'SvecImag'; 'SvecLimag';
 //%     'DvecChar'; 'DvecInt'; 'DvecLlong';
-//%     'DvecFloat'; 'DvecDoub'; 'DvecLdoub';
-//%     'DvecFcomp'; 'DvecComp'; 'DvecLcomp';
+//%     'DvecFloat'; 'DvecDoub'; 'DvecLdoub'; 'DvecQdoub';
+//%     'DvecFcomp'; 'DvecComp'; 'DvecLcomp'; 'DvecQcomp';
 //%     'CmatChar'; 'CmatInt'; 'CmatLlong';
-//%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
-//%     'CmatFcomp'; 'CmatComp'; 'CmatLcomp';
+//%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub'; 'CmatQdoub';
+//%     'CmatFcomp'; 'CmatComp'; 'CmatLcomp'; 'CmatQcomp';
 //%     'CmatFimag'; 'CmatImag'; 'CmatLimag';
 //%     'ScmatChar'; 'ScmatInt'; 'ScmatLlong';
-//%     'ScmatFloat'; 'ScmatDoub'; 'ScmatLdoub';
-//%     'ScmatFcomp'; 'ScmatComp'; 'ScmatLcomp';
+//%     'ScmatFloat'; 'ScmatDoub'; 'ScmatLdoub'; 'ScmatQdoub';
+//%     'ScmatFcomp'; 'ScmatComp'; 'ScmatLcomp'; 'ScmatQcomp';
 //%     'ScmatFimag'; 'ScmatImag'; 'ScmatLimag';
 //%     'DcmatChar'; 'DcmatInt'; 'DcmatLlong';
-//%     'DcmatFloat'; 'DcmatDoub'; 'DcmatLdoub';
-//%     'DcmatFcomp'; 'DcmatComp'; 'DcmatLcomp';
+//%     'DcmatFloat'; 'DcmatDoub'; 'DcmatLdoub'; 'DcmatQdoub';
+//%     'DcmatFcomp'; 'DcmatComp'; 'DcmatLcomp'; 'DcmatQcomp';
 //%     'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
-//%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
-//%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
+//%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub'; 'Cmat3Qdoub';
+//%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp'; 'Cmat3Qcomp';
 //%     'Cmat3Fimag'; 'Cmat3Imag'; 'Cmat3Limag';};
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
@@ -259,6 +273,9 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%     Ts = 'Int'; % ... will promote these types, might give warning
 //% elseif is_Float(Ts)
 //%     Ts = 'Doub'; % ... will promote these types, might give warning
+//% end
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
 //% end
 inline void assign(@T@_O v, ...)
 {
@@ -278,6 +295,9 @@ inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, @Ts@);
     va_end(args);
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%-------------------------
 
 // container to container
@@ -289,6 +309,7 @@ inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
 //%     'VecInt', 'DvecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
+//%     'VecQdoub', 'VecQdoub';
 //%     'VecDoub', 'SvecDoub';
 //%     'VecComp', 'VecComp';
 //%     'SvecDoub', 'SvecDoub';
@@ -352,6 +373,10 @@ inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
 //% if ~is_promo(value_type(T), value_type(T1))
 //%     error('illegal types');
 //% end
+//% Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline void copy(@T@_O v, @T1@_I v1)
 {
 @same_shape('v', 'v1')@
@@ -396,6 +421,9 @@ inline void copy(@T@_O v, @T1@_I v1)
 //%     error('not implemented!!');
 //% end
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%------------------------
 
 // for sparse containers

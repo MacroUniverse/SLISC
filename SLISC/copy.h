@@ -80,6 +80,20 @@ inline void vecset(Ldoub *v, Ldoub_I val, Long_I n, Long_I step)
         *p = val;
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void vecset(Qdoub *v, Qdoub_I val, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Qdoub *v, Qdoub_I val, Long_I n, Long_I step)
+{
+    for (Qdoub *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+#endif
+
 inline void vecset(Fcomp *v, Fcomp_I val, Long_I n)
 {
     for (Fcomp *p = v; p < v + n; ++p)
@@ -115,6 +129,20 @@ inline void vecset(Lcomp *v, Lcomp_I val, Long_I n, Long_I step)
     for (Lcomp *p = v; p < v + n*step; p += step)
         *p = val;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void vecset(Qcomp *v, Qcomp_I val, Long_I n)
+{
+    for (Qcomp *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Qcomp *v, Qcomp_I val, Long_I n, Long_I step)
+{
+    for (Qcomp *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+#endif
 
 
 inline void veccpy(Char *v, const Char *v1, Long_I n)
@@ -551,6 +579,37 @@ inline void veccpy(Ldoub *v, Long_I step, const Ldoub *v1, Long_I step1, Long_I 
     }
 }
 
+inline void veccpy(Qdoub *v, const Qdoub *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Qdoub *v, const Qdoub *v1, Long_I step1, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Qdoub *v, Long_I step, const Qdoub *v1, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Qdoub *v, Long_I step, const Qdoub *v1, Long_I step1, Long_I n)
+{
+    Qdoub *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
+
 inline void veccpy(Fcomp *v, const Int *v1, Long_I n)
 {
     for (Long i = 0; i < n; ++i)
@@ -954,6 +1013,37 @@ inline void veccpy(Lcomp *v, Long_I step, const Lcomp *v1, Long_I step1, Long_I 
     }
 }
 
+inline void veccpy(Qcomp *v, const Qcomp *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Qcomp *v, const Qcomp *v1, Long_I step1, Long_I n)
+{
+    for (Qcomp *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Qcomp *v, Long_I step, const Qcomp *v1, Long_I n)
+{
+    for (Qcomp *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Qcomp *v, Long_I step, const Qcomp *v1, Long_I step1, Long_I n)
+{
+    Qcomp *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
+
 
 inline void matcpy(Char *v, Long_I lda, const Char *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
@@ -1142,6 +1232,13 @@ inline void copy(VecLdoub_O v, Ldoub_I s)
     vecset(v.p(), s, v.size());
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void copy(VecQdoub_O v, Qdoub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+#endif
+
 inline void copy(VecFcomp_O v, Fcomp_I s)
 {
     vecset(v.p(), s, v.size());
@@ -1156,6 +1253,13 @@ inline void copy(VecLcomp_O v, Lcomp_I s)
 {
     vecset(v.p(), s, v.size());
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void copy(VecQcomp_O v, Qcomp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+#endif
 
 inline void copy(SvecChar_O v, Char_I s)
 {
@@ -1780,6 +1884,27 @@ inline void assign2(VecLdoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(VecQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(VecQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(VecFcomp_O v, ...)
 {
     va_list args;
@@ -1836,6 +1961,27 @@ inline void assign2(VecLcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(VecQcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(VecQcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(VecFimag_O v, ...)
 {
@@ -2008,6 +2154,27 @@ inline void assign2(SvecLdoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(SvecQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(SvecQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(SvecFcomp_O v, ...)
 {
     va_list args;
@@ -2064,6 +2231,27 @@ inline void assign2(SvecLcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(SvecQcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(SvecQcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(SvecFimag_O v, ...)
 {
@@ -2236,6 +2424,27 @@ inline void assign2(DvecLdoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(DvecQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(DvecQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(DvecFcomp_O v, ...)
 {
     va_list args;
@@ -2292,6 +2501,27 @@ inline void assign2(DvecLcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(DvecQcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(DvecQcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(CmatChar_O v, ...)
 {
@@ -2407,6 +2637,27 @@ inline void assign2(CmatLdoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(CmatQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(CmatQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(CmatFcomp_O v, ...)
 {
     va_list args;
@@ -2463,6 +2714,27 @@ inline void assign2(CmatLcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(CmatQcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(CmatQcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(CmatFimag_O v, ...)
 {
@@ -2635,6 +2907,27 @@ inline void assign2(ScmatLdoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(ScmatQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(ScmatQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(ScmatFcomp_O v, ...)
 {
     va_list args;
@@ -2691,6 +2984,27 @@ inline void assign2(ScmatLcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(ScmatQcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(ScmatQcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(ScmatFimag_O v, ...)
 {
@@ -2863,6 +3177,27 @@ inline void assign2(DcmatLdoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(DcmatQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(DcmatQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(DcmatFcomp_O v, ...)
 {
     va_list args;
@@ -2919,6 +3254,27 @@ inline void assign2(DcmatLcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(DcmatQcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(DcmatQcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(Cmat3Char_O v, ...)
 {
@@ -3034,6 +3390,27 @@ inline void assign2(Cmat3Ldoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(Cmat3Qdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Qdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+#endif
+
 inline void assign(Cmat3Fcomp_O v, ...)
 {
     va_list args;
@@ -3090,6 +3467,27 @@ inline void assign2(Cmat3Lcomp_IO v, Long_I ind, Long_I N, ...)
         v[i] = va_arg(args, Lcomp);
     va_end(args);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void assign(Cmat3Qcomp_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+
+inline void assign2(Cmat3Qcomp_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qcomp);
+    va_end(args);
+}
+#endif
 
 inline void assign(Cmat3Fimag_O v, ...)
 {
@@ -3228,6 +3626,19 @@ inline void copy(VecDoub_O v, VecDoub_I v1)
         return;
     veccpy(v.p(), v1.p(), v.size());
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void copy(VecQdoub_O v, VecQdoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v, v1))
+        SLS_ERR("wrong shape!");
+#endif
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+#endif
 
 inline void copy(VecDoub_O v, SvecDoub_I v1)
 {

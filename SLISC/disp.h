@@ -109,6 +109,23 @@ inline void disp(VecDoub_I v, Int_I precision = def_disp_prec)
     cout.precision(oldPrecision);
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline void disp(VecQdoub_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+#endif
+
 inline void disp(VecComp_I v, Int_I precision = def_disp_prec)
 {
     auto oldPrecision = cout.precision();
@@ -123,6 +140,23 @@ inline void disp(VecComp_I v, Int_I precision = def_disp_prec)
     cout << endl << endl;
     cout.precision(oldPrecision);
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline void disp(VecQcomp_I v, Int_I precision = def_disp_prec)
+{
+    auto oldPrecision = cout.precision();
+    cout.precision(precision);
+    Long N = v.size();
+    if (N == 0)
+        cout << "empty";
+    else
+        for (Long i = 0; i < N; ++i) {
+            cout << to_num(v[i]) << "   ";
+        }
+    cout << endl << endl;
+    cout.precision(oldPrecision);
+}
+#endif
 
 inline void disp(MatLlong_I a, Int_I precision = def_disp_prec)
 {
