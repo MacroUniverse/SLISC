@@ -44,7 +44,7 @@ inline __complex128 to_Qcomp0(const complex<__float128> x)
 	// __imag__ y = x.imag();
 }
 
-inline complex<__float128> to_Qcomp(const __complex128 x)
+inline complex<__float128> to_Qcomp(const __complex128 &x)
 {
 	return *(complex<__float128> *)&x;
 }
