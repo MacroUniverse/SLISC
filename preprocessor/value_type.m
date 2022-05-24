@@ -15,12 +15,16 @@ elseif any(strfind(T, 'Doub'))
     ret = 'Doub';
 elseif any(strfind(T, 'Ldoub'))
     ret = 'Ldoub';
+elseif any(strfind(T, 'Qdoub'))
+    ret = 'Qdoub';
 elseif any(strfind(T, 'Fcomp'))
     ret = 'Fcomp';
 elseif any(strfind(T, 'Comp'))
     ret = 'Comp';
 elseif any(strfind(T, 'Lcomp'))
     ret = 'Lcomp';
+elseif any(strfind(T, 'Qcomp'))
+    ret = 'Qcomp';
 elseif any(strfind(T, 'Fimag'))
     ret = 'Fimag';
 elseif any(strfind(T, 'Imag'))
