@@ -1086,6 +1086,188 @@ inline Ldoub * DcmatLdoub::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLdoub &DcmatLdoub_O, &DcmatLdoub_IO;
 
+#ifdef SLS_USE_QUAD_MATH
+class DcmatQdoub_c
+{
+protected:
+    const Qdoub *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    typedef const Qdoub value_type;
+    DcmatQdoub_c();
+    DcmatQdoub_c(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const DcmatQdoub_c &sli);
+
+
+    const Qdoub& operator[](Long_I i) const;
+    const Qdoub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    const Qdoub *p() const;
+};
+
+inline DcmatQdoub_c::DcmatQdoub_c() {}
+
+inline DcmatQdoub_c::DcmatQdoub_c(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void DcmatQdoub_c::set(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatQdoub_c::set(const DcmatQdoub_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+
+inline const Qdoub &DcmatQdoub_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline const Qdoub &DcmatQdoub_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long DcmatQdoub_c::n0() const
+{
+    return m_N0;
+}
+
+inline Long DcmatQdoub_c::n1() const
+{
+    return m_N1;
+}
+
+inline Long DcmatQdoub_c::lda() const
+{
+    return m_lda;
+}
+
+inline Long DcmatQdoub_c::size() const
+{
+    return m_N;
+}
+
+inline const Qdoub * DcmatQdoub_c::p() const
+{
+    return m_p;
+}
+
+typedef const DcmatQdoub_c &DcmatQdoub_I;
+#endif
+
+#ifdef SLS_USE_QUAD_MATH
+class DcmatQdoub
+{
+protected:
+    Qdoub *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    typedef Qdoub value_type;
+    DcmatQdoub();
+    DcmatQdoub(Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const DcmatQdoub &sli);
+
+    operator DcmatQdoub_c() const;
+
+    Qdoub& operator[](Long_I i) const;
+    Qdoub& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    Qdoub *p() const;
+};
+
+inline DcmatQdoub::DcmatQdoub() {}
+
+inline DcmatQdoub::DcmatQdoub(Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void DcmatQdoub::set(Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatQdoub::set(const DcmatQdoub &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+inline DcmatQdoub::operator DcmatQdoub_c() const
+{
+    return *((DcmatQdoub_c *)this);
+}
+
+inline Qdoub &DcmatQdoub::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline Qdoub &DcmatQdoub::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long DcmatQdoub::n0() const
+{
+    return m_N0;
+}
+
+inline Long DcmatQdoub::n1() const
+{
+    return m_N1;
+}
+
+inline Long DcmatQdoub::lda() const
+{
+    return m_lda;
+}
+
+inline Long DcmatQdoub::size() const
+{
+    return m_N;
+}
+
+inline Qdoub * DcmatQdoub::p() const
+{
+    return m_p;
+}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DcmatQdoub &DcmatQdoub_O, &DcmatQdoub_IO;
+#endif
+
 class DcmatFcomp_c
 {
 protected:
@@ -1619,5 +1801,187 @@ inline Lcomp * DcmatLcomp::p() const
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
+
+#ifdef SLS_USE_QUAD_MATH
+class DcmatQcomp_c
+{
+protected:
+    const Qcomp *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    typedef const Qcomp value_type;
+    DcmatQcomp_c();
+    DcmatQcomp_c(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const DcmatQcomp_c &sli);
+
+
+    const Qcomp& operator[](Long_I i) const;
+    const Qcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    const Qcomp *p() const;
+};
+
+inline DcmatQcomp_c::DcmatQcomp_c() {}
+
+inline DcmatQcomp_c::DcmatQcomp_c(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void DcmatQcomp_c::set(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatQcomp_c::set(const DcmatQcomp_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+
+inline const Qcomp &DcmatQcomp_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline const Qcomp &DcmatQcomp_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long DcmatQcomp_c::n0() const
+{
+    return m_N0;
+}
+
+inline Long DcmatQcomp_c::n1() const
+{
+    return m_N1;
+}
+
+inline Long DcmatQcomp_c::lda() const
+{
+    return m_lda;
+}
+
+inline Long DcmatQcomp_c::size() const
+{
+    return m_N;
+}
+
+inline const Qcomp * DcmatQcomp_c::p() const
+{
+    return m_p;
+}
+
+typedef const DcmatQcomp_c &DcmatQcomp_I;
+#endif
+
+#ifdef SLS_USE_QUAD_MATH
+class DcmatQcomp
+{
+protected:
+    Qcomp *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    typedef Qcomp value_type;
+    DcmatQcomp();
+    DcmatQcomp(Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const DcmatQcomp &sli);
+
+    operator DcmatQcomp_c() const;
+
+    Qcomp& operator[](Long_I i) const;
+    Qcomp& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    Qcomp *p() const;
+};
+
+inline DcmatQcomp::DcmatQcomp() {}
+
+inline DcmatQcomp::DcmatQcomp(Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void DcmatQcomp::set(Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatQcomp::set(const DcmatQcomp &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+inline DcmatQcomp::operator DcmatQcomp_c() const
+{
+    return *((DcmatQcomp_c *)this);
+}
+
+inline Qcomp &DcmatQcomp::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline Qcomp &DcmatQcomp::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long DcmatQcomp::n0() const
+{
+    return m_N0;
+}
+
+inline Long DcmatQcomp::n1() const
+{
+    return m_N1;
+}
+
+inline Long DcmatQcomp::lda() const
+{
+    return m_lda;
+}
+
+inline Long DcmatQcomp::size() const
+{
+    return m_N;
+}
+
+inline Qcomp * DcmatQcomp::p() const
+{
+    return m_p;
+}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DcmatQcomp &DcmatQcomp_O, &DcmatQcomp_IO;
+#endif
 
 } // namespace slisc

@@ -10,11 +10,15 @@ namespace slisc {
 
 Llong sqr(Long);
 
-//% types = {'Int'; 'Doub'; 'Comp';};
+//% types = {'Int'; 'Llong';
+//%   'Doub'; 'Comp'; 'Qdoub'; 'Qcomp';};
 //%-----------------
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
 //% CmobdT = ['Cmobd' T];
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
 void vecset(@T@ *, @T@_I, Llong_I, Llong_I);
 void veccpy(@T@ *, const @T@ *, Llong_I);
 
@@ -183,5 +187,8 @@ inline void @CmobdT@::resize(Long_I blk_size, Long_I Nblk)
     Long step = sqr(nblk0());
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
 //%----------------------
 } // namespace slisc

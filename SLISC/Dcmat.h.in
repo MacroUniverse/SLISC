@@ -2,26 +2,18 @@
 
 namespace slisc {
 //% types = {
-//%     'Char', true;
-//%     'Char', false;
-//%     'Int', true;
-//%     'Int', false;
-//%     'Llong', true;
-//%     'Llong', false;
-//%     'Long', true;
-//%     'Long', false;
-//%     'Float', true;
-//%     'Float', false;
-//%     'Doub', true;
-//%     'Doub', false;
-//%     'Ldoub', true;
-//%     'Ldoub', false;
-//%     'Fcomp', true;
-//%     'Fcomp', false;
-//%     'Comp', true;
-//%     'Comp', false;
-//%     'Lcomp', true;
-//%     'Lcomp', false;
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
 //% };
 //%------------------------
 //% [T, constness] = varargin{:};
@@ -47,6 +39,9 @@ typedef DcmatInt DcmatLong;
 typedef DcmatLlong DcmatLong;
 #endif
 //% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
 class @Class@
 {
 protected:
@@ -147,5 +142,8 @@ typedef const @Class@ &@DcmatT@_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@DcmatT@_O, &@DcmatT@_IO;
 //% end
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
 //%------------------------
 } // namespace slisc

@@ -11,9 +11,11 @@ namespace slisc {
 //%     'Float', true;  'Float', false;
 //%     'Doub', true;   'Doub', false;
 //%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
 //%     'Fcomp', true;  'Fcomp', false;
 //%     'Comp', true;   'Comp', false;
 //%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;
@@ -46,6 +48,9 @@ typedef ScmatInt ScmatLong;
 typedef ScmatLlong ScmatLong;
 #endif
 //% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
 class @Class@ : public @Base@
 {
 protected:
@@ -132,5 +137,8 @@ typedef const @Class@ &@ScmatT@_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@ScmatT@_O, &@ScmatT@_IO;
 //% end
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
 //%------------------------
 } // namespace slisc

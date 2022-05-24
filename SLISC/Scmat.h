@@ -920,6 +920,160 @@ inline ScmatLdoub::~ScmatLdoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
 
+#ifdef SLS_USE_QUAD_MATH
+class ScmatQdoub_c : public SvbaseQdoub_c
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    ScmatQdoub_c();
+    ScmatQdoub_c(const Qdoub *data, Long_I N0, Long_I N1); // unsafe
+
+
+    const Qdoub &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const ScmatQdoub_c &sli);
+    void set(const Qdoub *data, Long_I N0, Long_I N1);
+    ~ScmatQdoub_c();
+};
+
+inline ScmatQdoub_c::ScmatQdoub_c() {}
+
+inline ScmatQdoub_c::ScmatQdoub_c(const Qdoub *data, Long_I N0, Long_I N1)
+    : SvbaseQdoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+
+inline const Qdoub &ScmatQdoub_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatQdoub_c::n0() const
+{
+    return m_N0;
+}
+
+inline Long ScmatQdoub_c::n1() const
+{
+    return m_N1;
+}
+
+inline void ScmatQdoub_c::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQdoub_c::set(const Qdoub *data, Long_I N0, Long_I N1)
+{
+    SvbaseQdoub_c::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQdoub_c::set(const ScmatQdoub_c &sli)
+{
+    SvbaseQdoub_c::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline ScmatQdoub_c::~ScmatQdoub_c() {}
+
+typedef const ScmatQdoub_c &ScmatQdoub_I;
+#endif
+
+#ifdef SLS_USE_QUAD_MATH
+class ScmatQdoub : public SvbaseQdoub
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    ScmatQdoub();
+    ScmatQdoub(Qdoub *data, Long_I N0, Long_I N1); // unsafe
+
+    operator ScmatQdoub_c() const;
+
+    Qdoub &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const ScmatQdoub &sli);
+    void set(Qdoub *data, Long_I N0, Long_I N1);
+    ~ScmatQdoub();
+};
+
+inline ScmatQdoub::ScmatQdoub() {}
+
+inline ScmatQdoub::ScmatQdoub(Qdoub *data, Long_I N0, Long_I N1)
+    : SvbaseQdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatQdoub::operator ScmatQdoub_c() const
+{
+    return *((ScmatQdoub_c *)this);
+}
+
+inline Qdoub &ScmatQdoub::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatQdoub::n0() const
+{
+    return m_N0;
+}
+
+inline Long ScmatQdoub::n1() const
+{
+    return m_N1;
+}
+
+inline void ScmatQdoub::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQdoub::set(Qdoub *data, Long_I N0, Long_I N1)
+{
+    SvbaseQdoub::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQdoub::set(const ScmatQdoub &sli)
+{
+    SvbaseQdoub::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline ScmatQdoub::~ScmatQdoub() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const ScmatQdoub &ScmatQdoub_O, &ScmatQdoub_IO;
+#endif
+
 class ScmatFcomp_c : public SvbaseFcomp_c
 {
 protected:
@@ -1369,6 +1523,160 @@ inline ScmatLcomp::~ScmatLcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
+
+#ifdef SLS_USE_QUAD_MATH
+class ScmatQcomp_c : public SvbaseQcomp_c
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    ScmatQcomp_c();
+    ScmatQcomp_c(const Qcomp *data, Long_I N0, Long_I N1); // unsafe
+
+
+    const Qcomp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const ScmatQcomp_c &sli);
+    void set(const Qcomp *data, Long_I N0, Long_I N1);
+    ~ScmatQcomp_c();
+};
+
+inline ScmatQcomp_c::ScmatQcomp_c() {}
+
+inline ScmatQcomp_c::ScmatQcomp_c(const Qcomp *data, Long_I N0, Long_I N1)
+    : SvbaseQcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+
+inline const Qcomp &ScmatQcomp_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatQcomp_c::n0() const
+{
+    return m_N0;
+}
+
+inline Long ScmatQcomp_c::n1() const
+{
+    return m_N1;
+}
+
+inline void ScmatQcomp_c::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQcomp_c::set(const Qcomp *data, Long_I N0, Long_I N1)
+{
+    SvbaseQcomp_c::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQcomp_c::set(const ScmatQcomp_c &sli)
+{
+    SvbaseQcomp_c::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline ScmatQcomp_c::~ScmatQcomp_c() {}
+
+typedef const ScmatQcomp_c &ScmatQcomp_I;
+#endif
+
+#ifdef SLS_USE_QUAD_MATH
+class ScmatQcomp : public SvbaseQcomp
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    ScmatQcomp();
+    ScmatQcomp(Qcomp *data, Long_I N0, Long_I N1); // unsafe
+
+    operator ScmatQcomp_c() const;
+
+    Qcomp &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const ScmatQcomp &sli);
+    void set(Qcomp *data, Long_I N0, Long_I N1);
+    ~ScmatQcomp();
+};
+
+inline ScmatQcomp::ScmatQcomp() {}
+
+inline ScmatQcomp::ScmatQcomp(Qcomp *data, Long_I N0, Long_I N1)
+    : SvbaseQcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatQcomp::operator ScmatQcomp_c() const
+{
+    return *((ScmatQcomp_c *)this);
+}
+
+inline Qcomp &ScmatQcomp::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatQcomp::n0() const
+{
+    return m_N0;
+}
+
+inline Long ScmatQcomp::n1() const
+{
+    return m_N1;
+}
+
+inline void ScmatQcomp::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQcomp::set(Qcomp *data, Long_I N0, Long_I N1)
+{
+    SvbaseQcomp::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQcomp::set(const ScmatQcomp &sli)
+{
+    SvbaseQcomp::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline ScmatQcomp::~ScmatQcomp() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const ScmatQcomp &ScmatQcomp_O, &ScmatQcomp_IO;
+#endif
 
 class ScmatFimag_c : public SvbaseFimag_c
 {
