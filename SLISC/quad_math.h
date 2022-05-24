@@ -2,13 +2,132 @@
 #if !defined(__GNUC__) && !defined(__ICC)
 #error quad_math.h only supports g++ compiler or intel compiler
 #endif
-#include "global.h"
+#include <math.h>
+#include <cmath>
+#include <complex>
+#include <vector>
+#include <iostream>
 #include <quadmath.h>
+
+inline __float128 sqr(const __float128 & x) { return x*x; }
+inline __float128 abs(const __float128 & x) { return fabsq(x); }
+inline __float128 abs2(const __float128 & x) { return x*x; }
+inline __float128 acos(const __float128 & x) { return acosq(x); }
+inline __float128 acosh(const __float128 & x) { return acoshq(x); }
+inline __float128 asin(const __float128 & x) { return asinq(x); }
+inline __float128 asinh(const __float128 & x) { return asinhq(x); }
+inline __float128 atan(const __float128 & x) { return atanq(x); }
+inline __float128 atanh(const __float128 & x) { return atanhq(x); }
+inline __float128 atan2(const __float128 & y, const __float128 & x) { return atan2q(y, x); }
+inline __float128 ceil(const __float128 & x) { return ceilq(x); }
+inline __float128 cos(const __float128 & x) { return cosq(x); }
+inline __float128 erf(const __float128 & x) { return erfq(x); }
+inline __float128 exp(const __float128 & x) { return expq(x); }
+inline __float128 floor(const __float128 & x) { return floorq(x); }
+inline __float128 isinf(const __float128 & x) { return isinfq(x); }
+inline __float128 isnan(const __float128 & x) { return isnanq(x); }
+inline __float128 log(const __float128 & x) { return logq(x); }
+inline __float128 log2(const __float128 & x) { return log2q(x); }
+inline __float128 log10(const __float128 & x) { return log10q(x); }
+inline __float128 round(const __float128 & x) { return rintq(x); }
+inline __float128 sin(const __float128 & x) { return sinq(x); }
+inline __float128 sqrt(const __float128 & x) { return sqrtq(x); }
+inline __float128 tan(const __float128 & x) { return tanq(x); }
+
+namespace std {
+
+inline __complex128 to_Qcomp0(const complex<__float128> x)
+{
+	return *(__complex128 *)&x;
+	// Qcomp0 y;
+	// __real__ y = x.real();
+	// __imag__ y = x.imag();
+}
+
+inline complex<__float128> to_Qcomp(const __complex128 x)
+{
+	return *(complex<__float128> *)&x;
+}
+
+inline string quad2str(const __float128 x, const int prec = 5)
+{
+	char buf[128];
+	int width = 46;
+	quadmath_snprintf(buf, sizeof buf, ("%." + to_string(prec-1) + "Qe").c_str(), width, x);
+	return buf;
+}
+
+inline string quad2str(const __complex128 x, const int prec = 5)
+{
+	string str;
+	str += "(" + quad2str(crealq(x), prec) + "," + quad2str(cimagq(x), prec) + ")";
+	return str;
+}
+
+inline string quad2str(const complex<__float128> x, const int prec = 5)
+{
+	return quad2str(to_Qcomp0(x), prec);
+}
+
+inline ostream& operator<<(ostream& os, const __float128 & x)
+{
+	os << quad2str(x, os.precision());
+		return os;
+}
+
+inline ostream& operator<<(ostream& os, const __complex128 &x)
+{
+	os << quad2str(x, os.precision());
+		return os;
+}
+
+inline ostream& operator<<(ostream& os, const complex<__float128> & x)
+{
+	os << quad2str(x, os.precision());
+		return os;
+}
+
+inline __float128 sqr(const __float128 & x) { return x*x; }
+inline __float128 abs(const __float128 & x) { return fabsq(x); }
+inline __float128 abs2(const __float128 & x) { return x*x; }
+inline __float128 acos(const __float128 & x) { return acosq(x); }
+inline __float128 acosh(const __float128 & x) { return acoshq(x); }
+inline __float128 asin(const __float128 & x) { return asinq(x); }
+inline __float128 asinh(const __float128 & x) { return asinhq(x); }
+inline __float128 atan(const __float128 & x) { return atanq(x); }
+inline __float128 atanh(const __float128 & x) { return atanhq(x); }
+inline __float128 atan2(const __float128 & y, const __float128 & x) { return atan2q(y, x); }
+inline __float128 ceil(const __float128 & x) { return ceilq(x); }
+inline __float128 cos(const __float128 & x) { return cosq(x); }
+inline __float128 erf(const __float128 & x) { return erfq(x); }
+inline __float128 exp(const __float128 & x) { return expq(x); }
+inline __float128 floor(const __float128 & x) { return floorq(x); }
+inline __float128 isinf(const __float128 & x) { return isinfq(x); }
+inline __float128 isnan(const __float128 & x) { return isnanq(x); }
+inline __float128 log(const __float128 & x) { return logq(x); }
+inline __float128 log2(const __float128 & x) { return log2q(x); }
+inline __float128 log10(const __float128 & x) { return log10q(x); }
+inline __float128 round(const __float128 & x) { return rintq(x); }
+inline __float128 sin(const __float128 & x) { return sinq(x); }
+inline __float128 sqrt(const __float128 & x) { return sqrtq(x); }
+inline __float128 tan(const __float128 & x) { return tanq(x); }
+
+inline complex<__float128> sqr(const complex<__float128> & x) { return x*x; }
+inline __float128 abs(const complex<__float128> & x) { return cabsq(to_Qcomp0(x)); }
+inline __float128 abs2(const complex<__float128> & x) { return sqr(abs(x)); }
+inline __float128 arg(const complex<__float128> & x) { return cargq(to_Qcomp0(x)); }
+inline complex<__float128> exp(const complex<__float128> & x) { return to_Qcomp(cexpq(to_Qcomp0(x))); }
+inline __float128 imag(const complex<__float128> & x) { return cimagq(to_Qcomp0(x)); }
+inline complex<__float128> log(const complex<__float128> & x) { return to_Qcomp(clogq(to_Qcomp0(x))); }
+inline __float128 real(const complex<__float128> & x) { return crealq(to_Qcomp0(x)); }
+inline complex<__float128> sqrt(const complex<__float128> & x) { return to_Qcomp(csqrtq(to_Qcomp0(x))); }
+
+} // namespace std
 
 namespace slisc {
 
 typedef __float128 Qdoub;
-typedef const Qdoub Qdoub_I;
+typedef const Qdoub &Qdoub_I;
 typedef Qdoub &Qdoub_O, &Qdoub_IO;
 
 typedef  __complex128 Qcomp0;
@@ -20,129 +139,14 @@ typedef std::complex<Qdoub> Qcomp;
 typedef const Qcomp &Qcomp_I;
 typedef Qcomp &Qcomp_O, &Qcomp2_IO;
 
-inline Qcomp0 to_Qcomp0(Qcomp_I x)
-{
-	return *(Qcomp0 *)&x;
-	// Qcomp0 y;
-	// __real__ y = x.real();
-	// __imag__ y = x.imag();
-}
+typedef std::vector<Qdoub> vecQdoub;
+typedef const vecQdoub &vecQdoub_I;
+typedef vecQdoub &vecQdoub_O, &vecQdoub_IO;
 
-inline Qcomp to_Qcomp(Qcomp0_I x)
-{
-	return *(Qcomp *)&x;
-}
-
-inline Str quad2str(Qdoub_I x, Int_I prec = 5)
-{
-	Char buf[128];
-	Int width = 46;
-	quadmath_snprintf(buf, sizeof buf, ("%." + to_string(prec-1) + "Qe").c_str(), width, x);
-	return buf;
-}
-
-inline Str quad2str(Qcomp0_I x, Int_I prec = 5)
-{
-	Str str;
-	str += "(" + quad2str(crealq(x), prec) + "," + quad2str(cimagq(x), prec) + ")";
-	return str;
-}
-
-inline Str quad2str(Qcomp_I x, Int_I prec = 5)
-{
-	return quad2str(to_Qcomp0(x), prec);
-}
+typedef std::vector<Qcomp> vecQcomp;
+typedef const vecQcomp &vecQcomp_I;
+typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 } // namespace slisc
-
-inline slisc::Qdoub sqr(slisc::Qdoub_I x) { return x*x; }
-inline slisc::Qcomp sqr(slisc::Qcomp_I x) { return x*x; }
-inline slisc::Qdoub abs(slisc::Qdoub_I x) { return fabsq(x); }
-inline slisc::Qdoub abs(slisc::Qcomp_I x) { return cabsq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub abs2(slisc::Qdoub_I x) { return sqr(abs(x)); }
-inline slisc::Qdoub abs2(slisc::Qcomp_I x) { return sqr(abs(x)); }
-inline slisc::Qdoub acos(slisc::Qdoub_I x) { return acosq(x); }
-inline slisc::Qdoub acosh(slisc::Qdoub_I x) { return acoshq(x); }
-inline slisc::Qdoub arg(slisc::Qcomp_I x) { return cargq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub asin(slisc::Qdoub_I x) { return asinq(x); }
-inline slisc::Qdoub asinh(slisc::Qdoub_I x) { return asinhq(x); }
-inline slisc::Qdoub atan(slisc::Qdoub_I x) { return atanq(x); }
-inline slisc::Qdoub atanh(slisc::Qdoub_I x) { return atanhq(x); }
-inline slisc::Qdoub atan2(slisc::Qdoub_I y, slisc::Qdoub_I x) { return atan2q(y, x); }
-inline slisc::Qdoub ceil(slisc::Qdoub_I x) { return ceilq(x); }
-inline slisc::Qdoub cos(slisc::Qdoub_I x) { return cosq(x); }
-inline slisc::Qdoub erf(slisc::Qdoub_I x) { return erfq(x); }
-inline slisc::Qdoub exp(slisc::Qdoub_I x) { return expq(x); }
-inline slisc::Qcomp exp(slisc::Qcomp_I x) { return slisc::to_Qcomp(cexpq(slisc::to_Qcomp0(x))); }
-inline slisc::Qdoub floor(slisc::Qdoub_I x) { return floorq(x); }
-inline slisc::Qdoub imag(slisc::Qcomp_I x) { return cimagq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub isinf(slisc::Qdoub_I x) { return isinfq(x); }
-inline slisc::Qdoub isnan(slisc::Qdoub_I x) { return isnanq(x); }
-inline slisc::Qdoub log(slisc::Qdoub_I x) { return logq(x); }
-inline slisc::Qcomp log(slisc::Qcomp_I x) { return slisc::to_Qcomp(clogq(slisc::to_Qcomp0(x))); }
-inline slisc::Qdoub log2(slisc::Qdoub_I x) { return log2q(x); }
-inline slisc::Qdoub log10(slisc::Qdoub_I x) { return log10q(x); }
-inline slisc::Qdoub real(slisc::Qcomp_I x) { return crealq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub round(slisc::Qdoub_I x) { return rintq(x); }
-inline slisc::Qdoub sin(slisc::Qdoub_I x) { return sinq(x); }
-inline slisc::Qdoub sqrt(slisc::Qdoub_I x) { return sqrtq(x); }
-inline slisc::Qcomp sqrt(slisc::Qcomp_I x) { return slisc::to_Qcomp(csqrtq(slisc::to_Qcomp0(x))); }
-inline slisc::Qdoub tan(slisc::Qdoub_I x) { return tanq(x); }
-
-namespace std {
-
-inline std::ostream& operator<<(std::ostream& os, slisc::Qdoub_I x)
-{
-	os << slisc::quad2str(x, os.precision());
-		return os;
-}
-
-inline std::ostream& operator<<(std::ostream& os, slisc::Qcomp0_I x)
-{
-	os << slisc::quad2str(x, os.precision());
-		return os;
-}
-
-inline std::ostream& operator<<(std::ostream& os, slisc::Qcomp_I x)
-{
-	os << slisc::quad2str(x, os.precision());
-		return os;
-}
-
-inline slisc::Qdoub sqr(slisc::Qdoub_I x) { return x*x; }
-inline slisc::Qcomp sqr(slisc::Qcomp_I x) { return x*x; }
-inline slisc::Qdoub abs(slisc::Qdoub_I x) { return fabsq(x); }
-inline slisc::Qdoub abs(slisc::Qcomp_I x) { return cabsq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub abs2(slisc::Qdoub_I x) { return sqr(abs(x)); }
-inline slisc::Qdoub abs2(slisc::Qcomp_I x) { return sqr(abs(x)); }
-inline slisc::Qdoub acos(slisc::Qdoub_I x) { return acosq(x); }
-inline slisc::Qdoub acosh(slisc::Qdoub_I x) { return acoshq(x); }
-inline slisc::Qdoub arg(slisc::Qcomp_I x) { return cargq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub asin(slisc::Qdoub_I x) { return asinq(x); }
-inline slisc::Qdoub asinh(slisc::Qdoub_I x) { return asinhq(x); }
-inline slisc::Qdoub atan(slisc::Qdoub_I x) { return atanq(x); }
-inline slisc::Qdoub atanh(slisc::Qdoub_I x) { return atanhq(x); }
-inline slisc::Qdoub atan2(slisc::Qdoub_I y, slisc::Qdoub_I x) { return atan2q(y, x); }
-inline slisc::Qdoub ceil(slisc::Qdoub_I x) { return ceilq(x); }
-inline slisc::Qdoub cos(slisc::Qdoub_I x) { return cosq(x); }
-inline slisc::Qdoub erf(slisc::Qdoub_I x) { return erfq(x); }
-inline slisc::Qdoub exp(slisc::Qdoub_I x) { return expq(x); }
-inline slisc::Qcomp exp(slisc::Qcomp_I x) { return slisc::to_Qcomp(cexpq(slisc::to_Qcomp0(x))); }
-inline slisc::Qdoub floor(slisc::Qdoub_I x) { return floorq(x); }
-inline slisc::Qdoub imag(slisc::Qcomp_I x) { return cimagq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub isinf(slisc::Qdoub_I x) { return isinfq(x); }
-inline slisc::Qdoub isnan(slisc::Qdoub_I x) { return isnanq(x); }
-inline slisc::Qdoub log(slisc::Qdoub_I x) { return logq(x); }
-inline slisc::Qcomp log(slisc::Qcomp_I x) { return slisc::to_Qcomp(clogq(slisc::to_Qcomp0(x))); }
-inline slisc::Qdoub log2(slisc::Qdoub_I x) { return log2q(x); }
-inline slisc::Qdoub log10(slisc::Qdoub_I x) { return log10q(x); }
-inline slisc::Qdoub real(slisc::Qcomp_I x) { return crealq(slisc::to_Qcomp0(x)); }
-inline slisc::Qdoub round(slisc::Qdoub_I x) { return rintq(x); }
-inline slisc::Qdoub sin(slisc::Qdoub_I x) { return sinq(x); }
-inline slisc::Qdoub sqrt(slisc::Qdoub_I x) { return sqrtq(x); }
-inline slisc::Qcomp sqrt(slisc::Qcomp_I x) { return slisc::to_Qcomp(csqrtq(slisc::to_Qcomp0(x))); }
-inline slisc::Qdoub tan(slisc::Qdoub_I x) { return tanq(x); }
-
-} // namespace std
 
 // extension for Eigen library
 #ifdef SLS_USE_EIGEN

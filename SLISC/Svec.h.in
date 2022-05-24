@@ -1,9 +1,7 @@
 #pragma once
 #include "global.h"
 #include "Imag.h"
-#ifdef SLS_USE_QUAD_MATH
-#include "quad_math.h"
-#endif
+
 // this class is not memory safe!
 // "_c" means lower level const
 

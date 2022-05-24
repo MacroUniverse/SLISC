@@ -1,6 +1,5 @@
 #include "../SLISC/Bit.h"
 #include "../SLISC/file.h"
-#include "../SLISC/quad_math.h"
 
 // >> and << operating on signed integer is "undefined"!
 // Char and Uchar reinterpret cast conserves bit, but static cast might not (for older architecture)

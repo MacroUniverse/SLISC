@@ -49,6 +49,16 @@ void test_arithmetic()
 			SLS_ERR("failed!");
 	}
 
+    // quad precision mul
+#ifdef SLS_USE_QUAD_MATH
+    {
+        CmatQdoub a(2, 3);
+        VecQdoub x(3), y(2);
+        rand(x); rand(a);
+        mul(y, a, x);
+    }
+#endif
+
 	// trans()
 	{
 		Long N = 4;
@@ -134,7 +144,7 @@ void test_arithmetic()
     {
         Long N = 10;
         VecLong v1(N), order(N), v2(N);
-        rand(v1, N);
+        rand(v1);
         copy(v2, v1);
         linspace(order, 0, N - 1);
         sort(v1, order);

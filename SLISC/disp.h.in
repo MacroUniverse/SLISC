@@ -8,16 +8,23 @@ const Int def_disp_prec = 8;
 //%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
-//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatLdoub'; 'CmatQdoub';
+//%     'CmatComp'; 'CmatLcomp'; 'CmatQcomp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Ldoub'; 'Cmat3Qdoub';
+//%     'Cmat3Comp'; 'Cmat3Lcomp'; 'Cmat3Qcomp';
 //%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%     'DvecLlong'; 'DvecDoub'; 'DvecComp';
-//%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
+//%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatLdoub'; 'DcmatQdoub';
+//%     'DcmatComp'; 'DcmatLcomp'; 'DcmatQcomp';
 //%     'CmobdInt'; 'CmobdDoub'; 'CmobdComp'; 'CbandDoub'; 'CbandComp';
 //%     'McooInt'; 'McooDoub'; 'McooComp';
 //% };
 //%-----------------------------
 //% T = varargin{:};
+//% Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 //% if ndim(T) == 1
 inline void disp(@T@_I v, Int_I precision = def_disp_prec)
 {
@@ -92,6 +99,9 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
 }
 //% else
 //%     error('not implemented!');
+//% end
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
 //% end
 //%------------------------
 

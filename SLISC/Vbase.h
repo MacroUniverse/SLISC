@@ -3,9 +3,6 @@
 #include "global.h"
 #include "Imag.h"
 #include "string.h"
-#ifdef SLS_USE_QUAD_MATH
-#include "quad_math.h"
-#endif
 
 namespace slisc {
 class VbaseChar

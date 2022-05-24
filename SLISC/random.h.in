@@ -3,9 +3,6 @@
 #pragma once
 #include "arithmetic.h"
 #include <ctime>
-#ifdef SLS_USE_QUAD_MATH
-#include "quad_math.h"
-#endif
 
 #ifndef SLS_RAND_SEED
 // default random seed, update every second
@@ -64,6 +61,12 @@ inline Qdoub randQdoub()
     static internal::Ran rand_gen;
     return rand_gen.qdoub();
 }
+
+inline Qcomp randQcomp()
+{
+    static internal::Ran rand_gen;
+    return Qcomp(rand_gen.qdoub(), rand_gen.qdoub());
+}
 #endif
 
 // generate random Int in {0,1,2,...,N-1}
@@ -101,38 +104,38 @@ inline Comp randComp()
 }
 
 //% types = {
-//%     'VecLlong'; 'VecDoub'; 'VecComp';
-//%     'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%     'MatLlong'; 'MatDoub'; 'MatComp';
-//%     'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
+//%    'VecLlong'; 'VecDoub'; 'VecQdoub';
+//%    'VecComp'; 'VecQcomp';
+//%    'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%    'MatLlong'; 'MatDoub'; 'MatComp';
+//%    'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
+//%    'CmatComp'; 'CmatQcomp';
+//%    'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%    'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //% };
 //%--------------------------------
 //% T = varargin{:}; Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
+inline void rand(@T@_O v)
+{
+    Long i, N = v.size();
+    for (i = 0; i < N; ++i)
 //% if is_Llong(Ts)
-inline void rand(@T@_O v, Long_I N)
-{
-    Long i, Nv = v.size();
-    for (i = 0; i < Nv; ++i)
         v[i] = randLong(N);
-}
 //% elseif is_Doub(Ts)
-inline void rand(@T@_O &v)
-{
-    Long i, N = v.size();
-    for (i = 0; i < N; ++i)
         v[i] = randDoub();
-}
+//% elseif is_Qdoub(Ts)
+        v[i] = randQdoub();
 //% elseif is_Comp(Ts)
-//% % complex random number
-//% % uniform distribution
-inline void rand(@T@_O &v)
-{
-    Long i, N = v.size();
-    for (i = 0; i < N; ++i)
         v[i] = randComp();
+//% elseif is_Qcomp(Ts)
+        v[i] = randQcomp();
+//% end
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
 //% end
 //%------------------------
 }

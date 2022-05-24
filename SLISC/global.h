@@ -13,6 +13,7 @@
 #define SLS_CHECK_SHAPES
 #endif
 
+// STL
 #include <stdlib.h>
 #include <limits>
 #include <math.h>
@@ -26,6 +27,10 @@
 #include <fstream>
 #include <cstring>
 #include <cstdarg>
+// my std extension
+#ifdef SLS_USE_QUAD_MATH
+#include "quad_math.h"
+#endif
 
 #ifdef SLS_USE_MKL
     #define MKL_Complex16 double _Complex
@@ -173,9 +178,17 @@ typedef vector<Doub> vecDoub;
 typedef const vecDoub &vecDoub_I;
 typedef vecDoub &vecDoub_O, &vecDoub_IO;
 
+typedef vector<Ldoub> vecLdoub;
+typedef const vecLdoub &vecLdoub_I;
+typedef vecLdoub &vecLdoub_O, &vecLdoub_IO;
+
 typedef vector<Comp> vecComp;
 typedef const vecComp &vecComp_I;
 typedef vecComp &vecComp_O, &vecComp_IO;
+
+typedef vector<Lcomp> vecLcomp;
+typedef const vecLcomp &vecLcomp_I;
+typedef vecLcomp &vecLcomp_O, &vecLcomp_IO;
 
 typedef vector<Str> vecStr;
 typedef const vecStr &vecStr_I;
@@ -223,8 +236,8 @@ const Doub E = 2.71828182845904524;
 
 // error handling
 #ifndef SLS_ERR
-#define SLS_ERR(str) do{cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl; abort();} while(0)
+#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
 #endif
 
-#define SLS_WARN(str) do{cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << endl;} while(0)
+#define SLS_WARN(str) do{std::cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl;} while(0)
 } // namespace slisc

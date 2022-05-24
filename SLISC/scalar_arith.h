@@ -19,6 +19,14 @@ constexpr Float sign(Float_I s)
 constexpr Doub sign(Doub_I s)
 { return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
 
+constexpr Ldoub sign(Ldoub_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+
+#ifdef SLS_USE_QUAD_MATH
+constexpr Qdoub sign(Qdoub_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+#endif
+
 
 inline Char sign(Char_I a, Char_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
@@ -34,6 +42,14 @@ inline Float sign(Float_I a, Float_I b)
 
 inline Doub sign(Doub_I a, Doub_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+inline Ldoub sign(Ldoub_I a, Ldoub_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub sign(Qdoub_I a, Qdoub_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+#endif
 
 
 inline Bool isodd(Char_I n)
@@ -86,7 +102,19 @@ inline Llong to_num(Llong_I x) { return x; }
 
 inline Doub to_num(Doub_I x) { return x; }
 
+inline Ldoub to_num(Ldoub_I x) { return x; }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub to_num(Qdoub_I x) { return x; }
+#endif
+
 inline Comp to_num(Comp_I x) { return x; }
+
+inline Lcomp to_num(Lcomp_I x) { return x; }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qcomp to_num(Qcomp_I x) { return x; }
+#endif
 
 
 // modulus
@@ -187,6 +215,94 @@ inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
     }
     return r;
 }
+
+inline Ldoub mod(Ldoub_I s, Ldoub_I d)
+{
+    return s - round(s/d) * d;
+}
+
+// floating point version of "%", s = n * d + return
+inline Ldoub mod(Long_O n, Ldoub_I s, Ldoub_I d)
+{
+    n = round(s/d);
+    return s - n * d;
+}
+
+inline Ldoub mod_fl(Ldoub_I s, Ldoub_I d)
+{
+    return s - floor(s/d) * d;
+}
+
+// s = n * d + return
+inline Ldoub mod_fl(Long_O n, Ldoub_I s, Ldoub_I d)
+{
+    n = floor(s/d);
+    return s - n * d;
+}
+
+inline Ldoub mod_eu(Ldoub_I s, Ldoub_I d)
+{
+    Long n = s/d;
+    Ldoub r = s - n*d;
+    return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline Ldoub mod_eu(Long_O n, Ldoub_I s, Ldoub_I d)
+{
+    n = s/d;
+    Ldoub r = s - n*d;
+    if (r < 0) {
+        r += abs(d);
+        n -= sign(d);
+    }
+    return r;
+}
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub mod(Qdoub_I s, Qdoub_I d)
+{
+    return s - round(s/d) * d;
+}
+
+// floating point version of "%", s = n * d + return
+inline Qdoub mod(Long_O n, Qdoub_I s, Qdoub_I d)
+{
+    n = round(s/d);
+    return s - n * d;
+}
+
+inline Qdoub mod_fl(Qdoub_I s, Qdoub_I d)
+{
+    return s - floor(s/d) * d;
+}
+
+// s = n * d + return
+inline Qdoub mod_fl(Long_O n, Qdoub_I s, Qdoub_I d)
+{
+    n = floor(s/d);
+    return s - n * d;
+}
+
+inline Qdoub mod_eu(Qdoub_I s, Qdoub_I d)
+{
+    Long n = s/d;
+    Qdoub r = s - n*d;
+    return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline Qdoub mod_eu(Long_O n, Qdoub_I s, Qdoub_I d)
+{
+    n = s/d;
+    Qdoub r = s - n*d;
+    if (r < 0) {
+        r += abs(d);
+        n -= sign(d);
+    }
+    return r;
+}
+#endif
 
 
 inline Char sqr(Char_I a) { return a * a; }

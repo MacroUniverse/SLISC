@@ -5,6 +5,8 @@
 
 using namespace slisc;
 
+// define preconditioner matrix in asolve()
+// and matrix-vector multiplication in atimes()
 class Linbcg2: public Linbcg
 {
 	void asolve(VecDoub_I b, VecDoub_O x, const Int itrnsp) {
@@ -15,9 +17,8 @@ class Linbcg2: public Linbcg
 		trans(at, a);
 		if (!itrnsp)
 			mul(r, a, x);
-		else {
+		else
 			mul(r, at, x);
-		}
 	}
 };
 

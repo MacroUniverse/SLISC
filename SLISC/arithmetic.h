@@ -30,6 +30,35 @@ inline Long size(vecDoub_I v)
     return v.size();
 }
 
+inline Long size(vecLdoub_I v)
+{
+    return v.size();
+}
+
+#ifdef SLS_USE_QUAD_MATH
+inline Long size(vecQdoub_I v)
+{
+    return v.size();
+}
+#endif
+
+inline Long size(vecComp_I v)
+{
+    return v.size();
+}
+
+inline Long size(vecLcomp_I v)
+{
+    return v.size();
+}
+
+#ifdef SLS_USE_QUAD_MATH
+inline Long size(vecQcomp_I v)
+{
+    return v.size();
+}
+#endif
+
 inline Long size(Str_I v)
 {
     return v.size();
@@ -118,6 +147,19 @@ inline Ldoub sum_abs_v(const Ldoub *v, Long_I N)
     return s;
 }
 
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub sum_abs_v(const Qdoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = abs(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s += abs(v[i]);
+    return s;
+}
+#endif
+
 inline Float sum_abs_v(const Fcomp *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -150,6 +192,19 @@ inline Ldoub sum_abs_v(const Lcomp *v, Long_I N)
         s += abs(v[i]);
     return s;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub sum_abs_v(const Qcomp *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = abs(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s += abs(v[i]);
+    return s;
+}
+#endif
 
 
 // sum of absolute values
@@ -1177,6 +1232,114 @@ inline Ldoub min_v(Long_O ind, const Ldoub *v, Long_I N, Long_I step)
     return s;
 }
 
+inline Qdoub max_v(const Qdoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s < v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline Qdoub max_v(const Qdoub *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s < v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline Qdoub max_v(Long_O ind, const Qdoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s < v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+
+inline Qdoub max_v(Long_O ind, const Qdoub *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s < v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+
+inline Qdoub min_v(const Qdoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s > v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline Qdoub min_v(const Qdoub *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s > v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline Qdoub min_v(Long_O ind, const Qdoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s > v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+
+inline Qdoub min_v(Long_O ind, const Qdoub *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s > v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+
 
 inline Char max(VecChar_I v)
 { return max_v(v.p(), v.size()); }
@@ -1867,6 +2030,64 @@ inline Doub max_abs_v(const Doub *v, Long_I N, Long_I step)
     return s;
 }
 
+inline Ldoub max_abs_v(const Ldoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Ldoub s = abs(v[0]), val;
+    for (Long i = 1; i < N; ++i) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+inline Ldoub max_abs_v(const Ldoub *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Ldoub s = abs(v[0]), val;
+    for (Long i = step; i < N*step; i += step) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub max_abs_v(const Qdoub *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = abs(v[0]), val;
+    for (Long i = 1; i < N; ++i) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+inline Qdoub max_abs_v(const Qdoub *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = abs(v[0]), val;
+    for (Long i = step; i < N*step; i += step) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+#endif
+
 inline Doub max_abs_v(const Comp *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -1895,6 +2116,64 @@ inline Doub max_abs_v(const Comp *v, Long_I N, Long_I step)
     return s;
 }
 
+inline Ldoub max_abs_v(const Lcomp *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Ldoub s = abs(v[0]), val;
+    for (Long i = 1; i < N; ++i) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+inline Ldoub max_abs_v(const Lcomp *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Ldoub s = abs(v[0]), val;
+    for (Long i = step; i < N*step; i += step) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub max_abs_v(const Qcomp *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = abs(v[0]), val;
+    for (Long i = 1; i < N; ++i) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+inline Qdoub max_abs_v(const Qcomp *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Qdoub s = abs(v[0]), val;
+    for (Long i = step; i < N*step; i += step) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+#endif
+
 
 inline Int max_abs(VecInt_I v)
 {
@@ -1916,7 +2195,27 @@ inline Doub max_abs(VecDoub_I v)
     return max_abs_v(v.p(), v.size());
 }
 
+inline Ldoub max_abs(VecLdoub_I v)
+{
+    return max_abs_v(v.p(), v.size());
+}
+
+inline Qdoub max_abs(VecQdoub_I v)
+{
+    return max_abs_v(v.p(), v.size());
+}
+
 inline Doub max_abs(VecComp_I v)
+{
+    return max_abs_v(v.p(), v.size());
+}
+
+inline Ldoub max_abs(VecLcomp_I v)
+{
+    return max_abs_v(v.p(), v.size());
+}
+
+inline Qdoub max_abs(VecQcomp_I v)
 {
     return max_abs_v(v.p(), v.size());
 }
@@ -2005,6 +2304,30 @@ inline void mod_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N)
 }
 
 inline void mod_vs(Doub *v, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v[i], s);
+}
+
+inline void mod_vvs(Ldoub *v, const Ldoub *v1, Ldoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v1[i], s);
+}
+
+inline void mod_vs(Ldoub *v, Ldoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v[i], s);
+}
+
+inline void mod_vvs(Qdoub *v, const Qdoub *v1, Qdoub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v1[i], s);
+}
+
+inline void mod_vs(Qdoub *v, Qdoub_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = mod(v[i], s);
@@ -9920,6 +10243,57 @@ inline void cumsum(VecDoub_O v, VecDoub_I v1)
 
 
 
+inline void mul(VecInt_O y, CmatInt_I a, VecInt_I x)
+{
+    Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    for (Long i = 0; i < Nr; ++i)
+        y[i] = a(i, 0) * x[0];
+    for (Long j = 1; j < Nc; ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] += a(i, j) * x[j];
+    }
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(VecInt_IO y, CmatInt_I a, VecInt_I x, Int_I alpha, Int_I beta)
+{
+    Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    
+    // y = beta/alpha *y
+    if (beta == 0) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] = 0;
+    }
+    else {
+        Int b_a = beta/alpha;
+        if (b_a != 1) {
+            for (Long i = 0; i < Nr; ++i)
+                y[i] *= b_a;
+        }
+    }
+    
+    // y += A*x
+    for (Long j = 0; j < Nc; ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] += a(i, j) * x[j];
+    }
+
+    // y *= alpha
+    if (alpha != 1) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] *= alpha;
+    }
+}
+
 inline void mul(VecDoub_O y, CmatDoub_I a, VecDoub_I x)
 {
     Long Nr = a.n0(), Nc = a.n1();
@@ -10022,7 +10396,8 @@ inline void mul(VecDoub_IO y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha, Doub_I b
     }
 }
 
-inline void mul(VecInt_O y, CmatInt_I a, VecInt_I x)
+#ifdef SLS_USE_QUAD_MATH
+inline void mul(VecQdoub_O y, CmatQdoub_I a, VecQdoub_I x)
 {
     Long Nr = a.n0(), Nc = a.n1();
 #ifdef SLS_CHECK_SHAPES
@@ -10039,7 +10414,7 @@ inline void mul(VecInt_O y, CmatInt_I a, VecInt_I x)
 
 // y = alpha*A*x + beta*y
 // algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(VecInt_IO y, CmatInt_I a, VecInt_I x, Int_I alpha, Int_I beta)
+inline void mul(VecQdoub_IO y, CmatQdoub_I a, VecQdoub_I x, Qdoub_I alpha, Qdoub_I beta)
 {
     Long Nr = a.n0(), Nc = a.n1();
 #ifdef SLS_CHECK_SHAPES
@@ -10053,7 +10428,7 @@ inline void mul(VecInt_IO y, CmatInt_I a, VecInt_I x, Int_I alpha, Int_I beta)
             y[i] = 0;
     }
     else {
-        Int b_a = beta/alpha;
+        Qdoub b_a = beta/alpha;
         if (b_a != 1) {
             for (Long i = 0; i < Nr; ++i)
                 y[i] *= b_a;
@@ -10072,6 +10447,7 @@ inline void mul(VecInt_IO y, CmatInt_I a, VecInt_I x, Int_I alpha, Int_I beta)
             y[i] *= alpha;
     }
 }
+#endif
 
 inline void mul(VecComp_O y, CmatComp_I a, VecDoub_I x)
 {

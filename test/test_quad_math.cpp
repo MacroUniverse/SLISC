@@ -1,12 +1,9 @@
-#ifdef SLS_USE_QUAD_MATH
-#include "../SLISC/quad_math.h"
-#endif
 #include "../SLISC/Cmat.h"
 
 void test_quad_math()
 {
 #ifdef SLS_USE_QUAD_MATH
-	using namespace slisc;
+	// using namespace slisc;
 	// test libquadmath
 	// cout.precision(5);
 	// cout << "FLT128_MAX = " << FLT128_MAX << endl;
@@ -19,7 +16,7 @@ void test_quad_math()
 		SLS_ERR("failed!");
 	if (FLT128_DIG != 33)
 		SLS_ERR("failed!");
-	cout.precision(34);
+	std::cout.precision(34);
 	if (sqrt(3.Q) != 1.7320508075688772935274463415058724Q)
 		SLS_ERR("failed!");
 	

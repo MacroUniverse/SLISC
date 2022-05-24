@@ -5,19 +5,28 @@
 
 namespace slisc {
 // return signed size instead of unsigned
-//% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub';
+//% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong';
+//%  'vecDoub'; 'vecLdoub'; 'vecQdoub'; 'vecComp';
+//%  'vecLcomp'; 'vecQcomp';
 //%  'Str'; 'Str32'; 'vecStr'; 'vecStr32';};
 //%--------------------------
 //% T = varargin{:};
+//% Ts = value_type(T);
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline Long size(@T@_I v)
 {
     return v.size();
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%-------------------------
 
 // sum of absolute values
 //% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub';
-//%          'Fcomp'; 'Comp'; 'Lcomp'};
+//%    'Qdoub'; 'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';};
 //%--------------------------
 //% T = varargin{:};
 //% % decide return type
@@ -26,7 +35,10 @@ inline Long size(@T@_I v)
 //% elseif is_fpt(T) || is_comp(T)
 //%     Tr = rm_comp(T);
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (1)!');
+//% end
+//% if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
 //% end
 inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 {
@@ -38,6 +50,9 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
         s += abs(v[i]);
     return s;
 }
+//% if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//% end
 //%---------------------------
 
 // sum of absolute values
@@ -49,7 +64,7 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 //% elseif is_fpt(Ts) || is_comp(Ts)
 //%     Tr = rm_comp(Ts);
 //% else
-//%     error(['sum_abs: not implemented: ' T]);
+//%     error(['sum_abs: not implemented (2): ' T]);
 //% end
 //% if is_dense(T)
 inline @Tr@ sum_abs(@T@_I v)
@@ -57,7 +72,7 @@ inline @Tr@ sum_abs(@T@_I v)
     return sum_abs_v(v.p(), v.size());
 }
 //% else
-//%     error('sum_abs: not implemented!');
+//%     error('sum_abs: not implemented (3)!');
 //% end
 //%---------------------------
 
@@ -86,6 +101,7 @@ inline Long sum_abs(@T@_I v)
 //%     'max', 'Float', '<';   'min', 'Float', '>';
 //%     'max', 'Doub', '<';   'min', 'Doub', '>';
 //%     'max', 'Ldoub', '<';  'min', 'Ldoub', '>';
+//%     'max', 'Qdoub', '<';  'min', 'Qdoub', '>';
 //% };
 //%--------------------------
 //% [fun, T, oper] = varargin{:};
@@ -144,7 +160,7 @@ inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
     return s;
 }
 //% else
-//%     error(['max_v: not implemented: ' T]);
+//%     error(['max_v: not implemented (4): ' T]);
 //% end
 //%-------------------------
 
@@ -176,16 +192,21 @@ inline @Ts@ min(@T@_I v)
 inline @Ts@ min(Long_O ind, @T@_I v)
 { return min_v(v.p(), v.size(), v.step()); }
 //% else
-//%     error(['max: not implemented: ' T]);
+//%     error(['max: not implemented (5): ' T]);
 //% end
 //%-------------------------
 
 //% types = {
-//%     'Int'; 'Llong'; 'Float'; 'Doub'; 'Comp';
+//%    'Int'; 'Llong'; 'Float';
+//%    'Doub'; 'Ldoub'; 'Qdoub';
+//%    'Comp'; 'Lcomp'; 'Qcomp';
 //% };
 //%------------------------------
 //% T = varargin{:};
 //% Tr = rm_comp(T);
+//% if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//% end
 inline @Tr@ max_abs_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -213,12 +234,17 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
     }
     return s;
 }
+//% if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//% end
 //%-------------------------
 
 //% types = {
-//%     'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub'; 'VecComp';
-//%     'MatComp'; 'CmatDoub'; 'CmatComp'; 'Cmat3Doub'; 'Cmat3Comp';
-//%     'DvecDoub'; 'DvecComp'; 'SvecComp';
+//%    'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub';
+//%    'VecLdoub'; 'VecQdoub';
+//%    'VecComp'; 'VecLcomp'; 'VecQcomp';
+//%    'MatComp'; 'CmatDoub'; 'CmatComp'; 'Cmat3Doub'; 'Cmat3Comp';
+//%    'DvecDoub'; 'DvecComp'; 'SvecComp';
 //% };
 //%------------------------------
 //% T = varargin{:}; Tr = rm_comp(value_type(T));
@@ -242,6 +268,8 @@ inline @Tr@ max_abs(@T@_I v)
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
+//%     'Ldoub', 'Ldoub';
+//%     'Qdoub', 'Qdoub';
 //% };
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -523,7 +551,7 @@ inline @Tr@ norm2_dif(@T@_I a, @T@_I a1)
     return s2;
 }
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (6)!');
 //% end
 inline @Tr@ norm(@T@_I v)
 {
@@ -612,7 +640,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
     }
 }
 //% else
-//%     error('not implemented');
+//%     error('not implemented (7)');
 //% end
 //%-------------------------
 
@@ -691,7 +719,7 @@ inline void flip(@Tv@_IO v)
     flip_v(&v[0], v.size());
 }
 //% else
-//%     error('flip: not implemented!');
+//%     error('flip: not implemented (8)!');
 //% end
 //%---------------------------
 
@@ -711,7 +739,7 @@ inline void flip(@T@_O v, @T1@_I v1)
     flip_vv(v.p(), v1.p(), v1.size());
 }
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (9)!');
 //% end
 //%---------------------------
 
@@ -958,7 +986,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 }
 //% else
 //%     disp(T); disp(Ts);
-//%     error('not implemented');
+//%     error('not implemented (10)');
 //% end
 //%-------------------------
 
@@ -1063,7 +1091,7 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 }
 //% else
 //%     disp(T); disp(Ts);
-//%     error('not implemented');
+//%     error('not implemented (11)');
 //% end
 //%-------------------------
 
@@ -1228,7 +1256,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
             v(i, j) /= v1(i, j);
 }
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (12)!');
 //% end
 //%-------------------------
 
@@ -1317,7 +1345,7 @@ inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, 
     times_vvs(v, v1, inv_s, N, step, step1);
 }
 //% else
-//%     error(['divide_vvs: not implemented: ' T ' ' T1 ' ' T2]);
+//%     error(['divide_vvs: not implemented (13): ' T ' ' T1 ' ' T2]);
 //% end
 //%-------------------------
 
@@ -1766,7 +1794,7 @@ inline void minus(@T@_O v, @T1@_I v1)
     minus_vv(v.p(), v1.p(), v1.size());
 }
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (14)!');
 //% end
 //%--------------------------
 
@@ -1928,7 +1956,7 @@ inline @T@ dot(@T1@_I v1, @T2@_I v2)
                 sum += conj(v1(i,j,k)) * v2(i,j,k);
     return sum;
 //% else
-//%   error('not implemented!');
+//%   error('not implemented (15)!');
 //% end
 }
 //%-------------------------
@@ -1969,9 +1997,10 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 
 
 //% types = {
+//%     'VecInt' 'CmatInt' 'VecInt';
 //%     'VecDoub' 'CmatDoub' 'VecDoub';
 //%     'VecDoub' 'CmatDoub' 'SvecDoub';
-//%     'VecInt' 'CmatInt' 'VecInt';
+//%     'VecQdoub' 'CmatQdoub' 'VecQdoub';
 //%     'VecComp' 'CmatComp' 'VecDoub';
 //%     'VecComp' 'CmatComp' 'SvecDoub';
 //%     'VecComp' 'CmatComp' 'VecComp';
@@ -2010,6 +2039,9 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //% end
 //% if ndim(T) ~= 1 || ndim(T1) ~= 2 || ndim(T2) ~= 1
 //%     error('illegal dim!');
+//% end
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#ifdef SLS_USE_QUAD_MATH
 //% end
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
@@ -2076,6 +2108,9 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
             y[i] *= alpha;
     }
 }
+//% if is_Qdoub(Ts) || is_Qcomp(Ts)
+#endif
+//% end
 //%-------------------------
 
 //% types = {
@@ -2133,7 +2168,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
     }
 }
 //% else
-//%     error('not implemented');
+//%     error('not implemented (16)');
 //% end
 //%-------------------------
 
@@ -2208,7 +2243,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
     cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (17)!');
 //% end
 #else
     mul(y, a, x, alpha, beta);
@@ -2270,7 +2305,7 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
     cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
-//%     error('not implemented!');
+//%     error('not implemented (18)!');
 //% end
 #else
     mul(y, a, x, alpha, beta);
