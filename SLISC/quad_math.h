@@ -9,31 +9,6 @@
 #include <iostream>
 #include <quadmath.h>
 
-inline __float128 sqr(const __float128 & x) { return x*x; }
-inline __float128 abs(const __float128 & x) { return fabsq(x); }
-inline __float128 abs2(const __float128 & x) { return x*x; }
-inline __float128 acos(const __float128 & x) { return acosq(x); }
-inline __float128 acosh(const __float128 & x) { return acoshq(x); }
-inline __float128 asin(const __float128 & x) { return asinq(x); }
-inline __float128 asinh(const __float128 & x) { return asinhq(x); }
-inline __float128 atan(const __float128 & x) { return atanq(x); }
-inline __float128 atanh(const __float128 & x) { return atanhq(x); }
-inline __float128 atan2(const __float128 & y, const __float128 & x) { return atan2q(y, x); }
-inline __float128 ceil(const __float128 & x) { return ceilq(x); }
-inline __float128 cos(const __float128 & x) { return cosq(x); }
-inline __float128 erf(const __float128 & x) { return erfq(x); }
-inline __float128 exp(const __float128 & x) { return expq(x); }
-inline __float128 floor(const __float128 & x) { return floorq(x); }
-inline __float128 isinf(const __float128 & x) { return isinfq(x); }
-inline __float128 isnan(const __float128 & x) { return isnanq(x); }
-inline __float128 log(const __float128 & x) { return logq(x); }
-inline __float128 log2(const __float128 & x) { return log2q(x); }
-inline __float128 log10(const __float128 & x) { return log10q(x); }
-inline __float128 round(const __float128 & x) { return rintq(x); }
-inline __float128 sin(const __float128 & x) { return sinq(x); }
-inline __float128 sqrt(const __float128 & x) { return sqrtq(x); }
-inline __float128 tan(const __float128 & x) { return tanq(x); }
-
 namespace std {
 
 inline __complex128 to_Qcomp0(const complex<__float128> x)

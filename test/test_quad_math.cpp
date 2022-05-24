@@ -3,7 +3,7 @@
 void test_quad_math()
 {
 #ifdef SLS_USE_QUAD_MATH
-	// using namespace slisc;
+	using namespace slisc;
 	// test libquadmath
 	// cout.precision(5);
 	// cout << "FLT128_MAX = " << FLT128_MAX << endl;
