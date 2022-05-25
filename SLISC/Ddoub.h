@@ -13,7 +13,7 @@ struct Ddoub {
 	Ddoub(const Ddoub &q) { x = q.x; } // copy constructor
 	explicit Ddoub(const __float128 &q): x(q) {}
 	void operator=(const Ddoub &q) { x = q.x; }
-	void operator=(const Ddoub &q) { printf("Ddoub(): copy assignment\n"); x = q.x; }
+	void operator=(const Ddoub &q) { x = q.x; }
 };
 
 #else
