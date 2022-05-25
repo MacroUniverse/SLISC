@@ -187,7 +187,7 @@ inline Doub factorial(Int_I n) {
 }
 
 #ifdef SLS_USE_QUAD_MATH
-inline Qdoub factorial(Int_I n) {
+inline Qdoub factorialq(Int_I n) {
     if (n > 1754)
         SLS_ERR("n too large!");
     Qdoub ret = 1;

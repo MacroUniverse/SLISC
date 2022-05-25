@@ -236,13 +236,9 @@ struct turn_on_floating_exceptions {
 
 const Doub PI = 3.14159265358979323;
 const Doub E = 2.71828182845904524;
-inline PI(Doub_O x) {x = PI};
-inline E(Doub_O x) {x = E};
 #ifdef SLS_USE_QUAD_MATH
 const Qdoub PIq = 3.14159265358979323846264338327950288;
 const Qdoub Eq = 2.71828182845904523536028747135266250;
-inline PI(Qdoub_O x) {x = PIq};
-inline E(Qdoub_O x) {x = Eq};
 #endif
 
 // error handling

@@ -332,18 +332,25 @@ inline Doub abs2(Comp_I &a)
 }
 
 
-inline Doub factorial_imp(Doub_I n) {
-    if (n == 0. || n == 1.)
-        return 1.;
-    else
-        return n * factorial_imp(n - 1.);
-}
-
 inline Doub factorial(Int_I n) {
     if (n > 170)
         SLS_ERR("n too large!");
-    return factorial_imp(n);
+    Doub ret = 1;
+    for (Int i = 2; i <= n; ++i)
+        ret *= i;
+    return ret;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub factorialq(Int_I n) {
+    if (n > 1754)
+        SLS_ERR("n too large!");
+    Qdoub ret = 1;
+    for (Int i = 2; i <= n; ++i)
+        ret *= i;
+    return ret;
+}
+#endif
 
 inline Float sinc(Float_I x) { return x == 0.f ? 1.f : sin(x) / x; }
 
