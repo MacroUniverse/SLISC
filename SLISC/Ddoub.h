@@ -3,12 +3,17 @@
 namespace slisc {
 #ifdef SLS_USE_QUAD_MATH
 
+// use Qdoub in quad_math.h instead of this.
+// this will be slower than directly using __float128, due to copy constructor in return-by-value
+// testing: copy elision will not happen even -O3 is turned on for g++ for operator+
+
 struct Ddoub {
 	__float128 x;
 	Ddoub() {}
 	Ddoub(const Ddoub &q) { x = q.x; } // copy constructor
 	explicit Ddoub(const __float128 &q): x(q) {}
 	void operator=(const Ddoub &q) { x = q.x; }
+	void operator=(const Ddoub &q) { printf("Ddoub(): copy assignment\n"); x = q.x; }
 };
 
 #else
@@ -32,7 +37,7 @@ typedef const complex<Ddoub> & Dcomp;
 typedef const Dcomp & Dcomp_I;
 typedef Dcomp & Dcomp_O, & Dcomp_IO;
 
-inline Ddoub operator+(Ddoub_I x, Ddoub_I y) { Ddoub z = Ddoub(x.x + y.x); return z; }
+inline Ddoub operator+(Ddoub_I x, Ddoub_I y) { return Ddoub(x.x + y.x); }
 inline Ddoub operator-(Ddoub_I x, Ddoub_I y) { return Ddoub(x.x - y.x); }
 inline Ddoub operator*(Ddoub_I x, Ddoub_I y) { return Ddoub(x.x * y.x); }
 inline Ddoub operator/(Ddoub_I x, Ddoub_I y) { return Ddoub(x.x / y.x); }
