@@ -379,7 +379,7 @@ inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
 //% end
 inline void copy(@T@_O v, @T1@_I v1)
 {
-@same_shape('v', 'v1')@
+    assert_same_shape@ndim(T)@@ndim(T1)@(v, v1);
     if (v.size() == 0)
         return;
 //% if is_VecBool(T) || is_VecBool(T1)
@@ -438,7 +438,7 @@ inline void copy(@T@_O v, @T1@_I v1)
 inline void copy(@McooT@_O v, @McooT1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
+    if (!shape_cmp22(v, v1))
         SLS_ERR("wrong shape!");
     if (v.capacity() < v1.nnz())
         SLS_ERR("not enough capacity!");
@@ -471,7 +471,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 //% Ts1 = value_type(Tcmat);
 inline void copy(@Tcoo@_O v, @Tcmat@_I v1, Doub_I tol = 0)
 {
-@same_shape('v', 'v1')@
+    assert_same_shape@ndim(Tcoo)@@ndim(Tcmat)@(v, v1);
     for (Long j = 0; j < v1.n1(); ++j) {
         for (Long i = 0; i < v1.n0(); ++i) {
             @Ts1@ val = v1(i, j);
@@ -495,7 +495,7 @@ inline void copy(@Tcoo@_O v, @Tcmat@_I v1, Doub_I tol = 0)
 //% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];
 inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 {
-@same_shape('lhs', 'rhs')@
+    assert_same_shape@ndim(Tmat)@@ndim(McooTs)@(lhs, rhs);
     copy(lhs, 0);
     for (Long i = 0; i < rhs.nnz(); ++i) {
         lhs(rhs.row(i), rhs.col(i)) = rhs[i];
@@ -526,7 +526,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% Cmat3T = ['Cmat3' value_type(T)];
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
-@same_shape('lhs', 'rhs')@
+    assert_same_shape@ndim(T)@@ndim(T1)@(lhs, rhs);
     @Cmat3T@ &c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
@@ -544,7 +544,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% [T, T1] = varargin{:};
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
-@same_shape('lhs', 'rhs')@
+    assert_same_shape@ndim(T)@@ndim(T1)@(lhs, rhs);
     for (Long j = 0; j < lhs.n1(); ++j)
         for (Long i = 0; i < lhs.n0(); ++i)
             lhs(i, j) = rhs(i, j);
@@ -554,7 +554,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
 // #ifdef SLS_CHECK_SHAPES
-//     if (!shape_cmp(lhs, rhs))
+//     if (!shape_cmp22(lhs, rhs))
 //         SLS_ERR("wrong shape!");
 // #endif
 //     copy(lhs, 0);
@@ -576,7 +576,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 // void copy(MatCoo<T> &v, const CmatObd<T1> &v1)
 // {
 // #ifdef SLS_CHECK_SHAPES
-//     if (!shape_cmp(v, v1))
+//     if (!shape_cmp22(v, v1))
 //         SLS_ERR("wrong shape!");
 //     if (v.capacity() < v1.nnz())
 //         SLS_ERR("not enough capacity!");
@@ -650,7 +650,7 @@ inline void copy(@T@_O a, @T@_I b)
 //% if is_Cband(T1)
 inline void copy(@T1@_O b, @T2@_I a)
 {
-@same_shape('a', 'b')@
+    assert_same_shape@ndim(T1)@@ndim(T2)@(a, b);
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
         @SvecTs1@ cut_b = cut0(b.cmat(), j);
@@ -664,7 +664,7 @@ inline void copy(@T1@_O b, @T2@_I a)
 //% else
 inline void copy(@T1@_O a, @T2@_I b)
 {
-@same_shape('a', 'b')@
+    assert_same_shape@ndim(T1)@@ndim(T2)@(a, b);
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;

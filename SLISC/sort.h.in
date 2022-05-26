@@ -190,7 +190,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void sort(@T@_IO v, @T1@_IO v1)
 {
-@same_shape('v', 'v1')@
+    assert_same_shape@ndim(T)@@ndim(T1)@(v, v1);
     sort_vv(&v[0], &v1[0], v.size());
 }
 //% elseif is_vector(T) || is_Str(T) || is_Str32(T)

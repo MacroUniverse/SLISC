@@ -144,11 +144,7 @@ inline Doub coulombF(Int_I l, Doub_I k, Doub_I r, Doub_I Z = -1.)
 //% [Tv1, Tv2] = varargin{:};
 inline void coulombF(@Tv1@_O F, Int_I l, Doub_I k, @Tv2@_I r, Doub_I Z = -1.)
 {
-#ifdef SLS_CHECK_SHAPE
-    if (!shape_cmp(F, r))
-        SLS_ERR("wrong shape!");
-#endif
-
+    assert_same_shape@ndim(Tv1)@@ndim(Tv2)@(F, r);
     Comp F1, dF1;
     Doub eta = Z / k;
     for (Long i = 0; i < r.size(); ++i) {

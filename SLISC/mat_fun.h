@@ -10,7 +10,7 @@ namespace slisc {
 inline void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n0() != a.n1() || !shape_cmp(out, a))
+    if (a.n0() != a.n1() || !shape_cmp22(out, a))
         SLS_ERR("not a square matrix!");
 #endif
     Long N = a.n0();
@@ -29,7 +29,7 @@ inline void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
 inline void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n0() != a.n1() || !shape_cmp(out, a))
+    if (a.n0() != a.n1() || !shape_cmp22(out, a))
         SLS_ERR("not a square matrix!");
 #endif
     Long N = a.n0();

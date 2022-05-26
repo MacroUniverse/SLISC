@@ -79,9 +79,9 @@ void test_arithmetic()
 
 	// test shape_cmp
     {
-        if (!shape_cmp(Mat3Doub(7, 3, 5), Mat3Comp(7, 3, 5))) SLS_ERR("failed!");
-        if (!shape_cmp(MatDoub(3, 4), CmatDoub(3, 4))) SLS_ERR("failed!");
-        if (!shape_cmp(CmatInt(3, 4), MatChar(3, 4))) SLS_ERR("failed!");
+        if (!shape_cmp33(Mat3Doub(7, 3, 5), Mat3Comp(7, 3, 5))) SLS_ERR("failed!");
+        if (!shape_cmp22(MatDoub(3, 4), CmatDoub(3, 4))) SLS_ERR("failed!");
+        if (!shape_cmp22(CmatInt(3, 4), MatChar(3, 4))) SLS_ERR("failed!");
     }
 
     // copy from column major matrix to vector

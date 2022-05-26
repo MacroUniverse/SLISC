@@ -129,7 +129,7 @@ inline void Matb::get_profile()
 
 inline Long Matb::data_pos(Long_I i) const
 {
-#ifdef SLS_CHECK_BOUND
+#ifdef SLS_CHECK_BOUNDS
     if (i <0 || i >= size())
         SLS_ERR("out of bound!");
 #endif

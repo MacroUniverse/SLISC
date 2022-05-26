@@ -208,10 +208,7 @@ inline void copy_diag_real(CbandComp_O b, Doub_I s)
 // copy double dense matrix to imag part of band matrix
 inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 {
-    #ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(a, b))
-        SLS_ERR("wrong shape!");
-    #endif
+    assert_same_shape22(a, b);
     Long N0 = a.n0(), N1 = a.n1();
     for (Long j = 0; j < N1; ++j) {
         SvecComp cut_b = cut0(b.cmat(), j);
@@ -227,10 +224,7 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 // b = 1/2 + I*dt*a/4
 inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_time)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(a, b))
-        SLS_ERR("wrong shape!");
-#endif
+    assert_same_shape22(a, b);
     Long N0 = a.n0(), N1 = a.n1();
     Doub dt4 = 0.25*dt;
     for (Long j = 0; j < N1; ++j) {
@@ -261,10 +255,7 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_tim
 // B = 1/2 + I*dt*A/4
 inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I imag_time, Bool_I append = false)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(a, b))
-        SLS_ERR("wrong shape!");
-#endif
+    assert_same_shape22(a, b);
     Doub dt4 = 0.25*dt;
     if (!append) {
         copy(b, 0);
@@ -286,7 +277,7 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 {
 #ifdef SLS_CHECK_SHAPES
     for (Long l = 0; l < (Long)a.size(); ++l)
-        if (!shape_cmp(a[l], b))
+        if (!shape_cmp22(a[l], b))
             SLS_ERR("wrong shape!");
     if (coeff.size() != (Long)a.size())
         SLS_ERR("wrong shape!");
@@ -313,10 +304,7 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 
 inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v, v1))
-        SLS_ERR("wrong shape!");
-#endif
+    assert_same_shape22(v, v1);
     times(band(v), band(v1), s);
 }
 

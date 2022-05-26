@@ -9,6 +9,6 @@ void test_compare()
 	copy(v1, v);
 	if (!equals_to_vv(v.p(), v1.p(), N))
 		SLS_ERR("failed!");
-	if (!shape_cmp(v, v1))
+	if (!shape_cmp11(v, v1))
 		SLS_ERR("failed!");
 }
