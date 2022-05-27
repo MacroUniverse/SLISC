@@ -91,7 +91,8 @@ while ~quit
         Np = size(tem_db(i).param, 1);
         for j = 1:Np
             if ~tem_db(i).done(j)
-                disp([tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))]);
+                temp = [tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))];
+                disp(temp);
                 tem_db(i).out{j} = instantiate(tem_db(i).body, tem_db(i).param{j,:});
                 tem_db(i).done(j) = true; quit = false;
                 if cellstr_search(changed_file, tem_db(i).file) < 1
