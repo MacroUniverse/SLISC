@@ -1,0 +1,204 @@
+#pragma once
+#include "complex_arith.h"
+#include "Imag.h"
+
+namespace slisc {
+
+//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';};
+//%-------------------------------
+//% T = varargin{:};
+//% if is_Qdoub(T)
+#ifdef SLS_USE_QUAD_MATH
+//% end
+constexpr @T@ sign(@T@_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+//% if is_Qdoub(T)
+#endif
+//% end
+//%-------------------------------
+
+//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';};
+//%-------------------------------
+//% T = varargin{:};
+//% if is_Qdoub(T)
+#ifdef SLS_USE_QUAD_MATH
+//% end
+inline @T@ sign(@T@_I a, @T@_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
+//% if is_Qdoub(T)
+#endif
+//% end
+//%------------------------
+
+//% types = {'Char'; 'Int'; 'Uint'; 'Llong'; 'Ullong';};
+//%-------------------------------
+//% T = varargin{:};
+inline Bool isodd(@T@_I n)
+{
+    return n & 1;
+}
+//%------------------------
+
+//% types = {'Char'; 'Int'; 'Llong'};
+//%-------------------------------
+//% T = varargin{:};
+inline Bool ispow2(@T@_I n)
+{
+    return (n&(n-1)) == 0;
+}
+//%-----------------
+
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Ldoub'; 'Qdoub'; 'Comp'; 'Lcomp'; 'Qcomp';};
+//%------------------------------
+//% T = varargin{:};
+//% if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//% end
+//% if is_Bool(T) || is_Char(T)
+inline Int to_num(@T@_I x) { return (Int)x; }
+//% else
+inline @T@ to_num(@T@_I x) { return x; }
+//% end
+//% if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//% end
+//%------------------------
+
+// modulus
+// mod operation satisfies "s = div(s,d)*d + mod(s,d)"
+// however, "div" can have different truncation:
+// 1. c++11 operator "/" truncates towards 0, so "s = (s/d)*d + s%d"
+// 2. "mod()" truncates towards negative direction
+// 3. "mod_eu()" always return positive modulus
+// when both numbers are positive, all cases returns the same result
+// see https://en.wikipedia.org/wiki/Modulo_operation
+//% types = {
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Llong', 'Int';
+//%     'Doub', 'Doub';
+//%     'Ldoub', 'Ldoub';
+//%     'Qdoub', 'Qdoub';
+//% };
+//%--------------------------
+//% [T1, T2] = varargin{:};
+//% T = promo_type(T1, T2);
+//% if is_Qdoub(T1) || is_Qcomp(T2)
+#ifdef SLS_USE_QUAD_MATH
+//% end
+//% if is_integral(T1) && is_integral(T2)
+inline @T@ mod(@T1@_I i, @T2@_I n)
+{
+    return i % n;
+}
+
+inline @T@ mod_fl(@T1@_I i, @T2@_I n)
+{
+    return (i % n + n) % n;
+}
+
+inline @T@ mod_eu(@T1@_I i, @T2@_I n)
+{
+    @T@ ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+//% elseif is_fpt(T1) || is_fpt(T2)
+inline @T@ mod(@T1@_I s, @T2@_I d)
+{
+    return s - round(s/d) * d;
+}
+
+// floating point version of "%", s = n * d + return
+inline @T@ mod(Long_O n, @T1@_I s, @T2@_I d)
+{
+    n = round(s/d);
+    return s - n * d;
+}
+
+inline @T@ mod_fl(@T1@_I s, @T2@_I d)
+{
+    return s - floor(s/d) * d;
+}
+
+// s = n * d + return
+inline @T@ mod_fl(Long_O n, @T1@_I s, @T2@_I d)
+{
+    n = floor(s/d);
+    return s - n * d;
+}
+
+inline @T@ mod_eu(@T1@_I s, @T2@_I d)
+{
+    Long n = s/d;
+    @T@ r = s - n*d;
+    return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline @T@ mod_eu(Long_O n, @T1@_I s, @T2@_I d)
+{
+    n = s/d;
+    @T@ r = s - n*d;
+    if (r < 0) {
+        r += abs(d);
+        n -= sign(d);
+    }
+    return r;
+}
+//% else
+//%     error('not implemented!');
+//% end
+//% if is_Qdoub(T1) || is_Qcomp(T2)
+#endif
+//% end
+//%------------------------
+
+//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//%-----------------------------------
+//% T = varargin{:};
+inline @T@ sqr(@T@_I a) { return a * a; }
+//%------------------------
+
+//% types = {'Int'; 'Doub'; 'Comp';
+//%     };
+//%-------------------------------
+//% T = varargin{:};
+//% if is_real(T)
+inline @T@ abs2(@T@_I a)
+{
+    return a * a;
+}
+//% elseif is_comp(T)
+//%     Tr = rm_comp(T);
+inline @Tr@ abs2(@T@_I &a)
+{
+    return sqr(real(a)) + sqr(imag(a));
+}
+//% end
+//%------------------------
+
+inline Doub factorial(Int_I n) {
+    if (n > 170)
+        SLS_ERR("n too large!");
+    Doub ret = 1;
+    for (Int i = 2; i <= n; ++i)
+        ret *= i;
+    return ret;
+}
+
+#ifdef SLS_USE_QUAD_MATH
+inline Qdoub factorialq(Int_I n) {
+    if (n > 1754)
+        SLS_ERR("n too large!");
+    Qdoub ret = 1;
+    for (Int i = 2; i <= n; ++i)
+        ret *= i;
+    return ret;
+}
+#endif
+
+inline Float sinc(Float_I x) { return x == 0.f ? 1.f : sin(x) / x; }
+
+inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
+
+} // namespace slisc

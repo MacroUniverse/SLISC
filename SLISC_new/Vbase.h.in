@@ -1,0 +1,306 @@
+// basic vector
+#pragma once
+#include "global.h"
+#include "Imag.h"
+#include "string.h"
+
+namespace slisc {
+//% types = {
+//%     'Char'; 'Int'; 'Llong'; 'Long';
+//%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
+//%     'Fimag'; 'Imag'; 'Limag';};
+//%----------------------------------------------
+//% T = varargin{:};
+//% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef VbaseInt VbaseLong;
+#else
+typedef VbaseLlong VbaseLong;
+#endif
+//% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
+class @VbaseT@
+{
+protected:
+    @T@ *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    typedef @T@ value_type;
+    // constructors
+    @VbaseT@();
+    explicit @VbaseT@(Long_I N);
+    @VbaseT@(const @VbaseT@ &rhs); // copy constructor
+
+    // get properties
+    @T@* p(); // get pointer
+    const @T@* p() const;
+    Long size() const;
+    void resize(Long_I N);
+    @T@ &operator[](Long_I i);
+    const @T@ &operator[](Long_I i) const;
+    @T@& end();
+    const @T@& end() const;
+    @T@& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const @T@& end(Long_I i) const;
+    void operator<<(@VbaseT@ &rhs); // move data
+    ~@VbaseT@();
+};
+
+// m_p doesn't need to be initialized, but g++ will complain
+inline @VbaseT@::@VbaseT@() : m_N(0), m_p(nullptr) {}
+
+inline @VbaseT@::@VbaseT@(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new @T@[N];
+}
+
+// copy constructor
+inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+    m_N = rhs.m_N;
+    if (m_N > 0) {
+        m_p = new @T@[m_N];
+        memcpy(m_p, rhs.p(), m_N);
+    }
+}
+
+inline @T@ * @VbaseT@::p()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline const @T@ * @VbaseT@::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long @VbaseT@::size() const
+{
+    return m_N;
+}
+
+inline void @VbaseT@::resize(Long_I N)
+{
+    if (N != m_N) {
+        if (m_N == 0) { // N != 0
+            m_N = N; m_p = new @T@[N];
+        }
+        else { // m_N != 0
+            delete[] m_p;
+            if (N == 0)
+                m_N = 0;
+            else {
+                m_N = N;
+                m_p = new @T@[N];
+            }
+        }
+    }
+}
+
+inline void @VbaseT@::operator<<(@VbaseT@ &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    if (m_N != 0)
+        delete[] m_p;
+    m_N = rhs.m_N; rhs.m_N = 0;
+    m_p = rhs.m_p;
+}
+
+inline @T@ &@VbaseT@::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+    SLS_ERR("@VbaseT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+    return m_p[i];
+}
+
+inline const @T@ &@VbaseT@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=m_N)
+        SLS_ERR("@VbaseT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+    return m_p[i];
+}
+
+inline @T@ &@VbaseT@::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const @T@ &@VbaseT@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline @T@ &@VbaseT@::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+    return m_p[m_N - i];
+}
+
+inline const @T@ &@VbaseT@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+    return m_p[m_N - i];
+}
+
+inline @VbaseT@::~@VbaseT@()
+{
+    if (m_N != 0)
+        delete[] m_p;
+}
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
+//% end
+//%------------------------
+
+class VbaseBool
+{
+protected:
+    std::vector<bool> m_v;
+public:
+    typedef std::vector<bool>::reference ref;
+    // constructors
+    VbaseBool() = default;
+    explicit VbaseBool(Long_I N);
+    VbaseBool(const VbaseBool &rhs); // copy constructor
+
+    // get properties
+    Long size() const;
+    void resize(Long_I N);
+    ref operator[](Long_I i);
+    Bool operator[](Long_I i) const;
+    ref end();
+    Bool end() const;
+    ref end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    Bool end(Long_I i) const;
+    void operator<<(VbaseBool &rhs); // move data
+};
+
+inline VbaseBool::VbaseBool(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    if (N > 0)
+        m_v.resize(N);
+}
+
+inline VbaseBool::VbaseBool(const VbaseBool &rhs): m_v(rhs.m_v)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+}
+
+inline Long VbaseBool::size() const
+{
+    return m_v.size();
+}
+
+inline void VbaseBool::resize(Long_I N)
+{
+    m_v.resize(N);
+}
+
+inline void VbaseBool::operator<<(VbaseBool &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    m_v.swap(rhs.m_v);
+}
+
+inline VbaseBool::ref VbaseBool::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=size())
+        SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+#endif
+    return m_v[i];
+}
+
+inline Bool VbaseBool::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=size())
+        SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+#endif
+    return m_v[i];
+}
+
+inline VbaseBool::ref VbaseBool::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_v.empty())
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_v.back();
+}
+
+inline Bool VbaseBool::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_v.empty())
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_v.back();
+}
+
+inline VbaseBool::ref VbaseBool::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > size())
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+#endif
+    return m_v[size() - i];
+}
+
+inline Bool VbaseBool::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > size())
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+#endif
+    return m_v[size() - i];
+}
+} // namespace slisc

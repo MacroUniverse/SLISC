@@ -1,0 +1,89 @@
+// vector container
+#pragma once
+#include "Vbase.h"
+
+namespace slisc {
+//% types = {
+//%     'Char'; 'Int'; 'Llong'; 'Long';
+//%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
+//%     'Fimag'; 'Imag'; 'Limag';};
+//%----------------------------------------------------------
+//% T = varargin{:};
+//% VecT = ['Vec' T];
+//% VbaseT = ['Vbase' T];
+//% if is_Long(T)
+#ifdef SLS_USE_INT_AS_LONG
+typedef VecInt VecLong;
+#else
+typedef VecLlong VecLong;
+#endif
+//% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
+class @VecT@ : public @VbaseT@
+{
+public:
+    typedef @VbaseT@ Base;
+    @VecT@() = default;
+    explicit @VecT@(Long_I N);
+    @VecT@(const @VecT@ &rhs); // copy constructor
+    @VecT@ &operator=(const @VecT@ &rhs) = delete;
+    void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
+};
+
+inline @VecT@::@VecT@(Long_I N) : Base(N) {}
+
+inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline void @VecT@::operator<<(@VecT@ &rhs)
+{
+    Base::operator<<(rhs);
+}
+
+//% end
+typedef const @VecT@ &@VecT@_I;
+typedef @VecT@ &@VecT@_O, &@VecT@_IO;
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
+//%------------------------
+
+// implemented with vector<Bool>, not actually a vector of Bool
+class VecBool : public VbaseBool
+{
+public:
+    typedef VbaseBool Base;
+    using Base::ref; // bit reference
+
+    VecBool() = default;
+    explicit VecBool(Long_I N);
+    VecBool(const VecBool &rhs); // copy constructor
+    VecBool &operator=(const VecBool &rhs) = delete;
+    void operator<<(VecBool &rhs); // move data and rhs.resize(0)
+};
+
+inline VecBool::VecBool(Long_I N) : Base(N) {}
+
+inline VecBool::VecBool(const VecBool &rhs) : Base(rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline void VecBool::operator<<(VecBool &rhs)
+{
+    Base::operator<<(rhs);
+}
+
+typedef const VecBool &VecBool_I;
+typedef VecBool &VecBool_O, &VecBool_IO;
+
+} // namespace slisc

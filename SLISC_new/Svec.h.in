@@ -1,0 +1,269 @@
+#pragma once
+#include "global.h"
+#include "Imag.h"
+
+// this class is not memory safe!
+// "_c" means lower level const
+
+namespace slisc {
+//% types = {
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
+//%     'Fimag', true;  'Fimag', false;
+//%     'Imag', true;   'Imag', false;
+//%     'Limag', true;  'Limag', false;
+//% };
+//%------------------------
+//% [T, constness] = varargin{:};
+//% SvbaseT = ['Svbase' T];
+//% SvbaseT_c = [SvbaseT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = SvbaseT_c;
+//% else
+//%     CT = T;
+//%     Class = SvbaseT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvbaseInt_c SvbaseLong_c;
+#else
+typedef SvbaseLlong_c SvbaseLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvbaseInt SvbaseLong;
+#else
+typedef SvbaseLlong SvbaseLong;
+#endif
+//% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
+class @Class@
+{
+protected:
+    @CT@ *m_p;
+    Long m_N;
+public:
+    @Class@();
+    explicit @Class@(Long_I N);
+    @Class@(@CT@ *data, Long_I N); // unsafe
+    @CT@* p() const;
+    Long size() const;
+    @Class@ &operator=(const @Class@ &rhs) = delete;
+    @CT@ &operator[](Long_I i) const;
+    @CT@ &end() const;
+    @CT@ &end(Long_I i) const;
+//% if ~constness
+    operator @SvbaseT_c@() const;
+//% end
+    void set(const @Class@ &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(@CT@ *data);
+//% % resize() is a bad name, don't try to use it!
+    void set(Long_I N);
+    void set(@CT@ *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~@Class@();
+};
+
+inline @Class@::@Class@() {}
+
+inline @Class@::@Class@(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline @Class@::@Class@(@CT@ *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline @CT@ * @Class@::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long @Class@::size() const
+{
+    return m_N;
+}
+
+inline @CT@ &@Class@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline @CT@ &@Class@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline @CT@ &@Class@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+//% if ~constness
+inline @Class@::operator @SvbaseT_c@() const
+{
+    return *((@SvbaseT_c@ *)this);
+}
+//% end
+
+inline void @Class@::set(@CT@ *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void @Class@::set(@CT@ *data)
+{
+    m_p = data;
+}
+
+inline void @Class@::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void @Class@::next()
+{
+    m_p += m_N;
+}
+
+inline void @Class@::last()
+{
+    m_p -= m_N;
+}
+
+inline void @Class@::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline @Class@::~@Class@() {}
+//% end
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
+//%------------------------
+
+//% types = {
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
+//%     'Fimag', true;  'Fimag', false;
+//%     'Imag', true;   'Imag', false;
+//%     'Limag', true;  'Limag', false;
+//% };
+//%------------------------
+//% [T, constness] = varargin{:};
+//% SvecT = ['Svec' T]; SvbaseT = ['Svbase' T];
+//% SvecT_c = [SvecT '_c']; SvbaseT_c = [SvbaseT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = SvecT_c; Base = SvbaseT_c;
+//% else
+//%     CT = T;
+//%     Class = SvecT; Base = SvbaseT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong_c SvecLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+#else
+typedef SvecLlong SvecLong;
+#endif
+//% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
+class @Class@ : public @Base@
+{
+public:
+    @Class@() = default;
+    explicit @Class@(Long_I N);
+    @Class@(@CT@ *data, Long_I N); // unsafe
+    @Class@ &operator=(const @Class@ &rhs) = delete;
+//% if ~constness
+    operator @SvecT_c@() const;
+//% end
+};
+
+inline @Class@::@Class@(Long_I N) : @Base@(N)
+{}
+
+inline @Class@::@Class@(@CT@ *data, Long_I N)
+    : @Base@(data, N) {}
+
+//% if ~constness
+inline @Class@::operator @SvecT_c@() const
+{
+    return *((@SvecT_c@ *)this);
+}
+//% end
+
+//% end
+
+//% if constness
+typedef const @Class@ &@SvecT@_I;
+//% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
+//% end
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
+//%------------------------
+
+} // namespace slisc

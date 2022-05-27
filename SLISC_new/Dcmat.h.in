@@ -1,0 +1,149 @@
+#pragma once
+
+namespace slisc {
+//% types = {
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
+//% };
+//%------------------------
+//% [T, constness] = varargin{:};
+//% DcmatT = ['Dcmat' T];
+//% DcmatT_c = [DcmatT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = DcmatT_c;
+//% else
+//%     CT = T;
+//%     Class = DcmatT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef DcmatInt_c DcmatLong_c;
+#else
+typedef DcmatLlong_c DcmatLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef DcmatInt DcmatLong;
+#else
+typedef DcmatLlong DcmatLong;
+#endif
+//% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
+class @Class@
+{
+protected:
+    @CT@ *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    typedef @CT@ value_type;
+    @Class@();
+    @Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(@CT@ *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const @Class@ &sli);
+
+//% if ~constness
+    operator @DcmatT_c@() const;
+//% end
+
+    @CT@& operator[](Long_I i) const;
+    @CT@& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    @CT@ *p() const;
+};
+
+inline @Class@::@Class@() {}
+
+inline @Class@::@Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void @Class@::set(@CT@ *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+//% if ~constness
+inline @Class@::operator @DcmatT_c@() const
+{
+    return *((@DcmatT_c@ *)this);
+}
+//% end
+
+inline @CT@ &@Class@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long @Class@::n0() const
+{
+    return m_N0;
+}
+
+inline Long @Class@::n1() const
+{
+    return m_N1;
+}
+
+inline Long @Class@::lda() const
+{
+    return m_lda;
+}
+
+inline Long @Class@::size() const
+{
+    return m_N;
+}
+
+inline @CT@ * @Class@::p() const
+{
+    return m_p;
+}
+//% end
+
+//% if constness
+typedef const @Class@ &@DcmatT@_I;
+//% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const @Class@ &@DcmatT@_O, &@DcmatT@_IO;
+//% end
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
+//%------------------------
+} // namespace slisc

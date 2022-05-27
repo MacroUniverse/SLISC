@@ -1,0 +1,144 @@
+#pragma once
+#include "Svec.h"
+// "_c" means lower level const
+
+namespace slisc {
+//% types = {
+//%     'Char', true;   'Char', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Long', true;  'Long', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
+//%     'Fimag', true;  'Fimag', false;
+//%     'Imag', true;   'Imag', false;
+//%     'Limag', true;  'Limag', false;
+//% };
+//%------------------------
+//% [T, constness] = varargin{:};
+//% SvbaseT = ['Svbase' T];
+//% SvbaseT_c = [SvbaseT '_c'];
+//% ScmatT = ['Scmat' T];
+//% ScmatT_c = [ScmatT '_c'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Base = SvbaseT_c;
+//%     Class = ScmatT_c;
+//% else
+//%     CT = T;
+//%     Base = SvbaseT;
+//%     Class = ScmatT;
+//% end
+//% if is_Long(T) && constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef ScmatInt_c ScmatLong_c;
+#else
+typedef ScmatLlong_c ScmatLong_c;
+#endif
+//% elseif is_Long(T) && ~constness
+#ifdef SLS_USE_INT_AS_LONG
+typedef ScmatInt ScmatLong;
+#else
+typedef ScmatLlong ScmatLong;
+#endif
+//% else
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#ifdef SLS_USE_QUAD_MATH
+//%     end
+class @Class@ : public @Base@
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    @Class@();
+    @Class@(@CT@ *data, Long_I N0, Long_I N1); // unsafe
+
+//% if ~constness
+    operator @ScmatT_c@() const;
+//% end
+
+    @CT@ &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const @Class@ &sli);
+    void set(@CT@ *data, Long_I N0, Long_I N1);
+    ~@Class@();
+};
+
+inline @Class@::@Class@() {}
+
+inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1)
+    : @Base@(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+//% if ~constness
+inline @Class@::operator @ScmatT_c@() const
+{
+    return *((@ScmatT_c@ *)this);
+}
+//% end
+
+inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long @Class@::n0() const
+{
+    return m_N0;
+}
+
+inline Long @Class@::n1() const
+{
+    return m_N1;
+}
+
+inline void @Class@::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void @Class@::set(@CT@ *data, Long_I N0, Long_I N1)
+{
+    @Base@::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void @Class@::set(const @Class@ &sli)
+{
+    @Base@::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline @Class@::~@Class@() {}
+//% end
+
+//% if constness
+typedef const @Class@ &@ScmatT@_I;
+//% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const @Class@ &@ScmatT@_O, &@ScmatT@_IO;
+//% end
+//%     if is_Qdoub(T) || is_Qcomp(T)
+#endif
+//%     end
+//%------------------------
+} // namespace slisc
