@@ -16,14 +16,14 @@
 #include "Jcmat3.h"
 
 namespace slisc {
-//% types = {
+//% tem('equals_to_vs', {
 //%    'Int', 'Int';
 //%    'Llong', 'Llong';
 //%    'Doub', 'Doub';
 //%    'Qdoub', 'Qdoub';
 //%    'Comp', 'Comp';
 //%    'Qcomp', 'Qcomp';
-//%  };
+//%  });
 //%------------------------
 //% T = varargin{:};
 //% if is_Qdoub(T) || is_Qcomp(T)
@@ -41,7 +41,7 @@ inline Bool equals_to_vs(const @T@ *v, @T@_I s, Long_I N)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('equals_to_vv', {
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
@@ -52,7 +52,7 @@ inline Bool equals_to_vs(const @T@ *v, @T@_I s, Long_I N)
 //%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
 //%     'Qcomp', 'Qcomp';
-//%     };
+//%     });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
 //% if is_Qdoub(T1) || is_Qcomp(T1) || is_Qdoub(T2) || is_Qcomp(T2)
@@ -70,7 +70,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% end
 //%------------------------
 
-//% types = { 1; 2; 3; 4; };
+//% tem('shape_cmp', { 1; 2; 3; 4; });
 //%--------------------------------
 //% n = varargin{:};
 template <class T1, class T2>
@@ -104,7 +104,7 @@ inline void assert_same_shape@n@@n@@n@(const T1 &v1, const T2 &v2, const T3 &v3)
 }
 //%--------------------------------
 
-//% types = {
+//% tem('==', {
 //%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecInt', 'DvecInt';
@@ -142,7 +142,7 @@ inline void assert_same_shape@n@@n@@n@(const T1 &v1, const T2 &v2, const T3 &v3)
 //%     'DvecDoub', 'DvecDoub';
 //%     'DcmatDoub', 'CmatDoub';
 //%     'Jcmat3Doub', 'Cmat3Doub';
-//%     };
+//%     });
 //%--------------------------
 //% [T1, T2] = varargin{:};
 //% Ts1 = value_type(T1); Ts2 = value_type(T2);
@@ -206,13 +206,13 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
     return !(v1 == v2);
 }
 
-//% types = {
+//% tem('==vs', {
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'DvecInt'; 'DvecLlong'; 'DvecDoub';
 //%     'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%     'Mat3Doub'; 'CmatDoub'; 'CmatComp'; 'Cmat3Doub';
 //%     'Cmat3Comp'
-//%     };
+//%     });
 //%--------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);

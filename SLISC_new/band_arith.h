@@ -11,31 +11,31 @@ namespace slisc {
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
 // cut the non-zero band
-//% tem('band', {
-//%     'Doub'; 'Comp';
-//% });
-//%------------------------------
-//% T = varargin{:};
-//% CbandT = ['Cband' T]; DcmatT = ['Dcmat' T];
-inline @DcmatT@ band(@CbandT@_IO a)
+inline DcmatDoub band(CbandDoub_IO a)
 {
-    return @DcmatT@(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+    return DcmatDoub(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
-inline @DcmatT@_c band(@CbandT@_I a)
+inline DcmatDoub_c band(CbandDoub_I a)
 {
-    return @DcmatT@_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+    return DcmatDoub_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
-//%------------------------------
+
+inline DcmatComp band(CbandComp_IO a)
+{
+    return DcmatComp(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+}
+
+inline DcmatComp_c band(CbandComp_I a)
+{
+    return DcmatComp_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+}
+
+
 
 // detect band width of dense matrix
 // a(i,j) < tol is considered 0
-//% tem('nband', {
-//%     'CmatDoub'; 'CmatComp'; 'ScmatDoub'; 'ScmatComp';
-//% });
-//%----------------
-//% Tmat = varargin{:}; Ttol = rm_comp(value_type(Tmat));
-inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
+inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
 {
     Bool found = false;
     // check upper diagonals
@@ -67,7 +67,107 @@ inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
     if (!found)
         Nlow = 0;
 }
-//%----------------
+
+inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
+{
+    Bool found = false;
+    // check upper diagonals
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
+        Long i = 0;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
+            if (abs(a(i, j)) > tol)  {
+                Nup = k; found = true;
+            }
+            ++i;
+        }
+    }
+    if (!found)
+        Nup = 0;
+    
+    // check lower diagonals
+    found = false;
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
+        Long j = 0;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
+            if (abs(a(i, j)) > tol) {
+                Nlow = k; found = true;
+            }
+            ++j;
+        }
+    }
+    if (!found)
+        Nlow = 0;
+}
+
+inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
+{
+    Bool found = false;
+    // check upper diagonals
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
+        Long i = 0;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
+            if (abs(a(i, j)) > tol)  {
+                Nup = k; found = true;
+            }
+            ++i;
+        }
+    }
+    if (!found)
+        Nup = 0;
+    
+    // check lower diagonals
+    found = false;
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
+        Long j = 0;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
+            if (abs(a(i, j)) > tol) {
+                Nlow = k; found = true;
+            }
+            ++j;
+        }
+    }
+    if (!found)
+        Nlow = 0;
+}
+
+inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
+{
+    Bool found = false;
+    // check upper diagonals
+    for (Long k = a.n1() - 1; k > 0 && !found; --k) {
+        Long i = 0;
+        for (Long j = k; j < a.n1() && !found; ++j) {
+            if (i > a.n0()) break;
+            if (abs(a(i, j)) > tol)  {
+                Nup = k; found = true;
+            }
+            ++i;
+        }
+    }
+    if (!found)
+        Nup = 0;
+    
+    // check lower diagonals
+    found = false;
+    for (Long k = a.n0() - 1; k > 0  && !found; --k) {
+        Long j = 0;
+        for (Long i = k; i < a.n0() && !found; ++i) {
+            if (j > a.n1()) break;
+            if (abs(a(i, j)) > tol) {
+                Nlow = k; found = true;
+            }
+            ++j;
+        }
+    }
+    if (!found)
+        Nlow = 0;
+}
+
+
 
 inline void nband(Long_O Nup, Long_O Nlow, McooDoub_I a, Doub_I tol = 0)
 {
@@ -204,53 +304,30 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
     }
 }
 
-//% tem('times_band', {
-//%     'CbandComp', 'CbandComp', 'Doub';
-//% });
-//%----------------------------
-//% [Tv, Tv1, Ts] = varargin{:};
-inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
+inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
 {
-    assert_same_shape@ndim(Tv)@@ndim(Tv1)@(v, v1);
+    assert_same_shape22(v, v1);
     times(band(v), band(v1), s);
 }
-//%------------------------
+
+
 
 
 // matrix-vector multiplication for band matrix
 #ifdef SLS_USE_CBLAS
-//% tem('mul_band', {
-//%     'VecDoub' 'CbandDoub' 'VecDoub';
-//%     'VecComp' 'CbandDoub' 'VecComp';
-//%     'VecComp' 'CbandComp' 'VecComp';
-//%     'VecComp' 'CbandComp' 'SvecComp';
-//%     'SvecComp' 'CbandDoub' 'SvecComp';
-//% });
-//%------------------
-//% [Ty, Ta, Tx] = varargin{:};
-//% Tsx = value_type(Tx); Tsy = value_type(Ty);
-//% Tsa = value_type(Ta);
-inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
+inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
 {
-//% if is_dense_vec(Tx)
     Long incx = 1;
-//% elseif is_Dvec(Tx)
-    Long incx = x.step();
-//% end
-//% if is_dense_vec(Ty)
     Long incy = 1;
-//% elseif is_Dvec(Ty)
-    Long incy = x.step();
-//% end
-//% if is_Doub(Tsx) && is_Doub(Tsa) && is_Doub(Tsy)
     Doub alpha = 1, beta = 0;
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, beta, y.p(), incy);
-//% elseif is_Comp(Tsx) && is_Comp(Tsa) && is_Comp(Tsy)
-    Comp alpha(1, 0), beta(0, 0);
-    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
-        &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
-//% elseif is_Comp(Tsx) && is_Doub(Tsa) && is_Comp(Tsy)
+}
+
+inline void mul(VecComp_O y, CbandDoub_I a, VecComp_I x)
+{
+    Long incx = 1;
+    Long incy = 1;
     Doub alpha = 1, beta = 0;
     // real part
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
@@ -258,11 +335,40 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
     // imag part
     cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
         alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
-//% else
-//%     error('not implemented!');
-//% end
 }
-//%----------------------
+
+inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
+{
+    Long incx = 1;
+    Long incy = 1;
+    Comp alpha(1, 0), beta(0, 0);
+    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
+        &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
+}
+
+inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
+{
+    Long incx = 1;
+    Long incy = 1;
+    Comp alpha(1, 0), beta(0, 0);
+    cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
+        &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
+}
+
+inline void mul(SvecComp_O y, CbandDoub_I a, SvecComp_I x)
+{
+    Long incx = 1;
+    Long incy = 1;
+    Doub alpha = 1, beta = 0;
+    // real part
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
+        alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p(), incx*2, beta, (Doub*)y.p(), incy*2);
+    // imag part
+    cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
+        alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
+}
+
+
 #endif
 
 } // namespace slisc

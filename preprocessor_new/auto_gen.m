@@ -1,13 +1,19 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 function auto_gen(path, file)
-global tem_db;
+global tem_db is_batch_mode;
+is_batch_mode = false;
+if nargin == 1
+    is_batch_mode = true;
+end
 paths = {'../preprocessor_new', ...
     '../preprocessor_new/SLISC', ...
     '../preprocessor_new/SLISC/case_conflict'};
 old_path = pwd;
 cd(path);
-delete 'tem_db.mat'; warning('debug: delete tem_db.mat');
+if is_batch_mode && exist('tem_db.mat', 'file')
+    delete 'tem_db.mat';
+end
 if exist('tem_db.mat', 'file')
     load('tem_db.mat', 'tem_db');
 else
@@ -39,7 +45,7 @@ for i = 1:Nfile
     if nargin > 1 && ~strcmp(in_file, file)
         continue;
     end
-    fprintf([in_file '...' newline]);
+    fprintf(['scan: ' in_file '...' newline]);
     str = fileread(in_file);
     str(str == 13) = [];
     ind = 1;
@@ -85,7 +91,7 @@ while ~quit
         Np = size(tem_db(i).param, 1);
         for j = 1:Np
             if ~tem_db(i).done(j)
-                disp([tem_db(i).name ': ' tem_db(i).param{j,:}]);
+                disp([tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))]);
                 tem_db(i).out{j} = instantiate(tem_db(i).body, tem_db(i).param{j,:});
                 tem_db(i).done(j) = true; quit = false;
                 if cellstr_search(changed_file, tem_db(i).file) < 1
@@ -101,6 +107,7 @@ end
 ind = 1;
 out_strs = cell(numel(changed_file), 1);
 for i = 1:numel(changed_file)
+    disp(['output template: ' changed_file{i}]);
     str = fileread(changed_file{i}); ind = 1;
     str(str == 13) = [];
     while true
@@ -123,7 +130,7 @@ for i = 1:numel(changed_file)
             if (isempty(ind3))
                 error('no closing //%-----');
             end
-            str = [str(1:ind2-1) ['@' current_tem '@'] str(next_line(str,ind3)-1:end)];
+            str = [str(1:ind2-1) ['tem@' current_tem '@'] str(next_line(str,ind3)-1:end)];
         end
     end
     % str(str == 13)
@@ -132,15 +139,19 @@ end
 
 %% write output files
 for i = 1:numel(changed_file)
+    disp(['writing (' num2str(i) '): ' changed_file{i}]);
     str = out_strs{i};
     ind = 1;
     while true
-        [ind1, ind2] = find_next(str, '@.*@', ind);
+        [ind1, ind2] = find_next(str, 'tem@.*?@', ind);
         if isempty(ind1)
             break;
         end
-        current_tem = str(ind1+1:ind2-1);
+        current_tem = str(ind1+4:ind2-1);
         ind3 = tem_search(current_tem);
+        if ind3 < 0
+            error('something wrong!');
+        end
         temp = '';
         for j = 1:numel(tem_db(ind3).out)
             temp = [temp, tem_db(ind3).out{j}, newline];

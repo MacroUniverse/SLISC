@@ -12,7 +12,7 @@
 #include "Jcmat3.h"
 
 namespace slisc {
-//% types = {
+//% tem('cut1', {
 //%     'VecDoub'; 'VecComp';
 //%     'SvecDoub'; 'SvecComp';
 //%     'DvecDoub'; 'DvecComp';
@@ -26,7 +26,7 @@ namespace slisc {
 //%     'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
 //%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
 //%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
-//% };
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% T = value_type(Tv);
@@ -158,14 +158,14 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut0', {
 //%     'MatInt'; 'MatDoub'; 'MatComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
 //%     'CmatComp'; 'CmatQcomp';
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp'; 'Scmat3Comp';
 //%     'ScmatInt'; 'ScmatDoub'; 'ScmatComp';
 //%     'DcmatInt'; 'DcmatDoub'; 'DcmatComp';
-//% };
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut1_type(Tv);
@@ -262,12 +262,12 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut0_4a', {
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
 //%     'CmatComp'; 'CmatQcomp';
 //%     'ScmatDoub'; 'ScmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//% };
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut1_type(Tv);
@@ -324,11 +324,11 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut1_2a', {
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp'; 'ScmatLlong';
 //%     'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
 //%     'MatInt'; 'MatDoub'; 'MatComp'; 'Cmat3Comp';
-//% };
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut2_type(Tv);
@@ -425,12 +425,12 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i, Long_I k)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut1_4a', {
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
 //%     'CmatComp'; 'CmatQcomp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub';
 //%     'Cmat3Comp'; 'Cmat3Qcomp';
-//% };
+//% });
 //%----------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -488,10 +488,10 @@ inline @Tsli@_c cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut2', {
 //%     'Cmat3Doub'; 'Cmat3Qdoub';
 //%     'Cmat3Comp'; 'Cmat3Qcomp';
-//% };
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut3_type(Tv);
@@ -525,12 +525,12 @@ inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I j)
 //% end
 //%-----------------------
 
-//% types = {
+//% tem('cut01', {
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Qdoub';
 //%     'Cmat3Comp'; 'Cmat3Qcomp'; 'Scmat3Doub';
 //%     'Scmat3Comp'; 'Cmat4Int'; 'Cmat4Llong'; 'Cmat4Doub';
 //%     'Cmat4Comp';
-//% };
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut12_type(Tv);
@@ -587,10 +587,10 @@ inline @Tsli@_c cut01(@Tv@_I v, Long_I k, Long_I l)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut01_4a', {
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Qdoub';
 //%     'Cmat3Comp'; 'Cmat3Qcomp';
-//% };
+//% });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Scmat' value_type(T)];
@@ -627,10 +627,10 @@ inline @Tsli@_c cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% types = {
+//% tem('cut01_6a', {
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Qdoub';
 //%     'Cmat3Comp'; 'Cmat3Qcomp';
-//% };
+//% });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Dcmat' value_type(T)];

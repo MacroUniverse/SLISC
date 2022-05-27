@@ -5,10 +5,10 @@
 
 namespace slisc {
 // return signed size instead of unsigned
-//% types = {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong';
+//% tem('size', {'vecBool'; 'vecChar'; 'vecInt'; 'vecLlong';
 //%  'vecDoub'; 'vecLdoub'; 'vecQdoub'; 'vecComp';
 //%  'vecLcomp'; 'vecQcomp';
-//%  'Str'; 'Str32'; 'vecStr'; 'vecStr32';};
+//%  'Str'; 'Str32'; 'vecStr'; 'vecStr32';});
 //%--------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -25,8 +25,8 @@ inline Long size(@T@_I v)
 //%-------------------------
 
 // sum of absolute values
-//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub';
-//%    'Qdoub'; 'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';};
+//% tem('sum_abs_v', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub';
+//%    'Qdoub'; 'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';});
 //%--------------------------
 //% T = varargin{:};
 //% % decide return type
@@ -56,7 +56,7 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 //%---------------------------
 
 // sum of absolute values
-//% types = list_dense_contain();
+//% tem('sum_abs', list_dense_contain());
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% if is_integral(Ts)
@@ -76,7 +76,7 @@ inline @Tr@ sum_abs(@T@_I v)
 //% end
 //%---------------------------
 
-//% types = {'VecBool';};
+//% tem('sum_abs_bool', {'VecBool';});
 //%--------------------------
 //% T = varargin{:};
 inline Long sum_abs(@T@_I v)
@@ -94,7 +94,7 @@ inline Long sum_abs(@T@_I v)
 
 // maximum/minimum element (pointer version)
 // max_v(), min_v()
-//% types = {
+//% tem('max_min_v', {
 //%     'max', 'Char', '<';   'min', 'Char', '>';
 //%     'max', 'Int', '<';    'min', 'Int', '>';
 //%     'max', 'Llong', '<';  'min', 'Llong', '>';
@@ -102,7 +102,7 @@ inline Long sum_abs(@T@_I v)
 //%     'max', 'Doub', '<';   'min', 'Doub', '>';
 //%     'max', 'Ldoub', '<';  'min', 'Ldoub', '>';
 //%     'max', 'Qdoub', '<';  'min', 'Qdoub', '>';
-//% };
+//% });
 //%--------------------------
 //% [fun, T, oper] = varargin{:};
 //% if is_real(T) && ~is_Bool(T)
@@ -164,7 +164,7 @@ inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
 //% end
 //%-------------------------
 
-//% types = list_contain_dense_real();
+//% tem('max', list_contain_dense_real());
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
@@ -196,11 +196,11 @@ inline @Ts@ min(Long_O ind, @T@_I v)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('max_abs_v', {
 //%    'Int'; 'Llong'; 'Float';
 //%    'Doub'; 'Ldoub'; 'Qdoub';
 //%    'Comp'; 'Lcomp'; 'Qcomp';
-//% };
+//% });
 //%------------------------------
 //% T = varargin{:};
 //% Tr = rm_comp(T);
@@ -239,13 +239,13 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('max_abs', {
 //%    'VecInt'; 'VecLlong'; 'VecFloat'; 'VecDoub';
 //%    'VecLdoub'; 'VecQdoub';
 //%    'VecComp'; 'VecLcomp'; 'VecQcomp';
 //%    'MatComp'; 'CmatDoub'; 'CmatComp'; 'Cmat3Doub'; 'Cmat3Comp';
 //%    'DvecDoub'; 'DvecComp'; 'SvecComp';
-//% };
+//% });
 //%------------------------------
 //% T = varargin{:}; Tr = rm_comp(value_type(T));
 //% if is_dense(T)
@@ -263,14 +263,14 @@ inline @Tr@ max_abs(@T@_I v)
 //% end
 //%--------------------------
 
-//% types = {
+//% tem('mod_vvs', {
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
 //%     'Ldoub', 'Ldoub';
 //%     'Qdoub', 'Qdoub';
-//% };
+//% });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% Ts1 = value_type(T1);
@@ -287,10 +287,10 @@ inline void mod_vs(@T1@ *v, @Ts1@_I s, Long_I N)
 }
 //%-------------------------
 
-//% types = {
+//% tem('mod', {
 //%     'VecInt', 'VecInt', 'Int';
 //%     'VecLlong', 'VecLlong', 'Llong';
-//% };
+//% });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% Ts = value_type(T);
@@ -310,9 +310,9 @@ inline void mod(@T1@_O v, @Ts1@_I s)
 }
 //%-------------------------
 
-//% types = {
+//% tem('real_v', {
 //%     'Fcomp'; 'Comp'; 'Lcomp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:}; Tr = rm_comp(T);
 inline void real_v(@T@ *v, Long_I N)
@@ -329,10 +329,10 @@ inline void imag_v(@T@ *v, Long_I N)
 }
 //%---------------------
 
-//% types = {
+//% tem('real_vv', {
 //%     'Doub', 'Comp';
 //%     'Comp', 'Comp';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void real_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -348,9 +348,9 @@ inline void imag_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%---------------------
 
-//% types = {
+//% tem('real', {
 //%     'VecComp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:};
 inline void real(@T@_IO v)
@@ -364,10 +364,10 @@ inline void imag(@T@_IO v)
 }
 //%---------------------
 
-//% types = {
+//% tem('real_2a', {
 //%     'VecDoub', 'VecComp';
 //%     'VecComp', 'VecComp';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void real(@T@_O v, @T1@_I v1)
@@ -383,9 +383,9 @@ inline void imag(@T@_O v, @T1@_I v1)
 }
 //%--------------------
 
-//% types = {
+//% tem('abs_v', {
 //%     'Int'; 'Llong'; 'Doub'; 'Fcomp'; 'Comp'; 'Lcomp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:}; Tr = rm_comp(T);
 inline void abs_v(@T@ *v, Long_I N)
@@ -395,12 +395,12 @@ inline void abs_v(@T@ *v, Long_I N)
 }
 //%---------------------
 
-//% types = {
+//% tem('abs_vv', {
 //%     'Llong', 'Llong'; 
 //%     'Doub', 'Doub'; 
 //%     'Doub', 'Comp';
 //%     'Comp', 'Comp';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -410,9 +410,9 @@ inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%---------------------
 
-//% types = {
+//% tem('abs', {
 //%     'VecDoub'; 'SvecDoub'; 'VecComp'; 'SvecComp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:};
 inline void abs(@T@_IO v)
@@ -421,11 +421,11 @@ inline void abs(@T@_IO v)
 }
 //%---------------------
 
-//% types = {
+//% tem('abs_2a', {
 //%     'VecDoub', 'VecDoub';
 //%     'VecDoub', 'VecComp';
 //%     'VecComp', 'VecComp';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void abs(@T@_O v, @T1@_I v1)
@@ -435,7 +435,7 @@ inline void abs(@T@_O v, @T1@_I v1)
 }
 //%--------------------
 
-//% types = {'Bool'; 'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('sum_v', {'Bool'; 'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%--------------------
 //% T = varargin{:};
 //% if is_integral(T)
@@ -455,7 +455,7 @@ inline @Tret@ sum_v(const @T@ *v, Long_I N)
 }
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('prod_v', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%--------------------
 //% T = varargin{:};
 //% if is_integral(T)
@@ -475,9 +475,9 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 }
 //%------------------------
 
-//% types = {'VecChar'; 'VecInt'; 'VecLlong';
+//% tem('sum', {'VecChar'; 'VecInt'; 'VecLlong';
 //%     'VecDoub'; 'SvecDoub'; 'MatComp';
-//%     'CmatDoub'; 'CmatComp';};
+//%     'CmatDoub'; 'CmatComp';});
 //%----------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -497,11 +497,11 @@ inline @Tret@ prod(@T@_I v)
 }
 //%-----------------
 
-//% types = {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
+//% tem('norm2', {'VecDoub'; 'VecComp'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
 //%     'CmatDoub'; 'CmatComp'; 'Cmat3Doub';
 //%     'Cmat3Comp'; 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp';
 //%     'ScmatDoub'; 'ScmatComp'; 'DcmatComp';
-//% };
+//% });
 //%-------------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -564,7 +564,7 @@ inline @Tr@ norm_dif(@T@_I v, @T@_I v1)
 }
 //%-------------------------
 
-//% types = {
+//% tem('resize_cpy', {
 //%     'VecChar'; 'VecInt'; 'VecLlong';
 //%     'VecFloat'; 'VecDoub'; 'VecLdoub';
 //%     'VecFcomp'; 'VecComp'; 'VecLcomp';
@@ -572,7 +572,7 @@ inline @Tr@ norm_dif(@T@_I v, @T@_I v1)
 //%     'CmatFloat'; 'CmatDoub'; 'CmatLdoub';
 //%     'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
 //%     'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
-//% };
+//% });
 //%--------------------------------
 //% Tv = varargin{:};
 //% T = value_type(Tv);
@@ -644,7 +644,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
 //% end
 //%-------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('linspace_vss', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%-----------------------
 //% T = varargin{:};
 inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
@@ -661,10 +661,10 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 }
 //%-------------------------
 
-//% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
+//% tem('linspace', {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; 'MatInt';
 //%     'MatComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Comp'; 'ScmatInt';
-//% };
+//% });
 //%---------------------------------
 //% Tv = varargin{:};
 //% Ts = value_type(Tv);
@@ -677,9 +677,9 @@ inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
 }
 //%-------------------------
 
-//% types = {
+//% tem('flip_v', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'; 'Str'; 'Str32';
-//% };
+//% });
 //%---------------------------------
 //% T = varargin{:};
 inline void flip_v(@T@ *v, Long_I N)
@@ -689,13 +689,13 @@ inline void flip_v(@T@ *v, Long_I N)
 }
 //%---------------------
 
-//% types = {
+//% tem('flip_vv', {
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
 //%     'Comp', 'Comp';
-//% };
+//% });
 //%---------------------------------
 //% [T, T1] = varargin{:};
 inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -705,11 +705,11 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%----------------------------
 
-//% types = {
+//% tem('flip', {
 //%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'vecChar'; 'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'vecStr'; 'vecStr32';
-//% };
+//% });
 //%---------------------------------
 //% Tv = varargin{:};
 //% Ts = value_type(Tv);
@@ -723,13 +723,13 @@ inline void flip(@Tv@_IO v)
 //% end
 //%---------------------------
 
-//% types = {
+//% tem('flip_2a', {
 //%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecComp';
-//% };
+//% });
 //%---------------------------------
 //% [T, T1] = varargin{:};
 //% if is_dense(T) && is_dense(T1)
@@ -743,7 +743,7 @@ inline void flip(@T@_O v, @T1@_I v1)
 //% end
 //%---------------------------
 
-//% types = {
+//% tem('reorder', {
 //%     'VecInt', 'VecLlong';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
@@ -757,7 +757,7 @@ inline void flip(@T@_O v, @T1@_I v1)
 //%     'vecStr', 'vecLlong';
 //%     'vecStr32', 'VecLlong';
 //%     'vecStr32', 'vecLlong';
-//%     };
+//%     });
 //%---------------------
 //% [Tv, To] = varargin{:};
 //% if ~is_vecStr(Tv) && ~is_vecStr32(Tv)
@@ -782,9 +782,9 @@ inline void reorder(@Tv@_O v, @To@_I order)
 }
 //%-------------------------
 
-//% types = {'CmatDoub'; 'CmatQdoub';
+//% tem('trans', {'CmatDoub'; 'CmatQdoub';
 //%    'CmatComp'; 'CmatQcomp';
-//%    'MatComp'; 'DcmatDoub'; 'DcmatComp'};
+//%    'MatComp'; 'DcmatDoub'; 'DcmatComp'});
 //%--------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -806,7 +806,7 @@ inline void trans(@T@_IO v)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('trans_2a', {
 //%        'CmatLlong' 'CmatLlong';
 //%        'CmatDoub' 'CmatDoub';
 //%        'CmatQdoub' 'CmatQdoub';
@@ -818,7 +818,7 @@ inline void trans(@T@_IO v)
 //%        'DcmatLlong' 'DcmatLlong';
 //%        'DcmatDoub' 'DcmatDoub';
 //%        'DcmatComp' 'DcmatComp';
-//% };
+//% });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% Ts = value_type(T); Ts1 = value_type(T);
@@ -840,9 +840,9 @@ inline void trans(@T@_O v, @T1@_I v1)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('conj_v', {
 //%        'Comp';
-//% };
+//% });
 //%--------------------------
 //% T = varargin{:}; Tr = rm_comp(T);
 inline void conj_v(@T@ *v, Long_I N)
@@ -853,9 +853,9 @@ inline void conj_v(@T@ *v, Long_I N)
 }
 //%--------------------------
 
-//% types = {
+//% tem('conj_vv', {
 //%        'Comp', 'Comp';
-//% };
+//% });
 //%--------------------------
 //% [T, T1] = varargin{:};
 inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -865,9 +865,9 @@ inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%-------------------------------
 
-//% types = {
+//% tem('conj', {
 //%        'VecComp'; 'CmatComp'; 'MatComp'; 'DcmatComp';
-//% };
+//% });
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% if ~(is_comp(Ts))
@@ -887,10 +887,10 @@ inline void conj(@T@_IO v)
 //% end
 //%----------------------------
 
-//% types = {
+//% tem('conj_2a', {
 //%        'CmatComp', 'CmatComp';
 //%        'MatComp', 'MatComp';
-//% };
+//% });
 //%--------------------------
 //% [T, T1] = varargin{:};
 inline void conj(@T@_O v, @T1@_I v1)
@@ -900,9 +900,9 @@ inline void conj(@T@_O v, @T1@_I v1)
 }
 //%----------------------------
 
-//% types = {
+//% tem('her', {
 //%        'CmatComp'; 'MatComp';
-//% };
+//% });
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% if ~(is_comp(Ts) && ndim(T) == 2)
@@ -917,12 +917,12 @@ inline void her(@T@_IO v)
 }
 //%---------------------------
 
-//% types = {
+//% tem('her_2a', {
 //%        'MatComp' 'CmatComp';
 //%        'CmatComp' 'MatComp';
 //%        'CmatComp' 'CmatComp';
 //%        'DcmatComp' 'DcmatComp';
-//% };
+//% });
 //%--------------------------
 //% [T, T1] = varargin{:};
 inline void her(@T@_O v, @T1@_I v1)
@@ -931,14 +931,14 @@ inline void her(@T@_O v, @T1@_I v1)
 }
 //%-------------------------
 
-//% types = {
+//% tem('plus_equals_vs', {
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Doub', 'Doub';
 //%     'Qdoub', 'Qdoub';
 //%     'Comp', 'Comp';
 //%     'Qcomp', 'Qcomp';
-//%     };
+//%     });
 //%-------------------
 //% [T, Ts] = varargin{:};
 //% if ~is_promo(T, Ts)
@@ -1014,7 +1014,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('+=vs', {
 //%     'VecChar', 'Char';
 //%     'VecInt', 'Int';
 //%     'VecDoub', 'Doub';
@@ -1037,7 +1037,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     'Cmat3Doub', 'Doub';
 //%     'Cmat3Comp', 'Doub';
 //%     'Cmat3Comp', 'Comp';
-//% };
+//% });
 //%-------------------
 //% [T, Ts] = varargin{:};
 //% if is_Qdoub(Ts) || is_Qcomp(Ts)
@@ -1126,7 +1126,7 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('plus_equals_vv', {
 //%     'Char', 'Char';
 //%     'Int', 'Int';
 //%     'Doub', 'Doub';
@@ -1134,7 +1134,7 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
 //%     'Qcomp', 'Qcomp';
-//%     };
+//%     });
 //%-------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1)
@@ -1171,7 +1171,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('+=_2a', {
 //%     'VecChar', 'VecChar';
 //%     'VecInt', 'VecInt';
 //%     'VecDoub', 'VecDoub';
@@ -1200,7 +1200,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'ScmatComp', 'ScmatDoub';
 //%     'ScmatComp', 'ScmatComp';
 //%     'DcmatComp', 'DcmatDoub';
-//% };
+//% });
 //%-------------------
 //% [T, T1] = varargin{:};
 //% Ts = value_type(T);
@@ -1307,7 +1307,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('plus_vvs', {
 //%        'Char', 'Char', 'Char';
 //%        'Int', 'Int', 'Int';
 //%        'Llong', 'Llong', 'Llong';
@@ -1317,7 +1317,7 @@ inline void operator/=(@T@_O &v, @T1@_I v1)
 //%        'Comp', 'Doub', 'Imag';
 //%        'Comp', 'Doub', 'Comp';
 //%        'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~is_promo(T, T1) || ~is_promo(T, T2)
@@ -1396,7 +1396,7 @@ inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, 
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('minus_vsv', {
 //%        'Char', 'Char', 'Char';
 //%        'Int', 'Int', 'Int';
 //%        'Llong', 'Llong', 'Llong';
@@ -1405,7 +1405,7 @@ inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, 
 //%        'Comp', 'Comp', 'Doub';
 //%        'Comp', 'Doub', 'Comp';
 //%        'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~is_promo(T, T1) || ~is_promo(T, T2)
@@ -1440,7 +1440,7 @@ inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I s
 }
 //%-------------------------
 
-//% types = {
+//% tem('plus_vvv', {
 //%     'Char', 'Char', 'Char';
 //%     'Int', 'Int', 'Int';
 //%     'Llong', 'Llong', 'Llong';
@@ -1450,7 +1450,7 @@ inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I s
 //%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~is_promo(T, T1) || ~is_promo(T, T2)
@@ -1513,7 +1513,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 }
 //%-------------------------
 
-//% types = {
+//% tem('plus', {
 //%        'VecChar', 'VecChar', 'Char';
 //%        'VecInt', 'VecInt', 'Int';
 //%        'VecLlong', 'VecLlong', 'Llong';
@@ -1540,7 +1540,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 //%        'Cmat3Comp', 'Cmat3Comp', 'Comp';
 //%        'Cmat3Comp', 'Cmat3Doub', 'Comp';
 //%        'ScmatComp', 'ScmatDoub', 'Doub';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, Ts2] = varargin{:};
 //% Ts = value_type(T); Ts1 = value_type(T1);
@@ -1722,7 +1722,7 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('plus_3a', {
 //%        'VecChar', 'VecChar', 'VecChar';
 //%        'VecInt', 'VecInt', 'VecInt';
 //%        'VecLlong', 'VecLlong', 'VecLlong';
@@ -1735,7 +1735,7 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //%        'CmatDoub', 'CmatDoub', 'CmatDoub';
 //%        'CmatComp', 'CmatDoub', 'CmatDoub';
 //%        'CmatComp', 'CmatComp', 'CmatComp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
@@ -1808,13 +1808,13 @@ inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 //% end
 //%--------------------------
 
-//% types = {
+//% tem('minus_vv', {
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
 //%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
-//% };
+//% });
 //%----------------------------------------------------------
 //% [T, T1] = varargin{:};
 inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -1824,14 +1824,14 @@ inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%--------------------------
 
-//% types = {
+//% tem('minus', {
 //%     'VecInt', 'VecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecDoub';
 //%     'VecComp', 'VecComp';
 //%     'ScmatDoub', 'CmatDoub';
-//% };
+//% });
 //%----------------------------------------------------------
 //% [T, T1] = varargin{:};
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
@@ -1845,7 +1845,7 @@ inline void minus(@T@_O v, @T1@_I v1)
 //% end
 //%--------------------------
 
-//% types = {
+//% tem('pow_vs', {
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Float', 'Float';
@@ -1856,7 +1856,7 @@ inline void minus(@T@_O v, @T1@_I v1)
 //%     'Comp', 'Llong';
 //%     'Comp', 'Doub';
 //%     'Comp', 'Comp';  
-//% };
+//% });
 //%----------------------------------------------------------
 //% [T, Ts] = varargin{:};
 inline void pow_vs(@T@ *v, @Ts@_I s, Long_I N)
@@ -1866,14 +1866,14 @@ inline void pow_vs(@T@ *v, @Ts@_I s, Long_I N)
 }
 //%-------------------------
 
-//% types = {
+//% tem('pow', {
 //%     'VecLlong', 'Llong';
 //%     'VecDoub', 'Int';
 //%     'VecDoub', 'Doub';
 //%     'VecComp', 'Int';
 //%     'VecComp', 'Doub';
 //%     'VecComp', 'Comp';
-//% };
+//% });
 //%---------------------
 //% [T, Ts] = varargin{:};
 inline void pow(@T@_IO v, @Ts@_I s)
@@ -1882,7 +1882,7 @@ inline void pow(@T@_IO v, @Ts@_I s)
 }
 //%-------------------------
 
-//% types = {
+//% tem('pow_vvs', {
 //%     'Int', 'Int', 'Int';
 //%     'Llong', 'Llong', 'Llong';
 //%     'Float', 'Float', 'Float';
@@ -1893,7 +1893,7 @@ inline void pow(@T@_IO v, @Ts@_I s)
 //%     'Comp', 'Comp', 'Llong';
 //%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Comp', 'Comp';  
-//% };
+//% });
 //%----------------------------------------------------------
 //% [T, T1, Ts] = varargin{:};
 inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
@@ -1903,7 +1903,7 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 }
 //%-------------------------
 
-//% types = {
+//% tem('pow_3a', {
 //%     'VecLlong', 'VecLlong', 'Llong';
 //%     'VecDoub', 'VecDoub', 'Int';
 //%     'VecDoub', 'VecDoub', 'Llong';
@@ -1911,7 +1911,7 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 //%     'VecComp', 'VecComp', 'Int';
 //%     'VecComp', 'VecComp', 'Doub';
 //%     'VecComp', 'VecComp', 'Comp';
-//% };
+//% });
 //%---------------------
 //% [T, T1, Ts] = varargin{:};
 inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
@@ -1921,7 +1921,7 @@ inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 }
 //%-------------------------
 
-//% types = {
+//% tem('dot_vv', {
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Float', 'Float';
@@ -1934,7 +1934,7 @@ inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 //%     'Comp', 'Llong';
 //%     'Comp', 'Doub';
 //%     'Comp', 'Comp';
-//% };
+//% });
 //%----------------------------------------------------------
 //% [T1, T2] = varargin{:};
 //% T = promo_type(T1, T2);
@@ -1959,7 +1959,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 }
 //%-------------------------
 
-//% types = {
+//% tem('dot', {
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecChar';
 //%     'VecDoub', 'VecDoub';
@@ -1974,7 +1974,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%     'DvecComp', 'SvecDoub';
 //%     'Cmat3Comp', 'Cmat3Comp';
 //%     'Cmat3Comp', 'Jcmat3Comp';
-//% };
+//% });
 //%---------------------
 //% [T1, T2] = varargin{:};
 //% Ts1 = value_type(T1); Ts2 = value_type(T2);
@@ -2008,12 +2008,12 @@ inline @T@ dot(@T1@_I v1, @T2@_I v2)
 }
 //%-------------------------
 
-//% types = {
+//% tem('cumsum_vv', {
 //%     'Int', 'Int';
 //%     'Llong', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -2027,12 +2027,12 @@ inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%-------------------------
 
-//% types = {
+//% tem('cumsum', {
 //%     'VecInt', 'VecInt';
 //%     'VecLlong', 'VecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void cumsum(@T@_O v, @T1@_I v1)
@@ -2043,7 +2043,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%-------------------------
 
 
-//% types = {
+//% tem('mul', {
 //%     'VecInt' 'CmatInt' 'VecInt';
 //%     'VecDoub' 'CmatDoub' 'VecDoub';
 //%     'VecDoub' 'CmatDoub' 'SvecDoub';
@@ -2077,7 +2077,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //%     'SvecComp' 'ScmatComp' 'DvecComp';
 //%     'SvecComp' 'DcmatComp' 'SvecComp';
 //%     'SvecComp' 'DcmatDoub' 'SvecComp';
-//%     };
+//%     });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
@@ -2160,11 +2160,11 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 //% end
 //%-------------------------
 
-//% types = {
+//% tem('mul_yxa', {
 //%     'VecDoub', 'VecDoub', 'MatDoub';
 //%     'VecComp', 'VecDoub', 'MatComp';
 //%     'VecComp', 'VecComp', 'MatComp';
-//% };
+//% });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
@@ -2189,13 +2189,13 @@ inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 }
 //%-----------------------------
 
-//% types = {
+//% tem('mul_yax', {
 //%     'CmatDoub', 'CmatDoub', 'CmatDoub';
 //%     'CmatComp', 'CmatComp', 'CmatDoub';
 //%     'CmatComp', 'CmatComp', 'CmatComp';
 //%     'CmatComp', 'CmatComp', 'MatComp';
 //%     'ScmatComp', 'ScmatDoub', 'CmatComp';
-//% };
+//% });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% if ndim(T) == 2 && ndim(T1) == 2 && ndim(T2) == 2
@@ -2220,7 +2220,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%-------------------------
 
 // matrix-vector multiplication
-//% types = {
+//% tem('mul_gen_5a', {
 //%     'VecDoub', 'CmatDoub', 'VecDoub';
 //%     'VecDoub', 'CmatDoub', 'SvecDoub';
 //%     'VecComp', 'CmatDoub', 'VecComp';
@@ -2241,7 +2241,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'SvecComp', 'ScmatDoub', 'DvecComp';
 //%     'SvecComp', 'CmatDoub', 'SvecComp';
 //%     'SvecComp', 'CmatComp', 'SvecComp';  
-//%     };
+//%     });
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
@@ -2298,12 +2298,12 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 }
 //%-------------------------
 
-//% types = {
+//% tem('mul_sym', {
 //%     'VecDoub', 'CmatDoub', 'VecDoub';
 //%     'VecComp', 'CmatDoub', 'VecComp';
 //%   %  'SvecComp', 'DcmatDoub', 'SvecComp';
 //%   %  'DvecComp', 'DcmatDoub', 'DvecComp';
-//%     };
+//%     });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
@@ -2360,12 +2360,12 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 }
 //%--------------------------------
 
-//% types = {
+//% tem('mul_gen', {
 //%     'CmatDoub', 'CmatDoub', 'CmatDoub';
 //%     'CmatComp', 'CmatComp', 'CmatDoub';
 //%     'CmatComp', 'CmatComp', 'CmatComp';
 //%     'ScmatComp', 'ScmatDoub', 'CmatComp';
-//% };
+//% });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = value_type(Ty); Tsa = value_type(Ta); Tsx = value_type(Tx);
@@ -2393,7 +2393,7 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
 
 // concatinate std::vector
 // get unique elements from a vector
-//% types = {'vecInt'; 'vecLong'; 'vecStr'; 'vecStr32';};
+//% tem('+=vv', {'vecInt'; 'vecLong'; 'vecStr'; 'vecStr32';});
 //%---------------------
 //% T = varargin{:};
 inline void operator+=(@T@_IO v, @T@_I v1)
@@ -2403,8 +2403,8 @@ inline void operator+=(@T@_IO v, @T@_I v1)
 //%---------------------
 
 // get unique elements from a vector
-//% types = {'VecInt'; 'VecLong'; 'vecInt'; 'vecLong';
-//%     'vecStr'; 'vecStr32';};
+//% tem('uniq_elm', {'VecInt'; 'VecLong'; 'vecInt'; 'vecLong';
+//%     'vecStr'; 'vecStr32';});
 //%---------------------
 //% T = varargin{:};
 inline void uniq_elm(@T@_IO v)
@@ -2427,11 +2427,11 @@ inline void uniq_elm(@T@_IO v)
 //%---------------------
 
 // get all unique rows from a matrix
-//% types = {
+//% tem('uniq_rows', {
 //%     'CmatInt', 'CmatInt';
 //%     'CmatLlong', 'ScmatLlong';
 //%     'CmatDoub', 'CmatDoub';
-//% };
+//% });
 //%--------------------
 //% [T, T1] = varargin{:};
 //% Tsli1 = cut2_type(T1);
@@ -2457,7 +2457,7 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
 }
 //%---------------------------
 
-//% types = {'Doub'; 'Comp';};
+//% tem('exp_v', {'Doub'; 'Comp';});
 //%-------------------
 //% T = varargin{:};
 inline void exp_v(@T@ *v, Long_I N)
@@ -2467,10 +2467,10 @@ inline void exp_v(@T@ *v, Long_I N)
 }
 //%-----------------
 
-//% types = {
+//% tem('exp_vv', {
 //%     'Doub', 'Doub';
 //%     'Comp', 'Comp';
-//% };
+//% });
 //%-------------------
 //% [T, T1] = varargin{:};
 inline void exp_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -2480,9 +2480,9 @@ inline void exp_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%--------------------
 
-//% types = {
+//% tem('exp', {
 //%     'VecDoub'; 'VecComp';
-//% };
+//% });
 //%-------------------
 //% T = varargin{:};
 inline void exp(@T@_IO v)
@@ -2491,10 +2491,10 @@ inline void exp(@T@_IO v)
 }
 //%--------------------
 
-//% types = {
+//% tem('exp_2a', {
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecComp';
-//% };
+//% });
 //%-------------------
 //% [T, T1] = varargin{:};
 inline void exp(@T@_O v, @T1@_I v1)
