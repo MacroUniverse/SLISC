@@ -3,7 +3,7 @@ function ind = search_cell_row(mat, row)
 for i = 1:Ni
     found = true;
     for j = 1:Nj
-        if ~all(mat{i,j} == row{j})
+        if ~strcmp(mat{i,j}, row{j})
             found = false; break;
         end
     end
@@ -11,4 +11,5 @@ for i = 1:Ni
         ind = i; return;
     end
 end
+ind = -1;
 end

@@ -18,8 +18,9 @@ for i = 1:Ntp
     if nargin > 1 && ~strcmp(in_file, file)
         continue;
     end
-    fprintf([in_file '...']);
+    fprintf([in_file '...' newline]);
     str = fileread(in_file);
+    str(str == 13) = [];
     ind = 1;
     code = cell(1, 1); k = 0;
     while true
