@@ -37,7 +37,8 @@ goal: main.x
 main.x: main.o $(test_o)
 	make link
 
-h: $(path_gen_headers) # update headers only
+h: # remake all headers
+	octave --no-window-system --eval "cd preprocessor; auto_gen ../SLISC"
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
@@ -55,4 +56,4 @@ main.o: $(path_headers) main.cpp
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in
-	octave --no-window-system --eval "auto_gen SLISC $$(basename $<)"
+	octave --no-window-system --eval "cd preprocessor; auto_gen ../SLISC $$(basename $<)"

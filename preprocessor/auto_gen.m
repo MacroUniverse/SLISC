@@ -117,7 +117,7 @@ for i = 1:numel(changed_file)
             break;
         elseif isempty(ind2) || ind1 < ind2 % found meta block
             [temp, ind3] = get_meta_block(str, ind1);
-            [~, ind4] = find_next(temp, 'tem\s*(\s*''', 1);
+            [~, ind4] = find_next(temp, 'tem\s*\(\s*''', 1);
             if ind4 > 0
                 ind5 = find_next(temp, '''', ind4+1);
                 current_tem = temp(ind4+1:ind5-1);
