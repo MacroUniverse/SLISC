@@ -1,12 +1,19 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 function auto_gen(path, file)
+global tem_db;
 paths = {'../preprocessor', ...
-    '../preprocessor/SLISC', ...
-    '../preprocessor/SLISC/case_conflict'};
+    '../preprocessor_new/SLISC', ...
+    '../preprocessor_new/SLISC/case_conflict'};
 old_path = pwd;
 cd(path);
-load('db.mat', 'tem');
+if exist('tem_db.mat', 'file')
+    load('tem_db.mat', 'tem_db');
+else
+    tem_db = struct('name', '', 'file', '', 'body', '', ...
+        'param', {}, 'done', [], 'out', []);
+    save('tem_db.mat', 'tem_db');
+end
 % template database
 % tem.name: name of the template
 % tem.file: path/file of the template
@@ -31,37 +38,37 @@ for i = 1:Ntp
     fprintf([in_file '...']);
     str = fileread(in_file);
     ind = 1;
-    code = cell(1, 1); k = 0;
     while true
-        ind1 = find_next(str, '//%', ind);
-        if (isempty(ind1))
+        ind1 = find_next(str, '//% ', ind);
+        ind2 = find_next(str, '//%-----', ind);
+        if isempty(ind1) && isempty(ind2)
             break;
+        elseif isempty(ind2) || ind1 < ind2 % found meta block
+            [temp, ind3] = get_meta_block(str, ind1 + 3);
+            eval(temp);
+            ind = ind3 + 1;
+            continue;
+        elseif isempty(ind1) || ind2 < ind1 % found template body
+            ind3 = find_next(str, '//%-----', ind2+3);
+            if (isempty(ind3))
+                error('no closing //%-----');
+            end
+            body = str(next_line(str, ind2):ind3-1);
+            ind4 = tem_search(current_tem);
+            if ind4 < 0
+                error('no tem() before template body!');
+            end
+            tem_db(ind4).body = body;
+            tem_db(ind4).file = [pwd '/' in_file];
+            N = size(tem_db(ind4).param, 1);
+            tem_db(ind4).done = false(N, 1);
+            tem_db(ind4).out = repmat({''}, N, 1);
+            ind = ind3 + 3; current_tem = '';
+            continue;
+        else
+            error('something wrong!');
         end
-        k = k + 1;
-        code{k} = str(ind:ind1-1);
-        ind2 = find_next(str, '//%-----', ind1);
-        type_str = str(ind1:ind2-1);
-        type_str = strrep(type_str, '//%', '');
-        eval(type_str);
-        ind2 = next_line(str, ind2);
-        ind3 = find_next(str, '//%-----', ind2);
-        if (isempty(ind3))
-            error('no closing //%-----');
-        end
-        str1 = str(ind2:ind3-1);
-        Ninst = size(types, 1);
-        for j = 1:Ninst
-            k = k + 1;
-            code{k} = [instantiate(str1, types{j,:}), newline];
-        end
-        clear types;
-        ind = next_line(str, ind3);
-    end
-    k = k + 1;
-    code{k} = str(ind:end);
-    code_cat = [code{:}];
-    filewrite(in_file(1:end-3), code_cat);
-    fprintf('done!\n');
+    end        
 end
 rmpath(paths{:});
 cd(old_path);
