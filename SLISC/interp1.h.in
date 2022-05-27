@@ -9,7 +9,7 @@
 namespace slisc {
 
 // evaluate Lgendre interpolation polynomial
-//% types = {'VecDoub'; 'SvecDoub'};
+//% tem('legendre_interp_poly', {'VecDoub'; 'SvecDoub'});
 //%------------------------------
 //% Tv = varargin{:};
 inline Doub legendre_interp_poly(@Tv@_I x, Long_I ind, Doub_I x_q)
@@ -30,9 +30,9 @@ struct poly_interp1
     gsl_spline *m_spline;
 
 // real polynomial interpolation using gsl
-//% types = {'VecDoub', 'VecDoub';
+//% tem('poly_interp1', {'VecDoub', 'VecDoub';
 //%   'SvecDoub', 'SvecDoub'
-//%   'DvecDoub', 'DvecDoub'};
+//%   'DvecDoub', 'DvecDoub'});
 //%--------------------
 //% [Tv1, Tv2] = varargin{:};
     poly_interp1(@Tv1@_I x, @Tv2@_I y)
@@ -79,9 +79,9 @@ struct poly_comp_interp1
     vecDoub y_real, y_imag;
 
 // complex valued polynomial interpolation using gsl
-//% types = {'VecDoub', 'VecComp';
+//% tem('poly_comp_interp1', {'VecDoub', 'VecComp';
 //%   'SvecDoub', 'SvecComp'
-//%   'DvecDoub', 'DvecComp'};
+//%   'DvecDoub', 'DvecComp'});
 //%--------------------
 //% [Tv1, Tv2] = varargin{:};
     poly_comp_interp1(@Tv1@_I x, @Tv2@_I y)

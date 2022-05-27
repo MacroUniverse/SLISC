@@ -5,11 +5,11 @@
 #include "string.h"
 
 namespace slisc {
-//% types = {
+//% tem('Vbase', {
 //%     'Char'; 'Int'; 'Llong'; 'Long';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
-//%     'Fimag'; 'Imag'; 'Limag';};
+//%     'Fimag'; 'Imag'; 'Limag';});
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];

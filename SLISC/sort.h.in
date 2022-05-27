@@ -4,7 +4,7 @@
 #include "unicode.h"
 
 namespace slisc {
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Str'; 'Str32'};
+//% tem('sort_v', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Str'; 'Str32'});
 //%-----------------------------------
 //% T = varargin{:};
 // sort elements of arr
@@ -70,8 +70,8 @@ inline void sort_v(@T@ *arr, Long_I n)
 }
 //%------------------------
 
-//% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
-//%          'vecStr'; 'vecStr32'};
+//% tem('sort', {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
+//%          'vecStr'; 'vecStr32'});
 //%---------------------
 //% T = varargin{:};
 // sort elements of v
@@ -80,7 +80,7 @@ inline void sort(@T@_IO v)
 //%------------------------
 
 // sort v while making the same change for v1
-//% types = {
+//% tem('sort_vv', {
 //%     'Char', 'Llong';
 //%     'Int', 'Int';
 //%     'Int', 'Llong';
@@ -91,7 +91,7 @@ inline void sort(@T@_IO v)
 //%     'Str', 'Str';
 //%     'Str32', 'Llong';
 //%     'Str32', 'Str32';
-//% };
+//% });
 //%------------------------
 //% [T, T1] = varargin{:};
 //  from Numerical Recipes 3ed
@@ -169,7 +169,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //%------------------------
 
 // sort v while making the same change for v1
-//% types = {
+//% tem('sort2', {
 //%     'VecChar', 'VecLlong';
 //%     'VecInt', 'VecInt';
 //%     'VecInt', 'VecLlong';
@@ -184,7 +184,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //%     'vecStr32', 'VecLlong';
 //%     'vecStr32', 'vecLlong';
 //%     'vecStr32', 'vecStr32';
-//% };
+//% });
 //%---------------------
 //% [T, T1] = varargin{:};
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
@@ -225,10 +225,10 @@ inline void sort_case_insens(vecStr32_IO v)
 
 // case insensitive sorting for string
 // result is independent of the input order
-//% types = {
+//% tem('sort_case_insens', {
 //%     'vecStr', 'vecStr';
 //%     'vecStr', 'vecLlong';
-//% };
+//% });
 //%------------------------
 //% [T, T1] = varargin{:};
 inline void sort_case_insens(@T@_IO v, @T1@_IO v1)

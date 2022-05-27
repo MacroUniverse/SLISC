@@ -3,7 +3,7 @@
 // "_c" means lower level const
 
 namespace slisc {
-//% types = {
+//% tem('Dvec', {
 //%     'Char', true; 'Char', false;
 //%     'Int', true; 'Int', false;
 //%     'Llong', true; 'Llong', false;
@@ -16,7 +16,7 @@ namespace slisc {
 //%     'Comp', true; 'Comp', false;
 //%     'Lcomp', true; 'Lcomp', false;
 //%     'Qcomp', true; 'Qcomp', false;
-//% };
+//% });
 //%------------------------
 //% [T, constness] = varargin{:};
 //% DvecT = ['Dvec' T];

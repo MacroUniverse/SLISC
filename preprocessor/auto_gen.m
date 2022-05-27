@@ -156,7 +156,7 @@ for i = 1:numel(changed_file)
         for j = 1:numel(tem_db(ind3).out)
             temp = [temp, tem_db(ind3).out{j}, newline];
         end
-        str = [str(1:ind1-1), temp, str(ind2+1:end)];
+        str = [str(1:ind1-1), temp(1:end-1), str(ind2+1:end)];
         ind = ind1;
     end
     filewrite(changed_file{i}(1:end-3), str);

@@ -8,10 +8,10 @@ namespace slisc {
 
 // matrix / vector multiplication
 
-//% types = {
+//% tem('expokit_mul', {
 //%     'Comp', 'McooDoub', 'Comp';
 //%     'Comp', 'McooComp', 'Comp';
-//% };
+//% });
 //%---------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
@@ -20,10 +20,10 @@ void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
 }
 //%---------------------
 
-//% types = {
+//% tem('expokit_mul2', {
 //%     'Comp', 'CmobdDoub', 'Comp';
 //%     'Comp', 'CmobdComp', 'Comp';
-//% };
+//% });
 //%---------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
@@ -33,11 +33,11 @@ void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
 //%---------------------
 
 // not optimized for symmetric or Hermitian matrix
-//% types = {
+//% tem('expokit_mul3', {
 //%     'Comp', 'CmatDoub', 'Comp';
 //%     'Comp', 'CmatComp', 'Comp';
 //%     'Doub', 'CmatDoub', 'Doub';
-//% };
+//% });
 //%---------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
@@ -268,7 +268,7 @@ void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-//% types = {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'; 'CmatDoub'; 'CmatComp'};
+//% tem('ZGEXPV', {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'; 'CmatDoub'; 'CmatComp'});
 //%------------------
 //% Tm = varargin{:};
 void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
@@ -528,7 +528,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-//% types = {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'; 'CmatDoub'; 'CmatComp';};
+//% tem('ZHEXPV', {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'; 'CmatDoub'; 'CmatComp';});
 //%------------------
 //% Tm = varargin{:};
 void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
@@ -800,7 +800,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // use ZGEXPV() for MatCoo<>, ZHEXPV() for MatCooH<>
 // v cannot be empty!
 
-//% types = {
+//% tem('expv', {
 //%  'CmobdDoub', 'SvecComp';
 //%  'McooDoub', 'VecComp';
 //%  'McooComp', 'SvecComp';
@@ -808,7 +808,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 //%  'CmobdComp', 'SvecComp';
 //%  'CmatDoub', 'VecComp';
 //%  'CmatComp', 'VecComp';
-//% };
+//% });
 //%----------------------
 //% [Tm, Tv] = varargin{:};
 inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)

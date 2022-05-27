@@ -10,12 +10,12 @@ namespace slisc {
 
 // === coulomb phase shift ===
 #ifdef SLS_USE_GSL
-//% types = {
+//% tem('hydrogen_rR', {
 //%   'VecDoub' 'VecDoub';
 //%   'VecDoub' 'SvecDoub';
 //%   'SvecDoub' 'VecDoub';
 //%   'SvecDoub' 'SvecDoub';
-//% };
+//% });
 //%-----------------------
 //% [Tv, Tv1] = varargin{:};
 // scaled hydrogen bound state radial wave function, normalized

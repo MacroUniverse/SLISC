@@ -103,7 +103,7 @@ inline Comp randComp()
     return Comp(randDoub(), randDoub());
 }
 
-//% types = {
+//% tem('rand', {
 //%    'VecLlong'; 'VecDoub'; 'VecQdoub';
 //%    'VecComp'; 'VecQcomp';
 //%    'SvecLlong'; 'SvecDoub'; 'SvecComp';
@@ -112,7 +112,7 @@ inline Comp randComp()
 //%    'CmatComp'; 'CmatQcomp';
 //%    'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%    'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
-//% };
+//% });
 //%--------------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% if is_Qdoub(Ts) || is_Qcomp(Ts)

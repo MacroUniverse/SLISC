@@ -5,7 +5,7 @@
 #ifdef SLS_USE_LAPACKE
 namespace slisc {
 //not the most accurate, see also ?gerfs
-//% types = {'CmatDoub'; 'ScmatDoub';};
+//% tem('inv_mat', {'CmatDoub'; 'ScmatDoub';});
 //%---------------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -31,7 +31,7 @@ inline void inv_mat(@T@_IO A)
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
 // ####### Not Thread Safe ######
-//% types = {
+//% tem('lin_eq', {
 //% 'CmatDoub' 'CmatDoub';
 //% 'ScmatDoub' 'CmatDoub';
 //% 'ScmatDoub' 'ScmatDoub';
@@ -39,7 +39,7 @@ inline void inv_mat(@T@_IO A)
 //% 'SvecDoub' 'CmatDoub';
 //% 'VecComp' 'CmatComp';
 //% 'SvecComp' 'ScmatComp';
-//% };
+//% });
 //%---------------------
 //% [Tx, Ta] = varargin{:};
 //% Tsx = value_type(Tx); Tsa = value_type(Ta);
@@ -88,7 +88,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
 // A will be changed to LU matrix
 // ipiv: integer work space of size a.n0()
-//% types = {
+//% tem('lin_eq2', {
 //% 'CmatDoub' 'CmatDoub' 'SvecInt';
 //% 'ScmatDoub' 'CmatDoub' 'SvecInt';
 //% 'ScmatDoub' 'ScmatDoub' 'SvecInt';
@@ -96,7 +96,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% 'SvecDoub' 'CmatDoub' 'SvecInt';
 //% 'VecComp' 'CmatComp' 'SvecInt';
 //% 'SvecComp' 'ScmatComp' 'SvecInt';
-//% };
+//% });
 //%---------------------
 //% [Tx, Ta, Ti] = varargin{:};
 //% Tsx = value_type(Tx); Tsa = value_type(Ta);
@@ -139,11 +139,11 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
 // ####### Not Thread Safe ######
-//% types = {
+//% tem('lin_eq3', {
 //%     'VecDoub' 'CbandDoub';
 //%     'VecComp' 'CbandComp';
 //%     'SvecComp' 'CbandComp';
-//% };
+//% });
 //%---------------------
 //% [Tx, Ta] = varargin{:};
 //% Tsx = value_type(Tx); Tsa = value_type(Ta);
@@ -196,12 +196,12 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 // VecInt ipiv(a.n0());
 // @Ta@ a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
 // copy(a1, a);
-//% types = {
+//% tem('lin_eq4', {
 //%     'VecDoub' 'CbandDoub' 'VecInt';
 //%     'VecComp' 'CbandComp' 'VecInt';
 //%     'SvecComp' 'CbandComp' 'SvecInt';
 //%     'ScmatComp' 'CbandComp' 'SvecInt';
-//% };
+//% });
 //%---------------------
 //% [Tx, Ta, Ti] = varargin{:};
 //% Tsx = value_type(Tx); Tsa = value_type(Ta);

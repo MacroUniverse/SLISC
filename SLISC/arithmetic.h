@@ -448,6 +448,11 @@ inline Ldoub sum_abs(MatLdoub_I v)
     return sum_abs_v(v.p(), v.size());
 }
 
+inline Qdoub sum_abs(MatQdoub_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
 inline Float sum_abs(MatFcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
@@ -459,6 +464,11 @@ inline Doub sum_abs(MatComp_I v)
 }
 
 inline Ldoub sum_abs(MatLcomp_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
+inline Qdoub sum_abs(MatQcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
 }

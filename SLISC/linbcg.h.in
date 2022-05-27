@@ -6,9 +6,9 @@
 
 namespace slisc {
 
-//% types = {
+//% tem('Linbcg', {
 //%    'VecDoub'; 'VecQdoub';
-//% };
+//% });
 //%------------------------------
 //% Tv = varargin{:}; Ts = value_type(Tv);
 //% if is_Qdoub(Ts) || is_Qcomp(Ts)

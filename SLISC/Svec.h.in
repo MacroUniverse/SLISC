@@ -6,7 +6,7 @@
 // "_c" means lower level const
 
 namespace slisc {
-//% types = {
+//% tem('Svbase', {
 //%     'Char', true;   'Char', false;
 //%     'Int', true;    'Int', false;
 //%     'Llong', true;  'Llong', false;
@@ -22,7 +22,7 @@ namespace slisc {
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;
-//% };
+//% });
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvbaseT = ['Svbase' T];
@@ -184,7 +184,7 @@ inline @Class@::~@Class@() {}
 //%     end
 //%------------------------
 
-//% types = {
+//% tem('Svec', {
 //%     'Char', true;   'Char', false;
 //%     'Int', true;    'Int', false;
 //%     'Llong', true;  'Llong', false;
@@ -200,7 +200,7 @@ inline @Class@::~@Class@() {}
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;
-//% };
+//% });
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvecT = ['Svec' T]; SvbaseT = ['Svbase' T];

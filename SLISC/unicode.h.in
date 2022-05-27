@@ -171,7 +171,7 @@ inline Str32 operator+(Str_I str, Str32_I str32)
     return utf8to32(str) + str32;
 }
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'};
+//% tem('num2str2', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'});
 //%-----------------
 //% T = varargin{:};
 inline void num2str(Str32_O str, @T@_I num, Long_I min_len = -1)

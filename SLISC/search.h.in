@@ -7,7 +7,7 @@ namespace slisc {
 
 // see if elm == vec[i], return i
 // return -1 if not found
-//% types = {
+//% tem('search', {
 //%     'Int', 'VecInt';
 //%     'Llong', 'VecLlong';
 //%     'Char', 'Str';
@@ -15,7 +15,7 @@ namespace slisc {
 //%     'Str', 'vecStr';
 //%     'Str32', 'vecStr32';
 //%     'Llong', 'vecLlong';
-//% };
+//% });
 //%------------------------
 //% [Ts, Tv] = varargin{:};
 inline Long search(@Ts@_I s, @Tv@_I v, Long_I start = 0)
@@ -32,10 +32,10 @@ inline Long search(@Ts@_I s, @Tv@_I v, Long_I start = 0)
 // see if `match_head(s, v[i])`, return i
 // see if `match_head(v[i], s)`, return i
 // return -1 if not found
-//% types = {
+//% tem('search_head', {
 //%     'Str', 'vecStr';
 //%     'Str32', 'vecStr32';
-//% };
+//% });
 //%------------------------
 //% [Ts, Tv] = varargin{:};
 inline Long search_head(@Ts@_I s_short, @Tv@_I v_long, Long_I start = 0)
@@ -65,9 +65,9 @@ inline Long search_head(@Tv@_I v_short, @Ts@_I s_long, Long_I start = 0)
 // if s > v[N-1], ind = N-1;
 // else, v[ind] < s < v[ind+1];
 // algorithm: bisection
-//% types = {
+//% tem('lookup', {
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'vecInt'; 'vecLlong'; 'vecStr'; 'vecStr32';
-//% };
+//% });
 //%--------------------------
 //% T = varargin{:}; Ts = value_type(T);
 inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
@@ -148,7 +148,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 // check if v[i] == v[j] for any i and j > i
 // return i >= start
 // return -1 if no reapeat
-//% types = {'vecStr'; 'vecStr32'; 'VecChar'; 'VecInt'; 'VecLlong'; 'vecLlong'};
+//% tem('find_repeat', {'vecStr'; 'vecStr32'; 'VecChar'; 'VecInt'; 'VecLlong'; 'vecLlong'});
 //%--------------------------
 //% T = varargin{:};
 inline Long find_repeat(@T@_I v, Long_I start = 0)
@@ -179,14 +179,14 @@ inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
 // search a row from a matrix
 // starting from the row `start`
 // return the row index, return -1 if not found
-//% types = {
+//% tem('search_row', {
 //%   %  'VecInt', 'MatInt';
 //%   %  'VecLlong', 'MatLlong';
 //%     'VecInt', 'CmatInt';
 //%     'VecLlong', 'CmatLlong';
 //%     'DvecLlong', 'CmatLlong';
 //%     'VecDoub', 'CmatDoub';
-//% };
+//% });
 //%--------------------------
 //% [Tv, Tmat] = varargin{:};
 //% Tsli = cut2_type(Tmat);

@@ -11,9 +11,9 @@ namespace slisc {
 // https://software.intel.com/en-us/node/834918#DAEC7CD0-620A-4696-9612-C295F8211646
 
 // cut the non-zero band
-//% types = {
+//% tem('band', {
 //%     'Doub'; 'Comp';
-//% };
+//% });
 //%------------------------------
 //% T = varargin{:};
 //% CbandT = ['Cband' T]; DcmatT = ['Dcmat' T];
@@ -30,9 +30,9 @@ inline @DcmatT@_c band(@CbandT@_I a)
 
 // detect band width of dense matrix
 // a(i,j) < tol is considered 0
-//% types = {
+//% tem('nband', {
 //%     'CmatDoub'; 'CmatComp'; 'ScmatDoub'; 'ScmatComp';
-//% };
+//% });
 //%----------------
 //% Tmat = varargin{:}; Ttol = rm_comp(value_type(Tmat));
 inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
@@ -204,9 +204,9 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
     }
 }
 
-//% types = {
+//% tem('times_band', {
 //%     'CbandComp', 'CbandComp', 'Doub';
-//% };
+//% });
 //%----------------------------
 //% [Tv, Tv1, Ts] = varargin{:};
 inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
@@ -219,13 +219,13 @@ inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
 
 // matrix-vector multiplication for band matrix
 #ifdef SLS_USE_CBLAS
-//% types = {
+//% tem('mul_band', {
 //%     'VecDoub' 'CbandDoub' 'VecDoub';
 //%     'VecComp' 'CbandDoub' 'VecComp';
 //%     'VecComp' 'CbandComp' 'VecComp';
 //%     'VecComp' 'CbandComp' 'SvecComp';
 //%     'SvecComp' 'CbandDoub' 'SvecComp';
-//% };
+//% });
 //%------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsx = value_type(Tx); Tsy = value_type(Ty);

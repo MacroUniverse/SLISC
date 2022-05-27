@@ -3,11 +3,11 @@
 #include "Vbase.h"
 
 namespace slisc {
-//% types = {
+//% tem('Mat', {
 //%     'Char'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp';
-//%     'Fimag'; 'Imag'; 'Limag';};
+//%     'Fimag'; 'Imag'; 'Limag';});
 //%------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];

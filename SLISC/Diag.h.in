@@ -4,7 +4,7 @@
 #include "Vec.h"
 
 namespace slisc {
-//% types = {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp';};
+//% tem('Diag', {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp';});
 //%----------------------------------------
 //% T = varargin{:};
 //% DiagT = ['Diag' T];

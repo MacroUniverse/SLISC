@@ -10,8 +10,8 @@ namespace slisc {
 
 Llong sqr(Long);
 
-//% types = {'Int'; 'Llong';
-//%   'Doub'; 'Comp'; 'Qdoub'; 'Qcomp';};
+//% tem('Cmobd', {'Int'; 'Llong';
+//%   'Doub'; 'Comp'; 'Qdoub'; 'Qcomp';});
 //%-----------------
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];

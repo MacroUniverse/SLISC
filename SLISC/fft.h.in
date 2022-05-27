@@ -84,7 +84,7 @@ Comp fft_interp(Doub_I x1, VecDoub_I x, VecComp_I y);
 
 void fft_interp(VecComp_O y1, VecDoub_I x1, VecDoub_I x, VecComp_I y);
 
-//% types = {'VecInt'; 'VecDoub'; 'VecComp'; 'DvecDoub'; 'DvecComp'};
+//% tem('fftshift', {'VecInt'; 'VecDoub'; 'VecComp'; 'DvecDoub'; 'DvecComp'});
 //%-----------------------
 //% T = varargin{:};
 inline void fftshift(@T@_IO v)
@@ -98,7 +98,7 @@ inline void fftshift(@T@_IO v)
 }
 //%----------------
 
-//% types = {'MatDoub'; 'MatComp'; 'CmatDoub'; 'CmatComp';};
+//% tem('fftshift2', {'MatDoub'; 'MatComp'; 'CmatDoub'; 'CmatComp';});
 //%----------------
 //% T = varargin{:};
 //% Tsli1 = cut1_type(T);

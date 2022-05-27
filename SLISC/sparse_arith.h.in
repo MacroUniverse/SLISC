@@ -6,12 +6,12 @@
 #include "sort.h"
 
 namespace slisc {
-//% types = {
+//% tem('mul_cmat_cmat_diag', {
 //%        'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~(is_promo(T, T1) && is_promo(T, T2))
@@ -26,12 +26,12 @@ inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, cons
 }
 //%------------------------
 
-//% types = {
+//% tem('mul_cmat_diag_cmat', {
 //%        'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Doub';
 //%     'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~(is_promo(T, T1) && is_promo(T, T2))
@@ -46,11 +46,11 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 }
 //%------------------------
 
-//% types = {
+//% tem('mul_v_coo_v', {
 //%     'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%-------------------------------
 //% [Ty,T,Tx] = varargin{:};
 //% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
@@ -82,12 +82,12 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 }
 //%------------------------
 
-//% types = {
+//% tem('mul_v_cmatobd_v', {
 //%     'Int', 'Int', 'Int';
 //%     'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
 //%     'Comp', 'Comp', 'Comp';
-//% };
+//% });
 //%-------------------------------
 //% [Ty,T,Tx] = varargin{:};
 //% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
@@ -134,7 +134,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 }
 //%-----------------------
 
-//% types = {
+//% tem('mul_vmv', {
 //%     'VecInt', 'CmobdInt', 'VecInt';
 //%     'VecDoub', 'CmobdDoub', 'VecDoub';
 //%     'VecComp', 'CmobdComp', 'VecComp';
@@ -142,7 +142,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //%     'VecComp', 'CmobdDoub', 'SvecComp';
 //%     'SvecDoub', 'CmobdDoub', 'SvecDoub';
 //%     'SvecComp', 'CmobdDoub', 'SvecComp';
-//% };
+//% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
@@ -155,12 +155,12 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 }
 //%------------------------------
 
-//% types = {
+//% tem('mul_yaxs', {
 //%     'VecDoub', 'McooDoub', 'VecDoub';
 //%     'VecComp', 'McooComp', 'VecComp';
 //%     'SvecDoub', 'McooDoub', 'SvecDoub';
 //%     'SvecComp', 'McooDoub', 'SvecComp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
@@ -179,7 +179,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 }
 //%------------------------
 
-//% types = {
+//% tem('mul_yaxs2', {
 //%        'CmatDoub', 'CmatDoub', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagComp';
@@ -188,7 +188,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     'CmatComp', 'DiagComp', 'ScmatDoub';
 //%     'CmatComp', 'DiagComp', 'CmatComp';
 //%     'CmatComp', 'DiagDoub', 'CmatComp';
-//% };
+//% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
@@ -209,7 +209,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 }
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'};
+//% tem('sort_r', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%------------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo' T];
@@ -234,7 +234,7 @@ inline void sort_r(@McooT@_IO a)
 
 // sort to column major and combine elements, the i-th element is moved to desk[i]-th element
 // desk[i] might repeat
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('sort_col_dry', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -276,12 +276,12 @@ inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new
 }
 //%----------------------------
 
-//% types = {
+//% tem('*=sp', {
 //%     'McooDoub', 'Doub';
 //%     'McooComp', 'Doub';
 //%     'McooComp', 'Imag';
 //%     'McooComp', 'Comp';
-//% };
+//% });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 inline void operator*=(@T@_IO v, @Ts@_I s)
@@ -290,11 +290,11 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 }
 //%------------------------
 
-//% types = {
+//% tem('*=obd', {
 //%     'CmobdDoub', 'Doub';
 //%     'CmobdComp', 'Doub';
 //%     'CmobdComp', 'Comp';
-//% };
+//% });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 inline void operator*=(@T@_IO v, @Ts@_I s)
@@ -303,9 +303,9 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 }
 //%------------------------
 
-//% types = {
+//% tem('times_obd', {
 //%     'CmobdComp', 'CmobdDoub', 'Imag';
-//% };
+//% });
 //%----------------------------
 //% [T, T1, Ts] = varargin{:};
 inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
@@ -314,9 +314,9 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 }
 //%------------------------
 
-//% types = {
+//% tem('times_coo', {
 //%     'McooComp', 'McooDoub', 'Imag';
-//% };
+//% });
 //%----------------------------
 //% [T, T1, Ts] = varargin{:};
 inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
@@ -326,7 +326,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 //%------------------------
 
 // infinity norm (using maximum absolute sum of columns)
-//% types = {'CmatDoub'; 'CmatComp';};
+//% tem('norm_inf', {'CmatDoub'; 'CmatComp';});
 //%-----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% Tr = rm_comp(Ts);
@@ -342,7 +342,7 @@ inline @Tr@ norm_inf(@T@_I A)
 //%-----------------------------
 
 // infinity norm (using maximum absolute sum of columns)
-//% types = {'CmobdInt'; 'CmobdDoub'; 'CmobdComp';};
+//% tem('norm_inf2', {'CmobdInt'; 'CmobdDoub'; 'CmobdComp';});
 //%-----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% Tr = rm_comp(Ts);
@@ -379,7 +379,7 @@ inline @Tr@ norm_inf(@T@_I A)
 //%---------------------
 
 // infinity norm (using maximum absolute sum of columns)
-//% types = {'McooDoub'; 'McooComp';};
+//% tem('norm_inf3', {'McooDoub'; 'McooComp';});
 //%-----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 //% Tr = rm_comp(Ts);

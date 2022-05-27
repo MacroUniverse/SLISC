@@ -5,7 +5,7 @@
 
 namespace slisc {
 
-//% types = {'Float'; 'Doub'; 'Ldoub';};
+//% tem('Imag', {'Float'; 'Doub'; 'Ldoub';});
 //%-----------------
 //% T = varargin{:};
 //% Timag = add_imag(T);
@@ -71,7 +71,7 @@ inline @T@ abs(@Timag@_I val)
 const Imag I(1);
 
 // imag +-*/ imag
-//% types = {
+//% tem('+Imag', {
 //%     'Float', 'Float';
 //%     'Float', 'Doub';
 //%     'Float', 'Ldoub';
@@ -81,7 +81,7 @@ const Imag I(1);
 //%     'Ldoub', 'Float';
 //%     'Ldoub', 'Doub';
 //%     'Ldoub', 'Ldoub';
-//% };
+//% });
 //%-----------------
 //% [T1, T2] = varargin{:};
 //% Ti1 = add_imag(T1); Ti2 = add_imag(T2);

@@ -2,7 +2,7 @@
 #include "Vec.h"
 
 namespace slisc {
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];

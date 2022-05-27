@@ -531,7 +531,7 @@ inline void read(Str32_O str32, Str32_I fname)
 // read the file written by `write_vec_str()`
 // file must be ended by a return
 
-//% types = {'Str'; 'Str32';};
+//% tem('read_vec_str', {'Str'; 'Str32';});
 //%--------------------
 //% T = varargin{:};
 inline void read_vec_str(vec@T@_O vec_str, @T@_I fname)
@@ -560,7 +560,7 @@ inline void read_vec_str(vec@T@_O vec_str, @T@_I fname)
 // `fin.ignore(N)` skip N bytes
 //===================================
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('write', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%--------------------
 //% T = varargin{:};
 inline void write(ofstream &fout, @T@_I s)
@@ -608,7 +608,7 @@ inline void read(ifstream &fin, Str32_O str)
 // skipt specific number of lines at the beginning
 // matrix will auto-resize
 // spaces & new line at the end of file are allowed
-//% types = {'CmatInt'; 'CmatLlong'; 'CmatDoub';};
+//% tem('read', {'CmatInt'; 'CmatLlong'; 'CmatDoub';});
 //%--------------------
 //% T = varargin{:};
 //% Ts = value_type(T);

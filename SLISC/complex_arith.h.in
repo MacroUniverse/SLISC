@@ -3,7 +3,7 @@
 #include "global.h"
 
 namespace slisc {
-//% types = {
+//% tem('==comp', {
 //%     'Char', 'Fcomp';
 //%     'Char', 'Comp';
 //%     'Char', 'Lcomp';
@@ -36,7 +36,7 @@ namespace slisc {
 //%     'Comp', 'Lcomp';
 //%     'Lcomp', 'Fcomp';
 //%     'Lcomp', 'Comp';
-//%     };
+//%     });
 //%------------------------
 //% [T1, T2] = varargin{1:2};
 inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
@@ -57,9 +57,9 @@ inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
 //%------------------------
 
 // reference to real/imaginary part
-//% types = {
+//% tem('real_r', {
 //%    'Fcomp'; 'Comp'; 'Lcomp';
-//% };
+//% });
 //%----------------------------------
 //% Tc = varargin{:};
 //% Tr = rm_comp(Tc);
@@ -74,7 +74,7 @@ inline @Tr@ &imag_r(@Tc@ &c)
 }
 //%----------------------------------
 
-//% types = {
+//% tem('+=comp', {
 //%    'Fcomp', 'Doub';
 //%    'Fcomp', 'Ldoub';
 //%    'Comp', 'Float';
@@ -88,7 +88,7 @@ inline @Tr@ &imag_r(@Tc@ &c)
 //%    'Comp', 'Lcomp';
 //%    'Lcomp', 'Fcomp';
 //%    'Lcomp', 'Comp';
-//% };
+//% });
 //%----------------------------------
 //% [T1, T2] = varargin{:};
 //% if is_real(T2);
@@ -117,7 +117,7 @@ inline void operator/=(@T1@_O z, @T2@_I x)
 }
 //%------------------------
 
-//% types = {
+//% tem('+comp', {
 //%     'Char', 'Fcomp';
 //%     'Char', 'Comp';
 //%     'Char', 'Lcomp';
@@ -156,7 +156,7 @@ inline void operator/=(@T1@_O z, @T2@_I x)
 //%     'Comp', 'Lcomp';
 //%     'Lcomp', 'Fcomp';
 //%     'Lcomp', 'Comp';
-//% };
+//% });
 //%-------------------------------------
 //% [T1,T2] = varargin{:};
 //% T = promo_type(T1,T2);

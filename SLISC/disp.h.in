@@ -4,7 +4,7 @@
 
 namespace slisc {
 const Int def_disp_prec = 8;
-//% types = {
+//% tem('disp', {
 //%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
@@ -18,7 +18,7 @@ const Int def_disp_prec = 8;
 //%     'DcmatComp'; 'DcmatLcomp'; 'DcmatQcomp';
 //%     'CmobdInt'; 'CmobdDoub'; 'CmobdComp'; 'CbandDoub'; 'CbandComp';
 //%     'McooInt'; 'McooDoub'; 'McooComp';
-//% };
+//% });
 //%-----------------------------
 //% T = varargin{:};
 //% Ts = value_type(T);

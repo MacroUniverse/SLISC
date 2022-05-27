@@ -8,9 +8,9 @@ namespace slisc {
 // string utilities
 
 // see if a string match the first part of another string
-//% types = {
+//% tem('match_head', {
 //%     'Str'; 'Str32';
-//% };
+//% });
 //%------------------------
 //% T = varargin{:};
 inline Bool match_head(@T@_I str_short, @T@_I str_long)
@@ -21,7 +21,7 @@ inline Bool match_head(@T@_I str_short, @T@_I str_long)
 }
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub';};
+//% tem('num2str', {'Char'; 'Int'; 'Llong'; 'Doub';});
 //%---------------------
 //% T = varargin{:};
 inline void num2str(Str_O str, @T@_I s, Long_I min_len = -1)
@@ -184,7 +184,7 @@ inline Long replace(Str_O str1, Str_I str, Str_I key, Str_I new_key)
 }
 
 // convert string to lower case
-//% types = {'Str'; 'Str32'};
+//% tem('to_lower', {'Str'; 'Str32'});
 //%----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 inline void to_lower(@T@_O str)
@@ -202,7 +202,7 @@ inline void to_lower(@T@_O str)
 //%----------------------------
 
 // convert string to lower case
-//% types = {'Str'; 'Str32'};
+//% tem('to_lower2', {'Str'; 'Str32'});
 //%----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 inline void to_lower(@T@_O str, @T@_I STR)
@@ -221,7 +221,7 @@ inline void to_lower(@T@_O str, @T@_I STR)
 //%----------------------------
 
 // convert string to lower case
-//% types = {'Str'; 'Str32'};
+//% tem('to_upper', {'Str'; 'Str32'});
 //%----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 inline void to_upper(@T@_O STR, @T@_I str)
@@ -240,7 +240,7 @@ inline void to_upper(@T@_O STR, @T@_I str)
 //%----------------------------
 
 // convert string to lower case
-//% types = {'Str'; 'Str32'};
+//% tem('to_upper2', {'Str'; 'Str32'});
 //%----------------------------
 //% T = varargin{:}; Ts = value_type(T);
 inline void to_upper(@T@_IO str)
@@ -257,7 +257,7 @@ inline void to_upper(@T@_IO str)
 }
 //%----------------------------
 
-//% types = {'vecStr'; 'vecStr32'};
+//% tem('to_lower3', {'vecStr'; 'vecStr32'});
 //%----------------------------
 //% T = varargin{:};
 inline void to_lower(@T@_O vs, @T@_I VS)
@@ -269,7 +269,7 @@ inline void to_lower(@T@_O vs, @T@_I VS)
 }
 //%-----------------------------
 
-//% types = {'vecStr'; 'vecStr32'};
+//% tem('to_lower4', {'vecStr'; 'vecStr32'});
 //%----------------------------
 //% T = varargin{:};
 inline void to_lower(@T@_IO vs)
@@ -280,7 +280,7 @@ inline void to_lower(@T@_IO vs)
 }
 //%-----------------------------
 
-//% types = {'vecStr'; 'vecStr32'};
+//% tem('to_upper3', {'vecStr'; 'vecStr32'});
 //%----------------------------
 //% T = varargin{:};
 inline void to_upper(@T@_O VS, @T@_I vs)
@@ -292,7 +292,7 @@ inline void to_upper(@T@_O VS, @T@_I vs)
 }
 //%-----------------------------
 
-//% types = {'vecStr'; 'vecStr32'};
+//% tem('to_upper4', {'vecStr'; 'vecStr32'});
 //%----------------------------
 //% T = varargin{:};
 inline void to_upper(@T@_IO vs)

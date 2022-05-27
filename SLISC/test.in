@@ -1,4 +1,4 @@
-//# types = [['Int', 'int'],['Doub', 'doub'],['Comp', 'comp']]
+//# tem('', [['Int', 'int'],['Doub', 'doub'],['Comp', 'comp']]
 //#-----------------
 //# T1, T2 = types[i]
 void fun() {

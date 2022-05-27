@@ -2,7 +2,7 @@
 #include "Svec.h"
 
 namespace slisc {
-//% types = {
+//% tem('Scmat3', {
 //%     'Char', true;   'Char', false;
 //%     'Int', true;    'Int', false;
 //%     'Llong', true;  'Llong', false;
@@ -16,7 +16,7 @@ namespace slisc {
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;
-//% };
+//% });
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvbaseT = ['Svbase' T];

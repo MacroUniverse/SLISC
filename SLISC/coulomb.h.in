@@ -134,12 +134,12 @@ inline Doub coulombF(Int_I l, Doub_I k, Doub_I r, Doub_I Z = -1.)
 }
 
 // cut the non-zero band
-//% types = {
+//% tem('coulombF', {
 //%     'VecDoub', 'VecDoub';
 //%     'VecDoub', 'SvecDoub';
 //%     'SvecDoub', 'VecDoub';
 //%     'SvecDoub', 'SvecDoub';
-//% };
+//% });
 //%------------------------------
 //% [Tv1, Tv2] = varargin{:};
 inline void coulombF(@Tv1@_O F, Int_I l, Doub_I k, @Tv2@_I r, Doub_I Z = -1.)

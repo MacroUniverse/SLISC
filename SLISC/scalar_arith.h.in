@@ -4,7 +4,7 @@
 
 namespace slisc {
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';};
+//% tem('sign', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';});
 //%-------------------------------
 //% T = varargin{:};
 //% if is_Qdoub(T)
@@ -17,7 +17,7 @@ constexpr @T@ sign(@T@_I s)
 //% end
 //%-------------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';};
+//% tem('sign2', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';});
 //%-------------------------------
 //% T = varargin{:};
 //% if is_Qdoub(T)
@@ -30,7 +30,7 @@ inline @T@ sign(@T@_I a, @T@_I b)
 //% end
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Uint'; 'Llong'; 'Ullong';};
+//% tem('isodd', {'Char'; 'Int'; 'Uint'; 'Llong'; 'Ullong';});
 //%-------------------------------
 //% T = varargin{:};
 inline Bool isodd(@T@_I n)
@@ -39,7 +39,7 @@ inline Bool isodd(@T@_I n)
 }
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'};
+//% tem('ispow2', {'Char'; 'Int'; 'Llong'});
 //%-------------------------------
 //% T = varargin{:};
 inline Bool ispow2(@T@_I n)
@@ -48,7 +48,7 @@ inline Bool ispow2(@T@_I n)
 }
 //%-----------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Ldoub'; 'Qdoub'; 'Comp'; 'Lcomp'; 'Qcomp';};
+//% tem('to_num', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Ldoub'; 'Qdoub'; 'Comp'; 'Lcomp'; 'Qcomp';});
 //%------------------------------
 //% T = varargin{:};
 //% if is_Qdoub(T) || is_Qcomp(T)
@@ -72,14 +72,14 @@ inline @T@ to_num(@T@_I x) { return x; }
 // 3. "mod_eu()" always return positive modulus
 // when both numbers are positive, all cases returns the same result
 // see https://en.wikipedia.org/wiki/Modulo_operation
-//% types = {
+//% tem('mod', {
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Llong', 'Int';
 //%     'Doub', 'Doub';
 //%     'Ldoub', 'Ldoub';
 //%     'Qdoub', 'Qdoub';
-//% };
+//% });
 //%--------------------------
 //% [T1, T2] = varargin{:};
 //% T = promo_type(T1, T2);
@@ -153,14 +153,14 @@ inline @T@ mod_eu(Long_O n, @T1@_I s, @T2@_I d)
 //% end
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';};
+//% tem('sqr', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%-----------------------------------
 //% T = varargin{:};
 inline @T@ sqr(@T@_I a) { return a * a; }
 //%------------------------
 
-//% types = {'Int'; 'Doub'; 'Comp';
-//%     };
+//% tem('abs2', {'Int'; 'Doub'; 'Comp';
+//%     });
 //%-------------------------------
 //% T = varargin{:};
 //% if is_real(T)

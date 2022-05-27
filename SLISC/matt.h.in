@@ -46,7 +46,7 @@ public:
 typedef const Matt &Matt_I;
 typedef Matt &Matt_O, &Matt_IO;
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'};
+//% tem('matt_write_scalar', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%-----------------------------
 //% T = varargin{:};
 inline void matt_write_scalar(@T@_I s, ofstream &m_out)
@@ -76,7 +76,7 @@ inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 }
 //%------------------------
 
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'};
+//% tem('matt_read_scalar', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%------------------------------
 //% T = varargin{:};
 //% if is_Char(T)
@@ -308,7 +308,7 @@ inline Matt::~Matt()
 }
 
 // save() functions
-//% types = {
+//% tem('save_matt', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
@@ -319,7 +319,7 @@ inline Matt::~Matt()
 //%     'Cmat4Doub'; 'Cmat4Comp';
 //%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -476,13 +476,13 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 }
 
 // read matt files
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//% tem('load_matt', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%         'Cmat4Doub'; 'Cmat4Comp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:};
 //% Ts = value_type(T);

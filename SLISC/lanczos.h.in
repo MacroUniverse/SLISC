@@ -19,7 +19,7 @@ namespace slisc {
 // calculate v = exp(-i*H*dt) * v
 // H is a hermitian matrix
 // return error
-//% types = {
+//% tem('exp_Hdt_v_lanc', {
 //%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp';
 //%   'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp';
 //%   'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp';
@@ -30,7 +30,7 @@ namespace slisc {
 //%   'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp';
 //%   'DvecComp' 'McooDoub' 'VecDoub' 'VecComp';
 //%   'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp';
-//% };
+//% });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
@@ -106,7 +106,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 // x, y can be the same object
 // H is a hermitian matrix
 // return error
-//% types = {
+//% tem('exp_miHdt_v_lanc', {
 //%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp';
 //%   'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp';
 //%   'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp';
@@ -117,7 +117,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 //%   'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp';
 //%   'DvecComp' 'McooDoub' 'VecDoub' 'VecComp';
 //%   'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp';
-//% };
+//% });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)

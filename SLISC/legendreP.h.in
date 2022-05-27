@@ -13,9 +13,9 @@ namespace slisc {
  *            = 1 , m = 0
  */
 
-//% types = {
+//% tem('legendre_Pmm', {
 //%     'Doub'; 'Qdoub';
-//% };
+//% });
 //%--------------------------
 //% T = varargin{:};
 //%     if is_Qdoub(T) || is_Qcomp(T)
@@ -45,9 +45,9 @@ namespace slisc {
 //%     end
 //%--------------------------
 
-//% types = {
+//% tem('legendre_Plm', {
 //%     'Doub'; 'Qdoub';
-//% };
+//% });
 //%--------------------------
 //% T = varargin{:};
 //%     if is_Qdoub(T) || is_Qcomp(T)

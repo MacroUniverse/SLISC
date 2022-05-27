@@ -284,7 +284,7 @@ inline Matb::~Matb()
 // save() functions
 
 // save() for scalar
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'};
+//% tem('save', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%--------------------
 //% T = varargin{:};
 inline void save(@T@_I s, Str_I varname, Matb_IO matb)
@@ -317,7 +317,7 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 //%----------------------
 
 // save() for containers
-//% types = {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% tem('save1', {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'SvecChar'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'DvecLlong'; 'DvecDoub'; 'DvecComp'; 'CmatChar'; 'CmatInt';
@@ -328,7 +328,7 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'Mat3Int'; 'Mat3Llong'; 'Mat3Doub'; 'Mat3Comp';
 //%     'Cmat4Doub'; 'Cmat4Comp';
-//% };
+//% });
 //%--------------------
 //% Tv = varargin{:};
 //% Ts = value_type(Tv);
@@ -397,13 +397,13 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 
 // read matb files
 // return 0 if successful, -1 if variable not found
-//% types = {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//% tem('load', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
 //%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%         'Cmat4Doub'; 'Cmat4Comp';
-//% };
+//% });
 //%---------------------
 //% T = varargin{:};
 //% Ts = value_type(T);
@@ -553,9 +553,9 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
         const Long Ndim = matb.m_size[i].size();
         if (Ndim == 0) {
 // scalars
-//% types = {
+//% tem('matb2matt', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
-//% };
+//% });
 //%----------------------
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
@@ -569,12 +569,12 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
         }
 
 // containers
-//% types = {
+//% tem('matb2matt2', {
 //%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'Cmat4Doub'; 'Cmat4Comp';
-//% };
+//% });
 //%----------------------
 //% T = varargin{:};
 //% Ndim = num2str(ndim(T));
@@ -626,9 +626,9 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
         const Long Ndim = matt.m_size[i].size();
         if (Ndim == 0) {
 // scalars
-//% types = {
+//% tem('matt2matb', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
-//% };
+//% });
 //%----------------------
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
@@ -642,12 +642,12 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
         }
 
 // containers
-//% types = {
+//% tem('matt2matb2', {
 //%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%     'Cmat4Doub'; 'Cmat4Comp';
-//% };
+//% });
 //%----------------------
 //% T = varargin{:};
 //% Ndim = num2str(ndim(T));
