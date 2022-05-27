@@ -5,8 +5,8 @@
 namespace slisc {
 //% tem('Mat', {
 //%     'Char'; 'Int'; 'Llong';
-//%     'Float'; 'Doub'; 'Ldoub';
-//%     'Fcomp'; 'Comp'; 'Lcomp';
+//%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag';});
 //%------------------------------------
 //% T = varargin{:};
