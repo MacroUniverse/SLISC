@@ -1,7 +1,6 @@
 function ret = list_Cmat3()
-ret = {
-    'Cmat3Char'; 'Cmat3Int'; 'Cmat3Llong';
-    'Cmat3Float'; 'Cmat3Doub'; 'Cmat3Ldoub';
-    'Cmat3Fcomp'; 'Cmat3Comp'; 'Cmat3Lcomp';
-};
+ret = [ list_integral; list_ftp; list_comp ];
+for i = 1:numel(ret)
+    ret{i} = ['Cmat3' ret{i}];
+end
 end

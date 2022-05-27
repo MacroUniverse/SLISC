@@ -238,6 +238,11 @@ inline Ldoub sum_abs(VecLdoub_I v)
     return sum_abs_v(v.p(), v.size());
 }
 
+inline Qdoub sum_abs(VecQdoub_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
 inline Float sum_abs(VecFcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
@@ -249,6 +254,11 @@ inline Doub sum_abs(VecComp_I v)
 }
 
 inline Ldoub sum_abs(VecLcomp_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
+inline Qdoub sum_abs(VecQcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
 }
@@ -328,6 +338,11 @@ inline Ldoub sum_abs(CmatLdoub_I v)
     return sum_abs_v(v.p(), v.size());
 }
 
+inline Qdoub sum_abs(CmatQdoub_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
 inline Float sum_abs(CmatFcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
@@ -339,6 +354,11 @@ inline Doub sum_abs(CmatComp_I v)
 }
 
 inline Ldoub sum_abs(CmatLcomp_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
+inline Qdoub sum_abs(CmatQcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
 }
@@ -373,6 +393,11 @@ inline Ldoub sum_abs(ScmatLdoub_I v)
     return sum_abs_v(v.p(), v.size());
 }
 
+inline Qdoub sum_abs(ScmatQdoub_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
 inline Float sum_abs(ScmatFcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
@@ -384,6 +409,11 @@ inline Doub sum_abs(ScmatComp_I v)
 }
 
 inline Ldoub sum_abs(ScmatLcomp_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
+inline Qdoub sum_abs(ScmatQcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
 }
@@ -463,6 +493,11 @@ inline Ldoub sum_abs(Cmat3Ldoub_I v)
     return sum_abs_v(v.p(), v.size());
 }
 
+inline Qdoub sum_abs(Cmat3Qdoub_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
 inline Float sum_abs(Cmat3Fcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
@@ -474,6 +509,11 @@ inline Doub sum_abs(Cmat3Comp_I v)
 }
 
 inline Ldoub sum_abs(Cmat3Lcomp_I v)
+{
+    return sum_abs_v(v.p(), v.size());
+}
+
+inline Qdoub sum_abs(Cmat3Qcomp_I v)
 {
     return sum_abs_v(v.p(), v.size());
 }

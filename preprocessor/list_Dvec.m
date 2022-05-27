@@ -1,8 +1,7 @@
 % list all dense containers
 function ret = list_Dvec()
-ret = {
-    'DvecChar'; 'DvecInt'; 'DvecLlong';
-    'DvecFloat'; 'DvecDoub'; 'DvecLdoub';
-    'DvecFcomp'; 'DvecComp'; 'DvecLcomp';
-};
+ret = [ list_integral; list_ftp; list_comp ];
+for i = 1:numel(ret)
+    ret{i} = ['Dvec' ret{i}];
+end
 end
