@@ -277,8 +277,7 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 {
 #ifdef SLS_CHECK_SHAPES
     for (Long l = 0; l < (Long)a.size(); ++l)
-        if (!shape_cmp22(a[l], b))
-            SLS_ERR("wrong shape!");
+        assert_same_shape(a[l], b);
     if (coeff.size() != (Long)a.size())
         SLS_ERR("wrong shape!");
 #endif

@@ -50,24 +50,15 @@ inline @T@ to_num(@T@_I x) { return x; }
 // see https://en.wikipedia.org/wiki/Modulo_operation
 //% tem('mod', {
 //%     'Int', 'Int';
-//%     'Llong', 'Llong';
-//%     'Llong', 'Int';
 //%     'Doub', 'Doub';
-//%     'Ldoub', 'Ldoub';
 //% });
 //%--------------------------
 //% [T1, T2] = varargin{:};
 //% T = promo_type(T1, T2);
 //% if is_integral(T1) && is_integral(T2)
-inline @T@ mod(@T1@_I i, @T2@_I n)
-{
-    return i % n;
-}
+inline @T@ mod(@T1@_I i, @T2@_I n) { return i % n; }
 
-inline @T@ mod_fl(@T1@_I i, @T2@_I n)
-{
-    return (i % n + n) % n;
-}
+inline @T@ mod_fl(@T1@_I i, @T2@_I n) { return (i % n + n) % n; }
 
 inline @T@ mod_eu(@T1@_I i, @T2@_I n)
 {

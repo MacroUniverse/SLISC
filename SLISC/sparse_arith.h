@@ -22,22 +22,6 @@ inline void mul_cmat_diag_cmat(Comp *c, const Doub *a, const Comp *b, Long_I Nr,
     }
 }
 
-inline void mul_cmat_cmat_diag(Doub *c, const Doub *a, Long_I Nr, Long_I Nc, const Doub *b)
-{
-    for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
-        c += Nr; a += Nr;
-    }
-}
-
-inline void mul_cmat_diag_cmat(Doub *c, const Doub *a, const Doub *b, Long_I Nr, Long_I Nc)
-{
-    for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
-        c += Nr; b += Nr;
-    }
-}
-
 inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, const Doub *b)
 {
     for (Long i = 0; i < Nc; ++i) {
@@ -47,22 +31,6 @@ inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, con
 }
 
 inline void mul_cmat_diag_cmat(Comp *c, const Comp *a, const Doub *b, Long_I Nr, Long_I Nc)
-{
-    for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
-        c += Nr; b += Nr;
-    }
-}
-
-inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, const Comp *b)
-{
-    for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
-        c += Nr; a += Nr;
-    }
-}
-
-inline void mul_cmat_diag_cmat(Comp *c, const Comp *a, const Comp *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
         times_vvv(c, b, a, Nr);
@@ -203,39 +171,6 @@ inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
 }
 
 
-inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
-}
-
-inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
-}
-
-inline void mul(CmatComp_O y, CmatComp_I a, DiagComp_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
-}
-
 inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -247,40 +182,7 @@ inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
     mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
-inline void mul(CmatDoub_O y, DiagDoub_I a, CmatDoub_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
-}
-
 inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
-}
-
-inline void mul(CmatComp_O y, DiagComp_I a, CmatComp_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
-}
-
-inline void mul(CmatComp_O y, DiagDoub_I a, CmatComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
     if (a.n1() != x.n0())
@@ -556,38 +458,11 @@ inline void reorder(McooComp_O new_coo, McooComp_O coo, VecLong_I dest, Long_I n
 }
 
 
-inline void operator*=(McooDoub_IO v, Doub_I s)
-{
-    times_equals_vs(v.p(), s, v.nnz());
-}
-
 inline void operator*=(McooComp_IO v, Doub_I s)
-{
-    times_equals_vs(v.p(), s, v.nnz());
-}
+{ times_equals_vs(v.p(), s, v.nnz()); }
 
-inline void operator*=(McooComp_IO v, Imag_I s)
-{
-    times_equals_vs(v.p(), s, v.nnz());
-}
-
-inline void operator*=(McooComp_IO v, Comp_I s)
-{
-    times_equals_vs(v.p(), s, v.nnz());
-}
-
-
-inline void operator*=(CmobdDoub_IO v, Doub_I s)
-{
-    v.cmat3() *= s;
-}
 
 inline void operator*=(CmobdComp_IO v, Doub_I s)
-{
-    v.cmat3() *= s;
-}
-
-inline void operator*=(CmobdComp_IO v, Comp_I s)
 {
     v.cmat3() *= s;
 }

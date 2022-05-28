@@ -5,7 +5,9 @@
 
 namespace slisc {
 // return signed size instead of unsigned
-//% tem('size', {'vecBool' });
+//% tem('size', { 'vecBool'; 'vecInt'; 'vecLlong';
+//%    'vecDoub'; 'vecComp'; 'vecStr'; 'vecStr32';
+//%    'Str'; 'Str32'; });
 //%--------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -233,30 +235,22 @@ inline @Tr@ max_abs(@T@_I v)
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% Ts1 = val_t(T1);
-inline void mod_vvs(@T@ *v, const @T1@ *v1, @Ts1@_I s, Long_I N)
+//% req('mod', {Ts1,Ts1});
+inline void mod_vvs(@T@ *v, const @T1@ *v1, @T1@_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = mod(v1[i], s);
 }
-
-inline void mod_vs(@T1@ *v, @Ts1@_I s, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = mod(v[i], s);
-}
 //%-------------------------
 
-//% tem('mod2', { 'VecLlong', 'VecLlong', 'Llong' });
+//% tem('mod(v,v,s)', { 'VecLlong', 'VecLlong' });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% [Ts,Ts1] = val_t(T,T1);
 //% if ~(is_dense(T) && is_dense(T1) && is_same_major(T, T1) && is_promo(Ts, Ts1))
 //%     error('error types!');
 //% end
-//% req('mod_vvs', {T,T1});
-inline void mod(@T1@_O v, @Ts1@_I s)
-{ mod_vs(v.p(), s, v.size()); }
-
+//% req('mod_vvs', {Ts,Ts1});
 inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
 {
 //% req('assert_same_shape', {T, T1});
@@ -332,7 +326,7 @@ inline void imag(@T@_O v, @T1@_I v1)
 //%---------------------
 //% T = varargin{:}; Tr = rm_comp(T);
 inline void abs_v(@T@ *v, Long_I N)
-{
+{ // not optimized for real numbers
     for (Long i = 0; i < N; ++i)
         v[i] = abs(v[i]);
 }
@@ -495,6 +489,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
         else {
             @Tv@ v1(N);
             if (N > Nold) {
+//% req('vecset', {T});
                 veccpy(v1.p(), v.p(), Nold);
                 vecset(v1.p() + Nold, val, N - Nold);
             }
@@ -725,9 +720,7 @@ inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% end
 //% if is_dense(T)
 inline void conj(@T@_IO v)
-{
-    conj_v(v.p(), v.size());
-}
+{ conj_v(v.p(), v.size()); }
 //% elseif is_Dcmat(T)
 inline void conj(@T@_IO v)
 {
@@ -759,6 +752,7 @@ inline void her(@T@_IO v)
 #ifdef SLS_CHECK_SHAPES
     if (v.n0() != v.n1()) SLS_ERR("illegal shape!");
 #endif
+//% req('trans', {T}); req('conj', {T});
     trans(v); conj(v);
 }
 //%---------------------------
@@ -766,6 +760,7 @@ inline void her(@T@_IO v)
 //% tem('her(v,v)', { 'DcmatComp' 'DcmatComp' });
 //%--------------------------
 //% [T, T1] = varargin{:};
+//% req('trans(v,v)', {T,T1}); req('conj', {T});
 inline void her(@T@_O v, @T1@_I v1)
 { trans(v, v1); conj(v); }
 //%-------------------------
@@ -848,6 +843,7 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //% if ~is_promo(Tsv, Ts)
 //%     error('illegal type!');
 //% end
+//% req('plus_equals_vs', {Tsv,Ts});
 //% if is_dense(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 { plus_equals_vs(v.p(), s, v.size()); }
@@ -1485,12 +1481,13 @@ inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%     'ScmatDoub', 'CmatDoub';
 //% });
 //%----------------------------------------------------------
-//% [T, T1] = varargin{:};
+//% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 inline void minus(@T@_O v, @T1@_I v1)
 {
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(v, v1);
+//% req('minus_vv', {Ts,Ts1});
     minus_vv(v.p(), v1.p(), v1.size());
 }
 //% else
@@ -1565,13 +1562,14 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% tem('dot', { 'Cmat3Comp', 'Cmat3Doub' });
 //%---------------------
 //% [T1, T2] = varargin{:};
-//% Ts1 = val_t(T1); Ts2 = val_t(T2);
+//% [Ts1,Ts2] = val_t(T1,T2);
 //% T = promo_type(Ts1, Ts2);
 inline @T@ dot(@T1@_I v1, @T2@_I v2)
 {
 //% req('assert_same_shape', {T1, T2});
     assert_same_shape(v1, v2);
 //% if is_dense(T1) && is_dense(T2)
+//%     req('dot_vv', {Ts1,Ts2});
     return dot_vv(v1.p(), v2.p(), v2.size());
 //% elseif ndim(T1) == 1
     @T@ sum = 0;
@@ -1623,7 +1621,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 }
 //%-------------------------
 
-
+// matrix-vector multiplication, not optimized
 //% tem('mul(v,m,v)', { 'DvecComp' 'ScmatDoub' 'DvecComp' });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
@@ -1666,7 +1664,6 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
     if (Nc != x.size() || y.size() != Nr)
         SLS_ERR("illegal shape!");
 #endif
-    
     // y = beta/alpha *y
     if (beta == 0) {
         for (Long i = 0; i < Nr; ++i)
@@ -1679,7 +1676,6 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
                 y[i] *= b_a;
         }
     }
-    
     // y += A*x
 //% if is_rmajor(T1)
     for (Long i = 0; i < Nr; ++i) {
@@ -1692,7 +1688,6 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
             y[i] += a(i, j) * x[j];
     }
 //% end
-
     // y *= alpha
     if (alpha != 1) {
         for (Long i = 0; i < Nr; ++i)
@@ -1704,7 +1699,7 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 //% tem('mul(v,v,m)', { 'VecComp', 'VecDoub', 'MatComp' });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
-//% Ts = val_t(T); Ts1 = val_t(T1); Ts2 = val_t(T2);
+//% [Ts,Ts1,Ts2] = val_t(T,T1,T2);
 //% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
 //%     error('illegal type!');
 //% end
@@ -1718,6 +1713,7 @@ inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
     if (x.size() != a.n0() || y.size() != Nc_a)
         SLS_ERR("illegal shape!");
 #endif
+//% req('vecset', {Ts});
     vecset(y.p(), 0, Nc_a);
     for (Long j = 0; j < Nc_a; ++j) {
         for (Long i = 0; i < Nr_a; ++i)
@@ -1737,6 +1733,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
     if (a.n1() != x.n0() || y.n0() != Nr_a || y.n1() != Nc_x)
         SLS_ERR("illegal shape!");
 #endif
+//% req('vecset', {val_t(T)});
     vecset(y.p(), 0, Nr_a*Nc_x);
     for (Long i = 0; i < Nr_a; ++i) {
         for (Long j = 0; j < Nc_x; ++j) {
@@ -1803,6 +1800,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%     error('not implemented (17)!');
 //% end
 #else
+//% req('mul(v,m,v)', {Ty, Ta, Tx});
     mul(y, a, x, alpha, beta);
 #endif
 }
@@ -1860,6 +1858,7 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 //%     error('not implemented (18)!');
 //% end
 #else
+//% req('mul(v,m,v)', {Ty, Ta, Tx});
     mul(y, a, x, alpha, beta);
 #endif
 }
@@ -1886,6 +1885,7 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
         mul(y, a, x);
 //% end
 #else
+//% req('mul(m,m,m)', {Ty, Ta, Tx});
     mul(y, a, x);
 #endif
 }
@@ -1926,7 +1926,7 @@ inline void uniq_elm(@T@_IO v)
 //% tem('uniq_rows', { 'CmatDoub', 'CmatDoub' });
 //%--------------------
 //% [T, T1] = varargin{:};
-//% Tsli1 = cut2_type(T1);
+//% Tcut = cut1_type(T); Tcut1 = cut1_type(T1);
 inline void uniq_rows(@T@_O a, @T1@_I a1)
 {
     Long k = 0;
@@ -1935,17 +1935,20 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
         // check repeat
         Bool repeat = false;
 //% req('cut1', {T;T1});
-        @Tsli1@_c sli1 = cut1(a1, i);
+        @Tcut1@_c s1 = cut1(a1, i);
         for (Long j = 0; j < k; ++j) {
-            if (cut1(a, j) == sli1) {
+//% req('v==v', {Tcut,Tcut1});
+            if (cut1(a, j) == s1) {
                 repeat = true; break;
             }
         }
         if (repeat)
             continue;
-        copy(cut1(a, k), sli1);
+//% req('copy(v,v)', {Tcut,Tcut1});
+        copy(cut1(a, k), s1);
         ++k;
     }
+//% req('resize_cpy', {T});
     resize_cpy(a, k, a1.n1());
 }
 //%---------------------------

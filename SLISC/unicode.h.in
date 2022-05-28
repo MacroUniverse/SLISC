@@ -219,6 +219,7 @@ inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start = 0)
              imin = ind0; ikey = i;
          }
     }
+//% req('size', {'vecStr'});
     if (imin == size(str)) imin = -1;
     return imin;
 }

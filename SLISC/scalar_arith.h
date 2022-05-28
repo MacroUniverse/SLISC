@@ -93,51 +93,13 @@ inline Qcomp to_num(Qcomp_I x) { return x; }
 // 3. "mod_eu()" always return positive modulus
 // when both numbers are positive, all cases returns the same result
 // see https://en.wikipedia.org/wiki/Modulo_operation
-inline Int mod(Int_I i, Int_I n)
-{
-    return i % n;
-}
+inline Int mod(Int_I i, Int_I n) { return i % n; }
 
-inline Int mod_fl(Int_I i, Int_I n)
-{
-    return (i % n + n) % n;
-}
+inline Int mod_fl(Int_I i, Int_I n) { return (i % n + n) % n; }
 
 inline Int mod_eu(Int_I i, Int_I n)
 {
     Int ret = i % n;
-    return ret < 0 ? ret + abs(n) : ret;
-}
-
-inline Llong mod(Llong_I i, Llong_I n)
-{
-    return i % n;
-}
-
-inline Llong mod_fl(Llong_I i, Llong_I n)
-{
-    return (i % n + n) % n;
-}
-
-inline Llong mod_eu(Llong_I i, Llong_I n)
-{
-    Llong ret = i % n;
-    return ret < 0 ? ret + abs(n) : ret;
-}
-
-inline Llong mod(Llong_I i, Int_I n)
-{
-    return i % n;
-}
-
-inline Llong mod_fl(Llong_I i, Int_I n)
-{
-    return (i % n + n) % n;
-}
-
-inline Llong mod_eu(Llong_I i, Int_I n)
-{
-    Llong ret = i % n;
     return ret < 0 ? ret + abs(n) : ret;
 }
 
@@ -180,43 +142,14 @@ inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
     return r;
 }
 
-inline Ldoub mod(Ldoub_I s, Ldoub_I d)
-{ return s - round(s/d) * d; }
+inline Llong mod(Llong_I i, Llong_I n) { return i % n; }
 
-// floating point version of "%", s = n * d + return
-inline Ldoub mod(Long_O n, Ldoub_I s, Ldoub_I d)
+inline Llong mod_fl(Llong_I i, Llong_I n) { return (i % n + n) % n; }
+
+inline Llong mod_eu(Llong_I i, Llong_I n)
 {
-    n = round(s/d);
-    return s - n * d;
-}
-
-inline Ldoub mod_fl(Ldoub_I s, Ldoub_I d)
-{ return s - floor(s/d) * d; }
-
-// s = n * d + return
-inline Ldoub mod_fl(Long_O n, Ldoub_I s, Ldoub_I d)
-{
-    n = floor(s/d);
-    return s - n * d;
-}
-
-inline Ldoub mod_eu(Ldoub_I s, Ldoub_I d)
-{
-    Long n = s/d;
-    Ldoub r = s - n*d;
-    return r < 0 ? r + abs(d) : r;
-}
-
-// s = n * d + return
-inline Ldoub mod_eu(Long_O n, Ldoub_I s, Ldoub_I d)
-{
-    n = s/d;
-    Ldoub r = s - n*d;
-    if (r < 0) {
-        r += abs(d);
-        n -= sign(d);
-    }
-    return r;
+    Llong ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
 }
 
 

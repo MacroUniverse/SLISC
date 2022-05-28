@@ -41,6 +41,7 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 //% end
 inline void mul_v_coo_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
 {
+//% req('vecset', {Ty});
     vecset(y, 0, N1);
     for (Long k = 0; k < Nnz; ++k)
         y[i[k]] += a_ij[k] * x[j[k]];
@@ -75,6 +76,7 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 //% end
 inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
+//% req('vecset', {Ty});
     vecset(y, 0, N);
     Long step = blk_size - 1, step2 = blk_size - 2;
     a += blk_size + 1; // move to first element
@@ -152,14 +154,8 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%------------------------
 
 //% tem('mul(m,m,diag)', {
-//%        'CmatDoub', 'CmatDoub', 'DiagDoub';
-//%     'CmatComp', 'CmatComp', 'DiagDoub';
-//%     'CmatComp', 'CmatComp', 'DiagComp';
 //%     'CmatComp', 'CmatDoub', 'DiagComp';
-//%        'CmatDoub', 'DiagDoub', 'CmatDoub';
 //%     'CmatComp', 'DiagComp', 'ScmatDoub';
-//%     'CmatComp', 'DiagComp', 'CmatComp';
-//%     'CmatComp', 'DiagDoub', 'CmatComp';
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -197,9 +193,11 @@ inline void sort_r(@McooT@_IO a)
         inds[i] = a.n1() * a.row(i) + a.col(i);
     sort(inds, order);
     @SvecT@ sli(a.p(), Nnz);
+//% req('reorder', {SvecT, 'VecLlong'; SvecT, 'VecInt'});
     reorder(sli, order);
     SvecLong sli1;
     sli1.set(a.row_p(), Nnz);
+//% req('reorder', {'SvecLlong', 'VecLlong'; 'SvecInt', 'VecInt'});
     reorder(sli1, order);
     sli1.set(a.col_p());
     reorder(sli1, order);
@@ -250,25 +248,15 @@ inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new
 }
 //%----------------------------
 
-//% tem('*=sp', {
-//%     'McooDoub', 'Doub';
-//%     'McooComp', 'Doub';
-//%     'McooComp', 'Imag';
-//%     'McooComp', 'Comp';
-//% });
+//% tem('coo*=s', { 'McooComp', 'Doub'; });
 //%----------------------------
 //% [T, Ts] = varargin{:};
+//% req('plus_equals_vs', {val_t(T),Ts});
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{
-    times_equals_vs(v.p(), s, v.nnz());
-}
+{ times_equals_vs(v.p(), s, v.nnz()); }
 //%------------------------
 
-//% tem('*=obd', {
-//%     'CmobdDoub', 'Doub';
-//%     'CmobdComp', 'Doub';
-//%     'CmobdComp', 'Comp';
-//% });
+//% tem('obd*=s', { 'CmobdComp', 'Doub' });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 inline void operator*=(@T@_IO v, @Ts@_I s)
@@ -277,7 +265,7 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 }
 //%------------------------
 
-//% tem('times_obd', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
+//% tem('times(obd,obd,s)', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
 //%----------------------------
 //% [T1, T2, Ts] = varargin{:};
 //% [Ts1, Ts2] = val_t(T1, T2);

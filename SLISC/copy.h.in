@@ -24,7 +24,11 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
 }
 //%------------------------
 
-//% tem('veccpy', { 'Comp', 'Doub' });
+//% tem('veccpy', {
+//%     'Int', 'Int';
+//%     'Llong', 'Llong';
+//%     'Comp', 'Doub';
+//% });
 //%----------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1)
@@ -71,6 +75,7 @@ inline void veccpy(@T@ *v, Long_I step, const @T1@ *v1, Long_I step1, Long_I n)
 inline void matcpy(@T@ *v, Long_I lda, const @T1@ *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
     for (Long j = 0; j < Nsd; ++j) {
+//% req('veccpy', {T, T1});
         veccpy(v, v1, Nld);
         v += lda; v1 += lda1;
     }
@@ -118,6 +123,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //% tem('copy(v,s)', { 'Cmat3Doub' });
 //%-------------------------------------
 //% T = varargin{:}; Ts = val_t(T);
+//% req('vecset', {Ts});
 inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_VecBool(T)
@@ -202,7 +208,7 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //% if ~is_promo(val_t(T), val_t(T1))
 //%     error('illegal types');
 //% end
-//% Ts = val_t(T);
+//% [Ts,Ts1] = val_t(T,T1);
 inline void copy(@T@_O v, @T1@_I v1)
 {
 //% req('assert_same_shape', {T,T1});
@@ -214,12 +220,16 @@ inline void copy(@T@_O v, @T1@_I v1)
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i];
 //% elseif is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+//%     req('veccpy', {Ts,Ts1});
     veccpy(v.p(), v1.p(), v.size());
 //% elseif is_Dvec(T) && is_Dvec(T1)
+//%     req('veccpy', {Ts,Ts1});
     veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
 //% elseif is_dense_vec(T) && is_Dvec(T1)
+//%     req('veccpy', {Ts,Ts1});
     veccpy(v.p(), v1.p(), v1.step(), v1.size());
 //% elseif is_Dvec(T) && is_dense_vec(T1)
+//%     req('veccpy', {Ts,Ts1});
     veccpy(v.p(), v.step(), v1.p(), v1.size());
 //% elseif is_dense_mat(T) && is_dense_mat(T1) && is_diff_major(T, T1)
 //%     if is_cmajor(T)
@@ -228,12 +238,16 @@ inline void copy(@T@_O v, @T1@_I v1)
     matcpy_diff_major(v.p(), v1.p(), v.n1(), v.n0());
 //%     end
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
+//%     req('matcpy', {Ts,Ts1});
     matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
 //% elseif is_Dmat(T) && is_Dmat(T1)
+//%     req('matcpy', {Ts,Ts1});
     matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n1(), v.n0());
 //% elseif is_Cmat(T) && is_Dcmat(T1)
+//%     req('matcpy', {Ts,Ts1});
     matcpy(v.p(), v.n0(), v1.p(), v1.lda(), v.n0(), v.n1());
 //% elseif is_Dcmat(T) && is_Cmat(T1)
+//%     req('matcpy', {Ts,Ts1});
     matcpy(v.p(), v.lda(), v1.p(), v.n0(), v.n0(), v.n1());
 //% elseif ndim(T) == 3 && ndim(T1) == 3
     // slow
@@ -258,8 +272,8 @@ inline void copy(@T@_O v, @T1@_I v1)
 inline void copy(@McooT@_O v, @McooT1@_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp22(v, v1))
-        SLS_ERR("wrong shape!");
+//% req('assert_same_shape', {McooT, McooT1});
+    assert_same_shape(v, v1);
     if (v.capacity() < v1.nnz())
         SLS_ERR("not enough capacity!");
 #endif
@@ -271,6 +285,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 //% end
     Long Nnz = v1.nnz();
     v.resize(Nnz);
+//% req('veccpy', {T, T1});
     veccpy(v.p(), v1.p(), Nnz);
     veccpy(v.row_p(), v1.row_p(), Nnz);
     veccpy(v.col_p(), v1.col_p(), Nnz);
@@ -359,7 +374,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
 // #ifdef SLS_CHECK_SHAPES
-//     if (!shape_cmp22(lhs, rhs))
+//     if (!shape_cmp(lhs, rhs))
 //         SLS_ERR("wrong shape!");
 // #endif
 //     copy(lhs, 0);
@@ -381,7 +396,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 // void copy(MatCoo<T> &v, const CmatObd<T1> &v1)
 // {
 // #ifdef SLS_CHECK_SHAPES
-//     if (!shape_cmp22(v, v1))
+//     if (!shape_cmp(v, v1))
 //         SLS_ERR("wrong shape!");
 //     if (v.capacity() < v1.nnz())
 //         SLS_ERR("not enough capacity!");
@@ -425,7 +440,7 @@ inline void copy(@T@_O a, @T@_I b)
         SLS_ERR("wrong shape!");
 #endif
     a.reshape(b.n0(), b.nup(), b.nlow());
-// req('copy(v,v)', {['Cmat' Ts],['Cmat' Ts1]});
+//% req('copy(v,v)', {['Dcmat' Ts],['Dcmat' Ts1]});
     copy(band(a), band(b));
 }
 //%------------------------------

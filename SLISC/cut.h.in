@@ -141,7 +141,7 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 //% tem('cut0', { 'CmatComp' });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut1_type(Tv);
+//% Tsli = cut0_type(Tv);
 //% T = val_t(Tv);
 //% if is_Cmat(Tv) || is_Scmat(Tv)
 inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
@@ -232,7 +232,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j, Long_I k)
 //% tem('cut0-2', { 'ScmatComp' });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut1_type(Tv);
+//% Tsli = cut0_type(Tv);
 //% T = val_t(Tv);
 //% if is_Cmat(Tv) || is_Scmat(Tv)
 inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
@@ -283,7 +283,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% tem('cut1', { 'ScmatComp' });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut2_type(Tv);
+//% Tsli = cut1_type(Tv);
 //% T = val_t(Tv);
 //% if is_Cmat(Tv) || is_Scmat(Tv)
 inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
@@ -426,7 +426,7 @@ inline @Tsli@_c cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% tem('cut2', { 'Cmat3Doub' });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut3_type(Tv);
+//% Tsli = cut2_type(Tv);
 //% T = val_t(Tv);
 //% if is_Cmat3(Tv)
 inline @Tsli@ cut2(@Tv@_IO v, Long_I i, Long_I j)
@@ -454,7 +454,7 @@ inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I j)
 //% tem('cut01', { 'Cmat3Comp' });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut12_type(Tv);
+//% Tsli = cut01_type(Tv);
 //% T = val_t(Tv);
 //% if is_Cmat3(Tv) || is_Scmat3(Tv)
 inline @Tsli@ cut01(@Tv@_IO v, Long_I k)

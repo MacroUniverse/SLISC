@@ -14,7 +14,8 @@ namespace slisc {
 inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (A.n0() != A.n1() || !shape_cmp22(eigVec, A)
+//% req('shape_cmp', {Tm,Tm2});
+    if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
         || eigVal.size() != eigVec.n0())
         SLS_ERR("wrong shape!");
 #endif

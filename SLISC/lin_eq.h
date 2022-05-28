@@ -40,7 +40,7 @@ inline void lin_eq(CmatDoub_IO x, CmatDoub_I a)
 #endif
     static CmatDoub a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())
@@ -63,7 +63,7 @@ inline void lin_eq(ScmatDoub_IO x, CmatDoub_I a)
 #endif
     static CmatDoub a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())
@@ -86,7 +86,7 @@ inline void lin_eq(ScmatDoub_IO x, ScmatDoub_I a)
 #endif
     static CmatDoub a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())
@@ -109,7 +109,7 @@ inline void lin_eq(VecDoub_IO x, CmatDoub_I a)
 #endif
     static CmatDoub a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())
@@ -132,7 +132,7 @@ inline void lin_eq(SvecDoub_IO x, CmatDoub_I a)
 #endif
     static CmatDoub a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())
@@ -155,7 +155,7 @@ inline void lin_eq(VecComp_IO x, CmatComp_I a)
 #endif
     static CmatComp a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())
@@ -178,7 +178,7 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_I a)
 #endif
     static CmatComp a1(a.n0(), a.n1());
     static VecInt ipiv(a.n0());
-    if (!shape_cmp22(a1, a))
+    if (!shape_cmp(a1, a))
         a1.resize(a.n0(), a.n1());
     copy(a1, a);
     if (a.n0() > ipiv.size())

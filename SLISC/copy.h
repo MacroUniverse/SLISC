@@ -20,6 +20,128 @@ inline void vecset(Doub *v, Doub_I val, Long_I n, Long_I step)
         *p = val;
 }
 
+inline void vecset(Int *v, Int_I val, Long_I n)
+{
+    for (Int *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Int *v, Int_I val, Long_I n, Long_I step)
+{
+    for (Int *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Llong *v, Llong_I val, Long_I n)
+{
+    for (Llong *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Llong *v, Llong_I val, Long_I n, Long_I step)
+{
+    for (Llong *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Comp *v, Comp_I val, Long_I n)
+{
+    for (Comp *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Comp *v, Comp_I val, Long_I n, Long_I step)
+{
+    for (Comp *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Qdoub *v, Qdoub_I val, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Qdoub *v, Qdoub_I val, Long_I n, Long_I step)
+{
+    for (Qdoub *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Qcomp *v, Qcomp_I val, Long_I n)
+{
+    for (Qcomp *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Qcomp *v, Qcomp_I val, Long_I n, Long_I step)
+{
+    for (Qcomp *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+
+inline void veccpy(Int *v, const Int *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Int *v, const Int *v1, Long_I step1, Long_I n)
+{
+    for (Int *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Int *v, Long_I step, const Int *v1, Long_I n)
+{
+    for (Int *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Int *v, Long_I step, const Int *v1, Long_I step1, Long_I n)
+{
+    Int *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Llong *v, const Llong *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Llong *v, const Llong *v1, Long_I step1, Long_I n)
+{
+    for (Llong *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Llong *v, Long_I step, const Llong *v1, Long_I n)
+{
+    for (Llong *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Llong *v, Long_I step, const Llong *v1, Long_I step1, Long_I n)
+{
+    Llong *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
 
 inline void veccpy(Comp *v, const Doub *v1, Long_I n)
 {
@@ -52,8 +174,78 @@ inline void veccpy(Comp *v, Long_I step, const Doub *v1, Long_I step1, Long_I n)
     }
 }
 
+inline void veccpy(Doub *v, const Doub *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Doub *v, const Doub *v1, Long_I step1, Long_I n)
+{
+    for (Doub *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Doub *v, Long_I step, const Doub *v1, Long_I n)
+{
+    for (Doub *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Doub *v, Long_I step, const Doub *v1, Long_I step1, Long_I n)
+{
+    Doub *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Comp *v, const Comp *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Comp *v, const Comp *v1, Long_I step1, Long_I n)
+{
+    for (Comp *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Comp *v, Long_I step, const Comp *v1, Long_I n)
+{
+    for (Comp *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Comp *v, Long_I step, const Comp *v1, Long_I step1, Long_I n)
+{
+    Comp *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
+
 
 inline void matcpy(Comp *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
+{
+    for (Long j = 0; j < Nsd; ++j) {
+        veccpy(v, v1, Nld);
+        v += lda; v1 += lda1;
+    }
+}
+
+inline void matcpy(Doub *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
     for (Long j = 0; j < Nsd; ++j) {
         veccpy(v, v1, Nld);
@@ -194,12 +386,28 @@ inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
                 v(i, j, k) = v1(i, j, k);
 }
 
+inline void copy(DvecDoub_O v, DvecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
 inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
 {
     assert_same_shape(v, v1);
     if (v.size() == 0)
         return;
     veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
 }
 
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
@@ -215,8 +423,7 @@ inline void copy(ScmatDoub_O v, CmatDoub_I v1)
 inline void copy(McooDoub_O v, McooDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp22(v, v1))
-        SLS_ERR("wrong shape!");
+    assert_same_shape(v, v1);
     if (v.capacity() < v1.nnz())
         SLS_ERR("not enough capacity!");
 #endif
@@ -287,7 +494,7 @@ inline void copy(CmatDoub_O lhs, CmobdDoub_I rhs)
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
 // {
 // #ifdef SLS_CHECK_SHAPES
-//     if (!shape_cmp22(lhs, rhs))
+//     if (!shape_cmp(lhs, rhs))
 //         SLS_ERR("wrong shape!");
 // #endif
 //     copy(lhs, 0);
@@ -309,7 +516,7 @@ inline void copy(CmatDoub_O lhs, CmobdDoub_I rhs)
 // void copy(MatCoo<T> &v, const CmatObd<T1> &v1)
 // {
 // #ifdef SLS_CHECK_SHAPES
-//     if (!shape_cmp22(v, v1))
+//     if (!shape_cmp(v, v1))
 //         SLS_ERR("wrong shape!");
 //     if (v.capacity() < v1.nnz())
 //         SLS_ERR("not enough capacity!");
@@ -350,7 +557,6 @@ inline void copy(CbandDoub_O a, CbandDoub_I b)
         SLS_ERR("wrong shape!");
 #endif
     a.reshape(b.n0(), b.nup(), b.nlow());
-// req('copy(v,v)', {['Cmat' Ts],['Cmat' Ts1]});
     copy(band(a), band(b));
 }
 

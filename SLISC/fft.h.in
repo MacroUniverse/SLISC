@@ -101,8 +101,8 @@ inline void fftshift(@T@_IO v)
 //% tem('fftshift2', {'MatDoub'; 'MatComp'; 'CmatDoub'; 'CmatComp';});
 //%----------------
 //% T = varargin{:};
-//% Tsli1 = cut1_type(T);
-//% Tsli2 = cut2_type(T);
+//% Tcut0 = cut0_type(T);
+//% Tcut1 = cut1_type(T);
 inline void fftshift(@T@_IO a, Int_I dim = 1)
 {
     Long N1 = a.n0(), N2 = a.n1();
@@ -112,7 +112,7 @@ inline void fftshift(@T@_IO a, Int_I dim = 1)
         Long halfn = N1 / 2;
         for (Long j = 0; j < N2; ++j) {
 //% req('cut0', {T});
-            @Tsli1@ sli = cut0(a, j);
+            @Tcut0@ sli = cut0(a, j);
             for (Long i = 0; i < halfn; ++i)
                 swap(sli[i], sli[i + halfn]);
         }
@@ -123,7 +123,7 @@ inline void fftshift(@T@_IO a, Int_I dim = 1)
         Long halfn = N2 / 2;
         for (Long i = 0; i < N1; ++i) {
 //% req('cut1', {T});
-            @Tsli2@ sli = cut1(a, i);
+            @Tcut1@ sli = cut1(a, i);
             for (Long i = 0; i < halfn; ++i)
                 swap(sli[i], sli[i + halfn]);
         }

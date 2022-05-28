@@ -189,7 +189,7 @@ inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
 //% });
 //%--------------------------
 //% [Tv, Tmat] = varargin{:};
-//% Tsli = cut2_type(Tmat);
+//% Tsli = cut1_type(Tmat);
 inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
