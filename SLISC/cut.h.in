@@ -12,7 +12,8 @@
 #include "Jcmat3.h"
 
 namespace slisc {
-//% tem('cut', { 'ScmatDoub' });
+//% tem('cut', { 'VecInt'; 'VecDoub'; 'VecComp';
+//%  'CmatDoub'; 'CmatComp'; 'ScmatDoub' });
 //%----------------------------
 //% Tv = varargin{:};
 //% T = val_t(Tv);

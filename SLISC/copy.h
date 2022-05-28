@@ -612,6 +612,22 @@ inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
                 v(i, j, k) = v1(i, j, k);
 }
 
+inline void copy(DvecInt_O v, DvecInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
+inline void copy(DvecLlong_O v, DvecLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
 inline void copy(DvecDoub_O v, DvecDoub_I v1)
 {
     assert_same_shape(v, v1);

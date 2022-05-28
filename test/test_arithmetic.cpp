@@ -308,7 +308,7 @@ void test_arithmetic()
     {
         VecInt v(40);
         linspace(v, -20, 19);;
-        mod(v, 5);
+        mod(v, v, 5);
     }
 
     // plus(), minus(), times(), Devide()
@@ -491,7 +491,7 @@ void test_arithmetic()
         }
 
         {
-            VecDoub x(3); VecChar y(3);
+            VecDoub x(3); VecDoub y(3);
             linspace(x, 1.1, 3.3);
             linspace(y, 1, 3);
             auto s = dot(x, y);
@@ -570,7 +570,7 @@ void test_arithmetic()
     // v = cumsum(v)
     {
         VecInt v(4); linspace(v, 1, 4);
-        VecLlong v1(v.size());
+        VecInt v1(v.size());
         cumsum(v1, v);
         if (v1[0] != 1 || v1[1] != 3 || v1[2] != 6 || v1[3] != 10)
             SLS_ERR("failed!");
@@ -595,16 +595,6 @@ void test_arithmetic()
         a2[0] = 1; a2[1] = 2; a2[2] = 3;
         a2[3] = 2; a2[4] = 3; a2[5] = 4;
         if (a1 != a2)
-            SLS_ERR("failed!");
-    }
-
-    // operator+= for std::vector
-    {
-        vecInt v;
-        v = {1,2,3,4};
-        v += v;
-        v += {5,6,7,8};
-        if (v != vecInt{1,2,3,4,1,2,3,4,5,6,7,8})
             SLS_ERR("failed!");
     }
 }
