@@ -21,7 +21,8 @@ namespace slisc {
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 {
-    assert_same_shape@ndim(Tv)@@ndim(Tv1)@(rR, r);
+//% req('assert_same_shape', {Tv, Tv1});
+    assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = r[i] * gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -31,7 +32,8 @@ inline void hydrogen_rR(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 // unscaled hydrogen bound state radial wave function
 inline void hydrogen_R(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 {
-    assert_same_shape@ndim(Tv)@@ndim(Tv1)@(rR, r);
+//% req('assert_same_shape', {Tv, Tv1});
+    assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);

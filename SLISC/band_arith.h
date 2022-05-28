@@ -304,7 +304,7 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 
 inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
 {
-    assert_same_shape22(v, v1);
+    assert_same_shape(v, v1);
     times(band(v), band(v1), s);
 }
 

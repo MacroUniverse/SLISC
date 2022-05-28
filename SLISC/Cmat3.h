@@ -486,7 +486,6 @@ inline Long Cmat3Ldoub::n2() const {
 typedef const Cmat3Ldoub &Cmat3Ldoub_I;
 typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
 
-#ifdef SLS_USE_QUAD_MATH
 class Cmat3Qdoub : public VbaseQdoub
 {
 protected:
@@ -565,7 +564,6 @@ inline Long Cmat3Qdoub::n2() const {
 
 typedef const Cmat3Qdoub &Cmat3Qdoub_I;
 typedef Cmat3Qdoub &Cmat3Qdoub_O, &Cmat3Qdoub_IO;
-#endif
 
 class Cmat3Fcomp : public VbaseFcomp
 {
@@ -804,7 +802,6 @@ inline Long Cmat3Lcomp::n2() const {
 typedef const Cmat3Lcomp &Cmat3Lcomp_I;
 typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
 
-#ifdef SLS_USE_QUAD_MATH
 class Cmat3Qcomp : public VbaseQcomp
 {
 protected:
@@ -883,7 +880,6 @@ inline Long Cmat3Qcomp::n2() const {
 
 typedef const Cmat3Qcomp &Cmat3Qcomp_I;
 typedef Cmat3Qcomp &Cmat3Qcomp_O, &Cmat3Qcomp_IO;
-#endif
 
 class Cmat3Fimag : public VbaseFimag
 {

@@ -197,6 +197,7 @@ inline Long search_row(@Tv@_I v, @Tmat@_I a, Long_I start = 0)
         SLS_ERR("wrong shape");
 #endif
     for (Long i = start; i < a.n0(); ++i) {
+//% req('cut1', {Tmat});
         if (v == cut1(a, i))
             return i;
     }

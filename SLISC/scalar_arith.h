@@ -22,10 +22,8 @@ constexpr Doub sign(Doub_I s)
 constexpr Ldoub sign(Ldoub_I s)
 { return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
 
-#ifdef SLS_USE_QUAD_MATH
 constexpr Qdoub sign(Qdoub_I s)
 { return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
-#endif
 
 
 inline Char sign(Char_I a, Char_I b)
@@ -46,52 +44,26 @@ inline Doub sign(Doub_I a, Doub_I b)
 inline Ldoub sign(Ldoub_I a, Ldoub_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
 
-#ifdef SLS_USE_QUAD_MATH
 inline Qdoub sign(Qdoub_I a, Qdoub_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
-#endif
 
 
-inline Bool isodd(Char_I n)
-{
-    return n & 1;
-}
+inline Bool isodd(Char_I n) { return n & 1; }
 
-inline Bool isodd(Int_I n)
-{
-    return n & 1;
-}
+inline Bool isodd(Int_I n) { return n & 1; }
 
-inline Bool isodd(Uint_I n)
-{
-    return n & 1;
-}
+inline Bool isodd(Uint_I n) { return n & 1; }
 
-inline Bool isodd(Llong_I n)
-{
-    return n & 1;
-}
+inline Bool isodd(Llong_I n) { return n & 1; }
 
-inline Bool isodd(Ullong_I n)
-{
-    return n & 1;
-}
+inline Bool isodd(Ullong_I n) { return n & 1; }
 
 
-inline Bool ispow2(Char_I n)
-{
-    return (n&(n-1)) == 0;
-}
+inline Bool ispow2(Char_I n) { return (n&(n-1)) == 0; }
 
-inline Bool ispow2(Int_I n)
-{
-    return (n&(n-1)) == 0;
-}
+inline Bool ispow2(Int_I n) { return (n&(n-1)) == 0; }
 
-inline Bool ispow2(Llong_I n)
-{
-    return (n&(n-1)) == 0;
-}
+inline Bool ispow2(Llong_I n) { return (n&(n-1)) == 0; }
 
 
 inline Int to_num(Char_I x) { return (Int)x; }
@@ -104,17 +76,13 @@ inline Doub to_num(Doub_I x) { return x; }
 
 inline Ldoub to_num(Ldoub_I x) { return x; }
 
-#ifdef SLS_USE_QUAD_MATH
 inline Qdoub to_num(Qdoub_I x) { return x; }
-#endif
 
 inline Comp to_num(Comp_I x) { return x; }
 
 inline Lcomp to_num(Lcomp_I x) { return x; }
 
-#ifdef SLS_USE_QUAD_MATH
 inline Qcomp to_num(Qcomp_I x) { return x; }
-#endif
 
 
 // modulus
@@ -174,9 +142,7 @@ inline Llong mod_eu(Llong_I i, Int_I n)
 }
 
 inline Doub mod(Doub_I s, Doub_I d)
-{
-    return s - round(s/d) * d;
-}
+{ return s - round(s/d) * d; }
 
 // floating point version of "%", s = n * d + return
 inline Doub mod(Long_O n, Doub_I s, Doub_I d)
@@ -186,9 +152,7 @@ inline Doub mod(Long_O n, Doub_I s, Doub_I d)
 }
 
 inline Doub mod_fl(Doub_I s, Doub_I d)
-{
-    return s - floor(s/d) * d;
-}
+{ return s - floor(s/d) * d; }
 
 // s = n * d + return
 inline Doub mod_fl(Long_O n, Doub_I s, Doub_I d)
@@ -217,9 +181,7 @@ inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
 }
 
 inline Ldoub mod(Ldoub_I s, Ldoub_I d)
-{
-    return s - round(s/d) * d;
-}
+{ return s - round(s/d) * d; }
 
 // floating point version of "%", s = n * d + return
 inline Ldoub mod(Long_O n, Ldoub_I s, Ldoub_I d)
@@ -229,9 +191,7 @@ inline Ldoub mod(Long_O n, Ldoub_I s, Ldoub_I d)
 }
 
 inline Ldoub mod_fl(Ldoub_I s, Ldoub_I d)
-{
-    return s - floor(s/d) * d;
-}
+{ return s - floor(s/d) * d; }
 
 // s = n * d + return
 inline Ldoub mod_fl(Long_O n, Ldoub_I s, Ldoub_I d)
@@ -259,51 +219,6 @@ inline Ldoub mod_eu(Long_O n, Ldoub_I s, Ldoub_I d)
     return r;
 }
 
-#ifdef SLS_USE_QUAD_MATH
-inline Qdoub mod(Qdoub_I s, Qdoub_I d)
-{
-    return s - round(s/d) * d;
-}
-
-// floating point version of "%", s = n * d + return
-inline Qdoub mod(Long_O n, Qdoub_I s, Qdoub_I d)
-{
-    n = round(s/d);
-    return s - n * d;
-}
-
-inline Qdoub mod_fl(Qdoub_I s, Qdoub_I d)
-{
-    return s - floor(s/d) * d;
-}
-
-// s = n * d + return
-inline Qdoub mod_fl(Long_O n, Qdoub_I s, Qdoub_I d)
-{
-    n = floor(s/d);
-    return s - n * d;
-}
-
-inline Qdoub mod_eu(Qdoub_I s, Qdoub_I d)
-{
-    Long n = s/d;
-    Qdoub r = s - n*d;
-    return r < 0 ? r + abs(d) : r;
-}
-
-// s = n * d + return
-inline Qdoub mod_eu(Long_O n, Qdoub_I s, Qdoub_I d)
-{
-    n = s/d;
-    Qdoub r = s - n*d;
-    if (r < 0) {
-        r += abs(d);
-        n -= sign(d);
-    }
-    return r;
-}
-#endif
-
 
 inline Char sqr(Char_I a) { return a * a; }
 
@@ -316,20 +231,11 @@ inline Doub sqr(Doub_I a) { return a * a; }
 inline Comp sqr(Comp_I a) { return a * a; }
 
 
-inline Int abs2(Int_I a)
-{
-    return a * a;
-}
+inline Int abs2(Int_I a) { return a * a; }
 
-inline Doub abs2(Doub_I a)
-{
-    return a * a;
-}
+inline Doub abs2(Doub_I a) { return a * a; }
 
-inline Doub abs2(Comp_I &a)
-{
-    return sqr(real(a)) + sqr(imag(a));
-}
+inline Doub abs2(Comp_I &a) { return sqr(real(a)) + sqr(imag(a)); }
 
 
 inline Doub factorial(Int_I n) {
@@ -352,8 +258,7 @@ inline Qdoub factorialq(Int_I n) {
 }
 #endif
 
-inline Float sinc(Float_I x) { return x == 0.f ? 1.f : sin(x) / x; }
+inline Doub sinc(Doub_I x) { return x == 0 ? 1 : sin(x) / x; }
 
-inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
 
 } // namespace slisc

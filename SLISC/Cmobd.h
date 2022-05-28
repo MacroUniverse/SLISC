@@ -686,7 +686,6 @@ inline void CmobdComp::resize(Long_I blk_size, Long_I Nblk)
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-#ifdef SLS_USE_QUAD_MATH
 void vecset(Qdoub *, Qdoub_I, Llong_I, Llong_I);
 void veccpy(Qdoub *, const Qdoub *, Llong_I);
 
@@ -855,9 +854,7 @@ inline void CmobdQdoub::resize(Long_I blk_size, Long_I Nblk)
     Long step = sqr(nblk0());
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
-#endif
 
-#ifdef SLS_USE_QUAD_MATH
 void vecset(Qcomp *, Qcomp_I, Llong_I, Llong_I);
 void veccpy(Qcomp *, const Qcomp *, Llong_I);
 
@@ -1026,6 +1023,5 @@ inline void CmobdQcomp::resize(Long_I blk_size, Long_I Nblk)
     Long step = sqr(nblk0());
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
-#endif
 
 } // namespace slisc

@@ -1,3 +1,4 @@
 function ret = is_fpt(T)
-ret = is_Float(T) || is_Doub(T) || is_Ldoub(T) || is_Qdoub(T);
+n = type_num(T);
+ret = n >= 20 && n < 40;
 end

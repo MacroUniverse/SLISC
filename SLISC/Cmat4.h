@@ -534,7 +534,6 @@ inline Long Cmat4Ldoub::n3() const {
 typedef const Cmat4Ldoub &Cmat4Ldoub_I;
 typedef Cmat4Ldoub &Cmat4Ldoub_O, &Cmat4Ldoub_IO;
 
-#ifdef SLS_USE_QUAD_MATH
 class Cmat4Qdoub : public VbaseQdoub
 {
 protected:
@@ -621,7 +620,6 @@ inline Long Cmat4Qdoub::n3() const {
 
 typedef const Cmat4Qdoub &Cmat4Qdoub_I;
 typedef Cmat4Qdoub &Cmat4Qdoub_O, &Cmat4Qdoub_IO;
-#endif
 
 class Cmat4Fcomp : public VbaseFcomp
 {
@@ -884,7 +882,6 @@ inline Long Cmat4Lcomp::n3() const {
 typedef const Cmat4Lcomp &Cmat4Lcomp_I;
 typedef Cmat4Lcomp &Cmat4Lcomp_O, &Cmat4Lcomp_IO;
 
-#ifdef SLS_USE_QUAD_MATH
 class Cmat4Qcomp : public VbaseQcomp
 {
 protected:
@@ -971,7 +968,6 @@ inline Long Cmat4Qcomp::n3() const {
 
 typedef const Cmat4Qcomp &Cmat4Qcomp_I;
 typedef Cmat4Qcomp &Cmat4Qcomp_O, &Cmat4Qcomp_IO;
-#endif
 
 class Cmat4Fimag : public VbaseFimag
 {

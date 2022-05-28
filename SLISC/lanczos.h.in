@@ -19,18 +19,7 @@ namespace slisc {
 // calculate v = exp(-i*H*dt) * v
 // H is a hermitian matrix
 // return error
-//% tem('exp_Hdt_v_lanc', {
-//%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp';
-//%   'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp';
-//%   'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp';
-//%   'DvecComp' 'CmatDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'CmobdDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp';
-//%   'DvecComp' 'CbandDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp';
-//%   'DvecComp' 'McooDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp';
-//% });
+//% tem('exp_Hdt_v_lanc', { 'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp' });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
@@ -58,7 +47,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
     Comp *pc = wsp_c.p();
     SvecComp vc(pc, N); pc += vc.size(); // temp vec
     ScmatComp bases(pc, N, Nk); // Krylov bases
-    
+//% req('cut0', {'ScmatComp'});
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
     times(v0, x, 1/beta[0]); 
@@ -106,18 +95,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 // x, y can be the same object
 // H is a hermitian matrix
 // return error
-//% tem('exp_miHdt_v_lanc', {
-//%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp';
-//%   'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp';
-//%   'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp';
-//%   'DvecComp' 'CmatDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'CmobdDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp';
-//%   'DvecComp' 'CbandDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp';
-//%   'DvecComp' 'McooDoub' 'VecDoub' 'VecComp';
-//%   'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp';
-//% });
+//% tem('exp_miHdt_v_lanc', { 'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp' });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
@@ -146,7 +124,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
     SvecComp vc(pc, N); pc += vc.size(); // temp vec
     SvecComp vc1(pc, Nk); pc += vc1.size(); // temp vec
     ScmatComp bases(pc, N, Nk); // Krylov bases
-    
+//% req('cut0', {'ScmatComp'});
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
     times(v0, x, 1/beta[0]);
@@ -178,7 +156,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
     // alpha is now eigen values
     if (info != 0)
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
-    
+//% req('cut', { 'SvecComp' });
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
         vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];

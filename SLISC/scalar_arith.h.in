@@ -7,60 +7,36 @@ namespace slisc {
 //% tem('sign', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';});
 //%-------------------------------
 //% T = varargin{:};
-//% if is_Qdoub(T)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 constexpr @T@ sign(@T@_I s)
 { return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
-//% if is_Qdoub(T)
-#endif
-//% end
 //%-------------------------------
 
 //% tem('sign2', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';});
 //%-------------------------------
 //% T = varargin{:};
-//% if is_Qdoub(T)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 inline @T@ sign(@T@_I a, @T@_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
-//% if is_Qdoub(T)
-#endif
-//% end
 //%------------------------
 
 //% tem('isodd', {'Char'; 'Int'; 'Uint'; 'Llong'; 'Ullong';});
 //%-------------------------------
 //% T = varargin{:};
-inline Bool isodd(@T@_I n)
-{
-    return n & 1;
-}
+inline Bool isodd(@T@_I n) { return n & 1; }
 //%------------------------
 
 //% tem('ispow2', {'Char'; 'Int'; 'Llong'});
 //%-------------------------------
 //% T = varargin{:};
-inline Bool ispow2(@T@_I n)
-{
-    return (n&(n-1)) == 0;
-}
+inline Bool ispow2(@T@_I n) { return (n&(n-1)) == 0; }
 //%-----------------
 
 //% tem('to_num', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Ldoub'; 'Qdoub'; 'Comp'; 'Lcomp'; 'Qcomp';});
 //%------------------------------
 //% T = varargin{:};
-//% if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 //% if is_Bool(T) || is_Char(T)
 inline Int to_num(@T@_I x) { return (Int)x; }
 //% else
 inline @T@ to_num(@T@_I x) { return x; }
-//% end
-//% if is_Qdoub(T) || is_Qcomp(T)
-#endif
 //% end
 //%------------------------
 
@@ -78,14 +54,10 @@ inline @T@ to_num(@T@_I x) { return x; }
 //%     'Llong', 'Int';
 //%     'Doub', 'Doub';
 //%     'Ldoub', 'Ldoub';
-//%     'Qdoub', 'Qdoub';
 //% });
 //%--------------------------
 //% [T1, T2] = varargin{:};
 //% T = promo_type(T1, T2);
-//% if is_Qdoub(T1) || is_Qcomp(T2)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 //% if is_integral(T1) && is_integral(T2)
 inline @T@ mod(@T1@_I i, @T2@_I n)
 {
@@ -104,9 +76,7 @@ inline @T@ mod_eu(@T1@_I i, @T2@_I n)
 }
 //% elseif is_fpt(T1) || is_fpt(T2)
 inline @T@ mod(@T1@_I s, @T2@_I d)
-{
-    return s - round(s/d) * d;
-}
+{ return s - round(s/d) * d; }
 
 // floating point version of "%", s = n * d + return
 inline @T@ mod(Long_O n, @T1@_I s, @T2@_I d)
@@ -116,9 +86,7 @@ inline @T@ mod(Long_O n, @T1@_I s, @T2@_I d)
 }
 
 inline @T@ mod_fl(@T1@_I s, @T2@_I d)
-{
-    return s - floor(s/d) * d;
-}
+{ return s - floor(s/d) * d; }
 
 // s = n * d + return
 inline @T@ mod_fl(Long_O n, @T1@_I s, @T2@_I d)
@@ -148,9 +116,6 @@ inline @T@ mod_eu(Long_O n, @T1@_I s, @T2@_I d)
 //% else
 //%     error('not implemented!');
 //% end
-//% if is_Qdoub(T1) || is_Qcomp(T2)
-#endif
-//% end
 //%------------------------
 
 //% tem('sqr', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
@@ -159,21 +124,14 @@ inline @T@ mod_eu(Long_O n, @T1@_I s, @T2@_I d)
 inline @T@ sqr(@T@_I a) { return a * a; }
 //%------------------------
 
-//% tem('abs2', {'Int'; 'Doub'; 'Comp';
-//%     });
+//% tem('abs2', {'Int'; 'Doub'; 'Comp'; });
 //%-------------------------------
 //% T = varargin{:};
 //% if is_real(T)
-inline @T@ abs2(@T@_I a)
-{
-    return a * a;
-}
+inline @T@ abs2(@T@_I a) { return a * a; }
 //% elseif is_comp(T)
 //%     Tr = rm_comp(T);
-inline @Tr@ abs2(@T@_I &a)
-{
-    return sqr(real(a)) + sqr(imag(a));
-}
+inline @Tr@ abs2(@T@_I &a) { return sqr(real(a)) + sqr(imag(a)); }
 //% end
 //%------------------------
 
@@ -197,8 +155,10 @@ inline Qdoub factorialq(Int_I n) {
 }
 #endif
 
-inline Float sinc(Float_I x) { return x == 0.f ? 1.f : sin(x) / x; }
-
-inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
+//% tem('sinc', { 'Doub' });
+//%---------------------
+//% T = varargin{:}; if ~is_fpt(T), error('illegal type!'); end
+inline @T@ sinc(@T@_I x) { return x == @num(0,T)@ ? @num(1,T)@ : sin(x) / x; }
+//%---------------------
 
 } // namespace slisc

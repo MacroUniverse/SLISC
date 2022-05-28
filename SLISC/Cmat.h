@@ -516,7 +516,6 @@ inline void CmatLdoub::reshape(Long_I N0, Long_I N1)
 typedef const CmatLdoub &CmatLdoub_I;
 typedef CmatLdoub &CmatLdoub_O, &CmatLdoub_IO;
 
-#ifdef SLS_USE_QUAD_MATH
 class CmatQdoub : public VbaseQdoub
 {
 protected:
@@ -600,7 +599,6 @@ inline void CmatQdoub::reshape(Long_I N0, Long_I N1)
 
 typedef const CmatQdoub &CmatQdoub_I;
 typedef CmatQdoub &CmatQdoub_O, &CmatQdoub_IO;
-#endif
 
 class CmatFcomp : public VbaseFcomp
 {
@@ -854,7 +852,6 @@ inline void CmatLcomp::reshape(Long_I N0, Long_I N1)
 typedef const CmatLcomp &CmatLcomp_I;
 typedef CmatLcomp &CmatLcomp_O, &CmatLcomp_IO;
 
-#ifdef SLS_USE_QUAD_MATH
 class CmatQcomp : public VbaseQcomp
 {
 protected:
@@ -938,7 +935,6 @@ inline void CmatQcomp::reshape(Long_I N0, Long_I N1)
 
 typedef const CmatQcomp &CmatQcomp_I;
 typedef CmatQcomp &CmatQcomp_O, &CmatQcomp_IO;
-#endif
 
 class CmatFimag : public VbaseFimag
 {

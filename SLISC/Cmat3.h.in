@@ -19,9 +19,6 @@ typedef Cmat3Int Cmat3Long;
 typedef Cmat3Llong Cmat3Long;
 #endif
 //% else
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 class @Cmat3T@ : public @VbaseT@
 {
 protected:
@@ -101,8 +98,5 @@ inline Long @Cmat3T@::n2() const {
 
 typedef const @Cmat3T@ &@Cmat3T@_I;
 typedef @Cmat3T@ &@Cmat3T@_O, &@Cmat3T@_IO;
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%--------------------------------
 } // namespace slisc

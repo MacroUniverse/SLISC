@@ -1,12 +1,13 @@
+% define template and required params
 function tem(name, param)
 global tem_db is_batch_mode;
 if isempty(name)
     error('template name empty!');
 end
-disp(['tem: ' name]);
+disp(['scaning template: ' name]);
 ind = tem_search(name);
 if ind > 0
-    if is_batch_mode
+    if is_batch_mode && ~isempty(tem_db(ind).body)
         error(['redefinition of template: ' name]);
     end
     req(name, param, true);

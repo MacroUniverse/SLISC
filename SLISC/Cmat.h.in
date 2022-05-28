@@ -19,9 +19,6 @@ typedef CmatInt CmatLong;
 typedef CmatLlong CmatLong;
 #endif
 //% else
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 class @CmatT@ : public @VbaseT@
 {
 protected:
@@ -106,9 +103,6 @@ inline void @CmatT@::reshape(Long_I N0, Long_I N1)
 
 typedef const @CmatT@ &@CmatT@_I;
 typedef @CmatT@ &@CmatT@_O, &@CmatT@_IO;
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%----------------------------------------
 
 class CmatBool : public VbaseBool

@@ -45,7 +45,7 @@ for i = 1:Nfile
     if nargin > 1 && ~strcmp(in_file, file)
         continue;
     end
-    fprintf(['scan: ' in_file '...' newline]);
+    fprintf(['=========== scaning file: ' in_file ' ============' newline]);
     str = fileread(in_file);
     str(str == 13) = [];
     ind = 1;
@@ -91,7 +91,8 @@ while ~quit
         Np = size(tem_db(i).param, 1);
         for j = 1:Np
             if ~tem_db(i).done(j)
-                temp = [tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))];
+                temp = ['instantiating template: ' ...
+                    tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))];
                 disp(temp);
                 tem_db(i).out{j} = instantiate(tem_db(i).body, tem_db(i).param{j,:});
                 tem_db(i).done(j) = true; quit = false;
