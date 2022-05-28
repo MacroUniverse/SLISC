@@ -4,6 +4,9 @@ if nargin == 2
 end
 global tem_db;
 ind = tem_search(name);
+if ind < 0
+    error(['template not found: ' name]);
+end
 if size(tem_db(ind).param, 2) ~= size(param, 2)
     error(['template ' name ' does not take ' num2str(size(param, 2))...
         ' parameters!']);

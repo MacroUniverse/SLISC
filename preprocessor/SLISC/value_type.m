@@ -1,4 +1,11 @@
-function ret = value_type(T)
+function varargout = value_type(varargin)
+varargout = cell(size(varargin));
+for i = 1:nargin
+    varargout{i} = value_type1(varargin{i});
+end
+end
+
+function ret = value_type1(T)
 if any(strfind(T, 'Bool'))
     ret = 'Bool';
 elseif any(strfind(T, 'Char'))

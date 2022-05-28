@@ -6,17 +6,13 @@
 #include "sort.h"
 
 namespace slisc {
-//% tem('mul_cmat_cmat_diag', {
-//%        'Doub', 'Doub', 'Doub';
-//%     'Comp', 'Comp', 'Doub';
-//%     'Comp', 'Doub', 'Comp';
-//%     'Comp', 'Comp', 'Comp';
-//% });
+//% tem('mul_cmat_cmat_diag', { 'Comp', 'Doub', 'Comp'; });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~(is_promo(T, T1) && is_promo(T, T2))
 //%     error('illegal types!');
 //% end
+//% req('plus_vvs', {T, T1, T2});
 inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
 {
     for (Long i = 0; i < Nc; ++i) {
@@ -24,19 +20,8 @@ inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, cons
         c += Nr; a += Nr;
     }
 }
-//%------------------------
 
-//% tem('mul_cmat_diag_cmat', {
-//%        'Doub', 'Doub', 'Doub';
-//%     'Comp', 'Doub', 'Comp';
-//%     'Comp', 'Comp', 'Doub';
-//%     'Comp', 'Comp', 'Comp';
-//% });
-//%------------------------------
-//% [T, T1, T2] = varargin{:};
-//% if ~(is_promo(T, T1) && is_promo(T, T2))
-//%     error('illegal types!');
-//% end
+//% req('plus_vvv', {T, T2, T1});
 inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
@@ -47,9 +32,7 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 //%------------------------
 
 //% tem('mul_v_coo_v', {
-//%     'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
-//%     'Comp', 'Comp', 'Comp';
 //% });
 //%-------------------------------
 //% [Ty,T,Tx] = varargin{:};
@@ -83,10 +66,7 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 //%------------------------
 
 //% tem('mul_v_cmatobd_v', {
-//%     'Int', 'Int', 'Int';
-//%     'Doub', 'Doub', 'Doub';
 //%     'Comp', 'Doub', 'Comp';
-//%     'Comp', 'Comp', 'Comp';
 //% });
 //%-------------------------------
 //% [Ty,T,Tx] = varargin{:};
@@ -134,17 +114,14 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 }
 //%-----------------------
 
-//% tem('mul_vmv', {
-//%     'VecInt', 'CmobdInt', 'VecInt';
-//%     'VecDoub', 'CmobdDoub', 'VecDoub';
-//%     'VecComp', 'CmobdComp', 'VecComp';
-//%     'VecComp', 'CmobdDoub', 'VecComp';
-//%     'VecComp', 'CmobdDoub', 'SvecComp';
-//%     'SvecDoub', 'CmobdDoub', 'SvecDoub';
-//%     'SvecComp', 'CmobdDoub', 'SvecComp';
+//% tem('mul(v,obd,v)', {
+//%    'VecComp', 'CmobdDoub', 'SvecComp';
+//%    'VecInt', 'CmobdInt', 'VecInt'
 //% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
+//% [Ts, Ts1, Ts2] = value_type(Ty, Ta, Tx);
+//% req('mul_v_cmatobd_v', {Ts, Ts1, Ts2});
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -155,12 +132,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 }
 //%------------------------------
 
-//% tem('mul_yaxs', {
-//%     'VecDoub', 'McooDoub', 'VecDoub';
-//%     'VecComp', 'McooComp', 'VecComp';
-//%     'SvecDoub', 'McooDoub', 'SvecDoub';
-//%     'SvecComp', 'McooDoub', 'SvecComp';
-//% });
+//% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp'; });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
@@ -179,7 +151,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 }
 //%------------------------
 
-//% tem('mul_yaxs2', {
+//% tem('mul(m,m,diag)', {
 //%        'CmatDoub', 'CmatDoub', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagDoub';
 //%     'CmatComp', 'CmatComp', 'DiagComp';
@@ -191,6 +163,8 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
+//% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
+//% req('mul_cmat_cmat_diag', {Ts, Ts1, Ts2});
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -303,15 +277,13 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 }
 //%------------------------
 
-//% tem('times_obd', {
-//%     'CmobdComp', 'CmobdDoub', 'Imag';
-//% });
+//% tem('times_obd', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
 //%----------------------------
-//% [T, T1, Ts] = varargin{:};
-inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
-{
-    times(v.cmat3(), v1.cmat3(), s);
-}
+//% [T1, T2, Ts] = varargin{:};
+//% [Ts1, Ts2] = value_type(T1, T2);
+//% req('plus(v,v,s)', {['Cmat3' Ts1], ['Cmat3' Ts2], Ts});
+inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
+{ times(v1.cmat3(), v2.cmat3(), s); }
 //%------------------------
 
 //% tem('times_coo', {
