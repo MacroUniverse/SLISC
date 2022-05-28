@@ -40,7 +40,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 }
 //%------------------------
 
-//% tem('shape_cmp0', { 'CmatDoub', 'CmatDoub' });
+//% tem('shape_cmp', { 'CmatDoub', 'CmatDoub' });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
 //% N1 = ndim(T1); N2 = ndim(T2);
@@ -67,7 +67,7 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return (Long)v1.n0() == (Long)v2.n0
 inline void assert_same_shape(@T1@_I v1, @T2@_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
-//% req('shape_cmp0', {T1, T2});
+//% req('shape_cmp', {T1, T2});
     if (!shape_cmp(v1, v2))
         SLS_ERR("wrong shape!");
 #endif
@@ -89,7 +89,7 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //% [Ts1,Ts2] = val_t(T1,T2);
 inline Bool operator==(@T1@_I v1, @T2@_I v2)
 {
-//%     req('shape_cmp0', {T1, T2});
+//%     req('shape_cmp', {T1, T2});
 //% if is_dense(T1) && is_dense(T2) && is_same_major(T1, T2)
 //%     req('equals_to_vv', {Ts1, Ts2});
     return shape_cmp(v1, v2) &&

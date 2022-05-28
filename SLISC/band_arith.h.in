@@ -163,8 +163,9 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I imag_time
     assert_same_shape22(a, b);
     Doub dt4 = 0.25*dt;
     if (!append) {
+//% req('copy(band,s)', {'CbandComp'});
         copy(b, 0);
-//% req('cut1', {'CmatComp'});
+//% req('cut1', {'CmatComp'}); req('copy(v,s)', {'DvecComp'});
         copy(cut1(b.cmat(), b.idiag()), 0.5);
     }
     if (!imag_time)
@@ -189,8 +190,9 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
         SLS_ERR("wrong shape!");
 #endif
     if (!append) {
+//% req('copy(band,s)', {'CbandComp'});
         copy(b, 0);
-//% req('cut1', {'CmatComp'});
+//% req('cut1', {'CmatComp'}); req('copy(v,s)', {'DvecComp'});
         copy(cut1(b.cmat(), b.idiag()), 0.5);
     }
     if (!imag_time) {

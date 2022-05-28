@@ -540,6 +540,7 @@ inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub 
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pxi;
     Comp *pyj, factor, expo, dexpo;
+//% req('copy(v,s)', {'MatComp'});
     Y.resize(Nk, Nc); copy(Y, 0);
     for (j = 0; j < Nk; ++j) {
         pyj = Y.p() + Nc*j;

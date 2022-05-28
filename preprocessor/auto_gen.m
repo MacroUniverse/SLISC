@@ -88,6 +88,9 @@ quit = false;
 while ~quit
     quit = true;
     for i = 1:numel(tem_db)
+        if isempty(tem_db(i).body)
+            error(['template body not found: ' tem_db(i).name]);
+        end
         Np = size(tem_db(i).param, 1);
         for j = 1:Np
             if ~tem_db(i).done(j)

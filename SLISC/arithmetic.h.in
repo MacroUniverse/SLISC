@@ -487,6 +487,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
     Long Nold = v.size();
     if (N != Nold) {
         if (Nold == 0) {
+//% req('copy(v,s)', {Tv});
             v.resize(N); copy(v, val);
         }
         else if (N == 0)
@@ -511,6 +512,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
     Long N = N0 * N1;
     if (N0 != N10 || N1 != N20) {
         if (Nold == 0) {
+//%     req('copy(v,s)', {Tv});
             v.resize(N0, N1); copy(v, val);
         }
         else if (N == 0)
@@ -518,7 +520,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
         else {
             @Tv@ v1(N0, N1); copy(v1, val);
             Long N1min = min(N0, N10), N2min = min(N1, N20);
-//%     req('cut', {Tv});
+//%     req('cut', {Tv}); req('copy(v,v)', {Tsli,Tsli});
             copy(cut(v1, 0, N1min, 0, N2min),
                 cut(v, 0, N1min, 0, N2min));
             v << v1;
@@ -526,12 +528,14 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
     }
 }
 //% elseif is_Cmat3(Tv) || is_Mat3(Tv)
+//%     Tsli = cut_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0)
 {
     Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), Nold = N0*N1;
     Long N = N0 * N1 * N2;
     if (N0 != N10 || N1 != N20 || N2 != N30) {
         if (Nold == 0) {
+//% req('copy(v,s)', {Tv});
             v.resize(N0, N1, N2); copy(v, val);
         }
         else if (N == 0)
@@ -539,7 +543,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
         else {
             @Tv@ v1(N0, N1, N2); copy(v1, val);
             Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
-//%     req('cut', {Tv});
+//%     req('cut', {Tv}); req('copy(v,v)', {Tsli,Tsli});
             copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
                 cut(v, 0, N1min, 0, N2min, 0, N3min));
             v << v1;

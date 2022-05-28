@@ -94,7 +94,36 @@ inline void matcpy_diff_major(Doub *a2, const Doub *a1, Long_I N2, Long_I lda2, 
 // === container interface ===
 // must use pointer version
 // scalar to container
+inline void copy(DvecComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size(), v.step());
+}
+
 inline void copy(Cmat3Doub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(MatComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(DcmatComp_O v, Comp_I s)
+{
+    Long N1 = v.n0(), N2 = v.n1();
+    for (Long j = 0; j < N2; ++j)
+        vecset(&v(0, j), s, N1);
+}
+
+inline void copy(DcmatDoub_O v, Doub_I s)
+{
+    Long N1 = v.n0(), N2 = v.n1();
+    for (Long j = 0; j < N2; ++j)
+        vecset(&v(0, j), s, N1);
+}
+
+inline void copy(CmatDoub_O v, Doub_I s)
 {
     vecset(v.p(), s, v.size());
 }
@@ -142,6 +171,44 @@ inline void copy(VecDoub_O v, SvecDoub_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(CmatComp_O v, CmatComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    // slow
+    if (v1.size() != 0)
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
+                v(i, j, k) = v1(i, j, k);
+}
+
+inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(ScmatDoub_O v, CmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
 
 
 // for sparse containers
@@ -198,6 +265,7 @@ inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
 {
     assert_same_shape(lhs, rhs);
     Cmat3Doub &c3 = lhs.cmat3();
+// req('copy(v,s)', {Cmat3T});
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);
@@ -264,9 +332,13 @@ inline void copy(CmatDoub_O lhs, CmobdDoub_I rhs)
 //     }
 // }
 
+DcmatComp band(CbandComp_IO);
+DcmatComp_c band(CbandComp_I);
+inline void copy(CbandComp_O a, Comp_I s)
+{ copy(band(a), s); }
+
 DcmatDoub band(CbandDoub_IO);
 DcmatDoub_c band(CbandDoub_I);
-
 inline void copy(CbandDoub_O a, Doub_I s)
 { copy(band(a), s); }
 
@@ -278,6 +350,7 @@ inline void copy(CbandDoub_O a, CbandDoub_I b)
         SLS_ERR("wrong shape!");
 #endif
     a.reshape(b.n0(), b.nup(), b.nlow());
+// req('copy(v,v)', {['Cmat' Ts],['Cmat' Ts1]});
     copy(band(a), band(b));
 }
 

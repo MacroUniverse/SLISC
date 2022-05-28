@@ -6,11 +6,7 @@ namespace slisc {
 #ifdef SLS_USE_LAPACKE
 // only upper triangle is needed
 // eigen value in ascending order
-//% tem('eig_sym', {
-//%     'VecDoub', 'CmatDoub', 'CmatDoub';
-//%     'SvecDoub', 'ScmatDoub', 'CmatDoub';
-//%     'SvecDoub', 'ScmatDoub', 'ScmatDoub';
-//%     });
+//% tem('eig_sym', { 'SvecDoub', 'ScmatDoub', 'CmatDoub' });
 //%--------------------------------
 //% [Tv, Tm, Tm2] = varargin{:};
 //% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);
@@ -22,6 +18,7 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
         || eigVal.size() != eigVec.n0())
         SLS_ERR("wrong shape!");
 #endif
+//% req('copy(v,v)', {Tm,Tm2});
     copy(eigVec, A);
     Int N = (Int)A.n1();
     Int ret;
@@ -43,10 +40,12 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (A.n0() != A.n1() || !shape_cmp22(eigVec, A)
+//% req('shape_cmp', {'CmatComp','CmatComp'});
+    if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
         || eigVal.size() != eigVec.n0())
         SLS_ERR("wrong shape!");
 #endif
+//% req('copy(v,v)', {'CmatComp','CmatComp'});
     copy(eigVec, A);
     Int N = (Int)A.n1();
     eigVal.resize(N);

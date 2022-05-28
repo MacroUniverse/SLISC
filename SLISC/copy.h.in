@@ -115,7 +115,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // === container interface ===
 // must use pointer version
 // scalar to container
-//% tem('copy', { 'Cmat3Doub' });
+//% tem('copy(v,s)', { 'Cmat3Doub' });
 //%-------------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void copy(@T@_O v, @Ts@_I s)
@@ -247,10 +247,11 @@ inline void copy(@T@_O v, @T1@_I v1)
 //%     disp(['T1 = ', T1]);
 //%     error('not implemented!!');
 //% end
+}
 //%------------------------
 
 // for sparse containers
-//% tem('copy_coo', { 'Doub', 'Doub' });
+//% tem('copy(coo,coo)', { 'Doub', 'Doub' });
 //%----------------------------
 //% [T, T1] = varargin{:};
 //% McooT = ['Mcoo', T]; McooT1 = ['Mcoo', T1];
@@ -278,7 +279,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 
 // copy dense matrix to Mcoo matrix
 // abs(s) < tol is considered 0
-//% tem('copy(coo,cmat)', { 'McooComp', 'CmatComp' });
+//% tem('copy(coo,mat)', { 'McooComp', 'CmatComp' });
 //%----------------------------
 //% [Tcoo, Tcmat] = varargin{:};
 //% Ts1 = val_t(Tcmat);
@@ -307,6 +308,7 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 {
 //% req('assert_same_shape', {Tmat, McooTs});
     assert_same_shape(lhs, rhs);
+//% req('copy(v,s)', {Tmat});
     copy(lhs, 0);
     for (Long i = 0; i < rhs.nnz(); ++i) {
         lhs(rhs.row(i), rhs.col(i)) = rhs[i];
@@ -316,7 +318,8 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 
 //% tem('copy(obd,obd)', { 'CmobdDoub', 'CmobdDoub' });
 //%-----------------------
-//% [T, T1] = varargin{:};
+//% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
+//% req('copy(v,v)', {['Cmat3' Ts], ['Cmat3' Ts1]});
 inline void copy(@T@_O lhs, @T1@_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
 //%-------------------
@@ -330,6 +333,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(lhs, rhs);
     @Cmat3T@ &c3 = lhs.cmat3();
+// req('copy(v,s)', {Cmat3T});
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);
@@ -406,14 +410,14 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% DcmatTs = ['Dcmat' Ts];
 @DcmatTs@ band(@T@_IO);
 @DcmatTs@_c band(@T@_I);
-
+//% req('copy(v,s)', {DcmatTs});
 inline void copy(@T@_O a, @Ts@_I s)
 { copy(band(a), s); }
 //%------------------------------
 
 //% tem('copy(band,band)', { 'CbandDoub', 'CbandDoub' });
 //%------------------------------
-//% [T, T1] = varargin{:};
+//% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void copy(@T@_O a, @T@_I b)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -421,6 +425,7 @@ inline void copy(@T@_O a, @T@_I b)
         SLS_ERR("wrong shape!");
 #endif
     a.reshape(b.n0(), b.nup(), b.nlow());
+// req('copy(v,v)', {['Cmat' Ts],['Cmat' Ts1]});
     copy(band(a), band(b));
 }
 //%------------------------------
