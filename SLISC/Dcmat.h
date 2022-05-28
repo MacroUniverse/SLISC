@@ -9,7 +9,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Char value_type;
     DcmatChar_c();
     DcmatChar_c(const Char *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Char *p, Long_I N0, Long_I N1, Long_I lda);
@@ -95,7 +94,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Char value_type;
     DcmatChar();
     DcmatChar(Char *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Char *p, Long_I N0, Long_I N1, Long_I lda);
@@ -187,7 +185,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Int value_type;
     DcmatInt_c();
     DcmatInt_c(const Int *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Int *p, Long_I N0, Long_I N1, Long_I lda);
@@ -273,7 +270,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Int value_type;
     DcmatInt();
     DcmatInt(Int *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Int *p, Long_I N0, Long_I N1, Long_I lda);
@@ -365,7 +361,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Llong value_type;
     DcmatLlong_c();
     DcmatLlong_c(const Llong *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Llong *p, Long_I N0, Long_I N1, Long_I lda);
@@ -451,7 +446,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Llong value_type;
     DcmatLlong();
     DcmatLlong(Llong *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Llong *p, Long_I N0, Long_I N1, Long_I lda);
@@ -560,7 +554,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Float value_type;
     DcmatFloat_c();
     DcmatFloat_c(const Float *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Float *p, Long_I N0, Long_I N1, Long_I lda);
@@ -646,7 +639,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Float value_type;
     DcmatFloat();
     DcmatFloat(Float *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Float *p, Long_I N0, Long_I N1, Long_I lda);
@@ -738,7 +730,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Doub value_type;
     DcmatDoub_c();
     DcmatDoub_c(const Doub *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Doub *p, Long_I N0, Long_I N1, Long_I lda);
@@ -824,7 +815,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Doub value_type;
     DcmatDoub();
     DcmatDoub(Doub *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Doub *p, Long_I N0, Long_I N1, Long_I lda);
@@ -916,7 +906,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Ldoub value_type;
     DcmatLdoub_c();
     DcmatLdoub_c(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1002,7 +991,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Ldoub value_type;
     DcmatLdoub();
     DcmatLdoub(Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1095,7 +1083,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Qdoub value_type;
     DcmatQdoub_c();
     DcmatQdoub_c(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1183,7 +1170,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Qdoub value_type;
     DcmatQdoub();
     DcmatQdoub(Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Qdoub *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1276,7 +1262,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Fcomp value_type;
     DcmatFcomp_c();
     DcmatFcomp_c(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1362,7 +1347,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Fcomp value_type;
     DcmatFcomp();
     DcmatFcomp(Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1454,7 +1438,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Comp value_type;
     DcmatComp_c();
     DcmatComp_c(const Comp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Comp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1540,7 +1523,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Comp value_type;
     DcmatComp();
     DcmatComp(Comp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Comp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1632,7 +1614,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Lcomp value_type;
     DcmatLcomp_c();
     DcmatLcomp_c(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1718,7 +1699,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Lcomp value_type;
     DcmatLcomp();
     DcmatLcomp(Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1811,7 +1791,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef const Qcomp value_type;
     DcmatQcomp_c();
     DcmatQcomp_c(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
@@ -1899,7 +1878,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef Qcomp value_type;
     DcmatQcomp();
     DcmatQcomp(Qcomp *p, Long_I N0, Long_I N1, Long_I lda);
     void set(Qcomp *p, Long_I N0, Long_I N1, Long_I lda);

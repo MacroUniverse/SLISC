@@ -44,7 +44,7 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%--------------------------------
 //% [T1, T2] = varargin{:};
 //% N1 = ndim(T1); N2 = ndim(T2);
-//% Ts1 = value_type(T1); Ts2 = value_type(T2);
+//% [Ts1,Ts2] = val_t(T1,T2);
 //% if N1 ~= N2
 inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return false;}
 //% elseif N1 == 1
@@ -63,7 +63,7 @@ inline Bool shape_cmp(@T1@_I v1, @T2@_I v2) {return (Long)v1.n0() == (Long)v2.n0
 //% tem('assert_same_shape', { 'CmatComp', 'CmatInt' });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
-//% Ts1 = value_type(T1); Ts2 = value_type(T2);
+//% [Ts1,Ts2] = val_t(T1,T2);
 inline void assert_same_shape(@T1@_I v1, @T2@_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -77,7 +77,7 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2)
 //% tem('assert_same_shape3', { 'CmatComp', 'CmatInt', 'CmatDoub' });
 //%--------------------------------
 //% [T1, T2, T3] = varargin{:};
-//% Ts1 = value_type(T1); Ts2 = value_type(T2); Ts3 = value_type(T3);
+//% [Ts1,Ts2,Ts3] = val_t(T1,T2,T3);
 //% req('assert_same_shape', {T1, T2}); req('assert_same_shape', {T1, T3});
 inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
@@ -86,7 +86,7 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //% tem('v==v', { 'MatLlong', 'MatLlong'; });
 //%--------------------------
 //% [T1, T2] = varargin{:};
-//% Ts1 = value_type(T1); Ts2 = value_type(T2);
+//% [Ts1,Ts2] = val_t(T1,T2);
 inline Bool operator==(@T1@_I v1, @T2@_I v2)
 {
 //%     req('shape_cmp0', {T1, T2});
@@ -145,8 +145,7 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
 
 //% tem('v==s', { 'DvecDoub'; });
 //%--------------------------
-//% T = varargin{:};
-//% Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 inline Bool operator==(@T@_I v, @Ts@_I s)
 {
 //% if is_dense(T)

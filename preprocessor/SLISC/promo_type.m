@@ -32,17 +32,17 @@ elseif is_comp(T1) && is_real(T2)
 elseif is_Imat(T1) && is_comp(T2)
     if num1 - num2 <= 20
         ret = T2; return;
-    elseif is_Doub(value_type(T1))
+    elseif is_Doub(val_t(T1))
         ret = 'Comp'; return;
-    elseif is_Ldoub(value_type(T1))
+    elseif is_Ldoub(val_t(T1))
         ret = 'Lcomp'; return;
     end
 elseif is_comp(T1) && is_Imag(T2)
     if num2 - num1 <= 20
         ret = T1; return;
-    elseif is_Doub(value_type(T2))
+    elseif is_Doub(val_t(T2))
         ret = 'Comp'; return;
-    elseif is_Ldoub(value_type(T2))
+    elseif is_Ldoub(val_t(T2))
         ret = 'Lcomp'; return;
     end
 end

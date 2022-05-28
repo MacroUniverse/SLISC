@@ -29,7 +29,6 @@ protected:
     @T@ *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef @T@ value_type;
     // constructors
     @VbaseT@();
     explicit @VbaseT@(Long_I N);

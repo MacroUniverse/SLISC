@@ -69,7 +69,7 @@ inline Long search_head(@Tv@_I v_short, @Ts@_I s_long, Long_I start = 0)
 //%     'VecInt'; 'VecLlong'; 'VecDoub'; 'vecInt'; 'vecLlong'; 'vecStr'; 'vecStr32';
 //% });
 //%--------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;

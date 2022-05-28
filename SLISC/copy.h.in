@@ -117,7 +117,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // scalar to container
 //% tem('copy', { 'Cmat3Doub' });
 //%-------------------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_VecBool(T)
@@ -152,7 +152,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 // assign value to containers
 //% tem('assign', { 'DvecDoub' });
 //%--------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 //% if is_Bool(Ts) || is_Char(Ts)
 //%     Ts = 'Int'; % ... will promote these types, might give warning
 //% elseif is_Float(Ts)
@@ -181,7 +181,7 @@ inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
 // assign initializer list to containers
 //% tem('asign(v,v)', { 'ScmatComp' });
 //%------------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 {
     const @Ts@ *p1 = v1.begin();
@@ -199,10 +199,10 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //% tem('copy(v,v)', { 'VecDoub', 'SvecDoub' });
 //%---------------------------
 //% [T, T1] = varargin{:};
-//% if ~is_promo(value_type(T), value_type(T1))
+//% if ~is_promo(val_t(T), val_t(T1))
 //%     error('illegal types');
 //% end
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 inline void copy(@T@_O v, @T1@_I v1)
 {
 //% req('assert_same_shape', {T,T1});
@@ -281,7 +281,7 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 //% tem('copy(coo,cmat)', { 'McooComp', 'CmatComp' });
 //%----------------------------
 //% [Tcoo, Tcmat] = varargin{:};
-//% Ts1 = value_type(Tcmat);
+//% Ts1 = val_t(Tcmat);
 inline void copy(@Tcoo@_O v, @Tcmat@_I v1, Doub_I tol = 0)
 {
 //% req('assert_same_shape', {Tcoo,Tcmat});
@@ -324,7 +324,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% tem('copy(obd,coo)', { 'CmobdDoub', 'McooDoub' });
 //%-----------------------
 //% [T, T1] = varargin{:};
-//% Cmat3T = ['Cmat3' value_type(T)];
+//% Cmat3T = ['Cmat3' val_t(T)];
 inline void copy(@T@_O lhs, @T1@_I rhs)
 {
 //% req('assert_same_shape', {T, T1});
@@ -402,7 +402,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 
 //% tem('copy(band,s)', { 'CbandDoub' });
 //%------------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 //% DcmatTs = ['Dcmat' Ts];
 @DcmatTs@ band(@T@_IO);
 @DcmatTs@_c band(@T@_I);
@@ -431,7 +431,7 @@ inline void copy(@T@_O a, @T@_I b)
 //% });
 //%------------------------------
 //% [T1, T2] = varargin{:};
-//% [Ts1,Ts2] = value_type(T1,T2);
+//% [Ts1,Ts2] = val_t(T1,T2);
 //% SvecTs1 = ['Svec' Ts1]; SvecTs2 = ['Svec' Ts2];
 //% if is_Cband(T1)
 inline void copy(@T1@_O b, @T2@_I a)
@@ -440,7 +440,7 @@ inline void copy(@T1@_O b, @T2@_I a)
     assert_same_shape(a, b);
     Long N1 = a.n0(), N2 = a.n1();
     for (Long j = 0; j < N2; ++j) {
-//% req('cut0', {['Cmat' value_type(T1)]; T2});
+//% req('cut0', {['Cmat' val_t(T1)]; T2});
         @SvecTs1@ cut_b = cut0(b.cmat(), j);
         @SvecTs2@_c cut_a = cut0(a, j);
         Long k = b.idiag() - j;
@@ -458,7 +458,7 @@ inline void copy(@T1@_O a, @T2@_I b)
     for (Long j = 0; j < N2; ++j) {
         Long k = b.idiag() - j;
         Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
-//% req('cut0', {T1; ['Cmat' value_type(T2)]});
+//% req('cut0', {T1; ['Cmat' val_t(T2)]});
         @SvecTs1@ cut_a = cut0(a, j);
         @SvecTs2@_c cut_b = cut0(b.cmat(), j);
         for (Long i = 0; i < i_beg; ++i)

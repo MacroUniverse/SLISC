@@ -120,7 +120,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
-//% [Ts, Ts1, Ts2] = value_type(Ty, Ta, Tx);
+//% [Ts, Ts1, Ts2] = val_t(Ty, Ta, Tx);
 //% req('mul_v_cmatobd_v', {Ts, Ts1, Ts2});
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
@@ -163,7 +163,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
-//% Ts = value_type(T); Ts1 = value_type(T1); Ts2 = value_type(T2);
+//% Ts = val_t(T); Ts1 = val_t(T1); Ts2 = val_t(T2);
 //% req('mul_cmat_cmat_diag', {Ts, Ts1, Ts2});
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
@@ -280,7 +280,7 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 //% tem('times_obd', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
 //%----------------------------
 //% [T1, T2, Ts] = varargin{:};
-//% [Ts1, Ts2] = value_type(T1, T2);
+//% [Ts1, Ts2] = val_t(T1, T2);
 //% req('plus(v,v,s)', {['Cmat3' Ts1], ['Cmat3' Ts2], Ts});
 inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
 { times(v1.cmat3(), v2.cmat3(), s); }
@@ -300,7 +300,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 // infinity norm (using maximum absolute sum of columns)
 //% tem('norm_inf', {'CmatDoub'; 'CmatComp';});
 //%-----------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)
@@ -316,7 +316,7 @@ inline @Tr@ norm_inf(@T@_I A)
 // infinity norm (using maximum absolute sum of columns)
 //% tem('norm_inf2', {'CmobdInt'; 'CmobdDoub'; 'CmobdComp';});
 //%-----------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)
@@ -353,7 +353,7 @@ inline @Tr@ norm_inf(@T@_I A)
 // infinity norm (using maximum absolute sum of columns)
 //% tem('norm_inf3', {'McooDoub'; 'McooComp';});
 //%-----------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
 //% VecTr = ['Vec' Tr];
 inline @Tr@ norm_inf(@T@_I A)

@@ -50,7 +50,6 @@ protected:
     Long m_N0, m_N1;
     Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-    typedef @CT@ value_type;
     @Class@();
     @Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I lda);
     void set(@CT@ *p, Long_I N0, Long_I N1, Long_I lda);

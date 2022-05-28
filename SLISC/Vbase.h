@@ -11,7 +11,6 @@ protected:
     Char *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Char value_type;
     // constructors
     VbaseChar();
     explicit VbaseChar(Long_I N);
@@ -176,7 +175,6 @@ protected:
     Int *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Int value_type;
     // constructors
     VbaseInt();
     explicit VbaseInt(Long_I N);
@@ -341,7 +339,6 @@ protected:
     Llong *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Llong value_type;
     // constructors
     VbaseLlong();
     explicit VbaseLlong(Long_I N);
@@ -512,7 +509,6 @@ protected:
     Float *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Float value_type;
     // constructors
     VbaseFloat();
     explicit VbaseFloat(Long_I N);
@@ -677,7 +673,6 @@ protected:
     Doub *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Doub value_type;
     // constructors
     VbaseDoub();
     explicit VbaseDoub(Long_I N);
@@ -842,7 +837,6 @@ protected:
     Ldoub *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Ldoub value_type;
     // constructors
     VbaseLdoub();
     explicit VbaseLdoub(Long_I N);
@@ -1008,7 +1002,6 @@ protected:
     Qdoub *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Qdoub value_type;
     // constructors
     VbaseQdoub();
     explicit VbaseQdoub(Long_I N);
@@ -1174,7 +1167,6 @@ protected:
     Fcomp *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Fcomp value_type;
     // constructors
     VbaseFcomp();
     explicit VbaseFcomp(Long_I N);
@@ -1339,7 +1331,6 @@ protected:
     Comp *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Comp value_type;
     // constructors
     VbaseComp();
     explicit VbaseComp(Long_I N);
@@ -1504,7 +1495,6 @@ protected:
     Lcomp *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Lcomp value_type;
     // constructors
     VbaseLcomp();
     explicit VbaseLcomp(Long_I N);
@@ -1670,7 +1660,6 @@ protected:
     Qcomp *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Qcomp value_type;
     // constructors
     VbaseQcomp();
     explicit VbaseQcomp(Long_I N);
@@ -1836,7 +1825,6 @@ protected:
     Fimag *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Fimag value_type;
     // constructors
     VbaseFimag();
     explicit VbaseFimag(Long_I N);
@@ -2001,7 +1989,6 @@ protected:
     Imag *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Imag value_type;
     // constructors
     VbaseImag();
     explicit VbaseImag(Long_I N);
@@ -2166,7 +2153,6 @@ protected:
     Limag *m_p; // pointer to the first element
     Long m_N; // number of elements
 public:
-    typedef Limag value_type;
     // constructors
     VbaseLimag();
     explicit VbaseLimag(Long_I N);

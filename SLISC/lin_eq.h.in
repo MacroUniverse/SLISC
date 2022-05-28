@@ -8,7 +8,7 @@ namespace slisc {
 //% tem('inv_mat', {'CmatDoub'; 'ScmatDoub';});
 //%---------------------------------
 //% T = varargin{:};
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 inline void inv_mat(@T@_IO A)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -42,7 +42,7 @@ inline void inv_mat(@T@_IO A)
 //% });
 //%---------------------
 //% [Tx, Ta] = varargin{:};
-//% Tsx = value_type(Tx); Tsa = value_type(Ta);
+//% Tsx = val_t(Tx); Tsa = val_t(Ta);
 //% CmatTsa = ['Cmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 {
@@ -99,7 +99,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% });
 //%---------------------
 //% [Tx, Ta, Ti] = varargin{:};
-//% Tsx = value_type(Tx); Tsa = value_type(Ta);
+//% Tsx = val_t(Tx); Tsa = val_t(Ta);
 //% CmatTsa = ['Cmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 {
@@ -146,7 +146,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 //% });
 //%---------------------
 //% [Tx, Ta] = varargin{:};
-//% Tsx = value_type(Tx); Tsa = value_type(Ta);
+//% Tsx = val_t(Tx); Tsa = val_t(Ta);
 //% CbandTsa = ['Cband' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 {
@@ -204,7 +204,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% });
 //%---------------------
 //% [Tx, Ta, Ti] = varargin{:};
-//% Tsx = value_type(Tx); Tsa = value_type(Ta);
+//% Tsx = val_t(Tx); Tsa = val_t(Ta);
 inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, @Ti@_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES

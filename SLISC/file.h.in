@@ -611,7 +611,7 @@ inline void read(ifstream &fin, Str32_O str)
 //% tem('read', {'CmatInt'; 'CmatLlong'; 'CmatDoub';});
 //%--------------------
 //% T = varargin{:};
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 inline void read(@T@_O mat, Str_I file, Long_I skip_lines = 0)
 {
     ifstream input(file);

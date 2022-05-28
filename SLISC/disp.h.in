@@ -21,7 +21,7 @@ const Int def_disp_prec = 8;
 //% });
 //%-----------------------------
 //% T = varargin{:};
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 //% if is_Qdoub(Ts) || is_Qcomp(Ts)
 #ifdef SLS_USE_QUAD_MATH
 //% end

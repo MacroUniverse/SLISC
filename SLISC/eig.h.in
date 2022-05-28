@@ -13,7 +13,7 @@ namespace slisc {
 //%     });
 //%--------------------------------
 //% [Tv, Tm, Tm2] = varargin{:};
-//% Tsv = value_type(Tv); Tsm = value_type(Tm); Tsm2 = value_type(Tm2);
+//% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);
 //% if is_dense_vec(Tv) && is_Doub(Tsv) && is_dense_mat(Tm) && is_same_major(Tm, Tm2) && is_dense_mat(Tm2) && is_Doub(Tsm2)
 inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 {

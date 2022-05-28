@@ -114,7 +114,7 @@ inline Comp randComp()
 //%    'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //% });
 //%--------------------------------
-//% T = varargin{:}; Ts = value_type(T);
+//% T = varargin{:}; Ts = val_t(T);
 //% if is_Qdoub(Ts) || is_Qcomp(Ts)
 #ifdef SLS_USE_QUAD_MATH
 //% end

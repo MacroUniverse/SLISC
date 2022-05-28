@@ -1,5 +1,5 @@
 function ret = cut3_type(T)
-Ts = value_type(T);
+Ts = val_t(T);
 if is_Cmat3(T) || is_Cmat4(T)
     ret = ['Dvec' Ts];
 elseif is_Mat3(T)

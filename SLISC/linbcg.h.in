@@ -10,7 +10,7 @@ namespace slisc {
 //%    'VecDoub'; 'VecQdoub';
 //% });
 //%------------------------------
-//% Tv = varargin{:}; Ts = value_type(Tv);
+//% Tv = varargin{:}; Ts = val_t(Tv);
 //% if is_Qdoub(Ts) || is_Qcomp(Ts)
 #ifdef SLS_USE_QUAD_MATH
 //% end

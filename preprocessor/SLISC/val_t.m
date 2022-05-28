@@ -1,11 +1,11 @@
-function varargout = value_type(varargin)
+function varargout = val_t(varargin)
 varargout = cell(size(varargin));
 for i = 1:nargin
-    varargout{i} = value_type1(varargin{i});
+    varargout{i} = val_t1(varargin{i});
 end
 end
 
-function ret = value_type1(T)
+function ret = val_t1(T)
 if any(strfind(T, 'Bool'))
     ret = 'Bool';
 elseif any(strfind(T, 'Char'))
@@ -47,6 +47,6 @@ elseif strcmp(T, 'Str')
 elseif strcmp(T, 'Str32')
     ret = 'Char32';
 else
-    error(['value_type.m: not implemented: ' T]);
+    error(['val_t.m: not implemented: ' T]);
 end
 end

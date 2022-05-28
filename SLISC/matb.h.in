@@ -331,7 +331,7 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 //% });
 //%--------------------
 //% Tv = varargin{:};
-//% Ts = value_type(Tv);
+//% Ts = val_t(Tv);
 //% Ndim = num2str(ndim(Tv));
 //% numT = num2str(type_num(Ts));
 inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
@@ -406,7 +406,7 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 //% });
 //%---------------------
 //% T = varargin{:};
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
 //% if ~(is_Char(Ts) || is_Int(Ts) || is_Llong(Ts) || is_Doub(Ts) || is_Comp(Ts))
 //%     error('not implemented!');
@@ -578,7 +578,7 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 //%----------------------
 //% T = varargin{:};
 //% Ndim = num2str(ndim(T));
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
         if (type == @numTs@ && Ndim == @Ndim@) {
 //% if Ndim == '1'
@@ -651,7 +651,7 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 //%----------------------
 //% T = varargin{:};
 //% Ndim = num2str(ndim(T));
-//% Ts = value_type(T);
+//% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
         if (type == @numTs@ && Ndim == @Ndim@) {
 //% if Ndim == '1'
