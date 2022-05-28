@@ -40,7 +40,8 @@ inline Bool equals_to_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 }
 //%------------------------
 
-//% tem('shape_cmp', { 'CmatDoub', 'CmatDoub' });
+//% tem('shape_cmp', { 'CmatDoub', 'CmatDoub';
+//%   'Mat3Doub', 'Mat3Comp'; });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
 //% N1 = ndim(T1); N2 = ndim(T2);
@@ -83,7 +84,18 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 //%--------------------------------
 
-//% tem('v==v', { 'MatLlong', 'MatLlong'; });
+//% tem('v==v', {
+//%   'VecInt', 'VecInt';
+//%   'VecLlong', 'VecLlong';
+//%   'VecDoub', 'VecDoub';
+//%   'VecComp', 'VecComp';
+//%   'MatLlong', 'MatLlong';
+//%   'MatComp', 'MatComp';
+//%   'CmatDoub', 'CmatDoub';
+//%   'CmatDoub', 'MatDoub';
+//%   'CmatComp', 'MatComp';
+//%   'CmatComp', 'CmatComp';
+//% });
 //%--------------------------
 //% [T1, T2] = varargin{:};
 //% [Ts1,Ts2] = val_t(T1,T2);
@@ -125,9 +137,7 @@ inline Bool operator==(@T1@_I v1, @T2@_I v2)
 }
 
 inline Bool operator!=(@T1@_I v1, @T2@_I v2)
-{
-    return !(v1 == v2);
-}
+{ return !(v1 == v2); }
 //%------------------------
 
 inline Bool operator==(VecBool_I v1, VecBool_I v2)
@@ -143,7 +153,7 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
     return !(v1 == v2);
 }
 
-//% tem('v==s', { 'DvecDoub'; });
+//% tem('v==s', { 'DvecDoub'; 'VecComp'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline Bool operator==(@T@_I v, @Ts@_I s)

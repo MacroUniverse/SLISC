@@ -259,10 +259,9 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 //% tem('obd*=s', { 'CmobdComp', 'Doub' });
 //%----------------------------
 //% [T, Ts] = varargin{:};
+//% req('v+=s', {['Cmat3' val_t(T)], Ts});
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{
-    v.cmat3() *= s;
-}
+{ v.cmat3() *= s; }
 //%------------------------
 
 //% tem('times(obd,obd,s)', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
@@ -293,10 +292,12 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)
 {
+//% req('copy(v,s)', {VecTr});
     @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
     for (Long j = 0; j < A.n1(); ++j)
         for (Long i = 0; i < A.n0(); ++i)
             abs_sum[j] += abs(A(i, j));
+//% req('max', {VecTr});
     return max(abs_sum);
 }
 //%-----------------------------
@@ -310,11 +311,13 @@ inline @Tr@ norm_inf(@T@_I A)
 inline @Tr@ norm_inf(@T@_I A)
 {
     Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
+//% req('copy(v,s)', {VecTr});
     @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
     Long k = 0;
     @SvecTs_c@ sli(A.p() + N0 + 1, N1);
     // first block
     for (Long j = 1; j < N0; ++j) {
+//% req('sum_abs', {['Svec' Ts]});
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);
     }
@@ -334,6 +337,7 @@ inline @Tr@ norm_inf(@T@_I A)
         abs_sum[k] += sum_abs(sli);
         ++k; sli.shift(N0);
     }
+//% req('max', {VecTr});
     return max(abs_sum);
 }
 //%---------------------
@@ -346,10 +350,12 @@ inline @Tr@ norm_inf(@T@_I A)
 //% VecTr = ['Vec' Tr];
 inline @Tr@ norm_inf(@T@_I A)
 {
+//% req('copy(v,s)', {VecTr});
     @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
     for (Long i = 0; i < A.nnz(); ++i) {
         abs_sum[A.col(i)] += abs(A[i]);
     }
+//% req('max', {VecTr});
     return max(abs_sum);
 }
 //%---------------------

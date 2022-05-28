@@ -14,9 +14,8 @@ if ind > 0
 else
     ind = numel(tem_db)+1;
     tem_db(ind, 1).name = name;
-    tem_db(ind, 1).param = param; Np = size(param,1);
-    tem_db(ind, 1).done = false(Np,1);
-    tem_db(ind, 1).out = repmat({''},Np,1);
+    tem_db(ind, 1).param = param(1,:);
+    req(name, param);
 end
 assignin('caller', 'current_tem', name);
 end

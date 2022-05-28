@@ -89,6 +89,7 @@ inline void randPerm(VecInt_O perm, Int_I N)
         SLS_ERR("wrong shape!");
 #endif
     VecInt pool(N);
+//% req('linspace', {'VecInt'});
     linspace(pool, 0, N - 1);
     for (Long n = N; n > 0; --n) {
         Long ind = randInt(n);

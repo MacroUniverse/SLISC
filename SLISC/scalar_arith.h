@@ -103,6 +103,75 @@ inline Int mod_eu(Int_I i, Int_I n)
     return ret < 0 ? ret + abs(n) : ret;
 }
 
+inline Llong mod(Llong_I i, Int_I n) { return i % n; }
+
+inline Llong mod_fl(Llong_I i, Int_I n) { return (i % n + n) % n; }
+
+inline Llong mod_eu(Llong_I i, Int_I n)
+{
+    Llong ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Llong mod(Int_I i, Llong_I n) { return i % n; }
+
+inline Llong mod_fl(Int_I i, Llong_I n) { return (i % n + n) % n; }
+
+inline Llong mod_eu(Int_I i, Llong_I n)
+{
+    Llong ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Llong mod(Llong_I i, Llong_I n) { return i % n; }
+
+inline Llong mod_fl(Llong_I i, Llong_I n) { return (i % n + n) % n; }
+
+inline Llong mod_eu(Llong_I i, Llong_I n)
+{
+    Llong ret = i % n;
+    return ret < 0 ? ret + abs(n) : ret;
+}
+
+inline Float mod(Float_I s, Float_I d)
+{ return s - round(s/d) * d; }
+
+// floating point version of "%", s = n * d + return
+inline Float mod(Long_O n, Float_I s, Float_I d)
+{
+    n = round(s/d);
+    return s - n * d;
+}
+
+inline Float mod_fl(Float_I s, Float_I d)
+{ return s - floor(s/d) * d; }
+
+// s = n * d + return
+inline Float mod_fl(Long_O n, Float_I s, Float_I d)
+{
+    n = floor(s/d);
+    return s - n * d;
+}
+
+inline Float mod_eu(Float_I s, Float_I d)
+{
+    Long n = s/d;
+    Float r = s - n*d;
+    return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline Float mod_eu(Long_O n, Float_I s, Float_I d)
+{
+    n = s/d;
+    Float r = s - n*d;
+    if (r < 0) {
+        r += abs(d);
+        n -= sign(d);
+    }
+    return r;
+}
+
 inline Doub mod(Doub_I s, Doub_I d)
 { return s - round(s/d) * d; }
 
@@ -140,16 +209,6 @@ inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
         n -= sign(d);
     }
     return r;
-}
-
-inline Llong mod(Llong_I i, Llong_I n) { return i % n; }
-
-inline Llong mod_fl(Llong_I i, Llong_I n) { return (i % n + n) % n; }
-
-inline Llong mod_eu(Llong_I i, Llong_I n)
-{
-    Llong ret = i % n;
-    return ret < 0 ? ret + abs(n) : ret;
 }
 
 

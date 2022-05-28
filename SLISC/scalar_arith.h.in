@@ -50,6 +50,10 @@ inline @T@ to_num(@T@_I x) { return x; }
 // see https://en.wikipedia.org/wiki/Modulo_operation
 //% tem('mod', {
 //%     'Int', 'Int';
+//%     'Llong', 'Int';
+//%     'Int', 'Llong';
+//%     'Llong', 'Llong';
+//%     'Float', 'Float';
 //%     'Doub', 'Doub';
 //% });
 //%--------------------------

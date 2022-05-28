@@ -138,7 +138,7 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 //% end
 //%------------------------
 
-//% tem('cut0', { 'CmatComp' });
+//% tem('cut0', { 'CmatInt'; 'CmatComp'; 'MatInt'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
@@ -280,7 +280,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1', { 'ScmatComp' });
+//% tem('cut1', { 'ScmatComp'; 'MatInt' });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut1_type(Tv);
@@ -451,7 +451,7 @@ inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I j)
 //% end
 //%-----------------------
 
-//% tem('cut01', { 'Cmat3Comp' });
+//% tem('cut01', { 'Cmat3Comp'; 'Cmat3Int'; 'Cmat4Int' });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut01_type(Tv);

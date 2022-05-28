@@ -463,9 +463,7 @@ inline void operator*=(McooComp_IO v, Doub_I s)
 
 
 inline void operator*=(CmobdComp_IO v, Doub_I s)
-{
-    v.cmat3() *= s;
-}
+{ v.cmat3() *= s; }
 
 
 inline void times(CmobdComp_O v1, CmobdDoub_I v2, Imag_I s)

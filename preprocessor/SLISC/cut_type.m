@@ -8,6 +8,8 @@ elseif is_Cmat(T) || is_Scmat(T) || is_Dcmat(T)
     ret = ['Dcmat' Ts];
 elseif is_Cmat3(T)
     ret = ['Jcmat3' Ts];
+elseif is_Mat(T)
+    ret = ['Dmat', Ts];
 else
     error(['cut_type.m: not implemented: ' T]);
 end

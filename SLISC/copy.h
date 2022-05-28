@@ -245,7 +245,31 @@ inline void matcpy(Comp *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld,
     }
 }
 
+inline void matcpy(Int *v, Long_I lda, const Int *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
+{
+    for (Long j = 0; j < Nsd; ++j) {
+        veccpy(v, v1, Nld);
+        v += lda; v1 += lda1;
+    }
+}
+
+inline void matcpy(Llong *v, Long_I lda, const Llong *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
+{
+    for (Long j = 0; j < Nsd; ++j) {
+        veccpy(v, v1, Nld);
+        v += lda; v1 += lda1;
+    }
+}
+
 inline void matcpy(Doub *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
+{
+    for (Long j = 0; j < Nsd; ++j) {
+        veccpy(v, v1, Nld);
+        v += lda; v1 += lda1;
+    }
+}
+
+inline void matcpy(Comp *v, Long_I lda, const Comp *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
     for (Long j = 0; j < Nsd; ++j) {
         veccpy(v, v1, Nld);
@@ -301,6 +325,51 @@ inline void copy(MatComp_O v, Comp_I s)
     vecset(v.p(), s, v.size());
 }
 
+inline void copy(VecInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(VecLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(VecDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(VecComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(CmatInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(CmatLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(CmatDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(CmatComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Cmat3Comp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
 inline void copy(DcmatComp_O v, Comp_I s)
 {
     Long N1 = v.n0(), N2 = v.n1();
@@ -315,7 +384,7 @@ inline void copy(DcmatDoub_O v, Doub_I s)
         vecset(&v(0, j), s, N1);
 }
 
-inline void copy(CmatDoub_O v, Doub_I s)
+inline void copy(Cmat3Int_O v, Int_I s)
 {
     vecset(v.p(), s, v.size());
 }
@@ -357,7 +426,119 @@ inline void assign(ScmatComp_O v, const std::initializer_list<Comp> &v1)
 
 
 // container to container
-inline void copy(VecDoub_O v, SvecDoub_I v1)
+inline void copy(VecInt_O v, VecInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(VecInt_O v, DvecInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v1.step(), v1.size());
+}
+
+inline void copy(VecInt_O v, SvecInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(VecLlong_O v, VecLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(VecDoub_O v, VecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(VecComp_O v, VecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(CmatInt_O v, CmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(CmatLlong_O v, CmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(CmatDoub_O v, CmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(CmatDoub_O v, MatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy_diff_major(v.p(), v1.p(), v.n0(), v.n1());
+}
+
+inline void copy(MatDoub_O v, CmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy_diff_major(v.p(), v1.p(), v.n1(), v.n0());
+}
+
+inline void copy(Cmat3Int_O v, Cmat3Int_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Cmat3Llong_O v, Cmat3Llong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(SvecDoub_O v, SvecDoub_I v1)
 {
     assert_same_shape(v, v1);
     if (v.size() == 0)
@@ -373,7 +554,52 @@ inline void copy(CmatComp_O v, CmatComp_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(DcmatInt_O v, DcmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+inline void copy(DcmatLlong_O v, DcmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+inline void copy(DcmatComp_O v, DcmatComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
 inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    // slow
+    if (v1.size() != 0)
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
+                v(i, j, k) = v1(i, j, k);
+}
+
+inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
 {
     assert_same_shape(v, v1);
     if (v.size() == 0)
@@ -392,22 +618,6 @@ inline void copy(DvecDoub_O v, DvecDoub_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
-}
-
-inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
 }
 
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
@@ -472,7 +682,17 @@ inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
 {
     assert_same_shape(lhs, rhs);
     Cmat3Doub &c3 = lhs.cmat3();
-// req('copy(v,s)', {Cmat3T});
+    copy(c3, 0);
+    for (Long k = 0; k < rhs.nnz(); ++k) {
+        Long i = rhs.row(k), j = rhs.col(k);
+        lhs.ref(i, j) = rhs[k];
+    }
+}
+
+inline void copy(CmobdInt_O lhs, McooInt_I rhs)
+{
+    assert_same_shape(lhs, rhs);
+    Cmat3Int &c3 = lhs.cmat3();
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);

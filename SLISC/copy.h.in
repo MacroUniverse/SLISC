@@ -202,7 +202,23 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%------------------------------
 
 // container to container
-//% tem('copy(v,v)', { 'VecDoub', 'SvecDoub' });
+//% tem('copy(v,v)', {
+//%   'VecInt', 'VecInt';
+//%   'VecInt', 'DvecInt';
+//%   'VecInt', 'SvecInt';
+//%   'VecLlong', 'VecLlong';
+//%   'VecDoub', 'VecDoub';
+//%   'VecComp', 'VecComp';
+//%   'CmatInt', 'CmatInt';
+//%   'CmatLlong', 'CmatLlong';
+//%   'CmatDoub', 'CmatDoub';
+//%   'CmatDoub', 'MatDoub';
+//%   'MatDoub', 'CmatDoub';
+//%   'Cmat3Int', 'Cmat3Int';
+//%   'Cmat3Llong', 'Cmat3Llong';
+//%   'Cmat3Doub', 'Cmat3Doub';
+//%   'SvecDoub', 'SvecDoub';
+//% });
 //%---------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(val_t(T), val_t(T1))
@@ -339,7 +355,8 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
 //%-------------------
 
-//% tem('copy(obd,coo)', { 'CmobdDoub', 'McooDoub' });
+//% tem('copy(obd,coo)', { 'CmobdDoub', 'McooDoub';
+//%   'CmobdInt', 'McooInt' });
 //%-----------------------
 //% [T, T1] = varargin{:};
 //% Cmat3T = ['Cmat3' val_t(T)];
@@ -348,7 +365,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(lhs, rhs);
     @Cmat3T@ &c3 = lhs.cmat3();
-// req('copy(v,s)', {Cmat3T});
+//% req('copy(v,s)', {Cmat3T});
     copy(c3, 0);
     for (Long k = 0; k < rhs.nnz(); ++k) {
         Long i = rhs.row(k), j = rhs.col(k);

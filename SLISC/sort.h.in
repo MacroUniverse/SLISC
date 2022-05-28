@@ -158,7 +158,10 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //%------------------------
 
 // sort v while making the same change for v1
-//% tem('sort(v,v)', { 'VecInt', 'VecLlong' });
+//% tem('sort(v,v)', { 'VecInt', 'VecInt';
+//%     'VecInt', 'VecLlong';
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecLlong'; });
 //%---------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void sort(@T@_IO v, @T1@_IO v1)
