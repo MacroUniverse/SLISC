@@ -168,23 +168,25 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline Bool operator==(@T@_I v, @Ts@_I s)
-{
 //% if is_dense(T)
 //%     req('equals_to_vs', {Ts Ts});
-    return equals_to_vs(v.p(), s, v.size());
+{ return equals_to_vs(v.p(), s, v.size()); }
 //% elseif is_Dcmat(T)
+{
     for (Long j = 0; j < v.n1(); ++j)
 //%     req('equals_to_vs', {Ts Ts});
         if !equals_to_vs(v.p() + v.n0()*j, s, v.n0());
             return false
     return true;
+}
 //% else
+{
     for (Long i = 0; i < v.size(); ++i)
         if (v[i] != s)
             return false;
     return true;
-//% end
 }
+//% end
 
 inline Bool operator!=(@T@_I v, @Ts@_I s)
 { return !(v == s); }
