@@ -1,6 +1,5 @@
 #include "../SLISC/eig.h"
 #include "../SLISC/fedvr.h"
-#include "../SLISC/disp.h"
 
 using namespace slisc;
 
@@ -52,8 +51,6 @@ void test_D2_mat()
     }
     y /= u;
     VecDoub d2y(D2s.n0()); // second derivative
-    cout << "D2s = " << endl;
-    disp(D2s);
     mul(d2y, D2s, y);
     d2y *= u;
     d2y -= 2;

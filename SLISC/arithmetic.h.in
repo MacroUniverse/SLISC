@@ -1588,13 +1588,21 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 }
 //%-------------------------
 
-//% tem('pow(v,v,s)', { 'VecDoub', 'VecDoub', 'Int' });
+//% tem('pow(v,v,s)', {
+//% 'VecDoub', 'VecDoub', 'Int'
+//% 'VecDoub' 'VecDoub' 'Doub'
+//% 'VecComp' 'VecDoub' 'Comp'
+//% 'VecComp' 'VecComp' 'Doub'
+//% 'VecComp' 'VecComp' 'Comp'
+//% });
 //%---------------------
 //% [T, T1, Ts] = varargin{:};
+//% [Tsv,Ts1] = val_t(T,T1,Ts);
 inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(v, v1);
+//% req('pow_vvs', {Tsv Ts1 Ts});
     pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 //%-------------------------

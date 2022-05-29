@@ -4282,8 +4282,56 @@ inline void pow_vvs(Doub *v, const Doub *v1, Int_I s, Long_I N)
         v[i] = pow(v1[i], s);
 }
 
+inline void pow_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}
+
+inline void pow_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}
+
+inline void pow_vvs(Comp *v, const Comp *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}
+
+inline void pow_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}
+
 
 inline void pow(VecDoub_O v, VecDoub_I v1, Int_I s)
+{
+    assert_same_shape(v, v1);
+    pow_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void pow(VecDoub_O v, VecDoub_I v1, Doub_I s)
+{
+    assert_same_shape(v, v1);
+    pow_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void pow(VecComp_O v, VecDoub_I v1, Comp_I s)
+{
+    assert_same_shape(v, v1);
+    pow_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void pow(VecComp_O v, VecComp_I v1, Doub_I s)
+{
+    assert_same_shape(v, v1);
+    pow_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void pow(VecComp_O v, VecComp_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     pow_vvs(v.p(), v1.p(), s, v1.size());
