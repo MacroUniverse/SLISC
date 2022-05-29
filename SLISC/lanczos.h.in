@@ -19,7 +19,8 @@ namespace slisc {
 // calculate v = exp(-i*H*dt) * v
 // H is a hermitian matrix
 // return error
-//% tem('exp_Hdt_v_lanc', { 'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp' });
+//% tem('exp_Hdt_v_lanc', { 'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp'
+//%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp' });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
@@ -49,10 +50,13 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
     ScmatComp bases(pc, N, Nk); // Krylov bases
 //% req('cut0', {'ScmatComp'});
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
+//% req('norm2', {Tv});
     beta[0] = norm(x);
+//% req('plus(v,v,s)', {'SvecComp' Tv 'Doub'});
     times(v0, x, 1/beta[0]); 
 
     @mul_fun@(vc, H, v0);
+//% req('dot', {'SvecComp' 'SvecComp'});
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
         v1[i] = vc[i] - alpha[0] * v0[i];
@@ -66,6 +70,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
         @mul_fun@(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
+//% req('v+=s', {'SvecComp' 'Comp'; 'SvecComp' 'Doub'});
             v2[i] -= a * v1[i] + b * v0[i];
         beta[j2] = norm(v2);
         v2 /= beta[j2];
@@ -73,6 +78,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
+//% req('sum', {'SvecDoub'});
     Doub err = prod(beta);
 
     lapack_int info =
@@ -84,7 +90,9 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
     for (Long i = 0; i < Nk; ++i)
         alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
     // alpha, beta are just work spaces now
+//% req('mul_gen', {'SvecDoub' 'ScmatDoub' 'SvecDoub'});
     mul_gen(beta, eigV, alpha);
+//% req('mul(v,m,v)', {Tv 'ScmatComp' 'SvecDoub'});
     mul(y, bases, beta);
 
     return err;
@@ -95,7 +103,9 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 // x, y can be the same object
 // H is a hermitian matrix
 // return error
-//% tem('exp_miHdt_v_lanc', { 'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp' });
+//% tem('exp_miHdt_v_lanc', { 'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp'
+//% 'DvecComp' 'CmatDoub' 'VecDoub' 'VecComp'
+//% 'VecComp'  'CmatDoub' 'VecDoub' 'VecComp'});
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
@@ -126,12 +136,16 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
     ScmatComp bases(pc, N, Nk); // Krylov bases
 //% req('cut0', {'ScmatComp'});
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
+//% req('norm2', {Tv});
     beta[0] = norm(x);
+//% req('plus(v,v,s)', {'SvecComp' Tv 'Doub'});
     times(v0, x, 1/beta[0]);
     @mul_fun@(vc, H, v0);
+//% req('dot', {'SvecComp' 'SvecComp'});
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
         v1[i] = vc[i] - alpha[0] * v0[i];
+//% req('norm2', {'SvecComp'});
     beta[1] = norm(v1);
     v1 /= beta[1];
     @mul_fun@(vc, H, v1);
@@ -142,13 +156,15 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
         @mul_fun@(v2, H, v1);
         Doub a = alpha[j1], b = beta[j1];
         for (Long i = 0; i < N; ++i)
-            v2[i] -= a * v1[i] + b * v0[i];
+//% req('v+=s', {'SvecComp' 'Comp'; 'SvecComp' 'Doub'});
+        v2[i] -= a * v1[i] + b * v0[i];
         beta[j2] = norm(v2);
         v2 /= beta[j2];
         @mul_fun@(vc, H, v2);
         alpha[j2] = real(dot(v2, vc));
         v0.next(); v1.next(); v2.next();
     }
+//% req('sum', {'SvecDoub'});
     Doub err = prod(beta);
 
     lapack_int info =
@@ -160,9 +176,9 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
         vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+//% req('mul_gen', {'SvecComp' 'ScmatDoub' 'SvecComp'; Tv 'ScmatComp' 'SvecComp'});
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
-
     return err;
 }
 //%-----------------------

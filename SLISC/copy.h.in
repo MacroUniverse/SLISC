@@ -120,7 +120,9 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // === container interface ===
 // must use pointer version
 // scalar to container
-//% tem('copy(v,s)', { 'Cmat3Doub' });
+//% tem('copy(v,s)', { 'CmatDoub'; 'CmatComp';
+//%  'MatInt'; 'VecQdoub'; 'MatDoub';
+//% 'Mat3Doub'; 'Cmat3Doub' });
 //%-------------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('vecset', {Ts});
@@ -156,7 +158,8 @@ inline void copy(@T@_O v, @Ts@_I s)
 //%------------------------
 
 // assign value to containers
-//% tem('assign', { 'DvecDoub' });
+//% tem('assign', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'CmatDoub';
+//% 'CmatQdoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp' });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% if is_Bool(Ts) || is_Char(Ts)
@@ -185,7 +188,7 @@ inline void assign2(@T@_IO v, Long_I ind, Long_I N, ...)
 //%-------------------------
 
 // assign initializer list to containers
-//% tem('asign(v,v)', { 'ScmatComp' });
+//% tem('asign(v,v)', { 'VecDoub'; 'VecComp'; 'CmatDoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp' });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
@@ -209,6 +212,10 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'VecLlong', 'VecLlong';
 //%   'VecDoub', 'VecDoub';
 //%   'VecComp', 'VecComp';
+//%   'VecQdoub' 'VecQdoub'
+//%   'SvecDoub', 'SvecDoub';
+//%   'DvecComp' 'VecComp'
+//%   'MatDoub' 'MatDoub'
 //%   'CmatInt', 'CmatInt';
 //%   'CmatLlong', 'CmatLlong';
 //%   'CmatDoub', 'CmatDoub';
@@ -217,7 +224,7 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'Cmat3Int', 'Cmat3Int';
 //%   'Cmat3Llong', 'Cmat3Llong';
 //%   'Cmat3Doub', 'Cmat3Doub';
-//%   'SvecDoub', 'SvecDoub';
+//%   'Mat3Doub' 'Mat3Doub'
 //% });
 //%---------------------------
 //% [T, T1] = varargin{:};
@@ -331,7 +338,7 @@ inline void copy(@Tcoo@_O v, @Tcmat@_I v1, Doub_I tol = 0)
 //% tem('copy(mat,coo)', { 'CmatDoub', 'Doub' });
 //%----------------------------
 //% [Tmat, Ts] = varargin{:};
-//% if ~((is_dense_mat(Tmat) || is_Dmat(Tmat) || is_Jmat(Tmat)) && is_scalar(Ts))
+//% if ~((is_dense_mat(Tmat) || is_Dcmat(Tmat) || is_Jcmat(Tmat)) && is_scalar(Ts))
 //%     error('illegal types');
 //% end
 //% McooTs = ['Mcoo', Ts]; McoohTs = ['Mcooh', Ts];
@@ -464,6 +471,8 @@ inline void copy(@T@_O a, @T@_I b)
 
 //% tem('copy(mat,band)', {
 //%     'CmatDoub', 'CbandDoub';
+//%    'CmatComp' 'CbandComp'
+//%    'CbandComp' 'CmatComp'
 //%     'CbandDoub', 'CmatDoub';
 //% });
 //%------------------------------

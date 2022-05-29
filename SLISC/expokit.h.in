@@ -14,10 +14,9 @@ namespace slisc {
 //% });
 //%---------------------------
 //% [Ty, Ta, Tx] = varargin{:};
+//% req('mul_v_coo_v', {Ty val_t(Ta) Tx});
 void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
-{
-    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x);
-}
+{ mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x); }
 //%---------------------
 
 //% tem('expokit_mul2', {
@@ -26,10 +25,9 @@ void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
 //% });
 //%---------------------------
 //% [Ty, Ta, Tx] = varargin{:};
+//% req('mul_v_cmatobd_v', {Ty Tx val_t(Ta)});
 void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
-{
-    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0());
-}
+{ mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0()); }
 //%---------------------
 
 // not optimized for symmetric or Hermitian matrix
@@ -43,6 +41,7 @@ void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
 void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
 {
     Svec@Tx@ vx(x, a.n1()); Svec@Ty@ vy(y, a.n0());
+//% req('mul_gen', {['Svec' Ty],Ta,['Svec' Tx]});
     mul_gen(vy, a, vx);
 }
 //%---------------------

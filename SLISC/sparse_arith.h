@@ -22,6 +22,22 @@ inline void mul_cmat_diag_cmat(Comp *c, const Doub *a, const Comp *b, Long_I Nr,
     }
 }
 
+inline void mul_cmat_cmat_diag(Doub *c, const Doub *a, Long_I Nr, Long_I Nc, const Doub *b)
+{
+    for (Long i = 0; i < Nc; ++i) {
+        times_vvs(c, a, b[i], Nr);
+        c += Nr; a += Nr;
+    }
+}
+
+inline void mul_cmat_diag_cmat(Doub *c, const Doub *a, const Doub *b, Long_I Nr, Long_I Nc)
+{
+    for (Long i = 0; i < Nc; ++i) {
+        times_vvv(c, b, a, Nr);
+        c += Nr; b += Nr;
+    }
+}
+
 inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, const Doub *b)
 {
     for (Long i = 0; i < Nc; ++i) {
@@ -60,8 +76,130 @@ inline void mul_v_cooh_v(Comp *y, const Doub *a_ij, const Long *i, const Long *j
     }
 }
 
+inline void mul_v_coo_v(Comp *y, const Comp *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
+{
+    vecset(y, 0, N1);
+    for (Long k = 0; k < Nnz; ++k)
+        y[i[k]] += a_ij[k] * x[j[k]];
+}
+
+inline void mul_v_cooh_v(Comp *y, const Comp *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
+{
+    vecset(y, 0, N1);
+    for (Long k = 0; k < Nnz; ++k) {
+        Long r = i[k], c = j[k];
+        if (r == c)
+            y[r] += a_ij[k] * x[c];
+        else {
+            y[r] += a_ij[k] * x[c];
+            y[c] += conj(a_ij[k]) * x[r];
+        }
+    }
+}
+
+inline void mul_v_coo_v(Doub *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Doub *x)
+{
+    vecset(y, 0, N1);
+    for (Long k = 0; k < Nnz; ++k)
+        y[i[k]] += a_ij[k] * x[j[k]];
+}
+
+inline void mul_v_cooh_v(Doub *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Doub *x)
+{
+    vecset(y, 0, N1);
+    for (Long k = 0; k < Nnz; ++k) {
+        Long r = i[k], c = j[k];
+        if (r == c)
+            y[r] += a_ij[k] * x[c];
+        else {
+            y[r] += a_ij[k] * x[c];
+            y[c] += a_ij[k] * x[r];
+        }
+    }
+}
+
 
 inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        Comp s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+        for (Long j = 0; j < blk_size; ++j) {
+            Comp s = x[j];
+            for (Long i = 0; i < blk_size; ++i) {
+                y[i] += (*a) * s;
+                ++a;
+            }
+        }
+        x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        Comp s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+
+inline void mul_v_cmatobd_v(Comp *y, const Doub *x, const Comp *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        Doub s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+        for (Long j = 0; j < blk_size; ++j) {
+            Doub s = x[j];
+            for (Long i = 0; i < blk_size; ++i) {
+                y[i] += (*a) * s;
+                ++a;
+            }
+        }
+        x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        Doub s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+
+inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Comp *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
     vecset(y, 0, N);
     Long step = blk_size - 1, step2 = blk_size - 2;
@@ -170,8 +308,39 @@ inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
     mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.size() || a.n0() != y.size())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+}
+
+
+inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.n0())
+        SLS_ERR("illegal shape!");
+    if (y.n0() != a.n0() || y.n1() != x.n1())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
+}
 
 inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.n0())
+        SLS_ERR("illegal shape!");
+    if (y.n0() != a.n0() || y.n1() != x.n1())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
+}
+
+inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
     if (a.n1() != x.n0())
@@ -457,6 +626,9 @@ inline void reorder(McooComp_O new_coo, McooComp_O coo, VecLong_I dest, Long_I n
     }
 }
 
+
+inline void operator*=(McooDoub_IO v, Doub_I s)
+{ times_equals_vs(v.p(), s, v.nnz()); }
 
 inline void operator*=(McooComp_IO v, Doub_I s)
 { times_equals_vs(v.p(), s, v.nnz()); }

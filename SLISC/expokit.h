@@ -9,25 +9,17 @@ namespace slisc {
 // matrix / vector multiplication
 
 void expokit_mul(Comp *y, McooDoub_I a, Comp *x)
-{
-    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x);
-}
+{ mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x); }
 
 void expokit_mul(Comp *y, McooComp_I a, Comp *x)
-{
-    mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x);
-}
+{ mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x); }
 
 
 void expokit_mul(Comp *y, CmobdDoub_I a, Comp *x)
-{
-    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0());
-}
+{ mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0()); }
 
 void expokit_mul(Comp *y, CmobdComp_I a, Comp *x)
-{
-    mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0());
-}
+{ mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0()); }
 
 
 // not optimized for symmetric or Hermitian matrix

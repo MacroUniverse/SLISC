@@ -208,7 +208,9 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 }
 //%-------------------------
 
-//% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt'; 'SvecComp'; 'CmatComp'; 'MatComp'; });
+//% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt';
+//%   'VecQdoub'; 'SvecComp'; 'DvecComp';
+//%   'CmatDoub'; 'CmatComp'; 'MatComp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
@@ -414,8 +416,9 @@ inline @Tret@ prod(@T@_I v)
 //%-----------------
 
 //% tem('norm2', { 'VecDoub'; 'VecComp';
-//% 'SvecDoub'; 'SvecComp'; 'CmatDoub'; 'CmatComp'; 'MatComp';
-//% 'ScmatComp'; 'DcmatComp' });
+//% 'SvecDoub'; 'SvecComp'; 'CmatDoub'; 'CmatComp';
+//%  'MatDoub'; 'MatComp';
+//% 'ScmatComp'; 'DcmatComp'; 'Mat3Doub'; 'Mat3Comp'; 'Cmat3Comp'; });
 //%-------------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -578,10 +581,11 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 //%-------------------------
 
 //% tem('linspace', { 'VecInt'; 'VecLlong';
-//%     'VecDoub'; 'VecComp'; 'CmatInt'; 'CmatDoub';
+//%  'VecDoub'; 'VecComp'; 'CmatInt'; 'CmatDoub';
 //%  'CmatInt';
 //%   'CmatComp'; 'Cmat4Int'; 'ScmatInt';
 //%  'MatInt'; 'MatComp';
+//%  'Cmat3Doub'; 'Cmat3Doub'
 //% });
 //%---------------------------------
 //% Tv = varargin{:};
@@ -675,7 +679,8 @@ inline void reorder(@Tv@_O v, @To@_I order)
 }
 //%-------------------------
 
-//% tem('trans', { 'CmatInt'; 'CmatDoub'; 'ScmatDoub'; 'DcmatDoub' });
+//% tem('trans', { 'CmatInt'; 'CmatDoub'; 'ScmatDoub'; 'DcmatDoub';
+//% 'CmatQdoub' });
 //%--------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -692,7 +697,8 @@ inline void trans(@T@_IO v)
 //%-------------------------
 
 //% tem('trans(v,v)', { 'CmatDoub' 'CmatDoub';
-//%    'MatComp' 'CmatComp' });
+//%    'MatComp' 'CmatComp'
+//%   'CmatQdoub' 'CmatQdoub' });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% [Ts,Ts1] = val_t(T,T1);
@@ -864,6 +870,9 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%   'VecDoub', 'Doub';
 //%   'VecComp', 'Doub';
 //%   'VecComp', 'Comp';
+//%   'CmatDoub' 'Doub'
+//%   'CmatComp' 'Doub'
+//%   'CmatComp' 'Comp'
 //%   'DcmatComp', 'Doub';
 //% });
 //%-------------------
@@ -971,9 +980,20 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%   'VecLlong' 'VecLlong';
 //%   'VecDoub' 'VecDoub';
 //%   'VecComp' 'VecComp';
+//%   'VecComp' 'VecDoub';
+//%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub' 'SvecDoub'
 //%   'SvecComp' 'SvecComp'
-//%   'DvecComp', 'SvecDoub'; });
+//%   'DvecComp' 'VecComp'
+//%   'DvecComp', 'SvecDoub';
+//%   'CmatDoub' 'CmatDoub'
+//%   'CmatComp' 'CmatComp'
+//%   'MatDoub' 'MatDoub'
+//%   'MatComp' 'MatComp'
+//%   'Cmat3Comp' 'Cmat3Comp'
+//%   'Mat3Doub' 'Mat3Doub'
+//%   'Mat3Comp' 'Mat3Comp'
+//% });
 //%-------------------
 //% [T, T1] = varargin{:};
 //% Ts = val_t(T); Ts1 = val_t(T1);
@@ -1252,6 +1272,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 //%   'VecDoub' 'VecDoub' 'Doub'
 //%   'VecComp' 'VecComp' 'Doub'
 //%   'VecComp' 'VecComp' 'Comp'
+//%   'DcmatComp' 'DcmatComp' 'Doub'
 //% });
 //%------------------------------
 //% [T, T1, Ts2] = varargin{:};
@@ -1604,8 +1625,9 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%-------------------------
 
 //% tem('dot', { 'VecDoub' 'VecDoub'
-//% 'VecComp' 'VecDoub'
+//%   'VecComp' 'VecDoub'
 //%   'VecComp' 'VecComp'
+//%   'SvecDoub' 'SvecDoub'
 //%   'Cmat3Comp', 'Cmat3Doub' });
 //%---------------------
 //% [T1, T2] = varargin{:};
@@ -1674,6 +1696,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 // matrix-vector multiplication, not optimized
 //% tem('mul(v,m,v)', {
 //% 'VecInt' 'CmatInt' 'VecInt'
+//% 'VecComp' 'CmatComp' 'VecComp'
 //% 'DvecComp' 'ScmatDoub' 'DvecComp';
 //% 'VecComp' 'MatComp' 'VecDoub'
 //% 'VecQdoub' 'CmatQdoub' 'VecQdoub' });
@@ -1778,6 +1801,7 @@ inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
 
 //% tem('mul(m,m,m)', {
 //% 'CmatComp' 'CmatComp' 'MatComp'
+//% 'CmatComp', 'CmatComp', 'CmatComp'
 //% 'CmatComp', 'CmatComp', 'CmatDoub' });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};

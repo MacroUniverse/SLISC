@@ -134,9 +134,10 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 }
 //%------------------------------
 
-//% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp'; });
+//% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp';
+//% 'VecDoub' 'McooDoub' 'VecDoub' });
 //%------------------------------
-//% [T, T1, T2] = varargin{:};
+//% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -144,8 +145,10 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
         SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
+//%     req('mul_v_coo_v', {Ts Ts1 Ts2});
     mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
+//%     req('mul_v_coo_v', {Ts Ts1 Ts2});
     mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% else
 //%     error('not implemented!');
@@ -155,6 +158,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 
 //% tem('mul(m,m,diag)', {
 //%     'CmatComp', 'CmatDoub', 'DiagComp';
+//%     'CmatComp' 'CmatComp' 'DiagDoub'
 //%     'CmatComp', 'DiagComp', 'ScmatDoub';
 //% });
 //%------------------------------
@@ -248,7 +252,8 @@ inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new
 }
 //%----------------------------
 
-//% tem('coo*=s', { 'McooComp', 'Doub'; });
+//% tem('coo*=s', { 'McooDoub', 'Doub'
+//% 'McooComp', 'Doub'; });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 //% req('plus_equals_vs', {val_t(T),Ts});

@@ -6,7 +6,8 @@ namespace slisc {
 #ifdef SLS_USE_LAPACKE
 // only upper triangle is needed
 // eigen value in ascending order
-//% tem('eig_sym', { 'SvecDoub', 'ScmatDoub', 'CmatDoub' });
+//% tem('eig_sym', { 'SvecDoub', 'ScmatDoub', 'CmatDoub'
+//%  'VecDoub' 'CmatDoub' 'CmatDoub' });
 //%--------------------------------
 //% [Tv, Tm, Tm2] = varargin{:};
 //% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);

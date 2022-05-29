@@ -99,12 +99,18 @@ while ~quit
                 disp(temp);
                 tem_db(i).out{j} = instantiate(tem_db(i).body, tem_db(i).param{j,:});
                 tem_db(i).done(j) = true; quit = false;
-                if cellstr_search(changed_file, tem_db(i).file) < 1
-                    changed_file = [changed_file; {tem_db(i).file}];
+                if ~is_batch_mode
+                    if cellstr_search(changed_file, tem_db(i).file) < 1
+                        changed_file = [changed_file; {tem_db(i).file}];
+                    end
                 end
             end
         end
     end
+end
+
+if is_batch_mode
+    changed_file = in_list;
 end
 
 %% generate output template
@@ -167,6 +173,6 @@ for i = 1:numel(changed_file)
     filewrite(changed_file{i}(1:end-3), str);
 end
 
-rmpath(paths{:});
+% rmpath(paths{:});
 cd(old_path);
 end
