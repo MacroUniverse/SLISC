@@ -1103,9 +1103,7 @@ inline Bool operator==(VecBool_I v1, VecBool_I v2)
 }
 
 inline Bool operator!=(VecBool_I v1, VecBool_I v2)
-{
-    return !(v1 == v2);
-}
+{ return !(v1 == v2); }
 
 inline Bool operator==(VecInt_I v, Int_I s)
 {
@@ -1113,9 +1111,7 @@ inline Bool operator==(VecInt_I v, Int_I s)
 }
 
 inline Bool operator!=(VecInt_I v, Int_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(VecLlong_I v, Llong_I s)
 {
@@ -1123,9 +1119,7 @@ inline Bool operator==(VecLlong_I v, Llong_I s)
 }
 
 inline Bool operator!=(VecLlong_I v, Llong_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(VecDoub_I v, Doub_I s)
 {
@@ -1133,9 +1127,7 @@ inline Bool operator==(VecDoub_I v, Doub_I s)
 }
 
 inline Bool operator!=(VecDoub_I v, Doub_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(VecComp_I v, Comp_I s)
 {
@@ -1143,9 +1135,7 @@ inline Bool operator==(VecComp_I v, Comp_I s)
 }
 
 inline Bool operator!=(VecComp_I v, Comp_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(DvecInt_I v, Int_I s)
 {
@@ -1156,9 +1146,7 @@ inline Bool operator==(DvecInt_I v, Int_I s)
 }
 
 inline Bool operator!=(DvecInt_I v, Int_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(DvecDoub_I v, Doub_I s)
 {
@@ -1169,9 +1157,7 @@ inline Bool operator==(DvecDoub_I v, Doub_I s)
 }
 
 inline Bool operator!=(DvecDoub_I v, Doub_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(CmatLlong_I v, Llong_I s)
 {
@@ -1179,9 +1165,7 @@ inline Bool operator==(CmatLlong_I v, Llong_I s)
 }
 
 inline Bool operator!=(CmatLlong_I v, Llong_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(CmatDoub_I v, Doub_I s)
 {
@@ -1189,9 +1173,7 @@ inline Bool operator==(CmatDoub_I v, Doub_I s)
 }
 
 inline Bool operator!=(CmatDoub_I v, Doub_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(CmatComp_I v, Comp_I s)
 {
@@ -1199,9 +1181,7 @@ inline Bool operator==(CmatComp_I v, Comp_I s)
 }
 
 inline Bool operator!=(CmatComp_I v, Comp_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(MatDoub_I v, Doub_I s)
 {
@@ -1209,9 +1189,7 @@ inline Bool operator==(MatDoub_I v, Doub_I s)
 }
 
 inline Bool operator!=(MatDoub_I v, Doub_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(Mat3Doub_I v, Doub_I s)
 {
@@ -1219,9 +1197,7 @@ inline Bool operator==(Mat3Doub_I v, Doub_I s)
 }
 
 inline Bool operator!=(Mat3Doub_I v, Doub_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 inline Bool operator==(Cmat3Doub_I v, Doub_I s)
 {
@@ -1229,8 +1205,6 @@ inline Bool operator==(Cmat3Doub_I v, Doub_I s)
 }
 
 inline Bool operator!=(Cmat3Doub_I v, Doub_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 
 } // namespace slisc

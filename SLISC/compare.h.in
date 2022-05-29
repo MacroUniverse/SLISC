@@ -159,9 +159,7 @@ inline Bool operator==(VecBool_I v1, VecBool_I v2)
 }
 
 inline Bool operator!=(VecBool_I v1, VecBool_I v2)
-{
-    return !(v1 == v2);
-}
+{ return !(v1 == v2); }
 
 //% tem('v==s', { 'VecInt'; 'VecLlong';
 //%   'VecDoub'; 'VecComp'; 'DvecInt'; 'DvecDoub';
@@ -189,8 +187,6 @@ inline Bool operator==(@T@_I v, @Ts@_I s)
 }
 
 inline Bool operator!=(@T@_I v, @Ts@_I s)
-{
-    return !(v == s);
-}
+{ return !(v == s); }
 //%------------------------
 } // namespace slisc
