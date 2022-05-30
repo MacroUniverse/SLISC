@@ -1,7 +1,8 @@
 #ifdef SLS_USE_ARB
 #include <flint/fmpz.h>
+#include "arb_hypgeom.h"
+#include "../SLISC/arb_extension.h"
 #endif
-#include "../SLISC/global.h"
 
 void test_arb()
 {
@@ -28,5 +29,33 @@ void test_arb()
     s = fmpz_get_str(NULL, 10, f);
     if (s != "12345678901234567890123456789012345678901234567890")
         SLS_ERR("failed!");
+
+    // test arf_t: arbitrary precision floating point numbers
+    // https://arblib.org/arf.html
+    arf_t x; arf_init(x); // init to 0, arf_t is a pointer (array of size 1)
+    arf_set_d(x, PI); // set from double
+    // arf_allocated_bytes(x); // check size in heap
+    arf_clear(x); // free memory
+
+    // test arb_t: arf_t with rigorous error bound
+    arb_t a; arb_init(a);
+    slong prec = 100; // precision digits (in binary)
+    arb_set_str(a, "1.23456789022345678903234567890423456789e12345678", prec);
+    Str str = arb_get_str(a, 50, ARB_STR_MORE);
+    if (str != Str("[1.2345678902234567890323456789042238629443408769906e+12345678 +/- 1.05e+12345648]"))
+        SLS_ERR("failed!");
+    arb_clear(a);
+
+    // test my arf_get_q() fun
+    arb_init(a); prec = 150;
+    arb_set_str(a, "1.23456789022345678903234567890423456789e123", prec);
+    Qdoub v;
+    arf_get_q(v, arb_midref(a), ARF_RND_NEAR);
+    if (std::quad2str(v, 36) != Str("1.23456789022345678903234567890423455e+123"))
+        SLS_ERR("failed!");
+    arb_clear(a);
+    arf_t af; arf_init(af);
+    arf_set_q(af, 1.23456789022345678903234567890423455e+123Q);
+    arf_clear(af);
 #endif
 }

@@ -44,8 +44,8 @@ inline Bool bitR(Char_I byte, Int_I i)
     return byte &Uchar(1) << i;
 }
 
-inline Bool bitR(const Char *byte, Int_I i)
-{ return bitR(*byte, i); }
+inline Bool bitR(const void *byte, Int_I i)
+{ return bitR(*(const Char*)byte, i); }
 
 // extract a bit at the i-th place from the left
 inline Bool bitL(Char_I byte, Int_I i)
@@ -53,8 +53,8 @@ inline Bool bitL(Char_I byte, Int_I i)
     return byte &Uchar(128) >> i;
 }
 
-inline Bool bitL(const Char *byte, Int_I i)
-{ return bitL(*byte, i); }
+inline Bool bitL(const void *byte, Int_I i)
+{ return bitL(*(const Char*)byte, i); }
 
 // set i-th bit from the right
 inline void set_bitR(Char_IO byte, Int_I i)
@@ -62,8 +62,8 @@ inline void set_bitR(Char_IO byte, Int_I i)
     byte |= Uchar(1) << i;
 }
 
-inline void set_bitR(Char *byte, Int_I i)
-{ set_bitR(*byte, i); }
+inline void set_bitR(void *byte, Int_I i)
+{ set_bitR(*(Char*)byte, i); }
 
 // set i-th bit from the left
 inline void set_bitL(Char_IO byte, Int_I i)
@@ -71,8 +71,8 @@ inline void set_bitL(Char_IO byte, Int_I i)
     byte |= Uchar(128) >> i;
 }
 
-inline void set_bitL(Char *byte, Int_I i)
-{ set_bitL(*byte, i); }
+inline void set_bitL(void *byte, Int_I i)
+{ set_bitL(*(Char*)byte, i); }
 
 // unset i-th bit from the right
 inline void unset_bitR(Char_IO byte, Int_I i)
@@ -80,8 +80,8 @@ inline void unset_bitR(Char_IO byte, Int_I i)
     byte &= ~(Uchar(1) << i);
 }
 
-inline void unset_bitR(Char *byte, Int_I i)
-{ unset_bitR(*byte, i); }
+inline void unset_bitR(void *byte, Int_I i)
+{ unset_bitR(*(Char*)byte, i); }
 
 // unset i-th bit from the left
 inline void unset_bitL(Char_IO byte, Int_I i)
@@ -89,8 +89,8 @@ inline void unset_bitL(Char_IO byte, Int_I i)
     byte &= ~(Uchar(128) >> i);
 }
 
-inline void unset_bitL(Char *byte, Int_I i)
-{ unset_bitL(*byte, i); }
+inline void unset_bitL(void *byte, Int_I i)
+{ unset_bitL(*(Char*)byte, i); }
 
 // change the i-th bit from the right
 inline void toggle_bitR(Char_IO byte, Int_I i)
