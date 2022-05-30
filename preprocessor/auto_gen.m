@@ -1,8 +1,11 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
-function auto_gen(path, file)
+function auto_gen(in_paths, file)
 global tem_db is_batch_mode;
 is_batch_mode = false;
+if ischar(in_paths)
+    in_paths = {in_paths};
+end
 if nargin == 1
     is_batch_mode = true;
 end
@@ -10,7 +13,7 @@ paths = {'../preprocessor', ...
     '../preprocessor/SLISC', ...
     '../preprocessor/SLISC/case_conflict'};
 old_path = pwd;
-cd(path);
+cd(in_paths{1});
 if is_batch_mode && exist('tem_db.mat', 'file')
     delete 'tem_db.mat';
 end
@@ -29,13 +32,16 @@ end
 % tem.done(i): is the i-th parameter set instanciated?
 % tem.out(i): output for i-th param set
 addpath(paths{:});
-newline = char(10);
+newline = char(10); Nfile = 0;
+in_list = {};
+for i = 1:numel(in_paths)
 if in_octave
-    in_list = cellstr(ls('*.in', '-1'));
+    in_list = [in_list; cellstr(ls('*.in', '-1'))];
 else
-    in_list = cellstr(ls('*.in'));
+    in_list = [in_list; cellstr(ls('*.in'))];
 end
-Nfile = size(in_list);
+Nfile = Nfile + size(in_list);
+end
 
 %% first scan through all files
 % do not deal with template body
