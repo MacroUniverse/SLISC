@@ -60,7 +60,6 @@ void test_coulomb()
 #ifdef SLS_USE_QUAD_MATH
     // Qdoub coulomb function
     Qdoub valq = 4.58823013802876377840937975619267858e-286Q;
-    cout << arb_coulombF(203.Q, -0.1Q, 6.Q) << endl;
     if (abs((arb_coulombF(203.Q, -0.1Q, 6.Q) - valq)/valq) > 1e-33Q)
         SLS_ERR("failed!");
 #endif

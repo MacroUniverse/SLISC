@@ -54,7 +54,6 @@ void test_D2_mat()
     mul(d2y, D2s, y);
     d2y *= u;
     d2y -= 2;
-    cout << max_abs(d2y) << endl;
     if (max_abs(d2y) > 5e-13)
         SLS_ERR("failed!");
 }

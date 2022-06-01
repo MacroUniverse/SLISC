@@ -534,6 +534,92 @@ inline Long Cmat4Ldoub::n3() const {
 typedef const Cmat4Ldoub &Cmat4Ldoub_I;
 typedef Cmat4Ldoub &Cmat4Ldoub_O, &Cmat4Ldoub_IO;
 
+class Cmat4Qdoub : public VbaseQdoub
+{
+protected:
+    typedef VbaseQdoub Base;
+    Long m_N0, m_N1, m_N2, m_N3;
+public:
+    Cmat4Qdoub(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
+    Cmat4Qdoub(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    Cmat4Qdoub(const Cmat4Qdoub &rhs);   // Copy constructor
+    void operator<<(Cmat4Qdoub &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    Qdoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Qdoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
+    Long n1() const;
+    Long n2() const;
+    Long n3() const;
+};
+
+inline Cmat4Qdoub::Cmat4Qdoub(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
+
+// Copy constructor
+inline Cmat4Qdoub::Cmat4Qdoub(const Cmat4Qdoub &rhs): Base(rhs),
+    m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2), m_N3(rhs.m_N3)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline void Cmat4Qdoub::operator<<(Cmat4Qdoub &rhs)
+{
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline void Cmat4Qdoub::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+{
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    }
+}
+
+inline Qdoub &Cmat4Qdoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
+        k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    Long N1N2 = m_N0 * m_N1;
+    return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
+}
+
+inline const Qdoub &Cmat4Qdoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
+        k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    Long N1N2 = m_N0 * m_N1;
+    return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
+}
+
+inline Long Cmat4Qdoub::n0() const {
+    return m_N0;
+}
+
+inline Long Cmat4Qdoub::n1() const {
+    return m_N1;
+}
+
+inline Long Cmat4Qdoub::n2() const {
+    return m_N2;
+}
+
+inline Long Cmat4Qdoub::n3() const {
+    return m_N3;
+}
+
+typedef const Cmat4Qdoub &Cmat4Qdoub_I;
+typedef Cmat4Qdoub &Cmat4Qdoub_O, &Cmat4Qdoub_IO;
 
 class Cmat4Fcomp : public VbaseFcomp
 {
@@ -796,6 +882,92 @@ inline Long Cmat4Lcomp::n3() const {
 typedef const Cmat4Lcomp &Cmat4Lcomp_I;
 typedef Cmat4Lcomp &Cmat4Lcomp_O, &Cmat4Lcomp_IO;
 
+class Cmat4Qcomp : public VbaseQcomp
+{
+protected:
+    typedef VbaseQcomp Base;
+    Long m_N0, m_N1, m_N2, m_N3;
+public:
+    Cmat4Qcomp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
+    Cmat4Qcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    Cmat4Qcomp(const Cmat4Qcomp &rhs);   // Copy constructor
+    void operator<<(Cmat4Qcomp &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+    Qcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
+    const Qcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
+    Long n0() const;
+    Long n1() const;
+    Long n2() const;
+    Long n3() const;
+};
+
+inline Cmat4Qcomp::Cmat4Qcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+    : Base(N0*N1*N2*N3), m_N0(N0), m_N1(N1), m_N2(N2), m_N3(N3) {}
+
+// Copy constructor
+inline Cmat4Qcomp::Cmat4Qcomp(const Cmat4Qcomp &rhs): Base(rhs),
+    m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2), m_N3(rhs.m_N3)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline void Cmat4Qcomp::operator<<(Cmat4Qcomp &rhs)
+{
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+inline void Cmat4Qcomp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+{
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
+        Base::resize(N0*N1*N2*N3);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+    }
+}
+
+inline Qcomp &Cmat4Qcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
+        k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    Long N1N2 = m_N0 * m_N1;
+    return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
+}
+
+inline const Qcomp &Cmat4Qcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
+        k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    Long N1N2 = m_N0 * m_N1;
+    return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
+}
+
+inline Long Cmat4Qcomp::n0() const {
+    return m_N0;
+}
+
+inline Long Cmat4Qcomp::n1() const {
+    return m_N1;
+}
+
+inline Long Cmat4Qcomp::n2() const {
+    return m_N2;
+}
+
+inline Long Cmat4Qcomp::n3() const {
+    return m_N3;
+}
+
+typedef const Cmat4Qcomp &Cmat4Qcomp_I;
+typedef Cmat4Qcomp &Cmat4Qcomp_O, &Cmat4Qcomp_IO;
 
 class Cmat4Fimag : public VbaseFimag
 {

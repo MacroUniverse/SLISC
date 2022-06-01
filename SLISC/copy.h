@@ -56,6 +56,30 @@ inline void vecset(Comp *v, Comp_I val, Long_I n, Long_I step)
         *p = val;
 }
 
+inline void vecset(Qdoub *v, Qdoub_I val, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Qdoub *v, Qdoub_I val, Long_I n, Long_I step)
+{
+    for (Qdoub *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Qcomp *v, Qcomp_I val, Long_I n)
+{
+    for (Qcomp *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Qcomp *v, Qcomp_I val, Long_I n, Long_I step)
+{
+    for (Qcomp *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
 
 inline void veccpy(Int *v, const Int *v1, Long_I n)
 {
@@ -212,6 +236,37 @@ inline void veccpy(Comp *v, Long_I step, const Comp *v1, Long_I step1, Long_I n)
     }
 }
 
+inline void veccpy(Qdoub *v, const Qdoub *v1, Long_I n)
+{
+    for (Long i = 0; i < n; ++i)
+        v[i] = v1[i];
+}
+
+inline void veccpy(Qdoub *v, const Qdoub *v1, Long_I step1, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n; ++p) {
+        *p = *v1;
+        v1 += step1;
+    }
+}
+
+inline void veccpy(Qdoub *v, Long_I step, const Qdoub *v1, Long_I n)
+{
+    for (Qdoub *p = v; p < v + n*step; p += step) {
+        *p = *v1;
+        ++v1;
+    }
+}
+
+inline void veccpy(Qdoub *v, Long_I step, const Qdoub *v1, Long_I step1, Long_I n)
+{
+    Qdoub *end = v + n * step;
+    for (; v < end; v += step) {
+        *v = *v1;
+        v1 += step1;
+    }
+}
+
 
 inline void matcpy(Comp *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
@@ -306,6 +361,10 @@ inline void copy(MatInt_O v, Int_I s)
     vecset(v.p(), s, v.size());
 }
 
+inline void copy(VecQdoub_O v, Qdoub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
 
 inline void copy(MatDoub_O v, Doub_I s)
 {
@@ -402,6 +461,24 @@ inline void assign2(VecDoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+inline void assign(VecQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(VecQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
 
 inline void assign(VecComp_O v, ...)
 {
@@ -441,6 +518,24 @@ inline void assign2(CmatDoub_IO v, Long_I ind, Long_I N, ...)
     va_end(args);
 }
 
+inline void assign(CmatQdoub_O v, ...)
+{
+    va_list args;
+    va_start(args, v);
+    Long N = v.size();
+    for (Long i = 0; i < N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
+
+inline void assign2(CmatQdoub_IO v, Long_I ind, Long_I N, ...)
+{
+    va_list args;
+    va_start(args, N);
+    for (Long i = ind; i < ind+N; ++i)
+        v[i] = va_arg(args, Qdoub);
+    va_end(args);
+}
 
 inline void assign(SvecDoub_O v, ...)
 {
@@ -623,6 +718,13 @@ inline void copy(VecComp_O v, VecComp_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(VecQdoub_O v, VecQdoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
 
 inline void copy(SvecDoub_O v, SvecDoub_I v1)
 {

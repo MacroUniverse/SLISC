@@ -22,6 +22,8 @@ constexpr Doub sign(Doub_I s)
 constexpr Ldoub sign(Ldoub_I s)
 { return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
 
+constexpr Qdoub sign(Qdoub_I s)
+{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
 
 
 inline Char sign(Char_I a, Char_I b)
@@ -42,6 +44,8 @@ inline Doub sign(Doub_I a, Doub_I b)
 inline Ldoub sign(Ldoub_I a, Ldoub_I b)
 { return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
 
+inline Qdoub sign(Qdoub_I a, Qdoub_I b)
+{ return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a); }
 
 
 inline Bool isodd(Char_I n) { return n & 1; }
@@ -72,11 +76,13 @@ inline Doub to_num(Doub_I x) { return x; }
 
 inline Ldoub to_num(Ldoub_I x) { return x; }
 
+inline Qdoub to_num(Qdoub_I x) { return x; }
 
 inline Comp to_num(Comp_I x) { return x; }
 
 inline Lcomp to_num(Lcomp_I x) { return x; }
 
+inline Qcomp to_num(Qcomp_I x) { return x; }
 
 
 // modulus

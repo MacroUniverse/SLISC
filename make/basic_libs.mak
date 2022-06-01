@@ -29,8 +29,8 @@ quad_math_lib = -lquadmath
 boost_flag = -D SLS_USE_BOOST -I ../boost-headers
 boost_lib = -lboost_system -lboost_filesystem
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) #-D NDEBUG
-libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib)
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) #-D NDEBUG
+libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
