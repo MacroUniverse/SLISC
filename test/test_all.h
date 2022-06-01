@@ -3,7 +3,7 @@
 
 #pragma once
 #include <iostream>
-void test_time(); void test_Imag(); void test_scalar_arith(); void test_Vbase(); void test_Vec(); void test_Mat(); void test_Cmat(); void test_Cmat3(); void test_Cmat4(); void test_band(); void test_Mcoo(); void test_Cmobd(); void test_Svec(); void test_Dvec(); void test_Scmat(); void test_Scmat3(); void test_dense(); void test_cut(); void test_copy(); void test_compare(); void test_complex_arith(); void test_arithmetic(); void test_disp(); void test_random(); void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq(); void test_linux(); void test_file(); void test_matt(); void test_matb(); void test_fedvr(); void test_mat_fun(); void test_gsl(); void test_coulomb(); void test_unicode(); void test_Bit(); void test_interp1(); void test_sha1sum(); void test_string(); void test_expokit(); void test_global(); void test_lanczos(); void test_hydrogen(); void test_input(); void test_hypergeom(); void test_boost(); void test_arb(); void test_arpack(); void test_bisection(); void test_linbcg(); void test_quad_math(); void test_legendreP(); void test_Ddoub();
+void test_time(); void test_Imag(); void test_scalar_arith(); void test_Vbase(); void test_Vec(); void test_Mat(); void test_Cmat(); void test_Cmat3(); void test_Cmat4(); void test_band(); void test_Mcoo(); void test_Cmobd(); void test_Svec(); void test_Dvec(); void test_Scmat(); void test_Scmat3(); void test_dense(); void test_cut(); void test_copy(); void test_compare(); void test_complex_arith(); void test_arithmetic(); void test_disp(); void test_random(); void test_sort(); void test_ylm(); void test_anglib(); void test_search(); void test_lin_eq(); void test_linux(); void test_file(); void test_matt(); void test_matb(); void test_fedvr(); void test_mat_fun(); void test_gsl(); void test_coulomb(); void test_unicode(); void test_Bit(); void test_interp1(); void test_sha1sum(); void test_string(); void test_expokit(); void test_global(); void test_lanczos(); void test_hydrogen(); void test_input(); void test_hypergeom(); void test_boost(); void test_arb(); void test_arpack(); void test_bisection(); void test_linbcg(); void test_quad_math(); void test_legendreP();
 
 void test_all()
 {
@@ -61,7 +61,6 @@ void test_all()
     cout << "test_arpack()" << endl; test_arpack();
     cout << "test_linbcg()" << endl; test_linbcg();
     cout << "test_quad_math()" << endl; test_quad_math();
-    cout << "test_Ddoub()" << endl; test_Ddoub();
     
     cout << "do optional tests? (y/n)" << endl;
     if (getchar() == 'y') {

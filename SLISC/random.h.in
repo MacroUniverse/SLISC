@@ -116,9 +116,6 @@ inline Comp randComp()
 //% });
 //%--------------------------------
 //% T = varargin{:}; Ts = val_t(T);
-//% if is_Qdoub(Ts) || is_Qcomp(Ts)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 inline void rand(@T@_O v)
 {
     Long i, N = v.size();
@@ -135,8 +132,5 @@ inline void rand(@T@_O v)
         v[i] = randQcomp();
 //% end
 }
-//% if is_Qdoub(Ts) || is_Qcomp(Ts)
-#endif
-//% end
 //%------------------------
 }

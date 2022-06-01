@@ -1,12 +1,6 @@
-function ret = quad_math_endif(nargin)
-flag = false;
-for type = nargin
-    if is_quad(type{1})
-        flag = true; break;
-    end
-end
-if flag
-    ret = '#endif';
+function ret = quad_math_endif(varargin)
+if has_quad(varargin{:})
+    ret = '#endif // SLS_USE_QUAD_MATH';
 else
     ret = '';
 end

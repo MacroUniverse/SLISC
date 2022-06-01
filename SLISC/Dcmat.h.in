@@ -39,9 +39,6 @@ typedef DcmatInt DcmatLong;
 typedef DcmatLlong DcmatLong;
 #endif
 //% else
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 class @Class@
 {
 protected:
@@ -141,8 +138,5 @@ typedef const @Class@ &@DcmatT@_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@DcmatT@_O, &@DcmatT@_IO;
 //% end
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%------------------------
 } // namespace slisc

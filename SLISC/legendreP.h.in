@@ -2,9 +2,6 @@
 // code from GSL-2.5
 
 #include "global.h"
-#ifdef SLS_USE_QUAD_MATH
-#include "quad_math.h"
-#endif
 
 namespace slisc {
 
@@ -18,9 +15,6 @@ namespace slisc {
 //% });
 //%--------------------------
 //% T = varargin{:};
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 @T@ legendre_Pmm(int m, @T@_I x)
 {
   if(m == 0)
@@ -40,9 +34,6 @@ namespace slisc {
     return p_mm;
   }
 }
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%--------------------------
 
 //% tem('legendre_Plm', {
@@ -50,9 +41,6 @@ namespace slisc {
 //% });
 //%--------------------------
 //% T = varargin{:};
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 @T@ legendre_Plm(Int_I l, Int_I m, @T@_I x)
 {
   /* If l is large and m is large, then we have to worry
@@ -93,9 +81,6 @@ else{
 	return p_ell;
 }
 }
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%--------------------------
 
 } // namespace slisc

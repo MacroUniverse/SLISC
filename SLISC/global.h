@@ -27,10 +27,6 @@
 #include <fstream>
 #include <cstring>
 #include <cstdarg>
-// my std extension
-#ifdef SLS_USE_QUAD_MATH
-#include "quad_math.h"
-#endif
 
 #ifdef SLS_USE_MKL
     #define MKL_Complex16 double _Complex
@@ -48,6 +44,13 @@
         #endif
     #endif
 #endif
+
+// error handling
+#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
+#define SLS_WARN(str) do{std::cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl;} while(0)
+
+// my std extension
+#include "quad_math.h"
 
 namespace slisc {
 
@@ -241,10 +244,4 @@ const Qdoub PIq = 3.14159265358979323846264338327950288;
 const Qdoub Eq = 2.71828182845904523536028747135266250;
 #endif
 
-// error handling
-#ifndef SLS_ERR
-#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
-#endif
-
-#define SLS_WARN(str) do{std::cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl;} while(0)
 } // namespace slisc

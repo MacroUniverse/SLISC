@@ -47,9 +47,6 @@ typedef SvbaseInt SvbaseLong;
 typedef SvbaseLlong SvbaseLong;
 #endif
 //% else
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 class @Class@
 {
 protected:
@@ -179,9 +176,6 @@ inline void @Class@::set(const @Class@ &sli)
 
 inline @Class@::~@Class@() {}
 //% end
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%------------------------
 
 //% tem('Svec', {
@@ -225,9 +219,6 @@ typedef SvecInt SvecLong;
 typedef SvecLlong SvecLong;
 #endif
 //% else
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 class @Class@ : public @Base@
 {
 public:
@@ -261,9 +252,6 @@ typedef const @Class@ &@SvecT@_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
 //% end
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%------------------------
 
 } // namespace slisc

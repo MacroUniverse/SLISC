@@ -22,6 +22,7 @@ class LinbcgDoub2: public LinbcgDoub
 	}
 };
 
+#ifdef SLS_USE_QUAD_MATH
 class LinbcgQdoub2: public LinbcgQdoub
 {
 	void asolve(VecQdoub_I b, VecQdoub_O x, const Int itrnsp) {
@@ -36,6 +37,7 @@ class LinbcgQdoub2: public LinbcgQdoub
 			mul(r, at, x);
 	}
 };
+#endif
 
 void test_linbcg()
 {
@@ -56,7 +58,8 @@ void test_linbcg()
 		if (max_abs(x1) > 1e-10)
 			SLS_ERR("failed!");
 	}
-	
+
+#ifdef SLS_USE_QUAD_MATH
 	{
 		LinbcgQdoub2 solver;
 		CmatQdoub a(3,3); assign(a, 1.Q, 0.Q, 5.Q, 0.Q, 3.Q, 0.Q, 2.Q, 4.Q, 6.Q);
@@ -74,4 +77,5 @@ void test_linbcg()
 		if (max_abs(x1) > 1e-30)
 			SLS_ERR("failed!");
 	}
+#endif
 }

@@ -1,3 +1,7 @@
 function ret = is_Mcooh(T)
-ret = strcmp(T(1:5), 'Mcooh');
+if ~ischar(T) || numel(T) < 5
+    ret = false;
+else
+    ret = strcmp(T(1:5), 'Mcooh');
+end
 end

@@ -1,3 +1,7 @@
 function ret = is_Vec(T)
-ret = strcmp(T(1:3), 'Vec');
+if ~ischar(T) || numel(T) < 3
+    ret = false;
+else
+    ret = strcmp(T(1:3), 'Vec');
+end
 end

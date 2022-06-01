@@ -6,6 +6,17 @@
 
 namespace slisc {
 
+// similar to arb_get_str()
+inline char * arf_get_str(arf_t x, slong prec)
+{
+	arb_t y; arb_init(y);
+	arb_set_arf(y, x);
+	char *p = arb_get_str(y, prec, ARB_STR_MORE);
+	arb_clear(y);
+	return p;
+}
+
+#ifdef SLS_USE_QUAD_MATH
 // get a quad precision number from arf_t type
 // similar to arf_get_d()
 inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
@@ -33,16 +44,6 @@ inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
 	if (ARF_SGNBIT(t))
 		v = -v;
 	arf_clear(t);
-}
-
-// similar to arb_get_str()
-inline char * arf_get_str(arf_t x, slong prec)
-{
-	arb_t y; arb_init(y);
-	arb_set_arf(y, x);
-	char *p = arb_get_str(y, prec, ARB_STR_MORE);
-	arb_clear(y);
-	return p;
 }
 
 // similar to arf_set_d()
@@ -82,5 +83,6 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 	arf_set_q(arb_midref(x), q);
     mag_zero(arb_radref(x));
 }
+#endif
 
 }

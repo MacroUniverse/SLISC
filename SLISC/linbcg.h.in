@@ -11,9 +11,6 @@ namespace slisc {
 //% });
 //%------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
-//% if is_Qdoub(Ts) || is_Qcomp(Ts)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 struct Linbcg@Ts@ {
 	virtual void asolve(@Tv@_I b, @Tv@_O x, const Int itrnsp) = 0;
 	virtual void atimes(@Tv@_I x, @Tv@_O r, const Int itrnsp) = 0;
@@ -118,9 +115,6 @@ void Linbcg@Ts@::solve(@Tv@_I b, @Tv@_IO x, const Int itol, const @Ts@ tol,
 		return abs(sx[isamax]);
 	}
 }
-//% if is_Qdoub(Ts) || is_Qcomp(Ts)
-#endif
-//% end
 //%------------------------------
 
 }; // namespace slisc

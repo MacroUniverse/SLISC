@@ -117,14 +117,6 @@ inline void rand(VecDoub_O v)
         v[i] = randDoub();
 }
 
-#ifdef SLS_USE_QUAD_MATH
-inline void rand(VecQdoub_O v)
-{
-    Long i, N = v.size();
-    for (i = 0; i < N; ++i)
-        v[i] = randQdoub();
-}
-#endif
 
 inline void rand(VecComp_O v)
 {
@@ -133,14 +125,6 @@ inline void rand(VecComp_O v)
         v[i] = randComp();
 }
 
-#ifdef SLS_USE_QUAD_MATH
-inline void rand(VecQcomp_O v)
-{
-    Long i, N = v.size();
-    for (i = 0; i < N; ++i)
-        v[i] = randQcomp();
-}
-#endif
 
 inline void rand(SvecLlong_O v)
 {
@@ -198,14 +182,6 @@ inline void rand(CmatDoub_O v)
         v[i] = randDoub();
 }
 
-#ifdef SLS_USE_QUAD_MATH
-inline void rand(CmatQdoub_O v)
-{
-    Long i, N = v.size();
-    for (i = 0; i < N; ++i)
-        v[i] = randQdoub();
-}
-#endif
 
 inline void rand(CmatComp_O v)
 {
@@ -214,14 +190,6 @@ inline void rand(CmatComp_O v)
         v[i] = randComp();
 }
 
-#ifdef SLS_USE_QUAD_MATH
-inline void rand(CmatQcomp_O v)
-{
-    Long i, N = v.size();
-    for (i = 0; i < N; ++i)
-        v[i] = randQcomp();
-}
-#endif
 
 inline void rand(Cmat3Llong_O v)
 {

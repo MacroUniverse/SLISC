@@ -22,9 +22,6 @@ const Int def_disp_prec = 8;
 //%-----------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
-//% if is_Qdoub(Ts) || is_Qcomp(Ts)
-#ifdef SLS_USE_QUAD_MATH
-//% end
 //% if ndim(T) == 1
 inline void disp(@T@_I v, Int_I precision = def_disp_prec)
 {
@@ -99,9 +96,6 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
 }
 //% else
 //%     error('not implemented!');
-//% end
-//% if is_Qdoub(Ts) || is_Qcomp(Ts)
-#endif
 //% end
 //%------------------------
 

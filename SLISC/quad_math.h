@@ -7,6 +7,7 @@
 #include <complex>
 #include <vector>
 #include <iostream>
+#ifdef SLS_USE_QUAD_MATH
 #include <quadmath.h>
 
 namespace std {
@@ -122,6 +123,40 @@ typedef std::vector<Qcomp> vecQcomp;
 typedef const vecQcomp &vecQcomp_I;
 typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 } // namespace slisc
+
+#else // SLS_USE_QUAD_MATH
+// define dummy type for Qdoub to suppress error
+
+// define dummy type, to suppress compilation error
+struct Qdoub {
+	double x[2];
+	Qdoub() { SLS_ERR("Qdoub not implemented!"); }
+	Qdoub(const int &q) { SLS_ERR("Qdoub not implemented!"); }
+	Qdoub(const long long &q) { SLS_ERR("Qdoub not implemented!"); }
+	Qdoub(const double &q) { SLS_ERR("Qdoub not implemented!"); }
+	Qdoub(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); } // copy constructor
+	void operator=(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); }
+	operator double() { SLS_ERR("Qdoub not implemented!"); }
+};
+
+typedef const Qdoub &Qdoub_I;
+typedef Qdoub &Qdoub_O, &Qdoub_IO;
+
+// another definition
+typedef std::complex<Qdoub> Qcomp;
+typedef const Qcomp &Qcomp_I;
+typedef Qcomp &Qcomp_O, &Qcomp2_IO;
+
+typedef std::vector<Qdoub> vecQdoub;
+typedef const vecQdoub &vecQdoub_I;
+typedef vecQdoub &vecQdoub_O, &vecQdoub_IO;
+
+typedef std::vector<Qcomp> vecQcomp;
+typedef const vecQcomp &vecQcomp_I;
+typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
+
+#endif // SLS_USE_QUAD_MATH
+
 
 // extension for Eigen library
 #ifdef SLS_USE_EIGEN

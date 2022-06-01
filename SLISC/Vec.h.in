@@ -19,9 +19,6 @@ typedef VecInt VecLong;
 typedef VecLlong VecLong;
 #endif
 //% else
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#ifdef SLS_USE_QUAD_MATH
-//%     end
 class @VecT@ : public @VbaseT@
 {
 public:
@@ -50,9 +47,6 @@ inline void @VecT@::operator<<(@VecT@ &rhs)
 //% end
 typedef const @VecT@ &@VecT@_I;
 typedef @VecT@ &@VecT@_O, &@VecT@_IO;
-//%     if is_Qdoub(T) || is_Qcomp(T)
-#endif
-//%     end
 //%------------------------
 
 // implemented with vector<Bool>, not actually a vector of Bool
