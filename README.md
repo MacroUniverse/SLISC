@@ -1,59 +1,76 @@
 # SLISC0
-* Simple Scientific Library in Simple C++, without using `template`s
+* Simple Scientific Library in Simple C++, using code generation instead of `template`s
 * Matlab/Octave is used for code generation (see `## Code generation`)
 
 ## Introduction
 
-SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of slicing classes is supported. Codes from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.). The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
+SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read, debug and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of viewing classes is supported. Code from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.), and Macros can be defined to turn them on or off. The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
 
-SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed in Linux using g++ and GSL and LAPACK. It can also work for Interl compiler and MKL. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
+SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed on Linux using g++ and Intel compiler. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
 
-A simple example :
+A simple example:
 
 ```cpp
 #include "SLISC/algorithm.h"
 #include "SLISC/disp.h"
+#include "SLISC/cut.h"
 int main()
 {
 	using namespace slisc;
-	VecDoub u(3), v(3); // vectors, double type
+
+	// === vector and matrix ===
+	VecDoub u(3), v(3); // vectors with 3 elements, double precision
 	linspace(u, 0, 2); // elements linearly spaced from 0 to 2
 	cout << "u = \n"; disp(u); // display vector/matrix
 	copy(v, 3.14); // set all elements to 3.14
 	copy(u, v); // copy values from v to u
 	u += v; // add vector to vector
 	v += 2; // add scalar to vector
-	MatDoub a, b(2, 3); // row major matrices of double precision
+	CmatDoub a, b(2, 3); // column major matrices of double precision
 	a.resize(2, 3); // resize a to 2 rows and 3 columns
 	a(0, 0) = 1.1; // access element by row and column indices
 	a[3] = 9.9; // access element by a single index
 	a.end() = 5.5; a.end(-2) = 4.4; // access last element and last but 2 element
-	cout << "a has " << a.n1() << " rows and " << a.n2()
+	cout << "a has " << a.n0() << " rows and " << a.n1()
 	<< " columns, and a total of " << a.size() << " elements." << endl;
-	disp(a);
+	disp(a); // display
+
+	// === view types ===
+	SvecDoub bs = cut0(b, 0); // get a view of 1st column of b
+	bs[0] += 1; // view can be modified, and used just like a normal vector/matrix
+	Doub s2 = sum(bs); // sum of bs
+	DvecDoub bd = cut1(b, 1); // get a view of 1st row of b
+	bd = cut1(b, 0, 1, 2); // get a view from b(0,1) to b(0,2)
+	copy(cut1(b, 0), cut1(b, 1)); // copy 2nd row of b to 1st row
+
+	// === file IO ===
+	save_matb(b, "b", "data0.matb"); // save a matrix to a binary file
+	// create a binary file to save multiple scalars/vectors/matrices
+	Matb matb("data.matb", "w");
+	save(u, "u", matb); save(v, "v", matb);
+	save(a, "a", matb); save(b, "b", matb);
+	matb.close();
 }
 ```
 
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling
-* C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04
-* If you don't want to use external libraries, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
+* C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04 & Windows WSL
+* If you don't want to use external libraries at all, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
 * If you want to use everything, make sure you have `liblapacke-dev`, `libgsl-dev` and `libflint-arb-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
-* If you want to use only some of the libraries, include some of `-D SLS_USE_CBLAS`, `-D SLS_USE_LAPACKE`, `-D SLS_USE_GSL` and `-D SLS_USE_ARB` flags in makefiles.
-* Run `make` to compile, uncomment one of the `include` in Makefile.
+* If you want to use only some of the libraries, comment out their flags in the `.mak` files.
+* Run `make h` to generate the header code, then use `make` to compile, use `make -j4` to compile faster with 4 threads (or any number you like).
 * If you want to recompile just one test, use `make main.o test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time.
-* Use `./main.x` to run all tests.
+* Use `./main.x < input.inp` to run all tests, or just `./main.x` with hand input.
 
 ## Recommended Programming Style
-* All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference.
+* All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference as a parameter of a function.
 * Avoid using unsigned integer types when possible. They are not supported by the library for now. Use `size(std::vector<>)` in `arithmetic.h` instead of `vector::size()` when needed.
 * Generally, functions output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
-
-* Intrinsic types are aliased inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
-
+* Intrinsic types are renamed inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
 * A type with `_I` suffix is the `const` or `reference to const` version of that type, used in function parameter declarations to indicate an input argument. Similarly, `_O` means output (reference type), `_IO` means both input and output (reference type). Note that a reference to an `_O` or `_IO` types is still a reference type.
 
 ## Headers Introduction
@@ -62,40 +79,61 @@ When using something in any header file, just including that header file will be
 * `Bit.h` defines utilities for single-bit operations, and a pointer for bit
 * `complex_arith.h` defines extra operators used by `std::complex<>`, such as  `+, -, *, /, +=, -=, *=, /=, ==, !=` for mixed complex types.
 * `imag.h` defines a pure imaginary number types `Fimag` (`float`), `Imag` (`double`), and `Limag` (`ldouble`).
+* `quad_math.h` C++ extension to `quadmath.h`, for 128-bit floating point numbers.
 * `scalar_arith.h` defines scalar utilities such as `min()`, `max()`, `sqr()`, `isodd()`, `mod()`.
 * `Vbase.h` defines a base class `Vbase*` for dense containers, do not directly use this.
 * `Vec.h` defines the 1d containers `Vec*`, e.g. `VecInt`, `VecDoub`, `VecComp` etc.
-* `Mat.h` defines the row-major matrix container `Mat*`.
-* `Cmat.h` defines the col-major matrix container `Cmat*`.
-* `Mat3.h` defines the row-major 3D array `Mat3*`.
+* `Cmat.h` defines the col-major matrix container `Cmat*` (col-major containers are recommended).
+* `Mat.h` defines the row-major matrix container `Mat*` (row-major containers are less supported).
 * `Cmat3.h` defines the col-major 3D array `Cmat3`.
+* `Mat3.h` defines the row-major 3D array `Mat3*`.
 * `disp.h` display containers in console.
-* `input.h` promp for input, can save input history and repeat input automatically.
-* `file.h` file IO utilities.
-* `matt.h` save/load text-based data files in `.matt` format, can save multiple named scalars and containers to a single ascii text file. Use `matload.m` to load this file to Matlab.
-* `matb.h` same as `matt.h`, for binary data files.
 * `arithmetic.h` has utilities for dense matrices and vectors, e.g. `sum()`, `norm()`, dot product, matrix-vector multiplication.
-* `cut.h` matrix slicing, e.g. slice one column of a matrix to pass into a function that accepts a vector.
+* `compare.h` compare shape and values of containers
+* `copy.h` copy and assignment for containers
+* `cut.h` matrix view utilities, e.g. slicing one column of a matrix to pass into a function that accepts a vector.
+* `Svec.h` contiguous vector view
+* `Dvec.h` vector view with fixed step
+* `Scmat.h` contiguous matrix view (col-major)
+* `Dcmat.h` matrix view with leading dimension (col-major)
+* `Scmat3.h` contiguous 3D matrix view
 * `random.h` random number utilities
 * `time.h` timing utilities, including natural time and cpu time
 * `sort.h` sorting utilities
 * `search.h` search elements in containers
 * `string.h` string utilities
-* `svd.h` for singlar value decomposition
+* `unicode.h` unicode utilities
+* `linux.h` linux system utilities
+* `sha1sum.h` SHA1 checksum
+* `input.h` promp for input, can save input history and repeat input automatically.
+* `file.h` file IO utilities.
+* `matt.h` save/load text-based data files in `.matt` format, can save multiple named scalars and containers to a single ascii text file. Use `matload.m` to load this file to Matlab.
+* `matb.h` same as `matt.h`, for binary data files.
+* `lin_eq.h` solving linear equations
+* `ludcmp.h` LU decomposition
+* `linbcg.h` bi-conjugate solver for linear equations (supports sparse matrix)
+* `svd.h` singlar value decomposition
 * `eig.h` calculate matrix eigen values/vectors
-* `fft.h` for fourier transforms
-* `interp1.h` for 1 dimensional interpolation
-* `interp2.h` for 2 dimensional interpolation
-* `ludcmp.h` for LU decomposition
-* `sparse.h` defines the sparse square diagonal matrix `Diag<T>`, COO sparse matrix `MatCoo<T>`, COO sparse Hermitian matrix `MatCooH<T>`, and basic arithmetics.
+* `fft.h` fourier transforms
+* `interp1.h` 1 dimensional interpolation
+* `interp2.h` 2 dimensional interpolation
+* `sparse_arith.h` basic arithmetics for sparse matrices
+* `band_arith.h` basic arithmetics for band matrices
+* `tree.h` tree algorithm
+* `Cband.h` column-major band matrix
+* `Mcoo.h` COO sparse matrix
+* `Diag.h` diagonal matrix
 * `mat_fun.h` functions of square matrix
+* `legendreP.h` Legendre polynomial
+* `ylm.h` (generalized) spherical harmonics
 * `anglib.h` has functions for Clebsch–Gordan coefficients, 3j, 6j, and 9j symbols.
+* `hypergeom.h` hypergeometric functions
 * `coulomb.h` calculates coulomb functions (F, G, H), and their derivatives.
 * `fedvr.h` utilities for Finite Element Discrete Variable Representations, could be used to solve TDSE.
+* `Cmobd.h` a special sparse matrix type for `FEDVR` algorithm
 * `mparith.h` for arbitrary precision calculation
-* `expokit.h` calculate matrix exponential
-
-* TODO...
+* `lanczos.h` Lanczos algorithm to calculate matrix exponential
+* `expokit.h` calculate matrix exponential (translated from a Fortran lib)
 
 ## "global.h"
 
@@ -419,8 +457,3 @@ void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const ve
 		z[i] = x[i] + y[i];
 }
 ```
-
-## TODO
-* the largest problem with this method is ... just look at `shape_cmp()`, inputing even necessary combinations is painful. Sure, you can generate the list using `combine()` function, but then the generated file will have thousands of lines...
-* makefiles are not unified
-* unicode: * Visual Studio does not support `std::codecvt` between `UTF-8` and `UTF-32`, but only to `wchar_t` (link error during compilation). Using `utfcpp` library for now.
