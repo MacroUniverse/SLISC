@@ -8,7 +8,7 @@ namespace slisc {
 //%-------------------------------
 //% T = varargin{:};
 constexpr @T@ sign(@T@_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > @num(0,T)@ ? @num(1,T)@ : (s < @num(0,T)@ ? @num(-1,T)@ : @num(0,T)@); }
 //%-------------------------------
 
 //% tem('sign2', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';});

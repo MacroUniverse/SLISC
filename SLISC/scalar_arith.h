@@ -5,25 +5,25 @@
 namespace slisc {
 
 constexpr Char sign(Char_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0 ? 1 : (s < 0 ? -1 : 0); }
 
 constexpr Int sign(Int_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0 ? 1 : (s < 0 ? -1 : 0); }
 
 constexpr Llong sign(Llong_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0LL ? 1LL : (s < 0LL ? -1LL : 0LL); }
 
 constexpr Float sign(Float_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0.F ? 1.F : (s < 0.F ? -1.F : 0.F); }
 
 constexpr Doub sign(Doub_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0. ? 1. : (s < 0. ? -1. : 0.); }
 
 constexpr Ldoub sign(Ldoub_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0.L ? 1.L : (s < 0.L ? -1.L : 0.L); }
 
 constexpr Qdoub sign(Qdoub_I s)
-{ return s > 0.f ? 1.f : (s < 0.f ? -1.f : 0.f); }
+{ return s > 0.Q ? 1.Q : (s < 0.Q ? -1.Q : 0.Q); }
 
 
 inline Char sign(Char_I a, Char_I b)
@@ -250,7 +250,7 @@ inline Qdoub factorialq(Int_I n) {
 }
 #endif
 
-inline Doub sinc(Doub_I x) { return x == 0 ? 1 : sin(x) / x; }
+inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
 
 
 } // namespace slisc

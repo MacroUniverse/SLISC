@@ -22,7 +22,7 @@ struct Ddoub {
 	Doub x;
 	Ddoub() { SLS_ERR("Ddoub not implemented!"); }
 	Ddoub(const Doub &q) { SLS_ERR("Ddoub not implemented!"); }
-	Ddoub(Ddoub &q) { SLS_ERR("Ddoub not implemented!"); } // copy constructor
+	Ddoub(const Ddoub &q) { SLS_ERR("Ddoub not implemented!"); } // copy constructor
 	void operator=(Ddoub &q) { SLS_ERR("Ddoub not implemented!"); }
 	operator Doub() { SLS_ERR("Ddoub not implemented!"); }
 };
