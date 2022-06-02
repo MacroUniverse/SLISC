@@ -36,7 +36,7 @@ main.x: main.o $(test_o)
 	make link
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen ../SLISC"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC' '../test'})"
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(link_mkl_static) $(other_libs)
