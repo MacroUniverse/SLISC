@@ -7,7 +7,7 @@
 #include <complex>
 #include <vector>
 #include <iostream>
-#ifdef SLS_USE_QUAD_MATH123
+#ifdef SLS_USE_QUAD_MATH
 #include <quadmath.h>
 
 namespace std {
@@ -175,33 +175,3 @@ inline bool operator==(Qdoub_I x, Qdoub_I y) { return false; }
 inline bool operator!=(Qdoub_I x, Qdoub_I y) { return false; }
 
 #endif // SLS_USE_QUAD_MATH
-
-
-// extension for Eigen library
-#ifdef SLS_USE_EIGEN
-namespace Eigen {
-	template<> struct NumTraits<Qdoub> : GenericNumTraits<Qdoub>
-	{
-		typedef Qdoub Real;
-		typedef Qdoub NonInteger;
-		typedef Qdoub Nested;
-
-		static inline Real epsilon() { return FLT128_EPSILON; }
-		static inline Real dummy_precision() { return 0; }
-		static inline int digits10() { return FLT128_DIG; }
-
-		enum {
-			IsInteger = 0,
-			IsSigned = 1,
-			IsComplex = 0,
-			RequireInitialization = 1,
-			ReadCost = 2,
-			AddCost = 2,
-			MulCost = 6
-		};
-	};
-
-	typedef Matrix<Qdoub, Dynamic, Dynamic> MatrixXq;
-	typedef Matrix<Qdoub, Dynamic, 1> VectorXq;
-} // namespace Eigen
-#endif
