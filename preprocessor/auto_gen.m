@@ -35,13 +35,18 @@ addpath(paths{:});
 newline = char(10); Nfile = 0;
 in_list = {};
 for i = 1:numel(in_paths)
+    in_paths{i} = strrep(in_paths{i}, '\', '/');
 if in_octave
-    in_list = [in_list; cellstr(ls('*.in', '-1'))];
+    tmp = cellstr(ls([in_paths{i} '/*.in'], '-1'));
 else
-    in_list = [in_list; cellstr(ls('*.in'))];
+    tmp = cellstr(ls([in_paths{i} '/*.in']));
 end
-Nfile = Nfile + size(in_list);
+for j = 1:numel(tmp)
+    tmp{j} = [in_paths{i} '/' tmp{j}];
 end
+in_list = [in_list; tmp];
+end
+Nfile = numel(in_list);
 
 %% first scan through all files
 % do not deal with template body
@@ -159,7 +164,7 @@ end
 
 %% write output files
 for i = 1:numel(changed_file)
-    disp(['writing (' num2str(i) '): ' changed_file{i}]);
+    disp(['writing (' num2str(i) '): ' changed_file{i}(1:end-3)]);
     str = out_strs{i};
     ind = 1;
     while true

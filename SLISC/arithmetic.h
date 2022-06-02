@@ -4337,6 +4337,12 @@ inline void pow(VecComp_O v, VecComp_I v1, Comp_I s)
     pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
+inline void pow(MatComp_O v, MatDoub_I v1, Comp_I s)
+{
+    assert_same_shape(v, v1);
+    pow_vvs(v.p(), v1.p(), s, v1.size());
+}
+
 
 inline Comp dot_vv(const Doub *v1, const Comp *v2, Long_I N)
 {
