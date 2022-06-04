@@ -3,7 +3,7 @@
 
 #pragma once
 #include <iostream>
-#define SLS_TEST(name) test_##name(); cout << "test_" << #name << endl; test_##name()
+#define SLS_TEST(name) do{test_##name(); cout << "test_" << #name << endl; test_##name();} while(0)
 
 void test_all()
 {
