@@ -1,10 +1,10 @@
-#include "../SLISC/eigen.h"
+#include "../SLISC/Eigen.h"
 
 using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;
 using Eigen::MatrixXq; using Eigen::VectorXq;
 
-int test_eigen()
+void test_Eigen()
 {
 	// get diagonal
 	{

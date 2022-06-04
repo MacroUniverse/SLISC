@@ -43,6 +43,7 @@ void test_arithmetic()
 		CmatDoub a(N1, N2);
 		VecDoub x(N2), y(N1), y1(N1);
 		linspace(x, 1, N2);
+        linspace(a, 1, N1*N2);
 		mul_gen(y, a, x);
 		mul(y1, a, x);
 		if (y != y1)

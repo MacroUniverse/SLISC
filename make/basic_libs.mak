@@ -31,7 +31,7 @@ boost_lib = -lboost_system -lboost_filesystem
 # Eigen
 eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(boost_flag) $(eigen_flag) #-D NDEBUG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) #-D NDEBUG
 libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib)
 
 # file lists
@@ -50,7 +50,7 @@ main.x: main.o $(test_o)
 	make link
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC' '../test'})"
+	octave --no-window-system --eval "cd preprocessor; auto_gen '../SLISC' '../test'"
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)

@@ -1,12 +1,11 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
-function auto_gen(in_paths, file)
+function auto_gen(varargin)
 global tem_db is_batch_mode;
-is_batch_mode = false;
-if ischar(in_paths)
-    in_paths = {in_paths};
-end
-if nargin == 1
+in_paths = varargin;
+if numel(in_paths) == 1 && strcmp(in_paths{1}(end-2:end), '.in')
+    is_batch_mode = false;
+else
     is_batch_mode = true;
 end
 paths = {'../preprocessor', ...
@@ -34,17 +33,19 @@ end
 addpath(paths{:});
 newline = char(10); Nfile = 0;
 in_list = {};
-for i = 1:numel(in_paths)
-    in_paths{i} = strrep(in_paths{i}, '\', '/');
-if in_octave
-    tmp = cellstr(ls([in_paths{i} '/*.in'], '-1'));
-else
-    tmp = cellstr(ls([in_paths{i} '/*.in']));
-end
-for j = 1:numel(tmp)
-    tmp{j} = [in_paths{i} '/' tmp{j}];
-end
-in_list = [in_list; tmp];
+if is_batch_mode
+    for i = 1:numel(in_paths)
+        in_paths{i} = strrep(in_paths{i}, '\', '/');
+        if in_octave
+            tmp = cellstr(ls([in_paths{i} '/*.in'], '-1'));
+        else
+            tmp = cellstr(ls([in_paths{i} '/*.in']));
+        end
+        for j = 1:numel(tmp)
+            tmp{j} = [in_paths{i} '/' tmp{j}];
+        end
+        in_list = [in_list; tmp];
+    end
 end
 Nfile = numel(in_list);
 
@@ -53,9 +54,6 @@ Nfile = numel(in_list);
 % execute all meta outside template body
 for i = 1:Nfile
     in_file = in_list{i};
-    if nargin > 1 && ~strcmp(in_file, file)
-        continue;
-    end
     fprintf(['=========== scaning file: ' in_file ' ============' newline]);
     str = fileread(in_file);
     str(str == 13) = [];
