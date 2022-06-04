@@ -13,8 +13,8 @@ void test_Eigen()
 		for(int i=0;i<n;++i)
 			for(int j=0;j<n;++j)
 			    M(i,j) = i + j + 1;
-		cout << "M.diagonal() = " << M.diagonal() << endl;
-		cout << "M.diagonal<1>() = " << M.diagonal<1>() << endl;
+		// cout << "M.diagonal() = " << M.diagonal() << endl;
+		// cout << "M.diagonal<1>() = " << M.diagonal<1>() << endl;
 	}
 
 	// real QR solver
@@ -24,14 +24,14 @@ void test_Eigen()
 		Eigen::VectorXd y(2); y << 5., 11.;
 		MatrixXd A(2, 2); A << 1., 2., 3., 4.;
 
-		cout << "A = " << endl;
-		cout << A << endl;
-		cout << "y = " << endl;
-		cout << y << endl;
+		// cout << "A = " << endl;
+		// cout << A << endl;
+		// cout << "y = " << endl;
+		// cout << y << endl;
 		qr.compute(A);
 		x = qr.solve(y);
-		cout << "x = " << endl;
-		cout << x << endl;
+		// cout << "x = " << endl;
+		// cout << x << endl;
 	}
 
 	// complex QR solver
@@ -41,14 +41,14 @@ void test_Eigen()
 		Eigen::VectorXcd y(2); y << 5., 11.;
 		MatrixXcd A(2, 2); A << 1., 2., 3., 4.;
 
-		cout << "A = " << endl;
-		cout << A << endl;
-		cout << "y = " << endl;
-		cout << y << endl;
+		// cout << "A = " << endl;
+		// cout << A << endl;
+		// cout << "y = " << endl;
+		// cout << y << endl;
 		qr.compute(A);
 		x = qr.solve(y);
-		cout << "x = " << endl;
-		cout << x << endl;
+		// cout << "x = " << endl;
+		// cout << x << endl;
 	}
 
 	// test sparse linear solver
@@ -70,9 +70,9 @@ void test_Eigen()
 		// Eigen::ConjugateGradient<Eigen::SparseMatrix<double>> chol(mat); // symmetric matrix only!
 		Eigen::BiCGSTAB<Eigen::SparseMatrix<double>> chol(mat); // bi conjugate gradient method
 		Eigen::VectorXd x = chol.solve(b);
-		cout << "mat = " << mat << endl;
-		cout << "b = " << b << endl;
-		cout << "x = " << x << endl;
+		// cout << "mat = " << mat << endl;
+		// cout << "b = " << b << endl;
+		// cout << "x = " << x << endl;
 	}
 
 	// self-adjoint eigen solver
@@ -84,12 +84,12 @@ void test_Eigen()
 			    M(i,j) = i + j + 1;
 		Eigen::SelfAdjointEigenSolver<MatrixXd> eig;
 		eig.compute(M);
-		cout << "M = " << endl;
-		cout << M << endl;
-		cout << "eig.eigenvalues() = " << endl;
-		cout << eig.eigenvalues().transpose() << endl;
-		cout << "eig.eigenvectors() = " << endl;
-		cout << eig.eigenvectors() << "\n\n\n" << endl;
+		// cout << "M = " << endl;
+		// cout << M << endl;
+		// cout << "eig.eigenvalues() = " << endl;
+		// cout << eig.eigenvalues().transpose() << endl;
+		// cout << "eig.eigenvectors() = " << endl;
+		// cout << eig.eigenvectors() << "\n\n\n" << endl;
 	}
 
 	// solve tridiagonal eigen solver
@@ -99,10 +99,10 @@ void test_Eigen()
 		
 		Eigen::SelfAdjointEigenSolver<MatrixXd> eig;
 		eig.computeFromTridiagonal(d0, d1);
-		cout << "eig.eigenvalues() = " << endl;
-		cout << eig.eigenvalues().transpose() << endl;
-		cout << "eig.eigenvectors() = " << endl;
-		cout << eig.eigenvectors() << endl;
+		// cout << "eig.eigenvalues() = " << endl;
+		// cout << eig.eigenvalues().transpose() << endl;
+		// cout << "eig.eigenvectors() = " << endl;
+		// cout << eig.eigenvectors() << endl;
 	}
 
 	// test MatrixXq
@@ -112,10 +112,10 @@ void test_Eigen()
 		for(int i=0;i<n;++i)
 			for(int j=0;j<n;++j)
 			    M(i,j) = i + j + M_PIq;
-		cout.precision(34);
-		cout << "M.diagonal() = " << M.diagonal()[0] << endl;
-		cout << "M.diagonal<1>() = " << M.diagonal<1>()[0] << endl;
-		cout << "\n\n\n\n\n" << endl;
+		// cout.precision(34);
+		// cout << "M.diagonal() = " << M.diagonal()[0] << endl;
+		// cout << "M.diagonal<1>() = " << M.diagonal<1>()[0] << endl;
+		// cout << "\n\n\n\n\n" << endl;
 	}
 
 	// real QR solver for Qdoub
@@ -124,16 +124,16 @@ void test_Eigen()
 		Eigen::VectorXq x(2);
 		Eigen::VectorXq y(2); y << 5., 11.;
 		MatrixXq A(2, 2); A << 1.Q, sqrt(2.Q), sqrt(3.Q), 4.;
-		cout.precision(34);
-		cout << "A = " << endl;
-		cout << A << endl;
-		cout << "y = " << endl;
-		cout << y << endl;
+		// cout.precision(34);
+		// cout << "A = " << endl;
+		// cout << A << endl;
+		// cout << "y = " << endl;
+		// cout << y << endl;
 		qr.compute(A);
 		x = qr.solve(y);
-		cout << "x = " << endl;
-		cout << x << endl;
-		cout << "\n\n\n" << endl;
+		// cout << "x = " << endl;
+		// cout << x << endl;
+		// cout << "\n\n\n" << endl;
 	}
 
 	// solve tridiagonal eigen solver for Qdoub
@@ -143,9 +143,9 @@ void test_Eigen()
 		
 		Eigen::SelfAdjointEigenSolver<MatrixXq> eig;
 		eig.computeFromTridiagonal(d0, d1);
-		cout << "eig.eigenvalues() = " << endl;
-		cout << eig.eigenvalues().transpose() << endl;
-		cout << "eig.eigenvectors() = " << endl;
-		cout << eig.eigenvectors() << endl;
+		// cout << "eig.eigenvalues() = " << endl;
+		// cout << eig.eigenvalues().transpose() << endl;
+		// cout << "eig.eigenvectors() = " << endl;
+		// cout << eig.eigenvectors() << endl;
 	}
 }
