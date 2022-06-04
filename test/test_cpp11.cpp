@@ -7,7 +7,6 @@
 #include <functional>
 
 using namespace std;
-#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
 
 bool compare2(int a, int b) { return a < b; }
 
@@ -27,8 +26,8 @@ void test_cpp11()
 	sort(p.begin(), p.end(), fun);
 	for (int i = 0; i < N; ++i)
 		if (p[i].first != i+1)
-			SLS_ERR("failed!");
+			throw "failed!";
 	bool (*func)(int, int); func = &compare2;
 	if (func(2, 1) != 0)
-		SLS_ERR("failed!");
+		throw "failed!";
 }

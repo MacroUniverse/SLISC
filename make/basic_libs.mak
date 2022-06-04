@@ -58,7 +58,7 @@ link: # link only
 clean:
 	rm -f *.o *.x $(path_gen_headers)
 
-main.o: $(path_headers) main.cpp
+main.o: main.cpp test/test_all.h
 	$(compiler) $(flags) -c main.cpp
 
 %.o: test/%.cpp $(path_headers)

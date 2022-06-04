@@ -3,7 +3,7 @@
 
 #pragma once
 #include <iostream>
-#define SLS_TEST(name) do{void test_##name(); cout << "test_" << #name << endl; test_##name();} while(0)
+#define SLS_TEST(name) do{void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} while(0)
 
 void test_all()
 {
@@ -33,7 +33,7 @@ void test_all()
     SLS_TEST(fedvr);
     SLS_TEST(file);
     SLS_TEST(global);
-    SLS_TEST(gsl);
+    SLS_TEST(GSL);
     SLS_TEST(hydrogen);
     SLS_TEST(hypergeom);
     SLS_TEST(Imag);
