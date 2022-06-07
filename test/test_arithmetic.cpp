@@ -50,6 +50,33 @@ void test_arithmetic()
 			SLS_ERR("failed!");
 	}
 
+    // mul_sym()
+    {
+        Long N = 5;
+		CmatDoub a(N, N);
+		VecDoub x(N), y(N), y1(N);
+		linspace(x, 1, N);
+        linspace(a, 1, N*N);
+		mul_sym(y, a, x);
+        for (Long i = 0; i < N; ++i)
+            for (Long j = i+1; j < N; ++j)
+                a(j, i) = a(i, j);
+		mul(y1, a, x);
+		if (y != y1)
+			SLS_ERR("failed!");
+        
+        VecComp xc(N), yc(N), yc1(N);
+        linspace(xc, Comp(1,1), Comp(N,N));
+        linspace(a, 1, N*N);
+        mul_sym(yc, a, xc);
+        for (Long i = 0; i < N; ++i)
+            for (Long j = i+1; j < N; ++j)
+                a(j, i) = a(i, j);
+        mul(yc1, a, xc);
+        if (y != y1)
+			SLS_ERR("failed!");
+    }
+
     // quad precision mul
 #ifdef SLS_USE_QUAD_MATH
     {

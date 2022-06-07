@@ -5591,7 +5591,22 @@ inline void mul_sym(VecComp_IO &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, 
     cblas_dsymv(CblasColMajor, CblasUpper, a.n0(), alpha, a.p(),
         a.n0(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
-    mul(y, a, x, alpha, beta);
+    SLS_ERR("not implemented!");
+#endif
+}
+
+// y = alpha*A*x + beta*y
+inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+    cblas_dsymv(CblasColMajor, CblasUpper, a.n0(), alpha, a.p(),
+        a.n0(), x.p(), 1, beta, y.p(), 1);
+#else
+    SLS_ERR("not implemented!");
 #endif
 }
 

@@ -1897,7 +1897,8 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 }
 //%-------------------------
 
-//% tem('mul_sym', { 'VecComp', 'CmatDoub', 'VecComp' });
+//% tem('mul_sym', { 'VecComp', 'CmatDoub', 'VecComp'
+//%     'VecDoub', 'CmatDoub', 'VecDoub' });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
@@ -1935,9 +1936,6 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 //% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
     cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
         @lda@, x.p(), @incx@, beta, y.p(), @incy@);
-//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
-    cblas_zsymv(@layout@, CblasUpper, a.n0(), &alpha, a.p(),
-        @lda@, x.p(), @incx@, &beta, y.p(), @incy@);
 //% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
     // do real part
     cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
@@ -1949,8 +1947,7 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 //%     error('not implemented (18)!');
 //% end
 #else
-//% req('mul(v,m,v)', {Ty, Ta, Tx});
-    mul(y, a, x, alpha, beta);
+    SLS_ERR("not implemented!");
 #endif
 }
 //%--------------------------------
