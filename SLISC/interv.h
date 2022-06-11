@@ -17,31 +17,18 @@ class Intvs : public vecLong
 {
 public:
     typedef vecLong Base;
-
     void push(Long_I left, Long_I right);
-
     void pushL(Long_I i);
-
     void pushR(Long_I i);
-
     void push_back(Long_I i);
-
     void check_pair() const;
-
     Long size() const;
-
     const Long &L(Long_I i) const;
-
     Long &L(Long_I i);
-
     const Long &R(Long_I i) const;
-
     Long &R(Long_I i);
-
     const Long &operator[](Long_I i) const;
-
     Long &operator[](Long_I i);
-
     void erase(Long_I start, Long_I count);
 };
 

@@ -24,10 +24,17 @@ void test_cpp11()
 	function<bool(const pair<int,int> &, const pair<int,int> &)> fun = compare;
 	sort(p.begin(), p.end(), compare);
 	sort(p.begin(), p.end(), fun);
+	sort(p.begin(), p.end());
 	for (int i = 0; i < N; ++i)
 		if (p[i].first != i+1)
 			throw "failed!";
-	bool (*func)(int, int); func = &compare2;
+	if ((&compare2)(2, 1) != 0)
+		throw "failed!";
+	bool (*func)(int, int) = &compare2;
 	if (func(2, 1) != 0)
+		throw "failed!";
+	typedef bool (*T)(int, int);
+	T func2 = &compare2;
+	if (func2(2, 1) != 0)
 		throw "failed!";
 }
