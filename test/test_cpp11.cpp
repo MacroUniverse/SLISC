@@ -5,6 +5,7 @@
 #include <utility>
 #include <string>
 #include <functional>
+#include <unordered_map>
 
 using namespace std;
 
@@ -37,4 +38,12 @@ void test_cpp11()
 	T func2 = &compare2;
 	if (func2(2, 1) != 0)
 		throw "failed!";
+
+	// map
+	unordered_map<char, int> mp;
+	// can assume all entries already exist
+	mp['a'] = 2; mp['b'] = 3; mp['c'] = 4;
+	++mp['a']; --mp['b']; mp.erase('c');
+	for (pair<const char, int> &p : mp)
+		;// cout << p.first << " -> " << p.second << endl;
 }

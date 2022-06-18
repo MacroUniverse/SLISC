@@ -86,12 +86,14 @@ inline Qcomp to_num(Qcomp_I x) { return x; }
 
 
 // modulus
-// mod operation satisfies "s = div(s,d)*d + mod(s,d)"
+// all mod variants satisfies "s = div(s,d)*d + mod(s,d)"
 // however, "div" can have different truncation:
-// 1. c++11 operator "/" truncates towards 0, so "s = (s/d)*d + s%d"
-// 2. "mod()" truncates towards negative direction
-// 3. "mod_eu()" always return positive modulus
-// when both numbers are positive, all cases returns the same result
+// 1. c++ operator "/" truncates towards 0, so "s = (s/d)*d + s%d", and s%d = s%abs(d)
+// 2. "mod_fl()" div truncates towards negative direction
+// 3. "mod_eu()" is equivalent to "mod_fl(s,abs(d))"
+// d = 0 is undefined.
+// when s,d > 0, all variants return the same result
+// result of all variants differ by +-d
 // see https://en.wikipedia.org/wiki/Modulo_operation
 inline Int mod(Int_I i, Int_I n) { return i % n; }
 
