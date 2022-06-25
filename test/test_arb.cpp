@@ -14,21 +14,27 @@ void test_arb()
     fmpz_set_str(g, "12345678901234567890123456789012345678901234567890", 10);
     fmpz_set_str(h, "98765432109876543210987654321098765432109876543210", 10);
     fmpz_add(f, g, h);
-    Str s = fmpz_get_str(NULL, 10, f);
+    char *cs; cs = fmpz_get_str(NULL, 10, f);
+    Str s = cs;
+    free(cs);
     if (s != "111111111011111111101111111110111111111011111111100")
-        SLS_ERR("failed!");
+       SLS_ERR("failed!");
     fmpz_sub(f, g, h);
-    s = fmpz_get_str(NULL, 10, f);
+    s = cs = fmpz_get_str(NULL, 10, f);
     if (s != "-86419753208641975320864197532086419753208641975320")
         SLS_ERR("failed!");
+    free(cs);
     fmpz_mul(f, g, h);
-    s = fmpz_get_str(NULL, 10, f);
+    s = cs = fmpz_get_str(NULL, 10, f);
     if (s != "1219326311370217952261850327338667885945115073915611949397448712086533622923332237463801111263526900")
         SLS_ERR("failed!");
+    free(cs);
     fmpz_mod(f, g, h); // always positive
-    s = fmpz_get_str(NULL, 10, f);
+    s = cs = fmpz_get_str(NULL, 10, f);
     if (s != "12345678901234567890123456789012345678901234567890")
         SLS_ERR("failed!");
+    free(cs);
+    fmpz_clear(f); fmpz_clear(g); fmpz_clear(h);
 
     // test arf_t: arbitrary precision floating point numbers
     // https://arblib.org/arf.html
@@ -41,10 +47,10 @@ void test_arb()
     arb_t a; arb_init(a);
     slong prec = 100; // precision digits (in binary)
     arb_set_str(a, "1.23456789022345678903234567890423456789e12345678", prec);
-    Str str = arb_get_str(a, 50, ARB_STR_MORE);
+    Str str = cs = arb_get_str(a, 50, ARB_STR_MORE);
     if (str != Str("[1.2345678902234567890323456789042238629443408769906e+12345678 +/- 1.05e+12345648]"))
         SLS_ERR("failed!");
-    arb_clear(a);
+    free(cs); arb_clear(a);
 
 #ifdef SLS_USE_QUAD_MATH
     // test my arf_get_q() fun

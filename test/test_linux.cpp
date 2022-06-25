@@ -46,8 +46,13 @@ void test_linux()
 		for (Long i = 1; i < N; ++i)
 			s[i] = s[i-1] + 1;
 		Long new_ram = ram_usage();
+#ifdef SLS_USE_ASAN
+		if (abs((new_ram - old_ram)/1024 - 100.) > 20)
+			SLS_ERR("failed!");
+#else
 		if (abs((new_ram - old_ram)/1024 - 100.) > 1.)
 			SLS_ERR("failed!");
+#endif
 		delete [] s;
 	}
 }
