@@ -20,7 +20,7 @@ arpack_lib = -larpack -lgfortran
 gsl_flag = -D SLS_USE_GSL
 gsl_lib = -lgsl
 # Arb
-arb_flag = -D SLS_USE_ARB
+arb_flag = -D SLS_USE_ARB -I /usr/include/flint
 arb_lib = -lflint -lmpfr -lgmp -larb
 # quad math
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals

@@ -1,4 +1,6 @@
 #ifdef SLS_USE_ARB
+#include <gmp.h>
+#include <flint.h>
 #include <flint/fmpz.h>
 #include "arb_hypgeom.h"
 #include "../SLISC/arb_extension.h"
@@ -65,5 +67,6 @@ void test_arb()
     arf_set_q(af, 1.23456789022345678903234567890423455e+123Q);
     arf_clear(af);
 #endif
+    flint_cleanup();
 #endif
 }
