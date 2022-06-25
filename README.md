@@ -39,7 +39,7 @@ int main()
 	SvecDoub bs = cut0(b, 0); // get a view of 1st column of b
 	bs[0] += 1; // view can be modified, and used just like a normal vector/matrix
 	Doub s2 = sum(bs); // sum of bs
-	DvecDoub bd = cut1(b, 1); // get a view of 1st row of b
+	DvecDoub bd = cut1(b, 1); // get a view of 2nd row of b
 	bd = cut1(b, 0, 1, 2); // get a view from b(0,1) to b(0,2)
 	copy(cut1(b, 0), cut1(b, 1)); // copy 2nd row of b to 1st row
 
