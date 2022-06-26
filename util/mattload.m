@@ -22,7 +22,7 @@ for ii = 1:nvar
         load_it = false;
         for jj = 1:numel(varargin)
             if strcmp(names{ii}, varargin{jj})
-                load_it = true;
+                load_it = true; break;
             end
         end
     end

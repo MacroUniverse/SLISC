@@ -16,7 +16,8 @@ void test_all()
     SLS_TEST(lanczos); SLS_TEST(legendreP); SLS_TEST(linbcg); SLS_TEST(linux); SLS_TEST(lin_eq); SLS_TEST(Mat);
     SLS_TEST(matt); SLS_TEST(matb); SLS_TEST(mat_fun); SLS_TEST(Mcoo); SLS_TEST(quad_math); SLS_TEST(random);
     SLS_TEST(scalar_arith); SLS_TEST(Scmat); SLS_TEST(Scmat3); SLS_TEST(search); SLS_TEST(sha1sum); SLS_TEST(sort);
-    SLS_TEST(string); SLS_TEST(Svec); SLS_TEST(time); SLS_TEST(unicode); SLS_TEST(Vbase); SLS_TEST(Vec); SLS_TEST(ylm);
+    SLS_TEST(sqlite); SLS_TEST(string); SLS_TEST(Svec); SLS_TEST(time); SLS_TEST(unicode); SLS_TEST(Vbase);
+    SLS_TEST(Vec); SLS_TEST(ylm);
     
     cout << "do optional tests? (y/n)" << endl;
     if (getchar() == 'y') {
