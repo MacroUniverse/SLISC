@@ -91,85 +91,95 @@ void test_matfile()
         CC3[i] = Comp(randDoub(), randDoub());
     save(CC3, "CC3", mat);
 
+    matClose(mat);
+
     // // -----------  read test -------------
 
-    // // scalars
-    // matb.open("test1.matb", 'r');
+    // scalars
+    mat = matOpen("test.mat", "r");
 
-    // Int r_si;
-    // load(r_si, "si", matb);
-    // if (r_si != si) SLS_ERR("failed!");
+    Char r_c8;
+    load(r_c8, "c8", mat);
+    if (r_c8 != c8) SLS_ERR("failed!");
 
-    // Doub r_s;
-    // load(r_s, "s", matb);
-    // if (abs(r_s-s) != 0) SLS_ERR("failed!");
+    Uchar r_s8;
+    load(r_s8, "s8", mat);
+    if (r_s8 != s8) SLS_ERR("failed!");
 
-    // Comp r_sc;
-    // load(r_sc, "sc", matb);
-    // if (abs(r_sc-sc) != 0) SLS_ERR("failed!");
+    Int r_si;
+    load(r_si, "si", mat);
+    if (r_si != si) SLS_ERR("failed!");
 
-    // // vectors
-    // // TODO: Char
+    Llong r_sl;
+    load(r_sl, "sl", mat);
+    if (r_sl != sl) SLS_ERR("failed!");
 
-    // VecInt r_vi(0);
-    // load(r_vi, "vi", matb);
-    // if (r_vi != vi)
-    //     SLS_ERR("failed!");
+    Doub r_s;
+    load(r_s, "s", mat);
+    if (r_s != s) SLS_ERR("failed!");
 
-    // VecDoub r_v(0);
-    // load(r_v, "v", matb);
-    // r_v -= v;
-    // if (norm(r_v) != 0)
-    //     SLS_ERR("failed!");
+    Comp r_sc;
+    load(r_sc, "sc", mat);
+    if (r_sc != sc) SLS_ERR("failed!");
 
-    // VecComp r_vc(0);
-    // load(r_vc, "vc", matb);
-    // r_vc -= vc;
-    // if (norm(r_v) != 0)
-    //     SLS_ERR("failed!");
+    // vectors
+    VecChar r_v8;
+    load(r_v8, "v8", mat);
+    if (r_v8 != v8) SLS_ERR("failed!");
 
-    // VecDoub r_vd(0);
-    // load(r_vd, "vd", matb);
-    // if (r_vd[0] != 1.1 || r_vd[1] != 2.2 || r_vd[2] != 3.3)
-    //     SLS_ERR("failed!");
+    VecInt r_vi;
+    load(r_vi, "vi", mat);
+    if (r_vi != vi) SLS_ERR("failed!");
 
-    // // matrices
-    // // TODO: Char
+    VecLlong r_vl;
+    load(r_vl, "vl", mat);
+    if (r_vl != vl) SLS_ERR("failed!");
 
-    // MatInt r_AI(0,0);
-    // load(r_AI, "AI", matb);
-    // if (r_AI != AI) SLS_ERR("failed!");
+    VecDoub r_v;
+    load(r_v, "v", mat);
+    if (r_v != v) SLS_ERR("failed!");
 
-    // MatDoub r_A(0,0);
-    // load(r_A, "A", matb);
-    // r_A -= A;
-    // if (norm(r_A) != 0) SLS_ERR("failed!");
+    VecComp r_vc;
+    load(r_vc, "vc", mat);
+    if (r_vc != vc) SLS_ERR("failed!");
 
-    // MatComp r_C(0,0);
-    // load(r_C, "C", matb);
-    // r_C -= C;
-    // if (norm(r_C) != 0) SLS_ERR("failed!");
+    // matrices
 
-    // // 3D arrays
-    // Mat3Doub r_A3(0,0,0);
-    // load(r_A3, "A3", matb);
-    // r_A3 -= A3;
-    // if (norm(r_A3) != 0) SLS_ERR("failed!");
+    CmatInt r_AI;
+    load(r_AI, "AI", mat);
+    if (r_AI != AI) SLS_ERR("failed!");
 
-    // Mat3Comp r_C3(0,0,0);
-    // load(r_C3, "C3", matb);
-    // r_C3 -= C3;
-    // if (norm(r_C3) != 0) SLS_ERR("failed!");
+    CmatLlong r_AL;
+    load(r_AL, "AL", mat);
+    if (r_AL != AL) SLS_ERR("failed!");
 
-    // Cmat3Comp r_CC3(0, 0, 0);
-    // load(r_CC3, "CC3", matb);
-    // r_CC3 -= CC3;
-    // if (norm(r_CC3) != 0) SLS_ERR("failed!");
+    CmatDoub r_A;
+    load(r_A, "A", mat);
+    if (r_A != A) SLS_ERR("failed!");
 
-    // // matb2matt: convert matb to matt
+    CmatComp r_C;
+    load(r_C, "C", mat);
+    if (r_C != C) SLS_ERR("failed!");
+
+    // 3D arrays
+    Cmat3Llong r_A3L;
+    load(r_A3L, "A3L", mat);
+    if (r_A3L != A3L) SLS_ERR("failed!");
+
+    Cmat3Doub r_A3;
+    load(r_A3, "A3", mat);
+    if (r_A3 != A3) SLS_ERR("failed!");
+
+    Cmat3Comp r_CC3;
+    load(r_CC3, "CC3", mat);
+    if (r_CC3 != CC3) SLS_ERR("failed!");
+
+    matClose(mat);
+
+    // // matb2matt: convert mat to matt
     // {
     //     remove("test.matt");
-    //     matb2matt("test.matb");
+    //     matb2matt("test.mat");
 
     //     Matt matt("test.matt", "r");
 
@@ -238,39 +248,39 @@ void test_matfile()
     //     matt.close();
     // }
 
-    // // matt2matb: convert matt to matb
+    // // matt2matb: convert matt to mat
     // {
-    //     remove("test.matb");
+    //     remove("test.mat");
     //     matt2matb("test.matt");
 
-    //     Matb matb("test.matb", 'r');
+    //     Matb mat("test.mat", 'r');
 
     //     Int r_si;
-    //     load(r_si, "si", matb);
+    //     load(r_si, "si", mat);
     //     if (r_si != si) SLS_ERR("failed!");
 
     //     Doub r_s;
-    //     load(r_s, "s", matb);
+    //     load(r_s, "s", mat);
     //     if (abs(r_s-s) > 1e-15) SLS_ERR("failed!");
 
     //     Comp r_sc;
-    //     load(r_sc, "sc", matb);
+    //     load(r_sc, "sc", mat);
     //     if (abs(r_sc-sc) > 1e-15) SLS_ERR("failed!");
 
     //     // vectors
     //     // TODO: Char
         
     //     VecInt r_vi(0);
-    //     load(r_vi, "vi", matb);
+    //     load(r_vi, "vi", mat);
     //     if (r_vi != vi) SLS_ERR("failed!");
 
     //     VecDoub r_v(0);
-    //     load(r_v, "v", matb);
+    //     load(r_v, "v", mat);
     //     r_v -= v;
     //     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
 
     //     VecComp r_vc(0);
-    //     load(r_vc, "vc", matb);
+    //     load(r_vc, "vc", mat);
     //     r_vc -= vc;
     //     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
 
@@ -278,35 +288,35 @@ void test_matfile()
     //     // TODO: Char
 
     //     MatInt r_AI(0,0);
-    //     load(r_AI, "AI", matb);
+    //     load(r_AI, "AI", mat);
     //     if (r_AI != AI) SLS_ERR("failed!");
 
     //     MatDoub r_A(0,0);
-    //     load(r_A, "A", matb);
+    //     load(r_A, "A", mat);
     //     r_A -= A;
     //     if (norm(r_A) > 1e-15) SLS_ERR("failed!");
 
     //     MatComp r_C(0,0);
-    //     load(r_C, "C", matb);
+    //     load(r_C, "C", mat);
     //     r_C -= C;
     //     if (norm(r_C) > 1e-15) SLS_ERR("failed!");
 
     //     // 3D arrays
     //     // Mat3Doub r_A3(0,0,0);
-    //     // load(r_A3, "A3", matb);
+    //     // load(r_A3, "A3", mat);
     //     // r_A3 -= A3;
     //     // if (norm(r_A3) > 1e-15) SLS_ERR("failed!");
 
     //     // Mat3Comp r_C3(0,0,0);
-    //     // load(r_C3, "C3", matb);
+    //     // load(r_C3, "C3", mat);
     //     // r_C3 -= C3;
     //     // if (norm(r_C3) > 1e-15) SLS_ERR("failed!");
 
     //     Cmat3Comp r_CC3(0, 0, 0);
-    //     load(r_CC3, "CC3", matb);
+    //     load(r_CC3, "CC3", mat);
     //     r_CC3 -= CC3;
     //     if (norm(r_CC3) > 1e-15) SLS_ERR("failed!");
 
-    //     matb.close();
+    //     mat.close();
     // }
 }

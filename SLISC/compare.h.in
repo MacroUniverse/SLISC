@@ -85,6 +85,8 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //%--------------------------------
 
 //% tem('v==v', {
+//%   'VecChar', 'VecChar';
+//%   'VecUchar', 'VecUchar';
 //%   'VecInt', 'VecInt';
 //%   'VecLlong', 'VecLlong';
 //%   'VecDoub', 'VecDoub';
@@ -97,11 +99,14 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //%   'MatDoub' 'MatDoub'
 //%   'MatComp', 'MatComp';
 //%   'CmatInt' 'CmatInt'
+//%   'CmatLlong' 'CmatLlong'
 //%   'CmatDoub', 'CmatDoub';
 //%   'CmatDoub', 'MatDoub';
 //%   'CmatComp', 'MatComp';
 //%   'CmatComp', 'CmatComp';
+//%   'Cmat3Llong' 'Cmat3Llong'
 //%   'Cmat3Doub' 'Cmat3Doub'
+//%   'Cmat3Comp' 'Cmat3Comp'
 //%   'Mat3Doub' 'Mat3Doub'
 //%   'DcmatDoub' 'CmatDoub'
 //%   'Jcmat3Doub' 'Cmat3Doub'

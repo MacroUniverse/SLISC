@@ -48,9 +48,8 @@ inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 //% T = varargin{:}; Ts = val_t(T);
 inline void save(@T@_I v, Str_I varname, Mat pfile)
 {
-	Long i, n;
+	Long i, n = v.size();
 	mxArray *pv;
-	n = v.size();
 //% if is_Char(Ts)
 	pv = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
 //% elseif is_Uchar(Ts)
@@ -68,8 +67,7 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
     auto ppvr = mxGetPr(pv);
 	auto ppvi = mxGetPi(pv);
 	for (i = 0; i < n; ++i) {
-		ppvr[i] = real(v[i]);
-		ppvi[i] = imag(v[i]);
+		ppvr[i] = real(v[i]); ppvi[i] = imag(v[i]);
 	}
 //% else
 	@Ts@ *ppv = (@Ts@*)mxGetPr(pv);
@@ -135,7 +133,7 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 	m = a.n0(); n = a.n1(); q = a.n2(); mn = m * n;
 	size_t sz[3]{ size_t(m), size_t(n), size_t(q) };
 //% if is_Llong(Ts)
-	pa = mxCreateUninitNumericArray(3, sz, mxUINT64_CLASS, mxREAL);
+	pa = mxCreateUninitNumericArray(3, sz, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
 	pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
@@ -164,14 +162,16 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(s)', {'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
+//% tem('matload(s)', {'Char'; 'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%---------------------
 //% Ts = varargin{:};
 inline void load(@Ts@_O s, Str_I varname, Mat pfile)
 {
 	mxArray *ps;
     ps = matGetVariable(pfile, varname.c_str());
-//% if is_Uchar(Ts)
+//% if is_Char(Ts)
+    if (!mxIsInt8(ps))
+//% elseif is_Uchar(Ts)
     if (!mxIsUint8(ps))
 //% elseif is_Int(Ts)
 	if (!mxIsInt32(ps))
@@ -194,7 +194,7 @@ inline void load(@Ts@_O s, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(v)', {'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; });
+//% tem('matload(v)', {'VecChar'; 'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O v, Str_I varname, Mat pfile)
@@ -202,7 +202,9 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 	Long i, n;
 	mxArray *pv;
     pv = matGetVariable(pfile, varname.c_str());
-//% if is_Uchar(Ts)
+//% if is_Char(Ts)
+    if (!mxIsInt8(pv))
+//% elseif is_Uchar(Ts)
     if (!mxIsUint8(pv))
 //% elseif is_Int(Ts)
     if (!mxIsInt32(pv))
@@ -214,6 +216,8 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
     if (!mxIsDouble(pv))
 //% end
         SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	v.resize(n);
 //% if is_Comp(Ts)
     Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
 	if (ppvi)
@@ -223,8 +227,6 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 		for (i = 0; i < n; ++i)
 			v[i] = ppvr[i];
 //% else
-    n = mxGetDimensions(pv)[1];
-	v.resize(n);
 	@Ts@ *ppv = (@Ts@ *)mxGetPr(pv);
 	for (i = 0; i < n; ++i)
 		v[i] = ppv[i];
@@ -233,16 +235,18 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(a2)', {'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp'; });
+//% tem('matload(a2)', {'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void load(@T@_O &a, Str_I varname, Mat pfile)
+inline void load(@T@_O a, Str_I varname, Mat pfile)
 {
 	Long i, j, m, n;
 	mxArray *pa = matGetVariable(pfile, varname.c_str());
-//% if is_Uchar(Ts)
-	if (!mxIsUint8(pa))
+//% if is_Char(Ts)
+	if (!mxIsInt8(pa))
 //% elseif is_Uchar(Ts)
+	if (!mxIsUint8(pa))
+//% elseif is_Int(Ts)
     if (!mxIsInt32(pa))
 //% elseif is_Llong(Ts)
 	if (!mxIsInt64(pa))
@@ -280,7 +284,7 @@ inline void load(@T@_O &a, Str_I varname, Mat pfile)
 //% tem('matload(a3)', {'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void load(@T@_O &a, Str_I varname, Mat pfile)
+inline void load(@T@_O a, Str_I varname, Mat pfile)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa = matGetVariable(pfile, varname.c_str());

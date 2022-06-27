@@ -65,6 +65,22 @@ inline Bool equals_to_vv(const Int *v1, const Int *v2, Long_I N)
     return true;
 }
 
+inline Bool equals_to_vv(const Char *v1, const Char *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v1[i] != v2[i])
+            return false;
+    return true;
+}
+
+inline Bool equals_to_vv(const Uchar *v1, const Uchar *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        if (v1[i] != v2[i])
+            return false;
+    return true;
+}
+
 inline Bool equals_to_vv(const Llong *v1, const Llong *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -152,6 +168,10 @@ inline Bool shape_cmp(MatComp_I v1, MatDoub_I v2) {return v1.n0() == v2.n0() && 
 
 inline Bool shape_cmp(Cmat3Comp_I v1, Cmat3Doub_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
+inline Bool shape_cmp(VecChar_I v1, VecChar_I v2) {return (Long)v1.size() == (Long)v2.size();}
+
+inline Bool shape_cmp(VecUchar_I v1, VecUchar_I v2) {return (Long)v1.size() == (Long)v2.size();}
+
 inline Bool shape_cmp(MatLlong_I v1, MatLlong_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
 inline Bool shape_cmp(MatDoub_I v1, CmatDoub_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
@@ -160,9 +180,13 @@ inline Bool shape_cmp(MatInt_I v1, MatInt_I v2) {return v1.n0() == v2.n0() && v1
 
 inline Bool shape_cmp(CmatInt_I v1, CmatInt_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
+inline Bool shape_cmp(CmatLlong_I v1, CmatLlong_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
+
 inline Bool shape_cmp(CmatDoub_I v1, MatDoub_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
 inline Bool shape_cmp(CmatComp_I v1, MatComp_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
+
+inline Bool shape_cmp(Cmat3Llong_I v1, Cmat3Llong_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(Cmat3Doub_I v1, Cmat3Doub_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
@@ -192,11 +216,7 @@ inline Bool shape_cmp(VecInt_I v1, DvecInt_I v2) {return (Long)v1.size() == (Lon
 
 inline Bool shape_cmp(VecInt_I v1, SvecInt_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
-inline Bool shape_cmp(CmatLlong_I v1, CmatLlong_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
-
 inline Bool shape_cmp(Cmat3Int_I v1, Cmat3Int_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
-
-inline Bool shape_cmp(Cmat3Llong_I v1, Cmat3Llong_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(DcmatInt_I v1, DcmatInt_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
@@ -822,6 +842,24 @@ inline void assert_same_shape(DvecComp_I v1, SvecComp_I v2, DvecComp_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 
+inline Bool operator==(VecChar_I v1, VecChar_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(VecChar_I v1, VecChar_I v2)
+{ return !(v1 == v2); }
+
+inline Bool operator==(VecUchar_I v1, VecUchar_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(VecUchar_I v1, VecUchar_I v2)
+{ return !(v1 == v2); }
+
 inline Bool operator==(VecInt_I v1, VecInt_I v2)
 {
     return shape_cmp(v1, v2) &&
@@ -926,6 +964,15 @@ inline Bool operator==(CmatInt_I v1, CmatInt_I v2)
 inline Bool operator!=(CmatInt_I v1, CmatInt_I v2)
 { return !(v1 == v2); }
 
+inline Bool operator==(CmatLlong_I v1, CmatLlong_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(CmatLlong_I v1, CmatLlong_I v2)
+{ return !(v1 == v2); }
+
 inline Bool operator==(CmatDoub_I v1, CmatDoub_I v2)
 {
     return shape_cmp(v1, v2) &&
@@ -972,6 +1019,15 @@ inline Bool operator==(CmatComp_I v1, CmatComp_I v2)
 inline Bool operator!=(CmatComp_I v1, CmatComp_I v2)
 { return !(v1 == v2); }
 
+inline Bool operator==(Cmat3Llong_I v1, Cmat3Llong_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(Cmat3Llong_I v1, Cmat3Llong_I v2)
+{ return !(v1 == v2); }
+
 inline Bool operator==(Cmat3Doub_I v1, Cmat3Doub_I v2)
 {
     return shape_cmp(v1, v2) &&
@@ -979,6 +1035,15 @@ inline Bool operator==(Cmat3Doub_I v1, Cmat3Doub_I v2)
 }
 
 inline Bool operator!=(Cmat3Doub_I v1, Cmat3Doub_I v2)
+{ return !(v1 == v2); }
+
+inline Bool operator==(Cmat3Comp_I v1, Cmat3Comp_I v2)
+{
+    return shape_cmp(v1, v2) &&
+        equals_to_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(Cmat3Comp_I v1, Cmat3Comp_I v2)
 { return !(v1 == v2); }
 
 inline Bool operator==(Mat3Doub_I v1, Mat3Doub_I v2)
