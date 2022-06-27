@@ -4,7 +4,7 @@
 
 namespace slisc {
 //% tem('Mat', {
-//%     'Char'; 'Int'; 'Llong';
+//%     'Char'; 'Uchar'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag';});

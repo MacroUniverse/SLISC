@@ -75,6 +75,78 @@ inline void MatChar::resize(Long_I N0, Long_I N1)
 typedef const MatChar &MatChar_I;
 typedef MatChar &MatChar_O, &MatChar_IO;
 
+class MatUchar : public VbaseUchar
+{
+protected:
+    typedef VbaseUchar Base;
+    Long m_N0, m_N1;
+public:
+    using Base::p;
+    MatUchar(): m_N0(0), m_N1(0) {};
+    MatUchar(Long_I N0, Long_I N1);
+    MatUchar(const MatUchar &rhs);        // Copy constructor
+    MatUchar &operator=(const MatUchar &rhs) = delete;
+    void operator<<(MatUchar &rhs); // move data and rhs.resize(0, 0)
+    Uchar& operator()(Long_I i, Long_I j); // double indexing
+    const Uchar& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
+};
+
+inline MatUchar::MatUchar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline MatUchar::MatUchar(const MatUchar &rhs) : Base(0)
+{
+    SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
+}
+
+inline void MatUchar::operator<<(MatUchar &rhs)
+{
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
+    rhs.m_N0 = rhs.m_N1 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Uchar& MatUchar::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("MatUchar subscript out of bounds");
+#endif
+    return m_p[m_N1*i+j];
+}
+
+inline const Uchar &MatUchar::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("MatUchar subscript out of bounds");
+#endif
+    return m_p[m_N1*i+j];
+}
+
+inline Long MatUchar::n0() const
+{
+    return m_N0;
+}
+
+inline Long MatUchar::n1() const
+{
+    return m_N1;
+}
+
+inline void MatUchar::resize(Long_I N0, Long_I N1)
+{
+    if (N0 != m_N0 || N1 != m_N1) {
+        Base::resize(N0*N1);
+        m_N0 = N0; m_N1 = N1;
+    }
+}
+
+typedef const MatUchar &MatUchar_I;
+typedef MatUchar &MatUchar_O, &MatUchar_IO;
+
 class MatInt : public VbaseInt
 {
 protected:

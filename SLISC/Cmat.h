@@ -87,6 +87,90 @@ inline void CmatChar::reshape(Long_I N0, Long_I N1)
 typedef const CmatChar &CmatChar_I;
 typedef CmatChar &CmatChar_O, &CmatChar_IO;
 
+class CmatUchar : public VbaseUchar
+{
+protected:
+    typedef VbaseUchar Base;
+    Long m_N0, m_N1;
+public:
+    CmatUchar(): m_N0(0), m_N1(0) {};
+    CmatUchar(Long_I N0, Long_I N1);
+    CmatUchar(const CmatUchar &rhs);        // Copy constructor
+    CmatUchar &operator=(const CmatUchar &rhs) = delete;
+    void operator<<(CmatUchar &rhs); // move data and rhs.resize(0, 0)
+    Uchar& operator()(Long_I i, Long_I j);    // double indexing
+    const Uchar& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
+    void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+};
+
+inline CmatUchar::CmatUchar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline CmatUchar::CmatUchar(const CmatUchar &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+    for (Long i = 0; i < m_N; ++i)
+        m_p[i] = rhs.m_p[i];
+}
+
+inline void CmatUchar::operator<<(CmatUchar &rhs)
+{
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
+    rhs.m_N0 = rhs.m_N1 = 0;
+    Base::operator<<(rhs);
+}
+
+inline Uchar &CmatUchar::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("CmatUchar index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+#endif
+    return m_p[i+m_N0*j];
+}
+
+inline const Uchar &CmatUchar::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("CmatUchar index ("+num2str(i)+", "+num2str(j)
+            +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+#endif
+    return m_p[i+m_N0*j];
+}
+
+inline Long CmatUchar::n0() const
+{ return m_N0; }
+
+inline Long CmatUchar::n1() const
+{ return m_N1; }
+
+inline void CmatUchar::resize(Long_I N0, Long_I N1)
+{
+    if (N0 != m_N0 || N1 != m_N1) {
+        Base::resize(N0*N1);
+        m_N0 = N0; m_N1 = N1;
+    }
+}
+
+inline void CmatUchar::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0 * N1 != m_N)
+        SLS_ERR("CmatUchar reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
+            +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+typedef const CmatUchar &CmatUchar_I;
+typedef CmatUchar &CmatUchar_O, &CmatUchar_IO;
+
 class CmatInt : public VbaseInt
 {
 protected:

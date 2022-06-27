@@ -31,6 +31,34 @@ inline void VecChar::operator<<(VecChar &rhs)
 typedef const VecChar &VecChar_I;
 typedef VecChar &VecChar_O, &VecChar_IO;
 
+class VecUchar : public VbaseUchar
+{
+public:
+    typedef VbaseUchar Base;
+    VecUchar() = default;
+    explicit VecUchar(Long_I N);
+    VecUchar(const VecUchar &rhs); // copy constructor
+    VecUchar &operator=(const VecUchar &rhs) = delete;
+    void operator<<(VecUchar &rhs); // move data and rhs.resize(0)
+};
+
+inline VecUchar::VecUchar(Long_I N) : Base(N) {}
+
+inline VecUchar::VecUchar(const VecUchar &rhs) : Base(rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline void VecUchar::operator<<(VecUchar &rhs)
+{
+    Base::operator<<(rhs);
+}
+
+typedef const VecUchar &VecUchar_I;
+typedef VecUchar &VecUchar_O, &VecUchar_IO;
+
 class VecInt : public VbaseInt
 {
 public:

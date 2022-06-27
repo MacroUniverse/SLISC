@@ -153,6 +153,156 @@ inline ScmatChar::~ScmatChar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatChar &ScmatChar_O, &ScmatChar_IO;
 
+class ScmatUchar_c : public SvbaseUchar_c
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    ScmatUchar_c();
+    ScmatUchar_c(const Uchar *data, Long_I N0, Long_I N1); // unsafe
+
+
+    const Uchar &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const ScmatUchar_c &sli);
+    void set(const Uchar *data, Long_I N0, Long_I N1);
+    ~ScmatUchar_c();
+};
+
+inline ScmatUchar_c::ScmatUchar_c() {}
+
+inline ScmatUchar_c::ScmatUchar_c(const Uchar *data, Long_I N0, Long_I N1)
+    : SvbaseUchar_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+
+inline const Uchar &ScmatUchar_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatUchar_c::n0() const
+{
+    return m_N0;
+}
+
+inline Long ScmatUchar_c::n1() const
+{
+    return m_N1;
+}
+
+inline void ScmatUchar_c::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatUchar_c::set(const Uchar *data, Long_I N0, Long_I N1)
+{
+    SvbaseUchar_c::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatUchar_c::set(const ScmatUchar_c &sli)
+{
+    SvbaseUchar_c::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline ScmatUchar_c::~ScmatUchar_c() {}
+
+typedef const ScmatUchar_c &ScmatUchar_I;
+
+class ScmatUchar : public SvbaseUchar
+{
+protected:
+    Long m_N0, m_N1;
+public:
+    ScmatUchar();
+    ScmatUchar(Uchar *data, Long_I N0, Long_I N1); // unsafe
+
+    operator ScmatUchar_c() const;
+
+    Uchar &operator()(Long_I i, Long_I j) const; // double indexing
+    Long n0() const;
+    Long n1() const;
+
+    // resize() is a bad idea, don't try to create it!
+
+    // There is no upper bound checking of N, use with care
+    void reshape(Long_I N0, Long_I N1);
+    void set(const ScmatUchar &sli);
+    void set(Uchar *data, Long_I N0, Long_I N1);
+    ~ScmatUchar();
+};
+
+inline ScmatUchar::ScmatUchar() {}
+
+inline ScmatUchar::ScmatUchar(Uchar *data, Long_I N0, Long_I N1)
+    : SvbaseUchar(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatUchar::operator ScmatUchar_c() const
+{
+    return *((ScmatUchar_c *)this);
+}
+
+inline Uchar &ScmatUchar::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatUchar::n0() const
+{
+    return m_N0;
+}
+
+inline Long ScmatUchar::n1() const
+{
+    return m_N1;
+}
+
+inline void ScmatUchar::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N0*N1 != m_N)
+        SLS_ERR("illegal reshape!");
+#endif
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatUchar::set(Uchar *data, Long_I N0, Long_I N1)
+{
+    SvbaseUchar::set(data, N0*N1);
+    m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatUchar::set(const ScmatUchar &sli)
+{
+    SvbaseUchar::set(sli);
+    m_N0 = sli.m_N0; m_N1 = sli.m_N1;
+}
+
+inline ScmatUchar::~ScmatUchar() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const ScmatUchar &ScmatUchar_O, &ScmatUchar_IO;
+
 class ScmatInt_c : public SvbaseInt_c
 {
 protected:

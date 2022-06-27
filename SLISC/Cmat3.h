@@ -82,6 +82,85 @@ inline Long Cmat3Char::n2() const {
 typedef const Cmat3Char &Cmat3Char_I;
 typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
+class Cmat3Uchar : public VbaseUchar
+{
+protected:
+    typedef VbaseUchar Base;
+    Long m_N0, m_N1, m_N2;
+public:
+    Cmat3Uchar(): m_N0(0), m_N1(0), m_N2(0) {};
+    Cmat3Uchar(Long_I N0, Long_I N1, Long_I N2);
+    Cmat3Uchar(const Cmat3Uchar &rhs); // copy constructor
+    Cmat3Uchar &operator=(const Cmat3Uchar &rhs) = delete;
+    void operator<<(Cmat3Uchar &rhs); // move data and rhs.resize(0, 0, 0)
+    void resize(Long_I N0, Long_I N1, Long_I N2);
+    Uchar &operator()(Long_I i, Long_I j, Long_I k);
+    const Uchar &operator()(Long_I i, Long_I j, Long_I k) const;
+    Long n0() const;
+    Long n1() const;
+    Long n2() const;
+};
+
+inline Cmat3Uchar::Cmat3Uchar(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline void Cmat3Uchar::operator<<(Cmat3Uchar &rhs)
+{
+    m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+    rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
+    Base::operator<<(rhs);
+}
+
+// copy constructor
+inline Cmat3Uchar::Cmat3Uchar(const Cmat3Uchar &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline void Cmat3Uchar::resize(Long_I N0, Long_I N1, Long_I N2)
+{
+    if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+        Base::resize(N0*N1*N2);
+        m_N0 = N0; m_N1 = N1; m_N2 = N2;
+    }
+}
+
+inline Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+        SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+            +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+#endif
+    return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline const Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+        SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+            +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+#endif
+    return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Cmat3Uchar::n0() const {
+    return m_N0;
+}
+
+inline Long Cmat3Uchar::n1() const {
+    return m_N1;
+}
+
+inline Long Cmat3Uchar::n2() const {
+    return m_N2;
+}
+
+typedef const Cmat3Uchar &Cmat3Uchar_I;
+typedef Cmat3Uchar &Cmat3Uchar_O, &Cmat3Uchar_IO;
+
 class Cmat3Int : public VbaseInt
 {
 protected:

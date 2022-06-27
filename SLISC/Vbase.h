@@ -169,6 +169,170 @@ inline VbaseChar::~VbaseChar()
         delete[] m_p;
 }
 
+class VbaseUchar
+{
+protected:
+    Uchar *m_p; // pointer to the first element
+    Long m_N; // number of elements
+public:
+    // constructors
+    VbaseUchar();
+    explicit VbaseUchar(Long_I N);
+    VbaseUchar(const VbaseUchar &rhs); // copy constructor
+
+    // get properties
+    Uchar* p(); // get pointer
+    const Uchar* p() const;
+    Long size() const;
+    void resize(Long_I N);
+    Uchar &operator[](Long_I i);
+    const Uchar &operator[](Long_I i) const;
+    Uchar& end();
+    const Uchar& end() const;
+    Uchar& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+    const Uchar& end(Long_I i) const;
+    void operator<<(VbaseUchar &rhs); // move data
+    ~VbaseUchar();
+};
+
+// m_p doesn't need to be initialized, but g++ will complain
+inline VbaseUchar::VbaseUchar() : m_N(0), m_p(nullptr) {}
+
+inline VbaseUchar::VbaseUchar(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < 0)
+        SLS_ERR("size less than 0!");
+#endif
+    m_N = N;
+    if (N > 0)
+        m_p = new Uchar[N];
+}
+
+// copy constructor
+inline VbaseUchar::VbaseUchar(const VbaseUchar &rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+    SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+    m_N = rhs.m_N;
+    if (m_N > 0) {
+        m_p = new Uchar[m_N];
+        memcpy(m_p, rhs.p(), m_N);
+    }
+}
+
+inline Uchar * VbaseUchar::p()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline const Uchar * VbaseUchar::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long VbaseUchar::size() const
+{
+    return m_N;
+}
+
+inline void VbaseUchar::resize(Long_I N)
+{
+    if (N != m_N) {
+        if (m_N == 0) { // N != 0
+            m_N = N; m_p = new Uchar[N];
+        }
+        else { // m_N != 0
+            delete[] m_p;
+            if (N == 0)
+                m_N = 0;
+            else {
+                m_N = N;
+                m_p = new Uchar[N];
+            }
+        }
+    }
+}
+
+inline void VbaseUchar::operator<<(VbaseUchar &rhs)
+{
+    if (this == &rhs)
+        SLS_ERR("self move is forbidden!");
+    if (m_N != 0)
+        delete[] m_p;
+    m_N = rhs.m_N; rhs.m_N = 0;
+    m_p = rhs.m_p;
+}
+
+inline Uchar &VbaseUchar::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+    SLS_ERR("VbaseUchar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+    return m_p[i];
+}
+
+inline const Uchar &VbaseUchar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i<0 || i>=m_N)
+        SLS_ERR("VbaseUchar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+    return m_p[i];
+}
+
+inline Uchar &VbaseUchar::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Uchar &VbaseUchar::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Uchar &VbaseUchar::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+    return m_p[m_N - i];
+}
+
+inline const Uchar &VbaseUchar::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+    return m_p[m_N - i];
+}
+
+inline VbaseUchar::~VbaseUchar()
+{
+    if (m_N != 0)
+        delete[] m_p;
+}
+
 class VbaseInt
 {
 protected:

@@ -249,6 +249,249 @@ inline void SvbaseChar::set(const SvbaseChar &sli)
 
 inline SvbaseChar::~SvbaseChar() {}
 
+class SvbaseUchar_c
+{
+protected:
+    const Uchar *m_p;
+    Long m_N;
+public:
+    SvbaseUchar_c();
+    explicit SvbaseUchar_c(Long_I N);
+    SvbaseUchar_c(const Uchar *data, Long_I N); // unsafe
+    const Uchar* p() const;
+    Long size() const;
+    SvbaseUchar_c &operator=(const SvbaseUchar_c &rhs) = delete;
+    const Uchar &operator[](Long_I i) const;
+    const Uchar &end() const;
+    const Uchar &end(Long_I i) const;
+    void set(const SvbaseUchar_c &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(const Uchar *data);
+    void set(Long_I N);
+    void set(const Uchar *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseUchar_c();
+};
+
+inline SvbaseUchar_c::SvbaseUchar_c() {}
+
+inline SvbaseUchar_c::SvbaseUchar_c(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseUchar_c::SvbaseUchar_c(const Uchar *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline const Uchar * SvbaseUchar_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseUchar_c::size() const
+{
+    return m_N;
+}
+
+inline const Uchar &SvbaseUchar_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline const Uchar &SvbaseUchar_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline const Uchar &SvbaseUchar_c::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+
+inline void SvbaseUchar_c::set(const Uchar *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseUchar_c::set(const Uchar *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseUchar_c::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseUchar_c::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseUchar_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseUchar_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseUchar_c::set(const SvbaseUchar_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseUchar_c::~SvbaseUchar_c() {}
+
+class SvbaseUchar
+{
+protected:
+    Uchar *m_p;
+    Long m_N;
+public:
+    SvbaseUchar();
+    explicit SvbaseUchar(Long_I N);
+    SvbaseUchar(Uchar *data, Long_I N); // unsafe
+    Uchar* p() const;
+    Long size() const;
+    SvbaseUchar &operator=(const SvbaseUchar &rhs) = delete;
+    Uchar &operator[](Long_I i) const;
+    Uchar &end() const;
+    Uchar &end(Long_I i) const;
+    operator SvbaseUchar_c() const;
+    void set(const SvbaseUchar &sli);
+    void next(); // m_p += m_N
+    
+    // === unsafe operations (unsafe) ===
+    void set(Uchar *data);
+    void set(Long_I N);
+    void set(Uchar *data, Long_I N);
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N
+
+    ~SvbaseUchar();
+};
+
+inline SvbaseUchar::SvbaseUchar() {}
+
+inline SvbaseUchar::SvbaseUchar(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    m_p = nullptr;
+#endif
+}
+
+inline SvbaseUchar::SvbaseUchar(Uchar *data, Long_I N)
+    : m_p(data), m_N(N) {}
+
+inline Uchar * SvbaseUchar::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long SvbaseUchar::size() const
+{
+    return m_N;
+}
+
+inline Uchar &SvbaseUchar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[i];
+}
+
+inline Uchar &SvbaseUchar::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_N - 1];
+}
+
+inline Uchar &SvbaseUchar::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i <= 0 || i > m_N)
+        SLS_ERR("index out of bound");
+#endif
+    return m_p[m_N - i];
+}
+
+inline SvbaseUchar::operator SvbaseUchar_c() const
+{
+    return *((SvbaseUchar_c *)this);
+}
+
+inline void SvbaseUchar::set(Uchar *data, Long_I N)
+{
+    m_p = data; m_N = N;
+}
+
+inline void SvbaseUchar::set(Uchar *data)
+{
+    m_p = data;
+}
+
+inline void SvbaseUchar::set(Long_I N)
+{
+    m_N = N;
+}
+
+inline void SvbaseUchar::next()
+{
+    m_p += m_N;
+}
+
+inline void SvbaseUchar::last()
+{
+    m_p -= m_N;
+}
+
+inline void SvbaseUchar::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline void SvbaseUchar::set(const SvbaseUchar &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseUchar::~SvbaseUchar() {}
+
 class SvbaseInt_c
 {
 protected:

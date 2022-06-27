@@ -10,6 +10,8 @@ if any(strfind(T, 'Bool'))
     ret = 'Bool';
 elseif any(strfind(T, 'Char'))
     ret = 'Char';
+elseif any(strfind(T, 'Uchar'))
+    ret = 'Uchar';
 elseif any(strfind(T, 'Int'))
     ret = 'Int';
 elseif any(strfind(T, 'Llong'))

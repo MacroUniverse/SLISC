@@ -13,7 +13,7 @@ void test_all()
     SLS_TEST(compare); SLS_TEST(complex_arith); SLS_TEST(copy); SLS_TEST(coulomb); SLS_TEST(cpp11); SLS_TEST(cut);
     SLS_TEST(dense); SLS_TEST(Dvec); SLS_TEST(Eigen); SLS_TEST(expokit); SLS_TEST(fedvr); SLS_TEST(file);
     SLS_TEST(global); SLS_TEST(GSL); SLS_TEST(hydrogen); SLS_TEST(hypergeom); SLS_TEST(Imag); SLS_TEST(interp1);
-    SLS_TEST(lanczos); SLS_TEST(legendreP); SLS_TEST(linbcg); SLS_TEST(linux); SLS_TEST(lin_eq); SLS_TEST(Mat);
+    SLS_TEST(lanczos); SLS_TEST(legendreP); SLS_TEST(linbcg); SLS_TEST(linux); SLS_TEST(lin_eq); SLS_TEST(matfile);
     SLS_TEST(matt); SLS_TEST(matb); SLS_TEST(mat_fun); SLS_TEST(Mcoo); SLS_TEST(quad_math); SLS_TEST(random);
     SLS_TEST(scalar_arith); SLS_TEST(Scmat); SLS_TEST(Scmat3); SLS_TEST(search); SLS_TEST(sha1sum); SLS_TEST(sort);
     SLS_TEST(sqlite); SLS_TEST(string); SLS_TEST(Svec); SLS_TEST(time); SLS_TEST(unicode); SLS_TEST(Vbase);

@@ -19,3 +19,5 @@ SLISC/test
 util/matbinfo
 util/matbrename
 util/cat_files
+test.mat
+example.db

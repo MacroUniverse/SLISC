@@ -1,0 +1,302 @@
+// save SLISC containers to Matlab ".mat" files.
+// see README.txt for details
+
+#pragma once
+#include "arithmetic.h"
+#include <mat.h>
+
+namespace slisc {
+
+typedef MATFile *Mat;
+
+//% tem('matsave(s)', {'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
+//%---------------------
+//% Ts = varargin{:};
+inline void save(@Ts@_I s, Str_I varname, Mat pfile)
+{
+	mxArray *ps;
+//% if is_Uchar(Ts)
+	ps = mxCreateNumericMatrix(1, 1, mxUINT8_CLASS, mxREAL);
+//% elseif is_Int(Ts)
+    ps = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+//% elseif is_Llong(Ts)
+    ps = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
+//% elseif is_Doub(Ts)
+    ps = mxCreateDoubleMatrix(1, 1, mxREAL);
+//% elseif is_Comp(Ts)
+    ps = mxCreateDoubleMatrix(1, 1, mxCOMPLEX);
+//% end
+//% if is_Comp(Ts)
+    Doub *pps = mxGetPr(ps);
+	pps[0] = real(s);
+	pps = mxGetPi(ps);
+	pps[0] = imag(s);
+//% else
+	@Ts@ *pps = (@Ts@*)mxGetPr(ps);
+	pps[0] = s;
+//% end
+	matPutVariable(pfile, varname.c_str(), ps);
+	mxDestroyArray(ps);
+}
+//%---------------------
+
+
+//% tem('matsave(v)', {'VecUchar'; 'VecInt'; 'VecDoub'; 'VecComp';});
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+inline void save(@T@_I v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+	n = v.size();
+//% if is_Uchar(Ts)
+	pv = mxCreateUninitNumericMatrix(1, n, mxUINT8_CLASS, mxREAL);
+//% elseif is_Int(Ts)
+    pv = mxCreateUninitNumericMatrix(1, n, mxINT32_CLASS, mxREAL);
+//% elseif is_Doub(Ts)
+    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxREAL);
+//% elseif is_Comp(Ts)
+    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxCOMPLEX);
+//% end
+//% if is_Comp(Ts)
+    auto ppvr = mxGetPr(pv);
+	auto ppvi = mxGetPi(pv);
+	for (i = 0; i < n; ++i) {
+		ppvr[i] = real(v[i]);
+		ppvi[i] = imag(v[i]);
+	}
+//% else
+	@Ts@ *ppv = (@Ts@*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+//% end
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+//%---------------------
+
+//% tem('matsave(m2)', {'MatUchar'; 'MatInt'; 'MatDoub'; 'MatComp';
+//%    'CmatUchar'; 'CmatInt'; 'CmatDoub'; 'CmatComp';
+//%    'ScmatUchar'; 'ScmatInt'; 'ScmatDoub'; 'ScmatComp';});
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+inline void save(@T@_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa;
+	m = a.n0(); n = a.n1();
+//% if is_Uchar(Ts)
+	pa = mxCreateUninitNumericMatrix(m, n, mxUINT8_CLASS, mxREAL);
+//% elseif is_Int(Ts)
+    pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
+//% elseif is_Doub(Ts)
+    pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL);
+//% elseif is_Comp(Ts)
+    pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxCOMPLEX);
+//% end
+//% if is_Comp(Ts)
+    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+    for (i = 0; i < m; ++i) {
+		for (j = 0; j < n; ++j) {
+			Long ind = i + m * j; const Comp &c = a(i,j);
+			ppar[ind] = real(c);
+			ppai[ind] = imag(c);
+		}
+    }
+//% else
+    @Ts@ *ppa = (@Ts@*)mxGetPr(pa);
+        for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                ppa[i + m * j] = a(i,j);
+//% end
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+//%---------------------
+
+//% tem('matsave(m3)', {'Mat3Doub'; 'Mat3Comp'});
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+inline void save(@T@_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, k, m, n, q, mn;
+	mxArray *pa;
+	m = a.n0(); n = a.n1(); q = a.n2(); mn = m * n;
+	size_t sz[3]{ size_t(m), size_t(n), size_t(q) };
+//% if is_Doub(Ts)
+	pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxREAL);
+//% elseif is_Comp(Ts)
+    pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxCOMPLEX);
+//% end
+//% if is_Comp(Ts)
+    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+    for (i = 0; i < m; ++i) {
+        for (j = 0; j < n; ++j) {
+            for (k = 0; k < q; ++k) {
+                Long ind = i + m * j + mn * k;
+                const Comp &c = a(i,j,k);
+                ppar[ind] = real(c); ppai[ind] = imag(c);
+            }
+        }
+    }
+//% else
+    @Ts@ *ppa = (@Ts@*)mxGetPr(pa);
+        for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                for (k = 0; k < q; ++k)
+                    ppa[i + m * j + mn * k] = a(i,j,k);
+//% end
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+//%---------------------
+
+//% tem('matload(s)', {'Uchar'; 'Int'; 'Doub'; 'Comp'});
+//%---------------------
+//% Ts = varargin{:};
+inline void load(@Ts@_O s, Str_I varname, Mat pfile)
+{
+	mxArray *ps;
+    ps = matGetVariable(pfile, varname.c_str());
+//% if is_Uchar(Ts)
+    if (!mxIsUint8(ps))
+//% elseif is_Int(Ts)
+	if (!mxIsInt32(ps))
+//% elseif is_Doub(Ts)
+    if (!mxIsDouble(ps) || mxIsComplex(ps))
+//% elseif is_Comp(Ts)
+    if (!mxIsDouble(ps))
+//% end
+        SLS_ERR("'matfile: load(): wrong type!");
+//% if is_Comp(Ts)
+    Doub *ppsr = mxGetPr(ps), *ppsi = mxGetPi(ps);
+    s = ppsi ? Comp(ppsr[0], ppsi[0]) : ppsr[0];
+//% else
+    @Ts@ *pps = (@Ts@ *)mxGetPr(ps);
+	s = pps[0];
+//% end
+	mxDestroyArray(ps);
+}
+//%---------------------
+
+//% tem('matload(v)', {'VecUchar'; 'VecInt'; 'VecDoub'; 'VecComp'; });
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+inline void load(@T@_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+//% if is_Uchar(Ts)
+    if (!mxIsUint8(pv))
+//% elseif is_Int(Ts)
+    if (!mxIsInt32(pv))
+//% elseif is_Doub(Ts)
+    if (!mxIsDouble(pv) || mxIsComplex(pv))
+//% elseif is_Comp(Ts)
+    if (!mxIsDouble(pv))
+//% end
+        SLS_ERR("'matfile: load(): wrong type!");
+//% if is_Comp(Ts)
+    Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
+	if (ppvi)
+		for (i = 0; i < n; ++i)
+			v[i] = Comp(ppvr[i], ppvi[i]);
+	else
+		for (i = 0; i < n; ++i)
+			v[i] = ppvr[i];
+//% else
+    n = mxGetDimensions(pv)[1];
+	v.resize(n);
+	@Ts@ *ppv = (@Ts@ *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+//% end
+	mxDestroyArray(pv);
+}
+//%---------------------
+
+//% tem('matload(a2)', {'MatUchar'; 'MatInt'; 'MatDoub'; 'MatComp'; });
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+inline void load(@T@_O &a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+//% if is_Uchar(Ts)
+	if (!mxIsUint8(pa))
+//% elseif is_Uchar(Ts)
+    if (!mxIsInt32(pa))
+//% elseif is_Doub(Ts)
+    if (!mxIsDouble(pa) || mxIsComplex(pa))
+//% elseif is_Comp(Ts)
+    if (!mxIsDouble(pa))
+//% end
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	a.resize(m, n);
+//% if is_Comp(Ts)
+	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+    if (ppai)
+		for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j){
+                Long ind = i + m * j;
+                a(i,j) = Comp(ppar[ind], ppai[ind]);
+            }
+	else
+		for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                a(i,j) = ppar[i + m*j];
+//% else
+    @Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+//% end
+	mxDestroyArray(pa);
+}
+//%---------------------
+
+//% tem('matload(a3)', {'Mat3Doub'; 'Mat3Comp'});
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+inline void load(@T@_O &a, Str_I varname, Mat pfile)
+{
+	Long i, j, k, m, n, q, mn;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+//% if is_Doub(Ts)
+	if (!mxIsDouble(pa) || mxIsComplex(pa))
+//% elseif is_Comp(Ts)
+    if (!mxIsDouble(pa))
+//% end
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1]; q = sz[2]; mn = m*n;
+	a.resize(m, n, q);
+//% if is_Comp(Ts)
+    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+	if (ppai)
+		for (i = 0; i < m; ++i)
+		    for (j = 0; j < n; ++j)
+		        for (k = 0; k < q; ++k){
+			        Long ind = i + m*j + mn*k;
+			        a(i,j,k) = Comp(ppar[ind], ppai[ind]);
+		}
+	else
+		for (i = 0; i < m; ++i)
+		    for (j = 0; j < n; ++j)
+		        for (k = 0; k < q; ++k)
+			        a(i,j,k) = ppar[i + m*j + mn*k];
+//% else
+    @Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
+	for (i = 0; i < m; ++i)
+	    for (j = 0; j < n; ++j)
+    	    for (k = 0; k < q; ++k)
+	        	a(i,j,k) = ppa[i + m*j + mn*k];
+//% end
+	mxDestroyArray(pa);
+}
+//%---------------------
+
+} // namespace slisc
