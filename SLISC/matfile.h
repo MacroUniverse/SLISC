@@ -12,7 +12,7 @@ typedef MATFile *Mat;
 inline void save(Char_I s, Str_I varname, Mat pfile)
 {
 	mxArray *ps;
-	ps = mxCreateNumericMatrix(1, 1, mxINT8_CLASS, mxREAL);
+	ps = mxCreateNumericMatrix(1, 1, mxCHAR_CLASS, mxREAL);
 	Char *pps = (Char*)mxGetPr(ps);
 	pps[0] = s;
 	matPutVariable(pfile, varname.c_str(), ps);
@@ -77,7 +77,7 @@ inline void save(VecChar_I v, Str_I varname, Mat pfile)
 {
 	Long i, n = v.size();
 	mxArray *pv;
-	pv = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
+	pv = mxCreateUninitNumericMatrix(1, n, mxCHAR_CLASS, mxREAL);
 	Char *ppv = (Char*)mxGetPr(pv);
 	for (i = 0; i < n; ++i)
 		ppv[i] = v[i];
@@ -147,13 +147,161 @@ inline void save(VecComp_I v, Str_I varname, Mat pfile)
 	mxDestroyArray(pv);
 }
 
+inline void save(SvecChar_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+	pv = mxCreateUninitNumericMatrix(1, n, mxCHAR_CLASS, mxREAL);
+	Char *ppv = (Char*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(SvecUchar_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+	pv = mxCreateUninitNumericMatrix(1, n, mxUINT8_CLASS, mxREAL);
+	Uchar *ppv = (Uchar*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(SvecInt_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxINT32_CLASS, mxREAL);
+	Int *ppv = (Int*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(SvecLlong_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxINT64_CLASS, mxREAL);
+	Llong *ppv = (Llong*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(SvecDoub_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxREAL);
+	Doub *ppv = (Doub*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(SvecComp_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxCOMPLEX);
+    auto ppvr = mxGetPr(pv);
+	auto ppvi = mxGetPi(pv);
+	for (i = 0; i < n; ++i) {
+		ppvr[i] = real(v[i]); ppvi[i] = imag(v[i]);
+	}
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(DvecChar_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+	pv = mxCreateUninitNumericMatrix(1, n, mxCHAR_CLASS, mxREAL);
+	Char *ppv = (Char*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(DvecUchar_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+	pv = mxCreateUninitNumericMatrix(1, n, mxUINT8_CLASS, mxREAL);
+	Uchar *ppv = (Uchar*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(DvecInt_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxINT32_CLASS, mxREAL);
+	Int *ppv = (Int*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(DvecLlong_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxINT64_CLASS, mxREAL);
+	Llong *ppv = (Llong*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(DvecDoub_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxREAL);
+	Doub *ppv = (Doub*)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		ppv[i] = v[i];
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
+inline void save(DvecComp_I v, Str_I varname, Mat pfile)
+{
+	Long i, n = v.size();
+	mxArray *pv;
+    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxCOMPLEX);
+    auto ppvr = mxGetPr(pv);
+	auto ppvi = mxGetPi(pv);
+	for (i = 0; i < n; ++i) {
+		ppvr[i] = real(v[i]); ppvi[i] = imag(v[i]);
+	}
+	matPutVariable(pfile, varname.c_str(), pv);
+	mxDestroyArray(pv);
+}
+
 
 inline void save(CmatChar_I a, Str_I varname, Mat pfile)
 {
 	Long i, j, m, n;
 	mxArray *pa;
 	m = a.n0(); n = a.n1();
-	pa = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
+	pa = mxCreateUninitNumericMatrix(1, n, mxCHAR_CLASS, mxREAL);
     Char *ppa = (Char*)mxGetPr(pa);
         for (i = 0; i < m; ++i)
             for (j = 0; j < n; ++j)
@@ -236,20 +384,6 @@ inline void save(CmatComp_I a, Str_I varname, Mat pfile)
 	mxDestroyArray(pa);
 }
 
-inline void save(ScmatUchar_I a, Str_I varname, Mat pfile)
-{
-	Long i, j, m, n;
-	mxArray *pa;
-	m = a.n0(); n = a.n1();
-	pa = mxCreateUninitNumericMatrix(m, n, mxUINT8_CLASS, mxREAL);
-    Uchar *ppa = (Uchar*)mxGetPr(pa);
-        for (i = 0; i < m; ++i)
-            for (j = 0; j < n; ++j)
-                ppa[i + m * j] = a(i,j);
-	matPutVariable(pfile, varname.c_str(), pa);
-	mxDestroyArray(pa);
-}
-
 inline void save(ScmatInt_I a, Str_I varname, Mat pfile)
 {
 	Long i, j, m, n;
@@ -257,6 +391,20 @@ inline void save(ScmatInt_I a, Str_I varname, Mat pfile)
 	m = a.n0(); n = a.n1();
     pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
     Int *ppa = (Int*)mxGetPr(pa);
+        for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                ppa[i + m * j] = a(i,j);
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+
+inline void save(ScmatLlong_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa;
+	m = a.n0(); n = a.n1();
+    pa = mxCreateUninitNumericMatrix(m, n, mxINT64_CLASS, mxREAL);
+    Llong *ppa = (Llong*)mxGetPr(pa);
         for (i = 0; i < m; ++i)
             for (j = 0; j < n; ++j)
                 ppa[i + m * j] = a(i,j);
@@ -279,6 +427,66 @@ inline void save(ScmatDoub_I a, Str_I varname, Mat pfile)
 }
 
 inline void save(ScmatComp_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa;
+	m = a.n0(); n = a.n1();
+    pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxCOMPLEX);
+    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+    for (i = 0; i < m; ++i) {
+		for (j = 0; j < n; ++j) {
+			Long ind = i + m * j; const Comp &c = a(i,j);
+			ppar[ind] = real(c);
+			ppai[ind] = imag(c);
+		}
+    }
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+
+inline void save(DcmatInt_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa;
+	m = a.n0(); n = a.n1();
+    pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
+    Int *ppa = (Int*)mxGetPr(pa);
+        for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                ppa[i + m * j] = a(i,j);
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+
+inline void save(DcmatLlong_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa;
+	m = a.n0(); n = a.n1();
+    pa = mxCreateUninitNumericMatrix(m, n, mxINT64_CLASS, mxREAL);
+    Llong *ppa = (Llong*)mxGetPr(pa);
+        for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                ppa[i + m * j] = a(i,j);
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+
+inline void save(DcmatDoub_I a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa;
+	m = a.n0(); n = a.n1();
+    pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL);
+    Doub *ppa = (Doub*)mxGetPr(pa);
+        for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                ppa[i + m * j] = a(i,j);
+	matPutVariable(pfile, varname.c_str(), pa);
+	mxDestroyArray(pa);
+}
+
+inline void save(DcmatComp_I a, Str_I varname, Mat pfile)
 {
 	Long i, j, m, n;
 	mxArray *pa;
@@ -355,7 +563,7 @@ inline void load(Char_O s, Str_I varname, Mat pfile)
 {
 	mxArray *ps;
     ps = matGetVariable(pfile, varname.c_str());
-    if (!mxIsInt8(ps))
+    if (!mxIsChar(ps))
         SLS_ERR("'matfile: load(): wrong type!");
     Char *pps = (Char *)mxGetPr(ps);
 	s = pps[0];
@@ -423,7 +631,7 @@ inline void load(VecChar_O v, Str_I varname, Mat pfile)
 	Long i, n;
 	mxArray *pv;
     pv = matGetVariable(pfile, varname.c_str());
-    if (!mxIsInt8(pv))
+    if (!mxIsChar(pv))
         SLS_ERR("'matfile: load(): wrong type!");
 	n = mxGetDimensions(pv)[1];
 	v.resize(n);
@@ -512,12 +720,200 @@ inline void load(VecComp_O v, Str_I varname, Mat pfile)
 	mxDestroyArray(pv);
 }
 
+inline void load(SvecChar_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsChar(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Char *ppv = (Char *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(SvecUchar_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsUint8(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Uchar *ppv = (Uchar *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(SvecInt_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsInt32(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Int *ppv = (Int *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(SvecLlong_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+	if (!mxIsInt64(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Llong *ppv = (Llong *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(SvecDoub_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pv) || mxIsComplex(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Doub *ppv = (Doub *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(SvecComp_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+    Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
+	if (ppvi)
+		for (i = 0; i < n; ++i)
+			v[i] = Comp(ppvr[i], ppvi[i]);
+	else
+		for (i = 0; i < n; ++i)
+			v[i] = ppvr[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(DvecChar_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsChar(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Char *ppv = (Char *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(DvecUchar_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsUint8(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Uchar *ppv = (Uchar *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(DvecInt_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsInt32(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Int *ppv = (Int *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(DvecLlong_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+	if (!mxIsInt64(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Llong *ppv = (Llong *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(DvecDoub_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pv) || mxIsComplex(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+	Doub *ppv = (Doub *)mxGetPr(pv);
+	for (i = 0; i < n; ++i)
+		v[i] = ppv[i];
+	mxDestroyArray(pv);
+}
+
+inline void load(DvecComp_O v, Str_I varname, Mat pfile)
+{
+	Long i, n;
+	mxArray *pv;
+    pv = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pv))
+        SLS_ERR("'matfile: load(): wrong type!");
+	n = mxGetDimensions(pv)[1];
+	if (v.size() != n) SLS_ERR("wrong size!");
+    Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
+	if (ppvi)
+		for (i = 0; i < n; ++i)
+			v[i] = Comp(ppvr[i], ppvi[i]);
+	else
+		for (i = 0; i < n; ++i)
+			v[i] = ppvr[i];
+	mxDestroyArray(pv);
+}
+
 
 inline void load(CmatChar_O a, Str_I varname, Mat pfile)
 {
 	Long i, j, m, n;
 	mxArray *pa = matGetVariable(pfile, varname.c_str());
-	if (!mxIsInt8(pa))
+	if (!mxIsChar(pa))
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
@@ -537,7 +933,7 @@ inline void load(CmatUchar_O a, Str_I varname, Mat pfile)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
-	a.resize(m, n);
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
     Uchar *ppa = (Uchar *)mxGetPr(pa);
     for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
@@ -602,6 +998,148 @@ inline void load(CmatComp_O a, Str_I varname, Mat pfile)
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
 	a.resize(m, n);
+	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+    if (ppai)
+		for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j){
+                Long ind = i + m * j;
+                a(i,j) = Comp(ppar[ind], ppai[ind]);
+            }
+	else
+		for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                a(i,j) = ppar[i + m*j];
+	mxDestroyArray(pa);
+}
+
+inline void load(ScmatInt_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+    if (!mxIsInt32(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+    Int *ppa = (Int *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+	mxDestroyArray(pa);
+}
+
+inline void load(ScmatLlong_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+	if (!mxIsInt64(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+    Llong *ppa = (Llong *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+	mxDestroyArray(pa);
+}
+
+inline void load(ScmatDoub_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pa) || mxIsComplex(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+    Doub *ppa = (Doub *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+	mxDestroyArray(pa);
+}
+
+inline void load(ScmatComp_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+    if (ppai)
+		for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j){
+                Long ind = i + m * j;
+                a(i,j) = Comp(ppar[ind], ppai[ind]);
+            }
+	else
+		for (i = 0; i < m; ++i)
+            for (j = 0; j < n; ++j)
+                a(i,j) = ppar[i + m*j];
+	mxDestroyArray(pa);
+}
+
+inline void load(DcmatInt_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+    if (!mxIsInt32(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+    Int *ppa = (Int *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+	mxDestroyArray(pa);
+}
+
+inline void load(DcmatLlong_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+	if (!mxIsInt64(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+    Llong *ppa = (Llong *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+	mxDestroyArray(pa);
+}
+
+inline void load(DcmatDoub_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pa) || mxIsComplex(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+    Doub *ppa = (Doub *)mxGetPr(pa);
+    for (i = 0; i < m; ++i)
+		for (j = 0; j < n; ++j)
+			a(i,j) = ppa[m*j + i];
+	mxDestroyArray(pa);
+}
+
+inline void load(DcmatComp_O a, Str_I varname, Mat pfile)
+{
+	Long i, j, m, n;
+	mxArray *pa = matGetVariable(pfile, varname.c_str());
+    if (!mxIsDouble(pa))
+		SLS_ERR("'matfile: load(): wrong type!");
+	const mwSize *sz = mxGetDimensions(pa);
+	m = sz[0]; n = sz[1];
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
 	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
     if (ppai)
 		for (i = 0; i < m; ++i)

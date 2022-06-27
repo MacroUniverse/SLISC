@@ -16,7 +16,7 @@ inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 {
 	mxArray *ps;
 //% if is_Char(Ts)
-	ps = mxCreateNumericMatrix(1, 1, mxINT8_CLASS, mxREAL);
+	ps = mxCreateNumericMatrix(1, 1, mxCHAR_CLASS, mxREAL);
 //% elseif is_Uchar(Ts)
 	ps = mxCreateNumericMatrix(1, 1, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
@@ -43,7 +43,9 @@ inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 //%---------------------
 
 
-//% tem('matsave(v)', {'VecChar'; 'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';});
+//% tem('matsave(v)', {'VecChar'; 'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%    'SvecChar'; 'SvecUchar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%    'DvecChar'; 'DvecUchar'; 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp';});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void save(@T@_I v, Str_I varname, Mat pfile)
@@ -51,7 +53,7 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
 	Long i, n = v.size();
 	mxArray *pv;
 //% if is_Char(Ts)
-	pv = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
+	pv = mxCreateUninitNumericMatrix(1, n, mxCHAR_CLASS, mxREAL);
 //% elseif is_Uchar(Ts)
 	pv = mxCreateUninitNumericMatrix(1, n, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
@@ -81,7 +83,8 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
 
 //% tem('matsave(m2)', {
 //%    'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%    'ScmatUchar'; 'ScmatInt'; 'ScmatDoub'; 'ScmatComp';});
+//%    'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
+//%    'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void save(@T@_I a, Str_I varname, Mat pfile)
@@ -90,7 +93,7 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 	mxArray *pa;
 	m = a.n0(); n = a.n1();
 //% if is_Char(Ts)
-	pa = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
+	pa = mxCreateUninitNumericMatrix(1, n, mxCHAR_CLASS, mxREAL);
 //% elseif is_Uchar(Ts)
 	pa = mxCreateUninitNumericMatrix(m, n, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
@@ -132,7 +135,11 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 	mxArray *pa;
 	m = a.n0(); n = a.n1(); q = a.n2(); mn = m * n;
 	size_t sz[3]{ size_t(m), size_t(n), size_t(q) };
-//% if is_Llong(Ts)
+//% if is_Char(Ts)
+	pa = mxCreateUninitNumericArray(3, sz, mxCHAR_CLASS, mxREAL);
+//% elseif is_Int(Ts)
+	pa = mxCreateUninitNumericArray(3, sz, mxINT32_CLASS, mxREAL);
+//% elseif is_Llong(Ts)
 	pa = mxCreateUninitNumericArray(3, sz, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
 	pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxREAL);
@@ -170,7 +177,7 @@ inline void load(@Ts@_O s, Str_I varname, Mat pfile)
 	mxArray *ps;
     ps = matGetVariable(pfile, varname.c_str());
 //% if is_Char(Ts)
-    if (!mxIsInt8(ps))
+    if (!mxIsChar(ps))
 //% elseif is_Uchar(Ts)
     if (!mxIsUint8(ps))
 //% elseif is_Int(Ts)
@@ -194,7 +201,9 @@ inline void load(@Ts@_O s, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(v)', {'VecChar'; 'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; });
+//% tem('matload(v)', {'VecChar'; 'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'SvecChar'; 'SvecUchar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'DvecChar'; 'DvecUchar'; 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O v, Str_I varname, Mat pfile)
@@ -203,7 +212,7 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 	mxArray *pv;
     pv = matGetVariable(pfile, varname.c_str());
 //% if is_Char(Ts)
-    if (!mxIsInt8(pv))
+    if (!mxIsChar(pv))
 //% elseif is_Uchar(Ts)
     if (!mxIsUint8(pv))
 //% elseif is_Int(Ts)
@@ -217,7 +226,11 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 //% end
         SLS_ERR("'matfile: load(): wrong type!");
 	n = mxGetDimensions(pv)[1];
+//% if is_Vec(T)
 	v.resize(n);
+//% else
+	if (v.size() != n) SLS_ERR("wrong size!");
+//% end
 //% if is_Comp(Ts)
     Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
 	if (ppvi)
@@ -235,7 +248,9 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(a2)', {'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp'; });
+//% tem('matload(a2)', {'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%   'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
+//%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O a, Str_I varname, Mat pfile)
@@ -243,7 +258,7 @@ inline void load(@T@_O a, Str_I varname, Mat pfile)
 	Long i, j, m, n;
 	mxArray *pa = matGetVariable(pfile, varname.c_str());
 //% if is_Char(Ts)
-	if (!mxIsInt8(pa))
+	if (!mxIsChar(pa))
 //% elseif is_Uchar(Ts)
 	if (!mxIsUint8(pa))
 //% elseif is_Int(Ts)
@@ -258,7 +273,11 @@ inline void load(@T@_O a, Str_I varname, Mat pfile)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
+//% if is_Cmat(T) || is_Mat(T)
 	a.resize(m, n);
+//% else
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+//% end
 //% if is_Comp(Ts)
 	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
     if (ppai)
@@ -298,7 +317,11 @@ inline void load(@T@_O a, Str_I varname, Mat pfile)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1]; q = sz[2]; mn = m*n;
+//% if is_Cmat3(T) || is_Mat3(T)
 	a.resize(m, n, q);
+//% else
+	if (a.n0() != m || a.n1() != n || a.n3() != q) SLS_ERR("wrong size!");
+//% end
 //% if is_Comp(Ts)
     Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
 	if (ppai)

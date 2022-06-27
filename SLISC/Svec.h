@@ -3708,6 +3708,50 @@ inline SvecChar::operator SvecChar_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecChar &SvecChar_O, &SvecChar_IO;
 
+class SvecUchar_c : public SvbaseUchar_c
+{
+public:
+    SvecUchar_c() = default;
+    explicit SvecUchar_c(Long_I N);
+    SvecUchar_c(const Uchar *data, Long_I N); // unsafe
+    SvecUchar_c &operator=(const SvecUchar_c &rhs) = delete;
+};
+
+inline SvecUchar_c::SvecUchar_c(Long_I N) : SvbaseUchar_c(N)
+{}
+
+inline SvecUchar_c::SvecUchar_c(const Uchar *data, Long_I N)
+    : SvbaseUchar_c(data, N) {}
+
+
+
+typedef const SvecUchar_c &SvecUchar_I;
+
+class SvecUchar : public SvbaseUchar
+{
+public:
+    SvecUchar() = default;
+    explicit SvecUchar(Long_I N);
+    SvecUchar(Uchar *data, Long_I N); // unsafe
+    SvecUchar &operator=(const SvecUchar &rhs) = delete;
+    operator SvecUchar_c() const;
+};
+
+inline SvecUchar::SvecUchar(Long_I N) : SvbaseUchar(N)
+{}
+
+inline SvecUchar::SvecUchar(Uchar *data, Long_I N)
+    : SvbaseUchar(data, N) {}
+
+inline SvecUchar::operator SvecUchar_c() const
+{
+    return *((SvecUchar_c *)this);
+}
+
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecUchar &SvecUchar_O, &SvecUchar_IO;
+
 class SvecInt_c : public SvbaseInt_c
 {
 public:

@@ -251,6 +251,254 @@ inline DvecChar::~DvecChar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecChar &DvecChar_O, &DvecChar_IO;
 
+class DvecUchar_c
+{
+protected:
+    const Uchar *m_p;
+    Long m_N;
+    Long m_step;
+public:
+    DvecUchar_c();
+    DvecUchar_c(const Uchar *p, Long_I N, Long_I step);
+    const Uchar* p() const;
+    const Uchar &operator[](Long_I i) const;
+    const Uchar &end() const;
+    const Uchar &end(Long_I i) const;
+    Long size() const;
+    Long step() const;
+
+    DvecUchar_c &operator=(const DvecUchar_c &) = delete;
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set(const Uchar *p);
+    void set(const Uchar *p, Long_I N, Long_I step);
+    void set(const DvecUchar_c &sli);
+    void set(Long_I N);
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
+    
+    ~DvecUchar_c();
+};
+
+inline DvecUchar_c::DvecUchar_c() {}
+
+inline DvecUchar_c::DvecUchar_c(const Uchar *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
+
+inline const Uchar * DvecUchar_c::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long DvecUchar_c::size() const
+{
+    return m_N;
+}
+
+inline Long DvecUchar_c::step() const
+{
+    return m_step;
+}
+
+inline const Uchar &DvecUchar_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[m_step*i];
+}
+
+inline const Uchar &DvecUchar_c::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_step*(m_N - 1)];
+}
+
+inline const Uchar &DvecUchar_c::end(Long_I i) const
+{
+    return m_p[m_step*(m_N - i)];
+}
+
+inline void DvecUchar_c::set(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+
+inline void DvecUchar_c::set(const Uchar * p)
+{
+    m_p = p;
+}
+
+inline void DvecUchar_c::set(const Uchar * p, Long_I N, Long_I step)
+{
+    m_p = p; m_N = N; m_step = step;
+}
+
+inline void DvecUchar_c::set(const DvecUchar_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
+inline void DvecUchar_c::next()
+{
+    m_p += m_N;
+}
+
+inline void DvecUchar_c::last()
+{
+    m_p -= m_N;
+}
+
+inline void DvecUchar_c::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline DvecUchar_c::~DvecUchar_c() {}
+
+
+typedef const DvecUchar_c &DvecUchar_I;
+
+class DvecUchar
+{
+protected:
+    Uchar *m_p;
+    Long m_N;
+    Long m_step;
+public:
+    DvecUchar();
+    DvecUchar(Uchar *p, Long_I N, Long_I step);
+    Uchar* p() const;
+    Uchar &operator[](Long_I i) const;
+    Uchar &end() const;
+    Uchar &end(Long_I i) const;
+    Long size() const;
+    Long step() const;
+
+    operator DvecUchar_c() const;
+    DvecUchar &operator=(const DvecUchar &) = delete;
+    // === other member functions ===
+    // There is no bound checking, use with care
+    void set(Uchar *p);
+    void set(Uchar *p, Long_I N, Long_I step);
+    void set(const DvecUchar &sli);
+    void set(Long_I N);
+    void next(); // m_p += m_N
+    void last(); // m_p -= m_N
+    void shift(Long_I N); // m_p += N;
+    
+    ~DvecUchar();
+};
+
+inline DvecUchar::DvecUchar() {}
+
+inline DvecUchar::DvecUchar(Uchar *p, Long_I N, Long_I step)
+    : m_p(p), m_N(N), m_step(step) {}
+
+inline Uchar * DvecUchar::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("using p() for empty container!");
+#endif
+    return m_p;
+}
+
+inline Long DvecUchar::size() const
+{
+    return m_N;
+}
+
+inline Long DvecUchar::step() const
+{
+    return m_step;
+}
+
+inline Uchar &DvecUchar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Vbase subscript out of bounds");
+#endif
+    return m_p[m_step*i];
+}
+
+inline Uchar &DvecUchar::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (m_N == 0)
+        SLS_ERR("tring to use end() on empty vector!");
+#endif
+    return m_p[m_step*(m_N - 1)];
+}
+
+inline Uchar &DvecUchar::end(Long_I i) const
+{
+    return m_p[m_step*(m_N - i)];
+}
+
+inline void DvecUchar::set(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N <= 0) SLS_ERR("illegal N!");
+#endif
+    m_N = N;
+}
+
+inline DvecUchar::operator DvecUchar_c() const
+{
+    return *((DvecUchar_c *)this);
+}
+
+inline void DvecUchar::set(Uchar * p)
+{
+    m_p = p;
+}
+
+inline void DvecUchar::set(Uchar * p, Long_I N, Long_I step)
+{
+    m_p = p; m_N = N; m_step = step;
+}
+
+inline void DvecUchar::set(const DvecUchar &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+}
+
+inline void DvecUchar::next()
+{
+    m_p += m_N;
+}
+
+inline void DvecUchar::last()
+{
+    m_p -= m_N;
+}
+
+inline void DvecUchar::shift(Long_I N)
+{
+    m_p += N;
+}
+
+inline DvecUchar::~DvecUchar() {}
+
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DvecUchar &DvecUchar_O, &DvecUchar_IO;
+
 class DvecInt_c
 {
 protected:

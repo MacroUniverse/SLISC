@@ -177,6 +177,182 @@ inline Char * DcmatChar::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatChar &DcmatChar_O, &DcmatChar_IO;
 
+class DcmatUchar_c
+{
+protected:
+    const Uchar *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    DcmatUchar_c();
+    DcmatUchar_c(const Uchar *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const Uchar *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const DcmatUchar_c &sli);
+
+
+    const Uchar& operator[](Long_I i) const;
+    const Uchar& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    const Uchar *p() const;
+};
+
+inline DcmatUchar_c::DcmatUchar_c() {}
+
+inline DcmatUchar_c::DcmatUchar_c(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void DcmatUchar_c::set(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatUchar_c::set(const DcmatUchar_c &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+
+inline const Uchar &DcmatUchar_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline const Uchar &DcmatUchar_c::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long DcmatUchar_c::n0() const
+{
+    return m_N0;
+}
+
+inline Long DcmatUchar_c::n1() const
+{
+    return m_N1;
+}
+
+inline Long DcmatUchar_c::lda() const
+{
+    return m_lda;
+}
+
+inline Long DcmatUchar_c::size() const
+{
+    return m_N;
+}
+
+inline const Uchar * DcmatUchar_c::p() const
+{
+    return m_p;
+}
+
+typedef const DcmatUchar_c &DcmatUchar_I;
+
+class DcmatUchar
+{
+protected:
+    Uchar *m_p;
+    Long m_N;
+    Long m_N0, m_N1;
+    Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+    DcmatUchar();
+    DcmatUchar(Uchar *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(Uchar *p, Long_I N0, Long_I N1, Long_I lda);
+    void set(const DcmatUchar &sli);
+
+    operator DcmatUchar_c() const;
+
+    Uchar& operator[](Long_I i) const;
+    Uchar& operator()(Long_I i, Long_I j) const;
+    Long n0() const;
+    Long n1() const;
+    Long lda() const;
+    Long size() const;
+    Uchar *p() const;
+};
+
+inline DcmatUchar::DcmatUchar() {}
+
+inline DcmatUchar::DcmatUchar(Uchar *p, Long_I N0, Long_I N1, Long_I lda)
+    : m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+{}
+
+inline void DcmatUchar::set(Uchar *p, Long_I N0, Long_I N1, Long_I lda)
+{
+    m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatUchar::set(const DcmatUchar &sli)
+{
+    m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+inline DcmatUchar::operator DcmatUchar_c() const
+{
+    return *((DcmatUchar_c *)this);
+}
+
+inline Uchar &DcmatUchar::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i % m_N1 + m_lda * i / m_N1];
+}
+
+inline Uchar &DcmatUchar::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
+inline Long DcmatUchar::n0() const
+{
+    return m_N0;
+}
+
+inline Long DcmatUchar::n1() const
+{
+    return m_N1;
+}
+
+inline Long DcmatUchar::lda() const
+{
+    return m_lda;
+}
+
+inline Long DcmatUchar::size() const
+{
+    return m_N;
+}
+
+inline Uchar * DcmatUchar::p() const
+{
+    return m_p;
+}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DcmatUchar &DcmatUchar_O, &DcmatUchar_IO;
+
 class DcmatInt_c
 {
 protected:

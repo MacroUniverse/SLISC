@@ -5,6 +5,7 @@
 namespace slisc {
 //% tem('Dvec', {
 //%     'Char', true; 'Char', false;
+//%     'Uchar', true; 'Uchar', false;
 //%     'Int', true; 'Int', false;
 //%     'Llong', true; 'Llong', false;
 //%     'Long', true; 'Long', false;
