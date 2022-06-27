@@ -56,55 +56,45 @@ void test_matfile()
     // vecDoub vd(3); vd[0] = 1.1; vd[1] = 2.2; vd[2] = 3.3;
     // save(vd, "vd", mat);
 
-    // // matrices
+    // matrices
 
-    // MatInt AI(2, 3); copy(AI, 0);
-    // AI(0, 0) = 1; AI(0, 1) = 3; AI(0, 2) = 5; AI(1, 2) = 11;
-    // save(AI, "AI", mat);
+    CmatInt AI(2, 3); copy(AI, 0);
+    AI(0, 0) = 1; AI(0, 1) = 3; AI(0, 2) = 5; AI(1, 2) = 11;
+    save(AI, "AI", mat);
 
-    // MatDoub A(2, 3); copy(A, 0);
-    // A(0, 0) = 1; A(0, 1) = 3; A(0, 2) = 5; A(1, 2) = 11;
-    // save(A, "A", mat);
+    CmatLlong AL(2, 3); copy(AL, 0);
+    AL(0, 0) = 1; AL(0, 1) = 3; AL(0, 2) = 5; AL(1, 2) = 11;
+    save(AL, "AL", mat);
 
-    // MatComp C(3, 3);
-    // Comp *pC{ &C(0, 0) };
-    // for (Int i = 0; i < 9; ++i) {
-    //     pC[i] = 1 + (Doub)i + I * (Doub)i;
-    // }
-    // save(C, "C", mat);
+    CmatDoub A(2, 3); copy(A, 0);
+    A(0, 0) = 1; A(0, 1) = 3; A(0, 2) = 5; A(1, 2) = 11;
+    save(A, "A", mat);
 
-    // // 3d arrays
-    // Mat3Doub A3(2, 2, 2);
-    // for (Int i = 0; i < 8; ++i)
-    //     A3[i] = 1. + (Doub)i;
-    // save(A3, "A3", mat);
+    CmatComp C(3, 3);
+    for (Int i = 0; i < 9; ++i)
+        C[i] = 1 + (Doub)i + I * (Doub)i;
+    save(C, "C", mat);
 
-    // Mat3Comp C3(2, 2, 2);
-    // for (Int i = 0; i < 8; ++i)
-    //     C3[i] = Comp(1. + (Doub)i, (Doub)i);
-    // save(C3, "C3", mat);
+    // 3d arrays
+    Cmat3Llong A3L(2, 2, 2);
+    for (Int i = 0; i < 8; ++i)
+        A3L[i] = 1. + (Doub)i;
+    save(A3L, "A3L", mat);
 
-    // Cmat3Comp CC3(10, 12, 15);
-    // for (Int i = 0; i < CC3.size(); ++i)
-    //     CC3[i] = Comp(randDoub(), randDoub());
-    // save(CC3, "CC3", mat);
+    Cmat3Doub A3(2, 2, 2);
+    for (Int i = 0; i < 8; ++i)
+        A3[i] = 1. + (Doub)i;
+    save(A3, "A3", mat);
 
-    // mat.close();
-
-
-    // // test 'c' mode
-    // {
-    //     matb.open("test.matb", 'm');
-    //     matb.read_data();
-    //     matb.write_data("test1.matb");
-    //     matb.close();
-    // }
+    Cmat3Comp CC3(10, 12, 15);
+    for (Int i = 0; i < CC3.size(); ++i)
+        CC3[i] = Comp(randDoub(), randDoub());
+    save(CC3, "CC3", mat);
 
     // // -----------  read test -------------
 
     // // scalars
     // matb.open("test1.matb", 'r');
-
 
     // Int r_si;
     // load(r_si, "si", matb);
