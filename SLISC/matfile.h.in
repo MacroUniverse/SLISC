@@ -9,13 +9,15 @@ namespace slisc {
 
 typedef MATFile *Mat;
 
-//% tem('matsave(s)', {'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
+//% tem('matsave(s)', {'Char'; 'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%---------------------
 //% Ts = varargin{:};
 inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 {
 	mxArray *ps;
-//% if is_Uchar(Ts)
+//% if is_Char(Ts)
+	ps = mxCreateNumericMatrix(1, 1, mxINT8_CLASS, mxREAL);
+//% elseif is_Uchar(Ts)
 	ps = mxCreateNumericMatrix(1, 1, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
     ps = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -41,7 +43,7 @@ inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 //%---------------------
 
 
-//% tem('matsave(v)', {'VecUchar'; 'VecInt'; 'VecDoub'; 'VecComp';});
+//% tem('matsave(v)', {'VecChar'; 'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void save(@T@_I v, Str_I varname, Mat pfile)
@@ -49,10 +51,14 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
 	Long i, n;
 	mxArray *pv;
 	n = v.size();
-//% if is_Uchar(Ts)
+//% if is_Char(Ts)
+	pv = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
+//% elseif is_Uchar(Ts)
 	pv = mxCreateUninitNumericMatrix(1, n, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
     pv = mxCreateUninitNumericMatrix(1, n, mxINT32_CLASS, mxREAL);
+//% elseif is_Llong(Ts)
+    pv = mxCreateUninitNumericMatrix(1, n, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
     pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
@@ -75,8 +81,8 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matsave(m2)', {'MatUchar'; 'MatInt'; 'MatDoub'; 'MatComp';
-//%    'CmatUchar'; 'CmatInt'; 'CmatDoub'; 'CmatComp';
+//% tem('matsave(m2)', {
+//%    'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //%    'ScmatUchar'; 'ScmatInt'; 'ScmatDoub'; 'ScmatComp';});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -85,10 +91,14 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 	Long i, j, m, n;
 	mxArray *pa;
 	m = a.n0(); n = a.n1();
-//% if is_Uchar(Ts)
+//% if is_Char(Ts)
+	pa = mxCreateUninitNumericMatrix(1, n, mxINT8_CLASS, mxREAL);
+//% elseif is_Uchar(Ts)
 	pa = mxCreateUninitNumericMatrix(m, n, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
     pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
+//% elseif is_Llong(Ts)
+    pa = mxCreateUninitNumericMatrix(m, n, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
     pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
@@ -114,7 +124,8 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matsave(m3)', {'Mat3Doub'; 'Mat3Comp'});
+//% tem('matsave(m3)', {
+//%   'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void save(@T@_I a, Str_I varname, Mat pfile)
@@ -123,7 +134,9 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 	mxArray *pa;
 	m = a.n0(); n = a.n1(); q = a.n2(); mn = m * n;
 	size_t sz[3]{ size_t(m), size_t(n), size_t(q) };
-//% if is_Doub(Ts)
+//% if is_Llong(Ts)
+	pa = mxCreateUninitNumericArray(3, sz, mxUINT64_CLASS, mxREAL);
+//% elseif is_Doub(Ts)
 	pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
     pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxCOMPLEX);
@@ -144,14 +157,14 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
         for (i = 0; i < m; ++i)
             for (j = 0; j < n; ++j)
                 for (k = 0; k < q; ++k)
-                    ppa[i + m * j + mn * k] = a(i,j,k);
+                    ppa[i + m*j + mn*k] = a(i,j,k);
 //% end
 	matPutVariable(pfile, varname.c_str(), pa);
 	mxDestroyArray(pa);
 }
 //%---------------------
 
-//% tem('matload(s)', {'Uchar'; 'Int'; 'Doub'; 'Comp'});
+//% tem('matload(s)', {'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%---------------------
 //% Ts = varargin{:};
 inline void load(@Ts@_O s, Str_I varname, Mat pfile)
@@ -162,6 +175,8 @@ inline void load(@Ts@_O s, Str_I varname, Mat pfile)
     if (!mxIsUint8(ps))
 //% elseif is_Int(Ts)
 	if (!mxIsInt32(ps))
+//% elseif is_Llong(Ts)
+	if (!mxIsInt64(ps))
 //% elseif is_Doub(Ts)
     if (!mxIsDouble(ps) || mxIsComplex(ps))
 //% elseif is_Comp(Ts)
@@ -179,7 +194,7 @@ inline void load(@Ts@_O s, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(v)', {'VecUchar'; 'VecInt'; 'VecDoub'; 'VecComp'; });
+//% tem('matload(v)', {'VecUchar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O v, Str_I varname, Mat pfile)
@@ -191,6 +206,8 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
     if (!mxIsUint8(pv))
 //% elseif is_Int(Ts)
     if (!mxIsInt32(pv))
+//% elseif is_Llong(Ts)
+	if (!mxIsInt64(pv))
 //% elseif is_Doub(Ts)
     if (!mxIsDouble(pv) || mxIsComplex(pv))
 //% elseif is_Comp(Ts)
@@ -216,7 +233,7 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(a2)', {'MatUchar'; 'MatInt'; 'MatDoub'; 'MatComp'; });
+//% tem('matload(a2)', {'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O &a, Str_I varname, Mat pfile)
@@ -227,6 +244,8 @@ inline void load(@T@_O &a, Str_I varname, Mat pfile)
 	if (!mxIsUint8(pa))
 //% elseif is_Uchar(Ts)
     if (!mxIsInt32(pa))
+//% elseif is_Llong(Ts)
+	if (!mxIsInt64(pa))
 //% elseif is_Doub(Ts)
     if (!mxIsDouble(pa) || mxIsComplex(pa))
 //% elseif is_Comp(Ts)
@@ -258,14 +277,16 @@ inline void load(@T@_O &a, Str_I varname, Mat pfile)
 }
 //%---------------------
 
-//% tem('matload(a3)', {'Mat3Doub'; 'Mat3Comp'});
+//% tem('matload(a3)', {'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O &a, Str_I varname, Mat pfile)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa = matGetVariable(pfile, varname.c_str());
-//% if is_Doub(Ts)
+//% if is_Llong(Ts)
+	if (!mxIsInt64(pa))
+//% elseif is_Doub(Ts)
 	if (!mxIsDouble(pa) || mxIsComplex(pa))
 //% elseif is_Comp(Ts)
     if (!mxIsDouble(pa))

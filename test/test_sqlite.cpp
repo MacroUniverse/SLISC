@@ -1,4 +1,4 @@
-#include "../SLISC/global.h"
+#include "../SLISC/file.h"
 #include <iostream>
 #include <sqlite3.h>
 
@@ -7,6 +7,7 @@ int test_sqlite()
 	using namespace slisc;
     sqlite3* DB;
     int exit;
+    file_remove("example.db");
     exit = sqlite3_open("example.db", &DB);
     if (exit) {
 		cout << sqlite3_errmsg(DB) << endl;

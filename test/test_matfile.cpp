@@ -13,11 +13,17 @@ void test_matfile()
     Mat mat = matOpen("test.mat", "w");
     
     // scalars
+    Char c8 = 56;
+    save(c8, "c8", mat);
+
     Uchar s8 = 88;
     save(s8, "s8", mat);
 
     Int si = 99;
     save(si, "si", mat);
+
+    Llong sl = 123456;
+    save(sl, "sl", mat);
 
     Doub s(3.14159265358979323);
     save(s, "s", mat);
@@ -25,22 +31,27 @@ void test_matfile()
     Comp sc(s, -s);
     save(sc, "sc", mat);
 
-    // TODO
     // vectors
-    // VecChar v8(3);
-    // v8[0] = 1; v8[1] = 2; v8[2] = 3;
-    // save(v8, "v8", mat);
+    VecChar v8(3);
+    v8[0] = 1; v8[1] = 2; v8[2] = 3;
+    save(v8, "v8", mat);
 
-    // VecInt vi(3);
-    // vi[0] = 1; vi[1] = 2; vi[2] = 3;
-    // save(vi, "vi", mat);
-    // VecDoub v(3);
-    // v[0] = 1.; v[1] = 2.; v[2] = 3.;
-    // save(v, "v", mat);
-    // VecComp vc(3);
-    // for (Int i = 0; i < 3; ++i)
-    //     vc[i] = 1 + (Doub)i - I * (Doub)i;
-    // save(vc, "vc", mat);
+    VecInt vi(3);
+    vi[0] = 1; vi[1] = 2; vi[2] = 3;
+    save(vi, "vi", mat);
+
+    VecLlong vl(3);
+    vl[0] = 1; vl[1] = 2; vl[2] = 3;
+    save(vl, "vl", mat);
+
+    VecDoub v(3);
+    v[0] = 1.; v[1] = 2.; v[2] = 3.;
+    save(v, "v", mat);
+
+    VecComp vc(3);
+    for (Int i = 0; i < 3; ++i)
+        vc[i] = 1 + (Doub)i - I * (Doub)i;
+    save(vc, "vc", mat);
 
     // vecDoub vd(3); vd[0] = 1.1; vd[1] = 2.2; vd[2] = 3.3;
     // save(vd, "vd", mat);
