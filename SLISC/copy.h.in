@@ -216,12 +216,17 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'VecComp', 'DvecComp';
 //%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub', 'SvecDoub';
+//%   'SvecDoub', 'DvecDoub';
+//%   'SvecComp', 'DvecComp';
 //%   'DvecComp' 'VecComp'
+//%   'DvecComp' 'SvecComp'
 //%   'MatDoub' 'MatDoub'
 //%   'CmatInt', 'CmatInt';
 //%   'CmatLlong', 'CmatLlong';
+//%   'CmatLlong', 'ScmatLlong';
 //%   'CmatDoub', 'CmatDoub';
 //%   'CmatDoub', 'MatDoub';
+//%   'ScmatComp' 'ScmatComp'
 //%   'MatDoub', 'CmatDoub';
 //%   'Cmat3Int', 'Cmat3Int';
 //%   'Cmat3Llong', 'Cmat3Llong';
@@ -319,7 +324,9 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 
 // copy dense matrix to Mcoo matrix
 // abs(s) < tol is considered 0
-//% tem('copy(coo,mat)', { 'McooComp', 'CmatComp' });
+//% tem('copy(coo,mat)', {
+//% 'McooDoub' 'ScmatDoub'
+//% 'McooComp', 'CmatComp' });
 //%----------------------------
 //% [Tcoo, Tcmat] = varargin{:};
 //% Ts1 = val_t(Tcmat);

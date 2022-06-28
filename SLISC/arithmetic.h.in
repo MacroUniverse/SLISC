@@ -142,7 +142,8 @@ inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
 //% end
 //%-------------------------
 
-//% tem('max', {'VecDoub'});
+//% tem('max', {'VecInt'; 'VecLlong'; 'VecDoub';
+//%  'SvecInt'; 'SvecLlong'; 'SvecDoub';});
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('max_v', { 'max', Ts; 'min', Ts });
@@ -416,8 +417,8 @@ inline @Tret@ prod(@T@_I v)
 //%-----------------
 
 //% tem('norm2', { 'VecDoub'; 'VecComp';
-//% 'SvecDoub'; 'SvecComp'; 'CmatDoub'; 'CmatComp';
-//%  'MatDoub'; 'MatComp';
+//% 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'CmatDoub'; 'CmatComp';
+//% 'MatDoub'; 'MatComp';
 //% 'ScmatComp'; 'DcmatComp'; 'Mat3Doub'; 'Mat3Comp'; 'Cmat3Comp'; });
 //%-------------------------------
 //% T = varargin{:};
@@ -619,7 +620,7 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%----------------------------
 
 //% tem('flip_vec', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//%  'vecLlong'; 'vecDoub'; 'vecComp';});
+//%  'vecLlong'; 'vecDoub'; 'vecComp'; 'vecStr'; });
 //%---------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
 //% if is_dense(Tv)
@@ -697,9 +698,14 @@ inline void trans(@T@_IO v)
 }
 //%-------------------------
 
-//% tem('trans(v,v)', { 'CmatDoub' 'CmatDoub';
-//%    'MatComp' 'CmatComp'
+//% tem('trans(v,v)', {
+//%   'CmatInt' 'CmatInt';
+//%   'CmatLlong' 'CmatLlong';
+//%   'CmatDoub' 'CmatDoub';
+//%   'CmatComp' 'CmatComp';
+//%   'MatComp' 'CmatComp'
 //%   'ScmatDoub' 'ScmatDoub';
+//%   'ScmatComp' 'ScmatComp';
 //%   'CmatQdoub' 'CmatQdoub' });
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -991,12 +997,18 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%   'SvecDoub' 'VecDoub'
 //%   'SvecDoub' 'SvecDoub'
 //%   'SvecComp' 'SvecComp'
+//%   'DvecDoub' 'SvecDoub'
 //%   'DvecComp' 'VecComp'
+//%   'DvecComp' 'SvecComp'
 //%   'DvecComp', 'SvecDoub';
 //%   'CmatDoub' 'CmatDoub'
+//%   'CmatComp' 'CmatDoub'
 //%   'CmatComp' 'CmatComp'
 //%   'MatDoub' 'MatDoub'
 //%   'MatComp' 'MatComp'
+//%   'ScmatComp' 'ScmatDoub'
+//%   'ScmatComp' 'ScmatComp'
+//%   'DcmatComp' 'DcmatDoub'
 //%   'Cmat3Comp' 'Cmat3Comp'
 //%   'Mat3Doub' 'Mat3Doub'
 //%   'Mat3Comp' 'Mat3Comp'
@@ -1278,8 +1290,10 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 //%   'VecInt' 'VecInt' 'Int'
 //%   'VecDoub' 'VecDoub' 'Doub'
 //%   'VecComp' 'SvecDoub' 'Doub'
+//%   'VecComp' 'SvecDoub' 'Imag'
 //%   'VecComp' 'VecComp' 'Doub'
 //%   'VecComp' 'VecComp' 'Comp'
+//%   'SvecComp' 'SvecComp' 'Doub'
 //%   'DcmatComp' 'DcmatComp' 'Doub'
 //% });
 //%------------------------------
@@ -1718,6 +1732,7 @@ inline void cumsum(@T@_O v, @T1@_I v1)
 //% tem('mul(v,m,v)', {
 //% 'VecInt' 'CmatInt' 'VecInt'
 //% 'VecComp' 'CmatComp' 'VecComp'
+//% 'SvecComp' 'ScmatComp' 'SvecDoub'
 //% 'DvecComp' 'ScmatDoub' 'DvecComp';
 //% 'VecComp' 'MatComp' 'VecDoub'
 //% 'VecQdoub' 'CmatQdoub' 'VecQdoub' });
@@ -1850,11 +1865,16 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 
 // matrix-vector multiplication
 //% tem('mul_gen', { 'VecDoub', 'CmatDoub', 'SvecDoub';
-//%   'SvecComp' 'DcmatDoub' 'SvecComp'
-//%   'DvecComp' 'CmatDoub' 'DvecComp'
 //%   'VecComp' 'CmatDoub' 'VecComp'
 //%   'VecComp' 'ScmatDoub' 'VecComp'
-//%    'VecDoub', 'CmatDoub', 'VecDoub' });
+//%   'VecDoub', 'CmatDoub', 'VecDoub'
+//%   'SvecComp' 'ScmatDoub' 'DvecComp'
+//%   'SvecComp' 'ScmatComp' 'DvecComp'
+//%   'SvecComp' 'ScmatComp' 'SvecComp'
+//%   'SvecComp' 'DcmatDoub' 'SvecComp'
+//%   'DvecComp' 'ScmatDoub' 'SvecComp'
+//%   'DvecComp' 'ScmatComp' 'SvecComp'
+//%   'DvecComp' 'CmatDoub' 'DvecComp' });
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);

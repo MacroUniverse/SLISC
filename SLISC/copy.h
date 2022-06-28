@@ -765,7 +765,31 @@ inline void copy(SvecDoub_O v, SvecDoub_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(SvecDoub_O v, DvecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v1.step(), v1.size());
+}
+
+inline void copy(SvecComp_O v, DvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v1.step(), v1.size());
+}
+
 inline void copy(DvecComp_O v, VecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v.step(), v1.p(), v1.size());
+}
+
+inline void copy(DvecComp_O v, SvecComp_I v1)
 {
     assert_same_shape(v, v1);
     if (v.size() == 0)
@@ -797,6 +821,14 @@ inline void copy(CmatLlong_O v, CmatLlong_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(CmatLlong_O v, ScmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(CmatDoub_O v, CmatDoub_I v1)
 {
     assert_same_shape(v, v1);
@@ -811,6 +843,14 @@ inline void copy(CmatDoub_O v, MatDoub_I v1)
     if (v.size() == 0)
         return;
     matcpy_diff_major(v.p(), v1.p(), v.n0(), v.n1());
+}
+
+inline void copy(ScmatComp_O v, ScmatComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
 }
 
 inline void copy(MatDoub_O v, CmatDoub_I v1)
@@ -1022,6 +1062,18 @@ inline void copy(McooDoub_O v, McooDoub_I v1)
 
 // copy dense matrix to Mcoo matrix
 // abs(s) < tol is considered 0
+inline void copy(McooDoub_O v, ScmatDoub_I v1, Doub_I tol = 0)
+{
+    assert_same_shape(v, v1);
+    for (Long j = 0; j < v1.n1(); ++j) {
+        for (Long i = 0; i < v1.n0(); ++i) {
+            Doub val = v1(i, j);
+            if (abs(val) > tol)
+                v.push(val, i, j);
+        }
+    }
+}
+
 inline void copy(McooComp_O v, CmatComp_I v1, Doub_I tol = 0)
 {
     assert_same_shape(v, v1);

@@ -279,6 +279,46 @@ inline void mul_v_cmatobd_v(Int *y, const Int *x, const Int *a, Long_I blk_size,
     }
 }
 
+inline void mul_v_cmatobd_v(Doub *y, const Doub *x, const Doub *a, Long_I blk_size, Long_I Nblk, Long_I N)
+{
+    vecset(y, 0, N);
+    Long step = blk_size - 1, step2 = blk_size - 2;
+    a += blk_size + 1; // move to first element
+
+    // first block
+    for (Long j = 0; j < step; ++j) {
+        Doub s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+    x += step2; y += step2; --a;
+
+    // middle blocks
+    for (Long blk = 1; blk < Nblk - 1; ++blk) {
+        for (Long j = 0; j < blk_size; ++j) {
+            Doub s = x[j];
+            for (Long i = 0; i < blk_size; ++i) {
+                y[i] += (*a) * s;
+                ++a;
+            }
+        }
+        x += step; y += step;
+    }
+    
+    // last block
+    for (Long j = 0; j < step; ++j) {
+        Doub s = x[j];
+        for (Long i = 0; i < step; ++i) {
+            y[i] += (*a) * s;
+            ++a;
+        }
+        ++a;
+    }
+}
+
 
 inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
 {
@@ -307,8 +347,35 @@ inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
     mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+inline void mul(SvecDoub_O y, CmobdDoub_I a, SvecDoub_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (y.size() != a.n0() || x.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+}
+
+inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (y.size() != a.n0() || x.size() != a.n1())
+        SLS_ERR("wrong shape!");
+#endif
+    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+}
+
 
 inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.size() || a.n0() != y.size())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+}
+
+inline void mul(SvecDoub_O y, McooDoub_I a, SvecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
     if (a.n1() != x.size() || a.n0() != y.size())
@@ -644,6 +711,9 @@ inline void operator*=(McooComp_IO v, Doub_I s)
 
 
 inline void operator*=(CmobdComp_IO v, Doub_I s)
+{ v.cmat3() *= s; }
+
+inline void operator*=(CmobdDoub_IO v, Doub_I s)
 { v.cmat3() *= s; }
 
 

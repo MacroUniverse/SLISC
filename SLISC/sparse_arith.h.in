@@ -120,6 +120,8 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //%    'VecComp', 'CmobdDoub', 'VecComp';
 //%    'VecComp', 'CmobdDoub', 'SvecComp';
 //%    'VecInt', 'CmobdInt', 'VecInt'
+//%    'SvecDoub', 'CmobdDoub', 'SvecDoub';
+//%    'SvecComp', 'CmobdDoub', 'SvecComp';
 //% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -136,6 +138,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //%------------------------------
 
 //% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp';
+//% 'SvecDoub' 'McooDoub' 'SvecDoub'
 //% 'VecDoub' 'McooDoub' 'VecDoub' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
@@ -262,7 +265,8 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 { times_equals_vs(v.p(), s, v.nnz()); }
 //%------------------------
 
-//% tem('obd*=s', { 'CmobdComp', 'Doub' });
+//% tem('obd*=s', { 'CmobdComp', 'Doub'
+//%   'CmobdDoub' 'Doub' });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 //% req('v+=s', {['Cmat3' val_t(T)], Ts});

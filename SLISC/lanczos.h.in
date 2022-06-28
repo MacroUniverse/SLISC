@@ -19,8 +19,13 @@ namespace slisc {
 // calculate v = exp(-i*H*dt) * v
 // H is a hermitian matrix
 // return error
-//% tem('exp_Hdt_v_lanc', { 'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp'
-//%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp' });
+//% tem('exp_Hdt_v_lanc', {
+//%   'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp'
+//%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp'
+//%   'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
+//%   'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp'
+//%   'DvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
+//%  });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
@@ -105,7 +110,11 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 // return error
 //% tem('exp_miHdt_v_lanc', { 'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp'
 //% 'DvecComp' 'CmatDoub' 'VecDoub' 'VecComp'
-//% 'VecComp'  'CmatDoub' 'VecDoub' 'VecComp'});
+//% 'VecComp'  'CmatDoub' 'VecDoub' 'VecComp'
+//% 'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp'
+//% 'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
+//% 'DvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
+//% });
 //%-------------------------------
 //% [Tv, Tm, Twd, Twc] = varargin{:};
 //% if is_Cmat(Tm) || is_Scmat(Tm)
