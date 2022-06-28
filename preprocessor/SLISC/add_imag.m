@@ -7,6 +7,8 @@ elseif is_Doub(T)
     ret = 'Imag';
 elseif is_Ldoub(T)
     ret = 'Limag';
+elseif is_Qdoub(T)
+    ret = 'Qimag';
 else
     error('add_imag.m: not implemented');
 end 

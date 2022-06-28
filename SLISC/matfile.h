@@ -981,7 +981,7 @@ inline void load(CmatUchar_O a, Str_I varname, Mat mat)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
-	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
+	a.resize(m, n);
     Uchar *ppa = (Uchar *)mxGetPr(pa);
     for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)

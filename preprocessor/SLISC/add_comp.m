@@ -7,6 +7,8 @@ elseif is_Doub(T)
     ret = 'Comp';
 elseif is_Ldoub(T)
     ret = 'Lcomp';
+elseif is_Qdoub(T)
+    ret = 'Qcomp';
 else
     error('add_comp.m: not implemented');
 end 

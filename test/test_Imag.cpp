@@ -56,12 +56,35 @@ void test_Imag()
             SLS_ERR("failed!");
     }
 
-    // Imag * Comp,  Comp * Imag
+    // Imag +-*/ Doub,  Doub +-*/ Imag
+    {
+        Doub a = 2.;
+        Imag b(3.);
+        if (a + b != Comp(2,3)) SLS_ERR("failed!");
+        if (b + a != Comp(2,3)) SLS_ERR("failed!");
+        if (a - b != Comp(2,-3)) SLS_ERR("failed!");
+        if (b - a != Comp(-2,3)) SLS_ERR("failed!");
+        if (a * b != Imag(6.)) SLS_ERR("failed!");
+        if (b * a != Imag(6.)) SLS_ERR("failed!");
+        if (a / b != Imag(-2./3.)) SLS_ERR("failed!");
+        if (b / a != Imag(3./2.)) SLS_ERR("failed!");
+    }
+
+    // Imag +-*/ Comp,  Comp +-*/ Imag
     {
         Comp a(1, -2), c;
-        Imag b(2.);
+        Imag b(   2.);
+        c = a + b;
+        if (real(c) != 1. || imag(c) != 0.) SLS_ERR("failed!");
+        c = b + a;
+        if (b + a != a + b) SLS_ERR("failed!");
+        c = a - b;
+        if (real(c) != 1. || imag(c) != -4.) SLS_ERR("failed!");
+        if (b - a != -(a-b)) SLS_ERR("failed!");
         c = a * b;
-        if (real(c) != 4. || imag(c) != 2.)
-            SLS_ERR("failed!");
+        if (real(c) != 4. || imag(c) != 2.) SLS_ERR("failed!");
+        if (a*b != b*a) SLS_ERR("failed!");
+        c = a / b;
+        if (real(c) != -1. || imag(c) != -.5) SLS_ERR("failed!");
     }
 }
