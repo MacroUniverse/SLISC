@@ -1,13 +1,13 @@
 # choose one of the following makefiles for different compilers and libraries
 
-# the most compatible build, only g++ is required
-# include make/compatible.mak
+# only g++ is required
+# include make/g++_min.mak
 
-# g++ blas lapacke gsl are required
-include make/basic_libs.mak
+# all libs are required
+include make/g++_all.mak
 
-# MKL and gsl are required
-# include make/g++_and_mkl.mak
+# MKL and all libs are required
+# include make/g++_all_mkl.mak
 
-# icpc compiler and MKL are required
-# include make/icpc_and_mkl.mak
+# icpc compiler and MKL and all libs are required
+# include make/icpc_all_mkl.mak
