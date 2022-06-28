@@ -3,6 +3,7 @@
 #include "arith2.h"
 #include "arith4.h"
 #include "reorder.h"
+#include "copy.h"
 #include "mul.h"
 #include "cut.h"
 

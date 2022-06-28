@@ -55,6 +55,8 @@ public:
 
 //% if ~constness
     operator @DcmatT_c@() const;
+    @T@& operator[](Long_I i);
+    @T@& operator()(Long_I i, Long_I j);
 //% end
 
     @CT@& operator[](Long_I i) const;
@@ -87,6 +89,24 @@ inline @Class@::operator @DcmatT_c@() const
 {
     return *((@DcmatT_c@ *)this);
 }
+
+inline @T@ &@Class@::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline @T@ &@Class@::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
 //% end
 
 inline @CT@ &@Class@::operator[](Long_I i) const
@@ -95,7 +115,7 @@ inline @CT@ &@Class@::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const

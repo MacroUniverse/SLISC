@@ -6,330 +6,158 @@
 namespace slisc {
 // maximum/minimum element (pointer version)
 // max_v(), min_v()
-inline Doub max_v(const Doub *v, Long_I N)
+inline Doub max_v(const Doub *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s < v[i])
-            s = v[i];
-    }
-    return s;
+    const Doub *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p < *v) p = v;
+    return *p;
 }
 
-inline Doub max_v(const Doub *v, Long_I N, Long_I step)
+inline Doub max_v(Long_O ind, const Doub *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s < v[i])
-            s = v[i];
-    }
-    return s;
+    const Doub *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p < *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 
-inline Doub max_v(Long_O ind, const Doub *v, Long_I N)
+inline Doub min_v(const Doub *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s < v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const Doub *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p > *v) p = v;
+    return *p;
 }
 
-inline Doub max_v(Long_O ind, const Doub *v, Long_I N, Long_I step)
+inline Doub min_v(Long_O ind, const Doub *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s < v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const Doub *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p > *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 
-inline Doub min_v(const Doub *v, Long_I N)
+inline Int max_v(const Int *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s > v[i])
-            s = v[i];
-    }
-    return s;
+    const Int *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p < *v) p = v;
+    return *p;
 }
 
-inline Doub min_v(const Doub *v, Long_I N, Long_I step)
+inline Int max_v(Long_O ind, const Int *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s > v[i])
-            s = v[i];
-    }
-    return s;
+    const Int *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p < *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 
-inline Doub min_v(Long_O ind, const Doub *v, Long_I N)
+inline Int min_v(const Int *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s > v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const Int *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p > *v) p = v;
+    return *p;
 }
 
-inline Doub min_v(Long_O ind, const Doub *v, Long_I N, Long_I step)
+inline Int min_v(Long_O ind, const Int *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Doub s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s > v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const Int *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p > *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 
-inline Int max_v(const Int *v, Long_I N)
+inline Llong max_v(const Llong *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Int s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s < v[i])
-            s = v[i];
-    }
-    return s;
+    const Llong *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p < *v) p = v;
+    return *p;
 }
 
-inline Int max_v(const Int *v, Long_I N, Long_I step)
+inline Llong max_v(Long_O ind, const Llong *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Int s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s < v[i])
-            s = v[i];
-    }
-    return s;
+    const Llong *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p < *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 
-inline Int max_v(Long_O ind, const Int *v, Long_I N)
+inline Llong min_v(const Llong *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Int s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s < v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const Llong *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p > *v) p = v;
+    return *p;
 }
 
-inline Int max_v(Long_O ind, const Int *v, Long_I N, Long_I step)
+inline Llong min_v(Long_O ind, const Llong *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Int s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s < v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const Llong *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p > *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 
-inline Int min_v(const Int *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Int s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s > v[i])
-            s = v[i];
-    }
-    return s;
-}
 
-inline Int min_v(const Int *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Int s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s > v[i])
-            s = v[i];
-    }
-    return s;
-}
+// inline @T@ @fun@_dcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step1 = N0)
+// {
+// #ifdef SLS_CHECK_BOUNDS
+//     if (N0 <= 0 || N1 <= 0) SLS_ERR("illegal length!");
+// #endif
+//     const @T@ *beg = v, *end0 = v + N0, *end = v + step1*N1, *p = v; ++v;
+//     Long gap = step1 - N0;
+//     for (; v < end; v+=gap, end0+=step1)
+//         for (; v < end0; ++v)
+//             if (*p @oper@ *v) p = v;
+//     return *p;
+// }
 
-inline Int min_v(Long_O ind, const Int *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Int s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s > v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
-inline Int min_v(Long_O ind, const Int *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Int s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s > v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
-inline Llong max_v(const Llong *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s < v[i])
-            s = v[i];
-    }
-    return s;
-}
-
-inline Llong max_v(const Llong *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s < v[i])
-            s = v[i];
-    }
-    return s;
-}
-
-inline Llong max_v(Long_O ind, const Llong *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s < v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
-inline Llong max_v(Long_O ind, const Llong *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s < v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
-inline Llong min_v(const Llong *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s > v[i])
-            s = v[i];
-    }
-    return s;
-}
-
-inline Llong min_v(const Llong *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s > v[i])
-            s = v[i];
-    }
-    return s;
-}
-
-inline Llong min_v(Long_O ind, const Llong *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s > v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
-inline Llong min_v(Long_O ind, const Llong *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    Llong s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s > v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
+// inline @T@ @fun@_jcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step0 = 1, Long_I step1 = N0)
+// {
+// #ifdef SLS_CHECK_BOUNDS
+//     if (N0 <= 0 || N1 <= 0) SLS_ERR("illegal length!");
+// #endif
+//     const @T@ *beg = v, *end0 = v + step0*N0, *end = v + step1*N1, *p = v; v+=step0;
+//     Long gap = step1 - step0*N0;
+//     for (; v < end; v+=gap, end0+=step1)
+//         for (; v < end0; v+=step0)
+//             if (*p @oper@ *v) p = v;
+//     return *p;
+// }
 
 inline Int max(VecInt_I v)
 { return max_v(v.p(), v.size()); }

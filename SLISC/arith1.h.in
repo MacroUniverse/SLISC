@@ -14,63 +14,56 @@ namespace slisc {
 //% [fun, T] = varargin{:};
 //% if strcmp(fun, 'max'), oper = '<'; else, oper = '>'; end
 //% if is_real(T) && ~is_Bool(T)
-inline @T@ @fun@_v(const @T@ *v, Long_I N)
+inline @T@ @fun@_v(const @T@ *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @T@ s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s @oper@ v[i])
-            s = v[i];
-    }
-    return s;
+    const @T@ *end = v + N*step, *p = v; v+=step;
+    for (; v < end; v+=step) if (*p @oper@ *v) p = v;
+    return *p;
 }
 
-inline @T@ @fun@_v(const @T@ *v, Long_I N, Long_I step)
+inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
     if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @T@ s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s @oper@ v[i])
-            s = v[i];
-    }
-    return s;
-}
-
-inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    @T@ s = v[0];
-    for (Long i = 1; i < N; ++i) {
-        if (s @oper@ v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
-}
-
-inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
-#endif
-    @T@ s = v[0];
-    for (Long i = step; i < N*step; i += step) {
-        if (s @oper@ v[i]) {
-            s = v[i];  ind = i;
-        }
-    }
-    return s;
+    const @T@ *beg = v, *end = v + N, *p = v; v+=step;
+    for (; v < end; ++v) if (*p @oper@ *v) p = v;
+    ind = (p - beg)/step;
+    return *p;
 }
 //% else
 //%     error(['max_v: not implemented (4): ' T]);
 //% end
 //%-------------------------
+
+// inline @T@ @fun@_dcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step1 = N0)
+// {
+// #ifdef SLS_CHECK_BOUNDS
+//     if (N0 <= 0 || N1 <= 0) SLS_ERR("illegal length!");
+// #endif
+//     const @T@ *beg = v, *end0 = v + N0, *end = v + step1*N1, *p = v; ++v;
+//     Long gap = step1 - N0;
+//     for (; v < end; v+=gap, end0+=step1)
+//         for (; v < end0; ++v)
+//             if (*p @oper@ *v) p = v;
+//     return *p;
+// }
+
+// inline @T@ @fun@_jcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step0 = 1, Long_I step1 = N0)
+// {
+// #ifdef SLS_CHECK_BOUNDS
+//     if (N0 <= 0 || N1 <= 0) SLS_ERR("illegal length!");
+// #endif
+//     const @T@ *beg = v, *end0 = v + step0*N0, *end = v + step1*N1, *p = v; v+=step0;
+//     Long gap = step1 - step0*N0;
+//     for (; v < end; v+=gap, end0+=step1)
+//         for (; v < end0; v+=step0)
+//             if (*p @oper@ *v) p = v;
+//     return *p;
+// }
 
 //% tem('max', {'VecInt'; 'VecLlong'; 'VecDoub';
 //%  'SvecInt'; 'SvecLlong'; 'SvecDoub';});

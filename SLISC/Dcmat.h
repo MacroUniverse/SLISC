@@ -47,7 +47,7 @@ inline const Char &DcmatChar_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Char &DcmatChar_c::operator()(Long_I i, Long_I j) const
@@ -100,6 +100,8 @@ public:
     void set(const DcmatChar &sli);
 
     operator DcmatChar_c() const;
+    Char& operator[](Long_I i);
+    Char& operator()(Long_I i, Long_I j);
 
     Char& operator[](Long_I i) const;
     Char& operator()(Long_I i, Long_I j) const;
@@ -131,13 +133,31 @@ inline DcmatChar::operator DcmatChar_c() const
     return *((DcmatChar_c *)this);
 }
 
+inline Char &DcmatChar::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Char &DcmatChar::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Char &DcmatChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Char &DcmatChar::operator()(Long_I i, Long_I j) const
@@ -223,7 +243,7 @@ inline const Uchar &DcmatUchar_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Uchar &DcmatUchar_c::operator()(Long_I i, Long_I j) const
@@ -276,6 +296,8 @@ public:
     void set(const DcmatUchar &sli);
 
     operator DcmatUchar_c() const;
+    Uchar& operator[](Long_I i);
+    Uchar& operator()(Long_I i, Long_I j);
 
     Uchar& operator[](Long_I i) const;
     Uchar& operator()(Long_I i, Long_I j) const;
@@ -307,13 +329,31 @@ inline DcmatUchar::operator DcmatUchar_c() const
     return *((DcmatUchar_c *)this);
 }
 
+inline Uchar &DcmatUchar::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Uchar &DcmatUchar::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Uchar &DcmatUchar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Uchar &DcmatUchar::operator()(Long_I i, Long_I j) const
@@ -399,7 +439,7 @@ inline const Int &DcmatInt_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Int &DcmatInt_c::operator()(Long_I i, Long_I j) const
@@ -452,6 +492,8 @@ public:
     void set(const DcmatInt &sli);
 
     operator DcmatInt_c() const;
+    Int& operator[](Long_I i);
+    Int& operator()(Long_I i, Long_I j);
 
     Int& operator[](Long_I i) const;
     Int& operator()(Long_I i, Long_I j) const;
@@ -483,13 +525,31 @@ inline DcmatInt::operator DcmatInt_c() const
     return *((DcmatInt_c *)this);
 }
 
+inline Int &DcmatInt::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Int &DcmatInt::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Int &DcmatInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Int &DcmatInt::operator()(Long_I i, Long_I j) const
@@ -575,7 +635,7 @@ inline const Llong &DcmatLlong_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Llong &DcmatLlong_c::operator()(Long_I i, Long_I j) const
@@ -628,6 +688,8 @@ public:
     void set(const DcmatLlong &sli);
 
     operator DcmatLlong_c() const;
+    Llong& operator[](Long_I i);
+    Llong& operator()(Long_I i, Long_I j);
 
     Llong& operator[](Long_I i) const;
     Llong& operator()(Long_I i, Long_I j) const;
@@ -659,13 +721,31 @@ inline DcmatLlong::operator DcmatLlong_c() const
     return *((DcmatLlong_c *)this);
 }
 
+inline Llong &DcmatLlong::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Llong &DcmatLlong::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Llong &DcmatLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Llong &DcmatLlong::operator()(Long_I i, Long_I j) const
@@ -768,7 +848,7 @@ inline const Float &DcmatFloat_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Float &DcmatFloat_c::operator()(Long_I i, Long_I j) const
@@ -821,6 +901,8 @@ public:
     void set(const DcmatFloat &sli);
 
     operator DcmatFloat_c() const;
+    Float& operator[](Long_I i);
+    Float& operator()(Long_I i, Long_I j);
 
     Float& operator[](Long_I i) const;
     Float& operator()(Long_I i, Long_I j) const;
@@ -852,13 +934,31 @@ inline DcmatFloat::operator DcmatFloat_c() const
     return *((DcmatFloat_c *)this);
 }
 
+inline Float &DcmatFloat::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Float &DcmatFloat::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Float &DcmatFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Float &DcmatFloat::operator()(Long_I i, Long_I j) const
@@ -944,7 +1044,7 @@ inline const Doub &DcmatDoub_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Doub &DcmatDoub_c::operator()(Long_I i, Long_I j) const
@@ -997,6 +1097,8 @@ public:
     void set(const DcmatDoub &sli);
 
     operator DcmatDoub_c() const;
+    Doub& operator[](Long_I i);
+    Doub& operator()(Long_I i, Long_I j);
 
     Doub& operator[](Long_I i) const;
     Doub& operator()(Long_I i, Long_I j) const;
@@ -1028,13 +1130,31 @@ inline DcmatDoub::operator DcmatDoub_c() const
     return *((DcmatDoub_c *)this);
 }
 
+inline Doub &DcmatDoub::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Doub &DcmatDoub::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Doub &DcmatDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Doub &DcmatDoub::operator()(Long_I i, Long_I j) const
@@ -1120,7 +1240,7 @@ inline const Ldoub &DcmatLdoub_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Ldoub &DcmatLdoub_c::operator()(Long_I i, Long_I j) const
@@ -1173,6 +1293,8 @@ public:
     void set(const DcmatLdoub &sli);
 
     operator DcmatLdoub_c() const;
+    Ldoub& operator[](Long_I i);
+    Ldoub& operator()(Long_I i, Long_I j);
 
     Ldoub& operator[](Long_I i) const;
     Ldoub& operator()(Long_I i, Long_I j) const;
@@ -1204,13 +1326,31 @@ inline DcmatLdoub::operator DcmatLdoub_c() const
     return *((DcmatLdoub_c *)this);
 }
 
+inline Ldoub &DcmatLdoub::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Ldoub &DcmatLdoub::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Ldoub &DcmatLdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Ldoub &DcmatLdoub::operator()(Long_I i, Long_I j) const
@@ -1296,7 +1436,7 @@ inline const Qdoub &DcmatQdoub_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Qdoub &DcmatQdoub_c::operator()(Long_I i, Long_I j) const
@@ -1349,6 +1489,8 @@ public:
     void set(const DcmatQdoub &sli);
 
     operator DcmatQdoub_c() const;
+    Qdoub& operator[](Long_I i);
+    Qdoub& operator()(Long_I i, Long_I j);
 
     Qdoub& operator[](Long_I i) const;
     Qdoub& operator()(Long_I i, Long_I j) const;
@@ -1380,13 +1522,31 @@ inline DcmatQdoub::operator DcmatQdoub_c() const
     return *((DcmatQdoub_c *)this);
 }
 
+inline Qdoub &DcmatQdoub::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Qdoub &DcmatQdoub::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Qdoub &DcmatQdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Qdoub &DcmatQdoub::operator()(Long_I i, Long_I j) const
@@ -1472,7 +1632,7 @@ inline const Fcomp &DcmatFcomp_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Fcomp &DcmatFcomp_c::operator()(Long_I i, Long_I j) const
@@ -1525,6 +1685,8 @@ public:
     void set(const DcmatFcomp &sli);
 
     operator DcmatFcomp_c() const;
+    Fcomp& operator[](Long_I i);
+    Fcomp& operator()(Long_I i, Long_I j);
 
     Fcomp& operator[](Long_I i) const;
     Fcomp& operator()(Long_I i, Long_I j) const;
@@ -1556,13 +1718,31 @@ inline DcmatFcomp::operator DcmatFcomp_c() const
     return *((DcmatFcomp_c *)this);
 }
 
+inline Fcomp &DcmatFcomp::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Fcomp &DcmatFcomp::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Fcomp &DcmatFcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Fcomp &DcmatFcomp::operator()(Long_I i, Long_I j) const
@@ -1648,7 +1828,7 @@ inline const Comp &DcmatComp_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Comp &DcmatComp_c::operator()(Long_I i, Long_I j) const
@@ -1701,6 +1881,8 @@ public:
     void set(const DcmatComp &sli);
 
     operator DcmatComp_c() const;
+    Comp& operator[](Long_I i);
+    Comp& operator()(Long_I i, Long_I j);
 
     Comp& operator[](Long_I i) const;
     Comp& operator()(Long_I i, Long_I j) const;
@@ -1732,13 +1914,31 @@ inline DcmatComp::operator DcmatComp_c() const
     return *((DcmatComp_c *)this);
 }
 
+inline Comp &DcmatComp::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Comp &DcmatComp::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Comp &DcmatComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Comp &DcmatComp::operator()(Long_I i, Long_I j) const
@@ -1824,7 +2024,7 @@ inline const Lcomp &DcmatLcomp_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Lcomp &DcmatLcomp_c::operator()(Long_I i, Long_I j) const
@@ -1877,6 +2077,8 @@ public:
     void set(const DcmatLcomp &sli);
 
     operator DcmatLcomp_c() const;
+    Lcomp& operator[](Long_I i);
+    Lcomp& operator()(Long_I i, Long_I j);
 
     Lcomp& operator[](Long_I i) const;
     Lcomp& operator()(Long_I i, Long_I j) const;
@@ -1908,13 +2110,31 @@ inline DcmatLcomp::operator DcmatLcomp_c() const
     return *((DcmatLcomp_c *)this);
 }
 
+inline Lcomp &DcmatLcomp::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Lcomp &DcmatLcomp::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Lcomp &DcmatLcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Lcomp &DcmatLcomp::operator()(Long_I i, Long_I j) const
@@ -2000,7 +2220,7 @@ inline const Qcomp &DcmatQcomp_c::operator[](Long_I i) const
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline const Qcomp &DcmatQcomp_c::operator()(Long_I i, Long_I j) const
@@ -2053,6 +2273,8 @@ public:
     void set(const DcmatQcomp &sli);
 
     operator DcmatQcomp_c() const;
+    Qcomp& operator[](Long_I i);
+    Qcomp& operator()(Long_I i, Long_I j);
 
     Qcomp& operator[](Long_I i) const;
     Qcomp& operator()(Long_I i, Long_I j) const;
@@ -2084,13 +2306,31 @@ inline DcmatQcomp::operator DcmatQcomp_c() const
     return *((DcmatQcomp_c *)this);
 }
 
+inline Qcomp &DcmatQcomp::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Qcomp &DcmatQcomp::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+        SLS_ERR("Matrix subscript out of bounds");
+#endif
+    return m_p[i + m_lda * j];
+}
+
 inline Qcomp &DcmatQcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (i < 0 || i >= m_N)
         SLS_ERR("Matrix subscript out of bounds");
 #endif
-    return m_p[i % m_N1 + m_lda * i / m_N1];
+    return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
 inline Qcomp &DcmatQcomp::operator()(Long_I i, Long_I j) const
