@@ -10,20 +10,20 @@ namespace slisc {
 class Matb {
 public:
     Matb();
-    Matb(Str_I fname, Char_I rw, Bool_I replace = false);
-    Char m_rw; // 'r' for read 'w' for write
+    Matb(Str_I fname, Str_I rw, Bool_I replace = false);
+    Str m_rw; // "r" for read "w" for write
     ifstream m_in; // read file
     ofstream m_out; // write file
     Llong m_filesize; // file size
     Str m_fname; // name of the opened file
     vecStr m_name; // variable names
-    vecStr m_data; // data cache, only useful in 'm' mode
+    vecStr m_data; // data cache, only useful in "m" mode
     vecLlong m_type; // variable types
     vector<vecLlong> m_size; // variable dimensions
     vecLlong m_ind; // variable positions (from the first byte of file)
 
     // open a file
-    void open(Str_I fname, Char_I rw, Bool_I replace = false);
+    void open(Str_I fname, Str_I rw, Bool_I replace = false);
 
     // check if file is open
     Bool isopen();
@@ -148,10 +148,10 @@ inline Long Matb::search(Str_I name)
 
 inline Matb::Matb() {}
 
-inline Matb::Matb(Str_I fname, Char_I rw, Bool_I replace)
+inline Matb::Matb(Str_I fname, Str_I rw, Bool_I replace)
 { open(fname, rw, replace); }
 
-inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
+inline void Matb::open(Str_I fname, Str_I rw, Bool_I replace)
 {
     if (!little_endian())
         SLS_ERR("only support little endian for now!");
@@ -161,7 +161,7 @@ inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
         SLS_ERR("file must have \".matb\" extension!");
     m_rw = rw;
     m_fname = fname;
-    if (rw == 'w') {
+    if (rw == "w") {
 #ifndef SLS_MATB_REPLACE
         if (!replace && file_exist(m_fname)) {
             while (true) {
@@ -180,7 +180,7 @@ inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
         if (!m_out.good())
             SLS_ERR("error: file not created (does directory exist?): " + m_fname);
     }
-    else if (rw == 'r' || 'm') {
+    else if (rw == "r" || "m") {
         open_bin(m_in, m_fname);
         if (!m_in.good())
             SLS_ERR("error: file not found: " + m_fname);
@@ -209,8 +209,8 @@ inline Bool Matb::isopen()
 
 inline void Matb::read_data()
 {
-    if (m_rw != 'm')
-        SLS_ERR("read_data() can only be used in 'm' mode!");
+    if (m_rw != "m")
+        SLS_ERR("read_data() can only be used in \"m\" mode!");
     for (Long i = 0; i < size(); ++i) {
         m_data.push_back(Str()); m_data[i].resize(data_size(i));
         m_in.seekg(data_pos(i));
@@ -222,8 +222,8 @@ inline void Matb::read_data()
 
 inline void Matb::write_data(Str_I fname)
 {
-    if (m_rw != 'm')
-        SLS_ERR("write_data() can only be used in 'm' mode!");
+    if (m_rw != "m")
+        SLS_ERR("write_data() can only be used in \"m\" mode!");
     m_in.close();
     open_bin(m_out, fname);
     m_out.seekp(0, std::ios::beg);
@@ -253,7 +253,7 @@ inline void Matb::write_data(Str_I fname)
 
 inline void Matb::close()
 {
-    if (m_rw == 'w') {
+    if (m_rw == "w") {
         // write position of variables
         for (Long i = m_ind.size() - 1; i >= 0; --i)
             write(m_out, m_ind[i]);
@@ -306,7 +306,7 @@ inline void save(Char_I s, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Char_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -333,7 +333,7 @@ inline void save(Int_I s, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Int_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -360,7 +360,7 @@ inline void save(Llong_I s, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Llong_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -387,7 +387,7 @@ inline void save(Doub_I s, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Doub_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -414,7 +414,7 @@ inline void save(Comp_I s, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Comp_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -445,7 +445,7 @@ inline void save(VecChar_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(VecChar_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -474,7 +474,7 @@ inline void save(VecInt_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(VecInt_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -503,7 +503,7 @@ inline void save(VecLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(VecLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -532,7 +532,7 @@ inline void save(VecDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(VecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -561,7 +561,7 @@ inline void save(VecComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(VecComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -590,7 +590,7 @@ inline void save(SvecChar_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(SvecChar_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -619,7 +619,7 @@ inline void save(SvecLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(SvecLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -648,7 +648,7 @@ inline void save(SvecDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(SvecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -677,7 +677,7 @@ inline void save(SvecComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(SvecComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -706,7 +706,7 @@ inline void save(vecInt_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(vecInt_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -735,7 +735,7 @@ inline void save(vecLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(vecLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -764,7 +764,7 @@ inline void save(vecDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(vecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -793,7 +793,7 @@ inline void save(vecComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(vecComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -822,7 +822,7 @@ inline void save(DvecLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DvecLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -851,7 +851,7 @@ inline void save(DvecDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DvecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -880,7 +880,7 @@ inline void save(DvecComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DvecComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -910,7 +910,7 @@ inline void save(CmatChar_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(CmatChar_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -940,7 +940,7 @@ inline void save(CmatInt_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(CmatInt_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -970,7 +970,7 @@ inline void save(CmatLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(CmatLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1000,7 +1000,7 @@ inline void save(CmatDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(CmatDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1030,7 +1030,7 @@ inline void save(CmatComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(CmatComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1060,7 +1060,7 @@ inline void save(MatChar_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(MatChar_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1090,7 +1090,7 @@ inline void save(MatInt_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(MatInt_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1120,7 +1120,7 @@ inline void save(MatLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(MatLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1150,7 +1150,7 @@ inline void save(MatDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(MatDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1180,7 +1180,7 @@ inline void save(MatComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(MatComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1210,7 +1210,7 @@ inline void save(ScmatInt_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(ScmatInt_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1240,7 +1240,7 @@ inline void save(ScmatLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(ScmatLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1270,7 +1270,7 @@ inline void save(ScmatDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(ScmatDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1300,7 +1300,7 @@ inline void save(ScmatComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(ScmatComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1330,7 +1330,7 @@ inline void save(DcmatInt_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DcmatInt_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1360,7 +1360,7 @@ inline void save(DcmatLlong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DcmatLlong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1390,7 +1390,7 @@ inline void save(DcmatDoub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DcmatDoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1420,7 +1420,7 @@ inline void save(DcmatComp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(DcmatComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1451,7 +1451,7 @@ inline void save(Cmat3Int_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Cmat3Int_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1482,7 +1482,7 @@ inline void save(Cmat3Llong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Cmat3Llong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1513,7 +1513,7 @@ inline void save(Cmat3Doub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Cmat3Doub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1544,7 +1544,7 @@ inline void save(Cmat3Comp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Cmat3Comp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1575,7 +1575,7 @@ inline void save(Mat3Int_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Mat3Int_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1606,7 +1606,7 @@ inline void save(Mat3Llong_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Mat3Llong_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1637,7 +1637,7 @@ inline void save(Mat3Doub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Mat3Doub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1668,7 +1668,7 @@ inline void save(Mat3Comp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Mat3Comp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1701,7 +1701,7 @@ inline void save(Cmat4Doub_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Cmat4Doub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1734,7 +1734,7 @@ inline void save(Cmat4Comp_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(Cmat4Comp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -1770,7 +1770,7 @@ inline void load(Char_O s, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Char_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1793,7 +1793,7 @@ inline void load(Int_O s, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Int_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1816,7 +1816,7 @@ inline void load(Llong_O s, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Llong_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1839,7 +1839,7 @@ inline void load(Doub_O s, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Doub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1862,7 +1862,7 @@ inline void load(Comp_O s, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Comp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1888,7 +1888,7 @@ inline void load(VecChar_O v, Str_I varname, Matb_IO matb)
 
 inline void load_matb(VecChar_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1914,7 +1914,7 @@ inline void load(VecInt_O v, Str_I varname, Matb_IO matb)
 
 inline void load_matb(VecInt_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1940,7 +1940,7 @@ inline void load(VecLlong_O v, Str_I varname, Matb_IO matb)
 
 inline void load_matb(VecLlong_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1966,7 +1966,7 @@ inline void load(VecDoub_O v, Str_I varname, Matb_IO matb)
 
 inline void load_matb(VecDoub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -1992,7 +1992,7 @@ inline void load(VecComp_O v, Str_I varname, Matb_IO matb)
 
 inline void load_matb(VecComp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2020,7 +2020,7 @@ inline void load(MatInt_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(MatInt_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2048,7 +2048,7 @@ inline void load(MatLlong_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(MatLlong_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2076,7 +2076,7 @@ inline void load(MatDoub_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(MatDoub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2104,7 +2104,7 @@ inline void load(MatComp_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(MatComp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2134,7 +2134,7 @@ inline void load(Mat3Doub_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Mat3Doub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2164,7 +2164,7 @@ inline void load(Mat3Comp_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Mat3Comp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2192,7 +2192,7 @@ inline void load(CmatInt_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(CmatInt_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2220,7 +2220,7 @@ inline void load(CmatLlong_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(CmatLlong_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2248,7 +2248,7 @@ inline void load(CmatDoub_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(CmatDoub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2276,7 +2276,7 @@ inline void load(CmatComp_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(CmatComp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2306,7 +2306,7 @@ inline void load(Cmat3Int_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Cmat3Int_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2336,7 +2336,7 @@ inline void load(Cmat3Llong_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Cmat3Llong_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2366,7 +2366,7 @@ inline void load(Cmat3Doub_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Cmat3Doub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2396,7 +2396,7 @@ inline void load(Cmat3Comp_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Cmat3Comp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2427,7 +2427,7 @@ inline void load(Cmat4Doub_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Cmat4Doub_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2458,7 +2458,7 @@ inline void load(Cmat4Comp_O a, Str_I varname, Matb_IO matb)
 
 inline void load_matb(Cmat4Comp_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -2481,7 +2481,7 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
             return -1;
     }
 
-    Matb matb(matb_name, 'r');
+    Matb matb(matb_name, "r");
     Matt matt(matt_name, "w");
     Long Nvar = matb.m_name.size();
     for (Long i = 0; i < Nvar; ++i) {
@@ -2636,7 +2636,7 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
             return -1;
     }
     Matt matt(matt_name, "r");
-    Matb matb(matb_name, 'w');
+    Matb matb(matb_name, "w");
     Long Nvar = matt.m_name.size();
     for (Long i = 0; i < Nvar; ++i) {
         const Long &type = matt.m_type[i];

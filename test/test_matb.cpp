@@ -11,7 +11,7 @@ void test_matb()
     Matb matb;
     if (file_exist("test.matb"))
         remove("test.matb");
-    matb.open("test.matb", 'w');
+    matb.open("test.matb", "w");
 
     // scalars
     Char s8 = 88;
@@ -84,7 +84,7 @@ void test_matb()
 
     // test 'c' mode
     {
-        matb.open("test.matb", 'm');
+        matb.open("test.matb", "m");
         matb.read_data();
         matb.write_data("test1.matb");
         matb.close();
@@ -93,7 +93,7 @@ void test_matb()
     // -----------  read test -------------
 
     // scalars
-    matb.open("test1.matb", 'r');
+    matb.open("test1.matb", "r");
 
 
     Int r_si;
@@ -243,7 +243,7 @@ void test_matb()
         remove("test.matb");
         matt2matb("test.matt");
 
-        Matb matb("test.matb", 'r');
+        Matb matb("test.matb", "r");
 
         Int r_si;
         load(r_si, "si", matb);

@@ -10,20 +10,20 @@ namespace slisc {
 class Matb {
 public:
     Matb();
-    Matb(Str_I fname, Char_I rw, Bool_I replace = false);
-    Char m_rw; // 'r' for read 'w' for write
+    Matb(Str_I fname, Str_I rw, Bool_I replace = false);
+    Str m_rw; // "r" for read "w" for write
     ifstream m_in; // read file
     ofstream m_out; // write file
     Llong m_filesize; // file size
     Str m_fname; // name of the opened file
     vecStr m_name; // variable names
-    vecStr m_data; // data cache, only useful in 'm' mode
+    vecStr m_data; // data cache, only useful in "m" mode
     vecLlong m_type; // variable types
     vector<vecLlong> m_size; // variable dimensions
     vecLlong m_ind; // variable positions (from the first byte of file)
 
     // open a file
-    void open(Str_I fname, Char_I rw, Bool_I replace = false);
+    void open(Str_I fname, Str_I rw, Bool_I replace = false);
 
     // check if file is open
     Bool isopen();
@@ -148,10 +148,10 @@ inline Long Matb::search(Str_I name)
 
 inline Matb::Matb() {}
 
-inline Matb::Matb(Str_I fname, Char_I rw, Bool_I replace)
+inline Matb::Matb(Str_I fname, Str_I rw, Bool_I replace)
 { open(fname, rw, replace); }
 
-inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
+inline void Matb::open(Str_I fname, Str_I rw, Bool_I replace)
 {
     if (!little_endian())
         SLS_ERR("only support little endian for now!");
@@ -161,7 +161,7 @@ inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
         SLS_ERR("file must have \".matb\" extension!");
     m_rw = rw;
     m_fname = fname;
-    if (rw == 'w') {
+    if (rw == "w") {
 #ifndef SLS_MATB_REPLACE
         if (!replace && file_exist(m_fname)) {
             while (true) {
@@ -180,7 +180,7 @@ inline void Matb::open(Str_I fname, Char_I rw, Bool_I replace)
         if (!m_out.good())
             SLS_ERR("error: file not created (does directory exist?): " + m_fname);
     }
-    else if (rw == 'r' || 'm') {
+    else if (rw == "r" || "m") {
         open_bin(m_in, m_fname);
         if (!m_in.good())
             SLS_ERR("error: file not found: " + m_fname);
@@ -209,8 +209,8 @@ inline Bool Matb::isopen()
 
 inline void Matb::read_data()
 {
-    if (m_rw != 'm')
-        SLS_ERR("read_data() can only be used in 'm' mode!");
+    if (m_rw != "m")
+        SLS_ERR("read_data() can only be used in \"m\" mode!");
     for (Long i = 0; i < size(); ++i) {
         m_data.push_back(Str()); m_data[i].resize(data_size(i));
         m_in.seekg(data_pos(i));
@@ -222,8 +222,8 @@ inline void Matb::read_data()
 
 inline void Matb::write_data(Str_I fname)
 {
-    if (m_rw != 'm')
-        SLS_ERR("write_data() can only be used in 'm' mode!");
+    if (m_rw != "m")
+        SLS_ERR("write_data() can only be used in \"m\" mode!");
     m_in.close();
     open_bin(m_out, fname);
     m_out.seekp(0, std::ios::beg);
@@ -253,7 +253,7 @@ inline void Matb::write_data(Str_I fname)
 
 inline void Matb::close()
 {
-    if (m_rw == 'w') {
+    if (m_rw == "w") {
         // write position of variables
         for (Long i = m_ind.size() - 1; i >= 0; --i)
             write(m_out, m_ind[i]);
@@ -310,7 +310,7 @@ inline void save(@T@_I s, Str_I varname, Matb_IO matb)
 
 inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(s, varname, matb);
     matb.close();
 }
@@ -379,7 +379,7 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
 
 inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
-    Matb matb(matb_file, 'w', replace);
+    Matb matb(matb_file, "w", replace);
     save(v, varname, matb);
     matb.close();
 }
@@ -521,7 +521,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 //% % read one var from one file
 inline void load_matb(@T@_O var, Str_I varname, Str_I matb_file)
 {
-    Matb matb(matb_file, 'r');
+    Matb matb(matb_file, "r");
     load(var, varname, matb);
     matb.close();
 }
@@ -544,7 +544,7 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
             return -1;
     }
 
-    Matb matb(matb_name, 'r');
+    Matb matb(matb_name, "r");
     Matt matt(matt_name, "w");
     Long Nvar = matb.m_name.size();
     for (Long i = 0; i < Nvar; ++i) {
@@ -618,7 +618,7 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
             return -1;
     }
     Matt matt(matt_name, "r");
-    Matb matb(matb_name, 'w');
+    Matb matb(matb_name, "w");
     Long Nvar = matt.m_name.size();
     for (Long i = 0; i < Nvar; ++i) {
         const Long &type = matt.m_type[i];

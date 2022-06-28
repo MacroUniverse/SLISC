@@ -10,7 +10,7 @@ void test_matfile()
     // write to file
     if (file_exist("test.mat"))
         remove("test.mat");
-    Mat mat = matOpen("test.mat", "w");
+    Mat mat("test.mat", "w", true);
     
     // scalars
     Char c8 = 56;
@@ -91,12 +91,12 @@ void test_matfile()
         CC3[i] = Comp(randDoub(), randDoub());
     save(CC3, "CC3", mat);
 
-    matClose(mat);
+    mat.close();
 
     // // -----------  read test -------------
 
     // scalars
-    mat = matOpen("test.mat", "r");
+    mat.open("test.mat", "r");
 
     Char r_c8;
     load(r_c8, "c8", mat);
@@ -174,7 +174,7 @@ void test_matfile()
     load(r_CC3, "CC3", mat);
     if (r_CC3 != CC3) SLS_ERR("failed!");
 
-    matClose(mat);
+    mat.close();
 
     // // matb2matt: convert mat to matt
     // {

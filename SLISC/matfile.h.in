@@ -3,16 +3,64 @@
 
 #pragma once
 #include "arithmetic.h"
+#include "file.h"
+#include "time.h"
 #include <mat.h>
 
 namespace slisc {
 
-typedef MATFile *Mat;
+struct Mat
+{
+	MATFile *m_p;
+	Mat(): m_p(NULL) {};
+	Mat(Str_I fname, Str_I rw, Bool_I replace = false);
+	void open(Str_I fname, Str_I rw, Bool_I replace = false);
+	Bool isopen();
+	void close();
+};
+
+inline Mat::Mat(Str_I fname, Str_I rw, Bool_I replace): m_p(NULL) {
+	open(fname, rw, replace);
+}
+
+inline void Mat::open(Str_I fname, Str_I rw, Bool_I replace) {
+	if (isopen()) close();
+	if (rw == "w" && file_exist(fname)) {
+		if (!replace) {
+#ifdef SLS_MAT_REPLACE
+			file_remove(fname);
+#else
+			while (true) {
+				if (file_exist(fname)) {
+					SLS_WARN("\n\nfile [" + fname + "] already exist! delete file to continue...\n"
+						"  (define SLS_MAT_REPLACE to replace file by default)\n\n");
+				}
+				else
+					break;
+				pause(10);
+			}
+#endif
+		}
+		else
+			file_remove(fname);
+	}
+	m_p = matOpen(fname.c_str(), rw.c_str());
+}
+
+inline Bool Mat::isopen() {
+	return m_p != NULL;
+}
+
+inline void Mat::close() {
+	if (isopen()) {
+		matClose(m_p); m_p = NULL;
+	}
+}
 
 //% tem('matsave(s)', {'Char'; 'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%---------------------
 //% Ts = varargin{:};
-inline void save(@Ts@_I s, Str_I varname, Mat pfile)
+inline void save(@Ts@_I s, Str_I varname, Mat mat)
 {
 	mxArray *ps;
 //% if is_Char(Ts)
@@ -37,7 +85,7 @@ inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 	@Ts@ *pps = (@Ts@*)mxGetPr(ps);
 	pps[0] = s;
 //% end
-	matPutVariable(pfile, varname.c_str(), ps);
+	matPutVariable(mat.m_p, varname.c_str(), ps);
 	mxDestroyArray(ps);
 }
 //%---------------------
@@ -48,7 +96,7 @@ inline void save(@Ts@_I s, Str_I varname, Mat pfile)
 //%    'DvecChar'; 'DvecUchar'; 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp';});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void save(@T@_I v, Str_I varname, Mat pfile)
+inline void save(@T@_I v, Str_I varname, Mat mat)
 {
 	Long i, n = v.size();
 	mxArray *pv;
@@ -76,7 +124,7 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
 	for (i = 0; i < n; ++i)
 		ppv[i] = v[i];
 //% end
-	matPutVariable(pfile, varname.c_str(), pv);
+	matPutVariable(mat.m_p, varname.c_str(), pv);
 	mxDestroyArray(pv);
 }
 //%---------------------
@@ -87,7 +135,7 @@ inline void save(@T@_I v, Str_I varname, Mat pfile)
 //%    'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void save(@T@_I a, Str_I varname, Mat pfile)
+inline void save(@T@_I a, Str_I varname, Mat mat)
 {
 	Long i, j, m, n;
 	mxArray *pa;
@@ -120,7 +168,7 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
             for (j = 0; j < n; ++j)
                 ppa[i + m * j] = a(i,j);
 //% end
-	matPutVariable(pfile, varname.c_str(), pa);
+	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
 }
 //%---------------------
@@ -129,7 +177,7 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 //%   'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void save(@T@_I a, Str_I varname, Mat pfile)
+inline void save(@T@_I a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa;
@@ -164,7 +212,7 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
                 for (k = 0; k < q; ++k)
                     ppa[i + m*j + mn*k] = a(i,j,k);
 //% end
-	matPutVariable(pfile, varname.c_str(), pa);
+	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
 }
 //%---------------------
@@ -172,10 +220,10 @@ inline void save(@T@_I a, Str_I varname, Mat pfile)
 //% tem('matload(s)', {'Char'; 'Uchar'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
 //%---------------------
 //% Ts = varargin{:};
-inline void load(@Ts@_O s, Str_I varname, Mat pfile)
+inline void load(@Ts@_O s, Str_I varname, Mat mat)
 {
 	mxArray *ps;
-    ps = matGetVariable(pfile, varname.c_str());
+    ps = matGetVariable(mat.m_p, varname.c_str());
 //% if is_Char(Ts)
     if (!mxIsChar(ps))
 //% elseif is_Uchar(Ts)
@@ -206,11 +254,11 @@ inline void load(@Ts@_O s, Str_I varname, Mat pfile)
 //%     'DvecChar'; 'DvecUchar'; 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void load(@T@_O v, Str_I varname, Mat pfile)
+inline void load(@T@_O v, Str_I varname, Mat mat)
 {
 	Long i, n;
 	mxArray *pv;
-    pv = matGetVariable(pfile, varname.c_str());
+    pv = matGetVariable(mat.m_p, varname.c_str());
 //% if is_Char(Ts)
     if (!mxIsChar(pv))
 //% elseif is_Uchar(Ts)
@@ -253,10 +301,10 @@ inline void load(@T@_O v, Str_I varname, Mat pfile)
 //%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void load(@T@_O a, Str_I varname, Mat pfile)
+inline void load(@T@_O a, Str_I varname, Mat mat)
 {
 	Long i, j, m, n;
-	mxArray *pa = matGetVariable(pfile, varname.c_str());
+	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
 //% if is_Char(Ts)
 	if (!mxIsChar(pa))
 //% elseif is_Uchar(Ts)
@@ -303,10 +351,10 @@ inline void load(@T@_O a, Str_I varname, Mat pfile)
 //% tem('matload(a3)', {'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void load(@T@_O a, Str_I varname, Mat pfile)
+inline void load(@T@_O a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
-	mxArray *pa = matGetVariable(pfile, varname.c_str());
+	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
 //% if is_Llong(Ts)
 	if (!mxIsInt64(pa))
 //% elseif is_Doub(Ts)
