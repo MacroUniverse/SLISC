@@ -371,12 +371,27 @@ inline void copy(MatDoub_O v, Doub_I s)
     vecset(v.p(), s, v.size());
 }
 
+inline void copy(ScmatDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(ScmatComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
 inline void copy(Mat3Doub_O v, Doub_I s)
 {
     vecset(v.p(), s, v.size());
 }
 
 inline void copy(Cmat3Doub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Cmat4Doub_O v, Doub_I s)
 {
     vecset(v.p(), s, v.size());
 }
@@ -710,12 +725,28 @@ inline void copy(VecDoub_O v, VecDoub_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(VecDoub_O v, SvecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(VecComp_O v, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     if (v.size() == 0)
         return;
     veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(VecComp_O v, DvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
 
 inline void copy(VecQdoub_O v, VecQdoub_I v1)
@@ -920,7 +951,31 @@ inline void copy(DvecDoub_O v, DvecDoub_I v1)
     veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
 }
 
+inline void copy(Cmat3Comp_O v, Cmat3Comp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Cmat3Comp_O v, Cmat3Doub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(ScmatDoub_O v, ScmatDoub_I v1)
 {
     assert_same_shape(v, v1);
     if (v.size() == 0)
@@ -991,6 +1046,12 @@ inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
 
 
 inline void copy(CmobdDoub_O lhs, CmobdDoub_I rhs)
+{ copy(lhs.cmat3(), rhs.cmat3()); }
+
+inline void copy(CmobdComp_O lhs, CmobdComp_I rhs)
+{ copy(lhs.cmat3(), rhs.cmat3()); }
+
+inline void copy(CmobdComp_O lhs, CmobdDoub_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
 
 

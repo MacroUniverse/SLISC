@@ -117,6 +117,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //%-----------------------
 
 //% tem('mul(v,obd,v)', {
+//%    'VecComp', 'CmobdDoub', 'VecComp';
 //%    'VecComp', 'CmobdDoub', 'SvecComp';
 //%    'VecInt', 'CmobdInt', 'VecInt'
 //% });

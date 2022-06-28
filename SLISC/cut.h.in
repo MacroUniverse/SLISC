@@ -139,7 +139,10 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 //% end
 //%------------------------
 
-//% tem('cut0', { 'CmatInt'; 'CmatComp'; 'MatInt'; });
+//% tem('cut0', { 'MatInt'; 'CmatInt'; 'CmatDoub';
+//%   'CmatComp'; 'ScmatDoub'; 'ScmatComp';
+//%   'DcmatDoub'; 'DcmatComp';
+//%   'Cmat3Doub'; 'Cmat3Comp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
@@ -230,7 +233,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut0-2', { 'ScmatComp' });
+//% tem('cut0-2', { 'ScmatComp'; 'Cmat3Comp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
@@ -281,7 +284,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1', { 'ScmatComp'; 'MatInt' });
+//% tem('cut1', { 'ScmatComp'; 'MatInt'; 'CmatLlong'; 'Cmat3Comp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut1_type(Tv);
@@ -372,7 +375,7 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1-2', { 'CmatComp' });
+//% tem('cut1-2', { 'CmatLlong'; 'CmatComp' });
 //%----------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -424,7 +427,7 @@ inline @Tsli@_c cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut2', { 'Cmat3Doub' });
+//% tem('cut2', { 'Cmat3Doub'; 'Cmat3Comp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut2_type(Tv);
@@ -452,7 +455,8 @@ inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I j)
 //% end
 //%-----------------------
 
-//% tem('cut01', { 'Cmat3Comp'; 'Cmat3Int'; 'Cmat4Int' });
+//% tem('cut01', { 'Cmat3Comp'; 'Cmat3Int'; 'Cmat3Doub';
+//% 'Cmat3Comp'; 'Scmat3Comp'; 'Cmat4Int'; 'Cmat4Doub' });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut01_type(Tv);
@@ -503,7 +507,7 @@ inline @Tsli@_c cut01(@Tv@_I v, Long_I k, Long_I l)
 //% end
 //%------------------------
 
-//% tem('cut01-2', { 'Cmat3Doub' });
+//% tem('cut01-2', { 'Cmat3Doub'; 'Cmat3Comp' });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Scmat' val_t(T)];
@@ -534,7 +538,7 @@ inline @Tsli@_c cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut01-3', { 'Cmat3Doub' });
+//% tem('cut01-3', { 'Cmat3Doub'; 'Cmat3Comp' });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Dcmat' val_t(T)];

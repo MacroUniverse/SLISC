@@ -1,4 +1,5 @@
 #pragma once
+#ifdef SLS_USE_QUAD_MATH
 #if !defined(__GNUC__) && !defined(__ICC)
 #error quad_math.h only supports g++ compiler or intel compiler
 #endif
@@ -7,8 +8,11 @@
 #include <complex>
 #include <vector>
 #include <iostream>
-#ifdef SLS_USE_QUAD_MATH
 #include <quadmath.h>
+
+#ifdef __ICC
+typedef __float128 _Quad
+#endif
 
 namespace std {
 
@@ -101,7 +105,6 @@ inline complex<__float128> sqrt(const complex<__float128> & x) { return to_Qcomp
 } // namespace std
 
 namespace slisc {
-
 typedef __float128 Qdoub;
 typedef const Qdoub &Qdoub_I;
 typedef Qdoub &Qdoub_O, &Qdoub_IO;

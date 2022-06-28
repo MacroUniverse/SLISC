@@ -121,8 +121,8 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // must use pointer version
 // scalar to container
 //% tem('copy(v,s)', { 'CmatDoub'; 'CmatComp';
-//%  'MatInt'; 'VecQdoub'; 'MatDoub';
-//% 'Mat3Doub'; 'Cmat3Doub' });
+//% 'MatInt'; 'VecQdoub'; 'MatDoub'; 'ScmatDoub'; 'ScmatComp';
+//% 'Mat3Doub'; 'Cmat3Doub'; 'Cmat4Doub'; });
 //%-------------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('vecset', {Ts});
@@ -211,7 +211,9 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'VecInt', 'SvecInt';
 //%   'VecLlong', 'VecLlong';
 //%   'VecDoub', 'VecDoub';
+//%   'VecDoub', 'SvecDoub';
 //%   'VecComp', 'VecComp';
+//%   'VecComp', 'DvecComp';
 //%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub', 'SvecDoub';
 //%   'DvecComp' 'VecComp'
@@ -354,7 +356,9 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 }
 //%-------------------
 
-//% tem('copy(obd,obd)', { 'CmobdDoub', 'CmobdDoub' });
+//% tem('copy(obd,obd)', { 'CmobdDoub', 'CmobdDoub'
+//% 'CmobdComp' 'CmobdComp'
+//% 'CmobdComp' 'CmobdDoub' });
 //%-----------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 //% req('copy(v,v)', {['Cmat3' Ts], ['Cmat3' Ts1]});

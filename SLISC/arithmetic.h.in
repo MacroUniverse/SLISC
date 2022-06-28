@@ -209,7 +209,7 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 //%-------------------------
 
 //% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt';
-//%   'VecQdoub'; 'SvecComp'; 'DvecComp';
+//%   'VecQdoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp';
 //%   'CmatDoub'; 'CmatComp'; 'MatComp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -618,7 +618,8 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%----------------------------
 
-//% tem('flip_vec', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp'; });
+//% tem('flip_vec', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%  'vecLlong'; 'vecDoub'; 'vecComp';});
 //%---------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
 //% if is_dense(Tv)
@@ -698,6 +699,7 @@ inline void trans(@T@_IO v)
 
 //% tem('trans(v,v)', { 'CmatDoub' 'CmatDoub';
 //%    'MatComp' 'CmatComp'
+//%   'ScmatDoub' 'ScmatDoub';
 //%   'CmatQdoub' 'CmatQdoub' });
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -870,10 +872,13 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%   'VecDoub', 'Doub';
 //%   'VecComp', 'Doub';
 //%   'VecComp', 'Comp';
+//%   'SvecDoub', 'Doub';
+//%   'DvecComp', 'Doub';
 //%   'CmatDoub' 'Doub'
 //%   'CmatComp' 'Doub'
 //%   'CmatComp' 'Comp'
-//%   'DcmatComp', 'Doub';
+//%   'DcmatComp' 'Doub'
+//%   'DcmatComp' 'Comp'
 //% });
 //%-------------------
 //% [T, Ts] = varargin{:}; Tsv = val_t(T);
@@ -979,9 +984,11 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% tem('v+=v', { 'VecInt' 'VecInt';
 //%   'VecLlong' 'VecLlong';
 //%   'VecDoub' 'VecDoub';
+//%   'VecDoub' 'SvecDoub';
 //%   'VecComp' 'VecComp';
 //%   'VecComp' 'VecDoub';
 //%   'VecQdoub' 'VecQdoub'
+//%   'SvecDoub' 'VecDoub'
 //%   'SvecDoub' 'SvecDoub'
 //%   'SvecComp' 'SvecComp'
 //%   'DvecComp' 'VecComp'
@@ -1270,6 +1277,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 //% tem('plus(v,v,s)', {
 //%   'VecInt' 'VecInt' 'Int'
 //%   'VecDoub' 'VecDoub' 'Doub'
+//%   'VecComp' 'SvecDoub' 'Doub'
 //%   'VecComp' 'VecComp' 'Doub'
 //%   'VecComp' 'VecComp' 'Comp'
 //%   'DcmatComp' 'DcmatComp' 'Doub'
@@ -1635,7 +1643,12 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% tem('dot', { 'VecDoub' 'VecDoub'
 //%   'VecComp' 'VecDoub'
 //%   'VecComp' 'VecComp'
+//%   'SvecDoub' 'VecDoub'
 //%   'SvecDoub' 'SvecDoub'
+//%   'SvecDoub' 'SvecComp'
+//%   'SvecComp' 'VecComp'
+//%   'DvecComp' 'SvecDoub'
+//%   'Cmat3Comp', 'Jcmat3Comp'
 //%   'Cmat3Comp', 'Cmat3Doub' });
 //%---------------------
 //% [T1, T2] = varargin{:};
@@ -1838,7 +1851,9 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 // matrix-vector multiplication
 //% tem('mul_gen', { 'VecDoub', 'CmatDoub', 'SvecDoub';
 //%   'SvecComp' 'DcmatDoub' 'SvecComp'
+//%   'DvecComp' 'CmatDoub' 'DvecComp'
 //%   'VecComp' 'CmatDoub' 'VecComp'
+//%   'VecComp' 'ScmatDoub' 'VecComp'
 //%    'VecDoub', 'CmatDoub', 'VecDoub' });
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -1898,7 +1913,9 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //%-------------------------
 
 //% tem('mul_sym', { 'VecComp', 'CmatDoub', 'VecComp'
-//%     'VecDoub', 'CmatDoub', 'VecDoub' });
+//%     'VecDoub', 'CmatDoub', 'VecDoub'
+//%     'VecDoub', 'CmatDoub', 'SvecDoub'
+//% });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
@@ -2014,6 +2031,7 @@ inline void uniq_elm(@T@_IO v)
 //% tem('uniq_rows', {
 //% 'CmatInt' 'CmatInt'
 //% 'CmatLlong' 'CmatLlong'
+//% 'CmatLlong' 'ScmatLlong'
 //% 'CmatDoub' 'CmatDoub' });
 //%--------------------
 //% [T, T1] = varargin{:};

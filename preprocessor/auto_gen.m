@@ -2,6 +2,7 @@
 % otherwise, all '.in' files will be processed
 function auto_gen(varargin)
 global tem_db is_batch_mode;
+SLS_USE_QUADMATH = true;
 in_paths = varargin;
 if numel(in_paths) == 1 && strcmp(in_paths{1}(end-2:end), '.in')
     is_batch_mode = false;
@@ -106,9 +107,9 @@ while ~quit
                 temp = ['instantiating template: ' ...
                     tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))];
                 disp(temp);
-                % if has_quad(tem_db(i).param{j,:})
-                %     continue;
-                % end
+                if ~SLS_USE_QUADMATH && has_quad(tem_db(i).param{j,:})
+                    continue;
+                end
                 tem_db(i).out{j} = instantiate(tem_db(i).body, tem_db(i).param{j,:});
                 tem_db(i).done(j) = true; quit = false;
                 if ~is_batch_mode

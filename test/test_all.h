@@ -22,7 +22,6 @@ void test_all()
     cout << "do optional tests? (y/n)" << endl;
     if (getchar() == 'y') {
         SLS_TEST(disp); SLS_TEST(input);
-        cout << "WARNING: test_coulomb() has memory leak from the library itself!" << endl;
     }
     else
         cout << "optional tests skipped." << endl;
