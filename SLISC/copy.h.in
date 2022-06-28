@@ -120,8 +120,13 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // === container interface ===
 // must use pointer version
 // scalar to container
-//% tem('copy(v,s)', { 'CmatDoub'; 'CmatComp';
+//% tem('copy(v,s)', {
+//% 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//% 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp';
+//% 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //% 'MatInt'; 'VecQdoub'; 'MatDoub'; 'ScmatDoub'; 'ScmatComp';
+//% 'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //% 'Mat3Doub'; 'Cmat3Doub'; 'Cmat4Doub'; });
 //%-------------------------------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -217,6 +222,7 @@ inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub', 'SvecDoub';
 //%   'SvecDoub', 'DvecDoub';
+//%   'SvecComp', 'SvecDoub';
 //%   'SvecComp', 'DvecComp';
 //%   'DvecComp' 'VecComp'
 //%   'DvecComp' 'SvecComp'
@@ -295,7 +301,8 @@ inline void copy(@T@_O v, @T1@_I v1)
 //%------------------------
 
 // for sparse containers
-//% tem('copy(coo,coo)', { 'Doub', 'Doub' });
+//% tem('copy(coo,coo)', { 'Doub', 'Doub'
+//%    'Comp' 'Doub' });
 //%----------------------------
 //% [T, T1] = varargin{:};
 //% McooT = ['Mcoo', T]; McooT1 = ['Mcoo', T1];

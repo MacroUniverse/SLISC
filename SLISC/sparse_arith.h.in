@@ -6,6 +6,21 @@
 #include "sort.h"
 
 namespace slisc {
+
+//% tem('obd==obd', { 'Comp' 'Comp'
+//%    'Comp' 'Doub'
+//%    'Doub' 'Doub' });
+//%------------------------------
+//% [Ts, Ts1] = varargin{:};
+inline Bool operator==(Cmobd@Ts@_I a, Cmobd@Ts1@_I b)
+{
+//% req('v==v', {['Cmat3' Ts], ['Cmat3' Ts1]});
+    return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
+}
+
+inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
+//%------------------------------
+
 //% tem('mul_cmat_cmat_diag', { 'Comp', 'Doub', 'Comp'; });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -257,7 +272,8 @@ inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new
 //%----------------------------
 
 //% tem('coo*=s', { 'McooDoub', 'Doub'
-//% 'McooComp', 'Doub'; });
+//% 'McooComp', 'Doub';
+//% 'McooComp', 'Imag'; });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 //% req('plus_equals_vs', {val_t(T),Ts});
@@ -265,8 +281,10 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 { times_equals_vs(v.p(), s, v.nnz()); }
 //%------------------------
 
-//% tem('obd*=s', { 'CmobdComp', 'Doub'
-//%   'CmobdDoub' 'Doub' });
+//% tem('obd*=s', {
+//%   'CmobdDoub' 'Doub'
+//%   'CmobdComp' 'Doub'
+//%   'CmobdComp' 'Comp' });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 //% req('v+=s', {['Cmat3' val_t(T)], Ts});

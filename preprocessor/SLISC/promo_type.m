@@ -29,7 +29,7 @@ elseif is_comp(T1) && is_real(T2)
     elseif is_Ldoub(T2)
         ret = 'Lcomp'; return;
     end
-elseif is_Imat(T1) && is_comp(T2)
+elseif is_Imag(T1) && is_comp(T2)
     if num1 - num2 <= 20
         ret = T2; return;
     elseif is_Doub(val_t(T1))

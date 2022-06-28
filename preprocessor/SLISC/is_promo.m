@@ -26,8 +26,7 @@ elseif (is_imag(T2))
         if (num1 >= num2)
             ret = true; return;
         end
-    end
-    if (is_comp(T1))
+    elseif (is_comp(T1))
         if (num2 - num1 >= 20)
             ret = true; return;
         end

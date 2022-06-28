@@ -346,6 +346,71 @@ inline void copy(DvecComp_O v, Comp_I s)
     vecset(v.p(), s, v.size(), v.step());
 }
 
+inline void copy(VecInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(VecLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(VecDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(VecComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecComp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(DvecInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size(), v.step());
+}
+
+inline void copy(DvecLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size(), v.step());
+}
+
+inline void copy(DvecDoub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size(), v.step());
+}
+
+inline void copy(CmatInt_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(CmatLlong_O v, Llong_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
 inline void copy(CmatDoub_O v, Doub_I s)
 {
     vecset(v.p(), s, v.size());
@@ -381,12 +446,27 @@ inline void copy(ScmatComp_O v, Comp_I s)
     vecset(v.p(), s, v.size());
 }
 
-inline void copy(Mat3Doub_O v, Doub_I s)
+inline void copy(Cmat3Int_O v, Int_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Cmat3Llong_O v, Llong_I s)
 {
     vecset(v.p(), s, v.size());
 }
 
 inline void copy(Cmat3Doub_O v, Doub_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Cmat3Comp_O v, Comp_I s)
+{
+    vecset(v.p(), s, v.size());
+}
+
+inline void copy(Mat3Doub_O v, Doub_I s)
 {
     vecset(v.p(), s, v.size());
 }
@@ -397,41 +477,6 @@ inline void copy(Cmat4Doub_O v, Doub_I s)
 }
 
 inline void copy(MatComp_O v, Comp_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(VecInt_O v, Int_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(VecLlong_O v, Llong_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(VecDoub_O v, Doub_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(VecComp_O v, Comp_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(CmatInt_O v, Int_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(CmatLlong_O v, Llong_I s)
-{
-    vecset(v.p(), s, v.size());
-}
-
-inline void copy(Cmat3Comp_O v, Comp_I s)
 {
     vecset(v.p(), s, v.size());
 }
@@ -448,11 +493,6 @@ inline void copy(DcmatDoub_O v, Doub_I s)
     Long N1 = v.n0(), N2 = v.n1();
     for (Long j = 0; j < N2; ++j)
         vecset(&v(0, j), s, N1);
-}
-
-inline void copy(Cmat3Int_O v, Int_I s)
-{
-    vecset(v.p(), s, v.size());
 }
 
 
@@ -773,6 +813,14 @@ inline void copy(SvecDoub_O v, DvecDoub_I v1)
     veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
 
+inline void copy(SvecComp_O v, SvecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(SvecComp_O v, DvecComp_I v1)
 {
     assert_same_shape(v, v1);
@@ -1052,6 +1100,22 @@ inline void copy(McooDoub_O v, McooDoub_I v1)
         return;
     if (v.p() == v1.p())
         SLS_ERR("self assignment is forbidden!");
+    Long Nnz = v1.nnz();
+    v.resize(Nnz);
+    veccpy(v.p(), v1.p(), Nnz);
+    veccpy(v.row_p(), v1.row_p(), Nnz);
+    veccpy(v.col_p(), v1.col_p(), Nnz);
+}
+
+inline void copy(McooComp_O v, McooDoub_I v1)
+{
+#ifdef SLS_CHECK_SHAPES
+    assert_same_shape(v, v1);
+    if (v.capacity() < v1.nnz())
+        SLS_ERR("not enough capacity!");
+#endif
+    if (v1.nnz() == 0)
+        return;
     Long Nnz = v1.nnz();
     v.resize(Nnz);
     veccpy(v.p(), v1.p(), Nnz);

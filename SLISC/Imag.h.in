@@ -71,7 +71,7 @@ inline @T@ abs(@Timag@_I val)
 const Imag I(1);
 
 // imag +-*/ imag
-//% tem('+Imag', {
+//% tem('imag+imag', {
 //%     'Float', 'Float';
 //%     'Float', 'Doub';
 //%     'Float', 'Ldoub';
@@ -88,24 +88,16 @@ const Imag I(1);
 //% T = promo_type(T1, T2);
 //% Ti = add_imag(T);
 inline @Ti@ operator+(@Ti1@_I z1, @Ti2@_I z2)
-{
-    return @Ti@(imag(z1) + imag(z2));
-}
+{ return @Ti@(imag(z1) + imag(z2)); }
 
 inline @Ti@ operator-(@Ti1@_I z1, @Ti2@_I z2)
-{
-    return @Ti@(imag(z1) + imag(z2));
-}
+{ return @Ti@(imag(z1) - imag(z2)); }
 
 inline @T@ operator*(@Ti1@_I z1, @Ti2@_I z2)
-{
-    return @T@(-imag(z1) * imag(z2));
-}
+{ return -imag(z1) * imag(z2); }
 
 inline @T@ operator/(@Ti1@_I z1, @Ti2@_I z2)
-{
-    return @T@(imag(z1) / imag(z2));
-}
+{ return imag(z1) / imag(z2); }
 //%-----------------
 
 // TODO: use template

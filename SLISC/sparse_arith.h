@@ -6,6 +6,29 @@
 #include "sort.h"
 
 namespace slisc {
+
+inline Bool operator==(CmobdComp_I a, CmobdComp_I b)
+{
+    return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
+}
+
+inline Bool operator!=(CmobdComp_I a, CmobdComp_I b) { return !(a == b); }
+
+inline Bool operator==(CmobdComp_I a, CmobdDoub_I b)
+{
+    return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
+}
+
+inline Bool operator!=(CmobdComp_I a, CmobdDoub_I b) { return !(a == b); }
+
+inline Bool operator==(CmobdDoub_I a, CmobdDoub_I b)
+{
+    return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
+}
+
+inline Bool operator!=(CmobdDoub_I a, CmobdDoub_I b) { return !(a == b); }
+
+
 inline void mul_cmat_cmat_diag(Comp *c, const Doub *a, Long_I Nr, Long_I Nc, const Comp *b)
 {
     for (Long i = 0; i < Nc; ++i) {
@@ -709,11 +732,17 @@ inline void operator*=(McooDoub_IO v, Doub_I s)
 inline void operator*=(McooComp_IO v, Doub_I s)
 { times_equals_vs(v.p(), s, v.nnz()); }
 
+inline void operator*=(McooComp_IO v, Imag_I s)
+{ times_equals_vs(v.p(), s, v.nnz()); }
+
+
+inline void operator*=(CmobdDoub_IO v, Doub_I s)
+{ v.cmat3() *= s; }
 
 inline void operator*=(CmobdComp_IO v, Doub_I s)
 { v.cmat3() *= s; }
 
-inline void operator*=(CmobdDoub_IO v, Doub_I s)
+inline void operator*=(CmobdComp_IO v, Comp_I s)
 { v.cmat3() *= s; }
 
 

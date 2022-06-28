@@ -803,10 +803,11 @@ inline void her(@T@_O v, @T1@_I v1)
 { trans(v, v1); conj(v); }
 //%-------------------------
 
-//% tem('plus_equals_vs', { 'Comp', 'Doub' });
+//% tem('plus_equals_vs', { 'Int' 'Int'; 'Llong' 'Llong';
+//% 'Doub' 'Doub'; 'Comp', 'Doub'; 'Comp' 'Comp'; 'Comp' 'Imag' });
 //%-------------------
 //% [T, Ts] = varargin{:};
-//% if ~is_promo(T, Ts)
+//% if ~is_promo(T, Ts) || ~strcmp(rm_comp(T),rm_comp(Ts))
 //%     error('illegal types');
 //% end
 inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
@@ -856,16 +857,12 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
     for (Long i = 0; i < N*step; i += step)
         v[i] /= s;
 }
-//% elseif is_fpt(Ts) || is_comp(Ts)
+//% elseif is_fpt(Ts) || is_comp(Ts) || is_imag(Ts)
 inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
-{
-    times_equals_vs(v, (@Ts@)1/s, N);
-}
+{ times_equals_vs(v, @num(1,rm_comp(Ts))@/s, N); }
 
 inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
-{
-    times_equals_vs(v, (@Ts@)1/s, N, step);
-}
+{ times_equals_vs(v, @num(1,rm_comp(Ts))@/s, N, step); }
 //% else
 //%     disp(T); disp(Ts);
 //%     error('not implemented (10)');
@@ -996,6 +993,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub' 'VecDoub'
 //%   'SvecDoub' 'SvecDoub'
+//%   'SvecComp' 'VecDoub'
 //%   'SvecComp' 'SvecComp'
 //%   'DvecDoub' 'SvecDoub'
 //%   'DvecComp' 'VecComp'
