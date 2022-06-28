@@ -276,6 +276,14 @@ inline void matcpy(Comp *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld,
     }
 }
 
+inline void matcpy(Doub *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
+{
+    for (Long j = 0; j < Nsd; ++j) {
+        veccpy(v, v1, Nld);
+        v += lda; v1 += lda1;
+    }
+}
+
 inline void matcpy(Int *v, Long_I lda, const Int *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
     for (Long j = 0; j < Nsd; ++j) {
@@ -285,14 +293,6 @@ inline void matcpy(Int *v, Long_I lda, const Int *v1, Long_I lda1, Long_I Nld, L
 }
 
 inline void matcpy(Llong *v, Long_I lda, const Llong *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
-{
-    for (Long j = 0; j < Nsd; ++j) {
-        veccpy(v, v1, Nld);
-        v += lda; v1 += lda1;
-    }
-}
-
-inline void matcpy(Doub *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
     for (Long j = 0; j < Nsd; ++j) {
         veccpy(v, v1, Nld);
@@ -957,64 +957,6 @@ inline void copy(SvecComp_O v, SvecComp_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
-inline void copy(DcmatInt_O v, DcmatInt_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
-}
-
-inline void copy(DcmatLlong_O v, DcmatLlong_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
-}
-
-inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
-}
-
-inline void copy(DcmatComp_O v, DcmatComp_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
-}
-
-inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    // slow
-    if (v1.size() != 0)
-    for (Long k = 0; k < v.n2(); ++k)
-        for (Long j = 0; j < v.n1(); ++j)
-            for (Long i = 0; i < v.n0(); ++i)
-                v(i, j, k) = v1(i, j, k);
-}
-
-inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    // slow
-    if (v1.size() != 0)
-    for (Long k = 0; k < v.n2(); ++k)
-        for (Long j = 0; j < v.n1(); ++j)
-            for (Long i = 0; i < v.n0(); ++i)
-                v(i, j, k) = v1(i, j, k);
-}
-
 inline void copy(DvecInt_O v, DvecInt_I v1)
 {
     assert_same_shape(v, v1);
@@ -1055,6 +997,14 @@ inline void copy(Cmat3Comp_O v, Cmat3Doub_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
 {
     assert_same_shape(v, v1);
@@ -1085,6 +1035,56 @@ inline void copy(CmatComp_O v, ScmatComp_I v1)
     if (v.size() == 0)
         return;
     veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(DcmatInt_O v, DcmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+inline void copy(DcmatLlong_O v, DcmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+inline void copy(DcmatComp_O v, DcmatComp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    // slow
+    if (v1.size() != 0)
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
+                v(i, j, k) = v1(i, j, k);
+}
+
+inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    // slow
+    if (v1.size() != 0)
+    for (Long k = 0; k < v.n2(); ++k)
+        for (Long j = 0; j < v.n1(); ++j)
+            for (Long i = 0; i < v.n0(); ++i)
+                v(i, j, k) = v1(i, j, k);
 }
 
 

@@ -1,0 +1,382 @@
+// functions that loop through every element of a container
+#pragma once
+#include "scalar_arith.h"
+#include "compare.h"
+
+namespace slisc {
+
+//% tem('mod_vvs', {
+//%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
+//% });
+//%--------------------------
+//% [T, T1] = varargin{:};
+//% Ts1 = val_t(T1);
+//% req('mod', {Ts1,Ts1});
+inline void mod_vvs(@T@ *v, const @T1@ *v1, @T1@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = mod(v1[i], s);
+}
+//%-------------------------
+
+//% tem('mod(v,v,s)', { 'VecInt' 'VecInt'
+//% 'VecLlong', 'VecLlong' });
+//%--------------------------
+//% [T, T1] = varargin{:};
+//% [Ts,Ts1] = val_t(T,T1);
+//% if ~(is_dense(T) && is_dense(T1) && is_same_major(T, T1) && is_promo(Ts, Ts1))
+//%     error('error types!');
+//% end
+//% req('mod_vvs', {Ts,Ts1});
+inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    mod_vvs(v.p(), v1.p(), s, v.size());
+}
+//%-------------------------
+
+//% tem('real_v', { 'Comp' });
+//%---------------------
+//% T = varargin{:}; Tr = rm_comp(T);
+inline void real_v(@T@ *v, Long_I N)
+{
+    @Tr@ *pr = (@Tr@ *)v;
+    for (Long i = 1; i < 2*N; i += 2)
+        pr[i] = 0;
+}
+
+inline void imag_v(@T@ *v, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = imag(v[i]);
+}
+//%---------------------
+
+//% tem('real_vv', { 'Doub', 'Comp' });
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void real_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = real(v1[i]); 
+}
+
+inline void imag_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = imag(v1[i]); 
+}
+//%---------------------
+
+//% tem('real', { 'VecComp' });
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+//% req('real_v', {Ts});
+inline void real(@T@_IO v)
+{ real_v(v.p(), v.size()); }
+
+inline void imag(@T@_IO v)
+{ imag_v(v.p(), v.size()); }
+//%---------------------
+
+//% tem('real(v,v)', { 'VecDoub', 'VecComp' });
+//%---------------------
+//% [T, T1] = varargin{:};
+//% [Ts, Ts1] = val_t(T, T1);
+//% req('real_vv', {Ts, Ts1});
+inline void real(@T@_O v, @T1@_I v1)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    real_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void imag(@T@_O v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    imag_vv(v.p(), v1.p(), v1.size());
+}
+//%--------------------
+
+//% tem('abs_v', { 'Doub' });
+//%---------------------
+//% T = varargin{:}; Tr = rm_comp(T);
+inline void abs_v(@T@ *v, Long_I N)
+{ // not optimized for real numbers
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v[i]);
+}
+//%---------------------
+
+//% tem('abs_vv', { 'Doub', 'Comp' });
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = abs(v1[i]); 
+}
+//%---------------------
+
+//% tem('abs', { 'VecDoub'; 'VecComp'; 'SvecComp'; });
+//%---------------------
+//% T = varargin{:}; Ts = val_t(T);
+//% req('abs_v', {Ts});
+inline void abs(@T@_IO v)
+{ abs_v(v.p(), v.size()); }
+//%---------------------
+
+//% tem('abs(v,v)', {
+//% 'VecDoub' 'VecDoub'
+//% 'VecDoub', 'VecComp' });
+//%---------------------
+//% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
+inline void abs(@T@_O v, @T1@_I v1)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+//% req('abs_vv', {Ts Ts1});
+    abs_vv(v.p(), v1.p(), v1.size());
+}
+//%--------------------
+
+
+//% tem('conj_v', {
+//%        'Comp';
+//% });
+//%--------------------------
+//% T = varargin{:}; Tr = rm_comp(T);
+inline void conj_v(@T@ *v, Long_I N)
+{
+    @Tr@ *p = (@Tr@ *)v;
+    for (Long i = 1; i < 2*N; i += 2)
+        p[i] = -p[i];
+}
+//%--------------------------
+
+//% tem('conj_vv', {
+//%        'Comp', 'Comp';
+//% });
+//%--------------------------
+//% [T, T1] = varargin{:};
+inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = conj(v1[i]);
+}
+//%-------------------------------
+
+//% tem('conj', { 'VecComp'; 'CmatComp' });
+//%--------------------------
+//% T = varargin{:}; Ts = val_t(T);
+//% if ~(is_comp(Ts))
+//%     error('error types!');
+//% end
+//% if is_dense(T)
+inline void conj(@T@_IO v)
+{ conj_v(v.p(), v.size()); }
+//% elseif is_Dcmat(T)
+inline void conj(@T@_IO v)
+{
+    for (Long j = 0; j < v.n1(); ++j)
+        conj_v(v.p(), v.n0());
+}
+//% end
+//%----------------------------
+
+//% tem('conj(v,v)', { 'CmatComp', 'CmatComp' });
+//%--------------------------
+//% [T, T1] = varargin{:};
+inline void conj(@T@_O v, @T1@_I v1)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    conj_vv(v.p(), v1.p(), v.size());
+}
+//%----------------------------
+
+//% tem('linspace_vss', { 'Doub' });
+//%-----------------------
+//% T = varargin{:};
+inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
+{
+//% if is_integral(T)
+    @T@ delta = (last - first), Nm1 = N-1;
+    for (Long i = 0; i < N; ++i)
+        v[i] = first + delta * i / Nm1;
+//% else
+    @T@ delta = (last - first) / (N - 1);
+    for (Long i = 0; i < N; ++i)
+        v[i] = first + delta * i;
+//% end
+}
+//%-------------------------
+
+//% tem('linspace', { 'VecInt'; 'VecLlong';
+//%  'VecDoub'; 'VecComp'; 'CmatInt'; 'CmatDoub';
+//%  'CmatInt';
+//%   'CmatComp'; 'Cmat4Int'; 'ScmatInt';
+//%  'MatInt'; 'MatComp';
+//%  'Cmat3Doub'; 'Cmat3Doub'
+//% });
+//%---------------------------------
+//% Tv = varargin{:};
+//% Ts = val_t(Tv);
+//% if ~is_dense(Tv)
+//%     error('illegal types');
+//% end
+//% req('linspace_vss', {Ts});
+inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
+{ linspace_vss(v.p(), first, last, v.size()); }
+//%-------------------------
+
+
+//% tem('pow_vs', { 'Doub', 'Llong' });
+//%----------------------------------------------------------
+//% [T, Ts] = varargin{:};
+inline void pow_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v[i], s);
+}
+//%-------------------------
+
+//% tem('pow(v,s)', { 'VecComp', 'Int' });
+//%---------------------
+//% [T, Ts] = varargin{:}; Tvs = val_t(T);
+//% req('pow_vs', {Tvs, Ts});
+inline void pow(@T@_IO v, @Ts@_I s)
+{ pow_vs(v.p(), s, v.size()); }
+//%-------------------------
+
+//% tem('pow_vvs', { 'Doub', 'Doub', 'Int' });
+//%----------------------------------------------------------
+//% [T, T1, Ts] = varargin{:};
+inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = pow(v1[i], s);
+}
+//%-------------------------
+
+//% tem('pow(v,v,s)', {
+//% 'VecDoub', 'VecDoub', 'Int'
+//% 'VecDoub' 'VecDoub' 'Doub'
+//% 'VecComp' 'VecDoub' 'Comp'
+//% 'VecComp' 'VecComp' 'Doub'
+//% 'VecComp' 'VecComp' 'Comp'
+//% });
+//%---------------------
+//% [T, T1, Ts] = varargin{:};
+//% [Tsv,Ts1] = val_t(T,T1,Ts);
+inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+//% req('pow_vvs', {Tsv Ts1 Ts});
+    pow_vvs(v.p(), v1.p(), s, v1.size());
+}
+//%-------------------------
+
+//% tem('dot_vv', { 'Doub', 'Comp' });
+//%----------------------------------------------------------
+//% [T1, T2] = varargin{:};
+//% T = promo_type(T1, T2);
+inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+//% if is_comp(T1)
+    @T@ s = conj(v1[0]) * v2[0];
+//% else
+    @T@ s = v1[0] * v2[0];
+//% end
+    for (Long i = 1; i < N; ++i) {
+//% if is_comp(T1)
+        s += conj(v1[i]) * v2[i];
+//% else
+        s += v1[i] * v2[i];
+//% end
+    }
+    return s;
+}
+//%-------------------------
+
+//% tem('dot', { 'VecDoub' 'VecDoub'
+//%   'VecComp' 'VecDoub'
+//%   'VecComp' 'VecComp'
+//%   'SvecDoub' 'VecDoub'
+//%   'SvecDoub' 'SvecDoub'
+//%   'SvecDoub' 'SvecComp'
+//%   'SvecComp' 'VecComp'
+//%   'DvecComp' 'SvecDoub'
+//%   'Cmat3Comp', 'Jcmat3Comp'
+//%   'Cmat3Comp', 'Cmat3Doub' });
+//%---------------------
+//% [T1, T2] = varargin{:};
+//% [Ts1,Ts2] = val_t(T1,T2);
+//% T = promo_type(Ts1, Ts2);
+inline @T@ dot(@T1@_I v1, @T2@_I v2)
+{
+//% req('assert_same_shape', {T1, T2});
+    assert_same_shape(v1, v2);
+//% if is_dense(T1) && is_dense(T2)
+//%     req('dot_vv', {Ts1,Ts2});
+    return dot_vv(v1.p(), v2.p(), v2.size());
+//% elseif ndim(T1) == 1
+    @T@ sum = 0;
+    for (Long i = 0; i < v1.size(); ++i)
+        sum += conj(v1[i]) * v2[i];
+    return sum;
+//% elseif ndim(T1) == 2
+    @T@ sum = 0;
+    for (Long i = 0; i < v1.n0(); ++i)
+        for (Long j = 0; j < v1.n1(); ++j)
+                sum += conj(v1(i,j)) * v2(i,j);
+    return sum;
+//% elseif ndim(T1) == 3
+    @T@ sum = 0;
+    for (Long i = 0; i < v1.n0(); ++i)
+        for (Long j = 0; j < v1.n1(); ++j)
+            for (Long k = 0; k < v1.n2(); ++k)
+                sum += conj(v1(i,j,k)) * v2(i,j,k);
+    return sum;
+//% else
+//%   error('not implemented (15)!');
+//% end
+}
+//%-------------------------
+
+//% tem('cumsum_vv', { 'Doub', 'Doub' });
+//%---------------------
+//% [T, T1] = varargin{:};
+inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    v[0] = v1[0];
+    for (Long i = 1; i < N; ++i)
+        v[i] = v[i - 1] + v1[i];
+}
+//%-------------------------
+
+//% tem('cumsum', {
+//% 'VecInt' 'VecInt'
+//% 'VecLlong' 'VecLlong'
+//% 'VecDoub' 'VecDoub' });
+//%---------------------
+//% [T, T1] = varargin{:};
+//% req('cumsum_vv', {val_t(T), val_t(T1)});
+inline void cumsum(@T@_O v, @T1@_I v1)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    cumsum_vv(v.p(), v1.p(), v1.size());
+}
+//%-------------------------
+
+} // namespace slisc

@@ -1,0 +1,340 @@
+// functions that loop through every element of a container
+#pragma once
+#include "scalar_arith.h"
+#include "compare.h"
+
+namespace slisc {
+// maximum/minimum element (pointer version)
+// max_v(), min_v()
+//% tem('max_v', {
+//%     'max', 'Doub';
+//%     'min', 'Doub';
+//% });
+//%--------------------------
+//% [fun, T] = varargin{:};
+//% if strcmp(fun, 'max'), oper = '<'; else, oper = '>'; end
+//% if is_real(T) && ~is_Bool(T)
+inline @T@ @fun@_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s @oper@ v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline @T@ @fun@_v(const @T@ *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s @oper@ v[i])
+            s = v[i];
+    }
+    return s;
+}
+
+inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = 1; i < N; ++i) {
+        if (s @oper@ v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+
+inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @T@ s = v[0];
+    for (Long i = step; i < N*step; i += step) {
+        if (s @oper@ v[i]) {
+            s = v[i];  ind = i;
+        }
+    }
+    return s;
+}
+//% else
+//%     error(['max_v: not implemented (4): ' T]);
+//% end
+//%-------------------------
+
+//% tem('max', {'VecInt'; 'VecLlong'; 'VecDoub';
+//%  'SvecInt'; 'SvecLlong'; 'SvecDoub';});
+//%--------------------------
+//% T = varargin{:}; Ts = val_t(T);
+//% req('max_v', { 'max', Ts; 'min', Ts });
+//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(@T@_I v)
+{ return max_v(v.p(), v.size()); }
+
+inline @Ts@ max(Long_O ind, @T@_I v)
+{ return max_v(ind, v.p(), v.size()); }
+
+inline @Ts@ min(@T@_I v)
+{ return min_v(v.p(), v.size()); }
+
+inline @Ts@ min(Long_O ind, @T@_I v)
+{ return min_v(ind, v.p(), v.size()); }
+//% elseif is_Dvec(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(@T@_I v)
+{ return max_v(v.p(), v.size(), v.step()); }
+
+inline @Ts@ max(Long_O ind, @T@_I v)
+{ return max_v(v.p(), v.size(), v.step()); }
+
+inline @Ts@ min(@T@_I v)
+{ return min_v(v.p(), v.size(), v.step()); }
+
+inline @Ts@ min(Long_O ind, @T@_I v)
+{ return min_v(v.p(), v.size(), v.step()); }
+//% else
+//%     error(['max: not implemented (5): ' T]);
+//% end
+//%-------------------------
+
+//% tem('max_abs_v', { 'Doub' });
+//%------------------------------
+//% T = varargin{:};
+//% Tr = rm_comp(T);
+inline @Tr@ max_abs_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tr@ s = abs(v[0]), val;
+    for (Long i = 1; i < N; ++i) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+
+inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tr@ s = abs(v[0]), val;
+    for (Long i = step; i < N*step; i += step) {
+        val = abs(v[i]);
+        if (s < val)
+            s = val;
+    }
+    return s;
+}
+//%-------------------------
+
+//% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt';
+//%   'VecQdoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp';
+//%   'CmatDoub'; 'CmatComp'; 'MatComp'; });
+//%------------------------------
+//% T = varargin{:}; Ts = val_t(T);
+//% Tr = rm_comp(Ts);
+//% req('max_abs_v', { Ts });
+//% if is_dense(T)
+inline @Tr@ max_abs(@T@_I v)
+{
+    return max_abs_v(v.p(), v.size());
+}
+//% elseif is_Dvec(T)
+inline @Tr@ max_abs(@T@_I v)
+{
+    return max_abs_v(v.p(), v.size(), v.step());
+}
+//% else
+//%     error('Not implemented!');
+//% end
+//%--------------------------
+
+// sum of absolute values
+//% tem('sum_abs_v', { 'Int'; 'Llong'; 'Doub'; 'Comp' });
+//%--------------------------
+//% T = varargin{:};
+//% % decide return type
+//% if is_integral(T)
+//%     Tr = 'Llong';
+//% elseif is_fpt(T) || is_comp(T)
+//%     Tr = rm_comp(T);
+//% else
+//%     error('not implemented (1)!');
+//% end
+inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tr@ s = abs(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s += abs(v[i]);
+    return s;
+}
+//%---------------------------
+
+// sum of absolute values
+//% tem('sum_abs', {'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp'; });
+//%--------------------------
+//% T = varargin{:}; Ts = val_t(T);
+//% if is_integral(Ts)
+//%     Tr = 'Llong';
+//% elseif is_fpt(Ts) || is_comp(Ts)
+//%     Tr = rm_comp(Ts);
+//% else
+//%     error(['sum_abs: not implemented (2): ' T]);
+//% end
+//% if is_dense(T)
+//% req('sum_abs_v', {Ts});
+inline @Tr@ sum_abs(@T@_I v)
+{ return sum_abs_v(v.p(), v.size()); }
+//% else
+//%     error('sum_abs: not implemented (3)!');
+//% end
+//%---------------------------
+
+//% tem('sum_abs_bool', {'VecBool'});
+//%--------------------------
+//% T = varargin{:};
+inline Long sum_abs(@T@_I v)
+{
+    Long N = v.size();
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    Long s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+//%--------------------------
+
+//% tem('sum_v', { 'Doub' });
+//%--------------------
+//% T = varargin{:};
+//% if is_integral(T)
+//%     Tret = 'Llong';
+//% else
+//%     Tret = T;
+//% end
+inline @Tret@ sum_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tret@ s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s += v[i];
+    return s;
+}
+
+inline @Tret@ prod_v(const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N <= 0) SLS_ERR("illegal length!");
+#endif
+    @Tret@ s = v[0];
+    for (Long i = 1; i < N; ++i)
+        s *= v[i];
+    return s;
+}
+//%------------------------
+
+//% tem('sum', { 'VecInt'; 'VecLlong';
+//%   'VecDoub'; 'VecComp'; 'CmatDoub'; 'CmatComp'; 'MatComp'; });
+//%----------------
+//% T = varargin{:}; Ts = val_t(T);
+//% if is_integral(Ts)
+//%     Tret = 'Llong';
+//% else
+//%     Tret = Ts;
+//% end
+//% req('sum_v', {Ts});
+inline @Tret@ sum(@T@_I v)
+{ return sum_v(v.p(), v.size()); }
+
+inline @Tret@ prod(@T@_I v)
+{ return prod_v(v.p(), v.size()); }
+//%-----------------
+
+//% tem('norm2', { 'VecDoub'; 'VecComp';
+//% 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'CmatDoub'; 'CmatComp';
+//% 'MatDoub'; 'MatComp';
+//% 'ScmatComp'; 'DcmatComp'; 'Mat3Doub'; 'Mat3Comp'; 'Cmat3Comp'; });
+//%-------------------------------
+//% T = varargin{:};
+//% Ts = val_t(T);
+//% Tr = rm_comp(Ts);
+//% if is_dense(T) || is_Dvec(T)
+inline @Tr@ norm2(@T@_I v)
+{
+    Long N = v.size();
+    @Tr@ s2 = abs2(v[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i]);
+    return s2;
+}
+
+inline @Tr@ norm2_dif(@T@_I v, @T@_I v1)
+{
+    Long N = v.size();
+    @Tr@ s2 = abs2(v[0] - v1[0]);
+    for (Long i = 1; i < N; ++i)
+        s2 += abs2(v[i] - v1[i]);
+    return s2;
+}
+//% elseif is_Dcmat(T)
+inline @Tr@ norm2(@T@_I a)
+{
+    const @Ts@ *p = a.p();
+    Long Nr = a.n0(), lda = a.lda();
+    @Tr@ s2 = 0;
+    for (Long j = 0; j < a.n1(); ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            s2 += abs2(p[i]);
+        p += lda;
+    }
+    return s2;
+}
+
+inline @Tr@ norm2_dif(@T@_I a, @T@_I a1)
+{
+    const @Ts@ *p = a.p(), *p1 = a1.p();
+    Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
+    @Tr@ s2 = 0;
+    for (Long j = 0; j < a.n1(); ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            s2 += abs2(p[i] - p1[i]);
+        p += lda; p1 += lda1;
+    }
+    return s2;
+}
+//% else
+//%     error('not implemented (6)!');
+//% end
+inline @Tr@ norm(@T@_I v)
+{
+    return sqrt(norm2(v));
+}
+
+inline @Tr@ norm_dif(@T@_I v, @T@_I v1)
+{
+    return sqrt(norm2_dif(v, v1));
+}
+//%-------------------------
+} // namespace slisc

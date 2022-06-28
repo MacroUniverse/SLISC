@@ -1,0 +1,295 @@
+// functions that loop through every element of a container
+#pragma once
+#include "scalar_arith.h"
+
+namespace slisc {
+
+// matrix-vector multiplication, not optimized
+//% tem('mul(v,m,v)', {
+//% 'VecInt' 'CmatInt' 'VecInt'
+//% 'VecComp' 'CmatComp' 'VecComp'
+//% 'SvecComp' 'ScmatComp' 'SvecDoub'
+//% 'DvecComp' 'ScmatDoub' 'DvecComp';
+//% 'VecComp' 'MatComp' 'VecDoub'
+//% 'VecQdoub' 'CmatQdoub' 'VecQdoub' });
+//%-------------------------------
+//% [T,T1,T2] = varargin{:};
+//% [Ts,Ts1,Ts2] = val_t(T,T1,T2);
+//% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
+//%     error('illegal type!');
+//% end
+//% if ndim(T) ~= 1 || ndim(T1) ~= 2 || ndim(T2) ~= 1
+//%     error('illegal dim!');
+//% end
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+    Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+//% if is_rmajor(T1)
+    for (Long i = 0; i < Nr; ++i) {
+        y[i] = a(i, 0) * x[0];
+        for (Long j = 1; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+//% else
+    for (Long i = 0; i < Nr; ++i)
+        y[i] = a(i, 0) * x[0];
+    for (Long j = 1; j < Nc; ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] += a(i, j) * x[j];
+    }
+//% end
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
+{
+    Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+    if (Nc != x.size() || y.size() != Nr)
+        SLS_ERR("illegal shape!");
+#endif
+    // y = beta/alpha *y
+    if (beta == 0) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] = 0;
+    }
+    else {
+        @Ts@ b_a = beta/alpha;
+        if (b_a != 1) {
+            for (Long i = 0; i < Nr; ++i)
+                y[i] *= b_a;
+        }
+    }
+    // y += A*x
+//% if is_rmajor(T1)
+    for (Long i = 0; i < Nr; ++i) {
+        for (Long j = 0; j < Nc; ++j)
+            y[i] += a(i, j) * x[j];
+    }
+//% else
+    for (Long j = 0; j < Nc; ++j) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] += a(i, j) * x[j];
+    }
+//% end
+    // y *= alpha
+    if (alpha != 1) {
+        for (Long i = 0; i < Nr; ++i)
+            y[i] *= alpha;
+    }
+}
+//%-------------------------
+
+//% tem('mul(v,v,m)', { 'VecComp', 'VecDoub', 'MatComp' });
+//%-------------------------------
+//% [T,T1,T2] = varargin{:};
+//% [Ts,Ts1,Ts2] = val_t(T,T1,T2);
+//% if ~(is_promo(Ts, Ts1) && is_promo(Ts, Ts2));
+//%     error('illegal type!');
+//% end
+//% if ndim(T) ~= 1 || ndim(T1) ~= 1 || ndim(T2) ~= 2
+//%     error('illegal dim!');
+//% end
+inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
+{
+    Long Nr_a = a.n0(), Nc_a = a.n1();
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n0() || y.size() != Nc_a)
+        SLS_ERR("illegal shape!");
+#endif
+//% req('vecset', {Ts});
+    vecset(y.p(), 0, Nc_a);
+    for (Long j = 0; j < Nc_a; ++j) {
+        for (Long i = 0; i < Nr_a; ++i)
+            y[j] += x[i] * a(i, j);
+    }
+}
+//%-----------------------------
+
+//% tem('mul(m,m,m)', {
+//% 'CmatComp' 'CmatComp' 'MatComp'
+//% 'CmatComp', 'CmatComp', 'CmatComp'
+//% 'CmatComp', 'CmatComp', 'CmatDoub' });
+//%-------------------------------
+//% [T,T1,T2] = varargin{:};
+//% if ndim(T) == 2 && ndim(T1) == 2 && ndim(T2) == 2
+inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+{
+    Long Nr_a = a.n0(), Nc_a = a.n1(), Nc_x = x.n1();
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.n0() || y.n0() != Nr_a || y.n1() != Nc_x)
+        SLS_ERR("illegal shape!");
+#endif
+//% req('vecset', {val_t(T)});
+    vecset(y.p(), 0, Nr_a*Nc_x);
+    for (Long i = 0; i < Nr_a; ++i) {
+        for (Long j = 0; j < Nc_x; ++j) {
+            for (Long k = 0; k < Nc_a; ++k)
+                y(i, j) += a(i, k) * x(k, j);
+        }
+    }
+}
+//% else
+//%     error('not implemented (16)');
+//% end
+//%-------------------------
+
+// matrix-vector multiplication
+//% tem('mul_gen', { 'VecDoub', 'CmatDoub', 'SvecDoub';
+//%   'VecComp' 'CmatDoub' 'VecComp'
+//%   'VecComp' 'ScmatDoub' 'VecComp'
+//%   'VecDoub', 'CmatDoub', 'VecDoub'
+//%   'SvecComp' 'ScmatDoub' 'DvecComp'
+//%   'SvecComp' 'ScmatComp' 'DvecComp'
+//%   'SvecComp' 'ScmatComp' 'SvecComp'
+//%   'SvecComp' 'DcmatDoub' 'SvecComp'
+//%   'DvecComp' 'ScmatDoub' 'SvecComp'
+//%   'DvecComp' 'ScmatComp' 'SvecComp'
+//%   'DvecComp' 'CmatDoub' 'DvecComp' });
+//%------------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
+//% if is_dense_vec(Ty)
+//%     incy =  '1';
+//% else
+//%     incy = 'y.step()';
+//% end
+//% if is_dense_mat(Ta)
+//%     lda = 'a.n0()';
+//% else
+//%     lda = 'a.lda()';
+//% end
+//% if is_dense_vec(Tx)
+//%     incx = '1';
+//% else
+//%     incx = 'x.step()';
+//% end
+//% if is_cmajor(Ta)
+//%     layout = 'CblasColMajor';
+//% else
+//%     layout = 'CblasRowMajor';
+//% end
+// y = alpha*A*x + beta*y
+inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n1() || y.size() != a.n0())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+//% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
+    cblas_sgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
+//% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+    cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
+//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
+    cblas_zgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), &alpha, a.p(),
+        @lda@, x.p(), @incx@, &beta, y.p(), @incy@);
+//% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
+    // do real part
+    cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
+    // do imag part
+    cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
+//% else
+//%     error('not implemented (17)!');
+//% end
+#else
+//% req('mul(v,m,v)', {Ty, Ta, Tx});
+    mul(y, a, x, alpha, beta);
+#endif
+}
+//%-------------------------
+
+//% tem('mul_sym', { 'VecComp', 'CmatDoub', 'VecComp'
+//%     'VecDoub', 'CmatDoub', 'VecDoub'
+//%     'VecDoub', 'CmatDoub', 'SvecDoub'
+//% });
+//%--------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
+//% if is_dense_vec(Ty)
+//%     incy =  '1';
+//% else
+//%     incy = 'y.step()';
+//% end
+//% if is_dense_mat(Ta)
+//%     lda = 'a.n0()';
+//% else
+//%     lda = 'a.lda()';
+//% end
+//% if is_dense_vec(Tx)
+//%     incx = '1';
+//% else
+//%     incx = 'x.step()';
+//% end
+//% if is_cmajor(Ta)
+//%     layout = 'CblasColMajor';
+//% else
+//%     layout = 'CblasRowMajor';
+//% end
+// y = alpha*A*x + beta*y
+inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
+        SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+//% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
+    cblas_ssymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
+//% elseif is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+    cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
+        @lda@, x.p(), @incx@, beta, y.p(), @incy@);
+//% elseif is_Comp(Tsy) && is_Doub(Tsa) && is_Comp(Tsx)
+    // do real part
+    cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
+    // do imag part
+    cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
+        @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
+//% else
+//%     error('not implemented (18)!');
+//% end
+#else
+    SLS_ERR("not implemented!");
+#endif
+}
+//%--------------------------------
+
+//% tem('mul_gen(m,m,m)', { 'ScmatComp', 'ScmatDoub', 'CmatComp' });
+//%--------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+//% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
+inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.n0() || y.n0() != a.n0() || y.n1() != x.n1())
+        SLS_ERR("illegal shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+//% if is_Doub(Tsy) && is_Doub(Tsa) && is_Doub(Tsx)
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n0(), x.n1(), a.n1(), 1, (Doub*)a.p(), a.n0(), (Doub*)x.p(), a.n1(), 0, (Doub*)y.p(), a.n0());
+//% elseif is_Comp(Tsy) && is_Comp(Tsa) && is_Comp(Tsx)
+        Comp alpha(1,0), beta(0,0);
+        cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, a.n0(), x.n1(), a.n1(), &alpha, a.p(), a.n0(), x.p(), a.n1(), &beta, y.p(), a.n0());
+//% else
+        SLS_WARN("not implemented with cBLAS, using slow version");
+        mul(y, a, x);
+//% end
+#else
+//% req('mul(m,m,m)', {Ty, Ta, Tx});
+    mul(y, a, x);
+#endif
+}
+//%--------------------------------
+
+} // namespace slisc

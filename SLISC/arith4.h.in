@@ -1,0 +1,785 @@
+// element-wise +, -, *, /
+#pragma once
+#include "scalar_arith.h"
+#include "compare.h"
+
+namespace slisc {
+
+//% tem('plus_equals_vs', { 'Int' 'Int'; 'Llong' 'Llong';
+//% 'Doub' 'Doub'; 'Comp', 'Doub'; 'Comp' 'Comp'; 'Comp' 'Imag' });
+//%-------------------
+//% [T, Ts] = varargin{:};
+//% if ~is_promo(T, Ts) || ~strcmp(rm_comp(T),rm_comp(Ts))
+//%     error('illegal types');
+//% end
+inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += s;
+}
+
+inline void plus_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] += s;
+}
+
+inline void minus_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= s;
+}
+
+inline void minus_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] -= s;
+}
+
+inline void times_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= s;
+}
+
+inline void times_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] *= s;
+}
+//% if is_integral(T)
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= s;
+}
+
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
+{
+    for (Long i = 0; i < N*step; i += step)
+        v[i] /= s;
+}
+//% elseif is_fpt(Ts) || is_comp(Ts) || is_imag(Ts)
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N)
+{ times_equals_vs(v, @num(1,rm_comp(Ts))@/s, N); }
+
+inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
+{ times_equals_vs(v, @num(1,rm_comp(Ts))@/s, N, step); }
+//% else
+//%     disp(T); disp(Ts);
+//%     error('not implemented (10)');
+//% end
+//%-------------------------
+
+//% tem('v+=s', {
+//%   'VecInt', 'Int';
+//%   'VecLlong', 'Llong';
+//%   'VecDoub', 'Doub';
+//%   'VecComp', 'Doub';
+//%   'VecComp', 'Comp';
+//%   'SvecDoub', 'Doub';
+//%   'DvecComp', 'Doub';
+//%   'CmatDoub' 'Doub'
+//%   'CmatComp' 'Doub'
+//%   'CmatComp' 'Comp'
+//%   'DcmatComp' 'Doub'
+//%   'DcmatComp' 'Comp'
+//% });
+//%-------------------
+//% [T, Ts] = varargin{:}; Tsv = val_t(T);
+//% if ~is_promo(Tsv, Ts)
+//%     error('illegal type!');
+//% end
+//% req('plus_equals_vs', {Tsv,Ts});
+//% if is_dense(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{ plus_equals_vs(v.p(), s, v.size()); }
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{ minus_equals_vs(v.p(), s, v.size()); }
+
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{ times_equals_vs(v.p(), s, v.size()); }
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{ divide_equals_vs(v.p(), s, v.size()); }
+//% elseif is_Dvec(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{ plus_equals_vs(v.p(), s, v.size(), v.step()); }
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{ minus_equals_vs(v.p(), s, v.size(), v.step()); }
+
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{ times_equals_vs(v.p(), s, v.size(), v.step()); }
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{ divide_equals_vs(v.p(), s, v.size(), v.step()); }
+//% elseif is_Dcmat(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n1(); ++j)
+        plus_equals_vs(&v(0,j), s, v.n0());
+}
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n1(); ++j)
+        minus_equals_vs(&v(0,j), s, v.n0());
+}
+
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n1(); ++j)
+        times_equals_vs(&v(0,j), s, v.n0());
+}
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{
+    for (Long j = 0; j < v.n1(); ++j)
+        divide_equals_vs(&v(0,j), s, v.n0());
+}
+//% elseif is_Dvec(T) && is_scalar(Ts)
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{
+    times_equals_vs(v.p(), s, v.size(), v.step());
+}
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{
+    divide_equals_vs(v.p(), s, v.size(), v.step());
+}
+//% else
+//%     disp(T); disp(Ts);
+//%     error('not implemented (11)');
+//% end
+//%-------------------------
+
+//% tem('plus_equals_vv', { 'Comp', 'Doub' });
+//%-------------------
+//% [T, T1] = varargin{:};
+//% if ~is_promo(T, T1)
+//%     error('illegal types');
+//% end
+inline void plus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] += v1[i];
+}
+
+inline void minus_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] -= v1[i];
+}
+
+inline void times_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] *= v1[i];
+}
+
+inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] /= v1[i];
+}
+//%-------------------------
+
+//% tem('v+=v', { 'VecInt' 'VecInt';
+//%   'VecLlong' 'VecLlong';
+//%   'VecDoub' 'VecDoub';
+//%   'VecDoub' 'SvecDoub';
+//%   'VecComp' 'VecComp';
+//%   'VecComp' 'VecDoub';
+//%   'VecQdoub' 'VecQdoub'
+//%   'SvecDoub' 'VecDoub'
+//%   'SvecDoub' 'SvecDoub'
+//%   'SvecComp' 'VecDoub'
+//%   'SvecComp' 'SvecComp'
+//%   'DvecDoub' 'SvecDoub'
+//%   'DvecComp' 'VecComp'
+//%   'DvecComp' 'SvecComp'
+//%   'DvecComp', 'SvecDoub';
+//%   'CmatDoub' 'CmatDoub'
+//%   'CmatComp' 'CmatDoub'
+//%   'CmatComp' 'CmatComp'
+//%   'MatDoub' 'MatDoub'
+//%   'MatComp' 'MatComp'
+//%   'ScmatComp' 'ScmatDoub'
+//%   'ScmatComp' 'ScmatComp'
+//%   'DcmatComp' 'DcmatDoub'
+//%   'Cmat3Comp' 'Cmat3Comp'
+//%   'Mat3Doub' 'Mat3Doub'
+//%   'Mat3Comp' 'Mat3Comp'
+//% });
+//%-------------------
+//% [T, T1] = varargin{:};
+//% Ts = val_t(T); Ts1 = val_t(T1);
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+inline void operator+=(@T@_O &v, @T1@_I v1)
+{
+//%     req('assert_same_shape', {T, T1});
+//%     req('plus_equals_vv', {Ts, Ts1});
+    assert_same_shape(v, v1);
+    plus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator-=(@T@_O &v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    minus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator*=(@T@_O &v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    times_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator/=(@T@_O &v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    divide_equals_vv(v.p(), v1.p(), v1.size());
+}
+//% elseif ndim(T) == 1 && ndim(T1) == 1
+inline void operator+=(@T@_O &v, @T1@_I v1)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] += v1[i];
+}
+
+inline void operator-=(@T@_O &v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] -= v1[i];
+}
+
+inline void operator*=(@T@_O &v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] *= v1[i];
+}
+
+inline void operator/=(@T@_O &v, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    for (Long i = 0; i < v.size(); ++i)
+        v[i] /= v1[i];
+}
+//% elseif ndim(T) == 2 && ndim(T1) == 2
+inline void operator+=(@T@_O &v, @T1@_I v1) // slow!
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
+            v(i, j) += v1(i, j);
+}
+
+inline void operator-=(@T@_O &v, @T1@_I v1) // slow!
+{
+    assert_same_shape(v, v1);
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
+            v(i, j) -= v1(i, j);
+}
+
+inline void operator*=(@T@_O &v, @T1@_I v1) // slow!
+{
+    assert_same_shape(v, v1);
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
+            v(i, j) *= v1(i, j);
+}
+
+inline void operator/=(@T@_O &v, @T1@_I v1) // slow!
+{
+    assert_same_shape(v, v1);
+    for (Long j = 0; j < v.n1(); ++j)
+        for (Long i = 0; i < v.n0(); ++i)
+            v(i, j) /= v1(i, j);
+}
+//% else
+//%     error('not implemented (12)!');
+//% end
+//%-------------------------
+
+//% tem('plus_vvs', { 'Comp', 'Doub', 'Imag'; });
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal types');
+//% end
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void plus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void minus_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * s;
+        v += step1; v1 += step2;
+    }
+}
+
+//% if is_integral(T1) && is_integral(T2)
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / s;
+}
+
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / s;
+        v += step1; v1 += step2;
+    }
+}
+//% elseif is_fpt(T2) || is_comp(T2) || is_imag(T2)
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+{
+    @T2@ inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N);
+}
+
+inline void divide_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, Long_I step1)
+{
+    @T2@ inv_s = 1./s;
+    times_vvs(v, v1, inv_s, N, step, step1);
+}
+//% else
+//%     error(['divide_vvs: not implemented (13): ' T ' ' T1 ' ' T2]);
+//% end
+//%-------------------------
+
+//% tem('minus_vsv', { 'Comp', 'Doub', 'Comp'; });
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal types');
+//% end
+inline void minus_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = s - v1[i];
+}
+
+inline void minus_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
+inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = s / v1[i];
+}
+
+inline void divide_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
+}
+//%-------------------------
+
+//% tem('plus_vvv', { 'Comp', 'Doub', 'Comp'; });
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% if ~is_promo(T, T1) || ~is_promo(T, T2)
+//%     error('illegal type!');
+//% end
+inline void plus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + v2[i];
+}
+
+inline void plus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void minus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - v2[i];
+}
+
+inline void minus_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * v2[i];
+}
+
+inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / v2[i];
+}
+
+inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+//%-------------------------
+
+//% tem('plus(v,v,s)', {
+//%   'VecInt' 'VecInt' 'Int'
+//%   'VecDoub' 'VecDoub' 'Doub'
+//%   'VecComp' 'SvecDoub' 'Doub'
+//%   'VecComp' 'SvecDoub' 'Imag'
+//%   'VecComp' 'VecComp' 'Doub'
+//%   'VecComp' 'VecComp' 'Comp'
+//%   'SvecComp' 'SvecComp' 'Doub'
+//%   'DcmatComp' 'DcmatComp' 'Doub'
+//% });
+//%------------------------------
+//% [T, T1, Ts2] = varargin{:};
+//% [Ts,Ts1] = val_t(T, T1);
+//% if ~is_promo(Ts, Ts1) || ~is_promo(Ts, Ts2)
+//%     error('illegal types');
+//% end
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+//% req('assert_same_shape', {T, T1});
+//% req('plus_vvs', {Ts, Ts1, Ts2});
+    assert_same_shape(v, v1);
+    plus_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ plus(v, v1, s); }
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    minus_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+//% req('minus_vsv', {Ts, Ts1, Ts2});
+    minus_vsv(v.p(), s, v1.p(), v1.size());
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    times_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ times(v, v1, s); }
+
+inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    divide_vvs(v.p(), v1.p(), s, v1.size());
+}
+
+inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    divide_vsv(v.p(), s, v1.p(), v1.size());
+}
+//% elseif ndim(T) == 1 && ndim(T1) == 1
+//%     if is_Dvec(T)
+//%         step = 'v.step()';
+//%     else
+//%         step = '1';
+//%     end
+//%     if is_Dvec(T1)
+//%         step1 = 'v1.step()';
+//%     else
+//%         step1 = '1';
+//%     end
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    plus_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ plus(v, v1, s); }
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    minus_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    minus_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    times_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ times(v, v1, s); }
+
+inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    divide_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+}
+
+inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    divide_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
+}
+//% elseif is_Dcmat(T) && is_Dcmat(T1)
+inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+    @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
+    for (Long j = 0; j < v.n1(); ++j) {
+        plus_vvs(p, p1, s, v.n0());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ plus(v, v1, s); }
+
+inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
+    for (Long j = 0; j < v.n1(); ++j) {
+        minus_vvs(p, p1, s, v.n0());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
+    for (Long j = 0; j < v.n1(); ++j) {
+        minus_vsv(p, s, p1, v.n0());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
+    for (Long j = 0; j < v.n1(); ++j) {
+        times_vvs(p, p1, s, v.n0());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ times(v, v1, s); }
+
+inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+{
+    assert_same_shape(v, v1);
+    @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
+    for (Long j = 0; j < v.n1(); ++j) {
+        divide_vvs(p, p1, s, v.n0());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+
+inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
+{
+    assert_same_shape(v, v1);
+    @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
+    for (Long j = 0; j < v.n1(); ++j) {
+        divide_vsv(p, s, p1, v.n0());
+        p += v.lda(); p1 += v1.lda();
+    }
+}
+//% end
+//%-------------------------
+
+//% tem('plus(v,v,v)', {
+//%   'VecInt' 'VecInt' 'VecInt'
+//%   'VecDoub' 'VecDoub' 'VecDoub'
+//%   'VecComp' 'VecComp' 'VecComp'
+//%   'DvecComp', 'SvecComp', 'DvecComp'
+//% });
+//%------------------------------
+//% [T, T1, T2] = varargin{:};
+//% Ts = val_t(T); Ts1 = val_t(T1); Ts2 = val_t(T2);
+//% if ~is_promo(Ts, Ts1) || ~is_promo(Ts, Ts2)
+//%     error('illegal types');
+//% end
+//% req('assert_same_shape3', {T, T1, T2});
+//% req('plus_vvv', {Ts, Ts1, Ts2});
+//% if is_dense(T) && is_dense(T1)
+inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
+inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
+inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    times_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
+inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+//% elseif ndim(T) == 1 && ndim(T1) == 1
+//%     if is_Dvec(T)
+//%         step = 'v.step()';
+//%     else
+//%         step = '1';
+//%     end
+//%     if is_Dvec(T1)
+//%         step1 = 'v1.step()';
+//%     else
+//%         step1 = '1';
+//%     end
+//%     if is_Dvec(T2)
+//%         step2 = 'v2.step()';
+//%     else
+//%         step2 = '1';
+//%     end
+inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
+}
+
+inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
+}
+
+inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
+}
+
+inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
+}
+//% end
+//%--------------------------
+
+//% tem('minus_vv', { 'Comp', 'Doub' });
+//%----------------------------------------------------------
+//% [T, T1] = varargin{:};
+inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = -v1[i];
+}
+//%--------------------------
+
+//% tem('minus(v,v)', {
+//%     'VecLlong', 'VecLlong';
+//%     'VecDoub', 'VecDoub';
+//%     'VecComp', 'VecDoub';
+//%     'VecComp', 'VecComp';
+//%     'ScmatDoub', 'CmatDoub';
+//% });
+//%----------------------------------------------------------
+//% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
+//% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
+inline void minus(@T@_O v, @T1@_I v1)
+{
+//% req('assert_same_shape', {T, T1});
+    assert_same_shape(v, v1);
+//% req('minus_vv', {Ts,Ts1});
+    minus_vv(v.p(), v1.p(), v1.size());
+}
+//% else
+//%     error('not implemented (14)!');
+//% end
+//%--------------------------
+
+} // namespace slisc
