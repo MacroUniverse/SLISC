@@ -1,5 +1,6 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
+% in_paths must end with '/' or '\'
 function auto_gen(in_paths, fname)
 global tem_db is_batch_mode; % is_batch_mode: delete db and process all files
 % ========= options ========
@@ -7,9 +8,9 @@ SLS_USE_QUADMATH = true;
 % ==========================
 if ~exist('fname', 'var'), fname = []; end
 is_batch_mode = isempty(fname);
-proc_paths = {'../preprocessor', ...
-    '../preprocessor/SLISC', ...
-    '../preprocessor/SLISC/case_conflict'};
+proc_paths = {'../preprocessor/', ...
+    '../preprocessor/SLISC/', ...
+    '../preprocessor/SLISC/case_conflict/'};
 old_path = pwd;
 cd(in_paths{1});
 if is_batch_mode && exist('tem_db.mat', 'file')
@@ -35,12 +36,12 @@ if is_batch_mode
     for i = 1:numel(in_paths)
         in_paths{i} = strrep(in_paths{i}, '\', '/');
         if in_octave
-            tmp = cellstr(ls([in_paths{i} '/*.in'], '-1'));
+            tmp = cellstr(ls([in_paths{i} '*.in'], '-1'));
         else
-            tmp = cellstr(ls([in_paths{i} '/*.in']));
+            tmp = cellstr(ls([in_paths{i} '*.in']));
         end
         for j = 1:numel(tmp)
-            tmp{j} = [in_paths{i} '/' tmp{j}];
+            tmp{j} = [in_paths{i} tmp{j}];
         end
         in_list = [in_list; tmp];
     end
@@ -49,16 +50,16 @@ else
     for i = 1:numel(in_paths)
         in_paths{i} = strrep(in_paths{i}, '\', '/');
         if in_octave
-            tmp = cellstr(ls([in_paths{i} '/*.in'], '-1'));
+            tmp = cellstr(ls([in_paths{i} '*.in'], '-1'));
             for ii = 1:numel(tmp)
                 [~,name,ext] = fileparts(tmp{ii}); tmp{ii} = [name,ext];
             end
         else % in matlab
-            tmp = cellstr(ls([in_paths{i} '/*.in']));
+            tmp = cellstr(ls([in_paths{i} '*.in']));
         end
         for j = 1:numel(tmp)
             if strcmp(tmp{j}, fname)
-                in_list = {[in_paths{i} '/' tmp{j}]}; break;
+                in_list = {[in_paths{i} tmp{j}]}; break;
             end
         end
         if ~isempty(in_list), break; end
