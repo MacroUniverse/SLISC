@@ -747,6 +747,8 @@ inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
+//% else
+//%     error('not implemented!');
 //% end
 //%--------------------------
 

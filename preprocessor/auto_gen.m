@@ -1,15 +1,13 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
-function auto_gen(varargin)
-global tem_db is_batch_mode;
+function auto_gen(in_paths, fname)
+global tem_db is_batch_mode; % is_batch_mode: delete db and process all files
+% ========= options ========
 SLS_USE_QUADMATH = true;
-in_paths = varargin;
-if numel(in_paths) == 1 && strcmp(in_paths{1}(end-2:end), '.in')
-    is_batch_mode = false;
-else
-    is_batch_mode = true;
-end
-paths = {'../preprocessor', ...
+% ==========================
+if ~exist('fname', 'var'), fname = []; end
+is_batch_mode = isempty(fname);
+proc_paths = {'../preprocessor', ...
     '../preprocessor/SLISC', ...
     '../preprocessor/SLISC/case_conflict'};
 old_path = pwd;
@@ -22,7 +20,6 @@ if exist('tem_db.mat', 'file')
 else
     tem_db = struct('name', '', 'file', '', 'body', '', ...
         'param', {}, 'done', [], 'out', []);
-    save('tem_db.mat', 'tem_db');
 end
 % template database
 % tem.name: name of the template
@@ -31,7 +28,7 @@ end
 % tem.param{i,:}: i-th parameter set
 % tem.done(i): is the i-th parameter set instanciated?
 % tem.out(i): output for i-th param set
-addpath(paths{:});
+addpath(proc_paths{:});
 newline = char(10); Nfile = 0;
 in_list = {};
 if is_batch_mode
@@ -47,8 +44,28 @@ if is_batch_mode
         end
         in_list = [in_list; tmp];
     end
+    Nfile = numel(in_list);
+else
+    for i = 1:numel(in_paths)
+        in_paths{i} = strrep(in_paths{i}, '\', '/');
+        if in_octave
+            tmp = cellstr(ls([in_paths{i} '/*.in'], '-1'));
+            for ii = 1:numel(tmp)
+                [~,name,ext] = fileparts(tmp{ii}); tmp{ii} = [name,ext];
+            end
+        else % in matlab
+            tmp = cellstr(ls([in_paths{i} '/*.in']));
+        end
+        for j = 1:numel(tmp)
+            if strcmp(tmp{j}, fname)
+                in_list = {[in_paths{i} '/' tmp{j}]}; break;
+            end
+        end
+        if ~isempty(in_list), break; end
+    end
+    if isempty(in_list), error('.in file not found!'); end
+    Nfile = 1;
 end
-Nfile = numel(in_list);
 
 %% first scan through all files
 % do not deal with template body
@@ -77,10 +94,10 @@ for i = 1:Nfile
             body = str(next_line(str, ind2):ind3-1);
             ind4 = tem_search(current_tem);
             if ind4 < 0
-                error('no tem() before template body!');
+                error('no `tem()` command before template body!');
             end
             tem_db(ind4).body = body;
-            tem_db(ind4).file = [pwd '/' in_file];
+            tem_db(ind4).file = in_file;
             N = size(tem_db(ind4).param, 1);
             tem_db(ind4).done = false(N, 1);
             tem_db(ind4).out = repmat({''}, N, 1);
@@ -126,12 +143,12 @@ if is_batch_mode
     changed_file = in_list;
 end
 
-%% generate output template
+%% generate output file template
 % for changed files only
 ind = 1;
 out_strs = cell(numel(changed_file), 1);
 for i = 1:numel(changed_file)
-    disp(['output template: ' changed_file{i}]);
+    disp(['output text: ' changed_file{i}]);
     str = fileread(changed_file{i}); ind = 1;
     str(str == 13) = [];
     while true
@@ -187,5 +204,6 @@ for i = 1:numel(changed_file)
 end
 
 % rmpath(paths{:});
+save('tem_db.mat', 'tem_db');
 cd(old_path);
 end
