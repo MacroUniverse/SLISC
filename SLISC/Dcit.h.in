@@ -1,0 +1,74 @@
+// iterator for Dcmat
+// support forward and backward
+// very high performance for element traversal
+#include "Dcmat.h"
+
+namespace slisc {
+
+//% tem('Dcit', { 'Int' false; 'Int' true;
+//%   'Llong' false; 'Llong' true;
+//%   'Doub' false; 'Doub' true;
+//%   'Comp' false; 'Comp' true; });
+//%------------------------------
+//% [Ts, constness] = varargin{:};
+//% if constness
+//%     T_c = [Ts '_c']; Tc = ['const ' Ts]; T_IO = [Ts '_I'];
+//% else
+//%     T_c = Ts; Tc = Ts; T_IO = [Ts '_IO'];
+//% end
+struct Dcit@T_c@ {
+		@Tc@ *m_p; // current pos
+		@Tc@ *m_beg, *m_end; // tot range
+		@Tc@ *m_beg0, *m_end0; // current column range
+		Long m_step1; // leading dimension
+		void operator++() { ++m_p; }
+		void operator--() { --m_p; }
+		void beg(Dcmat@T_IO@ a) {
+			m_beg = m_p = a.p();
+			m_step1 = a.lda();
+			m_end = m_beg + a.n1()*m_step1;
+			m_beg0 = m_p;
+			m_end0 = m_p + a.n0();
+		}
+		void end(Dcmat@T_IO@ a) {
+			m_beg = a.p();
+			m_step1 = a.lda();
+			m_end = m_beg + a.n1()*m_step1;
+			m_beg0 = a.p() + a.lda()*(a.n1()-1);
+			m_end0 = m_beg0 + a.n0();
+			m_p = m_end0-1;
+		}
+		Bool ckend() {
+			if (m_p == m_end0) {
+				m_beg0 += m_step1;
+				if (m_beg0 >= m_end)
+					return false;
+				m_p = m_beg0; m_end0 += m_step1;
+			}
+			return true;
+		}
+		Bool ckbeg() {
+			if (m_p < m_beg0) {
+				m_end0 -= m_step1;
+				if (m_end0 < m_beg)
+					return false;
+				m_p = m_end0-1; m_beg0 -= m_step1;
+			}
+			return true;
+		}
+		@Tc@ &operator*() { return *m_p; }
+		Bool operator==(const @Ts@ *p) { return m_p == p; }
+		Bool operator!=(const @Ts@ *p) { return m_p != p; }
+		Bool operator>(const @Ts@ *p) { return m_p > p; }
+		Bool operator>=(const @Ts@ *p) { return m_p >= p; }
+		Bool operator<(const @Ts@ *p) { return m_p < p; }
+		Bool operator<=(const @Ts@ *p) { return m_p <= p; }
+};
+//% if constness
+typedef const Dcit@T_c@ &Dcit@Ts@_I;
+//% else
+typedef Dcit@Ts@ &Dcit@Ts@_O, &Dcit@Ts@_IO;
+//% end
+//%------------------------------
+
+} // namespace slisc

@@ -210,8 +210,6 @@ void test_arithmetic()
         if (norm2(e) != 285. * 2) SLS_ERR("failed!");
         if (norm2(cut(e, 0, 2, 0, 2)) != 46. * 2)
             SLS_ERR("failed!");
-        
-        DcmatDoub f(3, 4); rand(f);
     }
     // sum_abs
     {
