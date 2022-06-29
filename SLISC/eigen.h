@@ -1,10 +1,10 @@
 #include "global.h"
+#ifdef SLS_USE_EIGEN
 #include "Eigen/Dense"
 #include "Eigen/Sparse"
 #include "Eigen/LU"
 
 // extension for Eigen library
-#ifdef SLS_USE_EIGEN
 #ifdef SLS_USE_QUAD_MATH
 
 namespace Eigen {

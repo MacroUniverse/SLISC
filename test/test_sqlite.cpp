@@ -1,9 +1,12 @@
 #include "../SLISC/file.h"
 #include <iostream>
+#ifdef SLS_USE_SQLITE
 #include <sqlite3.h>
+#endif
 
-int test_sqlite()
+void test_sqlite()
 {
+#ifdef SLS_USE_SQLITE
 	using namespace slisc;
     sqlite3* DB;
     int exit;
@@ -27,5 +30,5 @@ int test_sqlite()
         sqlite3_free(messaggeError);
     }
     sqlite3_close(DB);
-    return 0;
+#endif
 }

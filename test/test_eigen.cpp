@@ -1,11 +1,14 @@
+#ifdef SLS_USE_EIGEN
 #include "../SLISC/Eigen.h"
 
 using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;
 using Eigen::MatrixXq; using Eigen::VectorXq;
+#endif
 
-void test_Eigen()
+void test_eigen()
 {
+#ifdef SLS_USE_EIGEN
 	// get diagonal
 	{
 		int n = 5;
@@ -148,4 +151,5 @@ void test_Eigen()
 		// cout << "eig.eigenvectors() = " << endl;
 		// cout << eig.eigenvectors() << endl;
 	}
+#endif
 }

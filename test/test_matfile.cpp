@@ -5,6 +5,7 @@
 
 void test_matfile()
 {
+#ifdef SLS_USE_MATFILE
     using namespace slisc;
 
     // write to file
@@ -319,4 +320,5 @@ void test_matfile()
 
     //     mat.close();
     // }
+#endif
 }

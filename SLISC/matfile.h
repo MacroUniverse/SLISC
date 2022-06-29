@@ -5,6 +5,7 @@
 #include "arithmetic.h"
 #include "file.h"
 #include "time.h"
+#ifdef SLS_USE_MATFILE
 #include <mat.h>
 
 namespace slisc {
@@ -1264,3 +1265,4 @@ inline void load(Cmat3Comp_O a, Str_I varname, Mat mat)
 
 
 } // namespace slisc
+#endif
