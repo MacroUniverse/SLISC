@@ -199,7 +199,8 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
     cblas_dgemv(@layout@, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
         @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
-//%     error('not implemented (17)!');
+    SLS_WARN("mul: using slower version!");
+    mul(y, a, x, alpha, beta);
 //% end
 #else
 //% req('mul(v,m,v)', {Ty, Ta, Tx});
@@ -235,7 +236,7 @@ inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I be
 //% else
 //%     layout = 'CblasRowMajor';
 //% end
-// y = alpha*A*x + beta*y
+// y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -260,7 +261,7 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 //%     error('not implemented (18)!');
 //% end
 #else
-    SLS_ERR("not implemented!");
+    SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
 #endif
 }
 //%--------------------------------

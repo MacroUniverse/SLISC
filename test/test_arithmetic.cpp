@@ -52,6 +52,7 @@ void test_arithmetic()
 
     // mul_sym()
     {
+#ifdef SLS_USE_CBLAS
         Long N = 5;
 		CmatDoub a(N, N);
 		VecDoub x(N), y(N), y1(N);
@@ -75,6 +76,7 @@ void test_arithmetic()
         mul(yc1, a, xc);
         if (y != y1)
 			SLS_ERR("failed!");
+#endif
     }
 
     // quad precision mul
@@ -202,7 +204,10 @@ void test_arithmetic()
         CmatDoub cc(4, 5); linspace(cc, 1, 20);
         DcmatDoub dc = cut(cc, 1, 2, 2, 3);
         if (max(dc) != 19 || min(dc) != 10) SLS_ERR("failed!");
+        Long i, j;
+        if (slisc::max2(i, j, dc) != 19 || i != 1 || j != 2 || slisc::min2(i, j, dc) != 10 || i != 0 || j != 0) SLS_ERR("failed!");
         if (max_abs(dc) != 19) SLS_ERR("failed!");
+        if (max_abs(i, j, dc) != 19 || i != 1 || j != 2) SLS_ERR("failed!");
 
         MatComp d(3, 3); linspace(d, Comp(1., -1.), Comp(9., -9.));
         if (sum(d) != Comp(45.,-45.)) SLS_ERR("failed!");

@@ -100,13 +100,14 @@ inline @Ts@ min(@T@_I v) { return min_v(v.p(), v.size(), v.step()); }
 
 inline @Ts@ min(Long_O ind, @T@_I v) { return min_v(v.p(), v.size(), v.step()); }
 //% elseif is_Dcmat(T) && is_real(Ts) && ~is_Bool(Ts)
+//% % max2 prevents name conflict with std::max
 inline @Ts@ max(@T@_I v) { return max_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 
-inline @Ts@ max(Long_O i, Long_O j, @T@_I v) { return max_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
+inline @Ts@ max2(Long_O i, Long_O j, @T@_I v) { return max_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 
 inline @Ts@ min(@T@_I v) { return min_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 
-inline @Ts@ min(Long_O i, Long_O j, @T@_I v) { return min_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
+inline @Ts@ min2(Long_O i, Long_O j, @T@_I v) { return min_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 //% else
 //%     error(['max: not implemented (5): ' T]);
 //% end
@@ -163,6 +164,27 @@ inline @Tr@ max_abs_dcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step1)
     }
     return s;
 }
+
+inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, Long_I step1)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+#endif
+    const @T@ *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+    @Tr@ s = abs(*v); ++v;
+    while (1) {
+        if (v == end0) {
+            beg0 += step1;
+            if (beg0 >= end) break;
+            v = beg0; end0 += step1;
+        }
+        const @Tr@ &t = abs(*v);
+        if (s < t) s = abs(t), p = v;
+        ++v;
+    }
+    i = (p - beg) % N0; j = (p - beg) / step1;
+    return s;
+}
 //%-------------------------
 
 //% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt';
@@ -178,6 +200,7 @@ inline @Tr@ max_abs(@T@_I v) { return max_abs_v(v.p(), v.size()); }
 inline @Tr@ max_abs(@T@_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 //% elseif is_Dcmat(T)
 inline @Tr@ max_abs(@T@_I v) { return max_abs_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
+inline @Tr@ max_abs(Long_O i, Long_O j, @T@_I v) { return max_abs_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 //% else
 //%     error('Not implemented!');
 //% end

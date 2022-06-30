@@ -7,6 +7,12 @@
 
 compiler = g++
 
+# CBLAS
+cblas_flag = -D SLS_USE_CBLAS
+cblas_lib = -lblas
+# LAPACKE
+lapacke_flag = -D SLS_USE_LAPACKE
+lapacke_lib = -llapacke
 # quad math
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
@@ -14,8 +20,8 @@ quad_math_lib = -lquadmath
 asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(quad_math_flag) $(asan_flag) #-D NDEBUG
-libs = $(quad_math_lib)
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
+libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)

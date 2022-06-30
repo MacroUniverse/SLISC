@@ -1590,7 +1590,7 @@ inline void mul_gen(VecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1,
 }
 
 
-// y = alpha*A*x + beta*y
+// y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecComp_IO &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1605,11 +1605,11 @@ inline void mul_sym(VecComp_IO &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, 
     cblas_dsymv(CblasColMajor, CblasUpper, a.n0(), alpha, a.p(),
         a.n0(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
 #else
-    SLS_ERR("not implemented!");
+    SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
 #endif
 }
 
-// y = alpha*A*x + beta*y
+// y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1620,11 +1620,11 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, 
     cblas_dsymv(CblasColMajor, CblasUpper, a.n0(), alpha, a.p(),
         a.n0(), x.p(), 1, beta, y.p(), 1);
 #else
-    SLS_ERR("not implemented!");
+    SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
 #endif
 }
 
-// y = alpha*A*x + beta*y
+// y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1635,7 +1635,7 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1,
     cblas_dsymv(CblasColMajor, CblasUpper, a.n0(), alpha, a.p(),
         a.n0(), x.p(), 1, beta, y.p(), 1);
 #else
-    SLS_ERR("not implemented!");
+    SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
 #endif
 }
 
