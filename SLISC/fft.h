@@ -644,7 +644,7 @@ inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub 
     Long i, j, k, Nx = X.n0(), Nc = X.n1();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pxi;
-    Comp *pyj, factor, expo, dexpo;
+    Comp *pyj, expo, dexpo;
     Y.resize(Nk, Nc); copy(Y, 0);
     for (j = 0; j < Nk; ++j) {
         pyj = Y.p() + Nc*j;
@@ -669,7 +669,7 @@ inline void dft_par(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, D
     for (j = 0; j < Nk; ++j) {
         Long i, k;
         const Comp *pxi;
-        Comp *pyj, factor, expo, dexpo;
+        Comp *pyj, expo, dexpo;
         pyj = Y.p() + Nc*j;
         expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
         dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
@@ -687,7 +687,7 @@ inline void idft(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub
     Long i, j, k, Nk = Y.n0(), Nc = Y.n1();
     Doub dk = (kmax - kmin) / (Nk - 1), dx = (xmax - xmin) / (Nx - 1);
     const Comp *pyi;
-    Comp *pxj, factor, expo, dexpo;
+    Comp *pxj, expo, dexpo;
     X.resize(Nx, Nc); copy(X, 0);
     for (j = 0; j < Nx; ++j) {
         pxj = X.p() + Nc*j;
@@ -711,7 +711,7 @@ inline void idft_par(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, 
     for (j = 0; j < Nx; ++j) {
         Long i, k;
         const Comp *pyi;
-        Comp *pxj, factor, expo, dexpo;
+        Comp *pxj, expo, dexpo;
         pxj = X.p() + Nc*j;
         expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
         dexpo = exp(Comp(0, (xmin + dx*j)*dk));

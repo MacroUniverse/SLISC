@@ -2,6 +2,7 @@
 
 # only g++ is required
 # include make/g++_min.mak
+# include make/clang_min.mak
 
 # all libs are required
 include make/g++_all.mak
