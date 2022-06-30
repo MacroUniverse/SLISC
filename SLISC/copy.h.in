@@ -121,7 +121,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // must use pointer version
 // scalar to container
 //% tem('copy(v,s)', {
-//% 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% 'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //% 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //% 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp';
 //% 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';

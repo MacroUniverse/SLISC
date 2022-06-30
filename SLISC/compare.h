@@ -288,6 +288,8 @@ inline Bool shape_cmp(VecInt_I v1, VecLlong_I v2) {return (Long)v1.size() == (Lo
 
 inline Bool shape_cmp(VecDoub_I v1, VecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
+inline Bool shape_cmp(vecLlong_I v1, vecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
+
 inline Bool shape_cmp(vecLlong_I v1, vecStr_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
 inline Bool shape_cmp(vecStr_I v1, vecStr_I v2) {return (Long)v1.size() == (Long)v2.size();}
@@ -882,6 +884,14 @@ inline void assert_same_shape(VecInt_I v1, VecLlong_I v2)
 }
 
 inline void assert_same_shape(VecDoub_I v1, VecLlong_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+}
+
+inline void assert_same_shape(vecLlong_I v1, vecLlong_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v1, v2))

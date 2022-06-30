@@ -80,6 +80,18 @@ inline void vecset(Qcomp *v, Qcomp_I val, Long_I n, Long_I step)
         *p = val;
 }
 
+inline void vecset(Char *v, Char_I val, Long_I n)
+{
+    for (Char *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Char *v, Char_I val, Long_I n, Long_I step)
+{
+    for (Char *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
 
 inline void veccpy(Int *v, const Int *v1, Long_I n)
 {
@@ -344,6 +356,11 @@ inline void matcpy_diff_major(Doub *a2, const Doub *a1, Long_I N2, Long_I lda2, 
 inline void copy(DvecComp_O v, Comp_I s)
 {
     vecset(v.p(), s, v.size(), v.step());
+}
+
+inline void copy(VecChar_O v, Char_I s)
+{
+    vecset(v.p(), s, v.size());
 }
 
 inline void copy(VecInt_O v, Int_I s)

@@ -1007,6 +1007,12 @@ inline void sort(VecDoub_IO v, VecLlong_IO v1)
     sort_vv(&v[0], &v1[0], v.size());
 }
 
+inline void sort(vecLlong_IO v, vecLlong_IO v1)
+{
+    assert_same_shape(v, v1);
+    sort_vv(&v[0], &v1[0], v.size());
+}
+
 inline void sort(vecLlong_IO v, vecStr_IO v1)
 {
     assert_same_shape(v, v1);

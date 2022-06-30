@@ -161,6 +161,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 //%     'VecInt', 'VecLlong';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
+//%     'vecLlong', 'vecLlong';
 //%     'vecLlong', 'vecStr';
 //% });
 //%---------------------
