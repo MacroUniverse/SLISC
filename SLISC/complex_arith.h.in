@@ -39,21 +39,14 @@ namespace slisc {
 //%     });
 //%------------------------
 //% [T1, T2] = varargin{1:2};
-inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2)
-{
 //% if is_real(T1)
-    return real(s2) == s1 && imag(s2) == 0;
+inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s2) == s1 && imag(s2) == 0; }
 //% elseif is_real(T2)
-    return real(s1) == s2 && imag(s1) == 0;
+inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == s2 && imag(s1) == 0; }
 //% else
-    return real(s1) == real(s2) && imag(s1) == imag(s2);
+inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
 //% end
-}
-
-inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
-{
-    return !(s1 == s2);
-}
+inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2) { return !(s1 == s2); }
 //%------------------------
 
 // reference to real/imaginary part
@@ -63,15 +56,8 @@ inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2)
 //%----------------------------------
 //% Tc = varargin{:};
 //% Tr = rm_comp(Tc);
-inline @Tr@ &real_r(@Tc@ &c)
-{
-    return *((@Tr@*)&c);
-}
-
-inline @Tr@ &imag_r(@Tc@ &c)
-{
-    return *((@Tr@*)&c + 1);
-}
+inline @Tr@ &real_r(@Tc@ &c) { return *((@Tr@*)&c); }
+inline @Tr@ &imag_r(@Tc@ &c) { return *((@Tr@*)&c + 1); }
 //%----------------------------------
 
 //% tem('+=comp', {
@@ -96,25 +82,10 @@ inline @Tr@ &imag_r(@Tc@ &c)
 //% else
 //%     T = T1;
 //% end
-inline void operator+=(@T1@_O z, @T2@_I x)
-{
-    z += (@T@)x;
-}
-
-inline void operator-=(@T1@_O z, @T2@_I x)
-{
-    z -= (@T@)x;
-}
-
-inline void operator*=(@T1@_O z, @T2@_I x)
-{
-    z *= (@T@)x;
-}
-
-inline void operator/=(@T1@_O z, @T2@_I x)
-{
-    z /= (@T@)x;
-}
+inline void operator+=(@T1@_O z, @T2@_I x) { z += (@T@)x; }
+inline void operator-=(@T1@_O z, @T2@_I x) { z -= (@T@)x; }
+inline void operator*=(@T1@_O z, @T2@_I x) { z *= (@T@)x; }
+inline void operator/=(@T1@_O z, @T2@_I x) { z /= (@T@)x; }
 //%------------------------
 
 //% tem('+comp', {
@@ -160,79 +131,67 @@ inline void operator/=(@T1@_O z, @T2@_I x)
 //%-------------------------------------
 //% [T1,T2] = varargin{:};
 //% T = promo_type(T1,T2);
-inline @T@ operator+(@T1@_I s1, @T2@_I s2)
-{
 //% if is_real(T1)
-    return @T@(s1 + real(s2), imag(s2));
+inline @T@ operator+(@T1@_I s1, @T2@_I s2) { return @T@(s1 + real(s2), imag(s2)); }
 //% elseif is_real(T2)
-    return @T@(real(s1) + s2, imag(s1));
+inline @T@ operator+(@T1@_I s1, @T2@_I s2) { return @T@(real(s1) + s2, imag(s1)); }
 //% elseif type_num(T1) > type_num(T2)
-    return s1 + (@T@)s2;
+inline @T@ operator+(@T1@_I s1, @T2@_I s2) { return s1 + (@T@)s2; }
 //% elseif type_num(T2) > type_num(T1)
-    return (@T@)s1 + s2;
+inline @T@ operator+(@T1@_I s1, @T2@_I s2) { return (@T@)s1 + s2; }
 //% else
 //%     error('not implemented!');
 //% end
-}
 
-inline @T@ operator-(@T1@_I s1, @T2@_I s2)
-{
 //% if is_real(T1)
-    return @T@(s1 - real(s2), -imag(s2));
+inline @T@ operator-(@T1@_I s1, @T2@_I s2) { return @T@(s1 - real(s2), -imag(s2)); }
 //% elseif is_real(T2)
-    return @T@(real(s1) - s2, imag(s1));
+inline @T@ operator-(@T1@_I s1, @T2@_I s2) { return @T@(real(s1) - s2, imag(s1)); }
 //% elseif type_num(T1) > type_num(T2)
-    return s1 - (@T@)s2;
+inline @T@ operator-(@T1@_I s1, @T2@_I s2) { return s1 - (@T@)s2; }
 //% elseif type_num(T2) > type_num(T1)
-    return (@T@)s1 - s2;
+inline @T@ operator-(@T1@_I s1, @T2@_I s2) { return (@T@)s1 - s2; }
 //% else
 //%     error('not implemented!');
 //% end
-}
 
-inline @T@ operator*(@T1@_I s1, @T2@_I s2)
-{
 //% if is_real(T1)
-    return @T@(s1*real(s2), s1*imag(s2));
+inline @T@ operator*(@T1@_I s1, @T2@_I s2) { return @T@(s1*real(s2), s1*imag(s2)); }
 //% elseif is_real(T2)
-    return @T@(real(s1)*s2, imag(s1)*s2);
+inline @T@ operator*(@T1@_I s1, @T2@_I s2) { return @T@(real(s1)*s2, imag(s1)*s2); }
 //% elseif type_num(T1) > type_num(T2)
-    return s1 * (@T@)s2;
+inline @T@ operator*(@T1@_I s1, @T2@_I s2) { return s1 * (@T@)s2; }
 //% elseif type_num(T2) > type_num(T1)
-    return (@T@)s1 * s2;
+inline @T@ operator*(@T1@_I s1, @T2@_I s2) { return (@T@)s1 * s2; }
 //% else
 //%     error('not implemented!');
 //% end
-}
 
-inline @T@ operator/(@T1@_I s1, @T2@_I s2)
-{
 //% Tr1 = rm_comp(T1); Tr2 = rm_comp(T2);
 //% numr1 = type_num(Tr1); numr2 = type_num(Tr2);
 //% num1 = type_num(T1); num2 = type_num(T2);
 //% if is_real(T1)
 //%     if numr1 < numr2
-    return (@Tr2@)s1 / s2;
+inline @T@ operator/(@T1@_I s1, @T2@_I s2) { return (@Tr2@)s1 / s2; }
 //%     elseif numr1 > numr2
 //%         Tc1 = add_comp(Tr1);
-    return s1 / (@Tc1@)s2;
+inline @T@ operator/(@T1@_I s1, @T2@_I s2) { return s1 / (@Tc1@)s2; }
 //%     end
 //% elseif is_real(T2)
 //%     if numr1 < numr2
 //%         Tc2 = add_comp(Tr2);
-    return (@Tc2@)s1 / s2;
+inline @T@ operator/(@T1@_I s1, @T2@_I s2) { return (@Tc2@)s1 / s2; }
 //%     elseif numr1 > numr2
-    return s1 / (@Tr1@)s2;
+inline @T@ operator/(@T1@_I s1, @T2@_I s2) { return s1 / (@Tr1@)s2; }
 //%     end
 //% elseif num1 > num2
 //%         Tc1 = add_comp(Tr1);
-    return s1 / (@Tc1@)s2;
+inline @T@ operator/(@T1@_I s1, @T2@_I s2) { return s1 / (@Tc1@)s2; }
 //% elseif num1 < num2
 //%     Tc2 = add_comp(Tr2);
-    return (@Tc2@)s1 / s2;
+inline @T@ operator/(@T1@_I s1, @T2@_I s2) { return (@Tc2@)s1 / s2; }
 //% else
 //%     error('not implemented!');
 //% end
-}
 //%------------------------
 } // namespace slisc

@@ -513,6 +513,18 @@ inline void copy(VecDoub_O v, const std::initializer_list<Doub> &v1)
         v[i] = p1[i];
 }
 
+inline void copy(VecQdoub_O v, const std::initializer_list<Qdoub> &v1)
+{
+    const Qdoub *p1 = v1.begin();
+    Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
+}
+
 inline void copy(VecComp_O v, const std::initializer_list<Comp> &v1)
 {
     const Comp *p1 = v1.begin();
@@ -528,6 +540,18 @@ inline void copy(VecComp_O v, const std::initializer_list<Comp> &v1)
 inline void copy(CmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
     const Doub *p1 = v1.begin();
+    Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
+}
+
+inline void copy(CmatQdoub_O v, const std::initializer_list<Qdoub> &v1)
+{
+    const Qdoub *p1 = v1.begin();
     Long N = v1.size();
 #ifdef SLS_CHECK_SHAPES
     if (v.size() != N)
@@ -564,30 +588,6 @@ inline void copy(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
 inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
 {
     const Comp *p1 = v1.begin();
-    Long N = v1.size();
-#ifdef SLS_CHECK_SHAPES
-    if (v.size() != N)
-        SLS_ERR("wrong shape!");
-#endif
-    for (Long i = 0; i < N; ++i)
-        v[i] = p1[i];
-}
-
-inline void copy(CmatQdoub_O v, const std::initializer_list<Qdoub> &v1)
-{
-    const Qdoub *p1 = v1.begin();
-    Long N = v1.size();
-#ifdef SLS_CHECK_SHAPES
-    if (v.size() != N)
-        SLS_ERR("wrong shape!");
-#endif
-    for (Long i = 0; i < N; ++i)
-        v[i] = p1[i];
-}
-
-inline void copy(VecQdoub_O v, const std::initializer_list<Qdoub> &v1)
-{
-    const Qdoub *p1 = v1.begin();
     Long N = v1.size();
 #ifdef SLS_CHECK_SHAPES
     if (v.size() != N)
