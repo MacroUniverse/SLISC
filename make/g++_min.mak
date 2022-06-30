@@ -14,7 +14,7 @@ quad_math_lib = -lquadmath
 asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(quad_math_flag) $(asan_flag) #-D NDEBUG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(quad_math_flag) $(asan_flag) # -D NDEBUG
 libs = $(quad_math_lib)
 
 # file lists

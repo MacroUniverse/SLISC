@@ -378,28 +378,22 @@ inline void sort_v(Str32 *arr, Long_I n)
 
 
 // sort elements of v
-inline void sort(VecChar_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(VecChar_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 
 // sort elements of v
-inline void sort(VecInt_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(VecInt_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 
 // sort elements of v
-inline void sort(VecLlong_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(VecLlong_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 
 // sort elements of v
-inline void sort(VecDoub_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(VecDoub_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 
 // sort elements of v
-inline void sort(vecStr_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(vecStr_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 
 // sort elements of v
-inline void sort(vecStr32_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(vecStr32_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 
 
 // sort v while making the same change for v1

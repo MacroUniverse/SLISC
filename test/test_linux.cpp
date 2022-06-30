@@ -1,8 +1,11 @@
+#ifndef _MSC_VER
 #include "../SLISC/linux.h"
 #include <signal.h>
+#endif
 
 void test_linux()
 {
+#ifndef _MSC_VER
 	using namespace slisc;
 	
 	// test exec_str()
@@ -55,4 +58,5 @@ void test_linux()
 #endif
 		delete [] s;
 	}
+#endif
 }

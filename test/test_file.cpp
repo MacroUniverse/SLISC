@@ -11,7 +11,7 @@ void test_file()
 		SLS_ERR("failed!");
 
 	// file_list_r
-	file_list_r(names, "test/test_file");
+	file_list_r(names, "test/test_file/");
 	if (names[0] != "test/test_file/123.txt" || names[1] != "test/test_file/234.txt" || names[2] != "test/test_file/sub/345.txt")
 		SLS_ERR("failed!");
 
@@ -122,10 +122,12 @@ void test_file()
 
 	// last modified time (local time)
 	{
+#ifndef _MSC_VER
 		Str yyyymmddhhmmss;
 		last_modified(yyyymmddhhmmss, "main.cpp");
 		if (yyyymmddhhmmss.size() != 14)
 			SLS_ERR("failed!");
+#endif
 	}
 
 	// check if directory exist

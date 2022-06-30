@@ -75,8 +75,7 @@ inline void sort_v(@T@ *arr, Long_I n)
 //%---------------------
 //% T = varargin{:};
 // sort elements of v
-inline void sort(@T@_IO v)
-{ sort_v(&v[0], v.size()); }
+inline void sort(@T@_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 //%------------------------
 
 // sort v while making the same change for v1

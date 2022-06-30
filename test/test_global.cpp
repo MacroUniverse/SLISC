@@ -5,10 +5,10 @@ void test_global()
 	using namespace slisc;
 	// test isnan()
 	Doub x = NaN;
-	if (!isnan(x) || isnan(1))
+	if (!slisc::isnan(x) || slisc::isnan(1))
 		SLS_ERR("failed!");
 	Comp c(NaN, NaN);
-	if (!isnan(c) || isnan(Comp(1,2)))
+	if (!slisc::isnan(c) || slisc::isnan(Comp(1,2)))
 		SLS_ERR("failed!");
 	if (sizeof(Char) != 1) SLS_ERR("failed!");
 	if (sizeof(Int) != 4) SLS_ERR("failed!");

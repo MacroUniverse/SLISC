@@ -2,8 +2,15 @@
 // TODO: test mparith.h not finished
 
 #pragma once
+#include "../SLISC/global.h"
+#include "../SLISC/unicode.h"
 #include <iostream>
 #define SLS_TEST(name) do{void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} while(0)
+
+#ifdef _MSC_VER
+slisc::turn_on_floating_exceptions yes_turn_on_floating_exceptions;
+slisc::set_windows_console_utf8 yes_set_windows_console_utf8;
+#endif
 
 void test_all()
 {
@@ -69,7 +76,7 @@ void test_all()
     cout << "do optional tests? (y/n)" << endl;
     if (getchar() == 'y') {
         SLS_TEST(disp);
-    SLS_TEST(input);
+        SLS_TEST(input);
     }
     else
         cout << "optional tests skipped." << endl;

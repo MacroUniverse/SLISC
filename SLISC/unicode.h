@@ -30,7 +30,7 @@ struct set_windows_console_utf8 {
     }
 };
 // in case of ODR error, put this in main function;
-set_windows_console_utf8 yes_set_windows_console_utf8;
+// set_windows_console_utf8 yes_set_windows_console_utf8;
 
 // Convert a wide Unicode wstring to an UTF8 string
 inline Str wstr2utf8(const std::wstring& wstr)
