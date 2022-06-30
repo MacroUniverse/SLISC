@@ -199,6 +199,11 @@ void test_arithmetic()
         if (max_abs(c) != 10.) SLS_ERR("failed!");
         if (norm2(c) != 385.) SLS_ERR("failed!");
 
+        CmatDoub cc(4, 5); linspace(cc, 1, 20);
+        DcmatDoub dc = cut(cc, 1, 2, 2, 3);
+        if (max(dc) != 19 || min(dc) != 10) SLS_ERR("failed!");
+        if (max_abs(dc) != 19) SLS_ERR("failed!");
+
         MatComp d(3, 3); linspace(d, Comp(1., -1.), Comp(9., -9.));
         if (sum(d) != Comp(45.,-45.)) SLS_ERR("failed!");
         if (max_abs(d) != abs(Comp(9,9))) SLS_ERR("failed!");
