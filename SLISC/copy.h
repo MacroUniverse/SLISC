@@ -496,13 +496,12 @@ inline void copy(DcmatDoub_O v, Doub_I s)
 }
 
 
-// assign value to containers
+// copy value to containers
 // clang compiler error: second argument to 'va_arg' is of non-POD type 'slisc::Comp'
-// inline void assign(@T@_O v, ...)
+// inline void copy(@T@_O v, ...)
 
-
-// assign initializer list to containers
-inline void assign(VecDoub_O v, const std::initializer_list<Doub> &v1)
+// copy initializer list to containers
+inline void copy(VecDoub_O v, const std::initializer_list<Doub> &v1)
 {
     const Doub *p1 = v1.begin();
     Long N = v1.size();
@@ -514,7 +513,7 @@ inline void assign(VecDoub_O v, const std::initializer_list<Doub> &v1)
         v[i] = p1[i];
 }
 
-inline void assign(VecComp_O v, const std::initializer_list<Comp> &v1)
+inline void copy(VecComp_O v, const std::initializer_list<Comp> &v1)
 {
     const Comp *p1 = v1.begin();
     Long N = v1.size();
@@ -526,7 +525,7 @@ inline void assign(VecComp_O v, const std::initializer_list<Comp> &v1)
         v[i] = p1[i];
 }
 
-inline void assign(CmatDoub_O v, const std::initializer_list<Doub> &v1)
+inline void copy(CmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
     const Doub *p1 = v1.begin();
     Long N = v1.size();
@@ -538,7 +537,7 @@ inline void assign(CmatDoub_O v, const std::initializer_list<Doub> &v1)
         v[i] = p1[i];
 }
 
-inline void assign(SvecDoub_O v, const std::initializer_list<Doub> &v1)
+inline void copy(SvecDoub_O v, const std::initializer_list<Doub> &v1)
 {
     const Doub *p1 = v1.begin();
     Long N = v1.size();
@@ -550,7 +549,7 @@ inline void assign(SvecDoub_O v, const std::initializer_list<Doub> &v1)
         v[i] = p1[i];
 }
 
-inline void assign(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
+inline void copy(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
     const Doub *p1 = v1.begin();
     Long N = v1.size();
@@ -562,9 +561,33 @@ inline void assign(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
         v[i] = p1[i];
 }
 
-inline void assign(ScmatComp_O v, const std::initializer_list<Comp> &v1)
+inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
 {
     const Comp *p1 = v1.begin();
+    Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
+}
+
+inline void copy(CmatQdoub_O v, const std::initializer_list<Qdoub> &v1)
+{
+    const Qdoub *p1 = v1.begin();
+    Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
+}
+
+inline void copy(VecQdoub_O v, const std::initializer_list<Qdoub> &v1)
+{
+    const Qdoub *p1 = v1.begin();
     Long N = v1.size();
 #ifdef SLS_CHECK_SHAPES
     if (v.size() != N)

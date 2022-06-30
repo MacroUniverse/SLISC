@@ -29,19 +29,19 @@ void test_copy()
 	// copy/compare from initializer list
 	{
 		VecDoub v(3);
-		assign(v, {1, 2, 3});
+		copy(v, {1, 2, 3});
 		if (v[0] != 1 || v[1] != 2 || v[2] != 3)
 			SLS_ERR("failed!");
 		CmatDoub a(2,3);
-		assign(a, {1, 2, 3, 4, 5, 6});
+		copy(a, {1, 2, 3, 4, 5, 6});
 		if (a[0] != 1 || a[1] != 2 || a[2] != 3 || a[3] != 4 || a[4] != 5 || a[5] != 6)
 			SLS_ERR("failed!");
 		ScmatDoub sa = cut(a, 0, 2);
-		assign(sa, {7, 8, 9, 0});
+		copy(sa, {7, 8, 9, 0});
 		if (sa[0] != 7 || sa[1] != 8 || sa[2] != 9 || sa[3] != 0)
 			SLS_ERR("failed!");
 		CmatComp ac(2, 2);
-		assign(sa, {1.1, 2.2, 3.3, 4.4});
+		copy(sa, {1.1, 2.2, 3.3, 4.4});
 		if (sa[0] != 1.1 || sa[1] != 2.2 || sa[2] != 3.3 || sa[3] != 4.4)
 			SLS_ERR("failed!");
 	}

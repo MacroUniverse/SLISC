@@ -162,16 +162,15 @@ inline void copy(@T@_O v, @Ts@_I s)
 }
 //%------------------------
 
-// assign value to containers
+// copy value to containers
 // clang compiler error: second argument to 'va_arg' is of non-POD type 'slisc::Comp'
-// inline void assign(@T@_O v, ...)
+// inline void copy(@T@_O v, ...)
 
-
-// assign initializer list to containers
-//% tem('asign(v,v)', { 'VecDoub'; 'VecComp'; 'CmatDoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp' });
+// copy initializer list to containers
+//% tem('copy(v,ini)', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'CmatDoub'; 'CmatQdoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline void assign(@T@_O v, const std::initializer_list<@Ts@> &v1)
+inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)
 {
     const @Ts@ *p1 = v1.begin();
     Long N = v1.size();
