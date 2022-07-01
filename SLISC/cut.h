@@ -199,6 +199,26 @@ inline SvecComp_c cut(SvecComp_I v, Long_I start, Long_I N)
     return sli;
 }
 
+inline SvecDoub cut(SvecDoub_IO v, Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start < 0 || start + N > v.size())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecDoub sli(&v[start], N);
+    return sli;
+}
+
+inline SvecDoub_c cut(SvecDoub_I v, Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+    if (start < 0 || start + N > v.size())
+        SLS_ERR("index out of bound!");
+#endif
+    SvecDoub_c sli(&v[start], N);
+    return sli;
+}
+
 inline DcmatInt cut(CmatInt_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS

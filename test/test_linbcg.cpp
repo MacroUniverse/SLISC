@@ -78,4 +78,24 @@ void test_linbcg()
 			SLS_ERR("failed!");
 	}
 #endif
+
+
+	// for symmetric, no preconditioner
+	{
+		CmatDoub a(3,3); copy(a, {1., 0., 5., 0., 3., 4., 5., 4., 6.});
+		VecDoub x(3), b1(3), b(3); copy(x, 1);
+		copy(b, {6., 7., 8.}); copy(x, 0);
+		Doub err, tol = 1e-8; Int iter, itmax = 100, itol = 4;
+		VecDoub wsp(3*6); SvecDoub swsp = cut(wsp, 0, 3*6);
+		lin_eq_bcg_sym(iter, err, x, a, b, itol, tol, itmax, swsp);
+		// cout << "a = " << endl; disp(a);
+		// cout << "b = " << endl; disp(b);
+		// cout << "x = " << endl; disp(x);
+		// cout << "iter = " << iter << endl;
+		// cout << "err = " << err << endl;
+		mul(b1, a, x);
+		b1 -= b;
+		if (max_abs(b1) > 1e-10)
+			SLS_ERR("failed!");
+	}
 }

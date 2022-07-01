@@ -1,8 +1,8 @@
 // solving sparse linear equations by the preconditioned biconjugate gradient method
 // see Numerical Recipes 3ed page 90
 #pragma once
-#include "Vec.h"
-#include "scalar_arith.h"
+#include "cut.h"
+#include "arithmetic.h"
 
 namespace slisc {
 
@@ -213,6 +213,105 @@ Qdoub LinbcgQdoub::snrm(VecQdoub_I sx, const Int itol)
 			if (abs(sx[i]) > abs(sx[isamax])) isamax=i;
 		}
 		return abs(sx[isamax]);
+	}
+}
+
+
+// BiCG with symmetric matrix and no precondition (only tested for real matrix)
+// 2-norm or inf-norm of vector sx
+inline Doub snrm(const Doub *sx, Int n, const Int itol)
+{
+	Int i, isamax;
+	Doub ans;
+	if (itol <= 3) {
+		ans = 0.0;
+		for (i=0;i<n;i++) ans += sqr(sx[i]);
+		return sqrt(ans);
+	} else {
+		isamax=0;
+		for (i=0;i<n;i++) {
+			if (abs(sx[i]) > abs(sx[isamax])) isamax=i;
+		}
+		return abs(sx[isamax]);
+	}
+}
+
+inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, VecDoub_IO x, CmatDoub_I A, VecDoub_I b, Int_I itol, Doub_I tol, Int_I itmax,  SvecDoub_IO wsp)
+{
+	Doub xnrm, dxnrm, bnrm, znrm=NaN, zm1nrm;
+	Doub ak, akden, bk, bkden=1., bknum;
+	const Doub EPS = 1.0e-14;
+	Int j, n=b.size();
+	if (wsp.size() < 6*n) SLS_ERR("not enough workspace!");
+	SvecDoub p = cut(wsp, 0, n), pp = cut(wsp, n, n), r = cut(wsp, 2*n, n);
+	SvecDoub rr = cut(wsp, 3*n, n), z = cut(wsp, 4*n, n), zz = cut(wsp, 5*n, n);
+	iter=0;
+	mul(r, A, x);
+	for (j=0;j<n;j++) {
+		r[j]=b[j]-r[j];
+		rr[j]=r[j];
+	}
+	if (itol == 1) {
+		bnrm=snrm(b.p(),n,itol);
+	}
+	else if (itol == 2) {
+		bnrm=snrm(b.p(),n,itol);
+	}
+	else if (itol == 3 || itol == 4) {
+		bnrm=snrm(b.p(),n,itol);
+		znrm = snrm(r.p(),n,itol);
+	}
+	else
+		SLS_ERR("illegal itol in linbcg_sym");
+
+	while (iter < itmax) {
+		++iter;
+		for (bknum=0.0,j=0;j<n;j++) bknum += r[j]*rr[j];
+		if (iter == 1) {
+			for (j=0;j<n;j++) {
+				p[j]=r[j];
+				pp[j]=rr[j];
+			}
+		} else {
+			bk=bknum/bkden;
+			for (j=0;j<n;j++) {
+				p[j]=bk*p[j]+r[j];
+				pp[j]=bk*pp[j]+rr[j];
+			}
+		}
+		bkden=bknum;
+		mul(z, A, p);
+		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
+		ak=bknum/akden;
+		mul(zz, A, pp);
+		for (j=0;j<n;j++) {
+			x[j] += ak*p[j];
+			r[j] -= ak*z[j];
+			rr[j] -= ak*zz[j];
+		}
+		
+		if (itol == 1)
+			err=snrm(r.p(),n,itol)/bnrm;
+		else if (itol == 2)
+			err=snrm(r.p(),n,itol)/bnrm;
+		else if (itol == 3 || itol == 4) {
+			zm1nrm=znrm;
+			znrm=snrm(r.p(),n,itol);
+			if (abs(zm1nrm-znrm) > EPS*znrm) {
+				dxnrm=abs(ak)*snrm(p.p(),n,itol);
+				err=znrm/abs(zm1nrm-znrm)*dxnrm;
+			} else {
+				err=znrm/bnrm;
+				continue;
+			}
+			xnrm=snrm(x.p(),n,itol);
+			if (err <= 0.5*xnrm) err /= xnrm;
+			else {
+				err=znrm/bnrm;
+				continue;
+			}
+		}
+		if (err <= tol) break;
 	}
 }
 
