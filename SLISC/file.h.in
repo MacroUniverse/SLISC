@@ -9,7 +9,7 @@
 #include "unicode.h"
 #include "sort.h"
 #include "Bit.h"
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 #include "search.h"
 #include "string.h"
 #endif
@@ -23,7 +23,7 @@ inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
 inline void write(Str_I str, Str_I fname);
 
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 inline Str wstr2utf8(const std::wstring& wstr);
 inline std::wstring utf82wstr(Str_I str);
 
@@ -52,7 +52,7 @@ inline Bool file_exist_case(Str_I fname)
 // check if a file exist, default is case sensitive
 // case_sens only works on Windows
 inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     ifstream f(fname);
     return f.good();
 #else
@@ -73,7 +73,7 @@ inline Bool file_exist(Str32_I fname) {
 // remove a file with error handling
 inline void file_remove(Str_I fname)
 {
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     if (remove(fname.c_str()) && file_exist(fname))
         throw Str("failed to remove, file being used? (" + fname + ")");
 #else
@@ -86,7 +86,7 @@ inline void file_remove(Str_I fname)
 // `path` must end with '/'
 inline Bool dir_exist(Str_I path)
 {
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     ofstream file(path + "/sls_test_if_dir_exist");
 #else
     ofstream file(utf82wstr(path + "/sls_test_if_dir_exist"));
@@ -117,7 +117,7 @@ inline void mkdir(Str_I path)
 {
     Str tmp = path;
     replace(tmp, "\"", "\\\""); // doesn't matter for utf8, multi-byte encoding all bytes > 127
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     Int ret = system(("mkdir -p \"" + tmp + "\"").c_str()); ret++;
 #else
     CreateDirectory(utf82wstr(tmp).c_str(), NULL);
@@ -129,7 +129,7 @@ inline void mkdir(Str_I path)
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     Int ret = system(("rmdir " + path).c_str()); ret++;
 #else
     if (RemoveDirectory(utf82wstr(path).c_str()) == 0)
@@ -151,7 +151,7 @@ inline void ensure_dir(Str_I dir_or_file)
         SLS_ERR("cannot create directory: " + dir);
 }
 
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
 // remove a file
 inline void file_rm(Str_I wildcard_name) {
     system(("rm " + wildcard_name).c_str());
@@ -161,7 +161,7 @@ inline void file_rm(Str_I wildcard_name) {
 // list all files in current directory
 // path must end with '/'
 // result is sorted
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {    
     if (!append)
@@ -214,7 +214,7 @@ inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
         fnames.push_back(path + names[i]);
 }
 
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 
 // path should end with '/'
 // path can be full, relative or empty (./)
@@ -257,7 +257,7 @@ inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false
 
 // list all files in a directory recursively (containing relative paths)
 // result is sorted
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
     if (!append)
@@ -417,7 +417,7 @@ inline Long file_size(Str_I fname)
 {
     if (!file_exist(fname))
         return -1;
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     ifstream fin(fname, ifstream::ate | ifstream::binary);
 #else
     ifstream fin(utf82wstr(fname), ifstream::ate | ifstream::binary);
@@ -430,7 +430,7 @@ inline void open_bin(ofstream &fout, Str_I fname)
 {
     if (fout.is_open())
         fout.close();
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     fout.open(fname, std::ios::out | std::ios::binary);
 #else
     fout.open(utf82wstr(fname), std::ios::out | std::ios::binary);
@@ -442,7 +442,7 @@ inline void open_bin(ifstream &fin, Str_I fname)
 {
     if (fin.is_open())
         fin.close();
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
     fin.open(fname, std::ios::in | std::ios::binary);
 #else
     fin.open(utf82wstr(fname), std::ios::in | std::ios::binary);
@@ -679,7 +679,7 @@ inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0)
 }
 
 // get time-stamp of a file
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>

@@ -4,7 +4,7 @@
 #include <fstream>
 #include <locale>
 #include <codecvt>
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 #include <Windows.h> // for console unicode output
 #undef max
 #undef min
@@ -12,7 +12,7 @@
 #include "string.h"
 #include "utfcpp/utf8.h"
 
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 #define SLS_USE_UTFCPP
 #endif
 
@@ -22,7 +22,7 @@ using std::stringstream;
 
 inline Long CRLF_to_LF(Str32_IO str);
 
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 // set windows console to display utf-8
 struct set_windows_console_utf8 {
     set_windows_console_utf8() {

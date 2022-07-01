@@ -28,6 +28,14 @@
 #include <cstring>
 #include <cstdarg>
 
+#ifdef _MSC_VER
+#define SLS_USE_MSVC // using Microsoft Visual C++ compiler
+#elif defined (__INTEL_COMPILER)
+#define SLS_USE_ICC // using Intel compiler (NOTE: __GNUC__ is also defined)
+#elif defined(__GNUC__)
+#define SLS_USE_GCC // using GNU compiler
+#endif
+
 #ifdef SLS_USE_MKL
     #define MKL_Complex16 double _Complex
     #include <mkl.h>
@@ -94,7 +102,7 @@ typedef const unsigned int Uint_I;
 typedef unsigned int Uint;
 typedef unsigned int &Uint_O, &Uint_IO;
 
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 typedef __int64 Llong;
 typedef unsigned __int64 Ullong;
 #else
@@ -221,7 +229,7 @@ inline Bool isnan(Comp s)
 // Floating Point Exceptions for Microsoft compilers
 // no exception for integer overflow
 #ifdef SLS_FP_EXCEPT
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 struct turn_on_floating_exceptions {
     turn_on_floating_exceptions() {
         unsigned cw; _controlfp_s(&cw, 0, 0);

@@ -1,6 +1,6 @@
 #pragma once
 #ifdef SLS_USE_QUAD_MATH
-#if !defined(__GNUC__) && !defined(__ICC)
+#if !defined(SLS_USE_GCC) && !defined(SLS_USE_ICC)
 #error quad_math.h only supports g++ compiler or intel compiler
 #endif
 #include <math.h>
@@ -10,8 +10,8 @@
 #include <iostream>
 #include <quadmath.h>
 
-#ifdef __ICC
-typedef __float128 _Quad
+#ifdef SLS_USE_ICC
+typedef _Quad __float128;
 #endif
 
 namespace std {

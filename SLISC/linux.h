@@ -1,6 +1,6 @@
 // linux utilities
 #pragma once
-#ifndef _MSC_VER
+#ifndef SLS_USE_MSVC
 #include <cstdio>
 #include <iostream>
 #include <memory>
