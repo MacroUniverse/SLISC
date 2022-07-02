@@ -10,9 +10,10 @@
 #include <iostream>
 #include <quadmath.h>
 
-#ifdef SLS_USE_ICC
-typedef _Quad __float128;
-#endif
+// #ifdef SLS_USE_ICC
+// typedef _Quad __float128;
+// typedef std::complex<_Quad> __complex128;
+// #endif
 
 namespace std {
 

@@ -4,7 +4,7 @@ compiler = icpc
 
 gsl_dir = /thummscratch/Hongyu/gsl/
 
-flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I ../boost-headers -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_QUAD_MATH
+flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I ../boost-headers -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_QUAD_MATH -I /usr/include/flint
 # -g # debug
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
