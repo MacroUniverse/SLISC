@@ -41,6 +41,7 @@ void test_random()
 
 #ifdef SLS_USE_QUAD_MATH
 	{
+		auto old_prec = cout.precision();
 		cout.precision(35);
 		Qdoub q;
 		for (Long i = 0; i < 20; ++i) {
@@ -48,6 +49,7 @@ void test_random()
 			if (q < 0 || q > 1)
 				SLS_ERR("failed!");
 		}
+		cout.precision(old_prec);
 	}
 #endif
 }
