@@ -1,5 +1,4 @@
 # Makefile
-# WARNING: link order does matter for icpc compiler, each linked library should depend only on the ones after it
 
 compiler = icpc
 
@@ -20,34 +19,31 @@ eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
 # Arpack
-arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/
 arpack_lib = -larpack -lgfortran
 # Arb
 arb_flag = -D SLS_USE_ARB -I /usr/include/flint
 arb_lib = -larb -lflint -lmpfr -lgmp
 # Address Sanitizer
-asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+asan_flag = # -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile
-matfile_bin_path = ../MatFile_linux/bin
-matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
-matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+matfile_bin_path = # ../MatFile_linux/bin
+matfile_flag = # -D SLS_USE_MATFILE -I ../MatFile_linux/include
+matfile_lib = # -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
 sqlite_flag = -D SLS_USE_SQLITE
 sqlite_lib = -l sqlite3
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
-libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
 compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -O3 -D NDEBUG
 
-flags = $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag)
-# -g # debug
+flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag)
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
-# -fp-model # floating point model
 
-other_libs = $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib)
+# WARNING: link order does matter for icpc compiler, each linked library should depend only on the ones after it, add new libs to the front
+libs = $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(link_mkl_static) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
@@ -70,7 +66,7 @@ h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'})"
 
 link: # link only
-	$(compiler) $(flags) -o main.x main.o test_*.o $(link_mkl_static) $(other_libs)
+	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
 	rm -f *.o *.x $(path_gen_headers)
