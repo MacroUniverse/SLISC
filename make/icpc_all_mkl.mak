@@ -1,4 +1,5 @@
 # Makefile
+# WARNING: link order does matter for icpc compiler, each linked library should depend only on the ones after it
 
 compiler = icpc
 
@@ -7,8 +8,8 @@ mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
 link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
 link_mkl_dynamic = -lpthread -lm -ldl 
 # Boost
-boost_flag = # -D SLS_USE_BOOST -I ../boost-headers
-boost_lib = # -lboost_system -lboost_filesystem
+boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+boost_lib = -lboost_filesystem -lboost_system
 # GSL
 gsl_dir = /thummscratch/Hongyu/gsl/
 gsl_flag = -D SLS_USE_GSL -I $(gsl_dir)include/
