@@ -8,32 +8,32 @@ link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_
 link_mkl_dynamic = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
 link_mkl_dynamic_single = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
 # Boost
-boost_flag = # -D SLS_USE_BOOST -I ../boost-headers
-boost_lib = # -lboost_filesystem -lboost_system
+boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+boost_lib = -lboost_filesystem -lboost_system
 # GSL
-gsl_dir = # /thummscratch/Hongyu/gsl/
-gsl_flag = # -D SLS_USE_GSL -I $(gsl_dir)include/
-gsl_lib = # -L $(gsl_dir)lib/ -lgsl
+gsl_dir = /thummscratch/Hongyu/gsl/
+gsl_flag = -D SLS_USE_GSL -I $(gsl_dir)include/
+gsl_lib = -L $(gsl_dir)lib/ -lgsl
 # Eigen
-eigen_flag = # -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad math
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
 # Arpack
-arpack_flag = # -D SLS_USE_ARPACK -I ../Arpack_test/include/
-arpack_lib = # -larpack -lgfortran
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/
+arpack_lib = -larpack -lgfortran
 # Arb
-arb_flag = # -D SLS_USE_ARB -I /usr/include/flint
-arb_lib = # -larb -lflint -lmpfr -lgmp
+arb_flag = -D SLS_USE_ARB -I /usr/include/flint
+arb_lib = -larb -lflint -lmpfr -lgmp
 # Address Sanitizer
 asan_flag = # -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile
-matfile_bin_path = # ../MatFile_linux/bin
-matfile_flag = # -D SLS_USE_MATFILE -I ../MatFile_linux/include
-matfile_lib = # -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+matfile_bin_path = ../MatFile_linux/bin
+matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
+matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
-sqlite_flag = # -D SLS_USE_SQLITE
-sqlite_lib = # -l sqlite3
+sqlite_flag = -D SLS_USE_SQLITE
+sqlite_lib = -l sqlite3
 
 # All
 
