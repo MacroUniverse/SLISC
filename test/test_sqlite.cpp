@@ -6,8 +6,8 @@
 
 void test_sqlite()
 {
+    using namespace slisc;
 #ifdef SLS_USE_SQLITE
-	using namespace slisc;
     sqlite3* DB;
     int exit;
     file_remove("example.db");

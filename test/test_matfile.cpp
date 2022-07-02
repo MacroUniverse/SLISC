@@ -5,9 +5,8 @@
 
 void test_matfile()
 {
-#ifdef SLS_USE_MATFILE
     using namespace slisc;
-
+#ifdef SLS_USE_MATFILE
     // write to file
     if (file_exist("test.mat"))
         remove("test.mat");
@@ -320,7 +319,7 @@ void test_matfile()
 
     //     mat.close();
     // }
-#elif
+#else
 	cout << "disabled!" << endl;
 #endif
 }

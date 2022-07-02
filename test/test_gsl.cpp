@@ -9,8 +9,8 @@
 
 void test_GSL()
 {
-#ifdef SLS_USE_GSL
     using namespace slisc;
+#ifdef SLS_USE_GSL
     Int two_ja = 1, two_ma = 1;
     Int two_jb = 1, two_mb = -1;
     Int two_jc = 0, two_mc = 0;

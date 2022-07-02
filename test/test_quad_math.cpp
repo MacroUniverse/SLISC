@@ -2,8 +2,8 @@
 
 void test_quad_math()
 {
-#ifdef SLS_USE_QUAD_MATH
 	using namespace slisc;
+#ifdef SLS_USE_QUAD_MATH
 	auto old_prec = std::cout.precision();
 	std::cout.precision(34);
 	// test libquadmath

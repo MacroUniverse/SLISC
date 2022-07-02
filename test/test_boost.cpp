@@ -7,8 +7,8 @@
 
 void test_boost()
 {
-#ifdef SLS_USE_BOOST
 	using namespace slisc;
+#ifdef SLS_USE_BOOST
 
 	// ================ file system =====================
 	using boost::filesystem::file_size; using boost::filesystem::rename;
