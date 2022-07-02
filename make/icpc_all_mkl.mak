@@ -2,21 +2,51 @@
 
 compiler = icpc
 
+# MKL
+mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
+link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+link_mkl_dynamic = -lpthread -lm -ldl 
+# Boost
+boost_flag = # -D SLS_USE_BOOST -I ../boost-headers
+boost_lib = # -lboost_system -lboost_filesystem
+# GSL
 gsl_dir = /thummscratch/Hongyu/gsl/
+gsl_flag = -D SLS_USE_GSL -I $(gsl_dir)include/
+gsl_lib = -L $(gsl_dir)lib/ -lgsl
+# Eigen
+eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+# quad math
+quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+quad_math_lib = -lquadmath
+# Arpack
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
+arpack_lib = -larpack -lgfortran
+# Arb
+arb_flag = -D SLS_USE_ARB -I /usr/include/flint
+arb_lib = -larb -lflint -lmpfr -lgmp
+# Address Sanitizer
+asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+# Matfile
+matfile_bin_path = ../MatFile_linux/bin
+matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
+matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+# SQLite
+sqlite_flag = -D SLS_USE_SQLITE
+sqlite_lib = -l sqlite3
 
-flags = -std=c++11 -Wall -I${MKLROOT}/include -I $(gsl_dir)include/  -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I ../boost-headers -O3 -D NDEBUG -D SLS_USE_GSL -D SLS_USE_MKL -D SLS_USE_ARB -D SLS_USE_QUAD_MATH -I /usr/include/flint
+# All
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
+libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
+
+compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -O3 -D NDEBUG
+
+flags = $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag)
 # -g # debug
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
 # -fp-model # floating point model
-# -D SLS_USE_BOOST
 
-link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
-
-link_mkl_dynamic = -lpthread -lm -ldl  
-
-other_libs = -L $(gsl_dir)lib/ -lgsl -larb -lflint -lmpfr -lgmp -lquadmath
-# -lboost_system -lboost_filesystem
+other_libs = $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
