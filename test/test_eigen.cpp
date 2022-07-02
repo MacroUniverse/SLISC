@@ -1,3 +1,4 @@
+#include <iostream>
 #ifdef SLS_USE_EIGEN
 #include "../SLISC/Eigen.h"
 
@@ -152,6 +153,6 @@ void test_eigen()
 		// cout << eig.eigenvectors() << endl;
 	}
 #else
-	cout << "disabled!" << endl;
+    std::cout << "disabled!" << std::endl;
 #endif
 }

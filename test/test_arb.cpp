@@ -1,3 +1,4 @@
+#include <iostream>
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint.h>
@@ -8,8 +9,8 @@
 
 void test_arb()
 {
-    using namespace slisc;
 #ifdef SLS_USE_ARB
+    using namespace slisc;
 	// test fmpz_t: arbitrary length integer from flint library, with performance for small number
     fmpz_t f, g, h;
     fmpz_init(f); fmpz_init(g); fmpz_init(h);
@@ -69,6 +70,6 @@ void test_arb()
 #endif
     flint_cleanup();
 #else
-    cout << "disabled!" << endl;
+    std::cout << "disabled!" << std::endl;
 #endif
 }

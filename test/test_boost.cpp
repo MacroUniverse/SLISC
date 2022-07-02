@@ -1,5 +1,5 @@
-#ifdef SLS_USE_BOOST
 #include <iostream>
+#ifdef SLS_USE_BOOST
 #include <boost/filesystem.hpp>
 #include <boost/json/src.hpp>
 #include "../SLISC/file.h"
@@ -7,9 +7,8 @@
 
 void test_boost()
 {
-	using namespace slisc;
 #ifdef SLS_USE_BOOST
-
+	using namespace slisc;
 	// ================ file system =====================
 	using boost::filesystem::file_size; using boost::filesystem::rename;
 	using boost::system::error_code; using boost::filesystem::last_write_time;
@@ -101,6 +100,6 @@ void test_boost()
 	if (s1 != s2)
 		SLS_ERR("failed!");
 #else
-	cout << "disabled!" << endl;
+    std::cout << "disabled!" << std::endl;
 #endif
 }

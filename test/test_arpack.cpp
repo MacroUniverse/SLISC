@@ -1,3 +1,4 @@
+#include <iostream>
 #ifdef SLS_USE_ARPACK
 #include "../../Arpack_test/include/arssym.h"
 // #include "../../Arpack_test/examples/product/sym/symsol.h"
@@ -85,6 +86,6 @@ void test_arpack()
 			SLS_ERR("failed!");
 	}
 #else
-	cout << "disabled!" << endl;
+    std::cout << "disabled!" << std::endl;
 #endif
 }
