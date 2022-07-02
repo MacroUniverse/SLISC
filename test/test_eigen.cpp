@@ -151,5 +151,7 @@ void test_eigen()
 		// cout << "eig.eigenvectors() = " << endl;
 		// cout << eig.eigenvectors() << endl;
 	}
+#elif
+	cout << "disabled!" << endl;
 #endif
 }

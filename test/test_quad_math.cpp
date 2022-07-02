@@ -30,5 +30,7 @@ void test_quad_math()
 	// Qcomp q2 = Qcomp(2, 3);
 	// cout << q2 << endl;
 	std::cout.precision(old_prec);
+#elif
+	cout << "disabled!" << endl;
 #endif
 }

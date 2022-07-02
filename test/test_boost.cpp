@@ -7,7 +7,7 @@
 
 void test_boost()
 {
-	#ifdef SLS_USE_BOOST
+#ifdef SLS_USE_BOOST
 	using namespace slisc;
 
 	// ================ file system =====================
@@ -100,5 +100,7 @@ void test_boost()
 	// cout << s2 << endl;
 	if (s1 != s2)
 		SLS_ERR("failed!");
-	#endif
+#elif
+	cout << "disabled!" << endl;
+#endif
 }

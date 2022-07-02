@@ -84,5 +84,7 @@ void test_arpack()
 		if (err > 1e-2)
 			SLS_ERR("failed!");
 	}
+#elif
+	cout << "disabled!" << endl;
 #endif
 }

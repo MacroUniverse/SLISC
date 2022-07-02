@@ -320,5 +320,7 @@ void test_matfile()
 
     //     mat.close();
     // }
+#elif
+	cout << "disabled!" << endl;
 #endif
 }

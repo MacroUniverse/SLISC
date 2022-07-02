@@ -68,5 +68,7 @@ void test_arb()
     arf_clear(af);
 #endif
     flint_cleanup();
+#elif
+    cout << "disabled!" << endl;
 #endif
 }
