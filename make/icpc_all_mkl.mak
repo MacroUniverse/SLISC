@@ -3,18 +3,19 @@
 compiler = icpc
 
 # MKL
-mkl_flag = -D SLS_USE_MKL -DMKL_ILP64 -I${MKLROOT}/include
+mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
 link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
 link_mkl_dynamic = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
+link_mkl_dynamic_single = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
 # Boost
-boost_flag = -D SLS_USE_BOOST -I ../boost-headers
-boost_lib = -lboost_filesystem -lboost_system
+boost_flag = # -D SLS_USE_BOOST -I ../boost-headers
+boost_lib = # -lboost_filesystem -lboost_system
 # GSL
-gsl_dir = /thummscratch/Hongyu/gsl/
-gsl_flag = -D SLS_USE_GSL -I $(gsl_dir)include/
-gsl_lib = -L $(gsl_dir)lib/ -lgsl
+gsl_dir = # /thummscratch/Hongyu/gsl/
+gsl_flag = # -D SLS_USE_GSL -I $(gsl_dir)include/
+gsl_lib = # -L $(gsl_dir)lib/ -lgsl
 # Eigen
-eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+eigen_flag = # -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad math
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
@@ -22,8 +23,8 @@ quad_math_lib = -lquadmath
 arpack_flag = # -D SLS_USE_ARPACK -I ../Arpack_test/include/
 arpack_lib = # -larpack -lgfortran
 # Arb
-arb_flag = -D SLS_USE_ARB -I /usr/include/flint
-arb_lib = -larb -lflint -lmpfr -lgmp
+arb_flag = # -D SLS_USE_ARB -I /usr/include/flint
+arb_lib = # -larb -lflint -lmpfr -lgmp
 # Address Sanitizer
 asan_flag = # -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile
@@ -31,8 +32,8 @@ matfile_bin_path = # ../MatFile_linux/bin
 matfile_flag = # -D SLS_USE_MATFILE -I ../MatFile_linux/include
 matfile_lib = # -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
-sqlite_flag = -D SLS_USE_SQLITE
-sqlite_lib = -l sqlite3
+sqlite_flag = # -D SLS_USE_SQLITE
+sqlite_lib = # -l sqlite3
 
 # All
 
@@ -43,7 +44,7 @@ flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(
 # -qopenmp-stubs # run OpenMP in serial mode
 
 # WARNING: link order does matter for icpc compiler, each linked library should depend only on the ones after it, add new libs to the front
-libs = $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(link_mkl_dynamic) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib)
+libs = $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(link_mkl_dynamic_single) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
