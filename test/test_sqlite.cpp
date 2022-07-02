@@ -30,7 +30,7 @@ void test_sqlite()
         sqlite3_free(messaggeError);
     }
     sqlite3_close(DB);
-#elif
+#else
 	cout << "disabled!" << endl;
 #endif
 }

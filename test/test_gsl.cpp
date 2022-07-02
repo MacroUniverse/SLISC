@@ -134,7 +134,7 @@ void test_GSL()
         if (abs(arg.val - 3.079015254176607) > 1e-14)
             SLS_ERR("failed!");
     }
-#elif
+#else
 	cout << "disabled!" << endl;
 #endif
 }
