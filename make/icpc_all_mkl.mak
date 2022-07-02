@@ -36,7 +36,7 @@ main.x: main.o $(test_o)
 	make link
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC' '../test'})"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'})"
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(link_mkl_static) $(other_libs)
@@ -44,11 +44,11 @@ link: # link only
 clean:
 	rm -f *.o *.x $(path_gen_headers)
 
-main.o: main.cpp
-	$(compiler) $(flags) -c main.cpp test/*.cpp
+main.o: main.cpp test/test_all.h
+	$(compiler) $(flags) -c main.cpp
 
 %.o: test/%.cpp $(path_headers)
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in
-	octave --no-window-system --eval "cd preprocessor; auto_gen ../SLISC $$(basename $<)"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)')"
