@@ -14,4 +14,5 @@ include make/g++_min.mak
 # include make/g++_all_mkl.mak
 
 # icpc compiler and MKL and all libs are required
+# include make/icpc_all_mkl_static.mak
 # include make/icpc_all_mkl.mak
