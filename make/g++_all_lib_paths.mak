@@ -8,18 +8,18 @@
 compiler = g++
 
 # CBLAS
-cblas_path = ../lib_cblas_x64_ubuntu/
+cblas_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_cblas_x64_ubuntu/
 cblas_flag = -D SLS_USE_CBLAS -I $(cblas_path)
 cblas_lib = -Wl,-rpath,$(cblas_path) -L$(cblas_path) -lblas
 # LAPACKE
-lapacke_path = ../lib_lapacke_x64_ubuntu/
+lapacke_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_lapacke_x64_ubuntu/
 lapacke_flag = -D SLS_USE_LAPACKE -I $(lapacke_path)
 lapacke_lib = -Wl,-rpath,$(lapacke_path) -L$(lapacke_path) -llapacke
 # Boost
 boost_flag = # -D SLS_USE_BOOST -I ../boost-headers
 boost_lib = # -lboost_system -lboost_filesystem
 # GSL
-gsl_path = ../lib_gsl_x64_ubuntu/
+gsl_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_gsl_x64_ubuntu/
 gsl_flag = -D SLS_USE_GSL -I $(gsl_path)
 gsl_lib = -Wl,-rpath,$(gsl_path) -L$(gsl_path) -lgsl
 # Eigen
@@ -31,19 +31,19 @@ quad_math_lib = -lquadmath
 arpack_flag = # -D SLS_USE_ARPACK -I ../Arpack_test/include
 arpack_lib = # -larpack -lgfortran
 # GMP
-gmp_path = ../lib_gmp_x64_ubuntu/
+gmp_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_gmp_x64_ubuntu/
 gmp_flag = -I $(gmp_path)
 gmp_lib = -Wl,-rpath,$(gmp_path) -L$(gmp_path) -lgmp
 # Flint
-flint_path = ../lib_flint_x64_ubuntu/
+flint_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_flint_x64_ubuntu/
 flint_flag = -I $(flint_path) -I $(flint_path)flint/
 flint_lib = -Wl,-rpath,$(flint_path) -L$(flint_path) -lflint
 # MPFR
-mpfr_path = ../lib_mpfr_x64_ubuntu/
+mpfr_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_mpfr_x64_ubuntu/
 mpfr_flag = -I $(mpfr_path)
 mpfr_lib = -Wl,-rpath,$(mpfr_path) -L$(mpfr_path) -lmpfr
 # Arb
-arb_path = ../lib_arb_x64_ubuntu/
+arb_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_arb_x64_ubuntu/
 arb_flag = -D SLS_USE_ARB -I $(arb_path)
 arb_lib = -Wl,-rpath,$(arb_path) -L$(arb_path) -larb
 # Address Sanitizer
