@@ -1,4 +1,5 @@
 # If the environment you use only supports g++ 8 compiler, then this makefile will use the libraries in SLISC0-libs-x64-ubuntu-18.04 repo, just clone it to the same directory as SLISC0 repo. This might also work for other linux distro, see if main.x runs successfully.
+# other required repo (clone to same directory as SLISC0/) are: Arpack_test, EigenTest, MatFile_linux
 # before running main.x, run `source set_path.sh` to setup LD_LIBRARY_PATH, this should be done for each bash login
 # use `ldd main.x` to check dynamic linkage
 
