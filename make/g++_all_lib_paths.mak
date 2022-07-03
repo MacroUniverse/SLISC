@@ -49,12 +49,13 @@ arb_lib = -Wl,-rpath,$(arb_path) -L$(arb_path) -larb
 # Address Sanitizer
 asan_flag = # -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile
-matfile_bin_path = # ../MatFile_linux/bin
-matfile_flag = # -D SLS_USE_MATFILE -I ../MatFile_linux/include
-matfile_lib = # -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+matfile_bin_path = ../MatFile_linux/bin
+matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
+matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
-sqlite_flag = # -D SLS_USE_SQLITE
-sqlite_lib = # -l sqlite3
+sqlite_path = # ../SLISC0-libs-x64-ubuntu-18.04/lib_sqlite3_x64_ubuntu/
+sqlite_flag = # -D SLS_USE_SQLITE -I $(sqlite_path)
+sqlite_lib = # -Wl,-rpath,$(sqlite_path) -L$(sqlite_path) -l sqlite3
 
 # All
 flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(gmp_flag) $(flint_flag) $(mpfr_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
