@@ -1,8 +1,7 @@
-# use g++ with libgsl-dev libblas-dev liblapacke-dev (all available from apt-get)
-# requires g++8.3 or higher
-# use `dpkg -L dpkg -L lib***` to check the installation directory
+# If the environment you use only supports g++ 8 compiler, then this makefile will use the libraries in SLISC0-libs-x64-ubuntu-18.04 repo, just clone it to the same directory as SLISC0 repo. This might also work for other linux distro, see if main.x runs successfully.
+# before running main.x, run `source set_path.sh` to setup LD_LIBRARY_PATH, this should be done for each bash login
+# use `ldd main.x` to check dynamic linkage
 
-# any change in *.h.in file will cause all *.cpp files to compile
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 compiler = g++
