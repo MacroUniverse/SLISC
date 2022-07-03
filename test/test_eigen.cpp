@@ -1,6 +1,6 @@
 #include <iostream>
 #ifdef SLS_USE_EIGEN
-#include "../SLISC/Eigen.h"
+#include "../SLISC/eigen.h"
 
 using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;

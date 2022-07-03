@@ -23,13 +23,14 @@ gsl_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_gsl_x64_ubuntu/
 gsl_flag = -D SLS_USE_GSL -I $(gsl_path)
 gsl_lib = -Wl,-rpath,$(gsl_path) -L$(gsl_path) -lgsl
 # Eigen
-eigen_flag = # -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad math
 quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
 # Arpack
-arpack_flag = # -D SLS_USE_ARPACK -I ../Arpack_test/include
-arpack_lib = # -larpack -lgfortran
+arpack_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_arpack_x64_ubuntu/
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/ -I $(arpack_path)
+arpack_lib = -Wl,-rpath,$(arpack_path) -L$(arpack_path) -larpack -lgfortran
 # GMP
 gmp_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_gmp_x64_ubuntu/
 gmp_flag = -I $(gmp_path)
@@ -53,9 +54,9 @@ matfile_bin_path = ../MatFile_linux/bin
 matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
 matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
-sqlite_path = # ../SLISC0-libs-x64-ubuntu-18.04/lib_sqlite3_x64_ubuntu/
-sqlite_flag = # -D SLS_USE_SQLITE -I $(sqlite_path)
-sqlite_lib = # -Wl,-rpath,$(sqlite_path) -L$(sqlite_path) -l sqlite3
+sqlite_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_sqlite3_x64_ubuntu/
+sqlite_flag = -D SLS_USE_SQLITE -I $(sqlite_path)
+sqlite_lib = -Wl,-rpath,$(sqlite_path) -L$(sqlite_path) -l sqlite3
 
 # All
 flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(gmp_flag) $(flint_flag) $(mpfr_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
