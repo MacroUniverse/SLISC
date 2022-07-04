@@ -614,6 +614,18 @@ inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
         v[i] = p1[i];
 }
 
+inline void copy(CmatComp_O v, const std::initializer_list<Comp> &v1)
+{
+    const Comp *p1 = v1.begin();
+    Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+    if (v.size() != N)
+        SLS_ERR("wrong shape!");
+#endif
+    for (Long i = 0; i < N; ++i)
+        v[i] = p1[i];
+}
+
 
 // container to container
 inline void copy(VecInt_O v, VecInt_I v1)

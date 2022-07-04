@@ -59,6 +59,25 @@ void test_linbcg()
 			SLS_ERR("failed!");
 	}
 
+	{
+		CmatComp a(3,3); copy(a, {Comp(1,1), Comp(0,0), Comp(5,2), Comp(0,0), Comp(3.,-1), Comp(0,0), Comp(2,-3), Comp(4,5), Comp(6,-1)});
+		VecComp x(3), x1(3), b(3);
+		VecDoub resvec(21); Int flag;
+		copy(b, {Comp(6,3), Comp(7,-3), Comp(8,-1)}); copy(x, 0);
+		copy(x1, {-5., -5., 5.5});
+		Doub relres; Long iter;
+		matlab_bicgstab(flag, relres, iter, resvec, x, a, b,  3e-16, 10);
+		cout << "a = " << endl; disp(a);
+		cout << "b = " << endl; disp(b);
+		cout << "x = " << endl; disp(x);
+		cout << "iter = " << iter << endl;
+		cout << "relres = " << relres << endl;
+		cout << "resvec = " << endl; disp(resvec);
+		x1 -= x;
+		if (max_abs(x1) > 1e-10)
+			SLS_ERR("failed!");
+	}
+
 #ifdef SLS_USE_QUAD_MATH
 	{
 		LinbcgQdoub2 solver;

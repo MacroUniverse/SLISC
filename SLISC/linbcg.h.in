@@ -226,4 +226,229 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 }
 //%------------------------------
 
+// Matlab function bicgsta
+
+inline Bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
+
+inline void matlab_bicgstab(Int_O flag, Doub_O relres, Long_O iter, VecDoub_O resvec,
+	VecComp_IO x, CmatComp_I afun, VecComp_I b,  Doub_I tol, Long_I maxit)
+{
+	Doub eps = 2.2e-16;
+	// Determine whether A is a matrix or a function.
+	Long m = b.size();
+	Long n = m;
+
+	// Check for all zero right hand side vector => all zero solution
+	Doub n2b = norm(b);                     // Norm of rhs vector, b
+	if (n2b == 0) {                     // if    rhs vector is all zeros
+		copy(x, 0);                // then  solution is all zeros
+		flag = 0;                      // a valid solution has been obtained
+		relres = 0;                    // the relative residual is actually 0/0
+		iter = 0;                      // no iterations need be performed
+		copy(resvec, 0);                    // resvec(1) = norm(b-A*x) = norm(0)
+		return;
+	}
+
+	flag = 1;
+	VecComp xmin = x;                          // Iterate which has minimal residual so far
+	Long imin = 0;                          // Iteration at which xmin was computed
+	Doub tolb = tol * n2b;                  // Relative tolerance
+	VecComp r(m); mul(r, afun, x);
+	for (Long i = 0; i < m; ++i)
+		r[i] = b[i] - r[i];
+	Doub normr = norm(r);                   // Norm of residual
+	Doub normr_act = normr;
+
+	if (normr <= tolb) {                // Initial guess is a good enough solution
+		flag = 0;
+		relres = normr / n2b;
+		iter = 0;
+		resvec[0] = normr;
+		return;
+	}
+
+	VecComp rt(m); copy(rt, r);                         // Shadow residual
+	VecComp p(m), ph(m), xhalf(m), v(m), s(m), sh(m), t(m);
+	if (resvec.size() != 2*maxit+1) SLS_ERR("illegal size!");       // Preallocate vector for norm of residuals
+	resvec[0] = normr;                 // resvec(0) = norm(b-A*x0)
+	Doub normrmin = normr;                  // Norm of residual from xmin
+	Comp rho = 1;
+	Comp omega = 1;
+	Doub stag = 0;                          // stagnation of the method
+	Comp alpha;
+	Long moresteps = 0;
+	Long maxmsteps = min(n/50, min(Long(10),n-maxit));
+	Long maxstagsteps = 3;
+
+	Long ii;
+	for (ii = 0; ii < maxit; ++ii) {
+		Comp rho1 = rho;
+		rho = dot(rt, r);
+		if ((rho == 0.) || isinf(rho)) {
+			flag = 4;
+			// resvec = resvec(0:2*ii);
+			break;
+		}
+		if (ii == 0)
+			copy(p, r);
+		else {
+			Comp beta = (rho/rho1)*(alpha/omega);
+			if (beta == 0 || isinf(beta)) {
+				flag = 4; break;
+			}
+			for (Long i = 0; i < m; ++i)
+				p[i] = r[i] + beta * (p[i] - omega * v[i]);
+		}
+		copy(ph, p);
+		mul(v, afun, ph);
+		Comp rtv = dot(rt, v);
+		if (rtv == 0 || isinf(rtv)) {
+			flag = 4;
+			// resvec = resvec[0:2*ii];
+			break;
+		}
+		alpha = rho / rtv;
+		if (isinf(alpha)) {
+			flag = 4;
+			// resvec = resvec(0:2*ii);
+			break;
+		}
+		
+		if (abs(alpha)*norm(ph) < eps*norm(x))
+			++stag;
+		else
+			stag = 0;
+		
+		for (Long i = 0; i < m; ++i) {
+			xhalf[i] = x[i] + alpha * ph[i];        // form the "half" iterate
+			s[i] = r[i] - alpha * v[i];             // residual associated with xhalf
+		}
+		normr = norm(s);
+		normr_act = normr;
+		resvec[2*ii+1] = normr;
+		
+		// check for convergence
+		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
+			mul(s, afun, xhalf);
+			for (Long i = 0; i < m; ++i)
+				s[i] = b[i] - s[i];
+			normr_act = norm(s);
+			resvec[2*ii+1] = normr_act;
+			if (normr_act <= tolb) {
+				copy(x, xhalf);
+				flag = 0;
+				iter = ii + 0.5;
+				// resvec = resvec[0:2*ii+1];
+				break;
+			}
+			else {
+				if (stag >= maxstagsteps && moresteps == 0)
+					stag = 0;
+				++moresteps;
+				if (moresteps >= maxmsteps) {
+					SLS_WARN("bicgstab: tooSmallTolerance");
+					flag = 3;
+					copy(x, xhalf);
+					// resvec = resvec[0:2*ii+1];
+					break;
+				}
+			}
+		}
+		
+		if (stag >= maxstagsteps) {
+			flag = 3;
+			// resvec = resvec[0:2*ii+1];
+			break;
+		}
+		
+		if (normr_act < normrmin) {        // update minimal norm quantities
+			normrmin = normr_act;
+			copy(xmin, xhalf);
+			imin = ii+1. - 0.5;
+		}
+		copy(sh, s);
+		mul(t, afun, sh);
+		Doub tt = norm2(t);
+		if (tt == 0 || isinf(tt)) {
+			flag = 4;
+			// resvec = resvec[0:2*ii+1];
+			break;
+		}
+		omega = dot(t, s) / tt;
+		if (isinf(omega)) {
+			flag = 4;
+			// resvec = resvec[0:2*ii+1];
+			break;
+		}
+		
+		if (abs(omega)*norm(sh) < eps*norm(xhalf))
+			stag = stag + 1;
+		else
+			stag = 0;
+		for (Long i = 0; i < m; ++i) {
+			x[i] = xhalf[i] + omega * sh[i];        // x = (x + alpha * ph) + omega * sh
+			r[i] = s[i] - omega * t[i];
+		}
+		normr = norm(r);
+		normr_act = normr;
+		resvec[2*ii+2] = normr;
+		
+		// check for convergence        
+		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
+			mul(r, afun, x);
+			for (Long i = 0; i < m; ++i)
+				r[i] = b[i] - r[i];
+			normr_act = norm(r);
+			resvec[2*ii+2] = normr_act;
+			if (normr_act <= tolb) {
+				flag = 0;
+				iter = ii+1;
+				// resvec = resvec[0:2*ii+2];
+				break;
+			}
+			else {
+				if (stag >= maxstagsteps && moresteps == 0)
+					stag = 0;
+				moresteps = moresteps + 1;
+				if (moresteps >= maxmsteps) {
+					SLS_WARN("bicgstab: tooSmallTolerance");
+					flag = 3;
+					// resvec = resvec[0:2*ii+2];
+					break;
+				}
+			}
+		}
+		
+		if (normr_act < normrmin) {       // update minimal norm quantities
+			normrmin = normr_act;
+			copy(xmin, x);
+			imin = ii+1;
+		}
+		
+		if (stag >= maxstagsteps) {
+			flag = 3;
+			// resvec = resvec[0:2*ii+2];
+			break;
+		}
+	}
+
+	// returned solution is first with minimal residual
+	if (flag == 0)
+		relres = normr_act / n2b;
+	else {
+		mul(r, afun, xmin);
+		for (Long i = 0; i < m; ++i)
+			r[i] = b[i] - r[i];
+		if (norm(r) <= normr_act) {
+			copy(x, xmin);
+			iter = imin;
+			relres = norm(r) / n2b;
+		}
+		else {
+			iter = ii + 1;
+			relres = normr_act / n2b;
+		}
+	}
+}
+
 }; // namespace slisc

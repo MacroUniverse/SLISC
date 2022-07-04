@@ -167,7 +167,7 @@ inline void copy(@T@_O v, @Ts@_I s)
 // inline void copy(@T@_O v, ...)
 
 // copy initializer list to containers
-//% tem('copy(v,ini)', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'CmatDoub'; 'CmatQdoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp'; });
+//% tem('copy(v,ini)', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'CmatDoub'; 'CmatComp'; 'CmatQdoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)

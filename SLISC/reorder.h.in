@@ -226,6 +226,7 @@ inline void her(@T@_IO v)
 //%---------------------------
 
 //% tem('her(v,v)', {
+//%    'CmatComp' 'CmatComp'
 //%    'CmatComp' 'MatComp'
 //%    'MatComp' 'CmatComp'
 //% 'DcmatComp' 'DcmatComp' });
