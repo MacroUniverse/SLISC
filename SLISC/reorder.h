@@ -787,6 +787,9 @@ inline void her(CmatComp_IO v)
 }
 
 
+inline void her(CmatComp_O v, CmatComp_I v1)
+{ trans(v, v1); conj(v); }
+
 inline void her(CmatComp_O v, MatComp_I v1)
 { trans(v, v1); conj(v); }
 
@@ -794,9 +797,6 @@ inline void her(MatComp_O v, CmatComp_I v1)
 { trans(v, v1); conj(v); }
 
 inline void her(DcmatComp_O v, DcmatComp_I v1)
-{ trans(v, v1); conj(v); }
-
-inline void her(CmatComp_O v, CmatComp_I v1)
 { trans(v, v1); conj(v); }
 
 

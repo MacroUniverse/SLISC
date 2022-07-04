@@ -54,7 +54,7 @@ inline VbaseChar::VbaseChar(const VbaseChar &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Char[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Char));
     }
 }
 
@@ -218,7 +218,7 @@ inline VbaseUchar::VbaseUchar(const VbaseUchar &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Uchar[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Uchar));
     }
 }
 
@@ -382,7 +382,7 @@ inline VbaseInt::VbaseInt(const VbaseInt &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Int[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Int));
     }
 }
 
@@ -546,7 +546,7 @@ inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Llong[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Llong));
     }
 }
 
@@ -716,7 +716,7 @@ inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Float[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Float));
     }
 }
 
@@ -880,7 +880,7 @@ inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Doub[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Doub));
     }
 }
 
@@ -1044,7 +1044,7 @@ inline VbaseLdoub::VbaseLdoub(const VbaseLdoub &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Ldoub[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Ldoub));
     }
 }
 
@@ -1208,7 +1208,7 @@ inline VbaseQdoub::VbaseQdoub(const VbaseQdoub &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Qdoub[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Qdoub));
     }
 }
 
@@ -1372,7 +1372,7 @@ inline VbaseFcomp::VbaseFcomp(const VbaseFcomp &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Fcomp[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Fcomp));
     }
 }
 
@@ -1536,7 +1536,7 @@ inline VbaseComp::VbaseComp(const VbaseComp &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Comp[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Comp));
     }
 }
 
@@ -1700,7 +1700,7 @@ inline VbaseLcomp::VbaseLcomp(const VbaseLcomp &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Lcomp[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Lcomp));
     }
 }
 
@@ -1864,7 +1864,7 @@ inline VbaseQcomp::VbaseQcomp(const VbaseQcomp &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Qcomp[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Qcomp));
     }
 }
 
@@ -2028,7 +2028,7 @@ inline VbaseFimag::VbaseFimag(const VbaseFimag &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Fimag[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Fimag));
     }
 }
 
@@ -2192,7 +2192,7 @@ inline VbaseImag::VbaseImag(const VbaseImag &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Imag[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Imag));
     }
 }
 
@@ -2356,7 +2356,7 @@ inline VbaseLimag::VbaseLimag(const VbaseLimag &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new Limag[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(Limag));
     }
 }
 

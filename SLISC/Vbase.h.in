@@ -69,7 +69,7 @@ inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
     m_N = rhs.m_N;
     if (m_N > 0) {
         m_p = new @T@[m_N];
-        memcpy(m_p, rhs.p(), m_N);
+        memcpy(m_p, rhs.p(), m_N*sizeof(@T@));
     }
 }
 

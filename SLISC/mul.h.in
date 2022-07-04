@@ -10,6 +10,7 @@ namespace slisc {
 //% 'SvecDoub' 'CmatDoub' 'VecDoub'
 //% 'VecComp' 'CmatComp' 'VecComp'
 //% 'SvecComp' 'ScmatComp' 'SvecDoub'
+//% 'SvecComp' 'CmatComp' 'VecComp'
 //% 'DvecComp' 'ScmatDoub' 'DvecComp';
 //% 'VecComp' 'MatComp' 'VecDoub'
 //% 'VecQdoub' 'CmatQdoub' 'VecQdoub' });

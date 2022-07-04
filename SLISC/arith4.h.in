@@ -674,6 +674,7 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //%   'VecInt' 'VecInt' 'VecInt'
 //%   'VecDoub' 'VecDoub' 'VecDoub'
 //%   'VecComp' 'VecComp' 'VecComp'
+//%   'SvecComp' 'VecComp' 'SvecComp'
 //%   'DvecComp', 'SvecComp', 'DvecComp'
 //% });
 //%------------------------------

@@ -66,7 +66,8 @@ void test_linbcg()
 		copy(b, {Comp(6,3), Comp(7,-3), Comp(8,-1)}); copy(x, 0);
 		copy(x1, {-5., -5., 5.5});
 		Doub relres; Long iter;
-		matlab_bicgstab(flag, relres, iter, resvec, x, a, b,  3e-16, 10);
+		VecComp wsp_c(3*8);
+		matlab_bicgstab(flag, relres, iter, resvec, x, a, b,  3e-16, 10, wsp_c);
 		cout << "a = " << endl; disp(a);
 		cout << "b = " << endl; disp(b);
 		cout << "x = " << endl; disp(x);
