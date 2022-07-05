@@ -318,6 +318,7 @@ inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, VecDoub_IO x, CmatDoub_I A, V
 
 // modified from Matlab function bicgsta() with no preconditioner
 // ref https://ww2.mathworks.cn/help/matlab/ref/bicgstab.html?lang=en
+// algo ref https://en.wikipedia.org/wiki/Biconjugate_gradient_stabilized_method
 // return: [0] Success [1] maxit iterations reached [3] stagnated after two consecutive iterations were the same
 // [4] scalar underflow/overflow
 
