@@ -2795,6 +2795,30 @@ inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
     divide_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
+inline void plus(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    plus_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
+inline void minus(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    minus_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
+inline void times(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    times_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
+inline void divide(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    divide_vvv(v.p(), v1.p(), v2.p(), v.size());
+}
+
 
 inline void minus_vv(Comp *v, const Doub *v1, Long_I N)
 {

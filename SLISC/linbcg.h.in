@@ -226,45 +226,58 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 }
 //%------------------------------
 
-// Matlab function bicgsta
-
+// modified from Matlab function bicgsta() with no preconditioner
+// ref https://ww2.mathworks.cn/help/matlab/ref/bicgstab.html?lang=en
+//% tem('bicgstab_matlab', {
+//%    'VecDoub' 'CmatDoub' 'VecDoub' 'VecDoub';
+//%    'VecComp' 'CmatComp' 'VecComp' 'VecComp';
+//% });
+//%------------------------------
+//% [Tx, Tmat, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
+//% Tcut = cut_type(Twsp);
+//% if is_comp(Ts)
 inline Bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
+//% end
 
-inline void matlab_bicgstab(Int_O flag, Doub_O relres, Long_O iter,
-	VecComp_IO x, CmatComp_I afun, VecComp_I b,  Doub_I tol, Long_I maxit, VecComp_IO wsp_c)
+inline void bicgstab_matlab(Int_O flag, @Tr@_O relres, Long_O iter,
+	@Tx@_IO x, @Tmat@_I afun, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
 {
-	Doub eps = 2.2e-16;
+	@Tr@ eps = 2.2e-16;
 	// Determine whether A is a matrix or a function.
 	Long m = b.size();
 	if (wsp_c.size() < 8*m) SLS_ERR("illegal size!");
 
 	// Check for all zero right hand side vector => all zero solution
-	Doub n2b = norm(b);                 // Norm of rhs vector, b
-	if (n2b == 0) {                     // if    rhs vector is all zeros
-		copy(x, 0);                     // then  solution is all zeros
-		flag = 0;                       // a valid solution has been obtained
-		relres = 0;                     // the relative residual is actually 0/0
-		iter = 0;                       // no iterations need be performed
+	const @Tr@ n2b = norm(b);
+	if (n2b == 0) {
+//% req('copy(v,s)', {Tx});
+		copy(x, 0);
+		flag = 0;     // a valid solution has been obtained
+		relres = iter = 0;
 		return;
 	}
-	SvecComp xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
-	SvecComp p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
+//% req('copy(v,v)', {Tcut Tx; Tcut Tcut});
+	@Tcut@ xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
+	@Tcut@ p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
 		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);
+//% req('plus(v,v,v)', {Tcut, Tb, Tcut});
 	mul(r, afun, x); minus(r, b, r);
-	SvecComp rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
+	@Tcut@ rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
-	Doub tolb = tol * n2b;              // Relative tolerance
-	Doub normr = norm(r), normr_act = normr;  // Norm of residual
+	const @Tr@ tolb = tol * n2b;        // Relative tolerance
+	@Tr@ normr = norm(r), normr_act = normr;  // Norm of residual
 	if (normr <= tolb) {                // Initial guess is a good enough solution
 		flag = 0; relres = normr / n2b; iter = 0; return;
 	}
-	Doub normrmin = normr;             // Norm of residual from xmin
-	Comp rho = 1, omega = 1, alpha;
+	@Tr@ normrmin = normr;             // Norm of residual from xmin
+	@Ts@ rho = 1, omega = 1, alpha;
 	Long stag = 0;                     // stagnation of the method
 	Long moresteps = 0, maxstagsteps = 3, maxmsteps = min(m/50, min(Long(10), m-maxit)), ii;
+
 	for (ii = 0; ii < maxit; ++ii) {
-		Comp rho1 = rho;
+		@Ts@ rho1 = rho;
+//% req('dot', {Tcut Tcut});
 		rho = dot(rt, r);
 		if (rho == 0. || isinf(rho)) {
 			flag = 4; break;
@@ -272,7 +285,7 @@ inline void matlab_bicgstab(Int_O flag, Doub_O relres, Long_O iter,
 		if (ii == 0)
 			copy(p, r);
 		else {
-			Comp beta = (rho/rho1)*(alpha/omega);
+			@Ts@ beta = (rho/rho1)*(alpha/omega);
 			if (beta == 0 || isinf(beta)) {
 				flag = 4; break;
 			}
@@ -280,7 +293,7 @@ inline void matlab_bicgstab(Int_O flag, Doub_O relres, Long_O iter,
 				p[i] = r[i] + beta * (p[i] - omega * v[i]);
 		}
 		mul(v, afun, p);
-		Comp rtv = dot(rt, v);
+		@Ts@ rtv = dot(rt, v);
 		if (rtv == 0 || isinf(rtv)) {
 			flag = 4; break;
 		}
@@ -333,7 +346,7 @@ inline void matlab_bicgstab(Int_O flag, Doub_O relres, Long_O iter,
 			imin = ii+1. - 0.5;
 		}
 		mul(t, afun, s);
-		Doub tt = norm2(t);
+		@Tr@ tt = norm2(t);
 		if (tt == 0 || isinf(tt)) {
 			flag = 4; break;
 		}
@@ -398,5 +411,6 @@ inline void matlab_bicgstab(Int_O flag, Doub_O relres, Long_O iter,
 		}
 	}
 }
+//%------------------------------
 
 }; // namespace slisc

@@ -956,6 +956,14 @@ inline void copy(CmatComp_O v, ScmatComp_I v1)
     veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(SvecDoub_O v, VecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    if (v.size() == 0)
+        return;
+    veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(DcmatInt_O v, DcmatInt_I v1)
 {
     assert_same_shape(v, v1);
