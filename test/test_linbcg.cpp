@@ -65,8 +65,8 @@ void test_linbcg()
 		VecDoub x(3), x1(3), b(3); VecDoub wsp_d(3*8);
 		copy(b, {6., 7., 8.}); copy(x, 0);
 		copy(x1, {-5., -5., 5.5});
-		Doub relres; Long iter; Int flag;
-		bicgstab_matlab(flag, relres, iter, x, a, b,  1e-15, 30, wsp_d);
+		Doub relres; Long iter;
+		if (bicgstab_matlab(relres, iter, x, a, b,  1e-15, 30, wsp_d) != 0) SLS_ERR("failed!");
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
@@ -81,8 +81,8 @@ void test_linbcg()
 		CmatComp a(3,3); copy(a, {Comp(1,1), Comp(0,0), Comp(5,2), Comp(0,0), Comp(3.,-1), Comp(0,0), Comp(2,-3), Comp(4,5), Comp(6,-1)});
 		VecComp x(3), b1(3), b(3); VecComp wsp_c(3*8);
 		copy(b, {Comp(6,3), Comp(7,-3), Comp(8,-1)}); copy(x, 0);
-		Doub relres; Long iter; Int flag;
-		bicgstab_matlab(flag, relres, iter, x, a, b,  1e-15, 30, wsp_c);
+		Doub relres; Long iter;
+		if (bicgstab_matlab(relres, iter, x, a, b,  1e-15, 30, wsp_c) != 0) SLS_ERR("failed!");
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
