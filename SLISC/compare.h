@@ -1035,6 +1035,9 @@ inline void assert_same_shape(DvecComp_I v1, SvecComp_I v2, DvecComp_I v3)
 inline void assert_same_shape(SvecDoub_I v1, VecDoub_I v2, SvecDoub_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
+inline void assert_same_shape(SvecComp_I v1, SvecComp_I v2, SvecComp_I v3)
+{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
+
 
 inline Bool operator==(VecChar_I v1, VecChar_I v2)
 {

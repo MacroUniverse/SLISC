@@ -421,12 +421,18 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 //% tem('bicgstab_matlab_optim', {
 //%    'VecDoub' 'CmatDoub' 'VecDoub' 'VecDoub';
 //%    'VecComp' 'CmatComp' 'VecComp' 'VecComp';
+//%    'SvecComp' 'CNmatComp' 'SvecComp' 'SvecComp';
 //% });
 //%------------------------------
 //% [Tx, Tmat, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
 //% Tcut = cut_type(Twsp);
+//% if strcmp(Tmat, 'CNmatComp')
+class CNmatComp;
+inline void mul(@Tcut@_O, @Tmat@ &, @Tcut@_I);
+
+//% end
 inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
-	@Tx@_IO x, @Tmat@_I A, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
+	@Tx@_IO x, @Tmat@ &A, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
 {
 	@Tr@ eps = 2.2e-16;
 	Long m = b.size(); Int flag;
