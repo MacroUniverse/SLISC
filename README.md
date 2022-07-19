@@ -55,10 +55,10 @@ int main()
 
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
-## Compiling
+## Compiling (needs update)
 * C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04 & Windows WSL
 * If you don't want to use external libraries at all, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
-* If you want to use everything, make sure you have `liblapacke-dev`, `libgsl-dev` and `libflint-arb-dev` installed (use `apt install`), then use the second `include` in `Makefile`.
+* If you want to use everything, make sure you have `liblapacke-dev`, `libgsl-dev` and `libflint-arb-dev` installed (use `apt install`), then use the second `include` in `Makefile`. Or you can use `cmake .`, then `make -j4`.
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
 * If you want to use only some of the libraries, comment out their flags in the `.mak` files.
 * Run `make h` to generate the header code, then use `make` to compile, use `make -j4` to compile faster with 4 threads (or any number you like).
