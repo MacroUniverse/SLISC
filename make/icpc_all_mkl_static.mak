@@ -10,7 +10,7 @@ link_mkl_dynamic = -lpthread -lm -ldl
 boost_flag = -D SLS_USE_BOOST -I ../boost-headers
 boost_lib = -lboost_filesystem -lboost_system
 # GSL
-gsl_dir = /thummscratch/Hongyu/gsl/
+gsl_dir = ../SLISC0-libs-x64-ubuntu-18.04/lib_gsl_x64_ubuntu/
 gsl_flag = -D SLS_USE_GSL -I $(gsl_dir)include/
 gsl_lib = -L $(gsl_dir)lib/ -lgsl
 # Eigen
