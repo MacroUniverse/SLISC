@@ -31,6 +31,6 @@ void test_quad_math()
 	// cout << q2 << endl;
 	std::cout.precision(old_prec);
 #else
-	cout << "disabled!" << endl;
+	cout << "---------- disabled! ----------" << endl;
 #endif
 }

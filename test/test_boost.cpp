@@ -100,6 +100,6 @@ void test_boost()
 	if (s1 != s2)
 		SLS_ERR("failed!");
 #else
-    std::cout << "disabled!" << std::endl;
+    std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

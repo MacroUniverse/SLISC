@@ -70,6 +70,6 @@ void test_arb()
 #endif
     flint_cleanup();
 #else
-    std::cout << "disabled!" << std::endl;
+    std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

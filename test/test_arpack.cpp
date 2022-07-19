@@ -86,6 +86,6 @@ void test_arpack()
 			SLS_ERR("failed!");
 	}
 #else
-    std::cout << "disabled!" << std::endl;
+    std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

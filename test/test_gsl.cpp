@@ -135,6 +135,6 @@ void test_GSL()
             SLS_ERR("failed!");
     }
 #else
-	cout << "disabled!" << endl;
+	cout << "---------- disabled! ----------" << endl;
 #endif
 }

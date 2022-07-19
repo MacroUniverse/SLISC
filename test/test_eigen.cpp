@@ -153,6 +153,6 @@ void test_eigen()
 		// cout << eig.eigenvectors() << endl;
 	}
 #else
-    std::cout << "disabled!" << std::endl;
+    std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

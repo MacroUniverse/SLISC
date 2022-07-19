@@ -320,6 +320,6 @@ void test_matfile()
     //     mat.close();
     // }
 #else
-	cout << "disabled!" << endl;
+	cout << "---------- disabled! ----------" << endl;
 #endif
 }

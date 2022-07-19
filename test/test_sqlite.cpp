@@ -31,6 +31,6 @@ void test_sqlite()
     }
     sqlite3_close(DB);
 #else
-	cout << "disabled!" << endl;
+	cout << "---------- disabled! ----------" << endl;
 #endif
 }
