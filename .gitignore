@@ -3,6 +3,8 @@
 Debug/
 Release/
 x64/
+CMakeFiles/
+*.cmake
 *.user
 *.x
 *.gch
@@ -23,3 +25,4 @@ test.mat
 example.db
 test1.txt
 test.txt
+CMakeCache.txt
