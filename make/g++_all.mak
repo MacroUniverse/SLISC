@@ -14,8 +14,8 @@ cblas_lib = -lblas
 lapacke_flag = -D SLS_USE_LAPACKE
 lapacke_lib = -llapacke
 # Boost
-boost_flag = -D SLS_USE_BOOST -I ../boost-headers
-boost_lib = -lboost_system -lboost_filesystem
+# boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+# boost_lib = -lboost_system -lboost_filesystem
 # GSL
 gsl_flag = -D SLS_USE_GSL
 gsl_lib = -lgsl
@@ -33,6 +33,7 @@ arb_lib = -lflint -lmpfr -lgmp -larb
 # Address Sanitizer
 asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile
+# (conflicts with boost_filesystem.so other than version 1.56.0)
 matfile_bin_path = ../MatFile_linux/bin
 matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
 matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
@@ -41,8 +42,8 @@ sqlite_flag = -D SLS_USE_SQLITE
 sqlite_lib = -l sqlite3
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
-libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
+libs = $(gsl_lib) $(lapacke_lib) $(boost_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
