@@ -1,10 +1,7 @@
 // do all available tests of SLISC
-// TODO: test mparith.h not finished
-
 #pragma once
-#include "../SLISC/global.h"
 #include "../SLISC/unicode.h"
-#include <iostream>
+
 #define SLS_TEST(name) do{void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} while(0)
 
 #ifdef _MSC_VER
