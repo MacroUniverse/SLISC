@@ -3,7 +3,7 @@ project(SLISC0)
 
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
-SET(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
 # include_directories(SLISC)
 
@@ -37,13 +37,13 @@ include_directories(/usr/include/flint/)
 list(APPEND LIBS flint mpfr gmp arb)
 # Address Sanitizer
 add_definitions(-D SLS_USE_ASAN)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
-set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -static-libasan")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
+set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize=address -static-libasan")
 # Matfile
 # (conflicts with boost_filesystem.so other than version 1.56.0)
 add_definitions(-D SLS_USE_MATFILE)
 include_directories(../MatFile_linux/include)
-LINK_DIRECTORIES(../MatFile_linux/bin)
+link_directories(../MatFile_linux/bin)
 list(APPEND LIBS mat mx)
 set(CMAKE_INSTALL_RPATH ../MatFile_linux/bin)
 # SQLite
@@ -56,3 +56,4 @@ file(GLOB SOURCES "test/*.cpp" "main.cpp")
 
 add_executable(main.x ${SOURCES})
 target_link_libraries(main.x ${LIBS})
+
