@@ -20,6 +20,19 @@ void test_sort()
 		}
 	}
 
+	// test quicksort()
+	{
+		Long N = 100;
+		VecInt v(N);
+		for (Long i = 0; i < N; ++i)
+			v[i] = randInt(N);
+		quicksort(v.p(), v.size());
+		for (Long i = 1; i < N; ++i) {
+			if (v[i] < v[i-1])
+				SLS_ERR("failed!");
+		}
+	}
+
     // test sort(v, v)
 	{
 		Long N = 100;

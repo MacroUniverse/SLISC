@@ -1083,4 +1083,44 @@ inline void sort_case_insens(vecStr_IO v, vecLlong_IO v1)
 }
 
 
+// C++ Implementation of the Quick Sort Algorithm.
+// swap medium to `a`
+template <class T>
+void quicksort_3mid(T &a, T &b, T &c) {
+    if (a < c) {
+        if (b < a) ;
+        else if (b > c) swap(a, c);
+        else swap(a, b);
+    }
+    else {
+        if (b < c) swap(a, c);
+        else if (b > a) ;
+        else swap(a, b);
+    }
+}
+
+template <class T>
+void quicksort(T *v, Long N)
+{
+	if (N <= 1) return;
+	swap(v[0], v[N/2]); // choose pivot as middle element
+    // if (N == 2) { // choose pivot as 3-element medium
+    //     if (v[0] > v[1]) swap(v[0], v[1]);
+    //     return;
+    // }
+    // quicksort_3mid(v[0], v[N/2], v[N-1]);
+    T pivot = v[0];
+    Long i = 1, j = N-1;
+    while (1) {
+        while (i < N && v[i] <= pivot) ++i;
+        while (v[j] > pivot) --j;
+        if (j <= i || i == N || j < 1)
+			break;
+		swap(v[i], v[j]);
+    }
+    swap(v[0], v[i-1]);
+    quicksort(v, i-1);
+	quicksort(v+i, N-i);
+}
+
 } // namespace slisc
