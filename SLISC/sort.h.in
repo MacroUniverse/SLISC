@@ -257,4 +257,28 @@ void quicksort(T *v, Long N)
 	quicksort(v+i, N-i);
 }
 
+template <class T>
+void mergesort(T *v, Long N, T *wsp)
+{
+    if (N == 1) return;
+    Long N1 = N/2, Tsize = sizeof(*v);
+    mergesort(v, N1, wsp);
+    mergesort(v + N1, N-N1, wsp + N1);
+    memcpy(wsp, v, Tsize*N);
+    Long i = 0, j = N1, ind = 0;
+    while (i < N1 && j < N) {
+        T e = wsp[i], e1 = wsp[j];
+        if (e < e1) {
+            v[ind++] = e; ++i;
+        }
+        else {
+            v[ind++] = e1; ++j;
+        }
+    }
+    if (i == N1)
+        memcpy(v+ind, wsp+j, Tsize*(N-j));
+    else
+        memcpy(v+ind, wsp+i, Tsize*(N1-i));
+}
+
 } // namespace slisc
