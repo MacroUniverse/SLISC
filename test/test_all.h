@@ -17,6 +17,7 @@ void test_all()
     SLS_TEST(arithmetic);
     SLS_TEST(arpack);
     SLS_TEST(band);
+    SLS_TEST(bin_tree);
     SLS_TEST(bisection);
     SLS_TEST(Bit);
     SLS_TEST(boost);

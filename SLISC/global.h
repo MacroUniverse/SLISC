@@ -18,6 +18,8 @@
 #include <limits>
 #include <math.h>
 #include <cmath>
+#include <climits>
+#include <cfloat>
 #include <algorithm>
 #include <complex>
 #include <vector>
@@ -27,6 +29,9 @@
 #include <fstream>
 #include <cstring>
 #include <cstdarg>
+#include <utility>
+#include <functional>
+#include <unordered_map>
 
 #ifdef _MSC_VER
 #define SLS_USE_MSVC // using Microsoft Visual C++ compiler
@@ -65,7 +70,8 @@ namespace slisc {
 // using std
 
 using std::complex;
-using std::vector; using std::string; using std::to_string;
+using std::vector; using std::string; using std::stringstream;
+using std::to_string; using std::pair;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap;
