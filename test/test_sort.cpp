@@ -26,7 +26,14 @@ void test_sort()
 		VecInt v(N);
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
-		quicksort(v.p(), v.size());
+		quicksort0(v.p(), v.size());
+		for (Long i = 1; i < N; ++i) {
+			if (v[i] < v[i-1])
+				SLS_ERR("failed!");
+		}
+		for (Long i = 0; i < N; ++i)
+			v[i] = randInt(N);
+		quicksort3(v.p(), v.size());
 		for (Long i = 1; i < N; ++i) {
 			if (v[i] < v[i-1])
 				SLS_ERR("failed!");
@@ -35,8 +42,8 @@ void test_sort()
 
 	// test mergesort()
 	{
-		Long N = 100;
-		VecInt v(N), wsp(N);
+		Long N = 101;
+		VecInt v(N), wsp((N+1)/2);
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
 		mergesort(v.p(), v.size(), wsp.p());

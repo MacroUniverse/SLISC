@@ -1083,7 +1083,6 @@ inline void sort_case_insens(vecStr_IO v, vecLlong_IO v1)
 }
 
 
-// C++ Implementation of the Quick Sort Algorithm.
 // swap medium to `a`
 template <class T>
 void quicksort_3mid(T &a, T &b, T &c) {
@@ -1099,16 +1098,16 @@ void quicksort_3mid(T &a, T &b, T &c) {
     }
 }
 
+// quick sort (medium of 3 pivot)
 template <class T>
-void quicksort(T *v, Long N)
+void quicksort3(T *v, Long N)
 {
 	if (N <= 1) return;
-	swap(v[0], v[N/2]); // choose pivot as middle element
-    // if (N == 2) { // choose pivot as 3-element medium
-    //     if (v[0] > v[1]) swap(v[0], v[1]);
-    //     return;
-    // }
-    // quicksort_3mid(v[0], v[N/2], v[N-1]);
+    if (N == 2) {
+        if (v[0] > v[1]) swap(v[0], v[1]);
+        return;
+    }
+    quicksort_3mid(v[0], v[N/2], v[N-1]); // medium of 3 pivot
     T pivot = v[0];
     Long i = 1, j = N-1;
     while (1) {
@@ -1119,21 +1118,43 @@ void quicksort(T *v, Long N)
 		swap(v[i], v[j]);
     }
     swap(v[0], v[i-1]);
-    quicksort(v, i-1);
-	quicksort(v+i, N-i);
+    quicksort3(v, i-1);
+	quicksort3(v+i, N-i);
 }
 
+// quick sort (1st elm pivot)
+template <class T>
+void quicksort0(T *v, Long N)
+{
+	if (N <= 1) return;
+	swap(v[0], v[N/2]); // 1st elm pivot
+    T pivot = v[0];
+    Long i = 1, j = N-1;
+    while (1) {
+        while (i < N && v[i] <= pivot) ++i;
+        while (v[j] > pivot) --j;
+        if (j <= i || i == N || j < 1)
+			break;
+		swap(v[i], v[j]);
+    }
+    swap(v[0], v[i-1]);
+    quicksort0(v, i-1);
+	quicksort0(v+i, N-i);
+}
+
+// merge sort
+// wsp (work space) requires length (N+1)/2
 template <class T>
 void mergesort(T *v, Long N, T *wsp)
 {
     if (N == 1) return;
     Long N1 = N/2, Tsize = sizeof(*v);
     mergesort(v, N1, wsp);
-    mergesort(v + N1, N-N1, wsp + N1);
-    memcpy(wsp, v, Tsize*N);
+    mergesort(v+N1, N-N1, wsp);
+    memcpy(wsp, v, Tsize*N1);
     Long i = 0, j = N1, ind = 0;
     while (i < N1 && j < N) {
-        T e = wsp[i], e1 = wsp[j];
+        T e = wsp[i], e1 = v[j];
         if (e < e1) {
             v[ind++] = e; ++i;
         }
@@ -1141,9 +1162,7 @@ void mergesort(T *v, Long N, T *wsp)
             v[ind++] = e1; ++j;
         }
     }
-    if (i == N1)
-        memcpy(v+ind, wsp+j, Tsize*(N-j));
-    else
+    if (i != N1)
         memcpy(v+ind, wsp+i, Tsize*(N1-i));
 }
 
