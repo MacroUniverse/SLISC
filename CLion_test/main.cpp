@@ -1,4 +1,5 @@
-#include "../SLISC/global.h"
+#include <bits/stdc++.h>
+#include "../SLISC/sort.h"
 
 int main() {
     using namespace slisc;

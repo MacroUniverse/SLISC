@@ -1,5 +1,7 @@
 #include "../SLISC/sort.h"
 #include "../SLISC/random.h"
+#include "../SLISC/copy.h"
+#include "../SLISC/compare.h"
 #include "../SLISC/disp.h"
 
 void test_sort()
@@ -22,22 +24,37 @@ void test_sort()
 
 	// test quicksort()
 	{
-		Long N = 100;
+		Long N = 10;
 		VecInt v(N);
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
-		quicksort0(v.p(), v.size());
+		quicksort0(v.p(), N);
 		for (Long i = 1; i < N; ++i) {
 			if (v[i] < v[i-1])
 				SLS_ERR("failed!");
 		}
+        VecInt order(N), v1(N);
+        for (Long i = 0; i < N; ++i)
+            v[i] = randInt(N);
+        copy(v1, v);
+        linspace(order, 0, N-1);
+        quicksort0(v.p(), order.p(), N);
+        quicksort0(order.p(), v.p(), N);
+        if (v != v1) SLS_ERR("failed!");
+
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
-		quicksort3(v.p(), v.size());
-		for (Long i = 1; i < N; ++i) {
+		quicksort3(v.p(), N);
+		for (Long i = 1; i < N; ++i)
 			if (v[i] < v[i-1])
 				SLS_ERR("failed!");
-		}
+        for (Long i = 0; i < N; ++i)
+            v[i] = randInt(N);
+        copy(v1, v);
+        linspace(order, 0, N-1);
+        quicksort3(v.p(), order.p(), N);
+        quicksort3(order.p(), v.p(), N);
+        if (v != v1) SLS_ERR("failed!");
 	}
 
 	// test mergesort()

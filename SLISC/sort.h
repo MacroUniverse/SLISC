@@ -1098,6 +1098,21 @@ void quicksort_3mid(T &a, T &b, T &c) {
     }
 }
 
+// do the same swap for a1, b1, c1
+template <class T>
+void quicksort_3mid(T &a, T &b, T &c, T &a1, T &b1, T &c1) {
+    if (a < c) {
+        if (b < a) ;
+        else if (b > c) swap(a, c), swap(a1, c1);
+        else swap(a, b), swap(a1, b1);
+    }
+    else {
+        if (b < c) swap(a, c), swap(a1, c1);
+        else if (b > a) ;
+        else swap(a, b), swap(a1, b1);
+    }
+}
+
 // quick sort (medium of 3 pivot)
 template <class T>
 void quicksort3(T *v, Long N)
@@ -1122,6 +1137,31 @@ void quicksort3(T *v, Long N)
 	quicksort3(v+i, N-i);
 }
 
+// also do the same change for v1
+template <class T, class T1>
+inline void quicksort3(T *v, T1 *v1, Long N)
+{
+    if (N <= 1) return;
+    if (N == 2) {
+        if (v[0] > v[1])
+            swap(v[0], v[1]), swap(v1[0], v1[1]);
+        return;
+    }
+    quicksort_3mid(v[0], v[N/2], v[N-1], v1[0], v1[N/2], v1[N-1]); // medium of 3 pivot
+    T pivot = v[0];
+    Long i = 1, j = N-1;
+    while (1) {
+        while (i < N && v[i] <= pivot) ++i;
+        while (v[j] > pivot) --j;
+        if (j <= i || i == N || j < 1)
+            break;
+        swap(v[i], v[j]); swap(v1[i], v1[j]);
+    }
+    swap(v[0], v[i-1]); swap(v1[0], v1[i-1]);
+    quicksort3(v, v1, i-1);
+    quicksort3(v+i, v1+i, N-i);
+}
+
 // quick sort (1st elm pivot)
 template <class T>
 void quicksort0(T *v, Long N)
@@ -1140,6 +1180,26 @@ void quicksort0(T *v, Long N)
     swap(v[0], v[i-1]);
     quicksort0(v, i-1);
 	quicksort0(v+i, N-i);
+}
+
+// also do the same change for v1
+template <class T, class T1>
+void quicksort0(T *v, T1 *v1, Long N)
+{
+    if (N <= 1) return;
+    swap(v[0], v[N/2]); swap(v1[0], v1[N/2]); // 1st elm pivot
+    T pivot = v[0];
+    Long i = 1, j = N-1;
+    while (1) {
+        while (i < N && v[i] <= pivot) ++i;
+        while (v[j] > pivot) --j;
+        if (j <= i || i == N || j < 1)
+            break;
+        swap(v[i], v[j]); swap(v1[i], v1[j]);
+    }
+    swap(v[0], v[i-1]); swap(v1[0], v1[i-1]);
+    quicksort0(v, v1, i-1);
+    quicksort0(v+i, v1+i, N-i);
 }
 
 // merge sort
