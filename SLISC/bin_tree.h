@@ -4,20 +4,30 @@
 namespace slisc {
 
 // Definition for a binary tree node.
- struct BtreeNode {
+struct BtreeNode {
     int val;
     BtreeNode *left, *right;
     BtreeNode(int x) : val(x), left(NULL), right(NULL) {}
- };
+};
+
+// deallocate a Btree or subtree (assuming every node is created with `new`)
+inline void Btree_delete(BtreeNode* node)
+{
+    if (node == NULL) return;
+    Btree_delete(node->left);
+    Btree_delete(node->right);
+    delete node;
+};
 
 // traverse binary tree and check if values are in order
 // `err_pair` will be empty if values are correct
 // if not, `err_pair[i]` will be neighboring node pairs with wrong values
 // argument `last` is the previous node checked before calling this function, use NULL if `node` is head
 // return last node checked for `node` (can't be NULL) subtree, return NULL to exit everything
-inline BtreeNode* bin_tree_check(vector<pair<BtreeNode*, BtreeNode*>> &err_pair, BtreeNode *node, BtreeNode *last = NULL) {
+inline BtreeNode* Btree_check(vector<pair<BtreeNode*, BtreeNode*>> &err_pair, BtreeNode *node, BtreeNode *last = NULL)
+{
     if (node->left != NULL) {
-        last = bin_tree_check(err_pair, node->left, last);
+        last = Btree_check(err_pair, node->left, last);
         if (last == NULL)
             return NULL;
     }
@@ -26,7 +36,7 @@ inline BtreeNode* bin_tree_check(vector<pair<BtreeNode*, BtreeNode*>> &err_pair,
         err_pair.emplace_back(last, node);
     }
     if (node->right != NULL)
-        return bin_tree_check(err_pair, node->right, node);
+        return Btree_check(err_pair, node->right, node);
     return node;
 }
 
