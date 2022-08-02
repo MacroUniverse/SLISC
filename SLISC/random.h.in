@@ -105,12 +105,13 @@ inline Comp randComp()
 }
 
 //% tem('rand', {
+//%    'vecInt'; 'vecLlong';
 //%    'VecLlong'; 'VecDoub'; 'VecQdoub';
 //%    'VecComp'; 'VecQcomp';
 //%    'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%    'MatLlong'; 'MatDoub'; 'MatComp';
 //%    'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
-//%    'CmatComp'; 'CmatQcomp';
+//%    'CmatComp'; 'CmatQcomp'; 'Str';
 //%    'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
 //%    'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //% });
@@ -120,7 +121,9 @@ inline void rand(@T@_O v)
 {
     Long i, N = v.size();
     for (i = 0; i < N; ++i)
-//% if is_Llong(Ts)
+//% if is_Int(Ts)
+        v[i] = randInt(N);
+//% elseif is_Llong(Ts)
         v[i] = randLong(N);
 //% elseif is_Doub(Ts)
         v[i] = randDoub();
@@ -130,6 +133,10 @@ inline void rand(@T@_O v)
         v[i] = randComp();
 //% elseif is_Qcomp(Ts)
         v[i] = randQcomp();
+//% elseif is_Char(Ts)
+        v[i] = randInt(26) + 'a';
+//% else
+//%     error('not implemented!');
 //% end
 }
 //%------------------------

@@ -1,4 +1,5 @@
 // extension for standard library
+#include "global.h"
 
 namespace slisc {
 
@@ -31,5 +32,11 @@ struct hash_pair {
         return h;
     }
 };
+
+template<class T1, class T2>
+std::ostream &operator<<(std::ostream &os, const pair<T1,T2> &s) {
+    os << "(" << s.first << ", " << s.second << ")";
+    return os;
+}
 
 } // namespace slisc

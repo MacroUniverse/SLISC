@@ -103,6 +103,20 @@ inline Comp randComp()
     return Comp(randDoub(), randDoub());
 }
 
+inline void rand(vecInt_O v)
+{
+    Long i, N = v.size();
+    for (i = 0; i < N; ++i)
+        v[i] = randInt(N);
+}
+
+inline void rand(vecLlong_O v)
+{
+    Long i, N = v.size();
+    for (i = 0; i < N; ++i)
+        v[i] = randLong(N);
+}
+
 inline void rand(VecLlong_O v)
 {
     Long i, N = v.size();
@@ -213,6 +227,13 @@ inline void rand(CmatQcomp_O v)
     Long i, N = v.size();
     for (i = 0; i < N; ++i)
         v[i] = randQcomp();
+}
+
+inline void rand(Str_O v)
+{
+    Long i, N = v.size();
+    for (i = 0; i < N; ++i)
+        v[i] = randInt(26) + 'a';
 }
 
 inline void rand(Cmat3Llong_O v)
