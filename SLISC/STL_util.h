@@ -1,7 +1,18 @@
-#pragma once
-#include "global.h"
+// extension for standard library
 
 namespace slisc {
+
+// use sort(iter1, iter2, cmp_inv()) for descending sort
+struct cmp_inv {
+	template <class T1, class T2>
+	bool operator()(const T1 &s1, const T2 &s2) { return s2 < s1; }
+};
+
+// use sort(iter1, iter2, cmp_second()) to sort the second element of pair
+struct cmp_second {
+	template<class T11, class T12, class T21, class T22>
+	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) { return s1.second < s2.second; }
+};
 
 // combine different hash
 // from boost library

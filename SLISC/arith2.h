@@ -201,6 +201,15 @@ inline void linspace_vss(Comp *v, Comp_I first, Comp_I last, Long N)
 }
 
 
+inline void linspace(vecInt_O v, Int_I first, Int_I last)
+{ linspace_vss(v.data(), first, last, v.size()); }
+
+inline void linspace(vecLlong_O v, Llong_I first, Llong_I last)
+{ linspace_vss(v.data(), first, last, v.size()); }
+
+inline void linspace(vecDoub_O v, Doub_I first, Doub_I last)
+{ linspace_vss(v.data(), first, last, v.size()); }
+
 inline void linspace(VecInt_O v, Int_I first, Int_I last)
 { linspace_vss(v.p(), first, last, v.size()); }
 

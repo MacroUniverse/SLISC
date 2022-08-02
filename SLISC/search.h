@@ -123,7 +123,7 @@ inline Long search_head(vecStr32_I v_short, Str32_I s_long, Long_I start = 0)
 
 
 // return true, output ind: if v[ind] == s, else return false
-// v is in ascending order
+// v must be ascending order (v[i] <= v[i+1])
 // if s < v[0], ind = -1;
 // if s > v[N-1], ind = N-1;
 // else, v[ind] < s < v[ind+1];
@@ -132,35 +132,18 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -168,35 +151,18 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -204,35 +170,18 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -240,35 +189,18 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -276,35 +208,18 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -312,35 +227,18 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -348,35 +246,18 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -384,35 +265,18 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -420,35 +284,18 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -456,35 +303,18 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -492,35 +322,18 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -528,35 +341,18 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -564,35 +360,18 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s)
 {
     Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
-    if (N < 1)
-        SLS_ERR("empty container!");
+    if (N < 1) SLS_ERR("empty container!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    else if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = N - 1; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = N - 1; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 
@@ -600,35 +379,18 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
     Long N = ind2 - ind1 + 1;
-    if (N < 1)
-        SLS_ERR("range error!");
+    if (N < 1) SLS_ERR("range error!");
 #endif
-    Char diff = s == v[0] ? 0 : (s > v[0] ? 1 : -1);
-    if (diff < 0) {
-        ind = -1; return false;
-    }
-    if (diff == 0) {
-        ind = 0; return true;
-    }
-    diff = s == v[ind2] ? 0 : (s > v[ind2] ? 1 : -1);
-    if (diff > 0) {
-        ind = ind2; return false;
-    }
-    if (diff == 0) {
-        ind = ind2; return true;
-    }
-    while (true) {
+    if (s < v[0]) { ind = -1; return false; }
+    if (s == v[0]) { ind = 0; return true; }
+    if (v[ind2] < s) { ind = ind2; return false; }
+    if (s == v[ind2]) { ind = ind2; return true; }
+    while (1) { // N >= 2 from here
+        if (ind2 - ind1 == 1) { ind = ind1; return false; }
         ind = (ind1 + ind2) / 2;
-        diff = s == v[ind] ? 0 : (s > v[ind] ? 1 : -1);
-        if (diff < 0)
-            ind2 = ind;
-        else if (diff > 0)
-            ind1 = ind;
-        else
-            return true;
-        if (ind2 - ind1 == 1) {
-            ind = ind1; return false;
-        }
+        if (s < v[ind]) ind2 = ind;
+        else if (v[ind] < s) ind1 = ind;
+        else return true;
     }
 }
 

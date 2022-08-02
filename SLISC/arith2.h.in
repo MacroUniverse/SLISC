@@ -214,12 +214,13 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 }
 //%-------------------------
 
-//% tem('linspace', { 'VecInt'; 'VecLlong';
-//%  'VecDoub'; 'VecComp'; 'CmatInt'; 'CmatDoub';
-//%  'CmatInt';
-//%   'CmatComp'; 'Cmat4Int'; 'ScmatInt';
-//%  'MatInt'; 'MatComp';
-//%  'Cmat3Doub'; 'Cmat3Doub'
+//% tem('linspace', {
+//% 'vecInt'; 'vecLlong'; 'vecDoub';
+//% 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% 'CmatInt'; 'CmatDoub'; 'CmatComp';
+//% 'Cmat4Int'; 'ScmatInt';
+//% 'MatInt'; 'MatComp';
+//% 'Cmat3Doub'; 'Cmat3Doub'
 //% });
 //%---------------------------------
 //% Tv = varargin{:};
@@ -229,7 +230,11 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 //% end
 //% req('linspace_vss', {Ts});
 inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
+//% if is_vector(Tv)
+{ linspace_vss(v.data(), first, last, v.size()); }
+//% else
 { linspace_vss(v.p(), first, last, v.size()); }
+//% end
 //%-------------------------
 
 

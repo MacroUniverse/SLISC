@@ -1,8 +1,13 @@
 #include <bits/stdc++.h>
 #include "../SLISC/sort.h"
+#include "../SLISC/search.h"
+#include "../SLISC/random.h"
+#include "../SLISC/STL_util.h"
+#include "../SLISC/arithmetic.h"
+
+using namespace slisc;
+using namespace std;
 
 int main() {
-    using namespace slisc;
-    cout << "hello!" << endl;
     return 0;
 }
