@@ -15,10 +15,10 @@
 
 // STL
 #include <stdlib.h>
-#include <limits>
 #include <math.h>
 #include <cmath>
 #include <climits>
+#include <limits>
 #include <cfloat>
 #include <algorithm>
 #include <complex>
@@ -32,6 +32,9 @@
 #include <utility>
 #include <functional>
 #include <unordered_map>
+#include <map>
+#include <unordered_set>
+#include <set>
 
 #ifdef _MSC_VER
 #define SLS_USE_MSVC // using Microsoft Visual C++ compiler
@@ -75,6 +78,7 @@ using std::to_string; using std::pair;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap;
+using std::numeric_limits;
 using std::isinf; using std::round; using std::ceil; using std::floor;
 using std::abs; using std::real; using std::imag;
 using std::conj; using std::pow;

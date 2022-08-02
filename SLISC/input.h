@@ -11,9 +11,10 @@ inline void cin_comment()
         SLS_ERR("each line must only be followed by a comment starting with //");
 }
 
+inline void cin_ignore_line()
+{ cin.ignore(numeric_limits<std::streamsize>::max(), '\n'); }
+
 inline void cin_LF()
-{
-    cin.ignore(1000, '\n');
-    cout << endl;
-}
+{ cin_ignore_line(); cout << endl; }
+
 } // namespace slisc
