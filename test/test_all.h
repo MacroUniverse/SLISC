@@ -2,14 +2,14 @@
 #pragma once
 #include "../SLISC/unicode.h"
 
-#define SLS_TEST(name) do{void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} while(0)
+#define SLS_TEST(name) do{ if (test_name.empty() || test_name == #name) {void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} } while(0)
 
 #ifdef _MSC_VER
 slisc::turn_on_floating_exceptions yes_turn_on_floating_exceptions;
 slisc::set_windows_console_utf8 yes_set_windows_console_utf8;
 #endif
 
-void test_all()
+void test_all(const std::string &test_name)
 {
     using std::cout; using std::endl;
     SLS_TEST(anglib);
@@ -72,12 +72,14 @@ void test_all()
     SLS_TEST(Vec);
     SLS_TEST(ylm);
     
-    cout << "do optional tests? (y/n)" << endl;
-    if (getchar() == 'y') {
-        SLS_TEST(disp);
-        SLS_TEST(input);
+    if (test_name.empty()) {
+        cout << "do optional tests? (y/n)" << endl;
+        if (getchar() == 'y') {
+            SLS_TEST(disp);
+            SLS_TEST(input);
+        }
+        else
+            cout << "optional tests skipped." << endl;
     }
-    else
-        cout << "optional tests skipped." << endl;
-    cout << "testing successful!" << endl;
+    cout << "end of testing!" << endl;
 }

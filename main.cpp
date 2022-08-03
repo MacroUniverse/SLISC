@@ -1,7 +1,10 @@
 // comprehensive test of SLISC
 #include "test/test_all.h"
 
-int main()
+int main (int argc, char **argv)
 {
-	test_all();
+	if (argc == 1)
+		test_all("");
+	else
+		test_all(argv[1]);
 }

@@ -10,6 +10,7 @@
 #include "../SLISC/file.h"
 #include "../SLISC/input.h"
 #include "../SLISC/sing_list.h"
+#include "../SLISC/bin_tree.h"
 
 using namespace slisc;
 using namespace std;
