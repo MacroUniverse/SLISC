@@ -62,9 +62,10 @@
 #endif
 
 // error handling
-#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
-#define SLS_ASSERT(condition) do {if (!(condition)) SLS_ERR("failed!");} while(0)
 #define SLS_WARN(str) do{std::cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl;} while(0)
+#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
+#define SLS_FAIL SLS_ERR("failed!")
+#define SLS_ASSERT(condition) if (!(condition)) SLS_FAIL
 
 // my std extension
 #include "quad_math.h"

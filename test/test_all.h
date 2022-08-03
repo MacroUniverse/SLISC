@@ -61,6 +61,7 @@ void test_all()
     SLS_TEST(Scmat3);
     SLS_TEST(search);
     SLS_TEST(sha1sum);
+    SLS_TEST(sing_list);
     SLS_TEST(sort);
     SLS_TEST(sqlite);
     SLS_TEST(string);

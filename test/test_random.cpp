@@ -30,7 +30,7 @@ void test_random()
 	{
 		Long N = 20;
 		VecInt v(N);
-		randPerm(v, N);
+		randPerm(v);
 		for (Long i = 0; i < N; ++i) {
 			if (v[i] < 0 || v[i] >= N)
 				SLS_ERR("failed!");
