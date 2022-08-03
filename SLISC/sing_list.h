@@ -4,34 +4,87 @@
 
 namespace slisc {
 
-// single linked list
-struct SingNode {
+// single linked list node
+struct SNode {
     int val;
-    SingNode *next;
-    SingNode() = default;
-    SingNode(int val1): val(val1) {};
+    SNode *next;
+    SNode() = default;
+    SNode(int val): val(val) {};
+    SNode(int val, SNode *next): val(val), next(next) {};
 };
 
-//struct SingList {
-//    Long m_N;
-//	SingNode *m_root;
-//    SingList(int N): m_N(N), m_root(new SingNode [N]) {};
-//    Long size() { return m_N; }
-//	void insert_after(SingNode *node);
-//	void push_back(int val);
-//	void resize(Long_I N);
-//};
+// create, set, destroy
+SNode *sing_list_gen(Long_I N);
+void sing_list_delete(SNode *node);
+void sing_list_rand_perm(SNode *head, Long_I N);
+// query
+Long sing_list_check(SNode *node);
+Long sing_list_size(SNode *head);
+SNode *sing_list_end(SNode *node);
+SNode *sing_list_locate(SNode *node, Long_I ind);
+void sing_list_print(SNode* node);
+// edit
+SNode *sing_list_push(SNode* head, int val);
+void sing_list_insert_after(SNode* node, int val);
+void sing_list_insert_after(SNode* node, SNode* new_node);
+void sing_list_insert_after(SNode* node, SNode* first, SNode* last);
+void sing_list_erase_after(SNode* node, Long N = -1);
+SNode *sing_list_split(SNode* head);
+// sort
+SNode *sing_list_merge_sorted(SNode* a, SNode* b);
+void sing_list_mergesort(SNode *&headRef);
+// ----------------------------------------
 
-inline SingNode *sing_list_gen(Long_I N)
+
+// allocate singly linked list
+// each node must be allocated separately
+inline SNode *sing_list_gen(Long_I N)
 {
-    SingNode *head = new SingNode [N];
+    if (N == 0) return NULL;
+    SNode *head = new SNode, *node = head;
     for (Long i = 1; i < N; ++i)
-        head[i-1].next = head + i;
-    head[N-1].next = NULL;
+        node = (node->next = new SNode);
+    node->next = NULL;
     return head;
 }
 
-inline void sing_list_rand_perm(SingNode *head, Long_I N)
+// delete singly linked list
+inline void sing_list_delete(SNode *node)
+{
+    while (node != NULL) {
+        SNode *next = node->next;
+        delete node;
+        node = next;
+    }
+}
+
+// check size of singly linked list
+inline Long sing_list_size(SNode *head)
+{
+    Long N = 0;
+    while (head != NULL)
+        head = head->next, ++N;
+    return N;
+}
+
+// return the last node of singly linked list
+inline SNode *sing_list_end(SNode *node)
+{
+    if (node == NULL) return NULL;
+    while (node->next != NULL)
+        node = node->next;
+    return node;
+}
+
+// return node + i node of singly linked list
+inline SNode *sing_list_locate(SNode *node, Long_I ind)
+{
+    for (Long i = 0; i < ind; ++i)
+        node = node->next;
+    return node;
+}
+
+inline void sing_list_rand_perm(SNode *head, Long_I N)
 {
     vecLong perm(N);
     randPerm(perm);
@@ -44,43 +97,82 @@ inline void sing_list_rand_perm(SingNode *head, Long_I N)
 }
 
 /* Function to print nodes in a given linked list */
-inline void sing_list_print(SingNode* node)
+inline void sing_list_print(SNode* node)
 {
     while (node != NULL) {
         cout << node->val << " ";
         node = node->next;
     }
+    cout << endl;
+}
+
+// check loop in singly linked list, return number of nodes
+// throw last node (node->next = old node) if there is a loop
+inline Long sing_list_check(SNode *node)
+{
+    unordered_set<SNode*> uset;
+    if (node == NULL) return 0;
+    uset.insert(node);
+    SNode* next = node->next;
+    while (next != NULL) {
+        if (uset.count(next) > 0)
+            throw node;
+        uset.insert(next);
+        node = next; next = node->next;
+    }
+    return uset.size();
 }
 
 // insert a node at the beginning of the linked list
-inline SingNode *sing_list_push(SingNode* head, int val)
+inline SNode *sing_list_push(SNode* head, int val)
 {
-    SingNode* new_node = new SingNode(val);
-    new_node->next = head;
+    SNode* new_node = new SNode;
+    new_node->val = val; new_node->next = head;
     return new_node;
 }
 
-// insert a new node after a node in singly linked list
-inline void sing_list_insert_after(SingNode* node, SingNode* new_node)
+// insert a singly linked list after a node in another singly linked list
+inline void sing_list_insert_after(SNode* node, SNode* new_node)
 {
-    new_node->next = node->next;
-    node->next = new_node;
+    new_node->next = node->next; node->next = new_node;
 }
 
-inline void sing_list_insert_after(SingNode* node, int val)
+// insert a singly linked list after a node in another singly linked list
+inline void sing_list_insert_after(SNode* node, SNode* first, SNode* last)
 {
-    SingNode* new_node = new SingNode(val);
+    last->next = node->next; node->next = first;
+}
+
+inline void sing_list_insert_after(SNode* node, int val)
+{
+    SNode* new_node = new SNode; new_node->val = val;
     sing_list_insert_after(node, new_node);
+}
+
+inline void sing_list_erase_after(SNode* node, Long N)
+{
+    if (N == 0) return;
+    SNode *node0 = node; node = node->next;
+    if (N < 0) { // erase all nodes after
+        sing_list_delete(node); node0->next = NULL;
+        return;
+    }
+    for (Long i = 0; i < N; ++i) {
+        SNode *next = node->next;
+        delete node;
+        node = next;
+    }
+    node0->next = node;
 }
 
 /* Split the nodes of the given list into front and back halves,
 and return the head of the second list.
 If the length is odd, the extra node should go in the front list.
 Uses the fast/slow pointer strategy. */
-SingNode* sing_list_split(SingNode* head)
+SNode* sing_list_split(SNode* head)
 {
-    SingNode* slow = head;
-    SingNode* fast = head->next;
+    SNode* slow = head;
+    SNode* fast = head->next;
     while (fast != NULL) {
         fast = fast->next;
         if (fast != NULL) {
@@ -88,17 +180,17 @@ SingNode* sing_list_split(SingNode* head)
             fast = fast->next;
         }
     }
-    SingNode *head1 = slow->next;
+    SNode *head1 = slow->next;
     slow->next = NULL;
     return head1;
 }
 
 // merge 2 sorted singly linked list
-SingNode* sing_list_merge_sorted(SingNode* a, SingNode* b)
+inline SNode* sing_list_merge_sorted(SNode* a, SNode* b)
 {
     if (a == NULL) return (b);
     if (b == NULL) return (a);
-    SingNode *head, *node;
+    SNode *head, *node;
     if (a->val < b->val) {
         head = node = a; a = a->next;
     }
@@ -123,12 +215,12 @@ SingNode* sing_list_merge_sorted(SingNode* a, SingNode* b)
 }
 
 /* sorts the linked list by changing next pointers (not data) */
-void sing_list_mergesort(SingNode *&headRef)
+inline void sing_list_mergesort(SNode *&headRef)
 {
-    SingNode* head = headRef;
+    SNode* head = headRef;
     if (head == NULL || head->next == NULL)
         return;
-    SingNode* head1 = sing_list_split(head);
+    SNode* head1 = sing_list_split(head);
     sing_list_mergesort(head);
     sing_list_mergesort(head1);
     headRef = sing_list_merge_sorted(head, head1);

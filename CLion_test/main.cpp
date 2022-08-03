@@ -27,11 +27,16 @@ int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input(v_num, v_str);
     //----------------------------------------------
-    Long N = 10;
-    SingNode *head = sing_list_gen(N);
+    Long N = 5;
+    SNode *head = sing_list_gen(N);
     sing_list_rand_perm(head, N);
-    sing_list_print(head); cout << endl;
+    sing_list_print(head);
     sing_list_mergesort(head);
+    SLS_ASSERT(sing_list_check(head) == N);
+    sing_list_print(head);
+    Long sz = sing_list_size(head);
+    SNode *node3 = sing_list_locate(head, 3);
+    sing_list_insert_after(node3, 333);
     sing_list_print(head);
     return 0;
 }

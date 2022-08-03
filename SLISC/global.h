@@ -63,6 +63,7 @@
 
 // error handling
 #define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
+#define SLS_ASSERT(condition) do {if (!(condition)) SLS_ERR("failed!");} while(0)
 #define SLS_WARN(str) do{std::cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl;} while(0)
 
 // my std extension
@@ -78,7 +79,8 @@ using std::to_string; using std::pair;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap;
-using std::numeric_limits;
+using std::numeric_limits; using std::unordered_set; using std::set;
+using std::unordered_map; using std::map;
 using std::isinf; using std::round; using std::ceil; using std::floor;
 using std::abs; using std::real; using std::imag;
 using std::conj; using std::pow;
