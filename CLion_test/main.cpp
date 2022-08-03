@@ -27,9 +27,11 @@ int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input(v_num, v_str);
     //----------------------------------------------
-    string s; s.resize(20);
-    rand(s);
-    for (int i = 0; i < 100; ++i)
-        cout << i << endl;
+    Long N = 10;
+    SingNode *head = sing_list_gen(N);
+    sing_list_rand_perm(head, N);
+    sing_list_print(head); cout << endl;
+    sing_list_mergesort(head);
+    sing_list_print(head);
     return 0;
 }

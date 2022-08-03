@@ -75,28 +75,61 @@ inline Int randInt(Int_I N)
     return Int(round(N*randDoub() - 0.5));
 }
 
-// generate random Long in {0,1,2,...,N-1}
+inline Long randLlong(Llong_I N)
+{
+    return round(N*randDoub() - 0.5);
+}
+
 inline Long randLong(Long_I N)
 {
-    return Long(round(N*randDoub() - 0.5));
+    return round(N*randDoub() - 0.5);
 }
 
 // generate a random permutation of {0,1,2,...,N-1}
-inline void randPerm(VecInt_O perm, Int_I N)
+inline void randPerm(vecInt_O v)
 {
-#ifdef SLS_CHECK_SHAPES
-    if (perm.size() != N)
-        SLS_ERR("wrong shape!");
-#endif
-    VecInt pool(N);
-    linspace(pool, 0, N - 1);
-    for (Long n = N; n > 0; --n) {
-        Long ind = randInt(n);
-        perm[n - 1] = pool[ind];
-        for (Long j = ind; j < n - 1; ++j)
-            pool[j] = pool[j + 1];
+    Long N = v.size(), N_1 = N - 1;
+    linspace(v, 0, N_1);
+    for (Long i = 0; i < N_1; ++i) {
+        Int ind = randInt(N-i) + i;
+        if (ind != i)
+            swap(v[i], v[ind]);
     }
 }
+
+inline void randPerm(vecLlong_O v)
+{
+    Long N = v.size(), N_1 = N - 1;
+    linspace(v, 0, N_1);
+    for (Long i = 0; i < N_1; ++i) {
+        Llong ind = randLlong(N-i) + i;
+        if (ind != i)
+            swap(v[i], v[ind]);
+    }
+}
+
+inline void randPerm(VecInt_O v)
+{
+    Long N = v.size(), N_1 = N - 1;
+    linspace(v, 0, N_1);
+    for (Long i = 0; i < N_1; ++i) {
+        Int ind = randInt(N-i) + i;
+        if (ind != i)
+            swap(v[i], v[ind]);
+    }
+}
+
+inline void randPerm(VecLlong_O v)
+{
+    Long N = v.size(), N_1 = N - 1;
+    linspace(v, 0, N_1);
+    for (Long i = 0; i < N_1; ++i) {
+        Llong ind = randLlong(N-i) + i;
+        if (ind != i)
+            swap(v[i], v[ind]);
+    }
+}
+
 
 inline Comp randComp()
 {
