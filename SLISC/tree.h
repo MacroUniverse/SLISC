@@ -22,7 +22,7 @@ void tree_gen(vector<Node> &tree, vecStr32_I entries, vecLong_I links)
     }
 }
 
-// iterative implementation of tree_all_dep()
+// recursives implementation of tree_all_dep()
 // return -1-ind if too many levels (probably circular dependency), tree[ind] is the deepest level
 Long tree_all_dep_imp(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecStr32_I vector, Long Niter = 0)
 {

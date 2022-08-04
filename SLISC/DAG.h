@@ -7,7 +7,7 @@ namespace slisc {
     // node.prev is the last connected node
     struct DAGnode : vector<Long> {
         Long val;
-        Long prev;
+        vector<Long> last;
     };
 
     // add edge to DAG
@@ -24,7 +24,7 @@ namespace slisc {
     }
 
     // topological sort for a sub DAG (algo: DFS backtrack)
-    inline bool dag_topo_sort1(const vector<DAGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
+    inline void dag_topo_sort1(const vector<DAGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
     {
         visited[node] = true;
         for (auto &next : dag[node]) {
@@ -35,7 +35,7 @@ namespace slisc {
     }
 
     // topological sort for DAG (algo: DFS backtrack)
-    inline bool dag_topo_sort(const vector<DAGnode> &dag, vector<Long> &order)
+    inline void dag_topo_sort(const vector<DAGnode> &dag, vector<Long> &order)
     {
         Long N = dag.size();
         vector<bool> visited(N, false);
@@ -43,6 +43,7 @@ namespace slisc {
             if (!visited[node])
                 dag_topo_sort1(dag, order, visited, node);
         }
+        reverse(order.begin(), order.end());
     }
 
     // deep first search a node: if node[i] can go to node[j] (including i == j)
@@ -112,6 +113,36 @@ namespace slisc {
             if (states[i] == 'u' && !dag_check_helper(dag, states, i))
                 return false;
         return true;
+    }
+
+    // reverse every edge of a (singly linked) sub DAG
+    // done[node] == true means all it's original links are erased
+    inline void dag_inverse1(vector<DAGnode> &dag, vector<bool> &done, Long_I node) {
+        for (auto &next : dag[node]) {
+            if (!done[next])
+                dag_inverse1(dag, done, next);
+            dag[next].push_back(node);
+        }
+        dag[node].clear(); done[node] = true;
+    }
+
+    inline void dag_inverse(vector<DAGnode> &dag) {
+        Long N = dag.size();
+        vector<bool> done(N, false);
+        for (Long node = 0; node < N; ++node)
+            if (!done[node])
+                dag_inverse1(dag, done, node);
+    }
+
+    inline void dag_examp0(vector<DAGnode> &dag) {
+        dag.resize(7);
+        dag[0].assign({2,3,4});
+        dag[1].assign({4,5});
+        dag[2].assign({6,3});
+        // dag[3];
+        dag[4].assign({3,5});
+        // dag[5]
+        // dag[6]
     }
 
     inline void dag_examp1(vector<DAGnode> &dag) {

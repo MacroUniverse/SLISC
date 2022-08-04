@@ -79,7 +79,7 @@ using std::vector; using std::string; using std::stringstream;
 using std::to_string; using std::pair;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
-using std::min; using std::max; using std::swap;
+using std::min; using std::max; using std::swap; using std::reverse;
 using std::numeric_limits; using std::unordered_set; using std::set;
 using std::unordered_map; using std::map;
 using std::isinf; using std::round; using std::ceil; using std::floor;

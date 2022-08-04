@@ -55,9 +55,9 @@ int main() {
     read_input(v_num, v_str);
     //----------------------------------------------
     vector<DAGnode> dag;
-    dag_examp1(dag);
+    dag_examp0(dag);
     vector<Long> order;
-    // dag_topo_sort(dag, order);
-    bool ret = dag_check(dag);
+    dag_topo_sort(dag, order);
+    dag_inverse(dag);
     return 0;
 }
