@@ -85,15 +85,34 @@ namespace slisc {
         return false;
     }
 
-    // check cycle in DAG
-//    inline bool dag_check_DFS(const vector<DAGnode> &dag, vector<bool> visited, Long_I start)
-//    {
-//        for (auto &next : dag[start]) {
-//            if (visited[next] && dag_is_downstream_DFS(dag, vector<bool> visited, start, next))
-//            if (dag_is_downstream_DFS(dag, visited, node, next))
-//                return true;
-//        }
-//    }
+    inline bool dag_check_helper(const vector<DAGnode> &dag, vector<char> &states, Long_I node)
+    {
+        states[node] = 'c';
+        for (auto &next : dag[node]) {
+            if (states[next] == 'u') {
+                if (!dag_check_helper(dag, states, next))
+                    return false;
+            }
+            else if (states[next] == 'v')
+                continue;
+            else // states[next] == 'c'
+                return false;
+        }
+        states[node] = 'v';
+        return true;
+    }
+
+    // check if a graph is DAG
+    // algo: DFS, distinguish nodes along current path, visited and unvisited nodes [u] unvisited [v] visited [c] current
+    inline bool dag_check(const vector<DAGnode> &dag)
+    {
+        Long N = dag.size();
+        vector<char> states(N, 'u');
+        for (Long i = 0; i < N; ++i)
+            if (states[i] == 'u' && !dag_check_helper(dag, states, i))
+                return false;
+        return true;
+    }
 
     inline void dag_examp1(vector<DAGnode> &dag) {
         dag.resize(12);
