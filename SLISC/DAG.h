@@ -66,24 +66,27 @@ namespace slisc {
         return dag_is_linked_DFS_helper(dag, visited, source, target);
     }
 
-    // breadth first search a node: if node[i] can go to node[j] (including i == j)
-    inline bool dag_is_linked_BFS(const vector<DAGnode> &dag, Long_I source, Long_I target)
+    // breadth first search from dag[i] for dag[j] (including i == j)
+    // return mininum steps needed, return -1 if not found
+    inline Long dag_BFS(const vector<DAGnode> &dag, Long_I source, Long_I target)
     {
-        if (source == target) return true;
+        if (source == target) return 0;
         vector<bool> visited(dag.size(), false);
         vector<Long> nodes = {source}, nodes1;
+        Long Nstep = 1;
         while (!nodes.empty()) {
+            ++Nstep;
             for (auto &node : nodes) {
                 for (auto &next : dag[node]) {
                     if (next == target)
-                        return true;
+                        return Nstep;
                     if (visited[next]) continue;
                     nodes1.push_back(next); visited[next] = true;
                 }
             }
             swap(nodes, nodes1); nodes1.clear();
         }
-        return false;
+        return -1;
     }
 
     inline bool dag_check_helper(const vector<DAGnode> &dag, vector<char> &states, Long_I node)
@@ -132,6 +135,35 @@ namespace slisc {
         for (Long node = 0; node < N; ++node)
             if (!done[node])
                 dag_inverse1(dag, done, node);
+    }
+
+    inline void dag_all_paths_helper(vector<vector<Long>> &paths, vector<Long> &path, vector<bool> &visited, const vector<DAGnode> &dag, Long_I node, Long_I target) {
+        path.push_back(node);
+        if (node == target) {
+            paths.push_back(path); path.pop_back();
+            return;
+        }
+        bool found = false;
+        for (auto &next : dag[node]) {
+            if (!visited[next]) {
+                dag_all_paths_helper(paths, path, visited, dag, next, target);
+                if (!visited[next])
+                    found = true;
+            }
+            else // states[next] == 'v'
+                continue;
+        }
+        visited[node] = !found;
+        path.pop_back();
+    }
+
+    // find all possible paths from source to target node
+    // algo: deep first search (DFS), but path to target remains unvisited to allow visiting again
+    inline void dag_all_paths(vector<vector<Long>> &paths, const vector<DAGnode> &dag, Long_I source, Long_I target) {
+        paths.clear();
+        vector<bool> visited(dag.size(), false);
+        vector<Long> path;
+        dag_all_paths_helper(paths, path, visited, dag, source, target);
     }
 
     inline void dag_examp0(vector<DAGnode> &dag) {

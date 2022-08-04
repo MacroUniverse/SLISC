@@ -54,10 +54,5 @@ int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input(v_num, v_str);
     //----------------------------------------------
-    vector<DAGnode> dag;
-    dag_examp0(dag);
-    vector<Long> order;
-    dag_topo_sort(dag, order);
-    dag_inverse(dag);
     return 0;
 }
