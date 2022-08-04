@@ -25,31 +25,6 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str) {
     }
 }
 
-// Data structure to store a graph edge
-struct Edge {
-    int src, dest;
-};
-
-// A class to represent a graph object
-class Graph
-{
-public:
-    // a vector of vectors to represent an adjacency list
-    vector<vector<int>> adjList;
-
-    // Graph Constructor
-    Graph(const vector<Edge> &edges, int n)
-    {
-        // resize the vector to hold `n` elements of type `vector<int>`
-        adjList.resize(n);
-
-        // add edges to the directed graph
-        for (auto &edge: edges) {
-            adjList[edge.src].push_back(edge.dest);
-        }
-    }
-};
-
 int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input(v_num, v_str);
