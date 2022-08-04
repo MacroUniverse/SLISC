@@ -89,6 +89,34 @@ namespace slisc {
         return -1;
     }
 
+    // get shortest path between source and target
+    // algo: BFS, add reverse link for each seached edge
+    inline void dag_shortest_path(vector<Long> &path, const vector<DAGnode> &dag, Long_I source, Long_I target)
+    {
+        path.clear(); path.push_back(target);
+        if (source == target) return;
+        unordered_map<Long, Long> iedge; // all searched edge in reverse
+        vector<Long> nodes = {source}, nodes1;
+        while (!nodes.empty()) {
+            for (auto &node : nodes) {
+                for (auto &next : dag[node]) {
+                    if (iedge.count(next)) continue;
+                    iedge[next] = node;
+                    if (next == target) goto abc;
+                    nodes1.push_back(next);
+                }
+            }
+            swap(nodes, nodes1); nodes1.clear();
+        }
+        abc:
+        Long node = target;
+        while (node != source) {
+            node = iedge[node];
+            path.push_back(node);
+        }
+        reverse(path.begin(), path.end());
+    }
+
     inline bool dag_check_helper(const vector<DAGnode> &dag, vector<char> &states, Long_I node)
     {
         states[node] = 'c';

@@ -29,5 +29,9 @@ int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input(v_num, v_str);
     //----------------------------------------------
+    vector<DAGnode> dag;
+    dag_examp1(dag);
+    vector<Long> path;
+    dag_shortest_path(path, dag, 0, 9);
     return 0;
 }
