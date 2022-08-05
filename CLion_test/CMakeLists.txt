@@ -5,9 +5,9 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
 # quad math
-add_definitions(-D SLS_USE_QUAD_MATH)
-add_compile_options(-fext-numeric-literals)
-list(APPEND LIBS quadmath)
+# add_definitions(-D SLS_USE_QUAD_MATH)
+# add_compile_options(-fext-numeric-literals)
+# list(APPEND LIBS quadmath)
 # Address Sanitizer
 add_definitions(-D SLS_USE_ASAN)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
