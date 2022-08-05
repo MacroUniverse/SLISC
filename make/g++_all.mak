@@ -22,14 +22,14 @@ gsl_lib = -lgsl
 # Eigen
 eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad math
-quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
-quad_math_lib = -lquadmath
+# quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+# quad_math_lib = -lquadmath
 # Arpack
-arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
-arpack_lib = -larpack -lgfortran
+# arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
+# arpack_lib = -larpack -lgfortran
 # Arb
 arb_flag = -D SLS_USE_ARB -I /usr/include/flint
-arb_lib = -lflint -lmpfr -lgmp -larb
+arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
 # Address Sanitizer
 asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile

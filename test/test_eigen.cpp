@@ -4,7 +4,6 @@
 
 using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;
-using Eigen::MatrixXq; using Eigen::VectorXq;
 #endif
 
 void test_eigen()
@@ -109,6 +108,8 @@ void test_eigen()
 		// cout << eig.eigenvectors() << endl;
 	}
 
+#ifdef SLS_USE_QUAD_MATH
+	using Eigen::MatrixXq; using Eigen::VectorXq;
 	// test MatrixXq
 	{
 		int n = 5;
@@ -152,6 +153,7 @@ void test_eigen()
 		// cout << "eig.eigenvectors() = " << endl;
 		// cout << eig.eigenvectors() << endl;
 	}
+#endif
 #else
     std::cout << "---------- disabled! ----------" << std::endl;
 #endif

@@ -23,6 +23,7 @@ inline BTNode *btree_gen(Long_I Nlevel)
     }
     node->left = btree_gen(Nlevel-1);
     node->right = btree_gen(Nlevel-1);
+    return node;
 }
 
 // deallocate a btree or subtree (assuming every node is created with `new`)
