@@ -34,7 +34,7 @@ list(APPEND LIBS arpack gfortran)
 # Arb
 add_definitions(-D SLS_USE_ARB)
 include_directories(/usr/include/flint/)
-list(APPEND LIBS flint mpfr gmp arb)
+list(APPEND LIBS flint mpfr gmp flint-arb) # replace flint-arb with arb if compiled yourself
 # Address Sanitizer
 add_definitions(-D SLS_USE_ASAN)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
