@@ -56,7 +56,7 @@ int main()
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling (needs update)
-* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, clang-10 , in Ubuntu 16.04 & 18.04 & Windows WSL.
+* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04 & 18.04 & 22.04 Windows WSL.
 * `octave` 4.2 (4.0 works but is slower) is needed for code generation. If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
 * Use `make` to compile, use `make -j4` to compile with 4 threads (or any number you like).
 * Makefile provides multiple options, uncomment one line to enable. The default option does not require any 3rd party binary libraries and is most compatible. Some modules will not be available, some others will run slower. use `make -j8` to use 8 threads to compile.
