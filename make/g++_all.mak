@@ -25,8 +25,8 @@ eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 # quad_math_lib = -lquadmath
 # Arpack
-# arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
-# arpack_lib = -larpack -lgfortran
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
+arpack_lib = -larpack -lgfortran
 # Arb
 arb_flag = -D SLS_USE_ARB -I /usr/include/flint
 arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
