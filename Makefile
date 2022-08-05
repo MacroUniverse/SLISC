@@ -1,6 +1,6 @@
 # choose one of the following makefiles for different compilers and libraries
 
-# only g++ is required
+# only compiler is required
 include make/g++_min.mak
 # include make/clang_min.mak
 
@@ -11,9 +11,9 @@ include make/g++_min.mak
 # include make/g++_all.mak
 # include g++_all_portable.mak
 
-# MKL and all libs are required
+# g++, MKL and all libs are required
 # include make/g++_all_mkl.mak
 
-# icpc compiler and MKL and all libs are required
+# icpc compiler, MKL and all libs are required
 # include make/icpc_all_mkl_static.mak
 # include make/icpc_all_mkl.mak
