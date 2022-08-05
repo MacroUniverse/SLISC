@@ -100,79 +100,79 @@ void test_matfile()
 
     Char r_c8;
     load(r_c8, "c8", mat);
-    if (r_c8 != c8) SLS_ERR("failed!");
+    if (r_c8 != c8) SLS_FAIL;
 
     Uchar r_s8;
     load(r_s8, "s8", mat);
-    if (r_s8 != s8) SLS_ERR("failed!");
+    if (r_s8 != s8) SLS_FAIL;
 
     Int r_si;
     load(r_si, "si", mat);
-    if (r_si != si) SLS_ERR("failed!");
+    if (r_si != si) SLS_FAIL;
 
     Llong r_sl;
     load(r_sl, "sl", mat);
-    if (r_sl != sl) SLS_ERR("failed!");
+    if (r_sl != sl) SLS_FAIL;
 
     Doub r_s;
     load(r_s, "s", mat);
-    if (r_s != s) SLS_ERR("failed!");
+    if (r_s != s) SLS_FAIL;
 
     Comp r_sc;
     load(r_sc, "sc", mat);
-    if (r_sc != sc) SLS_ERR("failed!");
+    if (r_sc != sc) SLS_FAIL;
 
     // vectors
     VecChar r_v8;
     load(r_v8, "v8", mat);
-    if (r_v8 != v8) SLS_ERR("failed!");
+    if (r_v8 != v8) SLS_FAIL;
 
     VecInt r_vi;
     load(r_vi, "vi", mat);
-    if (r_vi != vi) SLS_ERR("failed!");
+    if (r_vi != vi) SLS_FAIL;
 
     VecLlong r_vl;
     load(r_vl, "vl", mat);
-    if (r_vl != vl) SLS_ERR("failed!");
+    if (r_vl != vl) SLS_FAIL;
 
     VecDoub r_v;
     load(r_v, "v", mat);
-    if (r_v != v) SLS_ERR("failed!");
+    if (r_v != v) SLS_FAIL;
 
     VecComp r_vc;
     load(r_vc, "vc", mat);
-    if (r_vc != vc) SLS_ERR("failed!");
+    if (r_vc != vc) SLS_FAIL;
 
     // matrices
 
     CmatInt r_AI;
     load(r_AI, "AI", mat);
-    if (r_AI != AI) SLS_ERR("failed!");
+    if (r_AI != AI) SLS_FAIL;
 
     CmatLlong r_AL;
     load(r_AL, "AL", mat);
-    if (r_AL != AL) SLS_ERR("failed!");
+    if (r_AL != AL) SLS_FAIL;
 
     CmatDoub r_A;
     load(r_A, "A", mat);
-    if (r_A != A) SLS_ERR("failed!");
+    if (r_A != A) SLS_FAIL;
 
     CmatComp r_C;
     load(r_C, "C", mat);
-    if (r_C != C) SLS_ERR("failed!");
+    if (r_C != C) SLS_FAIL;
 
     // 3D arrays
     Cmat3Llong r_A3L;
     load(r_A3L, "A3L", mat);
-    if (r_A3L != A3L) SLS_ERR("failed!");
+    if (r_A3L != A3L) SLS_FAIL;
 
     Cmat3Doub r_A3;
     load(r_A3, "A3", mat);
-    if (r_A3 != A3) SLS_ERR("failed!");
+    if (r_A3 != A3) SLS_FAIL;
 
     Cmat3Comp r_CC3;
     load(r_CC3, "CC3", mat);
-    if (r_CC3 != CC3) SLS_ERR("failed!");
+    if (r_CC3 != CC3) SLS_FAIL;
 
     mat.close();
 
@@ -185,65 +185,65 @@ void test_matfile()
 
     //     Int r_si;
     //     load(r_si, "si", matt);
-    //     if (r_si != si) SLS_ERR("failed!");
+    //     if (r_si != si) SLS_FAIL;
 
     //     Doub r_s;
     //     load(r_s, "s", matt);
-    //     if (abs(r_s-s) > 1e-15) SLS_ERR("failed!");
+    //     if (abs(r_s-s) > 1e-15) SLS_FAIL;
 
     //     Comp r_sc;
     //     load(r_sc, "sc", matt);
-    //     if (abs(r_sc-sc) > 1e-15) SLS_ERR("failed!");
+    //     if (abs(r_sc-sc) > 1e-15) SLS_FAIL;
 
     //     // vectors
     //     // TODO: Char
         
     //     VecInt r_vi(0);
     //     load(r_vi, "vi", matt);
-    //     if (r_vi != vi) SLS_ERR("failed!");
+    //     if (r_vi != vi) SLS_FAIL;
 
     //     VecDoub r_v(0);
     //     load(r_v, "v", matt);
     //     r_v -= v;
-    //     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_v) > 1e-15) SLS_FAIL;
 
     //     VecComp r_vc(0);
     //     load(r_vc, "vc", matt);
     //     r_vc -= vc;
-    //     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_v) > 1e-15) SLS_FAIL;
 
     //     // matrices
     //     // TODO: Char
 
     //     MatInt r_AI(0,0);
     //     load(r_AI, "AI", matt);
-    //     if (r_AI != AI) SLS_ERR("failed!");
+    //     if (r_AI != AI) SLS_FAIL;
 
     //     MatDoub r_A(0,0);
     //     load(r_A, "A", matt);
     //     r_A -= A;
-    //     if (norm(r_A) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_A) > 1e-15) SLS_FAIL;
 
     //     MatComp r_C(0,0);
     //     load(r_C, "C", matt);
     //     r_C -= C;
-    //     if (norm(r_C) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_C) > 1e-15) SLS_FAIL;
 
     //     // 3D arrays
     //     // Mat3Doub r_A3(0,0,0);
     //     // load(r_A3, "A3", matt);
     //     // r_A3 -= A3;
-    //     // if (norm(r_A3) > 1e-15) SLS_ERR("failed!");
+    //     // if (norm(r_A3) > 1e-15) SLS_FAIL;
 
     //     // Mat3Comp r_C3(0,0,0);
     //     // load(r_C3, "C3", matt);
     //     // r_C3 -= C3;
-    //     // if (norm(r_C3) > 1e-15) SLS_ERR("failed!");
+    //     // if (norm(r_C3) > 1e-15) SLS_FAIL;
 
     //     Cmat3Comp r_CC3(0, 0, 0);
     //     load(r_CC3, "CC3", matt);
     //     r_CC3 -= CC3;
-    //     if (norm(r_CC3) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_CC3) > 1e-15) SLS_FAIL;
 
     //     matt.close();
     // }
@@ -257,65 +257,65 @@ void test_matfile()
 
     //     Int r_si;
     //     load(r_si, "si", mat);
-    //     if (r_si != si) SLS_ERR("failed!");
+    //     if (r_si != si) SLS_FAIL;
 
     //     Doub r_s;
     //     load(r_s, "s", mat);
-    //     if (abs(r_s-s) > 1e-15) SLS_ERR("failed!");
+    //     if (abs(r_s-s) > 1e-15) SLS_FAIL;
 
     //     Comp r_sc;
     //     load(r_sc, "sc", mat);
-    //     if (abs(r_sc-sc) > 1e-15) SLS_ERR("failed!");
+    //     if (abs(r_sc-sc) > 1e-15) SLS_FAIL;
 
     //     // vectors
     //     // TODO: Char
         
     //     VecInt r_vi(0);
     //     load(r_vi, "vi", mat);
-    //     if (r_vi != vi) SLS_ERR("failed!");
+    //     if (r_vi != vi) SLS_FAIL;
 
     //     VecDoub r_v(0);
     //     load(r_v, "v", mat);
     //     r_v -= v;
-    //     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_v) > 1e-15) SLS_FAIL;
 
     //     VecComp r_vc(0);
     //     load(r_vc, "vc", mat);
     //     r_vc -= vc;
-    //     if (norm(r_v) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_v) > 1e-15) SLS_FAIL;
 
     //     // matrices
     //     // TODO: Char
 
     //     MatInt r_AI(0,0);
     //     load(r_AI, "AI", mat);
-    //     if (r_AI != AI) SLS_ERR("failed!");
+    //     if (r_AI != AI) SLS_FAIL;
 
     //     MatDoub r_A(0,0);
     //     load(r_A, "A", mat);
     //     r_A -= A;
-    //     if (norm(r_A) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_A) > 1e-15) SLS_FAIL;
 
     //     MatComp r_C(0,0);
     //     load(r_C, "C", mat);
     //     r_C -= C;
-    //     if (norm(r_C) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_C) > 1e-15) SLS_FAIL;
 
     //     // 3D arrays
     //     // Mat3Doub r_A3(0,0,0);
     //     // load(r_A3, "A3", mat);
     //     // r_A3 -= A3;
-    //     // if (norm(r_A3) > 1e-15) SLS_ERR("failed!");
+    //     // if (norm(r_A3) > 1e-15) SLS_FAIL;
 
     //     // Mat3Comp r_C3(0,0,0);
     //     // load(r_C3, "C3", mat);
     //     // r_C3 -= C3;
-    //     // if (norm(r_C3) > 1e-15) SLS_ERR("failed!");
+    //     // if (norm(r_C3) > 1e-15) SLS_FAIL;
 
     //     Cmat3Comp r_CC3(0, 0, 0);
     //     load(r_CC3, "CC3", mat);
     //     r_CC3 -= CC3;
-    //     if (norm(r_CC3) > 1e-15) SLS_ERR("failed!");
+    //     if (norm(r_CC3) > 1e-15) SLS_FAIL;
 
     //     mat.close();
     // }

@@ -8,32 +8,32 @@ void test_file()
 	vecStr names;
 	file_list(names, "./");
 	if (names.size() < 3)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// file_list_r
 	file_list_r(names, "test/test_file/");
 	if (names[0] != "test/test_file/123.txt" || names[1] != "test/test_file/234.txt" || names[2] != "test/test_file/sub/345.txt")
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// write()
 	Str data = "abcdefghijklmnopqrstuvwxyz";
 	write(data.data(), data.size(), "test_bin");
 	if (file_size("test_bin") != size(data))
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	Str data1;
 
 	// read()
 	data1.resize(data.size());
 	read(&data1[0], data1.size(), "test_bin");
 	if (data1 != data)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// write_vec_str() and read_vec_str()
 	vecStr32 str32 = {U"你好你好", U"谢谢", U"您吃了吗？"}, str32_;
 	write_vec_str(str32, U"您吃了吗.txt");
 	read_vec_str(str32_, U"您吃了吗.txt");
 	if (str32 != str32_)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	file_remove(utf32to8(U"您吃了吗.txt"));
 	
 	// multiple binary write()
@@ -44,7 +44,7 @@ void test_file()
 	fout.close();
 	read(&data1[0], data1.size(), "test_bin");
 	if (data1 != data)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	
 	// multiple binary read()
 	ifstream fin; open_bin(fin, "test_bin");
@@ -54,7 +54,7 @@ void test_file()
 	fin.read(&data1[20], 10);
 	fin.close();
 	if (data1 != data)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// write() and read() scalar
 	open_bin(fout, "test_bin");
@@ -66,20 +66,20 @@ void test_file()
 	Int i; Doub d; Comp c;
 	read(fin, i);
 	if (i != 12345)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	read(fin, d);
 	if (d != 3.1415)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	read(fin, c);
 	if (c != 1.1 + 2.2*I)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	
 	// write() and read() string to/from file
 	Str str(data), str1;
 	write(str, "test_bin");
 	read(str1, "test_bin");
 	if (str != str1)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// write() and read() string to/from fstream
 	open_bin(fout, "test_bin");
@@ -99,7 +99,7 @@ void test_file()
 	str1 += tmp;
 	fin.close();
 	if (str1 != str)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	remove("test_bin");
 
@@ -110,13 +110,13 @@ void test_file()
 		mat1(1, 0) = 2.351; mat1(1, 1) = 2.265; mat1(1, 2) = -2.376;
 		mat1(2, 0) = -2.53; mat1(2, 1) = 6.65; mat1(2, 2) =  0.28;
 		if (mat != mat1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		
 		VecDoub v; MatDoub mat2(3, 3); copy(mat2, mat1);
 		read(v, "test/test_file_matrix.txt", 2);
 		for (i = 0; i < mat2.size(); ++i) {
 			if (v[i] != mat2[i])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 	}
 
@@ -126,7 +126,7 @@ void test_file()
 		Str yyyymmddhhmmss;
 		last_modified(yyyymmddhhmmss, "main.cpp");
 		if (yyyymmddhhmmss.size() != 14)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 #endif
 	}
 
@@ -134,23 +134,23 @@ void test_file()
 	// `path` must end with '/'
 	{
 		if (!dir_exist("SLISC/"))
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (!dir_exist("SLISC"))
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (dir_exist("abc/"))
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (dir_exist("abc"))
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 	// test ensure_dir()
 	{
 		ensure_dir("test_dir");
 		if (!dir_exist("test_dir"))
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		rmdir("test_dir");
 		if (dir_exist("test_dir"))
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 	// file_copy()
@@ -161,7 +161,7 @@ void test_file()
 		file_copy(file2, file1);
 		read(str2, file2);
 		if (str2 != str1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		file_remove(file1); file_remove(file2);
 	}
 
@@ -174,7 +174,7 @@ void test_file()
 		file_copy(file2, file1, buff);
 		read(str2, file2);
 		if (str2 != str1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		file_remove(file1); file_remove(file2);
 	}
 }

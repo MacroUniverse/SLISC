@@ -11,19 +11,19 @@ void test_random()
 		Long i, N = 10;
 		for (i = 0; i < 5; ++i)
 			if (rangen1.doub() != rangen2.doub())
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		VecDoub vx(N), vx1(N);
 		rand(vx); rand(vx1);
 		if (vx == vx1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (max(vx) > 1.)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (max(vx) < 0.)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		VecComp vc(N), vc1(N);
 		rand(vc); rand(vc1);
 		if (vc == vc1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
     
 	// randPerm
@@ -33,10 +33,10 @@ void test_random()
 		randPerm(v);
 		for (Long i = 0; i < N; ++i) {
 			if (v[i] < 0 || v[i] >= N)
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 		if (find_repeat(v) >= 0)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 #ifdef SLS_USE_QUAD_MATH
@@ -47,7 +47,7 @@ void test_random()
 		for (Long i = 0; i < 20; ++i) {
 			q = randQdoub();
 			if (q < 0 || q > 1)
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 		cout.precision(old_prec);
 	}

@@ -13,13 +13,13 @@ void test_quad_math()
 	// cout << "FLT128_EPSILON = " << FLT128_EPSILON << endl;
 	// cout << "FLT128_DENORM_MIN = " << FLT128_DENORM_MIN << endl;
 	if (FLT128_MANT_DIG != 113)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (FLT128_MAX_EXP != 16384)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (FLT128_DIG != 33)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (sqrt(3.Q) != 1.7320508075688772935274463415058724Q)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	
 	// CmatQdoub qmat(2, 2);
 	// for (Long i = 0; i < 4; ++i) {

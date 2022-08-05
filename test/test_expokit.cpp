@@ -65,10 +65,10 @@ void test_expokit()
         
         y1 -= y0;
         if (max_abs(y1) > 5e-12)
-		    SLS_ERR("failed!");
+		    SLS_FAIL;
         y2 -= y0;
         if (max_abs(y2) > 5e-12)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 #endif
 }

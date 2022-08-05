@@ -22,7 +22,7 @@ void test_boost()
 	if (BOOST_VERSION < 106500)
 		SLS_ERR("faild! boost version not tested");
 	if (file_size("test/test_file/测试.txt") != 12)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	file_copy("test/test_file/测试1.txt", "test/test_file/测试.txt", true);
 	error_code ec;
 
@@ -33,33 +33,33 @@ void test_boost()
 	file_remove("测试1.txt");
 	rename("test/test_file/测试1.txt", "测试1.txt");
 	if (!file_exist("测试1.txt"))
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	
 	// last_write_time
 	Long t = last_write_time("测试1.txt"); // return an integer of POSIX time
 	Long t1 = time(NULL);
 	if (abs(t - t1) > 1)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	file_remove("测试1.txt");
 
 	// current path (pwd)
 	Str path = current_path().string();
 	if (path.substr(path.size()-7) != "/SLISC0")
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// manipulate path
 	boost::filesystem::path p = "abc/def/ghi.txt";
 	if (p.string() != "abc/def/ghi.txt")
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (p.extension() != ".txt") // file extension
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (p.stem() != "ghi")
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (p.filename() != "ghi.txt") // string convert to boost::filesystem::path
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (p.parent_path() != "abc/def") // no slash at the end!
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	
 	// ============== json ===================
 	using boost::json::value; using boost::json::parse;
@@ -93,12 +93,12 @@ void test_boost()
 	if(ec)
     	SLS_ERR("failed: " + ec.message());
 	if (jv1 != jv2)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	string s2 = serialize(jv2);
 	// cout << s1 << endl;
 	// cout << s2 << endl;
 	if (s1 != s2)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 #else
     std::cout << "---------- disabled! ----------" << std::endl;
 #endif

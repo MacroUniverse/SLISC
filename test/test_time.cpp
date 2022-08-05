@@ -18,12 +18,12 @@ void test_time()
     using namespace slisc;
     // convert sec to hh:mm:ss
     if (hhmmss(27*3600+12*60 + 5) != "03:12:05")
-        SLS_ERR("failed!");
+        SLS_FAIL;
 
     // current hh:mm:ss
     Str str = hhmmss();
     if (str.size() != 8 || str[2] != ':' || str[5] != ':')
-        SLS_ERR("failed!");
+        SLS_FAIL;
 
     Timer t; CPUTimer cput;
     // cpu time

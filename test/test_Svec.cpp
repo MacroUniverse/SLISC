@@ -9,6 +9,6 @@ void test_Svec()
 	sli.set(v.p(), N);
 	for (Long i = 0; i < N; ++i) {
 		if (sli[i] != v[i])
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 }

@@ -56,7 +56,7 @@ void test_linbcg()
 		// cout << "err = " << err << endl;
 		x1 -= x;
 		if (max_abs(x1) > 1e-10)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 	{
@@ -66,7 +66,7 @@ void test_linbcg()
 		copy(b, {6., 7., 8.}); copy(x, 0);
 		copy(x1, {-5., -5., 5.5});
 		Doub relres; Long iter;
-		if (bicgstab_matlab_optim(relres, iter, x, a, b,  1e-15, 30, wsp_d) != 0) SLS_ERR("failed!");
+		if (bicgstab_matlab_optim(relres, iter, x, a, b,  1e-15, 30, wsp_d) != 0) SLS_FAIL;
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
@@ -74,7 +74,7 @@ void test_linbcg()
 		// cout << "relres = " << relres << endl;
 		x1 -= x;
 		if (max_abs(x1) > 1e-10)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 	{
@@ -82,7 +82,7 @@ void test_linbcg()
 		VecComp x(3), b1(3), b(3); VecComp wsp_c(3*8);
 		copy(b, {Comp(6,3), Comp(7,-3), Comp(8,-1)}); copy(x, 0);
 		Doub relres; Long iter;
-		if (bicgstab_matlab_optim(relres, iter, x, a, b,  1e-15, 30, wsp_c) != 0) SLS_ERR("failed!");
+		if (bicgstab_matlab_optim(relres, iter, x, a, b,  1e-15, 30, wsp_c) != 0) SLS_FAIL;
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
@@ -90,7 +90,7 @@ void test_linbcg()
 		// cout << "relres = " << relres << endl;
 		mul(b1, a, x); b1 -= b;
 		if (max_abs(b1) > 1e-13)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 #ifdef SLS_USE_QUAD_MATH
@@ -109,7 +109,7 @@ void test_linbcg()
 		// cout << "err = " << err << endl;
 		x1 -= x;
 		if (max_abs(x1) > 1e-30)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 #endif
 
@@ -130,6 +130,6 @@ void test_linbcg()
 		mul(b1, a, x);
 		b1 -= b;
 		if (max_abs(b1) > 1e-10)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 }

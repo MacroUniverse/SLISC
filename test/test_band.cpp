@@ -11,7 +11,7 @@ void test_band()
         a.resize(5, 6, 2, 3);
 		copy(a, 3.1);
 		if (a.cmat() != 3.1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 	// conversion to/from dense matrix
@@ -25,7 +25,7 @@ void test_band()
 		for (Long j = 0; j < N2; ++j)
 			for (Long i = max(Long(0), j - Nup); i < min(N1, j + Nup + 1); ++i)
 				if (matrix(i, j) != matrix1(i, j))
-					SLS_ERR("failed!");
+					SLS_FAIL;
     }
 
     {
@@ -37,7 +37,7 @@ void test_band()
         // copy(a, matrix, ku, kl);
         // copy(matrix1, a, ku, kl);
         // if (matrix != matrix1)
-        //     SLS_ERR("failed!");
+        //     SLS_FAIL;
     }
 
 	// test double index
@@ -49,7 +49,7 @@ void test_band()
 		for (Long j = 0; j < N2; ++j) {
 			for (Long i = 0; i < N1; ++i) {
 				if (den(i, j) != ban(i, j))
-					SLS_ERR("failed!");
+					SLS_FAIL;
 			}
 		}
 	}
@@ -60,11 +60,11 @@ void test_band()
         CmatComp a(6, 7); copy(a, 0);
         nband(Nup, Nlow, a);
         if (Nup != 0 && Nlow != 0)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         a(4, 2) = a(2, 5) = 5;
         nband(Nup, Nlow, a);
         if (Nup != 3 || Nlow != 2)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // test band() diag()
@@ -72,10 +72,10 @@ void test_band()
         CbandDoub a(4, 4, 1, 1);
         DcmatDoub b = a.band();
         if (b.p() != &a.cmat()[a.idiag()-a.nup()] || b.n0() != 3 || b.n1() != 4)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         DvecDoub v = a.diag();
         if (v.p() != &a.cmat()[a.idiag()] || v.step() != a.lda() || v.size() != 4)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
 #ifdef SLS_USE_CBLAS
@@ -110,7 +110,7 @@ void test_band()
         mul(yd, d, x);
         yd -= ya;
         if (max_abs(yd) > 1e-8)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     {

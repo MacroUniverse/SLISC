@@ -11,7 +11,7 @@ void test_Scmat()
 	for (Long j = 0; j < N-2; ++j) {
 		for (Long i = 0; i < N; ++i) {
 			if (sli(i, j) != v(i, j))
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 	}
 }

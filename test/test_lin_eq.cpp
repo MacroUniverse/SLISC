@@ -15,7 +15,7 @@ void test_lin_eq()
         mul(b, a, a_inv);
         b(0, 0) -= 1; b(1, 1) -= 1; b(2, 2) -= 1;
         if (norm(b) > 2e-15)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
     
     // solve general matrix
@@ -29,7 +29,7 @@ void test_lin_eq()
         y -= x;
         if (max_abs(y) > 1e-10) {
             cout << "max_abs(y) = " << max_abs(y) << endl;
-            SLS_ERR("failed!");
+            SLS_FAIL;
         }
     }
 
@@ -43,7 +43,7 @@ void test_lin_eq()
         y -= x;
         if (max_abs(y) > 5e-14) {
             cout << "max_abs(y) = " << max_abs(y) << endl;
-            SLS_ERR("failed!");
+            SLS_FAIL;
         }
     }
 
@@ -58,7 +58,7 @@ void test_lin_eq()
         y -= x;
         if (max_abs(y) > 1e-13) {
             cout << "max_abs(y) = " << max_abs(y) << endl;
-            SLS_ERR("failed!");
+            SLS_FAIL;
         }
     }
 
@@ -72,7 +72,7 @@ void test_lin_eq()
         y -= x;
         if (max_abs(y) > 5e-14) {
             cout << "max_abs(y) = " << max_abs(y) << endl;
-            SLS_ERR("failed!");
+            SLS_FAIL;
         }
     }
 
@@ -88,7 +88,7 @@ void test_lin_eq()
         y -= x;
         if (max_abs(y) > 5e-14) {
             cout << "max_abs(y) = " << max_abs(y) << endl;
-            SLS_ERR("failed!");
+            SLS_FAIL;
         }
     }
 #endif

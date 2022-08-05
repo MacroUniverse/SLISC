@@ -7,7 +7,7 @@ void test_Mcoo()
 	McooDoub a(3, 3, 4);
 	a.push(2, 1, 2);
 	if (a(1, 2) != 2)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 
 	// test sort_col_dry() and reorder()
 	{
@@ -25,11 +25,11 @@ void test_Mcoo()
 		VecLong dest(a.nnz());
 		Long new_Nnz = sort_col_dry(dest, a);
 		if (new_Nnz != 8)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 
 		vecLong v = {0, 4, 2, 6, 1, 5, 3, 7, 0, 4, 2, 6, 1, 5, 3, 7};
 		for (Long i = 0; i < 16; ++i)
 			if (v[i] != dest[i])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 	}
 }

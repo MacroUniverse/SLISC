@@ -15,8 +15,7 @@ void test_arithmetic()
 		VecDoub v(N), v1(N); linspace(v, 1, N);
 		copy(v1, v);
 		resize_cpy(v, 2*N);
-		if (!equals_to_vv(v.p(), v1.p(), N))
-			SLS_ERR("failed!");
+		SLS_ASSERT(equals_to_vv(v.p(), v1.p(), N));
 	}
 
 	// linspace()
@@ -24,8 +23,7 @@ void test_arithmetic()
 		Long N = 3;
 		VecDoub v(N), v1(N); v[0] = 0; v[1] = 1; v[2] = 2;
 		linspace(v1, 0, N-1);
-		if (!equals_to_vv(v.p(), v1.p(), N))
-			SLS_ERR("failed!");
+		SLS_ASSERT(equals_to_vv(v.p(), v1.p(), N));
 	}
 
 	// reorder()
@@ -33,8 +31,7 @@ void test_arithmetic()
 		VecLlong v(4), order(4); linspace(v, 0, 3);
 		order[0] = 2; order[1] = 1; order[2] = 0; order[3] = 3;
 		reorder(v, order);
-		if (v != order)
-			SLS_ERR("failed!");
+		SLS_ASSERT(v == order);
 	}
 	
 	// mul_gen()
@@ -46,8 +43,7 @@ void test_arithmetic()
         linspace(a, 1, N1*N2);
 		mul_gen(y, a, x);
 		mul(y1, a, x);
-		if (y != y1)
-			SLS_ERR("failed!");
+		SLS_ASSERT(y == y1);
 	}
 
     // mul_sym()
@@ -63,8 +59,7 @@ void test_arithmetic()
             for (Long j = i+1; j < N; ++j)
                 a(j, i) = a(i, j);
 		mul(y1, a, x);
-		if (y != y1)
-			SLS_ERR("failed!");
+		SLS_ASSERT(y == y1);
         
         VecComp xc(N), yc(N), yc1(N);
         linspace(xc, Comp(1,1), Comp(N,N));
@@ -74,8 +69,7 @@ void test_arithmetic()
             for (Long j = i+1; j < N; ++j)
                 a(j, i) = a(i, j);
         mul(yc1, a, xc);
-        if (y != y1)
-			SLS_ERR("failed!");
+        SLS_ASSERT(y == y1);
 #endif
     }
 
@@ -95,21 +89,19 @@ void test_arithmetic()
 		CmatDoub a(N, N), b(N, N);
 		linspace(a, 1, N*N); copy(b, a);
 		trans(a); trans(a);
-		if (a != b)
-			SLS_ERR("failed!");
+		SLS_ASSERT(a == b);
 
 		Long N1 = 5, N2 = 6;
 		CmatDoub c(N1, N2), d(N2, N1), e(N1, N2);
 		linspace(c, 1, N1*N2);
 		copy(e, c);
 		trans(d, c); trans(c, d);
-		if (c != e)
-			SLS_ERR("failed!");
+		SLS_ASSERT(c == e);
 	}
 
 	// test shape_cmp
     {
-        if (!shape_cmp(Mat3Doub(7, 3, 5), Mat3Comp(7, 3, 5))) SLS_ERR("failed!");
+        SLS_ASSERT(shape_cmp(Mat3Doub(7, 3, 5), Mat3Comp(7, 3, 5)));
     }
 
     // copy from column major matrix to vector
@@ -120,15 +112,13 @@ void test_arithmetic()
         for (Long i = 0; i < 3; ++i) {
             copy(vr, cut1(a, i));
             for (Long j = 0; j < 4; ++j) {
-                if (vr[j] != a(i, j))
-                    SLS_ERR("failed!");
+                SLS_ASSERT(vr[j] == a(i, j));
             }
         }
         for (Long j = 0; j < 4; ++j) {
             copy(vc, cut0(a, j));
             for (Long i = 0; i < 3; ++i) {
-                if (vc[i] != a(i, j))
-                    SLS_ERR("failed!");
+                SLS_ASSERT(vc[i] == a(i, j));
             }
         }
     }
@@ -140,15 +130,13 @@ void test_arithmetic()
         for (Long i = 0; i < 3; ++i) {
             copy(vr, cut1(a, i));
             for (Long j = 0; j < 4; ++j) {
-                if (vr[j] != a(i, j))
-                    SLS_ERR("failed!");
+                SLS_ASSERT(vr[j] == a(i, j));
             }
         }
         for (Long j = 0; j < 4; ++j) {
             copy(vc, cut0(a, j));
             for (Long i = 0; i < 3; ++i) {
-                if (vc[i] != a(i, j))
-                    SLS_ERR("failed!");
+                SLS_ASSERT(vc[i] == a(i, j));
             }
         }
     }
@@ -159,13 +147,11 @@ void test_arithmetic()
         CmatDoub a1(N1, N2); rand(a1);
         MatDoub a2(N1, N2);
         copy(a2, a1);
-        if (a1 != a2)
-            SLS_ERR("failed!");
+        SLS_ASSERT(a1 == a2);
 
         rand(a2);
         copy(a1, a2);
-        if (a1 != a2)
-            SLS_ERR("failed!");
+        SLS_ASSERT(a1 == a2);
     }
     
     // reorder
@@ -177,55 +163,53 @@ void test_arithmetic()
         linspace(order, 0, N - 1);
         sort(v1, order);
         reorder(v2, order);
-        if (v1 != v2)
-            SLS_ERR("failed!");
+        SLS_ASSERT(v1 == v2);
     }
 
     // sum, max, max_abs, norm2
     {
         Long ind = 0;
         VecInt a(4); a[0] = 1; a[1] = 0; a[2] = 1; a[3] = 1;
-        if (sum(a) != Llong(3))
-			SLS_ERR("failed!");
+        SLS_ASSERT(sum(a) == Llong(3));
 
         VecInt b(4); b[0] = 2; b[1] = 3; b[2] = -1; b[3] = 5;
-        if (sum(b) != 9) SLS_ERR("failed!");
-        if (max(b) != 5) SLS_ERR("failed!");
-        max(ind, b); if (ind != 3) SLS_ERR("failed!");
-        if (max_abs(b) != 5) SLS_ERR("failed!");
+        SLS_ASSERT(sum(b) == 9);
+        SLS_ASSERT(max(b) == 5);
+        max(ind, b); SLS_ASSERT(ind == 3);
+        SLS_ASSERT(max_abs(b) == 5);
 
         VecDoub c(10); linspace(c, 1., 10.);
-        if (sum(c) != 55) SLS_ERR("failed!");
-        if (max(c) != 10.) SLS_ERR("failed!");
-        max(ind, c); if (ind != 9) SLS_ERR("failed!");
-        if (max_abs(c) != 10.) SLS_ERR("failed!");
-        if (norm2(c) != 385.) SLS_ERR("failed!");
+        SLS_ASSERT(sum(c) == 55);
+        SLS_ASSERT(max(c) == 10.);
+        max(ind, c); SLS_ASSERT(ind == 9);
+        SLS_ASSERT(max_abs(c) == 10.);
+        SLS_ASSERT(norm2(c) == 385.);
 
         CmatDoub cc(4, 5); linspace(cc, 1, 20);
         DcmatDoub dc = cut(cc, 1, 2, 2, 3);
-        if (max(dc) != 19 || min(dc) != 10) SLS_ERR("failed!");
+        SLS_ASSERT(max(dc) == 19 && min(dc) == 10);
         Long i, j;
-        if (slisc::max2(i, j, dc) != 19 || i != 1 || j != 2 || slisc::min2(i, j, dc) != 10 || i != 0 || j != 0) SLS_ERR("failed!");
-        if (max_abs(dc) != 19) SLS_ERR("failed!");
-        if (max_abs(i, j, dc) != 19 || i != 1 || j != 2) SLS_ERR("failed!");
+        SLS_ASSERT(slisc::max2(i, j, dc) == 19 && i == 1 && j == 2 && slisc::min2(i, j, dc) == 10 && i == 0 && j == 0);
+        SLS_ASSERT(max_abs(dc) == 19);
+        SLS_ASSERT(max_abs(i, j, dc) == 19 && i == 1 && j == 2);
 
         MatComp d(3, 3); linspace(d, Comp(1., -1.), Comp(9., -9.));
-        if (sum(d) != Comp(45.,-45.)) SLS_ERR("failed!");
-        if (max_abs(d) != abs(Comp(9,9))) SLS_ERR("failed!");
-        if (norm2(d) != 285.*2) SLS_ERR("failed!");
+        if (sum(d) != Comp(45.,-45.)) SLS_FAIL;
+        if (max_abs(d) != abs(Comp(9,9))) SLS_FAIL;
+        if (norm2(d) != 285.*2) SLS_FAIL;
 
         CmatComp e(3, 3); linspace(e, Comp(1., -1.), Comp(9., -9.));
-        if (sum(e) != Comp(45., -45.)) SLS_ERR("failed!");
-        if (max_abs(e) != abs(Comp(9, 9))) SLS_ERR("failed!");
-        if (norm2(e) != 285. * 2) SLS_ERR("failed!");
+        if (sum(e) != Comp(45., -45.)) SLS_FAIL;
+        if (max_abs(e) != abs(Comp(9, 9))) SLS_FAIL;
+        if (norm2(e) != 285. * 2) SLS_FAIL;
         if (norm2(cut(e, 0, 2, 0, 2)) != 46. * 2)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
     // sum_abs
     {
         VecDoub v(10); linspace(v, -4, 5);
         if (sum_abs(v) != 25)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // flip
@@ -234,9 +218,9 @@ void test_arithmetic()
         linspace(v, -2, 3); copy(v2, v);
         linspace(v1, 3, -2);
         flip(v);
-        if (v != v1) SLS_ERR("failed!");
+        if (v != v1) SLS_FAIL;
         flip(v, v1);
-        if (v != v2) SLS_ERR("failed!");
+        if (v != v2) SLS_FAIL;
     }
 
     // trans
@@ -244,14 +228,14 @@ void test_arithmetic()
         CmatComp a(3,3); linspace(a, Comp(0, 0), Comp(8, 8));
         MatComp b(3,3); linspace(b, Comp(0, 0), Comp(8, 8));
         trans(a);
-        if (a != b) SLS_ERR("failed!");
+        if (a != b) SLS_FAIL;
 
         a.resize(2, 3);
         linspace(a, Comp(0, 0), Comp(5, 5));
         b.resize(3, 2);
         linspace(b, Comp(0, 0), Comp(5, 5));
         MatComp c(a.n1(), a.n0()); trans(c, a);
-        if (c != b)  SLS_ERR("failed!");
+        if (c != b)  SLS_FAIL;
     }
 
     // her
@@ -259,14 +243,14 @@ void test_arithmetic()
         CmatComp a(3,3); linspace(a, Comp(0, 0), Comp(8, 8));
         MatComp b(3,3); linspace(b, Comp(0, 0), Comp(8, -8));
         her(a);
-        if (a != b) SLS_ERR("failed!");
+        if (a != b) SLS_FAIL;
 
         a.resize(2, 3);
         linspace(a, Comp(0, 0), Comp(5, 5));
         b.resize(3, 2);
         linspace(b, Comp(0, 0), Comp(5, -5));
         MatComp c(a.n1(), a.n0()); her(c, a);
-        if (c != b)  SLS_ERR("failed!");
+        if (c != b)  SLS_FAIL;
     }
 
     // +=, -=, *=, /=
@@ -278,68 +262,68 @@ void test_arithmetic()
         // v ?= s
         copy(vLlong, 1);
         vLlong += 1;
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         vLlong -= 1;
-        if (vLlong != 1) SLS_ERR("failed!");
+        if (vLlong != 1) SLS_FAIL;
         vLlong *= 2;
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         vLlong /= 2;
-        if (vLlong != 1) SLS_ERR("failed!");
+        if (vLlong != 1) SLS_FAIL;
 
         copy(vDoub, 1);
         vDoub += 1.;
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         vDoub -= 1.;
-        if (vDoub != 1.) SLS_ERR("failed!");
+        if (vDoub != 1.) SLS_FAIL;
         vDoub *= 2.;
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         vDoub /= 2.;
-        if (vDoub != 1.) SLS_ERR("failed!");
+        if (vDoub != 1.) SLS_FAIL;
 
         copy(vComp, Comp(1, 1));
         vComp += Comp(1., 1.);
-        if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2., 2.)) SLS_FAIL;
         vComp -= Comp(1., 1.);
-        if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
+        if (vComp != Comp(1., 1.)) SLS_FAIL;
         vComp *= 2.;
-        if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2., 2.)) SLS_FAIL;
         vComp /= 2.;
-        if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
+        if (vComp != Comp(1., 1.)) SLS_FAIL;
 
         // v ?= v
 
         copy(vLlong, 1); copy(vLlong1, 1);
         vLlong += vLlong1;
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         vLlong -= vLlong1;
-        if (vLlong != 1) SLS_ERR("failed!");
+        if (vLlong != 1) SLS_FAIL;
         copy(vLlong2, 2);
         vLlong *= vLlong2;
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         vLlong /= vLlong2;
-        if (vLlong != 1) SLS_ERR("failed!");
+        if (vLlong != 1) SLS_FAIL;
 
         copy(vDoub, 1); copy(vDoub1, 1);
         vDoub += vDoub1;
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         vDoub -= vDoub1;
-        if (vDoub != 1.) SLS_ERR("failed!");
+        if (vDoub != 1.) SLS_FAIL;
         copy(vDoub2, 2);
         vDoub *= vDoub2;
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         vDoub /= vDoub2;
-        if (vDoub != 1.) SLS_ERR("failed!");
+        if (vDoub != 1.) SLS_FAIL;
 
         copy(vComp, Comp(1, 1)); copy(vComp1, Comp(1, 1));
         vComp += vComp1;
-        if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2., 2.)) SLS_FAIL;
         vComp -= vComp1;
-        if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
+        if (vComp != Comp(1., 1.)) SLS_FAIL;
         copy(vComp2, 2);
         vComp *= vComp2;
-        if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2., 2.)) SLS_FAIL;
         vComp /= vComp2;
-        if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
+        if (vComp != Comp(1., 1.)) SLS_FAIL;
     }
 
     // mod()
@@ -358,101 +342,101 @@ void test_arithmetic()
         // v = v ? s
         copy(vLlong1, 1);
         plus(vLlong, vLlong1, 1);
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         minus(vLlong, vLlong1, 1);
-        if (vLlong != 0) SLS_ERR("failed!");
+        if (vLlong != 0) SLS_FAIL;
         times(vLlong, vLlong1, 2);
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         divide(vLlong, vLlong1, 2);
-        if (vLlong != 0) SLS_ERR("failed!");
+        if (vLlong != 0) SLS_FAIL;
 
         copy(vDoub1, 1);
         plus(vDoub, vDoub1, 1.);
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         minus(vDoub, vDoub1, 1.);
-        if (vDoub != 0.) SLS_ERR("failed!");
+        if (vDoub != 0.) SLS_FAIL;
         times(vDoub, vDoub1, 2.);
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         divide(vDoub, vDoub1, 2.);
-        if (vDoub != 0.5) SLS_ERR("failed!");
+        if (vDoub != 0.5) SLS_FAIL;
         
         copy(vComp1, 1);
         plus(vComp, vComp1, 1.);
-        if (vComp != 2.) SLS_ERR("failed!");
+        if (vComp != 2.) SLS_FAIL;
         minus(vComp, vComp1, 1.);
-        if (vComp != 0.) SLS_ERR("failed!");
+        if (vComp != 0.) SLS_FAIL;
         times(vComp, vComp1, 2.);
-        if (vComp != 2.) SLS_ERR("failed!");
+        if (vComp != 2.) SLS_FAIL;
         divide(vComp, vComp1, 2.);
-        if (vComp != 0.5) SLS_ERR("failed!");
+        if (vComp != 0.5) SLS_FAIL;
 
         // v = s ? v
 
         copy(vLlong1, 1);
         plus(vLlong, 1, vLlong1);
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         minus(vLlong, 1, vLlong1);
-        if (vLlong != 0) SLS_ERR("failed!");
+        if (vLlong != 0) SLS_FAIL;
         times(vLlong, 2, vLlong1);
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         copy(vLlong1, 2);
         divide(vLlong, 2, vLlong1);
-        if (vLlong != 1) SLS_ERR("failed!");
+        if (vLlong != 1) SLS_FAIL;
 
         copy(vDoub1, 1);
         plus(vDoub, 1., vDoub1);
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         minus(vDoub, 1., vDoub1);
-        if (vDoub != 0.) SLS_ERR("failed!");
+        if (vDoub != 0.) SLS_FAIL;
         times(vDoub, 2., vDoub1);
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         copy(vDoub1, 2);
         divide(vDoub, 2., vDoub1);
-        if (vDoub != 1.) SLS_ERR("failed!");
+        if (vDoub != 1.) SLS_FAIL;
 
         copy(vComp1, Comp(1,1));
         plus(vComp, Comp(1., 1.), vComp1);
-        if (vComp != Comp(2.,2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2.,2.)) SLS_FAIL;
         minus(vComp, Comp(1.,1.), vComp1);
-        if (vComp != 0.) SLS_ERR("failed!");
+        if (vComp != 0.) SLS_FAIL;
         times(vComp, 2., vComp1);
-        if (vComp != Comp(2.,2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2.,2.)) SLS_FAIL;
         copy(vComp1, 2);
         divide(vComp, Comp(2.,2.), vComp1);
-        if (vComp != Comp(1.,1.)) SLS_ERR("failed!");
+        if (vComp != Comp(1.,1.)) SLS_FAIL;
 
         // v = v ? v
 
         copy(vLlong1, 4); copy(vLlong2, 2);
         plus(vLlong, vLlong1, vLlong2);
-        if (vLlong != 6) SLS_ERR("failed!");
+        if (vLlong != 6) SLS_FAIL;
         minus(vLlong, vLlong1, vLlong2);
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
         times(vLlong, vLlong1, vLlong2);
-        if (vLlong != 8) SLS_ERR("failed!");
+        if (vLlong != 8) SLS_FAIL;
         divide(vLlong, vLlong1, vLlong2);
-        if (vLlong != 2) SLS_ERR("failed!");
+        if (vLlong != 2) SLS_FAIL;
 
         copy(vDoub1, 1); copy(vDoub2, 2);
         plus(vDoub, vDoub1, vDoub2);
-        if (vDoub != 3.) SLS_ERR("failed!");
+        if (vDoub != 3.) SLS_FAIL;
         minus(vDoub, vDoub2, vDoub1);
-        if (vDoub != 1.) SLS_ERR("failed!");
+        if (vDoub != 1.) SLS_FAIL;
         times(vDoub, vDoub1, vDoub2);
-        if (vDoub != 2.) SLS_ERR("failed!");
+        if (vDoub != 2.) SLS_FAIL;
         divide(vDoub, vDoub1, vDoub2);
-        if (vDoub != 0.5) SLS_ERR("failed!");
+        if (vDoub != 0.5) SLS_FAIL;
 
         copy(vComp1, Comp(1, 1)); copy(vComp2, Comp(2, 2));
         plus(vComp, vComp1, vComp2);
-        if (vComp != Comp(3., 3.)) SLS_ERR("failed!");
+        if (vComp != Comp(3., 3.)) SLS_FAIL;
         minus(vComp, vComp2, vComp1);
-        if (vComp != Comp(1., 1.)) SLS_ERR("failed!");
+        if (vComp != Comp(1., 1.)) SLS_FAIL;
         copy(vComp2, 2);
         times(vComp, vComp1, vComp2);
-        if (vComp != Comp(2., 2.)) SLS_ERR("failed!");
+        if (vComp != Comp(2., 2.)) SLS_FAIL;
         divide(vComp, vComp1, vComp2);
-        if (vComp != Comp(0.5, 0.5)) SLS_ERR("failed!");
+        if (vComp != Comp(0.5, 0.5)) SLS_FAIL;
     }
 
     // real(v), v = real(v)
@@ -460,11 +444,11 @@ void test_arithmetic()
         VecComp v(3); linspace(v, Comp(1.1,1.1), Comp(3.3,3.3));
         VecComp v1(3); linspace(v1, 1.1, 3.3);
         real(v);
-        if (v != v1) SLS_ERR("failed!");
+        if (v != v1) SLS_FAIL;
         linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
         VecDoub v2(v.size());
         real(v2, v);
-        if(v2 != v1) SLS_ERR("failed!");
+        if(v2 != v1) SLS_FAIL;
     }
 
     // imag(v), v = imag(v)
@@ -472,11 +456,11 @@ void test_arithmetic()
         VecComp v(3); linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
         VecComp v1(3); linspace(v1, 1.1, 3.3);
         imag(v);
-        if (v != v1) SLS_ERR("failed!");
+        if (v != v1) SLS_FAIL;
         linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
         VecDoub v2(v.size());
         imag(v2, v);
-        if (v2 != v1) SLS_ERR("failed!");
+        if (v2 != v1) SLS_FAIL;
     }
 
     // abs(v), v = abs(v)
@@ -486,11 +470,11 @@ void test_arithmetic()
             VecDoub v(5); linspace(v, -2, 2);
             VecComp v1(5); v1[0] = 2; v1[1] = 1; v1[2] = 0; v1[3] = 1; v1[4] = 2;
             abs(v);
-            if (v != v1) SLS_ERR("failed!");
+            if (v != v1) SLS_FAIL;
             linspace(v, -2, 2);
             VecDoub v2(v1.size());
             abs(v2, v);
-            if (v2 != v1) SLS_ERR("failed!");
+            if (v2 != v1) SLS_FAIL;
         }
         
         // comp
@@ -498,11 +482,11 @@ void test_arithmetic()
             VecComp v(3); linspace(v, Comp(3, 4), Comp(9, 12));
             VecComp v1(3); linspace(v1, 5, 15);
             abs(v);
-            if (v != v1) SLS_ERR("failed!");
+            if (v != v1) SLS_FAIL;
             linspace(v, Comp(3, 4), Comp(9, 12));
             VecDoub v2(v.size());
             abs(v2, v);
-            if (v2 != v1) SLS_ERR("failed!");
+            if (v2 != v1) SLS_FAIL;
         }
     }
 
@@ -511,11 +495,11 @@ void test_arithmetic()
         VecComp v(3); linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
         VecComp v1(3); linspace(v1, Comp(1.1, -1.1), Comp(3.3, -3.3));
         conj(v);
-        if (v != v1) SLS_ERR("failed!");
+        if (v != v1) SLS_FAIL;
         linspace(v, Comp(1.1, 1.1), Comp(3.3, 3.3));
         // VecLcomp v2(v.size());
         // conj(v2, v);
-        // if (v2 != v1) SLS_ERR("failed!");
+        // if (v2 != v1) SLS_FAIL;
     }
 
     // s = dot(v, v)
@@ -525,7 +509,7 @@ void test_arithmetic()
             linspace(x, Comp(1.1, 1.1), Comp(3.3, 3.3));
             linspace(y, 1., 3.);
             auto s = dot(x, y);
-            if (abs(s - Comp(15.4, -15.4)) > 1e-14) SLS_ERR("failed!");
+            if (abs(s - Comp(15.4, -15.4)) > 1e-14) SLS_FAIL;
         }
 
         {
@@ -533,7 +517,7 @@ void test_arithmetic()
             linspace(x, 1.1, 3.3);
             linspace(y, 1, 3);
             auto s = dot(x, y);
-            if (abs(s - 15.4) > 1e-14) SLS_ERR("failed!");
+            if (abs(s - 15.4) > 1e-14) SLS_FAIL;
         }
     }
 
@@ -546,7 +530,7 @@ void test_arithmetic()
         v1[2] = Comp(532, -532); v1[3] = Comp(728, -728);
         mul(v2, a, v);
         if (v2 != v1)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // matrix-vector multiplication (column-major)
@@ -558,7 +542,7 @@ void test_arithmetic()
         copy(y, 1);
         mul(y, a, x);
         if (y[0] != 70 || y[1] != 80 || y[2] != 90)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // matrix-vector multiplication using cblas
@@ -569,7 +553,7 @@ void test_arithmetic()
         mul_gen(y1, a, x);
         y1 -= y;
         if (max_abs(y1) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
 
         SvecComp cut_x, cut_y, cut_y1;
         cut_x.set(cut(x, 1, 5));
@@ -580,7 +564,7 @@ void test_arithmetic()
         mul_gen(cut_y1, cut_a, cut_x);
         cut_y1 -= cut_y;
         if (max_abs(cut_y1) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // vector-matrix multiplication
@@ -591,7 +575,7 @@ void test_arithmetic()
         v1[0] = Comp(476, -476); v1[1] = Comp(504, -504);
         v1[2] = Comp(532, -532); v1[3] = Comp(560, -560);
         mul(v2, v, a);
-        if (v2 != v1) SLS_ERR("failed!");
+        if (v2 != v1) SLS_FAIL;
     }
 
     // matrix-matrix multiplication
@@ -602,7 +586,7 @@ void test_arithmetic()
         mul(c, b, a);
         if (c(0, 0) != 3262 || c(0, 2) != 3626 || c(1, 1) != 3640 || c(1, 3) != 4032 ||
             c(2, 2) != 4046 || c(2, 3) != 4256 || c(3, 3) != 4480)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // v = cumsum(v)
@@ -611,7 +595,7 @@ void test_arithmetic()
         VecInt v1(v.size());
         cumsum(v1, v);
         if (v1[0] != 1 || v1[1] != 3 || v1[2] != 6 || v1[3] != 10)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // uniq_elm()
@@ -620,7 +604,7 @@ void test_arithmetic()
         vecInt v1 = {1,3,2,5,8,6,7};
         uniq_elm(v);
         if (v != v1)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // uniq_rows()
@@ -633,6 +617,6 @@ void test_arithmetic()
         a2[0] = 1; a2[1] = 2; a2[2] = 3;
         a2[3] = 2; a2[4] = 3; a2[5] = 4;
         if (a1 != a2)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 }

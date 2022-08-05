@@ -17,9 +17,9 @@ void test_input()
 	SLS_INP(d3); SLS_INP(i4); SLS_INP(s2); cin_comment(); cin_LF();
 
 	if (i1 != 123 || i2 != 234 || d1 != 345.6)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (d2 != 456.7 || s1 != "a567" || i3 != 678)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (d3 != 789.1 || i4 != 890 || s2 != "yoyo")
-		SLS_ERR("failed!");
+		SLS_FAIL;
 }

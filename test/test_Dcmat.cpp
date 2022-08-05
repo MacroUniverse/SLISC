@@ -11,10 +11,10 @@ void test_Dcmat() {
 	DcitDoub_c it;
 	Long k = 0;
 	for (it.beg(b); it.ckend(); ++it)
-		if (*it != b[k++]) SLS_ERR("failed!");
-	if (k != 12)  SLS_ERR("failed!");
+		if (*it != b[k++]) SLS_FAIL;
+	if (k != 12)  SLS_FAIL;
 	k = 11;
 	for (it.end(b); it.ckbeg(); --it)
-		if (*it != b[k--]) SLS_ERR("failed!");
-	if (k != -1)  SLS_ERR("failed!");
+		if (*it != b[k--]) SLS_FAIL;
+	if (k != -1)  SLS_FAIL;
 }

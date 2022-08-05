@@ -12,7 +12,7 @@ void test_cut()
 		SvecDoub sli = cut(v, 0, N);
 		for (Long i = 0; i < N; ++i) {
 			if (sli[i] != v[i])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 	}
 
@@ -22,9 +22,9 @@ void test_cut()
 		CmatDoub v(N1, N2); linspace(v, 1, N1*N2);
 		ScmatDoub sli = cut(v, 0, N2 - 2);
 		if (sli.p() != v.p())
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (sli.n0() != N1 || sli.n1() != N2 - 2)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 
 	{
@@ -32,8 +32,8 @@ void test_cut()
 		CmatDoub v(N1, N2); linspace(v, 1, N1*N2);
 		DcmatDoub sli = cut(v, 0, N1 - 2, 0, N2 - 2);
 		if (sli.p() != v.p())
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		if (sli.n0() != N1 - 2 || sli.n1() != N2 - 2)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 }

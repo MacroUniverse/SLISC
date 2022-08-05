@@ -10,14 +10,14 @@ void test_bin_tree() {
     // === test text2btree() and btree2text() ===
     BTNode *root = text2btree(tree_str);
     string tree_str1 = btree2text(root);
-    if (tree_str1 != tree_str) SLS_ERR("failed!");
+    if (tree_str1 != tree_str) SLS_FAIL;
 
     // === test btree_check() ===
     vector<pair<BTNode*, BTNode*>> err_pair;
     btree_check(err_pair, root);
-    if (err_pair.size() != 2) SLS_ERR("failed!");
-    if (err_pair[0].first->val != 10 || err_pair[0].second->val != 4) SLS_ERR("failed!");
-    if (err_pair[1].first->val != 9 || err_pair[1].second->val != 3) SLS_ERR("failed!");
+    if (err_pair.size() != 2) SLS_FAIL;
+    if (err_pair[0].first->val != 10 || err_pair[0].second->val != 4) SLS_FAIL;
+    if (err_pair[1].first->val != 9 || err_pair[1].second->val != 3) SLS_FAIL;
     btree_delete(root);
 
     // gen

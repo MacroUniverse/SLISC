@@ -9,6 +9,6 @@ void test_Dvec()
 	sli.set(v.p(), N/2, 2);
 	for (Long i = 0; i < N/2; ++i) {
 		if (sli[i] != v[2*i])
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 }

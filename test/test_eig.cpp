@@ -33,7 +33,7 @@ void test_eig()
             eigVec1 -= eigVec2;
             if (max_abs(eigVec1) > 5e-5) {
                 cout << max_abs(eigVec1) << endl;
-                SLS_ERR("failed!"); // TODO: why is Visual Studio more accurate?
+                SLS_FAIL; // TODO: why is Visual Studio more accurate?
             }
         }
     }
@@ -64,7 +64,7 @@ void test_eig()
             eigVec1 -= eigVec2;
             if (max_abs(eigVec1) > 5e-5) {
                 cout << max_abs(eigVec1) << endl;
-                SLS_ERR("failed!"); // TODO: why is Visual Studio more accurate?
+                SLS_FAIL; // TODO: why is Visual Studio more accurate?
             }
         }
     }

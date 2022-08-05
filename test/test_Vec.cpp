@@ -9,16 +9,16 @@ void test_Vec()
     {
         VecDoub v;
         if (v.size() != 0)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     {
         VecDoub v(N);
         if (v.size() != N)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         v[1] = 2;
         if (v[1] != 2)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // VecBool
@@ -26,13 +26,13 @@ void test_Vec()
 		Long N = 4;
 		VecBool v(N);
 		if (v.size() != N)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		v[0] = 1; v[1] = 0; v[2] = 1; v[3] = 0;
 		if (!v[0] || v[1] || !v[2] || v[3])
-			SLS_ERR("failed!");
+			SLS_FAIL;
         v.resize(N + 1);
         if (v.size() != N+1)
-            SLS_ERR("failed!");
+            SLS_FAIL;
 	}
 
     // copy constructor
@@ -40,6 +40,6 @@ void test_Vec()
         Long N = 4;
 		VecBool v(N), v1(v);
         if (v1 != v)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 }

@@ -18,7 +18,7 @@ void test_Cmobd()
         mul(y, a, x);
         if (y[0] != 21 || y[1] != 48 || y[2] != 51 || y[3] != 90 ||
             y[4] != 81 || y[5] != 76 || y[6] != 47)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
     
     // construct from Mcoo
@@ -36,7 +36,7 @@ void test_Cmobd()
         mul(y, a2, x);
         if (y[0] != 21 || y[1] != 48 || y[2] != 51 || y[3] != 90 ||
             y[4] != 81 || y[5] != 76 || y[6] != 47)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
     
     // qref() and find() for diagonal elements
@@ -51,16 +51,16 @@ void test_Cmobd()
         for (Long i = 0; i < 7; ++i) {
             Long ind0 = a.find(i, i);
             if (ind0 != ind[i])
-                SLS_ERR("failed!");
+                SLS_FAIL;
             if (a[ind0] != diag[i] || a(i,i) != diag[i])
-                SLS_ERR("failed!");
+                SLS_FAIL;
             if (i % 2 == 1) {
                 if (a[ind0 - 1] != 0)
-                    SLS_ERR("failed!");
+                    SLS_FAIL;
             }
             a.ref(i,i) = 111;
             if (a[ind0] != 111)
-                SLS_ERR("failed!");
+                SLS_FAIL;
         }
 
         for (Long i = 0; i < 7; ++i) {
@@ -69,13 +69,13 @@ void test_Cmobd()
         }
         for (Long i = 0; i < 7; ++i) {
             if (a(i, i) != 100)
-                SLS_ERR("failed!");
+                SLS_FAIL;
         }
     }
 
     // norm_inf()
     {
         if (norm_inf(a) != 120)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 }

@@ -14,10 +14,10 @@ void test_hydrogen()
 	hydrogen_rR(rR1, n1, l, Z, r);
 	hydrogen_rR(rR2, n2, l, Z, r);
 	if (abs(dot(rR1, rR1)*dr - 1) > 1e-11)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (abs(dot(rR2, rR2)*dr - 1) > 1e-5)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 	if (abs(dot(rR1, rR2)*dr) > 1e-8)
-		SLS_ERR("failed!");
+		SLS_FAIL;
 #endif
 }

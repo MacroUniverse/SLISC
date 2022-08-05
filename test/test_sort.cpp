@@ -18,7 +18,7 @@ void test_sort()
 		sort(v);
 		for (Long i = 1; i < N; ++i) {
 			if (v[i] < v[i-1])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 	}
 
@@ -31,7 +31,7 @@ void test_sort()
 		quicksort0(v.p(), N);
 		for (Long i = 1; i < N; ++i) {
 			if (v[i] < v[i-1])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
         VecInt order(N), v1(N);
         for (Long i = 0; i < N; ++i)
@@ -40,21 +40,21 @@ void test_sort()
         linspace(order, 0, N-1);
         quicksort0(v.p(), order.p(), N);
         quicksort0(order.p(), v.p(), N);
-        if (v != v1) SLS_ERR("failed!");
+        if (v != v1) SLS_FAIL;
 
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
 		quicksort3(v.p(), N);
 		for (Long i = 1; i < N; ++i)
 			if (v[i] < v[i-1])
-				SLS_ERR("failed!");
+				SLS_FAIL;
         for (Long i = 0; i < N; ++i)
             v[i] = randInt(N);
         copy(v1, v);
         linspace(order, 0, N-1);
         quicksort3(v.p(), order.p(), N);
         quicksort3(order.p(), v.p(), N);
-        if (v != v1) SLS_ERR("failed!");
+        if (v != v1) SLS_FAIL;
 	}
 
 	// test mergesort()
@@ -66,7 +66,7 @@ void test_sort()
 		mergesort(v.p(), v.size(), wsp.p());
 		for (Long i = 1; i < N; ++i) {
 			if (v[i] < v[i-1])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 	}
 
@@ -83,12 +83,12 @@ void test_sort()
 		
 		for (Long i = 1; i < N; ++i) {
 			if (a[i] < a[i-1])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 
 		for (Long i = 0; i < N; ++i) {
 			if (a[i] != a0[order[i]])
-				SLS_ERR("failed!");
+				SLS_FAIL;
 		}
 	}
 
@@ -98,10 +98,10 @@ void test_sort()
 		sort(vs);
 		vecStr vs1 = {"1234", "A3", "AD", "B", "a", "ab", "bC", "bd"};
 		if (vs != vs1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		sort_case_insens(vs);
 		vs1 = {"1234", "a", "A3", "ab", "AD", "B", "bC", "bd"};
 		if (vs != vs1)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 }

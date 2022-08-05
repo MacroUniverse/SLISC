@@ -25,7 +25,7 @@ void test_mat_fun()
             CmatDoub out(3, 3);
             exp_mat_sym(out, a, 1);
             out -= out0;
-            if (max_abs(out) > 5e-13) SLS_ERR("failed!");
+            if (max_abs(out) > 5e-13) SLS_FAIL;
         }
     }
 #endif

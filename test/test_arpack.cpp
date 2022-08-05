@@ -78,12 +78,12 @@ void test_arpack()
 	for (Long j = 0; j < Nconv; ++j) {
 		SvecDoub v(dprob.RawEigenvector(j), N);
 		if (abs(norm(v) - 1) > 1e-10)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 		a.mul(v.p(), av.p());
 		Doub err = a.err(v.p(), av.p());
 		// cout << "err = " << err << endl;
 		if (err > 1e-2)
-			SLS_ERR("failed!");
+			SLS_FAIL;
 	}
 #else
     std::cout << "---------- disabled! ----------" << std::endl;

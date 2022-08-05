@@ -18,7 +18,7 @@ void test_GSL()
     // should be 1/sqrt(2) = 0.707107...
     Doub ret = gsl_sf_coupling_3j(two_ja, two_jb, two_jc, two_ma, two_mb, two_mc);
     if (abs(ret - 1. / sqrt(2)) > 1e-14)
-        SLS_ERR("failed!");
+        SLS_FAIL;
 
     Int two_jd, two_je, two_jf, two_jg, two_jh, two_ji;
     // {ja jb jc
@@ -32,7 +32,7 @@ void test_GSL()
     ret = gsl_sf_coupling_9j(two_ja, two_jb, two_jc, two_jd, two_je, two_jf,
         two_jg, two_jh, two_ji);
     if (abs(ret) > 1e-14)
-        SLS_ERR("failed!");
+        SLS_FAIL;
 
     // test associated legendre polynomial for multiple l
     // (for every l < lmax, 0 < m < l)
@@ -45,7 +45,7 @@ void test_GSL()
         gsl_sf_legendre_array(GSL_SF_LEGENDRE_NONE, lmax, 0.6, legen_arr.p());
         ret = legen_arr[gsl_sf_legendre_array_index(3, 2)];
         if (abs(ret - 5.76) > 1e-14)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // test associated legendre polynomial single value
@@ -54,18 +54,18 @@ void test_GSL()
     {
         Int l = 3, m = 2;
         if (abs(gsl_sf_legendre_Plm(l, m, 0.4) - 5.04) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(gsl_sf_legendre_Plm(l, m, -0.2) + 2.88) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(gsl_sf_legendre_Plm(l, m, 0.6) - 5.76) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         l = 5;  m = 3;
         if (abs(gsl_sf_legendre_Plm(l, m, 0.4) + 17.7840597569846238) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(gsl_sf_legendre_Plm(l, m, -0.2) - 31.6042964572856770) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(gsl_sf_legendre_Plm(l, m, 0.6) + 60.2112) > 1e-13)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // test hydrogen radial function (normalized)
@@ -79,7 +79,7 @@ void test_GSL()
                 Doub R0 = 2 * pow(Z, 1.5) * exp(-Z * r[i]);
                 Doub R = gsl_sf_hydrogenicR(n, l, Z, r[i]);
                 if (abs(R - R0) > 1e-9)
-                    SLS_ERR("failed!");
+                    SLS_FAIL;
             }
         }
         
@@ -91,7 +91,7 @@ void test_GSL()
                 Doub R0 = 8/(27 * sqrt(6)) * pow(Z, 1.5) * (1 - Z*r[i]/6) * Z * r[i] * exp(-Z * r[i]/3);
                 Doub R = gsl_sf_hydrogenicR(n, l, Z, r[i]);
                 if (abs(R - R0) > 1e-9)
-                    SLS_ERR("failed!");
+                    SLS_FAIL;
             }
         }
     }
@@ -106,15 +106,15 @@ void test_GSL()
         // see also gsl_sf_coulomb_wave_FG_array
         Int ret = gsl_sf_coulomb_wave_F_array(lmin, kmax, eta, rho, F.p(), &F_exponent);
         if (ret == GSL_EOVRFLW)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(F[0] - 0.938149544359976) > 1e-15)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(F[1] - 0.623001859914959) > 1e-15)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(F[2] - 0.292126432552811) > 1e-15)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(F[3] - 0.103105785225698) > 1e-15)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 
     // logarithm of complex gamma function
@@ -125,14 +125,14 @@ void test_GSL()
         gsl_sf_result lnr, arg;
         gsl_sf_lngamma_complex_e(zr1, zi1, &lnr, &arg);
         if (abs(lnr.val + 2.072151270682631) > 1e-14)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(arg.val - 1.180959032907777) > 1e-14)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         gsl_sf_lngamma_complex_e(zr2, zi2, &lnr, &arg);
         if (abs(lnr.val - 0.3294311939326557) > 1e-14)
-            SLS_ERR("failed!");
+            SLS_FAIL;
         if (abs(arg.val - 3.079015254176607) > 1e-14)
-            SLS_ERR("failed!");
+            SLS_FAIL;
     }
 #else
 	cout << "---------- disabled! ----------" << endl;
