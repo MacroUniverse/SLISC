@@ -17,13 +17,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="223e5e8e-b874-41ec-bda0-6bdd877948e6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SLISC/Ddoub.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SLISC/STL_util.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/STL_util.h" afterDir="false" />
-    </list>
+    <list default="true" id="223e5e8e-b874-41ec-bda0-6bdd877948e6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,7 +92,7 @@
       <workItem from="1659666607222" duration="35000" />
       <workItem from="1659689313591" duration="255000" />
       <workItem from="1659690349453" duration="4329000" />
-      <workItem from="1659714958819" duration="2626000" />
+      <workItem from="1659714958819" duration="3324000" />
     </task>
     <servers />
   </component>

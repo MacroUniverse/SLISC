@@ -19,7 +19,7 @@ struct Linbcg@Ts@ {
 	@Ts@ snrm(@Tv@_I sx, const Int itol);
 };
 
-void Linbcg@Ts@::solve(@Tv@_I b, @Tv@_IO x, const Int itol, const @Ts@ tol,
+inline void Linbcg@Ts@::solve(@Tv@_I b, @Tv@_IO x, const Int itol, const @Ts@ tol,
 	const Int itmax, Int &iter, @Ts@ &err)
 {
 	@Ts@ ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
@@ -99,7 +99,8 @@ void Linbcg@Ts@::solve(@Tv@_I b, @Tv@_IO x, const Int itol, const @Ts@ tol,
 		if (err <= tol) break;
 	}
 }
-@Ts@ Linbcg@Ts@::snrm(@Tv@_I sx, const Int itol)
+
+inline @Ts@ Linbcg@Ts@::snrm(@Tv@_I sx, const Int itol)
 {
 	Int i,isamax,n=sx.size();
 	@Ts@ ans;

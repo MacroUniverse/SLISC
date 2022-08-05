@@ -11,7 +11,7 @@ struct Node
 };
 
 // links[2n] -> links[2n+1]
-void tree_gen(vector<Node> &tree, vecStr32_I entries, vecLong_I links)
+inline void tree_gen(vector<Node> &tree, vecStr32_I entries, vecLong_I links)
 {
     Long Nlink = links.size();
     tree.resize(entries.size());
@@ -24,7 +24,7 @@ void tree_gen(vector<Node> &tree, vecStr32_I entries, vecLong_I links)
 
 // recursives implementation of tree_all_dep()
 // return -1-ind if too many levels (probably circular dependency), tree[ind] is the deepest level
-Long tree_all_dep_imp(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecStr32_I vector, Long Niter = 0)
+inline Long tree_all_dep_imp(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecStr32_I vector, Long Niter = 0)
 {
     ++Niter;
     // cout << "tree debug: ind = " << ind << ", level = " << Niter << endl;
@@ -46,7 +46,7 @@ Long tree_all_dep_imp(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecS
 
 // find all upstream nodes of a tree, and the distances
 // return -1-ind if too many levels (probably circular dependency), tree[ind] is the deepest level
-Long tree_all_dep(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecStr32_I vector)
+inline Long tree_all_dep(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecStr32_I vector)
 {
     deps.clear();
     Long ret = tree_all_dep_imp(deps, tree, ind, vector);
@@ -63,7 +63,7 @@ Long tree_all_dep(vecLong_O deps, const vector<Node> &tree, Long_I ind, vecStr32
 
 // find redundant i.e. if A->B->...C, then A->C is redundent
 // return -1-ind if too many levels (probably circular dependency), tree[ind] is the deepest level
-Long tree_redundant(vecLong_O links, const vector<Node> &tree, vecStr32_I vector)
+inline Long tree_redundant(vecLong_O links, const vector<Node> &tree, vecStr32_I vector)
 {
     vecLong deps;
     for (Long i = 0; i < Long(tree.size()); ++i) {

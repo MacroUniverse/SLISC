@@ -57,7 +57,7 @@ struct Matb_file_not_complete {};
 
 // read the last Llong
 // pointer will be moved to the beginning of the last Llong
-Llong lastLlong(ifstream &fin)
+inline Llong lastLlong(ifstream &fin)
 {
     Llong p = Llong(fin.tellg()) - 8;
     Llong num;

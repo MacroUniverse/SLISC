@@ -169,7 +169,7 @@ inline void slist_erase_after(SNode* node, Long N)
 and return the head of the second list.
 If the length is odd, the extra node should go in the front list.
 Uses the fast/slow pointer strategy. */
-SNode* slist_split(SNode* head)
+inline SNode* slist_split(SNode* head)
 {
     SNode* slow = head;
     SNode* fast = head->next;

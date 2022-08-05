@@ -1,6 +1,6 @@
 // associated legendre polynomial
 // code from GSL-2.5
-
+#pragma once
 #include "global.h"
 
 namespace slisc {
@@ -15,7 +15,7 @@ namespace slisc {
 //% });
 //%--------------------------
 //% T = varargin{:};
-@T@ legendre_Pmm(int m, @T@_I x)
+inline @T@ legendre_Pmm(int m, @T@_I x)
 {
   if(m == 0)
   {
@@ -41,7 +41,7 @@ namespace slisc {
 //% });
 //%--------------------------
 //% T = varargin{:};
-@T@ legendre_Plm(Int_I l, Int_I m, @T@_I x)
+inline @T@ legendre_Plm(Int_I l, Int_I m, @T@_I x)
 {
   /* If l is large and m is large, then we have to worry
    * about overflow. Calculate an approximate exponent which

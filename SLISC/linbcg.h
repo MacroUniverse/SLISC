@@ -14,7 +14,7 @@ struct LinbcgDoub {
 	Doub snrm(VecDoub_I sx, const Int itol);
 };
 
-void LinbcgDoub::solve(VecDoub_I b, VecDoub_IO x, const Int itol, const Doub tol,
+inline void LinbcgDoub::solve(VecDoub_I b, VecDoub_IO x, const Int itol, const Doub tol,
 	const Int itmax, Int &iter, Doub &err)
 {
 	Doub ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
@@ -94,7 +94,8 @@ void LinbcgDoub::solve(VecDoub_I b, VecDoub_IO x, const Int itol, const Doub tol
 		if (err <= tol) break;
 	}
 }
-Doub LinbcgDoub::snrm(VecDoub_I sx, const Int itol)
+
+inline Doub LinbcgDoub::snrm(VecDoub_I sx, const Int itol)
 {
 	Int i,isamax,n=sx.size();
 	Doub ans;

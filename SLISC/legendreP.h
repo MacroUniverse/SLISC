@@ -1,6 +1,6 @@
 // associated legendre polynomial
 // code from GSL-2.5
-
+#pragma once
 #include "global.h"
 
 namespace slisc {
@@ -10,7 +10,7 @@ namespace slisc {
  *            = 1 , m = 0
  */
 
-Doub legendre_Pmm(int m, Doub_I x)
+inline Doub legendre_Pmm(int m, Doub_I x)
 {
   if(m == 0)
   {
@@ -32,7 +32,7 @@ Doub legendre_Pmm(int m, Doub_I x)
 
 
 
-Doub legendre_Plm(Int_I l, Int_I m, Doub_I x)
+inline Doub legendre_Plm(Int_I l, Int_I m, Doub_I x)
 {
   /* If l is large and m is large, then we have to worry
    * about overflow. Calculate an approximate exponent which

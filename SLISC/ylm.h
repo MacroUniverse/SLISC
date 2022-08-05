@@ -10,7 +10,7 @@ namespace slisc {
 // same definition with Wolfram Alpha
 // see http://littleshi.cn/online/SphHar.html
 
-Comp ylm(Int_I l, Int_I m, Doub_I theta, Doub_I phi)
+inline Comp ylm(Int_I l, Int_I m, Doub_I theta, Doub_I phi)
 {
     Doub A, ret0;
     Long n;
@@ -40,7 +40,7 @@ Comp ylm(Int_I l, Int_I m, Doub_I theta, Doub_I phi)
 }
 
 // generalized spherical harmonics
-Comp yl1l2LM(Int_I l1, Int_I l2, Int_I L, Int_I M,
+inline Comp yl1l2LM(Int_I l1, Int_I l2, Int_I L, Int_I M,
     Doub_I theta1, Doub_I phi1, Doub_I theta2, Doub_I phi2)
 {
     Comp sum = 0.;

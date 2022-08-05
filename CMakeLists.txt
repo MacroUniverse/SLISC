@@ -24,9 +24,9 @@ list(APPEND LIBS gsl)
 add_definitions(-D SLS_USE_EIGEN)
 include_directories(../EigenTest/Eigen)
 # quad math
-add_definitions(-D SLS_USE_QUAD_MATH)
-add_compile_options(-fext-numeric-literals)
-list(APPEND LIBS quadmath)
+# add_definitions(-D SLS_USE_QUAD_MATH)
+# add_compile_options(-fext-numeric-literals)
+# list(APPEND LIBS quadmath)
 # Arpack
 add_definitions(-D SLS_USE_ARPACK)
 include_directories(../Arpack_test/include)
@@ -55,5 +55,12 @@ add_compile_options(-Wall -Wno-reorder -Wno-misleading-indentation -fopenmp -g -
 file(GLOB SOURCES "test/*.cpp" "main.cpp")
 
 add_executable(main.x ${SOURCES})
-target_link_libraries(main.x ${LIBS})
 
+# precompile header (total compilation time remains the same, but single recompilation might be slower. Can help to check `#pragma once` and `inline` before functions if they are missing)
+# file(GLOB SLISC_HEADERS "SLISC/*.h")
+# file(GLOB STL_HEADERS "/usr/include/c++/9/*")
+# list(REMOVE_ITEM STL_HEADERS /usr/include/c++/9/backward /usr/include/c++/9/bits /usr/include/c++/9/debug /usr/include/c++/9/decimal /usr/include/c++/9/experimental /usr/include/c++/9/ext /usr/include/c++/9/parallel /usr/include/c++/9/profile /usr/include/c++/9/pstl /usr/include/c++/9/tr1 /usr/include/c++/9/tr2)
+# target_precompile_headers(main.x PRIVATE ${STL_HEADERS} ${SLISC_HEADERS})
+
+# link
+target_link_libraries(main.x ${LIBS})

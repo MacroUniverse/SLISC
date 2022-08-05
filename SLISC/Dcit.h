@@ -1,6 +1,7 @@
 // iterator for Dcmat
 // support forward and backward
 // very high performance for element traversal
+#pragma once
 #include "Dcmat.h"
 
 namespace slisc {

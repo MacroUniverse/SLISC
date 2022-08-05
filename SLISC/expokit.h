@@ -8,34 +8,34 @@ namespace slisc {
 
 // matrix / vector multiplication
 
-void expokit_mul(Comp *y, McooDoub_I a, Comp *x)
+inline void expokit_mul(Comp *y, McooDoub_I a, Comp *x)
 { mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x); }
 
-void expokit_mul(Comp *y, McooComp_I a, Comp *x)
+inline void expokit_mul(Comp *y, McooComp_I a, Comp *x)
 { mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x); }
 
 
-void expokit_mul(Comp *y, CmobdDoub_I a, Comp *x)
+inline void expokit_mul(Comp *y, CmobdDoub_I a, Comp *x)
 { mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0()); }
 
-void expokit_mul(Comp *y, CmobdComp_I a, Comp *x)
+inline void expokit_mul(Comp *y, CmobdComp_I a, Comp *x)
 { mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0()); }
 
 
 // not optimized for symmetric or Hermitian matrix
-void expokit_mul(Comp *y, CmatDoub_I a, Comp *x)
+inline void expokit_mul(Comp *y, CmatDoub_I a, Comp *x)
 {
     SvecComp vx(x, a.n1()); SvecComp vy(y, a.n0());
     mul_gen(vy, a, vx);
 }
 
-void expokit_mul(Comp *y, CmatComp_I a, Comp *x)
+inline void expokit_mul(Comp *y, CmatComp_I a, Comp *x)
 {
     SvecComp vx(x, a.n1()); SvecComp vy(y, a.n0());
     mul_gen(vy, a, vx);
 }
 
-void expokit_mul(Doub *y, CmatDoub_I a, Doub *x)
+inline void expokit_mul(Doub *y, CmatDoub_I a, Doub *x)
 {
     SvecDoub vx(x, a.n1()); SvecDoub vy(y, a.n0());
     mul_gen(vy, a, vx);
@@ -47,7 +47,7 @@ void expokit_mul(Doub *y, CmatDoub_I a, Doub *x)
 // arguments: iexph
 // internal variables: i, j, k, icoef, ih2, ip, iq, iput, iget, ifree, iused
 
-void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *wsp, Int_I lwsp,
+inline void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *wsp, Int_I lwsp,
     Int *ipiv, Int_O iexph, Int_O ns, Int_O iflag)
 {
     Int i, j, k, icoef, mm, ih2, iodd, iused, ifree, iq, ip, iput, iget;
@@ -171,7 +171,7 @@ void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *wsp, 
 // * any variable values should not change
 // * all pointer indexing (including +, -) is subtracted by 1 in place
 
-void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
+inline void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
 {
     SLS_ERR("the translated ZNCHBV is not complete yet, do it now!");
     const Comp zero = 0.;
@@ -263,7 +263,7 @@ void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdDoub_I mat, Int_I itrace, Int_O iflag)
 {
 #ifndef NDEBUG
@@ -510,7 +510,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdComp_I mat, Int_I itrace, Int_O iflag)
 {
 #ifndef NDEBUG
@@ -757,7 +757,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooDoub_I mat, Int_I itrace, Int_O iflag)
 {
 #ifndef NDEBUG
@@ -1004,7 +1004,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooComp_I mat, Int_I itrace, Int_O iflag)
 {
 #ifndef NDEBUG
@@ -1251,7 +1251,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatDoub_I mat, Int_I itrace, Int_O iflag)
 {
 #ifndef NDEBUG
@@ -1498,7 +1498,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatComp_I mat, Int_I itrace, Int_O iflag)
 {
 #ifndef NDEBUG
@@ -1755,7 +1755,7 @@ void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdDoub_I mat, Int_I itrace, Int_O iflag )
 {
 #ifndef NDEBUG
@@ -2018,7 +2018,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdComp_I mat, Int_I itrace, Int_O iflag )
 {
 #ifndef NDEBUG
@@ -2281,7 +2281,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooDoub_I mat, Int_I itrace, Int_O iflag )
 {
 #ifndef NDEBUG
@@ -2544,7 +2544,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooComp_I mat, Int_I itrace, Int_O iflag )
 {
 #ifndef NDEBUG
@@ -2807,7 +2807,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatDoub_I mat, Int_I itrace, Int_O iflag )
 {
 #ifndef NDEBUG
@@ -3070,7 +3070,7 @@ void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
     wsp[9] = Comp(beta / vnorm);
 }
 
-void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
             Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatComp_I mat, Int_I itrace, Int_O iflag )
 {
 #ifndef NDEBUG

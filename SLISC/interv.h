@@ -161,7 +161,7 @@ inline Long is_in_no(Long_I i, Intvs_I intvs)
 
 // invert ranges in ind0, output to ind1
 // [0, N-1] is the total domain
-Long invert(Intvs_O ind, Intvs_I ind0, Long_I N)
+inline Long invert(Intvs_O ind, Intvs_I ind0, Long_I N)
 {
     ind.clear();
     if (ind0.size() == 0) {
