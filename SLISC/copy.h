@@ -56,30 +56,6 @@ inline void vecset(Comp *v, Comp_I val, Long_I n, Long_I step)
         *p = val;
 }
 
-inline void vecset(Qdoub *v, Qdoub_I val, Long_I n)
-{
-    for (Qdoub *p = v; p < v + n; ++p)
-        *p = val;
-}
-
-inline void vecset(Qdoub *v, Qdoub_I val, Long_I n, Long_I step)
-{
-    for (Qdoub *p = v; p < v + n*step; p += step)
-        *p = val;
-}
-
-inline void vecset(Qcomp *v, Qcomp_I val, Long_I n)
-{
-    for (Qcomp *p = v; p < v + n; ++p)
-        *p = val;
-}
-
-inline void vecset(Qcomp *v, Qcomp_I val, Long_I n, Long_I step)
-{
-    for (Qcomp *p = v; p < v + n*step; p += step)
-        *p = val;
-}
-
 inline void vecset(Char *v, Char_I val, Long_I n)
 {
     for (Char *p = v; p < v + n; ++p)
@@ -242,37 +218,6 @@ inline void veccpy(Comp *v, Long_I step, const Comp *v1, Long_I n)
 inline void veccpy(Comp *v, Long_I step, const Comp *v1, Long_I step1, Long_I n)
 {
     Comp *end = v + n * step;
-    for (; v < end; v += step) {
-        *v = *v1;
-        v1 += step1;
-    }
-}
-
-inline void veccpy(Qdoub *v, const Qdoub *v1, Long_I n)
-{
-    for (Long i = 0; i < n; ++i)
-        v[i] = v1[i];
-}
-
-inline void veccpy(Qdoub *v, const Qdoub *v1, Long_I step1, Long_I n)
-{
-    for (Qdoub *p = v; p < v + n; ++p) {
-        *p = *v1;
-        v1 += step1;
-    }
-}
-
-inline void veccpy(Qdoub *v, Long_I step, const Qdoub *v1, Long_I n)
-{
-    for (Qdoub *p = v; p < v + n*step; p += step) {
-        *p = *v1;
-        ++v1;
-    }
-}
-
-inline void veccpy(Qdoub *v, Long_I step, const Qdoub *v1, Long_I step1, Long_I n)
-{
-    Qdoub *end = v + n * step;
     for (; v < end; v += step) {
         *v = *v1;
         v1 += step1;
@@ -443,10 +388,6 @@ inline void copy(MatInt_O v, Int_I s)
     vecset(v.p(), s, v.size());
 }
 
-inline void copy(VecQdoub_O v, Qdoub_I s)
-{
-    vecset(v.p(), s, v.size());
-}
 
 inline void copy(MatDoub_O v, Doub_I s)
 {
@@ -530,17 +471,6 @@ inline void copy(VecDoub_O v, const std::initializer_list<Doub> &v1)
         v[i] = p1[i];
 }
 
-inline void copy(VecQdoub_O v, const std::initializer_list<Qdoub> &v1)
-{
-    const Qdoub *p1 = v1.begin();
-    Long N = v1.size();
-#ifdef SLS_CHECK_SHAPES
-    if (v.size() != N)
-        SLS_ERR("wrong shape!");
-#endif
-    for (Long i = 0; i < N; ++i)
-        v[i] = p1[i];
-}
 
 inline void copy(VecComp_O v, const std::initializer_list<Comp> &v1)
 {
@@ -578,17 +508,6 @@ inline void copy(CmatComp_O v, const std::initializer_list<Comp> &v1)
         v[i] = p1[i];
 }
 
-inline void copy(CmatQdoub_O v, const std::initializer_list<Qdoub> &v1)
-{
-    const Qdoub *p1 = v1.begin();
-    Long N = v1.size();
-#ifdef SLS_CHECK_SHAPES
-    if (v.size() != N)
-        SLS_ERR("wrong shape!");
-#endif
-    for (Long i = 0; i < N; ++i)
-        v[i] = p1[i];
-}
 
 inline void copy(SvecDoub_O v, const std::initializer_list<Doub> &v1)
 {
@@ -700,13 +619,6 @@ inline void copy(VecComp_O v, DvecComp_I v1)
     veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
 
-inline void copy(VecQdoub_O v, VecQdoub_I v1)
-{
-    assert_same_shape(v, v1);
-    if (v.size() == 0)
-        return;
-    veccpy(v.p(), v1.p(), v.size());
-}
 
 inline void copy(SvecDoub_O v, SvecDoub_I v1)
 {

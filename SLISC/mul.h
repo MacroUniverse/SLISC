@@ -340,53 +340,6 @@ inline void mul(VecComp_IO y, MatComp_I a, VecDoub_I x, Comp_I alpha, Comp_I bet
     }
 }
 
-inline void mul(VecQdoub_O y, CmatQdoub_I a, VecQdoub_I x)
-{
-    Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-    if (Nc != x.size() || y.size() != Nr)
-        SLS_ERR("illegal shape!");
-#endif
-    for (Long i = 0; i < Nr; ++i)
-        y[i] = a(i, 0) * x[0];
-    for (Long j = 1; j < Nc; ++j) {
-        for (Long i = 0; i < Nr; ++i)
-            y[i] += a(i, j) * x[j];
-    }
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(VecQdoub_IO y, CmatQdoub_I a, VecQdoub_I x, Qdoub_I alpha, Qdoub_I beta)
-{
-    Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-    if (Nc != x.size() || y.size() != Nr)
-        SLS_ERR("illegal shape!");
-#endif
-    // y = beta/alpha *y
-    if (beta == 0) {
-        for (Long i = 0; i < Nr; ++i)
-            y[i] = 0;
-    }
-    else {
-        Qdoub b_a = beta/alpha;
-        if (b_a != 1) {
-            for (Long i = 0; i < Nr; ++i)
-                y[i] *= b_a;
-        }
-    }
-    // y += A*x
-    for (Long j = 0; j < Nc; ++j) {
-        for (Long i = 0; i < Nr; ++i)
-            y[i] += a(i, j) * x[j];
-    }
-    // y *= alpha
-    if (alpha != 1) {
-        for (Long i = 0; i < Nr; ++i)
-            y[i] *= alpha;
-    }
-}
 
 inline void mul(VecComp_O y, ScmatComp_I a, SvecDoub_I x)
 {

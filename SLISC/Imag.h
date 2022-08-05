@@ -101,37 +101,6 @@ inline Ldoub imag(Limag_I val) { return val.imag(); }
 
 inline Ldoub abs(Limag_I val) { return val.imag(); }
 
-class Qimag
-{
-protected:
-    Qdoub m_s;
-public:
-    Qimag() {};
-    explicit Qimag(const Qdoub &val);
-    operator Qcomp() const;
-    Qdoub real() const;
-    Qdoub imag() const;
-    void imag(Qdoub_I val);
-};
-
-typedef const Qimag &Qimag_I;
-typedef Qimag &Qimag_O, &Qimag_IO;
-
-inline Qimag::Qimag(const Qdoub &val): m_s(val) {}
-
-inline Qimag::operator Qcomp() const { return Qcomp(0, m_s); }
-
-inline Qdoub Qimag::real() const { return 0; }
-
-inline Qdoub Qimag::imag() const { return m_s; }
-
-inline void Qimag::imag(Qdoub_I val) { m_s = val; }
-
-inline Qdoub real(Qimag_I val) { return 0; }
-
-inline Qdoub imag(Qimag_I val) { return val.imag(); }
-
-inline Qdoub abs(Qimag_I val) { return val.imag(); }
 
 
 const Imag I(1);

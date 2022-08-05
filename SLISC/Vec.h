@@ -207,33 +207,6 @@ inline void VecLdoub::operator<<(VecLdoub &rhs)
 typedef const VecLdoub &VecLdoub_I;
 typedef VecLdoub &VecLdoub_O, &VecLdoub_IO;
 
-class VecQdoub : public VbaseQdoub
-{
-public:
-    typedef VbaseQdoub Base;
-    VecQdoub() = default;
-    explicit VecQdoub(Long_I N);
-    VecQdoub(const VecQdoub &rhs); // copy constructor
-    VecQdoub &operator=(const VecQdoub &rhs) = delete;
-    void operator<<(VecQdoub &rhs); // move data and rhs.resize(0)
-};
-
-inline VecQdoub::VecQdoub(Long_I N) : Base(N) {}
-
-inline VecQdoub::VecQdoub(const VecQdoub &rhs) : Base(rhs)
-{
-#ifdef SLS_NO_CPY_CONSTRUCTOR
-    SLS_ERR("copy constructor forbidden!");
-#endif
-}
-
-inline void VecQdoub::operator<<(VecQdoub &rhs)
-{
-    Base::operator<<(rhs);
-}
-
-typedef const VecQdoub &VecQdoub_I;
-typedef VecQdoub &VecQdoub_O, &VecQdoub_IO;
 
 class VecFcomp : public VbaseFcomp
 {
@@ -319,33 +292,6 @@ inline void VecLcomp::operator<<(VecLcomp &rhs)
 typedef const VecLcomp &VecLcomp_I;
 typedef VecLcomp &VecLcomp_O, &VecLcomp_IO;
 
-class VecQcomp : public VbaseQcomp
-{
-public:
-    typedef VbaseQcomp Base;
-    VecQcomp() = default;
-    explicit VecQcomp(Long_I N);
-    VecQcomp(const VecQcomp &rhs); // copy constructor
-    VecQcomp &operator=(const VecQcomp &rhs) = delete;
-    void operator<<(VecQcomp &rhs); // move data and rhs.resize(0)
-};
-
-inline VecQcomp::VecQcomp(Long_I N) : Base(N) {}
-
-inline VecQcomp::VecQcomp(const VecQcomp &rhs) : Base(rhs)
-{
-#ifdef SLS_NO_CPY_CONSTRUCTOR
-    SLS_ERR("copy constructor forbidden!");
-#endif
-}
-
-inline void VecQcomp::operator<<(VecQcomp &rhs)
-{
-    Base::operator<<(rhs);
-}
-
-typedef const VecQcomp &VecQcomp_I;
-typedef VecQcomp &VecQcomp_O, &VecQcomp_IO;
 
 class VecFimag : public VbaseFimag
 {

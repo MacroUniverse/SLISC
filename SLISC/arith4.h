@@ -613,30 +613,6 @@ inline void divide_equals_vv(Comp *v, const Comp *v1, Long_I N)
         v[i] /= v1[i];
 }
 
-inline void plus_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] += v1[i];
-}
-
-inline void minus_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] -= v1[i];
-}
-
-inline void times_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] *= v1[i];
-}
-
-inline void divide_equals_vv(Qdoub *v, const Qdoub *v1, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] /= v1[i];
-}
-
 
 inline void operator+=(VecInt_O &v, VecInt_I v1)
 {
@@ -782,29 +758,6 @@ inline void operator/=(VecComp_O &v, VecDoub_I v1)
     divide_equals_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void operator+=(VecQdoub_O &v, VecQdoub_I v1)
-{
-    assert_same_shape(v, v1);
-    plus_equals_vv(v.p(), v1.p(), v1.size());
-}
-
-inline void operator-=(VecQdoub_O &v, VecQdoub_I v1)
-{
-    assert_same_shape(v, v1);
-    minus_equals_vv(v.p(), v1.p(), v1.size());
-}
-
-inline void operator*=(VecQdoub_O &v, VecQdoub_I v1)
-{
-    assert_same_shape(v, v1);
-    times_equals_vv(v.p(), v1.p(), v1.size());
-}
-
-inline void operator/=(VecQdoub_O &v, VecQdoub_I v1)
-{
-    assert_same_shape(v, v1);
-    divide_equals_vv(v.p(), v1.p(), v1.size());
-}
 
 inline void operator+=(SvecDoub_O &v, VecDoub_I v1)
 {

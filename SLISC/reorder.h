@@ -644,16 +644,6 @@ inline void trans(DcmatDoub_IO v)
             swap(v(i, j), v(j, i));
 }
 
-inline void trans(CmatQdoub_IO v)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (v.n0() != v.n1())
-        SLS_ERR("illegal shape!");
-#endif
-    for (Long i = 0; i < v.n0(); ++i)
-        for (Long j = 0; j < i; ++j)
-            swap(v(i, j), v(j, i));
-}
 
 inline void trans(CmatComp_IO v)
 {
@@ -744,16 +734,6 @@ inline void trans(ScmatComp_O v, ScmatComp_I v1)
             v(i, j) = v1(j, i);
 }
 
-inline void trans(CmatQdoub_O v, CmatQdoub_I v1)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (v.n0() != v1.n1() || v.n1() != v1.n0())
-        SLS_ERR("wrong shape!");
-#endif
-    for (Long i = 0; i < v.n0(); ++i)
-        for (Long j = 0; j < v.n1(); ++j)
-            v(i, j) = v1(j, i);
-}
 
 inline void trans(CmatComp_O v, MatComp_I v1)
 {

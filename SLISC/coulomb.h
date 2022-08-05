@@ -39,27 +39,6 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 	return F;
 }
 
-inline Qdoub arb_coulombF(Qdoub_I l, Qdoub_I eta, Qdoub_I x)
-{
-	slong prec = 160; // set precision bit (log10/log2 = 3.322)
-	Qdoub F = 0;
-	arb_t l1, eta1, x1, F1;
-	arb_init(l1); arb_init(eta1); arb_init(x1); arb_init(F1);
-	arb_set_q(l1, l); arb_set_q(eta1, eta); arb_set_q(x1, x);
-	Int digits;
-	for (Long i = 0; i < 6; ++i) {
-		arb_hypgeom_coulomb(F1, NULL, l1, eta1, x1, prec);
-		digits = floor(arb_rel_accuracy_bits(F1)/3.321928);
-		if (digits >= 34)
-			break;
-		prec *= 2;
-	}
-	if (digits < 34)
-		SLS_ERR("arb_coulombF error too large : " + num2str(digits) + " digits");
-	arf_get_q(F, arb_midref(F1), ARF_RND_NEAR);
-	arb_clear(l1); arb_clear(eta1); arb_clear(x1); arb_clear(F1);
-	return F;
-}
 
 
 // complex version
