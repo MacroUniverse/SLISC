@@ -56,15 +56,14 @@ int main()
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
 ## Compiling (needs update)
-* C++11 standard is used, tested with g++8.3 (earlier version might not work), octave 4.2 (4.0 works but is slower), in Ubuntu 16.04 & 18.04 & Windows WSL
-* If you don't want to use external libraries at all, uncomment the first `include` in `Makefile`, and comment the others. Some functions will not be available, some others will run slower.
-* If you want to use everything, make sure you have `liblapacke-dev`, `libgsl-dev` and `libflint-arb-dev` installed (use `apt install`), then use the second `include` in `Makefile`. Or you can use `cmake .`, then `make -j4`.
+* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, clang-10 , in Ubuntu 16.04 & 18.04 & Windows WSL.
+* `octave` 4.2 (4.0 works but is slower) is needed for code generation. If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
+* Use `make` to compile, use `make -j4` to compile with 4 threads (or any number you like).
+* Makefile provides multiple options, uncomment one line to enable. The default option does not require any 3rd party binary libraries and is most compatible. Some modules will not be available, some others will run slower. use `make -j8` to use 8 threads to compile.
+* To recompile just one test, use `make test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
+* Use `./main.x < input.inp` to run all tests, or just `./main.x` with hand input. Use `./main.x <test>` to run 1 test.
+* `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used, comment/uncomment sections in `g++_all.mak` to enable/disable them.
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
-* If you want to use only some of the libraries, comment out their flags in the `.mak` files.
-* Run `make h` to generate the header code, then use `make` to compile, use `make -j4` to compile faster with 4 threads (or any number you like).
-* If you want to recompile just one test, use `make main.o test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
-* If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time.
-* Use `./main.x < input.inp` to run all tests, or just `./main.x` with hand input.
 
 ## Recommended Programming Style
 * All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference as a parameter of a function.
