@@ -8,8 +8,8 @@
 compiler = g++
 
 # quad math
-quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
-quad_math_lib = -lquadmath
+# quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+# quad_math_lib = -lquadmath
 # Address Sanitizer
 asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
 

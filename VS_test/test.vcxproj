@@ -18,78 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="test\test_anglib.cpp" />
-    <ClCompile Include="test\test_arb.cpp" />
-    <ClCompile Include="test\test_arithmetic.cpp" />
-    <ClCompile Include="test\test_arpack.cpp" />
-    <ClCompile Include="test\test_band.cpp" />
-    <ClCompile Include="test\test_bin_tree.cpp" />
-    <ClCompile Include="test\test_bisection.cpp" />
-    <ClCompile Include="test\test_Bit.cpp" />
-    <ClCompile Include="test\test_boost.cpp" />
-    <ClCompile Include="test\test_Cmat.cpp" />
-    <ClCompile Include="test\test_Cmat3.cpp" />
-    <ClCompile Include="test\test_Cmat4.cpp" />
-    <ClCompile Include="test\test_Cmobd.cpp" />
-    <ClCompile Include="test\test_compare.cpp" />
-    <ClCompile Include="test\test_complex_arith.cpp" />
-    <ClCompile Include="test\test_copy.cpp" />
-    <ClCompile Include="test\test_coulomb.cpp" />
-    <ClCompile Include="test\test_cpp11.cpp" />
-    <ClCompile Include="test\test_cut.cpp" />
-    <ClCompile Include="test\test_Dcmat.cpp" />
-    <ClCompile Include="test\test_dense.cpp" />
-    <ClCompile Include="test\test_disp.cpp" />
-    <ClCompile Include="test\test_Dvec.cpp" />
-    <ClCompile Include="test\test_eig.cpp" />
-    <ClCompile Include="test\test_eigen.cpp" />
-    <ClCompile Include="test\test_expokit.cpp" />
-    <ClCompile Include="test\test_fedvr.cpp" />
-    <ClCompile Include="test\test_fft.cpp" />
-    <ClCompile Include="test\test_file.cpp" />
-    <ClCompile Include="test\test_global.cpp" />
-    <ClCompile Include="test\test_gsl.cpp" />
-    <ClCompile Include="test\test_hydrogen.cpp" />
-    <ClCompile Include="test\test_hypergeom.cpp" />
-    <ClCompile Include="test\test_Imag.cpp" />
-    <ClCompile Include="test\test_input.cpp" />
-    <ClCompile Include="test\test_interp1.cpp" />
-    <ClCompile Include="test\test_lanczos.cpp" />
-    <ClCompile Include="test\test_legendreP.cpp" />
-    <ClCompile Include="test\test_linbcg.cpp" />
-    <ClCompile Include="test\test_linux.cpp" />
-    <ClCompile Include="test\test_lin_eq.cpp" />
-    <ClCompile Include="test\test_Mat.cpp" />
-    <ClCompile Include="test\test_matb.cpp" />
-    <ClCompile Include="test\test_matfile.cpp" />
-    <ClCompile Include="test\test_matt.cpp" />
-    <ClCompile Include="test\test_mat_fun.cpp" />
-    <ClCompile Include="test\test_Mcoo.cpp" />
-    <ClCompile Include="test\test_quad_math.cpp" />
-    <ClCompile Include="test\test_random.cpp" />
-    <ClCompile Include="test\test_scalar_arith.cpp" />
-    <ClCompile Include="test\test_Scmat.cpp" />
-    <ClCompile Include="test\test_Scmat3.cpp" />
-    <ClCompile Include="test\test_search.cpp" />
-    <ClCompile Include="test\test_sha1sum.cpp" />
-    <ClCompile Include="test\test_sing_list.cpp" />
-    <ClCompile Include="test\test_sort.cpp" />
-    <ClCompile Include="test\test_sqlite.cpp" />
-    <ClCompile Include="test\test_string.cpp" />
-    <ClCompile Include="test\test_Svec.cpp" />
-    <ClCompile Include="test\test_time.cpp" />
-    <ClCompile Include="test\test_unicode.cpp" />
-    <ClCompile Include="test\test_Vbase.cpp" />
-    <ClCompile Include="test\test_Vec.cpp" />
-    <ClCompile Include="test\test_ylm.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{56CED062-5AD0-42FC-B4CC-0798267A70F6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SLISC0</RootNamespace>
+    <ProjectGuid>{5eea95e3-508c-42b5-bb49-968f8ca4e94a}</ProjectGuid>
+    <RootNamespace>test</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -137,24 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -164,27 +82,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -198,12 +98,21 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -217,6 +126,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="test.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

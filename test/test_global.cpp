@@ -29,8 +29,10 @@ void test_global()
 		SLS_WARN("Lcomp bytes: " + to_string(sizeof(Lcomp)));
 	}
 	//% check if is 80 bit implementation
+#ifndef SLS_USE_MSVC
 	if (abs(std::numeric_limits<Ldoub>::max() - 1.1897314e+4932L) > 1e4926L)
 		SLS_WARN("Ldoub max =" + to_string(std::numeric_limits<Ldoub>::max()));
 	if (log2(std::numeric_limits<Ldoub>::epsilon()) != -63)
 		SLS_WARN("Ldoub mantessa bits: =" + to_string(log2(std::numeric_limits<Ldoub>::epsilon())));
+#endif
 }
