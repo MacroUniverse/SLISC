@@ -12,10 +12,10 @@ mkl_compile =  -m64 -I${MKLROOT}/include
 
 # use `sudo apt install libgsl-dev` to install GNU scientific library
 # use `dpkg -L dpkg -L libgsl-dev` to check the installation directory
-libs = -lgsl -llapacke -lblas -lflint -larb -larpack -lgfortran -lquadmath
+libs = -lgsl -llapacke -lblas -lflint -lflint-arb -larpack -lgfortran # -lquadmath
 # -lboost_system -lboost_filesystem
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals -I ../Arpack_test/include -D SLS_USE_MKL -D SLS_USE_GSL -D SLS_USE_ARB -D SLS_USE_ARPACK -D SLS_USE_QUAD_MATH -D NDEBUG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals -I ../Arpack_test/include -D SLS_USE_MKL -D SLS_USE_GSL -D SLS_USE_ARB -D SLS_USE_ARPACK -D NDEBUG -I /usr/include/flint # -D SLS_USE_QUAD_MATH
 # -I ../boost-headers
 #  -D SLS_USE_BOOST
 

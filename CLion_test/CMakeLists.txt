@@ -17,7 +17,7 @@ add_executable(main.x main.cpp)
 file(GLOB SLISC_HEADERS "../SLISC/*.h")
 file(GLOB STL_HEADERS "/usr/include/c++/9/*")
 list(REMOVE_ITEM STL_HEADERS /usr/include/c++/9/backward /usr/include/c++/9/bits /usr/include/c++/9/debug /usr/include/c++/9/decimal /usr/include/c++/9/experimental /usr/include/c++/9/ext /usr/include/c++/9/parallel /usr/include/c++/9/profile /usr/include/c++/9/pstl /usr/include/c++/9/tr1 /usr/include/c++/9/tr2)
-target_precompile_headers(main.x PRIVATE ${STL_HEADERS} ${SLISC_HEADERS})
+# target_precompile_headers(main.x PRIVATE ${STL_HEADERS} ${SLISC_HEADERS})
 target_link_libraries(main.x ${LIBS})
 
 # message(STATUS "${STL_HEADERS}")
