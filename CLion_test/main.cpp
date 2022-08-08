@@ -1,7 +1,13 @@
-// Build time:
-// [iostream] 4.2s [STL] 5.2s [SLISC] 8.5s
+// === Build time on Mission with WSL1 ===
+// [iostream] 4.2s [STL] 5.2s
+// [STL+SLISC] 8.5s
 // [GCH:STL+SLISC] 5.2s (GCH = gcc precompiled header)
 // [GCH:STL+SLISC+test_arithmetic] 7.2s
+
+// === Build time on Miranda with WSL2 ===
+// [STL+SLISC] 4.6s
+// [GCH:STL+SLISC] 1.7s
+
 #include <bits/stdc++.h>
 #include "../SLISC/STL_util.h"
 #include "../SLISC/search.h"
