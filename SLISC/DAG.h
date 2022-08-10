@@ -5,17 +5,17 @@ namespace slisc {
 
     // node[i] are the next connected nodes
     // node.prev is the last connected node
-    struct DAGnode : vector<Long> {
+    struct DGnode : vector<Long> {
         Long val;
         vector<Long> last;
     };
 
     // add edge to DAG
-    inline void dag_add_edge(vector<DAGnode> &dag, Long_I i, Long_I j)
+    inline void dag_add_edge(vector<DGnode> &dag, Long_I i, Long_I j)
     { dag[i].push_back(j); }
 
     // check if edge exist in DAG
-    inline bool dag_exist_edge(const vector<DAGnode> &dag, Long_I i, Long_I j)
+    inline bool dag_exist_edge(const vector<DGnode> &dag, Long_I i, Long_I j)
     {
         for (auto &e : dag[i])
             if (j == e) // repeated edge
@@ -24,7 +24,7 @@ namespace slisc {
     }
 
     // topological sort for a sub DAG (algo: DFS backtrack)
-    inline void dag_topo_sort1(const vector<DAGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
+    inline void dag_topo_sort1(const vector<DGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
     {
         visited[node] = true;
         for (auto &next : dag[node]) {
@@ -35,7 +35,7 @@ namespace slisc {
     }
 
     // topological sort for DAG (algo: DFS backtrack)
-    inline void dag_topo_sort(const vector<DAGnode> &dag, vector<Long> &order)
+    inline void dag_topo_sort(const vector<DGnode> &dag, vector<Long> &order)
     {
         Long N = dag.size();
         vector<bool> visited(N, false);
@@ -47,7 +47,7 @@ namespace slisc {
     }
 
     // deep first search a node: if node[i] can go to node[j] (including i == j)
-    inline bool dag_is_linked_DFS_helper(const vector<DAGnode> &dag, vector<bool> &visited, Long_I source, Long_I target)
+    inline bool dag_is_linked_DFS_helper(const vector<DGnode> &dag, vector<bool> &visited, Long_I source, Long_I target)
     {
         visited[source] = true;
         if (source == target)
@@ -60,7 +60,7 @@ namespace slisc {
         return false;
     }
 
-    inline bool dag_is_linked_DFS(const vector<DAGnode> &dag, Long_I source, Long_I target)
+    inline bool dag_is_linked_DFS(const vector<DGnode> &dag, Long_I source, Long_I target)
     {
         vector<bool> visited(dag.size(), false);
         return dag_is_linked_DFS_helper(dag, visited, source, target);
@@ -68,7 +68,7 @@ namespace slisc {
 
     // breadth first search from dag[i] for dag[j] (including i == j)
     // return mininum steps needed, return -1 if not found
-    inline Long dag_BFS(const vector<DAGnode> &dag, Long_I source, Long_I target)
+    inline Long dag_BFS(const vector<DGnode> &dag, Long_I source, Long_I target)
     {
         if (source == target) return 0;
         vector<bool> visited(dag.size(), false);
@@ -91,7 +91,7 @@ namespace slisc {
 
     // get shortest path between source and target
     // algo: BFS, add reverse link for each seached edge
-    inline void dag_shortest_path(vector<Long> &path, const vector<DAGnode> &dag, Long_I source, Long_I target)
+    inline void dag_shortest_path(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target)
     {
         path.clear(); path.push_back(target);
         if (source == target) return;
@@ -117,7 +117,7 @@ namespace slisc {
         reverse(path.begin(), path.end());
     }
 
-    inline bool dag_check_helper(const vector<DAGnode> &dag, vector<char> &states, Long_I node)
+    inline bool dag_check_helper(const vector<DGnode> &dag, vector<char> &states, Long_I node)
     {
         states[node] = 'c';
         for (auto &next : dag[node]) {
@@ -136,7 +136,7 @@ namespace slisc {
 
     // check if a graph is DAG
     // algo: DFS, distinguish nodes along current path, visited and unvisited nodes [u] unvisited [v] visited [c] current
-    inline bool dag_check(const vector<DAGnode> &dag)
+    inline bool dag_check(const vector<DGnode> &dag)
     {
         Long N = dag.size();
         vector<char> states(N, 'u');
@@ -148,7 +148,7 @@ namespace slisc {
 
     // reverse every edge of a (singly linked) sub DAG
     // done[node] == true means all it's original links are erased
-    inline void dag_inverse1(vector<DAGnode> &dag, vector<bool> &done, Long_I node) {
+    inline void dag_inverse1(vector<DGnode> &dag, vector<bool> &done, Long_I node) {
         for (auto &next : dag[node]) {
             if (!done[next])
                 dag_inverse1(dag, done, next);
@@ -157,7 +157,7 @@ namespace slisc {
         dag[node].clear(); done[node] = true;
     }
 
-    inline void dag_inverse(vector<DAGnode> &dag) {
+    inline void dag_inverse(vector<DGnode> &dag) {
         Long N = dag.size();
         vector<bool> done(N, false);
         for (Long node = 0; node < N; ++node)
@@ -165,7 +165,7 @@ namespace slisc {
                 dag_inverse1(dag, done, node);
     }
 
-    inline void dag_all_paths_helper(vector<vector<Long>> &paths, vector<Long> &path, vector<bool> &visited, const vector<DAGnode> &dag, Long_I node, Long_I target) {
+    inline void dag_all_paths_helper(vector<vector<Long>> &paths, vector<Long> &path, vector<bool> &visited, const vector<DGnode> &dag, Long_I node, Long_I target) {
         path.push_back(node);
         if (node == target) {
             paths.push_back(path); path.pop_back();
@@ -187,14 +187,14 @@ namespace slisc {
 
     // find all possible paths from source to target node
     // algo: deep first search (DFS), but path to target remains unvisited to allow visiting again
-    inline void dag_all_paths(vector<vector<Long>> &paths, const vector<DAGnode> &dag, Long_I source, Long_I target) {
+    inline void dag_all_paths(vector<vector<Long>> &paths, const vector<DGnode> &dag, Long_I source, Long_I target) {
         paths.clear();
         vector<bool> visited(dag.size(), false);
         vector<Long> path;
         dag_all_paths_helper(paths, path, visited, dag, source, target);
     }
 
-    inline void dag_examp0(vector<DAGnode> &dag) {
+    inline void dag_examp0(vector<DGnode> &dag) {
         dag.resize(7);
         dag[0].assign({2,3,4});
         dag[1].assign({4,5});
@@ -205,7 +205,7 @@ namespace slisc {
         // dag[6]
     }
 
-    inline void dag_examp1(vector<DAGnode> &dag) {
+    inline void dag_examp1(vector<DGnode> &dag) {
         dag.resize(12);
         dag[0].assign({1, 7});
         dag[1].assign({3, 4});
