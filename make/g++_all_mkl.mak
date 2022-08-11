@@ -4,20 +4,30 @@
 
 compiler = g++
 
+# MKL
 mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
 
-mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+# mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 
 mkl_compile =  -m64 -I${MKLROOT}/include
 
-# use `sudo apt install libgsl-dev` to install GNU scientific library
-# use `dpkg -L dpkg -L libgsl-dev` to check the installation directory
-libs = -lgsl -llapacke -lblas -lflint -lflint-arb -larpack -lgfortran # -lquadmath
+# GSL
+gsl_flag = -D SLS_USE_GSL
+gsl_lib = -lgsl
+# Arb
+arb_flag = -D SLS_USE_ARB -I /usr/include/flint
+arb_lib = -lflint -lflint-arb
+# Arpack
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
+arpack_lib = -larpack -lgfortran
+# Boost
+boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+boost_lib = 
+
+libs = $(gsl_lib) $(arb_lib) $(arpack_lib) $(mkl_stat_link) # -lquadmath
 # -lboost_system -lboost_filesystem
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals -I ../Arpack_test/include -D SLS_USE_MKL -D SLS_USE_GSL -D SLS_USE_ARB -D SLS_USE_ARPACK -D NDEBUG -I /usr/include/flint # -D SLS_USE_QUAD_MATH
-# -I ../boost-headers
-#  -D SLS_USE_BOOST
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals  -D SLS_USE_MKL $(mkl_compile) $(gsl_flag) $(arb_flag) $(arpack_flag) -D NDEBUG  # -D SLS_USE_QUAD_MATH
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
@@ -31,7 +41,6 @@ headers = $(gen_headers) $(cur_headers) # all headers (no path)
 path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 
 # link
-# choose `$(mkl_dyn_link)` or `$(mkl_stat_link)`
 goal: main.x
 
 main.x: main.o $(test_o)
@@ -47,10 +56,10 @@ clean:
 	rm -f *.o *.x $(path_gen_headers)
 
 goal:main.o
-	g++ $(flags) -o main.x main.o test_*.o $(libs) $(mkl_stat_link)
+	g++ $(flags) -o main.x main.o test_*.o $(libs)
 
 main.o: $(path_headers) main.cpp
-	$(compiler) $(flags) $(mkl_compile) -c main.cpp
+	$(compiler) $(flags) -c main.cpp
 
 %.o: test/%.cpp $(path_headers)
 	$(compiler) $(flags) -c $<

@@ -1,4 +1,5 @@
 #include "../SLISC/queue.h"
+#include "../SLISC/random.h"
 
 void test_queue()
 {

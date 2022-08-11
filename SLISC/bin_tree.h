@@ -38,10 +38,10 @@ inline void btree_delete(BTnode* node)
 };
 
 // assign order traversal index to each node value
-inline BTnode *btree_assign(BTnode *node, BTnode *last = NULL)
+inline BTnode *btree_assign(BTnode *node, Long_I step = 1, BTnode *last = NULL)
 {
     if (node->left != NULL) {
-        last = btree_assign(node->left, last);
+        last = btree_assign(node->left, step, last);
         if (last == NULL)
             return NULL;
     }
@@ -50,10 +50,10 @@ inline BTnode *btree_assign(BTnode *node, BTnode *last = NULL)
         if (node != NULL) node->val = 0;
     }
     else {
-        node->val = last->val + 1;
+        node->val = last->val + step;
     }
     if (node->right != NULL)
-        return btree_assign(node->right, node);
+        return btree_assign(node->right, step, node);
     return node;
 }
 
@@ -144,6 +144,29 @@ inline bool btree_cmp(BTnode *node1, BTnode *node2) {
     if (!btree_cmp(node1->left, node2->left)) return false;
     if(!btree_cmp(node1->right, node2->right)) return false;
     return true;
+}
+
+// search a binary tree, if not found, return the parent node of insertion
+// return NULL if the tree is empty
+// `node` cannot be NULL
+inline BTnode *btree_search_helper(BTnode *node, Long_I key)
+{
+    if (key < node->val) {
+        if (node->left == NULL) return node;
+        return btree_search_helper(node->left, key);
+    }
+    if (key > node->val) {
+        if (node->right == NULL) return node;
+        return btree_search_helper(node->right, key);
+    }
+    // key == node->val
+    return node;
+}
+
+inline BTnode *btree_search(BTnode *node, Long_I key)
+{
+    if (node == NULL) return NULL;
+    return btree_search_helper(node, key);
 }
 
 // =========== requires .last ===========

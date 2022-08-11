@@ -29,4 +29,11 @@ void test_bin_tree() {
     // btree_print(root2);
     SLS_ASSERT(btree_cmp(root1, root2));
     btree_delete(root1); btree_delete(root2);
+
+    // btree_search()
+    root = btree_gen(5);
+    btree_assign(root, 2);
+    // btree_print(root);
+    for (Long key = 0; key <= 60; key += 2)
+        SLS_ASSERT(btree_search(root, key)->val == key);
 }
