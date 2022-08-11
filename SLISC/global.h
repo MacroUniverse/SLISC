@@ -35,6 +35,9 @@
 #include <map>
 #include <unordered_set>
 #include <set>
+#include <deque>
+#include <queue>
+#include <stack>
 
 #ifdef _MSC_VER
 #define SLS_USE_MSVC // using Microsoft Visual C++ compiler
@@ -89,6 +92,8 @@ using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
+using std::unordered_map; using std::unordered_set; using std::map;
+using std::set; using std::deque; using std::queue; using std::stack;
 #ifdef SLS_USE_QUAD_MATH
 using std::sqr;
 #endif

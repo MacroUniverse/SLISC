@@ -15,12 +15,13 @@
 #include "../SLISC/random.h"
 #include "../SLISC/sing_list.h"
 #include "../SLISC/bin_tree.h"
-#include "../SLISC/DAG.h"
+#include "../SLISC/graph.h"
 #include "../SLISC/string.h"
 #include "../SLISC/Bit.h"
 #include "../SLISC/disp.h"
 #include "../SLISC/input.h"
 #include "../SLISC/file.h"
+#include "../SLISC/queue.h"
 using namespace slisc;
 
 using namespace std;
@@ -38,6 +39,22 @@ int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input(v_num, v_str);
 //----------------------------------------------
-    cout << "hello!" << endl;
+
+    vector<vector<Long>> edges, edges2;
+    dwg_examp0(edges);
+    vector<DWGnode> dwg, dwg2;
+    edges2dwg(dwg, edges);
+    vector<Long> dists, dists2;
+    dwg_SPFA(dists, dwg, 0);
+    dwg_SPFA2(dists2, dwg, 0);
+    SLS_ASSERT(dists == dists2);
+
+    dwg_rand(edges2, 20, 50, {-2,5}, 3);
+    edges2dwg(dwg2, edges2);
+    for (Long source = 0; source < (Long)dwg2.size(); ++source) {
+        dwg_SPFA(dists, dwg2, 0);
+        dwg_SPFA2(dists2, dwg2, 0);
+        SLS_ASSERT(dists == dists2);
+    }
     return 0;
 }

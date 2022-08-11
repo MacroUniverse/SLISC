@@ -4,19 +4,21 @@
 namespace slisc {
 
 // Definition for a binary tree node.
-struct BTNode {
+struct BTnode {
     int val;
-    BTNode *left, *right;
-    BTNode() = default;
-    BTNode(int x) : val(x), left(NULL), right(NULL) {}
+    BTnode *left, *right, *parent;
+    BTnode() = default;
+    BTnode(int x) : val(x), left(NULL), right(NULL), parent(NULL) {}
 };
+
+// =========== doesn't require .last ===========
 
 // generate btree with exactly Nlevel
 // total # of nodes is (2^Nlevel - 1)
-inline BTNode *btree_gen(Long_I Nlevel)
+inline BTnode *btree_gen(Long_I Nlevel)
 {
     if (Nlevel == 0) return NULL;
-    BTNode *node = new BTNode;
+    BTnode *node = new BTnode;
     if (Nlevel == 1) {
         node->left = NULL; node->right = NULL;
         return node;
@@ -27,7 +29,7 @@ inline BTNode *btree_gen(Long_I Nlevel)
 }
 
 // deallocate a btree or subtree (assuming every node is created with `new`)
-inline void btree_delete(BTNode* node)
+inline void btree_delete(BTnode* node)
 {
     if (node == NULL) return;
     btree_delete(node->left);
@@ -36,7 +38,7 @@ inline void btree_delete(BTNode* node)
 };
 
 // assign order traversal index to each node value
-inline BTNode *btree_assign(BTNode *node, BTNode *last = NULL)
+inline BTnode *btree_assign(BTnode *node, BTnode *last = NULL)
 {
     if (node->left != NULL) {
         last = btree_assign(node->left, last);
@@ -60,7 +62,7 @@ inline BTNode *btree_assign(BTNode *node, BTNode *last = NULL)
 // if not, `err_pair[i]` will be neighboring node pairs with wrong values
 // argument `last` is the previous node checked before calling this function, use NULL if `node` is head
 // return last node checked for `node` (can't be NULL) subtree, return NULL to exit everything
-inline BTNode *btree_check(vector<pair<BTNode*, BTNode*>> &err_pair, BTNode *node, BTNode *last = NULL)
+inline BTnode *btree_check(vector<pair<BTnode*, BTnode*>> &err_pair, BTnode *node, BTnode *last = NULL)
 {
     if (node->left != NULL) {
         last = btree_check(err_pair, node->left, last);
@@ -78,7 +80,7 @@ inline BTNode *btree_check(vector<pair<BTNode*, BTNode*>> &err_pair, BTNode *nod
 
 // Function to print binary tree in 2D
 // It does reverse inorder traversal
-inline void btree_print(BTNode *root, int space = 0)
+inline void btree_print(BTnode *root, int space = 0)
 {
     const int COUNT = 7;
     if (root == NULL)
@@ -95,7 +97,7 @@ inline void btree_print(BTNode *root, int space = 0)
 
 // Encodes a tree to a text string.
 // node->left->right order traverse
-inline void btree2text_helper(string &str, BTNode *node) {
+inline void btree2text_helper(string &str, BTnode *node) {
     if (!str.empty()) str += ' ';
     if (node == NULL) {
         str += "NULL"; return;
@@ -105,34 +107,34 @@ inline void btree2text_helper(string &str, BTNode *node) {
     btree2text_helper(str, node->right);
 }
 
-inline string btree2text(BTNode* root) {
+inline string btree2text(BTnode* root) {
 	string str;
     btree2text_helper(str, root);
 	return str;
 }
 
 // Decodes text string to binary tree.
-inline void text2btree_helper(BTNode* &node, stringstream &ss) {
+inline void text2btree_helper(BTnode* &node, stringstream &ss) {
     string sval;
     ss >> sval;
     if (sval == "NULL" || sval.empty()) {
         node = NULL; return;
     }
     int val = stoi(sval);
-    node = new BTNode(val);
+    node = new BTnode(val);
     text2btree_helper(node->left, ss);
     text2btree_helper(node->right, ss);
 }
 
-inline BTNode *text2btree(const string &str) {
+inline BTnode *text2btree(const string &str) {
     stringstream ss(str);
-	BTNode *root;
+	BTnode *root;
     text2btree_helper(root, ss);
 	return root;
 }
 
 // compare 2 (sub) binary trees
-inline bool btree_cmp(BTNode *node1, BTNode *node2) {
+inline bool btree_cmp(BTnode *node1, BTnode *node2) {
     if (node1 == NULL || node2 == NULL) {
         if (node1 != NULL || node2 != NULL)
             return false;
@@ -142,6 +144,20 @@ inline bool btree_cmp(BTNode *node1, BTNode *node2) {
     if (!btree_cmp(node1->left, node2->left)) return false;
     if(!btree_cmp(node1->right, node2->right)) return false;
     return true;
+}
+
+// =========== requires .last ===========
+
+// get next node of binary tree
+inline BTnode *btree_next(BTnode *node)
+{
+    return NULL;
+}
+
+// get last node of binary tree
+inline BTnode *btree_last(BTnode *node)
+{
+    return NULL;
 }
 
 } // namespace slisc

@@ -1,8 +1,10 @@
-// Directed Acyclic Graph
+// Directed Graph (Acyclic or/and Weighted)
 #pragma once
-#include "global.h"
+#include "queue.h"
 namespace slisc {
+    // ==================== DAG ========================
 
+    // node for directed graph (including DAG)
     // node[i] are the next connected nodes
     // node.prev is the last connected node
     struct DGnode : vector<Long> {
@@ -219,4 +221,113 @@ namespace slisc {
         dag[9].assign({10});
     }
 
+    // =============== DWG ===================
+    // node for directed weighted graph (including DAG)
+    // node[i] are the next connected nodes (.first) and weights (.second)
+    // node.prev is the last connected node
+    struct DWGnode : vector<pair<Long,Long>> {
+        Long val;
+        vector<Long> last;
+    };
+
+    // generate DWG from edges (edges[i] = {from, to, weight})
+    inline void edges2dwg(vector<DWGnode> &dwg, const vector<vector<Long>> &edges)
+    {
+        for (auto &edge : edges) {
+            dwg.resize(max(edge[0], edge[1]) + 1);
+            dwg[edge[0]].emplace_back(edge[1], edge[2]);
+        }
+    }
+
+    // from DWG to edges (edges[i] = {from, to, weight})
+    inline void dwg2edges(vector<vector<Long>> &edges, const vector<DWGnode> &dwg)
+    {
+        edges.clear();
+        for (Long node = 0; node < (Long)dwg.size(); ++node)
+            for (auto &next : dwg[node])
+                edges.push_back({node, next.first, next.second});
+    }
+
+    // BFS algo to find the shortest dists from source node
+    // supports negative edge weight
+    inline void dwg_SPFA(vector<Long> &dists, const vector<DWGnode> &dwg, Long_I source)
+    {
+        queue<Long> q; q.push(source);
+        vector<bool> in_q(dwg.size(), false);
+        dists.assign(dwg.size(), numeric_limits<Long>::max());
+        dists[source] = 0;
+        while (!q.empty()) {
+            Long node = q.front(); q.pop(); in_q[node] = false;
+            Long d = dists[node];
+            for (auto &pair : dwg[node]) {
+                Long next = pair.first, weight = pair.second;
+                if (d + weight >= dists[next])
+                    continue;
+                dists[next] = d + weight;
+                if (!in_q[next])
+                    q.push(next), in_q[next] = true;
+            }
+        }
+    }
+
+    // improved BFS algo to find the shortest dists from source node (algo: que is sorted by distance)
+    // supports negative edge weight
+    inline void dwg_SPFA2(vector<Long> &dists, const vector<DWGnode> &dwg, Long_I source)
+    {
+        set<pair<Long,Long>> q; // (dist, node)
+        q.insert(pair<Long,Long>(0, source));
+        vector<bool> in_q(dwg.size(), false);
+        dists.assign(dwg.size(), numeric_limits<Long>::max());
+        dists[source] = 0;
+        while (!q.empty()) {
+            Long node = (*q.begin()).second;
+            q.erase(q.begin()); in_q[node] = false;
+            Long d = dists[node];
+            for (auto &tmp : dwg[node]) {
+                Long next = tmp.first, weight = tmp.second;
+                if (d + weight >= dists[next])
+                    continue;
+                if (in_q[next])
+                    q.erase(pair<Long, Long>(dists[next], next));
+                dists[next] = d + weight;
+                q.insert(pair<Long, Long>(dists[next], next)); in_q[next] = true;
+            }
+        }
+    }
+
+    inline void dwg_examp0(vector<vector<Long>> &edges) {
+        edges.clear();
+        edges.push_back({0, 1, 1});
+        edges.push_back({0, 2, 4});
+        edges.push_back({1, 4, 2});
+        edges.push_back({2, 3, -1});
+        edges.push_back({2, 6, 2});
+        edges.push_back({3, 4, -1});
+        edges.push_back({4, 5, 2});
+        edges.push_back({4, 6, 1});
+    }
+
+    // generate random DWG (might be cyclic)
+    inline void dwg_rand(vector<vector<Long>> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3) {
+        edges.clear();
+        vector<Long> fork_count(Nnode, 0);
+        while ((Long)edges.size() < Nedge) {
+            Long from = randLong(Nnode);
+            while (fork_count[from] > max_fork)
+                from = randLong(Nnode);
+            Long to = randLong(Nnode);
+            while (to == from)
+                to = randLong(Nnode);
+            Long i;
+            for (i = 0; i < (Long)edges.size(); ++i) {
+                if ((edges[i][0] == from && edges[i][1] == to) || (edges[i][0] == to && edges[i][1] == from))
+                    break;
+            }
+            if (i == (Long)edges.size()) {
+                Long weight = weight_range.first + randLong(weight_range.second-weight_range.first);
+                edges.push_back({from, to, weight});
+                ++fork_count[from];
+            }
+        }
+    }
 } // namespace

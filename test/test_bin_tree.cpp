@@ -8,12 +8,12 @@ void test_bin_tree() {
                       "13 NULL NULL 15 NULL NULL";
 
     // === test text2btree() and btree2text() ===
-    BTNode *root = text2btree(tree_str);
+    BTnode *root = text2btree(tree_str);
     string tree_str1 = btree2text(root);
     if (tree_str1 != tree_str) SLS_FAIL;
 
     // === test btree_check() ===
-    vector<pair<BTNode*, BTNode*>> err_pair;
+    vector<pair<BTnode*, BTnode*>> err_pair;
     btree_check(err_pair, root);
     if (err_pair.size() != 2) SLS_FAIL;
     if (err_pair[0].first->val != 10 || err_pair[0].second->val != 4) SLS_FAIL;
@@ -21,10 +21,10 @@ void test_bin_tree() {
     btree_delete(root);
 
     // gen
-    BTNode *root1 = btree_gen(4);
+    BTnode *root1 = btree_gen(4);
     btree_assign(root1);
     // btree_print(root1);
-    BTNode *root2 = btree_gen(4);
+    BTnode *root2 = btree_gen(4);
     btree_assign(root2);
     // btree_print(root2);
     SLS_ASSERT(btree_cmp(root1, root2));

@@ -55,6 +55,7 @@ void test_all(const std::string &test_name)
     SLS_TEST(mat_fun);
     SLS_TEST(Mcoo);
     SLS_TEST(quad_math);
+    SLS_TEST(queue);
     SLS_TEST(random);
     SLS_TEST(scalar_arith);
     SLS_TEST(Scmat);
