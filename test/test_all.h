@@ -39,6 +39,7 @@ void test_all(const std::string &test_name)
     SLS_TEST(fedvr);
     SLS_TEST(file);
     SLS_TEST(global);
+    SLS_TEST(graph);
     SLS_TEST(GSL);
     SLS_TEST(hydrogen);
     SLS_TEST(hypergeom);
@@ -74,7 +75,7 @@ void test_all(const std::string &test_name)
     SLS_TEST(ylm);
     
     if (test_name.empty()) {
-        cout << "do optional tests? (y/n)" << endl;
+        cout << "do optional tests? (y/[n])" << endl;
         if (getchar() == 'y') {
             SLS_TEST(disp);
             SLS_TEST(input);

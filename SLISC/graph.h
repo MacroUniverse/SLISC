@@ -1,6 +1,7 @@
 // Directed Graph (Acyclic or/and Weighted)
 #pragma once
-#include "queue.h"
+#include "random.h"
+
 namespace slisc {
     // ==================== DAG ========================
 
@@ -233,8 +234,9 @@ namespace slisc {
     // generate DWG from edges (edges[i] = {from, to, weight})
     inline void edges2dwg(vector<DWGnode> &dwg, const vector<vector<Long>> &edges)
     {
+        dwg.clear();
         for (auto &edge : edges) {
-            dwg.resize(max(edge[0], edge[1]) + 1);
+            dwg.resize(max((Long)dwg.size(), max(edge[0], edge[1]) + 1));
             dwg[edge[0]].emplace_back(edge[1], edge[2]);
         }
     }
@@ -248,8 +250,27 @@ namespace slisc {
                 edges.push_back({node, next.first, next.second});
     }
 
+    // convert edges to text
+    inline string dwg_edges2text(const vector<vector<Long>> &edges)
+    {
+        stringstream ss;
+        for (auto &edge : edges)
+            ss << edge[0] << " " << edge[1] << " " << edge[2] << endl;
+        return ss.str();
+    }
+
+    // convert text to edges
+    inline void dwg_text2edges(vector<vector<Long>> &edges, const string &str)
+    {
+        stringstream ss(str);
+        Long from, to, weight;
+        while (ss >> from >> to >> weight)
+            edges.push_back({from, to, weight});
+    }
+
     // BFS algo to find the shortest dists from source node
     // supports negative edge weight
+    // out of reach distance is numeric_limits<Long>::max()
     inline void dwg_SPFA(vector<Long> &dists, const vector<DWGnode> &dwg, Long_I source)
     {
         queue<Long> q; q.push(source);
@@ -264,6 +285,7 @@ namespace slisc {
                 if (d + weight >= dists[next])
                     continue;
                 dists[next] = d + weight;
+                if (dists[next] < -1e-4) throw "-infinity distance?";
                 if (!in_q[next])
                     q.push(next), in_q[next] = true;
             }
@@ -272,6 +294,7 @@ namespace slisc {
 
     // improved BFS algo to find the shortest dists from source node (algo: que is sorted by distance)
     // supports negative edge weight
+    // out of reach distance is numeric_limits<Long>::max()
     inline void dwg_SPFA2(vector<Long> &dists, const vector<DWGnode> &dwg, Long_I source)
     {
         set<pair<Long,Long>> q; // (dist, node)
@@ -290,6 +313,7 @@ namespace slisc {
                 if (in_q[next])
                     q.erase(pair<Long, Long>(dists[next], next));
                 dists[next] = d + weight;
+                if (dists[next] < -1e-4) throw "-infinity distance?";
                 q.insert(pair<Long, Long>(dists[next], next)); in_q[next] = true;
             }
         }
@@ -307,27 +331,52 @@ namespace slisc {
         edges.push_back({4, 6, 1});
     }
 
-    // generate random DWG (might be cyclic)
-    inline void dwg_rand(vector<vector<Long>> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3) {
+    // generate random DWG (might have -inf cyclic)
+    inline void dwg_rand_unsafe(vector<vector<Long>> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3)
+    {
         edges.clear();
         vector<Long> fork_count(Nnode, 0);
+        Long Nloop = 0, max_loop = 100*Nedge;
         while ((Long)edges.size() < Nedge) {
+            if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
             Long from = randLong(Nnode);
-            while (fork_count[from] > max_fork)
+            while (fork_count[from] > max_fork) {
+                if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
                 from = randLong(Nnode);
+            }
             Long to = randLong(Nnode);
-            while (to == from)
+            while (to == from) {
+                if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
                 to = randLong(Nnode);
-            Long i;
-            for (i = 0; i < (Long)edges.size(); ++i) {
+            }
+            Long i; // check repetition
+            for (i = 0; i < (Long)edges.size(); ++i)
                 if ((edges[i][0] == from && edges[i][1] == to) || (edges[i][0] == to && edges[i][1] == from))
                     break;
-            }
             if (i == (Long)edges.size()) {
                 Long weight = weight_range.first + randLong(weight_range.second-weight_range.first);
                 edges.push_back({from, to, weight});
                 ++fork_count[from];
             }
         }
+    }
+
+    // generate random DWG (prevent -inf cyclic)
+    inline void dwg_rand(vector<vector<Long>> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3)
+    {
+        vector<DWGnode> dwg;
+        vector<Long> dists;
+        for (Long i = 0; i < 1000; ++i) {
+            dwg_rand_unsafe(edges, Nnode, Nedge, weight_range, max_fork);
+            edges2dwg(dwg, edges);
+            Long source;
+            for (source = 0; source < (Long)dwg.size(); ++source) {
+                try { dwg_SPFA(dists, dwg, source); }
+                catch (...) { break; }
+            }
+            // got a good DWG
+            if (source == (Long)dwg.size()) return;
+        }
+        SLS_ERR("dwg_rand(): always got -inf loops, impossible params?");
     }
 } // namespace
