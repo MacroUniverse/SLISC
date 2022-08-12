@@ -23,6 +23,7 @@ void test_bin_tree() {
     // gen
     BTnode *root1 = btree_gen(4);
     btree_assign(root1);
+    
     // btree_print(root1);
     BTnode *root2 = btree_gen(4);
     btree_assign(root2);
@@ -36,4 +37,5 @@ void test_bin_tree() {
     // btree_print(root);
     for (Long key = 0; key <= 60; key += 2)
         SLS_ASSERT(btree_search(root, key)->val == key);
+    btree_delete(root);
 }
