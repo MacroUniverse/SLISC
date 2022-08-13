@@ -168,7 +168,31 @@ namespace slisc {
                 dag_inverse1(dag, done, node);
     }
 
-    inline void dag_all_paths_helper(vector<vector<Long>> &paths, vector<Long> &path, vector<bool> &visited, const vector<DGnode> &dag, Long_I node, Long_I target) {
+    // source != target
+    inline void dag_num_paths_helper(unordered_map<Long,Long> &count, const vector<DGnode> &dag, Long_I node, Long_I target)
+    {
+        Long N = 0;
+        for (auto &next : dag[node]) {
+            if (!count.count(next))
+                dag_num_paths_helper(count, dag, next, target);
+            N += count[next];
+        }
+        count[node] = N;
+    }
+
+    // find # of paths from source to target node
+    // algo: deep first search (DFS), record count from each node to target
+    inline Long dag_num_paths(const vector<DGnode> &dag, Long_I source, Long_I target) {
+        if (source == target) return 1;
+        unordered_map<Long, Long> count; // # of paths from each node to target
+        count[target] = 1;
+        dag_num_paths_helper(count, dag, source, target);
+        return count[source];
+    }
+
+    inline void dag_all_paths_helper(vector<vector<Long>> &paths, vector<Long> &path, vector<bool> &dead,
+                                     const vector<DGnode> &dag, Long_I node, Long_I target)
+    {
         path.push_back(node);
         if (node == target) {
             paths.push_back(path); path.pop_back();
@@ -176,15 +200,13 @@ namespace slisc {
         }
         bool found = false;
         for (auto &next : dag[node]) {
-            if (!visited[next]) {
-                dag_all_paths_helper(paths, path, visited, dag, next, target);
-                if (!visited[next])
-                    found = true;
-            }
-            else // states[next] == 'v'
+            if (dead[next])
                 continue;
+            dag_all_paths_helper(paths, path, dead, dag, next, target);
+            if (!found && !dead[next])
+                found = true;
         }
-        visited[node] = !found;
+        dead[node] = !found;
         path.pop_back();
     }
 
@@ -192,34 +214,43 @@ namespace slisc {
     // algo: deep first search (DFS), but path to target remains unvisited to allow visiting again
     inline void dag_all_paths(vector<vector<Long>> &paths, const vector<DGnode> &dag, Long_I source, Long_I target) {
         paths.clear();
-        vector<bool> visited(dag.size(), false);
+        vector<bool> dead(dag.size(), false); // visited node with no way to target
         vector<Long> path;
-        dag_all_paths_helper(paths, path, visited, dag, source, target);
+        dag_all_paths_helper(paths, path, dead, dag, source, target);
     }
 
-    inline void dag_examp0(vector<DGnode> &dag) {
-        dag.resize(7);
-        dag[0].assign({2,3,4});
-        dag[1].assign({4,5});
-        dag[2].assign({6,3});
-        // dag[3];
-        dag[4].assign({3,5});
-        // dag[5]
-        // dag[6]
-    }
-
-    inline void dag_examp1(vector<DGnode> &dag) {
-        dag.resize(12);
-        dag[0].assign({1, 7});
-        dag[1].assign({3, 4});
-        dag[2].assign({4, 5, 11});
-        dag[3].assign({7, 8});
-        dag[4].assign({6});
-        dag[5].assign({6});
-        dag[6].assign({10, 11});
-        dag[7].assign({9});
-        dag[8].assign({9});
-        dag[9].assign({10});
+    inline void dag_examp(vector<DGnode> &dag, Long_I ind)
+    {
+        if (ind == 0) {
+            dag.resize(7);
+            dag[0].assign({2,3,4});
+            dag[1].assign({4,5});
+            dag[2].assign({6,3});
+            dag[4].assign({3,5});
+        }
+        else if (ind == 1) {
+            dag.resize(12);
+            dag[0].assign({1, 7});
+            dag[1].assign({3, 4});
+            dag[2].assign({4, 5, 11});
+            dag[3].assign({7, 8});
+            dag[4].assign({6});
+            dag[5].assign({6});
+            dag[6].assign({10, 11});
+            dag[7].assign({9});
+            dag[8].assign({9});
+            dag[9].assign({10});
+        }
+        else if (ind == 2) {
+            dag.resize(10);
+            dag[0].assign({1, 2});
+            dag[1].assign({7, 3});
+            dag[2].assign({3});
+            dag[3].assign({4, 5});
+            dag[4].assign({6});
+            dag[5].assign({6});
+            dag[7].assign({8, 9});
+        }
     }
 
     // =============== DWG ===================

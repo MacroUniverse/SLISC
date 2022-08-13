@@ -186,6 +186,7 @@ inline SNode* slist_split(SNode* head)
 }
 
 // merge 2 sorted singly linked list
+// verified in leetcode 148
 inline SNode* slist_merge_sorted(SNode* a, SNode* b)
 {
     if (a == NULL) return (b);

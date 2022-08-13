@@ -31,4 +31,21 @@ void test_graph()
 			SLS_ASSERT(dists == dists2);
 		}
 	}
+
+	// all/num paths from source to target
+	{
+		vector<DGnode> dag;
+		for (Long i = 0; i <= 2; ++i) {
+			dag_examp(dag, i);
+			for (Long from = 0; from < dag.size(); ++from) {
+				for (Long to = 0; to < dag.size(); ++to) {
+					Long num = dag_num_paths(dag, from, to);
+					vector<vector<Long>> paths;
+					dag_all_paths(paths, dag, from, to);
+					if(num != paths.size())
+						SLS_FAIL;
+				}
+			}
+		}
+	}
 }
