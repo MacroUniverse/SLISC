@@ -16,6 +16,7 @@
 // STL
 #include <stdlib.h>
 #include <math.h>
+#include <cassert>
 #include <cmath>
 #include <climits>
 #include <limits>

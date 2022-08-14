@@ -33,6 +33,7 @@ void test_all(const std::string &test_name)
     SLS_TEST(cut);
     SLS_TEST(dense);
     SLS_TEST(Dcmat);
+    SLS_TEST(disjoint_sets);
     SLS_TEST(Dvec);
     SLS_TEST(eigen);
     SLS_TEST(expokit);

@@ -1,8 +1,10 @@
 // Directed Graph (Acyclic or/and Weighted)
 #pragma once
 #include "random.h"
+#include "disjoint_sets.h"
 
 namespace slisc {
+
     // ==================== DAG ========================
 
     // node for directed graph (including DAG)
