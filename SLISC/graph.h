@@ -426,28 +426,30 @@ namespace slisc {
 
     // =============== weighted graph ================
     // Kruskal's algorithm to find Minimum Spanning Tree of a given connected, undirected and weighted graph
-    // returns total weight of the MST
+    // return total weight of the MST
+    // return -1 if the graph is not connected
+    // (tested with leetcode 1135)
     inline Long wg_MST_kruskal(vector<Long> &min_edges, vector<DWGedge> &edges, Long_I Nnode)
     {
         Long tot_wt = 0; // total weight
         min_edges.clear();
         auto comp = [](const DWGedge &u, const DWGedge&v)
-        { return get<2>(u) < get<2>(v); };
+        { return u[2] < v[2]; };
         sort(edges.begin(), edges.end(), comp); // sort by weight
         disjoint_sets ds(Nnode);
-
-        for (Long i = 0; i < (Long)edges.size(); ++i)
+        Long Nedge = edges.size();
+        for (Long i = 0; i < Nedge; ++i)
         {
             auto &edge = edges[i];
-            Long u = get<0>(edge);
-            Long v = get<1>(edge);
+            Long u = edge[0];
+            Long v = edge[1];
             if (!ds.check(u, v)) // not connected
             {
                 min_edges.push_back(i);
-                tot_wt += get<2>(edge);
+                tot_wt += edge[2];
                 ds.merge(u, v);
             }
         }
-        return tot_wt;
+        return ds.num_set() == 1 ? tot_wt : -1;
     }
 } // namespace

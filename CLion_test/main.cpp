@@ -15,6 +15,7 @@
 #include "../SLISC/random.h"
 #include "../SLISC/sing_list.h"
 #include "../SLISC/bin_tree.h"
+#include "../SLISC/disjoint_sets.h"
 #include "../SLISC/graph.h"
 #include "../SLISC/string.h"
 #include "../SLISC/Bit.h"
@@ -22,6 +23,7 @@
 #include "../SLISC/input.h"
 #include "../SLISC/file.h"
 #include "../SLISC/queue.h"
+#include "../SLISC/disjoint_sets.h"
 using namespace slisc;
 
 using namespace std;
@@ -35,16 +37,11 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str) {
     }
 }
 
-int main() {
+// Driver program to test above functions
+int main()
+{
 //    vector<int> v_num, v_num1; vector<string> v_str;
 //    read_input(v_num, v_str);
 //----------------------------------------------
-//    priority_queue<int, vector<int>, greater<int>> heap;   // 定义小根堆的方式
-//    heap.push(5); heap.push(8); heap.push(3); heap.push(1); heap.push(2); heap.push(9); heap.push(6);
-//    while (!heap.empty())
-//    {
-//        cout << heap.top() << endl;     // 输出最小值，即队头
-//        heap.pop();     // 删除最小值，即删除队头
-//    }
     return 0;
 }
