@@ -426,6 +426,62 @@ inline Doub min(DcmatDoub_I v) { return min_dcmat(v.p(), v.n0(), v.n1(), v.lda()
 inline Doub min2(Long_O i, Long_O j, DcmatDoub_I v) { return min_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 
 
+// find smallest Nmin elements
+template <class T>
+inline void minN(vector<T> &vals, vector<Long> &inds, T *v, Long_I N, Long_I Nmin)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < Nmin)
+        SLS_ERR("wrong shape!");
+#endif
+    typedef pair<T,Long> P; // (val, ind)
+    vals.resize(Nmin); inds.resize(Nmin);
+    priority_queue<P> q;
+    for (Long i = 0; i < Nmin; ++i)
+        q.push(P(v[i], i));
+    for (Long i = Nmin; i < N; ++i) {
+        T &val = v[i];
+        if (val < q.top().first) {
+            q.pop();
+            q.push(P(val, i));
+        }
+    }
+    for (Long i = 0; i < Nmin; ++i) {
+        Long j = Nmin-i-1;
+        vals[j] = q.top().first;
+        inds[j] = q.top().second;
+        q.pop();
+    }
+}
+
+// find largest Nmax elements
+template <class T>
+inline void maxN(vector<T> &vals, vector<Long> &inds, T *v, Long_I N, Long_I Nmax)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < Nmax)
+        SLS_ERR("wrong shape!");
+#endif
+    typedef pair<T,Long> P; // (val, ind)
+    vals.resize(Nmax); inds.resize(Nmax);
+    priority_queue<P, vector<P>, std::greater<P>> q;
+    for (Long i = 0; i < Nmax; ++i)
+        q.push(P(v[i], i));
+    for (Long i = Nmax; i < N; ++i) {
+        T &val = v[i];
+        if (val > q.top().first) {
+            q.pop();
+            q.push(P(val, i));
+        }
+    }
+    for (Long i = 0; i < Nmax; ++i) {
+        Long j = Nmax-i-1;
+        vals[j] = q.top().first;
+        inds[j] = q.top().second;
+        q.pop();
+    }
+}
+
 inline Doub max_abs_v(const Doub *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
