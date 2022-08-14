@@ -256,6 +256,9 @@ namespace slisc {
     }
 
     // =============== DWG ===================
+    // edge of directed weighted graph, [0] from [1] to [2] weight
+    typedef array<Long, 3> DWGedge;
+
     // node for directed weighted graph (including DAG)
     // node[i] are the next connected nodes (.first) and weights (.second)
     // node.prev is the last connected node
@@ -264,8 +267,14 @@ namespace slisc {
         vector<Long> last;
     };
 
+    inline void dwg_add_edge(vector<DWGedge> &dwg, Long_I from, Long_I to, Long_I weight)
+    {
+        dwg.emplace_back(); DWGedge &b = dwg.back();
+        b[0] = from; b[1] = to; b[2] = weight;
+    }
+
     // generate DWG from edges (edges[i] = {from, to, weight})
-    inline void edges2dwg(vector<DWGnode> &dwg, const vector<vector<Long>> &edges)
+    inline void edges2dwg(vector<DWGnode> &dwg, const vector<DWGedge> &edges)
     {
         dwg.clear();
         for (auto &edge : edges) {
@@ -275,16 +284,16 @@ namespace slisc {
     }
 
     // from DWG to edges (edges[i] = {from, to, weight})
-    inline void dwg2edges(vector<vector<Long>> &edges, const vector<DWGnode> &dwg)
+    inline void dwg2edges(vector<DWGedge> &edges, const vector<DWGnode> &dwg)
     {
         edges.clear();
         for (Long node = 0; node < (Long)dwg.size(); ++node)
             for (auto &next : dwg[node])
-                edges.push_back({node, next.first, next.second});
+                edges.emplace_back(DWGedge{node, next.first, next.second});
     }
 
     // convert edges to text
-    inline string dwg_edges2text(const vector<vector<Long>> &edges)
+    inline string dwg_edges2text(const vector<DWGedge> &edges)
     {
         stringstream ss;
         for (auto &edge : edges)
@@ -293,7 +302,7 @@ namespace slisc {
     }
 
     // convert text to edges
-    inline void dwg_text2edges(vector<vector<Long>> &edges, const string &str)
+    inline void dwg_text2edges(vector<DWGedge> &edges, const string &str)
     {
         stringstream ss(str);
         Long from, to, weight;
@@ -352,7 +361,7 @@ namespace slisc {
         }
     }
 
-    inline void dwg_examp0(vector<vector<Long>> &edges) {
+    inline void dwg_examp(vector<DWGedge> &edges) {
         edges.clear();
         edges.push_back({0, 1, 1});
         edges.push_back({0, 2, 4});
@@ -365,7 +374,7 @@ namespace slisc {
     }
 
     // generate random DWG (might have -inf cyclic)
-    inline void dwg_rand_unsafe(vector<vector<Long>> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3)
+    inline void dwg_rand_unsafe(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3)
     {
         edges.clear();
         vector<Long> fork_count(Nnode, 0);
@@ -395,7 +404,7 @@ namespace slisc {
     }
 
     // generate random DWG (prevent -inf cyclic)
-    inline void dwg_rand(vector<vector<Long>> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3)
+    inline void dwg_rand(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork = 3)
     {
         vector<DWGnode> dwg;
         vector<Long> dists;
@@ -411,5 +420,34 @@ namespace slisc {
             if (source == (Long)dwg.size()) return;
         }
         SLS_ERR("dwg_rand(): always got -inf loops, impossible params?");
+    }
+
+
+
+    // =============== weighted graph ================
+    // Kruskal's algorithm to find Minimum Spanning Tree of a given connected, undirected and weighted graph
+    // returns total weight of the MST
+    inline Long wg_MST_kruskal(vector<Long> &min_edges, vector<DWGedge> &edges, Long_I Nnode)
+    {
+        Long tot_wt = 0; // total weight
+        min_edges.clear();
+        auto comp = [](const DWGedge &u, const DWGedge&v)
+        { return get<2>(u) < get<2>(v); };
+        sort(edges.begin(), edges.end(), comp); // sort by weight
+        disjoint_sets ds(Nnode);
+
+        for (Long i = 0; i < (Long)edges.size(); ++i)
+        {
+            auto &edge = edges[i];
+            Long u = get<0>(edge);
+            Long v = get<1>(edge);
+            if (!ds.check(u, v)) // not connected
+            {
+                min_edges.push_back(i);
+                tot_wt += get<2>(edge);
+                ds.merge(u, v);
+            }
+        }
+        return tot_wt;
     }
 } // namespace

@@ -32,6 +32,7 @@
 #include <cstdarg>
 #include <utility>
 #include <functional>
+#include <tuple>
 #include <unordered_map>
 #include <map>
 #include <unordered_set>
@@ -39,6 +40,7 @@
 #include <deque>
 #include <queue>
 #include <stack>
+#include <array>
 
 #ifdef _MSC_VER
 #define SLS_USE_MSVC // using Microsoft Visual C++ compiler
@@ -80,14 +82,14 @@ namespace slisc {
 
 using std::complex;
 using std::vector; using std::string; using std::stringstream;
-using std::to_string; using std::pair;
+using std::to_string; using std::pair; using std::tuple;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap; using std::reverse;
 using std::numeric_limits; using std::unordered_set; using std::set;
-using std::unordered_map; using std::map;
+using std::unordered_map; using std::map; using std::get;
 using std::isinf; using std::round; using std::ceil; using std::floor;
-using std::abs; using std::real; using std::imag;
+using std::abs; using std::real; using std::imag; using std::array;
 using std::conj; using std::pow; using std::priority_queue;
 using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
