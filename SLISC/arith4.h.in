@@ -72,6 +72,8 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%-------------------------
 
 //% tem('v+=s', {
+//%   'vecInt', 'Int';
+//%   'vecLlong', 'Llong';
 //%   'VecInt', 'Int';
 //%   'VecLlong', 'Llong';
 //%   'VecDoub', 'Doub';
@@ -91,7 +93,19 @@ inline void divide_equals_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     error('illegal type!');
 //% end
 //% req('plus_equals_vs', {Tsv,Ts});
-//% if is_dense(T) && is_scalar(Ts)
+//% if is_vector(T) && is_scalar(Ts)
+inline void operator+=(@T@_IO v, @Ts@_I s)
+{ plus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator-=(@T@_IO v, @Ts@_I s)
+{ minus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator*=(@T@_IO v, @Ts@_I s)
+{ times_equals_vs(v.data(), s, v.size()); }
+
+inline void operator/=(@T@_IO v, @Ts@_I s)
+{ divide_equals_vs(v.data(), s, v.size()); }
+//% elseif is_dense(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 { plus_equals_vs(v.p(), s, v.size()); }
 

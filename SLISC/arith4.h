@@ -492,6 +492,30 @@ inline void operator*=(Cmat3Comp_IO v, Comp_I s)
 inline void operator/=(Cmat3Comp_IO v, Comp_I s)
 { divide_equals_vs(v.p(), s, v.size()); }
 
+inline void operator+=(vecInt_IO v, Int_I s)
+{ plus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator-=(vecInt_IO v, Int_I s)
+{ minus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator*=(vecInt_IO v, Int_I s)
+{ times_equals_vs(v.data(), s, v.size()); }
+
+inline void operator/=(vecInt_IO v, Int_I s)
+{ divide_equals_vs(v.data(), s, v.size()); }
+
+inline void operator+=(vecLlong_IO v, Llong_I s)
+{ plus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator-=(vecLlong_IO v, Llong_I s)
+{ minus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator*=(vecLlong_IO v, Llong_I s)
+{ times_equals_vs(v.data(), s, v.size()); }
+
+inline void operator/=(vecLlong_IO v, Llong_I s)
+{ divide_equals_vs(v.data(), s, v.size()); }
+
 
 inline void plus_equals_vv(Comp *v, const Doub *v1, Long_I N)
 {

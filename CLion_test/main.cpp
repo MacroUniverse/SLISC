@@ -35,60 +35,6 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str) {
     }
 }
 
-template <class T>
-inline void minN(vector<T> &vals, vector<Long> &inds, T *v, Long_I N, Long_I Nmin)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N < Nmin)
-        SLS_ERR("wrong shape!");
-#endif
-    typedef pair<T,Long> P; // (val, ind)
-    vals.resize(Nmin); inds.resize(Nmin);
-    priority_queue<P> q;
-    for (Long i = 0; i < Nmin; ++i)
-        q.push(P(v[i], i));
-    for (Long i = Nmin; i < N; ++i) {
-        T &val = v[i];
-        if (val < q.top().first) {
-            q.pop();
-            q.push(P(val, i));
-        }
-    }
-    for (Long i = 0; i < Nmin; ++i) {
-        Long j = Nmin-i-1;
-        vals[j] = q.top().first;
-        inds[j] = q.top().second;
-        q.pop();
-    }
-}
-
-template <class T>
-inline void maxN(vector<T> &vals, vector<Long> &inds, T *v, Long_I N, Long_I Nmax)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (N < Nmax)
-        SLS_ERR("wrong shape!");
-#endif
-    typedef pair<T,Long> P; // (val, ind)
-    vals.resize(Nmax); inds.resize(Nmax);
-    priority_queue<P, vector<P>, std::greater<P>> q;
-    for (Long i = 0; i < Nmax; ++i)
-        q.push(P(v[i], i));
-    for (Long i = Nmax; i < N; ++i) {
-        T &val = v[i];
-        if (val > q.top().first) {
-            q.pop();
-            q.push(P(val, i));
-        }
-    }
-    for (Long i = 0; i < Nmax; ++i) {
-        Long j = Nmax-i-1;
-        vals[j] = q.top().first;
-        inds[j] = q.top().second;
-        q.pop();
-    }
-}
-
 int main() {
 //    vector<int> v_num, v_num1; vector<string> v_str;
 //    read_input(v_num, v_str);
@@ -100,20 +46,5 @@ int main() {
 //        cout << heap.top() << endl;     // 输出最小值，即队头
 //        heap.pop();     // 删除最小值，即删除队头
 //    }
-
-    Long N = 1000, Nmax = 50;
-    vector<Long> v(N), vals(Nmax), inds(Nmax);
-    randPerm(v);
-    maxN(vals, inds, &v[0], N, Nmax);
-    for (Long i = 0; i < Nmax; ++i) {
-        SLS_ASSERT(vals[i] == N-1-i);
-        SLS_ASSERT(vals[i] == v[inds[i]]);
-    }
-    minN(vals, inds, &v[0], N, Nmax);
-    for (Long i = 0; i < Nmax; ++i) {
-        SLS_ASSERT(vals[i] == i);
-        SLS_ASSERT(vals[i] == v[inds[i]]);
-    }
-    max(VecInt(5));
     return 0;
 }

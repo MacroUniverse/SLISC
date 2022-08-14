@@ -87,7 +87,7 @@ using std::numeric_limits; using std::unordered_set; using std::set;
 using std::unordered_map; using std::map;
 using std::isinf; using std::round; using std::ceil; using std::floor;
 using std::abs; using std::real; using std::imag;
-using std::conj; using std::pow;
+using std::conj; using std::pow; using std::priority_queue;
 using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
