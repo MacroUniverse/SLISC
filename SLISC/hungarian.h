@@ -274,7 +274,7 @@ inline Long hungarian(vvecLong_I cost, bool allow_negatives = true)
 {
     const Long sz = cost.size();
 #ifdef SLS_CHECK_SHAPES
-    if (cost.empty() || cost[0].size() != sz)
+    if (cost.empty() || size(cost[0]) != sz)
         SLS_ERR("wrong shape!");
 #endif
     vvecLong matrix(sz, vecLong(sz));

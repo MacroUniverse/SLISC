@@ -9,8 +9,8 @@
 
 namespace slisc {
 
-void vecset(Int *, Int_I, Llong_I, Llong_I);
-void veccpy(Int *, const Int *, Llong_I);
+void vecset(Int *, Int_I, Long_I, Long_I);
+void veccpy(Int *, const Int *, Long_I);
 
 class CmobdInt
 {
@@ -178,8 +178,8 @@ inline void CmobdInt::resize(Long_I blk_size, Long_I Nblk)
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-void vecset(Llong *, Llong_I, Llong_I, Llong_I);
-void veccpy(Llong *, const Llong *, Llong_I);
+void vecset(Llong *, Llong_I, Long_I, Long_I);
+void veccpy(Llong *, const Llong *, Long_I);
 
 class CmobdLlong
 {
@@ -347,8 +347,8 @@ inline void CmobdLlong::resize(Long_I blk_size, Long_I Nblk)
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-void vecset(Doub *, Doub_I, Llong_I, Llong_I);
-void veccpy(Doub *, const Doub *, Llong_I);
+void vecset(Doub *, Doub_I, Long_I, Long_I);
+void veccpy(Doub *, const Doub *, Long_I);
 
 class CmobdDoub
 {
@@ -516,8 +516,8 @@ inline void CmobdDoub::resize(Long_I blk_size, Long_I Nblk)
     vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
-void vecset(Comp *, Comp_I, Llong_I, Llong_I);
-void veccpy(Comp *, const Comp *, Llong_I);
+void vecset(Comp *, Comp_I, Long_I, Long_I);
+void veccpy(Comp *, const Comp *, Long_I);
 
 class CmobdComp
 {

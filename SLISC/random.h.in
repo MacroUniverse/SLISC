@@ -111,7 +111,7 @@ inline Comp randComp()
 
 //% tem('rand', {
 //%    'vecInt'; 'vecLlong';
-//%    'VecLlong'; 'VecDoub'; 'VecQdoub';
+//%    'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub';
 //%    'VecComp'; 'VecQcomp';
 //%    'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%    'MatLlong'; 'MatDoub'; 'MatComp';

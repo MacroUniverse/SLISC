@@ -150,6 +150,13 @@ inline void rand(vecLlong_O v)
         v[i] = randLong(N);
 }
 
+inline void rand(VecInt_O v)
+{
+    Long i, N = v.size();
+    for (i = 0; i < N; ++i)
+        v[i] = randInt(N);
+}
+
 inline void rand(VecLlong_O v)
 {
     Long i, N = v.size();

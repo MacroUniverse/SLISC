@@ -1,4 +1,5 @@
 // binary version of matt.h
+// always use Llong when reading and writing index in matb file
 
 #pragma once
 #include "matt.h"
@@ -18,8 +19,8 @@ public:
     Str m_fname; // name of the opened file
     vecStr m_name; // variable names
     vecStr m_data; // data cache, only useful in "m" mode
-    vecLlong m_type; // variable types
-    vector<vecLlong> m_size; // variable dimensions
+    vecLong m_type; // variable types
+    vector<vecLong> m_size; // variable dimensions
     vecLlong m_ind; // variable positions (from the first byte of file)
 
     // open a file
@@ -120,7 +121,8 @@ inline void Matb::get_profile()
             SLS_ERR("unknown!");
         m_size[i].resize(n);
         for (Long j = 0; j < n; ++j) {
-            read(fin, m_size[i][j]);
+            Llong tmp;
+            read(fin, tmp); m_size[i][j] = tmp;
             if (m_size[i][j] < 0)
                 SLS_ERR("unknown!");
         }
@@ -231,13 +233,13 @@ inline void Matb::write_data(Str_I fname)
         // debug
         if (m_ind[i] != m_out.tellp())
             SLS_ERR("unknown!");
-        write(m_out, Llong(m_name[i].size()));
+        write(m_out, (Llong)m_name[i].size());
         write(m_out, m_name[i]); // name
-        write(m_out, m_type[i]);
-        Llong Ndim = m_size[i].size();
-        write(m_out, Ndim); // dim
+        write(m_out, (Llong)m_type[i]);
+        Long Ndim = m_size[i].size();
+        write(m_out, (Llong)Ndim); // dim
         for (Long j = 0; j < Ndim; ++j)
-            write(m_out, m_size[i][j]);
+            write(m_out, (Llong)m_size[i][j]);
         write(m_out, m_data[i]);
     }
     // write position of variables
@@ -258,7 +260,7 @@ inline void Matb::close()
         for (Long i = m_ind.size() - 1; i >= 0; --i)
             write(m_out, m_ind[i]);
         // write number of variables
-        write(m_out, size());
+        write(m_out, (Llong)size());
         // mark end-of-file
         write(m_out, "Matb_End_of_File");
         m_out.close();
@@ -297,7 +299,7 @@ inline void save(@T@_I s, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, Llong(size(varname)));
+    write(fout, Llong(varname.size()));
     write(fout, varname);
     // write data type info
 //% tmp = num2str(type_num(T));
@@ -345,30 +347,30 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
     matb.m_name.push_back(varname);
     matb.m_ind.push_back(fout.tellp());
     // write variable name info
-    write(fout, size(varname)); write(fout, varname);
+    write(fout, (Llong)varname.size()); write(fout, varname);
     // write data type info
     write(fout, Llong(@numT@));
     // write shape info
     write(fout, Llong(@Ndim@));
     // write matrix data
 //% if Ndim == '1'
-    write(fout, (Long)v.size());
+    write(fout, (Llong)v.size());
     for (Long i = 0; i < (Long)v.size(); ++i)
         write(fout, v[i]);
 //% elseif Ndim == '2'
-    write(fout, v.n0()); write(fout, v.n1());
+    write(fout, (Llong)v.n0()); write(fout, (Llong)v.n1());
     for (Long j = 0; j < v.n1(); ++j)
         for (Long i = 0; i < v.n0(); ++i)
             write(fout, v(i, j));
 //% elseif Ndim == '3'
-    write(fout, v.n0()); write(fout, v.n1()); write(fout, v.n2());
+    write(fout, (Llong)v.n0()); write(fout, (Llong)v.n1()); write(fout, (Llong)v.n2());
     for (Long k = 0; k < v.n2(); ++k)
         for (Long j = 0; j < v.n1(); ++j)
             for (Long i = 0; i < v.n0(); ++i)
                 write(fout, v(i, j, k));
 //% elseif Ndim == '4'
-    write(fout, v.n0()); write(fout, v.n1());
-    write(fout, v.n2()); write(fout, v.n3());
+    write(fout, (Llong)v.n0()); write(fout, (Llong)v.n1());
+    write(fout, (Llong)v.n2()); write(fout, (Llong)v.n3());
     for (Long l = 0; l < v.n3(); ++l)
         for (Long k = 0; k < v.n2(); ++k)
             for (Long j = 0; j < v.n1(); ++j)

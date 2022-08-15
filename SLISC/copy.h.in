@@ -27,6 +27,7 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
 //% tem('veccpy', {
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
+//%     'Doub', 'Doub';
 //%     'Comp', 'Doub';
 //% });
 //%----------------------------

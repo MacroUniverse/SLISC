@@ -1,6 +1,7 @@
 // save vectors and matrices to ".matt" file
 
 #pragma once
+#include "scalar_arith.h"
 #include "file.h"
 
 namespace slisc {
