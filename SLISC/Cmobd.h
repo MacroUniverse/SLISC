@@ -4,11 +4,10 @@
 // currently, first overlapping element must be zero (e.g. matrix-vector multiplication will depend on this)
 
 #pragma once
+#include "scalar_arith.h"
 #include "Cmat3.h"
 
 namespace slisc {
-
-Llong sqr(Long);
 
 void vecset(Int *, Int_I, Llong_I, Llong_I);
 void veccpy(Int *, const Int *, Llong_I);

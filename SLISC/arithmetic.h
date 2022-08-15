@@ -9,12 +9,6 @@
 
 namespace slisc {
 
-template <class T>
-inline Long size(const vector<T> &v) { return v.size(); }
-
-template <class T>
-inline Long size(const std::basic_string<T> &v) { return v.size(); }
-
 // concatinate std::vector
 inline void cat(vecInt_IO v, vecInt_I v1)
 { v.insert(v.end(), v1.begin(), v1.end()); }

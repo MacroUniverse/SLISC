@@ -84,7 +84,7 @@ inline void hungarian_step2(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCove
                 if (RowCover[r] == 0 && ColCover[c] == 0) {
                     M[r][c] = 1; RowCover[r] = 1; ColCover[c] = 1;
                 }
-    copy(RowCover, 0); copy(ColCover, 0);
+    copy(RowCover, false); copy(ColCover, false);
     step = 3;
 }
 
@@ -119,7 +119,7 @@ inline void hungarian_find_a_zero(Long& row, Long& col,
     while (!done) {
         c = 0;
         while (true) {
-            if (matrix[r][c] == 0 && RowCover[r] == 0 && ColCover[c] == 0) {
+            if (matrix[r][c] == 0 && !RowCover[r] && !ColCover[c]) {
                 row = r; col = c; done = true;
             }
             c += 1;
@@ -231,7 +231,7 @@ inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0,
             M[path[p][0]][path[p][1]] = 0;
         else
             M[path[p][0]][path[p][1]] = 1;
-	copy(RowCover, 0); copy(ColCover, 0);
+	copy(RowCover, false); copy(ColCover, false);
 	// erase primes
     for (auto& row: M)
         for (auto& val: row)
@@ -268,23 +268,6 @@ inline void hungarian_step6(vvecLong& matrix, vecBool_I RowCover, vecBool_I ColC
                 matrix[r][c] -= minval;
     }
     step = 4;
-}
-
-/* Calculates the optimal cost from mask matrix */
-inline Long hungarian_output_solution(vvecLong_I original, vvecChar_I M)
-{
-    Long res = 0;
-    for (unsigned j=0; j<original.begin()->size(); ++j)
-        for (unsigned i=0; i<original.size(); ++i)
-            if (M[i][j]) {
-                auto it1 = original.begin();
-                std::advance(it1, i);
-                auto it2 = it1->begin();
-                std::advance(it2, j);
-                res += *it2;
-                continue;                
-            }
-    return res;
 }
 
 /* Main function of the algorithm */
@@ -343,12 +326,19 @@ inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
                 done = true; break;
         }
     }
-    
-    //Printing part (optional)
-    // std::cout << "Cost Matrix: \n" << original << std::endl 
-    //          << "Optimal assignment: \n" << M;
-    
-    return hungarian_output_solution(original, M);
+    // output solution
+    Long res = 0;
+    for (Long j = 0; j < size(original[0]); ++j)
+        for (Long i = 0; i < size(original); ++i)
+            if (M[i][j]) {
+                auto it1 = original.begin();
+                std::advance(it1, i);
+                auto it2 = it1->begin();
+                std::advance(it2, j);
+                res += *it2;
+                continue;                
+            }
+    return res;
 }
 
 } // namespace slisc

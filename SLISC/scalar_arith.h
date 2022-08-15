@@ -208,16 +208,8 @@ inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
 }
 
 
-inline Char sqr(Char_I a) { return a * a; }
-
-inline Int sqr(Int_I a) { return a * a; }
-
-inline Llong sqr(Llong_I a) { return a * a; }
-
-inline Doub sqr(Doub_I a) { return a * a; }
-
-inline Comp sqr(Comp_I a) { return a * a; }
-
+template <class T>
+inline T sqr(const T &x) { return x * x; }
 
 inline Int abs2(Int_I a) { return a * a; }
 
@@ -245,6 +237,12 @@ inline Qdoub factorialq(Int_I n) {
     return ret;
 }
 #endif
+
+template <class T>
+inline Long size(const vector<T> &v) { return v.size(); }
+
+template <class T>
+inline Long size(const std::basic_string<T> &v) { return v.size(); }
 
 inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
 

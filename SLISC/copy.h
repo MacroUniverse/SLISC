@@ -56,18 +56,6 @@ inline void vecset(Comp *v, Comp_I val, Long_I n, Long_I step)
         *p = val;
 }
 
-inline void vecset(Char *v, Char_I val, Long_I n)
-{
-    for (Char *p = v; p < v + n; ++p)
-        *p = val;
-}
-
-inline void vecset(Char *v, Char_I val, Long_I n, Long_I step)
-{
-    for (Char *p = v; p < v + n*step; p += step)
-        *p = val;
-}
-
 inline void vecset(Bool *v, Bool_I val, Long_I n)
 {
     for (Bool *p = v; p < v + n; ++p)
@@ -77,6 +65,18 @@ inline void vecset(Bool *v, Bool_I val, Long_I n)
 inline void vecset(Bool *v, Bool_I val, Long_I n, Long_I step)
 {
     for (Bool *p = v; p < v + n*step; p += step)
+        *p = val;
+}
+
+inline void vecset(Char *v, Char_I val, Long_I n)
+{
+    for (Char *p = v; p < v + n; ++p)
+        *p = val;
+}
+
+inline void vecset(Char *v, Char_I val, Long_I n, Long_I step)
+{
+    for (Char *p = v; p < v + n*step; p += step)
         *p = val;
 }
 
@@ -315,6 +315,11 @@ inline void copy(DvecComp_O v, Comp_I s)
     vecset(v.p(), s, v.size(), v.step());
 }
 
+inline void copy(vecBool_O v, Bool_I s)
+{
+    v.assign(v.size(), s);
+}
+
 inline void copy(vecInt_O v, Int_I s)
 {
     v.assign(v.size(), s);
@@ -323,16 +328,6 @@ inline void copy(vecInt_O v, Int_I s)
 inline void copy(vecLlong_O v, Llong_I s)
 {
     v.assign(v.size(), s);
-}
-
-inline void copy(vvecInt_O v, Int_I s)
-{
-    for (auto &v1 : v) v1.assign(v1.size(), s);
-}
-
-inline void copy(vvecLlong_O v, Llong_I s)
-{
-    for (auto &v1 : v) v1.assign(v1.size(), s);
 }
 
 inline void copy(VecChar_O v, Char_I s)
@@ -393,6 +388,21 @@ inline void copy(DvecLlong_O v, Llong_I s)
 inline void copy(DvecDoub_O v, Doub_I s)
 {
     vecset(v.p(), s, v.size(), v.step());
+}
+
+inline void copy(vvecBool_O v, Bool_I s)
+{
+    for (auto &v1 : v) v1.assign(v1.size(), s);
+}
+
+inline void copy(vvecInt_O v, Int_I s)
+{
+    for (auto &v1 : v) v1.assign(v1.size(), s);
+}
+
+inline void copy(vvecLlong_O v, Llong_I s)
+{
+    for (auto &v1 : v) v1.assign(v1.size(), s);
 }
 
 inline void copy(CmatInt_O v, Int_I s)
@@ -483,16 +493,6 @@ inline void copy(DcmatDoub_O v, Doub_I s)
     Long N1 = v.n0(), N2 = v.n1();
     for (Long j = 0; j < N2; ++j)
         vecset(&v(0, j), s, N1);
-}
-
-inline void copy(vecBool_O v, Bool_I s)
-{
-    v.assign(v.size(), s);
-}
-
-inline void copy(vvecBool_O v, Bool_I s)
-{
-    for (auto &v1 : v) v1.assign(v1.size(), s);
 }
 
 

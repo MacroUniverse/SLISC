@@ -115,11 +115,8 @@ inline @T@ mod_eu(Long_O n, @T1@_I s, @T2@_I d)
 //% end
 //%------------------------
 
-//% tem('sqr', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
-//%-----------------------------------
-//% T = varargin{:};
-inline @T@ sqr(@T@_I a) { return a * a; }
-//%------------------------
+template <class T>
+inline T sqr(const T &x) { return x * x; }
 
 //% tem('abs2', {'Int'; 'Doub'; 'Comp'; });
 //%-------------------------------
@@ -151,6 +148,12 @@ inline Qdoub factorialq(Int_I n) {
     return ret;
 }
 #endif
+
+template <class T>
+inline Long size(const vector<T> &v) { return v.size(); }
+
+template <class T>
+inline Long size(const std::basic_string<T> &v) { return v.size(); }
 
 //% tem('sinc', { 'Doub' });
 //%---------------------
