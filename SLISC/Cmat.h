@@ -339,15 +339,6 @@ inline void CmatLlong::reshape(Long_I N0, Long_I N1)
 typedef const CmatLlong &CmatLlong_I;
 typedef CmatLlong &CmatLlong_O, &CmatLlong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef CmatInt CmatLong;
-#else
-typedef CmatLlong CmatLong;
-#endif
-
-typedef const CmatLong &CmatLong_I;
-typedef CmatLong &CmatLong_O, &CmatLong_IO;
-
 class CmatFloat : public VbaseFloat
 {
 protected:
@@ -1106,6 +1097,14 @@ inline void CmatLimag::reshape(Long_I N0, Long_I N1)
 typedef const CmatLimag &CmatLimag_I;
 typedef CmatLimag &CmatLimag_O, &CmatLimag_IO;
 
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef CmatInt CmatLong;
+#else
+typedef CmatLlong CmatLong;
+#endif
+typedef const CmatLong &CmatLong_I;
+typedef CmatLong &CmatLong_O, &CmatLong_IO;
 
 class CmatBool : public VbaseBool
 {

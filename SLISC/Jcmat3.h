@@ -660,22 +660,6 @@ inline Llong *Jcmat3Llong::p() const
 
 typedef const Jcmat3Llong &Jcmat3Llong_O, &Jcmat3Llong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef Jcmat3Int_c Jcmat3Long_c;
-#else
-typedef Jcmat3Llong_c Jcmat3Long_c;
-#endif
-
-typedef const Jcmat3Long_c &Jcmat3Long_I;
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef Jcmat3Int Jcmat3Long;
-#else
-typedef Jcmat3Llong Jcmat3Long;
-#endif
-
-typedef const Jcmat3Long &Jcmat3Long_O, &Jcmat3Long_IO;
-
 class Jcmat3Float_c
 {
 protected:
@@ -1989,5 +1973,16 @@ inline Lcomp *Jcmat3Lcomp::p() const
 }
 
 typedef const Jcmat3Lcomp &Jcmat3Lcomp_O, &Jcmat3Lcomp_IO;
+
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef Jcmat3Int Jcmat3Long;
+typedef Jcmat3Int_c Jcmat3Long_c;
+#else
+typedef Jcmat3Llong Jcmat3Long;
+typedef Jcmat3Llong_c Jcmat3Long_c;
+#endif
+typedef const Jcmat3Long_c &Jcmat3Long_I;
+typedef const Jcmat3Long &Jcmat3Long_O, &Jcmat3Long_IO;
 
 } // namespace slisc

@@ -785,23 +785,6 @@ inline Llong * DcmatLlong::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLlong &DcmatLlong_O, &DcmatLlong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef DcmatInt_c DcmatLong_c;
-#else
-typedef DcmatLlong_c DcmatLong_c;
-#endif
-
-typedef const DcmatLong_c &DcmatLong_I;
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef DcmatInt DcmatLong;
-#else
-typedef DcmatLlong DcmatLong;
-#endif
-
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const DcmatLong &DcmatLong_O, &DcmatLong_IO;
-
 class DcmatFloat_c
 {
 protected:
@@ -1981,5 +1964,18 @@ inline Lcomp * DcmatLcomp::p() const
 typedef const DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
 
 
+
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef DcmatInt DcmatLong;
+typedef DcmatInt_c DcmatLong_c;
+#else
+typedef DcmatLlong DcmatLong;
+typedef DcmatLlong_c DcmatLong_c;
+#endif
+
+typedef const DcmatLong_c &DcmatLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DcmatLong &DcmatLong_O, &DcmatLong_IO;
 
 } // namespace slisc

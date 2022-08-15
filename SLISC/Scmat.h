@@ -603,23 +603,6 @@ inline ScmatLlong::~ScmatLlong() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLlong &ScmatLlong_O, &ScmatLlong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef ScmatInt_c ScmatLong_c;
-#else
-typedef ScmatLlong_c ScmatLong_c;
-#endif
-
-typedef const ScmatLong_c &ScmatLong_I;
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef ScmatInt ScmatLong;
-#else
-typedef ScmatLlong ScmatLong;
-#endif
-
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const ScmatLong &ScmatLong_O, &ScmatLong_IO;
-
 class ScmatFloat_c : public SvbaseFloat_c
 {
 protected:
@@ -1974,4 +1957,16 @@ inline ScmatLimag::~ScmatLimag() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLimag &ScmatLimag_O, &ScmatLimag_IO;
 
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef ScmatInt ScmatLong;
+typedef ScmatInt_c ScmatLong_c;
+#else
+typedef ScmatLlong ScmatLong;
+typedef ScmatLlong_c ScmatLong_c;
+#endif
+
+typedef const ScmatLong_c &ScmatLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const ScmatLong &ScmatLong_O, &ScmatLong_IO;
 } // namespace slisc

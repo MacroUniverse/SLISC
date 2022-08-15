@@ -13,7 +13,7 @@ namespace slisc {
 inline void cat(vecInt_IO v, vecInt_I v1)
 { v.insert(v.end(), v1.begin(), v1.end()); }
 
-inline void cat(vecLong_IO v, vecLong_I v1)
+inline void cat(vecLlong_IO v, vecLlong_I v1)
 { v.insert(v.end(), v1.begin(), v1.end()); }
 
 inline void cat(vecStr_IO v, vecStr_I v1)

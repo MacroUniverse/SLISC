@@ -15,6 +15,11 @@ if size(tem_db(ind).param, 2) ~= size(param, 2)
 end
 Np = size(param, 1);
 for i = 1:Np
+    for j = 1:size(param, 2)
+        if isa(param{i, j}, 'char')
+            param{i, j} = convert_Long(param{i, j});
+        end
+    end
     iparam = search_cell_row(tem_db(ind).param, param(i,:));
     if iparam < 0
         tem_db(ind).param = [tem_db(ind).param; param(i,:)];

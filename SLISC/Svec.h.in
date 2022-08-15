@@ -11,7 +11,6 @@ namespace slisc {
 //%     'Uchar', true;   'Uchar', false;
 //%     'Int', true;    'Int', false;
 //%     'Llong', true;  'Llong', false;
-//%     'Long', true;  'Long', false;
 //%     'Float', true;  'Float', false;
 //%     'Doub', true;   'Doub', false;
 //%     'Ldoub', true;  'Ldoub', false;
@@ -35,19 +34,6 @@ namespace slisc {
 //%     CT = T;
 //%     Class = SvbaseT;
 //% end
-//% if is_Long(T) && constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvbaseInt_c SvbaseLong_c;
-#else
-typedef SvbaseLlong_c SvbaseLong_c;
-#endif
-//% elseif is_Long(T) && ~constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvbaseInt SvbaseLong;
-#else
-typedef SvbaseLlong SvbaseLong;
-#endif
-//% else
 class @Class@
 {
 protected:
@@ -176,8 +162,15 @@ inline void @Class@::set(const @Class@ &sli)
 }
 
 inline @Class@::~@Class@() {}
-//% end
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvbaseInt SvbaseLong;
+typedef SvbaseInt_c SvbaseLong_c;
+#else
+typedef SvbaseLlong SvbaseLong;
+typedef SvbaseLlong_c SvbaseLong_c;
+#endif
 
 //% tem('Svec', {
 //%     'Char', true;   'Char', false;
@@ -208,19 +201,6 @@ inline @Class@::~@Class@() {}
 //%     CT = T;
 //%     Class = SvecT; Base = SvbaseT;
 //% end
-//% if is_Long(T) && constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt_c SvecLong_c;
-#else
-typedef SvecLlong_c SvecLong_c;
-#endif
-//% elseif is_Long(T) && ~constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt SvecLong;
-#else
-typedef SvecLlong SvecLong;
-#endif
-//% else
 class @Class@ : public @Base@
 {
 public:
@@ -246,8 +226,6 @@ inline @Class@::operator @SvecT_c@() const
 }
 //% end
 
-//% end
-
 //% if constness
 typedef const @Class@ &@SvecT@_I;
 //% else
@@ -255,5 +233,16 @@ typedef const @Class@ &@SvecT@_I;
 typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
 //% end
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong SvecLong;
+typedef SvecLlong_c SvecLong_c;
+#endif
+typedef const SvecLong_c &SvecLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 
 } // namespace slisc

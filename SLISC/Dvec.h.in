@@ -8,7 +8,6 @@ namespace slisc {
 //%     'Uchar', true; 'Uchar', false;
 //%     'Int', true; 'Int', false;
 //%     'Llong', true; 'Llong', false;
-//%     'Long', true; 'Long', false;
 //%     'Float', true; 'Float', false;
 //%     'Doub', true; 'Doub', false;
 //%     'Ldoub', true; 'Ldoub', false;
@@ -29,19 +28,6 @@ namespace slisc {
 //%     CT = T;
 //%     Class = DvecT;
 //% end
-//% if is_Long(T) && constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef DvecInt_c DvecLong_c;
-#else
-typedef DvecLlong_c DvecLong_c;
-#endif
-//% elseif is_Long(T) && ~constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef DvecInt DvecLong;
-#else
-typedef DvecLlong DvecLong;
-#endif
-//% else
 class @Class@
 {
 protected:
@@ -170,7 +156,6 @@ inline void @Class@::shift(Long_I N)
 
 inline @Class@::~@Class@() {}
 
-//% end
 
 //% if constness
 typedef const @Class@ &@DvecT@_I;
@@ -179,4 +164,16 @@ typedef const @Class@ &@DvecT@_I;
 typedef const @Class@ &@DvecT@_O, &@DvecT@_IO;
 //% end
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef DvecInt DvecLong;
+typedef DvecInt_c DvecLong_c;
+#else
+typedef DvecLlong DvecLong;
+typedef DvecLlong_c DvecLong_c;
+#endif
+typedef const DvecLong_c &DvecLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DvecLong &DvecLong_O, &DvecLong_IO;
+
 } // namespace slisc

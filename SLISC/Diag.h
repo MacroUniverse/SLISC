@@ -140,15 +140,6 @@ inline const DiagLlong &diag(VecLlong_I v)
 typedef const DiagLlong &DiagLlong_I;
 typedef DiagLlong &DiagLlong_O, &DiagLlong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef DiagInt DiagLong;
-#else
-typedef DiagLlong DiagLong;
-#endif
-
-typedef const DiagLong &DiagLong_I;
-typedef DiagLong &DiagLong_O, &DiagLong_IO;
-
 void veccpy(Doub *, const Doub *, Llong_I);
 
 class DiagDoub : public VecDoub
@@ -284,5 +275,14 @@ inline const DiagComp &diag(VecComp_I v)
 
 typedef const DiagComp &DiagComp_I;
 typedef DiagComp &DiagComp_O, &DiagComp_IO;
+
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef DiagInt DiagLong;
+#else
+typedef DiagLlong DiagLong;
+#endif
+typedef const DiagLong &DiagLong_I;
+typedef DiagLong &DiagLong_O, &DiagLong_IO;
 
 } // namespace slisc

@@ -6,20 +6,13 @@
 
 namespace slisc {
 //% tem('Vbase', {
-//%     'Char'; 'Uchar'; 'Int'; 'Llong'; 'Long';
+//%     'Char'; 'Uchar'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag';});
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef VbaseInt VbaseLong;
-#else
-typedef VbaseLlong VbaseLong;
-#endif
-//% else
 class @VbaseT@
 {
 protected:
@@ -183,8 +176,13 @@ inline @VbaseT@::~@VbaseT@()
     if (m_N != 0)
         delete[] m_p;
 }
-//% end
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef VbaseInt VbaseLong;
+#else
+typedef VbaseLlong VbaseLong;
+#endif
 
 class VbaseBool
 {

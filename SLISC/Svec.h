@@ -978,18 +978,6 @@ inline void SvbaseLlong::set(const SvbaseLlong &sli)
 
 inline SvbaseLlong::~SvbaseLlong() {}
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvbaseInt_c SvbaseLong_c;
-#else
-typedef SvbaseLlong_c SvbaseLong_c;
-#endif
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvbaseInt SvbaseLong;
-#else
-typedef SvbaseLlong SvbaseLong;
-#endif
-
 class SvbaseFloat_c
 {
 protected:
@@ -3182,6 +3170,14 @@ inline void SvbaseLimag::set(const SvbaseLimag &sli)
 inline SvbaseLimag::~SvbaseLimag() {}
 
 
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvbaseInt SvbaseLong;
+typedef SvbaseInt_c SvbaseLong_c;
+#else
+typedef SvbaseLlong SvbaseLong;
+typedef SvbaseLlong_c SvbaseLong_c;
+#endif
+
 class SvecChar_c : public SvbaseChar_c
 {
 public:
@@ -3196,7 +3192,6 @@ inline SvecChar_c::SvecChar_c(Long_I N) : SvbaseChar_c(N)
 
 inline SvecChar_c::SvecChar_c(const Char *data, Long_I N)
     : SvbaseChar_c(data, N) {}
-
 
 
 typedef const SvecChar_c &SvecChar_I;
@@ -3222,7 +3217,6 @@ inline SvecChar::operator SvecChar_c() const
     return *((SvecChar_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecChar &SvecChar_O, &SvecChar_IO;
 
@@ -3240,7 +3234,6 @@ inline SvecUchar_c::SvecUchar_c(Long_I N) : SvbaseUchar_c(N)
 
 inline SvecUchar_c::SvecUchar_c(const Uchar *data, Long_I N)
     : SvbaseUchar_c(data, N) {}
-
 
 
 typedef const SvecUchar_c &SvecUchar_I;
@@ -3266,7 +3259,6 @@ inline SvecUchar::operator SvecUchar_c() const
     return *((SvecUchar_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecUchar &SvecUchar_O, &SvecUchar_IO;
 
@@ -3284,7 +3276,6 @@ inline SvecInt_c::SvecInt_c(Long_I N) : SvbaseInt_c(N)
 
 inline SvecInt_c::SvecInt_c(const Int *data, Long_I N)
     : SvbaseInt_c(data, N) {}
-
 
 
 typedef const SvecInt_c &SvecInt_I;
@@ -3310,7 +3301,6 @@ inline SvecInt::operator SvecInt_c() const
     return *((SvecInt_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecInt &SvecInt_O, &SvecInt_IO;
 
@@ -3328,7 +3318,6 @@ inline SvecLlong_c::SvecLlong_c(Long_I N) : SvbaseLlong_c(N)
 
 inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I N)
     : SvbaseLlong_c(data, N) {}
-
 
 
 typedef const SvecLlong_c &SvecLlong_I;
@@ -3354,26 +3343,8 @@ inline SvecLlong::operator SvecLlong_c() const
     return *((SvecLlong_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLlong &SvecLlong_O, &SvecLlong_IO;
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt_c SvecLong_c;
-#else
-typedef SvecLlong_c SvecLong_c;
-#endif
-
-typedef const SvecLong_c &SvecLong_I;
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef SvecInt SvecLong;
-#else
-typedef SvecLlong SvecLong;
-#endif
-
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 
 class SvecFloat_c : public SvbaseFloat_c
 {
@@ -3389,7 +3360,6 @@ inline SvecFloat_c::SvecFloat_c(Long_I N) : SvbaseFloat_c(N)
 
 inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I N)
     : SvbaseFloat_c(data, N) {}
-
 
 
 typedef const SvecFloat_c &SvecFloat_I;
@@ -3415,7 +3385,6 @@ inline SvecFloat::operator SvecFloat_c() const
     return *((SvecFloat_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFloat &SvecFloat_O, &SvecFloat_IO;
 
@@ -3433,7 +3402,6 @@ inline SvecDoub_c::SvecDoub_c(Long_I N) : SvbaseDoub_c(N)
 
 inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I N)
     : SvbaseDoub_c(data, N) {}
-
 
 
 typedef const SvecDoub_c &SvecDoub_I;
@@ -3459,7 +3427,6 @@ inline SvecDoub::operator SvecDoub_c() const
     return *((SvecDoub_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecDoub &SvecDoub_O, &SvecDoub_IO;
 
@@ -3477,7 +3444,6 @@ inline SvecLdoub_c::SvecLdoub_c(Long_I N) : SvbaseLdoub_c(N)
 
 inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I N)
     : SvbaseLdoub_c(data, N) {}
-
 
 
 typedef const SvecLdoub_c &SvecLdoub_I;
@@ -3503,7 +3469,6 @@ inline SvecLdoub::operator SvecLdoub_c() const
     return *((SvecLdoub_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
 
@@ -3523,7 +3488,6 @@ inline SvecFcomp_c::SvecFcomp_c(Long_I N) : SvbaseFcomp_c(N)
 
 inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I N)
     : SvbaseFcomp_c(data, N) {}
-
 
 
 typedef const SvecFcomp_c &SvecFcomp_I;
@@ -3549,7 +3513,6 @@ inline SvecFcomp::operator SvecFcomp_c() const
     return *((SvecFcomp_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFcomp &SvecFcomp_O, &SvecFcomp_IO;
 
@@ -3567,7 +3530,6 @@ inline SvecComp_c::SvecComp_c(Long_I N) : SvbaseComp_c(N)
 
 inline SvecComp_c::SvecComp_c(const Comp *data, Long_I N)
     : SvbaseComp_c(data, N) {}
-
 
 
 typedef const SvecComp_c &SvecComp_I;
@@ -3593,7 +3555,6 @@ inline SvecComp::operator SvecComp_c() const
     return *((SvecComp_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecComp &SvecComp_O, &SvecComp_IO;
 
@@ -3611,7 +3572,6 @@ inline SvecLcomp_c::SvecLcomp_c(Long_I N) : SvbaseLcomp_c(N)
 
 inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I N)
     : SvbaseLcomp_c(data, N) {}
-
 
 
 typedef const SvecLcomp_c &SvecLcomp_I;
@@ -3637,7 +3597,6 @@ inline SvecLcomp::operator SvecLcomp_c() const
     return *((SvecLcomp_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
 
@@ -3657,7 +3616,6 @@ inline SvecFimag_c::SvecFimag_c(Long_I N) : SvbaseFimag_c(N)
 
 inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I N)
     : SvbaseFimag_c(data, N) {}
-
 
 
 typedef const SvecFimag_c &SvecFimag_I;
@@ -3683,7 +3641,6 @@ inline SvecFimag::operator SvecFimag_c() const
     return *((SvecFimag_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFimag &SvecFimag_O, &SvecFimag_IO;
 
@@ -3701,7 +3658,6 @@ inline SvecImag_c::SvecImag_c(Long_I N) : SvbaseImag_c(N)
 
 inline SvecImag_c::SvecImag_c(const Imag *data, Long_I N)
     : SvbaseImag_c(data, N) {}
-
 
 
 typedef const SvecImag_c &SvecImag_I;
@@ -3727,7 +3683,6 @@ inline SvecImag::operator SvecImag_c() const
     return *((SvecImag_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecImag &SvecImag_O, &SvecImag_IO;
 
@@ -3745,7 +3700,6 @@ inline SvecLimag_c::SvecLimag_c(Long_I N) : SvbaseLimag_c(N)
 
 inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I N)
     : SvbaseLimag_c(data, N) {}
-
 
 
 typedef const SvecLimag_c &SvecLimag_I;
@@ -3771,9 +3725,19 @@ inline SvecLimag::operator SvecLimag_c() const
     return *((SvecLimag_c *)this);
 }
 
-
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
 
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef SvecInt SvecLong;
+typedef SvecInt_c SvecLong_c;
+#else
+typedef SvecLlong SvecLong;
+typedef SvecLlong_c SvecLong_c;
+#endif
+typedef const SvecLong_c &SvecLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 
 } // namespace slisc

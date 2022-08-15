@@ -10,7 +10,7 @@
 namespace slisc {
 
 // concatinate std::vector
-//% tem('cat_vec', {'vecInt'; 'vecLong'; 'vecStr'; 'vecStr32';});
+//% tem('cat_vec', {'vecInt'; 'vecLlong'; 'vecStr'; 'vecStr32';});
 //%---------------------
 //% T = varargin{:};
 inline void cat(@T@_IO v, @T@_I v1)

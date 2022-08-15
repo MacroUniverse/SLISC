@@ -4,10 +4,12 @@
 // [GCH:STL+SLISC] 5.2s (GCH = gcc precompiled header)
 // [GCH:STL+SLISC+test_arithmetic] 7.2s
 
+#define SLS_USE_INT_AS_LONG
 // === Build time on Miranda with WSL2 ===
 // [STL+SLISC] 4.6s
 // [GCH:STL+SLISC] 1.7s
 #include <bits/stdc++.h>
+#include "../SLISC/global.h"
 #include "../SLISC/STL_util.h"
 #include "../SLISC/search.h"
 #include "../SLISC/sort.h"
@@ -24,6 +26,7 @@
 #include "../SLISC/file.h"
 #include "../SLISC/queue.h"
 #include "../SLISC/disjoint_sets.h"
+#include "../SLISC/hungarian.h"
 using namespace slisc;
 
 using namespace std;
@@ -43,5 +46,8 @@ int main()
 //    vector<int> v_num, v_num1; vector<string> v_str;
 //    read_input(v_num, v_str);
 //----------------------------------------------
+    vvecInt cost;
+    cost = {{1,2,3},{2,3,4},{3,4,5}};
+    auto res = hungarian(cost);
     return 0;
 }

@@ -4,18 +4,11 @@
 #include "Vec.h"
 
 namespace slisc {
-//% tem('Diag', {'Int'; 'Llong'; 'Long'; 'Doub'; 'Comp';});
+//% tem('Diag', {'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%----------------------------------------
 //% T = varargin{:};
 //% DiagT = ['Diag' T];
 //% VecT = ['Vec' T];
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef DiagInt DiagLong;
-#else
-typedef DiagLlong DiagLong;
-#endif
-//% else
 void veccpy(@T@ *, const @T@ *, Llong_I);
 
 class @DiagT@ : public @VecT@
@@ -80,9 +73,17 @@ inline const @DiagT@ &diag(@VecT@_I v)
 {
     return (@DiagT@&)v;
 }
-//% end
 
 typedef const @DiagT@ &@DiagT@_I;
 typedef @DiagT@ &@DiagT@_O, &@DiagT@_IO;
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef DiagInt DiagLong;
+#else
+typedef DiagLlong DiagLong;
+#endif
+typedef const DiagLong &DiagLong_I;
+typedef DiagLong &DiagLong_O, &DiagLong_IO;
+
 } // namespace slisc

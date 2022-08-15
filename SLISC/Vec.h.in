@@ -4,7 +4,7 @@
 
 namespace slisc {
 //% tem('Vec', {
-//%     'Char'; 'Uchar'; 'Int'; 'Llong'; 'Long';
+//%     'Char'; 'Uchar'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag';});
@@ -12,13 +12,6 @@ namespace slisc {
 //% T = varargin{:};
 //% VecT = ['Vec' T];
 //% VbaseT = ['Vbase' T];
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef VecInt VecLong;
-#else
-typedef VecLlong VecLong;
-#endif
-//% else
 class @VecT@ : public @VbaseT@
 {
 public:
@@ -44,10 +37,17 @@ inline void @VecT@::operator<<(@VecT@ &rhs)
     Base::operator<<(rhs);
 }
 
-//% end
 typedef const @VecT@ &@VecT@_I;
 typedef @VecT@ &@VecT@_O, &@VecT@_IO;
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef VecInt VecLong;
+#else
+typedef VecLlong VecLong;
+#endif
+typedef const VecLong &VecLong_I;
+typedef VecLong &VecLong_O, &VecLong_IO;
 
 // implemented with vector<Bool>, not actually a vector of Bool
 class VecBool : public VbaseBool

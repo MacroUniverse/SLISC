@@ -264,15 +264,6 @@ inline Long Cmat4Llong::n3() const {
 typedef const Cmat4Llong &Cmat4Llong_I;
 typedef Cmat4Llong &Cmat4Llong_O, &Cmat4Llong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef Cmat4Int Cmat4Long;
-#else
-typedef Cmat4Llong Cmat4Long;
-#endif
-
-typedef const Cmat4Long &Cmat4Long_I;
-typedef Cmat4Long &Cmat4Long_O, &Cmat4Long_IO;
-
 class Cmat4Float : public VbaseFloat
 {
 protected:
@@ -1057,5 +1048,14 @@ inline Long Cmat4Limag::n3() const {
 
 typedef const Cmat4Limag &Cmat4Limag_I;
 typedef Cmat4Limag &Cmat4Limag_O, &Cmat4Limag_IO;
+
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef Cmat4Int Cmat4Long;
+#else
+typedef Cmat4Llong Cmat4Long;
+#endif
+typedef const Cmat4Long &Cmat4Long_I;
+typedef Cmat4Long &Cmat4Long_O, &Cmat4Long_IO;
 
 } // namespace slisc

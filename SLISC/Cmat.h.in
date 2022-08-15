@@ -4,7 +4,7 @@
 
 namespace slisc {
 //% tem('Cmat', {
-//%     'Char'; 'Uchar'; 'Int'; 'Llong'; 'Long';
+//%     'Char'; 'Uchar'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag';});
@@ -12,13 +12,6 @@ namespace slisc {
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
 //% VbaseT = ['Vbase' T];
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef CmatInt CmatLong;
-#else
-typedef CmatLlong CmatLong;
-#endif
-//% else
 class @CmatT@ : public @VbaseT@
 {
 protected:
@@ -99,11 +92,18 @@ inline void @CmatT@::reshape(Long_I N0, Long_I N1)
 #endif
     m_N0 = N0; m_N1 = N1;
 }
-//% end
 
 typedef const @CmatT@ &@CmatT@_I;
 typedef @CmatT@ &@CmatT@_O, &@CmatT@_IO;
 //%----------------------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef CmatInt CmatLong;
+#else
+typedef CmatLlong CmatLong;
+#endif
+typedef const CmatLong &CmatLong_I;
+typedef CmatLong &CmatLong_O, &CmatLong_IO;
 
 class CmatBool : public VbaseBool
 {

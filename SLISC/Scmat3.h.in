@@ -6,7 +6,6 @@ namespace slisc {
 //%     'Char', true;   'Char', false;
 //%     'Int', true;    'Int', false;
 //%     'Llong', true;  'Llong', false;
-//%     'Long', true;  'Long', false;
 //%     'Float', true;  'Float', false;
 //%     'Doub', true;   'Doub', false;
 //%     'Ldoub', true;  'Ldoub', false;
@@ -32,19 +31,6 @@ namespace slisc {
 //%     Base = SvbaseT;
 //%     Class = Scmat3T;
 //% end
-//% if is_Long(T) && constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef Scmat3Int_c Scmat3Long_c;
-#else
-typedef Scmat3Llong_c Scmat3Long_c;
-#endif
-//% elseif is_Long(T) && ~constness
-#ifdef SLS_USE_INT_AS_LONG
-typedef Scmat3Int Scmat3Long;
-#else
-typedef Scmat3Llong Scmat3Long;
-#endif
-//% else
 class @Class@ : public @Base@
 {
 protected:
@@ -128,7 +114,6 @@ inline void @Class@::set(const @Class@ &sli)
 }
 
 inline @Class@::~@Class@() {}
-//% end
 
 //% if constness
 typedef const @Class@ &@Scmat3T@_I;
@@ -137,4 +122,17 @@ typedef const @Class@ &@Scmat3T@_I;
 typedef const @Class@ &@Scmat3T@_O, &@Scmat3T@_IO;
 //% end
 //%------------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef Scmat3Int Scmat3Long;
+typedef Scmat3Int_c Scmat3Long_c;
+#else
+typedef Scmat3Llong Scmat3Long;
+typedef Scmat3Llong_c Scmat3Long_c;
+#endif
+
+typedef const Scmat3Long_c &Scmat3Long_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const Scmat3Long &Scmat3Long_O, &Scmat3Long_IO;
+
 } // namespace slisc

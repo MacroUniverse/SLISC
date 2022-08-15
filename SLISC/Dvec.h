@@ -995,23 +995,6 @@ inline DvecLlong::~DvecLlong() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLlong &DvecLlong_O, &DvecLlong_IO;
 
-#ifdef SLS_USE_INT_AS_LONG
-typedef DvecInt_c DvecLong_c;
-#else
-typedef DvecLlong_c DvecLong_c;
-#endif
-
-typedef const DvecLong_c &DvecLong_I;
-
-#ifdef SLS_USE_INT_AS_LONG
-typedef DvecInt DvecLong;
-#else
-typedef DvecLlong DvecLong;
-#endif
-
-// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
-typedef const DvecLong &DvecLong_O, &DvecLong_IO;
-
 class DvecFloat_c
 {
 protected:
@@ -2503,5 +2486,17 @@ inline DvecLcomp::~DvecLcomp() {}
 typedef const DvecLcomp &DvecLcomp_O, &DvecLcomp_IO;
 
 
+
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef DvecInt DvecLong;
+typedef DvecInt_c DvecLong_c;
+#else
+typedef DvecLlong DvecLong;
+typedef DvecLlong_c DvecLong_c;
+#endif
+typedef const DvecLong_c &DvecLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DvecLong &DvecLong_O, &DvecLong_IO;
 
 } // namespace slisc
