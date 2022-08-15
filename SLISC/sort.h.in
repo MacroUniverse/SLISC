@@ -209,9 +209,9 @@ inline void sort_case_insens(@T@_IO v, @T1@_IO v1)
     sort(v, v1);
     @T@ v_low; to_lower(v_low, v);
     VecLong order(v.size());
-//% req('sort(v,v)', {'vecStr', 'VecLlong'; 'vecStr', 'VecLlong';});
+//% req('sort(v,v)', {'vecStr', 'VecLlong'; 'vecStr', 'VecLong';});
     sort(v_low, order); // case insensitive sorting
-//% req('reorder', {T, 'VecLlong'; T, 'VecInt'; T1, 'VecLlong'; T1, 'VecInt'});
+//% req('reorder', {T, 'VecLlong'; T, 'VecInt'; T1, 'VecLong'; T1, 'VecInt'});
     reorder(v, order);
     reorder(v1, order);
 }
