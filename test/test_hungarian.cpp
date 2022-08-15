@@ -1,10 +1,11 @@
 #include "../SLISC/hungarian.h"
 
-void test_hungarian() //example of usage
+int test_hungarian() //example of usage
 {
-	using namespace slisc;
+    using namespace slisc;
+    using namespace std;
     
-    vector<vector<vector<Long>>> tests;
+    vector<vector<vector<int>>> tests;
     
     tests.push_back({{25,40,35},
                      {40,60,35},
@@ -19,16 +20,16 @@ void test_hungarian() //example of usage
                      {30,10,20,30},
                      {35,20,25,30}});
     
-    tests.push_back({{10,19,8,15,1000},
-                     {10,18,7,17,1000},
-                     {13,16,9,14,1000},
-                     {12,19,8,18,1000},
-                     {14,17,10,19,1000}});
+    tests.push_back({{10,19,8,15,0},
+                     {10,18,7,17,0},
+                     {13,16,9,14,0},
+                     {12,19,8,18,0},
+                     {14,17,10,19,0}});
+
+    SLS_ASSERT(hungarian(tests[0]) == 95);
+    SLS_ASSERT(hungarian(tests[1]) == 129);
+    SLS_ASSERT(hungarian(tests[2]) == 111);
+    SLS_ASSERT(hungarian(tests[3]) == 48);
     
-    for (auto& m: tests) {
-        auto r = hungarian(m);
-        // cout << "Optimal cost: " << r << endl;
-        // cout << "----------------- \n\n";
-		r *= 0;
-    }
+    return 0;
 }
