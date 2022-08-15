@@ -233,6 +233,14 @@ typedef vector<Str32> vecStr32;
 typedef const vecStr32 &vecStr32_I;
 typedef vecStr32 &vecStr32_O, &vecStr32_IO;
 
+typedef vector<vector<Bool>> vvecBool;
+typedef const vvecBool &vvecBool_I;
+typedef vvecBool &vvecBool_O, &vvecBool_IO;
+
+typedef vector<vector<Char>> vvecChar;
+typedef const vvecChar &vvecChar_I;
+typedef vvecChar &vvecChar_O, &vvecChar_IO;
+
 typedef vector<vector<Int>> vvecInt;
 typedef const vvecInt &vvecInt_I;
 typedef vvecInt &vvecInt_O, &vvecInt_IO;

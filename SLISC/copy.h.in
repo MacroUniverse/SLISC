@@ -121,10 +121,11 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // must use pointer version
 // scalar to container
 //% tem('copy(v,s)', {
-//% 'vecInt'; 'vecLlong'; 'vvecInt'; 'vvecLlong';
+//% 'vecBool'; 'vecInt'; 'vecLlong';
 //% 'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //% 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //% 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp';
+//% 'vvecBool'; 'vvecInt'; 'vvecLlong';
 //% 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
 //% 'MatInt'; 'VecQdoub'; 'MatDoub'; 'ScmatDoub'; 'ScmatComp';
 //% 'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
@@ -135,10 +136,9 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 inline void copy(@T@_O v, @Ts@_I s)
 {
 //% if is_vector(T)
-    vecset(v.data(), s, v.size());
+    v.assign(v.size(), s);
 //% elseif is_vvec(T)
-    for (auto &v1 : v)
-        vecset(v1.data(), s, v1.size());
+    for (auto &v1 : v) v1.assign(v1.size(), s);
 //% elseif is_VecBool(T)
     Long N = v.size();
     for (Long i = 0; i < N; ++i)

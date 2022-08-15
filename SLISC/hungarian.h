@@ -19,8 +19,7 @@
  * This version is written by Fernando B. Giannasi */
 #pragma once
 #include "copy.h"
-#include "arith1.h"
-#include "arith4.h"
+#include "arithmetic.h"
 
 namespace slisc {
 
@@ -49,22 +48,17 @@ inline void hungarian_step1(vvecLong& matrix, Long& step)
     // process rows
     for (auto& row: matrix) {
         auto smallest = *std::min_element(begin(row), end(row));
-        if (smallest > 0)        
-            for (auto& n: row)
-                n -= smallest;
+        if (smallest > 0) row -= smallest;
     }
     // process cols
     Long sz = matrix.size(); // square matrix is granted
-    for (Long j=0; j<sz; ++j) {
+    for (Long j = 0; j < sz; ++j) {
         Long minval = std::numeric_limits<Long>::max();
-        for (Long i = 0; i < sz; ++i) {
+        for (Long i = 0; i < sz; ++i)
             minval = std::min(minval, matrix[i][j]);
-        }
-        if (minval > 0) {
-            for (Long i=0; i<sz; ++i) {
+        if (minval > 0)
+            for (Long i=0; i<sz; ++i)
                 matrix[i][j] -= minval;
-            }
-        }
     }
     step = 2;
 }
@@ -80,21 +74,15 @@ inline void hungarian_step1(vvecLong& matrix, Long& step)
  * (i.e. set M(i,j)=1) and cover its row and column (i.e. set R_cov(i)=1 and C_cov(j)=1).
  * Before we go on to Step 3, we uncover all rows and columns so that we can use the 
  * cover vectors to help us count the number of starred zeros. */
-inline void hungarian_step2(vvecLong_I matrix, 
-           vvecLong& M, 
-           vecLong & RowCover,
-           vecLong & ColCover, 
-           Long& step)
+inline void hungarian_step2(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCover,
+           vecBool_IO ColCover, Long& step)
 {
     Long sz = matrix.size();
-    
     for (Long r=0; r<sz; ++r) 
         for (Long c=0; c<sz; ++c) 
             if (matrix[r][c] == 0)
                 if (RowCover[r] == 0 && ColCover[c] == 0) {
-                    M[r][c] = 1;
-                    RowCover[r] = 1;
-                    ColCover[c] = 1;
+                    M[r][c] = 1; RowCover[r] = 1; ColCover[c] = 1;
                 }
     copy(RowCover, 0); copy(ColCover, 0);
     step = 3;
@@ -105,14 +93,14 @@ inline void hungarian_step2(vvecLong_I matrix,
  * otherwise, Go to Step 4. Once we have searched the entire cost matrix, we count the 
  * number of independent zeros found.  If we have found (and starred) K independent zeros 
  * then we are done.  If not we procede to Step 4.*/
-inline void hungarian_step3(vvecLong_I M, vecLong& ColCover, Long& step)
+inline void hungarian_step3(vvecChar_I M, vecBool_IO ColCover, Long_IO step)
 {
     Long sz = M.size(), colcount = 0;
     for (Long r=0; r<sz; ++r)
         for (Long c=0; c<sz; ++c)
             if (M[r][c] == 1)
                 ColCover[c] = 1;
-    for (auto& n: ColCover)
+    for (auto n : ColCover)
         if (n == 1)
             colcount++;
     if (colcount >= sz)
@@ -122,8 +110,8 @@ inline void hungarian_step3(vvecLong_I M, vecLong& ColCover, Long& step)
 }
 
 // Following functions to support step 4
-inline void find_a_zero(Long& row, Long& col,
-                 vvecLong_I matrix, vecLong_I RowCover, vecLong_I ColCover)
+inline void hungarian_find_a_zero(Long& row, Long& col,
+                 vvecLong_I matrix, vecBool_I RowCover, vecBool_I ColCover)
 {
     Long r = 0, c = 0, sz = matrix.size();
     bool done = false;
@@ -144,51 +132,39 @@ inline void find_a_zero(Long& row, Long& col,
     }
 }
 
-inline bool star_in_row(Long row, vvecLong_I M)
+inline bool hungarian_star_in_row(Long row, vvecChar_I M)
 {
     bool tmp = false;
-    for (unsigned c = 0; c < M.size(); c++)
+    for (Long c = 0; c < size(M); c++)
         if (M[row][c] == 1)
             tmp = true;
     return tmp;
-}
-
-
-inline void find_star_in_row(Long row, Long& col, vvecLong_I M)
-{
-    col = -1;
-    for (unsigned c = 0; c < M.size(); c++)
-        if (M[row][c] == 1)
-            col = c;
 }
 
 /* Find a noncovered zero and prime it.  If there is no starred zero in the row containing
  * this primed zero, Go to Step 5.  Otherwise, cover this row and uncover the column 
  * containing the starred zero. Continue in this manner until there are no uncovered zeros
  * left. Save the smallest uncovered value and Go to Step 6. */
-inline void hungarian_step4(vvecLong_I matrix, 
-           vvecLong& M, 
-           vecLong& RowCover,
-           vecLong& ColCover,
-           Long& path_row_0,
-           Long& path_col_0,
-           Long& step)
+inline void hungarian_step4(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCover,
+           vecBool_IO ColCover, Long& path_row_0, Long& path_col_0, Long& step)
 {
     Long row = -1, col = -1;
     bool done = false;
     while (!done) {
-        find_a_zero(row, col, matrix, RowCover, ColCover);
-        
+        hungarian_find_a_zero(row, col, matrix, RowCover, ColCover);
         if (row == -1){
             done = true;
             step = 6;
         }
         else {
             M[row][col] = 2;
-            if (star_in_row(row, M)) {
-                find_star_in_row(row, col, M);
-                RowCover[row] = 1;
-                ColCover[col] = 0;
+            if (hungarian_star_in_row(row, M)) {
+                // hungarian_find_star_in_row(row, col, M);
+                col = -1;
+                for (unsigned c = 0; c < M.size(); c++)
+                    if (M[row][c] == 1)
+                        col = c;
+                RowCover[row] = 1; ColCover[col] = 0;
             }
             else {
                 done = true;
@@ -201,15 +177,15 @@ inline void hungarian_step4(vvecLong_I matrix,
 }
 
 // Following functions to support step 5
-inline void hungarian_find_star_in_col(Long c, Long& r, vvecLong_I M)
+inline void hungarian_find_star_in_col(Long c, Long& r, vvecChar_I M)
 {
     r = -1;
-    for (unsigned i = 0; i < M.size(); i++)
+    for (Long i = 0; i < size(M); i++)
         if (M[i][c] == 1)
             r = i;
 }
 
-inline void hungarian_find_prime_in_row(Long r, Long& c, vvecLong_I M)
+inline void hungarian_find_prime_in_row(Long r, Long& c, vvecChar_I M)
 {
     for (unsigned j = 0; j < M.size(); j++)
         if (M[r][j] == 2)
@@ -226,7 +202,7 @@ inline void hungarian_find_prime_in_row(Long r, Long& c, vvecLong_I M)
  * familiar.  It is a verbal description of the augmenting path algorithm (for solving
  * the maximal matching problem). */
 inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0, 
-           vvecLong& M, vecLong& RowCover, vecLong& ColCover, Long& step)
+           vvecChar_IO M, vecBool_IO RowCover, vecBool_IO ColCover, Long& step)
 {
     Long r = -1, c = -1;
     Long path_count = 1;
@@ -275,7 +251,7 @@ inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0,
  * found not to be elements of the minimal assignment.  Also we are only changing the 
  * values by an amount equal to the smallest value in the cost matrix, so we will not
  * jump over the optimal (i.e. minimal assignment) with this change. */
-inline void hungarian_step6(vvecLong& matrix, vecLong_I RowCover, vecLong_I ColCover, Long& step)
+inline void hungarian_step6(vvecLong& matrix, vecBool_I RowCover, vecBool_I ColCover, Long& step)
 {
     Long minval = std::numeric_limits<Long>::max();
 	for (unsigned r = 0; r < matrix.size(); r++)
@@ -295,7 +271,7 @@ inline void hungarian_step6(vvecLong& matrix, vecLong_I RowCover, vecLong_I ColC
 }
 
 /* Calculates the optimal cost from mask matrix */
-inline Long output_solution(vvecLong_I original, vvecLong_I M)
+inline Long hungarian_output_solution(vvecLong_I original, vvecChar_I M)
 {
     Long res = 0;
     for (unsigned j=0; j<original.begin()->size(); ++j)
@@ -332,12 +308,11 @@ inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
     
     /* The masked matrix M.  If M(i,j)=1 then C(i,j) is a starred zero,  
      * If M(i,j)=2 then C(i,j) is a primed zero. */
-    vvecLong M(sz, vecLong(sz, 0));
+    vvecChar M(sz, vecChar(sz, 0));
     
     /* We also define two vectors RowCover and ColCover that are used to "cover" 
      *the rows and columns of the cost matrix C*/
-    vecLong RowCover(sz, 0);
-    vecLong ColCover(sz, 0);
+    vecBool RowCover(sz, 0), ColCover(sz, 0);
     
     Long path_row_0, path_col_0; //temporary to hold the smallest uncovered value
     
@@ -362,7 +337,7 @@ inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
             case 6:
                 hungarian_step6(matrix, RowCover, ColCover, step); break;
             case 7:
-                for (auto& vec: M) {vec.resize(original.begin()->size());}
+                for (auto &vec: M) { vec.resize(original.begin()->size()); }
                 M.resize(original.size()); done = true; break;
             default:
                 done = true; break;
@@ -373,7 +348,7 @@ inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
     // std::cout << "Cost Matrix: \n" << original << std::endl 
     //          << "Optimal assignment: \n" << M;
     
-    return output_solution(original, M);
+    return hungarian_output_solution(original, M);
 }
 
 } // namespace slisc

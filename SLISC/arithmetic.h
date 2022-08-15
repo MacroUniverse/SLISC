@@ -8,25 +8,12 @@
 #include "cut.h"
 
 namespace slisc {
-// return signed size instead of unsigned
-inline Long size(vecBool_I v) { return v.size(); }
 
-inline Long size(vecInt_I v) { return v.size(); }
+template <class T>
+inline Long size(const vector<T> &v) { return v.size(); }
 
-inline Long size(vecLlong_I v) { return v.size(); }
-
-inline Long size(vecDoub_I v) { return v.size(); }
-
-inline Long size(vecComp_I v) { return v.size(); }
-
-inline Long size(vecStr_I v) { return v.size(); }
-
-inline Long size(vecStr32_I v) { return v.size(); }
-
-inline Long size(Str_I v) { return v.size(); }
-
-inline Long size(Str32_I v) { return v.size(); }
-
+template <class T>
+inline Long size(const std::basic_string<T> &v) { return v.size(); }
 
 // concatinate std::vector
 inline void cat(vecInt_IO v, vecInt_I v1)
