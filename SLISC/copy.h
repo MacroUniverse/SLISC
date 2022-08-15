@@ -969,6 +969,22 @@ inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
 }
 
 
+template <class T1, class T2>
+inline void copy(vector<vector<T1>> &v1, const vector<vector<T2>> &v2)
+{
+#ifdef SLS_CHECK_SHAPE
+    Long N = v1.size();
+    SLS_ASSERT(N == v2.size());
+    for (Long i = 0; i < N; ++i)
+        SLS_ASSERT(v1[i].size() == v2[i].size());
+#endif
+    Long j = 0;
+    for (auto &v : v1) {
+        veccpy(v.data(), v2[j].data(), v.size());
+        ++j;
+    }
+}
+
 // for sparse containers
 inline void copy(McooDoub_O v, McooDoub_I v1)
 {

@@ -148,7 +148,7 @@ inline bool hungarian_star_in_row(Long row, vvecChar_I M)
 inline void hungarian_step4(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCover,
            vecBool_IO ColCover, Long& path_row_0, Long& path_col_0, Long& step)
 {
-    Long row = -1, col = -1;
+    Long row = -1, col = -1, sz = M.size();
     bool done = false;
     while (!done) {
         hungarian_find_a_zero(row, col, matrix, RowCover, ColCover);
@@ -161,14 +161,13 @@ inline void hungarian_step4(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCove
             if (hungarian_star_in_row(row, M)) {
                 // hungarian_find_star_in_row(row, col, M);
                 col = -1;
-                for (unsigned c = 0; c < M.size(); c++)
+                for (Long c = 0; c < sz; c++)
                     if (M[row][c] == 1)
                         col = c;
                 RowCover[row] = 1; ColCover[col] = 0;
             }
             else {
-                done = true;
-                step = 5;
+                done = true; step = 5;
                 path_row_0 = row;
                 path_col_0 = col;
             }
@@ -253,13 +252,12 @@ inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0,
  * jump over the optimal (i.e. minimal assignment) with this change. */
 inline void hungarian_step6(vvecLong& matrix, vecBool_I RowCover, vecBool_I ColCover, Long& step)
 {
-    Long minval = std::numeric_limits<Long>::max();
-	for (unsigned r = 0; r < matrix.size(); r++)
-        for (unsigned c = 0; c < matrix.size(); c++)
+    Long sz = matrix.size(), minval = std::numeric_limits<Long>::max();
+	for (Long r = 0; r < sz; r++)
+        for (Long c = 0; c < sz; c++)
             if (RowCover[r] == 0 && ColCover[c] == 0)
                 if (minval > matrix[r][c])
                     minval = matrix[r][c];
-    Long sz = matrix.size();
     for (Long r = 0; r < sz; r++)
         for (Long c = 0; c < sz; c++) {
             if (RowCover[r] == 1)
@@ -271,38 +269,23 @@ inline void hungarian_step6(vvecLong& matrix, vecBool_I RowCover, vecBool_I ColC
 }
 
 /* Main function of the algorithm */
-inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
-{  
-    /* Initialize data structures */
-    // Work on a vector copy to preserve original matrix
-    // Didn't passed by value cause needed to access both
-    vvecLong matrix (original.size(), 
-                                        vecLong(original.begin()->size()));
-    auto it = original.begin();
-    for (auto& vec: matrix) {         
-        std::copy(it->begin(), it->end(), vec.begin());
-        it = std::next(it);
-    }
-    
-    // handle negative values -> pass true if allowed or false otherwise
+// `original` is the square cost matrix
+inline Long hungarian(vvecLong_I cost, bool allow_negatives = true)
+{
+    const Long sz = cost.size();
+#ifdef SLS_CHECK_SHAPES
+    if (cost.empty() || cost[0].size() != sz)
+        SLS_ERR("wrong shape!");
+#endif
+    vvecLong matrix(sz, vecLong(sz));
+    copy(matrix, cost);
     hungarian_handle_negatives(matrix, allow_negatives);
+
+    vvecChar M(sz, vecChar(sz, 0)); // The masked matrix M
+    vecBool RowCover(sz, 0), ColCover(sz, 0); // "cover" the cost matrix
+    Long path_row_0, path_col_0; // temporary to hold the smallest uncovered value
+    vvecLong path(2*sz, vecLong(2, 0)); // Array for the augmenting path algorithm
     
-    std::size_t sz = matrix.size();
-    
-    /* The masked matrix M.  If M(i,j)=1 then C(i,j) is a starred zero,  
-     * If M(i,j)=2 then C(i,j) is a primed zero. */
-    vvecChar M(sz, vecChar(sz, 0));
-    
-    /* We also define two vectors RowCover and ColCover that are used to "cover" 
-     *the rows and columns of the cost matrix C*/
-    vecBool RowCover(sz, 0), ColCover(sz, 0);
-    
-    Long path_row_0, path_col_0; //temporary to hold the smallest uncovered value
-    
-    // Array for the augmenting path algorithm
-    vvecLong path(2*sz, vecLong(2, 0));
-    
-    /* Now Work The Steps */
     bool done = false;
     Long step = 1;
     while (!done) {
@@ -320,18 +303,18 @@ inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
             case 6:
                 hungarian_step6(matrix, RowCover, ColCover, step); break;
             case 7:
-                for (auto &vec: M) { vec.resize(original.begin()->size()); }
-                M.resize(original.size()); done = true; break;
+                for (auto &vec: M) { vec.resize(sz); }
+                M.resize(sz); done = true; break;
             default:
                 done = true; break;
         }
     }
-    // output solution
+    // total cost
     Long res = 0;
-    for (Long j = 0; j < size(original[0]); ++j)
-        for (Long i = 0; i < size(original); ++i)
+    for (Long j = 0; j < sz; ++j)
+        for (Long i = 0; i < sz; ++i)
             if (M[i][j]) {
-                auto it1 = original.begin();
+                auto it1 = cost.begin();
                 std::advance(it1, i);
                 auto it2 = it1->begin();
                 std::advance(it2, j);
