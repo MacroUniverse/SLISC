@@ -342,7 +342,7 @@ inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
     Long path_row_0, path_col_0; //temporary to hold the smallest uncovered value
     
     // Array for the augmenting path algorithm
-    vvecLong path(sz+1, vecLong(2, 0));
+    vvecLong path(2*sz, vecLong(2, 0));
     
     /* Now Work The Steps */
     bool done = false;

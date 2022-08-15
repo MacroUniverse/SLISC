@@ -31,13 +31,11 @@ void test_hungarian() //example of usage
                     {40,60,35},
                     {20,40,25}}); res.push_back(95);
 
-    // ====== failed!!!!!!!!! ===============
-    // tests.push_back({{15,40,45},
-    //                 {20,60,35},
-    //                 {20,40,25}}); res.push_back(85);    
+    tests.push_back({{15,40,45},
+                    {20,60,35},
+                    {20,40,25}}); res.push_back(85);    
 
     for (Long i = 0; i < (Long)tests.size(); ++i) {
-        // cout << " =========== " << i << " =========== " << endl;
         SLS_ASSERT(hungarian(tests[i]) == res[i]);
     }
 }
