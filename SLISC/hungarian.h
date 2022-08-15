@@ -1,5 +1,7 @@
-// Hungarian algorithm in C++ The Hungarian algorithm, also know as Munkres or Kuhn-Munkres algorithm is usefull for solving the assignment problem
+// Hungarian algorithm in C++ The Hungarian algorithm,
+// also know as Munkres or Kuhn-Munkres algorithm is usefull for solving the assignment problem
 // https://github.com/phoemur/hungarian_algorithm
+// see also: https://www.geeksforgeeks.org/hungarian-algorithm-assignment-problem-set-1-introduction/
 
 /* This is an implementation of the Hungarian algorithm in C++
  * The Hungarian algorithm, also know as Munkres or Kuhn-Munkres
@@ -16,7 +18,6 @@
  * 
  * This version is written by Fernando B. Giannasi */
 #pragma once
-#include "global.h"
 #include "copy.h"
 #include "arith1.h"
 #include "arith4.h"
@@ -25,7 +26,7 @@ namespace slisc {
 
 /* Handle negative elements if present. If allowed = true, add abs(minval) to 
  * every element to create one zero. Else throw an exception */
-void handle_negatives(vector<vector<Long>>& matrix, bool allowed = true)
+inline void hungarian_handle_negatives(vvecLong& matrix, bool allowed = true)
 {
     Long minval = min(matrix);
     if (minval < 0) {
@@ -43,7 +44,7 @@ void handle_negatives(vector<vector<Long>>& matrix, bool allowed = true)
  * element in its row.  
  * For each col of the matrix, find the smallest element and subtract it from every 
  * element in its col. Go to Step 2. */
-void step1(vector<vector<Long>>& matrix, Long& step)
+inline void hungarian_step1(vvecLong& matrix, Long& step)
 {
     // process rows
     for (auto& row: matrix) {
@@ -52,7 +53,6 @@ void step1(vector<vector<Long>>& matrix, Long& step)
             for (auto& n: row)
                 n -= smallest;
     }
-    
     // process cols
     Long sz = matrix.size(); // square matrix is granted
     for (Long j=0; j<sz; ++j) {
@@ -80,10 +80,10 @@ void step1(vector<vector<Long>>& matrix, Long& step)
  * (i.e. set M(i,j)=1) and cover its row and column (i.e. set R_cov(i)=1 and C_cov(j)=1).
  * Before we go on to Step 3, we uncover all rows and columns so that we can use the 
  * cover vectors to help us count the number of starred zeros. */
-void step2(const vector<vector<Long>>& matrix, 
-           vector<vector<Long>>& M, 
-           vector<Long>& RowCover,
-           vector<Long>& ColCover, 
+inline void hungarian_step2(vvecLong_I matrix, 
+           vvecLong& M, 
+           vecLong & RowCover,
+           vecLong & ColCover, 
            Long& step)
 {
     Long sz = matrix.size();
@@ -105,51 +105,34 @@ void step2(const vector<vector<Long>>& matrix,
  * otherwise, Go to Step 4. Once we have searched the entire cost matrix, we count the 
  * number of independent zeros found.  If we have found (and starred) K independent zeros 
  * then we are done.  If not we procede to Step 4.*/
-void step3(const vector<vector<Long>>& M, 
-           vector<Long>& ColCover,
-           Long& step)
+inline void hungarian_step3(vvecLong_I M, vecLong& ColCover, Long& step)
 {
-    Long sz = M.size();
-    Long colcount = 0;
-    
+    Long sz = M.size(), colcount = 0;
     for (Long r=0; r<sz; ++r)
         for (Long c=0; c<sz; ++c)
             if (M[r][c] == 1)
                 ColCover[c] = 1;
-            
     for (auto& n: ColCover)
         if (n == 1)
             colcount++;
-    
-    if (colcount >= sz) {
+    if (colcount >= sz)
         step = 7; // solution found
-    }
-    else {
+    else
         step = 4;
-    }
 }
 
 // Following functions to support step 4
-void find_a_zero(Long& row, 
-                 Long& col,
-                 const vector<vector<Long>>& matrix,
-                 const vector<Long>& RowCover,
-                 const vector<Long>& ColCover)
+inline void find_a_zero(Long& row, Long& col,
+                 vvecLong_I matrix, vecLong_I RowCover, vecLong_I ColCover)
 {
-    Long r = 0;
-    Long c = 0;
-    Long sz = matrix.size();
+    Long r = 0, c = 0, sz = matrix.size();
     bool done = false;
-    row = -1;
-    col = -1;
-    
+    row = col = -1;
     while (!done) {
         c = 0;
         while (true) {
             if (matrix[r][c] == 0 && RowCover[r] == 0 && ColCover[c] == 0) {
-                row = r;
-                col = c;
-                done = true;
+                row = r; col = c; done = true;
             }
             c += 1;
             if (c >= sz || done)
@@ -161,21 +144,17 @@ void find_a_zero(Long& row,
     }
 }
 
-bool star_in_row(Long row, 
-                 const vector<vector<Long>>& M)
+inline bool star_in_row(Long row, vvecLong_I M)
 {
     bool tmp = false;
     for (unsigned c = 0; c < M.size(); c++)
         if (M[row][c] == 1)
             tmp = true;
-    
     return tmp;
 }
 
 
-void find_star_in_row(Long row,
-                      Long& col, 
-                      const vector<vector<Long>>& M)
+inline void find_star_in_row(Long row, Long& col, vvecLong_I M)
 {
     col = -1;
     for (unsigned c = 0; c < M.size(); c++)
@@ -183,24 +162,21 @@ void find_star_in_row(Long row,
             col = c;
 }
 
-
 /* Find a noncovered zero and prime it.  If there is no starred zero in the row containing
  * this primed zero, Go to Step 5.  Otherwise, cover this row and uncover the column 
  * containing the starred zero. Continue in this manner until there are no uncovered zeros
  * left. Save the smallest uncovered value and Go to Step 6. */
-void step4(const vector<vector<Long>>& matrix, 
-           vector<vector<Long>>& M, 
-           vector<Long>& RowCover,
-           vector<Long>& ColCover,
+inline void hungarian_step4(vvecLong_I matrix, 
+           vvecLong& M, 
+           vecLong& RowCover,
+           vecLong& ColCover,
            Long& path_row_0,
            Long& path_col_0,
            Long& step)
 {
-    Long row = -1;
-    Long col = -1;
+    Long row = -1, col = -1;
     bool done = false;
-
-    while (!done){
+    while (!done) {
         find_a_zero(row, col, matrix, RowCover, ColCover);
         
         if (row == -1){
@@ -225,9 +201,7 @@ void step4(const vector<vector<Long>>& matrix,
 }
 
 // Following functions to support step 5
-void find_star_in_col(Long c, 
-                      Long& r,
-                      const vector<vector<Long>>& M)
+inline void hungarian_find_star_in_col(Long c, Long& r, vvecLong_I M)
 {
     r = -1;
     for (unsigned i = 0; i < M.size(); i++)
@@ -235,34 +209,12 @@ void find_star_in_col(Long c,
             r = i;
 }
 
-void find_prime_in_row(Long r, 
-                       Long& c, 
-                       const vector<vector<Long>>& M)
+inline void hungarian_find_prime_in_row(Long r, Long& c, vvecLong_I M)
 {
     for (unsigned j = 0; j < M.size(); j++)
         if (M[r][j] == 2)
             c = j;
 }
-
-void augment_path(vector<vector<Long>>& path, 
-                  Long path_count, 
-                  vector<vector<Long>>& M)
-{
-    for (Long p = 0; p < path_count; p++)
-        if (M[path[p][0]][path[p][1]] == 1)
-            M[path[p][0]][path[p][1]] = 0;
-        else
-            M[path[p][0]][path[p][1]] = 1;
-}
-
-void erase_primes(vector<vector<Long>>& M)
-{
-    for (auto& row: M)
-        for (auto& val: row)
-            if (val == 2)
-                val = 0;
-}
-
 
 /* Construct a series of alternating primed and starred zeros as follows.  
  * Let Z0 represent the uncovered primed zero found in Step 4.  Let Z1 denote the 
@@ -273,24 +225,16 @@ void erase_primes(vector<vector<Long>>& M)
  * line in the matrix.  Return to Step 3.  You may notice that Step 5 seems vaguely 
  * familiar.  It is a verbal description of the augmenting path algorithm (for solving
  * the maximal matching problem). */
-void step5(vector<vector<Long>>& path, 
-           Long path_row_0, 
-           Long path_col_0, 
-           vector<vector<Long>>& M, 
-           vector<Long>& RowCover,
-           vector<Long>& ColCover,
-           Long& step)
+inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0, 
+           vvecLong& M, vecLong& RowCover, vecLong& ColCover, Long& step)
 {
-    Long r = -1;
-    Long c = -1;
+    Long r = -1, c = -1;
     Long path_count = 1;
-    
     path[path_count - 1][0] = path_row_0;
     path[path_count - 1][1] = path_col_0;
-    
     bool done = false;
     while (!done) {
-        find_star_in_col(path[path_count - 1][1], r, M);
+        hungarian_find_star_in_col(path[path_count - 1][1], r, M);
         if (r > -1) {
             path_count += 1;
             path[path_count - 1][0] = r;
@@ -299,30 +243,25 @@ void step5(vector<vector<Long>>& path,
         else {done = true;}
         
         if (!done) {
-            find_prime_in_row(path[path_count - 1][0], c, M);
+            hungarian_find_prime_in_row(path[path_count - 1][0], c, M);
             path_count += 1;
             path[path_count - 1][0] = path[path_count - 2][0];
             path[path_count - 1][1] = c;
         }
     }
-    
-    augment_path(path, path_count, M);
+    // augment_path
+	for (Long p = 0; p < path_count; p++)
+        if (M[path[p][0]][path[p][1]] == 1)
+            M[path[p][0]][path[p][1]] = 0;
+        else
+            M[path[p][0]][path[p][1]] = 1;
 	copy(RowCover, 0); copy(ColCover, 0);
-    erase_primes(M);
+	// erase primes
+    for (auto& row: M)
+        for (auto& val: row)
+            if (val == 2)
+                val = 0;
     step = 3;
-}
-
-// methods to support step 6
-void find_smallest(Long& minval, 
-                   const vector<vector<Long>>& matrix, 
-                   const vector<Long>& RowCover,
-                   const vector<Long>& ColCover)
-{
-    for (unsigned r = 0; r < matrix.size(); r++)
-        for (unsigned c = 0; c < matrix.size(); c++)
-            if (RowCover[r] == 0 && ColCover[c] == 0)
-                if (minval > matrix[r][c])
-                    minval = matrix[r][c];
 }
 
 /* Add the value found in Step 4 to every element of each covered row, and subtract it 
@@ -336,14 +275,14 @@ void find_smallest(Long& minval,
  * found not to be elements of the minimal assignment.  Also we are only changing the 
  * values by an amount equal to the smallest value in the cost matrix, so we will not
  * jump over the optimal (i.e. minimal assignment) with this change. */
-void step6(vector<vector<Long>>& matrix, 
-           const vector<Long>& RowCover,
-           const vector<Long>& ColCover,
-           Long& step)
+inline void hungarian_step6(vvecLong& matrix, vecLong_I RowCover, vecLong_I ColCover, Long& step)
 {
     Long minval = std::numeric_limits<Long>::max();
-    find_smallest(minval, matrix, RowCover, ColCover);
-    
+	for (unsigned r = 0; r < matrix.size(); r++)
+        for (unsigned c = 0; c < matrix.size(); c++)
+            if (RowCover[r] == 0 && ColCover[c] == 0)
+                if (minval > matrix[r][c])
+                    minval = matrix[r][c];
     Long sz = matrix.size();
     for (Long r = 0; r < sz; r++)
         for (Long c = 0; c < sz; c++) {
@@ -352,14 +291,11 @@ void step6(vector<vector<Long>>& matrix,
             if (ColCover[c] == 0)
                 matrix[r][c] -= minval;
     }
-    
     step = 4;
 }
 
 /* Calculates the optimal cost from mask matrix */
-template<class Container>
-Long output_solution(const Container& original,
-                  const vector<vector<Long>>& M)
+inline Long output_solution(vvecLong_I original, vvecLong_I M)
 {
     Long res = 0;
     for (unsigned j=0; j<original.begin()->size(); ++j)
@@ -376,16 +312,13 @@ Long output_solution(const Container& original,
 }
 
 /* Main function of the algorithm */
-template<class Container>
-inline Long hungarian(const Container& original,
-          bool allow_negatives = true)
+inline Long hungarian(vvecLong_I original, bool allow_negatives = true)
 {  
     /* Initialize data structures */
-    
     // Work on a vector copy to preserve original matrix
     // Didn't passed by value cause needed to access both
-    vector<vector<Long>> matrix (original.size(), 
-                                        vector<Long>(original.begin()->size()));
+    vvecLong matrix (original.size(), 
+                                        vecLong(original.begin()->size()));
     auto it = original.begin();
     for (auto& vec: matrix) {         
         std::copy(it->begin(), it->end(), vec.begin());
@@ -393,23 +326,23 @@ inline Long hungarian(const Container& original,
     }
     
     // handle negative values -> pass true if allowed or false otherwise
-    handle_negatives(matrix, allow_negatives);
+    hungarian_handle_negatives(matrix, allow_negatives);
     
     std::size_t sz = matrix.size();
     
     /* The masked matrix M.  If M(i,j)=1 then C(i,j) is a starred zero,  
      * If M(i,j)=2 then C(i,j) is a primed zero. */
-    vector<vector<Long>> M (sz, vector<Long>(sz, 0));
+    vvecLong M (sz, vecLong(sz, 0));
     
     /* We also define two vectors RowCover and ColCover that are used to "cover" 
      *the rows and columns of the cost matrix C*/
-    vector<Long> RowCover (sz, 0);
-    vector<Long> ColCover (sz, 0);
+    vecLong RowCover(sz, 0);
+    vecLong ColCover(sz, 0);
     
     Long path_row_0, path_col_0; //temporary to hold the smallest uncovered value
     
     // Array for the augmenting path algorithm
-    vector<vector<Long>> path (sz+1, vector<Long>(2, 0));
+    vvecLong path (sz+1, vecLong(2, 0));
     
     /* Now Work The Steps */
     bool done = false;
@@ -417,31 +350,22 @@ inline Long hungarian(const Container& original,
     while (!done) {
         switch (step) {
             case 1:
-                step1(matrix, step);
-                break;
+                hungarian_step1(matrix, step); break;
             case 2:
-                step2(matrix, M, RowCover, ColCover, step);
-                break;
+                hungarian_step2(matrix, M, RowCover, ColCover, step); break;
             case 3:
-                step3(M, ColCover, step);
-                break;
+                hungarian_step3(M, ColCover, step); break;
             case 4:
-                step4(matrix, M, RowCover, ColCover, path_row_0, path_col_0, step);
-                break;
+                hungarian_step4(matrix, M, RowCover, ColCover, path_row_0, path_col_0, step); break;
             case 5:
-                step5(path, path_row_0, path_col_0, M, RowCover, ColCover, step);
-                break;
+                hungarian_step5(path, path_row_0, path_col_0, M, RowCover, ColCover, step); break;
             case 6:
-                step6(matrix, RowCover, ColCover, step);
-                break;
+                hungarian_step6(matrix, RowCover, ColCover, step); break;
             case 7:
                 for (auto& vec: M) {vec.resize(original.begin()->size());}
-                M.resize(original.size());
-                done = true;
-                break;
+                M.resize(original.size()); done = true; break;
             default:
-                done = true;
-                break;
+                done = true; break;
         }
     }
     

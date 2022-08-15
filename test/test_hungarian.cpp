@@ -5,7 +5,7 @@ int test_hungarian() //example of usage
     using namespace slisc;
     using namespace std;
     
-    vector<vector<vector<int>>> tests;
+    vector<vvecLong> tests;
     
     tests.push_back({{25,40,35},
                      {40,60,35},

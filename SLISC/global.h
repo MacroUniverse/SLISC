@@ -241,6 +241,14 @@ typedef vector<vector<Llong>> vvecLlong;
 typedef const vvecLlong &vvecLlong_I;
 typedef vvecLlong &vvecLlong_O, &vvecLlong_IO;
 
+#ifdef SLS_USE_INT_AS_LONG
+typedef vvecInt vvecLong;
+#else
+typedef vvecLlong vvecLong;
+#endif
+typedef const vvecLong &vvecLong_I;
+typedef vvecLong &vvecLong_O, &vvecLong_IO;
+
 // quiet NaN definition
 // uncomment one of the following 3 methods of defining a global NaN
 // you can test by verifying that (NaN != NaN) is true
