@@ -453,6 +453,28 @@ inline void copy(DcmatDoub_O v, Doub_I s)
         vecset(&v(0, j), s, N1);
 }
 
+inline void copy(vecInt_O v, Int_I s)
+{
+    vecset(v.data(), s, v.size());
+}
+
+inline void copy(vecLlong_O v, Llong_I s)
+{
+    vecset(v.data(), s, v.size());
+}
+
+inline void copy(vvecInt_O v, Int_I s)
+{
+    for (auto &v1 : v)
+        vecset(v1.data(), s, v1.size());
+}
+
+inline void copy(vvecLlong_O v, Llong_I s)
+{
+    for (auto &v1 : v)
+        vecset(v1.data(), s, v1.size());
+}
+
 
 // copy value to containers
 // clang compiler error: second argument to 'va_arg' is of non-POD type 'slisc::Comp'

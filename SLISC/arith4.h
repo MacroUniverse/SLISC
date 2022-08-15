@@ -264,6 +264,30 @@ inline void divide_equals_vs(Comp *v, Imag_I s, Long_I N, Long_I step)
 { times_equals_vs(v, 1./s, N, step); }
 
 
+inline void operator+=(vecInt_IO v, Int_I s)
+{ plus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator-=(vecInt_IO v, Int_I s)
+{ minus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator*=(vecInt_IO v, Int_I s)
+{ times_equals_vs(v.data(), s, v.size()); }
+
+inline void operator/=(vecInt_IO v, Int_I s)
+{ divide_equals_vs(v.data(), s, v.size()); }
+
+inline void operator+=(vecLlong_IO v, Llong_I s)
+{ plus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator-=(vecLlong_IO v, Llong_I s)
+{ minus_equals_vs(v.data(), s, v.size()); }
+
+inline void operator*=(vecLlong_IO v, Llong_I s)
+{ times_equals_vs(v.data(), s, v.size()); }
+
+inline void operator/=(vecLlong_IO v, Llong_I s)
+{ divide_equals_vs(v.data(), s, v.size()); }
+
 inline void operator+=(VecInt_IO v, Int_I s)
 { plus_equals_vs(v.p(), s, v.size()); }
 
@@ -492,30 +516,32 @@ inline void operator*=(Cmat3Comp_IO v, Comp_I s)
 inline void operator/=(Cmat3Comp_IO v, Comp_I s)
 { divide_equals_vs(v.p(), s, v.size()); }
 
-inline void operator+=(vecInt_IO v, Int_I s)
-{ plus_equals_vs(v.data(), s, v.size()); }
 
-inline void operator-=(vecInt_IO v, Int_I s)
-{ minus_equals_vs(v.data(), s, v.size()); }
+template <class T>
+inline void operator+=(vector<vector<T>> &v, const T &s)
+{
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            e += s;
+}
 
-inline void operator*=(vecInt_IO v, Int_I s)
-{ times_equals_vs(v.data(), s, v.size()); }
+template <class T>
+inline void operator-=(vector<vector<T>> &v, const T &s)
+{
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            e -= s;
+}
 
-inline void operator/=(vecInt_IO v, Int_I s)
-{ divide_equals_vs(v.data(), s, v.size()); }
+template <class T>
+inline void operator*=(vector<vector<T>> &v, const T &s)
+{
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            e *= s;
+}
 
-inline void operator+=(vecLlong_IO v, Llong_I s)
-{ plus_equals_vs(v.data(), s, v.size()); }
-
-inline void operator-=(vecLlong_IO v, Llong_I s)
-{ minus_equals_vs(v.data(), s, v.size()); }
-
-inline void operator*=(vecLlong_IO v, Llong_I s)
-{ times_equals_vs(v.data(), s, v.size()); }
-
-inline void operator/=(vecLlong_IO v, Llong_I s)
-{ divide_equals_vs(v.data(), s, v.size()); }
-
+// don't use c++ template for operator/=()
 
 inline void plus_equals_vv(Comp *v, const Doub *v1, Long_I N)
 {

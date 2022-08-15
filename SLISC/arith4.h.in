@@ -169,6 +169,32 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //% end
 //%-------------------------
 
+template <class T>
+inline void operator+=(vector<vector<T>> &v, const T &s)
+{
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            e += s;
+}
+
+template <class T>
+inline void operator-=(vector<vector<T>> &v, const T &s)
+{
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            e -= s;
+}
+
+template <class T>
+inline void operator*=(vector<vector<T>> &v, const T &s)
+{
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            e *= s;
+}
+
+// don't use c++ template for operator/=()
+
 //% tem('plus_equals_vv', { 'Comp', 'Doub' });
 //%-------------------
 //% [T, T1] = varargin{:};

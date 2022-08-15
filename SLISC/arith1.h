@@ -425,6 +425,85 @@ inline Doub min(DcmatDoub_I v) { return min_dcmat(v.p(), v.n0(), v.n1(), v.lda()
 
 inline Doub min2(Long_O i, Long_O j, DcmatDoub_I v) { return min_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 
+inline Int max(vecInt_I v) { return max_v(v.data(), v.size()); }
+
+inline Int max(Long_O ind, vecInt_I v) { return max_v(ind, v.data(), v.size()); }
+
+inline Int min(vecInt_I v) { return min_v(v.data(), v.size()); }
+
+inline Int min(Long_O ind, vecInt_I v) { return min_v(ind, v.data(), v.size()); }
+
+inline Llong max(vecLlong_I v) { return max_v(v.data(), v.size()); }
+
+inline Llong max(Long_O ind, vecLlong_I v) { return max_v(ind, v.data(), v.size()); }
+
+inline Llong min(vecLlong_I v) { return min_v(v.data(), v.size()); }
+
+inline Llong min(Long_O ind, vecLlong_I v) { return min_v(ind, v.data(), v.size()); }
+
+inline Int max(vvecInt_I v) {
+    Int s = numeric_limits<Int>::min(), s1;
+    for (auto &v1 : v) { s1 = max(v1); if (s < s1) s = s1; }
+    return s;
+}
+
+inline Int max(Long_O ind, vvecInt_I v) {
+    Long ind1;
+    Int s = numeric_limits<Int>::min(), s1;
+    for (auto &v1 : v) { s1 = max(ind1, v1); if (s < s1) s = s1, ind = ind1; }
+    return s;
+}
+
+inline Int min(vvecInt_I v) {
+    Int s = numeric_limits<Int>::max(), s1;
+    for (auto &v1 : v) { s1 = min(v1); if (s1 < s) s = s1; }
+    return s;
+}
+
+inline Int min(Long_O ind, vvecInt_I v) {
+    Long ind1;
+    Int s = numeric_limits<Int>::max(), s1;
+    for (auto &v1 : v) { s1 = min(ind1, v1); if (s1 < s) s = s1, ind = ind1; }
+    return s;
+}
+
+inline Llong max(vvecLlong_I v) {
+    Llong s = numeric_limits<Llong>::min(), s1;
+    for (auto &v1 : v) { s1 = max(v1); if (s < s1) s = s1; }
+    return s;
+}
+
+inline Llong max(Long_O ind, vvecLlong_I v) {
+    Long ind1;
+    Llong s = numeric_limits<Llong>::min(), s1;
+    for (auto &v1 : v) { s1 = max(ind1, v1); if (s < s1) s = s1, ind = ind1; }
+    return s;
+}
+
+inline Llong min(vvecLlong_I v) {
+    Llong s = numeric_limits<Llong>::max(), s1;
+    for (auto &v1 : v) { s1 = min(v1); if (s1 < s) s = s1; }
+    return s;
+}
+
+inline Llong min(Long_O ind, vvecLlong_I v) {
+    Long ind1;
+    Llong s = numeric_limits<Llong>::max(), s1;
+    for (auto &v1 : v) { s1 = min(ind1, v1); if (s1 < s) s = s1, ind = ind1; }
+    return s;
+}
+
+
+
+template <class T>
+inline T min(const vector<vector<T>> &v)
+{
+    T s = numeric_limits<T>::max();
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            if (e < s) s = e;
+    return s;
+}
 
 // find smallest Nmin elements
 template <class T>

@@ -77,13 +77,50 @@ inline @T@ @fun@_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, L
 //% end
 //%-------------------------
 
-//% tem('max', {'VecInt'; 'VecLlong'; 'VecDoub';
+//% tem('max', {
+//%  'vecInt'; 'vecLlong';
+//%  'VecInt'; 'VecLlong'; 'VecDoub';
 //%  'SvecInt'; 'SvecLlong'; 'SvecDoub';
+//%  'vvecInt'; 'vvecLlong';
 //%  'DcmatLlong'; 'DcmatDoub'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('max_v', { 'max', Ts; 'min', Ts });
-//% if is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
+//% if is_vector(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(@T@_I v) { return max_v(v.data(), v.size()); }
+
+inline @Ts@ max(Long_O ind, @T@_I v) { return max_v(ind, v.data(), v.size()); }
+
+inline @Ts@ min(@T@_I v) { return min_v(v.data(), v.size()); }
+
+inline @Ts@ min(Long_O ind, @T@_I v) { return min_v(ind, v.data(), v.size()); }
+//% elseif is_vvec(T) && is_real(Ts) && ~is_Bool(Ts)
+inline @Ts@ max(@T@_I v) {
+    @Ts@ s = numeric_limits<@Ts@>::min(), s1;
+    for (auto &v1 : v) { s1 = max(v1); if (s < s1) s = s1; }
+    return s;
+}
+
+inline @Ts@ max(Long_O ind, @T@_I v) {
+    Long ind1;
+    @Ts@ s = numeric_limits<@Ts@>::min(), s1;
+    for (auto &v1 : v) { s1 = max(ind1, v1); if (s < s1) s = s1, ind = ind1; }
+    return s;
+}
+
+inline @Ts@ min(@T@_I v) {
+    @Ts@ s = numeric_limits<@Ts@>::max(), s1;
+    for (auto &v1 : v) { s1 = min(v1); if (s1 < s) s = s1; }
+    return s;
+}
+
+inline @Ts@ min(Long_O ind, @T@_I v) {
+    Long ind1;
+    @Ts@ s = numeric_limits<@Ts@>::max(), s1;
+    for (auto &v1 : v) { s1 = min(ind1, v1); if (s1 < s) s = s1, ind = ind1; }
+    return s;
+}
+//% elseif is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
 inline @Ts@ max(@T@_I v) { return max_v(v.p(), v.size()); }
 
 inline @Ts@ max(Long_O ind, @T@_I v) { return max_v(ind, v.p(), v.size()); }
@@ -112,6 +149,17 @@ inline @Ts@ min2(Long_O i, Long_O j, @T@_I v) { return min_dcmat(i, j, v.p(), v.
 //%     error(['max: not implemented (5): ' T]);
 //% end
 //%-------------------------
+
+
+template <class T>
+inline T min(const vector<vector<T>> &v)
+{
+    T s = numeric_limits<T>::max();
+    for (auto &v1 : v)
+        for (auto &e : v1)
+            if (e < s) s = e;
+    return s;
+}
 
 // find smallest Nmin elements
 template <class T>

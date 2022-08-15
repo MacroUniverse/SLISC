@@ -233,6 +233,14 @@ typedef vector<Str32> vecStr32;
 typedef const vecStr32 &vecStr32_I;
 typedef vecStr32 &vecStr32_O, &vecStr32_IO;
 
+typedef vector<vector<Int>> vvecInt;
+typedef const vvecInt &vvecInt_I;
+typedef vvecInt &vvecInt_O, &vvecInt_IO;
+
+typedef vector<vector<Llong>> vvecLlong;
+typedef const vvecLlong &vvecLlong_I;
+typedef vvecLlong &vvecLlong_O, &vvecLlong_IO;
+
 // quiet NaN definition
 // uncomment one of the following 3 methods of defining a global NaN
 // you can test by verifying that (NaN != NaN) is true
