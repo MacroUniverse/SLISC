@@ -3,7 +3,7 @@
 
 compiler = clang++
 
-flags = -Wall -Wno-reorder -std=c++11 -g #-D NDEBUG
+flags = -Wall -Wno-reorder -std=c++11 -D SLS_USE_INT_AS_LONG -g #-D NDEBUG
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)

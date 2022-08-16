@@ -11,11 +11,12 @@ void test_global()
 	if (!slisc::isnan(c) || slisc::isnan(Comp(1,2)))
 		SLS_FAIL;
 	if (sizeof(Char) != 1) SLS_FAIL;
-	if (sizeof(Int) != 4) SLS_FAIL;
-	if (sizeof(Llong) != 8) SLS_FAIL;
 	if (sizeof(Uchar) != 1) SLS_FAIL;
+	if (sizeof(Int) != 4) SLS_FAIL;
 	if (sizeof(Uint) != 4) SLS_FAIL;
+	if (sizeof(Llong) != 8) SLS_FAIL;
 	if (sizeof(Ullong) != 8) SLS_FAIL;
+
 	if (sizeof(Float) != 4) SLS_FAIL;
 	if (sizeof(Doub) != 8) SLS_FAIL;
 	if (sizeof(Fcomp) != 8) SLS_FAIL;
@@ -28,7 +29,13 @@ void test_global()
 		SLS_WARN("Ldoub bytes: " + to_string(sizeof(Ldoub)));
 		SLS_WARN("Lcomp bytes: " + to_string(sizeof(Lcomp)));
 	}
-	//% check if is 80 bit implementation
+#ifdef SLS_USE_INT_AS_LONG
+	SLS_WARN("Using Int as Long");
+	SLS_ASSERT(sizeof(Long) == 4);
+#else
+	SLS_ASSERT(sizeof(Long) == 8);
+#endif
+	// check if is 80 bit implementation
 #ifndef SLS_USE_MSVC
 	if (abs(std::numeric_limits<Ldoub>::max() - 1.1897314e+4932L) > 1e4926L)
 		SLS_WARN("Ldoub max =" + to_string(std::numeric_limits<Ldoub>::max()));

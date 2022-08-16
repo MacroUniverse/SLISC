@@ -14,7 +14,7 @@ compiler = g++
 # asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(quad_math_flag) $(asan_flag) # -D NDEBUG -D SLS_USE_INT_AS_LONG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 -D SLS_USE_INT_AS_LONG $(quad_math_flag) $(asan_flag) # -D NDEBUG
 libs = $(quad_math_lib)
 
 # file lists

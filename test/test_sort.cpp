@@ -70,6 +70,20 @@ void test_sort()
 		}
 	}
 
+	// test heapsort()
+	{
+		cout << "heapsort" << endl;
+		Long N = 101;
+		VecInt v(N);
+		for (Long i = 0; i < N; ++i)
+			v[i] = randInt(N);
+		heapsort(v.p(), v.size());
+		for (Long i = 1; i < N; ++i) {
+			if (v[i] < v[i-1])
+				SLS_FAIL;
+		}
+	}
+
     // test sort(v, v)
 	{
 		Long N = 100;

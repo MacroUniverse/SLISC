@@ -2,18 +2,18 @@
 #include "compare.h"
 #include "arithmetic.h"
 #include "unicode.h"
+#include "heap.h"
 
 namespace slisc {
-//% tem('sort_v', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Str'; 'Str32'});
-//%-----------------------------------
-//% T = varargin{:};
+
 // sort elements of arr
 // adapted from Numerical Recipes 3ed
-inline void sort_v(@T@ *arr, Long_I n)
+template <class T>
+inline void sort_v(T *arr, Long_I n)
 {
     static const Int M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0;
-    @T@ a;
+    T a;
     VecLong istack(NSTACK);
     ir = n - 1;
     for (;;) {
@@ -68,7 +68,6 @@ inline void sort_v(@T@ *arr, Long_I n)
         }
     }
 }
-//%------------------------
 
 //% tem('sort', {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
 //%          'vecStr'; 'vecStr32'});
@@ -79,16 +78,14 @@ inline void sort(@T@_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
 //%------------------------
 
 // sort v while making the same change for v1
-//% tem('sort_vv', { 'Doub', 'Llong' });
-//%------------------------
-//% [T, T1] = varargin{:};
-//  from Numerical Recipes 3ed
-inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
+// adapted from Numerical Recipes 3ed
+template <class T, class T1>
+inline void sort_vv(T *v, T1 *v1, Long_I N)
 {
     const Long M = 7, NSTACK = 64;
     Long i, ir, j, k, jstack = -1, l = 0, n = N;
-    @T@ a;
-    @T1@ b;
+    T a;
+    T1 b;
     VecLong istack(NSTACK);
     ir = n - 1;
     for (;;) {
@@ -154,7 +151,7 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
         }
     }
 }
-//%------------------------
+
 
 // sort v while making the same change for v1
 //% tem('sort(v,v)', { 'VecInt', 'VecInt';
@@ -169,7 +166,6 @@ inline void sort_vv(@T@ *v, @T1@ *v1, Long_I N)
 inline void sort(@T@_IO v, @T1@_IO v1)
 {
 //% req('assert_same_shape', {T, T1});
-//% req('sort_vv', {Ts,Ts1});
     assert_same_shape(v, v1);
     sort_vv(&v[0], &v1[0], v.size());
 }
@@ -209,9 +205,9 @@ inline void sort_case_insens(@T@_IO v, @T1@_IO v1)
     sort(v, v1);
     @T@ v_low; to_lower(v_low, v);
     VecLong order(v.size());
-//% req('sort(v,v)', {'vecStr', 'VecLlong'; 'vecStr', 'VecLong';});
+//% req('sort(v,v)', {T, 'VecLong';});
     sort(v_low, order); // case insensitive sorting
-//% req('reorder', {T, 'VecLlong'; T, 'VecInt'; T1, 'VecLong'; T1, 'VecInt'});
+//% req('reorder', {T, 'VecLong'; T1, 'VecLong';});
     reorder(v, order);
     reorder(v1, order);
 }
@@ -358,6 +354,18 @@ void mergesort(T *v, Long N, T *wsp)
     }
     if (i != N1)
         memcpy(v+ind, wsp+i, Tsize*(N1-i));
+}
+
+// Main function to do heap sort
+template <class T>
+inline void heapsort(T *v, Long N)
+{
+    for (Long i = N / 2 - 1; i >= 0; i--)
+        heapify(v, N, i);
+    for (Long i = N - 1; i >= 0; i--) {
+        swap(v[0], v[i]);
+        heapify(v, i, 0);
+    }
 }
 
 } // namespace slisc

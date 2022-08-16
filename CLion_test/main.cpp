@@ -40,14 +40,10 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str) {
     }
 }
 
-// Driver program to test above functions
 int main()
 {
 //    vector<int> v_num, v_num1; vector<string> v_str;
 //    read_input(v_num, v_str);
 //----------------------------------------------
-    vvecInt cost;
-    cost = {{1,2,3},{2,3,4},{3,4,5}};
-    auto res = hungarian(cost);
     return 0;
 }

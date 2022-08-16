@@ -21,9 +21,101 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="223e5e8e-b874-41ec-bda0-6bdd877948e6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cband.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cband.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmat.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmat.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmat3.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmat3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmat3.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmat3.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmat4.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmat4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmat4.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmat4.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmobd.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmobd.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Cmobd.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Cmobd.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Dcit.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Dcit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Dcmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Dcmat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Dcmat.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Dcmat.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Diag.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Diag.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Diag.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Diag.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Dvec.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Dvec.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Dvec.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Dvec.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Imag.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Imag.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Jcmat3.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Jcmat3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Jcmat3.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Jcmat3.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Mat.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Mat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Mat3.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Mat3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Mcoo.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Mcoo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Scmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Scmat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Scmat.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Scmat.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Scmat3.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Scmat3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Scmat3.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Scmat3.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Svec.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Svec.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Svec.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Svec.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Vbase.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Vbase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Vbase.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Vbase.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Vec.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Vec.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/Vec.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/Vec.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arith1.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arith1.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arith1.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arith1.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arith2.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arith2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arith4.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arith4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arith4.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arith4.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arithmetic.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arithmetic.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/arithmetic.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/arithmetic.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/band_arith.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/band_arith.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/compare.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/compare.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/complex_arith.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/complex_arith.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/copy.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/copy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/copy.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/copy.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/coulomb.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/coulomb.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/cut.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/cut.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/disjoint_sets.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/disjoint_sets.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/disp.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/disp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/eig.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/eig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/expokit.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/expokit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/fedvr.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/fedvr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/fft.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/fft.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/file.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/file.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/global.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/global.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/graph.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/hungarian.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/hungarian.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/hydrogen.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/hydrogen.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/interp1.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/interp1.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/lanczos.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/lanczos.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/legendreP.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/legendreP.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/lin_eq.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/lin_eq.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/linbcg.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/linbcg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/mat_fun.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/mat_fun.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/matb.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/matb.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/matb.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/matb.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/matfile.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/matfile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/matt.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/matt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/matt.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/matt.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/mul.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/mul.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/random.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/random.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/random.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/random.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/reorder.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/reorder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/scalar_arith.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/scalar_arith.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/scalar_arith.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/scalar_arith.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/search.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/search.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/sort.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/sort.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/sort.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/sort.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/sparse_arith.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/sparse_arith.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/string.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/string.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/unicode.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/unicode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/unicode.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/unicode.h.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../input.inp" beforeDir="false" afterPath="$PROJECT_DIR$/../input.inp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../make/g++_min.mak" beforeDir="false" afterPath="$PROJECT_DIR$/../make/g++_min.mak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preprocessor/SLISC/case_conflict/is_vvec.m" beforeDir="false" afterPath="$PROJECT_DIR$/../preprocessor/SLISC/case_conflict/is_vvec.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preprocessor/SLISC/convert_Long.m" beforeDir="false" afterPath="$PROJECT_DIR$/../preprocessor/SLISC/convert_Long.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preprocessor/auto_gen.m" beforeDir="false" afterPath="$PROJECT_DIR$/../preprocessor/auto_gen.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preprocessor/in_octave.m" beforeDir="false" afterPath="$PROJECT_DIR$/../preprocessor/in_octave.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../preprocessor/req.m" beforeDir="false" afterPath="$PROJECT_DIR$/../preprocessor/req.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/test_all.h" beforeDir="false" afterPath="$PROJECT_DIR$/../test/test_all.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/test_disjoint_sets.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../test/test_disjoint_sets.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/test_graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../test/test_graph.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/test_hungarian.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../test/test_hungarian.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,9 +161,9 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="main.x" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="true" REDIRECT_INPUT_PATH="$PROJECT_DIR$/inp.txt" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="test" TARGET_NAME="main.x" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="test" RUN_TARGET_NAME="main.x">
@@ -102,6 +194,7 @@
       <workItem from="1659714958819" duration="3324000" />
       <workItem from="1659918338716" duration="55000" />
       <workItem from="1659918401269" duration="348000" />
+      <workItem from="1660610353451" duration="4610000" />
     </task>
     <servers />
   </component>
@@ -118,16 +211,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>35</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

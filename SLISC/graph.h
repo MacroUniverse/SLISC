@@ -408,16 +408,16 @@ namespace slisc {
     {
         vector<DWGnode> dwg;
         vector<Long> dists;
-        for (Long i = 0; i < 1000; ++i) {
+        for (Long i = 0; i < 4000; ++i) {
             dwg_rand_unsafe(edges, Nnode, Nedge, weight_range, max_fork);
             edges2dwg(dwg, edges);
             Long source;
-            for (source = 0; source < (Long)dwg.size(); ++source) {
+            for (source = 0; source < size(dwg); ++source) {
                 try { dwg_SPFA(dists, dwg, source); }
                 catch (...) { break; }
             }
             // got a good DWG
-            if (source == (Long)dwg.size()) return;
+            if (source == size(dwg)) return;
         }
         SLS_ERR("dwg_rand(): always got -inf loops, impossible params?");
     }

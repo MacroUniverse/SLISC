@@ -5,7 +5,7 @@ function auto_gen(in_paths, fname)
 global tem_db is_batch_mode SLS_USE_INT_AS_LONG; % is_batch_mode: delete db and process all files
 % ========= options ========
 SLS_USE_QUADMATH = false;
-SLS_USE_INT_AS_LONG = false;
+SLS_USE_INT_AS_LONG = true;
 % ==========================
 if ~exist('fname', 'var'), fname = []; end
 is_batch_mode = isempty(fname);

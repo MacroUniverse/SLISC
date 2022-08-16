@@ -27,7 +27,7 @@ boost_lib =
 libs = $(gsl_lib) $(arb_lib) $(arpack_lib) $(mkl_stat_link) # -lquadmath
 # -lboost_system -lboost_filesystem
 
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals  -D SLS_USE_MKL $(mkl_compile) $(gsl_flag) $(arb_flag) $(arpack_flag) -D NDEBUG  # -D SLS_USE_QUAD_MATH
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals  -D SLS_USE_MKL $(mkl_compile) $(gsl_flag) $(arb_flag) $(arpack_flag) -D SLS_USE_INT_AS_LONG -D NDEBUG  # -D SLS_USE_QUAD_MATH
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
