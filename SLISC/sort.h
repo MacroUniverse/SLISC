@@ -412,9 +412,88 @@ void mergesort(T *v, Long N, T *wsp)
 template <class T>
 inline void heapsort(T *v, Long N)
 {
+    // make max heap
     for (Long i = N / 2 - 1; i >= 0; i--)
         heapify(v, N, i);
+    // sort loop
     for (Long i = N - 1; i >= 0; i--) {
+        swap(v[0], v[i]);
+        heapify(v, i, 0);
+    }
+}
+
+// find smallest Nmin elements
+// return in ascending order
+// algo: one pass, with priority queue, optimal for small Nmin
+template <class T>
+inline void minN(vector<T> &vals, vector<Long> &inds, const T *v, Long_I N, Long_I Nmin)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < Nmin)
+        SLS_ERR("wrong shape!");
+#endif
+    typedef pair<T,Long> P; // (val, ind)
+    vals.resize(Nmin); inds.resize(Nmin);
+    priority_queue<P> q;
+    for (Long i = 0; i < Nmin; ++i)
+        q.push(P(v[i], i));
+    for (Long i = Nmin; i < N; ++i) {
+        const T &val = v[i];
+        if (val < q.top().first) {
+            q.pop();
+            q.push(P(val, i));
+        }
+    }
+    for (Long i = 0; i < Nmin; ++i) {
+        Long j = Nmin-i-1;
+        vals[j] = q.top().first;
+        inds[j] = q.top().second;
+        q.pop();
+    }
+}
+
+// find largest Nmax elements
+// return in descending order
+// algo: one pass, with priority queue, optimal for small Nmax
+template <class T>
+inline void maxN(vector<T> &vals, vector<Long> &inds, const T *v, Long_I N, Long_I Nmax)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (N < Nmax)
+        SLS_ERR("wrong shape!");
+#endif
+    typedef pair<T,Long> P; // (val, ind)
+    vals.resize(Nmax); inds.resize(Nmax);
+    priority_queue<P, vector<P>, std::greater<P>> q;
+    for (Long i = 0; i < Nmax; ++i)
+        q.push(P(v[i], i));
+    for (Long i = Nmax; i < N; ++i) {
+        const T &val = v[i];
+        if (val > q.top().first) {
+            q.pop();
+            q.push(P(val, i));
+        }
+    }
+    for (Long i = 0; i < Nmax; ++i) {
+        Long j = Nmax-i-1;
+        vals[j] = q.top().first;
+        inds[j] = q.top().second;
+        q.pop();
+    }
+}
+
+// find largest Nmax elements
+// and put to the end of vector with ascending order
+// algo: heap sort (used in Python std lib), optimal for large Nmax
+template <class T>
+inline void maxN_heap(T *v, Long_I N, Long_I Nmax)
+{
+    // make max heap
+    for (Long i = N / 2 - 1; i >= 0; --i)
+        heapify(v, N, i);
+    // sort loop
+    Long Nmin = N - Nmax;
+    for (Long i = N - 1; i >= Nmin; --i) {
         swap(v[0], v[i]);
         heapify(v, i, 0);
     }

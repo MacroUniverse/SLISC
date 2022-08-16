@@ -205,23 +205,6 @@ void test_arithmetic()
         if (norm2(cut(e, 0, 2, 0, 2)) != 46. * 2)
             SLS_FAIL;
     }
-    // minN() maxN()
-    {
-        Long N = 20, Nmax = 3;
-        vector<Long> v(N), vals, inds;
-        v -= N/2;
-        randPerm(v);
-        maxN(vals, inds, &v[0], N, Nmax);
-        for (Long i = 0; i < Nmax; ++i) {
-            SLS_ASSERT(vals[i] == N-1-i);
-            SLS_ASSERT(vals[i] == v[inds[i]]);
-        }
-        minN(vals, inds, &v[0], N, Nmax);
-        for (Long i = 0; i < Nmax; ++i) {
-            SLS_ASSERT(vals[i] == i);
-            SLS_ASSERT(vals[i] == v[inds[i]]);
-        }
-    }
     // sum_abs
     {
         VecDoub v(10); linspace(v, -4, 5);

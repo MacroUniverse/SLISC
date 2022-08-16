@@ -4,7 +4,6 @@
 // [GCH:STL+SLISC] 5.2s (GCH = gcc precompiled header)
 // [GCH:STL+SLISC+test_arithmetic] 7.2s
 
-#define SLS_USE_INT_AS_LONG
 // === Build time on Miranda with WSL2 ===
 // [STL+SLISC] 4.6s
 // [GCH:STL+SLISC] 1.7s

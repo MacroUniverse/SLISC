@@ -24,7 +24,7 @@ void test_sort()
 
 	// test quicksort()
 	{
-		Long N = 10;
+		Long N = 100;
 		VecInt v(N);
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
@@ -117,5 +117,34 @@ void test_sort()
 		vs1 = {"1234", "a", "A3", "ab", "AD", "B", "bC", "bd"};
 		if (vs != vs1)
 			SLS_FAIL;
+	}
+
+	// minN() maxN()
+    {
+        Long N = 20, Nmax = 3;
+        vector<Long> v(N), vals, inds;
+        v -= N/2;
+        randPerm(v);
+        maxN(vals, inds, &v[0], N, Nmax);
+        for (Long i = 0; i < Nmax; ++i) {
+            SLS_ASSERT(vals[i] == N-1-i);
+            SLS_ASSERT(vals[i] == v[inds[i]]);
+        }
+        minN(vals, inds, &v[0], N, Nmax);
+        for (Long i = 0; i < Nmax; ++i) {
+            SLS_ASSERT(vals[i] == i);
+            SLS_ASSERT(vals[i] == v[inds[i]]);
+        }
+    }
+	// maxN_heap()
+	{
+		Long N = 100, Nmax = 11;
+		vecLong v(N), vals, inds;
+		for (Long i = 0; i < N; ++i)
+			v[i] = randLong(N);
+		maxN(vals, inds, v.data(), N, Nmax);
+		maxN_heap(v.data(), N, Nmax);
+		for (Long i = 0; i < Nmax; ++i)
+			SLS_ASSERT(vals[i] == v[N-i-1]);
 	}
 }
