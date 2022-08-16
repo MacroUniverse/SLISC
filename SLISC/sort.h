@@ -499,4 +499,54 @@ inline void maxN_heap(T *v, Long_I N, Long_I Nmax)
     }
 }
 
+// find largest Nmax elements
+// and put to the end of vector with ascending order
+// algo: quick sort (1st elm pivot)
+template <class T>
+inline void maxN_quick0(T *v, Long_I N, Long_I Nmax)
+{
+	if (N <= 1) return;
+	swap(v[0], v[N/2]); // 1st elm pivot
+    T pivot = v[0];
+    Long i = 1, j = N-1;
+    while (1) {
+        while (i < N && v[i] <= pivot) ++i;
+        while (v[j] > pivot) --j;
+        if (j <= i || i == N || j < 1)
+			break;
+		swap(v[i], v[j]);
+    }
+    swap(v[0], v[i-1]);
+    if (N-i+1 < Nmax)
+        maxN_quick0(v, i-1, Nmax);
+	maxN_quick0(v+i, N-i, Nmax);
+}
+
+// find largest Nmax elements
+// and put to the end of vector with ascending order
+// algo: quick sort (medium of 3)
+template <class T>
+inline void maxN_quick3(T *v, Long_I N, Long_I Nmax)
+{
+	if (N <= 1) return;
+    if (N == 2) {
+        if (v[0] > v[1]) swap(v[0], v[1]);
+        return;
+    }
+    quicksort_3mid(v[0], v[N/2], v[N-1]); // medium of 3 pivot
+    T pivot = v[0];
+    Long i = 1, j = N-1;
+    while (1) {
+        while (i < N && v[i] <= pivot) ++i;
+        while (v[j] > pivot) --j;
+        if (j <= i || i == N || j < 1)
+			break;
+		swap(v[i], v[j]);
+    }
+    swap(v[0], v[i-1]);
+    if (N-i+1 < Nmax)
+        maxN_quick3(v, i-1, Nmax);
+	maxN_quick3(v+i, N-i, Nmax);
+}
+
 } // namespace slisc
