@@ -742,4 +742,29 @@ inline void disp(vecStr32_I v)
     for (Long i = 0; i < N; ++i)
         cout << utf32to8(v[i]) << endl;
 }
+
+// set stdout text style
+// example: cout << text_deco('r', 'b') + "Red bold text" + text_deco() << endl;
+// ref: https://www.tutorialspoint.com/how-to-output-colored-text-to-a-linux-terminal
+inline string text_style(Char_I color = 'n', Char_I style = 'n')
+{
+    if (color == 'n' && style == 'n')
+        return "\033[0m";
+    string str = "\033[";
+    if (style == 'n') ;
+    else if (style == 'b') str += '1'; // bold
+    else if (style == 'u') str += '4'; // underline
+    str += ';';
+    if (color == 'r') str += "31";
+    else if (color == 'k') str += "30"; // black
+    else if (color == 'g') str += "32"; // green
+    else if (color == 'y') str += "33"; // yellow
+    else if (color == 'b') str += "34"; // blue
+    else if (color == 'm') str += "35"; // magenta
+    else if (color == 'c') str += "36"; // cyan
+    else if (color == 'w') str += "37"; // white
+    str += 'm';
+    return str;
+}
+
 } // namespace slisc
