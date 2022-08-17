@@ -42,6 +42,7 @@ void test_all(const std::string &test_name)
     SLS_TEST(global);
     SLS_TEST(graph);
     SLS_TEST(GSL);
+    SLS_TEST(huffman);
     SLS_TEST(hungarian);
     SLS_TEST(hydrogen);
     SLS_TEST(hypergeom);

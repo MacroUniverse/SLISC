@@ -8,9 +8,11 @@
 // [STL+SLISC] 4.6s
 // [GCH:STL+SLISC] 1.7s
 #include <bits/stdc++.h>
+#define SLS_USE_INT_AS_LONG
 #include "../SLISC/global.h"
 #include "../SLISC/STL_util.h"
 #include "../SLISC/search.h"
+#include "../SLISC/heap.h"
 #include "../SLISC/sort.h"
 // #define SLS_RAND_SEED 0
 #include "../SLISC/random.h"
@@ -26,6 +28,7 @@
 #include "../SLISC/queue.h"
 #include "../SLISC/disjoint_sets.h"
 #include "../SLISC/hungarian.h"
+#include "../SLISC/huffman.h"
 using namespace slisc;
 
 using namespace std;
@@ -39,8 +42,7 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str) {
     }
 }
 
-int main()
-{
+int main() {
 //    vector<int> v_num, v_num1; vector<string> v_str;
 //    read_input(v_num, v_str);
 //----------------------------------------------

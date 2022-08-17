@@ -937,53 +937,49 @@ inline Comp prod_v(const Comp *v, Long_I N)
 }
 
 
-inline Llong sum(VecInt_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Llong sum(vecInt_I v) { return sum_v(v.data(), v.size()); }
 
-inline Llong prod(VecInt_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Llong prod(vecInt_I v) { return prod_v(v.data(), v.size()); }
 
-inline Llong sum(VecLlong_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Llong sum(vecLlong_I v) { return sum_v(v.data(), v.size()); }
 
-inline Llong prod(VecLlong_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Llong prod(vecLlong_I v) { return prod_v(v.data(), v.size()); }
 
-inline Doub sum(VecDoub_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Doub sum(vecDoub_I v) { return sum_v(v.data(), v.size()); }
 
-inline Doub prod(VecDoub_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Doub prod(vecDoub_I v) { return prod_v(v.data(), v.size()); }
 
-inline Comp sum(VecComp_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Llong sum(VecInt_I v) { return sum_v(v.p(), v.size()); }
 
-inline Comp prod(VecComp_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Llong prod(VecInt_I v) { return prod_v(v.p(), v.size()); }
 
-inline Doub sum(CmatDoub_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Llong sum(VecLlong_I v) { return sum_v(v.p(), v.size()); }
 
-inline Doub prod(CmatDoub_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Llong prod(VecLlong_I v) { return prod_v(v.p(), v.size()); }
 
-inline Comp sum(CmatComp_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Doub sum(VecDoub_I v) { return sum_v(v.p(), v.size()); }
 
-inline Comp prod(CmatComp_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Doub prod(VecDoub_I v) { return prod_v(v.p(), v.size()); }
 
-inline Comp sum(MatComp_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Comp sum(VecComp_I v) { return sum_v(v.p(), v.size()); }
 
-inline Comp prod(MatComp_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Comp prod(VecComp_I v) { return prod_v(v.p(), v.size()); }
 
-inline Doub sum(SvecDoub_I v)
-{ return sum_v(v.p(), v.size()); }
+inline Doub sum(CmatDoub_I v) { return sum_v(v.p(), v.size()); }
 
-inline Doub prod(SvecDoub_I v)
-{ return prod_v(v.p(), v.size()); }
+inline Doub prod(CmatDoub_I v) { return prod_v(v.p(), v.size()); }
+
+inline Comp sum(CmatComp_I v) { return sum_v(v.p(), v.size()); }
+
+inline Comp prod(CmatComp_I v) { return prod_v(v.p(), v.size()); }
+
+inline Comp sum(MatComp_I v) { return sum_v(v.p(), v.size()); }
+
+inline Comp prod(MatComp_I v) { return prod_v(v.p(), v.size()); }
+
+inline Doub sum(SvecDoub_I v) { return sum_v(v.p(), v.size()); }
+
+inline Doub prod(SvecDoub_I v) { return prod_v(v.p(), v.size()); }
 
 
 inline Doub norm2(VecDoub_I v)

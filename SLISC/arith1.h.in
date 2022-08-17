@@ -348,7 +348,7 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 }
 //%------------------------
 
-//% tem('sum', { 'VecInt'; 'VecLlong';
+//% tem('sum', { 'vecInt'; 'vecLlong'; 'vecDoub'; 'VecInt'; 'VecLlong';
 //%   'VecDoub'; 'VecComp'; 'CmatDoub'; 'CmatComp'; 'MatComp'; });
 //%----------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -358,11 +358,15 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 //%     Tret = Ts;
 //% end
 //% req('sum_v', {Ts});
-inline @Tret@ sum(@T@_I v)
-{ return sum_v(v.p(), v.size()); }
+//% if is_vector(T)
+inline @Tret@ sum(@T@_I v) { return sum_v(v.data(), v.size()); }
 
-inline @Tret@ prod(@T@_I v)
-{ return prod_v(v.p(), v.size()); }
+inline @Tret@ prod(@T@_I v) { return prod_v(v.data(), v.size()); }
+//% else
+inline @Tret@ sum(@T@_I v) { return sum_v(v.p(), v.size()); }
+
+inline @Tret@ prod(@T@_I v) { return prod_v(v.p(), v.size()); }
+//% end
 //%-----------------
 
 //% tem('norm2', { 'VecDoub'; 'VecComp';
