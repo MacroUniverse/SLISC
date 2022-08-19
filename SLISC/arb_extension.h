@@ -85,4 +85,27 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 }
 #endif
 
-}
+// c++ wrapper for fmpz_t
+struct BigInt
+{
+	fmpz_t m_n;
+	BigInt() { fmpz_init(m_n); }
+	BitInt(Long_I val)
+	{
+		fmpz_init(m_n); fmpz_set_si(m_n, val);
+	}
+	BigInt(Str_I str, Int_I base = 10)
+	{
+		fmpz_init(m_n); fmpz_set_str(m_n, str, base);
+	}
+	~BigInt() { fmpz_clear(m_n); }
+} 
+
+// inline BigInt operator+(BigInt x, BigInt y)
+// {
+// 	BigInt z;
+// 	fmpz_add(fmpz_t z, const fmpz_t x, const fmpz_t y);
+// 	return z;
+// }
+
+} // namespace slisc

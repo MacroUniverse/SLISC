@@ -220,10 +220,10 @@ inline Long b85_ind(Char_I c)
 // convert 5-digit base58 to 4-byte integer (little endian)
 inline Int b852Int(const Char *p)
 {
-    Int n = b85_ind(p[0]), exp = 85;
+    Int n = b85_ind(p[0]), exp = 1;
     for (Int i = 1; i < 5; ++i) {
-        n += b85_ind(p[i]) * exp;
         exp *= 85;
+        n += b85_ind(p[i]) * exp;
     }
     return n;
 }

@@ -72,7 +72,6 @@ void test_sort()
 
 	// test heapsort()
 	{
-		cout << "heapsort" << endl;
 		Long N = 101;
 		VecInt v(N);
 		for (Long i = 0; i < N; ++i)
@@ -157,7 +156,6 @@ void test_sort()
 			v[i] = randLong(N);
 		maxN(vals, inds, v.data(), N, Nmax);
 		maxN_quick0(v.data(), N, Nmax);
-		disp(v); disp(vals);
 		for (Long i = 0; i < Nmax; ++i)
 			SLS_ASSERT(vals[i] == v[N-i-1]);
 	}
@@ -170,7 +168,6 @@ void test_sort()
 			v[i] = randLong(N);
 		maxN(vals, inds, v.data(), N, Nmax);
 		maxN_quick3(v.data(), N, Nmax);
-		disp(v); disp(vals);
 		for (Long i = 0; i < Nmax; ++i)
 			SLS_ASSERT(vals[i] == v[N-i-1]);
 	}

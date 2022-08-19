@@ -14,9 +14,10 @@ void test_arb()
 	// test fmpz_t: arbitrary length integer from flint library, with performance for small number
     fmpz_t f, g, h;
     fmpz_init(f); fmpz_init(g); fmpz_init(h);
-    fmpz_set_str(g, "12345678901234567890123456789012345678901234567890", 10);
+    fmpz_set_str(g, "12345678901234567890123456789012345678901234567890", 10); // base of 10
     fmpz_set_str(h, "98765432109876543210987654321098765432109876543210", 10);
     fmpz_add(f, g, h);
+    cout << "sizeof(fmpz_t) = " << sizeof(fmpz_t) << endl;
     char *cs; cs = fmpz_get_str(NULL, 10, f);
     Str s = cs;
     free(cs);

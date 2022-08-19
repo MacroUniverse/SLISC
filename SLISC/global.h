@@ -68,8 +68,8 @@
 #endif
 
 // error handling
-#define SLS_WARN(str) do{std::cout << "warning: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl;} while(0)
-#define SLS_ERR(str) do{std::cout << "error: " << __FILE__ << ": line " << __LINE__ << ": " << str << std::endl; abort();} while(0)
+#define SLS_WARN(str) do{std::cout << "\033[1;31mWarning\033[0m: " << __FILE__ << ": line " << __LINE__ << ": \033[1;31m" << str << "\033[0m" << std::endl;} while(0)
+#define SLS_ERR(str) do{std::cout << "\033[1;31mError\033[0m: " << __FILE__ << ": line " << __LINE__ << ": \033[1;31m" << str << "\033[0m" << std::endl; abort();} while(0)
 #define SLS_FAIL SLS_ERR("failed!")
 #define SLS_ASSERT(condition) if (!(condition)) SLS_FAIL
 
