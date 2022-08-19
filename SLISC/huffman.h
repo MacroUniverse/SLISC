@@ -4,6 +4,7 @@
 #include "global.h"
 
 namespace slisc {
+
 // A Huffman tree node
 struct MinHeapNode {
 	char data;
@@ -15,6 +16,14 @@ struct MinHeapNode {
 		this->data = data;
 		this->freq = freq;
 	}
+};
+
+inline void huffman_tree_delete(MinHeapNode* node)
+{
+    if (node == NULL) return;
+    huffman_tree_delete(node->left);
+    huffman_tree_delete(node->right);
+    delete node;
 };
 
 // comparison of two heap nodes (needed in min heap)
@@ -59,6 +68,7 @@ void huffman_code(unordered_map<char,string> &dict, Str_I data, vecLong freq)
 	// the Huffman tree built above
     string str;
 	printCodes(dict, minHeap.top(), str);
+	huffman_tree_delete(top);
 }
 
 } // namespace slisc

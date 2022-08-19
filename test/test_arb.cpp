@@ -7,17 +7,21 @@
 #include "../SLISC/arb_extension.h"
 #endif
 
+// void test_fun(int a[1])
+// {
+//     ++a[0];
+// }
+
 void test_arb()
 {
 #ifdef SLS_USE_ARB
     using namespace slisc;
 	// test fmpz_t: arbitrary length integer from flint library, with performance for small number
-    fmpz_t f, g, h;
+    fmpz_t f, g, h; // sizeof(fmpz_t) is 8
     fmpz_init(f); fmpz_init(g); fmpz_init(h);
     fmpz_set_str(g, "12345678901234567890123456789012345678901234567890", 10); // base of 10
     fmpz_set_str(h, "98765432109876543210987654321098765432109876543210", 10);
     fmpz_add(f, g, h);
-    cout << "sizeof(fmpz_t) = " << sizeof(fmpz_t) << endl;
     char *cs; cs = fmpz_get_str(NULL, 10, f);
     Str s = cs;
     free(cs);
@@ -63,7 +67,26 @@ void test_arb()
     arf_set_q(af, 1.23456789022345678903234567890423455e+123Q);
     arf_clear(af);
 #endif
-    flint_cleanup();
+
+    // test BigInt wrapper
+    {
+        BigInt a("1234567890223456789032"), b("2345678902234567890323"), c;
+        add(c, a, b);
+        SLS_ASSERT(to_string(c) == "3580246792458024679355");
+        add(a, a, a);
+        SLS_ASSERT(to_string(a) == "2469135780446913578064");
+        mul(c, a, b);
+        SLS_ASSERT(to_string(c) == "5791799706946809282022521437831175850674672");
+    }
+
+    flint_cleanup(); // prevent memory leak
+
+    // {
+    //     int x[1]; x[0] = 123;
+    //     int *y = &x[0];
+    //     test_fun(y);
+    //     cout << "x[0] = " << x[0] << endl;
+    // }
 #else
     std::cout << "---------- disabled! ----------" << std::endl;
 #endif

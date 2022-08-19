@@ -89,23 +89,63 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 struct BigInt
 {
 	fmpz_t m_n;
-	BigInt() { fmpz_init(m_n); }
-	BitInt(Long_I val)
+	// constructors
+	BigInt() {
+		// printf("BigInt: default init called.\n");
+		fmpz_init(m_n);
+	}
+	BigInt(Long_I val)
 	{
+		// printf("BigInt: Long init called.\n");
 		fmpz_init(m_n); fmpz_set_si(m_n, val);
+	}
+	BigInt(Doub_I val)
+	{
+		// printf("BigInt: Doub init called.\n");
+		fmpz_init(m_n); fmpz_set_d(m_n, val);
 	}
 	BigInt(Str_I str, Int_I base = 10)
 	{
-		fmpz_init(m_n); fmpz_set_str(m_n, str, base);
+		// printf("BigInt: Str init called.\n");
+		fmpz_init(m_n); fmpz_set_str(m_n, str.c_str(), base);
 	}
-	~BigInt() { fmpz_clear(m_n); }
-} 
+	BigInt(const BigInt &x) // copy constructor
+	{
+		// printf("BigInt: copy constructor called.\n");
+		fmpz_set(m_n, x.m_n);
+	}
+	// BigInt(BigInt&& x) // move constructor
+	// {
+	// 	printf("BigInt: move constructor called.\n");
+	// 	fmpz_clear(m_n);
+	// 	m_n = x.m_n; x.m_n = NULL;
+	// }
+	BigInt &operator=(const BigInt &rhs) // copy assignment
+	{
+		// printf("BigInt: copy assignment called.\n");
+		fmpz_set(m_n, rhs.m_n);
+		return *this;
+	}
+	~BigInt() {
+		// printf("BigInt: destructor called.\n");
+		fmpz_clear(m_n);
+	}
+};
 
-// inline BigInt operator+(BigInt x, BigInt y)
-// {
-// 	BigInt z;
-// 	fmpz_add(fmpz_t z, const fmpz_t x, const fmpz_t y);
-// 	return z;
-// }
+inline Str to_string(const BigInt &x)
+{
+	char *s; s = fmpz_get_str(NULL, 10, x.m_n);
+	Str str(s); free(s);
+	return str;
+}
+
+inline void add(BigInt &z, const BigInt &x, const BigInt &y)
+{ fmpz_add(z.m_n, x.m_n, y.m_n); }
+
+inline void sub(BigInt &z, const BigInt &x, const BigInt &y)
+{ fmpz_sub(z.m_n, x.m_n, y.m_n); }
+
+inline void mul(BigInt &z, const BigInt &x, const BigInt &y)
+{ fmpz_mul(z.m_n, x.m_n, y.m_n); }
 
 } // namespace slisc
