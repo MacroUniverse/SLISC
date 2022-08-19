@@ -49,8 +49,14 @@ set(CMAKE_INSTALL_RPATH ../MatFile_linux/bin)
 # SQLite
 add_definitions(-D SLS_USE_SQLITE)
 list(APPEND LIBS sqlite3)
+# Debug
+add_compile_options(-g -ftrapv)
+# Release
+# add_definitions(-D NDEBUG)
+# add_compile_options(-O3)
 
-add_compile_options(-Wall -Wno-reorder -Wno-misleading-indentation -fopenmp -g -fmax-errors=2)
+
+add_compile_options(-Wall -Wno-reorder -Wno-misleading-indentation -fopenmp -fmax-errors=2)
 
 file(GLOB SOURCES "test/*.cpp" "main.cpp")
 
