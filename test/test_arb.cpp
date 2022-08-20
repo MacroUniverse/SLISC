@@ -47,13 +47,13 @@ void test_arb()
         SLS_ASSERT(a == "1234567890223456789032");
         SLS_ASSERT(b == "2345678902234567890323");
         SLS_ASSERT(b != "2345678902234567890324");
-        add(c, a, b);
+        c = a + b; // equiv to: add(c, a, b)
         SLS_ASSERT(to_string(c) == "3580246792458024679355");
         SLS_ASSERT(c == "3580246792458024679355");
         a += a;
         SLS_ASSERT(to_string(a) == "2469135780446913578064");
         SLS_ASSERT(a == "2469135780446913578064");
-        mul(c, a, b);
+        c = a * b; // equiv to: mul(c, a, b)
         SLS_ASSERT(to_string(c) == "5791799706946809282022521437831175850674672");
         SLS_ASSERT(c == "5791799706946809282022521437831175850674672");
         c *= c;

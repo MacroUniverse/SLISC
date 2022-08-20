@@ -87,6 +87,17 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 
 // c++ wrapper for fmpz_t
 // ref: http://flintlib.org/sphinx/fmpz.html
+
+struct Bint;
+struct BintAdd { const Bint &x, &y; };
+typedef const BintAdd &BintAdd_I;
+struct BintSub { const Bint &x, &y; };
+typedef const BintSub &BintSub_I;
+struct BintMul { const Bint &x, &y; };
+typedef const BintMul &BintMul_I;
+struct BintDiv { const Bint &x, &y; };
+typedef const BintDiv &BintDiv_I;
+
 struct Bint
 {
 	fmpz_t m_n;
@@ -129,7 +140,10 @@ struct Bint
 	Bint &operator=(Llong_I rhs) { fmpz_set_si(m_n, rhs); return *this; }
 	Bint &operator=(Doub_I rhs) { fmpz_set_d(m_n, rhs); return *this; }
 	Bint &operator=(Str_I rhs) { fmpz_set_str(m_n, rhs.c_str(), 10); return *this; }
-
+	Bint &operator=(BintAdd_I rhs) { fmpz_add(m_n, rhs.x.m_n, rhs.y.m_n); return *this; }
+	Bint &operator=(BintSub_I rhs) { fmpz_sub(m_n, rhs.x.m_n, rhs.y.m_n); return *this; }
+	Bint &operator=(BintMul_I rhs) { fmpz_mul(m_n, rhs.x.m_n, rhs.y.m_n); return *this; }
+	Bint &operator=(BintDiv_I rhs) { fmpz_tdiv_q(m_n, rhs.x.m_n, rhs.y.m_n); return *this; }
 	~Bint() {
 		// printf("Bint: destructor called.\n");
 		fmpz_clear(m_n);
@@ -268,6 +282,17 @@ inline void abs(Bint_O y, Bint_I x)
 inline void pow(Bint_O z, Bint_I x, Llong_I y)
 { assert(y >= 0); fmpz_pow_ui(z.m_n, x.m_n, y); }
 
+inline BintAdd operator+(Bint_I x, Bint_I y)
+{ return BintAdd{x, y}; }
+
+inline BintSub operator-(Bint_I x, Bint_I y)
+{ return BintSub{x, y}; }
+
+inline BintMul operator*(Bint_I x, Bint_I y)
+{ return BintMul{x, y}; }
+
+inline BintDiv operator/(Bint_I x, Bint_I y)
+{ return BintDiv{x, y}; }
 
 // arf_t: arbitrary precision floating point numbers
 // https://arblib.org/arf.html
