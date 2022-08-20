@@ -310,6 +310,9 @@ struct Breal {
 typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
 
+inline Llong arb_prec() { return 100; }
+inline arf_rnd_t arb_rnd() { return ARF_RND_NEAR; }
+
 inline Str to_string(Breal_I x, Long_I digits = 4)
 {
 	Char * s = arf_get_str(x.m_n, digits);
@@ -318,45 +321,63 @@ inline Str to_string(Breal_I x, Long_I digits = 4)
 }
 
 inline Bool operator==(Breal_I x, Breal_I y)
-{ return arf_equal(x, y); }
+{ return arf_equal(x.m_n, y.m_n); }
 
 inline Bool operator!=(Breal_I x, Breal_I y)
 { return !(x == y); }
 
-// struct Areal {
-// 	arb_t m_n;
-// 	// constructors
-// 	Areal() {
-// 		// printf("Areal: default init called.\n");
-// 		arb_init(m_n);
-// 	}
-// 	Areal(Doub_I val)
-// 	{
-// 		// printf("Areal: Doub init called.\n");
-// 		arb_init(m_n); arb_set_d(m_n, val);
-// 	}
-// 	Areal(Str_I str, Long_I prec)
-// 	{
-// 		// printf("Areal: Str init called.\n");
-// 		arb_init(m_n); arb_set_str(m_n, str.c_str(), prec);
-// 	}
-// 	Areal(const Areal &x) // copy constructor
-// 	{
-// 		// printf("Areal: copy constructor called.\n");
-// 		arb_set(m_n, x.m_n);
-// 	}
-// 	Areal &operator=(const Areal &rhs) // copy assignment
-// 	{
-// 		// printf("Areal: copy assignment called.\n");
-// 		arb_set(m_n, rhs.m_n); return *this;
-// 	}
-// 	Areal &operator=(Doub_I rhs) { arb_set_d(m_n, rhs); return *this; }
-// 	Areal &operator=(Str_I rhs) { arb_set_str(m_n, rhs.c_str(), 10); return *this; }
+inline void add(Breal_O z, Breal_I x, Breal_I y)
+{ arf_add(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
 
-// 	~Areal() {
-// 		// printf("Areal: destructor called.\n");
-// 		arb_clear(m_n);
-// 	}
-// }
+inline void sub(Breal_O z, Breal_I x, Breal_I y)
+{ arf_sub(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+
+inline void mul(Breal_O z, Breal_I x, Breal_I y)
+{ arf_mul(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+
+inline void div(Breal_O z, Breal_I x, Breal_I y)
+{ arf_div(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+
+inline void sqrt(Breal_O y, Breal_I x)
+{ arf_sqrt(y.m_n, x.m_n, arb_prec(), arb_rnd()); }
+
+struct Areal {
+	arb_t m_n;
+	// constructors
+	Areal() {
+		// printf("Areal: default init called.\n");
+		arb_init(m_n);
+	}
+	Areal(Doub_I val)
+	{
+		// printf("Areal: Doub init called.\n");
+		arb_init(m_n); arb_set_d(m_n, val);
+	}
+	Areal(Str_I str, Long_I prec = arb_prec())
+	{
+		// printf("Areal: Str init called.\n");
+		arb_init(m_n); arb_set_str(m_n, str.c_str(), prec);
+	}
+	Areal(const Areal &x) // copy constructor
+	{
+		// printf("Areal: copy constructor called.\n");
+		arb_set(m_n, x.m_n);
+	}
+	Areal &operator=(const Areal &rhs) // copy assignment
+	{
+		// printf("Areal: copy assignment called.\n");
+		arb_set(m_n, rhs.m_n); return *this;
+	}
+	Areal &operator=(Doub_I rhs) { arb_set_d(m_n, rhs); return *this; }
+	Areal &operator=(Str_I rhs) { arb_set_str(m_n, rhs.c_str(), 10); return *this; }
+
+	~Areal() {
+		// printf("Areal: destructor called.\n");
+		arb_clear(m_n);
+	}
+};
+
+typedef const Areal &Areal_I;
+typedef Areal &Areal_O, &Areal_IO;
 
 } // namespace slisc

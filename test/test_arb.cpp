@@ -73,8 +73,16 @@ void test_arb()
 
     // test arf_t wrapper
     {
-        Breal x(PI);
-        cout << to_string(x) << endl;
+        Breal x(PI), y(1.23456789e-2), z;
+        add(z, x, y);
+        // cout << to_string(z) << endl;
+        add(z, z, y);
+        // cout << to_string(z) << endl;
+    }
+
+    // test arb_t wrapper
+    {
+        Areal x(PI), y("1.23456789e-2"), z;
     }
 
     flint_cleanup(); // prevent memory leak
