@@ -87,60 +87,59 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 
 // c++ wrapper for fmpz_t
 // ref: http://flintlib.org/sphinx/fmpz.html
-struct BigInt
+struct Bint
 {
 	fmpz_t m_n;
 	// constructors
-	BigInt() {
-		// printf("BigInt: default init called.\n");
+	Bint() {
+		// printf("Bint: default init called.\n");
 		fmpz_init(m_n);
 	}
-	BigInt(Llong_I val)
+	Bint(Llong_I val)
 	{
-		// printf("BigInt: Llong init called.\n");
+		// printf("Bint: Llong init called.\n");
 		fmpz_init(m_n); fmpz_set_si(m_n, val);
 	}
-	BigInt(Doub_I val)
+	Bint(Doub_I val)
 	{
-		// printf("BigInt: Doub init called.\n");
+		// printf("Bint: Doub init called.\n");
 		fmpz_init(m_n); fmpz_set_d(m_n, val);
 	}
-	BigInt(Str_I str, Int_I base = 10)
+	Bint(Str_I str, Int_I base = 10)
 	{
-		// printf("BigInt: Str init called.\n");
+		// printf("Bint: Str init called.\n");
 		fmpz_init(m_n); fmpz_set_str(m_n, str.c_str(), base);
 	}
-	BigInt(const BigInt &x) // copy constructor
+	Bint(const Bint &x) // copy constructor
 	{
-		// printf("BigInt: copy constructor called.\n");
+		// printf("Bint: copy constructor called.\n");
 		fmpz_set(m_n, x.m_n);
 	}
-	// BigInt(BigInt&& x) // move constructor
+	// Bint(Bint&& x) // move constructor
 	// {
-	// 	printf("BigInt: move constructor called.\n");
+	// 	printf("Bint: move constructor called.\n");
 	// 	fmpz_clear(m_n);
 	// 	m_n = x.m_n; x.m_n = NULL;
 	// }
-	BigInt &operator=(const BigInt &rhs) // copy assignment
+	Bint &operator=(const Bint &rhs) // copy assignment
 	{
-		// printf("BigInt: copy assignment called.\n");
+		// printf("Bint: copy assignment called.\n");
 		fmpz_set(m_n, rhs.m_n); return *this;
 	}
-	BigInt &operator=(Llong_I rhs) { fmpz_set_si(m_n, rhs); return *this; }
-	BigInt &operator=(Doub_I rhs) { fmpz_set_d(m_n, rhs); return *this; }
-	BigInt &operator=(Str_I rhs) { fmpz_set_str(m_n, rhs.c_str(), 10); return *this; }
-	
+	Bint &operator=(Llong_I rhs) { fmpz_set_si(m_n, rhs); return *this; }
+	Bint &operator=(Doub_I rhs) { fmpz_set_d(m_n, rhs); return *this; }
+	Bint &operator=(Str_I rhs) { fmpz_set_str(m_n, rhs.c_str(), 10); return *this; }
 
-	~BigInt() {
-		// printf("BigInt: destructor called.\n");
+	~Bint() {
+		// printf("Bint: destructor called.\n");
 		fmpz_clear(m_n);
 	}
 };
 
-typedef const BigInt &BigInt_I;
-typedef BigInt &BigInt_O, &BigInt_IO;
+typedef const Bint &Bint_I;
+typedef Bint &Bint_O, &Bint_IO;
 
-inline Str to_string(const BigInt &x)
+inline Str to_string(const Bint &x)
 {
 	char *s; s = fmpz_get_str(NULL, 10, x.m_n);
 	Str str(s); free(s);
@@ -148,68 +147,68 @@ inline Str to_string(const BigInt &x)
 }
 
 // compare
-inline Bool operator==(BigInt_I x, BigInt_I y)
+inline Bool operator==(Bint_I x, Bint_I y)
 { return fmpz_equal(x.m_n, y.m_n); }
 
-inline Bool operator==(BigInt_I x, Llong_I y)
+inline Bool operator==(Bint_I x, Llong_I y)
 { return fmpz_equal_si(x.m_n, y); }
 
-inline Bool operator==(Llong_I y, BigInt_I x)
+inline Bool operator==(Llong_I y, Bint_I x)
 { return fmpz_equal_si(x.m_n, y); }
 
-inline Bool operator==(BigInt_I x, Str_I y)
-{ BigInt yy(y); return x == yy; }
+inline Bool operator==(Bint_I x, Str_I y)
+{ Bint yy(y); return x == yy; }
 
-inline Bool operator==(Str_I y, BigInt_I x)
-{ BigInt yy(y); return x == yy; }
+inline Bool operator==(Str_I y, Bint_I x)
+{ Bint yy(y); return x == yy; }
 
-inline Bool operator!=(BigInt_I x, BigInt_I y)
+inline Bool operator!=(Bint_I x, Bint_I y)
 { return !(x == y); }
 
-inline Bool operator!=(BigInt_I x, Llong_I y)
+inline Bool operator!=(Bint_I x, Llong_I y)
 { return !(x == y); }
 
-inline Bool operator!=(Llong_I y, BigInt_I x)
+inline Bool operator!=(Llong_I y, Bint_I x)
 { return !(x == y); }
 
-inline Bool operator!=(BigInt_I x, Str_I y)
+inline Bool operator!=(Bint_I x, Str_I y)
 { return !(x == y); }
 
-inline Bool operator<(BigInt_I x, BigInt_I y)
+inline Bool operator<(Bint_I x, Bint_I y)
 { return fmpz_cmp(x.m_n, y.m_n) < 0; }
 
-inline Bool operator<(BigInt_I x, Llong_I y)
+inline Bool operator<(Bint_I x, Llong_I y)
 { return fmpz_cmp_si(x.m_n, y) < 0; }
 
-inline Bool operator<(Llong_I y, BigInt_I x)
+inline Bool operator<(Llong_I y, Bint_I x)
 { return fmpz_cmp_si(x.m_n, y) > 0; }
 
-inline Bool operator>(BigInt_I x, BigInt_I y)
+inline Bool operator>(Bint_I x, Bint_I y)
 { return fmpz_cmp(x.m_n, y.m_n) > 0; }
 
-inline Bool operator>(BigInt_I x, Llong_I y)
+inline Bool operator>(Bint_I x, Llong_I y)
 { return fmpz_cmp_si(x.m_n, y) > 0; }
 
-inline Bool operator>(Llong_I y, BigInt_I x)
+inline Bool operator>(Llong_I y, Bint_I x)
 { return fmpz_cmp_si(x.m_n, y) < 0; }
 
-inline Bool is_odd(BigInt_I x)
+inline Bool is_odd(Bint_I x)
 { return fmpz_is_odd(x.m_n); }
 
 // arithmetic
 
-inline void neg(BigInt_O x, BigInt_I y)
+inline void neg(Bint_O x, Bint_I y)
 { fmpz_neg(x.m_n, y.m_n); }
 
-inline void neg(BigInt_IO x) { neg(x, x); }
+inline void neg(Bint_IO x) { neg(x, x); }
 
-inline void add(BigInt_O z, BigInt_I x, BigInt_I y)
+inline void add(Bint_O z, Bint_I x, Bint_I y)
 { fmpz_add(z.m_n, x.m_n, y.m_n); }
 
-inline void operator+=(BigInt_IO y, BigInt_I x)
+inline void operator+=(Bint_IO y, Bint_I x)
 { add(y, y, x); }
 
-inline void add(BigInt_O z, BigInt_I x, Llong_I y)
+inline void add(Bint_O z, Bint_I x, Llong_I y)
 {
 	if (y > 0)
 		fmpz_add_ui(z.m_n, x.m_n, y);
@@ -217,17 +216,17 @@ inline void add(BigInt_O z, BigInt_I x, Llong_I y)
 		fmpz_sub_ui(z.m_n, x.m_n, -y);
 }
 
-inline void operator+=(BigInt_IO y, Llong_I x) { add(y, y, x); }
+inline void operator+=(Bint_IO y, Llong_I x) { add(y, y, x); }
 
-inline void add(BigInt_O z, Llong_I y, BigInt_I x)
+inline void add(Bint_O z, Llong_I y, Bint_I x)
 { add(z, x, y); }
 
-inline void sub(BigInt_O z, BigInt_I x, BigInt_I y)
+inline void sub(Bint_O z, Bint_I x, Bint_I y)
 { fmpz_sub(z.m_n, x.m_n, y.m_n); }
 
-inline void sub(BigInt_IO y, BigInt_I x) { sub(y, y, x); }
+inline void sub(Bint_IO y, Bint_I x) { sub(y, y, x); }
 
-inline void sub(BigInt_O z, BigInt_I x, Llong_I y)
+inline void sub(Bint_O z, Bint_I x, Llong_I y)
 {
 	if (y > 0)
 		fmpz_sub_ui(z.m_n, x.m_n, y);
@@ -235,38 +234,114 @@ inline void sub(BigInt_O z, BigInt_I x, Llong_I y)
 		fmpz_add_ui(z.m_n, x.m_n, -y);
 }
 
-inline void operator-=(BigInt_IO y, Llong_I x) { sub(y, y, x); }
+inline void operator-=(Bint_IO y, Llong_I x) { sub(y, y, x); }
 
-inline void sub(BigInt_O z, Llong_I y, BigInt_I x)
+inline void sub(Bint_O z, Llong_I y, Bint_I x)
 { sub(z, x, y); neg(z); }
 
-inline void mul(BigInt_O z, BigInt_I x, BigInt_I y)
+inline void mul(Bint_O z, Bint_I x, Bint_I y)
 { fmpz_mul(z.m_n, x.m_n, y.m_n); }
 
-inline void operator*=(BigInt_IO y, BigInt_I x) { mul(y, y, x); }
+inline void operator*=(Bint_IO y, Bint_I x) { mul(y, y, x); }
 
-inline void mul(BigInt_O z, BigInt_I x, Llong_I y)
+inline void mul(Bint_O z, Bint_I x, Llong_I y)
 { fmpz_mul_si(z.m_n, x.m_n, y); }
 
-inline void mul(BigInt_O z, Llong_I y, BigInt_I x)
+inline void mul(Bint_O z, Llong_I y, Bint_I x)
 { fmpz_mul_si(z.m_n, x.m_n, y); }
 
-inline void div(BigInt_O z, BigInt_I x, BigInt_I y)
+inline void div(Bint_O z, Bint_I x, Bint_I y)
 { fmpz_tdiv_q(z.m_n, x.m_n, y.m_n); }
 
-inline void operator/=(BigInt_IO y, BigInt_I x)
+inline void operator/=(Bint_IO y, Bint_I x)
 { div(y, x, x); }
 
-inline void div(BigInt_O z, BigInt_I x, Llong_I y)
+inline void div(Bint_O z, Bint_I x, Llong_I y)
 { fmpz_tdiv_q_si(z.m_n, x.m_n, y); }
 
-inline void mod(BigInt_O z, BigInt_I x, BigInt_I y)
+inline void mod(Bint_O z, Bint_I x, Bint_I y)
 { fmpz_mod(z.m_n, x.m_n, y.m_n); } // always positive
 
-inline void abs(BigInt_O y, BigInt_I x)
+inline void abs(Bint_O y, Bint_I x)
 { fmpz_abs(y.m_n, x.m_n); }
 
-inline void pow(BigInt_O z, BigInt_I x, Llong_I y)
+inline void pow(Bint_O z, Bint_I x, Llong_I y)
 { assert(y >= 0); fmpz_pow_ui(z.m_n, x.m_n, y); }
+
+
+// arf_t: arbitrary precision floating point numbers
+// https://arblib.org/arf.html
+// struct Breal {
+// 	arf_t m_n;
+// 	// constructors
+// 	Breal() {
+// 		// printf("Breal: default init called.\n");
+// 		arf_init(m_n);
+// 	}
+// 	Breal(Doub_I val)
+// 	{
+// 		// printf("Breal: Doub init called.\n");
+// 		arf_init(m_n); arf_set_d(m_n, val);
+// 	}
+// 	Breal(Str_I str, Int_I base = 10)
+// 	{
+// 		// printf("Breal: Str init called.\n");
+// 		arf_init(m_n); arf_set_str(m_n, str.c_str(), base);
+// 	}
+// 	Breal(const Breal &x) // copy constructor
+// 	{
+// 		// printf("Breal: copy constructor called.\n");
+// 		arf_set(m_n, x.m_n);
+// 	}
+// 	Breal &operator=(const Breal &rhs) // copy assignment
+// 	{
+// 		// printf("Breal: copy assignment called.\n");
+// 		arf_set(m_n, rhs.m_n); return *this;
+// 	}
+// 	Breal &operator=(Llong_I rhs) { arf_set_si(m_n, rhs); return *this; }
+// 	Breal &operator=(Doub_I rhs) { arf_set_d(m_n, rhs); return *this; }
+// 	Breal &operator=(Str_I rhs) { arf_set_str(m_n, rhs.c_str(), 10); return *this; }
+
+// 	~Breal() {
+// 		// printf("Breal: destructor called.\n");
+// 		arf_clear(m_n);
+// 	}
+// }
+
+// struct Areal {
+// 	arb_t m_n;
+// 	// constructors
+// 	Areal() {
+// 		// printf("Areal: default init called.\n");
+// 		arb_init(m_n);
+// 	}
+// 	Areal(Doub_I val)
+// 	{
+// 		// printf("Areal: Doub init called.\n");
+// 		arb_init(m_n); arb_set_d(m_n, val);
+// 	}
+// 	Areal(Str_I str, Long_I prec)
+// 	{
+// 		// printf("Areal: Str init called.\n");
+// 		arb_init(m_n); arb_set_str(m_n, str.c_str(), prec);
+// 	}
+// 	Areal(const Areal &x) // copy constructor
+// 	{
+// 		// printf("Areal: copy constructor called.\n");
+// 		arb_set(m_n, x.m_n);
+// 	}
+// 	Areal &operator=(const Areal &rhs) // copy assignment
+// 	{
+// 		// printf("Areal: copy assignment called.\n");
+// 		arb_set(m_n, rhs.m_n); return *this;
+// 	}
+// 	Areal &operator=(Doub_I rhs) { arb_set_d(m_n, rhs); return *this; }
+// 	Areal &operator=(Str_I rhs) { arb_set_str(m_n, rhs.c_str(), 10); return *this; }
+
+// 	~Areal() {
+// 		// printf("Areal: destructor called.\n");
+// 		arb_clear(m_n);
+// 	}
+// }
 
 } // namespace slisc

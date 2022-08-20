@@ -18,41 +18,11 @@ void test_arb()
     using namespace slisc;
     SLS_ASSERT(sizeof(slong) == sizeof(Llong)); // test compatibility
 
-	// test fmpz_t: arbitrary length integer from flint library, with performance for small number
-    fmpz_t f, g, h; // sizeof(fmpz_t) is 8
-    fmpz_init(f); fmpz_init(g); fmpz_init(h);
-    fmpz_set_str(g, "12345678901234567890123456789012345678901234567890", 10); // base of 10
-    fmpz_set_str(h, "98765432109876543210987654321098765432109876543210", 10);
-    fmpz_add(f, g, h);
-    char *cs; cs = fmpz_get_str(NULL, 10, f);
-    Str s = cs;
-    free(cs);
-    SLS_ASSERT(s == "111111111011111111101111111110111111111011111111100");
-    fmpz_sub(f, g, h);
-    s = cs = fmpz_get_str(NULL, 10, f);
-    SLS_ASSERT(s == "-86419753208641975320864197532086419753208641975320");
-    free(cs);
-    fmpz_mul(f, g, h);
-    s = cs = fmpz_get_str(NULL, 10, f);
-    SLS_ASSERT(s == "1219326311370217952261850327338667885945115073915611949397448712086533622923332237463801111263526900");
-    free(cs);
-    fmpz_mod(f, g, h); // always positive
-    s = cs = fmpz_get_str(NULL, 10, f);
-    SLS_ASSERT(s == "12345678901234567890123456789012345678901234567890");
-    free(cs);
-    fmpz_clear(f); fmpz_clear(g); fmpz_clear(h);
-
-    // test arf_t: arbitrary precision floating point numbers
-    // https://arblib.org/arf.html
-    arf_t x; arf_init(x); // init to 0, arf_t is a pointer (array of size 1)
-    arf_set_d(x, PI); // set from double
-    // arf_allocated_bytes(x); // check size in heap
-    arf_clear(x); // free memory
-
     // test arb_t: arf_t with rigorous error bound
     arb_t a; arb_init(a);
     slong prec = 100; // precision digits (in binary)
     arb_set_str(a, "1.23456789022345678903234567890423456789e12345678", prec);
+    char *cs;
     Str str = cs = arb_get_str(a, 50, ARB_STR_MORE);
     SLS_ASSERT(str == Str("[1.2345678902234567890323456789042238629443408769906e+12345678 +/- 1.05e+12345648]"));
     free(cs); arb_clear(a);
@@ -70,9 +40,10 @@ void test_arb()
     arf_clear(af);
 #endif
 
-    // test BigInt wrapper
+    // test Bint wrapper
     {
-        BigInt a("1234567890223456789032"), b("2345678902234567890323"), c;
+        // test fmpz_t: arbitrary length integer from flint library, with performance for small number
+        Bint a("1234567890223456789032"), b("2345678902234567890323"), c;
         SLS_ASSERT(a == "1234567890223456789032");
         SLS_ASSERT(b == "2345678902234567890323");
         SLS_ASSERT(b != "2345678902234567890324");
@@ -89,10 +60,10 @@ void test_arb()
         SLS_ASSERT(c == "33544943845389145879408669314542605675909324086440898342615643360632092646597582307584");
         SLS_ASSERT(to_string(c) == "33544943845389145879408669314542605675909324086440898342615643360632092646597582307584");
 
-        SLS_ASSERT(BigInt("123456789") == BigInt("123456789"));
-        SLS_ASSERT(BigInt("123456789") != BigInt("123456788"));
-        SLS_ASSERT(BigInt("123456789") > BigInt("123456788"));
-        SLS_ASSERT(BigInt("123456788") < BigInt("123456789"));
+        SLS_ASSERT(Bint("123456789") == Bint("123456789"));
+        SLS_ASSERT(Bint("123456789") != Bint("123456788"));
+        SLS_ASSERT(Bint("123456789") > Bint("123456788"));
+        SLS_ASSERT(Bint("123456788") < Bint("123456789"));
         neg(a);
         SLS_ASSERT(a == "-2469135780446913578064");
     }
