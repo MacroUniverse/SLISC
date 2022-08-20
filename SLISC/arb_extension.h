@@ -132,6 +132,9 @@ struct BigInt
 	}
 };
 
+typedef const BigInt &BigInt_I;
+typedef BigInt &BigInt_O, &BigInt_IO;
+
 inline Str to_string(const BigInt &x)
 {
 	char *s; s = fmpz_get_str(NULL, 10, x.m_n);
@@ -139,13 +142,51 @@ inline Str to_string(const BigInt &x)
 	return str;
 }
 
-inline void add(BigInt &z, const BigInt &x, const BigInt &y)
+inline void add(BigInt_O z, BigInt_I x, BigInt_I y)
 { fmpz_add(z.m_n, x.m_n, y.m_n); }
 
-inline void sub(BigInt &z, const BigInt &x, const BigInt &y)
+inline void add(BigInt_O z, BigInt_I x, Long_I y)
+{
+	if (y > 0)
+		fmpz_add_ui(z.m_n, x.m_n, (ulong)y);
+	else if (y < 0)
+		fmpz_sub_ui(z.m_n, x.m_n, ulong(-y));
+}
+
+inline void sub(BigInt_O z, BigInt_I x, BigInt_I y)
 { fmpz_sub(z.m_n, x.m_n, y.m_n); }
 
-inline void mul(BigInt &z, const BigInt &x, const BigInt &y)
+inline void sub(BigInt_O z, BigInt_I x, Long_I y)
+{
+	if (y > 0)
+		fmpz_sub_ui(z.m_n, x.m_n, (ulong)y);
+	else if (y < 0)
+		fmpz_add_ui(z.m_n, x.m_n, ulong(-y));
+}
+
+inline void mul(BigInt_O z, BigInt_I x, BigInt_I y)
 { fmpz_mul(z.m_n, x.m_n, y.m_n); }
+
+// compare
+inline Bool operator<(BigInt_I x, BigInt_I y)
+{ return fmpz_cmp(x.m_n, y.m_n) < 0; }
+
+inline Bool operator>(BigInt_I x, BigInt_I y)
+{ return fmpz_cmp(x.m_n, y.m_n) > 0; }
+
+inline Bool operator==(BigInt_I x, BigInt_I y)
+{ return fmpz_equal(x.m_n, y.m_n); }
+
+inline Bool operator!=(BigInt_I x, BigInt_I y)
+{ return !(x == y); }
+
+inline Bool operator<(BigInt_I x, Long_I y)
+{ return fmpz_cmp_si(x.m_n, y) < 0; }
+
+inline Bool operator>(BigInt_I x, Long_I y)
+{ return fmpz_cmp_si(x.m_n, y) > 0; }
+
+inline void abs(BigInt_O y, BigInt_I x)
+{ fmpz_abs(y.m_n, x.m_n); }
 
 } // namespace slisc

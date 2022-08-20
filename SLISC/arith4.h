@@ -2149,301 +2149,301 @@ inline void divide_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N, Long_I
 }
 
 
-inline void plus(VecInt_O v, VecInt_I v1, Int_I s)
+inline void add(VecInt_O v, VecInt_I v1, Int_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecInt_O v, Int_I s, VecInt_I v1)
-{ plus(v, v1, s); }
+inline void add(VecInt_O v, Int_I s, VecInt_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecInt_O v, VecInt_I v1, Int_I s)
+inline void sub(VecInt_O v, VecInt_I v1, Int_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecInt_O v, Int_I s, VecInt_I v1)
+inline void sub(VecInt_O v, Int_I s, VecInt_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecInt_O v, VecInt_I v1, Int_I s)
+inline void mul(VecInt_O v, VecInt_I v1, Int_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecInt_O v, Int_I s, VecInt_I v1)
-{ times(v, v1, s); }
+inline void mul(VecInt_O v, Int_I s, VecInt_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecInt_O v, VecInt_I v1, Int_I s)
+inline void div(VecInt_O v, VecInt_I v1, Int_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecInt_O v, Int_I s, VecInt_I v1)
+inline void div(VecInt_O v, Int_I s, VecInt_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(VecDoub_O v, VecDoub_I v1, Doub_I s)
+inline void add(VecDoub_O v, VecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecDoub_O v, Doub_I s, VecDoub_I v1)
-{ plus(v, v1, s); }
+inline void add(VecDoub_O v, Doub_I s, VecDoub_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecDoub_O v, VecDoub_I v1, Doub_I s)
+inline void sub(VecDoub_O v, VecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecDoub_O v, Doub_I s, VecDoub_I v1)
+inline void sub(VecDoub_O v, Doub_I s, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecDoub_O v, VecDoub_I v1, Doub_I s)
+inline void mul(VecDoub_O v, VecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecDoub_O v, Doub_I s, VecDoub_I v1)
-{ times(v, v1, s); }
+inline void mul(VecDoub_O v, Doub_I s, VecDoub_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecDoub_O v, VecDoub_I v1, Doub_I s)
+inline void div(VecDoub_O v, VecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecDoub_O v, Doub_I s, VecDoub_I v1)
+inline void div(VecDoub_O v, Doub_I s, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(VecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void add(VecComp_O v, SvecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecComp_O v, Doub_I s, SvecDoub_I v1)
-{ plus(v, v1, s); }
+inline void add(VecComp_O v, Doub_I s, SvecDoub_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void sub(VecComp_O v, SvecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecComp_O v, Doub_I s, SvecDoub_I v1)
+inline void sub(VecComp_O v, Doub_I s, SvecDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void mul(VecComp_O v, SvecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecComp_O v, Doub_I s, SvecDoub_I v1)
-{ times(v, v1, s); }
+inline void mul(VecComp_O v, Doub_I s, SvecDoub_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void div(VecComp_O v, SvecDoub_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecComp_O v, Doub_I s, SvecDoub_I v1)
+inline void div(VecComp_O v, Doub_I s, SvecDoub_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(VecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void add(VecComp_O v, SvecDoub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecComp_O v, Imag_I s, SvecDoub_I v1)
-{ plus(v, v1, s); }
+inline void add(VecComp_O v, Imag_I s, SvecDoub_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void sub(VecComp_O v, SvecDoub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecComp_O v, Imag_I s, SvecDoub_I v1)
+inline void sub(VecComp_O v, Imag_I s, SvecDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void mul(VecComp_O v, SvecDoub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecComp_O v, Imag_I s, SvecDoub_I v1)
-{ times(v, v1, s); }
+inline void mul(VecComp_O v, Imag_I s, SvecDoub_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void div(VecComp_O v, SvecDoub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecComp_O v, Imag_I s, SvecDoub_I v1)
+inline void div(VecComp_O v, Imag_I s, SvecDoub_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(VecComp_O v, VecComp_I v1, Doub_I s)
+inline void add(VecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecComp_O v, Doub_I s, VecComp_I v1)
-{ plus(v, v1, s); }
+inline void add(VecComp_O v, Doub_I s, VecComp_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecComp_O v, VecComp_I v1, Doub_I s)
+inline void sub(VecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecComp_O v, Doub_I s, VecComp_I v1)
+inline void sub(VecComp_O v, Doub_I s, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecComp_O v, VecComp_I v1, Doub_I s)
+inline void mul(VecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecComp_O v, Doub_I s, VecComp_I v1)
-{ times(v, v1, s); }
+inline void mul(VecComp_O v, Doub_I s, VecComp_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecComp_O v, VecComp_I v1, Doub_I s)
+inline void div(VecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecComp_O v, Doub_I s, VecComp_I v1)
+inline void div(VecComp_O v, Doub_I s, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(VecComp_O v, VecComp_I v1, Comp_I s)
+inline void add(VecComp_O v, VecComp_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecComp_O v, Comp_I s, VecComp_I v1)
-{ plus(v, v1, s); }
+inline void add(VecComp_O v, Comp_I s, VecComp_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecComp_O v, VecComp_I v1, Comp_I s)
+inline void sub(VecComp_O v, VecComp_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecComp_O v, Comp_I s, VecComp_I v1)
+inline void sub(VecComp_O v, Comp_I s, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecComp_O v, VecComp_I v1, Comp_I s)
+inline void mul(VecComp_O v, VecComp_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecComp_O v, Comp_I s, VecComp_I v1)
-{ times(v, v1, s); }
+inline void mul(VecComp_O v, Comp_I s, VecComp_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecComp_O v, VecComp_I v1, Comp_I s)
+inline void div(VecComp_O v, VecComp_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecComp_O v, Comp_I s, VecComp_I v1)
+inline void div(VecComp_O v, Comp_I s, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void add(SvecComp_O v, SvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(SvecComp_O v, Doub_I s, SvecComp_I v1)
-{ plus(v, v1, s); }
+inline void add(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{ add(v, v1, s); }
 
-inline void minus(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void sub(SvecComp_O v, SvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(SvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void sub(SvecComp_O v, Doub_I s, SvecComp_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void mul(SvecComp_O v, SvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(SvecComp_O v, Doub_I s, SvecComp_I v1)
-{ times(v, v1, s); }
+inline void mul(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void div(SvecComp_O v, SvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(SvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void div(SvecComp_O v, Doub_I s, SvecComp_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+inline void add(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     Comp *p = v.p(); const Comp *p1 = v1.p();
@@ -2453,10 +2453,10 @@ inline void plus(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
     }
 }
 
-inline void plus(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
-{ plus(v, v1, s); }
+inline void add(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
+{ add(v, v1, s); }
 
-inline void minus(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+inline void sub(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     Comp *p = v.p(); const Comp *p1 = v1.p();
@@ -2466,7 +2466,7 @@ inline void minus(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
     }
 }
 
-inline void minus(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
+inline void sub(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 {
     assert_same_shape(v, v1);
     Comp *p = v.p(); const Comp *p1 = v1.p();
@@ -2476,7 +2476,7 @@ inline void minus(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
     }
 }
 
-inline void times(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+inline void mul(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     Comp *p = v.p(); const Comp *p1 = v1.p();
@@ -2486,10 +2486,10 @@ inline void times(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
     }
 }
 
-inline void times(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
-{ times(v, v1, s); }
+inline void mul(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
+inline void div(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     Comp *p = v.p(); const Comp *p1 = v1.p();
@@ -2499,7 +2499,7 @@ inline void divide(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
     }
 }
 
-inline void divide(DcmatComp_O v, const Doub_I s, DcmatComp_I v1)
+inline void div(DcmatComp_O v, const Doub_I s, DcmatComp_I v1)
 {
     assert_same_shape(v, v1);
     Comp *p = v.p(); const Comp *p1 = v1.p();
@@ -2509,338 +2509,338 @@ inline void divide(DcmatComp_O v, const Doub_I s, DcmatComp_I v1)
     }
 }
 
-inline void plus(VecComp_O v, VecDoub_I v1, Comp_I s)
+inline void add(VecComp_O v, VecDoub_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(VecComp_O v, Comp_I s, VecDoub_I v1)
-{ plus(v, v1, s); }
+inline void add(VecComp_O v, Comp_I s, VecDoub_I v1)
+{ add(v, v1, s); }
 
-inline void minus(VecComp_O v, VecDoub_I v1, Comp_I s)
+inline void sub(VecComp_O v, VecDoub_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(VecComp_O v, Comp_I s, VecDoub_I v1)
+inline void sub(VecComp_O v, Comp_I s, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(VecComp_O v, VecDoub_I v1, Comp_I s)
+inline void mul(VecComp_O v, VecDoub_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(VecComp_O v, Comp_I s, VecDoub_I v1)
-{ times(v, v1, s); }
+inline void mul(VecComp_O v, Comp_I s, VecDoub_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(VecComp_O v, VecDoub_I v1, Comp_I s)
+inline void div(VecComp_O v, VecDoub_I v1, Comp_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(VecComp_O v, Comp_I s, VecDoub_I v1)
+inline void div(VecComp_O v, Comp_I s, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(SvecComp_O v, VecComp_I v1, Doub_I s)
+inline void add(SvecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(SvecComp_O v, Doub_I s, VecComp_I v1)
-{ plus(v, v1, s); }
+inline void add(SvecComp_O v, Doub_I s, VecComp_I v1)
+{ add(v, v1, s); }
 
-inline void minus(SvecComp_O v, VecComp_I v1, Doub_I s)
+inline void sub(SvecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(SvecComp_O v, Doub_I s, VecComp_I v1)
+inline void sub(SvecComp_O v, Doub_I s, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(SvecComp_O v, VecComp_I v1, Doub_I s)
+inline void mul(SvecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(SvecComp_O v, Doub_I s, VecComp_I v1)
-{ times(v, v1, s); }
+inline void mul(SvecComp_O v, Doub_I s, VecComp_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(SvecComp_O v, VecComp_I v1, Doub_I s)
+inline void div(SvecComp_O v, VecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(SvecComp_O v, Doub_I s, VecComp_I v1)
+inline void div(SvecComp_O v, Doub_I s, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void plus(SvecComp_O v, DvecComp_I v1, Doub_I s)
+inline void add(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
-inline void plus(SvecComp_O v, Doub_I s, DvecComp_I v1)
-{ plus(v, v1, s); }
+inline void add(SvecComp_O v, Doub_I s, DvecComp_I v1)
+{ add(v, v1, s); }
 
-inline void minus(SvecComp_O v, DvecComp_I v1, Doub_I s)
+inline void sub(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
-inline void minus(SvecComp_O v, Doub_I s, DvecComp_I v1)
+inline void sub(SvecComp_O v, Doub_I s, DvecComp_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size(), 1, v1.step());
 }
 
-inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
+inline void mul(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
-inline void times(SvecComp_O v, Doub_I s, DvecComp_I v1)
-{ times(v, v1, s); }
+inline void mul(SvecComp_O v, Doub_I s, DvecComp_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(SvecComp_O v, DvecComp_I v1, Doub_I s)
+inline void div(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size(), 1, v1.step());
 }
 
-inline void divide(SvecComp_O v, Doub_I s, DvecComp_I v1)
+inline void div(SvecComp_O v, Doub_I s, DvecComp_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size(), 1, v1.step());
 }
 
-inline void plus(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+inline void add(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
-{ plus(v, v1, s); }
+inline void add(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+{ add(v, v1, s); }
 
-inline void minus(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+inline void sub(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+inline void sub(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+inline void mul(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
-{ times(v, v1, s); }
+inline void mul(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+inline void div(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+inline void div(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
 }
 
 
-inline void plus(VecInt_O v, VecInt_I v1, VecInt_I v2)
+inline void add(VecInt_O v, VecInt_I v1, VecInt_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(VecInt_O v, VecInt_I v1, VecInt_I v2)
+inline void sub(VecInt_O v, VecInt_I v1, VecInt_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(VecInt_O v, VecInt_I v1, VecInt_I v2)
+inline void mul(VecInt_O v, VecInt_I v1, VecInt_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(VecInt_O v, VecInt_I v1, VecInt_I v2)
+inline void div(VecInt_O v, VecInt_I v1, VecInt_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void plus(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
+inline void add(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
+inline void sub(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
+inline void mul(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
+inline void div(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void plus(VecComp_O v, VecComp_I v1, VecComp_I v2)
+inline void add(VecComp_O v, VecComp_I v1, VecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(VecComp_O v, VecComp_I v1, VecComp_I v2)
+inline void sub(VecComp_O v, VecComp_I v1, VecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(VecComp_O v, VecComp_I v1, VecComp_I v2)
+inline void mul(VecComp_O v, VecComp_I v1, VecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(VecComp_O v, VecComp_I v1, VecComp_I v2)
+inline void div(VecComp_O v, VecComp_I v1, VecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void plus(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
+inline void add(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
+inline void sub(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
+inline void mul(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
+inline void div(SvecComp_O v, VecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void plus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+inline void add(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
-inline void minus(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+inline void sub(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
-inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+inline void mul(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
-inline void divide(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
+inline void div(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
 }
 
-inline void plus(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+inline void add(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+inline void sub(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+inline void mul(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
+inline void div(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void plus(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+inline void add(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+inline void sub(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+inline void mul(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+inline void div(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
@@ -2872,31 +2872,31 @@ inline void minus_vv(Comp *v, const Comp *v1, Long_I N)
 }
 
 
-inline void minus(VecLlong_O v, VecLlong_I v1)
+inline void sub(VecLlong_O v, VecLlong_I v1)
 {
     assert_same_shape(v, v1);
     minus_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void minus(VecDoub_O v, VecDoub_I v1)
+inline void sub(VecDoub_O v, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void minus(VecComp_O v, VecDoub_I v1)
+inline void sub(VecComp_O v, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void minus(VecComp_O v, VecComp_I v1)
+inline void sub(VecComp_O v, VecComp_I v1)
 {
     assert_same_shape(v, v1);
     minus_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void minus(ScmatDoub_O v, CmatDoub_I v1)
+inline void sub(ScmatDoub_O v, CmatDoub_I v1)
 {
     assert_same_shape(v, v1);
     minus_vv(v.p(), v1.p(), v1.size());

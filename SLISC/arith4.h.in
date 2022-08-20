@@ -526,7 +526,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 }
 //%-------------------------
 
-//% tem('plus(v,v,s)', {
+//% tem('add(v,v,s)', {
 //%   'VecInt' 'VecInt' 'Int'
 //%   'VecDoub' 'VecDoub' 'Doub'
 //%   'VecComp' 'SvecDoub' 'Doub'
@@ -543,7 +543,7 @@ inline void divide_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I 
 //%     error('illegal types');
 //% end
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
-inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 //% req('assert_same_shape', {T, T1});
 //% req('plus_vvs', {Ts, Ts1, Ts2});
@@ -551,38 +551,38 @@ inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
     plus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ plus(v, v1, s); }
+inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ add(v, v1, s); }
 
-inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void sub(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
 //% req('minus_vsv', {Ts, Ts1, Ts2});
     minus_vsv(v.p(), s, v1.p(), v1.size());
 }
 
-inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ times(v, v1, s); }
+inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size());
 }
 
-inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size());
@@ -598,50 +598,50 @@ inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
 //%     else
 //%         step1 = '1';
 //%     end
-inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(v, v1);
     plus_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
-inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ plus(v, v1, s); }
+inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ add(v, v1, s); }
 
-inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void sub(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     minus_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
-inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
     minus_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
 }
 
-inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     times_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
-inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ times(v, v1, s); }
+inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     divide_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
 }
 
-inline void divide(@T@_O v, @Ts2@_I s, @T1@_I v1)
+inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
     divide_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
 }
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
-inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(v, v1);
@@ -652,10 +652,10 @@ inline void plus(@T@_O v, @T1@_I v1, @Ts2@_I s)
     }
 }
 
-inline void plus(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ plus(v, v1, s); }
+inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ add(v, v1, s); }
 
-inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void sub(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
@@ -665,7 +665,7 @@ inline void minus(@T@_O v, @T1@_I v1, @Ts2@_I s)
     }
 }
 
-inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
+inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
@@ -675,7 +675,7 @@ inline void minus(@T@_O v, @Ts2@_I s, @T1@_I v1)
     }
 }
 
-inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
@@ -685,10 +685,10 @@ inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
     }
 }
 
-inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ times(v, v1, s); }
+inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ mul(v, v1, s); }
 
-inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
@@ -698,7 +698,7 @@ inline void divide(@T@_O v, @T1@_I v1, @Ts2@_I s)
     }
 }
 
-inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
+inline void div(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
@@ -710,7 +710,7 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //% end
 //%-------------------------
 
-//% tem('plus(v,v,v)', {
+//% tem('add(v,v,v)', {
 //%   'VecInt' 'VecInt' 'VecInt'
 //%   'VecDoub' 'VecDoub' 'VecDoub'
 //%   'VecComp' 'VecComp' 'VecComp'
@@ -726,25 +726,25 @@ inline void divide(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //% req('assert_same_shape3', {T, T1, T2});
 //% req('plus_vvv', {Ts, Ts1, Ts2});
 //% if is_dense(T) && is_dense(T1)
-inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void add(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void sub(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void mul(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     times_vvv(v.p(), v1.p(), v2.p(), v.size());
 }
 
-inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size());
@@ -765,25 +765,25 @@ inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
 //%     else
 //%         step2 = '1';
 //%     end
-inline void plus(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void add(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     plus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
-inline void minus(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void sub(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
-inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void mul(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     minus_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
-inline void divide(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     divide_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
@@ -803,7 +803,7 @@ inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%--------------------------
 
-//% tem('minus(v,v)', {
+//% tem('sub(v,v)', {
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecDoub';
 //%     'VecComp', 'VecDoub';
@@ -813,7 +813,7 @@ inline void minus_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%----------------------------------------------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
-inline void minus(@T@_O v, @T1@_I v1)
+inline void sub(@T@_O v, @T1@_I v1)
 {
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(v, v1);

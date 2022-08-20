@@ -2,6 +2,7 @@
 #ifdef SLS_USE_BOOST
 #include <boost/filesystem.hpp>
 #include <boost/json/src.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 #include "../SLISC/file.h"
 #endif
 
@@ -99,6 +100,18 @@ void test_boost()
 	// cout << s2 << endl;
 	if (s1 != s2)
 		SLS_FAIL;
+
+	// Boost Multi-precision lib
+	{
+		using namespace boost::multiprecision;
+		cpp_int u = 1, v = 2, w;
+		for(unsigned i = 1; i <= 100; ++i)
+			u *= i;
+		// prints 93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000 (i.e. 100!)
+		// std::cout << u << std::endl;
+		w = u + v;
+		// std::cout << w << std::endl;
+	}
 #else
     std::cout << "---------- disabled! ----------" << std::endl;
 #endif

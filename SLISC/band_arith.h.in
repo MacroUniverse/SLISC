@@ -219,11 +219,11 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 //% });
 //%----------------------------
 //% [Tv, Tv1, Ts] = varargin{:};
-inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
+inline void mul(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
 {
 //% req('assert_same_shape', {Tv, Tv1});
     assert_same_shape(v, v1);
-    times(band(v), band(v1), s);
+    mul(band(v), band(v1), s);
 }
 //%------------------------
 

@@ -746,11 +746,11 @@ inline void operator*=(CmobdComp_IO v, Comp_I s)
 { v.cmat3() *= s; }
 
 
-inline void times(CmobdComp_O v1, CmobdDoub_I v2, Imag_I s)
-{ times(v1.cmat3(), v2.cmat3(), s); }
+inline void mul(CmobdComp_O v1, CmobdDoub_I v2, Imag_I s)
+{ mul(v1.cmat3(), v2.cmat3(), s); }
 
 
-inline void times(McooComp_O v, McooDoub_I v1, Imag_I s)
+inline void mul(McooComp_O v, McooDoub_I v1, Imag_I s)
 {
     times_vvs(v.p(), v1.p(), s, v1.nnz());
 }

@@ -292,13 +292,13 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 { v.cmat3() *= s; }
 //%------------------------
 
-//% tem('times(obd,obd,s)', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
+//% tem('mul(obd,obd,s)', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
 //%----------------------------
 //% [T1, T2, Ts] = varargin{:};
 //% [Ts1, Ts2] = val_t(T1, T2);
-//% req('plus(v,v,s)', {['Cmat3' Ts1], ['Cmat3' Ts2], Ts});
-inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
-{ times(v1.cmat3(), v2.cmat3(), s); }
+//% req('add(v,v,s)', {['Cmat3' Ts1], ['Cmat3' Ts2], Ts});
+inline void mul(@T1@_O v1, @T2@_I v2, @Ts@_I s)
+{ mul(v1.cmat3(), v2.cmat3(), s); }
 //%------------------------
 
 //% tem('times_coo', {
@@ -306,7 +306,7 @@ inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
 //% });
 //%----------------------------
 //% [T, T1, Ts] = varargin{:};
-inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
+inline void mul(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
     times_vvs(v.p(), v1.p(), s, v1.nnz());
 }

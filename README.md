@@ -192,7 +192,7 @@ The vector/matrix classes are (each type also comes with `_I`, `_O`, and `_IO` v
 Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `p()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
 
 ## arithmetics.h
-* includes basic arithmatics like `==`, `+=`, `*=`, `plus()`, `minus()`, etc. for containers.
+* includes basic arithmatics like `==`, `+=`, `*=`, `add()`, `sub()`, etc. for containers.
 * Operators `+, -, *, /, +=, -=, *=, /=` are only for container types element-wise operations.
 
 ## disp.h
@@ -234,7 +234,7 @@ includes various overloaded "disp()" functions.
 time utilities
 
 ```c++
-// all times are in seconds.
+// all in seconds.
 void Timer::tic()
 Doub Timer::toc()
 void CPUTimer::tic()
@@ -304,10 +304,10 @@ void idiagonals(Matrix<T> &a) // inverse of diagonals(), shift the i-th line i t
 operator ==, != // compare size and each element, right hand side can also be a scalar.
 operators +,-,*,/ scalar/vec/mat, whenever make sense (inefficient!).
 operators +=,-=,*=,/= scalar/vec/mat, whenever make sense
-void plus(out, in, in) //for scalar/vec/mat, whenever make sense.
-void minus(out, in, in) // binary "-" operator
-void minus(in_out) // unary "-" operator
-void minus(out, in)
+void add(out, in, in) //for scalar/vec/mat, whenever make sense.
+void sub(out, in, in) // binary "-" operator
+void neg(in_out) // unary "-" operator
+void sub(out, in)
 Times, Divide
 void real(MatDoub_O &rc, MatComplex_I &c)
 void imag(MatDoub_O &ic, MatComplex_I &c)
@@ -420,7 +420,7 @@ using namespace std;
 //% };
 //%----------------------------------
 //% [Tz, Tx, Ty] = varargin{:};
-void plus(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
+void add(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
 {
 //% if is_vector(Tz) && is_vector(Tx) && is_scalar(Ty)
 	for (size_t i = 0; i < z.size(); ++i)
@@ -444,13 +444,13 @@ Using `$octave auto_gen.m`, the generated file `demo.h` looks like
 #include <vector>
 using namespace std;
 
-void plus(vector<double> &z, const Int &x, const vector<float> &y)
+void add(vector<double> &z, const Int &x, const vector<float> &y)
 {
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x + y[i];
 }
 
-void plus(vector<complex<double>> &z, const vector<complex<double>> &x, const vector<Int> &y)
+void add(vector<complex<double>> &z, const vector<complex<double>> &x, const vector<Int> &y)
 {
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x[i] + y[i];

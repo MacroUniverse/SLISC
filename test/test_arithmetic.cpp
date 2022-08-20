@@ -333,7 +333,7 @@ void test_arithmetic()
         mod(v, v, 5);
     }
 
-    // plus(), minus(), times(), Devide()
+    // add(), sub(), mul(), Devide()
     {
         VecInt vLlong(3), vLlong1(3), vLlong2(3), vLlong3(3);
         VecDoub vDoub(3), vDoub1(3), vDoub2(3), vDoub3(3);
@@ -341,101 +341,101 @@ void test_arithmetic()
 
         // v = v ? s
         copy(vLlong1, 1);
-        plus(vLlong, vLlong1, 1);
+        add(vLlong, vLlong1, 1);
         if (vLlong != 2) SLS_FAIL;
-        minus(vLlong, vLlong1, 1);
+        sub(vLlong, vLlong1, 1);
         if (vLlong != 0) SLS_FAIL;
-        times(vLlong, vLlong1, 2);
+        mul(vLlong, vLlong1, 2);
         if (vLlong != 2) SLS_FAIL;
-        divide(vLlong, vLlong1, 2);
+        div(vLlong, vLlong1, 2);
         if (vLlong != 0) SLS_FAIL;
 
         copy(vDoub1, 1);
-        plus(vDoub, vDoub1, 1.);
+        add(vDoub, vDoub1, 1.);
         if (vDoub != 2.) SLS_FAIL;
-        minus(vDoub, vDoub1, 1.);
+        sub(vDoub, vDoub1, 1.);
         if (vDoub != 0.) SLS_FAIL;
-        times(vDoub, vDoub1, 2.);
+        mul(vDoub, vDoub1, 2.);
         if (vDoub != 2.) SLS_FAIL;
-        divide(vDoub, vDoub1, 2.);
+        div(vDoub, vDoub1, 2.);
         if (vDoub != 0.5) SLS_FAIL;
         
         copy(vComp1, 1);
-        plus(vComp, vComp1, 1.);
+        add(vComp, vComp1, 1.);
         if (vComp != 2.) SLS_FAIL;
-        minus(vComp, vComp1, 1.);
+        sub(vComp, vComp1, 1.);
         if (vComp != 0.) SLS_FAIL;
-        times(vComp, vComp1, 2.);
+        mul(vComp, vComp1, 2.);
         if (vComp != 2.) SLS_FAIL;
-        divide(vComp, vComp1, 2.);
+        div(vComp, vComp1, 2.);
         if (vComp != 0.5) SLS_FAIL;
 
         // v = s ? v
 
         copy(vLlong1, 1);
-        plus(vLlong, 1, vLlong1);
+        add(vLlong, 1, vLlong1);
         if (vLlong != 2) SLS_FAIL;
-        minus(vLlong, 1, vLlong1);
+        sub(vLlong, 1, vLlong1);
         if (vLlong != 0) SLS_FAIL;
-        times(vLlong, 2, vLlong1);
+        mul(vLlong, 2, vLlong1);
         if (vLlong != 2) SLS_FAIL;
         copy(vLlong1, 2);
-        divide(vLlong, 2, vLlong1);
+        div(vLlong, 2, vLlong1);
         if (vLlong != 1) SLS_FAIL;
 
         copy(vDoub1, 1);
-        plus(vDoub, 1., vDoub1);
+        add(vDoub, 1., vDoub1);
         if (vDoub != 2.) SLS_FAIL;
-        minus(vDoub, 1., vDoub1);
+        sub(vDoub, 1., vDoub1);
         if (vDoub != 0.) SLS_FAIL;
-        times(vDoub, 2., vDoub1);
+        mul(vDoub, 2., vDoub1);
         if (vDoub != 2.) SLS_FAIL;
         copy(vDoub1, 2);
-        divide(vDoub, 2., vDoub1);
+        div(vDoub, 2., vDoub1);
         if (vDoub != 1.) SLS_FAIL;
 
         copy(vComp1, Comp(1,1));
-        plus(vComp, Comp(1., 1.), vComp1);
+        add(vComp, Comp(1., 1.), vComp1);
         if (vComp != Comp(2.,2.)) SLS_FAIL;
-        minus(vComp, Comp(1.,1.), vComp1);
+        sub(vComp, Comp(1.,1.), vComp1);
         if (vComp != 0.) SLS_FAIL;
-        times(vComp, 2., vComp1);
+        mul(vComp, 2., vComp1);
         if (vComp != Comp(2.,2.)) SLS_FAIL;
         copy(vComp1, 2);
-        divide(vComp, Comp(2.,2.), vComp1);
+        div(vComp, Comp(2.,2.), vComp1);
         if (vComp != Comp(1.,1.)) SLS_FAIL;
 
         // v = v ? v
 
         copy(vLlong1, 4); copy(vLlong2, 2);
-        plus(vLlong, vLlong1, vLlong2);
+        add(vLlong, vLlong1, vLlong2);
         if (vLlong != 6) SLS_FAIL;
-        minus(vLlong, vLlong1, vLlong2);
+        sub(vLlong, vLlong1, vLlong2);
         if (vLlong != 2) SLS_FAIL;
-        times(vLlong, vLlong1, vLlong2);
+        mul(vLlong, vLlong1, vLlong2);
         if (vLlong != 8) SLS_FAIL;
-        divide(vLlong, vLlong1, vLlong2);
+        div(vLlong, vLlong1, vLlong2);
         if (vLlong != 2) SLS_FAIL;
 
         copy(vDoub1, 1); copy(vDoub2, 2);
-        plus(vDoub, vDoub1, vDoub2);
+        add(vDoub, vDoub1, vDoub2);
         if (vDoub != 3.) SLS_FAIL;
-        minus(vDoub, vDoub2, vDoub1);
+        sub(vDoub, vDoub2, vDoub1);
         if (vDoub != 1.) SLS_FAIL;
-        times(vDoub, vDoub1, vDoub2);
+        mul(vDoub, vDoub1, vDoub2);
         if (vDoub != 2.) SLS_FAIL;
-        divide(vDoub, vDoub1, vDoub2);
+        div(vDoub, vDoub1, vDoub2);
         if (vDoub != 0.5) SLS_FAIL;
 
         copy(vComp1, Comp(1, 1)); copy(vComp2, Comp(2, 2));
-        plus(vComp, vComp1, vComp2);
+        add(vComp, vComp1, vComp2);
         if (vComp != Comp(3., 3.)) SLS_FAIL;
-        minus(vComp, vComp2, vComp1);
+        sub(vComp, vComp2, vComp1);
         if (vComp != Comp(1., 1.)) SLS_FAIL;
         copy(vComp2, 2);
-        times(vComp, vComp1, vComp2);
+        mul(vComp, vComp1, vComp2);
         if (vComp != Comp(2., 2.)) SLS_FAIL;
-        divide(vComp, vComp1, vComp2);
+        div(vComp, vComp1, vComp2);
         if (vComp != Comp(0.5, 0.5)) SLS_FAIL;
     }
 

@@ -235,7 +235,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	SvecDoub xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
 	SvecDoub p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
 		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);
-	mul(r, A, x); minus(r, b, r);
+	mul(r, A, x); sub(r, b, r);
 	SvecDoub rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
@@ -290,7 +290,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(s, A, xhalf);
-			minus(s, b, s);
+			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
 				copy(x, xhalf);
@@ -342,7 +342,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(r, A, x);
-			minus(r, b, r);
+			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
 				flag = 0; iter = ii+1; break;
@@ -372,7 +372,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		relres = normr_act / n2b;
 	else {
 		mul(r, A, xmin);
-		minus(r, b, r);
+		sub(r, b, r);
 		if (norm(r) <= normr_act) {
 			copy(x, xmin);
 			iter = imin;
@@ -404,7 +404,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	SvecComp xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
 	SvecComp p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
 		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);
-	mul(r, A, x); minus(r, b, r);
+	mul(r, A, x); sub(r, b, r);
 	SvecComp rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
@@ -459,7 +459,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(s, A, xhalf);
-			minus(s, b, s);
+			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
 				copy(x, xhalf);
@@ -511,7 +511,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(r, A, x);
-			minus(r, b, r);
+			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
 				flag = 0; iter = ii+1; break;
@@ -541,7 +541,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		relres = normr_act / n2b;
 	else {
 		mul(r, A, xmin);
-		minus(r, b, r);
+		sub(r, b, r);
 		if (norm(r) <= normr_act) {
 			copy(x, xmin);
 			iter = imin;
@@ -574,7 +574,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	}
 	SvecDoub p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
 		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
-	mul(r, A, x); minus(r, b, r);
+	mul(r, A, x); sub(r, b, r);
 	SvecDoub rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const Doub tolb = tol * n2b;        // Relative tolerance
@@ -627,7 +627,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(s, A, xhalf);
-			minus(s, b, s);
+			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
 				copy(x, xhalf);
@@ -671,7 +671,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(r, A, x);
-			minus(r, b, r);
+			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
 				flag = 0; iter = ii+1; break;
@@ -711,7 +711,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	}
 	SvecComp p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
 		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
-	mul(r, A, x); minus(r, b, r);
+	mul(r, A, x); sub(r, b, r);
 	SvecComp rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const Doub tolb = tol * n2b;        // Relative tolerance
@@ -764,7 +764,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(s, A, xhalf);
-			minus(s, b, s);
+			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
 				copy(x, xhalf);
@@ -808,7 +808,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(r, A, x);
-			minus(r, b, r);
+			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
 				flag = 0; iter = ii+1; break;
@@ -851,7 +851,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	}
 	SvecComp p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
 		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
-	mul(r, A, x); minus(r, b, r);
+	mul(r, A, x); sub(r, b, r);
 	SvecComp rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const Doub tolb = tol * n2b;        // Relative tolerance
@@ -904,7 +904,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(s, A, xhalf);
-			minus(s, b, s);
+			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
 				copy(x, xhalf);
@@ -948,7 +948,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
 			mul(r, A, x);
-			minus(r, b, r);
+			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
 				flag = 0; iter = ii+1; break;

@@ -41,7 +41,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]); 
+    mul(v0, x, 1/beta[0]); 
 
     mul_gen(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
@@ -103,7 +103,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]); 
+    mul(v0, x, 1/beta[0]); 
 
     mul_gen(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
@@ -165,7 +165,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]); 
+    mul(v0, x, 1/beta[0]); 
 
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
@@ -227,7 +227,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, 
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]); 
+    mul(v0, x, 1/beta[0]); 
 
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
@@ -289,7 +289,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]); 
+    mul(v0, x, 1/beta[0]); 
 
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
@@ -357,7 +357,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_IO x, Doub_I
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]);
+    mul(v0, x, 1/beta[0]);
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -417,7 +417,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_IO x, Doub_I 
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]);
+    mul(v0, x, 1/beta[0]);
     mul_gen(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -477,7 +477,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_IO x, Doub_I dt
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]);
+    mul(v0, x, 1/beta[0]);
     mul_gen(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -537,7 +537,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_IO x, Doub_I 
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]);
+    mul(v0, x, 1/beta[0]);
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -597,7 +597,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_IO x, Doub_I
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]);
+    mul(v0, x, 1/beta[0]);
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)
@@ -657,7 +657,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_IO x, Doub_I
     ScmatComp bases(pc, N, Nk); // Krylov bases
     SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
     beta[0] = norm(x);
-    times(v0, x, 1/beta[0]);
+    mul(v0, x, 1/beta[0]);
     mul(vc, H, v0);
     alpha[0] = real(dot(v0, vc));
     for (Long i = 0; i < N; ++i)

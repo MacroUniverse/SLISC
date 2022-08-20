@@ -76,7 +76,7 @@ void test_interp1()
 		using namespace slisc;
 		Long N0 = 30;
 		VecDoub x0(N0); linspace(x0, 0, 2*PI);
-		VecDoub x1(N0); plus(x1, x0, 0.1);
+		VecDoub x1(N0); add(x1, x0, 0.1);
 		VecDoub y0(N0), y1(N0);
 		for (Long i = 0; i < N0; ++i) {
 			y0[i] = sin(x0[i]);
