@@ -27,6 +27,9 @@ void test_arb()
     SLS_ASSERT(str == Str("[1.2345678902234567890323456789042238629443408769906e+12345678 +/- 1.05e+12345648]"));
     free(cs); arb_clear(a);
 
+    // arf_t f;
+    // arf_set(f, &a[0].mid);
+
 #ifdef SLS_USE_QUAD_MATH
     // test my arf_get_q() fun
     arb_init(a); prec = 150;
@@ -40,20 +43,20 @@ void test_arb()
     arf_clear(af);
 #endif
 
-    // test Bint wrapper
+    // test fmpz_t wrapper
     {
         // test fmpz_t: arbitrary length integer from flint library, with performance for small number
         Bint a("1234567890223456789032"), b("2345678902234567890323"), c;
         SLS_ASSERT(a == "1234567890223456789032");
         SLS_ASSERT(b == "2345678902234567890323");
         SLS_ASSERT(b != "2345678902234567890324");
-        c = a + b; // equiv to: add(c, a, b)
+        add(c, a, b);
         SLS_ASSERT(to_string(c) == "3580246792458024679355");
         SLS_ASSERT(c == "3580246792458024679355");
         a += a;
         SLS_ASSERT(to_string(a) == "2469135780446913578064");
         SLS_ASSERT(a == "2469135780446913578064");
-        c = a * b; // equiv to: mul(c, a, b)
+        mul(c, a, b);
         SLS_ASSERT(to_string(c) == "5791799706946809282022521437831175850674672");
         SLS_ASSERT(c == "5791799706946809282022521437831175850674672");
         c *= c;
@@ -66,6 +69,12 @@ void test_arb()
         SLS_ASSERT(Bint("123456788") < Bint("123456789"));
         neg(a);
         SLS_ASSERT(a == "-2469135780446913578064");
+    }
+
+    // test arf_t wrapper
+    {
+        Breal x(PI);
+        cout << to_string(x) << endl;
     }
 
     flint_cleanup(); // prevent memory leak
