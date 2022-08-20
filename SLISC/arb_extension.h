@@ -86,6 +86,7 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 #endif
 
 // c++ wrapper for fmpz_t
+// ref: http://flintlib.org/sphinx/fmpz.html
 struct BigInt
 {
 	fmpz_t m_n;
@@ -94,9 +95,9 @@ struct BigInt
 		// printf("BigInt: default init called.\n");
 		fmpz_init(m_n);
 	}
-	BigInt(Long_I val)
+	BigInt(Llong_I val)
 	{
-		// printf("BigInt: Long init called.\n");
+		// printf("BigInt: Llong init called.\n");
 		fmpz_init(m_n); fmpz_set_si(m_n, val);
 	}
 	BigInt(Doub_I val)
@@ -123,9 +124,13 @@ struct BigInt
 	BigInt &operator=(const BigInt &rhs) // copy assignment
 	{
 		// printf("BigInt: copy assignment called.\n");
-		fmpz_set(m_n, rhs.m_n);
-		return *this;
+		fmpz_set(m_n, rhs.m_n); return *this;
 	}
+	BigInt &operator=(Llong_I rhs) { fmpz_set_si(m_n, rhs); return *this; }
+	BigInt &operator=(Doub_I rhs) { fmpz_set_d(m_n, rhs); return *this; }
+	BigInt &operator=(Str_I rhs) { fmpz_set_str(m_n, rhs.c_str(), 10); return *this; }
+	
+
 	~BigInt() {
 		// printf("BigInt: destructor called.\n");
 		fmpz_clear(m_n);
@@ -142,51 +147,126 @@ inline Str to_string(const BigInt &x)
 	return str;
 }
 
-inline void add(BigInt_O z, BigInt_I x, BigInt_I y)
-{ fmpz_add(z.m_n, x.m_n, y.m_n); }
-
-inline void add(BigInt_O z, BigInt_I x, Long_I y)
-{
-	if (y > 0)
-		fmpz_add_ui(z.m_n, x.m_n, (ulong)y);
-	else if (y < 0)
-		fmpz_sub_ui(z.m_n, x.m_n, ulong(-y));
-}
-
-inline void sub(BigInt_O z, BigInt_I x, BigInt_I y)
-{ fmpz_sub(z.m_n, x.m_n, y.m_n); }
-
-inline void sub(BigInt_O z, BigInt_I x, Long_I y)
-{
-	if (y > 0)
-		fmpz_sub_ui(z.m_n, x.m_n, (ulong)y);
-	else if (y < 0)
-		fmpz_add_ui(z.m_n, x.m_n, ulong(-y));
-}
-
-inline void mul(BigInt_O z, BigInt_I x, BigInt_I y)
-{ fmpz_mul(z.m_n, x.m_n, y.m_n); }
-
 // compare
-inline Bool operator<(BigInt_I x, BigInt_I y)
-{ return fmpz_cmp(x.m_n, y.m_n) < 0; }
-
-inline Bool operator>(BigInt_I x, BigInt_I y)
-{ return fmpz_cmp(x.m_n, y.m_n) > 0; }
-
 inline Bool operator==(BigInt_I x, BigInt_I y)
 { return fmpz_equal(x.m_n, y.m_n); }
+
+inline Bool operator==(BigInt_I x, Llong_I y)
+{ return fmpz_equal_si(x.m_n, y); }
+
+inline Bool operator==(Llong_I y, BigInt_I x)
+{ return fmpz_equal_si(x.m_n, y); }
+
+inline Bool operator==(BigInt_I x, Str_I y)
+{ BigInt yy(y); return x == yy; }
+
+inline Bool operator==(Str_I y, BigInt_I x)
+{ BigInt yy(y); return x == yy; }
 
 inline Bool operator!=(BigInt_I x, BigInt_I y)
 { return !(x == y); }
 
-inline Bool operator<(BigInt_I x, Long_I y)
+inline Bool operator!=(BigInt_I x, Llong_I y)
+{ return !(x == y); }
+
+inline Bool operator!=(Llong_I y, BigInt_I x)
+{ return !(x == y); }
+
+inline Bool operator!=(BigInt_I x, Str_I y)
+{ return !(x == y); }
+
+inline Bool operator<(BigInt_I x, BigInt_I y)
+{ return fmpz_cmp(x.m_n, y.m_n) < 0; }
+
+inline Bool operator<(BigInt_I x, Llong_I y)
 { return fmpz_cmp_si(x.m_n, y) < 0; }
 
-inline Bool operator>(BigInt_I x, Long_I y)
+inline Bool operator<(Llong_I y, BigInt_I x)
 { return fmpz_cmp_si(x.m_n, y) > 0; }
+
+inline Bool operator>(BigInt_I x, BigInt_I y)
+{ return fmpz_cmp(x.m_n, y.m_n) > 0; }
+
+inline Bool operator>(BigInt_I x, Llong_I y)
+{ return fmpz_cmp_si(x.m_n, y) > 0; }
+
+inline Bool operator>(Llong_I y, BigInt_I x)
+{ return fmpz_cmp_si(x.m_n, y) < 0; }
+
+inline Bool is_odd(BigInt_I x)
+{ return fmpz_is_odd(x.m_n); }
+
+// arithmetic
+
+inline void neg(BigInt_O x, BigInt_I y)
+{ fmpz_neg(x.m_n, y.m_n); }
+
+inline void neg(BigInt_IO x) { neg(x, x); }
+
+inline void add(BigInt_O z, BigInt_I x, BigInt_I y)
+{ fmpz_add(z.m_n, x.m_n, y.m_n); }
+
+inline void operator+=(BigInt_IO y, BigInt_I x)
+{ add(y, y, x); }
+
+inline void add(BigInt_O z, BigInt_I x, Llong_I y)
+{
+	if (y > 0)
+		fmpz_add_ui(z.m_n, x.m_n, y);
+	else if (y < 0)
+		fmpz_sub_ui(z.m_n, x.m_n, -y);
+}
+
+inline void operator+=(BigInt_IO y, Llong_I x) { add(y, y, x); }
+
+inline void add(BigInt_O z, Llong_I y, BigInt_I x)
+{ add(z, x, y); }
+
+inline void sub(BigInt_O z, BigInt_I x, BigInt_I y)
+{ fmpz_sub(z.m_n, x.m_n, y.m_n); }
+
+inline void sub(BigInt_IO y, BigInt_I x) { sub(y, y, x); }
+
+inline void sub(BigInt_O z, BigInt_I x, Llong_I y)
+{
+	if (y > 0)
+		fmpz_sub_ui(z.m_n, x.m_n, y);
+	else if (y < 0)
+		fmpz_add_ui(z.m_n, x.m_n, -y);
+}
+
+inline void operator-=(BigInt_IO y, Llong_I x) { sub(y, y, x); }
+
+inline void sub(BigInt_O z, Llong_I y, BigInt_I x)
+{ sub(z, x, y); neg(z); }
+
+inline void mul(BigInt_O z, BigInt_I x, BigInt_I y)
+{ fmpz_mul(z.m_n, x.m_n, y.m_n); }
+
+inline void operator*=(BigInt_IO y, BigInt_I x) { mul(y, y, x); }
+
+inline void mul(BigInt_O z, BigInt_I x, Llong_I y)
+{ fmpz_mul_si(z.m_n, x.m_n, y); }
+
+inline void mul(BigInt_O z, Llong_I y, BigInt_I x)
+{ fmpz_mul_si(z.m_n, x.m_n, y); }
+
+inline void div(BigInt_O z, BigInt_I x, BigInt_I y)
+{ fmpz_tdiv_q(z.m_n, x.m_n, y.m_n); }
+
+inline void operator/=(BigInt_IO y, BigInt_I x)
+{ div(y, x, x); }
+
+inline void div(BigInt_O z, BigInt_I x, Llong_I y)
+{ fmpz_tdiv_q_si(z.m_n, x.m_n, y); }
+
+inline void mod(BigInt_O z, BigInt_I x, BigInt_I y)
+{ fmpz_mod(z.m_n, x.m_n, y.m_n); } // always positive
 
 inline void abs(BigInt_O y, BigInt_I x)
 { fmpz_abs(y.m_n, x.m_n); }
+
+inline void pow(BigInt_O z, BigInt_I x, Llong_I y)
+{ assert(y >= 0); fmpz_pow_ui(z.m_n, x.m_n, y); }
 
 } // namespace slisc

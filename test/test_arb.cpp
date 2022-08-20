@@ -16,6 +16,8 @@ void test_arb()
 {
 #ifdef SLS_USE_ARB
     using namespace slisc;
+    SLS_ASSERT(sizeof(slong) == sizeof(Llong)); // test compatibility
+
 	// test fmpz_t: arbitrary length integer from flint library, with performance for small number
     fmpz_t f, g, h; // sizeof(fmpz_t) is 8
     fmpz_init(f); fmpz_init(g); fmpz_init(h);
@@ -71,22 +73,31 @@ void test_arb()
     // test BigInt wrapper
     {
         BigInt a("1234567890223456789032"), b("2345678902234567890323"), c;
+        SLS_ASSERT(a == "1234567890223456789032");
+        SLS_ASSERT(b == "2345678902234567890323");
+        SLS_ASSERT(b != "2345678902234567890324");
         add(c, a, b);
         SLS_ASSERT(to_string(c) == "3580246792458024679355");
-        add(a, a, a);
+        SLS_ASSERT(c == "3580246792458024679355");
+        a += a;
         SLS_ASSERT(to_string(a) == "2469135780446913578064");
+        SLS_ASSERT(a == "2469135780446913578064");
         mul(c, a, b);
         SLS_ASSERT(to_string(c) == "5791799706946809282022521437831175850674672");
+        SLS_ASSERT(c == "5791799706946809282022521437831175850674672");
+        c *= c;
+        SLS_ASSERT(c == "33544943845389145879408669314542605675909324086440898342615643360632092646597582307584");
+        SLS_ASSERT(to_string(c) == "33544943845389145879408669314542605675909324086440898342615643360632092646597582307584");
+
+        SLS_ASSERT(BigInt("123456789") == BigInt("123456789"));
+        SLS_ASSERT(BigInt("123456789") != BigInt("123456788"));
+        SLS_ASSERT(BigInt("123456789") > BigInt("123456788"));
+        SLS_ASSERT(BigInt("123456788") < BigInt("123456789"));
+        neg(a);
+        SLS_ASSERT(a == "-2469135780446913578064");
     }
 
     flint_cleanup(); // prevent memory leak
-
-    // {
-    //     int x[1]; x[0] = 123;
-    //     int *y = &x[0];
-    //     test_fun(y);
-    //     cout << "x[0] = " << x[0] << endl;
-    // }
 #else
     std::cout << "---------- disabled! ----------" << std::endl;
 #endif
