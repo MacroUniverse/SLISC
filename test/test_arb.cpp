@@ -82,7 +82,12 @@ void test_arb()
 
     // test arb_t wrapper
     {
-        Areal x(PI), y("1.23456789e-2"), z;
+        Areal x(PI), y("1.23456789"), z;
+        // cout << to_string(y) << endl;
+        add(z, x, y);
+        // cout << to_string(z) << endl;
+        sin(z, y);
+        // cout << to_string(z) << endl;
     }
 
     flint_cleanup(); // prevent memory leak

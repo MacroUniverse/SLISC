@@ -1,5 +1,4 @@
 #pragma once
-#include "global.h"
 #include "Bit.h"
 #include "arf.h"
 #include "acb_hypgeom.h"
@@ -145,6 +144,8 @@ inline Str to_string(const Bint &x)
 	Str str(s); free(s);
 	return str;
 }
+
+inline void clear(Bint_O x) { fmpz_clear(x.m_n); }
 
 // compare
 inline Bool operator==(Bint_I x, Bint_I y)
@@ -320,6 +321,8 @@ inline Str to_string(Breal_I x, Long_I digits = 4)
 	return str;
 }
 
+inline void clear(Breal_O x) { arf_clear(x.m_n); }
+
 inline Bool operator==(Breal_I x, Breal_I y)
 { return arf_equal(x.m_n, y.m_n); }
 
@@ -379,5 +382,62 @@ struct Areal {
 
 typedef const Areal &Areal_I;
 typedef Areal &Areal_O, &Areal_IO;
+
+inline void clear(Areal_O x) { arb_clear(x.m_n); }
+
+inline void swap(Areal_IO x, Areal_IO y)
+{ arb_swap(x.m_n, y.m_n); }
+
+inline Str to_string(Areal_I x, Llong_I digits = 10, ulong flag = ARB_STR_MORE)
+{
+	Char * s = arb_get_str(x.m_n, digits, flag);
+	Str str(s); free(s);
+	return str;
+}
+
+inline void add(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_add(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void sub(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_sub(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void mul(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_mul(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void div(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_div(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void sqrt(Areal_IO y, Areal_I x)
+{ arb_sqrt(y.m_n, x.m_n, arb_prec()); }
+
+inline void sqr(Areal_IO y, Areal_I x)
+{ arb_sqr(y.m_n, x.m_n, arb_prec()); }
+
+inline void log(Areal_IO y, Areal_I x)
+{ arb_log(y.m_n, x.m_n, arb_prec()); }
+
+inline void exp(Areal_IO y, Areal_I x)
+{ arb_exp(y.m_n, x.m_n, arb_prec()); }
+
+inline void sin(Areal_IO y, Areal_I x)
+{ arb_sin(y.m_n, x.m_n, arb_prec()); }
+
+inline void cos(Areal_IO y, Areal_I x)
+{ arb_cos(y.m_n, x.m_n, arb_prec()); }
+
+inline void tan(Areal_IO y, Areal_I x)
+{ arb_tan(y.m_n, x.m_n, arb_prec()); }
+
+inline void cot(Areal_IO y, Areal_I x)
+{ arb_cot(y.m_n, x.m_n, arb_prec()); }
+
+inline void atan(Areal_IO y, Areal_I x)
+{ arb_atan(y.m_n, x.m_n, arb_prec()); }
+
+inline void asin(Areal_IO y, Areal_I x)
+{ arb_asin(y.m_n, x.m_n, arb_prec()); }
+
+inline void acos(Areal_IO y, Areal_I x)
+{ arb_acos(y.m_n, x.m_n, arb_prec()); }
 
 } // namespace slisc
