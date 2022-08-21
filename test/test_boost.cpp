@@ -3,6 +3,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/json/src.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
+#include <boost/math/special_functions/gamma.hpp>
 #include "../SLISC/file.h"
 #endif
 
@@ -111,6 +113,22 @@ void test_boost()
 		// std::cout << u << std::endl;
 		w = u + v;
 		// std::cout << w << std::endl;
+
+		// Operations at fixed precision and full numeric_limits support:
+		typedef number<cpp_bin_float<256> > cpp_bin_float_256;
+		// cpp_bin_float_256 b = 2;
+		// std::cout << std::numeric_limits<cpp_bin_float_256>::digits << std::endl;
+		// std::cout << std::numeric_limits<cpp_bin_float_256>::digits10 << std::endl;
+		// We can use any C++ std lib function, lets print all the digits as well:
+		// std::cout << std::setprecision(std::numeric_limits<cpp_bin_float_256>::max_digits10)
+		//	<< log(b) << std::endl; // print log(2)
+		// We can also use any function from Boost.Math:
+		// std::cout << boost::math::tgamma(b) << std::endl;
+		// These even work when the argument is an expression template:
+		// std::cout << boost::math::tgamma(b * b) << std::endl;
+		// And since we have an extended exponent range we can generate some really large 
+		// numbers here (4.0238726007709377354370243e+2564):
+		// std::cout << boost::math::tgamma(cpp_bin_float_256(1000)) << std::endl;
 	}
 #else
     std::cout << "---------- disabled! ----------" << std::endl;
