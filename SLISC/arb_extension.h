@@ -21,8 +21,10 @@ inline char * arf_get_str(const arf_t x, slong prec)
 inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
 {
 	arf_t t;
-	mp_srcptr tp;
-	mp_size_t tn;
+	// mp_limb_t is the type of a limb, with FLINT_BITS bits
+	// typedef const mp_limb_t *mp_srcptr;
+	mp_srcptr tp; // pointer to least significant limb
+	mp_size_t tn; // # of limbs
 
 	arf_init(t);
 	arf_set_round(t, x, 113, rnd);
@@ -30,7 +32,7 @@ inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
 	if (tn == 1)
 		v = (Qdoub)(tp[0]);
 	else if (tn == 2)
-		v = (Qdoub)(tp[1]) + (Qdoub)(tp[0]) * ldexpq(1,-FLINT_BITS);
+		v = (Qdoub)(tp[1]) + (Qdoub)(tp[0]) * ldexpq(1,-FLINT_BITS); // FLINT_BITS is # of bits in each limb, i.e. sizeof(mp_limb_t)*8
 	else if (tn == 3)
 		v = (Qdoub)(tp[2]) + (Qdoub)(tp[1]) * ldexpq(1,-FLINT_BITS) + (Qdoub)(tp[0]) * ldexpq(1,-2*FLINT_BITS);
 	else if (tn == 4)
@@ -40,7 +42,7 @@ inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
 
 	v = ldexpq(v, ARF_EXP(t) - FLINT_BITS);
 
-	if (ARF_SGNBIT(t))
+	if (ARF_SGNBIT(t)) // 1 for negative
 		v = -v;
 	arf_clear(t);
 }
@@ -311,6 +313,7 @@ struct Breal {
 typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
 
+// TODO: using static variable is not thread-safe, need to think about the precision machenism
 inline Llong arb_prec() { return 100; }
 inline arf_rnd_t arb_rnd() { return ARF_RND_NEAR; }
 
