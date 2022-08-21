@@ -106,16 +106,17 @@ void test_boost()
 	// Boost Multi-precision lib
 	{
 		using namespace boost::multiprecision;
-		cpp_int u = 1, v = 2, w;
-		for(unsigned i = 1; i <= 100; ++i)
+		cpp_int u = 2, v = 3, w;
+		w = (u + v)*v + u;
+		// cout << w << endl;
+		for(unsigned i = 3; i <= 100; ++i)
 			u *= i;
 		// prints 93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000 (i.e. 100!)
 		// std::cout << u << std::endl;
-		w = u + v;
 		// std::cout << w << std::endl;
 
 		// Operations at fixed precision and full numeric_limits support:
-		typedef number<cpp_bin_float<256> > cpp_bin_float_256;
+		// typedef number<cpp_bin_float<256> > cpp_bin_float_256;
 		// cpp_bin_float_256 b = 2;
 		// std::cout << std::numeric_limits<cpp_bin_float_256>::digits << std::endl;
 		// std::cout << std::numeric_limits<cpp_bin_float_256>::digits10 << std::endl;

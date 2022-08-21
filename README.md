@@ -1,10 +1,10 @@
 # SLISC0
-* Simple Scientific Library in Simple C++, using code generation instead of `template`s
+* Simple Scientific Library in Simple C++, using code generation instead of non-trivial `template`s
 * Matlab/Octave is used for code generation (see `## Code generation`)
 
 ## Introduction
 
-SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read, debug and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of viewing classes is supported. Code from some other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.), and Macros can be defined to turn them on or off. The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
+SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read, debug and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of viewing classes are supported. Code from many other projects or libraries has been incorporated (e.g. Numerical Recipes, Eigen, Intel MKL etc.), and Macros can be defined to turn them on or off. The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
 
 SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed on Linux using g++ and Intel compiler. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
 
@@ -55,9 +55,9 @@ int main()
 
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
-## Compiling (needs update)
+## Compiling
 * Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04 & 18.04 & 22.04 Windows WSL.
-* `octave` 4.2 (4.0 works but is slower) is needed for code generation. If you don't want to install `octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
+* `Octave` 4.2 (4.0 works but is slower) or higher is needed for code generation. If you don't want to install `Octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
 * Use `make` to compile, use `make -j4` to compile with 4 threads (or any number you like).
 * Makefile provides multiple options, uncomment one line to enable. The default option does not require any 3rd party binary libraries and is most compatible. Some modules will not be available, some others will run slower. use `make -j8` to use 8 threads to compile.
 * To recompile just one test, use `make test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
@@ -66,8 +66,10 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
 
 ## Recommended Programming Style
-* All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference as a parameter of a function.
+* Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
+* Function overloading should be preferred over class members.
 * Avoid using unsigned integer types when possible. They are not supported by the library for now. Use `size(std::vector<>)` in `arithmetic.h` instead of `vector::size()` when needed.
+* All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference as a parameter of a function.
 * Generally, functions output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
 * Intrinsic types are renamed inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
 * A type with `_I` suffix is the `const` or `reference to const` version of that type, used in function parameter declarations to indicate an input argument. Similarly, `_O` means output (reference type), `_IO` means both input and output (reference type). Note that a reference to an `_O` or `_IO` types is still a reference type.
