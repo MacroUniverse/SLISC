@@ -82,11 +82,14 @@ void test_arb()
 
     // test arb_t wrapper
     {
-        Areal x(PI), y("1.23456789"), z;
+        Areal x(PI), y("1.2345678902234567890323456789"), z;
         // cout << to_string(y) << endl;
         add(z, x, y);
         // cout << to_string(z) << endl;
         sin(z, y);
+        // cout << to_string(z) << endl;
+        exp(z, y);
+        pow(y, x, x);
         // cout << to_string(z) << endl;
     }
 

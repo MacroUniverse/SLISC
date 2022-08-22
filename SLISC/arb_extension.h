@@ -314,7 +314,7 @@ typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
 
 // TODO: using static variable is not thread-safe, need to think about the precision machenism
-inline Llong arb_prec() { return 100; }
+inline Llong arb_prec() { return 5000; }
 inline arf_rnd_t arb_rnd() { return ARF_RND_NEAR; }
 
 inline Str to_string(Breal_I x, Long_I digits = 4)
@@ -398,49 +398,93 @@ inline Str to_string(Areal_I x, Llong_I digits = 10, ulong flag = ARB_STR_MORE)
 	return str;
 }
 
-inline void add(Areal_IO z, Areal_I x, Areal_I y)
+inline void add(Areal_O z, Areal_I x, Areal_I y)
 { arb_add(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
-inline void sub(Areal_IO z, Areal_I x, Areal_I y)
+inline void sub(Areal_O z, Areal_I x, Areal_I y)
 { arb_sub(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
-inline void mul(Areal_IO z, Areal_I x, Areal_I y)
+inline void mul(Areal_O z, Areal_I x, Areal_I y)
 { arb_mul(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
-inline void div(Areal_IO z, Areal_I x, Areal_I y)
+inline void div(Areal_O z, Areal_I x, Areal_I y)
 { arb_div(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
-inline void sqrt(Areal_IO y, Areal_I x)
+inline void sqrt(Areal_O y, Areal_I x)
 { arb_sqrt(y.m_n, x.m_n, arb_prec()); }
 
-inline void sqr(Areal_IO y, Areal_I x)
+inline void sqr(Areal_O y, Areal_I x)
 { arb_sqr(y.m_n, x.m_n, arb_prec()); }
 
-inline void log(Areal_IO y, Areal_I x)
+inline void pow(Areal_O z, Areal_I x, Areal_I y)
+{ arb_pow(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void log(Areal_O y, Areal_I x)
 { arb_log(y.m_n, x.m_n, arb_prec()); }
 
-inline void exp(Areal_IO y, Areal_I x)
+inline void exp(Areal_O y, Areal_I x)
 { arb_exp(y.m_n, x.m_n, arb_prec()); }
 
-inline void sin(Areal_IO y, Areal_I x)
+inline void sin(Areal_O y, Areal_I x)
 { arb_sin(y.m_n, x.m_n, arb_prec()); }
 
-inline void cos(Areal_IO y, Areal_I x)
+inline void cos(Areal_O y, Areal_I x)
 { arb_cos(y.m_n, x.m_n, arb_prec()); }
 
-inline void tan(Areal_IO y, Areal_I x)
+inline void sin_cos(Areal_O s, Areal_O c, Areal_I x)
+{ arb_sin_cos(s.m_n, c.m_n, x.m_n, arb_prec()); }
+
+inline void tan(Areal_O y, Areal_I x)
 { arb_tan(y.m_n, x.m_n, arb_prec()); }
 
-inline void cot(Areal_IO y, Areal_I x)
+inline void cot(Areal_O y, Areal_I x)
 { arb_cot(y.m_n, x.m_n, arb_prec()); }
 
-inline void atan(Areal_IO y, Areal_I x)
+inline void atan(Areal_O y, Areal_I x)
 { arb_atan(y.m_n, x.m_n, arb_prec()); }
 
-inline void asin(Areal_IO y, Areal_I x)
+inline void atan2(Areal_O z, Areal_I y, Areal_I x)
+{ arb_atan2(z.m_n, y.m_n, x.m_n, arb_prec()); }
+
+inline void asin(Areal_O y, Areal_I x)
 { arb_asin(y.m_n, x.m_n, arb_prec()); }
 
-inline void acos(Areal_IO y, Areal_I x)
+inline void acos(Areal_O y, Areal_I x)
 { arb_acos(y.m_n, x.m_n, arb_prec()); }
+
+inline void const_pi(Areal_O z)
+{ arb_const_pi(z.m_n, arb_prec()); }
+
+inline void const_e(Areal_O z)
+{ arb_const_e(z.m_n, arb_prec()); }
+
+inline void const_sqrt_pi(Areal_O z)
+{ arb_const_sqrt_pi(z.m_n, arb_prec()); }
+
+inline void const_log2(Areal_O z)
+{ arb_const_log2(z.m_n, arb_prec()); }
+
+inline void const_log10(Areal_O z)
+{ arb_const_log10(z.m_n, arb_prec()); }
+
+// y = x * 2^e
+inline void ldexp(Areal_O y, Areal_I x, Bint_I e)
+{ arb_mul_2exp_fmpz(y.m_n, x.m_n, e.m_n); }
+
+// z += x*y
+inline void addmul(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_addmul(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void submul(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_submul(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void inv(Areal_O z, Areal_I x)
+{ arb_inv(z.m_n, x.m_n, arb_prec()); }
+
+inline void gamma(Areal_O z, Areal_I x)
+{ arb_gamma(z.m_n, x.m_n, arb_prec()); }
+
+inline void digamma(Areal_O z, Areal_I x)
+{ arb_digamma(z.m_n, x.m_n, arb_prec()); }
 
 } // namespace slisc
