@@ -450,6 +450,12 @@ inline Comp dot(Cmat3Comp_I v1, Cmat3Doub_I v2)
     return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
+inline Comp dot(Cmat3Comp_I v1, Cmat3Comp_I v2)
+{
+    assert_same_shape(v1, v2);
+    return dot_vv(v1.p(), v2.p(), v2.size());
+}
+
 inline Comp dot(SvecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v1, v2);

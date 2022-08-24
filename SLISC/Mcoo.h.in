@@ -2,7 +2,7 @@
 #include "Vec.h"
 
 namespace slisc {
-//% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
+//% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'; 'Qdoub'; 'Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -130,7 +130,7 @@ inline void @McooT@::push(@T@_I s, Long_I i, Long_I j)
     }
 #endif
     if (m_Nnz == m_N)
-        SLS_ERR("@McooT@::add(): out of memory, please reserve!");
+        SLS_ERR("@McooT@::push(): out of memory, please reserve! m_N = " + to_string(m_N));
     m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
     ++m_Nnz;
 }
@@ -146,7 +146,7 @@ inline void @McooT@::set(@T@_I s, Long_I i, Long_I j)
     }
     // push
     if (m_Nnz == m_N)
-        SLS_ERR("@McooT@::add(): out of memory, please reserve!");
+        SLS_ERR("@McooT@::set(): out of memory, please reserve! m_N = " + to_string(m_N));
     m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
     ++m_Nnz;
 }
