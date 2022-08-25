@@ -1,12 +1,8 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 % in_paths must end with '/' or '\'
-function auto_gen(in_paths, fname)
+function auto_gen(in_paths, fname, SLS_USE_QUADMATH, SLS_USE_INT_AS_LONG)
 global tem_db is_batch_mode SLS_USE_INT_AS_LONG; % is_batch_mode: delete db and process all files
-% ========= options ========
-SLS_USE_QUADMATH = false;
-SLS_USE_INT_AS_LONG = true;
-% ==========================
 if ~exist('fname', 'var'), fname = []; end
 is_batch_mode = isempty(fname);
 proc_paths = {'../preprocessor/', ...
@@ -14,11 +10,11 @@ proc_paths = {'../preprocessor/', ...
     '../preprocessor/SLISC/case_conflict/'};
 old_path = pwd;
 cd(in_paths{1});
-if is_batch_mode && exist('tem_db.mat', 'file')
-    delete 'tem_db.mat';
+if is_batch_mode && exist('./tem_db.mat', 'file')
+    delete './tem_db.mat';
 end
-if exist('tem_db.mat', 'file')
-    load('tem_db.mat', 'tem_db');
+if exist('./tem_db.mat', 'file')
+    load('./tem_db.mat', 'tem_db');
 else
     tem_db = struct('name', '', 'file', '', 'body', '', ...
         'param', {}, 'done', [], 'out', []);
@@ -206,6 +202,6 @@ for i = 1:numel(changed_file)
 end
 
 % rmpath(paths{:});
-save('tem_db.mat', 'tem_db');
+save('./tem_db.mat', 'tem_db');
 cd(old_path);
 end
