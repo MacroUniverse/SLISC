@@ -16,7 +16,7 @@ gsl_lib = -L $(gsl_dir)lib/ -lgsl
 # Eigen
 eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad math
-quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+# quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
 # Arpack
 arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/
@@ -34,7 +34,7 @@ matfile_lib = # -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l m
 sqlite_flag = -D SLS_USE_SQLITE
 sqlite_lib = -l sqlite3
 
-compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -O3 -D NDEBUG
+compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I /usr/include/x86_64-linux-gnu/c++/7  -O3 -D NDEBUG
 
 # All
 
@@ -43,7 +43,7 @@ flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(
 # -qopenmp-stubs # run OpenMP in serial mode
 
 # WARNING: link order does matter for icpc compiler, each linked library should depend only on the ones after it, add new libs to the front
-libs = $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(link_mkl_static) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib)
+libs = -L /usr/lib/gcc/x86_64-linux-gnu/7/ $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib) $(link_mkl_static)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
@@ -66,7 +66,7 @@ h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'})"
 
 link: # link only
-	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
+	$(compiler) $(flags) -o main.x  main.o test_*.o $(libs)
 
 clean:
 	rm -f *.o *.x $(path_gen_headers)
