@@ -8,35 +8,37 @@ link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_
 link_mkl_dynamic = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
 link_mkl_dynamic_single = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
 # Boost
-# boost_flag = -D SLS_USE_BOOST -I ../boost-headers
-# boost_lib = -lboost_filesystem -lboost_system
+boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+boost_lib = -lboost_system -lboost_filesystem
 # GSL
-gsl_dir = /thummscratch/Hongyu/gsl/
-gsl_flag = -D SLS_USE_GSL -I $(gsl_dir)include/
-gsl_lib = -L $(gsl_dir)lib/ -lgsl
+gsl_flag = -D SLS_USE_GSL
+gsl_lib = -lgsl
 # Eigen
 eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
-# quad math
+# Quad Math
 # quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 # quad_math_lib = -lquadmath
 # Arpack
-arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/
+arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
 arpack_lib = -larpack -lgfortran
 # Arb
 arb_flag = -D SLS_USE_ARB -I /usr/include/flint
-arb_lib = -lflint-arb -lflint -lmpfr -lgmp
+arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
 # Address Sanitizer
-asan_flag = # -fsanitize=address -static-libasan -D SLS_USE_ASAN
+# (not implemented for mkl)
 # Matfile
-matfile_bin_path = ../MatFile_linux/bin
-matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
-matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+# (conflicts with boost_filesystem.so other than version 1.56.0)
+# matfile_bin_path = ../MatFile_linux/bin
+# matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
+# matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
 sqlite_flag = -D SLS_USE_SQLITE
 sqlite_lib = -l sqlite3
+# Debug / Release
+debug_flag = -g -ftrapv
+# release_flag = -O3 -D NDEBUG
 
 # All
-
 compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -g
 
 flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) -D SLS_USE_INT_AS_LONG

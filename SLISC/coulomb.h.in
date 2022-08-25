@@ -29,6 +29,7 @@ inline @T@ arb_coulombF(@T@_I l, @T@_I eta, @T@_I x)
 	arb_t l1, eta1, x1, F1;
 	arb_init(l1); arb_init(eta1); arb_init(x1); arb_init(F1);
 //% if is_Doub(T)
+	// can use _arb_init_set_d() instead
 	arb_set_d(l1, l); arb_set_d(eta1, eta); arb_set_d(x1, x);
 //% else
 	arb_set_q(l1, l); arb_set_q(eta1, eta); arb_set_q(x1, x);

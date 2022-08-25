@@ -23,6 +23,7 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 	Doub F = 0;
 	arb_t l1, eta1, x1, F1;
 	arb_init(l1); arb_init(eta1); arb_init(x1); arb_init(F1);
+	// can use _arb_init_set_d() instead
 	arb_set_d(l1, l); arb_set_d(eta1, eta); arb_set_d(x1, x);
 	Int digits;
 	for (Long i = 0; i < 6; ++i) {
