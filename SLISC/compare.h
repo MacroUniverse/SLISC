@@ -1030,13 +1030,25 @@ inline void assert_same_shape(CmatComp_I v1, CmatInt_I v2, CmatDoub_I v3)
 inline void assert_same_shape(vecInt_I v1, vecInt_I v2, vecInt_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
+inline void assert_same_shape(vecLlong_I v1, vecLlong_I v2, vecLlong_I v3)
+{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
+
 inline void assert_same_shape(VecInt_I v1, VecInt_I v2, VecInt_I v3)
+{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
+
+inline void assert_same_shape(VecLlong_I v1, VecLlong_I v2, VecLlong_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 inline void assert_same_shape(VecDoub_I v1, VecDoub_I v2, VecDoub_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 inline void assert_same_shape(VecComp_I v1, VecComp_I v2, VecComp_I v3)
+{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
+
+inline void assert_same_shape(SvecDoub_I v1, SvecDoub_I v2, SvecDoub_I v3)
+{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
+
+inline void assert_same_shape(SvecComp_I v1, SvecComp_I v2, SvecComp_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 inline void assert_same_shape(SvecComp_I v1, VecComp_I v2, SvecComp_I v3)
@@ -1046,9 +1058,6 @@ inline void assert_same_shape(DvecComp_I v1, SvecComp_I v2, DvecComp_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 inline void assert_same_shape(SvecDoub_I v1, VecDoub_I v2, SvecDoub_I v3)
-{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
-
-inline void assert_same_shape(SvecComp_I v1, SvecComp_I v2, SvecComp_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 

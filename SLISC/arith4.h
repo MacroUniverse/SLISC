@@ -1528,60 +1528,6 @@ inline void operator/=(Mat3Comp_O &v, Mat3Comp_I v1)
 }
 
 
-inline void add_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] + s;
-}
-
-inline void add_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
-{
-    for (Long i = 0; i < N; ++i) {
-        *v = *v1 + s;
-        v += step1; v1 += step2;
-    }
-}
-
-inline void sub_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] - s;
-}
-
-inline void sub_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
-{
-    for (Long i = 0; i < N; ++i) {
-        *v = *v1 - s;
-        v += step1; v1 += step2;
-    }
-}
-
-inline void mul_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] * s;
-}
-
-inline void mul_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
-{
-    for (Long i = 0; i < N; ++i) {
-        *v = *v1 * s;
-        v += step1; v1 += step2;
-    }
-}
-
-inline void div_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
-{
-    Imag inv_s = 1./s;
-    mul_vvs(v, v1, inv_s, N);
-}
-
-inline void div_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step, Long_I step1)
-{
-    Imag inv_s = 1./s;
-    mul_vvs(v, v1, inv_s, N, step, step1);
-}
-
 inline void add_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
@@ -1631,6 +1577,62 @@ inline void div_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
 }
 
 inline void div_vvs(Int *v, const Int *v1, Int_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void add_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + s;
+}
+
+inline void add_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void sub_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - s;
+}
+
+inline void sub_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void mul_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void mul_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void div_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / s;
+}
+
+inline void div_vvs(Llong *v, const Llong *v1, Llong_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / s;
@@ -1692,13 +1694,13 @@ inline void div_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step, Lo
     mul_vvs(v, v1, inv_s, N, step, step1);
 }
 
-inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
+inline void add_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] + s;
 }
 
-inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
+inline void add_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -1706,13 +1708,13 @@ inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, L
     }
 }
 
-inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
+inline void sub_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - s;
 }
 
-inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
+inline void sub_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -1720,13 +1722,13 @@ inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, L
     }
 }
 
-inline void mul_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
+inline void mul_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] * s;
 }
 
-inline void mul_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
+inline void mul_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -1734,15 +1736,15 @@ inline void mul_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, L
     }
 }
 
-inline void div_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
+inline void div_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
 {
-    Doub inv_s = 1./s;
+    Comp inv_s = 1./s;
     mul_vvs(v, v1, inv_s, N);
 }
 
-inline void div_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step, Long_I step1)
+inline void div_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step, Long_I step1)
 {
-    Doub inv_s = 1./s;
+    Comp inv_s = 1./s;
     mul_vvs(v, v1, inv_s, N, step, step1);
 }
 
@@ -1854,13 +1856,13 @@ inline void div_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N, Long_I step, Lo
     mul_vvs(v, v1, inv_s, N, step, step1);
 }
 
-inline void add_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+inline void add_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] + s;
 }
 
-inline void add_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
+inline void add_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + s;
@@ -1868,13 +1870,13 @@ inline void add_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, L
     }
 }
 
-inline void sub_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+inline void sub_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - s;
 }
 
-inline void sub_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
+inline void sub_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - s;
@@ -1882,13 +1884,13 @@ inline void sub_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, L
     }
 }
 
-inline void mul_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+inline void mul_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] * s;
 }
 
-inline void mul_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, Long_I step2)
+inline void mul_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -1896,46 +1898,73 @@ inline void mul_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step1, L
     }
 }
 
-inline void div_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
+inline void div_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N)
 {
-    Comp inv_s = 1./s;
+    Imag inv_s = 1./s;
     mul_vvs(v, v1, inv_s, N);
 }
 
-inline void div_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N, Long_I step, Long_I step1)
+inline void div_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step, Long_I step1)
 {
-    Comp inv_s = 1./s;
+    Imag inv_s = 1./s;
     mul_vvs(v, v1, inv_s, N, step, step1);
 }
 
 
-inline void sub_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
+inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = s - v1[i];
+        v[i] = v1[i] + s;
 }
 
-inline void sub_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
+inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
-        *v = s - *v1;
-        v += step; v1 += step1;
+        *v = *v1 + s;
+        v += step1; v1 += step2;
     }
 }
 
-inline void div_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
+inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = s / v1[i];
+        v[i] = v1[i] - s;
 }
 
-inline void div_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
+inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
-        *v = s / *v1;
-        v += step; v1 += step1;
+        *v = *v1 - s;
+        v += step1; v1 += step2;
     }
 }
+
+inline void mul_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * s;
+}
+
+inline void mul_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * s;
+        v += step1; v1 += step2;
+    }
+}
+
+inline void div_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
+{
+    Doub inv_s = 1./s;
+    mul_vvs(v, v1, inv_s, N);
+}
+
+inline void div_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step, Long_I step1)
+{
+    Doub inv_s = 1./s;
+    mul_vvs(v, v1, inv_s, N, step, step1);
+}
+
 
 inline void sub_vsv(Int *v, const Int &s, const Int *v1, Long_I N)
 {
@@ -1958,6 +1987,34 @@ inline void div_vsv(Int *v, const Int &s, const Int *v1, Long_I N)
 }
 
 inline void div_vsv(Int *v, const Int &s, const Int *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s / *v1;
+        v += step; v1 += step1;
+    }
+}
+
+inline void sub_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = s - v1[i];
+}
+
+inline void sub_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N, Long_I step, Long_I step1)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = s - *v1;
+        v += step; v1 += step1;
+    }
+}
+
+inline void div_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = s / v1[i];
+}
+
+inline void div_vsv(Llong *v, const Llong &s, const Llong *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
         *v = s / *v1;
@@ -1993,13 +2050,13 @@ inline void div_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N, Long_I ste
     }
 }
 
-inline void sub_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N)
+inline void sub_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s - v1[i];
 }
 
-inline void sub_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
+inline void sub_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
         *v = s - *v1;
@@ -2007,41 +2064,13 @@ inline void sub_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N, Long_I ste
     }
 }
 
-inline void div_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N)
+inline void div_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = s / v1[i];
 }
 
-inline void div_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
-{
-    for (Long i = 0; i < N; ++i) {
-        *v = s / *v1;
-        v += step; v1 += step1;
-    }
-}
-
-inline void sub_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = s - v1[i];
-}
-
-inline void sub_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N, Long_I step, Long_I step1)
-{
-    for (Long i = 0; i < N; ++i) {
-        *v = s - *v1;
-        v += step; v1 += step1;
-    }
-}
-
-inline void div_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N)
-{
-    for (Long i = 0; i < N; ++i)
-        v[i] = s / v1[i];
-}
-
-inline void div_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N, Long_I step, Long_I step1)
+inline void div_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
         *v = s / *v1;
@@ -2105,62 +2134,63 @@ inline void div_vsv(Comp *v, const Comp &s, const Comp *v1, Long_I N, Long_I ste
     }
 }
 
-
-inline void add_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
+inline void sub_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] + v2[i];
+        v[i] = s - v1[i];
 }
 
-inline void add_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void sub_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
-        *v = *v1 + *v2;
-        v += step; v1 += step1; v2 += step2;
+        *v = s - *v1;
+        v += step; v1 += step1;
     }
 }
 
-inline void sub_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
+inline void div_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] - v2[i];
+        v[i] = s / v1[i];
 }
 
-inline void sub_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void div_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
-        *v = *v1 - *v2;
-        v += step; v1 += step1; v2 += step2;
+        *v = s / *v1;
+        v += step; v1 += step1;
     }
 }
 
-inline void mul_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
+
+inline void sub_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] * v2[i];
+        v[i] = s - v1[i];
 }
 
-inline void mul_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void sub_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
-        *v = *v1 * *v2;
-        v += step; v1 += step1; v2 += step2;
+        *v = s - *v1;
+        v += step; v1 += step1;
     }
 }
 
-inline void div_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
+inline void div_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
-        v[i] = v1[i] / v2[i];
+        v[i] = s / v1[i];
 }
 
-inline void div_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void div_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N, Long_I step, Long_I step1)
 {
     for (Long i = 0; i < N; ++i) {
-        *v = *v1 / *v2;
-        v += step; v1 += step1; v2 += step2;
+        *v = s / *v1;
+        v += step; v1 += step1;
     }
 }
+
 
 inline void add_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
 {
@@ -2211,6 +2241,62 @@ inline void div_vvv(Int *v, const Int *v1, const Int *v2, Long_I N)
 }
 
 inline void div_vvv(Int *v, const Int *v1, const Int *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void add_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + v2[i];
+}
+
+inline void add_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void sub_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - v2[i];
+}
+
+inline void sub_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void mul_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * v2[i];
+}
+
+inline void mul_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void div_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / v2[i];
+}
+
+inline void div_vvv(Llong *v, const Llong *v1, const Llong *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / *v2;
@@ -2274,13 +2360,13 @@ inline void div_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N, Long_I st
     }
 }
 
-inline void add_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+inline void add_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] + v2[i];
 }
 
-inline void add_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void add_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 + *v2;
@@ -2288,13 +2374,13 @@ inline void add_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I st
     }
 }
 
-inline void sub_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+inline void sub_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] - v2[i];
 }
 
-inline void sub_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void sub_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 - *v2;
@@ -2302,13 +2388,13 @@ inline void sub_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I st
     }
 }
 
-inline void mul_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+inline void mul_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] * v2[i];
 }
 
-inline void mul_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void mul_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * *v2;
@@ -2316,13 +2402,13 @@ inline void mul_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I st
     }
 }
 
-inline void div_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+inline void div_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] / v2[i];
 }
 
-inline void div_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void div_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 / *v2;
@@ -2386,6 +2472,119 @@ inline void div_vvv(Comp *v, const Comp *v1, const Doub *v2, Long_I N, Long_I st
     }
 }
 
+inline void add_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + v2[i];
+}
+
+inline void add_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void sub_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - v2[i];
+}
+
+inline void sub_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void mul_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * v2[i];
+}
+
+inline void mul_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void div_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / v2[i];
+}
+
+inline void div_vvv(Comp *v, const Comp *v1, const Comp *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void add_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] + v2[i];
+}
+
+inline void add_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 + *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void sub_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] - v2[i];
+}
+
+inline void sub_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 - *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void mul_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] * v2[i];
+}
+
+inline void mul_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 * *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+inline void div_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N)
+{
+    for (Long i = 0; i < N; ++i)
+        v[i] = v1[i] / v2[i];
+}
+
+inline void div_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+{
+    for (Long i = 0; i < N; ++i) {
+        *v = *v1 / *v2;
+        v += step; v1 += step1; v2 += step2;
+    }
+}
+
+
 
 inline void add(vecInt_O v, vecInt_I v1, Int_I s)
 {
@@ -2429,6 +2628,48 @@ inline void div(vecInt_O v, Int_I s, vecInt_I v1)
     div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
+inline void add(vecLlong_O v, vecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    add_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void add(vecLlong_O v, Llong_I s, vecLlong_I v1)
+{ add(v, v1, s); }
+
+inline void sub(vecLlong_O v, vecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    sub_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void sub(vecLlong_O v, Llong_I s, vecLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    sub_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void mul(vecLlong_O v, vecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    mul_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void mul(vecLlong_O v, Llong_I s, vecLlong_I v1)
+{ mul(v, v1, s); }
+
+inline void div(vecLlong_O v, vecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    div_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void div(vecLlong_O v, Llong_I s, vecLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    div_vsv(&v[0], s, &v1[0], v1.size());
+}
+
 inline void add(VecInt_O v, VecInt_I v1, Int_I s)
 {
     assert_same_shape(v, v1);
@@ -2466,6 +2707,48 @@ inline void div(VecInt_O v, VecInt_I v1, Int_I s)
 }
 
 inline void div(VecInt_O v, Int_I s, VecInt_I v1)
+{
+    assert_same_shape(v, v1);
+    div_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void add(VecLlong_O v, VecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    add_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void add(VecLlong_O v, Llong_I s, VecLlong_I v1)
+{ add(v, v1, s); }
+
+inline void sub(VecLlong_O v, VecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    sub_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void sub(VecLlong_O v, Llong_I s, VecLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    sub_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void mul(VecLlong_O v, VecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    mul_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void mul(VecLlong_O v, Llong_I s, VecLlong_I v1)
+{ mul(v, v1, s); }
+
+inline void div(VecLlong_O v, VecLlong_I v1, Llong_I s)
+{
+    assert_same_shape(v, v1);
+    div_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void div(VecLlong_O v, Llong_I s, VecLlong_I v1)
 {
     assert_same_shape(v, v1);
     div_vsv(&v[0], s, &v1[0], v1.size());
@@ -2681,6 +2964,48 @@ inline void div(VecComp_O v, Comp_I s, VecComp_I v1)
     div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
+inline void add(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+{
+    assert_same_shape(v, v1);
+    add_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void add(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+{ add(v, v1, s); }
+
+inline void sub(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+{
+    assert_same_shape(v, v1);
+    sub_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void sub(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    sub_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void mul(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+{
+    assert_same_shape(v, v1);
+    mul_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void mul(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+{ mul(v, v1, s); }
+
+inline void div(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+{
+    assert_same_shape(v, v1);
+    div_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void div(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+{
+    assert_same_shape(v, v1);
+    div_vsv(&v[0], s, &v1[0], v1.size());
+}
+
 inline void add(SvecComp_O v, SvecComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
@@ -2718,6 +3043,48 @@ inline void div(SvecComp_O v, SvecComp_I v1, Doub_I s)
 }
 
 inline void div(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    div_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void add(SvecComp_O v, SvecComp_I v1, Comp_I s)
+{
+    assert_same_shape(v, v1);
+    add_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void add(SvecComp_O v, Comp_I s, SvecComp_I v1)
+{ add(v, v1, s); }
+
+inline void sub(SvecComp_O v, SvecComp_I v1, Comp_I s)
+{
+    assert_same_shape(v, v1);
+    sub_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void sub(SvecComp_O v, Comp_I s, SvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    sub_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void mul(SvecComp_O v, SvecComp_I v1, Comp_I s)
+{
+    assert_same_shape(v, v1);
+    mul_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void mul(SvecComp_O v, Comp_I s, SvecComp_I v1)
+{ mul(v, v1, s); }
+
+inline void div(SvecComp_O v, SvecComp_I v1, Comp_I s)
+{
+    assert_same_shape(v, v1);
+    div_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void div(SvecComp_O v, Comp_I s, SvecComp_I v1)
 {
     assert_same_shape(v, v1);
     div_vsv(&v[0], s, &v1[0], v1.size());
@@ -2982,6 +3349,30 @@ inline void div(vecInt_O v, vecInt_I v1, vecInt_I v2)
     div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
+inline void add(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    add_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void sub(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    sub_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void mul(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void div(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    div_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
 inline void add(VecInt_O v, VecInt_I v1, VecInt_I v2)
 {
     assert_same_shape(v, v1, v2);
@@ -3001,6 +3392,30 @@ inline void mul(VecInt_O v, VecInt_I v1, VecInt_I v2)
 }
 
 inline void div(VecInt_O v, VecInt_I v1, VecInt_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    div_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void add(VecLlong_O v, VecLlong_I v1, VecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    add_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void sub(VecLlong_O v, VecLlong_I v1, VecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    sub_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void mul(VecLlong_O v, VecLlong_I v1, VecLlong_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void div(VecLlong_O v, VecLlong_I v1, VecLlong_I v2)
 {
     assert_same_shape(v, v1, v2);
     div_vvv(&v[0], &v1[0], &v2[0], v.size());
@@ -3049,6 +3464,54 @@ inline void mul(VecComp_O v, VecComp_I v1, VecComp_I v2)
 }
 
 inline void div(VecComp_O v, VecComp_I v1, VecComp_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    div_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void add(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    add_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void sub(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    sub_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void mul(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void div(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    div_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void add(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    add_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void sub(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    sub_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void mul(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
+{
+    assert_same_shape(v, v1, v2);
+    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void div(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
     assert_same_shape(v, v1, v2);
     div_vvv(&v[0], &v1[0], &v2[0], v.size());
@@ -3126,84 +3589,60 @@ inline void div(SvecDoub_O v, VecDoub_I v1, SvecDoub_I v2)
     div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void add(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
-{
-    assert_same_shape(v, v1, v2);
-    add_vvv(&v[0], &v1[0], &v2[0], v.size());
-}
 
-inline void sub(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
-{
-    assert_same_shape(v, v1, v2);
-    sub_vvv(&v[0], &v1[0], &v2[0], v.size());
-}
-
-inline void mul(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
-{
-    assert_same_shape(v, v1, v2);
-    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
-}
-
-inline void div(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
-{
-    assert_same_shape(v, v1, v2);
-    div_vvv(&v[0], &v1[0], &v2[0], v.size());
-}
-
-
-inline void sub_vv(Comp *v, const Doub *v1, Long_I N)
+inline void neg_vv(Comp *v, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = -v1[i];
 }
 
-inline void sub_vv(Llong *v, const Llong *v1, Long_I N)
+inline void neg_vv(Llong *v, const Llong *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = -v1[i];
 }
 
-inline void sub_vv(Doub *v, const Doub *v1, Long_I N)
+inline void neg_vv(Doub *v, const Doub *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = -v1[i];
 }
 
-inline void sub_vv(Comp *v, const Comp *v1, Long_I N)
+inline void neg_vv(Comp *v, const Comp *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = -v1[i];
 }
 
 
-inline void sub(VecLlong_O v, VecLlong_I v1)
+inline void neg(VecLlong_O v, VecLlong_I v1)
 {
     assert_same_shape(v, v1);
-    sub_vv(v.p(), v1.p(), v1.size());
+    neg_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void sub(VecDoub_O v, VecDoub_I v1)
+inline void neg(VecDoub_O v, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
-    sub_vv(v.p(), v1.p(), v1.size());
+    neg_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void sub(VecComp_O v, VecDoub_I v1)
+inline void neg(VecComp_O v, VecDoub_I v1)
 {
     assert_same_shape(v, v1);
-    sub_vv(v.p(), v1.p(), v1.size());
+    neg_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void sub(VecComp_O v, VecComp_I v1)
+inline void neg(VecComp_O v, VecComp_I v1)
 {
     assert_same_shape(v, v1);
-    sub_vv(v.p(), v1.p(), v1.size());
+    neg_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void sub(ScmatDoub_O v, CmatDoub_I v1)
+inline void neg(ScmatDoub_O v, CmatDoub_I v1)
 {
     assert_same_shape(v, v1);
-    sub_vv(v.p(), v1.p(), v1.size());
+    neg_vv(v.p(), v1.p(), v1.size());
 }
 
 
