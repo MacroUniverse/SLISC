@@ -424,13 +424,13 @@ using namespace std;
 //% [Tz, Tx, Ty] = varargin{:};
 void add(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
 {
-//% if is_vector(Tz) && is_vector(Tx) && is_scalar(Ty)
+//% if is_vec(Tz) && is_vec(Tx) && is_scalar(Ty)
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x[i] + y;
-//% elseif is_vector(Tz) && is_scalar(Tx) && is_vector(Ty)
+//% elseif is_vec(Tz) && is_scalar(Tx) && is_vec(Ty)
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x + y[i];
-//% elseif is_vector(Tz) && is_vector(Tx) && is_vector(Ty)
+//% elseif is_vec(Tz) && is_vec(Tx) && is_vec(Ty)
 	for (size_t i = 0; i < z.size(); ++i)
 		z[i] = x[i] + y[i];
 //% else

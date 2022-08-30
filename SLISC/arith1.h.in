@@ -86,7 +86,7 @@ inline @T@ @fun@_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, L
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('max_v', { 'max', Ts; 'min', Ts });
-//% if is_vector(T) && is_real(Ts) && ~is_Bool(Ts)
+//% if is_vec(T) && is_real(Ts) && ~is_Bool(Ts)
 inline @Ts@ max(@T@_I v) { return max_v(v.data(), v.size()); }
 
 inline @Ts@ max(Long_O ind, @T@_I v) { return max_v(ind, v.data(), v.size()); }
@@ -358,7 +358,7 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 //%     Tret = Ts;
 //% end
 //% req('sum_v', {Ts});
-//% if is_vector(T)
+//% if is_vec(T)
 inline @Tret@ sum(@T@_I v) { return sum_v(v.data(), v.size()); }
 
 inline @Tret@ prod(@T@_I v) { return prod_v(v.data(), v.size()); }

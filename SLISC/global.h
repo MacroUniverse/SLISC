@@ -249,6 +249,10 @@ typedef vector<vector<Llong>> vvecLlong;
 typedef const vvecLlong &vvecLlong_I;
 typedef vvecLlong &vvecLlong_O, &vvecLlong_IO;
 
+typedef vector<vector<Doub>> vvecDoub;
+typedef const vvecDoub &vvecDoub_I;
+typedef vvecDoub &vvecDoub_O, &vvecDoub_IO;
+
 #ifdef SLS_USE_INT_AS_LONG
 typedef vvecInt vvecLong;
 #else

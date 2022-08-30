@@ -122,6 +122,8 @@ inline Bool equals_to_vv(const Comp *v1, const Doub *v2, Long_I N)
 }
 
 
+inline Bool shape_cmp(vecInt_I v1, vecInt_I v2) {return (Long)v1.size() == (Long)v2.size();}
+
 inline Bool shape_cmp(CmatDoub_I v1, CmatDoub_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
 inline Bool shape_cmp(Mat3Doub_I v1, Mat3Comp_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
@@ -165,6 +167,10 @@ inline Bool shape_cmp(Cmat3Comp_I v1, Jcmat3Comp_I v2) {return v1.n0() == v2.n0(
 inline Bool shape_cmp(Cmat3Comp_I v1, Cmat3Doub_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
 
 inline Bool shape_cmp(Cmat3Comp_I v1, Cmat3Comp_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1() && v1.n2() == v2.n2();}
+
+inline Bool shape_cmp(vecLlong_I v1, vecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
+
+inline Bool shape_cmp(vecDoub_I v1, vecDoub_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
 inline Bool shape_cmp(VecDoub_I v1, SvecDoub_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
@@ -288,8 +294,6 @@ inline Bool shape_cmp(VecInt_I v1, VecLlong_I v2) {return (Long)v1.size() == (Lo
 
 inline Bool shape_cmp(VecDoub_I v1, VecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
-inline Bool shape_cmp(vecLlong_I v1, vecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
-
 inline Bool shape_cmp(vecLlong_I v1, vecStr_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
 inline Bool shape_cmp(vecStr_I v1, vecStr_I v2) {return (Long)v1.size() == (Long)v2.size();}
@@ -332,6 +336,14 @@ inline void assert_same_shape(ScmatDoub_I v1, CbandComp_I v2)
 }
 
 inline void assert_same_shape(McooDoub_I v1, CbandComp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+}
+
+inline void assert_same_shape(vecInt_I v1, vecInt_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v1, v2))
@@ -468,6 +480,22 @@ inline void assert_same_shape(Cmat3Comp_I v1, Cmat3Doub_I v2)
 }
 
 inline void assert_same_shape(Cmat3Comp_I v1, Cmat3Comp_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+}
+
+inline void assert_same_shape(vecLlong_I v1, vecLlong_I v2)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (!shape_cmp(v1, v2))
+        SLS_ERR("wrong shape!");
+#endif
+}
+
+inline void assert_same_shape(vecDoub_I v1, vecDoub_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
     if (!shape_cmp(v1, v2))
@@ -891,14 +919,6 @@ inline void assert_same_shape(VecDoub_I v1, VecLlong_I v2)
 #endif
 }
 
-inline void assert_same_shape(vecLlong_I v1, vecLlong_I v2)
-{
-#ifdef SLS_CHECK_SHAPES
-    if (!shape_cmp(v1, v2))
-        SLS_ERR("wrong shape!");
-#endif
-}
-
 inline void assert_same_shape(vecLlong_I v1, vecStr_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1005,6 +1025,9 @@ inline void assert_same_shape(vecStr_I v1, vecLlong_I v2)
 
 
 inline void assert_same_shape(CmatComp_I v1, CmatInt_I v2, CmatDoub_I v3)
+{ assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
+
+inline void assert_same_shape(vecInt_I v1, vecInt_I v2, vecInt_I v3)
 { assert_same_shape(v1, v2); assert_same_shape(v1, v3); }
 
 inline void assert_same_shape(VecInt_I v1, VecInt_I v2, VecInt_I v3)

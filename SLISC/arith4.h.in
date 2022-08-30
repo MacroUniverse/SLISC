@@ -5,8 +5,10 @@
 
 namespace slisc {
 
-//% tem('add_eq_vs', { 'Int' 'Int'; 'Llong' 'Llong';
-//% 'Doub' 'Doub'; 'Comp', 'Doub'; 'Comp' 'Comp'; 'Comp' 'Imag' });
+//% tem('add_eq_vs', {
+//% 'Int' 'Int'; 'Llong' 'Llong';
+//% 'Doub' 'Doub'; 'Comp', 'Doub';
+//% 'Comp' 'Comp'; 'Comp' 'Imag' });
 //%-------------------
 //% [T, Ts] = varargin{:};
 //% if ~is_promo(T, Ts) || ~strcmp(rm_comp(T),rm_comp(Ts))
@@ -72,20 +74,33 @@ inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%-------------------------
 
 //% tem('v+=s', {
-//%   'vecInt', 'Int';
-//%   'vecLlong', 'Llong';
-//%   'VecInt', 'Int';
-//%   'VecLlong', 'Llong';
-//%   'VecDoub', 'Doub';
-//%   'VecComp', 'Doub';
-//%   'VecComp', 'Comp';
-//%   'SvecDoub', 'Doub';
-//%   'DvecComp', 'Doub';
-//%   'CmatDoub' 'Doub'
-//%   'CmatComp' 'Doub'
-//%   'CmatComp' 'Comp'
+//%   'vecInt' 'Int';
+//%   'vecLlong' 'Llong';
+//%   'vecDoub' 'Doub';
+//%   'vecComp' 'Doub';
+//%   'vecComp' 'Comp';
+//%   'VecInt' 'Int';
+//%   'VecLlong' 'Llong';
+//%   'VecDoub' 'Doub';
+//%   'VecComp' 'Doub';
+//%   'VecComp' 'Comp';
+//%   'SvecInt' 'Int';
+//%   'SvecLlong' 'Llong';
+//%   'SvecDoub' 'Doub';
+//%   'SvecComp' 'Doub';
+//%   'SvecComp' 'Comp';
+//%   'DvecComp' 'Doub';
+//%   'CmatInt' 'Int';
+//%   'CmatLlong' 'Llong';
+//%   'CmatDoub' 'Doub';
+//%   'CmatComp' 'Doub';
+//%   'CmatComp' 'Comp';
+//%   'DcmatDoub' 'Doub'
 //%   'DcmatComp' 'Doub'
 //%   'DcmatComp' 'Comp'
+//%   'vvecInt' 'Int'
+//%   'vvecLlong' 'Llong'
+//%   'vvecDoub' 'Doub'
 //% });
 //%-------------------
 //% [T, Ts] = varargin{:}; Tsv = val_t(T);
@@ -93,30 +108,30 @@ inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%     error('illegal type!');
 //% end
 //% req('add_eq_vs', {Tsv,Ts});
-//% if is_vector(T) && is_scalar(Ts)
+//% if is_vvec(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
-{ add_eq_vs(v.data(), s, v.size()); }
+{ for (auto &e : v) e += s; }
 
 inline void operator-=(@T@_IO v, @Ts@_I s)
-{ sub_eq_vs(v.data(), s, v.size()); }
+{ for (auto &e : v) e -= s; }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{ mul_eq_vs(v.data(), s, v.size()); }
+{ for (auto &e : v) e *= s; }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
-{ div_eq_vs(v.data(), s, v.size()); }
+{ for (auto &e : v) e /= s; }
 //% elseif is_dense(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
-{ add_eq_vs(v.p(), s, v.size()); }
+{ add_eq_vs(&v[0], s, v.size()); }
 
 inline void operator-=(@T@_IO v, @Ts@_I s)
-{ sub_eq_vs(v.p(), s, v.size()); }
+{ sub_eq_vs(&v[0], s, v.size()); }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{ mul_eq_vs(v.p(), s, v.size()); }
+{ mul_eq_vs(&v[0], s, v.size()); }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
-{ div_eq_vs(v.p(), s, v.size()); }
+{ div_eq_vs(&v[0], s, v.size()); }
 //% elseif is_Dvec(T) && is_scalar(Ts)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 { add_eq_vs(v.p(), s, v.size(), v.step()); }
@@ -159,33 +174,10 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 //% end
 //%-------------------------
 
-template <class T>
-inline void operator+=(vector<vector<T>> &v, const T &s)
-{
-    for (auto &v1 : v)
-        for (auto &e : v1)
-            e += s;
-}
-
-template <class T>
-inline void operator-=(vector<vector<T>> &v, const T &s)
-{
-    for (auto &v1 : v)
-        for (auto &e : v1)
-            e -= s;
-}
-
-template <class T>
-inline void operator*=(vector<vector<T>> &v, const T &s)
-{
-    for (auto &v1 : v)
-        for (auto &e : v1)
-            e *= s;
-}
-
-// don't use c++ template for operator/=()
-
-//% tem('add_eq_vv', { 'Comp', 'Doub' });
+//% tem('add_eq_vv', {
+//% 'Int' 'Int'; 'Llong' 'Llong';
+//% 'Doub' 'Doub'; 'Comp' 'Doub';
+//% 'Comp' 'Comp'; 'Comp' 'Imag' });
 //%-------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1)
@@ -216,62 +208,67 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%-------------------------
 
-//% tem('v+=v', { 'VecInt' 'VecInt';
-//%   'VecLlong' 'VecLlong';
-//%   'VecDoub' 'VecDoub';
-//%   'VecDoub' 'SvecDoub';
-//%   'VecComp' 'VecComp';
-//%   'VecComp' 'SvecComp';
-//%   'VecComp' 'VecDoub';
-//%   'VecQdoub' 'VecQdoub'
-//%   'SvecDoub' 'VecDoub'
-//%   'SvecDoub' 'SvecDoub'
-//%   'SvecComp' 'VecDoub'
-//%   'SvecComp' 'SvecComp'
-//%   'DvecDoub' 'SvecDoub'
-//%   'DvecComp' 'VecComp'
-//%   'DvecComp' 'SvecComp'
-//%   'DvecComp', 'SvecDoub';
-//%   'CmatDoub' 'CmatDoub'
-//%   'CmatComp' 'CmatDoub'
-//%   'CmatComp' 'CmatComp'
-//%   'MatDoub' 'MatDoub'
-//%   'MatComp' 'MatComp'
-//%   'ScmatComp' 'ScmatDoub'
-//%   'ScmatComp' 'ScmatComp'
-//%   'DcmatComp' 'DcmatDoub'
-//%   'Cmat3Comp' 'Cmat3Comp'
-//%   'Mat3Doub' 'Mat3Doub'
-//%   'Mat3Comp' 'Mat3Comp'
+//% tem('v+=v', {
+//% 'vecInt' 'vecInt';
+//% 'vecLlong' 'vecLlong';
+//% 'vecDoub' 'vecDoub';
+//% 'VecInt' 'VecInt';
+//% 'VecLlong' 'VecLlong';
+//% 'VecDoub' 'VecDoub';
+//% 'VecDoub' 'SvecDoub';
+//% 'VecComp' 'VecDoub';
+//% 'VecComp' 'VecComp';
+//% 'VecComp' 'SvecComp';
+//% 'VecComp' 'VecDoub';
+//% 'VecQdoub' 'VecQdoub'
+//% 'SvecDoub' 'VecDoub'
+//% 'SvecDoub' 'SvecDoub'
+//% 'SvecComp' 'VecDoub'
+//% 'SvecComp' 'SvecComp'
+//% 'DvecDoub' 'SvecDoub'
+//% 'DvecComp' 'VecComp'
+//% 'DvecComp' 'SvecComp'
+//% 'DvecComp', 'SvecDoub';
+//% 'CmatDoub' 'CmatDoub'
+//% 'CmatComp' 'CmatDoub'
+//% 'CmatComp' 'CmatComp'
+//% 'MatDoub' 'MatDoub'
+//% 'MatComp' 'MatComp'
+//% 'ScmatComp' 'ScmatDoub'
+//% 'ScmatComp' 'ScmatComp'
+//% 'DcmatComp' 'DcmatDoub'
+//% 'Cmat3Comp' 'Cmat3Comp'
+//% 'Mat3Doub' 'Mat3Doub'
+//% 'Mat3Comp' 'Mat3Comp'
 //% });
 //%-------------------
 //% [T, T1] = varargin{:};
 //% Ts = val_t(T); Ts1 = val_t(T1);
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
-inline void operator+=(@T@_O &v, @T1@_I v1)
-{
 //%     req('assert_same_shape', {T, T1});
 //%     req('add_eq_vv', {Ts, Ts1});
+inline void operator+=(@T@_O &v, @T1@_I v1)
+{
     assert_same_shape(v, v1);
-    add_eq_vv(v.p(), v1.p(), v1.size());
+    add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(@T@_O &v, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    sub_eq_vv(v.p(), v1.p(), v1.size());
+    sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    mul_eq_vv(v.p(), v1.p(), v1.size());
+    mul_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(@T@_O &v, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    div_eq_vv(v.p(), v1.p(), v1.size());
+    div_eq_vv(&v[0], &v1[0], v1.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
 inline void operator+=(@T@_O &v, @T1@_I v1)
@@ -518,6 +515,7 @@ inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I ste
 //%-------------------------
 
 //% tem('add(v,v,s)', {
+//%   'vecInt' 'vecInt' 'Int'
 //%   'VecInt' 'VecInt' 'Int'
 //%   'VecDoub' 'VecDoub' 'Doub'
 //%   'VecComp' 'SvecDoub' 'Doub'
@@ -539,7 +537,7 @@ inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
 //% req('assert_same_shape', {T, T1});
 //% req('add_vvs', {Ts, Ts1, Ts2});
     assert_same_shape(v, v1);
-    add_vvs(v.p(), v1.p(), s, v1.size());
+    add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
@@ -548,20 +546,20 @@ inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void sub(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    sub_vvs(v.p(), v1.p(), s, v1.size());
+    sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
 //% req('sub_vsv', {Ts, Ts1, Ts2});
-    sub_vsv(v.p(), s, v1.p(), v1.size());
+    sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    mul_vvs(v.p(), v1.p(), s, v1.size());
+    mul_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
@@ -570,13 +568,13 @@ inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    div_vvs(v.p(), v1.p(), s, v1.size());
+    div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    div_vsv(v.p(), s, v1.p(), v1.size());
+    div_vsv(&v[0], s, &v1[0], v1.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
 //%     if is_Dvec(T)
@@ -593,7 +591,7 @@ inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
 //% req('assert_same_shape', {T, T1});
     assert_same_shape(v, v1);
-    add_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+    add_vvs(&v[0], &v1[0], s, v1.size(), @step@, @step1@);
 }
 
 inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
@@ -602,19 +600,19 @@ inline void add(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void sub(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    sub_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+    sub_vvs(&v[0], &v1[0], s, v1.size(), @step@, @step1@);
 }
 
 inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    sub_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
+    sub_vsv(&v[0], s, &v1[0], v1.size(), @step@, @step1@);
 }
 
 inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    mul_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+    mul_vvs(&v[0], &v1[0], s, v1.size(), @step@, @step1@);
 }
 
 inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
@@ -623,13 +621,13 @@ inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
 inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    div_vvs(v.p(), v1.p(), s, v1.size(), @step@, @step1@);
+    div_vvs(&v[0], &v1[0], s, v1.size(), @step@, @step1@);
 }
 
 inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    div_vsv(v.p(), s, v1.p(), v1.size(), @step@, @step1@);
+    div_vsv(&v[0], s, &v1[0], v1.size(), @step@, @step1@);
 }
 //% elseif is_Dcmat(T) && is_Dcmat(T1)
 inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
@@ -702,6 +700,7 @@ inline void div(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //%-------------------------
 
 //% tem('add(v,v,v)', {
+//%   'vecInt' 'vecInt' 'vecInt'
 //%   'VecInt' 'VecInt' 'VecInt'
 //%   'VecDoub' 'VecDoub' 'VecDoub'
 //%   'VecComp' 'VecComp' 'VecComp'
@@ -720,25 +719,25 @@ inline void div(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 inline void add(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
-    add_vvv(v.p(), v1.p(), v2.p(), v.size());
+    add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void sub(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
-    sub_vvv(v.p(), v1.p(), v2.p(), v.size());
+    sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void mul(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
-    mul_vvv(v.p(), v1.p(), v2.p(), v.size());
+    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
-    div_vvv(v.p(), v1.p(), v2.p(), v.size());
+    div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
 //%     if is_Dvec(T)

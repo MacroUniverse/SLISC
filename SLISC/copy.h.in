@@ -136,7 +136,7 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 //% req('vecset', {Ts});
 inline void copy(@T@_O v, @Ts@_I s)
 {
-//% if is_vector(T)
+//% if is_vec(T)
     v.assign(v.size(), s);
 //% elseif is_vvec(T)
     for (auto &v1 : v) v1.assign(v1.size(), s);

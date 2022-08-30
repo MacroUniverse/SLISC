@@ -277,7 +277,7 @@ def ndim(T):
     if is_scalar(T):
         return 0
     elif is_Vbase(T) or is_dense_vec(T) or is_Fvec(T) or \
-        is_Svec(T) or is_Svec_c(T) or is_Dvec(T) or is_vector(T):
+        is_Svec(T) or is_Svec_c(T) or is_Dvec(T) or is_vec(T):
         return 1
     elif is_dense_mat(T) or is_sparse_mat(T) or \
         is_Fcmat(T) or is_Scmat(T) or is_Scmat_c(T) or \
