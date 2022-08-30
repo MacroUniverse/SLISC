@@ -2,6 +2,11 @@
 #include "Vec.h"
 
 namespace slisc {
+
+void veccpy(Long *, const Long *, Long);
+
+void veccpy(Char *, const Char *, Long);
+
 class McooChar : public VbaseChar
 {
 private:
@@ -19,7 +24,7 @@ public:
     const Long *row_p() const;
     Long *col_p();
     const Long *col_p() const;
-    // inline void operator<<(McooChar &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
+    void operator<<(McooChar &rhs); // move data and rhs.resize(0)
     void push(Char_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Char_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n0() const;
@@ -42,6 +47,7 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+    void reserve_cpy(Long_I N); // reserve and conserve data
     void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
@@ -108,6 +114,14 @@ inline Char McooChar::operator()(Long_I i, Long_I j) const
     if (n < 0)
         return 0; // never return a (const) reference to a temporary
     return m_p[n];
+}
+
+inline void McooChar::operator<<(McooChar &rhs)
+{
+    Base::operator<<(rhs);
+    m_row << rhs.m_row; m_col << rhs.m_col;
+    m_Nnz = rhs.m_Nnz;
+    rhs.m_Nnz = 0; rhs.m_N = 0;
 }
 
 inline void McooChar::push(Char_I s, Long_I i, Long_I j)
@@ -251,10 +265,23 @@ inline void McooChar::reserve(Long_I N)
     m_Nnz = 0;
 }
 
+inline void McooChar::reserve_cpy(Long_I N)
+{
+    VecChar data(N);
+    VecLong row(N), col(N);
+    veccpy(data.p(), m_p, m_Nnz);
+    veccpy(row.p(), m_row.p(), m_Nnz);
+    veccpy(col.p(), m_col.p(), m_Nnz);
+    Base::operator<<(data);
+    m_row << row; m_col << col;
+}
+
 inline void McooChar::reshape(Long_I N0, Long_I N1)
 {
     m_N0 = N0; m_N1 = N1;
 }
+
+void veccpy(Int *, const Int *, Long);
 
 class McooInt : public VbaseInt
 {
@@ -273,7 +300,7 @@ public:
     const Long *row_p() const;
     Long *col_p();
     const Long *col_p() const;
-    // inline void operator<<(McooInt &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
+    void operator<<(McooInt &rhs); // move data and rhs.resize(0)
     void push(Int_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Int_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n0() const;
@@ -296,6 +323,7 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+    void reserve_cpy(Long_I N); // reserve and conserve data
     void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
@@ -362,6 +390,14 @@ inline Int McooInt::operator()(Long_I i, Long_I j) const
     if (n < 0)
         return 0; // never return a (const) reference to a temporary
     return m_p[n];
+}
+
+inline void McooInt::operator<<(McooInt &rhs)
+{
+    Base::operator<<(rhs);
+    m_row << rhs.m_row; m_col << rhs.m_col;
+    m_Nnz = rhs.m_Nnz;
+    rhs.m_Nnz = 0; rhs.m_N = 0;
 }
 
 inline void McooInt::push(Int_I s, Long_I i, Long_I j)
@@ -505,10 +541,23 @@ inline void McooInt::reserve(Long_I N)
     m_Nnz = 0;
 }
 
+inline void McooInt::reserve_cpy(Long_I N)
+{
+    VecInt data(N);
+    VecLong row(N), col(N);
+    veccpy(data.p(), m_p, m_Nnz);
+    veccpy(row.p(), m_row.p(), m_Nnz);
+    veccpy(col.p(), m_col.p(), m_Nnz);
+    Base::operator<<(data);
+    m_row << row; m_col << col;
+}
+
 inline void McooInt::reshape(Long_I N0, Long_I N1)
 {
     m_N0 = N0; m_N1 = N1;
 }
+
+void veccpy(Llong *, const Llong *, Long);
 
 class McooLlong : public VbaseLlong
 {
@@ -527,7 +576,7 @@ public:
     const Long *row_p() const;
     Long *col_p();
     const Long *col_p() const;
-    // inline void operator<<(McooLlong &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
+    void operator<<(McooLlong &rhs); // move data and rhs.resize(0)
     void push(Llong_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Llong_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n0() const;
@@ -550,6 +599,7 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+    void reserve_cpy(Long_I N); // reserve and conserve data
     void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
@@ -616,6 +666,14 @@ inline Llong McooLlong::operator()(Long_I i, Long_I j) const
     if (n < 0)
         return 0; // never return a (const) reference to a temporary
     return m_p[n];
+}
+
+inline void McooLlong::operator<<(McooLlong &rhs)
+{
+    Base::operator<<(rhs);
+    m_row << rhs.m_row; m_col << rhs.m_col;
+    m_Nnz = rhs.m_Nnz;
+    rhs.m_Nnz = 0; rhs.m_N = 0;
 }
 
 inline void McooLlong::push(Llong_I s, Long_I i, Long_I j)
@@ -759,10 +817,23 @@ inline void McooLlong::reserve(Long_I N)
     m_Nnz = 0;
 }
 
+inline void McooLlong::reserve_cpy(Long_I N)
+{
+    VecLlong data(N);
+    VecLong row(N), col(N);
+    veccpy(data.p(), m_p, m_Nnz);
+    veccpy(row.p(), m_row.p(), m_Nnz);
+    veccpy(col.p(), m_col.p(), m_Nnz);
+    Base::operator<<(data);
+    m_row << row; m_col << col;
+}
+
 inline void McooLlong::reshape(Long_I N0, Long_I N1)
 {
     m_N0 = N0; m_N1 = N1;
 }
+
+void veccpy(Doub *, const Doub *, Long);
 
 class McooDoub : public VbaseDoub
 {
@@ -781,7 +852,7 @@ public:
     const Long *row_p() const;
     Long *col_p();
     const Long *col_p() const;
-    // inline void operator<<(McooDoub &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
+    void operator<<(McooDoub &rhs); // move data and rhs.resize(0)
     void push(Doub_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Doub_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n0() const;
@@ -804,6 +875,7 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+    void reserve_cpy(Long_I N); // reserve and conserve data
     void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
@@ -870,6 +942,14 @@ inline Doub McooDoub::operator()(Long_I i, Long_I j) const
     if (n < 0)
         return 0; // never return a (const) reference to a temporary
     return m_p[n];
+}
+
+inline void McooDoub::operator<<(McooDoub &rhs)
+{
+    Base::operator<<(rhs);
+    m_row << rhs.m_row; m_col << rhs.m_col;
+    m_Nnz = rhs.m_Nnz;
+    rhs.m_Nnz = 0; rhs.m_N = 0;
 }
 
 inline void McooDoub::push(Doub_I s, Long_I i, Long_I j)
@@ -1013,10 +1093,23 @@ inline void McooDoub::reserve(Long_I N)
     m_Nnz = 0;
 }
 
+inline void McooDoub::reserve_cpy(Long_I N)
+{
+    VecDoub data(N);
+    VecLong row(N), col(N);
+    veccpy(data.p(), m_p, m_Nnz);
+    veccpy(row.p(), m_row.p(), m_Nnz);
+    veccpy(col.p(), m_col.p(), m_Nnz);
+    Base::operator<<(data);
+    m_row << row; m_col << col;
+}
+
 inline void McooDoub::reshape(Long_I N0, Long_I N1)
 {
     m_N0 = N0; m_N1 = N1;
 }
+
+void veccpy(Comp *, const Comp *, Long);
 
 class McooComp : public VbaseComp
 {
@@ -1035,7 +1128,7 @@ public:
     const Long *row_p() const;
     Long *col_p();
     const Long *col_p() const;
-    // inline void operator<<(McooComp &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
+    void operator<<(McooComp &rhs); // move data and rhs.resize(0)
     void push(Comp_I s, Long_I i, Long_I j); // add one nonzero element
     void set(Comp_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n0() const;
@@ -1058,6 +1151,7 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+    void reserve_cpy(Long_I N); // reserve and conserve data
     void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
@@ -1124,6 +1218,14 @@ inline Comp McooComp::operator()(Long_I i, Long_I j) const
     if (n < 0)
         return 0; // never return a (const) reference to a temporary
     return m_p[n];
+}
+
+inline void McooComp::operator<<(McooComp &rhs)
+{
+    Base::operator<<(rhs);
+    m_row << rhs.m_row; m_col << rhs.m_col;
+    m_Nnz = rhs.m_Nnz;
+    rhs.m_Nnz = 0; rhs.m_N = 0;
 }
 
 inline void McooComp::push(Comp_I s, Long_I i, Long_I j)
@@ -1265,6 +1367,17 @@ inline void McooComp::reserve(Long_I N)
     m_row.resize(N);
     m_col.resize(N);
     m_Nnz = 0;
+}
+
+inline void McooComp::reserve_cpy(Long_I N)
+{
+    VecComp data(N);
+    VecLong row(N), col(N);
+    veccpy(data.p(), m_p, m_Nnz);
+    veccpy(row.p(), m_row.p(), m_Nnz);
+    veccpy(col.p(), m_col.p(), m_Nnz);
+    Base::operator<<(data);
+    m_row << row; m_col << col;
 }
 
 inline void McooComp::reshape(Long_I N0, Long_I N1)

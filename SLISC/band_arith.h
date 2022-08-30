@@ -301,10 +301,10 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
     }
 }
 
-inline void mul(CbandComp_O v, CbandComp_I v1, Doub_I s)
+inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
 {
     assert_same_shape(v, v1);
-    mul(band(v), band(v1), s);
+    times(band(v), band(v1), s);
 }
 
 

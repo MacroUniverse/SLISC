@@ -972,9 +972,9 @@ inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
 template <class T1, class T2>
 inline void copy(vector<vector<T1>> &v1, const vector<vector<T2>> &v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = v1.size();
-    SLS_ASSERT(N == v2.size());
+    SLS_ASSERT(N == size(v2));
     for (Long i = 0; i < N; ++i)
         SLS_ASSERT(v1[i].size() == v2[i].size());
 #endif
@@ -1048,12 +1048,21 @@ inline void copy(McooComp_O v, CmatComp_I v1, Doub_I tol = 0)
 }
 
 
+inline void copy(CmatInt_O lhs, McooInt_I rhs)
+{
+    assert_same_shape(lhs, rhs);
+    copy(lhs, 0);
+    for (Long i = 0; i < rhs.nnz(); ++i) {
+        lhs(rhs.row(i), rhs.col(i)) += rhs[i];
+    }
+}
+
 inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
 {
     assert_same_shape(lhs, rhs);
     copy(lhs, 0);
     for (Long i = 0; i < rhs.nnz(); ++i) {
-        lhs(rhs.row(i), rhs.col(i)) = rhs[i];
+        lhs(rhs.row(i), rhs.col(i)) += rhs[i];
     }
 }
 

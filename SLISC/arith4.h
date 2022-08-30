@@ -1255,6 +1255,54 @@ inline void operator/=(DvecComp_O &v, SvecDoub_I v1)
         v[i] /= v1[i];
 }
 
+inline void operator+=(CmatInt_O &v, CmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    add_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator-=(CmatInt_O &v, CmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    sub_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator*=(CmatInt_O &v, CmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    times_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator/=(CmatInt_O &v, CmatInt_I v1)
+{
+    assert_same_shape(v, v1);
+    div_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator+=(CmatLlong_O &v, CmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    add_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator-=(CmatLlong_O &v, CmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    sub_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator*=(CmatLlong_O &v, CmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    times_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator/=(CmatLlong_O &v, CmatLlong_I v1)
+{
+    assert_same_shape(v, v1);
+    div_eq_vv(&v[0], &v1[0], v1.size());
+}
+
 inline void operator+=(CmatDoub_O &v, CmatDoub_I v1)
 {
     assert_same_shape(v, v1);

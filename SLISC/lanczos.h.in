@@ -58,7 +58,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 //% req('norm2', {Tv});
     beta[0] = norm(x);
 //% req('add(v,v,s)', {'SvecComp' Tv 'Doub'});
-    mul(v0, x, 1/beta[0]); 
+    times(v0, x, 1/beta[0]); 
 
     @mul_fun@(vc, H, v0);
 //% req('dot', {'SvecComp' 'SvecComp'});
@@ -148,7 +148,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nk
 //% req('norm2', {Tv});
     beta[0] = norm(x);
 //% req('add(v,v,s)', {'SvecComp' Tv 'Doub'});
-    mul(v0, x, 1/beta[0]);
+    times(v0, x, 1/beta[0]);
     @mul_fun@(vc, H, v0);
 //% req('dot', {'SvecComp' 'SvecComp'});
     alpha[0] = real(dot(v0, vc));

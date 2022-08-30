@@ -8,7 +8,7 @@ namespace slisc {
 // v == s
 
 template <class T1, class T2>
-Bool equals_to_vs(const T1 *v, const T2 &s, Long_I N)
+Bool equals_vs(const T1 *v, const T2 &s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         if (v[i] != s)
@@ -19,7 +19,7 @@ Bool equals_to_vs(const T1 *v, const T2 &s, Long_I N)
 // v == v
 
 template <class T1, class T2>
-Bool equals_to_vv(const T1 *v1, const T2 *v2, Long_I N)
+Bool equals_vv(const T1 *v1, const T2 *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         if (v1[i] != v2[i])

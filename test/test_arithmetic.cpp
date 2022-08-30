@@ -15,7 +15,7 @@ void test_arithmetic()
 		VecDoub v(N), v1(N); linspace(v, 1, N);
 		copy(v1, v);
 		resize_cpy(v, 2*N);
-		SLS_ASSERT(equals_to_vv(v.p(), v1.p(), N));
+		SLS_ASSERT(equals_vv(v.p(), v1.p(), N));
 	}
 
 	// linspace()
@@ -23,7 +23,7 @@ void test_arithmetic()
 		Long N = 3;
 		VecDoub v(N), v1(N); v[0] = 0; v[1] = 1; v[2] = 2;
 		linspace(v1, 0, N-1);
-		SLS_ASSERT(equals_to_vv(v.p(), v1.p(), N));
+		SLS_ASSERT(equals_vv(v.p(), v1.p(), N));
 	}
 
 	// reorder()

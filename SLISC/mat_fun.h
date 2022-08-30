@@ -38,7 +38,7 @@ inline void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
     VecComp eigValComp(N);
     CmatDoub eigVec(N, N);
     eig_sym(eigVal, eigVec, a);
-    mul(eigValComp, eigVal, s);
+    times(eigValComp, eigVal, s);
     for (Long i = 0; i < N; ++i)
         eigValComp[i] = exp(eigValComp[i]);
     CmatComp temp(N, N);

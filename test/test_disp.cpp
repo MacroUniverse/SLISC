@@ -8,7 +8,7 @@ void test_disp()
 	cout << "display matrix:" << endl;
 	disp(a);
 
-	cout << "\text_style() :" << endl;
+	cout << "\ntext_style() :" << endl;
 	cout << text_style('r', 'b') + "Bold red text" + text_style() << endl;
     cout << text_style('g') + "Green Text" + text_style() << endl;
     cout << text_style('y', 'u') + "Yellow underlined text" + text_style() << endl;

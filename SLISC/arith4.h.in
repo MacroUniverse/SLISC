@@ -228,7 +228,9 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'DvecDoub' 'SvecDoub'
 //% 'DvecComp' 'VecComp'
 //% 'DvecComp' 'SvecComp'
-//% 'DvecComp', 'SvecDoub';
+//% 'DvecComp', 'SvecDoub'
+//% 'CmatInt' 'CmatInt'
+//% 'CmatLlong' 'CmatLlong'
 //% 'CmatDoub' 'CmatDoub'
 //% 'CmatComp' 'CmatDoub'
 //% 'CmatComp' 'CmatComp'

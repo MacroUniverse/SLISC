@@ -3,7 +3,9 @@
 #include "Diag.h"
 #include "Mcoo.h"
 #include "Cmobd.h"
+#include "copy.h"
 #include "sort.h"
+#include "disp.h"
 
 namespace slisc {
 
@@ -31,7 +33,7 @@ inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
 inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
 {
     for (Long i = 0; i < Nc; ++i) {
-        mul_vvs(c, a, b[i], Nr);
+        times_vvs(c, a, b[i], Nr);
         c += Nr; a += Nr;
     }
 }
@@ -40,7 +42,7 @@ inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, cons
 inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
-        mul_vvv(c, b, a, Nr);
+        times_vvv(c, b, a, Nr);
         c += Nr; b += Nr;
     }
 }
@@ -229,9 +231,11 @@ inline void sort_r(@McooT@_IO a)
 }
 //%------------------------
 
-// sort to column major and combine elements, the i-th element is moved to desk[i]-th element
-// desk[i] might repeat
-//% tem('sort_col_dry', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
+// sort_col_dry() sorts elements to column major and combine repeated elements
+// the i-th element should be moved (or +=) to desk[i]-th element
+// reorder() does the actual sorting given output from sort_col_dry()
+// sort_col() in-place sorting
+//% tem('sort_col', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -239,37 +243,116 @@ inline void sort_r(@McooT@_IO a)
 //% VecT = ['Vec', T];
 inline Long sort_col_dry(VecLong_O dest, @McooT@_I coo)
 {
+    Long N = coo.nnz();
 #ifdef SLS_CHECK_SHAPES
-    if (dest.size() != coo.nnz())
+    if (dest.size() != N)
         SLS_ERR("wrong shape!");
 #endif
-    VecLong ind(coo.nnz()), order(coo.nnz());
-    linspace(order, 0, order.size()-1);
-    for (Long i = 0; i < coo.nnz(); ++i)
+    VecLong ind(N), order(N);
+    linspace(order, 0, N-1);
+    for (Long i = 0; i < N; ++i)
         ind[i] = coo.row(i) + coo.n0() * coo.col(i);
     sort(ind, order);
     Long k = 0;
-    // i loop through sorted ind, k is the index for unique ind
-    for (Long i = 0; i < coo.nnz()-1; ++i) {
+    for (Long i = 0; i < N-1; ++i) {
         dest[order[i]] = k;
         if (ind[i+1] != ind[i])
             ++k;
     }
-    dest[order[coo.nnz()-1]] = k;
+    dest[order[N-1]] = k;
     return k + 1;
 }
 
-inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new_Nnz)
+inline void reorder(@McooT@_O new_coo, @McooT@_I coo, VecLong_I dest, Long_I new_Nnz)
 {
+    assert(&new_coo != &coo);
     new_coo.resize(new_Nnz);
-    for (Long i = 0; i < new_Nnz; ++i)
-        new_coo[i] = 0;
+    vecset(new_coo.p(), 0, new_Nnz);
     for (Long i = 0; i < coo.nnz(); ++i) {
         Long j = dest[i];
         new_coo[j] += coo[i];
         new_coo.row(j) = coo.row(i);
         new_coo.col(j) = coo.col(i);
     }
+}
+
+inline void sort_col(@McooT@_IO coo)
+{
+    VecLong dest(coo.nnz());
+    Long new_Nnz = sort_col_dry(dest, coo);
+    @McooT@ new_coo(coo.n0(), coo.n1(), new_Nnz);
+    reorder(new_coo, coo, dest, new_Nnz);
+    coo << new_coo;
+}
+
+//% Tr = rm_comp(T);
+inline void rm_zero(@McooT@_IO coo, @Tr@_I thresh = 0)
+{
+    Long k = 0;
+    for (Long i = 0; i < coo.nnz(); ++i) {
+        if (abs(coo[i]) <= thresh)
+            continue;
+        if (k != i) {
+            coo[k] = coo[i];
+            coo.row(k) = coo.row(i);
+            coo.col(k) = coo.col(i);
+        }
+        ++k;
+    }
+    coo.resize(k);
+}
+//%----------------------------
+
+//% tem('coo+=coo', {'Int'; 'Llong'; 'Doub'; 'Comp';});
+//%----------------------------
+//% T = varargin{:};
+//% McooT = ['Mcoo', T];
+//% VbaseT = ['Vbase', T];
+//% VecT = ['Vec', T];
+inline void operator+=(@McooT@_O coo, @McooT@_I coo1)
+{
+    Long Nnz = coo.nnz();
+    coo.resize(Nnz + coo1.nnz());
+    for (Long i = 0; i < coo1.nnz(); ++i) {
+        Long ii = Nnz+i;
+        coo[ii] = coo1[i];
+        coo.row(ii) = coo1.row(i);
+        coo.col(ii) = coo1.col(i);
+    }
+}
+
+inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
+{
+    Long Nnz = coo.nnz();
+    coo.resize(Nnz + coo1.nnz());
+    for (Long i = 0; i < coo1.nnz(); ++i) {
+        Long ii = Nnz+i;
+        coo[ii] = -coo1[i];
+        coo.row(ii) = coo1.row(i);
+        coo.col(ii) = coo1.col(i);
+    }
+}
+//%----------------------------
+
+//% tem('coo==coo', {'Int'; 'Llong'; 'Doub'; 'Comp';});
+//%----------------------------
+//% T = varargin{:};
+//% McooT = ['Mcoo', T];
+//% VbaseT = ['Vbase', T];
+//% VecT = ['Vec', T];
+inline Bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
+{
+    sort_col(coo); rm_zero(coo);
+    sort_col(coo1); rm_zero(coo1);
+    if (coo.nnz() != coo1.nnz())
+        return false;
+    if (!equals_vv(coo.p(), coo1.p(), coo.nnz()))
+        return false;
+    if (!equals_vv(coo.row_p(), coo1.row_p(), coo.nnz()))
+        return false;
+    if (!equals_vv(coo.col_p(), coo1.col_p(), coo.nnz()))
+        return false;
+    return true;
 }
 //%----------------------------
 
@@ -300,17 +383,17 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 //% [Ts1, Ts2] = val_t(T1, T2);
 //% req('add(v,v,s)', {['Cmat3' Ts1], ['Cmat3' Ts2], Ts});
 inline void mul(@T1@_O v1, @T2@_I v2, @Ts@_I s)
-{ mul(v1.cmat3(), v2.cmat3(), s); }
+{ times(v1.cmat3(), v2.cmat3(), s); }
 //%------------------------
 
-//% tem('mul_coo', {
+//% tem('times_coo', {
 //%     'McooComp', 'McooDoub', 'Imag';
 //% });
 //%----------------------------
 //% [T, T1, Ts] = varargin{:};
-inline void mul(@T@_O v, @T1@_I v1, @Ts@_I s)
+inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-    mul_vvs(v.p(), v1.p(), s, v1.nnz());
+    times_vvs(v.p(), v1.p(), s, v1.nnz());
 }
 //%------------------------
 

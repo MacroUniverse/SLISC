@@ -2,12 +2,17 @@
 #include "Vec.h"
 
 namespace slisc {
+
+void veccpy(Long *, const Long *, Long);
+
 //% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'; 'Qdoub'; 'Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
 //% VbaseT = ['Vbase', T];
 //% VecT = ['Vec', T];
+void veccpy(@T@ *, const @T@ *, Long);
+
 class @McooT@ : public @VbaseT@
 {
 private:
@@ -25,7 +30,7 @@ public:
     const Long *row_p() const;
     Long *col_p();
     const Long *col_p() const;
-    // inline void operator<<(@McooT@ &rhs); // move data and rhs.resize(0, 0); rhs.resize(0)
+    void operator<<(@McooT@ &rhs); // move data and rhs.resize(0)
     void push(@T@_I s, Long_I i, Long_I j); // add one nonzero element
     void set(@T@_I s, Long_I i, Long_I j); // change existing element or push new element
     Long n0() const;
@@ -48,6 +53,7 @@ public:
     void trim(Long_I Nnz); // decrease m_Nnz to Nnz
     void resize(Long_I N); // set m_Nz
     void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+    void reserve_cpy(Long_I N); // reserve and conserve data
     void reshape(Long_I N0, Long_I N1); // change matrix shape
 };
 
@@ -114,6 +120,14 @@ inline @T@ @McooT@::operator()(Long_I i, Long_I j) const
     if (n < 0)
         return 0; // never return a (const) reference to a temporary
     return m_p[n];
+}
+
+inline void @McooT@::operator<<(@McooT@ &rhs)
+{
+    Base::operator<<(rhs);
+    m_row << rhs.m_row; m_col << rhs.m_col;
+    m_Nnz = rhs.m_Nnz;
+    rhs.m_Nnz = 0; rhs.m_N = 0;
 }
 
 inline void @McooT@::push(@T@_I s, Long_I i, Long_I j)
@@ -255,6 +269,17 @@ inline void @McooT@::reserve(Long_I N)
     m_row.resize(N);
     m_col.resize(N);
     m_Nnz = 0;
+}
+
+inline void @McooT@::reserve_cpy(Long_I N)
+{
+    @VecT@ data(N);
+    VecLong row(N), col(N);
+    veccpy(data.p(), m_p, m_Nnz);
+    veccpy(row.p(), m_row.p(), m_Nnz);
+    veccpy(col.p(), m_col.p(), m_Nnz);
+    Base::operator<<(data);
+    m_row << row; m_col << col;
 }
 
 inline void @McooT@::reshape(Long_I N0, Long_I N1)

@@ -286,9 +286,9 @@ inline void copy(@T@_O v, @T1@_I v1)
 template <class T1, class T2>
 inline void copy(vector<vector<T1>> &v1, const vector<vector<T2>> &v2)
 {
-#ifdef SLS_CHECK_SHAPE
+#ifdef SLS_CHECK_SHAPES
     Long N = v1.size();
-    SLS_ASSERT(N == v2.size());
+    SLS_ASSERT(N == size(v2));
     for (Long i = 0; i < N; ++i)
         SLS_ASSERT(v1[i].size() == v2[i].size());
 #endif
@@ -350,7 +350,9 @@ inline void copy(@Tcoo@_O v, @Tcmat@_I v1, Doub_I tol = 0)
 }
 //%------------------------
 
-//% tem('copy(mat,coo)', { 'CmatDoub', 'Doub' });
+//% tem('copy(mat,coo)', {
+//%   'CmatInt', 'Int'
+//%   'CmatDoub', 'Doub' });
 //%----------------------------
 //% [Tmat, Ts] = varargin{:};
 //% if ~((is_dense_mat(Tmat) || is_Dcmat(Tmat) || is_Jcmat(Tmat)) && is_scalar(Ts))
@@ -364,7 +366,7 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 //% req('copy(v,s)', {Tmat});
     copy(lhs, 0);
     for (Long i = 0; i < rhs.nnz(); ++i) {
-        lhs(rhs.row(i), rhs.col(i)) = rhs[i];
+        lhs(rhs.row(i), rhs.col(i)) += rhs[i];
     }
 }
 //%-------------------
