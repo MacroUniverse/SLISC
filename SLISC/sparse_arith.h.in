@@ -280,7 +280,7 @@ inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new
 //% [T, Ts] = varargin{:};
 //% req('add_eq_vs', {val_t(T),Ts});
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{ mul_eq_vs(v.p(), s, v.nnz()); }
+{ times_eq_vs(v.p(), s, v.nnz()); }
 //%------------------------
 
 //% tem('obd*=s', {

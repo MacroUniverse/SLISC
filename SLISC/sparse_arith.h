@@ -745,13 +745,13 @@ inline void reorder(McooComp_O new_coo, McooComp_O coo, VecLong_I dest, Long_I n
 
 
 inline void operator*=(McooDoub_IO v, Doub_I s)
-{ mul_eq_vs(v.p(), s, v.nnz()); }
+{ times_eq_vs(v.p(), s, v.nnz()); }
 
 inline void operator*=(McooComp_IO v, Doub_I s)
-{ mul_eq_vs(v.p(), s, v.nnz()); }
+{ times_eq_vs(v.p(), s, v.nnz()); }
 
 inline void operator*=(McooComp_IO v, Imag_I s)
-{ mul_eq_vs(v.p(), s, v.nnz()); }
+{ times_eq_vs(v.p(), s, v.nnz()); }
 
 
 inline void operator*=(CmobdDoub_IO v, Doub_I s)

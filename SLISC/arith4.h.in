@@ -38,13 +38,13 @@ inline void sub_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
         v[i] -= s;
 }
 
-inline void mul_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
+inline void times_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] *= s;
 }
 
-inline void mul_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
+inline void times_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
 {
     for (Long i = 0; i < N*step; i += step)
         v[i] *= s;
@@ -63,10 +63,10 @@ inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 }
 //% elseif is_fpt(Ts) || is_comp(Ts) || is_imag(Ts)
 inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
-{ mul_eq_vs(v, @num(1,rm_comp(Ts))@/s, N); }
+{ times_eq_vs(v, @num(1,rm_comp(Ts))@/s, N); }
 
 inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
-{ mul_eq_vs(v, @num(1,rm_comp(Ts))@/s, N, step); }
+{ times_eq_vs(v, @num(1,rm_comp(Ts))@/s, N, step); }
 //% else
 //%     disp(T); disp(Ts);
 //%     error('not implemented (10)');
@@ -128,7 +128,7 @@ inline void operator-=(@T@_IO v, @Ts@_I s)
 { sub_eq_vs(&v[0], s, v.size()); }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{ mul_eq_vs(&v[0], s, v.size()); }
+{ times_eq_vs(&v[0], s, v.size()); }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
 { div_eq_vs(&v[0], s, v.size()); }
@@ -140,7 +140,7 @@ inline void operator-=(@T@_IO v, @Ts@_I s)
 { sub_eq_vs(v.p(), s, v.size(), v.step()); }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{ mul_eq_vs(v.p(), s, v.size(), v.step()); }
+{ times_eq_vs(v.p(), s, v.size(), v.step()); }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
 { div_eq_vs(v.p(), s, v.size(), v.step()); }
@@ -160,7 +160,7 @@ inline void operator-=(@T@_IO v, @Ts@_I s)
 inline void operator*=(@T@_IO v, @Ts@_I s)
 {
     for (Long j = 0; j < v.n1(); ++j)
-        mul_eq_vs(&v(0,j), s, v.n0());
+        times_eq_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
@@ -195,7 +195,7 @@ inline void sub_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
         v[i] -= v1[i];
 }
 
-inline void mul_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
+inline void times_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] *= v1[i];
@@ -262,7 +262,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1)
 inline void operator*=(@T@_O &v, @T1@_I v1)
 {
     assert_same_shape(v, v1);
-    mul_eq_vv(&v[0], &v1[0], v1.size());
+    times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(@T@_O &v, @T1@_I v1)
@@ -380,13 +380,13 @@ inline void sub_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Lo
     }
 }
 
-inline void mul_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] * s;
 }
 
-inline void mul_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
+inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * s;
@@ -412,13 +412,13 @@ inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Lo
 inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
     @T2@ inv_s = 1./s;
-    mul_vvs(v, v1, inv_s, N);
+    times_vvs(v, v1, inv_s, N);
 }
 
 inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, Long_I step1)
 {
     @T2@ inv_s = 1./s;
-    mul_vvs(v, v1, inv_s, N, step, step1);
+    times_vvs(v, v1, inv_s, N, step, step1);
 }
 //% else
 //%     error(['div_vvs: not implemented (13): ' T ' ' T1 ' ' T2]);
@@ -510,13 +510,13 @@ inline void sub_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I ste
     }
 }
 
-inline void mul_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
+inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
     for (Long i = 0; i < N; ++i)
         v[i] = v1[i] * v2[i];
 }
 
-inline void mul_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
+inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
     for (Long i = 0; i < N; ++i) {
         *v = *v1 * *v2;
@@ -585,14 +585,14 @@ inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
     sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    mul_vvs(&v[0], &v1[0], s, v1.size());
+    times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ mul(v, v1, s); }
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ times(v, v1, s); }
 
 inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
@@ -638,14 +638,14 @@ inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
     sub_vsv(&v[0], s, &v1[0], v1.size(), @step@, @step1@);
 }
 
-inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
-    mul_vvs(&v[0], &v1[0], s, v1.size(), @step@, @step1@);
+    times_vvs(&v[0], &v1[0], s, v1.size(), @step@, @step1@);
 }
 
-inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ mul(v, v1, s); }
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ times(v, v1, s); }
 
 inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
@@ -693,18 +693,18 @@ inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
     }
 }
 
-inline void mul(@T@_O v, @T1@_I v1, @Ts2@_I s)
+inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
     assert_same_shape(v, v1);
     @Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
     for (Long j = 0; j < v.n1(); ++j) {
-        mul_vvs(p, p1, s, v.n0());
+        times_vvs(p, p1, s, v.n0());
         p += v.lda(); p1 += v1.lda();
     }
 }
 
-inline void mul(@T@_O v, @Ts2@_I s, @T1@_I v1)
-{ mul(v, v1, s); }
+inline void times(@T@_O v, @Ts2@_I s, @T1@_I v1)
+{ times(v, v1, s); }
 
 inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 {
@@ -739,6 +739,10 @@ inline void div(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //%   'SvecComp' 'SvecComp' 'SvecComp'
 //%   'SvecComp' 'VecComp' 'SvecComp'
 //%   'DvecComp', 'SvecComp', 'DvecComp'
+//%   'CmatInt' 'CmatInt' 'CmatInt'
+//%   'CmatLlong' 'CmatLlong' 'CmatLlong'
+//%   'CmatDoub' 'CmatDoub' 'CmatDoub'
+//%   'CmatComp' 'CmatComp' 'CmatComp'
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -761,10 +765,10 @@ inline void sub(@T@_O v, @T1@_I v1, @T2@_I v2)
     sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void mul(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
-    mul_vvv(&v[0], &v1[0], &v2[0], v.size());
+    times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
@@ -800,7 +804,7 @@ inline void sub(@T@_O v, @T1@_I v1, @T2@_I v2)
     sub_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
 }
 
-inline void mul(@T@_O v, @T1@_I v1, @T2@_I v2)
+inline void times(@T@_O v, @T1@_I v1, @T2@_I v2)
 {
     assert_same_shape(v, v1, v2);
     sub_vvv(v.p(), v1.p(), v2.p(), v.size(), @step@, @step1@, @step2@);
@@ -816,7 +820,7 @@ inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
 //% end
 //%--------------------------
 
-//% tem('neg_vv', { 'Comp', 'Doub' });
+//% tem('neg_vv', { 'Comp' 'Doub' });
 //%----------------------------------------------------------
 //% [T, T1] = varargin{:};
 inline void neg_vv(@T@ *v, const @T1@ *v1, Long_I N)
