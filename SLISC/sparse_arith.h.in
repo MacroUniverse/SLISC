@@ -27,20 +27,20 @@ inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
 //% if ~(is_promo(T, T1) && is_promo(T, T2))
 //%     error('illegal types!');
 //% end
-//% req('plus_vvs', {T, T1, T2});
+//% req('add_vvs', {T, T1, T2});
 inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
+        mul_vvs(c, a, b[i], Nr);
         c += Nr; a += Nr;
     }
 }
 
-//% req('plus_vvv', {T, T2, T1});
+//% req('add_vvv', {T, T2, T1});
 inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
+        mul_vvv(c, b, a, Nr);
         c += Nr; b += Nr;
     }
 }
@@ -278,9 +278,9 @@ inline void reorder(@McooT@_O new_coo, @McooT@_O coo, VecLong_I dest, Long_I new
 //% 'McooComp', 'Imag'; });
 //%----------------------------
 //% [T, Ts] = varargin{:};
-//% req('plus_equals_vs', {val_t(T),Ts});
+//% req('add_eq_vs', {val_t(T),Ts});
 inline void operator*=(@T@_IO v, @Ts@_I s)
-{ times_equals_vs(v.p(), s, v.nnz()); }
+{ mul_eq_vs(v.p(), s, v.nnz()); }
 //%------------------------
 
 //% tem('obd*=s', {
@@ -303,14 +303,14 @@ inline void mul(@T1@_O v1, @T2@_I v2, @Ts@_I s)
 { mul(v1.cmat3(), v2.cmat3(), s); }
 //%------------------------
 
-//% tem('times_coo', {
+//% tem('mul_coo', {
 //%     'McooComp', 'McooDoub', 'Imag';
 //% });
 //%----------------------------
 //% [T, T1, Ts] = varargin{:};
 inline void mul(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-    times_vvs(v.p(), v1.p(), s, v1.nnz());
+    mul_vvs(v.p(), v1.p(), s, v1.nnz());
 }
 //%------------------------
 

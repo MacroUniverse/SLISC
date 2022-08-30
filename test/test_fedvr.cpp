@@ -86,7 +86,7 @@ void test_inf_sqr_well()
     VecDoub eng(8);
     for (Int n = 1; n <= 8; ++n)
         eng[n - 1] = sqr(PI) / 2. * sqr(n);
-    minus_equals_vv(eng.p(), eigVal.p(), 8);
+    sub_eq_vv(eng.p(), eigVal.p(), 8);
     if (max_abs_v(eng.p(), 8) > 1e-5) SLS_FAIL;
 
     // TODO: test wave function using analytical solution
@@ -124,7 +124,7 @@ void test_SHO()
 
     // test energies
     VecDoub Eng(8); linspace(Eng, 0.5, 7.5);
-    minus_equals_vv(Eng.p(), eigVal.p(), 8);
+    sub_eq_vv(Eng.p(), eigVal.p(), 8);
     if (max_abs_v(Eng.p(), 8) > 1e-5) SLS_FAIL;
 
     // TODO: test wave function using analytical solution.

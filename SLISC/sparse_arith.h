@@ -32,7 +32,7 @@ inline Bool operator!=(CmobdDoub_I a, CmobdDoub_I b) { return !(a == b); }
 inline void mul_cmat_cmat_diag(Comp *c, const Doub *a, Long_I Nr, Long_I Nc, const Comp *b)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
+        mul_vvs(c, a, b[i], Nr);
         c += Nr; a += Nr;
     }
 }
@@ -40,7 +40,7 @@ inline void mul_cmat_cmat_diag(Comp *c, const Doub *a, Long_I Nr, Long_I Nc, con
 inline void mul_cmat_diag_cmat(Comp *c, const Doub *a, const Comp *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
+        mul_vvv(c, b, a, Nr);
         c += Nr; b += Nr;
     }
 }
@@ -48,7 +48,7 @@ inline void mul_cmat_diag_cmat(Comp *c, const Doub *a, const Comp *b, Long_I Nr,
 inline void mul_cmat_cmat_diag(Doub *c, const Doub *a, Long_I Nr, Long_I Nc, const Doub *b)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
+        mul_vvs(c, a, b[i], Nr);
         c += Nr; a += Nr;
     }
 }
@@ -56,7 +56,7 @@ inline void mul_cmat_cmat_diag(Doub *c, const Doub *a, Long_I Nr, Long_I Nc, con
 inline void mul_cmat_diag_cmat(Doub *c, const Doub *a, const Doub *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
+        mul_vvv(c, b, a, Nr);
         c += Nr; b += Nr;
     }
 }
@@ -64,7 +64,7 @@ inline void mul_cmat_diag_cmat(Doub *c, const Doub *a, const Doub *b, Long_I Nr,
 inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, const Doub *b)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
+        mul_vvs(c, a, b[i], Nr);
         c += Nr; a += Nr;
     }
 }
@@ -72,7 +72,7 @@ inline void mul_cmat_cmat_diag(Comp *c, const Comp *a, Long_I Nr, Long_I Nc, con
 inline void mul_cmat_diag_cmat(Comp *c, const Comp *a, const Doub *b, Long_I Nr, Long_I Nc)
 {
     for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
+        mul_vvv(c, b, a, Nr);
         c += Nr; b += Nr;
     }
 }
@@ -745,13 +745,13 @@ inline void reorder(McooComp_O new_coo, McooComp_O coo, VecLong_I dest, Long_I n
 
 
 inline void operator*=(McooDoub_IO v, Doub_I s)
-{ times_equals_vs(v.p(), s, v.nnz()); }
+{ mul_eq_vs(v.p(), s, v.nnz()); }
 
 inline void operator*=(McooComp_IO v, Doub_I s)
-{ times_equals_vs(v.p(), s, v.nnz()); }
+{ mul_eq_vs(v.p(), s, v.nnz()); }
 
 inline void operator*=(McooComp_IO v, Imag_I s)
-{ times_equals_vs(v.p(), s, v.nnz()); }
+{ mul_eq_vs(v.p(), s, v.nnz()); }
 
 
 inline void operator*=(CmobdDoub_IO v, Doub_I s)
@@ -770,7 +770,7 @@ inline void mul(CmobdComp_O v1, CmobdDoub_I v2, Imag_I s)
 
 inline void mul(McooComp_O v, McooDoub_I v1, Imag_I s)
 {
-    times_vvs(v.p(), v1.p(), s, v1.nnz());
+    mul_vvs(v.p(), v1.p(), s, v1.nnz());
 }
 
 
