@@ -416,6 +416,24 @@ inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
     mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+inline void mul(VecDoub_O y, McooDoub_I a, SvecDoub_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.size() || a.n0() != y.size())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+}
+
+inline void mul(VecComp_O y, McooDoub_I a, SvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+    if (a.n1() != x.size() || a.n0() != y.size())
+        SLS_ERR("illegal shape!");
+#endif
+    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+}
+
 
 inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
 {

@@ -122,7 +122,7 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 //% else
 //%     mul_fun = 'mul';
 //% end
-inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -184,7 +184,7 @@ inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_IO x, Doub_I dt, Long_I N
 //% req('cut', { 'SvecComp' });
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 //% req('mul_gen', {'SvecComp' 'ScmatDoub' 'SvecComp'; Tv 'ScmatComp' 'SvecComp'});
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);

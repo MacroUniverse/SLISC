@@ -784,6 +784,30 @@ inline void operator/=(VecComp_O &v, VecComp_I v1)
     divide_equals_vv(v.p(), v1.p(), v1.size());
 }
 
+inline void operator+=(VecComp_O &v, SvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    plus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator-=(VecComp_O &v, SvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    minus_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator*=(VecComp_O &v, SvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    times_equals_vv(v.p(), v1.p(), v1.size());
+}
+
+inline void operator/=(VecComp_O &v, SvecComp_I v1)
+{
+    assert_same_shape(v, v1);
+    divide_equals_vv(v.p(), v1.p(), v1.size());
+}
+
 inline void operator+=(VecComp_O &v, VecDoub_I v1)
 {
     assert_same_shape(v, v1);

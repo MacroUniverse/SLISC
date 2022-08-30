@@ -231,6 +231,7 @@ inline void divide_equals_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%   'VecDoub' 'VecDoub';
 //%   'VecDoub' 'SvecDoub';
 //%   'VecComp' 'VecComp';
+//%   'VecComp' 'SvecComp';
 //%   'VecComp' 'VecDoub';
 //%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub' 'VecDoub'

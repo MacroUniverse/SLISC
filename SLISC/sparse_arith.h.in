@@ -154,7 +154,9 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 
 //% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp';
 //% 'SvecDoub' 'McooDoub' 'SvecDoub'
-//% 'VecDoub' 'McooDoub' 'VecDoub' });
+//% 'VecDoub' 'McooDoub' 'VecDoub'
+//% 'VecDoub' 'McooDoub' 'SvecDoub'
+//% 'VecComp' 'McooDoub' 'SvecComp' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)

@@ -334,7 +334,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 // x, y can be the same object
 // H is a hermitian matrix
 // return error
-inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_IO x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -388,13 +388,13 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_IO x, Doub_I
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
     return err;
 }
 
-inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_IO x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -448,13 +448,13 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_IO x, Doub_I 
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
     return err;
 }
 
-inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_IO x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -508,13 +508,13 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_IO x, Doub_I dt
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
     return err;
 }
 
-inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_IO x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -568,13 +568,13 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_IO x, Doub_I 
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
     return err;
 }
 
-inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_IO x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -628,13 +628,13 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_IO x, Doub_I
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
     return err;
 }
 
-inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_IO x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
+inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
     Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -688,7 +688,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_IO x, Doub_I
         SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
     SvecComp vc2 = cut(vc, 0, Nk);
     for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * conj(eigV[i*Nk]) * beta[0];
+        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
     mul_gen(vc1, eigV, vc2);
     mul_gen(y, bases, vc1);
     return err;
