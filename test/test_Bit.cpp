@@ -63,14 +63,14 @@ void test_Bit()
             SLS_FAIL;
 
     // base85 and int conversion (5 char = 4 bytes = 1 int)
-    Str str1 = "1;^cB", str2 = "33333";
-    Int a = b852Int(&str1[0]);
-    Int2b85(&str2[0], a);
+    Str str1 = "1;^cB", str2(str1.size(), 'a');
+    Int a = b872Int(&str1[0]);
+    Int2b87(&str2[0], a);
     if (str1 != str2)
         SLS_FAIL;
 
-    // base85 encoding
-    // Str str85;
-    // int2b85(str85, "12345");
-    // cout << str85 << endl;
+    // base87 encoding
+    // Str str87;
+    // int2b87(str87, "12345");
+    // cout << str87 << endl;
 }
