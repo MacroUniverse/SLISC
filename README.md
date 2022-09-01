@@ -65,6 +65,32 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used, comment/uncomment sections in `g++_all.mak` to enable/disable them.
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
 
+## Ubuntu 20.04 All Dependencies
+```
+sudo apt install -y vim git make g++ gdb libarpack++2-dev gfortran liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
+sudo apt purge libopenblas*
+git clone https://github.com/MacroUniverse/SLISC0
+git clone https://github.com/MacroUniverse/Arpack_test
+git clone https://github.com/MacroUniverse/EigenTest
+git clone https://github.com/MacroUniverse/boost-headers
+cd SLISC0
+touch SLISC/*.h
+make -j4
+```
+
+example of software versions (tested):
+```
+gfortran:amd64/focal 4:9.3.0-1ubuntu2
+libarpack++2-dev:amd64/focal 2.3-10build1
+libboost-filesystem-dev:amd64/focal 1.71.0.0ubuntu2
+libflint-arb-dev:amd64/focal 1:2.17.0-1
+libflint-dev:amd64/focal 2.5.2-21build1
+libgmp-dev:amd64/focal 2:6.2.0+dfsg-4
+libgsl-dev:amd64/focal 2.5+dfsg-6build1
+liblapacke-dev:amd64/focal 3.9.0-1build1
+libsqlite3-dev:amd64/focal-security 3.31.1-4ubuntu0.3
+```
+
 ## Recommended Programming Style
 * Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
 * Function overloading should be preferred over class members.
