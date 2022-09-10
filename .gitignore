@@ -21,6 +21,8 @@ SLISC/test
 util/matbinfo
 util/matbrename
 util/cat_files
+util/echo2
+util/mattinfo
 test.mat
 example.db
 test1.txt

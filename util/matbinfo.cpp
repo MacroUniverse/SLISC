@@ -5,7 +5,7 @@ using namespace slisc;
 int main(int argc, char **argv)
 {
 	Str fname = argv[1];
-	Matb matb(fname, 'r');
+	Matb matb(fname, "r");
 	for (Long i = 0; i < matb.size(); ++i) {
 		cout << i << ". " << matb.m_name[i] << "  size: ";
 		if (size(matb.m_size[i]) > 0) {

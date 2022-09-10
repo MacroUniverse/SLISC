@@ -91,6 +91,8 @@ liblapacke-dev:amd64/focal 3.9.0-1build1
 libsqlite3-dev:amd64/focal-security 3.31.1-4ubuntu0.3
 ```
 
+note that gfortran needs to have the same version with g++.
+
 ## Recommended Programming Style
 * Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
 * Function overloading should be preferred over class members.

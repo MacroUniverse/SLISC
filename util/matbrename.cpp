@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 	cout << fname << ": " << varname << " -> " << newname << endl;
 	if (varname.size() != newname.size())
 		SLS_ERR("cuttently only support rename to same size name!");
-	Matb matb(fname, 'r');
+	Matb matb(fname, "r");
 	Long ind = matb.search(varname);
 	if (ind < 0)
 		SLS_ERR("variable not found!");
