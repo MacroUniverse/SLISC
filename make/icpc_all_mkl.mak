@@ -4,9 +4,9 @@ compiler = icpc
 
 # MKL
 mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
-link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+# link_mkl_static = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
 # [doesn't work] link_mkl_dynamic = -L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
-# link_mkl_dynamic_single = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
+link_mkl_dynamic_single = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
 # Boost
 boost_flag = -D SLS_USE_BOOST -I ../boost-headers
 boost_lib = -lboost_system -lboost_filesystem

@@ -78,7 +78,7 @@ touch SLISC/*.h
 make -j4
 ```
 
-example of software versions (tested):
+example of package versions on Ubuntu 20.04 (tested):
 ```
 gfortran:amd64/focal 4:9.3.0-1ubuntu2
 libarpack++2-dev:amd64/focal 2.3-10build1
@@ -92,6 +92,8 @@ libsqlite3-dev:amd64/focal-security 3.31.1-4ubuntu0.3
 ```
 
 note that gfortran needs to have the same version with g++.
+
+Update: now tested on Ubuntu 22.04 (with g++-9), however, there is a bug in GSL header `/usr/include/gsl/gsl_blas_types.h`: replace all `typedef  enum` with just `typedef `.
 
 ## Recommended Programming Style
 * Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
