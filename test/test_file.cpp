@@ -157,6 +157,7 @@ void test_file()
 	{
 		Str file1 = "sls_test_file_copy.txt", str1 = "abcdefg";
 		Str file2 = "sls_test_file_copy2.txt", str2;
+		file_remove(file1); file_remove(file2);
 		write(str1, file1);
 		file_copy(file2, file1);
 		read(str2, file2);
@@ -165,16 +166,21 @@ void test_file()
 		file_remove(file1); file_remove(file2);
 	}
 
-	// file_copy() with buffer
+	// file_copy() with buffer, and file_move()
 	{
 		Str file1 = "sls_test_file_copy.txt", str1 = "abcdefg";
 		Str file2 = "sls_test_file_copy2.txt", str2;
+		file_remove(file1); file_remove(file2);
 		Str buff; buff.resize(5);
 		write(str1, file1);
 		file_copy(file2, file1, buff);
 		read(str2, file2);
-		if (str2 != str1)
-			SLS_FAIL;
-		file_remove(file1); file_remove(file2);
+		SLS_ASSERT(str2 == str1);
+		file_remove(file2);
+		try {file_move(file2, file1);}
+		catch (Str_I msg) { cout << msg << endl; }
+		str2.clear(); read(str2, file2);
+		SLS_ASSERT(str1 == str2);
+		file_remove(file2);
 	}
 }

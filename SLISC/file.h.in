@@ -400,15 +400,14 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 // move a file (copy and delete)
 inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
-	file_copy(fname_out, fname_in, replace);
-	file_remove(fname_in);
-}
-
-// file_move() with user buffer
-inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
-{
-	file_copy(fname_out, fname_in, buffer, replace);
-	file_remove(fname_in);
+	if (file_exist(fname_out)) {
+		if (replace)
+			file_remove(fname_out);
+		else
+			throw "file_move(): destination exist: " + fname_out;
+	}
+	if (rename(fname_in.c_str(), fname_out.c_str()))
+		throw "file_move(): failed! from " + fname_in + " to " + fname_out;
 }
 
 // get number of bytes in file

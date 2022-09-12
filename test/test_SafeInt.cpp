@@ -10,5 +10,5 @@ void test_SafeInt()
 	c = a * b;
 	// unordered_map<SafeInt<char>, SafeInt<char>> umap;
 	// umap[a] = b; umap[b] = c; umap[c] = a;
-	cout << (unsigned int)c << endl;
+	// cout << (unsigned int)c << endl;
 }
