@@ -13,7 +13,7 @@ namespace slisc {
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = r[i] * gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -23,7 +23,7 @@ inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 // unscaled hydrogen bound state radial wave function
 inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -33,7 +33,7 @@ inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = r[i] * gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -43,7 +43,7 @@ inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 // unscaled hydrogen bound state radial wave function
 inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -53,7 +53,7 @@ inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = r[i] * gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -63,7 +63,7 @@ inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 // unscaled hydrogen bound state radial wave function
 inline void hydrogen_R(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -73,7 +73,7 @@ inline void hydrogen_R(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = r[i] * gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -83,7 +83,7 @@ inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 // unscaled hydrogen bound state radial wave function
 inline void hydrogen_R(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);

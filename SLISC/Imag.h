@@ -8,14 +8,14 @@ namespace slisc {
 class Fimag
 {
 protected:
-    Float m_s;
+	Float m_s;
 public:
-    Fimag() {};
-    explicit Fimag(const Float &val);
-    operator Fcomp() const;
-    Float real() const;
-    Float imag() const;
-    void imag(Float_I val);
+	Fimag() {};
+	explicit Fimag(const Float &val);
+	operator Fcomp() const;
+	Float real() const;
+	Float imag() const;
+	void imag(Float_I val);
 };
 
 typedef const Fimag &Fimag_I;
@@ -40,14 +40,14 @@ inline Float abs(Fimag_I val) { return val.imag(); }
 class Imag
 {
 protected:
-    Doub m_s;
+	Doub m_s;
 public:
-    Imag() {};
-    explicit Imag(const Doub &val);
-    operator Comp() const;
-    Doub real() const;
-    Doub imag() const;
-    void imag(Doub_I val);
+	Imag() {};
+	explicit Imag(const Doub &val);
+	operator Comp() const;
+	Doub real() const;
+	Doub imag() const;
+	void imag(Doub_I val);
 };
 
 typedef const Imag &Imag_I;
@@ -72,14 +72,14 @@ inline Doub abs(Imag_I val) { return val.imag(); }
 class Limag
 {
 protected:
-    Ldoub m_s;
+	Ldoub m_s;
 public:
-    Limag() {};
-    explicit Limag(const Ldoub &val);
-    operator Lcomp() const;
-    Ldoub real() const;
-    Ldoub imag() const;
-    void imag(Ldoub_I val);
+	Limag() {};
+	explicit Limag(const Ldoub &val);
+	operator Lcomp() const;
+	Ldoub real() const;
+	Ldoub imag() const;
+	void imag(Ldoub_I val);
 };
 
 typedef const Limag &Limag_I;
@@ -138,8 +138,8 @@ inline Fcomp operator+(Fimag_I z1, Fcomp_I z2) { return Fcomp(real(z2), imag(z2)
 inline Fcomp operator-(Fimag_I z1, Fcomp_I z2) { return Fcomp(-real(z2), imag(z1) - imag(z2)); }
 inline Fcomp operator*(Fimag_I z1, Fcomp_I z2) { return Fcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Fcomp operator/(Fimag_I z1, Fcomp_I z2) {
-    const Float &x2 = real(z2), &y2 = imag(z2);
-    return Fcomp(y2, x2) * Float(imag(z1) / (x2*x2 + y2*y2));
+	const Float &x2 = real(z2), &y2 = imag(z2);
+	return Fcomp(y2, x2) * Float(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Fimag_I z1, Fcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Fimag_I z1, Fcomp_I z2) { return !(z1 == z2); }
@@ -176,8 +176,8 @@ inline Comp operator+(Fimag_I z1, Comp_I z2) { return Comp(real(z2), imag(z2) + 
 inline Comp operator-(Fimag_I z1, Comp_I z2) { return Comp(-real(z2), imag(z1) - imag(z2)); }
 inline Comp operator*(Fimag_I z1, Comp_I z2) { return Comp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Comp operator/(Fimag_I z1, Comp_I z2) {
-    const Doub &x2 = real(z2), &y2 = imag(z2);
-    return Comp(y2, x2) * Doub(imag(z1) / (x2*x2 + y2*y2));
+	const Doub &x2 = real(z2), &y2 = imag(z2);
+	return Comp(y2, x2) * Doub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Fimag_I z1, Comp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Fimag_I z1, Comp_I z2) { return !(z1 == z2); }
@@ -214,8 +214,8 @@ inline Lcomp operator+(Fimag_I z1, Lcomp_I z2) { return Lcomp(real(z2), imag(z2)
 inline Lcomp operator-(Fimag_I z1, Lcomp_I z2) { return Lcomp(-real(z2), imag(z1) - imag(z2)); }
 inline Lcomp operator*(Fimag_I z1, Lcomp_I z2) { return Lcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Lcomp operator/(Fimag_I z1, Lcomp_I z2) {
-    const Ldoub &x2 = real(z2), &y2 = imag(z2);
-    return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
+	const Ldoub &x2 = real(z2), &y2 = imag(z2);
+	return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Fimag_I z1, Lcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Fimag_I z1, Lcomp_I z2) { return !(z1 == z2); }
@@ -252,8 +252,8 @@ inline Comp operator+(Imag_I z1, Fcomp_I z2) { return Comp(real(z2), imag(z2) + 
 inline Comp operator-(Imag_I z1, Fcomp_I z2) { return Comp(-real(z2), imag(z1) - imag(z2)); }
 inline Comp operator*(Imag_I z1, Fcomp_I z2) { return Comp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Comp operator/(Imag_I z1, Fcomp_I z2) {
-    const Float &x2 = real(z2), &y2 = imag(z2);
-    return Comp(y2, x2) * Doub(imag(z1) / (x2*x2 + y2*y2));
+	const Float &x2 = real(z2), &y2 = imag(z2);
+	return Comp(y2, x2) * Doub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Imag_I z1, Fcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Imag_I z1, Fcomp_I z2) { return !(z1 == z2); }
@@ -290,8 +290,8 @@ inline Comp operator+(Imag_I z1, Comp_I z2) { return Comp(real(z2), imag(z2) + i
 inline Comp operator-(Imag_I z1, Comp_I z2) { return Comp(-real(z2), imag(z1) - imag(z2)); }
 inline Comp operator*(Imag_I z1, Comp_I z2) { return Comp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Comp operator/(Imag_I z1, Comp_I z2) {
-    const Doub &x2 = real(z2), &y2 = imag(z2);
-    return Comp(y2, x2) * Doub(imag(z1) / (x2*x2 + y2*y2));
+	const Doub &x2 = real(z2), &y2 = imag(z2);
+	return Comp(y2, x2) * Doub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Imag_I z1, Comp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Imag_I z1, Comp_I z2) { return !(z1 == z2); }
@@ -328,8 +328,8 @@ inline Lcomp operator+(Imag_I z1, Lcomp_I z2) { return Lcomp(real(z2), imag(z2) 
 inline Lcomp operator-(Imag_I z1, Lcomp_I z2) { return Lcomp(-real(z2), imag(z1) - imag(z2)); }
 inline Lcomp operator*(Imag_I z1, Lcomp_I z2) { return Lcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Lcomp operator/(Imag_I z1, Lcomp_I z2) {
-    const Ldoub &x2 = real(z2), &y2 = imag(z2);
-    return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
+	const Ldoub &x2 = real(z2), &y2 = imag(z2);
+	return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Imag_I z1, Lcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Imag_I z1, Lcomp_I z2) { return !(z1 == z2); }
@@ -366,8 +366,8 @@ inline Lcomp operator+(Limag_I z1, Fcomp_I z2) { return Lcomp(real(z2), imag(z2)
 inline Lcomp operator-(Limag_I z1, Fcomp_I z2) { return Lcomp(-real(z2), imag(z1) - imag(z2)); }
 inline Lcomp operator*(Limag_I z1, Fcomp_I z2) { return Lcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Lcomp operator/(Limag_I z1, Fcomp_I z2) {
-    const Float &x2 = real(z2), &y2 = imag(z2);
-    return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
+	const Float &x2 = real(z2), &y2 = imag(z2);
+	return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Limag_I z1, Fcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Limag_I z1, Fcomp_I z2) { return !(z1 == z2); }
@@ -404,8 +404,8 @@ inline Lcomp operator+(Limag_I z1, Comp_I z2) { return Lcomp(real(z2), imag(z2) 
 inline Lcomp operator-(Limag_I z1, Comp_I z2) { return Lcomp(-real(z2), imag(z1) - imag(z2)); }
 inline Lcomp operator*(Limag_I z1, Comp_I z2) { return Lcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Lcomp operator/(Limag_I z1, Comp_I z2) {
-    const Doub &x2 = real(z2), &y2 = imag(z2);
-    return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
+	const Doub &x2 = real(z2), &y2 = imag(z2);
+	return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Limag_I z1, Comp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Limag_I z1, Comp_I z2) { return !(z1 == z2); }
@@ -442,8 +442,8 @@ inline Lcomp operator+(Limag_I z1, Lcomp_I z2) { return Lcomp(real(z2), imag(z2)
 inline Lcomp operator-(Limag_I z1, Lcomp_I z2) { return Lcomp(-real(z2), imag(z1) - imag(z2)); }
 inline Lcomp operator*(Limag_I z1, Lcomp_I z2) { return Lcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
 inline Lcomp operator/(Limag_I z1, Lcomp_I z2) {
-    const Ldoub &x2 = real(z2), &y2 = imag(z2);
-    return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
+	const Ldoub &x2 = real(z2), &y2 = imag(z2);
+	return Lcomp(y2, x2) * Ldoub(imag(z1) / (x2*x2 + y2*y2));
 }
 inline Bool operator==(Limag_I z1, Lcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Limag_I z1, Lcomp_I z2) { return !(z1 == z2); }
@@ -466,8 +466,8 @@ inline void operator/=(Comp_IO z1, Imag_I z2) { z1 = z1 / z2; }
 // operator<<
 inline std::ostream &operator<<(std::ostream &out, Imag_I num)
 {
-    out << num.imag() << 'i';
-    return out;
+	out << num.imag() << 'i';
+	return out;
 }
 
 } // namespace slisc

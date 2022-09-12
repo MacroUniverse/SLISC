@@ -22,7 +22,7 @@ namespace slisc {
 inline void hydrogen_rR(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 {
 //% req('assert_same_shape', {Tv, Tv1});
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = r[i] * gsl_sf_hydrogenicR(n, l, Z, r[i]);
@@ -33,7 +33,7 @@ inline void hydrogen_rR(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 inline void hydrogen_R(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 {
 //% req('assert_same_shape', {Tv, Tv1});
-    assert_same_shape(rR, r);
+	assert_same_shape(rR, r);
 	gsl_set_error_handler_off(); // turn off error for possible underflow
 	for (Long i = 0; i < r.size(); ++i)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);

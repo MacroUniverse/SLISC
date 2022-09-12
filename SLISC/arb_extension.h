@@ -57,9 +57,9 @@ inline void arf_set_q(arf_t x, Qdoub_I q0)
 	Uchar *p = (Uchar*)&q;
 	Bool negative = bitL(p+15, 0);
 	unset_bitL(p+15, 0);
-    short int pw = *(short int*)(p+14) - 16383;
-    p[14] = 0; p[15] = 0;
-    long long *pL0 = (long long*)p;
+	short int pw = *(short int*)(p+14) - 16383;
+	p[14] = 0; p[15] = 0;
+	long long *pL0 = (long long*)p;
 	long long *pL1 = (long long*)(p+7);
 	arf_t tmp; arf_init(tmp);
 	arb_t t2; arb_init(t2);
@@ -82,7 +82,7 @@ inline void arf_set_q(arf_t x, Qdoub_I q0)
 inline void arb_set_q(arb_t x, Qdoub_I q)
 {
 	arf_set_q(arb_midref(x), q);
-    mag_zero(arb_radref(x));
+	mag_zero(arb_radref(x));
 }
 #endif
 

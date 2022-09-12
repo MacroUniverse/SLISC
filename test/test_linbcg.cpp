@@ -60,7 +60,6 @@ void test_linbcg()
 	}
 
 	{
-		LinbcgDoub2 solver;
 		CmatDoub a(3,3); copy(a, {1., 0., 5., 0., 3., 0., 2., 4., 6.});
 		VecDoub x(3), x1(3), b(3); VecDoub wsp_d(3*8);
 		copy(b, {6., 7., 8.}); copy(x, 0);

@@ -15,12 +15,12 @@ namespace slisc {
 class @VecT@ : public @VbaseT@
 {
 public:
-    typedef @VbaseT@ Base;
-    @VecT@() = default;
-    explicit @VecT@(Long_I N);
-    @VecT@(const @VecT@ &rhs); // copy constructor
-    @VecT@ &operator=(const @VecT@ &rhs) = delete;
-    void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
+	typedef @VbaseT@ Base;
+	@VecT@() = default;
+	explicit @VecT@(Long_I N);
+	@VecT@(const @VecT@ &rhs); // copy constructor
+	@VecT@ &operator=(const @VecT@ &rhs) = delete;
+	void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
 
 inline @VecT@::@VecT@(Long_I N) : Base(N) {}
@@ -28,13 +28,13 @@ inline @VecT@::@VecT@(Long_I N) : Base(N) {}
 inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
-    SLS_ERR("copy constructor forbidden!");
+	SLS_ERR("copy constructor forbidden!");
 #endif
 }
 
 inline void @VecT@::operator<<(@VecT@ &rhs)
 {
-    Base::operator<<(rhs);
+	Base::operator<<(rhs);
 }
 
 typedef const @VecT@ &@VecT@_I;
@@ -53,14 +53,14 @@ typedef VecLong &VecLong_O, &VecLong_IO;
 class VecBool : public VbaseBool
 {
 public:
-    typedef VbaseBool Base;
-    using Base::ref; // bit reference
+	typedef VbaseBool Base;
+	using Base::ref; // bit reference
 
-    VecBool() = default;
-    explicit VecBool(Long_I N);
-    VecBool(const VecBool &rhs); // copy constructor
-    VecBool &operator=(const VecBool &rhs) = delete;
-    void operator<<(VecBool &rhs); // move data and rhs.resize(0)
+	VecBool() = default;
+	explicit VecBool(Long_I N);
+	VecBool(const VecBool &rhs); // copy constructor
+	VecBool &operator=(const VecBool &rhs) = delete;
+	void operator<<(VecBool &rhs); // move data and rhs.resize(0)
 };
 
 inline VecBool::VecBool(Long_I N) : Base(N) {}
@@ -68,13 +68,13 @@ inline VecBool::VecBool(Long_I N) : Base(N) {}
 inline VecBool::VecBool(const VecBool &rhs) : Base(rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
-    SLS_ERR("copy constructor forbidden!");
+	SLS_ERR("copy constructor forbidden!");
 #endif
 }
 
 inline void VecBool::operator<<(VecBool &rhs)
 {
-    Base::operator<<(rhs);
+	Base::operator<<(rhs);
 }
 
 typedef const VecBool &VecBool_I;

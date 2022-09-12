@@ -14,19 +14,19 @@ inline Doub legendre_Pmm(int m, Doub_I x)
 {
   if(m == 0)
   {
-    return 1.0;
+	return 1.0;
   }
   else
   {
-    Doub p_mm = 1;
-    Doub root_factor = sqrt(1-x)*sqrt(1+x);
-    Doub fact_coeff = 1;
-    int i;
-    for(i=1; i<=m; i++) {
-      p_mm *= -fact_coeff * root_factor;
-      fact_coeff += 2;
-    }
-    return p_mm;
+	Doub p_mm = 1;
+	Doub root_factor = sqrt(1-x)*sqrt(1+x);
+	Doub fact_coeff = 1;
+	int i;
+	for(i=1; i<=m; i++) {
+	  p_mm *= -fact_coeff * root_factor;
+	  fact_coeff += 2;
+	}
+	return p_mm;
   }
 }
 
@@ -64,9 +64,9 @@ else{
 	Int ell;
 
 	for(ell=m+2; ell <= l; ell++){
-    p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
-    p_ellm2 = p_ellm1;
-    p_ellm1 = p_ell;
+	p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
+	p_ellm2 = p_ellm1;
+	p_ellm1 = p_ell;
 	}
 
 	return p_ell;

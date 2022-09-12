@@ -17,59 +17,59 @@ namespace slisc {
 inline @T@ @fun@_v(const @T@ *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    const @T@ *end = v + N*step, *p = v; v+=step;
-    for (; v < end; v+=step) if (*p @oper@ *v) p = v;
-    return *p;
+	const @T@ *end = v + N*step, *p = v; v+=step;
+	for (; v < end; v+=step) if (*p @oper@ *v) p = v;
+	return *p;
 }
 
 inline @T@ @fun@_v(Long_O ind, const @T@ *v, Long_I N, Long_I step = 1)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    const @T@ *beg = v, *end = v + N, *p = v; v+=step;
-    for (; v < end; ++v) if (*p @oper@ *v) p = v;
-    ind = (p - beg)/step;
-    return *p;
+	const @T@ *beg = v, *end = v + N, *p = v; v+=step;
+	for (; v < end; ++v) if (*p @oper@ *v) p = v;
+	ind = (p - beg)/step;
+	return *p;
 }
 
 inline @T@ @fun@_dcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step1)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
 #endif
-    const @T@ *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
-    while (1) {
-        if (v == end0) {
-            beg0 += step1;
-            if (beg0 >= end) break;
-            v = beg0; end0 += step1;
-        }
-        if (*p @oper@ *v) p = v;
-        ++v;
-    }
-    return *p;
+	const @T@ *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	while (1) {
+	    if (v == end0) {
+	        beg0 += step1;
+	        if (beg0 >= end) break;
+	        v = beg0; end0 += step1;
+	    }
+	    if (*p @oper@ *v) p = v;
+	    ++v;
+	}
+	return *p;
 }
 
 inline @T@ @fun@_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, Long_I step1)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
 #endif
-    const @T@ *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
-    while (1) {
-        if (v == end0) {
-            beg0 += step1;
-            if (beg0 >= end) break;
-            v = beg0; end0 += step1;
-        }
-        if (*p @oper@ *v) p = v;
-        ++v;
-    }
-    i = (p - beg) % N0; j = (p - beg) / step1;
-    return *p;
+	const @T@ *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	while (1) {
+	    if (v == end0) {
+	        beg0 += step1;
+	        if (beg0 >= end) break;
+	        v = beg0; end0 += step1;
+	    }
+	    if (*p @oper@ *v) p = v;
+	    ++v;
+	}
+	i = (p - beg) % N0; j = (p - beg) / step1;
+	return *p;
 }
 
 //% else
@@ -96,29 +96,29 @@ inline @Ts@ min(@T@_I v) { return min_v(v.data(), v.size()); }
 inline @Ts@ min(Long_O ind, @T@_I v) { return min_v(ind, v.data(), v.size()); }
 //% elseif is_vvec(T) && is_real(Ts) && ~is_Bool(Ts)
 inline @Ts@ max(@T@_I v) {
-    @Ts@ s = numeric_limits<@Ts@>::min(), s1;
-    for (auto &v1 : v) { s1 = max(v1); if (s < s1) s = s1; }
-    return s;
+	@Ts@ s = numeric_limits<@Ts@>::min(), s1;
+	for (auto &v1 : v) { s1 = max(v1); if (s < s1) s = s1; }
+	return s;
 }
 
 inline @Ts@ max(Long_O ind, @T@_I v) {
-    Long ind1;
-    @Ts@ s = numeric_limits<@Ts@>::min(), s1;
-    for (auto &v1 : v) { s1 = max(ind1, v1); if (s < s1) s = s1, ind = ind1; }
-    return s;
+	Long ind1;
+	@Ts@ s = numeric_limits<@Ts@>::min(), s1;
+	for (auto &v1 : v) { s1 = max(ind1, v1); if (s < s1) s = s1, ind = ind1; }
+	return s;
 }
 
 inline @Ts@ min(@T@_I v) {
-    @Ts@ s = numeric_limits<@Ts@>::max(), s1;
-    for (auto &v1 : v) { s1 = min(v1); if (s1 < s) s = s1; }
-    return s;
+	@Ts@ s = numeric_limits<@Ts@>::max(), s1;
+	for (auto &v1 : v) { s1 = min(v1); if (s1 < s) s = s1; }
+	return s;
 }
 
 inline @Ts@ min(Long_O ind, @T@_I v) {
-    Long ind1;
-    @Ts@ s = numeric_limits<@Ts@>::max(), s1;
-    for (auto &v1 : v) { s1 = min(ind1, v1); if (s1 < s) s = s1, ind = ind1; }
-    return s;
+	Long ind1;
+	@Ts@ s = numeric_limits<@Ts@>::max(), s1;
+	for (auto &v1 : v) { s1 = min(ind1, v1); if (s1 < s) s = s1, ind = ind1; }
+	return s;
 }
 //% elseif is_dense(T) && is_real(Ts) && ~is_Bool(Ts)
 inline @Ts@ max(@T@_I v) { return max_v(v.p(), v.size()); }
@@ -154,11 +154,11 @@ inline @Ts@ min2(Long_O i, Long_O j, @T@_I v) { return min_dcmat(i, j, v.p(), v.
 template <class T>
 inline T min(const vector<vector<T>> &v)
 {
-    T s = numeric_limits<T>::max();
-    for (auto &v1 : v)
-        for (auto &e : v1)
-            if (e < s) s = e;
-    return s;
+	T s = numeric_limits<T>::max();
+	for (auto &v1 : v)
+	    for (auto &e : v1)
+	        if (e < s) s = e;
+	return s;
 }
 
 //% tem('max_abs_v', { 'Doub' });
@@ -168,70 +168,70 @@ inline T min(const vector<vector<T>> &v)
 inline @Tr@ max_abs_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @Tr@ s = abs(v[0]), val;
-    for (Long i = 1; i < N; ++i) {
-        val = abs(v[i]);
-        if (s < val)
-            s = val;
-    }
-    return s;
+	@Tr@ s = abs(v[0]), val;
+	for (Long i = 1; i < N; ++i) {
+	    val = abs(v[i]);
+	    if (s < val)
+	        s = val;
+	}
+	return s;
 }
 
 inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @Tr@ s = abs(v[0]), val;
-    for (Long i = step; i < N*step; i += step) {
-        val = abs(v[i]);
-        if (s < val)
-            s = val;
-    }
-    return s;
+	@Tr@ s = abs(v[0]), val;
+	for (Long i = step; i < N*step; i += step) {
+	    val = abs(v[i]);
+	    if (s < val)
+	        s = val;
+	}
+	return s;
 }
 
 inline @Tr@ max_abs_dcmat(const @T@ *v, Long_I N0, Long_I N1, Long_I step1)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
 #endif
-    const @T@ *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
-    @Tr@ s = abs(*v); ++v;
-    while (1) {
-        if (v == end0) {
-            beg0 += step1;
-            if (beg0 >= end) break;
-            v = beg0; end0 += step1;
-        }
-        const @Tr@ &t = abs(*v);
-        if (s < t) s = abs(t);
-        ++v;
-    }
-    return s;
+	const @T@ *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	@Tr@ s = abs(*v); ++v;
+	while (1) {
+	    if (v == end0) {
+	        beg0 += step1;
+	        if (beg0 >= end) break;
+	        v = beg0; end0 += step1;
+	    }
+	    const @Tr@ &t = abs(*v);
+	    if (s < t) s = abs(t);
+	    ++v;
+	}
+	return s;
 }
 
 inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, Long_I step1)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
 #endif
-    const @T@ *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
-    @Tr@ s = abs(*v); ++v;
-    while (1) {
-        if (v == end0) {
-            beg0 += step1;
-            if (beg0 >= end) break;
-            v = beg0; end0 += step1;
-        }
-        const @Tr@ &t = abs(*v);
-        if (s < t) s = abs(t), p = v;
-        ++v;
-    }
-    i = (p - beg) % N0; j = (p - beg) / step1;
-    return s;
+	const @T@ *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	@Tr@ s = abs(*v); ++v;
+	while (1) {
+	    if (v == end0) {
+	        beg0 += step1;
+	        if (beg0 >= end) break;
+	        v = beg0; end0 += step1;
+	    }
+	    const @Tr@ &t = abs(*v);
+	    if (s < t) s = abs(t), p = v;
+	    ++v;
+	}
+	i = (p - beg) % N0; j = (p - beg) / step1;
+	return s;
 }
 //%-------------------------
 
@@ -269,12 +269,12 @@ inline @Tr@ max_abs(Long_O i, Long_O j, @T@_I v) { return max_abs_dcmat(i, j, v.
 inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @Tr@ s = abs(v[0]);
-    for (Long i = 1; i < N; ++i)
-        s += abs(v[i]);
-    return s;
+	@Tr@ s = abs(v[0]);
+	for (Long i = 1; i < N; ++i)
+	    s += abs(v[i]);
+	return s;
 }
 //%---------------------------
 
@@ -306,14 +306,14 @@ inline @Tr@ sum_abs(@T@_I v)
 //% T = varargin{:};
 inline Long sum_abs(@T@_I v)
 {
-    Long N = v.size();
+	Long N = v.size();
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    Long s = v[0];
-    for (Long i = 1; i < N; ++i)
-        s += v[i];
-    return s;
+	Long s = v[0];
+	for (Long i = 1; i < N; ++i)
+	    s += v[i];
+	return s;
 }
 //%--------------------------
 
@@ -328,23 +328,23 @@ inline Long sum_abs(@T@_I v)
 inline @Tret@ sum_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @Tret@ s = v[0];
-    for (Long i = 1; i < N; ++i)
-        s += v[i];
-    return s;
+	@Tret@ s = v[0];
+	for (Long i = 1; i < N; ++i)
+	    s += v[i];
+	return s;
 }
 
 inline @Tret@ prod_v(const @T@ *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (N <= 0) SLS_ERR("illegal length!");
+	if (N <= 0) SLS_ERR("illegal length!");
 #endif
-    @Tret@ s = v[0];
-    for (Long i = 1; i < N; ++i)
-        s *= v[i];
-    return s;
+	@Tret@ s = v[0];
+	for (Long i = 1; i < N; ++i)
+	    s *= v[i];
+	return s;
 }
 //%------------------------
 
@@ -380,58 +380,58 @@ inline @Tret@ prod(@T@_I v) { return prod_v(v.p(), v.size()); }
 //% if is_dense(T) || is_Dvec(T)
 inline @Tr@ norm2(@T@_I v)
 {
-    Long N = v.size();
-    @Tr@ s2 = abs2(v[0]);
-    for (Long i = 1; i < N; ++i)
-        s2 += abs2(v[i]);
-    return s2;
+	Long N = v.size();
+	@Tr@ s2 = abs2(v[0]);
+	for (Long i = 1; i < N; ++i)
+	    s2 += abs2(v[i]);
+	return s2;
 }
 
 inline @Tr@ norm2_dif(@T@_I v, @T@_I v1)
 {
-    Long N = v.size();
-    @Tr@ s2 = abs2(v[0] - v1[0]);
-    for (Long i = 1; i < N; ++i)
-        s2 += abs2(v[i] - v1[i]);
-    return s2;
+	Long N = v.size();
+	@Tr@ s2 = abs2(v[0] - v1[0]);
+	for (Long i = 1; i < N; ++i)
+	    s2 += abs2(v[i] - v1[i]);
+	return s2;
 }
 //% elseif is_Dcmat(T)
 inline @Tr@ norm2(@T@_I a)
 {
-    const @Ts@ *p = a.p();
-    Long Nr = a.n0(), lda = a.lda();
-    @Tr@ s2 = 0;
-    for (Long j = 0; j < a.n1(); ++j) {
-        for (Long i = 0; i < Nr; ++i)
-            s2 += abs2(p[i]);
-        p += lda;
-    }
-    return s2;
+	const @Ts@ *p = a.p();
+	Long Nr = a.n0(), lda = a.lda();
+	@Tr@ s2 = 0;
+	for (Long j = 0; j < a.n1(); ++j) {
+	    for (Long i = 0; i < Nr; ++i)
+	        s2 += abs2(p[i]);
+	    p += lda;
+	}
+	return s2;
 }
 
 inline @Tr@ norm2_dif(@T@_I a, @T@_I a1)
 {
-    const @Ts@ *p = a.p(), *p1 = a1.p();
-    Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
-    @Tr@ s2 = 0;
-    for (Long j = 0; j < a.n1(); ++j) {
-        for (Long i = 0; i < Nr; ++i)
-            s2 += abs2(p[i] - p1[i]);
-        p += lda; p1 += lda1;
-    }
-    return s2;
+	const @Ts@ *p = a.p(), *p1 = a1.p();
+	Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
+	@Tr@ s2 = 0;
+	for (Long j = 0; j < a.n1(); ++j) {
+	    for (Long i = 0; i < Nr; ++i)
+	        s2 += abs2(p[i] - p1[i]);
+	    p += lda; p1 += lda1;
+	}
+	return s2;
 }
 //% else
 //%     error('not implemented (6)!');
 //% end
 inline @Tr@ norm(@T@_I v)
 {
-    return sqrt(norm2(v));
+	return sqrt(norm2(v));
 }
 
 inline @Tr@ norm_dif(@T@_I v, @T@_I v1)
 {
-    return sqrt(norm2_dif(v, v1));
+	return sqrt(norm2_dif(v, v1));
 }
 //%-------------------------
 } // namespace slisc

@@ -69,16 +69,16 @@ inline void save(@Ts@_I s, Str_I varname, Mat mat)
 //% elseif is_Uchar(Ts)
 	ps = mxCreateNumericMatrix(1, 1, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
-    ps = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+	ps = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
 //% elseif is_Llong(Ts)
-    ps = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
+	ps = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
-    ps = mxCreateDoubleMatrix(1, 1, mxREAL);
+	ps = mxCreateDoubleMatrix(1, 1, mxREAL);
 //% elseif is_Comp(Ts)
-    ps = mxCreateDoubleMatrix(1, 1, mxCOMPLEX);
+	ps = mxCreateDoubleMatrix(1, 1, mxCOMPLEX);
 //% end
 //% if is_Comp(Ts)
-    Doub *pps = mxGetPr(ps);
+	Doub *pps = mxGetPr(ps);
 	pps[0] = real(s);
 	pps = mxGetPi(ps);
 	pps[0] = imag(s);
@@ -106,16 +106,16 @@ inline void save(@T@_I v, Str_I varname, Mat mat)
 //% elseif is_Uchar(Ts)
 	pv = mxCreateUninitNumericMatrix(1, n, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
-    pv = mxCreateUninitNumericMatrix(1, n, mxINT32_CLASS, mxREAL);
+	pv = mxCreateUninitNumericMatrix(1, n, mxINT32_CLASS, mxREAL);
 //% elseif is_Llong(Ts)
-    pv = mxCreateUninitNumericMatrix(1, n, mxINT64_CLASS, mxREAL);
+	pv = mxCreateUninitNumericMatrix(1, n, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
-    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxREAL);
+	pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
-    pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxCOMPLEX);
+	pv = mxCreateUninitNumericMatrix(1, n, mxDOUBLE_CLASS, mxCOMPLEX);
 //% end
 //% if is_Comp(Ts)
-    auto ppvr = mxGetPr(pv);
+	auto ppvr = mxGetPr(pv);
 	auto ppvi = mxGetPi(pv);
 	for (i = 0; i < n; ++i) {
 		ppvr[i] = real(v[i]); ppvi[i] = imag(v[i]);
@@ -146,28 +146,28 @@ inline void save(@T@_I a, Str_I varname, Mat mat)
 //% elseif is_Uchar(Ts)
 	pa = mxCreateUninitNumericMatrix(m, n, mxUINT8_CLASS, mxREAL);
 //% elseif is_Int(Ts)
-    pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
+	pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
 //% elseif is_Llong(Ts)
-    pa = mxCreateUninitNumericMatrix(m, n, mxINT64_CLASS, mxREAL);
+	pa = mxCreateUninitNumericMatrix(m, n, mxINT64_CLASS, mxREAL);
 //% elseif is_Doub(Ts)
-    pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL);
+	pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
-    pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxCOMPLEX);
+	pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxCOMPLEX);
 //% end
 //% if is_Comp(Ts)
-    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
-    for (i = 0; i < m; ++i) {
+	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+	for (i = 0; i < m; ++i) {
 		for (j = 0; j < n; ++j) {
 			Long ind = i + m * j; const Comp &c = a(i,j);
 			ppar[ind] = real(c);
 			ppai[ind] = imag(c);
 		}
-    }
+	}
 //% else
-    @Ts@ *ppa = (@Ts@*)mxGetPr(pa);
-        for (i = 0; i < m; ++i)
-            for (j = 0; j < n; ++j)
-                ppa[i + m * j] = a(i,j);
+	@Ts@ *ppa = (@Ts@*)mxGetPr(pa);
+	    for (i = 0; i < m; ++i)
+	        for (j = 0; j < n; ++j)
+	            ppa[i + m * j] = a(i,j);
 //% end
 	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
@@ -193,25 +193,25 @@ inline void save(@T@_I a, Str_I varname, Mat mat)
 //% elseif is_Doub(Ts)
 	pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxREAL);
 //% elseif is_Comp(Ts)
-    pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxCOMPLEX);
+	pa = mxCreateUninitNumericArray(3, sz, mxDOUBLE_CLASS, mxCOMPLEX);
 //% end
 //% if is_Comp(Ts)
-    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
-    for (i = 0; i < m; ++i) {
-        for (j = 0; j < n; ++j) {
-            for (k = 0; k < q; ++k) {
-                Long ind = i + m * j + mn * k;
-                const Comp &c = a(i,j,k);
-                ppar[ind] = real(c); ppai[ind] = imag(c);
-            }
-        }
-    }
+	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+	for (i = 0; i < m; ++i) {
+	    for (j = 0; j < n; ++j) {
+	        for (k = 0; k < q; ++k) {
+	            Long ind = i + m * j + mn * k;
+	            const Comp &c = a(i,j,k);
+	            ppar[ind] = real(c); ppai[ind] = imag(c);
+	        }
+	    }
+	}
 //% else
-    @Ts@ *ppa = (@Ts@*)mxGetPr(pa);
-        for (i = 0; i < m; ++i)
-            for (j = 0; j < n; ++j)
-                for (k = 0; k < q; ++k)
-                    ppa[i + m*j + mn*k] = a(i,j,k);
+	@Ts@ *ppa = (@Ts@*)mxGetPr(pa);
+	    for (i = 0; i < m; ++i)
+	        for (j = 0; j < n; ++j)
+	            for (k = 0; k < q; ++k)
+	                ppa[i + m*j + mn*k] = a(i,j,k);
 //% end
 	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
@@ -224,26 +224,26 @@ inline void save(@T@_I a, Str_I varname, Mat mat)
 inline void load(@Ts@_O s, Str_I varname, Mat mat)
 {
 	mxArray *ps;
-    ps = matGetVariable(mat.m_p, varname.c_str());
+	ps = matGetVariable(mat.m_p, varname.c_str());
 //% if is_Char(Ts)
-    if (!mxIsChar(ps))
+	if (!mxIsChar(ps))
 //% elseif is_Uchar(Ts)
-    if (!mxIsUint8(ps))
+	if (!mxIsUint8(ps))
 //% elseif is_Int(Ts)
 	if (!mxIsInt32(ps))
 //% elseif is_Llong(Ts)
 	if (!mxIsInt64(ps))
 //% elseif is_Doub(Ts)
-    if (!mxIsDouble(ps) || mxIsComplex(ps))
+	if (!mxIsDouble(ps) || mxIsComplex(ps))
 //% elseif is_Comp(Ts)
-    if (!mxIsDouble(ps))
+	if (!mxIsDouble(ps))
 //% end
-        SLS_ERR("'matfile: load(): wrong type!");
+	    SLS_ERR("'matfile: load(): wrong type!");
 //% if is_Comp(Ts)
-    Doub *ppsr = mxGetPr(ps), *ppsi = mxGetPi(ps);
-    s = ppsi ? Comp(ppsr[0], ppsi[0]) : ppsr[0];
+	Doub *ppsr = mxGetPr(ps), *ppsi = mxGetPi(ps);
+	s = ppsi ? Comp(ppsr[0], ppsi[0]) : ppsr[0];
 //% else
-    @Ts@ *pps = (@Ts@ *)mxGetPr(ps);
+	@Ts@ *pps = (@Ts@ *)mxGetPr(ps);
 	s = pps[0];
 //% end
 	mxDestroyArray(ps);
@@ -259,21 +259,21 @@ inline void load(@T@_O v, Str_I varname, Mat mat)
 {
 	Long i, n;
 	mxArray *pv;
-    pv = matGetVariable(mat.m_p, varname.c_str());
+	pv = matGetVariable(mat.m_p, varname.c_str());
 //% if is_Char(Ts)
-    if (!mxIsChar(pv))
+	if (!mxIsChar(pv))
 //% elseif is_Uchar(Ts)
-    if (!mxIsUint8(pv))
+	if (!mxIsUint8(pv))
 //% elseif is_Int(Ts)
-    if (!mxIsInt32(pv))
+	if (!mxIsInt32(pv))
 //% elseif is_Llong(Ts)
 	if (!mxIsInt64(pv))
 //% elseif is_Doub(Ts)
-    if (!mxIsDouble(pv) || mxIsComplex(pv))
+	if (!mxIsDouble(pv) || mxIsComplex(pv))
 //% elseif is_Comp(Ts)
-    if (!mxIsDouble(pv))
+	if (!mxIsDouble(pv))
 //% end
-        SLS_ERR("'matfile: load(): wrong type!");
+	    SLS_ERR("'matfile: load(): wrong type!");
 	n = mxGetDimensions(pv)[1];
 //% if is_Vec(T)
 	v.resize(n);
@@ -281,7 +281,7 @@ inline void load(@T@_O v, Str_I varname, Mat mat)
 	if (v.size() != n) SLS_ERR("wrong size!");
 //% end
 //% if is_Comp(Ts)
-    Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
+	Doub *ppvr = mxGetPr(pv), *ppvi = mxGetPi(pv);
 	if (ppvi)
 		for (i = 0; i < n; ++i)
 			v[i] = Comp(ppvr[i], ppvi[i]);
@@ -311,13 +311,13 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 //% elseif is_Uchar(Ts)
 	if (!mxIsUint8(pa))
 //% elseif is_Int(Ts)
-    if (!mxIsInt32(pa))
+	if (!mxIsInt32(pa))
 //% elseif is_Llong(Ts)
 	if (!mxIsInt64(pa))
 //% elseif is_Doub(Ts)
-    if (!mxIsDouble(pa) || mxIsComplex(pa))
+	if (!mxIsDouble(pa) || mxIsComplex(pa))
 //% elseif is_Comp(Ts)
-    if (!mxIsDouble(pa))
+	if (!mxIsDouble(pa))
 //% end
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
@@ -329,19 +329,19 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 //% end
 //% if is_Comp(Ts)
 	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
-    if (ppai)
+	if (ppai)
 		for (i = 0; i < m; ++i)
-            for (j = 0; j < n; ++j){
-                Long ind = i + m * j;
-                a(i,j) = Comp(ppar[ind], ppai[ind]);
-            }
+	        for (j = 0; j < n; ++j){
+	            Long ind = i + m * j;
+	            a(i,j) = Comp(ppar[ind], ppai[ind]);
+	        }
 	else
 		for (i = 0; i < m; ++i)
-            for (j = 0; j < n; ++j)
-                a(i,j) = ppar[i + m*j];
+	        for (j = 0; j < n; ++j)
+	            a(i,j) = ppar[i + m*j];
 //% else
-    @Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
-    for (i = 0; i < m; ++i)
+	@Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
+	for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
 			a(i,j) = ppa[m*j + i];
 //% end
@@ -361,7 +361,7 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 //% elseif is_Doub(Ts)
 	if (!mxIsDouble(pa) || mxIsComplex(pa))
 //% elseif is_Comp(Ts)
-    if (!mxIsDouble(pa))
+	if (!mxIsDouble(pa))
 //% end
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
@@ -372,7 +372,7 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 	if (a.n0() != m || a.n1() != n || a.n3() != q) SLS_ERR("wrong size!");
 //% end
 //% if is_Comp(Ts)
-    Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
+	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
 	if (ppai)
 		for (i = 0; i < m; ++i)
 			for (j = 0; j < n; ++j)
@@ -386,10 +386,10 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 				for (k = 0; k < q; ++k)
 					a(i,j,k) = ppar[i + m*j + mn*k];
 //% else
-    @Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
+	@Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
-    		for (k = 0; k < q; ++k)
+			for (k = 0; k < q; ++k)
 				a(i,j,k) = ppa[i + m*j + mn*k];
 //% end
 	mxDestroyArray(pa);

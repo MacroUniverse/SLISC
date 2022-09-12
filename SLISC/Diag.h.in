@@ -14,64 +14,64 @@ void veccpy(@T@ *, const @T@ *, Llong_I);
 class @DiagT@ : public @VecT@
 {
 private:
-    typedef @VecT@ Base;
+	typedef @VecT@ Base;
 public:
-    @DiagT@(Long_I N);
-    @DiagT@(@VecT@_I v);
-    Long size() const;
-    Long nnz() const;
-    Long n0() const;
-    Long n1() const;
-    @T@ &ref(Long_I i, Long_I j);
-    @T@ operator()(Long_I i, Long_I j) const;
+	@DiagT@(Long_I N);
+	@DiagT@(@VecT@_I v);
+	Long size() const;
+	Long nnz() const;
+	Long n0() const;
+	Long n1() const;
+	@T@ &ref(Long_I i, Long_I j);
+	@T@ operator()(Long_I i, Long_I j) const;
 };
 
 inline @DiagT@::@DiagT@(Long_I N) : Base(N) {}
 
 inline @DiagT@::@DiagT@(@VecT@_I v) : Base(v.size())
 {
-    veccpy(m_p, v.p(), m_N);
+	veccpy(m_p, v.p(), m_N);
 }
 
 inline Long @DiagT@::size() const
 {
-    SLS_ERR("use nnz() instead!");
-    return 0;
+	SLS_ERR("use nnz() instead!");
+	return 0;
 }
 
 inline Long @DiagT@::nnz() const
 {
-    return Base::size();
+	return Base::size();
 }
 
 inline Long @DiagT@::n0() const
 {
-    return Base::size();
+	return Base::size();
 }
 
 inline Long @DiagT@::n1() const
 {
-    return Base::size();
+	return Base::size();
 }
 
 inline @T@ &@DiagT@::ref(Long_I i, Long_I j)
 {
-    if (i == j)
-        return (*this)[i];
-    SLS_ERR("not a diagonal element!");
-    return (*this)[i];
+	if (i == j)
+	    return (*this)[i];
+	SLS_ERR("not a diagonal element!");
+	return (*this)[i];
 }
 
 inline @T@ @DiagT@::operator()(Long_I i, Long_I j) const
 {
-    if (i == j) return (*this)[i];
-    return 0;
+	if (i == j) return (*this)[i];
+	return 0;
 }
 
 // convert vector to diagonal matrix
 inline const @DiagT@ &diag(@VecT@_I v)
 {
-    return (@DiagT@&)v;
+	return (@DiagT@&)v;
 }
 
 typedef const @DiagT@ &@DiagT@_I;

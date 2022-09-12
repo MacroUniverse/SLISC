@@ -35,72 +35,72 @@ namespace slisc {
 //% end
 inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
 {
-    Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
-    if (Nk > N)
-        SLS_ERR("Nk > N !");
-    if (wsp_d.size() < Nk*Nk + 2*Nk)
-        SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N)
-        SLS_ERR("wsp_c too short!");
+	if (Nk > N)
+	    SLS_ERR("Nk > N !");
+	if (wsp_d.size() < Nk*Nk + 2*Nk)
+	    SLS_ERR("wsp_d too short!");
+	if (wsp_c.size() < N*Nk + N)
+	    SLS_ERR("wsp_c too short!");
 #endif
 
-    Doub *pd = wsp_d.p();
-    SvecDoub alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
-    SvecDoub beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
-    ScmatDoub eigV(pd, Nk, Nk); // eigen vectors
-    
-    Comp *pc = wsp_c.p();
-    SvecComp vc(pc, N); pc += vc.size(); // temp vec
-    ScmatComp bases(pc, N, Nk); // Krylov bases
+	Doub *pd = wsp_d.p();
+	SvecDoub alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
+	SvecDoub beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
+	ScmatDoub eigV(pd, Nk, Nk); // eigen vectors
+	
+	Comp *pc = wsp_c.p();
+	SvecComp vc(pc, N); pc += vc.size(); // temp vec
+	ScmatComp bases(pc, N, Nk); // Krylov bases
 //% req('cut0', {'ScmatComp'});
-    SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
+	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 //% req('norm2', {Tv});
-    beta[0] = norm(x);
+	beta[0] = norm(x);
 //% req('add(v,v,s)', {'SvecComp' Tv 'Doub'});
-    times(v0, x, 1/beta[0]); 
+	times(v0, x, 1/beta[0]); 
 
-    @mul_fun@(vc, H, v0);
+	@mul_fun@(vc, H, v0);
 //% req('dot', {'SvecComp' 'SvecComp'});
-    alpha[0] = real(dot(v0, vc));
-    for (Long i = 0; i < N; ++i)
-        v1[i] = vc[i] - alpha[0] * v0[i];
-    beta[1] = norm(v1);
-    v1 /= beta[1];
-    @mul_fun@(vc, H, v1);
-    alpha[1] = real(dot(v1, vc));
+	alpha[0] = real(dot(v0, vc));
+	for (Long i = 0; i < N; ++i)
+	    v1[i] = vc[i] - alpha[0] * v0[i];
+	beta[1] = norm(v1);
+	v1 /= beta[1];
+	@mul_fun@(vc, H, v1);
+	alpha[1] = real(dot(v1, vc));
 
-    for (Long j = 0; j < Nk-2; ++j) {
-        Long j1 = j+1, j2 = j+2;
-        @mul_fun@(v2, H, v1);
-        Doub a = alpha[j1], b = beta[j1];
-        for (Long i = 0; i < N; ++i)
+	for (Long j = 0; j < Nk-2; ++j) {
+	    Long j1 = j+1, j2 = j+2;
+	    @mul_fun@(v2, H, v1);
+	    Doub a = alpha[j1], b = beta[j1];
+	    for (Long i = 0; i < N; ++i)
 //% req('v+=s', {'SvecComp' 'Comp'; 'SvecComp' 'Doub'});
-            v2[i] -= a * v1[i] + b * v0[i];
-        beta[j2] = norm(v2);
-        v2 /= beta[j2];
-        @mul_fun@(vc, H, v2);
-        alpha[j2] = real(dot(v2, vc));
-        v0.next(); v1.next(); v2.next();
-    }
+	        v2[i] -= a * v1[i] + b * v0[i];
+	    beta[j2] = norm(v2);
+	    v2 /= beta[j2];
+	    @mul_fun@(vc, H, v2);
+	    alpha[j2] = real(dot(v2, vc));
+	    v0.next(); v1.next(); v2.next();
+	}
 //% req('sum', {'SvecDoub'});
-    Doub err = prod(beta);
+	Doub err = prod(beta);
 
-    lapack_int info =
-    LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
-    // alpha is now eigen values
-    if (info != 0)
-        SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
-    
-    for (Long i = 0; i < Nk; ++i)
-        alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
-    // alpha, beta are just work spaces now
+	lapack_int info =
+	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
+	// alpha is now eigen values
+	if (info != 0)
+	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	
+	for (Long i = 0; i < Nk; ++i)
+	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+	// alpha, beta are just work spaces now
 //% req('mul_gen', {'SvecDoub' 'ScmatDoub' 'SvecDoub'});
-    mul_gen(beta, eigV, alpha);
+	mul_gen(beta, eigV, alpha);
 //% req('mul(v,m,v)', {Tv 'ScmatComp' 'SvecDoub'});
-    mul(y, bases, beta);
+	mul(y, bases, beta);
 
-    return err;
+	return err;
 }
 //%-------------------------------
 
@@ -124,71 +124,71 @@ inline Doub exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkryl
 //% end
 inline Doub exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, Doub_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
 {
-    Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
-    if (Nk > N)
-        SLS_ERR("Nk > N !");
-    if (wsp_d.size() < Nk*Nk + 2*Nk)
-        SLS_ERR("wsp_d too short!");
-    if (wsp_c.size() < N*Nk + N + Nk)
-        SLS_ERR("wsp_c too short!");
+	if (Nk > N)
+	    SLS_ERR("Nk > N !");
+	if (wsp_d.size() < Nk*Nk + 2*Nk)
+	    SLS_ERR("wsp_d too short!");
+	if (wsp_c.size() < N*Nk + N + Nk)
+	    SLS_ERR("wsp_c too short!");
 #endif
 
-    Doub *pd = wsp_d.p();
-    SvecDoub alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
-    SvecDoub beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
-    ScmatDoub eigV(pd, Nk, Nk); // eigen vectors
-    
-    Comp *pc = wsp_c.p();
-    SvecComp vc(pc, N); pc += vc.size(); // temp vec
-    SvecComp vc1(pc, Nk); pc += vc1.size(); // temp vec
-    ScmatComp bases(pc, N, Nk); // Krylov bases
+	Doub *pd = wsp_d.p();
+	SvecDoub alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
+	SvecDoub beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
+	ScmatDoub eigV(pd, Nk, Nk); // eigen vectors
+	
+	Comp *pc = wsp_c.p();
+	SvecComp vc(pc, N); pc += vc.size(); // temp vec
+	SvecComp vc1(pc, Nk); pc += vc1.size(); // temp vec
+	ScmatComp bases(pc, N, Nk); // Krylov bases
 //% req('cut0', {'ScmatComp'});
-    SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
+	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 //% req('norm2', {Tv});
-    beta[0] = norm(x);
+	beta[0] = norm(x);
 //% req('add(v,v,s)', {'SvecComp' Tv 'Doub'});
-    times(v0, x, 1/beta[0]);
-    @mul_fun@(vc, H, v0);
+	times(v0, x, 1/beta[0]);
+	@mul_fun@(vc, H, v0);
 //% req('dot', {'SvecComp' 'SvecComp'});
-    alpha[0] = real(dot(v0, vc));
-    for (Long i = 0; i < N; ++i)
-        v1[i] = vc[i] - alpha[0] * v0[i];
+	alpha[0] = real(dot(v0, vc));
+	for (Long i = 0; i < N; ++i)
+	    v1[i] = vc[i] - alpha[0] * v0[i];
 //% req('norm2', {'SvecComp'});
-    beta[1] = norm(v1);
-    v1 /= beta[1];
-    @mul_fun@(vc, H, v1);
-    alpha[1] = real(dot(v1, vc));
+	beta[1] = norm(v1);
+	v1 /= beta[1];
+	@mul_fun@(vc, H, v1);
+	alpha[1] = real(dot(v1, vc));
 
-    for (Long j = 0; j < Nk-2; ++j) {
-        Long j1 = j+1, j2 = j+2;
-        @mul_fun@(v2, H, v1);
-        Doub a = alpha[j1], b = beta[j1];
-        for (Long i = 0; i < N; ++i)
+	for (Long j = 0; j < Nk-2; ++j) {
+	    Long j1 = j+1, j2 = j+2;
+	    @mul_fun@(v2, H, v1);
+	    Doub a = alpha[j1], b = beta[j1];
+	    for (Long i = 0; i < N; ++i)
 //% req('v+=s', {'SvecComp' 'Comp'; 'SvecComp' 'Doub'});
-        v2[i] -= a * v1[i] + b * v0[i];
-        beta[j2] = norm(v2);
-        v2 /= beta[j2];
-        @mul_fun@(vc, H, v2);
-        alpha[j2] = real(dot(v2, vc));
-        v0.next(); v1.next(); v2.next();
-    }
+	    v2[i] -= a * v1[i] + b * v0[i];
+	    beta[j2] = norm(v2);
+	    v2 /= beta[j2];
+	    @mul_fun@(vc, H, v2);
+	    alpha[j2] = real(dot(v2, vc));
+	    v0.next(); v1.next(); v2.next();
+	}
 //% req('sum', {'SvecDoub'});
-    Doub err = prod(beta);
+	Doub err = prod(beta);
 
-    lapack_int info =
-    LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
-    // alpha is now eigen values
-    if (info != 0)
-        SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	lapack_int info =
+	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
+	// alpha is now eigen values
+	if (info != 0)
+	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 //% req('cut', { 'SvecComp' });
-    SvecComp vc2 = cut(vc, 0, Nk);
-    for (Long i = 0; i < Nk; ++i)
-        vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+	SvecComp vc2 = cut(vc, 0, Nk);
+	for (Long i = 0; i < Nk; ++i)
+	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 //% req('mul_gen', {'SvecComp' 'ScmatDoub' 'SvecComp'; Tv 'ScmatComp' 'SvecComp'});
-    mul_gen(vc1, eigV, vc2);
-    mul_gen(y, bases, vc1);
-    return err;
+	mul_gen(vc1, eigV, vc2);
+	mul_gen(y, bases, vc1);
+	return err;
 }
 //%-----------------------
 

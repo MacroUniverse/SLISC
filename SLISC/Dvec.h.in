@@ -31,127 +31,127 @@ namespace slisc {
 class @Class@
 {
 protected:
-    @CT@ *m_p;
-    Long m_N;
-    Long m_step;
+	@CT@ *m_p;
+	Long m_N;
+	Long m_step;
 public:
-    @Class@();
-    @Class@(@CT@ *p, Long_I N, Long_I step);
-    @CT@* p() const;
-    @CT@ &operator[](Long_I i) const;
-    @CT@ &end() const;
-    @CT@ &end(Long_I i) const;
-    Long size() const;
-    Long step() const;
+	@Class@();
+	@Class@(@CT@ *p, Long_I N, Long_I step);
+	@CT@* p() const;
+	@CT@ &operator[](Long_I i) const;
+	@CT@ &end() const;
+	@CT@ &end(Long_I i) const;
+	Long size() const;
+	Long step() const;
 
 //% if ~constness
-    operator @DvecT_c@() const;
+	operator @DvecT_c@() const;
 //% end
-    @Class@ &operator=(const @Class@ &) = delete;
-    // === other member functions ===
-    // There is no bound checking, use with care
-    void set(@CT@ *p);
-    void set(@CT@ *p, Long_I N, Long_I step);
-    void set(const @Class@ &sli);
+	@Class@ &operator=(const @Class@ &) = delete;
+	// === other member functions ===
+	// There is no bound checking, use with care
+	void set(@CT@ *p);
+	void set(@CT@ *p, Long_I N, Long_I step);
+	void set(const @Class@ &sli);
 //% % resize() is a bad name, don't try to use it!
-    void set(Long_I N);
-    void next(); // m_p += m_N
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N;
-    
-    ~@Class@();
+	void set(Long_I N);
+	void next(); // m_p += m_N
+	void last(); // m_p -= m_N
+	void shift(Long_I N); // m_p += N;
+	
+	~@Class@();
 };
 
 inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *p, Long_I N, Long_I step)
-    : m_p(p), m_N(N), m_step(step) {}
+	: m_p(p), m_N(N), m_step(step) {}
 
 inline @CT@ * @Class@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
+	if (m_N == 0)
+	    SLS_ERR("using p() for empty container!");
 #endif
-    return m_p;
+	return m_p;
 }
 
 inline Long @Class@::size() const
 {
-    return m_N;
+	return m_N;
 }
 
 inline Long @Class@::step() const
 {
-    return m_step;
+	return m_step;
 }
 
 inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
+	if (i < 0 || i >= m_N)
+	    SLS_ERR("Vbase subscript out of bounds");
 #endif
-    return m_p[m_step*i];
+	return m_p[m_step*i];
 }
 
 inline @CT@ &@Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
+	if (m_N == 0)
+	    SLS_ERR("tring to use end() on empty vector!");
 #endif
-    return m_p[m_step*(m_N - 1)];
+	return m_p[m_step*(m_N - 1)];
 }
 
 inline @CT@ &@Class@::end(Long_I i) const
 {
-    return m_p[m_step*(m_N - i)];
+	return m_p[m_step*(m_N - i)];
 }
 
 inline void @Class@::set(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (N <= 0) SLS_ERR("illegal N!");
+	if (N <= 0) SLS_ERR("illegal N!");
 #endif
-    m_N = N;
+	m_N = N;
 }
 
 //% if ~constness
 inline @Class@::operator @DvecT_c@() const
 {
-    return *((@DvecT_c@ *)this);
+	return *((@DvecT_c@ *)this);
 }
 //% end
 
 inline void @Class@::set(@CT@ * p)
 {
-    m_p = p;
+	m_p = p;
 }
 
 inline void @Class@::set(@CT@ * p, Long_I N, Long_I step)
 {
-    m_p = p; m_N = N; m_step = step;
+	m_p = p; m_N = N; m_step = step;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
-    m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
+	m_p = sli.m_p; m_N = sli.m_N; m_step = sli.m_step;
 }
 
 inline void @Class@::next()
 {
-    m_p += m_N;
+	m_p += m_N;
 }
 
 inline void @Class@::last()
 {
-    m_p -= m_N;
+	m_p -= m_N;
 }
 
 inline void @Class@::shift(Long_I N)
 {
-    m_p += N;
+	m_p += N;
 }
 
 inline @Class@::~@Class@() {}

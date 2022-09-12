@@ -37,33 +37,33 @@ namespace slisc {
 class @Class@
 {
 protected:
-    @CT@ *m_p;
-    Long m_N;
+	@CT@ *m_p;
+	Long m_N;
 public:
-    @Class@();
-    explicit @Class@(Long_I N);
-    @Class@(@CT@ *data, Long_I N); // unsafe
-    @CT@* p() const;
-    Long size() const;
-    @Class@ &operator=(const @Class@ &rhs) = delete;
-    @CT@ &operator[](Long_I i) const;
-    @CT@ &end() const;
-    @CT@ &end(Long_I i) const;
+	@Class@();
+	explicit @Class@(Long_I N);
+	@Class@(@CT@ *data, Long_I N); // unsafe
+	@CT@* p() const;
+	Long size() const;
+	@Class@ &operator=(const @Class@ &rhs) = delete;
+	@CT@ &operator[](Long_I i) const;
+	@CT@ &end() const;
+	@CT@ &end(Long_I i) const;
 //% if ~constness
-    operator @SvbaseT_c@() const;
+	operator @SvbaseT_c@() const;
 //% end
-    void set(const @Class@ &sli);
-    void next(); // m_p += m_N
-    
-    // === unsafe operations (unsafe) ===
-    void set(@CT@ *data);
+	void set(const @Class@ &sli);
+	void next(); // m_p += m_N
+	
+	// === unsafe operations (unsafe) ===
+	void set(@CT@ *data);
 //% % resize() is a bad name, don't try to use it!
-    void set(Long_I N);
-    void set(@CT@ *data, Long_I N);
-    void last(); // m_p -= m_N
-    void shift(Long_I N); // m_p += N
+	void set(Long_I N);
+	void set(@CT@ *data, Long_I N);
+	void last(); // m_p -= m_N
+	void shift(Long_I N); // m_p += N
 
-    ~@Class@();
+	~@Class@();
 };
 
 inline @Class@::@Class@() {}
@@ -71,94 +71,94 @@ inline @Class@::@Class@() {}
 inline @Class@::@Class@(Long_I N) : m_N(N)
 {
 #ifdef SLS_CHECK_BOUNDS
-    m_p = nullptr;
+	m_p = nullptr;
 #endif
 }
 
 inline @Class@::@Class@(@CT@ *data, Long_I N)
-    : m_p(data), m_N(N) {}
+	: m_p(data), m_N(N) {}
 
 inline @CT@ * @Class@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("using p() for empty container!");
+	if (m_N == 0)
+	    SLS_ERR("using p() for empty container!");
 #endif
-    return m_p;
+	return m_p;
 }
 
 inline Long @Class@::size() const
 {
-    return m_N;
+	return m_N;
 }
 
 inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i < 0 || i >= m_N)
-        SLS_ERR("Vbase subscript out of bounds");
+	if (i < 0 || i >= m_N)
+	    SLS_ERR("Vbase subscript out of bounds");
 #endif
-    return m_p[i];
+	return m_p[i];
 }
 
 inline @CT@ &@Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (m_N == 0)
-        SLS_ERR("tring to use end() on empty vector!");
+	if (m_N == 0)
+	    SLS_ERR("tring to use end() on empty vector!");
 #endif
-    return m_p[m_N - 1];
+	return m_p[m_N - 1];
 }
 
 inline @CT@ &@Class@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
-    if (i <= 0 || i > m_N)
-        SLS_ERR("index out of bound");
+	if (i <= 0 || i > m_N)
+	    SLS_ERR("index out of bound");
 #endif
-    return m_p[m_N - i];
+	return m_p[m_N - i];
 }
 
 //% if ~constness
 inline @Class@::operator @SvbaseT_c@() const
 {
-    return *((@SvbaseT_c@ *)this);
+	return *((@SvbaseT_c@ *)this);
 }
 //% end
 
 inline void @Class@::set(@CT@ *data, Long_I N)
 {
-    m_p = data; m_N = N;
+	m_p = data; m_N = N;
 }
 
 inline void @Class@::set(@CT@ *data)
 {
-    m_p = data;
+	m_p = data;
 }
 
 inline void @Class@::set(Long_I N)
 {
-    m_N = N;
+	m_N = N;
 }
 
 inline void @Class@::next()
 {
-    m_p += m_N;
+	m_p += m_N;
 }
 
 inline void @Class@::last()
 {
-    m_p -= m_N;
+	m_p -= m_N;
 }
 
 inline void @Class@::shift(Long_I N)
 {
-    m_p += N;
+	m_p += N;
 }
 
 inline void @Class@::set(const @Class@ &sli)
 {
-    m_p = sli.m_p; m_N = sli.m_N;
+	m_p = sli.m_p; m_N = sli.m_N;
 }
 
 inline @Class@::~@Class@() {}
@@ -203,12 +203,12 @@ typedef SvbaseLlong_c SvbaseLong_c;
 class @Class@ : public @Base@
 {
 public:
-    @Class@() = default;
-    explicit @Class@(Long_I N);
-    @Class@(@CT@ *data, Long_I N); // unsafe
-    @Class@ &operator=(const @Class@ &rhs) = delete;
+	@Class@() = default;
+	explicit @Class@(Long_I N);
+	@Class@(@CT@ *data, Long_I N); // unsafe
+	@Class@ &operator=(const @Class@ &rhs) = delete;
 //% if ~constness
-    operator @SvecT_c@() const;
+	operator @SvecT_c@() const;
 //% end
 };
 
@@ -216,12 +216,12 @@ inline @Class@::@Class@(Long_I N) : @Base@(N)
 {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N)
-    : @Base@(data, N) {}
+	: @Base@(data, N) {}
 
 //% if ~constness
 inline @Class@::operator @SvecT_c@() const
 {
-    return *((@SvecT_c@ *)this);
+	return *((@SvecT_c@ *)this);
 }
 //% end
 

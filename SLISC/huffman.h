@@ -20,10 +20,10 @@ struct MinHeapNode {
 
 inline void huffman_tree_delete(MinHeapNode* node)
 {
-    if (node == NULL) return;
-    huffman_tree_delete(node->left);
-    huffman_tree_delete(node->right);
-    delete node;
+	if (node == NULL) return;
+	huffman_tree_delete(node->left);
+	huffman_tree_delete(node->right);
+	delete node;
 };
 
 // comparison of two heap nodes (needed in min heap)
@@ -37,20 +37,20 @@ struct compare {
 void printCodes(unordered_map<char,string> &dict, struct MinHeapNode* root, string &str)
 {
 	if (!root) {
-        str.pop_back(); return;
-    }
+	    str.pop_back(); return;
+	}
 	if (root->data != '$')
-        dict[root->data] = str;
-    str += '0'; printCodes(dict, root->left, str);
-    str += '1'; printCodes(dict, root->right, str);
-    str.pop_back();
+	    dict[root->data] = str;
+	str += '0'; printCodes(dict, root->left, str);
+	str += '1'; printCodes(dict, root->right, str);
+	str.pop_back();
 }
 
 // The main function that builds a Huffman Tree and
 // print codes by traversing the built Huffman Tree
 void huffman_code(unordered_map<char,string> &dict, Str_I data, vecLong freq)
 {
-    Long size = data.size();
+	Long size = data.size();
 	MinHeapNode *left, *right, *top;
 	// Create a min heap & inserts all characters of data[]
 	priority_queue<MinHeapNode*, vector<MinHeapNode*>, compare> minHeap;
@@ -66,7 +66,7 @@ void huffman_code(unordered_map<char,string> &dict, Str_I data, vecLong freq)
 	}
 	// Print Huffman codes using
 	// the Huffman tree built above
-    string str;
+	string str;
 	printCodes(dict, minHeap.top(), str);
 	huffman_tree_delete(top);
 }

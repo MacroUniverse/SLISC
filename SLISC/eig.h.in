@@ -17,21 +17,21 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
 //% req('shape_cmp', {Tm,Tm2});
-    if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
-        || eigVal.size() != eigVec.n0())
-        SLS_ERR("wrong shape!");
+	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	    || eigVal.size() != eigVec.n0())
+	    SLS_ERR("wrong shape!");
 #endif
 //% req('copy(v,v)', {Tm,Tm2});
-    copy(eigVec, A);
-    Int N = (Int)A.n1();
-    Int ret;
+	copy(eigVec, A);
+	Int N = (Int)A.n1();
+	Int ret;
 //% if is_cmajor(Tm)
-    ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
+	ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
 //% else
-    ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
+	ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
 //% end
-    if (ret != 0)
-        SLS_ERR("failed!");
+	if (ret != 0)
+	    SLS_ERR("failed!");
 }
 //% else
 //%     error('Not implemented!');
@@ -44,18 +44,18 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
 //% req('shape_cmp', {'CmatComp','CmatComp'});
-    if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
-        || eigVal.size() != eigVec.n0())
-        SLS_ERR("wrong shape!");
+	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	    || eigVal.size() != eigVec.n0())
+	    SLS_ERR("wrong shape!");
 #endif
 //% req('copy(v,v)', {'CmatComp','CmatComp'});
-    copy(eigVec, A);
-    Int N = (Int)A.n1();
-    eigVal.resize(N);
-    Int ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
-        (double _Complex*)eigVec.p(), N, eigVal.p());
-    if (ret != 0)
-        SLS_ERR("failed!");
+	copy(eigVec, A);
+	Int N = (Int)A.n1();
+	eigVal.resize(N);
+	Int ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
+	    (double _Complex*)eigVec.p(), N, eigVal.p());
+	if (ret != 0)
+	    SLS_ERR("failed!");
 }
 #endif
 } // namespace slisc

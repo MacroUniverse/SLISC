@@ -22,8 +22,8 @@ inline Doub arb_hypergeom1F1(Doub_I a, Doub_I b, Doub_I z)
 		arb_hypgeom_1f1(res1, a1, b1, z1, 0, prec);
 		digits = arb_rel_accuracy_bits(res1)/3.321928;
 		if (digits >= 16)
-            break;
-        prec *= 2;
+	        break;
+	    prec *= 2;
 	}
 	if (digits < 16)
 		SLS_ERR("arb_hypergeom1F1 error too large : " + num2str(digits) + " digits");
@@ -54,8 +54,8 @@ inline Comp arb_hypergeom1F1(Comp_I a, Comp_I b, Comp_I z)
 		acb_hypgeom_1f1(res1, a1, b1, z1, 0, prec);
 		digits = acb_rel_accuracy_bits(res1)/3.321928;
 		if (digits >= 16)
-            break;
-        prec *= 2;
+	        break;
+	    prec *= 2;
 	}
 	if (digits < 16)
 		SLS_ERR("arb_hypergeom1F1 error too large : " + num2str(digits) + " digits");

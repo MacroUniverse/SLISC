@@ -49,9 +49,9 @@ inline CbandInt::CbandInt(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I 
 {
 #ifdef SLS_CHECK_SHAPES
 	if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
-		SLS_ERR("CbandInt: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
-			", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	    SLS_ERR("CbandInt: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 #endif
 }
 
@@ -69,10 +69,10 @@ inline Int CbandInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
-		SLS_ERR("index out of bound!");
+	    SLS_ERR("index out of bound!");
 #endif
 	if (i - j > m_Nlow || j - i > m_Nup)
-		return 0;
+	    return 0;
 	return m_a(m_idiag + i - j, j);
 }
 
@@ -80,10 +80,10 @@ inline Int &CbandInt::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
-		SLS_ERR("index out of bound!");
+	    SLS_ERR("index out of bound!");
 #endif
 	if (i - j > m_Nlow || j - i > m_Nup)
-		SLS_ERR("index out of band!");
+	    SLS_ERR("index out of band!");
 	return m_a(m_idiag + i - j, j);
 }
 
@@ -160,12 +160,12 @@ inline void CbandInt::resize(Long_I lda, Long_I N1)
 inline void CbandInt::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
 	if (idiag >= 0)
-		m_idiag = idiag;
+	    m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPES
 	if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-		SLS_ERR("CbandInt: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
-			", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	    SLS_ERR("CbandInt: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 	}
 #endif
 	m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
@@ -181,9 +181,9 @@ inline void CbandInt::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-		SLS_ERR("CbandInt: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
-			", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
+	    SLS_ERR("CbandInt: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
 #endif
 	m_idiag = idiag;
 }
@@ -234,9 +234,9 @@ inline CbandDoub::CbandDoub(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_
 {
 #ifdef SLS_CHECK_SHAPES
 	if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
-		SLS_ERR("CbandDoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
-			", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	    SLS_ERR("CbandDoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 #endif
 }
 
@@ -254,10 +254,10 @@ inline Doub CbandDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
-		SLS_ERR("index out of bound!");
+	    SLS_ERR("index out of bound!");
 #endif
 	if (i - j > m_Nlow || j - i > m_Nup)
-		return 0;
+	    return 0;
 	return m_a(m_idiag + i - j, j);
 }
 
@@ -265,10 +265,10 @@ inline Doub &CbandDoub::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
-		SLS_ERR("index out of bound!");
+	    SLS_ERR("index out of bound!");
 #endif
 	if (i - j > m_Nlow || j - i > m_Nup)
-		SLS_ERR("index out of band!");
+	    SLS_ERR("index out of band!");
 	return m_a(m_idiag + i - j, j);
 }
 
@@ -345,12 +345,12 @@ inline void CbandDoub::resize(Long_I lda, Long_I N1)
 inline void CbandDoub::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
 	if (idiag >= 0)
-		m_idiag = idiag;
+	    m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPES
 	if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-		SLS_ERR("CbandDoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
-			", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	    SLS_ERR("CbandDoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 	}
 #endif
 	m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
@@ -366,9 +366,9 @@ inline void CbandDoub::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-		SLS_ERR("CbandDoub: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
-			", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
+	    SLS_ERR("CbandDoub: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
 #endif
 	m_idiag = idiag;
 }
@@ -419,9 +419,9 @@ inline CbandComp::CbandComp(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_
 {
 #ifdef SLS_CHECK_SHAPES
 	if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
-		SLS_ERR("CbandComp: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
-			", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	    SLS_ERR("CbandComp: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 #endif
 }
 
@@ -439,10 +439,10 @@ inline Comp CbandComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
-		SLS_ERR("index out of bound!");
+	    SLS_ERR("index out of bound!");
 #endif
 	if (i - j > m_Nlow || j - i > m_Nup)
-		return 0;
+	    return 0;
 	return m_a(m_idiag + i - j, j);
 }
 
@@ -450,10 +450,10 @@ inline Comp &CbandComp::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
-		SLS_ERR("index out of bound!");
+	    SLS_ERR("index out of bound!");
 #endif
 	if (i - j > m_Nlow || j - i > m_Nup)
-		SLS_ERR("index out of band!");
+	    SLS_ERR("index out of band!");
 	return m_a(m_idiag + i - j, j);
 }
 
@@ -530,12 +530,12 @@ inline void CbandComp::resize(Long_I lda, Long_I N1)
 inline void CbandComp::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
 {
 	if (idiag >= 0)
-		m_idiag = idiag;
+	    m_idiag = idiag;
 #ifdef SLS_CHECK_SHAPES
 	if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
-		SLS_ERR("CbandComp: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
-			", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	    SLS_ERR("CbandComp: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
 	}
 #endif
 	m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
@@ -551,9 +551,9 @@ inline void CbandComp::shift(Long_I idiag)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
-		SLS_ERR("CbandComp: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
-			", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
-			", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
+	    SLS_ERR("CbandComp: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
 #endif
 	m_idiag = idiag;
 }

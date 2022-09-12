@@ -5,10 +5,10 @@
 namespace slisc {
 inline void cin_comment()
 {
-    string str;
-    cin >> str;
-    if (str.size() > 0 && str.substr(0, 2) != "//")
-        SLS_ERR("each line must only be followed by a comment starting with //");
+	string str;
+	cin >> str;
+	if (str.size() > 0 && str.substr(0, 2) != "//")
+	    SLS_ERR("each line must only be followed by a comment starting with //");
 }
 
 inline void cin_ignore_line()
