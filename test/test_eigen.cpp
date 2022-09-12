@@ -15,7 +15,7 @@ void test_eigen()
 		MatrixXd M(n,n);
 		for(int i=0;i<n;++i)
 			for(int j=0;j<n;++j)
-			    M(i,j) = i + j + 1;
+				M(i,j) = i + j + 1;
 		// cout << "M.diagonal() = " << M.diagonal() << endl;
 		// cout << "M.diagonal<1>() = " << M.diagonal<1>() << endl;
 	}
@@ -84,7 +84,7 @@ void test_eigen()
 		MatrixXd M(n,n);
 		for(int i=0;i<n;++i)
 			for(int j=0;j<n;++j)
-			    M(i,j) = i + j + 1;
+				M(i,j) = i + j + 1;
 		Eigen::SelfAdjointEigenSolver<MatrixXd> eig;
 		eig.compute(M);
 		// cout << "M = " << endl;
@@ -116,7 +116,7 @@ void test_eigen()
 		MatrixXq M(n,n);
 		for(int i=0;i<n;++i)
 			for(int j=0;j<n;++j)
-			    M(i,j) = i + j + M_PIq;
+				M(i,j) = i + j + M_PIq;
 		// cout.precision(34);
 		// cout << "M.diagonal() = " << M.diagonal()[0] << endl;
 		// cout << "M.diagonal<1>() = " << M.diagonal<1>()[0] << endl;
@@ -155,6 +155,6 @@ void test_eigen()
 	}
 #endif
 #else
-    std::cout << "---------- disabled! ----------" << std::endl;
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

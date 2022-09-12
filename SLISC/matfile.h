@@ -1215,9 +1215,9 @@ inline void load(Cmat3Llong_O a, Str_I varname, Mat mat)
 	a.resize(m, n, q);
     Llong *ppa = (Llong *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
-	    for (j = 0; j < n; ++j)
-    	    for (k = 0; k < q; ++k)
-	        	a(i,j,k) = ppa[i + m*j + mn*k];
+		for (j = 0; j < n; ++j)
+    		for (k = 0; k < q; ++k)
+				a(i,j,k) = ppa[i + m*j + mn*k];
 	mxDestroyArray(pa);
 }
 
@@ -1232,9 +1232,9 @@ inline void load(Cmat3Doub_O a, Str_I varname, Mat mat)
 	a.resize(m, n, q);
     Doub *ppa = (Doub *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
-	    for (j = 0; j < n; ++j)
-    	    for (k = 0; k < q; ++k)
-	        	a(i,j,k) = ppa[i + m*j + mn*k];
+		for (j = 0; j < n; ++j)
+    		for (k = 0; k < q; ++k)
+				a(i,j,k) = ppa[i + m*j + mn*k];
 	mxDestroyArray(pa);
 }
 
@@ -1250,16 +1250,16 @@ inline void load(Cmat3Comp_O a, Str_I varname, Mat mat)
     Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
 	if (ppai)
 		for (i = 0; i < m; ++i)
-		    for (j = 0; j < n; ++j)
-		        for (k = 0; k < q; ++k){
-			        Long ind = i + m*j + mn*k;
-			        a(i,j,k) = Comp(ppar[ind], ppai[ind]);
+			for (j = 0; j < n; ++j)
+				for (k = 0; k < q; ++k){
+					Long ind = i + m*j + mn*k;
+					a(i,j,k) = Comp(ppar[ind], ppai[ind]);
 		}
 	else
 		for (i = 0; i < m; ++i)
-		    for (j = 0; j < n; ++j)
-		        for (k = 0; k < q; ++k)
-			        a(i,j,k) = ppar[i + m*j + mn*k];
+			for (j = 0; j < n; ++j)
+				for (k = 0; k < q; ++k)
+					a(i,j,k) = ppar[i + m*j + mn*k];
 	mxDestroyArray(pa);
 }
 

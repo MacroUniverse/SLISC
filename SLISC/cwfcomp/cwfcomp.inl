@@ -57,29 +57,29 @@ inline Comp Coulomb_wave_functions::continued_fraction_h (const Comp &z,const in
   double test;
   do
   {
-    const int nm1 = n-1;
-    const Comp an = (a + nm1)*(c + nm1),bn = two_z_minus_eta + n*two_I_omega,bn_plus_an_Dn = bn + an*Dn,bn_plus_an_over_Cn = bn + an/Cn;
+	const int nm1 = n-1;
+	const Comp an = (a + nm1)*(c + nm1),bn = two_z_minus_eta + n*two_I_omega,bn_plus_an_Dn = bn + an*Dn,bn_plus_an_over_Cn = bn + an/Cn;
 
-    Dn = (bn_plus_an_Dn != 0.0) ? (1.0/bn_plus_an_Dn) : (large);
-    Cn = (bn_plus_an_over_Cn != 0.0) ? (bn_plus_an_over_Cn) : (small);
+	Dn = (bn_plus_an_Dn != 0.0) ? (1.0/bn_plus_an_Dn) : (large);
+	Cn = (bn_plus_an_over_Cn != 0.0) ? (bn_plus_an_over_Cn) : (small);
 
-    const Comp Delta_n = Dn*Cn;
-    hn *= Delta_n;
-    test = inf_norm (1.0 - Delta_n);
-     
-    if ((n++ > 100000) && ((l == 0.0) || (abs_z > 0.5) || neg_int_omega_one || neg_int_omega_minus_one))
-    {
-      if ((real (z) < 0.0) && (cwf_minus_eta_ptr == 0)) cwf_minus_eta_ptr = new class Coulomb_wave_functions (is_it_normalized,l,-eta);
-      class Coulomb_wave_functions &cwf = (real (z) < 0.0) ? (*cwf_minus_eta_ptr) : (*this);
+	const Comp Delta_n = Dn*Cn;
+	hn *= Delta_n;
+	test = inf_norm (1.0 - Delta_n);
+	 
+	if ((n++ > 100000) && ((l == 0.0) || (abs_z > 0.5) || neg_int_omega_one || neg_int_omega_minus_one))
+	{
+	  if ((real (z) < 0.0) && (cwf_minus_eta_ptr == 0)) cwf_minus_eta_ptr = new class Coulomb_wave_functions (is_it_normalized,l,-eta);
+	  class Coulomb_wave_functions &cwf = (real (z) < 0.0) ? (*cwf_minus_eta_ptr) : (*this);
 
-      const Comp z00(2.0,SIGN (real (z))*(imag (z) + 2.0*SIGN (imag (z)))),z01(0.6,0.6*SIGN (real (z))*SIGN (imag (z)));
-      const Comp z_start = (abs_z > 0.5) ? (z00) : (z01),debut_cwf = cwf.debut,F_debut_cwf = cwf.F_debut,dF_debut_cwf = cwf.dF_debut;
-      Comp F_start,dF_start,H,dH;
-      cwf.F_dF (z_start,F_start,dF_start);
-      cwf.is_H_dir_int_naive = true, cwf.H_dH_direct_integration (SIGN (real (z))*omega,SIGN (real (z))*z,H,dH), cwf.is_H_dir_int_naive = false;
-      cwf.debut = debut_cwf, cwf.F_debut = F_debut_cwf, cwf.dF_debut = dF_debut_cwf;
-      return (SIGN (real (z))*dH/H);
-    }
+	  const Comp z00(2.0,SIGN (real (z))*(imag (z) + 2.0*SIGN (imag (z)))),z01(0.6,0.6*SIGN (real (z))*SIGN (imag (z)));
+	  const Comp z_start = (abs_z > 0.5) ? (z00) : (z01),debut_cwf = cwf.debut,F_debut_cwf = cwf.F_debut,dF_debut_cwf = cwf.dF_debut;
+	  Comp F_start,dF_start,H,dH;
+	  cwf.F_dF (z_start,F_start,dF_start);
+	  cwf.is_H_dir_int_naive = true, cwf.H_dH_direct_integration (SIGN (real (z))*omega,SIGN (real (z))*z,H,dH), cwf.is_H_dir_int_naive = false;
+	  cwf.debut = debut_cwf, cwf.F_debut = F_debut_cwf, cwf.dF_debut = dF_debut_cwf;
+	  return (SIGN (real (z))*dH/H);
+	}
   }
   while (test > 1E-15);
 
@@ -134,7 +134,7 @@ inline Comp Coulomb_wave_functions::continued_fraction_h (const Comp &z,const in
 // factor : exp (log_cut_constant_AS - 2.i.omega.(z - eta.log(2z)) - phase_shift).
 
 inline void Coulomb_wave_functions::asymptotic_expansion_H_dH_scaled (const int omega,const Comp &one_over_z,
-							       Comp &H_scaled,Comp &dH_scaled,bool &is_it_successful)
+								   Comp &H_scaled,Comp &dH_scaled,bool &is_it_successful)
 {  
   Comp sum[2],dsum[2];
 
@@ -152,23 +152,23 @@ inline void Coulomb_wave_functions::asymptotic_expansion_H_dH_scaled (const int 
 
   if (one_over_z != 0.0)
   {
-    const Comp z = 1.0/one_over_z;
+	const Comp z = 1.0/one_over_z;
  
-    if (isfinite (log_cut_constant_AS) && (real (z) < 0.0) && (SIGN (imag (z)) == -omega))
-    {
-      const Comp factor = exp (-two_I_omega*(z - eta*(C_LN2 + log (z))) - phase_shift + log_cut_constant_AS);
+	if (isfinite (log_cut_constant_AS) && (real (z) < 0.0) && (SIGN (imag (z)) == -omega))
+	{
+	  const Comp factor = exp (-two_I_omega*(z - eta*(C_LN2 + log (z))) - phase_shift + log_cut_constant_AS);
 
-      H_scaled += sum[1]*factor;
-      dH_scaled += (dsum[1] - sum[1]*I_omega_one_minus_eta_over_z)*factor;
-    }
+	  H_scaled += sum[1]*factor;
+	  dH_scaled += (dsum[1] - sum[1]*I_omega_one_minus_eta_over_z)*factor;
+	}
   }
 
   if (!is_it_normalized)
   {
-    if ((Cl_eta == 0.0) || (!isfinite (Cl_eta))) 
-      H_scaled = exp (log_Cl_eta + log (H_scaled)),dH_scaled = exp (log_Cl_eta + log (dH_scaled));
-    else 
-      H_scaled *= Cl_eta,dH_scaled *= Cl_eta;
+	if ((Cl_eta == 0.0) || (!isfinite (Cl_eta))) 
+	  H_scaled = exp (log_Cl_eta + log (H_scaled)),dH_scaled = exp (log_Cl_eta + log (dH_scaled));
+	else 
+	  H_scaled *= Cl_eta,dH_scaled *= Cl_eta;
   }
 }
 
@@ -229,18 +229,18 @@ inline void Coulomb_wave_functions::H_dH_direct_integration (const int omega,con
 
   if (debut == 0.0) 
   {
-    debut = 0.5*z/abs (z);
-    F_dF_power_series (debut,F_debut,dF_debut);
+	debut = 0.5*z/abs (z);
+	F_dF_power_series (debut,F_debut,dF_debut);
   }
 
   Comp debut_omega = debut,H_debut,dH_debut;
 
   if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
-      && (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
-      && (!neg_int_omega_one && !neg_int_omega_minus_one))
-    first_order_expansions (omega,debut_omega,H_debut,dH_debut);
+	  && (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
+	  && (!neg_int_omega_one && !neg_int_omega_minus_one))
+	first_order_expansions (omega,debut_omega,H_debut,dH_debut);
   else
-    H_dH_with_F_dF_and_CF (omega,debut_omega,H_debut,dH_debut);
+	H_dH_with_F_dF_and_CF (omega,debut_omega,H_debut,dH_debut);
 
   const class ODE_integration &ODE = *ODE_ptr;
   const double step_abs = min(0.1,10.0/turning_point);
@@ -249,25 +249,25 @@ inline void Coulomb_wave_functions::H_dH_direct_integration (const int omega,con
 
   for (unsigned int i = N_num-1 ; i <= N_num ; i--)
   {
-    const Comp z_aft = z - i*step_num,one_over_debut = 1.0/debut,log_H_debut_der = dH_debut/H_debut;
-    const Comp d2H_debut_over_H_debut = (ll_plus_one*one_over_debut + two_eta)*one_over_debut - 1.0;
+	const Comp z_aft = z - i*step_num,one_over_debut = 1.0/debut,log_H_debut_der = dH_debut/H_debut;
+	const Comp d2H_debut_over_H_debut = (ll_plus_one*one_over_debut + two_eta)*one_over_debut - 1.0;
   
-    if (is_H_dir_int_naive)
-      ODE (debut_omega,H_debut,dH_debut,z_aft,H,dH);
-    else if (abs (1.0 + step_num*(log_H_debut_der + 0.5*step_num*d2H_debut_over_H_debut)) < 1.0)
-    {
-      const Comp h = continued_fraction_h (z_aft,omega);      
-      Comp H_debut_not_normed,dH_debut_not_normed;
+	if (is_H_dir_int_naive)
+	  ODE (debut_omega,H_debut,dH_debut,z_aft,H,dH);
+	else if (abs (1.0 + step_num*(log_H_debut_der + 0.5*step_num*d2H_debut_over_H_debut)) < 1.0)
+	{
+	  const Comp h = continued_fraction_h (z_aft,omega);      
+	  Comp H_debut_not_normed,dH_debut_not_normed;
 
-      ODE (z_aft,1.0,h,debut_omega,H_debut_not_normed,dH_debut_not_normed);
-      H = H_debut/H_debut_not_normed;
-      dH = h*H; 
-    }
-    else ODE (debut_omega,H_debut,dH_debut,z_aft,H,dH);
+	  ODE (z_aft,1.0,h,debut_omega,H_debut_not_normed,dH_debut_not_normed);
+	  H = H_debut/H_debut_not_normed;
+	  dH = h*H; 
+	}
+	else ODE (debut_omega,H_debut,dH_debut,z_aft,H,dH);
 
-    if (!isfinite (H) || !isfinite (dH)) cout<<"Numerical failure encountered in H_dH_direct_integration."<<endl,exit (1);
+	if (!isfinite (H) || !isfinite (dH)) cout<<"Numerical failure encountered in H_dH_direct_integration."<<endl,exit (1);
 
-    debut_omega = z_aft,H_debut = H,dH_debut = dH;
+	debut_omega = z_aft,H_debut = H,dH_debut = dH;
   }
 }
 
@@ -308,15 +308,15 @@ inline void Coulomb_wave_functions::H_dH_from_first_order_expansions (const int 
 
   if ((norm_functions == 0.0) || (!isfinite (norm_functions))) 
   {
-    const Comp log_norm = (!is_it_normalized) ? (2.0*log_Cl_eta) : (0.0);
+	const Comp log_norm = (!is_it_normalized) ? (2.0*log_Cl_eta) : (0.0);
 
-    H = G + I_omega*exp (log (F) + log_norm);
-    dH = dG + I_omega*exp (log (dF) + log_norm);
+	H = G + I_omega*exp (log (F) + log_norm);
+	dH = dG + I_omega*exp (log (dF) + log_norm);
   }
   else
   {
-    H = G + I_omega*norm_functions*F;
-    dH = dG + I_omega*norm_functions*dF;
+	H = G + I_omega*norm_functions*F;
+	dH = dG + I_omega*norm_functions*dF;
   }
 }
 
@@ -391,49 +391,49 @@ inline void Coulomb_wave_functions::H_dH_with_F_dF_and_CF (const int omega,const
 
   if (((neg_int_omega_one && (omega == -1))) || ((neg_int_omega_minus_one && (omega == 1))))
   {
-    const Comp h_omega = continued_fraction_h (z,omega);
-    H = 1.0/(F*(f - h_omega)),dH =  H*h_omega;
+	const Comp h_omega = continued_fraction_h (z,omega);
+	H = 1.0/(F*(f - h_omega)),dH =  H*h_omega;
   }
   else if (neg_int_omega_one || neg_int_omega_minus_one)
-    H = F,dH = dF;
+	H = F,dH = dF;
   else
   {
-    const Comp h_sign = continued_fraction_h (z,SIGN (y)),h_minus_sign = (abs (f - h_sign) < 1.0) ? (continued_fraction_h (z,-SIGN (y))) : (f);
-    const Comp h_omega = (omega == SIGN (y)) ? (h_sign) : (h_minus_sign),h_minus_omega = (omega == SIGN (y)) ? (h_minus_sign) : (h_sign);
+	const Comp h_sign = continued_fraction_h (z,SIGN (y)),h_minus_sign = (abs (f - h_sign) < 1.0) ? (continued_fraction_h (z,-SIGN (y))) : (f);
+	const Comp h_omega = (omega == SIGN (y)) ? (h_sign) : (h_minus_sign),h_minus_omega = (omega == SIGN (y)) ? (h_minus_sign) : (h_sign);
 
-    if (inf_norm (f - h_omega) > inf_norm (f - h_minus_omega))
-    {
-      H = 1.0/(F*(f - h_omega)),dH =  H*h_omega;
+	if (inf_norm (f - h_omega) > inf_norm (f - h_minus_omega))
+	{
+	  H = 1.0/(F*(f - h_omega)),dH =  H*h_omega;
 
-      const Comp log_cut_constant_CFa = (omega == 1) ? (log_cut_constant_CFa_plus) : (log_cut_constant_CFa_minus);
+	  const Comp log_cut_constant_CFa = (omega == 1) ? (log_cut_constant_CFa_plus) : (log_cut_constant_CFa_minus);
 
-      if ((isfinite (log_cut_constant_CFa)) && (x < 0.0) && (SIGN (y) == -omega))
-      {
+	  if ((isfinite (log_cut_constant_CFa)) && (x < 0.0) && (SIGN (y) == -omega))
+	  {
 	const Comp cut_constant_CFa = (omega == 1) ? (cut_constant_CFa_plus) : (cut_constant_CFa_minus); 
-      
+	  
 	if ((cut_constant_CFa == 0.0) || (!isfinite (cut_constant_CFa)))
 	  H -= exp (log_cut_constant_CFa + log (F)),dH -= exp (log_cut_constant_CFa + log (dF));
 	else 
 	  H -= cut_constant_CFa*F,dH -= cut_constant_CFa*dF;
-      }
-    }
-    else
-    {
-      const Comp H_minus_omega = 1.0/(F*(f - h_minus_omega)),dH_minus_omega = H_minus_omega*h_minus_omega;
-      const Comp norm_functions = (!is_it_normalized) ? (Cl_eta*Cl_eta) : (1.0);
-      const Comp cut_constant_CFb = (omega == 1) ? (cut_constant_CFb_plus) : (cut_constant_CFb_minus); 
-      const Comp constant = ((x < 0.0) && (SIGN (y) == omega)) ? (cut_constant_CFb) : (two_I_omega*norm_functions);
+	  }
+	}
+	else
+	{
+	  const Comp H_minus_omega = 1.0/(F*(f - h_minus_omega)),dH_minus_omega = H_minus_omega*h_minus_omega;
+	  const Comp norm_functions = (!is_it_normalized) ? (Cl_eta*Cl_eta) : (1.0);
+	  const Comp cut_constant_CFb = (omega == 1) ? (cut_constant_CFb_plus) : (cut_constant_CFb_minus); 
+	  const Comp constant = ((x < 0.0) && (SIGN (y) == omega)) ? (cut_constant_CFb) : (two_I_omega*norm_functions);
 
-      if ((constant == 0.0) || (!isfinite (constant))) 
-      {
+	  if ((constant == 0.0) || (!isfinite (constant))) 
+	  {
 	const Comp log_norm = (!is_it_normalized) ? (2.0*log_Cl_eta) : (0.0),log_two_I_omega(C_LN2,omega*C_PI_2);
 	const Comp log_cut_constant_CFb = (omega == 1) ? (log_cut_constant_CFb_plus) : (log_cut_constant_CFb_minus);
 	const Comp log_constant = ((x < 0.0) && (SIGN (y) == omega)) ? (log_cut_constant_CFb) : (log_two_I_omega + log_norm);
 	
 	H = exp (log_constant + log (F)) + H_minus_omega,dH = exp (log_constant + log (dF)) + dH_minus_omega;
-      }
-      else H = constant*F + H_minus_omega,dH = constant*dF + dH_minus_omega;
-    }
+	  }
+	  else H = constant*F + H_minus_omega,dH = constant*dF + dH_minus_omega;
+	}
   }
 }
 
@@ -482,32 +482,32 @@ inline void Coulomb_wave_functions::H_dH_with_expansion (const int omega,const C
   Comp F,dF,Fp,dFp;
   F_dF (z,F,dF);
   cwf_lp_ptr->F_dF (z,Fp,dFp);
-    
+	
   const Comp exp_I_omega_chi = (omega == 1) ? (exp_I_chi) : (exp_minus_I_chi);
-    
+	
   if (is_it_normalized)
   { 
-    if (inf_norm ((dFp*F - dF*Fp)*one_over_sin_chi - 1.0) < precision)
-    {
-      H = (exp_I_omega_chi*F - Fp)*one_over_sin_chi;
-      dH = (exp_I_omega_chi*dF - dFp)*one_over_sin_chi;
-    }
-    else {is_it_successful = false; return;}
+	if (inf_norm ((dFp*F - dF*Fp)*one_over_sin_chi - 1.0) < precision)
+	{
+	  H = (exp_I_omega_chi*F - Fp)*one_over_sin_chi;
+	  dH = (exp_I_omega_chi*dF - dFp)*one_over_sin_chi;
+	}
+	else {is_it_successful = false; return;}
   }
   else  
   {
-    const Comp one_over_2lp1 = 1.0/(2*l+1);
+	const Comp one_over_2lp1 = 1.0/(2*l+1);
 
-    if (inf_norm ((dF*Fp - dFp*F)*one_over_2lp1 - 1.0) < precision)
-    {
-      const Comp Cl_eta_2 = Cl_eta*Cl_eta,exp_I_omega_chi_over_sin_chi = exp_I_omega_chi*one_over_sin_chi;
-      const Comp F_Cl_eta_2 = ((Cl_eta_2 == 0.0) || (!isfinite (Cl_eta_2))) ? (exp (2.0*log_Cl_eta + log (F))) : (Cl_eta_2*F);
-      const Comp dF_Cl_eta_2 = ((Cl_eta_2 == 0.0) || (!isfinite (Cl_eta_2))) ? (exp (2.0*log_Cl_eta + log (dF))) : (Cl_eta_2*dF);
-      
-      H = exp_I_omega_chi_over_sin_chi*F_Cl_eta_2 + Fp*one_over_2lp1;
-      dH = exp_I_omega_chi_over_sin_chi*dF_Cl_eta_2 + dFp*one_over_2lp1;
-    }
-      else {is_it_successful = false; return;}
+	if (inf_norm ((dF*Fp - dFp*F)*one_over_2lp1 - 1.0) < precision)
+	{
+	  const Comp Cl_eta_2 = Cl_eta*Cl_eta,exp_I_omega_chi_over_sin_chi = exp_I_omega_chi*one_over_sin_chi;
+	  const Comp F_Cl_eta_2 = ((Cl_eta_2 == 0.0) || (!isfinite (Cl_eta_2))) ? (exp (2.0*log_Cl_eta + log (F))) : (Cl_eta_2*F);
+	  const Comp dF_Cl_eta_2 = ((Cl_eta_2 == 0.0) || (!isfinite (Cl_eta_2))) ? (exp (2.0*log_Cl_eta + log (dF))) : (Cl_eta_2*dF);
+	  
+	  H = exp_I_omega_chi_over_sin_chi*F_Cl_eta_2 + Fp*one_over_2lp1;
+	  dH = exp_I_omega_chi_over_sin_chi*dF_Cl_eta_2 + dFp*one_over_2lp1;
+	}
+	  else {is_it_successful = false; return;}
   }
   
   is_it_successful = true;
@@ -546,41 +546,41 @@ inline void Coulomb_wave_functions::F_dF_power_series (const Comp &z,Comp &F,Com
 {
   if (z == 0.0)
   {
-    if (l == 0) F = 0.0,dF = (is_it_normalized) ? (Cl_eta) : (1.0);
-    else if (real (l) > 0) F = dF = 0.0;
-    else cout<<"F(z=0) and/or F'(z=0) are undefined."<<endl, abort ();
+	if (l == 0) F = 0.0,dF = (is_it_normalized) ? (Cl_eta) : (1.0);
+	else if (real (l) > 0) F = dF = 0.0;
+	else cout<<"F(z=0) and/or F'(z=0) are undefined."<<endl, abort ();
   }
   else
   {
-    const Comp z_square = z*z,z_two_eta = 2.0*eta*z;
+	const Comp z_square = z*z,z_two_eta = 2.0*eta*z;
 
-    int n = 2;
-    Comp an_minus_two = 1.0,an_minus_one = z*eta/(l+1.0);
+	int n = 2;
+	Comp an_minus_two = 1.0,an_minus_one = z*eta/(l+1.0);
  
-    F = an_minus_two + an_minus_one;
-    dF = (l+1.0)*an_minus_two + (l+2.0)*an_minus_one;
+	F = an_minus_two + an_minus_one;
+	dF = (l+1.0)*an_minus_two + (l+2.0)*an_minus_one;
 
-    while (inf_norm (an_minus_two*(n+l-1.0)) + inf_norm (an_minus_one*(n+l)) > precision)
-    {
-      const Comp an = (z_two_eta*an_minus_one - an_minus_two*z_square)/(n*(n + l + l + 1.0));
+	while (inf_norm (an_minus_two*(n+l-1.0)) + inf_norm (an_minus_one*(n+l)) > precision)
+	{
+	  const Comp an = (z_two_eta*an_minus_one - an_minus_two*z_square)/(n*(n + l + l + 1.0));
 
-      F += an;
-      dF += an*(n + l + 1.0);
-    
-      n++;
-      an_minus_two = an_minus_one;
-      an_minus_one = an;
-    }
-    
-    const Comp z_pow_l_plus_one = pow (z,l+1.0);
-    F *= z_pow_l_plus_one;
-    dF *= z_pow_l_plus_one/z; 
-    
-    if (is_it_normalized)
-    {
-      if ((Cl_eta == 0.0) || (!isfinite (Cl_eta))) F = exp (log_Cl_eta + log (F)),dF = exp (log_Cl_eta + log (dF));
-      else F *= Cl_eta,dF *= Cl_eta;
-    }
+	  F += an;
+	  dF += an*(n + l + 1.0);
+	
+	  n++;
+	  an_minus_two = an_minus_one;
+	  an_minus_one = an;
+	}
+	
+	const Comp z_pow_l_plus_one = pow (z,l+1.0);
+	F *= z_pow_l_plus_one;
+	dF *= z_pow_l_plus_one/z; 
+	
+	if (is_it_normalized)
+	{
+	  if ((Cl_eta == 0.0) || (!isfinite (Cl_eta))) F = exp (log_Cl_eta + log (F)),dF = exp (log_Cl_eta + log (dF));
+	  else F *= Cl_eta,dF *= Cl_eta;
+	}
   }
 }
 
@@ -630,19 +630,19 @@ inline Comp Coulomb_wave_functions::continued_fraction_f (const Comp &z,const in
   double test;
   do
   {
-    const int nm1 = n-1;
-    const Comp an = minus_two_I_omega_a_z + nm1*minus_two_I_omega_z;
-    const Comp bn = b_plus_two_I_omega_z + nm1;
-    
-    const Comp bn_plus_an_Dn = bn + an*Dn,bn_plus_an_over_Cn = bn + an/Cn;
+	const int nm1 = n-1;
+	const Comp an = minus_two_I_omega_a_z + nm1*minus_two_I_omega_z;
+	const Comp bn = b_plus_two_I_omega_z + nm1;
+	
+	const Comp bn_plus_an_Dn = bn + an*Dn,bn_plus_an_over_Cn = bn + an/Cn;
 
-    Dn = (bn_plus_an_Dn != 0.0) ? (1.0/bn_plus_an_Dn) : (large);
-    Cn = (bn_plus_an_over_Cn != 0.0) ? (bn_plus_an_over_Cn) : (small);
+	Dn = (bn_plus_an_Dn != 0.0) ? (1.0/bn_plus_an_Dn) : (large);
+	Cn = (bn_plus_an_over_Cn != 0.0) ? (bn_plus_an_over_Cn) : (small);
 
-    const Comp Delta_n = Dn*Cn;
-    fn *= Delta_n;
-    test = inf_norm (1.0 - Delta_n);
-    n++;
+	const Comp Delta_n = Dn*Cn;
+	fn *= Delta_n;
+	test = inf_norm (1.0 - Delta_n);
+	n++;
   }
   while (test > 1E-15);
 
@@ -710,8 +710,8 @@ inline void Coulomb_wave_functions::asymptotic_expansion_F_dF (const Comp &z,Com
 
   if (!is_it_normalized)
   {
-    if ((Cl_eta == 0.0) || (!isfinite (Cl_eta))) F = exp (log (F) - log_Cl_eta),dF = exp (log (dF) - log_Cl_eta);
-    else F /= Cl_eta,dF /= Cl_eta;
+	if ((Cl_eta == 0.0) || (!isfinite (Cl_eta))) F = exp (log (F) - log_Cl_eta),dF = exp (log (dF) - log_Cl_eta);
+	else F /= Cl_eta,dF /= Cl_eta;
   }
 
 
@@ -789,33 +789,33 @@ inline void Coulomb_wave_functions::F_dF_direct_integration (const Comp &z,Comp 
 
   for (unsigned int i = N_num-1 ; i <= N_num ; i--)
   {
-    const Comp z_aft = z - i*step_num,one_over_debut = 1.0/debut,log_F_debut_der = dF_debut/F_debut;
-    const Comp d2F_debut_over_F_debut = (ll_plus_one*one_over_debut + two_eta)*one_over_debut - 1.0;
+	const Comp z_aft = z - i*step_num,one_over_debut = 1.0/debut,log_F_debut_der = dF_debut/F_debut;
+	const Comp d2F_debut_over_F_debut = (ll_plus_one*one_over_debut + two_eta)*one_over_debut - 1.0;
 
-    if (abs (1.0 + step_num*(log_F_debut_der + 0.5*step_num*d2F_debut_over_F_debut)) < 1.0)
-    {
-      const Comp ratio = debut/z; 
-      if ((real (l) > -1.0) && ((abs (imag (ratio)) > precision) || (real (ratio) > 1.0)))
+	if (abs (1.0 + step_num*(log_F_debut_der + 0.5*step_num*d2F_debut_over_F_debut)) < 1.0)
+	{
+	  const Comp ratio = debut/z; 
+	  if ((real (l) > -1.0) && ((abs (imag (ratio)) > precision) || (real (ratio) > 1.0)))
 	{debut = 0.0, F_dF_direct_integration (z,F,dF,is_it_successful); return;}
 
-      Comp F_debut_not_normed,dF_debut_not_normed;
+	  Comp F_debut_not_normed,dF_debut_not_normed;
 
-      if (neg_int_omega_one)
-      {
+	  if (neg_int_omega_one)
+	  {
 	const Comp fp = continued_fraction_f (z_aft,1);
 	ODE (z_aft,1.0,fp,debut,F_debut_not_normed,dF_debut_not_normed);
 	F = F_debut/F_debut_not_normed; 
 	dF = fp*F;
-      }
-      else if (neg_int_omega_minus_one)
-      {
+	  }
+	  else if (neg_int_omega_minus_one)
+	  {
 	const Comp fm = continued_fraction_f (z_aft,-1);
 	ODE (z_aft,1.0,fm,debut,F_debut_not_normed,dF_debut_not_normed); 
 	F = F_debut/F_debut_not_normed; 
 	dF = fm*F;
-      }
-      else
-      {
+	  }
+	  else
+	  {
 	const Comp f_omega = continued_fraction_f (z_aft,SIGN(-imag(z_aft))),f_minus_omega = continued_fraction_f (z_aft,-SIGN(-imag(z_aft)));
 
 	//// Comment the following line if you want to accept the value of f(omega) = F'/F inconditionally
@@ -824,13 +824,13 @@ inline void Coulomb_wave_functions::F_dF_direct_integration (const Comp &z,Comp 
 	ODE (z_aft,1.0,f_omega,debut,F_debut_not_normed,dF_debut_not_normed);
 	F = F_debut/F_debut_not_normed; 
 	dF = f_omega*F;
-      }
-    }
-    else ODE (debut,F_debut,dF_debut,z_aft,F,dF);
+	  }
+	}
+	else ODE (debut,F_debut,dF_debut,z_aft,F,dF);
 
-    debut = z_aft,F_debut = F,dF_debut = dF;
+	debut = z_aft,F_debut = F,dF_debut = dF;
 
-    if (!isfinite (F) || !isfinite (dF)) cout<<"Numerical failure encountered in F_dF_direct_integration."<<endl,exit (1);
+	if (!isfinite (F) || !isfinite (dF)) cout<<"Numerical failure encountered in F_dF_direct_integration."<<endl,exit (1);
   }
   is_it_successful = true;
 }
@@ -865,23 +865,23 @@ inline void Coulomb_wave_functions::F_dF_with_symmetry_relations (const Comp &z,
 
   if ((debut != 0.0) && (cwf_minus_eta_ptr->debut != -debut))
   {
-    const double arg_debut = arg (debut);
-    const Comp sym_constant_debut = (arg_debut <= 0.0) ? (1.0/sym_constant_arg_neg) : (1.0/sym_constant_arg_pos);
+	const double arg_debut = arg (debut);
+	const Comp sym_constant_debut = (arg_debut <= 0.0) ? (1.0/sym_constant_arg_neg) : (1.0/sym_constant_arg_pos);
 
-    cwf_minus_eta_ptr->debut = -debut; 
+	cwf_minus_eta_ptr->debut = -debut; 
 
-    if ((sym_constant_debut == 0.0) || (!isfinite (sym_constant_debut))) 
-    {
-      const Comp log_sym_constant_debut = (arg (debut) <= 0.0) ? (-log_sym_constant_arg_neg) : (-log_sym_constant_arg_pos);
+	if ((sym_constant_debut == 0.0) || (!isfinite (sym_constant_debut))) 
+	{
+	  const Comp log_sym_constant_debut = (arg (debut) <= 0.0) ? (-log_sym_constant_arg_neg) : (-log_sym_constant_arg_pos);
 
-      cwf_minus_eta_ptr->F_debut = exp (log_sym_constant_debut + log (F_debut)); 
-      cwf_minus_eta_ptr->dF_debut = -exp (log_sym_constant_debut + log (dF_debut));
-    } 
-    else
-    {
-      cwf_minus_eta_ptr->F_debut = F_debut*sym_constant_debut; 
-      cwf_minus_eta_ptr->dF_debut = -dF_debut*sym_constant_debut;
-    }
+	  cwf_minus_eta_ptr->F_debut = exp (log_sym_constant_debut + log (F_debut)); 
+	  cwf_minus_eta_ptr->dF_debut = -exp (log_sym_constant_debut + log (dF_debut));
+	} 
+	else
+	{
+	  cwf_minus_eta_ptr->F_debut = F_debut*sym_constant_debut; 
+	  cwf_minus_eta_ptr->dF_debut = -dF_debut*sym_constant_debut;
+	}
   }
 
   const double arg_z = arg (z);
@@ -891,15 +891,15 @@ inline void Coulomb_wave_functions::F_dF_with_symmetry_relations (const Comp &z,
 
   if ((sym_constant == 0.0) || (!isfinite (sym_constant))) 
   {
-    const Comp log_sym_constant = (arg_z <= 0.0) ? (log_sym_constant_arg_neg) : (log_sym_constant_arg_pos);
+	const Comp log_sym_constant = (arg_z <= 0.0) ? (log_sym_constant_arg_neg) : (log_sym_constant_arg_pos);
 
-    F = exp (log_sym_constant + log (F)); 
-    dF = -exp (log_sym_constant + log (dF));
+	F = exp (log_sym_constant + log (F)); 
+	dF = -exp (log_sym_constant + log (dF));
   } 
   else 
   {
-    F *= sym_constant; 
-    dF *= -sym_constant;
+	F *= sym_constant; 
+	dF *= -sym_constant;
   }
 }
 
@@ -943,30 +943,30 @@ inline void Coulomb_wave_functions::asymptotic_series (const int omega,const Com
 
   for (unsigned int i = 0 ; i <= 1 ; i++)
   {
-    const int sign = (i == 0) ? (omega) : (-omega); 
-    const Comp Ieta(-imag (eta),real (eta)),two_I_eta_sign = 2.0*sign*Ieta,Ieta_Ieta_plus_sign_minus_ll_plus_one = Ieta*(Ieta + sign) - l*(l+1.0);
-    
-    int n = 0;
-    Comp an_sign = 1.0;
+	const int sign = (i == 0) ? (omega) : (-omega); 
+	const Comp Ieta(-imag (eta),real (eta)),two_I_eta_sign = 2.0*sign*Ieta,Ieta_Ieta_plus_sign_minus_ll_plus_one = Ieta*(Ieta + sign) - l*(l+1.0);
+	
+	int n = 0;
+	Comp an_sign = 1.0;
 
-    do
-    {
-      const double n_plus_one = n + 1.0;
-      const Comp sign_one_over_two_I_n_plus_one(0,-sign*0.5/n_plus_one);
+	do
+	{
+	  const double n_plus_one = n + 1.0;
+	  const Comp sign_one_over_two_I_n_plus_one(0,-sign*0.5/n_plus_one);
 
-      an_sign *= one_over_z*(n*(n_plus_one + two_I_eta_sign) + Ieta_Ieta_plus_sign_minus_ll_plus_one)*sign_one_over_two_I_n_plus_one;
+	  an_sign *= one_over_z*(n*(n_plus_one + two_I_eta_sign) + Ieta_Ieta_plus_sign_minus_ll_plus_one)*sign_one_over_two_I_n_plus_one;
 
-      const Comp sum_term = an_sign,dsum_term = n_plus_one*an_sign*one_over_z;
+	  const Comp sum_term = an_sign,dsum_term = n_plus_one*an_sign*one_over_z;
 
-      sum[i] += sum_term;
-      dsum[i] -= dsum_term;
+	  sum[i] += sum_term;
+	  dsum[i] -= dsum_term;
 
-      test = max (inf_norm (sum_term),inf_norm (dsum_term));
-      n++;
-    }
-    while ((test > precision) && (abs(test) < 1e200));
+	  test = max (inf_norm (sum_term),inf_norm (dsum_term));
+	  n++;
+	}
+	while ((test > precision) && (abs(test) < 1e200));
 
-    if (!(abs(test) < 1e200)) {is_it_successful = false; return;}
+	if (!(abs(test) < 1e200)) {is_it_successful = false; return;}
   }
 
   const Comp two_I_omega(0.0,2.0*omega);
@@ -1018,13 +1018,13 @@ inline void Coulomb_wave_functions::partial_derivatives (const bool is_it_regula
 
   if (is_it_eta)
   { 
-    if (cwf_real_eta_plus_ptr == 0) cwf_real_eta_plus_ptr = new class Coulomb_wave_functions (is_it_normalized,l_r,chi_r_plus);
-    if (cwf_real_eta_minus_ptr == 0) cwf_real_eta_minus_ptr = new class Coulomb_wave_functions (is_it_normalized,l_r,chi_r_minus);
+	if (cwf_real_eta_plus_ptr == 0) cwf_real_eta_plus_ptr = new class Coulomb_wave_functions (is_it_normalized,l_r,chi_r_plus);
+	if (cwf_real_eta_minus_ptr == 0) cwf_real_eta_minus_ptr = new class Coulomb_wave_functions (is_it_normalized,l_r,chi_r_minus);
   }
   else
   {
-    if (cwf_real_l_plus_ptr == 0) cwf_real_l_plus_ptr = new class Coulomb_wave_functions (is_it_normalized,chi_r_plus,eta_r);
-    if (cwf_real_l_minus_ptr == 0) cwf_real_l_minus_ptr = new class Coulomb_wave_functions (is_it_normalized,chi_r_minus,eta_r);
+	if (cwf_real_l_plus_ptr == 0) cwf_real_l_plus_ptr = new class Coulomb_wave_functions (is_it_normalized,chi_r_plus,eta_r);
+	if (cwf_real_l_minus_ptr == 0) cwf_real_l_minus_ptr = new class Coulomb_wave_functions (is_it_normalized,chi_r_minus,eta_r);
   }
  
   class Coulomb_wave_functions &cwf_plus = (is_it_eta) ? (*cwf_real_eta_plus_ptr) : (*cwf_real_l_plus_ptr);
@@ -1034,13 +1034,13 @@ inline void Coulomb_wave_functions::partial_derivatives (const bool is_it_regula
 
   if (is_it_regular)
   {
-    cwf_plus.F_dF (x,A_plus,dA_plus);
-    cwf_minus.F_dF (x,A_minus,dA_minus);
+	cwf_plus.F_dF (x,A_plus,dA_plus);
+	cwf_minus.F_dF (x,A_minus,dA_minus);
   }
   else
   {
-    cwf_plus.H_dH (1,x,A_plus,dA_plus);
-    cwf_minus.H_dH (1,x,A_minus,dA_minus);
+	cwf_plus.H_dH (1,x,A_plus,dA_plus);
+	cwf_minus.H_dH (1,x,A_minus,dA_minus);
   }
 
   const double B_plus = real (A_plus),B_minus = real (A_minus),dB_plus = real (dA_plus),dB_minus = real (dA_minus);
@@ -1091,15 +1091,15 @@ inline void Coulomb_wave_functions::partial_derivatives (const bool is_it_regula
 inline void Coulomb_wave_functions::first_order_expansions (const bool is_it_regular,const Comp &z,Comp &B,Comp &dB)
 {
   const double x = real (z),y = imag (z),l_r = real (l),l_i = imag (l),eta_r = real (eta),eta_i = imag (eta);
-    
+	
   if (cwf_real_ptr == 0) cwf_real_ptr = new class Coulomb_wave_functions (is_it_normalized,l_r,eta_r);
   class Coulomb_wave_functions &cwf_real = *cwf_real_ptr;
-    
+	
   Comp A_x,dA_x;
   if (is_it_regular) 
-    cwf_real.F_dF (x,A_x,dA_x);
+	cwf_real.F_dF (x,A_x,dA_x);
   else
-    cwf_real.H_dH (1,x,A_x,dA_x);
+	cwf_real.H_dH (1,x,A_x,dA_x);
 
   const double Bx = real (A_x),dBx = real (dA_x);
   
@@ -1165,22 +1165,22 @@ inline void Coulomb_wave_functions::F_dF (const Comp &z,Comp &F,Comp &dF)
   const double x = real (z),y = imag (z),l_i = imag (l),eta_i = imag (eta);
 
   if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
-      && (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
-      && (!neg_int_omega_one && !neg_int_omega_minus_one))
-    first_order_expansions (true,z,F,dF);
+	  && (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
+	  && (!neg_int_omega_one && !neg_int_omega_minus_one))
+	first_order_expansions (true,z,F,dF);
   else if (abs (z) <= 0.5)
-    F_dF_power_series (z,F,dF);
+	F_dF_power_series (z,F,dF);
   else 
   {
-    if (real (z) < 0.0) 
-      F_dF_with_symmetry_relations (z,F,dF);
-    else
-    {
-      bool is_it_successful = false;
-      if (!neg_int_omega_one && !neg_int_omega_minus_one) asymptotic_expansion_F_dF (z,F,dF,is_it_successful);
+	if (real (z) < 0.0) 
+	  F_dF_with_symmetry_relations (z,F,dF);
+	else
+	{
+	  bool is_it_successful = false;
+	  if (!neg_int_omega_one && !neg_int_omega_minus_one) asymptotic_expansion_F_dF (z,F,dF,is_it_successful);
 
-      if (!is_it_successful) 
-      {
+	  if (!is_it_successful) 
+	  {
 	F_dF_direct_integration (z,F,dF,is_it_successful);
 
 	if (!neg_int_omega_one && !neg_int_omega_minus_one && !is_it_successful)
@@ -1236,39 +1236,39 @@ inline void Coulomb_wave_functions::G_dG (const Comp &z,Comp &G,Comp &dG)
   const double x = real (z),y = imag (z),l_i = imag (l),eta_i = imag (eta);
 
   if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
-      && (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
-      && (!neg_int_omega_one && !neg_int_omega_minus_one))
-    first_order_expansions (false,z,G,dG);
+	  && (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
+	  && (!neg_int_omega_one && !neg_int_omega_minus_one))
+	first_order_expansions (false,z,G,dG);
   else
   {
-    if (neg_int_omega_one) 
-      H_dH (-1,z,G,dG);
-    else if (neg_int_omega_minus_one)
-      H_dH (1,z,G,dG);
-    else
-    {
-      Comp F,dF;
-      F_dF (z,F,dF);
+	if (neg_int_omega_one) 
+	  H_dH (-1,z,G,dG);
+	else if (neg_int_omega_minus_one)
+	  H_dH (1,z,G,dG);
+	else
+	{
+	  Comp F,dF;
+	  F_dF (z,F,dF);
 
-      Comp H_plus,dH_plus;
-      H_dH (1,z,H_plus,dH_plus);
+	  Comp H_plus,dH_plus;
+	  H_dH (1,z,H_plus,dH_plus);
 
-      const Comp I(0.0,1.0);
+	  const Comp I(0.0,1.0);
 
-      if (is_it_normalized)
+	  if (is_it_normalized)
 	G = H_plus - I*F,dG = dH_plus - I*dF;
-      else
-      {
+	  else
+	  {
 	const Comp I_Cl_eta_square = I*Cl_eta*Cl_eta;
 	
 	if ((I_Cl_eta_square == 0.0) || (!isfinite (I_Cl_eta_square)))
 	  G = H_plus - I*exp (2.0*log_Cl_eta + log (F)),dG = dH_plus - I*exp (2.0*log_Cl_eta + log (dF));
 	else
 	  G = H_plus - I_Cl_eta_square*F,dG = dH_plus - I_Cl_eta_square*dF;
-      }
-      
-      if ((y == 0.0) && (eta_i == 0.0) && (l_i == 0.0)) G = real (G),dG = real (dG);
-    }
+	  }
+	  
+	  if ((y == 0.0) && (eta_i == 0.0) && (l_i == 0.0)) G = real (G),dG = real (dG);
+	}
   }
 }
 
@@ -1311,39 +1311,39 @@ inline void Coulomb_wave_functions::H_dH (const int omega,const Comp &z,Comp &H,
 
   if (is_it_successful)
   {
-    const Comp I_omega(0,omega),log_unscale = I_omega*(z - eta*(C_LN2 + log (z))),unscale = exp (log_unscale);
+	const Comp I_omega(0,omega),log_unscale = I_omega*(z - eta*(C_LN2 + log (z))),unscale = exp (log_unscale);
 
-    if ((unscale == 0.0) || (!isfinite (unscale)))
-      H = exp (log (H_scaled) + log_unscale),dH = exp (log (dH_scaled) + log_unscale);
-    else    
-      H = H_scaled*unscale,dH = dH_scaled*unscale;
+	if ((unscale == 0.0) || (!isfinite (unscale)))
+	  H = exp (log (H_scaled) + log_unscale),dH = exp (log (dH_scaled) + log_unscale);
+	else    
+	  H = H_scaled*unscale,dH = dH_scaled*unscale;
   }
   else
   {
-    const double x = real (z),y = imag (z),l_i = imag (l),eta_i = imag (eta);
-    
-    if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
+	const double x = real (z),y = imag (z),l_i = imag (l),eta_i = imag (eta);
+	
+	if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
 	&& (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
 	&& (!neg_int_omega_one && !neg_int_omega_minus_one))
-      H_dH_from_first_order_expansions (omega,z,H,dH);
-    else
-    { 
-      //// Replace the following line by : if (!neg_int_omega_one && !neg_int_omega_minus_one) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
-      //// if you want H_dH_with_expansion to be used if |l_i| < 1 or |z| > 1.
-      if (!neg_int_omega_one && !neg_int_omega_minus_one && (abs (l_i) >= 1.0) && (abs (z) <= 1.0)) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
+	  H_dH_from_first_order_expansions (omega,z,H,dH);
+	else
+	{ 
+	  //// Replace the following line by : if (!neg_int_omega_one && !neg_int_omega_minus_one) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
+	  //// if you want H_dH_with_expansion to be used if |l_i| < 1 or |z| > 1.
+	  if (!neg_int_omega_one && !neg_int_omega_minus_one && (abs (l_i) >= 1.0) && (abs (z) <= 1.0)) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
 
-      if (!is_it_successful) H_dH_with_F_dF_and_CF (omega,z,H,dH);
+	  if (!is_it_successful) H_dH_with_F_dF_and_CF (omega,z,H,dH);
 
-      if ((y == 0.0) && (eta_i == 0.0) && (l_i == 0.0))
-      {
+	  if ((y == 0.0) && (eta_i == 0.0) && (l_i == 0.0))
+	  {
 	Comp F,dF;
 	F_dF (z,F,dF);
 
 	const double omega_norm_functions = (!is_it_normalized) ? (omega*real (Cl_eta)*real (Cl_eta)) : (omega);
 	H = Comp (real (H),omega_norm_functions*real (F));
 	dH = Comp (real (dH),omega_norm_functions*real (dF));
-      }
-    }
+	  }
+	}
   }
 
   if (!isfinite (H) || !isfinite (dH)) cout<<"Numerical failure encountered in H_dH."<<endl,exit (1);
@@ -1389,39 +1389,39 @@ inline void Coulomb_wave_functions::H_dH_scaled (const int omega,const Comp &z,C
 
   if (!is_it_successful)
   {
-    Comp H,dH;
+	Comp H,dH;
    
-    const double x = real (z),y = imag (z),l_i = imag (l),eta_i = imag (eta);
+	const double x = real (z),y = imag (z),l_i = imag (l),eta_i = imag (eta);
 
-    if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
+	if (((y != 0.0) || (eta_i != 0.0) || (l_i != 0.0)) 
 	&& (abs (y) < sqrt_precision*min (1.0,x)) && (abs (eta_i) < sqrt_precision) && (abs (l_i) < sqrt_precision)
 	&& (!neg_int_omega_one && !neg_int_omega_minus_one))
-      H_dH_from_first_order_expansions (omega,z,H,dH);
-    else 
-    { 
-      //// Replace the following line by : if (!neg_int_omega_one && !neg_int_omega_minus_one) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
-      //// if you want H_dH_with_expansion to be used if |l_i| < 1 or |z| > 1.
-      if (!neg_int_omega_one && !neg_int_omega_minus_one && (abs (l_i) >= 1.0) && (abs (z) <= 1.0)) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
+	  H_dH_from_first_order_expansions (omega,z,H,dH);
+	else 
+	{ 
+	  //// Replace the following line by : if (!neg_int_omega_one && !neg_int_omega_minus_one) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
+	  //// if you want H_dH_with_expansion to be used if |l_i| < 1 or |z| > 1.
+	  if (!neg_int_omega_one && !neg_int_omega_minus_one && (abs (l_i) >= 1.0) && (abs (z) <= 1.0)) H_dH_with_expansion (omega,z,H,dH,is_it_successful);
 
-      if (!is_it_successful) H_dH_with_F_dF_and_CF (omega,z,H,dH);
-      
-      if ((y == 0.0) && (eta_i == 0.0) && (l_i == 0.0))
-      {  
+	  if (!is_it_successful) H_dH_with_F_dF_and_CF (omega,z,H,dH);
+	  
+	  if ((y == 0.0) && (eta_i == 0.0) && (l_i == 0.0))
+	  {  
 	Comp F,dF;
 	F_dF (z,F,dF);
 
 	const double omega_norm_functions = (!is_it_normalized) ? (omega*real (Cl_eta)*real (Cl_eta)) : (omega);
 	H = Comp (real (H),omega_norm_functions*real (F));
 	dH = Comp (real (dH),omega_norm_functions*real (dF));
-      }
-    }
+	  }
+	}
   
-    const Comp I_omega(0,omega),log_scale = -I_omega*(z - eta*(C_LN2 + log (z))),scale = exp (log_scale);
-    
-    if ((scale == 0.0) || (!isfinite (scale)))
-      H_scaled = exp (log (H) + log_scale),dH_scaled = exp (log (dH) + log_scale);
-    else
-      H_scaled = H*scale,dH_scaled = dH*scale; 
+	const Comp I_omega(0,omega),log_scale = -I_omega*(z - eta*(C_LN2 + log (z))),scale = exp (log_scale);
+	
+	if ((scale == 0.0) || (!isfinite (scale)))
+	  H_scaled = exp (log (H) + log_scale),dH_scaled = exp (log (dH) + log_scale);
+	else
+	  H_scaled = H*scale,dH_scaled = dH*scale; 
   }
 
   if (!isfinite (H_scaled) || !isfinite (dH_scaled)) cout<<"Numerical failure encountered in H_dH_scaled."<<endl,exit (1);

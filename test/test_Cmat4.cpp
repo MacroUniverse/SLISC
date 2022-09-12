@@ -20,31 +20,31 @@ void test_Cmat4()
 			SLS_FAIL;
 	}
 
-    Cmat4Int a(2, 3, 4, 5);
-    linspace(a, 1, a.size());
-    if (a.n0() != 2 || a.n1() != 3 ||
-        a.n2() != 4 || a.n3() != 5)
-        SLS_FAIL;
+	Cmat4Int a(2, 3, 4, 5);
+	linspace(a, 1, a.size());
+	if (a.n0() != 2 || a.n1() != 3 ||
+		a.n2() != 4 || a.n3() != 5)
+		SLS_FAIL;
 
-    Long ind = 0;
-    for (Long l = 0; l < 5; ++l) {
-        for (Long k = 0; k < 4; ++k) {
-            for (Long j = 0; j < 3; ++j) {
-                for (Long i = 0; i < 2; ++i) {
-                    ++ind;
-                    if (a(i, j, k, l) != ind)
-                        SLS_FAIL;
-                }
+	Long ind = 0;
+	for (Long l = 0; l < 5; ++l) {
+		for (Long k = 0; k < 4; ++k) {
+			for (Long j = 0; j < 3; ++j) {
+				for (Long i = 0; i < 2; ++i) {
+					++ind;
+					if (a(i, j, k, l) != ind)
+						SLS_FAIL;
+				}
 			}
 		}
 	}
 
 	ScmatInt sli; 
-    for (Long l = 0; l < 5; ++l) {
-        for (Long k = 0; k < 4; ++k) {
+	for (Long l = 0; l < 5; ++l) {
+		for (Long k = 0; k < 4; ++k) {
 			sli.set(cut01(a, k, l));
-            if (sli.p() != &a(0, 0, k, l))
-                SLS_FAIL;
-        }
-    }
+			if (sli.p() != &a(0, 0, k, l))
+				SLS_FAIL;
+		}
+	}
 }

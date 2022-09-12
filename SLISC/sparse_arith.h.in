@@ -17,7 +17,7 @@ namespace slisc {
 inline Bool operator==(Cmobd@Ts@_I a, Cmobd@Ts1@_I b)
 {
 //% req('v==v', {['Cmat3' Ts], ['Cmat3' Ts1]});
-    return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
+	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
 inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
@@ -32,19 +32,19 @@ inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
 //% req('add_vvs', {T, T1, T2});
 inline void mul_cmat_cmat_diag(@T@ *c, const @T1@ *a, Long_I Nr, Long_I Nc, const @T2@ *b)
 {
-    for (Long i = 0; i < Nc; ++i) {
-        times_vvs(c, a, b[i], Nr);
-        c += Nr; a += Nr;
-    }
+	for (Long i = 0; i < Nc; ++i) {
+		times_vvs(c, a, b[i], Nr);
+		c += Nr; a += Nr;
+	}
 }
 
 //% req('add_vvv', {T, T2, T1});
 inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, Long_I Nc)
 {
-    for (Long i = 0; i < Nc; ++i) {
-        times_vvv(c, b, a, Nr);
-        c += Nr; b += Nr;
-    }
+	for (Long i = 0; i < Nc; ++i) {
+		times_vvv(c, b, a, Nr);
+		c += Nr; b += Nr;
+	}
 }
 //%------------------------
 
@@ -59,27 +59,27 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 inline void mul_v_coo_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
 {
 //% req('vecset', {Ty});
-    vecset(y, 0, N1);
-    for (Long k = 0; k < Nnz; ++k)
-        y[i[k]] += a_ij[k] * x[j[k]];
+	vecset(y, 0, N1);
+	for (Long k = 0; k < Nnz; ++k)
+		y[i[k]] += a_ij[k] * x[j[k]];
 }
 
 inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
 {
-    vecset(y, 0, N1);
-    for (Long k = 0; k < Nnz; ++k) {
-        Long r = i[k], c = j[k];
-        if (r == c)
-            y[r] += a_ij[k] * x[c];
-        else {
-            y[r] += a_ij[k] * x[c];
+	vecset(y, 0, N1);
+	for (Long k = 0; k < Nnz; ++k) {
+		Long r = i[k], c = j[k];
+		if (r == c)
+			y[r] += a_ij[k] * x[c];
+		else {
+			y[r] += a_ij[k] * x[c];
 //% if is_comp(T)
-            y[c] += conj(a_ij[k]) * x[r];
+			y[c] += conj(a_ij[k]) * x[r];
 //% else
-            y[c] += a_ij[k] * x[r];
+			y[c] += a_ij[k] * x[r];
 //% end
-        }
-    }
+		}
+	}
 }
 //%------------------------
 
@@ -94,42 +94,42 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
 //% req('vecset', {Ty});
-    vecset(y, 0, N);
-    Long step = blk_size - 1, step2 = blk_size - 2;
-    a += blk_size + 1; // move to first element
+	vecset(y, 0, N);
+	Long step = blk_size - 1, step2 = blk_size - 2;
+	a += blk_size + 1; // move to first element
 
-    // first block
-    for (Long j = 0; j < step; ++j) {
-        @Tx@ s = x[j];
-        for (Long i = 0; i < step; ++i) {
-            y[i] += (*a) * s;
-            ++a;
-        }
-        ++a;
-    }
-    x += step2; y += step2; --a;
+	// first block
+	for (Long j = 0; j < step; ++j) {
+		@Tx@ s = x[j];
+		for (Long i = 0; i < step; ++i) {
+			y[i] += (*a) * s;
+			++a;
+		}
+		++a;
+	}
+	x += step2; y += step2; --a;
 
-    // middle blocks
-    for (Long blk = 1; blk < Nblk - 1; ++blk) {
-        for (Long j = 0; j < blk_size; ++j) {
-            @Tx@ s = x[j];
-            for (Long i = 0; i < blk_size; ++i) {
-                y[i] += (*a) * s;
-                ++a;
-            }
-        }
-        x += step; y += step;
-    }
-    
-    // last block
-    for (Long j = 0; j < step; ++j) {
-        @Tx@ s = x[j];
-        for (Long i = 0; i < step; ++i) {
-            y[i] += (*a) * s;
-            ++a;
-        }
-        ++a;
-    }
+	// middle blocks
+	for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < blk_size; ++j) {
+			@Tx@ s = x[j];
+			for (Long i = 0; i < blk_size; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+	}
+	
+	// last block
+	for (Long j = 0; j < step; ++j) {
+		@Tx@ s = x[j];
+		for (Long i = 0; i < step; ++i) {
+			y[i] += (*a) * s;
+			++a;
+		}
+		++a;
+	}
 }
 //%-----------------------
 
@@ -147,10 +147,10 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (y.size() != a.n0() || x.size() != a.n1())
-        SLS_ERR("wrong shape!");
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
 #endif
-    mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 //%------------------------------
 
@@ -164,15 +164,15 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.size() || a.n0() != y.size())
-        SLS_ERR("illegal shape!");
+	if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
 //%     req('mul_v_coo_v', {Ts Ts1 Ts2});
-    mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
 //%     req('mul_v_coo_v', {Ts Ts1 Ts2});
-    mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+	mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% else
 //%     error('not implemented!');
 //% end
@@ -191,15 +191,15 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
-    if (a.n1() != x.n0())
-        SLS_ERR("illegal shape!");
-    if (y.n0() != a.n0() || y.n1() != x.n1())
-        SLS_ERR("illegal shape!");
+	if (a.n1() != x.n0())
+		SLS_ERR("illegal shape!");
+	if (y.n0() != a.n0() || y.n1() != x.n1())
+		SLS_ERR("illegal shape!");
 #endif
 //% if is_dense(T) && is_cmajor(T) && is_dense(T1) && is_cmajor(T1) && is_Diag(T2)
-    mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
+	mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 //% elseif is_dense(T) && is_cmajor(T) && is_Diag(T1) && is_dense(T2) && is_cmajor(T2)
-    mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
+	mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 //% else
 //%     error('not implemented!');
 //% end
@@ -213,21 +213,21 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //% SvecT = ['Svec' T];
 inline void sort_r(@McooT@_IO a)
 {
-    Long Nnz = a.nnz();
-    VecLong inds(Nnz), order(Nnz);
-    linspace(order, 0, Nnz - 1);
-    for (Long i = 0; i < Nnz; ++i)
-        inds[i] = a.n1() * a.row(i) + a.col(i);
-    sort(inds, order);
-    @SvecT@ sli(a.p(), Nnz);
+	Long Nnz = a.nnz();
+	VecLong inds(Nnz), order(Nnz);
+	linspace(order, 0, Nnz - 1);
+	for (Long i = 0; i < Nnz; ++i)
+		inds[i] = a.n1() * a.row(i) + a.col(i);
+	sort(inds, order);
+	@SvecT@ sli(a.p(), Nnz);
 //% req('reorder', {SvecT, 'VecLlong'; SvecT, 'VecInt'});
-    reorder(sli, order);
-    SvecLong sli1;
-    sli1.set(a.row_p(), Nnz);
+	reorder(sli, order);
+	SvecLong sli1;
+	sli1.set(a.row_p(), Nnz);
 //% req('reorder', {'SvecLlong', 'VecLlong'; 'SvecInt', 'VecInt'});
-    reorder(sli1, order);
-    sli1.set(a.col_p());
-    reorder(sli1, order);
+	reorder(sli1, order);
+	sli1.set(a.col_p());
+	reorder(sli1, order);
 }
 //%------------------------
 
@@ -243,63 +243,63 @@ inline void sort_r(@McooT@_IO a)
 //% VecT = ['Vec', T];
 inline Long sort_col_dry(VecLong_O dest, @McooT@_I coo)
 {
-    Long N = coo.nnz();
+	Long N = coo.nnz();
 #ifdef SLS_CHECK_SHAPES
-    if (dest.size() != N)
-        SLS_ERR("wrong shape!");
+	if (dest.size() != N)
+		SLS_ERR("wrong shape!");
 #endif
-    VecLong ind(N), order(N);
-    linspace(order, 0, N-1);
-    for (Long i = 0; i < N; ++i)
-        ind[i] = coo.row(i) + coo.n0() * coo.col(i);
-    sort(ind, order);
-    Long k = 0;
-    for (Long i = 0; i < N-1; ++i) {
-        dest[order[i]] = k;
-        if (ind[i+1] != ind[i])
-            ++k;
-    }
-    dest[order[N-1]] = k;
-    return k + 1;
+	VecLong ind(N), order(N);
+	linspace(order, 0, N-1);
+	for (Long i = 0; i < N; ++i)
+		ind[i] = coo.row(i) + coo.n0() * coo.col(i);
+	sort(ind, order);
+	Long k = 0;
+	for (Long i = 0; i < N-1; ++i) {
+		dest[order[i]] = k;
+		if (ind[i+1] != ind[i])
+			++k;
+	}
+	dest[order[N-1]] = k;
+	return k + 1;
 }
 
 inline void reorder(@McooT@_O new_coo, @McooT@_I coo, VecLong_I dest, Long_I new_Nnz)
 {
-    assert(&new_coo != &coo);
-    new_coo.resize(new_Nnz);
-    vecset(new_coo.p(), 0, new_Nnz);
-    for (Long i = 0; i < coo.nnz(); ++i) {
-        Long j = dest[i];
-        new_coo[j] += coo[i];
-        new_coo.row(j) = coo.row(i);
-        new_coo.col(j) = coo.col(i);
-    }
+	assert(&new_coo != &coo);
+	new_coo.resize(new_Nnz);
+	vecset(new_coo.p(), 0, new_Nnz);
+	for (Long i = 0; i < coo.nnz(); ++i) {
+		Long j = dest[i];
+		new_coo[j] += coo[i];
+		new_coo.row(j) = coo.row(i);
+		new_coo.col(j) = coo.col(i);
+	}
 }
 
 inline void sort_col(@McooT@_IO coo)
 {
-    VecLong dest(coo.nnz());
-    Long new_Nnz = sort_col_dry(dest, coo);
-    @McooT@ new_coo(coo.n0(), coo.n1(), new_Nnz);
-    reorder(new_coo, coo, dest, new_Nnz);
-    coo << new_coo;
+	VecLong dest(coo.nnz());
+	Long new_Nnz = sort_col_dry(dest, coo);
+	@McooT@ new_coo(coo.n0(), coo.n1(), new_Nnz);
+	reorder(new_coo, coo, dest, new_Nnz);
+	coo << new_coo;
 }
 
 //% Tr = rm_comp(T);
 inline void rm_zero(@McooT@_IO coo, @Tr@_I thresh = 0)
 {
-    Long k = 0;
-    for (Long i = 0; i < coo.nnz(); ++i) {
-        if (abs(coo[i]) <= thresh)
-            continue;
-        if (k != i) {
-            coo[k] = coo[i];
-            coo.row(k) = coo.row(i);
-            coo.col(k) = coo.col(i);
-        }
-        ++k;
-    }
-    coo.resize(k);
+	Long k = 0;
+	for (Long i = 0; i < coo.nnz(); ++i) {
+		if (abs(coo[i]) <= thresh)
+			continue;
+		if (k != i) {
+			coo[k] = coo[i];
+			coo.row(k) = coo.row(i);
+			coo.col(k) = coo.col(i);
+		}
+		++k;
+	}
+	coo.resize(k);
 }
 //%----------------------------
 
@@ -311,26 +311,26 @@ inline void rm_zero(@McooT@_IO coo, @Tr@_I thresh = 0)
 //% VecT = ['Vec', T];
 inline void operator+=(@McooT@_O coo, @McooT@_I coo1)
 {
-    Long Nnz = coo.nnz();
-    coo.resize(Nnz + coo1.nnz());
-    for (Long i = 0; i < coo1.nnz(); ++i) {
-        Long ii = Nnz+i;
-        coo[ii] = coo1[i];
-        coo.row(ii) = coo1.row(i);
-        coo.col(ii) = coo1.col(i);
-    }
+	Long Nnz = coo.nnz();
+	coo.resize(Nnz + coo1.nnz());
+	for (Long i = 0; i < coo1.nnz(); ++i) {
+		Long ii = Nnz+i;
+		coo[ii] = coo1[i];
+		coo.row(ii) = coo1.row(i);
+		coo.col(ii) = coo1.col(i);
+	}
 }
 
 inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
 {
-    Long Nnz = coo.nnz();
-    coo.resize(Nnz + coo1.nnz());
-    for (Long i = 0; i < coo1.nnz(); ++i) {
-        Long ii = Nnz+i;
-        coo[ii] = -coo1[i];
-        coo.row(ii) = coo1.row(i);
-        coo.col(ii) = coo1.col(i);
-    }
+	Long Nnz = coo.nnz();
+	coo.resize(Nnz + coo1.nnz());
+	for (Long i = 0; i < coo1.nnz(); ++i) {
+		Long ii = Nnz+i;
+		coo[ii] = -coo1[i];
+		coo.row(ii) = coo1.row(i);
+		coo.col(ii) = coo1.col(i);
+	}
 }
 //%----------------------------
 
@@ -342,17 +342,17 @@ inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
 //% VecT = ['Vec', T];
 inline Bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
 {
-    sort_col(coo); rm_zero(coo);
-    sort_col(coo1); rm_zero(coo1);
-    if (coo.nnz() != coo1.nnz())
-        return false;
-    if (!equals_vv(coo.p(), coo1.p(), coo.nnz()))
-        return false;
-    if (!equals_vv(coo.row_p(), coo1.row_p(), coo.nnz()))
-        return false;
-    if (!equals_vv(coo.col_p(), coo1.col_p(), coo.nnz()))
-        return false;
-    return true;
+	sort_col(coo); rm_zero(coo);
+	sort_col(coo1); rm_zero(coo1);
+	if (coo.nnz() != coo1.nnz())
+		return false;
+	if (!equals_vv(coo.p(), coo1.p(), coo.nnz()))
+		return false;
+	if (!equals_vv(coo.row_p(), coo1.row_p(), coo.nnz()))
+		return false;
+	if (!equals_vv(coo.col_p(), coo1.col_p(), coo.nnz()))
+		return false;
+	return true;
 }
 //%----------------------------
 
@@ -393,7 +393,7 @@ inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
 //% [T, T1, Ts] = varargin{:};
 inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-    times_vvs(v.p(), v1.p(), s, v1.nnz());
+	times_vvs(v.p(), v1.p(), s, v1.nnz());
 }
 //%------------------------
 
@@ -406,12 +406,12 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 inline @Tr@ norm_inf(@T@_I A)
 {
 //% req('copy(v,s)', {VecTr});
-    @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
-    for (Long j = 0; j < A.n1(); ++j)
-        for (Long i = 0; i < A.n0(); ++i)
-            abs_sum[j] += abs(A(i, j));
+	@VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
+	for (Long j = 0; j < A.n1(); ++j)
+		for (Long i = 0; i < A.n0(); ++i)
+			abs_sum[j] += abs(A(i, j));
 //% req('max', {VecTr});
-    return max(abs_sum);
+	return max(abs_sum);
 }
 //%-----------------------------
 
@@ -423,35 +423,35 @@ inline @Tr@ norm_inf(@T@_I A)
 //% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
 inline @Tr@ norm_inf(@T@_I A)
 {
-    Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
+	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
 //% req('copy(v,s)', {VecTr});
-    @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
-    Long k = 0;
-    @SvecTs_c@ sli(A.p() + N0 + 1, N1);
-    // first block
-    for (Long j = 1; j < N0; ++j) {
+	@VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
+	Long k = 0;
+	@SvecTs_c@ sli(A.p() + N0 + 1, N1);
+	// first block
+	for (Long j = 1; j < N0; ++j) {
 //% req('sum_abs', {['Svec' Ts]});
-        abs_sum[k] += sum_abs(sli);
-        ++k; sli.shift(N0);
-    }
-    --k;
-    // middle blocks
-    sli.set(N0); sli.shift(-1);
-    for (Long blk = 1; blk < Nblk - 1; ++blk) {
-        for (Long j = 0; j < N0; ++j) {
-            abs_sum[k] += sum_abs(sli);
-            ++k; sli.next();
-        }
-        --k;
-    }
-    // last block
-    sli.set(N1);
-    for (Long j = 0; j < N1; ++j) {
-        abs_sum[k] += sum_abs(sli);
-        ++k; sli.shift(N0);
-    }
+		abs_sum[k] += sum_abs(sli);
+		++k; sli.shift(N0);
+	}
+	--k;
+	// middle blocks
+	sli.set(N0); sli.shift(-1);
+	for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < N0; ++j) {
+			abs_sum[k] += sum_abs(sli);
+			++k; sli.next();
+		}
+		--k;
+	}
+	// last block
+	sli.set(N1);
+	for (Long j = 0; j < N1; ++j) {
+		abs_sum[k] += sum_abs(sli);
+		++k; sli.shift(N0);
+	}
 //% req('max', {VecTr});
-    return max(abs_sum);
+	return max(abs_sum);
 }
 //%---------------------
 
@@ -464,12 +464,12 @@ inline @Tr@ norm_inf(@T@_I A)
 inline @Tr@ norm_inf(@T@_I A)
 {
 //% req('copy(v,s)', {VecTr});
-    @VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
-    for (Long i = 0; i < A.nnz(); ++i) {
-        abs_sum[A.col(i)] += abs(A[i]);
-    }
+	@VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
+	for (Long i = 0; i < A.nnz(); ++i) {
+		abs_sum[A.col(i)] += abs(A[i]);
+	}
 //% req('max', {VecTr});
-    return max(abs_sum);
+	return max(abs_sum);
 }
 //%---------------------
 

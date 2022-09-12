@@ -26,16 +26,16 @@ public:
 		// report
 		++m_count;
 		if (m_count % 100 == 0) {
-            // cout << "mul count: " << m_count << ", err = " << err(v, w) << endl;
-        }
+			// cout << "mul count: " << m_count << ", err = " << err(v, w) << endl;
+		}
 	}
 
 	// mean value / eigen value
-    Doub mean(const Doub *v, const Doub *w) const
-    {
-        SvecDoub_c sv(v, m_N), sw(w, m_N);
-        return dot(sv, sw)/dot(sv, sv);
-    }
+	Doub mean(const Doub *v, const Doub *w) const
+	{
+		SvecDoub_c sv(v, m_N), sw(w, m_N);
+		return dot(sv, sw)/dot(sv, sv);
+	}
 
 	Doub err(const Doub *v, const Doub *w) const
 	{
@@ -86,6 +86,6 @@ void test_arpack()
 			SLS_FAIL;
 	}
 #else
-    std::cout << "---------- disabled! ----------" << std::endl;
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

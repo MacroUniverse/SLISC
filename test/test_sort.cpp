@@ -6,7 +6,7 @@
 
 void test_sort()
 {
-    using namespace slisc;
+	using namespace slisc;
 
 	// test sort()
 	{
@@ -33,14 +33,14 @@ void test_sort()
 			if (v[i] < v[i-1])
 				SLS_FAIL;
 		}
-        VecInt order(N), v1(N);
-        for (Long i = 0; i < N; ++i)
-            v[i] = randInt(N);
-        copy(v1, v);
-        linspace(order, 0, N-1);
-        quicksort0(v.p(), order.p(), N);
-        quicksort0(order.p(), v.p(), N);
-        if (v != v1) SLS_FAIL;
+		VecInt order(N), v1(N);
+		for (Long i = 0; i < N; ++i)
+			v[i] = randInt(N);
+		copy(v1, v);
+		linspace(order, 0, N-1);
+		quicksort0(v.p(), order.p(), N);
+		quicksort0(order.p(), v.p(), N);
+		if (v != v1) SLS_FAIL;
 
 		for (Long i = 0; i < N; ++i)
 			v[i] = randInt(N);
@@ -48,13 +48,13 @@ void test_sort()
 		for (Long i = 1; i < N; ++i)
 			if (v[i] < v[i-1])
 				SLS_FAIL;
-        for (Long i = 0; i < N; ++i)
-            v[i] = randInt(N);
-        copy(v1, v);
-        linspace(order, 0, N-1);
-        quicksort3(v.p(), order.p(), N);
-        quicksort3(order.p(), v.p(), N);
-        if (v != v1) SLS_FAIL;
+		for (Long i = 0; i < N; ++i)
+			v[i] = randInt(N);
+		copy(v1, v);
+		linspace(order, 0, N-1);
+		quicksort3(v.p(), order.p(), N);
+		quicksort3(order.p(), v.p(), N);
+		if (v != v1) SLS_FAIL;
 	}
 
 	// test mergesort()
@@ -83,7 +83,7 @@ void test_sort()
 		}
 	}
 
-    // test sort(v, v)
+	// test sort(v, v)
 	{
 		Long N = 100;
 		VecInt a(N), a0(N), order(N);
@@ -119,22 +119,22 @@ void test_sort()
 	}
 
 	// minN(), maxN()
-    {
-        Long N = 20, Nmax = 3;
-        vector<Long> v(N), vals, inds;
-        v -= N/2;
-        randPerm(v);
-        maxN(vals, inds, &v[0], N, Nmax);
-        for (Long i = 0; i < Nmax; ++i) {
-            SLS_ASSERT(vals[i] == N-1-i);
-            SLS_ASSERT(vals[i] == v[inds[i]]);
-        }
-        minN(vals, inds, &v[0], N, Nmax);
-        for (Long i = 0; i < Nmax; ++i) {
-            SLS_ASSERT(vals[i] == i);
-            SLS_ASSERT(vals[i] == v[inds[i]]);
-        }
-    }
+	{
+		Long N = 20, Nmax = 3;
+		vector<Long> v(N), vals, inds;
+		v -= N/2;
+		randPerm(v);
+		maxN(vals, inds, &v[0], N, Nmax);
+		for (Long i = 0; i < Nmax; ++i) {
+			SLS_ASSERT(vals[i] == N-1-i);
+			SLS_ASSERT(vals[i] == v[inds[i]]);
+		}
+		minN(vals, inds, &v[0], N, Nmax);
+		for (Long i = 0; i < Nmax; ++i) {
+			SLS_ASSERT(vals[i] == i);
+			SLS_ASSERT(vals[i] == v[inds[i]]);
+		}
+	}
 
 	// maxN_heap()
 	{

@@ -35,8 +35,8 @@ void test_Cmat()
 		v(1, 2) = true;
 		if (!v(1, 2))
 			SLS_FAIL;
-        v.resize(N1+1, N2+1);
-        if (v.n0() != N1+1 || v.n1() != N2+1)
-            SLS_FAIL;
+		v.resize(N1+1, N2+1);
+		if (v.n0() != N1+1 || v.n1() != N2+1)
+			SLS_FAIL;
 	}
 }

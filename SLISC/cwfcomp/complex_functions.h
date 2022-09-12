@@ -13,7 +13,7 @@ const double C_PI = 3.14159265358979323846;
 
 template <typename T>
 inline T SIGN(T a) {
-    return a < 0 ? (-1) : 1;
+	return a < 0 ? (-1) : 1;
 }
 
 // Infinite norm of a complex number.
@@ -262,36 +262,36 @@ inline Comp log_Gamma (const Comp &z)
 
   if (x > 0.0)
   {
-    const Comp z_p_0p5 = z + 0.5, z_p_5p5 = z + 5.5;
-    const double sqrt_2Pi = 2.5066282746310005;
-    const double c[7] = {1.000000000190015,
-             7.618009172947146E+1,
-            -8.650532032941677E+1,
-             2.401409824083091E+1,
-            -1.231739572450155,
-             0.1208650973866179E-2,
-            -0.5395239384953000E-5};
-      
-    Comp sum = c[0];
-    for (int i = 1 ; i < 7 ; i++) sum += c[i]/(z + i);
-    sum *= sqrt_2Pi;
+	const Comp z_p_0p5 = z + 0.5, z_p_5p5 = z + 5.5;
+	const double sqrt_2Pi = 2.5066282746310005;
+	const double c[7] = {1.000000000190015,
+			 7.618009172947146E+1,
+			-8.650532032941677E+1,
+			 2.401409824083091E+1,
+			-1.231739572450155,
+			 0.1208650973866179E-2,
+			-0.5395239384953000E-5};
+	  
+	Comp sum = c[0];
+	for (int i = 1 ; i < 7 ; i++) sum += c[i]/(z + i);
+	sum *= sqrt_2Pi;
 
-    const Comp log_Gamma_z = log (sum) - log (z) + z_p_0p5*log (z_p_5p5) - z_p_5p5;
+	const Comp log_Gamma_z = log (sum) - log (z) + z_p_0p5*log (z_p_5p5) - z_p_5p5;
 
-    return log_Gamma_z;
+	return log_Gamma_z;
   }
   else if (y >= 0.0)
   {
-    const int n = (x < rint (x)) ? (static_cast<int> (rint (x)) - 1) : (static_cast<int> (rint (x)));
-    const double log_Pi = 1.1447298858494002;
-    const Comp log_const(-C_LN2, C_PI_2),i_Pi(0.0, C_PI);
-    const Comp eps = z - n,log_sin_Pi_z = (y > 110) ? (-i_Pi*z + log_const) : (log (sin (C_PI*eps)) - i_Pi*n);
-    const Comp log_Gamma_z = log_Pi - log_sin_Pi_z - log_Gamma (1.0 - z);
-    
-    return log_Gamma_z;
+	const int n = (x < rint (x)) ? (static_cast<int> (rint (x)) - 1) : (static_cast<int> (rint (x)));
+	const double log_Pi = 1.1447298858494002;
+	const Comp log_const(-C_LN2, C_PI_2),i_Pi(0.0, C_PI);
+	const Comp eps = z - n,log_sin_Pi_z = (y > 110) ? (-i_Pi*z + log_const) : (log (sin (C_PI*eps)) - i_Pi*n);
+	const Comp log_Gamma_z = log_Pi - log_sin_Pi_z - log_Gamma (1.0 - z);
+	
+	return log_Gamma_z;
   }
   else
-    return conj (log_Gamma (conj (z)));
+	return conj (log_Gamma (conj (z)));
 }
 
 
@@ -394,15 +394,15 @@ inline Comp log_cut_constant_AS_calc (const int omega,const Comp &l,const Comp &
 
   if (real (two_I_Pi_eps) > -0.1)
   {
-    const Comp log_cut_constant = log (expm1 (-two_I_Pi_eps)) + two_I_Pi_eps;
+	const Comp log_cut_constant = log (expm1 (-two_I_Pi_eps)) + two_I_Pi_eps;
 
-    return log_cut_constant;
+	return log_cut_constant;
   }
   else
   {
-    const Comp log_cut_constant = log1p (-exp (two_I_Pi_eps));
+	const Comp log_cut_constant = log1p (-exp (two_I_Pi_eps));
 
-    return log_cut_constant;
+	return log_cut_constant;
   }
 }
 
@@ -448,15 +448,15 @@ inline Comp log_cut_constant_CFa_calc (const bool is_it_normalized,const int ome
 
   if (real (two_I_Pi_eps) < 0.1)
   {
-    const Comp log_cut_constant = log_two_I_omega + log (expm1 (two_I_Pi_eps)) + log_norm;
+	const Comp log_cut_constant = log_two_I_omega + log (expm1 (two_I_Pi_eps)) + log_norm;
 
-    return log_cut_constant;
+	return log_cut_constant;
   }
   else
   {
-    const Comp log_cut_constant = log_two_I_omega + log1p (-exp (-two_I_Pi_eps)) + two_I_Pi_eps + log_norm;
+	const Comp log_cut_constant = log_two_I_omega + log1p (-exp (-two_I_Pi_eps)) + two_I_Pi_eps + log_norm;
 
-    return log_cut_constant; 
+	return log_cut_constant; 
   }
 }
 
@@ -576,15 +576,15 @@ inline Comp exp_I_omega_chi_calc (const int omega,const Comp &l,const Comp &eta)
 
   if (abs (sin_chi) > 0.5)
   {
-    const Comp exp_I_omega_chi = exp (I_omega*chi);
+	const Comp exp_I_omega_chi = exp (I_omega*chi);
 
-    return exp_I_omega_chi;
+	return exp_I_omega_chi;
   }
   else
   {
-    const Comp cos_chi = SIGN (real (cos (chi)))*sqrt (1.0 - sin_chi*sin_chi),exp_I_omega_chi = cos_chi + I_omega*sin_chi;
+	const Comp cos_chi = SIGN (real (cos (chi)))*sqrt (1.0 - sin_chi*sin_chi),exp_I_omega_chi = cos_chi + I_omega*sin_chi;
 
-    return exp_I_omega_chi;
+	return exp_I_omega_chi;
   }
 }
 

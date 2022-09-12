@@ -58,7 +58,7 @@ inline Comp arb_hypergeom1F1(Comp_I a, Comp_I b, Comp_I z)
         prec *= 2;
 	}
 	if (digits < 16)
-	    SLS_ERR("arb_hypergeom1F1 error too large : " + num2str(digits) + " digits");
+		SLS_ERR("arb_hypergeom1F1 error too large : " + num2str(digits) + " digits");
 	acb_get_real(temp1, res1);
 	res.real(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
 	acb_get_imag(temp1, res1);

@@ -18,10 +18,10 @@ void test_boost()
 	using boost::filesystem::current_path;
 
 	Int major_ver = BOOST_VERSION / 100000,
-        minor_ver = (BOOST_VERSION / 100) % 1000,
+		minor_ver = (BOOST_VERSION / 100) % 1000,
 		sub_minor_ver = BOOST_VERSION % 100;
 	cout << "boost version: " << major_ver << "." << minor_ver << "."
-        << sub_minor_ver << endl;
+		<< sub_minor_ver << endl;
 	if (BOOST_VERSION < 106500)
 		SLS_ERR("faild! boost version not tested");
 	if (file_size("test/test_file/测试.txt") != 12)
@@ -76,25 +76,25 @@ void test_boost()
 	// obj[ "object" ] = { {"currency", "USD"}, {"value", 42.99} };    // insert an object with 2 elements
 	
 	value jv1 = {
-    { "pi", 3.141 },
-    { "happy", true },
-    { "name", "Boost" },
-    { "nothing", nullptr },
-    { "answer", {
-        { "everything", 42 } } },
-    {"list", {1, 0, 2}}, // [1, 0, 2]
-    {"object", {
-        { "currency", "USD" },
-        { "value", 42.99 }
-            } }
-    };
+	{ "pi", 3.141 },
+	{ "happy", true },
+	{ "name", "Boost" },
+	{ "nothing", nullptr },
+	{ "answer", {
+		{ "everything", 42 } } },
+	{"list", {1, 0, 2}}, // [1, 0, 2]
+	{"object", {
+		{ "currency", "USD" },
+		{ "value", 42.99 }
+			} }
+	};
 
 	string s1 = serialize(jv1);
 	// cout << jv1 << "\n\n\n" << endl; // uncomment
 	value jv2 = parse(s1, ec);
 	// cout << jv2 << "\n\n\n" << endl; // uncomment
 	if(ec)
-    	SLS_ERR("failed: " + ec.message());
+		SLS_ERR("failed: " + ec.message());
 	if (jv1 != jv2)
 		SLS_FAIL;
 	string s2 = serialize(jv2);
@@ -132,6 +132,6 @@ void test_boost()
 		// std::cout << boost::math::tgamma(cpp_bin_float_256(1000)) << std::endl;
 	}
 #else
-    std::cout << "---------- disabled! ----------" << std::endl;
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

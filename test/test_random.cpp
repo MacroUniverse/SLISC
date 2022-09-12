@@ -3,8 +3,8 @@
 
 void test_random()
 {
-    using namespace slisc;
-    using internal::Ran;
+	using namespace slisc;
+	using internal::Ran;
 	{
 		// same seed
 		Ran rangen1(1234), rangen2(1234);
@@ -25,7 +25,7 @@ void test_random()
 		if (vc == vc1)
 			SLS_FAIL;
 	}
-    
+	
 	// randPerm
 	{
 		Long N = 20;
