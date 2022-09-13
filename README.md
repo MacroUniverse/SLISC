@@ -65,7 +65,7 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used, comment/uncomment sections in `g++_all.mak` to enable/disable them.
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
 
-## Ubuntu 20.04 All Dependencies
+### Ubuntu 20.04 All Dependencies
 ```
 sudo apt install -y vim git make g++ gdb libarpack++2-dev gfortran liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
 sudo apt purge libopenblas*
@@ -78,22 +78,37 @@ touch SLISC/*.h
 make -j4
 ```
 
-example of package versions on Ubuntu 20.04 (tested):
+tested of package versions on Ubuntu 20.04 (tested):
 ```
-gfortran:amd64/focal 4:9.3.0-1ubuntu2
-libarpack++2-dev:amd64/focal 2.3-10build1
-libboost-filesystem-dev:amd64/focal 1.71.0.0ubuntu2
-libflint-arb-dev:amd64/focal 1:2.17.0-1
-libflint-dev:amd64/focal 2.5.2-21build1
-libgmp-dev:amd64/focal 2:6.2.0+dfsg-4
-libgsl-dev:amd64/focal 2.5+dfsg-6build1
-liblapacke-dev:amd64/focal 3.9.0-1build1
-libsqlite3-dev:amd64/focal-security 3.31.1-4ubuntu0.3
+gfortran: amd64/focal 4:9.3.0-1ubuntu2
+libarpack++2-dev: amd64/focal 2.3-10build1
+libboost-filesystem-dev: amd64/focal 1.71.0.0ubuntu2
+libflint-arb-dev: amd64/focal 1:2.17.0-1
+libarb (compiled from source): 2.19.0
+libflint-dev:a md64/focal 2.5.2-21build1
+libgmp-dev: amd64/focal 2:6.2.0+dfsg-4
+libgsl-dev: amd64/focal 2.5+dfsg-6build1
+liblapacke-dev: amd64/focal 3.9.0-1build1
+libsqlite3-dev: amd64/focal-security 3.31.1-4ubuntu0.3
 ```
-
 note that gfortran needs to have the same version with g++.
 
+### Ubuntu 22.04 All Dependencies
 Update: now tested on Ubuntu 22.04 (with g++-9), however, there is a bug in GSL header `/usr/include/gsl/gsl_blas_types.h`: replace all `typedef  enum` with just `typedef `.
+
+tested of package versions on Ubuntu 22.04 (tested):
+```
+gfortran-9: 9.4.0-5ubuntu1
+libarpack++2-dev: 2.3-10build1
+libboost-filesystem-dev: 1.74.0.3ubuntu7
+libflint-arb-dev: 1:2.22.1-1
+libarb (compiled from source): 2.23.0
+libflint-dev: 2.8.4-2build1
+libgmp-dev: 2:6.2.1+dfsg-3ubuntu1
+libgsl-dev: 2.7.1+dfsg-3
+liblapacke-dev: 3.10.0-2ubuntu1
+libsqlite3-dev: 3.37.2-2
+```
 
 ## Recommended Programming Style
 * Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
