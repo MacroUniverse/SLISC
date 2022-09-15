@@ -358,14 +358,13 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 	fout.close();
 }
 
-inline void file_copy(Str32_I fname_out, Str32_I fname_in, Bool_I replace)
+inline void file_copy(Str32_I fname_out, Str32_I fname_in, Bool_I replace = false)
 {
 	file_copy(utf32to8(fname_out), utf32to8(fname_in), replace);
 }
 
 // file copy with user buffer (larger buffer is faster)
 // buffer size used is `buffer.capacity()`, not `buffer.size()`
-// `buffer` resized to 0 after return
 inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
 	// checking
@@ -400,14 +399,49 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 // move a file (copy and delete)
 inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
-	if (file_exist(fname_out)) {
-		if (replace)
-			file_remove(fname_out);
-		else
-			throw "file_move(): destination exist: " + fname_out;
+	if (!file_exist(fname_in))
+	    SLS_ERR("file not found!");
+	if (file_exist(fname_out) && !replace) {
+	    while (true) {
+	        if (file_exist(fname_out)) {
+	            SLS_WARN("\n\nfile [" + fname_out + "] already exist! delete file to continue...\n"
+	                "  (set argument `replace = false` to replace file by default)\n\n");
+	        }
+	        else {
+	            break;
+	        }
+	        pause(10);
+	    }
 	}
-	if (rename(fname_in.c_str(), fname_out.c_str()))
-		throw "file_move(): failed! from " + fname_in + " to " + fname_out;
+	if (rename(fname_in.c_str(), fname_out.c_str())) {
+		// rename() failed (probably differen filesystems/deives are involved)
+		file_copy(fname_out, fname_in, replace);
+		file_remove(fname_in);
+	}
+}
+
+// file_move() with user buffer
+inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
+{
+	if (!file_exist(fname_in))
+	    SLS_ERR("file not found!");
+	if (file_exist(fname_out) && !replace) {
+	    while (true) {
+	        if (file_exist(fname_out)) {
+	            SLS_WARN("\n\nfile [" + fname_out + "] already exist! delete file to continue...\n"
+	                "  (set argument `replace = false` to replace file by default)\n\n");
+	        }
+	        else {
+	            break;
+	        }
+	        pause(10);
+	    }
+	}
+	if (rename(fname_in.c_str(), fname_out.c_str())) {
+		// rename() failed (probably differen filesystems/deives are involved)
+		file_copy(fname_out, fname_in, buffer, replace);
+		file_remove(fname_in);
+	}
 }
 
 // get number of bytes in file

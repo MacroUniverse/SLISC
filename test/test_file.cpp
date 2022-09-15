@@ -177,8 +177,7 @@ void test_file()
 		read(str2, file2);
 		SLS_ASSERT(str2 == str1);
 		file_remove(file2);
-		try {file_move(file2, file1);}
-		catch (Str_I msg) { cout << msg << endl; }
+		file_move(file2, file1);
 		str2.clear(); read(str2, file2);
 		SLS_ASSERT(str1 == str2);
 		file_remove(file2);
