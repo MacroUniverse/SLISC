@@ -29,6 +29,20 @@ void test_sqlite()
 		SLS_ERR("Error Create Table");
 		sqlite3_free(messaggeError);
 	}
+
+	sql = "INSERT INTO PERSON"
+					  "(ID, NAME, SURNAME, AGE, ADDRESS, SALARY)"
+					  " VALUES "
+					  "(0, 'Addis', 'Chen', 30, 'Claflin Rd, Manhattan, KS, 66502', 1500.03);"
+		   "INSERT INTO PERSON"
+					  " VALUES "
+					  "(1, 'Bob', 'Chen', 31, 'Anderson Ave, Manhattan, KS, 66502', 1500.03);";
+	exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
+	if (exit != SQLITE_OK) {
+		SLS_ERR("Error Inserting Table :" + Str(messaggeError));
+		sqlite3_free(messaggeError);
+	}
+
 	sqlite3_close(DB);
 #else
 	cout << "---------- disabled! ----------" << endl;

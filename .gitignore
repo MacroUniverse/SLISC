@@ -4,6 +4,7 @@ Debug/
 Release/
 x64/
 CMakeFiles/
+cmake-build-debug/
 *.cmake
 *.user
 *.x

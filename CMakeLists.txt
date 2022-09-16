@@ -55,7 +55,7 @@ add_compile_options(-g -ftrapv)
 # add_definitions(-D NDEBUG)
 # add_compile_options(-O3)
 
-
+add_definitions(-D SLS_USE_INT_AS_LONG)
 add_compile_options(-Wall -Wno-reorder -Wno-misleading-indentation -fopenmp -fmax-errors=2)
 
 file(GLOB SOURCES "test/*.cpp" "main.cpp")
