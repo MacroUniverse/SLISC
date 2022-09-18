@@ -48,6 +48,7 @@ void test_all(const std::string &test_name)
 	SLS_TEST(hypergeom);
 	SLS_TEST(Imag);
 	SLS_TEST(interp1);
+	SLS_TEST(json);
 	SLS_TEST(lanczos);
 	SLS_TEST(legendreP);
 	SLS_TEST(linbcg);
