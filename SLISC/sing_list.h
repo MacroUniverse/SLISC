@@ -15,14 +15,14 @@ struct SNode {
 
 // create, set, destroy
 SNode *slist_gen(Long_I N);
-void slist_delete(SNode *node);
 void slist_rand_perm(SNode *head, Long_I N);
+void slist_delete(SNode *node);
 // query
+void slist_print(SNode* node);
 Long slist_check(SNode *node);
 Long slist_size(SNode *head);
 SNode *slist_end(SNode *node);
 SNode *slist_locate(SNode *node, Long_I ind);
-void slist_print(SNode* node);
 // edit
 SNode *slist_push(SNode* head, int val);
 void slist_insert_after(SNode* node, int val);
@@ -36,14 +36,14 @@ void slist_mergesort(SNode *&headRef);
 // ----------------------------------------
 
 
-// allocate singly linked list
-// each node must be allocated separately
+// allocate singly linked list with values [0,1,...,N-1]
+// each node is allocated separately
 inline SNode *slist_gen(Long_I N)
 {
 	if (N == 0) return NULL;
-	SNode *head = new SNode, *node = head;
+	SNode *head = new SNode(0), *node = head;
 	for (Long i = 1; i < N; ++i)
-		node = (node->next = new SNode);
+		node = (node->next = new SNode(i));
 	node->next = NULL;
 	return head;
 }
@@ -96,10 +96,15 @@ inline void slist_rand_perm(SNode *head, Long_I N)
 	}
 }
 
-/* Function to print nodes in a given linked list */
+// print singly linked list, will detect loop
 inline void slist_print(SNode* node)
 {
+    unordered_set<SNode*> uset;
 	while (node != NULL) {
+        if (uset.count(node) > 0) {
+            cout << " cyclic link to " << node->val; return;
+        }
+        uset.insert(node);
 		cout << node->val << " ";
 		node = node->next;
 	}
