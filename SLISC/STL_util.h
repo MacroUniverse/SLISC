@@ -34,10 +34,86 @@ struct hash_pair {
 	}
 };
 
-template<class T1, class T2>
+template <class T1, class T2>
 std::ostream &operator<<(std::ostream &os, const pair<T1,T2> &s) {
 	os << "(" << s.first << ", " << s.second << ")";
 	return os;
+}
+
+template <class T>
+std::ostream &operator<<(std::ostream &os, const unordered_set<T> &v) {
+    for (auto &e : v)
+        cout << e << endl;
+    return os;
+}
+
+template <class T>
+std::ostream &operator<<(std::ostream &os, const set<T> &v) {
+    for (auto &e : v)
+        cout << e << endl;
+    return os;
+}
+
+template <class T1, class T2>
+std::ostream &operator<<(std::ostream &os, const unordered_map<T1, T2> &v) {
+    for (auto &e : v)
+        cout << e << endl;
+    return os;
+}
+
+template <class T1, class T2>
+std::ostream &operator<<(std::ostream &os, const map<T1, T2> &v) {
+    for (auto &e : v)
+        cout << e << endl;
+    return os;
+}
+
+template <class T>
+std::ostream &operator<<(std::ostream &os, const vector<T> &v) {
+    for (Long i = 0; i < (Long)v.size(); ++i)
+        cout << std::setw(3) << i << ":" << v[i] << " " << endl;
+    return os;
+}
+
+template <class T>
+std::ostream &operator<<(std::ostream &os, const vector<vector<T>> &v) {
+    for (auto &row : v) {
+        for (auto &e: row)
+            cout << std::setw(3) << e << " ";
+        cout << endl;
+    }
+    return os;
+}
+
+// priority queue smaller value first
+template <class T>
+using priority_queue2 = std::priority_queue<T, vector<T>, std::greater<T>>;
+
+// find minimum `second` of unordered_map and others
+template <class T>
+typename T::const_iterator const min_second(const T &v)
+{
+    auto it = v.begin(), it0 = it;
+    auto val = it->second;
+    for (++it; it != v.end(); ++it) {
+        if (it->second < val) {
+            val = it->second; it0 = it;
+        }
+    }
+    return it0;
+}
+
+template <class T>
+typename T::const_iterator const max_second(const T &v)
+{
+    auto it = v.begin(), it0 = it;
+    auto val = it->second;
+    for (++it; it != v.end(); ++it) {
+        if (val < it->second) {
+            val = it->second; it0 = it;
+        }
+    }
+    return it0;
 }
 
 } // namespace slisc
