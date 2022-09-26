@@ -89,22 +89,23 @@ namespace slisc {
 	    }
 	};
 
-    template <class T>
+    template <class T, class H = std::hash<T>>
     struct disjoint_sets2
     {
         // private:
         Long Nset; // # of sets
         // parent of a node that leads to the set leader
-        unordered_map<T, T> parent;
+        unordered_map<T, T, H> parent;
         // map non-isolated leaders to total # of children
-        unordered_map<T, Long> Nchild;
+        unordered_map<T, Long, H> Nchild;
 
         // public:
         disjoint_sets2(): Nset(0) {};
 
-        // push an isolated node
+        // push a new node to new set
+        // do nothing if already exist
         void push(const T &node) {
-            assert(parent.count(node) == 0); // node already exists
+            if(parent.count(node)) return;
             parent[node] = node;
             ++Nset;
         }
@@ -128,13 +129,16 @@ namespace slisc {
             return p;
         }
 
+        // check node existence
+        bool count(const T &node) { return parent.count(node); }
+
         // check if two nodes are in the same set
         bool check(const T &x, const T &y)
         { return find(x) == find(y); }
 
         // merge two sets. x, y are elements from each set
-        // x, y can be in the same group
-        void merge(Long_I node1, Long_I node2)
+        // x, y can be in the same group, or non existent node
+        void merge(const T &node1, const T &node2)
         {
             T l1 = find(node1), l2 = find(node2);
             if (l1 == l2) return; // same set

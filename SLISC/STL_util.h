@@ -40,8 +40,8 @@ std::ostream &operator<<(std::ostream &os, const pair<T1,T2> &s) {
 	return os;
 }
 
-template <class T>
-std::ostream &operator<<(std::ostream &os, const unordered_set<T> &v) {
+template <class T, class H>
+std::ostream &operator<<(std::ostream &os, const unordered_set<T, H> &v) {
     for (auto &e : v)
         cout << e << endl;
     return os;
@@ -54,8 +54,8 @@ std::ostream &operator<<(std::ostream &os, const set<T> &v) {
     return os;
 }
 
-template <class T1, class T2>
-std::ostream &operator<<(std::ostream &os, const unordered_map<T1, T2> &v) {
+template <class T1, class T2, class H>
+std::ostream &operator<<(std::ostream &os, const unordered_map<T1, T2, H> &v) {
     for (auto &e : v)
         cout << e << endl;
     return os;
