@@ -246,7 +246,7 @@ inline Long size(const std::basic_string<T> &v) { return v.size(); }
 
 // number of prime numbers smaller than n
 // verified with leetcode 204
-Long nprimes(Long_I N)
+inline Long nprimes(Long_I N)
 {
 	if (N <= 2) return 0;
 	if (N == 3) return 1;
@@ -264,7 +264,7 @@ Long nprimes(Long_I N)
 }
 
 // get all the prime numbers smaller than n
-void primes(vecLong_O v, Long_I N)
+inline void primes(vecLong_O v, Long_I N)
 {
 	v.clear();
 	if (N <= 2) return;

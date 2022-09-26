@@ -1,4 +1,6 @@
 #include "../SLISC/disjoint_sets.h"
+#include "../SLISC/random.h"
+#include "../SLISC/disp.h"
 
 void test_disjoint_sets()
 {
@@ -35,6 +37,39 @@ void test_disjoint_sets()
 		SLS_ASSERT(s.num_set2() == 1);
 		s.update();
 		for (Long i = 0; i < N; ++i)
-			SLS_ASSERT(s.parent[i] == 6);
+			SLS_ASSERT(s.parent[i] == 0);
+	}
+
+	// disjoint_sets2
+	{
+		disjoint_sets2<Long> s;
+		SLS_ASSERT(s.size() == 0);
+		SLS_ASSERT(s.num_set() == 0);
+		SLS_ASSERT(s.num_set2() == 0);
+		Long N = 10;
+		vecLong v(N); randPerm(v);
+		disp(v);
+		for (Long i = 0; i < N; ++i) {
+			s.push(v[i]);
+			SLS_ASSERT(s.find(v[i]) == v[i]);
+		}
+		for (Long i = 0; i < 4; ++i)
+			s.merge(v[i], v[i+1]);
+		for (Long i = 0; i < 4; ++i) {
+			SLS_ASSERT(s.check(v[i], v[i+1]));
+			SLS_ASSERT(s.check(v[i], v[4]));
+		}
+		SLS_ASSERT(s.num_set() == 6);
+		SLS_ASSERT(s.num_set2() == 1);
+		for (Long i = 5; i < N-1; ++i)
+			s.merge(v[i], v[i + 1]);
+		SLS_ASSERT(s.num_set() == 2);
+		SLS_ASSERT(s.num_set2() == 2);
+		s.merge(v[2], v[7]);
+		SLS_ASSERT(s.num_set() == 1);
+		SLS_ASSERT(s.num_set2() == 1);
+		s.update();
+		for (Long i = 0; i < N; ++i)
+			SLS_ASSERT(s.parent[i] == v[0]);
 	}
 }
