@@ -270,14 +270,16 @@ inline void primes(vecLong_O v, Long_I N)
 	if (N <= 2) return;
 	v.push_back(2);
 	if (N == 3) return;
-	v.push_back(3);
-	Long Nh = N/2;
+	Long i, Nh = N/2;
 	vector<bool> isprime(Nh, true); // isprime[i] for (2*i+1)
-	for (Long i = 1; sqr(2*i+1) < N; ++i)
-		if (isprime[i])
+	for (i = 1; sqr(2*i+1) < N; ++i) {
+		if (isprime[i]) {
+			v.push_back(2*i+1);
 			for (Long p = 2*i+1, j = i+p; j < Nh; j += p)
 				isprime[j] = false;
-	for (Long i = 2; i < Nh; ++i)
+		}
+	}
+	for (; i < Nh; ++i)
 		if (isprime[i])
 			v.push_back(2*i+1);
 }
@@ -290,7 +292,7 @@ inline void primes_ext(vecLong_IO v, Long_I N)
 	Long Nv = v.size(), N_old = v.back()+1;
 	assert(Nv >= 5);
 	assert(N > N_old);
-	Long Nb = N/2-N_old/2;
+	Long i = 0, Nb = N/2-N_old/2;
 	// isprime[i] for (N_old+2*i+1)
 	vector<bool> isprime(Nb, true);
 	for (Long i = 1; i < Nv; ++i) {
@@ -302,11 +304,14 @@ inline void primes_ext(vecLong_IO v, Long_I N)
 			isprime[j] = false;
 	}
 	if (N_old+1 < sqrt(N))
-		for (Long i = 0; sqr(N_old+2*i+1) < N; ++i)
-			if (isprime[i])
+		for (; sqr(N_old+2*i+1) < N; ++i) {
+			if (isprime[i]) {
+				v.push_back(N_old+2*i+1);
 				for (Long p = N_old+2*i+1, j = i+p; j < Nb; j += p)
 					isprime[j] = false;
-	for (Long i = 0; i < Nb; ++i)
+			}
+		}
+	for (; i < Nb; ++i)
 		if (isprime[i])
 			v.push_back(N_old+2*i+1);
 }
@@ -314,13 +319,11 @@ inline void primes_ext(vecLong_IO v, Long_I N)
 // get the at least first N prime numbers
 inline void primes2(vecLong_O v, Long_I Nprime)
 {
-	Long N = 2*Nprime, Nloop = 0;
+	Long N = 2*Nprime;
 	primes(v, N);
 	while (size(v) < Nprime) {
 		N = max(Long(N*1.1), N/size(v)*Nprime);
 		primes_ext(v, N);
-		++Nloop;
-		cout << "Nloop = " << Nloop << endl;
 	}
 }
 

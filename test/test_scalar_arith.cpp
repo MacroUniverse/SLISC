@@ -140,15 +140,16 @@ void test_scalar_arith()
 			877,881,883,887,907,911,919,929,937,941,
 			947,953,967,971,977,983,991,997};
 		primes(v, N);
+		// cout << v << endl;
 		SLS_ASSERT(v == v1);
 
 		primes(v, 50);
 		for (Long i = 100; i <= 1000; i+=100)
 			primes_ext(v, i);
 		SLS_ASSERT(v == v1);
-
-		// primes2(v, 10000000);
-		// cout << "v.size() = " << v.size() << endl;
-		// cout << "v.back() = " << v.back() << endl;
+		v.clear();
+		primes2(v, v1.size());
+		v.resize(v1.size());
+		SLS_ASSERT(v == v1);
 	}
 }
