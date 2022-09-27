@@ -48,7 +48,6 @@ void test_disjoint_sets()
 		SLS_ASSERT(s.num_set2() == 0);
 		Long N = 10;
 		vecLong v(N); randPerm(v);
-		disp(v);
 		for (Long i = 0; i < N; ++i) {
 			s.push(v[i]);
 			SLS_ASSERT(s.find(v[i]) == v[i]);
