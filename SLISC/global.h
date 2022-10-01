@@ -42,14 +42,20 @@
 #include <stack>
 #include <array>
 
+// compilers
 #ifdef _MSC_VER
 	#define SLS_USE_MSVC // using Microsoft Visual C++ compiler
 #elif defined (__INTEL_COMPILER)
 	#define SLS_USE_ICC // using Intel compiler (NOTE: __GNUC__ is also defined)
 #elif defined(__GNUC__)
 	#define SLS_USE_GCC // using GNU compiler
-#elif #if defined(__MINGW32__) || defined(__MINGW64__)
-	#define SLS_USE_MINGW
+#endif
+
+// platform
+#if defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__) || defined(_MSC_VER) || defined(_WIN32) || defined(_WIN64)
+	#define SLS_USE_WINDOWS
+#else
+	#define SLS_USE_LINUX
 #endif
 
 #ifdef SLS_USE_MKL

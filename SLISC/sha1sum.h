@@ -213,9 +213,11 @@ namespace slisc {
 	}
 
 	// sha1sum for file
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	inline Str sha1sum_f(Str_I fname) {
 		Str str;
 		read(str, fname);
 		return sha1sum(str);
 	}
+#endif
 } // namespace slisc

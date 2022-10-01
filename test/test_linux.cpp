@@ -1,11 +1,11 @@
-#if defined(SLS_USE_GCC) && !defined(SLS_USE_MINGW)
+#ifdef SLS_USE_LINUX
 #include "../SLISC/linux.h"
 #include <signal.h>
 #endif
 
 void test_linux()
 {
-#if defined(SLS_USE_GCC) && !defined(SLS_USE_MINGW)
+#ifdef SLS_USE_LINUX
 	using namespace slisc;
 	
 	// test exec_str()

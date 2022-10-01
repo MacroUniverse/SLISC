@@ -1,4 +1,6 @@
 #pragma once
+#include "global.h"
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 #include "time.h"
 #include "arithmetic.h"
 #include "linux.h"
@@ -861,3 +863,4 @@ inline void set_buff(ofstream &fout, Str_IO buffer)
 }
 
 } // namespace slisc
+#endif

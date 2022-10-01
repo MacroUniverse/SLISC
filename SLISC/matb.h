@@ -5,6 +5,8 @@
 #include "matt.h"
 #include "Bit.h"
 
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
+
 namespace slisc {
 
 // all non-data intergers in file are Llong
@@ -2776,3 +2778,4 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 }
 
 } // namespace slisc
+#endif

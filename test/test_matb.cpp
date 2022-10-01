@@ -5,6 +5,7 @@
 
 void test_matb()
 {
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 
 	// write to file
@@ -309,4 +310,5 @@ void test_matb()
 
 		matb.close();
 	}
+#endif
 }

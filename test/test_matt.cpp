@@ -3,6 +3,7 @@
 
 void test_matt()
 {
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 
 	// write to file
@@ -152,4 +153,5 @@ void test_matt()
 	if (norm(r_CC3) > 1e-15) SLS_FAIL;
 
 	matt.close();
+#endif
 }

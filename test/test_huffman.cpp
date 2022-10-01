@@ -2,6 +2,7 @@
 
 void test_huffman()
 {
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 	string str = {'a', 'b', 'c', 'd', 'e', 'f'};
 	vecLong freq = {5, 9, 12, 13, 16, 45};
@@ -13,4 +14,5 @@ void test_huffman()
 		Nbit += dict[str[i]].size() * freq[i];
 	}
 	SLS_ASSERT(Nbit == 224);
+#endif
 }

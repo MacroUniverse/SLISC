@@ -4,16 +4,16 @@
 #include <fstream>
 #include <locale>
 #include <codecvt>
-#ifdef SLS_USE_MSVC
-#include <Windows.h> // for console unicode output
-#undef max
-#undef min
+#ifdef SLS_USE_WINDOWS
+	#include <Windows.h> // for console unicode output
+	#undef max
+	#undef min
 #endif
 #include "string.h"
 #include "utfcpp/utf8.h"
 
-#ifdef SLS_USE_MSVC
-#define SLS_USE_UTFCPP
+#ifdef SLS_USE_WINDOWS
+	#define SLS_USE_UTFCPP
 #endif
 
 namespace slisc {
@@ -22,7 +22,7 @@ using std::stringstream;
 
 inline Long CRLF_to_LF(Str32_IO str);
 
-#ifdef SLS_USE_MSVC
+#ifdef SLS_USE_WINDOWS
 // set windows console to display utf-8
 struct set_windows_console_utf8 {
 	set_windows_console_utf8() {

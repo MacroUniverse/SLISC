@@ -3,6 +3,7 @@
 
 void test_file()
 {
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 	// file_list
 	vecStr names;
@@ -182,4 +183,5 @@ void test_file()
 		SLS_ASSERT(str1 == str2);
 		file_remove(file2);
 	}
+#endif
 }

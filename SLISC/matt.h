@@ -4,8 +4,9 @@
 #include "scalar_arith.h"
 #include "file.h"
 
-namespace slisc {
+#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 
+namespace slisc {
 // Matt class for text mode
 class Matt {
 public:
@@ -2322,5 +2323,6 @@ inline void load_matt(Cmat4Comp_O var, Str_I varname, Str_I matt_file)
 	matt.close();
 }
 
-
 } // namespace slisc
+
+#endif
