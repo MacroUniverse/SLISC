@@ -1,11 +1,11 @@
-#ifndef _MSC_VER
+#if defined(SLS_USE_GCC) && !defined(SLS_USE_MINGW)
 #include "../SLISC/linux.h"
 #include <signal.h>
 #endif
 
 void test_linux()
 {
-#ifndef _MSC_VER
+#if defined(SLS_USE_GCC) && !defined(SLS_USE_MINGW)
 	using namespace slisc;
 	
 	// test exec_str()

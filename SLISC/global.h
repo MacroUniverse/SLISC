@@ -43,11 +43,13 @@
 #include <array>
 
 #ifdef _MSC_VER
-#define SLS_USE_MSVC // using Microsoft Visual C++ compiler
+	#define SLS_USE_MSVC // using Microsoft Visual C++ compiler
 #elif defined (__INTEL_COMPILER)
-#define SLS_USE_ICC // using Intel compiler (NOTE: __GNUC__ is also defined)
+	#define SLS_USE_ICC // using Intel compiler (NOTE: __GNUC__ is also defined)
 #elif defined(__GNUC__)
-#define SLS_USE_GCC // using GNU compiler
+	#define SLS_USE_GCC // using GNU compiler
+#elif #if defined(__MINGW32__) || defined(__MINGW64__)
+	#define SLS_USE_MINGW
 #endif
 
 #ifdef SLS_USE_MKL

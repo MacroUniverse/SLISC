@@ -8,6 +8,7 @@ using namespace slisc;
 
 void test_sql_bind()
 {
+#ifdef SLS_USE_SQLITE
 	Str str;
 	sqlite3 *db;
 	vecStr res_name;
@@ -97,6 +98,7 @@ void test_sql_bind()
 	SLS_ASSERT(res_id[0] == 3);
 
 	sqlite3_close(db);
+#endif
 }
 
 void test_sqlite()
