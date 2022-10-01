@@ -1,14 +1,15 @@
 // linux utilities
 #pragma once
+#include "global.h"
+#include <iostream>
+#include <string>
+#include <sstream>
+
 #ifdef SLS_USE_LINUX
 #include <cstdio>
-#include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <string>
 #include <array>
-#include "global.h"
-#include <sstream>
 #include <unistd.h>
 
 namespace slisc {

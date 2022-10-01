@@ -13,5 +13,7 @@ void test_sha1sum() {
 
 	if (sha1sum_f("test/test_sha1sum.txt") != "f99cf75b4d3e9d76ce38a2d0cc88f23ae9e6b505")
 		SLS_FAIL;
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

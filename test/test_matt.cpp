@@ -153,5 +153,7 @@ void test_matt()
 	if (norm(r_CC3) > 1e-15) SLS_FAIL;
 
 	matt.close();
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

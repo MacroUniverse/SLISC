@@ -14,5 +14,7 @@ void test_huffman()
 		Nbit += dict[str[i]].size() * freq[i];
 	}
 	SLS_ASSERT(Nbit == 224);
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

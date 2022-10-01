@@ -310,5 +310,7 @@ void test_matb()
 
 		matb.close();
 	}
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

@@ -24,5 +24,7 @@ void test_json()
 	data["menu"].erase("id");
 	data["menu"]["popup"]["menuitem"].erase(1);
 	// cout << data.dump(2) << endl;
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

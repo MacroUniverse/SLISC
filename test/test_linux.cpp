@@ -1,5 +1,5 @@
-#ifdef SLS_USE_LINUX
 #include "../SLISC/linux.h"
+#ifdef SLS_USE_LINUX
 #include <signal.h>
 #endif
 
@@ -58,5 +58,7 @@ void test_linux()
 #endif
 		delete [] s;
 	}
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }

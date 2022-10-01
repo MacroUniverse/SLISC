@@ -183,5 +183,7 @@ void test_file()
 		SLS_ASSERT(str1 == str2);
 		file_remove(file2);
 	}
+#else
+	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
