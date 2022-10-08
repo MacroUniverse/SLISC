@@ -23,6 +23,7 @@ Long slist_check(SNode *node);
 Long slist_size(SNode *head);
 SNode *slist_end(SNode *node);
 SNode *slist_locate(SNode *node, Long_I ind);
+SNode *slist_rlocate(SNode *node, Long_I ind);
 // edit
 SNode *slist_push(SNode* head, int val);
 void slist_insert_after(SNode* node, int val);
@@ -82,6 +83,22 @@ inline SNode *slist_locate(SNode *node, Long_I ind)
 	for (Long i = 0; i < ind; ++i)
 		node = node->next;
 	return node;
+}
+
+// reverse locate
+// ind = 1 for the last node
+// return NULL if out of bound
+// verified with leetcode 19
+inline SNode *slist_rlocate(SNode *node, Long_I ind)
+{
+    SNode *node0 = node;
+    for (Long i = 0; i < ind; ++i) {
+        if (node == NULL) return NULL;
+        node = node->next;
+    }
+    while (node)
+        node = node->next, node0 = node0->next;
+    return node0;
 }
 
 inline void slist_rand_perm(SNode *head, Long_I N)
@@ -154,6 +171,7 @@ inline void slist_insert_after(SNode* node, int val)
 	slist_insert_after(node, new_node);
 }
 
+// erase N nodes after node
 inline void slist_erase_after(SNode* node, Long N)
 {
 	if (N == 0) return;
