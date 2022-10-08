@@ -5,6 +5,7 @@
 namespace slisc {
 
 // single linked list node
+// each one must be created by `new`
 struct SNode {
 	int val;
 	SNode *next;
@@ -13,29 +14,45 @@ struct SNode {
 	SNode(int val, SNode *next): val(val), next(next) {};
 };
 
-// create, set, destroy
+// === create, set, destroy list ===
 SNode *slist_gen(Long_I N);
 void slist_rand_perm(SNode *head, Long_I N);
+// delete node and all nodes after
 void slist_delete(SNode *node);
-// query
+
+// === query ===
 void slist_print(SNode* node);
+// check loop in singly linked list for loop, return number of nodes
+// throw last node (node->next = old node) if there is a loop
 Long slist_check(SNode *node);
-Long slist_size(SNode *head);
-SNode *slist_end(SNode *node);
+Long slist_size(SNode *head); // # of nodes
+SNode *slist_end(SNode *node); // end node
+SNode *slist_end_size(Long_O N, SNode *node); // both size and end node
+// return node+i node, return NULL if out of bound
 SNode *slist_locate(SNode *node, Long_I ind);
-SNode *slist_rlocate(SNode *node, Long_I ind);
-// edit
-SNode *slist_push(SNode* head, int val);
+// return node-i node, return NULL if out of bound
+// node = NULL means one pass the end node
+SNode *slist_rlocate(SNode *beg, Long_I ind, SNode *node = NULL);
+
+// === edit ===
+// insert a node at the beginning of the linked list
+SNode *slist_push_front(SNode* head, int val);
 void slist_insert_after(SNode* node, int val);
 void slist_insert_after(SNode* node, SNode* new_node);
 void slist_insert_after(SNode* node, SNode* first, SNode* last);
-void slist_erase_after(SNode* node, Long N = -1);
-SNode *slist_split(SNode* head);
-// sort
+// erase 1 node after `node`
+void slist_erase_after(SNode* node);
+// erase N nodes after `node`, out of bound allowed
+void slist_erase_N_after(SNode* node, Long N);
+void slist_erase_all_after(SNode* node);
+// split into half and return the second head
+// if the length is odd, the extra node should go in the front list
+SNode *slist_split_half(SNode* head);
+// merge 2 sorted lists
 SNode *slist_merge_sorted(SNode* a, SNode* b);
-void slist_mergesort(SNode *&headRef);
+// sorts the linked list by changing links
+SNode *slist_mergesort(SNode *head);
 // ----------------------------------------
-
 
 // allocate singly linked list with values [0,1,...,N-1]
 // each node is allocated separately
@@ -49,17 +66,15 @@ inline SNode *slist_gen(Long_I N)
 	return head;
 }
 
-// delete singly linked list
-inline void slist_delete(SNode *node)
+inline void slist_delete(SNode *head)
 {
-	while (node != NULL) {
-		SNode *next = node->next;
-		delete node;
-		node = next;
+	while (head != NULL) {
+		SNode *next = head->next;
+		delete head;
+        head = next;
 	}
 }
 
-// check size of singly linked list
 inline Long slist_size(SNode *head)
 {
 	Long N = 0;
@@ -68,7 +83,6 @@ inline Long slist_size(SNode *head)
 	return N;
 }
 
-// return the last node of singly linked list
 inline SNode *slist_end(SNode *node)
 {
 	if (node == NULL) return NULL;
@@ -77,27 +91,39 @@ inline SNode *slist_end(SNode *node)
 	return node;
 }
 
-// return node + i node of singly linked list
+// return the last node and size of singly linked list
+inline SNode *slist_end_size(Long_O N, SNode *node)
+{
+    if (node == NULL) { N = 0; return NULL; }
+    N = 1;
+    while (node->next != NULL) {
+        node = node->next; ++N;
+    }
+    return node;
+}
+
 inline SNode *slist_locate(SNode *node, Long_I ind)
 {
-	for (Long i = 0; i < ind; ++i)
-		node = node->next;
+	for (Long i = 0; i < ind; ++i) {
+        if (node == NULL) return NULL;
+        node = node->next;
+    }
 	return node;
 }
 
 // reverse locate
 // ind = 1 for the last node
 // return NULL if out of bound
-// verified with leetcode 19
-inline SNode *slist_rlocate(SNode *node, Long_I ind)
+// (verified with leetcode 19)
+inline SNode *slist_rlocate(SNode *beg, Long_I ind, SNode *node)
 {
-    SNode *node0 = node;
+    SNode *node0 = beg;
     for (Long i = 0; i < ind; ++i) {
-        if (node == NULL) return NULL;
-        node = node->next;
+        if (beg == node) return NULL;
+        beg = beg->next;
     }
-    while (node)
-        node = node->next, node0 = node0->next;
+    while (beg != node)
+        beg = beg->next, node0 = node0->next;
     return node0;
 }
 
@@ -128,8 +154,6 @@ inline void slist_print(SNode* node)
 	cout << endl;
 }
 
-// check loop in singly linked list, return number of nodes
-// throw last node (node->next = old node) if there is a loop
 inline Long slist_check(SNode *node)
 {
 	unordered_set<SNode*> uset;
@@ -145,8 +169,7 @@ inline Long slist_check(SNode *node)
 	return uset.size();
 }
 
-// insert a node at the beginning of the linked list
-inline SNode *slist_push(SNode* head, int val)
+inline SNode *slist_push_front(SNode* head, int val)
 {
 	SNode* new_node = new SNode;
 	new_node->val = val; new_node->next = head;
@@ -171,16 +194,21 @@ inline void slist_insert_after(SNode* node, int val)
 	slist_insert_after(node, new_node);
 }
 
-// erase N nodes after node
-inline void slist_erase_after(SNode* node, Long N)
+inline void slist_erase_after(SNode* node)
+{
+    if (node == NULL) return;
+    SNode *node0 = node; node = node->next;
+    if (node == NULL) return;
+    node0->next = node->next;
+    delete node;
+}
+
+inline void slist_erase_N_after(SNode* node, Long N)
 {
 	if (N == 0) return;
 	SNode *node0 = node; node = node->next;
-	if (N < 0) { // erase all nodes after
-		slist_delete(node); node0->next = NULL;
-		return;
-	}
 	for (Long i = 0; i < N; ++i) {
+        if (node == NULL) break;
 		SNode *next = node->next;
 		delete node;
 		node = next;
@@ -188,11 +216,14 @@ inline void slist_erase_after(SNode* node, Long N)
 	node0->next = node;
 }
 
-/* Split the nodes of the given list into front and back halves,
-and return the head of the second list.
-If the length is odd, the extra node should go in the front list.
-Uses the fast/slow pointer strategy. */
-inline SNode* slist_split(SNode* head)
+inline void slist_erase_all_after(SNode* node)
+{
+    if (node == NULL) return;
+    SNode *node0 = node; node = node->next;
+    slist_delete(node); node0->next = NULL;
+}
+
+inline SNode* slist_split_half(SNode* head)
 {
 	SNode* slow = head;
 	SNode* fast = head->next;
@@ -210,17 +241,15 @@ inline SNode* slist_split(SNode* head)
 
 // merge 2 sorted singly linked list
 // verified in leetcode 148
-inline SNode* slist_merge_sorted(SNode* a, SNode* b)
+inline SNode *slist_merge_sorted(SNode* a, SNode* b)
 {
-	if (a == NULL) return (b);
-	if (b == NULL) return (a);
+	if (a == NULL) return b;
+	if (b == NULL) return a;
 	SNode *head, *node;
-	if (a->val < b->val) {
-		head = node = a; a = a->next;
-	}
-	else {
-		head = node = b; b = b->next;
-	}
+	if (a->val < b->val)
+		head = node = a, a = a->next;
+	else
+		head = node = b, b = b->next;
 	while (1) {
 		if (a == NULL) {
 			node->next = b; break;
@@ -228,26 +257,22 @@ inline SNode* slist_merge_sorted(SNode* a, SNode* b)
 		if (b == NULL) {
 			node->next = a; break;
 		}
-		if (a->val < b->val) {
-			node = (node->next = a); a = a->next;
-		}
-		else {
-			node = (node->next = b); b = b->next;
-		}
+		if (a->val < b->val)
+			node = (node->next = a), a = a->next;
+		else
+			node = (node->next = b), b = b->next;
 	}
 	return head;
 }
 
-/* sorts the linked list by changing next pointers (not data) */
-inline void slist_mergesort(SNode *&headRef)
+inline SNode* slist_mergesort(SNode *head)
 {
-	SNode* head = headRef;
 	if (head == NULL || head->next == NULL)
-		return;
-	SNode* head1 = slist_split(head);
-	slist_mergesort(head);
-	slist_mergesort(head1);
-	headRef = slist_merge_sorted(head, head1);
+		return head;
+	SNode* head1 = slist_split_half(head);
+    head = slist_mergesort(head);
+    head1 = slist_mergesort(head1);
+    return slist_merge_sorted(head, head1);
 }
 
 } // namespace slisc
