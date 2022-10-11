@@ -2,7 +2,6 @@
 #include "compare.h"
 #include "arithmetic.h"
 #include "unicode.h"
-#include "heap.h"
 
 namespace slisc {
 
@@ -275,7 +274,7 @@ void quicksort_3mid(T &a, T &b, T &c) {
 	}
 	else {
 		if (b < c) swap(a, c);
-		else if (b > a) ;
+		else if (b > a);
 		else swap(a, b);
 	}
 }
@@ -310,8 +309,7 @@ void quicksort3(T *v, Long N)
 	while (1) {
 		while (i < N && v[i] <= pivot) ++i;
 		while (v[j] > pivot) --j;
-		if (j <= i || i == N || j < 1)
-			break;
+		if (j <= i) break;
 		swap(v[i], v[j]);
 	}
 	swap(v[0], v[i-1]);
@@ -335,8 +333,7 @@ inline void quicksort3(T *v, T1 *v1, Long N)
 	while (1) {
 		while (i < N && v[i] <= pivot) ++i;
 		while (v[j] > pivot) --j;
-		if (j <= i || i == N || j < 1)
-			break;
+		if (j <= i) break;
 		swap(v[i], v[j]); swap(v1[i], v1[j]);
 	}
 	swap(v[0], v[i-1]); swap(v1[0], v1[i-1]);
@@ -406,20 +403,6 @@ void mergesort(T *v, Long N, T *wsp)
 	}
 	if (i != N1)
 		memcpy(v+ind, wsp+i, Tsize*(N1-i));
-}
-
-// Main function to do heap sort
-template <class T>
-inline void heapsort(T *v, Long N)
-{
-	// make max heap
-	for (Long i = N / 2 - 1; i >= 0; i--)
-		heapify(v, N, i);
-	// sort loop
-	for (Long i = N - 1; i >= 0; i--) {
-		swap(v[0], v[i]);
-		heapify(v, i, 0);
-	}
 }
 
 // find smallest Nmin elements
