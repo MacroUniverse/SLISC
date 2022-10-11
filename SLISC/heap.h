@@ -7,7 +7,7 @@ namespace slisc {
     // `heapify` will make the tree a max tree
     // left = 2*node + 1, right = 2*node + 2;
     template <class T>
-    void heapify(T *v, Long N, Long node)
+    inline void heapify(T *v, Long N, Long node)
     {
         // Find largest among root (node), left child and right child
         Long imax = node, left = 2*node + 1, right = left + 1;

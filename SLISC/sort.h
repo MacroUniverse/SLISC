@@ -2,6 +2,7 @@
 #include "compare.h"
 #include "arithmetic.h"
 #include "unicode.h"
+#include "heap.h"
 
 namespace slisc {
 
@@ -268,7 +269,7 @@ inline void sort_case_insens(vecStr_IO v, vecLlong_IO v1)
 template <class T>
 void quicksort_3mid(T &a, T &b, T &c) {
 	if (a < c) {
-		if (b < a) ;
+		if (b < a);
 		else if (b > c) swap(a, c);
 		else swap(a, b);
 	}
@@ -283,13 +284,13 @@ void quicksort_3mid(T &a, T &b, T &c) {
 template <class T>
 void quicksort_3mid(T &a, T &b, T &c, T &a1, T &b1, T &c1) {
 	if (a < c) {
-		if (b < a) ;
+		if (b < a);
 		else if (b > c) swap(a, c), swap(a1, c1);
 		else swap(a, b), swap(a1, b1);
 	}
 	else {
 		if (b < c) swap(a, c), swap(a1, c1);
-		else if (b > a) ;
+		else if (b > a);
 		else swap(a, b), swap(a1, b1);
 	}
 }

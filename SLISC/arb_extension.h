@@ -5,15 +5,17 @@
 
 namespace slisc {
 
+#if __ARB_VERSION == 2 && __ARB_VERSION_MINOR <= 19
 // similar to arb_get_str()
-/* inline char * arf_get_str(const arf_t x, slong prec)
+inline char * arf_get_str(const arf_t x, slong prec)
 {
 	arb_t y; arb_init(y);
 	arb_set_arf(y, x);
 	char *p = arb_get_str(y, prec, ARB_STR_MORE);
 	arb_clear(y);
 	return p;
-} */
+}
+#endif
 
 #ifdef SLS_USE_QUAD_MATH
 // get a quad precision number from arf_t type
