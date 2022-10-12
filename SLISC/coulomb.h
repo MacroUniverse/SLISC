@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "compare.h"
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint.h>
@@ -67,6 +67,29 @@ inline Comp acb_coulombF(Comp_I l, Comp_I eta, Comp_I x)
 	acb_clear(l1); acb_clear(eta1); acb_clear(x1); acb_clear(F1);
 	arb_clear(F1_re); arb_clear(F1_im);
 	return F;
+}
+
+inline Doub arb_gamma(Doub_I x)
+{
+	slong prec = 80; // set precision bit (log10/log2 = 3.322)
+	Doub res = 0;
+	arb_t x1, res1;
+	arb_init(x1); arb_init(res1);
+	// can use _arb_init_set_d() instead
+	arb_set_d(x1, x);
+	Int digits;
+	for (Long i = 0; i < 6; ++i) {
+		arb_gamma(res1, x1, prec);
+		digits = floor(arb_rel_accuracy_bits(res1)/3.321928);
+		if (digits >= 16)
+			break;
+		prec *= 2;
+	}
+	if (digits < 16)
+		SLS_ERR("arb_gamma error too large : " + num2str(digits) + " digits");
+	res = arf_get_d(arb_midref(res1), ARF_RND_NEAR);
+	arb_clear(x1); arb_clear(res1);
+	return res;
 }
 
 inline Comp arb_gamma(Comp_I z)
