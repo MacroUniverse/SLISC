@@ -1,5 +1,6 @@
 #pragma once
 #include "compare.h"
+#include "scalar_arith.h"
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint.h>
@@ -118,6 +119,29 @@ inline Comp arb_gamma(Comp_I z)
 	return res;
 }
 
+inline Doub arb_lngamma(Doub_I x)
+{
+	slong prec = 80; // set precision bit (log10/log2 = 3.322)
+	Doub res = 0;
+	arb_t x1, res1;
+	arb_init(x1); arb_init(res1);
+	// can use _arb_init_set_d() instead
+	arb_set_d(x1, x);
+	Int digits;
+	for (Long i = 0; i < 6; ++i) {
+		arb_lgamma(res1, x1, prec);
+		digits = floor(arb_rel_accuracy_bits(res1)/3.321928);
+		if (digits >= 16)
+			break;
+		prec *= 2;
+	}
+	if (digits < 16)
+		SLS_ERR("arb_gamma error too large : " + num2str(digits) + " digits");
+	res = arf_get_d(arb_midref(res1), ARF_RND_NEAR);
+	arb_clear(x1); arb_clear(res1);
+	return res;
+}
+
 inline Comp arb_lngamma(Comp_I z)
 {
 	slong prec = 80;
@@ -141,6 +165,10 @@ inline Comp arb_lngamma(Comp_I z)
 	acb_get_imag(temp1, res1);
 	res.imag(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
 	acb_clear(z1); acb_clear(res1); arb_clear(temp1);
+
+	res.imag(mod_fl(res.imag(), 2*PI));
+	if (res.imag() > PI)
+		res.imag(res.imag() - 2*PI);
 	return res;
 }
 
