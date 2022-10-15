@@ -1,3 +1,6 @@
+// support for float128 type
+// c++ wrapper for fmpz_t, arf_t, and arb_t
+
 #pragma once
 #include "Bit.h"
 #include "arf.h"
@@ -148,8 +151,6 @@ inline Str to_string(const Bint &x)
 	Str str(s); free(s);
 	return str;
 }
-
-inline void clear(Bint_O x) { fmpz_clear(x.m_n); }
 
 // compare
 inline Bool operator==(Bint_I x, Bint_I y)
