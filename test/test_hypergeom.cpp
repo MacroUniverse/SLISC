@@ -17,5 +17,7 @@ void test_hypergeom()
 	Comp val1(1.143503984180676, 3.224470526790991);
 	if (abs((arb_hypergeom1F1(Comp(1.23,1.23),Comp(1.23,1.23),Comp(1.23,1.23)) - val1)/val1) > 1e-14)
 		SLS_FAIL;
+#else
+    cout << "---------- disabled! ----------" << endl;
 #endif
 }

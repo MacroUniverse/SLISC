@@ -4,7 +4,7 @@
 
 #define SLS_TEST(name) do{ if (test_name.empty() || test_name == #name) {void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} } while(0)
 
-#ifdef _MSC_VER
+#ifdef SLS_USE_MSVC
 slisc::turn_on_floating_exceptions yes_turn_on_floating_exceptions;
 slisc::set_windows_console_utf8 yes_set_windows_console_utf8;
 #endif
