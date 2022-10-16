@@ -317,7 +317,14 @@ typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
 
 // TODO: using static variable is not thread-safe, need to think about the precision machenism
-inline Llong arb_prec() { return 5000; }
+inline Llong arb_prec(Llong_I new_prec = -1)
+{
+	static Llong prec = 128;
+	if (new_prec > 1)
+		prec = new_prec;
+	return prec;
+}
+
 inline arf_rnd_t arb_rnd() { return ARF_RND_NEAR; }
 
 inline Str to_string(Breal_I x, Long_I digits = 4)

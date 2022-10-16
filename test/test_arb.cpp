@@ -30,6 +30,15 @@ void test_arb()
 	// arf_t f;
 	// arf_set(f, &a[0].mid);
 
+	{
+		arb_t a; arb_init(a);
+		arb_const_pi(a, 300);
+		char *cs;
+		Str str = cs = arb_get_str(a, 100, ARB_STR_MORE);
+		cout << str << endl;
+		free(cs); arb_clear(a);
+	}
+
 #ifdef SLS_USE_QUAD_MATH
 	// test my arf_get_q() fun
 	arb_init(a); prec = 150;
@@ -73,7 +82,7 @@ void test_arb()
 
 	// test arf_t wrapper
 	{
-		Breal x(PI), y("1.23456789e-2"), z;
+		Breal x(PI), y("1.234567890223456789032345678904234567890e-2"), z;
 		add(z, x, y);
 		// cout << to_string(z) << endl;
 		add(z, z, y);
