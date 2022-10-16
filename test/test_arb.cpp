@@ -73,7 +73,7 @@ void test_arb()
 
 	// test arf_t wrapper
 	{
-		Breal x(PI), y(1.23456789e-2), z;
+		Breal x(PI), y("1.23456789e-2"), z;
 		add(z, x, y);
 		// cout << to_string(z) << endl;
 		add(z, z, y);
