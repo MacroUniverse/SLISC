@@ -47,6 +47,7 @@ void test_arb()
 	arf_get_q(v, arb_midref(a), ARF_RND_NEAR);
 	SLS_ASSERT(std::quad2str(v, 36) == Str("1.23456789022345678903234567890423455e+123"));
 	arb_clear(a);
+
 	arf_t af; arf_init(af);
 	arf_set_q(af, 1.23456789022345678903234567890423455e+123Q);
 	arf_clear(af);
@@ -82,7 +83,8 @@ void test_arb()
 
 	// test arf_t wrapper
 	{
-		Breal x(PI), y("1.23456789022345678903234567890423456789e-2",  200), z;
+		arb_prec(200);
+		Breal x(PI), y("1.23456789022345678903234567890423456789e-2"), z;
         SLS_ASSERT(to_string(y, 42) == "0.0123456789022345678903234567890423456789000");
 		add(z, x, y);
 		// cout << to_string(z) << endl;

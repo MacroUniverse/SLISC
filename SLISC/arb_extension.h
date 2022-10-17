@@ -23,9 +23,12 @@ inline char * arf_get_str(const arf_t x, slong prec)
 inline int arf_set_str(arf_t res, const char * inp, slong prec)
 {
     arb_t y; arb_init(y);
-    if (arb_set_str(y, inp, prec))
+    if (arb_set_str(y, inp, prec)) {
+		arb_clear(y);
         return 1;
+	}
     arf_set(res, &y->mid);
+	arb_clear(y);
     return 0;
 }
 
@@ -44,17 +47,24 @@ inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
 	arf_set_round(t, x, 113, rnd);
 	ARF_GET_MPN_READONLY(tp, tn, t);
 	if (tn == 1)
-		v = (Qdoub)(tp[0]);
+		// FLINT_BITS is # of bits in each limb, i.e. sizeof(mp_limb_t)*8
+		v = Qdoub(tp[0])*ldexpq(1,-FLINT_BITS);
 	else if (tn == 2)
-		v = (Qdoub)(tp[1]) + (Qdoub)(tp[0]) * ldexpq(1,-FLINT_BITS); // FLINT_BITS is # of bits in each limb, i.e. sizeof(mp_limb_t)*8
+		v = Qdoub(tp[1])*ldexpq(1,-FLINT_BITS) +
+			Qdoub(tp[0])*ldexpq(1,-2*FLINT_BITS);
 	else if (tn == 3)
-		v = (Qdoub)(tp[2]) + (Qdoub)(tp[1]) * ldexpq(1,-FLINT_BITS) + (Qdoub)(tp[0]) * ldexpq(1,-2*FLINT_BITS);
+		v = Qdoub(tp[2])*ldexpq(1,-FLINT_BITS) +
+			Qdoub(tp[1])*ldexpq(1,-2*FLINT_BITS) +
+			Qdoub(tp[0])*ldexpq(1,-3*FLINT_BITS);
 	else if (tn == 4)
-		v = (Qdoub)(tp[3]) + (Qdoub)(tp[2]) * ldexpq(1,-FLINT_BITS) + (Qdoub)(tp[1]) * ldexpq(1,-2*FLINT_BITS) + (Qdoub)(tp[0]) * ldexpq(1,-3*FLINT_BITS);
+		v = Qdoub(tp[3])*ldexpq(1,-FLINT_BITS) +
+			Qdoub(tp[2])*ldexpq(1,-2*FLINT_BITS) +
+			Qdoub(tp[1])*ldexpq(1,-3*FLINT_BITS) +
+			Qdoub(tp[0])*ldexpq(1,-4*FLINT_BITS);
 	else
 		SLS_ERR("not implemented!");
 
-	v = ldexpq(v, ARF_EXP(t) - FLINT_BITS);
+	v = ldexpq(v, ARF_EXP(t));
 
 	if (ARF_SGNBIT(t)) // 1 for negative
 		v = -v;
