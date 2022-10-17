@@ -373,6 +373,21 @@ struct Areal {
 		// printf("Areal: default init called.\n");
 		arb_init(m_n);
 	}
+    Areal(arb_t val)
+    {
+        // printf("Areal: arb_t init called.\n");
+        arb_init(m_n); arb_set(m_n, val);
+    }
+    Areal(arf_t val)
+    {
+        // printf("Areal: arf_t init called.\n");
+        arb_init(m_n); arb_set_arf(m_n, val);
+    }
+    Areal(Breal_I val)
+    {
+        // printf("Areal: Breal init called.\n");
+        arb_init(m_n); arb_set_arf(m_n, val.m_n);
+    }
 	Areal(Doub_I val)
 	{
 		// printf("Areal: Doub init called.\n");
@@ -471,21 +486,6 @@ inline void asin(Areal_O y, Areal_I x)
 inline void acos(Areal_O y, Areal_I x)
 { arb_acos(y.m_n, x.m_n, arb_prec()); }
 
-inline void const_pi(Areal_O z)
-{ arb_const_pi(z.m_n, arb_prec()); }
-
-inline void const_e(Areal_O z)
-{ arb_const_e(z.m_n, arb_prec()); }
-
-inline void const_sqrt_pi(Areal_O z)
-{ arb_const_sqrt_pi(z.m_n, arb_prec()); }
-
-inline void const_log2(Areal_O z)
-{ arb_const_log2(z.m_n, arb_prec()); }
-
-inline void const_log10(Areal_O z)
-{ arb_const_log10(z.m_n, arb_prec()); }
-
 // y = x * 2^e
 inline void ldexp(Areal_O y, Areal_I x, Bint_I e)
 { arb_mul_2exp_fmpz(y.m_n, x.m_n, e.m_n); }
@@ -505,5 +505,23 @@ inline void gamma(Areal_O z, Areal_I x)
 
 inline void digamma(Areal_O z, Areal_I x)
 { arb_digamma(z.m_n, x.m_n, arb_prec()); }
+
+// constants
+
+inline void const_pi(Areal_O z)
+{ arb_const_pi(z.m_n, arb_prec()); }
+
+inline void const_e(Areal_O z)
+{ arb_const_e(z.m_n, arb_prec()); }
+
+inline void const_sqrt_pi(Areal_O z)
+{ arb_const_sqrt_pi(z.m_n, arb_prec()); }
+
+inline void const_log2(Areal_O z)
+{ arb_const_log2(z.m_n, arb_prec()); }
+
+inline void const_log10(Areal_O z)
+{ arb_const_log10(z.m_n, arb_prec()); }
+
 
 } // namespace slisc
