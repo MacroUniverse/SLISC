@@ -283,6 +283,23 @@ inline void abs(Bint_O y, Bint_I x)
 inline void pow(Bint_O z, Bint_I x, Llong_I y)
 { assert(y >= 0); fmpz_pow_ui(z.m_n, x.m_n, y); }
 
+
+// TODO: using static variable is not thread-safe, need to think about the precision machenism
+inline Llong arb_prec(Llong_I new_prec = -1)
+{
+	static Llong prec = 128;
+	if (new_prec > 1)
+		prec = new_prec;
+	return prec;
+}
+
+// arb_prec() in decimal
+inline Llong arb_digits(Llong_I new_digit = -1)
+{
+	const Doub log2_10 = 3.32192809489;
+	return floor(arb_prec(ceil(new_digit * log2_10)) / log2_10);
+}
+
 // arf_t: arbitrary precision floating point numbers
 // https://arblib.org/arf.html
 struct Breal {
@@ -297,10 +314,10 @@ struct Breal {
 		// printf("Breal: Doub init called.\n");
 		arf_init(m_n); arf_set_d(m_n, val);
 	}
-    Breal(Str_I str, Int_I prec = 10)
+    Breal(Str_I str)
     {
         // printf("Breal: Str init called.\n");
-        arf_init(m_n); arf_set_str(m_n, str.c_str(), prec);
+        arf_init(m_n); arf_set_str(m_n, str.c_str(), arb_prec());
     }
 	Breal(const Breal &x) // copy constructor
 	{
@@ -324,15 +341,6 @@ struct Breal {
 
 typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
-
-// TODO: using static variable is not thread-safe, need to think about the precision machenism
-inline Llong arb_prec(Llong_I new_prec = -1)
-{
-	static Llong prec = 128;
-	if (new_prec > 1)
-		prec = new_prec;
-	return prec;
-}
 
 inline arf_rnd_t arb_rnd() { return ARF_RND_NEAR; }
 
