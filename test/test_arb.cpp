@@ -32,10 +32,10 @@ void test_arb()
 
 	{
 		arb_t a; arb_init(a);
-		arb_const_pi(a, 300);
+		arb_const_pi(a, 32);
 		char *cs;
-		Str str = cs = arb_get_str(a, 100, ARB_STR_MORE);
-		cout << str << endl;
+		Str str = cs = arb_get_str(a, 11, ARB_STR_MORE);
+        SLS_ASSERT(str.substr(0, 13) == "[3.1415926535");
 		free(cs); arb_clear(a);
 	}
 
@@ -82,7 +82,8 @@ void test_arb()
 
 	// test arf_t wrapper
 	{
-		Breal x(PI), y("1.234567890223456789032345678904234567890e-2"), z;
+		Breal x(PI), y("1.23456789022345678903234567890423456789e-2",  200), z;
+        SLS_ASSERT(to_string(y, 42) == "0.0123456789022345678903234567890423456789000");
 		add(z, x, y);
 		// cout << to_string(z) << endl;
 		add(z, z, y);

@@ -20,6 +20,15 @@ inline char * arf_get_str(const arf_t x, slong prec)
 }
 #endif
 
+inline int arf_set_str(arf_t res, const char * inp, slong prec)
+{
+    arb_t y; arb_init(y);
+    if (arb_set_str(y, inp, prec))
+        return 1;
+    arf_set(res, &y->mid);
+    return 0;
+}
+
 #ifdef SLS_USE_QUAD_MATH
 // get a quad precision number from arf_t type
 // similar to arf_get_d()
@@ -288,11 +297,11 @@ struct Breal {
 		// printf("Breal: Doub init called.\n");
 		arf_init(m_n); arf_set_d(m_n, val);
 	}
-	// Breal(Str_I str, Int_I base = 10)
-	// {
-	// 	// printf("Breal: Str init called.\n");
-	// 	arf_init(m_n); arf_set_str(m_n, str.c_str(), base);
-	// }
+    Breal(Str_I str, Int_I prec = 10)
+    {
+        // printf("Breal: Str init called.\n");
+        arf_init(m_n); arf_set_str(m_n, str.c_str(), prec);
+    }
 	Breal(const Breal &x) // copy constructor
 	{
 		// printf("Breal: copy constructor called.\n");
