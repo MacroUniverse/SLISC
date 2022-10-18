@@ -351,7 +351,7 @@ inline Str to_string(Breal_I x, Llong_I digits = 10)
 	return str;
 }
 
-std::ostream &operator<<(std::ostream &os, Breal_I x) {
+inline std::ostream &operator<<(std::ostream &os, Breal_I x) {
     cout << to_string(x) << endl;
     return os;
 }
@@ -415,7 +415,7 @@ inline Str to_string(Areal_I x, Llong_I digits = -1)
 	return str;
 }
 
-std::ostream &operator<<(std::ostream &os, Areal_I x) {
+inline std::ostream &operator<<(std::ostream &os, Areal_I x) {
     cout << to_string(x) << endl;
     return os;
 }
@@ -529,5 +529,30 @@ inline void gamma(Areal_O z, Areal_I x)
 
 inline void digamma(Areal_O z, Areal_I x)
 { arb_digamma(z.m_n, x.m_n, arb_prec()); }
+
+
+struct Acomp {
+	acb_t m_n;
+	// constructors
+	Acomp() { acb_init(m_n); }
+    Acomp(acb_t val) { acb_init(m_n); acb_set(m_n, val); }
+    // Acomp(arf_t val, arf_t val) { acb_init(m_n); acb_set_arf(m_n, val); }
+    Acomp(Breal_I val) { acb_init(m_n); acb_set_arb(m_n, val.m_n); }
+	// Acomp(Breal_I val, Breal_I val) { acb_init(m_n); acb_set_arf(m_n, val.m_n); }
+	// Acomp(Doub_I val, Doub_I val) {	acb_init(m_n); acb_set_d(m_n, val);	}
+	// e.g. for acb_prec(30), Acomp("1.23") will be [1.229999999999999999999999999999621 +/- 1.58e-30]
+	// Acomp(Str_I str) { acb_init(m_n); acb_set_str(m_n, str.c_str(), acb_prec()); }
+	Acomp(const Acomp &x) { acb_set(m_n, x.m_n); } // copy constructor
+	Acomp &operator=(const Acomp &rhs) // copy assignment
+	{ acb_set(m_n, rhs.m_n); return *this; }
+	// Acomp &operator=(Comp_I rhs) { acb_set_d_d(m_n, rhs.real(), rhs.imag()); return *this; }
+	// Acomp &operator=(Str_I rhs) { acb_set_str(m_n, rhs.c_str(), acb_prec()); return *this; }
+	~Acomp() { acb_clear(m_n); }
+};
+
+typedef const Acomp &Acomp_I;
+typedef Acomp &Acomp_O, &Acomp_IO;
+
+inline void clear(Acomp_O x) { acb_clear(x.m_n); }
 
 } // namespace slisc
