@@ -5,6 +5,7 @@
 #include <flint/fmpz.h>
 #include "arb_hypgeom.h"
 #include "../SLISC/arb_extension.h"
+#include "../SLISC/arb_spec_fun.h"
 #endif
 
 void test_arb()
@@ -102,6 +103,15 @@ void test_arb()
 	}
 
 	flint_cleanup(); // prevent memory leak
+
+	// test arb_spec_fun
+	{
+		// Areal x(1.525);
+		// cout << to_string(x, 100) << endl;
+
+		// Breal x("123.4567890223456789032345678904234567");
+		// cout << to_string(x, 100) << endl;
+	}
 #else
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif

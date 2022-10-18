@@ -172,6 +172,11 @@ inline Str to_string(const Bint &x)
 	return str;
 }
 
+std::ostream &operator<<(std::ostream &os, Bint_I x) {
+    cout << to_string(x) << endl;
+    return os;
+}
+
 // compare
 inline Bool operator==(Bint_I x, Bint_I y)
 { return fmpz_equal(x.m_n, y.m_n); }
@@ -339,11 +344,16 @@ struct Breal {
 typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
 
-inline Str to_string(Breal_I x, Long_I digits = 4)
+inline Str to_string(Breal_I x, Llong_I digits = 10)
 {
 	Char * s = arf_get_str(x.m_n, digits);
 	Str str(s); free(s);
 	return str;
+}
+
+std::ostream &operator<<(std::ostream &os, Breal_I x) {
+    cout << to_string(x) << endl;
+    return os;
 }
 
 inline void clear(Breal_O x) { arf_clear(x.m_n); }
@@ -391,6 +401,16 @@ typedef Areal &Areal_O, &Areal_IO;
 
 inline void clear(Areal_O x) { arb_clear(x.m_n); }
 
+// return std::numeric_limits<slong>::max() if radius is 0
+inline Llong get_prec(Areal_I x) { return arb_rel_accuracy_bits(x.m_n); }
+
+inline void print_rad(Areal_I x) { mag_print(arb_radref(x.m_n)); }
+
+inline void set_rad(Areal_IO x, Doub_I r) { mag_set_d(arb_radref(x.m_n), r); };
+
+inline void set_rad(Areal_IO x, ulong man, Bint_I exp) // set to `man * 2^exp`
+{ arb_radref(x.m_n)->man = man; fmpz_add_si(&arb_radref(x.m_n)->exp, exp.m_n, MAG_BITS); };
+
 inline void swap(Areal_IO x, Areal_IO y) { arb_swap(x.m_n, y.m_n); }
 
 inline Str to_string(Areal_I x, Llong_I digits = 10, ulong flag = ARB_STR_MORE)
@@ -398,6 +418,11 @@ inline Str to_string(Areal_I x, Llong_I digits = 10, ulong flag = ARB_STR_MORE)
 	Char *s = arb_get_str(x.m_n, digits, flag);
 	Str str(s); free(s);
 	return str;
+}
+
+std::ostream &operator<<(std::ostream &os, Areal_I x) {
+    cout << to_string(x) << endl;
+    return os;
 }
 
 inline void add(Areal_O z, Areal_I x, Areal_I y)
