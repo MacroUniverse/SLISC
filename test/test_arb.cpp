@@ -102,16 +102,29 @@ void test_arb()
 		// cout << to_string(z) << endl;
 	}
 
-	flint_cleanup(); // prevent memory leak
-
 	// test arb_spec_fun
 	{
-		// Areal x(1.525);
+		// Areal x, y, z;
+		// arb_digits(300);
+		// x = "1.23";
+		// cout << x << endl;
+
+		// arb_pi(x);
+		// arb_digits(300);
+		// arb_pi(y);
+		// add(z, x, y);
+		// cout << "z = " << z << endl;
+		// cout << get_digits(x) << endl;
+		// cout << get_digits(y) << endl;
+		// cout << get_digits(z) << endl;
+
 		// cout << to_string(x, 100) << endl;
 
 		// Breal x("123.4567890223456789032345678904234567");
 		// cout << to_string(x, 100) << endl;
 	}
+
+	flint_cleanup(); // prevent memory leak
 #else
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif

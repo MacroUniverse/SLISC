@@ -165,7 +165,7 @@ struct Bint
 typedef const Bint &Bint_I;
 typedef Bint &Bint_O, &Bint_IO;
 
-inline Str to_string(const Bint &x)
+inline Str to_string(Bint_I x)
 {
 	char *s; s = fmpz_get_str(NULL, 10, x.m_n);
 	Str str(s); free(s);
@@ -310,10 +310,10 @@ inline Llong arb_prec(Llong_I new_prec = -1)
 }
 
 // arb_prec() in decimal
-inline Llong arb_digits(Llong_I new_digit = -1)
+inline Doub arb_digits(Doub_I new_digit = -1)
 {
 	const Doub log2_10 = 3.32192809489;
-	return floor(arb_prec(ceil(new_digit * log2_10)) / log2_10);
+	return arb_prec(ceil(new_digit * log2_10)) / log2_10;
 }
 
 // arf_t: arbitrary precision floating point numbers
@@ -387,12 +387,13 @@ struct Areal {
     Areal(arf_t val) { arb_init(m_n); arb_set_arf(m_n, val); }
     Areal(Breal_I val) { arb_init(m_n); arb_set_arf(m_n, val.m_n); }
 	Areal(Doub_I val) {	arb_init(m_n); arb_set_d(m_n, val);	}
+	// e.g. for arb_prec(30), Areal("1.23") will be [1.229999999999999999999999999999621 +/- 1.58e-30]
 	Areal(Str_I str) { arb_init(m_n); arb_set_str(m_n, str.c_str(), arb_prec()); }
 	Areal(const Areal &x) { arb_set(m_n, x.m_n); } // copy constructor
 	Areal &operator=(const Areal &rhs) // copy assignment
 	{ arb_set(m_n, rhs.m_n); return *this; }
 	Areal &operator=(Doub_I rhs) { arb_set_d(m_n, rhs); return *this; }
-	Areal &operator=(Str_I rhs) { arb_set_str(m_n, rhs.c_str(), 10); return *this; }
+	Areal &operator=(Str_I rhs) { arb_set_str(m_n, rhs.c_str(), arb_prec()); return *this; }
 	~Areal() { arb_clear(m_n); }
 };
 
@@ -401,8 +402,23 @@ typedef Areal &Areal_O, &Areal_IO;
 
 inline void clear(Areal_O x) { arb_clear(x.m_n); }
 
-// return std::numeric_limits<slong>::max() if radius is 0
+// return ARF_PREC_EXACT i.e. std::numeric_limits<slong>::max() if radius is 0
+// defined as the difference between the top bit in the midpoint and the position of the top bit in the radius, minus one
 inline Llong get_prec(Areal_I x) { return arb_rel_accuracy_bits(x.m_n); }
+
+inline Doub get_digits(Areal_I x) { return get_prec(x) / 3.32192809489; }
+
+inline Str to_string(Areal_I x, Llong_I digits = -1)
+{
+	Char *s = arb_get_str(x.m_n, digits < 0 ? get_digits(x)+5 : digits, ARB_STR_MORE);
+	Str str(s); free(s);
+	return str;
+}
+
+std::ostream &operator<<(std::ostream &os, Areal_I x) {
+    cout << to_string(x) << endl;
+    return os;
+}
 
 inline void print_rad(Areal_I x) { mag_print(arb_radref(x.m_n)); }
 
@@ -413,38 +429,62 @@ inline void set_rad(Areal_IO x, ulong man, Bint_I exp) // set to `man * 2^exp`
 
 inline void swap(Areal_IO x, Areal_IO y) { arb_swap(x.m_n, y.m_n); }
 
-inline Str to_string(Areal_I x, Llong_I digits = 10, ulong flag = ARB_STR_MORE)
-{
-	Char *s = arb_get_str(x.m_n, digits, flag);
-	Str str(s); free(s);
-	return str;
-}
+// constants
 
-std::ostream &operator<<(std::ostream &os, Areal_I x) {
-    cout << to_string(x) << endl;
-    return os;
-}
+inline void arb_pi(Areal_O z) { arb_const_pi(z.m_n, arb_prec()); }
 
+inline void arb_e(Areal_O z) { arb_const_e(z.m_n, arb_prec()); }
+
+inline void arb_sqrt_pi(Areal_O z) { arb_const_sqrt_pi(z.m_n, arb_prec()); }
+
+inline void arb_log2(Areal_O z) { arb_const_log2(z.m_n, arb_prec()); }
+
+inline void arb_log10(Areal_O z) { arb_const_log10(z.m_n, arb_prec()); }
+
+// + - * /
 inline void add(Areal_O z, Areal_I x, Areal_I y)
 { arb_add(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void add(Areal_O z, Areal_I x, Llong_I y)
+{ arb_add_si(z.m_n, x.m_n, y, arb_prec()); }
 
 inline void sub(Areal_O z, Areal_I x, Areal_I y)
 { arb_sub(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
+inline void sub(Areal_O z, Areal_I x, Llong_I y)
+{ arb_sub_si(z.m_n, x.m_n, y, arb_prec()); }
+
 inline void mul(Areal_O z, Areal_I x, Areal_I y)
 { arb_mul(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void mul(Areal_O z, Areal_I x, Llong_I y)
+{ arb_mul_si(z.m_n, x.m_n, y, arb_prec()); }
 
 inline void div(Areal_O z, Areal_I x, Areal_I y)
 { arb_div(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
-inline void sqrt(Areal_O y, Areal_I x)
-{ arb_sqrt(y.m_n, x.m_n, arb_prec()); }
+inline void div(Areal_O z, Areal_I x, Llong_I y)
+{ arb_div_si(z.m_n, x.m_n, y, arb_prec()); }
+
+// z += x*y
+inline void addmul(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_addmul(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void submul(Areal_IO z, Areal_I x, Areal_I y)
+{ arb_submul(z.m_n, x.m_n, y.m_n, arb_prec()); }
 
 inline void sqr(Areal_O y, Areal_I x)
 { arb_sqr(y.m_n, x.m_n, arb_prec()); }
 
 inline void pow(Areal_O z, Areal_I x, Areal_I y)
 { arb_pow(z.m_n, x.m_n, y.m_n, arb_prec()); }
+
+inline void inv(Areal_O z, Areal_I x)
+{ arb_inv(z.m_n, x.m_n, arb_prec()); }
+
+// basic fun
+inline void sqrt(Areal_O y, Areal_I x)
+{ arb_sqrt(y.m_n, x.m_n, arb_prec()); }
 
 inline void log(Areal_O y, Areal_I x)
 { arb_log(y.m_n, x.m_n, arb_prec()); }
@@ -483,32 +523,11 @@ inline void acos(Areal_O y, Areal_I x)
 inline void ldexp(Areal_O y, Areal_I x, Bint_I e)
 { arb_mul_2exp_fmpz(y.m_n, x.m_n, e.m_n); }
 
-// z += x*y
-inline void addmul(Areal_IO z, Areal_I x, Areal_I y)
-{ arb_addmul(z.m_n, x.m_n, y.m_n, arb_prec()); }
-
-inline void submul(Areal_IO z, Areal_I x, Areal_I y)
-{ arb_submul(z.m_n, x.m_n, y.m_n, arb_prec()); }
-
-inline void inv(Areal_O z, Areal_I x)
-{ arb_inv(z.m_n, x.m_n, arb_prec()); }
-
+// special fun
 inline void gamma(Areal_O z, Areal_I x)
 { arb_gamma(z.m_n, x.m_n, arb_prec()); }
 
 inline void digamma(Areal_O z, Areal_I x)
 { arb_digamma(z.m_n, x.m_n, arb_prec()); }
-
-// constants
-
-inline void arb_pi(Areal_O z) { arb_const_pi(z.m_n, arb_prec()); }
-
-inline void arb_e(Areal_O z) { arb_const_e(z.m_n, arb_prec()); }
-
-inline void arb_sqrt_pi(Areal_O z) { arb_const_sqrt_pi(z.m_n, arb_prec()); }
-
-inline void arb_log2(Areal_O z) { arb_const_log2(z.m_n, arb_prec()); }
-
-inline void arb_log10(Areal_O z) { arb_const_log10(z.m_n, arb_prec()); }
 
 } // namespace slisc
