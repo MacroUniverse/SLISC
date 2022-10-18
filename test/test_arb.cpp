@@ -7,11 +7,6 @@
 #include "../SLISC/arb_extension.h"
 #endif
 
-// void test_fun(int a[1])
-// {
-//     ++a[0];
-// }
-
 void test_arb()
 {
 #ifdef SLS_USE_ARB

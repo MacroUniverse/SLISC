@@ -11,7 +11,7 @@ namespace slisc {
 // __ARB_VERSION might not be defined in older versions
 #if !defined(__ARB_VERSION) || (__ARB_VERSION == 2 && __ARB_VERSION_MINOR <= 21)
 // similar to arb_get_str()
-inline char * arf_get_str(const arf_t x, slong prec)
+inline char *arf_get_str(const arf_t x, slong prec)
 {
 	arb_t y; arb_init(y);
 	arb_set_arf(y, x);
@@ -316,44 +316,28 @@ inline Llong arb_digits(Llong_I new_digit = -1)
 struct Breal {
 	arf_t m_n;
 	// constructors
-	Breal() {
-		// printf("Breal: default init called.\n");
-		arf_init(m_n);
-	}
-	Breal(Doub_I val)
-	{
-		// printf("Breal: Doub init called.\n");
-		arf_init(m_n); arf_set_d(m_n, val);
-	}
+	Breal() { arf_init(m_n); }
+	Breal(Doub_I val) { arf_init(m_n); arf_set_d(m_n, val); }
     Breal(Str_I str)
     {
-        // printf("Breal: Str init called.\n");
         arf_init(m_n); arf_set_str(m_n, str.c_str(), arb_prec());
     }
 	Breal(const Breal &x) // copy constructor
 	{
-		// printf("Breal: copy constructor called.\n");
 		arf_init(m_n); arf_set(m_n, x.m_n);
 	}
 	Breal &operator=(const Breal &rhs) // copy assignment
 	{
-		// printf("Breal: copy assignment called.\n");
 		arf_set(m_n, rhs.m_n); return *this;
 	}
 	Breal &operator=(Llong_I rhs) { arf_set_si(m_n, rhs); return *this; }
 	Breal &operator=(Doub_I rhs) { arf_set_d(m_n, rhs); return *this; }
-	// Breal &operator=(Str_I rhs) { arf_set_str(m_n, rhs.c_str(), 10); return *this; }
-
-	~Breal() {
-		// printf("Breal: destructor called.\n");
-		arf_clear(m_n);
-	}
+	Breal &operator=(Str_I rhs) { arf_set_str(m_n, rhs.c_str(), 10); return *this; }
+	~Breal() { arf_clear(m_n); }
 };
 
 typedef const Breal &Breal_I;
 typedef Breal &Breal_O, &Breal_IO;
-
-inline arf_rnd_t arb_rnd() { return ARF_RND_NEAR; }
 
 inline Str to_string(Breal_I x, Long_I digits = 4)
 {
@@ -371,69 +355,35 @@ inline Bool operator!=(Breal_I x, Breal_I y)
 { return !(x == y); }
 
 inline void add(Breal_O z, Breal_I x, Breal_I y)
-{ arf_add(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+{ arf_add(z.m_n, x.m_n, y.m_n, arb_prec(), ARF_RND_NEAR); }
 
 inline void sub(Breal_O z, Breal_I x, Breal_I y)
-{ arf_sub(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+{ arf_sub(z.m_n, x.m_n, y.m_n, arb_prec(), ARF_RND_NEAR); }
 
 inline void mul(Breal_O z, Breal_I x, Breal_I y)
-{ arf_mul(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+{ arf_mul(z.m_n, x.m_n, y.m_n, arb_prec(), ARF_RND_NEAR); }
 
 inline void div(Breal_O z, Breal_I x, Breal_I y)
-{ arf_div(z.m_n, x.m_n, y.m_n, arb_prec(), arb_rnd()); }
+{ arf_div(z.m_n, x.m_n, y.m_n, arb_prec(), ARF_RND_NEAR); }
 
 inline void sqrt(Breal_O y, Breal_I x)
-{ arf_sqrt(y.m_n, x.m_n, arb_prec(), arb_rnd()); }
+{ arf_sqrt(y.m_n, x.m_n, arb_prec(), ARF_RND_NEAR); }
 
 struct Areal {
 	arb_t m_n;
 	// constructors
-	Areal() {
-		// printf("Areal: default init called.\n");
-		arb_init(m_n);
-	}
-    Areal(arb_t val)
-    {
-        // printf("Areal: arb_t init called.\n");
-        arb_init(m_n); arb_set(m_n, val);
-    }
-    Areal(arf_t val)
-    {
-        // printf("Areal: arf_t init called.\n");
-        arb_init(m_n); arb_set_arf(m_n, val);
-    }
-    Areal(Breal_I val)
-    {
-        // printf("Areal: Breal init called.\n");
-        arb_init(m_n); arb_set_arf(m_n, val.m_n);
-    }
-	Areal(Doub_I val)
-	{
-		// printf("Areal: Doub init called.\n");
-		arb_init(m_n); arb_set_d(m_n, val);
-	}
-	Areal(Str_I str, Long_I prec = arb_prec())
-	{
-		// printf("Areal: Str init called.\n");
-		arb_init(m_n); arb_set_str(m_n, str.c_str(), prec);
-	}
-	Areal(const Areal &x) // copy constructor
-	{
-		// printf("Areal: copy constructor called.\n");
-		arb_set(m_n, x.m_n);
-	}
+	Areal() { arb_init(m_n); }
+    Areal(arb_t val) { arb_init(m_n); arb_set(m_n, val); }
+    Areal(arf_t val) { arb_init(m_n); arb_set_arf(m_n, val); }
+    Areal(Breal_I val) { arb_init(m_n); arb_set_arf(m_n, val.m_n); }
+	Areal(Doub_I val) {	arb_init(m_n); arb_set_d(m_n, val);	}
+	Areal(Str_I str) { arb_init(m_n); arb_set_str(m_n, str.c_str(), arb_prec()); }
+	Areal(const Areal &x) { arb_set(m_n, x.m_n); } // copy constructor
 	Areal &operator=(const Areal &rhs) // copy assignment
-	{
-		// printf("Areal: copy assignment called.\n");
-		arb_set(m_n, rhs.m_n); return *this;
-	}
+	{ arb_set(m_n, rhs.m_n); return *this; }
 	Areal &operator=(Doub_I rhs) { arb_set_d(m_n, rhs); return *this; }
 	Areal &operator=(Str_I rhs) { arb_set_str(m_n, rhs.c_str(), 10); return *this; }
-
-	~Areal() {
-		// printf("Areal: destructor called.\n");
-		arb_clear(m_n);
-	}
+	~Areal() { arb_clear(m_n); }
 };
 
 typedef const Areal &Areal_I;
@@ -441,12 +391,11 @@ typedef Areal &Areal_O, &Areal_IO;
 
 inline void clear(Areal_O x) { arb_clear(x.m_n); }
 
-inline void swap(Areal_IO x, Areal_IO y)
-{ arb_swap(x.m_n, y.m_n); }
+inline void swap(Areal_IO x, Areal_IO y) { arb_swap(x.m_n, y.m_n); }
 
 inline Str to_string(Areal_I x, Llong_I digits = 10, ulong flag = ARB_STR_MORE)
 {
-	Char * s = arb_get_str(x.m_n, digits, flag);
+	Char *s = arb_get_str(x.m_n, digits, flag);
 	Str str(s); free(s);
 	return str;
 }
@@ -527,20 +476,14 @@ inline void digamma(Areal_O z, Areal_I x)
 
 // constants
 
-inline void const_pi(Areal_O z)
-{ arb_const_pi(z.m_n, arb_prec()); }
+inline void arb_pi(Areal_O z) { arb_const_pi(z.m_n, arb_prec()); }
 
-inline void const_e(Areal_O z)
-{ arb_const_e(z.m_n, arb_prec()); }
+inline void arb_e(Areal_O z) { arb_const_e(z.m_n, arb_prec()); }
 
-inline void const_sqrt_pi(Areal_O z)
-{ arb_const_sqrt_pi(z.m_n, arb_prec()); }
+inline void arb_sqrt_pi(Areal_O z) { arb_const_sqrt_pi(z.m_n, arb_prec()); }
 
-inline void const_log2(Areal_O z)
-{ arb_const_log2(z.m_n, arb_prec()); }
+inline void arb_log2(Areal_O z) { arb_const_log2(z.m_n, arb_prec()); }
 
-inline void const_log10(Areal_O z)
-{ arb_const_log10(z.m_n, arb_prec()); }
-
+inline void arb_log10(Areal_O z) { arb_const_log10(z.m_n, arb_prec()); }
 
 } // namespace slisc
