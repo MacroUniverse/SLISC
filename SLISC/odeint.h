@@ -1,7 +1,8 @@
 // adapted from numerical recipes
-// #include "global.h"
+#pragma once
+#include "copy.h"
 
-// namespace slisc {
+namespace slisc {
 
 struct StepperBase {
 	Doub &x;
@@ -14,8 +15,8 @@ struct StepperBase {
 	Doub EPS;
 	Int n,neqn;
 	VecDoub yout,yerr;
-	StepperBase(VecDoub_IO &yy, VecDoub_IO &dydxx, Doub &xx, const Doub atoll,
-		const Doub rtoll, bool dens) : x(xx),y(yy),dydx(dydxx),atol(atoll),
+	StepperBase(VecDoub_IO &yy, VecDoub_IO dydxx, Doub &xx, Doub_I atoll,
+		Doub_I rtoll, bool dens) : x(xx),y(yy),dydx(dydxx),atol(atoll),
 		rtol(rtoll),dense(dens),n(y.size()),neqn(n),yout(n),yerr(n) {}
 };
 
@@ -208,31 +209,31 @@ struct StepperDopr853 : StepperBase, Dopr853_constants {
 	VecDoub yerr2;
 	VecDoub k2,k3,k4,k5,k6,k7,k8,k9,k10;
 	VecDoub rcont1,rcont2,rcont3,rcont4,rcont5,rcont6,rcont7,rcont8;
-	StepperDopr853(VecDoub_IO &yy, VecDoub_IO &dydxx, Doub &xx,
-		const Doub atoll, const Doub rtoll, bool dens);
-	void step(const Doub htry,D &derivs);
-	void dy(const Doub h,D &derivs);
-	void prepare_dense(const Doub h,VecDoub_I &dydxnew,D &derivs);
-	Doub dense_out(const Int i, const Doub x, const Doub h);
-	Doub error(const Doub h);
+	StepperDopr853(VecDoub_IO yy, VecDoub_IO dydxx, Doub &xx,
+		Doub_I atoll, Doub_I rtoll, bool dens);
+	void step(Doub_I htry,D &derivs);
+	void dy(Doub_I h,D &derivs);
+	void prepare_dense(Doub_I h,VecDoub_I &dydxnew,D &derivs);
+	Doub dense_out(const Int i, Doub_I x, Doub_I h);
+	Doub error(Doub_I h);
 	struct Controller {
 		Doub hnext,errold;
 		bool reject;
 		Controller();
-		bool success(const Doub err, Doub &h);
+		bool success(Doub_I err, Doub &h);
 	};
 	Controller con;
 };
 template <class D>
-StepperDopr853<D>::StepperDopr853(VecDoub_IO &yy,VecDoub_IO &dydxx,Doub &xx,
-	const Doub atoll,const Doub rtoll,bool dens) :
+StepperDopr853<D>::StepperDopr853(VecDoub_IO yy,VecDoub_IO dydxx,Doub &xx,
+	Doub_I atoll,Doub_I rtoll,bool dens) :
 	StepperBase(yy,dydxx,xx,atoll,rtoll,dens),yerr2(n),k2(n),k3(n),k4(n),
 	k5(n),k6(n),k7(n),k8(n),k9(n),k10(n),rcont1(n),rcont2(n),rcont3(n),
 	rcont4(n),rcont5(n),rcont6(n),rcont7(n),rcont8(n) {
 	EPS=numeric_limits<Doub>::epsilon();
 }
 template <class D>
-void StepperDopr853<D>::step(const Doub htry,D &derivs) {
+void StepperDopr853<D>::step(Doub_I htry,D &derivs) {
 	VecDoub dydxnew(n);
 	Doub h=htry;
 	for (;;) {
@@ -245,14 +246,14 @@ void StepperDopr853<D>::step(const Doub htry,D &derivs) {
 	derivs(x+h,yout,dydxnew);
 	if (dense)
 		prepare_dense(h,dydxnew,derivs);
-	dydx=dydxnew;
-	y=yout;
+	copy(dydx, dydxnew);
+	copy(y, yout);
 	xold=x;
 	x += (hdid=h);
 	hnext=con.hnext;
 }
 template <class D>
-void StepperDopr853<D>::dy(const Doub h,D &derivs) {
+void StepperDopr853<D>::dy(Doub_I h,D &derivs) {
 	VecDoub ytemp(n);
 	Int i;
 	for (i=0;i<n;i++)
@@ -305,7 +306,7 @@ void StepperDopr853<D>::dy(const Doub h,D &derivs) {
 	}
 }
 template <class D>
-void StepperDopr853<D>::prepare_dense(const Doub h,VecDoub_I &dydxnew,
+void StepperDopr853<D>::prepare_dense(Doub_I h,VecDoub_I &dydxnew,
 	D &derivs) {
 	Int i;
 	Doub ydiff,bspl;
@@ -347,19 +348,19 @@ void StepperDopr853<D>::prepare_dense(const Doub h,VecDoub_I &dydxnew,
 	}
 }
 template <class D>
-Doub StepperDopr853<D>::dense_out(const Int i,const Doub x,const Doub h) {
+Doub StepperDopr853<D>::dense_out(const Int i, Doub_I x, Doub_I h) {
 	Doub s=(x-xold)/h;
 	Doub s1=1.0-s;
 	return rcont1[i]+s*(rcont2[i]+s1*(rcont3[i]+s*(rcont4[i]+s1*(rcont5[i]+
 		s*(rcont6[i]+s1*(rcont7[i]+s*rcont8[i]))))));
 }
 template <class D>
-Doub StepperDopr853<D>::error(const Doub h) {
+Doub StepperDopr853<D>::error( Doub_I h) {
 	Doub err=0.0,err2=0.0,sk,deno;
 	for (Int i=0;i<n;i++) {
-		sk=atol+rtol*MAX(abs(y[i]),abs(yout[i]));
-		err2 += SQR(yerr[i]/sk);
-		err += SQR(yerr2[i]/sk);
+		sk=atol+rtol*max(abs(y[i]),abs(yout[i]));
+		err2 += sqr(yerr[i]/sk);
+		err += sqr(yerr2[i]/sk);
 	}
 	deno=err+0.01*err2;
 	if (deno <= 0.0)
@@ -369,7 +370,7 @@ Doub StepperDopr853<D>::error(const Doub h) {
 template <class D>
 StepperDopr853<D>::Controller::Controller() : reject(false), errold(1.0e-4) {}
 template <class D>
-bool StepperDopr853<D>::Controller::success(const Doub err, Doub &h) {
+bool StepperDopr853<D>::Controller::success(Doub_I err, Doub &h) {
 	static const Doub beta=0.0,alpha=1.0/8.0-beta*0.2,safe=0.9,minscale=0.333,
 		maxscale=6.0;
 	Doub scale;
@@ -382,14 +383,14 @@ bool StepperDopr853<D>::Controller::success(const Doub err, Doub &h) {
 			if (scale>maxscale) scale=maxscale;
 		}
 		if (reject)
-			hnext=h*MIN(scale,1.0);
+			hnext=h*min(scale,1.0);
 		else
 			hnext=h*scale;
-		errold=MAX(err,1.0e-4);
+		errold=max(err,1.0e-4);
 		reject=false;
 		return true;
 	} else {
-		scale=MAX(safe*pow(err,-alpha),minscale);
+		scale=max(safe*pow(err,-alpha),minscale);
 		h *= scale;
 		reject=true;
 		return false;
@@ -404,12 +405,12 @@ struct Output {
 	Int count;
 	Doub x1,x2,xout,dxout;
 	VecDoub xsave;
-	MatDoub ysave;
+	CmatDoub ysave;
 	Output() : kmax(-1),dense(false),count(0) {}
-	Output(const Int nsavee) : kmax(500),nsave(nsavee),count(0),xsave(kmax) {
+	Output(Int_I nsavee) : kmax(500),nsave(nsavee),count(0),xsave(kmax) {
 		dense = nsave > 0 ? true : false;
 	}
-	void init(const Int neqn, const Doub xlo, const Doub xhi) {
+	void init(const Int neqn, Doub_I xlo, Doub_I xhi) {
 		nvar=neqn;
 		if (kmax == -1) return;
 		ysave.resize(nvar,kmax);
@@ -427,28 +428,28 @@ struct Output {
 		xsave.resize(kmax);
 		for (Int k=0; k<kold; k++)
 			xsave[k]=tempvec[k];
-		MatDoub tempmat(ysave);
+		CmatDoub tempmat(ysave.n0(), ysave.n1()); copy(tempmat, ysave);
 		ysave.resize(nvar,kmax);
 		for (Int i=0; i<nvar; i++)
 			for (Int k=0; k<kold; k++)
-				ysave[i][k]=tempmat[i][k];
+				ysave(i,k)=tempmat(i,k);
 	}
 	template <class Stepper>
-	void save_dense(Stepper &s, const Doub xout, const Doub h) {
+	void save_dense(Stepper &s, Doub_I xout, Doub_I h) {
 		if (count == kmax) resize();
 		for (Int i=0;i<nvar;i++)
-			ysave[i][count]=s.dense_out(i,xout,h);
+			ysave(i,count)=s.dense_out(i,xout,h);
 		xsave[count++]=xout;
 	}
-	void save(const Doub x, VecDoub_I &y) {
+	void save(Doub_I x, VecDoub_I &y) {
 		if (kmax <= 0) return;
 		if (count == kmax) resize();
 		for (Int i=0;i<nvar;i++)
-			ysave[i][count]=y[i];
+			ysave(i,count)=y[i];
 		xsave[count++]=x;
 	}
 	template <class Stepper>
-	void out(const Int nstp,const Doub x,VecDoub_I &y,Stepper &s,const Doub h) {
+	void out(const Int nstp, Doub_I x,VecDoub_I &y,Stepper &s, Doub_I h) {
 		if (!dense)
 			throw("dense output not set in Output!");
 		if (nstp == -1) {
@@ -482,21 +483,31 @@ struct Odeint {
 	Stepper s;
 	Int nstp;
 	Doub x,h;
-	Odeint(VecDoub_IO &ystartt,const Doub xx1,const Doub xx2,
-		const Doub atol,const Doub rtol,const Doub h1,
-		const Doub hminn,Output &outt,typename Stepper::Dtype &derivss);
+	Odeint(VecDoub_IO ystartt, Doub_I xx1, Doub_I xx2,
+		 Doub_I atol, Doub_I rtol, Doub_I h1,
+		 Doub_I hminn,Output &outt,typename Stepper::Dtype &derivss);
 	void integrate();
 };
 
+template<class T>
+inline T NR3SIGN(const T &a, const T &b)
+{return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a);}
+
+inline float NR3SIGN(const float &a, const double &b)
+{return b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a);}
+
+inline float NR3SIGN(const double &a, const float &b)
+{return (float)(b >= 0 ? (a >= 0 ? a : -a) : (a >= 0 ? -a : a));}
+
 template<class Stepper>
-Odeint<Stepper>::Odeint(VecDoub_IO &ystartt, const Doub xx1, const Doub xx2,
-	const Doub atol, const Doub rtol, const Doub h1, const Doub hminn,
+Odeint<Stepper>::Odeint(VecDoub_IO ystartt, Doub_I xx1, Doub_I xx2,
+	Doub_I atol, Doub_I rtol, Doub_I h1, Doub_I hminn,
 	Output &outt,typename Stepper::Dtype &derivss) : nvar(ystartt.size()),
 	y(nvar),dydx(nvar),ystart(ystartt),x(xx1),nok(0),nbad(0),
 	x1(xx1),x2(xx2),hmin(hminn),dense(outt.dense),out(outt),derivs(derivss),
 	s(y,dydx,x,atol,rtol,dense) {
 	EPS=numeric_limits<Doub>::epsilon();
-	h=SIGN(h1,x2-x1);
+	h=NR3SIGN(h1,x2-x1);
 	for (Int i=0;i<nvar;i++) y[i]=ystart[i];
 	out.init(s.neqn,x1,x2);
 }
@@ -508,7 +519,7 @@ void Odeint<Stepper>::integrate() {
 		out.out(-1,x,y,s,h);
 	else
 		out.save(x,y);
-	for (nstp=0;nstp<MAXSTP;nstp++) {
+	for (nstp=0; nstp < MAXSTP; nstp++) {
 		if ((x+h*1.0001-x2)*(x2-x1) > 0.0)
 			h=x2-x;
 		s.step(h,derivs);
@@ -529,4 +540,4 @@ void Odeint<Stepper>::integrate() {
 	throw("Too many steps in routine Odeint");
 }
 
-// } // namespace slisc
+} // namespace slisc

@@ -4,6 +4,8 @@ project(test)
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
+add_definitions(-D SLS_USE_INT_AS_LONG)
+
 # quad math
 # add_definitions(-D SLS_USE_QUAD_MATH)
 # add_compile_options(-fext-numeric-literals)
