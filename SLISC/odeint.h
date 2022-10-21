@@ -1,4 +1,5 @@
-// adapted from numerical recipes
+// adapted from numerical recipes 3ed
+
 #pragma once
 #include "copy.h"
 
