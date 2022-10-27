@@ -172,7 +172,7 @@ inline Str to_string(Bint_I x)
 	return str;
 }
 
-std::ostream &operator<<(std::ostream &os, Bint_I x) {
+inline std::ostream &operator<<(std::ostream &os, Bint_I x) {
     cout << to_string(x) << endl;
     return os;
 }
@@ -537,7 +537,7 @@ struct Acomp {
 	Acomp() { acb_init(m_n); }
     Acomp(acb_t val) { acb_init(m_n); acb_set(m_n, val); }
     // Acomp(arf_t val, arf_t val) { acb_init(m_n); acb_set_arf(m_n, val); }
-    Acomp(Breal_I val) { acb_init(m_n); acb_set_arb(m_n, val.m_n); }
+    Acomp(Areal_I val) { acb_init(m_n); acb_set_arb(m_n, val.m_n); }
 	// Acomp(Breal_I val, Breal_I val) { acb_init(m_n); acb_set_arf(m_n, val.m_n); }
 	// Acomp(Doub_I val, Doub_I val) {	acb_init(m_n); acb_set_d(m_n, val);	}
 	// e.g. for acb_prec(30), Acomp("1.23") will be [1.229999999999999999999999999999621 +/- 1.58e-30]
