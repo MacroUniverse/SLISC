@@ -113,10 +113,8 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 // check if v[i] == v[j] for any i and j > i
 // return i >= start
 // return -1 if no reapeat
-//% tem('find_repeat', {'vecStr'; 'vecStr32'; 'VecChar'; 'VecInt'; 'VecLlong'; 'vecLlong'});
-//%--------------------------
-//% T = varargin{:};
-inline Long find_repeat(@T@_I v, Long_I start = 0)
+template <class T>
+inline Long find_repeat(const T &v, Long_I start = 0)
 {
 	Long N = v.size();
 	for (Long i = start; i < N; ++i) {
@@ -128,7 +126,9 @@ inline Long find_repeat(@T@_I v, Long_I start = 0)
 	return -1;
 }
 
-inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
+// smae, also output j
+template <class T>
+inline Long find_repeat(Long_O j, const T &v, Long_I start = 0)
 {
 	Long N = v.size();
 	for (Long i = start; i < N; ++i) {
@@ -139,7 +139,6 @@ inline Long find_repeat(Long_O j, @T@_I v, Long_I start = 0)
 	}
 	return -1;
 }
-//%------------------------
 
 // search a row from a matrix
 // starting from the row `start`

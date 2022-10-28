@@ -18,12 +18,10 @@ inline void cat(@T@_IO v, @T@_I v1)
 //%---------------------
 
 // get unique elements from a vector
-//% tem('uniq_elm', { 'vecInt' });
-//%---------------------
-//% T = varargin{:};
-inline void uniq_elm(@T@_IO v)
+template <class T>
+inline void uniq_elm(vector<T> &v)
 {
-	Long N = v.size(), n = 0; // already done
+	Long N = v.size(), n = 0;
 	for (Long i = 0; i < N; ++i) {
 	    Bool repeat = false;
 	    for (Long j = 0; j < n; ++j) {
@@ -38,7 +36,6 @@ inline void uniq_elm(@T@_IO v)
 	}
 	v.resize(n);
 }
-//%---------------------
 
 // get all unique rows from a matrix
 //% tem('uniq_rows', {
