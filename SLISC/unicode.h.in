@@ -707,10 +707,19 @@ inline Bool is_chinese(Char32_I c)
 // include punctuations
 inline Bool is_chinese_punc(Char32_I c)
 {
-	static Str32 s = U"，。？！、：；“”‘’（）【】…—《》￥·";
-	if ((Long)s.find(c) >= 0)
-		return true;
-	return false;
+    static const Str32 s = U"，。？！、：；“”‘’（）【】…—《》￥·";
+
+    static Bool check = false;
+    if (!check) {
+        check = true;
+        for (auto c1 : s)
+            if (is_chinese(c1))
+                SLS_ERR("I didn't expect is_chinese() to contain punc, modify that function.");
+    }
+
+    if ((Long)s.find(c) >= 0)
+        return true;
+    return false;
 }
 
 } // namespace slisc
