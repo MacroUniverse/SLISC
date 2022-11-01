@@ -226,11 +226,21 @@ inline Char b87(Long_I i)
 	return s[i];
 }
 
-// base 64 : safe filename and paths
+// base 64 (2) : safe filename and paths
 // 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_
-inline Char b64(Long_I i)
+inline Char b64_2(Long_I i)
 {
 	static const Str s = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+	return s[i];
+}
+
+// widely used on internet
+// https://en.wikipedia.org/wiki/Base64
+// for a library that converts a file to Base64 string, see
+// https://github.com/ReneNyffenegger/cpp-base64
+inline Char b64(Long_I i)
+{
+	static const Str s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 	return s[i];
 }
 
