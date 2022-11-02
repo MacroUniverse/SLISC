@@ -1,9 +1,20 @@
 #include "../SLISC/Cmat.h"
+#include "../SLISC/quad_math.h"
+#include "../SLISC/random.h"
 
 void test_quad_math()
 {
 	using namespace slisc;
 #ifdef SLS_USE_QUAD_MATH
+	// cout << (3.5Q < 3.7Q) << endl;
+	// cout << (3.5Q == 3.5Q) << endl;
+	// cout << (3.5Q != 3.5Q) << endl;
+	for (Long i = 0; i < 100; ++i) {
+		Qcomp z_std = randQcomp();
+		__complex128 z_c = to_c(z_std);
+		SLS_ASSERT(z_std.real() == __real__ z_c && z_std.imag() == __imag__ z_c);
+	}
+
 	auto old_prec = std::cout.precision();
 	std::cout.precision(34);
 	// test libquadmath
