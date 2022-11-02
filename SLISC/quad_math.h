@@ -178,7 +178,6 @@ inline complex<__float128> sqr(const complex<__float128> &x) { return x*x; }
 
 inline __float128 abs2(const complex<__float128> &x) { return sqr(abs(x)); }
 
-
 } // namespace std
 
 namespace slisc {

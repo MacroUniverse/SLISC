@@ -9,10 +9,15 @@ void test_quad_math()
 	// cout << (3.5Q < 3.7Q) << endl;
 	// cout << (3.5Q == 3.5Q) << endl;
 	// cout << (3.5Q != 3.5Q) << endl;
-	for (Long i = 0; i < 100; ++i) {
-		Qcomp z_std = randQcomp();
+	for (Long i = 0; i < 20; ++i) {
+		Qdoub x = randQdoub(), y = randQdoub();
+		SLS_ASSERT(sin(x) == sinq(x));
+		SLS_ASSERT(std::atan2(x, y) == atan2q(x,y));
+
+		Qcomp z_std = randQcomp(), c_std = randQcomp();
 		__complex128 z_c = to_c(z_std);
-		SLS_ASSERT(z_std.real() == __real__ z_c && z_std.imag() == __imag__ z_c);
+		SLS_ASSERT(sin(z_std) == std::to_std(csinq(z_c)));
+		SLS_ASSERT(to_c(pow(z_std, c_std)) == cpowq(to_c(z_std), to_c(c_std)));
 	}
 
 	auto old_prec = std::cout.precision();
