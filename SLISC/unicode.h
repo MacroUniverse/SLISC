@@ -715,13 +715,10 @@ inline Bool is_chinese(Char32_I c)
         0x2E80, 0x2EF3, // '部首扩展'
         0xF900, 0xFAD9, // '兼容汉字'
         0x2F800, 0x2FA1D, // '兼容扩展'
-        0xE815, 0xE86F, // 'PUA(GBK)部件'
-        0xE400, 0xE5E8, // '部件扩展'
-        0xE600, 0xE6CF, // 'PUA增补'
         0x31C0, 0x31E3, // '汉字笔画'
         0x2FF0, 0x2FFB, // '汉字结构'
         0x3105, 0x312F, // '汉语注音'
-        0x31A0, 0x31BA, // '注音扩展'
+        0x31A0, 0x31BF, // '注音扩展'
         0x3007, 0x3007 // '〇'
     };
 	static_assert(sizeof(Char32) == 4);
