@@ -44,12 +44,12 @@ void test_Bit()
 		SLS_FAIL;
 	if (to_bitstr(ui+2) != "01010101")
 		SLS_FAIL;
-	if (str2bit("10100101") != bit2char(0b10100101))
+	if (str2bit("10100101") != bit2char(165))
 		SLS_FAIL;
 
-	Char uc = 0b10100101;
+	Char uc = (Char)165; // 0b10100101
 	toggle_bitL(&uc, 1);
-	if (uc != bit2char(0b11100101))
+	if (uc != bit2char(229)) // 0b11100101
 		SLS_FAIL;
 
 	// base conversion

@@ -676,7 +676,7 @@ inline Bool is_chinese(Char32_I c)
         0x31A0, 0x31BF, // '注音扩展'
         0x3007, 0x3007 // '〇'
     };
-	static_assert(sizeof(Char32) == 4);
+	static_assert(sizeof(Char32) == 4, "unexpected!");
     Long N = sizeof(range) / sizeof(range[0]);
     // TODO: use bisection to optimize
     for (Long i = 0; i < N; i += 2) {

@@ -46,6 +46,7 @@ debug_flag = -g -ftrapv
 
 # All
 flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp $(debug_flag) $(release_flag) -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) -D SLS_USE_INT_AS_LONG
+# -pedantic # show more warnings
 
 libs = $(gsl_lib) $(lapacke_lib) $(boost_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
