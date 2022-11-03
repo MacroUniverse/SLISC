@@ -17,7 +17,7 @@ gsl_lib = -L $(gsl_dir)lib/ -lgsl
 # Eigen
 eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
 # quad math
-# quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
 quad_math_lib = -lquadmath
 # Arpack
 arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/
@@ -42,7 +42,7 @@ debug_flag = -g
 # All
 compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I /usr/include/x86_64-linux-gnu/c++/7 $(debug_flag) $(release_flag)
 
-flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) -D SLS_USE_INT_AS_LONG
+flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag)
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
 
@@ -67,7 +67,7 @@ main.x: main.o $(test_o)
 	make link
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], false, true)"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], true, false)"
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
@@ -82,4 +82,4 @@ main.o: main.cpp test/test_all.h
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', false, true)"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', true, false)"

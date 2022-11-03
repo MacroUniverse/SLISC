@@ -16,6 +16,7 @@ include make/g++_all.mak
 # include make/g++_all_mkl.mak
 
 # icpc compiler, MKL and all libs are required
+# include make/icpc_full_mkl.mak
 # include make/icpc_all_mkl.mak
 
 # Mingw64 / Msys2

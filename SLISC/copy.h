@@ -20,30 +20,6 @@ inline void vecset(Doub *v, Doub_I val, Long_I n, Long_I step)
 	    *p = val;
 }
 
-inline void vecset(Int *v, Int_I val, Long_I n)
-{
-	for (Int *p = v; p < v + n; ++p)
-	    *p = val;
-}
-
-inline void vecset(Int *v, Int_I val, Long_I n, Long_I step)
-{
-	for (Int *p = v; p < v + n*step; p += step)
-	    *p = val;
-}
-
-inline void vecset(Llong *v, Llong_I val, Long_I n)
-{
-	for (Llong *p = v; p < v + n; ++p)
-	    *p = val;
-}
-
-inline void vecset(Llong *v, Llong_I val, Long_I n, Long_I step)
-{
-	for (Llong *p = v; p < v + n*step; p += step)
-	    *p = val;
-}
-
 inline void vecset(Comp *v, Comp_I val, Long_I n)
 {
 	for (Comp *p = v; p < v + n; ++p)
@@ -65,6 +41,30 @@ inline void vecset(Bool *v, Bool_I val, Long_I n)
 inline void vecset(Bool *v, Bool_I val, Long_I n, Long_I step)
 {
 	for (Bool *p = v; p < v + n*step; p += step)
+	    *p = val;
+}
+
+inline void vecset(Int *v, Int_I val, Long_I n)
+{
+	for (Int *p = v; p < v + n; ++p)
+	    *p = val;
+}
+
+inline void vecset(Int *v, Int_I val, Long_I n, Long_I step)
+{
+	for (Int *p = v; p < v + n*step; p += step)
+	    *p = val;
+}
+
+inline void vecset(Llong *v, Llong_I val, Long_I n)
+{
+	for (Llong *p = v; p < v + n; ++p)
+	    *p = val;
+}
+
+inline void vecset(Llong *v, Llong_I val, Long_I n, Long_I step)
+{
+	for (Llong *p = v; p < v + n*step; p += step)
 	    *p = val;
 }
 
@@ -894,6 +894,14 @@ inline void copy(ScmatDoub_O v, ScmatDoub_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+inline void copy(SvecDoub_O v, VecDoub_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	veccpy(v.p(), v1.p(), v.size());
+}
+
 inline void copy(CmatDoub_O v, ScmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -903,14 +911,6 @@ inline void copy(CmatDoub_O v, ScmatDoub_I v1)
 }
 
 inline void copy(CmatComp_O v, ScmatComp_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(SvecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	if (v.size() == 0)
