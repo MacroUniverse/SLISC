@@ -13,6 +13,7 @@ include make/g++_all.mak
 # include g++_all_portable.mak
 
 # g++, MKL and all libs are required
+# include make/g++_full_mkl.mak
 # include make/g++_all_mkl.mak
 
 # icpc compiler, MKL and all libs are required

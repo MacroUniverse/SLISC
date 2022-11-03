@@ -51,6 +51,8 @@ inline @VbaseT@::@VbaseT@(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new @T@[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -64,6 +66,8 @@ inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 	    m_p = new @T@[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(@T@));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline @T@ * @VbaseT@::p()

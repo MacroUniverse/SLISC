@@ -43,6 +43,8 @@ inline VbaseChar::VbaseChar(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Char[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -56,6 +58,8 @@ inline VbaseChar::VbaseChar(const VbaseChar &rhs)
 	    m_p = new Char[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Char));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Char * VbaseChar::p()
@@ -207,6 +211,8 @@ inline VbaseUchar::VbaseUchar(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Uchar[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -220,6 +226,8 @@ inline VbaseUchar::VbaseUchar(const VbaseUchar &rhs)
 	    m_p = new Uchar[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Uchar));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Uchar * VbaseUchar::p()
@@ -371,6 +379,8 @@ inline VbaseInt::VbaseInt(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Int[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -384,6 +394,8 @@ inline VbaseInt::VbaseInt(const VbaseInt &rhs)
 	    m_p = new Int[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Int));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Int * VbaseInt::p()
@@ -535,6 +547,8 @@ inline VbaseLlong::VbaseLlong(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Llong[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -548,6 +562,8 @@ inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
 	    m_p = new Llong[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Llong));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Llong * VbaseLlong::p()
@@ -699,6 +715,8 @@ inline VbaseFloat::VbaseFloat(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Float[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -712,6 +730,8 @@ inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
 	    m_p = new Float[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Float));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Float * VbaseFloat::p()
@@ -863,6 +883,8 @@ inline VbaseDoub::VbaseDoub(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Doub[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -876,6 +898,8 @@ inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
 	    m_p = new Doub[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Doub));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Doub * VbaseDoub::p()
@@ -1027,6 +1051,8 @@ inline VbaseLdoub::VbaseLdoub(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Ldoub[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -1040,6 +1066,8 @@ inline VbaseLdoub::VbaseLdoub(const VbaseLdoub &rhs)
 	    m_p = new Ldoub[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Ldoub));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Ldoub * VbaseLdoub::p()
@@ -1192,6 +1220,8 @@ inline VbaseFcomp::VbaseFcomp(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Fcomp[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -1205,6 +1235,8 @@ inline VbaseFcomp::VbaseFcomp(const VbaseFcomp &rhs)
 	    m_p = new Fcomp[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Fcomp));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Fcomp * VbaseFcomp::p()
@@ -1356,6 +1388,8 @@ inline VbaseComp::VbaseComp(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Comp[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -1369,6 +1403,8 @@ inline VbaseComp::VbaseComp(const VbaseComp &rhs)
 	    m_p = new Comp[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Comp));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Comp * VbaseComp::p()
@@ -1520,6 +1556,8 @@ inline VbaseLcomp::VbaseLcomp(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Lcomp[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -1533,6 +1571,8 @@ inline VbaseLcomp::VbaseLcomp(const VbaseLcomp &rhs)
 	    m_p = new Lcomp[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Lcomp));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Lcomp * VbaseLcomp::p()
@@ -1685,6 +1725,8 @@ inline VbaseFimag::VbaseFimag(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Fimag[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -1698,6 +1740,8 @@ inline VbaseFimag::VbaseFimag(const VbaseFimag &rhs)
 	    m_p = new Fimag[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Fimag));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Fimag * VbaseFimag::p()
@@ -1849,6 +1893,8 @@ inline VbaseImag::VbaseImag(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Imag[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -1862,6 +1908,8 @@ inline VbaseImag::VbaseImag(const VbaseImag &rhs)
 	    m_p = new Imag[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Imag));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Imag * VbaseImag::p()
@@ -2013,6 +2061,8 @@ inline VbaseLimag::VbaseLimag(Long_I N)
 	m_N = N;
 	if (N > 0)
 	    m_p = new Limag[N];
+	else
+		m_p = nullptr;
 }
 
 // copy constructor
@@ -2026,6 +2076,8 @@ inline VbaseLimag::VbaseLimag(const VbaseLimag &rhs)
 	    m_p = new Limag[m_N];
 	    memcpy(m_p, rhs.p(), m_N*sizeof(Limag));
 	}
+	else
+		m_p = nullptr;
 }
 
 inline Limag * VbaseLimag::p()

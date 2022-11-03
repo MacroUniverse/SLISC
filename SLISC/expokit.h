@@ -282,7 +282,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
@@ -776,7 +776,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
@@ -1023,7 +1023,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
@@ -1270,7 +1270,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
@@ -1517,7 +1517,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
@@ -1773,7 +1773,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
@@ -2036,7 +2036,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
@@ -2299,7 +2299,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
@@ -2562,7 +2562,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
@@ -2825,7 +2825,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
@@ -3088,7 +3088,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
 	    s_error, x_error, t_now, t_new, t_step, t_old,
 	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-	    vnorm, avnorm, hj1j, hump, sqr1;
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
