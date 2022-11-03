@@ -8,6 +8,7 @@
 # include make/g++_lapack.mak
 
 # all libs are required
+# include make/g++_full.mak
 include make/g++_all.mak
 # include g++_all_portable.mak
 
