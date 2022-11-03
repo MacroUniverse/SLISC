@@ -1,8 +1,9 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 % in_paths must end with '/' or '\'
-function auto_gen(in_paths, fname, SLS_USE_QUADMATH, SLS_USE_INT_AS_LONG)
+function auto_gen(in_paths, fname, SLS_USE_QUADMATH, use_int_as_long)
 global tem_db is_batch_mode SLS_USE_INT_AS_LONG; % is_batch_mode: delete db and process all files
+SLS_USE_INT_AS_LONG = use_int_as_long;
 if ~exist('fname', 'var'), fname = []; end
 is_batch_mode = isempty(fname);
 proc_paths = {'../preprocessor/', ...

@@ -115,7 +115,7 @@ SLS_QMATH_RFUNR(cos)
 SLS_QMATH_RFUNR(cosh)
 SLS_QMATH_RFUNR(erf)
 SLS_QMATH_RFUNR(exp)
-SLS_QMATH_RFUNR(exp2)
+// SLS_QMATH_RFUNR(exp2) // not supported in earlier g++
 SLS_QMATH_RFUNR(expm1)
 SLS_QMATH_RFUNR(fabs)
 SLS_QMATH_RFUNRR(fdim)
