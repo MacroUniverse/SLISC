@@ -40,14 +40,14 @@ debug_flag = -g
 # release_flag = -O3 -D NDEBUG
 
 # All
-compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type -I /usr/include/x86_64-linux-gnu/c++/7 $(debug_flag) $(release_flag)
+compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type  $(debug_flag) $(release_flag)
 
 flags = $(sqlite_flag) $(matfile_flag) $(arpack_flag) $(mkl_flag) $(gsl_flag) $(compiler_flag) $(boost_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) -D SLS_USE_INT_AS_LONG
 # -qopenmp # run OpenMP in parallel mode
 # -qopenmp-stubs # run OpenMP in serial mode
 
 # WARNING: link order does matter for static link, each linked library should depend only on the ones after it, add new libs to the front
-libs = -L /usr/lib/gcc/x86_64-linux-gnu/7/ $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(link_mkl_static) $(link_mkl_dynamic_single) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib) 
+libs = $(sqlite_lib) $(matfile_lib) $(arpack_lib) $(link_mkl_static) $(link_mkl_dynamic_single) $(gsl_lib) $(arb_lib) $(quad_math_lib) $(boost_lib) 
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
