@@ -67,16 +67,20 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 
 ### Ubuntu 20.04 All Dependencies
 ```
-sudo apt install -y vim git make g++ gdb libarpack++2-dev gfortran liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
-sudo apt purge libopenblas*
-git clone https://github.com/MacroUniverse/SLISC0
-git clone https://github.com/MacroUniverse/Arpack_test
-git clone https://github.com/MacroUniverse/EigenTest
-git clone https://github.com/MacroUniverse/boost-headers
+apt -y update
+apt -y upgrade
+apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
+apt purge -y libopenblas*
+cd /root
+git clone https://github.com/MacroUniverse/SLISC0 --depth 1
+git clone https://github.com/MacroUniverse/Arpack_test --depth 1
+git clone https://github.com/MacroUniverse/EigenTest --depth 1
+git clone https://github.com/MacroUniverse/boost-headers --depth 1
 cd SLISC0
 touch SLISC/*.h
-make -j4
+make -j12
 ```
+see Dockerfile_ubuntu22.04 for building a docker image.
 
 tested of package versions on Ubuntu 20.04 (tested):
 ```
