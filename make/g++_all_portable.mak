@@ -7,44 +7,56 @@
 
 compiler = g++
 
+# portable library path
+lib_path = ../SLISC0-libs-x64-ubuntu-18.04/
+
 # CBLAS
-cblas_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_cblas_x64_ubuntu/
+cblas_path = $(lib_path)lib_cblas_x64_ubuntu/
 cblas_flag = -D SLS_USE_CBLAS -I $(cblas_path)
 cblas_lib = -Wl,-rpath,$(cblas_path) -L$(cblas_path) -lblas
 # LAPACKE
-lapacke_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_lapacke_x64_ubuntu/
+lapacke_path = $(lib_path)lib_lapacke_x64_ubuntu/
 lapacke_flag = -D SLS_USE_LAPACKE -I $(lapacke_path)
 lapacke_lib = -Wl,-rpath,$(lapacke_path) -L$(lapacke_path) -llapacke
 # Boost
 boost_flag = # -D SLS_USE_BOOST -I ../boost-headers
 boost_lib = # -lboost_system -lboost_filesystem
 # GSL
-gsl_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_gsl_x64_ubuntu/
+gsl_path = $(lib_path)lib_gsl_x64_ubuntu/
 gsl_flag = -D SLS_USE_GSL -I $(gsl_path)
 gsl_lib = -Wl,-rpath,$(gsl_path) -L$(gsl_path) -lgsl
 # Eigen
-eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen/
 # quad math
-quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
-quad_math_lib = -lquadmath
+# quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+# quad_math_lib = -lquadmath
+# gfortran
+gfortran_path = $(lib_path)lib_gfortran_x64_ubuntu/
+gfortran_lib = -Wl,-rpath,$(gfortran_path) -L$(gfortran_path) -lgfortran
 # Arpack
-arpack_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_arpack_x64_ubuntu/
+arpack_path = $(lib_path)lib_arpack_x64_ubuntu/
 arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include/ -I $(arpack_path)
-arpack_lib = -Wl,-rpath,$(arpack_path) -L$(arpack_path) -larpack -lgfortran
+arpack_lib = -Wl,-rpath,$(arpack_path) -L$(arpack_path) -larpack
 # GMP
-gmp_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_gmp_x64_ubuntu/
+gmp_path = $(lib_path)lib_gmp_x64_ubuntu/
 gmp_flag = -I $(gmp_path)
 gmp_lib = -Wl,-rpath,$(gmp_path) -L$(gmp_path) -lgmp
+# GF2X
+gf2x_path = $(lib_path)lib_gf2x_x64_ubuntu/
+gf2x_lib = -Wl,-rpath,$(gf2x_path) -L$(gf2x_path) -lgf2x
+# NTL
+ntl_path = $(lib_path)lib_ntl_x64_ubuntu/
+ntl_lib = -Wl,-rpath,$(ntl_path) -L$(ntl_path) -lntl
 # Flint
-flint_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_flint_x64_ubuntu/
-flint_flag = -I $(flint_path) -I $(flint_path)flint/
+flint_path = $(lib_path)lib_flint_x64_ubuntu/
+flint_flag = -I $(flint_path) -I $(flint_path)/flint/
 flint_lib = -Wl,-rpath,$(flint_path) -L$(flint_path) -lflint
 # MPFR
-mpfr_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_mpfr_x64_ubuntu/
+mpfr_path = $(lib_path)lib_mpfr_x64_ubuntu/
 mpfr_flag = -I $(mpfr_path)
 mpfr_lib = -Wl,-rpath,$(mpfr_path) -L$(mpfr_path) -lmpfr
 # Arb
-arb_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_arb_x64_ubuntu/
+arb_path = $(lib_path)lib_arb_x64_ubuntu/
 arb_flag = -D SLS_USE_ARB -I $(arb_path)
 arb_lib = -Wl,-rpath,$(arb_path) -L$(arb_path) -larb
 # Address Sanitizer
@@ -54,13 +66,14 @@ matfile_bin_path = ../MatFile_linux/bin
 matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
 matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
-sqlite_path = ../SLISC0-libs-x64-ubuntu-18.04/lib_sqlite3_x64_ubuntu/
+sqlite_path = $(lib_path)lib_sqlite3_x64_ubuntu/
 sqlite_flag = -D SLS_USE_SQLITE -I $(sqlite_path)
 sqlite_lib = -Wl,-rpath,$(sqlite_path) -L$(sqlite_path) -l sqlite3
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(gmp_flag) $(flint_flag) $(mpfr_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) #-D NDEBUG
-libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(flint_lib) $(mpfr_lib) $(gmp_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib) -D SLS_USE_INT_AS_LONG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -g -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(gsl_flag) $(gmp_flag) $(flint_flag) $(mpfr_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) -D SLS_USE_INT_AS_LONG #-D NDEBUG
+
+libs = $(gsl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(flint_lib) $(ntl_lib) $(gf2x_lib) $(mpfr_lib) $(gmp_lib) $(arpack_lib) $(gfortran_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
 # file lists
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)

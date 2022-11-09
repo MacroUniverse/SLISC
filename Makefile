@@ -10,7 +10,7 @@
 # all libs are required
 # include make/g++_full.mak
 include make/g++_all.mak
-# include g++_all_portable.mak
+# include make/g++_all_portable.mak
 
 # g++, MKL and all libs are required
 # include make/g++_full_mkl.mak

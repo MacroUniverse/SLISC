@@ -3,7 +3,7 @@
 # To open a bash, use `sudo docker run -it slisc0 bash`
 # more docker commands https://wuli.wiki/online/Docker.html
 
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -12,6 +12,7 @@ RUN apt -y update && \
 	apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev && \
 	apt purge -y libopenblas*
 
+# set your timezone
 # set your timezone
 RUN apt install -y tzdata
 ENV TZ America/Chicago

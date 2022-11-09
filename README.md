@@ -65,8 +65,8 @@ SLISC has a modular design like the Standard Template Library. Just include any 
 * `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used, comment/uncomment sections in `g++_all.mak` to enable/disable them.
 * `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
 
-### Ubuntu 20.04 All Dependencies
-```
+### Ubuntu 20.04 Instellation
+```bash
 apt -y update
 apt -y upgrade
 apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
@@ -80,7 +80,6 @@ cd SLISC0
 touch SLISC/*.h
 make -j12
 ```
-see Dockerfile_ubuntu22.04 for building a docker image.
 
 tested of package versions on Ubuntu 20.04 (tested):
 ```
@@ -96,6 +95,13 @@ liblapacke-dev: amd64/focal 3.9.0-1build1
 libsqlite3-dev: amd64/focal-security 3.31.1-4ubuntu0.3
 ```
 note that gfortran needs to have the same version with g++.
+
+for docker image build, use
+```bash
+sudo docker build -t slisc0 -f ./Dockerfile_XXX . # build
+sudo docker run slisc0 # run test
+sudo docker run -it slisc0 bash # open terminal
+```
 
 ### Ubuntu 22.04 All Dependencies
 Update: now tested on Ubuntu 22.04 (with g++-9), however, there is a bug in GSL header `/usr/include/gsl/gsl_blas_types.h`: replace all `typedef  enum` with just `typedef `.
