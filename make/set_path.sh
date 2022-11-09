@@ -1,4 +1,11 @@
-source make/ld_path_append.sh ../SLISC0-libs-x64-ubuntu-18.04/lib_cblas_x64_ubuntu/
+cd ../SLISC0-libs-x64-ubuntu-18.04/lib_imkl2021a_x64_CentOS7.9/
+FILE=libmkl_core.so.1
+if [[ ! -f "$FILE" ]]; then
+    cat ${FILE}-* > $FILE
+fi
+cd -
+
+. make/ld_path_append.sh ../SLISC0-libs-x64-ubuntu-18.04/lib_cblas_x64_ubuntu/
 . make/ld_path_append.sh ../SLISC0-libs-x64-ubuntu-18.04/lib_lapacke_x64_ubuntu/
 . make/ld_path_append.sh ../SLISC0-libs-x64-ubuntu-18.04/lib_gmp_x64_ubuntu/
 . make/ld_path_append.sh ../SLISC0-libs-x64-ubuntu-18.04/lib_gf2x_x64_ubuntu/
