@@ -95,6 +95,12 @@ h: # remake all headers
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
+	:
+	:
+	: ------------------------------
+	: please run the following to add library path:
+	: source make/set_path.sh
+	: ------------------------------
 
 clean:
 	rm -f *.o *.x $(path_gen_headers)
