@@ -43,9 +43,9 @@ set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize
 # (conflicts with boost_filesystem.so other than version 1.56.0)
 add_definitions(-D SLS_USE_MATFILE)
 include_directories(../MatFile_linux/include)
-link_directories(../MatFile_linux/bin)
+link_directories(../MatFile_linux/lib)
 list(APPEND LIBS mat mx)
-set(CMAKE_INSTALL_RPATH ../MatFile_linux/bin)
+set(CMAKE_INSTALL_RPATH ../MatFile_linux/lib)
 # SQLite
 add_definitions(-D SLS_USE_SQLITE)
 list(APPEND LIBS sqlite3)

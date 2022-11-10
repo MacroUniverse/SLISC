@@ -29,7 +29,7 @@ arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from sour
 # (not implemented for mkl)
 # Matfile
 # (conflicts with boost_filesystem.so other than version 1.56.0)
-# matfile_bin_path = ../MatFile_linux/bin
+# matfile_bin_path = ../MatFile_linux/lib
 # matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
 # matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite

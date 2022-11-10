@@ -62,7 +62,7 @@ arb_lib = -Wl,-rpath,$(arb_path) -L$(arb_path) -larb
 # Address Sanitizer
 asan_flag = # -fsanitize=address -static-libasan -D SLS_USE_ASAN
 # Matfile
-matfile_bin_path = ../MatFile_linux/bin
+matfile_bin_path = ../MatFile_linux/lib
 matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
 matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
 # SQLite
