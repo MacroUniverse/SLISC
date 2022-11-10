@@ -91,4 +91,7 @@ void test_all(const std::string &test_name)
 			cout << "optional tests skipped." << endl;
 	}
 	cout << "end of testing!" << endl;
+	cout << "===============================================" << endl;
+	cout << "TODO: make sure all blas/lapack use 64bit int! No matter what is Long!" << endl;
+	cout << "===============================================" << endl;
 }
