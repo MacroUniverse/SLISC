@@ -42,12 +42,36 @@ RUN scl enable devtoolset-9 bash && cd /root/ && \
 	ln -sf /root/cmake-3.25.0-rc4-linux-x86_64/bin/cmake /usr/bin/ && \
 	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
 
-# (C)BLAS and LAPACK(E) (reference)
+# (C)BLAS and LAPACK(E) 64bit dynamic (reference)
 RUN	scl enable devtoolset-9 bash && cd /root/ && \
 	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd /root/lapack-build && make -j12 && make install
+
+# (C)BLAS and LAPACK(E) 32bit dynamic (reference)
+RUN scl enable devtoolset-9 bash && cd /root/ && \
+	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd /root/lapack-build && make -j12 && make install
+
+# (C)BLAS and LAPACK(E) 64bit static (reference)
+RUN scl enable devtoolset-9 bash && cd /root/ && \
+	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd /root/lapack-build && make -j12 && make install
+
+# (C)BLAS and LAPACK(E) 32bit static (reference)
+RUN scl enable devtoolset-9 bash && cd /root/ && \
+	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd /root/lapack-build && make -j12 && make install
 
 # CMd ["scl enable devtoolset-9 bash"]
