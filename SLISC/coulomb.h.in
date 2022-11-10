@@ -3,7 +3,7 @@
 #include "scalar_arith.h"
 #ifdef SLS_USE_ARB
 #include <gmp.h>
-#include <flint.h>
+#include <flint/flint.h>
 #include "arb_hypgeom.h" // real functions
 #include "acb_hypgeom.h" // complex functions
 #include "arb_extension.h"

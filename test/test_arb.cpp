@@ -1,7 +1,7 @@
 #include <iostream>
 #ifdef SLS_USE_ARB
 #include <gmp.h>
-#include <flint.h>
+#include <flint/flint.h>
 #include <flint/fmpz.h>
 #include "arb_hypgeom.h"
 #include "../SLISC/arb_extension.h"

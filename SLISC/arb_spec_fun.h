@@ -2,7 +2,7 @@
 // if this file gets too large, consider splitting
 #pragma once
 #include <gmp.h>
-#include <flint.h>
+#include <flint/flint.h>
 #include "compare.h"
 #include "scalar_arith.h"
 #include "arb_extension.h"
