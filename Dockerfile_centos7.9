@@ -1,0 +1,54 @@
+FROM centos:7.9.2009
+
+RUN yum install -y https://repo.ius.io/ius-release-el7.rpm
+RUN yum install -y centos-release-scl
+RUN yum install -y devtoolset-9
+RUN scl enable devtoolset-9 bash
+RUN yum install -y git vim make automake libtool time gcc-c++ gcc-gfortran gmp-devel mpfr-devel wget mlocate
+
+RUN	cd /root/ && \
+	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
+	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
+	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
+	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
+	git clone https://github.com/fredrik-johansson/arb && \
+	git clone https://github.com/fredrik-johansson/flint2 && \
+	git clone https://github.com/MacroUniverse/GSL-2.5-test
+
+RUN echo "scl enable devtoolset-9 bash" >> ~/.bashrc && \
+	echo "cd ~" >> ~/.bashrc
+
+# GSL
+RUN	cd /root/GSL-2.5-test/gsl-2.5-original && \
+	chmod +x ./configure && ./configure && \
+	make -j12 && make install
+
+# flint2
+RUN cd /root/flint2/ && git checkout 14dc6cbd2 && \
+	chmod +x ./configure && ./configure && \
+	make -j12 && make install
+
+# Arb
+RUN cd /root/arb && git checkout 2.23.0 && \
+	chmod +x ./configure && ./configure && \
+	make -j12 && make install && \
+	ln -s libarb.so /usr/local/lib/libflint-arb.so && \
+	ldconfig
+
+# CMake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
+	tar -xzf cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
+	ln -sf /root/cmake-3.25.0-rc4-linux-x86_64/bin/cmake /usr/bin/ && \
+	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
+
+# (C)BLAS and LAPACK(E) (reference)
+RUN	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/
+
+RUN cd /root/lapack-build && make -j12 && make install
+
+# RUN scl enable devtoolset-9 bash && \
+#	cd /root/SLISC0/ && touch SLISC/*.h \
+#	make -j12
