@@ -90,9 +90,9 @@
 	#endif
 	#ifdef SLS_USE_LAPACKE
 		#ifdef SLS_USE_INT_AS_LONG
-			#define CBLAS_INT int
+			#define lapack_int int
 		#else
-			#define CBLAS_INT long long
+			#define lapack_int long long
 		#endif
 	    #include <lapacke.h>
 	    #ifdef I // I is already defined in "/usr/include/complex.h"

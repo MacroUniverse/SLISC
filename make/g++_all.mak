@@ -37,9 +37,8 @@ endif
 ifeq ($(opt_mkl), false)
     cblas_flag = -D SLS_USE_CBLAS
     ifeq ($(opt_long32), false)
-        cblas_lib = -l blas
+        cblas_lib = -l blas64
     else
-        # TODO: change to blas64
         cblas_lib = -l blas
     endif
 endif
@@ -48,9 +47,8 @@ endif
 ifeq ($(opt_mkl), false)
     lapacke_flag = -D SLS_USE_LAPACKE
     ifeq ($(opt_long32), false)
-        lapacke_lib = -l lapacke
+        lapacke_lib = -l lapacke64
     else
-        # TODO: change to lapacke64
         lapacke_lib = -l lapacke
     endif
 endif
@@ -122,11 +120,11 @@ path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 
 goal: main.x
 
-main.x: main.o $(test_o)
-	make link
-
 h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quad), $(opt_long32))"
+
+main.x: main.o $(test_o)
+	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
