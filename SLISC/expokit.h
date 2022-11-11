@@ -47,10 +47,10 @@ inline void expokit_mul(Doub *y, CmatDoub_I a, Doub *x)
 // arguments: iexph
 // internal variables: i, j, k, icoef, ih2, ip, iq, iput, iget, ifree, iused
 
-inline void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *wsp, Int_I lwsp,
-	Int *ipiv, Int_O iexph, Int_O ns, Int_O iflag)
+inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, Comp *wsp, Long_I lwsp,
+	Long *ipiv, Long_O iexph, Long_O ns, Long_O iflag)
 {
-	Int i, j, k, icoef, mm, ih2, iodd, iused, ifree, iq, ip, iput, iget;
+	Long i, j, k, icoef, mm, ih2, iodd, iused, ifree, iq, ip, iput, iget;
 	Doub hnorm;
 	Comp cp, cq, scale, scale2, temp;
 	const Comp zero = 0., one = 1.;
@@ -85,7 +85,7 @@ inline void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp
 	hnorm = abs(t*hnorm);
 	if (hnorm == 0.)
 	    SLS_ERR("Error - null H in input of ZGPADM.");
-	ns = max(0, Int(log(hnorm) / log(2.)) + 2);
+	ns = max(0, Long(log(hnorm) / log(2.)) + 2);
 	scale = Comp(t / pow(2, ns), 0.);
 	scale2 = scale*scale;
 
@@ -171,12 +171,12 @@ inline void ZGPADM(Int_I ideg, Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp
 // * any variable values should not change
 // * all pointer indexing (including +, -) is subtracted by 1 in place
 
-inline void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *wsp)
+inline void ZNCHBV(Long_I m, Doub_I t, const Comp *H, Long_I ldh, Comp *y, Comp *wsp)
 {
 	SLS_ERR("the translated ZNCHBV is not complete yet, do it now!");
 	const Comp zero = 0.;
-	const Int ndeg = 7;
-	Int i, j, k, ip, ih, iy, iz;
+	const Long ndeg = 7;
+	Long i, j, k, ip, ih, iy, iz;
 	Doub alpha0;
 	Comp alpha[ndeg], theta[ndeg];
 	Comp tmpc;
@@ -263,20 +263,20 @@ inline void ZNCHBV(Int_I m, Doub_I t, const Comp *H, Int_I ldh, Comp *y, Comp *w
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdDoub_I mat, Int_I itrace, Int_O iflag)
+inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdDoub_I mat, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -296,7 +296,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n*(m + 1) + n;
 	ifree = ih + mh*mh;
 	lfree = lwsp - ifree;
@@ -510,20 +510,20 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdComp_I mat, Int_I itrace, Int_O iflag)
+inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdComp_I mat, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -543,7 +543,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n*(m + 1) + n;
 	ifree = ih + mh*mh;
 	lfree = lwsp - ifree;
@@ -757,20 +757,20 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooDoub_I mat, Int_I itrace, Int_O iflag)
+inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooDoub_I mat, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -790,7 +790,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n*(m + 1) + n;
 	ifree = ih + mh*mh;
 	lfree = lwsp - ifree;
@@ -1004,20 +1004,20 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooComp_I mat, Int_I itrace, Int_O iflag)
+inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooComp_I mat, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -1037,7 +1037,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n*(m + 1) + n;
 	ifree = ih + mh*mh;
 	lfree = lwsp - ifree;
@@ -1251,20 +1251,20 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatDoub_I mat, Int_I itrace, Int_O iflag)
+inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatDoub_I mat, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -1284,7 +1284,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n*(m + 1) + n;
 	ifree = ih + mh*mh;
 	lfree = lwsp - ifree;
@@ -1498,20 +1498,20 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatComp_I mat, Int_I itrace, Int_O iflag)
+inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatComp_I mat, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -1531,7 +1531,7 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n*(m + 1) + n;
 	ifree = ih + mh*mh;
 	lfree = lwsp - ifree;
@@ -1755,19 +1755,19 @@ inline void ZGEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	        Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdDoub_I mat, Int_I itrace, Int_O iflag )
+inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdDoub_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -1788,7 +1788,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n * (m + 1) + n;
 	ifree = ih + mh * mh;
 	lfree = lwsp - ifree - 1;
@@ -2018,19 +2018,19 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	        Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmobdComp_I mat, Int_I itrace, Int_O iflag )
+inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdComp_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -2051,7 +2051,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n * (m + 1) + n;
 	ifree = ih + mh * mh;
 	lfree = lwsp - ifree - 1;
@@ -2281,19 +2281,19 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	        Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooDoub_I mat, Int_I itrace, Int_O iflag )
+inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooDoub_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -2314,7 +2314,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n * (m + 1) + n;
 	ifree = ih + mh * mh;
 	lfree = lwsp - ifree - 1;
@@ -2544,19 +2544,19 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	        Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, McooComp_I mat, Int_I itrace, Int_O iflag )
+inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooComp_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -2577,7 +2577,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n * (m + 1) + n;
 	ifree = ih + mh * mh;
 	lfree = lwsp - ifree - 1;
@@ -2807,19 +2807,19 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	        Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatDoub_I mat, Int_I itrace, Int_O iflag )
+inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatDoub_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -2840,7 +2840,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n * (m + 1) + n;
 	ifree = ih + mh * mh;
 	lfree = lwsp - ifree - 1;
@@ -3070,19 +3070,19 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 	wsp[9] = Comp(beta / vnorm);
 }
 
-inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	        Comp *wsp, Int_I lwsp, Int *iwsp, Int_I liwsp, CmatComp_I mat, Int_I itrace, Int_O iflag )
+inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatComp_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
 	    SLS_ERR("zero vector is not allowed!");
 #endif
-	const Int mxstep = 500, mxreject = 0, ideg = 6;
+	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
 
 	const Comp zero = 0., one = 1.;
 
-	Int i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
+	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
 	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
 	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
@@ -3103,7 +3103,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 
 	k1 = 2;
 	mh = m + 2;
-	const Int iv = 0;
+	const Long iv = 0;
 	ih = iv + n * (m + 1) + n;
 	ifree = ih + mh * mh;
 	lfree = lwsp - ifree - 1;
@@ -3339,7 +3339,7 @@ inline void ZHEXPV(Int_I n, Int_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
 // use ZGEXPV() for MatCoo<>, ZHEXPV() for MatCooH<>
 // v cannot be empty!
 
-inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3349,27 +3349,27 @@ inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
-inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3379,27 +3379,27 @@ inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
-inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3409,27 +3409,27 @@ inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I 
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
-inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3439,27 +3439,27 @@ inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
-inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3469,27 +3469,27 @@ inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
-inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3499,27 +3499,27 @@ inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 
-inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecInt_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
@@ -3529,23 +3529,23 @@ inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I m
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 	    SLS_ERR("wrong shape!");
 #endif
-	Int iflag;
+	Long iflag;
 	if (!her)
-	    ZGEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-	    ZHEXPV((Int)v.size(), Nkrylov, t, v.p(),
-	        tol, mat_norm, wsp_c.p(), (Int)wsp_c.size(),
-	        wsp_i.p(), (Int)wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
-inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Int_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
 	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecInt wsp_i(max(Nkrylov + 2, 7));
+	VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
-	SvecInt s_wsp_i(wsp_i.p(), wsp_i.size());
+	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
 	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 

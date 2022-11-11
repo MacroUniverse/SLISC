@@ -123,8 +123,8 @@ goal: main.x
 h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quad), $(opt_long32))"
 
-main.x: $(test_o) main.o
-	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
+main.x: main.o $(test_o)
+    $(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)

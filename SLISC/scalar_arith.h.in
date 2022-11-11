@@ -4,6 +4,16 @@
 
 namespace slisc {
 
+// max, min with mixed types
+//% tem('min', {'Llong' 'Int' 'Llong';});
+//%-------------------------------
+//% [T, T1, T2] = varargin{:};
+inline @T@ max(const @T1@ &x, const @T2@ &y) { return x < y ? y : x; }
+inline @T@ max(const @T2@ &x, const @T1@ &y) { return x < y ? y : x; }
+inline @T@ min(const @T1@ &x, const @T2@ &y) { return x < y ? x : y; }
+inline @T@ min(const @T2@ &x, const @T1@ &y) { return x < y ? x : y; }
+//%-------------------------------
+
 //% tem('sign', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'; 'Ldoub'; 'Qdoub';});
 //%-------------------------------
 //% T = varargin{:};

@@ -4,6 +4,13 @@
 
 namespace slisc {
 
+// max, min with mixed types
+inline Llong max(const Int &x, const Llong &y) { return x < y ? y : x; }
+inline Llong max(const Llong &x, const Int &y) { return x < y ? y : x; }
+inline Llong min(const Int &x, const Llong &y) { return x < y ? x : y; }
+inline Llong min(const Llong &x, const Int &y) { return x < y ? x : y; }
+
+
 constexpr Char sign(Char_I s)
 { return s > 0 ? 1 : (s < 0 ? -1 : 0); }
 

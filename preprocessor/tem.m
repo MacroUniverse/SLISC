@@ -14,6 +14,11 @@ if ind > 0
 else
     ind = numel(tem_db)+1;
     tem_db(ind, 1).name = name;
+    for j = 1:size(param, 2)
+        if isa(param{1, j}, 'char')
+            param{1, j} = convert_Long(param{1, j});
+        end
+    end
     tem_db(ind, 1).param = param(1,:);
     req(name, param);
 end

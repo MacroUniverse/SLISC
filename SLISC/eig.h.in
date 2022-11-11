@@ -23,8 +23,8 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 #endif
 //% req('copy(v,v)', {Tm,Tm2});
 	copy(eigVec, A);
-	Int N = (Int)A.n1();
-	Int ret;
+	Long N = A.n1();
+	Long ret;
 //% if is_cmajor(Tm)
 	ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
 //% else
@@ -50,9 +50,9 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 #endif
 //% req('copy(v,v)', {'CmatComp','CmatComp'});
 	copy(eigVec, A);
-	Int N = (Int)A.n1();
+	Long N = A.n1();
 	eigVal.resize(N);
-	Int ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
+	Long ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
 	    (double _Complex*)eigVec.p(), N, eigVal.p());
 	if (ret != 0)
 	    SLS_ERR("failed!");
