@@ -1,4 +1,5 @@
 FROM centos:7.9.2009
+# don't modify anything in ~/.bashrc, there will be problem
 
 RUN yum install -y https://repo.ius.io/ius-release-el7.rpm
 RUN yum install -y centos-release-scl
@@ -74,12 +75,27 @@ RUN scl enable devtoolset-9 bash && cd /root/ && \
 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd /root/lapack-build && make -j12 && make install
 
-# CMd ["scl enable devtoolset-9 bash"]
+# Temporary
+RUN scl enable devtoolset-9 bash && cd /root/ && \
+	yum install -y soci-sqlite3-devel boost-filesystem
 
-#     5  touch SLISC/*.h
-#     7  make -j12
+# will set the shel for rest of the Dockerfile, but not for `docker run`
+SHELL [ "scl", "enable", "devtoolset-9" ]
 
+RUN cd /root/ && \
+	rm -rf SLISC0 && \
+	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 --branch long64-quad && \
+	cd ~/SLISC0 && touch SLISC/*.h && \
+	make -f make/g++_all_centos_tmp.mak -j12
 
-#    24  source make/ld_path_append.sh /usr/local/lib64/
-#    25  source make/ld_path_append.sh /usr/local/lib/
-#    26  ./main.x < input.inp 
+RUN echo "cd ~" >> ~/.bashrc && \
+	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/" >> ~/.bashrc && \
+	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/" >> ~/.bashrc
+
+RUN echo "#! /usr/bin/bash" > /test.sh && \
+	echo "cd /root/SLISC0" >> /test.sh && \
+	echo "./main.x < input.inp" >> /test.sh && \
+	chmod +x /test.sh
+
+# this doesn't work yet since we need to run `scl enable devtoolset-9 bash` first
+# CMD ["/test.sh"]
