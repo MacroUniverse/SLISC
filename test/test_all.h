@@ -93,5 +93,6 @@ void test_all(const std::string &test_name)
 	cout << "end of testing!" << endl;
 	cout << "===============================================" << endl;
 	cout << "TODO: make sure all blas/lapack use 64bit int! No matter what is Long!" << endl;
+	cout << "TODO: expokit, lin_eq are not working on 64bit mode!" << endl;
 	cout << "===============================================" << endl;
 }
