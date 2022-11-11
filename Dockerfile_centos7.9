@@ -4,10 +4,15 @@ FROM centos:7.9.2009
 RUN yum install -y https://repo.ius.io/ius-release-el7.rpm
 RUN yum install -y centos-release-scl
 RUN yum install -y devtoolset-9
-RUN scl enable devtoolset-9 bash && \
-	yum install -y git vim make automake libtool time gcc-c++ gcc-gfortran gmp-devel mpfr-devel wget mlocate
 
-RUN	scl enable devtoolset-9 bash && cd /root/ && \
+# this set the shel for rest of the Dockerfile, but not for `docker run`
+# equivalent to `scl enable devtoolset-9 bash` in a bash session
+SHELL [ "scl", "enable", "devtoolset-9" ]
+
+RUN yum install -y git vim make automake libtool time gcc-c++ gcc-gfortran \
+	gmp-devel mpfr-devel soci-sqlite3-devel boost-filesystem wget mlocate
+
+RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
 	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
@@ -17,34 +22,31 @@ RUN	scl enable devtoolset-9 bash && cd /root/ && \
 	git clone https://github.com/MacroUniverse/GSL-2.5-test
 
 # GSL
-RUN	scl enable devtoolset-9 bash && \
-	cd /root/GSL-2.5-test/gsl-2.5-original && \
+RUN	cd /root/GSL-2.5-test/gsl-2.5-original && \
 	chmod +x ./configure && ./configure && \
 	make -j12 && make install
 
 # flint2
-RUN scl enable devtoolset-9 bash && \
-	cd /root/flint2/ && git checkout 14dc6cbd2 && \
+RUN cd /root/flint2/ && git checkout 14dc6cbd2 && \
 	chmod +x ./configure && ./configure && \
 	make -j12 && make install
 
 # Arb
-RUN scl enable devtoolset-9 bash && \
-	cd /root/arb && git checkout 2.23.0 && \
+RUN cd /root/arb && git checkout 2.23.0 && \
 	chmod +x ./configure && ./configure && \
 	make -j12 && make install && \
 	ln -s libarb.so /usr/local/lib/libflint-arb.so && \
 	ldconfig
 
 # CMake
-RUN scl enable devtoolset-9 bash && cd /root/ && \
+RUN cd /root/ && \
 	wget https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	tar -xzf cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	ln -sf /root/cmake-3.25.0-rc4-linux-x86_64/bin/cmake /usr/bin/ && \
 	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
 
 # (C)BLAS and LAPACK(E) 64bit dynamic (reference)
-RUN	scl enable devtoolset-9 bash && cd /root/ && \
+RUN	cd /root/ && \
 	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
@@ -52,7 +54,7 @@ RUN	scl enable devtoolset-9 bash && cd /root/ && \
 	cd /root/lapack-build && make -j12 && make install
 
 # (C)BLAS and LAPACK(E) 32bit dynamic (reference)
-RUN scl enable devtoolset-9 bash && cd /root/ && \
+RUN cd /root/ && \
 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
@@ -60,7 +62,7 @@ RUN scl enable devtoolset-9 bash && cd /root/ && \
 	cd /root/lapack-build && make -j12 && make install
 
 # (C)BLAS and LAPACK(E) 64bit static (reference)
-RUN scl enable devtoolset-9 bash && cd /root/ && \
+RUN cd /root/ && \
 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
@@ -68,29 +70,25 @@ RUN scl enable devtoolset-9 bash && cd /root/ && \
 	cd /root/lapack-build && make -j12 && make install
 
 # (C)BLAS and LAPACK(E) 32bit static (reference)
-RUN scl enable devtoolset-9 bash && cd /root/ && \
+RUN cd /root/ && \
 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd /root/lapack-build && make -j12 && make install
 
-# Temporary
-RUN scl enable devtoolset-9 bash && cd /root/ && \
-	yum install -y soci-sqlite3-devel boost-filesystem
+# set LD_LIBRARY_PATH
+# bashrc doesn't seem to work for `RUN`
+RUN echo "cd ~" >> ~/.bashrc && \
+	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/" >> ~/.bashrc && \
+	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/" >> ~/.bashrc
 
-# will set the shel for rest of the Dockerfile, but not for `docker run`
-SHELL [ "scl", "enable", "devtoolset-9" ]
-
+# test branch: long64-quad
 RUN cd /root/ && \
 	rm -rf SLISC0 && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 --branch long64-quad && \
 	cd ~/SLISC0 && touch SLISC/*.h && \
 	make -f make/g++_all_centos_tmp.mak -j12
-
-RUN echo "cd ~" >> ~/.bashrc && \
-	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/" >> ~/.bashrc && \
-	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/" >> ~/.bashrc
 
 RUN echo "#! /usr/bin/bash" > /test.sh && \
 	echo "cd /root/SLISC0" >> /test.sh && \
