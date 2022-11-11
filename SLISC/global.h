@@ -81,11 +81,19 @@
 	    #else
 	        #define __GSL_CBLAS_H__
 	    #endif
-		#define CBLAS_INT long long
+		#ifdef SLS_USE_INT_AS_LONG
+			#define CBLAS_INT int
+		#else
+			#define CBLAS_INT long long
+		#endif
 	    #include <cblas.h>
 	#endif
 	#ifdef SLS_USE_LAPACKE
-		#define lapack_int long long
+		#ifdef SLS_USE_INT_AS_LONG
+			#define CBLAS_INT int
+		#else
+			#define CBLAS_INT long long
+		#endif
 	    #include <lapacke.h>
 	    #ifdef I // I is already defined in "/usr/include/complex.h"
 	        #undef I
