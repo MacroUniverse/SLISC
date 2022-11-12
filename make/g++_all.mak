@@ -6,14 +6,18 @@
 #======== options =========
 # define Long (array index type) as 32bit integer
 opt_long32 = true
-# use quad precision float
-opt_quadmath = false
 # debug mode
 opt_debug = true
-# lapack package (reference, openblas, mkl, none)
-opt_lapack = reference
+# address sanitizer
+opt_asan = true
 # static link (only for MKL for now)
 opt_static = false
+# minimum build (all below options set to false)
+opt_min = false
+# use quad precision float
+opt_quadmath = false
+# lapack package (reference, openblas, mkl, none)
+opt_lapack = reference
 # use Boost lib
 opt_boost = true
 # use GSL lib
@@ -33,10 +37,25 @@ opt_matfile = false
 # compiler
 compiler = g++
 
+# === minimum build ===
+ifeq ($(opt_min), true)
+    opt_quadmath = false
+    opt_lapack = none
+    opt_boost = false
+    opt_gsl = false
+    opt_eigen = false
+    opt_arb = false
+    opt_arpack = false
+    opt_sqlite = false
+    opt_matfile = false
+endif
+
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
     # Address Sanitizer
-    asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+    ifeq ($(opt_asan), true)
+        asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+    endif
     debug_flag = -g -ftrapv $(asan_flag)
 else
     release_flag = -O3 -D NDEBUG
