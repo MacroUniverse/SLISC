@@ -4,16 +4,30 @@
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 #======== options =========
-# debug mode
-opt_debug    = true
 # define Long (array index type) as 32bit integer
-opt_long32   = false
-# enalbe quad precision float support
-opt_quad     = true
+opt_long32 = false
+# use quad precision float
+opt_quadmath = true
+# debug mode
+opt_debug = true
 # lapack package (reference, openblas, mkl)
-opt_lapack   = openblas
+opt_lapack = openblas
 # static link (only for MKL for now)
-opt_static   = false
+opt_static = false
+# use Boost lib
+opt_boost = true
+# use GSL lib
+opt_gsl = true
+# use Eigen lib
+opt_eigen = true
+# use Arblib lib
+opt_arb = true
+# use Arpack++2 lib
+opt_arpack = true
+# use sqlite
+opt_sqlite = true
+# read and write Matlab .mat file
+opt_matfile = false
 #==========================
 
 # compiler
@@ -33,18 +47,15 @@ ifeq ($(opt_long32), true)
     long_flag = -D SLS_USE_INT_AS_LONG
 endif
 
-# === CBLAS (reference) ===
 ifeq ($(opt_lapack), reference)
+# === CBLAS (reference) ===
     cblas_flag = -D SLS_USE_CBLAS
     ifeq ($(opt_long32), false)
         cblas_lib = -l cblas64
     else
         cblas_lib = -l cblas
     endif
-endif
-
 # === LAPACKE (reference) ===
-ifeq ($(opt_lapack), reference)
     lapacke_flag = -D SLS_USE_LAPACKE
     ifeq ($(opt_long32), false)
         lapacke_lib = -l lapacke64
@@ -53,14 +64,11 @@ ifeq ($(opt_lapack), reference)
     endif
 endif
 
-# === CBLAS (openblas) ===
 ifeq ($(opt_lapack), openblas)
+# === CBLAS (openblas) ===
     cblas_flag = -D SLS_USE_CBLAS -I /opt/OpenBLAS/include
     cblas_lib = -L /opt/OpenBLAS/lib -l openblas
-endif
-
 # === LAPACKE (openblas) ===
-ifeq ($(opt_lapack), openblas)
     lapacke_flag = -D SLS_USE_LAPACKE
 endif
 
@@ -68,49 +76,65 @@ endif
 # ref: MKL link advisor https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
 ifeq ($(opt_lapack), mkl)
     mkl_flag = -D SLS_USE_MKL -m64 -I${MKLROOT}/include
-    ifeq ($(opt_static), true)
+    ifeq ($(opt_static), true) # static link
         mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
-    else
+    else # dynamic link
         mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
     endif
 endif
 
 # === Boost ===
-boost_flag = -D SLS_USE_BOOST -I ../boost-headers
-boost_lib = -lboost_system -lboost_filesystem
+ifeq ($(opt_boost), true)
+    boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+    boost_lib = -lboost_system -lboost_filesystem
+endif
 
 # === GSL ===
-gsl_flag = -D SLS_USE_GSL
-gsl_lib = -lgsl
+ifeq ($(opt_gsl), true)
+    gsl_flag = -D SLS_USE_GSL
+    gsl_lib = -lgsl
+endif
 
 # === Eigen ===
-eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+ifeq ($(opt_eigen), true)
+    eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+endif
 
 # === Quad Math ===
-ifeq ($(opt_quad), true)
+ifeq ($(opt_quadmath), true)
     quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
     quad_math_lib = -lquadmath
 endif
 
 # === Arb ===
-arb_flag = -D SLS_USE_ARB
-arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
+ifeq ($(opt_arb), true)
+    arb_flag = -D SLS_USE_ARB
+    arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
+endif
 
 # === Arpack ===
+ifeq ($(opt_arpack), true)
 ifeq ($(opt_lapack), reference) # only works for reference lapack for now
     arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
     arpack_lib = -larpack -lgfortran
 endif
+endif
 
 # === SQLite ===
-sqlite_flag = -D SLS_USE_SQLITE
-sqlite_lib = -l sqlite3
+ifeq ($(opt_sqlite), true)
+    sqlite_flag = -D SLS_USE_SQLITE
+    sqlite_lib = -l sqlite3
+endif
 
 # === Matlab .mat file ===
 # (conflicts with boost_filesystem.so other than version 1.56.0)
-# matfile_bin_path = ../MatFile_linux/lib
-# matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
-# matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+ifeq ($(opt_matfile), true)
+    matfile_bin_path = ../MatFile_linux/lib
+    matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
+    matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+endif
+
+# ---------------------------------------------------------
 
 # all flags
 flags = -Wall -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -std=c++11 -fopenmp $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag)
@@ -132,16 +156,19 @@ path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 goal: main.x
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quad), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quadmath), $(opt_long32))"
 
-main.x: main.o $(test_o)
+main.x: main.o $(test_o) # link
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
-link: # link only
+link: # force link
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
-	rm -f *.o *.x $(path_gen_headers)
+	rm -f *.o *.x
+
+clean_h:
+    rm -f $(path_gen_headers)
 
 main.o: main.cpp test/test_all.h
 	$(compiler) $(flags) -c main.cpp
@@ -149,5 +176,5 @@ main.o: main.cpp test/test_all.h
 %.o: test/%.cpp $(path_headers)
 	$(compiler) $(flags) -c $<
 
-%.h: %.h.in
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', $(opt_quad), $(opt_long32))"
+%.h: %.h.in # code gen
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
