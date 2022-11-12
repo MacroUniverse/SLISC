@@ -12,7 +12,6 @@ RUN apt -y update && \
 	apt install -y vim git make g++ gdb gfortran wget automake
 
 # set your timezone
-# set your timezone
 RUN apt install -y tzdata
 ENV TZ America/Chicago
 RUN echo "${TZ}" > /etc/timezone \
@@ -29,7 +28,25 @@ RUN cd /root/OpenBLAS-0.3.21/ && \
 
 RUN	cd /root/ && \
 	git clone --depth 1 https://github.com/MacroUniverse/SLISC0 && \
-	git clone --depth 1 --branch long64-quad https://github.com/MacroUniverse/SLISC0 SLISC0-long64-quad
+	touch SLISC0/SLISC/*.h && \
+	git clone --depth 1 --branch long64-quad https://github.com/MacroUniverse/SLISC0 SLISC0-long64-quad && \
+	touch SLISC0-long64-quad/SLISC/*.h
 
 RUN cd /root/SLISC0 && \
-	
+	make -j12 opt_lapack=openblas opt_boost=false opt_gsl=false opt_eigen=false opt_arb=false opt_arpack=false opt_sqlite=false
+
+RUN cd /root/SLISC0-long64-quad && \
+	make -j12 opt_lapack=openblas opt_boost=false opt_gsl=false opt_eigen=false opt_arb=false opt_arpack=false opt_sqlite=false
+
+RUN echo "source /root/SLISC0/make/ld_path_append.sh /opt/OpenBLAS/lib" >> ~/.bashrc
+
+RUN echo "#! /usr/bin/bash" > /test.sh && \
+	echo "source /root/SLISC0/make/ld_path_append.sh /opt/OpenBLAS/lib" >> /test.sh && \
+	echo "cd /root/SLISC0" >> /test.sh && \
+	echo "./main.x < input.inp" >> /test.sh && \
+	echo "cd /root/SLISC0-long64-quad" >> /test.sh && \
+	echo "printf '\n\n\n\n\n\n'" >> /test.sh && \
+	echo "./main.x < input.inp" >> /test.sh && \
+	chmod +x /test.sh
+
+CMD ["/test.sh"]
