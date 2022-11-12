@@ -1,0 +1,34 @@
+# To build docker image, use `sudo docker build -t slisc0 -f Dockerfile_XXX .`
+# To run test, use `sudo docker run slisc0`
+# To open a bash, use `sudo docker run -it slisc0 bash`
+# more docker commands https://wuli.wiki/online/Docker.html
+
+FROM ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt -y update && \
+	apt -y upgrade && \
+	apt install -y vim git make g++ gdb gfortran libopenblas-dev
+
+# set your timezone
+# set your timezone
+RUN apt install -y tzdata
+ENV TZ America/Chicago
+RUN echo "${TZ}" > /etc/timezone \
+  && ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime \
+  && dpkg-reconfigure -f noninteractive tzdata
+
+RUN	cd /root/ && \
+	git clone https://github.com/MacroUniverse/SLISC0 --depth 1
+
+RUN cd /root/ && \
+	apt install -y wget automake && \
+	apt purge libopenblas-dev && apt autoremove && \
+	wget https://github.com/xianyi/OpenBLAS/releases/download/v0.3.21/OpenBLAS-0.3.21.tar.gz && \
+	tar -xzf OpenBLAS-0.3.21.tar.gz
+
+RUN cd /root/ && \
+	mkdir openblas-build && cd openblas-build && \
+	cmake -DBUILD_STATIC_LIBS=ON -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release ../OpenBLAS-0.3.21/ && \
+	make -j12 && make install

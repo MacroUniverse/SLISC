@@ -10,4 +10,4 @@ _l=${_l%:}
 _l=${_l#:}
 LD_LIBRARY_PATH="$_l"
 
-LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$1"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$1"

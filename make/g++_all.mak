@@ -5,15 +5,15 @@
 
 #======== options =========
 # debug mode
-opt_debug   = true
+opt_debug    = true
 # define Long (array index type) as 32bit integer
-opt_long32  = true
+opt_long32   = false
 # enalbe quad precision float support
-opt_quad    = false
-# use MKL
-opt_mkl     = false
+opt_quad     = true
+# lapack package (reference, openblas, mkl)
+opt_lapack   = openblas
 # static link (only for MKL for now)
-opt_static  = false
+opt_static   = false
 #==========================
 
 # compiler
@@ -33,18 +33,18 @@ ifeq ($(opt_long32), true)
     long_flag = -D SLS_USE_INT_AS_LONG
 endif
 
-# === CBLAS ===
-ifeq ($(opt_mkl), false)
+# === CBLAS (reference) ===
+ifeq ($(opt_lapack), reference)
     cblas_flag = -D SLS_USE_CBLAS
     ifeq ($(opt_long32), false)
-        cblas_lib = -l blas64
+        cblas_lib = -l cblas64
     else
-        cblas_lib = -l blas
+        cblas_lib = -l cblas
     endif
 endif
 
-# === LAPACKE ===
-ifeq ($(opt_mkl), false)
+# === LAPACKE (reference) ===
+ifeq ($(opt_lapack), reference)
     lapacke_flag = -D SLS_USE_LAPACKE
     ifeq ($(opt_long32), false)
         lapacke_lib = -l lapacke64
@@ -53,9 +53,20 @@ ifeq ($(opt_mkl), false)
     endif
 endif
 
+# === CBLAS (openblas) ===
+ifeq ($(opt_lapack), openblas)
+    cblas_flag = -D SLS_USE_CBLAS -I /opt/OpenBLAS/include
+    cblas_lib = -L /opt/OpenBLAS/lib -l openblas
+endif
+
+# === LAPACKE (openblas) ===
+ifeq ($(opt_lapack), openblas)
+    lapacke_flag = -D SLS_USE_LAPACKE
+endif
+
 # === MKL ===
 # ref: MKL link advisor https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
-ifeq ($(opt_mkl), true)
+ifeq ($(opt_lapack), mkl)
     mkl_flag = -D SLS_USE_MKL -m64 -I${MKLROOT}/include
     ifeq ($(opt_static), true)
         mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
@@ -86,7 +97,7 @@ arb_flag = -D SLS_USE_ARB
 arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
 
 # === Arpack ===
-ifeq ($(opt_mkl), false)
+ifeq ($(opt_lapack), reference) # only works for reference lapack for now
     arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
     arpack_lib = -larpack -lgfortran
 endif

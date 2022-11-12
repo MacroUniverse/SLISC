@@ -8,4 +8,5 @@ while [[ $_l =~ :$1: ]]; do
 done
 _l=${_l%:}
 _l=${_l#:}
-LD_LIBRARY_PATH="$_l"
+
+export LD_LIBRARY_PATH="$_l"
