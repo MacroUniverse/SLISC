@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt -y update && \
 	apt -y upgrade && \
-	apt install -y vim git make g++ gdb gfortran libopenblas-dev
+	apt install -y vim git make g++ gdb gfortran wget automake
 
 # set your timezone
 # set your timezone
@@ -19,16 +19,17 @@ RUN echo "${TZ}" > /etc/timezone \
   && ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime \
   && dpkg-reconfigure -f noninteractive tzdata
 
-RUN	cd /root/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1
-
 RUN cd /root/ && \
-	apt install -y wget automake && \
-	apt purge libopenblas-dev && apt autoremove && \
 	wget https://github.com/xianyi/OpenBLAS/releases/download/v0.3.21/OpenBLAS-0.3.21.tar.gz && \
 	tar -xzf OpenBLAS-0.3.21.tar.gz
 
-RUN cd /root/ && \
-	mkdir openblas-build && cd openblas-build && \
-	cmake -DBUILD_STATIC_LIBS=ON -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release ../OpenBLAS-0.3.21/ && \
-	make -j12 && make install
+RUN cd /root/OpenBLAS-0.3.21/ && \
+	make USE_THREAD=0 -j12  && \
+	make install
+
+RUN	cd /root/ && \
+	git clone --depth 1 https://github.com/MacroUniverse/SLISC0 && \
+	git clone --depth 1 --branch long64-quad https://github.com/MacroUniverse/SLISC0 SLISC0-long64-quad
+
+RUN cd /root/SLISC0 && \
+	

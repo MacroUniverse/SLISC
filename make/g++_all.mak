@@ -5,13 +5,13 @@
 
 #======== options =========
 # define Long (array index type) as 32bit integer
-opt_long32 = false
+opt_long32 = true
 # use quad precision float
-opt_quadmath = true
+opt_quadmath = false
 # debug mode
 opt_debug = true
-# lapack package (reference, openblas, mkl)
-opt_lapack = openblas
+# lapack package (reference, openblas, mkl, none)
+opt_lapack = reference
 # static link (only for MKL for now)
 opt_static = false
 # use Boost lib
@@ -168,7 +168,7 @@ clean:
 	rm -f *.o *.x
 
 clean_h:
-    rm -f $(path_gen_headers)
+	rm -f $(path_gen_headers)
 
 main.o: main.cpp test/test_all.h
 	$(compiler) $(flags) -c main.cpp
