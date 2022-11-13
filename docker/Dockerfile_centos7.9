@@ -3,13 +3,16 @@ FROM centos:7.9.2009
 
 RUN yum install -y https://repo.ius.io/ius-release-el7.rpm
 RUN yum install -y centos-release-scl
+
+# includes g++ and gfortran 9.3.1, GDB 8.3 make 4.2.1
+# ref: https://access.redhat.com/documentation/en-us/red_hat_developer_toolset/9/html-single/user_guide/index
 RUN yum install -y devtoolset-9
 
 # this set the shel for rest of the Dockerfile, but not for `docker run`
 # equivalent to `scl enable devtoolset-9 bash` in a bash session
 SHELL [ "scl", "enable", "devtoolset-9" ]
 
-RUN yum install -y git vim make automake libtool time gcc-c++ gcc-gfortran \
+RUN yum install -y git vim time \
 	gmp-devel mpfr-devel soci-sqlite3-devel boost-filesystem wget mlocate
 
 RUN	cd /root/ && \
@@ -17,9 +20,9 @@ RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
+	git clone https://github.com/MacroUniverse/GSL-2.5-test --depth 1 && \
 	git clone https://github.com/fredrik-johansson/arb && \
-	git clone https://github.com/fredrik-johansson/flint2 && \
-	git clone https://github.com/MacroUniverse/GSL-2.5-test
+	git clone https://github.com/fredrik-johansson/flint2 
 
 # GSL
 RUN	cd /root/GSL-2.5-test/gsl-2.5-original && \
@@ -80,19 +83,7 @@ RUN cd /root/ && \
 RUN ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
 	ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
 
-RUN cd /root/SLISC0 && \
-	git pull origin && touch SLISC/*.h && \
-	make -j12 opt_arpack=false opt_boost=true opt_asan=false opt_sqlite=false && \
-	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
-	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
-	./main.x < input.inp
-
-RUN cd /root/SLISC0 && \
-	cp SLISC-long64-quad/*.h SLISC/ && \
-	make -j12 opt_long32=false opt_quadmath=true opt_arpack=false opt_boost=true opt_asan=false opt_sqlite=false && \
-	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
-	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
-	./main.x < input.inp
+RUN yum install -y automake libtool
 
 # Arpack-NG
 RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
@@ -103,9 +94,18 @@ RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 	sh bootstrap && ./configure && make -j12 && make check && \
 	make install
 
+RUN yum install -y soci-sqlite3-devel
+
 RUN cd /root/SLISC0 && \
-	git pull origin && git checkout ./ && touch SLISC/*.h && \
-	make -j12 opt_boost=true opt_asan=false opt_sqlite=false && \
+	git pull origin && touch SLISC/*.h && \
+	make -j12 opt_asan=false && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
+	./main.x < input.inp
+
+RUN cd /root/SLISC0 && \
+	cp SLISC-long64-quad/*.h SLISC/ && \
+	make -j12 opt_long32=false opt_quadmath=true opt_asan=false && \
 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
 	./main.x < input.inp
