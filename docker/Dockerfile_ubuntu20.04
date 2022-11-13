@@ -13,7 +13,6 @@ RUN apt -y update && \
 	apt purge -y libopenblas*
 
 # set your timezone
-# set your timezone
 RUN apt install -y tzdata
 ENV TZ America/Chicago
 RUN echo "${TZ}" > /etc/timezone \
