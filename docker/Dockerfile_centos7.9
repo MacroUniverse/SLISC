@@ -13,7 +13,7 @@ RUN yum install -y devtoolset-9
 SHELL [ "scl", "enable", "devtoolset-9" ]
 
 RUN yum install -y git vim time \
-	gmp-devel mpfr-devel soci-sqlite3-devel boost-filesystem wget mlocate
+	soci-sqlite3-devel boost-filesystem wget mlocate
 
 RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
@@ -21,23 +21,36 @@ RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
 	git clone https://github.com/MacroUniverse/GSL-2.5-test --depth 1 && \
+	git clone https://github.com/MacroUniverse/GMP_test --depth 1 && \
 	git clone https://github.com/fredrik-johansson/arb && \
 	git clone https://github.com/fredrik-johansson/flint2 
 
 # GSL
 RUN	cd /root/GSL-2.5-test/gsl-2.5-original && \
 	chmod +x ./configure && ./configure && \
-	make -j12 && make install
+	make -j12 && make check && make install
 
-# flint2
+RUN yum install -y automake libtool
+
+# GMP
+RUN cd /root/GMP_test/gmp-6.1.2 && chmod 777 -R ./ && \
+	./configure && make -j12 && make check && make install
+
+# MPFR
+RUN cd /root/ && \
+	wget https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
+	tar -xzf mpfr-4.1.0.tar.gz && cd mpfr-4.1.0 && \
+	./configure && make -j12 && make check && make install
+
+# Flint2
 RUN cd /root/flint2/ && git checkout 14dc6cbd2 && \
 	chmod +x ./configure && ./configure && \
-	make -j12 && make install
+	make -j12 && make check && make install
 
 # Arb
 RUN cd /root/arb && git checkout 2.23.0 && \
 	chmod +x ./configure && ./configure && \
-	make -j12 && make install && \
+	make -j12 && make check && make install && \
 	ln -s libarb.so /usr/local/lib/libflint-arb.so && \
 	ldconfig
 
@@ -54,7 +67,7 @@ RUN	cd /root/ && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd /root/lapack-build && make -j12 && make install
+	cd /root/lapack-build && make -j12 && make check && make install
 
 # (C)BLAS and LAPACK(E) 32bit dynamic (reference)
 RUN cd /root/ && \
@@ -62,7 +75,7 @@ RUN cd /root/ && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd /root/lapack-build && make -j12 && make install
+	cd /root/lapack-build && make -j12 make check && && make install
 
 # (C)BLAS and LAPACK(E) 64bit static (reference)
 RUN cd /root/ && \
@@ -70,7 +83,7 @@ RUN cd /root/ && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd /root/lapack-build && make -j12 && make install
+	cd /root/lapack-build && make -j12 && make check && make install
 
 # (C)BLAS and LAPACK(E) 32bit static (reference)
 RUN cd /root/ && \
@@ -78,12 +91,10 @@ RUN cd /root/ && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd /root/lapack-build && make -j12 && make install
+	cd /root/lapack-build && make -j12 && make check && make install
 
 RUN ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
 	ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
-
-RUN yum install -y automake libtool
 
 # Arpack-NG
 RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
@@ -94,6 +105,7 @@ RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 	sh bootstrap && ./configure && make -j12 && make check && \
 	make install
 
+# TODO: compile from source
 RUN yum install -y soci-sqlite3-devel
 
 RUN cd /root/SLISC0 && \
