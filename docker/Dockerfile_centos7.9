@@ -77,9 +77,19 @@ RUN cd /root/ && \
 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd /root/lapack-build && make -j12 && make install
 
+RUN ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
+	ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
+
 RUN cd /root/SLISC0 && \
-	git pull && touch SLISC/*.h && \
-	make -j12 opt_arpack=false opt_boost=false opt_asan=false opt_sqlite=false && \
+	git pull origin && touch SLISC/*.h && \
+	make -j12 opt_arpack=false opt_boost=true opt_asan=false opt_sqlite=false && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
+	./main.x < input.inp
+
+RUN cd /root/SLISC0 && \
+	cp SLISC-long64-quad/*.h SLISC/ && \
+	make -j12 opt_long32=false opt_quadmath=true opt_arpack=false opt_boost=true opt_asan=false opt_sqlite=false && \
 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
 	./main.x < input.inp
@@ -89,15 +99,6 @@ RUN cd /root/SLISC0 && \
 RUN echo "cd ~" >> ~/.bashrc && \
 	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/" >> ~/.bashrc && \
 	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/" >> ~/.bashrc
-
-# test branch: long64-quad
-RUN cd /root/ && \
-	git clone --depth 1 --branch long64-quad https://github.com/MacroUniverse/SLISC0 SLISC0-long64-quad && \
-	cd ~/SLISC0-long64-quad && touch SLISC/*.h && \
-	make -j12 opt_arpack=false opt_boost=false opt_asan=false opt_sqlite=false && \
-	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
-	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
-	./main.x < input.inp
 
 # RUN echo "#! /usr/bin/bash" > /test.sh && \
 #	echo "cd /root/SLISC0" >> /test.sh && \
