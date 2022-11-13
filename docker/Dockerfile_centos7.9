@@ -94,8 +94,24 @@ RUN cd /root/SLISC0 && \
 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
 	./main.x < input.inp
 
+# Arpack-NG
+RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
+	cd /root/ && \
+	wget https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
+	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	sh bootstrap && ./configure && make -j12 && make check && \
+	make install
+
+RUN cd /root/SLISC0 && \
+	git pull origin && git checkout ./ && touch SLISC/*.h && \
+	make -j12 opt_boost=true opt_asan=false opt_sqlite=false && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
+	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
+	./main.x < input.inp
+
 # set LD_LIBRARY_PATH
-# bashrc doesn't seem to work for `RUN`
+# bashrc doesn't work for `RUN` ! only for bash section
 RUN echo "cd ~" >> ~/.bashrc && \
 	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/" >> ~/.bashrc && \
 	echo "source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/" >> ~/.bashrc

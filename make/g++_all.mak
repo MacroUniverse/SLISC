@@ -96,22 +96,22 @@ endif
 ifeq ($(opt_lapack), mkl)
     mkl_flag = -D SLS_USE_MKL -m64 -I${MKLROOT}/include
     ifeq ($(opt_static), true) # static link
-        mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+        mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
     else # dynamic link
-        mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+        mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
     endif
 endif
 
 # === Boost ===
 ifeq ($(opt_boost), true)
     boost_flag = -D SLS_USE_BOOST -I ../boost-headers
-    boost_lib = -lboost_system -lboost_filesystem
+    boost_lib = -l boost_system -l boost_filesystem
 endif
 
 # === GSL ===
 ifeq ($(opt_gsl), true)
     gsl_flag = -D SLS_USE_GSL
-    gsl_lib = -lgsl
+    gsl_lib = -l gsl
 endif
 
 # === Eigen ===
@@ -122,7 +122,7 @@ endif
 # === Quad Math ===
 ifeq ($(opt_quadmath), true)
     quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
-    quad_math_lib = -lquadmath
+    quad_math_lib = -l quadmath
 endif
 
 # === Arb ===
@@ -135,7 +135,7 @@ endif
 ifeq ($(opt_arpack), true)
 ifeq ($(opt_lapack), reference) # only works for reference lapack for now
     arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
-    arpack_lib = -larpack -lgfortran
+    arpack_lib = -l arpack -l gfortran -l blas -l lapack
 endif
 endif
 
@@ -150,7 +150,7 @@ endif
 ifeq ($(opt_matfile), true)
     matfile_bin_path = ../MatFile_linux/lib
     matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
-    matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L$(matfile_bin_path) -l mat -l mx
+    matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
 endif
 
 # ---------------------------------------------------------
