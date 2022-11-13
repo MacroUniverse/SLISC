@@ -68,7 +68,7 @@ void huffman_code(unordered_map<char,string> &dict, Str_I data, vecLong freq)
 	// the Huffman tree built above
 	string str;
 	SLS_WARN("something is wrong! str shouldn't be empty!");
-	printCodes(dict, minHeap.top(), str);
+	// printCodes(dict, minHeap.top(), str);
 	huffman_tree_delete(top);
 }
 
