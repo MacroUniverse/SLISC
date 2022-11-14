@@ -25,6 +25,9 @@ RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1
 
+RUN ln -s libblas.so /usr/lib/x86_64-linux-gnu/libcblas.so && \
+    ln -s libblas.a /usr/lib/x86_64-linux-gnu/libcblas.a
+
 RUN	cd /root/SLISC0 && \
 	touch SLISC/*.h && \
 	make -j12
