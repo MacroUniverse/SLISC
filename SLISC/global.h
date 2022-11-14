@@ -70,6 +70,16 @@
 	#else
 		#define __GSL_BLAS_TYPES_H__
 	#endif
+	#ifdef SLS_USE_INT_AS_LONG
+		#define MKL_INT int
+	#else
+		#define MKL_INT long long
+	#endif
+	#ifdef SLS_USE_INT_AS_LONG
+		#define lapack_int int
+	#else
+		#define lapack_int long long
+	#endif
 	#include <mkl.h>
 	#ifdef SLS_USE_GSL
 		#include "my_gsl_blas_types.h"

@@ -26,7 +26,9 @@ RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1
 
 RUN ln -s libblas.so /usr/lib/x86_64-linux-gnu/libcblas.so && \
-    ln -s libblas.a /usr/lib/x86_64-linux-gnu/libcblas.a
+    ln -s libblas.a /usr/lib/x86_64-linux-gnu/libcblas.a && \
+	ln -s libblas64.so /usr/lib/x86_64-linux-gnu/libcblas64.so
+	# libcblas64.a not found
 
 RUN	cd /root/SLISC0 && \
 	touch SLISC/*.h && \

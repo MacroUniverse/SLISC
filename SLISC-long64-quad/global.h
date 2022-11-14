@@ -61,17 +61,29 @@
 #ifdef SLS_USE_MKL
 	#define MKL_Complex16 double _Complex
 	#ifdef __GSL_CBLAS_H__
-		#error include SLISC/global.h becore any GSL headers
+		#error include SLISC/global.h before any GSL headers
 	#else
 	    #define __GSL_CBLAS_H__
 	#endif
 	#ifdef __GSL_BLAS_TYPES_H__
-		#error include SLISC/global.h becore any GSL headers
+		#error include SLISC/global.h before any GSL headers
 	#else
 		#define __GSL_BLAS_TYPES_H__
 	#endif
+	#ifdef SLS_USE_INT_AS_LONG
+		#define MKL_INT int
+	#else
+		#define MKL_INT long long
+	#endif
+	#ifdef SLS_USE_INT_AS_LONG
+		#define lapack_int int
+	#else
+		#define lapack_int long long
+	#endif
 	#include <mkl.h>
-	#include "my_gsl_blas_types.h"
+	#ifdef SLS_USE_GSL
+		#include "my_gsl_blas_types.h"
+	#endif
 	#define SLS_USE_CBLAS
 	#define SLS_USE_LAPACKE
 #else
