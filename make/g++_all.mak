@@ -4,7 +4,7 @@
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 #======== options =========
-# compiler [g++|clang++]
+# compiler [g++|clang++|icpc]
 opt_compiler = g++
 # define Long (array index type) as 32bit integer
 opt_long32 = true
@@ -55,7 +55,10 @@ ifeq ($(opt_debug), true)
     ifeq ($(opt_asan), true)
         asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
     endif
-    debug_flag = -g -ftrapv $(asan_flag)
+    debug_flag = -g
+    ifeq ($(opt_compiler), g++)
+        debug_flag = -g -ftrapv $(asan_flag)
+    endif
 else
     release_flag = -O3 -D NDEBUG
 endif
@@ -93,11 +96,21 @@ endif
 # === MKL ===
 # ref: MKL link advisor https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
 ifeq ($(opt_lapack), mkl)
-    mkl_flag = -D SLS_USE_MKL -m64 -I${MKLROOT}/include
-    ifeq ($(opt_static), true) # static link
-        mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
-    else # dynamic link
-        mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+    ifeq ($(opt_compiler), g++)
+        mkl_flag = -D SLS_USE_MKL -m64 -I${MKLROOT}/include
+        ifeq ($(opt_static), true) # static link
+            mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+        else # dynamic link
+            mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+        endif
+    endif
+    ifeq ($(opt_compiler), icpc)
+        mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
+        ifeq ($(opt_static), true) # static link
+            mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+        else # dynamic link
+            mkl_dyn_link = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
+        endif
     endif
 endif
 
@@ -152,15 +165,21 @@ ifeq ($(opt_matfile), true)
     matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
 endif
 
-# === g++ flags ===
+# === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    gpp_flag = -fmax-errors=20 -fopenmp
+    compiler_flag = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11 -fmax-errors=20 -fopenmp
+endif
+ifeq ($(opt_compiler), clang++)
+    compiler_flag = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11
+endif
+ifeq ($(opt_compiler), icpc)
+    compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
 endif
 
 # ---------------------------------------------------------
 
 # all flags
-flags = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11 $(gpp_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag)
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag)
 # -pedantic # show more warnings
 
 # all libs
