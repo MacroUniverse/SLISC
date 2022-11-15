@@ -81,48 +81,50 @@ RUN cd ~/arb && git checkout 2.23.0 && \
 RUN cd ~/ && \
 	wget https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	tar -xzf cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
-	ln -sf ~/cmake-3.25.0-rc4-linux-x86_64/bin/cmake /usr/bin/ && \
+	ln -s ~/cmake-3.25.0-rc4-linux-x86_64/bin/cmake ~ && \
 	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
 
 # ========== not tested ==========
 
 # (C)BLAS and LAPACK(E) 64bit dynamic (reference)
+# `make check` is not defined
 RUN	cd ~/ && \
 	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	mkdir $INSTALL_DIR/lapack64-so && \
-	cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack64-so -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd ~/lapack-build && make -j12 && make check && make install
+	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack64-so -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd ~/lapack-build && make -j12 && make install
 
-# TODO
+# (C)BLAS and LAPACK(E) 32bit dynamic (reference)
+RUN cd ~/ && \
+	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	mkdir $INSTALL_DIR/lapack32-so && \
+	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack32-so -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd ~/lapack-build && make -j12 && make install
 
-# # (C)BLAS and LAPACK(E) 32bit dynamic (reference)
-# RUN cd ~/ && \
-# 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
-# 	tar -xzf v3.10.1.tar.gz && \
-# 	mkdir lapack-build && cd lapack-build && \
-# 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-# 	cd ~/lapack-build && make -j12 make check && && make install
+# (C)BLAS and LAPACK(E) 64bit static (reference)
+RUN cd ~/ && \
+	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	mkdir $INSTALL_DIR/lapack64-a && \
+	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack64-a -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd ~/lapack-build && make -j12 && make install
 
-# # (C)BLAS and LAPACK(E) 64bit static (reference)
-# RUN cd ~/ && \
-# 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
-# 	tar -xzf v3.10.1.tar.gz && \
-# 	mkdir lapack-build && cd lapack-build && \
-# 	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-# 	cd ~/lapack-build && make -j12 && make check && make install
+# (C)BLAS and LAPACK(E) 32bit static (reference)
+RUN cd ~/ && \
+	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	mkdir $INSTALL_DIR/lapack32-a && \
+	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack32-a -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd ~/lapack-build && make -j12 && make install
 
-# # (C)BLAS and LAPACK(E) 32bit static (reference)
-# RUN cd ~/ && \
-# 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
-# 	tar -xzf v3.10.1.tar.gz && \
-# 	mkdir lapack-build && cd lapack-build && \
-# 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-# 	cd ~/lapack-build && make -j12 && make check && make install
-
-# RUN ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
-# 	ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
+RUN sudo ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
+	sudo ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
 
 # # Arpack-NG
 # RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
