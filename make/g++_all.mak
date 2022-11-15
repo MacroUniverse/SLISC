@@ -4,6 +4,8 @@
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 #======== options =========
+# compiler [g++|clang++]
+opt_compiler = g++
 # define Long (array index type) as 32bit integer
 opt_long32 = true
 # debug mode
@@ -33,9 +35,6 @@ opt_sqlite = true
 # read and write Matlab .mat file
 opt_matfile = false
 #==========================
-
-# compiler
-compiler = g++
 
 # === minimum build ===
 ifeq ($(opt_min), true)
@@ -153,10 +152,15 @@ ifeq ($(opt_matfile), true)
     matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
 endif
 
+# === g++ flags ===
+ifeq ($(opt_compiler), g++)
+    gpp_flag = -fmax-errors=20 -fopenmp
+endif
+
 # ---------------------------------------------------------
 
 # all flags
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -std=c++11 -fopenmp $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag)
+flags = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11 $(gpp_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag)
 # -pedantic # show more warnings
 
 # all libs
@@ -178,10 +182,10 @@ h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quadmath), $(opt_long32))"
 
 main.x: main.o $(test_o) # link
-	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
+	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 link: # force link
-	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
+	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
 	rm -f *.o *.x
@@ -190,10 +194,10 @@ clean_h:
 	rm -f $(path_gen_headers)
 
 main.o: main.cpp test/test_all.h
-	$(compiler) $(flags) -c main.cpp
+	$(opt_compiler) $(flags) -c main.cpp
 
 %.o: test/%.cpp $(path_headers)
-	$(compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c $<
 
 %.h: %.h.in # code gen
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
