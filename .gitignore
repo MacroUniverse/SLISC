@@ -10,6 +10,7 @@ cmake-build-debug/
 *.x
 *.gch
 *.o
+*.o.tmp
 *.asv
 test.matt
 test.matb

@@ -4,13 +4,13 @@
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 #======== options =========
-# compiler [g++|clang++|icpc]
+# compiler [g++|clang++|icpc|icpx]
 opt_compiler = g++
 # define Long (array index type) as 32bit integer
 opt_long32 = true
 # debug mode
 opt_debug = true
-# address sanitizer
+# address sanitizer (only for g++ for now)
 opt_asan = true
 # static link (only for MKL for now)
 opt_static = false
@@ -49,11 +49,20 @@ ifeq ($(opt_min), true)
     opt_matfile = false
 endif
 
+ifeq ($(opt_compiler), icpc)
+    icpc_or_icpx = true
+endif
+ifeq ($(opt_compiler), icpx)
+    icpc_or_icpx = true
+endif
+
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
     # Address Sanitizer
     ifeq ($(opt_asan), true)
+    ifeq ($(opt_compiler), g++)
         asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+    endif
     endif
     debug_flag = -g
     ifeq ($(opt_compiler), g++)
@@ -104,7 +113,7 @@ ifeq ($(opt_lapack), mkl)
             mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
         endif
     endif
-    ifeq ($(opt_compiler), icpc)
+    ifeq ($(icpc_or_icpx), true)
         mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
         ifeq ($(opt_static), true) # static link
             mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
@@ -175,6 +184,9 @@ endif
 ifeq ($(opt_compiler), icpc)
     compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
 endif
+ifeq ($(opt_compiler), icpx)
+    compiler_flag = -std=c++11 -Wall -fp-model precise -qopenmp -Qoption,cpp,--extended_float_types -Wno-reorder-ctor -Wno-overloaded-virtual
+endif
 
 # ---------------------------------------------------------
 
@@ -201,6 +213,7 @@ h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quadmath), $(opt_long32))"
 
 main.x: main.o $(test_o) # link
+	@printf "\n\n   --- link ---\n\n"
 	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 link: # force link
