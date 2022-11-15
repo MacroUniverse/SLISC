@@ -12,6 +12,9 @@ RUN yum install -y devtoolset-9
 # equivalent to `scl enable devtoolset-9 bash` in a bash session
 SHELL [ "scl", "enable", "devtoolset-9" ]
 
+RUN yum install -y git vim time \
+	soci-sqlite3-devel boost-filesystem wget mlocate automake libtool
+
 # create new user `docker` as sudoer, use bash by default
 # no password required for sudo command
 
@@ -24,32 +27,108 @@ RUN useradd -u $DOCKER_UID -m $DOCKER_USER --shell /bin/bash -G wheel,root && \
     echo "$DOCKER_USER ALL=(ALL) ALL" >> /etc/sudoers && \
     echo "$DOCKER_USER ALL=NOPASSWD: ALL" >> /etc/sudoers
 
-RUN yum install -y git vim time \
-	soci-sqlite3-devel boost-filesystem wget mlocate automake libtool
-
 USER ${DOCKER_USER}
 
 RUN	cd ~/ && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
-#	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
-#	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
-#	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
-#	git clone https://github.com/MacroUniverse/GSL-2.5-test --depth 1 && \
+	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
+	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
+	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
+	git clone https://github.com/MacroUniverse/GSL-2.5-test --depth 1 && \
 	git clone https://github.com/MacroUniverse/GMP_test --depth 1 && \
-	git clone https://github.com/fredrik-johansson/flint2  && \
-	git clone https://github.com/fredrik-johansson/arb
+	git clone https://github.com/fredrik-johansson/arb && \
+	git clone https://github.com/fredrik-johansson/flint2 
+
+ARG INSTALL_DIR=/home/$DOCKER_USER/libs
+RUN mkdir -p $INSTALL_DIR
+
+# GSL
+# TODO: `make check` failes!
+RUN	cd ~/GSL-2.5-test/gsl-2.5-original && \
+	chmod +x ./configure && \
+	mkdir $INSTALL_DIR/gsl && \
+	./configure --prefix=$INSTALL_DIR/gsl && \
+	make -j12 && make install
 
 # GMP
-RUN cd ~/GMP_test/gmp-6.1.2 && chmod 777 -R ./ && \
-	mkdir ~/gmp-install && \
-	./configure --prefix=/home/$DOCKER_USER/gmp-install/ && make -j12 && make install
-
-# ==== testing ========
+RUN cd ~/GMP_test/gmp-6.1.2 && \
+	mkdir $INSTALL_DIR/gmp && \
+	./configure --prefix=$INSTALL_DIR/gmp && \
+	make -j12 && make check && make install
 
 # MPFR
 RUN cd ~/ && \
 	wget https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
 	tar -xzf mpfr-4.1.0.tar.gz && cd mpfr-4.1.0 && \
-	mkdir ~/mpfr-install && \
-	./configure --prefix=/home/$DOCKER_USER/mpfr-install/ --with-gmp=/home/$DOCKER_USER/gmp-install/ && \
-	make -j12 && make install
+	mkdir $INSTALL_DIR/mpfr && \
+	./configure --prefix=$INSTALL_DIR/mpfr --with-gmp=$INSTALL_DIR/gmp && \
+	make -j12 && make check && make install
+
+# Flint2
+RUN cd ~/flint2/ && git checkout 14dc6cbd2 && \
+	mkdir $INSTALL_DIR/flint && \
+	./configure --prefix=$INSTALL_DIR/flint --with-gmp=$INSTALL_DIR/gmp --with-mpfr=$INSTALL_DIR/mpfr && \
+	make -j12 && make check && make install
+
+# Arb
+RUN cd ~/arb && git checkout 2.23.0 && \
+	mkdir $INSTALL_DIR/arb && \
+	./configure --prefix=$INSTALL_DIR/arb --with-gmp=$INSTALL_DIR/gmp --with-mpfr=$INSTALL_DIR/mpfr --with-flint=$INSTALL_DIR/flint && \
+	make -j12 && make check && make install && \
+	ln -s libarb.so $INSTALL_DIR/arb/lib/libflint-arb.so
+
+# CMake
+RUN cd ~/ && \
+	wget https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
+	tar -xzf cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
+	ln -sf ~/cmake-3.25.0-rc4-linux-x86_64/bin/cmake /usr/bin/ && \
+	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
+
+# ========== not tested ==========
+
+# (C)BLAS and LAPACK(E) 64bit dynamic (reference)
+RUN	cd ~/ && \
+	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
+	tar -xzf v3.10.1.tar.gz && \
+	mkdir lapack-build && cd lapack-build && \
+	mkdir $INSTALL_DIR/lapack64-so && \
+	cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack64-so -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	cd ~/lapack-build && make -j12 && make check && make install
+
+# TODO
+
+# # (C)BLAS and LAPACK(E) 32bit dynamic (reference)
+# RUN cd ~/ && \
+# 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+# 	tar -xzf v3.10.1.tar.gz && \
+# 	mkdir lapack-build && cd lapack-build && \
+# 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+# 	cd ~/lapack-build && make -j12 make check && && make install
+
+# # (C)BLAS and LAPACK(E) 64bit static (reference)
+# RUN cd ~/ && \
+# 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+# 	tar -xzf v3.10.1.tar.gz && \
+# 	mkdir lapack-build && cd lapack-build && \
+# 	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+# 	cd ~/lapack-build && make -j12 && make check && make install
+
+# # (C)BLAS and LAPACK(E) 32bit static (reference)
+# RUN cd ~/ && \
+# 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
+# 	tar -xzf v3.10.1.tar.gz && \
+# 	mkdir lapack-build && cd lapack-build && \
+# 	cmake -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+# 	cd ~/lapack-build && make -j12 && make check && make install
+
+# RUN ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
+# 	ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
+
+# # Arpack-NG
+# RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
+# 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
+# 	cd ~/ && \
+# 	wget https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
+# 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+# 	sh bootstrap && ./configure && make -j12 && make check && \
+# 	make install
