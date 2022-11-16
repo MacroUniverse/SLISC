@@ -96,11 +96,11 @@ RUN cd ~/ && \
 	mkdir $INSTALL_DIR/arpack && \
 	sh bootstrap
 
-# delete line 26616d to prevent an error about Eigen, `make check` will be ok
+# delete line 25628 to prevent an error about Eigen, `make check` will be ok
 RUN cd ~/arpack-ng-3.8.0 && \
 	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib/ && \
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib/ && \
-	sed -i '26616d' ./configure && \
+	sed -i '25628d' ./configure && \
 	./configure --prefix=$INSTALL_DIR/arpack && \
 	make -j12 && make check -j12 && make install
 

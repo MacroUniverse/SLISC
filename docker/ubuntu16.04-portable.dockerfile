@@ -142,7 +142,7 @@ RUN cd ~/SLISC0 && \
 	make -j12 opt_asan=false && \
 	./main.x < input.inp
 
-RUN cd ~/SLISC0 && \
+RUN cd ~/SLISC0 && git pull && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
 	source make/set_path2.sh && \
 	make -j12 opt_long32=false opt_quadmath=true opt_asan=false && \
