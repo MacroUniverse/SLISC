@@ -43,7 +43,7 @@ ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
 
 # GSL
-# TODO: `make check` fails!
+# TODO: `make check` partly fails!
 RUN	cd ~/GSL-2.5-test/gsl-2.5-original && \
 	chmod +x ./configure && \
 	mkdir $INSTALL_DIR/gsl && \
@@ -127,7 +127,6 @@ RUN sudo ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesyste
 	sudo ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
 
 # Arpack-NG
-# TODO: all `make check` fails
 RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
  	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
  	cd ~/ && \
@@ -138,8 +137,9 @@ RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 # --with-blas --with-lapack will not work
 RUN	cd ~/arpack-ng-3.8.0 && \
 	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib64/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib64/ && \
 	sh bootstrap && ./configure --prefix=$INSTALL_DIR/arpack && \
-	make -j12 && make install
+	make -j12 && make check && make install
 
 RUN ln -s lib64 $INSTALL_DIR/lapack32-so/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack32-a/lib && \
