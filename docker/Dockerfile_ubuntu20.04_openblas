@@ -19,7 +19,7 @@ RUN echo "${TZ}" > /etc/timezone \
   && dpkg-reconfigure -f noninteractive tzdata
 
 RUN cd /root/ && \
-	wget https://github.com/xianyi/OpenBLAS/releases/download/v0.3.21/OpenBLAS-0.3.21.tar.gz && \
+	wget -q https://github.com/xianyi/OpenBLAS/releases/download/v0.3.21/OpenBLAS-0.3.21.tar.gz && \
 	tar -xzf OpenBLAS-0.3.21.tar.gz
 
 RUN cd /root/OpenBLAS-0.3.21/ && \

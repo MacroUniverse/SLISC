@@ -43,7 +43,7 @@ RUN mkdir -p $INSTALL_DIR
 
 # ======== CMake ========
 RUN cd ~/ && \
-	wget https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
+	wget -q https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	tar -xzf cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	ln -s ~/cmake-3.25.0-rc4-linux-x86_64/bin/cmake ~ && \
 	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
@@ -51,7 +51,7 @@ RUN cd ~/ && \
 # ======== (C)BLAS and LAPACK(E) 64bit dynamic (reference) ========
 # `make check` is not defined
 RUN	cd ~/ && \
-	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
+	wget -q https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	mkdir $INSTALL_DIR/lapack64-so && \
@@ -91,7 +91,7 @@ RUN ln -s lib64 $INSTALL_DIR/lapack32-so/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack64-a/lib
 
 # ======== GSL ========
-RUN	cd ~/ && wget https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
+RUN	cd ~/ && wget -q https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
 	tar -xzf gsl-2.7.1.tar.gz && cd gsl-2.7.1 && \
 	mkdir $INSTALL_DIR/gsl && \
 	./configure --prefix=$INSTALL_DIR/gsl && \
@@ -102,7 +102,7 @@ RUN	cd ~/ && wget https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
 RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
  	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
  	cd ~/ && \
- 	wget https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
+ 	wget -q https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
  	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
 	mkdir $INSTALL_DIR/arpack && \
 	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib64/ && \
@@ -111,7 +111,7 @@ RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 	make -j12 && make check -j12 && make install
 
 # ======== GMP ========
-RUN cd ~/ && wget https://gmplib.org/download/gmp/gmp-6.2.1.tar.lz && \
+RUN cd ~/ && wget -q https://gmplib.org/download/gmp/gmp-6.2.1.tar.lz && \
 	lzip -d gmp-6.2.1.tar.lz && \
 	tar -xf gmp-6.2.1.tar && cd gmp-6.2.1 && \
 	mkdir $INSTALL_DIR/gmp && \
@@ -120,21 +120,21 @@ RUN cd ~/ && wget https://gmplib.org/download/gmp/gmp-6.2.1.tar.lz && \
 
 # ======== MPFR ========
 RUN cd ~/ && \
-	wget https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
+	wget -q https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
 	tar -xzf mpfr-4.1.0.tar.gz && cd mpfr-4.1.0 && \
 	mkdir $INSTALL_DIR/mpfr && \
 	./configure --prefix=$INSTALL_DIR/mpfr --with-gmp=$INSTALL_DIR/gmp && \
 	make -j12 && make check -j12 && make install
 
 # ======== Flint2 ========
-RUN cd ~ && wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz && \
+RUN cd ~ && wget -q https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz && \
 	tar -xzf v2.9.0.tar.gz && cd flint2-2.9.0/ && \
 	mkdir $INSTALL_DIR/flint && \
 	./configure --prefix=$INSTALL_DIR/flint --with-gmp=$INSTALL_DIR/gmp --with-mpfr=$INSTALL_DIR/mpfr && \
 	make -j12 && make check -j12 && make install
 
 # ======== Arb ========
-RUN cd ~ && wget https://github.com/fredrik-johansson/arb/archive/refs/tags/2.23.0.tar.gz  && \
+RUN cd ~ && wget -q https://github.com/fredrik-johansson/arb/archive/refs/tags/2.23.0.tar.gz  && \
 	tar -xzf 2.23.0.tar.gz && cd arb-2.23.0/ && \
 	mkdir $INSTALL_DIR/arb && \
 	./configure --prefix=$INSTALL_DIR/arb --with-gmp=$INSTALL_DIR/gmp --with-mpfr=$INSTALL_DIR/mpfr --with-flint=$INSTALL_DIR/flint && \

@@ -38,7 +38,7 @@ RUN cd /root/GMP_test/gmp-6.1.2 && chmod 777 -R ./ && \
 
 # MPFR
 RUN cd /root/ && \
-	wget https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
+	wget -q https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
 	tar -xzf mpfr-4.1.0.tar.gz && cd mpfr-4.1.0 && \
 	./configure && make -j12 && make check && make install
 
@@ -56,14 +56,14 @@ RUN cd /root/arb && git checkout 2.23.0 && \
 
 # CMake
 RUN cd /root/ && \
-	wget https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
+	wget -q https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	tar -xzf cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
 	ln -sf /root/cmake-3.25.0-rc4-linux-x86_64/bin/cmake /usr/bin/ && \
 	rm cmake-3.25.0-rc4-linux-x86_64.tar.gz
 
 # (C)BLAS and LAPACK(E) 64bit dynamic (reference)
 RUN	cd /root/ && \
-	wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
+	wget -q https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.10.1.tar.gz && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
 	cmake -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
@@ -100,7 +100,7 @@ RUN ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so 
 RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
 	cd /root/ && \
-	wget https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
+	wget -q https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
 	sh bootstrap && ./configure && make -j12 && make check && \
 	make install
