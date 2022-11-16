@@ -43,7 +43,7 @@ ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
 
 # GSL
-# TODO: `make check` failes!
+# TODO: `make check` fails!
 RUN	cd ~/GSL-2.5-test/gsl-2.5-original && \
 	chmod +x ./configure && \
 	mkdir $INSTALL_DIR/gsl && \
@@ -126,11 +126,34 @@ RUN cd ~/ && \
 RUN sudo ln -s /usr/lib64/libboost_filesystem.so.* /usr/lib64/libboost_filesystem.so && \
 	sudo ln -s /usr/lib64/libboost_system.so.* /usr/lib64/libboost_system.so
 
-# # Arpack-NG
-# RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
-# 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
-# 	cd ~/ && \
-# 	wget https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
-# 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
-# 	sh bootstrap && ./configure && make -j12 && make check && \
-# 	make install
+# Arpack-NG
+# TODO: all `make check` fails
+RUN source ~/SLISC0/make/ld_path_append.sh /usr/local/lib/ && \
+ 	source ~/SLISC0/make/ld_path_append.sh /usr/local/lib64/ && \
+ 	cd ~/ && \
+ 	wget https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack
+
+# --with-blas --with-lapack will not work
+RUN	cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib64/ && \
+	sh bootstrap && ./configure --prefix=$INSTALL_DIR/arpack && \
+	make -j12 && make install
+
+RUN ln -s lib64 $INSTALL_DIR/lapack32-so/lib && \
+	ln -s lib64 $INSTALL_DIR/lapack32-a/lib && \
+	ln -s lib64 $INSTALL_DIR/lapack64-so/lib && \
+	ln -s lib64 $INSTALL_DIR/lapack64-a/lib
+
+RUN cd ~/SLISC0 && \
+	git pull origin && touch SLISC/*.h && \
+	source make/set_path2.sh && \
+	make -j12 opt_asan=false && \
+	./main.x < input.inp
+
+RUN cd ~/SLISC0 && \
+	cp SLISC-long64-quad/*.h SLISC/ && \
+	source make/set_path2.sh && \
+	make -j12 opt_long32=false opt_quadmath=true opt_asan=false && \
+	./main.x < input.inp
