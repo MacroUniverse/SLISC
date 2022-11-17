@@ -75,12 +75,6 @@ RUN cd ~/ && \
 	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack32-a -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd ~/lapack-build && make -j12 && make install
 
-# TODO: these are not needed on ubuntu
-RUN ln -s lib64 $INSTALL_DIR/lapack32-so/lib && \
-	ln -s lib64 $INSTALL_DIR/lapack32-a/lib && \
-	ln -s lib64 $INSTALL_DIR/lapack64-so/lib && \
-	ln -s lib64 $INSTALL_DIR/lapack64-a/lib
-
 # ======== GSL ========
 RUN	cd ~/ && wget -q https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
 	tar -xzf gsl-2.7.1.tar.gz && cd gsl-2.7.1 && \
