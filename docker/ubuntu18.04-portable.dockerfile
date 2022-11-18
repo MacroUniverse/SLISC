@@ -108,7 +108,7 @@ RUN cd ~/ && wget -q https://gmplib.org/download/gmp/gmp-6.2.1.tar.lz && \
 
 # ======== MPFR ========
 RUN cd ~/ && \
-	wget -q https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.gz && \
+	wget -q https://www.mpfr.org/mpfr-4.1.0/mpfr-4.1.0.tar.gz && \
 	tar -xzf mpfr-4.1.0.tar.gz && cd mpfr-4.1.0 && \
 	mkdir $INSTALL_DIR/mpfr && \
 	./configure --prefix=$INSTALL_DIR/mpfr --with-gmp=$INSTALL_DIR/gmp && \

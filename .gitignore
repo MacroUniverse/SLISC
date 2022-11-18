@@ -12,6 +12,8 @@ cmake-build-debug/
 *.o
 *.o.tmp
 *.asv
+*.log
+*.tar.gz
 test.matt
 test.matb
 test1.matb
