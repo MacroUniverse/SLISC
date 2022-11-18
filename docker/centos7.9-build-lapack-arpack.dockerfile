@@ -2,8 +2,8 @@
 
 # sudo docker build -t addiszx/slisc0:centos7.9-build-lapack-arpack -f docker/centos7.9-build-lapack-arpack.dockerfile . | tee docker-centos7.9-build-lapack-arpack.log
 # sudo docker run --name centos7.9-build-lapack-arpack -itd addiszx/slisc0:centos7.9-build-lapack-arpack bash
-# sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/lapack32-shared-3.10.1.tar.gz .
-# sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/lapack32-static-3.10.1.tar.gz .
+# sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/lapack-shared-3.10.1.tar.gz .
+# sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/lapack-static-3.10.1.tar.gz .
 # sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/lapack64-shared-3.10.1.tar.gz .
 # sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/lapack64-static-3.10.1.tar.gz .
 # sudo docker cp centos7.9-build-lapack-arpack:/home/docker/libs/arpack-ng-3.8.0.tar.gz .
@@ -64,8 +64,8 @@ RUN cd ~/ && \
 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
-	mkdir $INSTALL_DIR/lapack32-shared-3.10.1 && \
-	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack32-shared-3.10.1 -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	mkdir $INSTALL_DIR/lapack-shared-3.10.1 && \
+	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack-shared-3.10.1 -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd ~/lapack-build && make -j12 && make install
 
 # ======== (C)BLAS and LAPACK(E) 64bit static (reference) ========
@@ -82,12 +82,12 @@ RUN cd ~/ && \
 	rm -rf lapack-3.10.1 && rm -rf lapack-build && \
 	tar -xzf v3.10.1.tar.gz && \
 	mkdir lapack-build && cd lapack-build && \
-	mkdir $INSTALL_DIR/lapack32-static-3.10.1 && \
-	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack32-static-3.10.1 -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
+	mkdir $INSTALL_DIR/lapack-static-3.10.1 && \
+	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack-static-3.10.1 -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd ~/lapack-build && make -j12 && make install
 
-RUN ln -s lib64 $INSTALL_DIR/lapack32-shared-3.10.1/lib && \
-	ln -s lib64 $INSTALL_DIR/lapack32-static-3.10.1/lib && \
+RUN ln -s lib64 $INSTALL_DIR/lapack-shared-3.10.1/lib && \
+	ln -s lib64 $INSTALL_DIR/lapack-static-3.10.1/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack64-shared-3.10.1/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack64-static-3.10.1/lib
 
@@ -97,15 +97,15 @@ RUN cd ~/ && \
  	wget -q https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
  	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
 	mkdir $INSTALL_DIR/arpack-ng-3.8.0 && \
-	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-shared-3.10.1/lib64/ && \
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack32-shared-3.10.1/lib64/ && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib64/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib64/ && \
 	sh bootstrap && ./configure --prefix=$INSTALL_DIR/arpack-ng-3.8.0 && \
 	make -j12 && make check -j12 && make install
 
 
 RUN cd $INSTALL_DIR && \
-	tar -czf lapack32-shared-3.10.1.tar.gz lapack32-shared-3.10.1 && rm -r lapack32-shared-3.10.1 && \
-	tar -czf lapack32-static-3.10.1.tar.gz lapack32-static-3.10.1 && rm -r lapack32-static-3.10.1 && \
+	tar -czf lapack-shared-3.10.1.tar.gz lapack-shared-3.10.1 && rm -r lapack-shared-3.10.1 && \
+	tar -czf lapack-static-3.10.1.tar.gz lapack-static-3.10.1 && rm -r lapack-static-3.10.1 && \
 	tar -czf lapack64-shared-3.10.1.tar.gz lapack64-shared-3.10.1 && rm -r lapack64-shared-3.10.1 && \
 	tar -czf lapack64-static-3.10.1.tar.gz lapack64-static-3.10.1 && rm -r lapack64-static-3.10.1 && \
 	tar -czf arpack-ng-3.8.0.tar.gz arpack-ng-3.8.0 && rm -r arpack-ng-3.8.0

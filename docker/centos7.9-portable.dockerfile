@@ -1,3 +1,7 @@
+## run folloing in SLISC0 to build and export library
+
+# sudo docker build -t addiszx/slisc0:centos7.9-portable -f docker/centos7.9-portable.dockerfile . | tee docker-centos7.9-portable.log
+
 FROM centos:7.9.2009
 
 RUN yum install -y https://repo.ius.io/ius-release-el7.rpm
@@ -34,7 +38,9 @@ RUN	cd ~/ && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1
 
 # copy prebuilt libraries
-COPY SLISC0-libs-x64-centos7.9.2009 /home/$DOCKER_USER
+ARG INSTALL_DIR=/home/$DOCKER_USER/SLISC0-libs-x64-centos7.9.2009
+COPY SLISC0-libs-x64-centos7.9.2009 $INSTALL_DIR
+RUN rm -rf $INSTALL_DIR/.git
 
 # ======== SLISC ========
 RUN cd $INSTALL_DIR && source setup.sh && \
@@ -43,7 +49,8 @@ RUN cd $INSTALL_DIR && source setup.sh && \
 	make -j12 opt_asan=false && \
 	./main.x < input.inp
 
-RUN cd $INSTALL_DIR && source setup.sh && \
+RUN cd $INSTALL_DIR && \
+	source setup.sh && \
 	cd ~/SLISC0 && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
 	make -j12 opt_long32=false opt_quadmath=true opt_asan=false && \

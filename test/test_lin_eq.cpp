@@ -41,7 +41,7 @@ void test_lin_eq()
 		mul(y, a, x);
 		lin_eq(y, a);
 		y -= x;
-		if (max_abs(y) > 5e-14) {
+		if (max_abs(y) > 2e-13) {
 			cout << "max_abs(y) = " << max_abs(y) << endl;
 			SLS_FAIL;
 		}

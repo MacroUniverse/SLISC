@@ -63,8 +63,8 @@ RUN cd ~ && \
 RUN cd ~ && \
 	tar -xzf boost_1_80_0.tar.gz && cd boost_1_80_0 && \
 	mkdir $INSTALL_DIR/boost-1.80.0 && \
-	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 || \
-	./b2 install -j12
+	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 && \
+	./b2 install -j12 || echo "--- ignoreing exit code 1 ----"
 
 # ======== GSL ========
 RUN	cd ~/ && wget -q https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
