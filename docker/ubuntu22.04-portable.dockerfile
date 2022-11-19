@@ -39,6 +39,17 @@ RUN cd ~ && \
 	./configure --prefix=$INSTALL_DIR/sqlite-3.40.0 --enable-static=yes && \
 	make -j12 && make install
 
+# ======== Boost ========
+# ./bootstrap.sh ... --with-libraries=filesystem to select sub lib
+RUN cd ~ && \
+	wget -q https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
+	
+RUN cd ~ && \
+	tar -xzf boost_1_80_0.tar.gz && cd boost_1_80_0 && \
+	mkdir $INSTALL_DIR/boost-1.80.0 && \
+	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 && \
+	./b2 install -j12
+
 # ======== CMake ========
 RUN cd ~/ && \
 	wget -q https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
