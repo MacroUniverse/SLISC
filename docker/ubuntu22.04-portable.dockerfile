@@ -31,6 +31,14 @@ RUN	cd ~/ && \
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
 
+# ======== Sqlite ========
+RUN cd ~ && \
+	wget -q --no-check-certificate https://www.sqlite.org/2022/sqlite-autoconf-3400000.tar.gz && \
+	tar -xzf ./sqlite-autoconf-3400000.tar.gz && \
+	mkdir $INSTALL_DIR/sqlite-3.40.0 && cd sqlite-autoconf-3400000 && \
+	./configure --prefix=$INSTALL_DIR/sqlite-3.40.0 --enable-static=yes && \
+	make -j12 && make install
+
 # ======== CMake ========
 RUN cd ~/ && \
 	wget -q https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
