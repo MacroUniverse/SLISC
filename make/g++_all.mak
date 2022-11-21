@@ -97,7 +97,7 @@ endif
 ifeq ($(opt_lapack), openblas)
 # === CBLAS (openblas) ===
     cblas_flag = -D SLS_USE_CBLAS -I /opt/OpenBLAS/include
-    cblas_lib = -L /opt/OpenBLAS/lib -l openblas
+    cblas_lib = -l openblas
 # === LAPACKE (openblas) ===
     lapacke_flag = -D SLS_USE_LAPACKE
 endif
