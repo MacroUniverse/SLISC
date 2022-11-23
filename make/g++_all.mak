@@ -12,6 +12,8 @@ opt_long32 = true
 opt_debug = true
 # address sanitizer (only for g++ for now)
 opt_asan = true
+# c++ standard [c++11|gnu++11]
+opt_std = c++11
 # static link (only for MKL for now)
 opt_static = false
 # minimum build (all below options set to false)
@@ -185,16 +187,16 @@ endif
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag = -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation  -std=c++11 -fmax-errors=20 -fopenmp
+    compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -fopenmp
 endif
 ifeq ($(opt_compiler), clang++)
-    compiler_flag = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11
+    compiler_flag = -std=$(opt_std) -Wall -Wno-reorder -Wno-misleading-indentation
 endif
 ifeq ($(opt_compiler), icpc)
-    compiler_flag = -std=c++11 -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
+    compiler_flag = -std=$(opt_std) -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
 endif
 ifeq ($(opt_compiler), icpx)
-    compiler_flag = -std=c++11 -Wall -fp-model precise -qopenmp -Qoption,cpp,--extended_float_types -Wno-reorder-ctor -Wno-overloaded-virtual
+    compiler_flag = -std=$(opt_std) -Wall -fp-model precise -qopenmp -Qoption,cpp,--extended_float_types -Wno-reorder-ctor -Wno-overloaded-virtual
 endif
 
 # ---------------------------------------------------------
