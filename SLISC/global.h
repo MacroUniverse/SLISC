@@ -123,6 +123,7 @@
 #include "quad_math.h"
 
 #ifdef SLS_USE_MPLAPACK
+#include "my_mplapack_utils__Float128.h"
 #include <mplapack/mpblas__Float128.h>
 #include <mplapack/mplapack__Float128.h>
 #endif
