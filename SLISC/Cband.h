@@ -561,4 +561,6 @@ inline void CbandComp::shift(Long_I idiag)
 typedef const CbandComp &CbandComp_I;
 typedef CbandComp &CbandComp_O, &CbandComp_IO;
 
+
+
 } // namespace slisc

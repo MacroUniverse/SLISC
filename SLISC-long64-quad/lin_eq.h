@@ -456,6 +456,46 @@ inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecLlong_IO ipiv)
 	}
 }
 
+#ifdef SLS_USE_MPLAPACK
+inline void lin_eq(VecQcomp_IO x, CbandQcomp_IO a1, VecLlong_IO ipiv)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (a1.n0() != a1.n1() || a1.n1() != x.size())
+	    SLS_ERR("wrong shape!");
+	if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+	    SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
+#endif
+	Long lda = a1.lda();
+	Long ldx = x.size(), nrhs = 1;
+	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
+	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+	if (ret != 0) {
+	    cout << "LAPACK returned " << ret << endl;
+	    SLS_ERR("something wrong!");
+	}
+}
+#endif
+
+#ifdef SLS_USE_MPLAPACK
+inline void lin_eq(SvecQcomp_IO x, CbandQcomp_IO a1, SvecLlong_IO ipiv)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (a1.n0() != a1.n1() || a1.n1() != x.size())
+	    SLS_ERR("wrong shape!");
+	if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+	    SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
+#endif
+	Long lda = a1.lda();
+	Long ldx = x.size(), nrhs = 1;
+	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
+	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+	if (ret != 0) {
+	    cout << "LAPACK returned " << ret << endl;
+	    SLS_ERR("something wrong!");
+	}
+}
+#endif
+
 inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecLlong_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES

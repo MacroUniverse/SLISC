@@ -92,4 +92,23 @@ void test_lin_eq()
 		}
 	}
 #endif
+
+#ifdef SLS_USE_MPLAPACK
+	// Qcomp band matrix
+	{
+		Long N1 = 10, N2 = 10, Nup = 3, Nlow = 4;
+		CbandQcomp b;
+		b.resize(N1, N2, Nup, Nlow, Nup + 2*Nlow + 1, Nlow + Nup);
+		VecLong ipiv(N1);
+		VecQcomp x(N2), y(N2);
+		rand(x); rand(b.cmat());
+		mul(y, b, x);
+		lin_eq(y, b, ipiv);
+		y -= x;
+		if (max_abs(y) > 5e-30Q) {
+			cout << "max_abs(y) = " << max_abs(y) << endl;
+			SLS_FAIL;
+		}
+	}
+#endif
 }

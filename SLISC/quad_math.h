@@ -205,7 +205,7 @@ typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 } // namespace slisc
 
 #else // SLS_USE_QUAD_MATH
-// define dummy type for Qdoub to suppress error
+// TODO: maybe use DD library in here
 struct Qdoub {
 	double x[2];
 	Qdoub() { SLS_ERR("Qdoub not implemented!"); }

@@ -561,4 +561,374 @@ inline void CbandComp::shift(Long_I idiag)
 typedef const CbandComp &CbandComp_I;
 typedef CbandComp &CbandComp_O, &CbandComp_IO;
 
+class CbandQdoub
+{
+public:
+	Long m_N0;
+	Long m_Nup;
+	Long m_Nlow;
+	Long m_idiag; // position of diagonal
+	CmatQdoub m_a;
+
+	CbandQdoub();
+	CbandQdoub(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+
+	Qdoub * p();
+	const Qdoub * p() const;
+	Qdoub operator()(Long_I i, Long_I j) const;
+	Qdoub &ref(Long_I i, Long_I j);
+	Long n0() const;
+	Long n1() const;
+	Long size() const;
+	Long nup() const;
+	Long nlow() const;
+	Long lda() const;
+	Long idiag() const;
+	CmatQdoub &cmat();
+	const CmatQdoub &cmat() const;
+	DcmatQdoub band();
+	DcmatQdoub_c band() const;
+	DvecQdoub diag();
+	DvecQdoub_c diag() const;
+	void resize(Long_I lda, Long_I N1);
+	void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+	void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
+	void shift(Long_I idiag);
+};
+
+inline CbandQdoub::CbandQdoub(): m_N0(0), m_Nup(0), m_Nlow(0), m_idiag(0)
+{}
+
+inline CbandQdoub::CbandQdoub(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
+	m_N0(N0), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N1)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
+	    SLS_ERR("CbandQdoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+#endif
+}
+
+inline Qdoub * CbandQdoub::p()
+{
+	return m_a.p();
+}
+
+inline const Qdoub * CbandQdoub::p() const
+{
+	return m_a.p();
+}
+
+inline Qdoub CbandQdoub::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
+	    SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+	    return 0;
+	return m_a(m_idiag + i - j, j);
+}
+
+inline Qdoub &CbandQdoub::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
+	    SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+	    SLS_ERR("index out of band!");
+	return m_a(m_idiag + i - j, j);
+}
+
+inline Long CbandQdoub::n0() const
+{
+	return m_N0;
+}
+
+inline Long CbandQdoub::n1() const
+{
+	return m_a.n1();
+}
+
+inline Long CbandQdoub::size() const
+{
+	return n0() * n1();
+}
+
+inline Long CbandQdoub::nup() const
+{
+	return m_Nup;
+}
+
+inline Long CbandQdoub::nlow() const
+{
+	return m_Nlow;
+}
+
+inline Long CbandQdoub::lda() const
+{
+	return m_a.n0();
+}
+
+inline Long CbandQdoub::idiag() const
+{
+	return m_idiag;
+}
+
+inline CmatQdoub &CbandQdoub::cmat()
+{
+	return m_a;
+}
+
+inline const CmatQdoub &CbandQdoub::cmat() const
+{
+	return m_a;
+}
+
+inline DcmatQdoub CbandQdoub::band()
+{
+	return DcmatQdoub(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+}
+
+inline DcmatQdoub_c CbandQdoub::band() const
+{
+	return DcmatQdoub_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+}
+
+inline DvecQdoub CbandQdoub::diag()
+{
+	return DvecQdoub(&m_a[m_idiag], n1(), lda());
+}
+
+inline DvecQdoub_c CbandQdoub::diag() const
+{
+	return DvecQdoub_c(&m_a[m_idiag], n1(), lda());
+}
+
+inline void CbandQdoub::resize(Long_I lda, Long_I N1)
+{
+	m_a.resize(lda, N1);
+}
+
+inline void CbandQdoub::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
+{
+	if (idiag >= 0)
+	    m_idiag = idiag;
+#ifdef SLS_CHECK_SHAPES
+	if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
+	    SLS_ERR("CbandQdoub: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	}
+#endif
+	m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
+}
+
+inline void CbandQdoub::resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
+{
+	resize(lda < 0? Nup+Nlow+1 : lda, N1);
+	reshape(N0, Nup, Nlow, idiag < 0? Nup : idiag);
+}
+
+inline void CbandQdoub::shift(Long_I idiag)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
+	    SLS_ERR("CbandQdoub: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
+#endif
+	m_idiag = idiag;
+}
+
+typedef const CbandQdoub &CbandQdoub_I;
+typedef CbandQdoub &CbandQdoub_O, &CbandQdoub_IO;
+
+class CbandQcomp
+{
+public:
+	Long m_N0;
+	Long m_Nup;
+	Long m_Nlow;
+	Long m_idiag; // position of diagonal
+	CmatQcomp m_a;
+
+	CbandQcomp();
+	CbandQcomp(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+
+	Qcomp * p();
+	const Qcomp * p() const;
+	Qcomp operator()(Long_I i, Long_I j) const;
+	Qcomp &ref(Long_I i, Long_I j);
+	Long n0() const;
+	Long n1() const;
+	Long size() const;
+	Long nup() const;
+	Long nlow() const;
+	Long lda() const;
+	Long idiag() const;
+	CmatQcomp &cmat();
+	const CmatQcomp &cmat() const;
+	DcmatQcomp band();
+	DcmatQcomp_c band() const;
+	DvecQcomp diag();
+	DvecQcomp_c diag() const;
+	void resize(Long_I lda, Long_I N1);
+	void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
+	void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
+	void shift(Long_I idiag);
+};
+
+inline CbandQcomp::CbandQcomp(): m_N0(0), m_Nup(0), m_Nlow(0), m_idiag(0)
+{}
+
+inline CbandQcomp::CbandQcomp(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag):
+	m_N0(N0), m_Nup(Nup), m_Nlow(Nlow), m_idiag(idiag < 0 ? Nup : idiag), m_a(lda < 0? Nup + Nlow + 1 : lda, N1)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (m_idiag < m_Nup || m_a.n0() - m_idiag - 1 < m_Nlow)
+	    SLS_ERR("CbandQcomp: wrong shape: N0="+num2str(N0)+", N1="+num2str(N1)+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+#endif
+}
+
+inline Qcomp * CbandQcomp::p()
+{
+	return m_a.p();
+}
+
+inline const Qcomp * CbandQcomp::p() const
+{
+	return m_a.p();
+}
+
+inline Qcomp CbandQcomp::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
+	    SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+	    return 0;
+	return m_a(m_idiag + i - j, j);
+}
+
+inline Qcomp &CbandQcomp::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= n1())
+	    SLS_ERR("index out of bound!");
+#endif
+	if (i - j > m_Nlow || j - i > m_Nup)
+	    SLS_ERR("index out of band!");
+	return m_a(m_idiag + i - j, j);
+}
+
+inline Long CbandQcomp::n0() const
+{
+	return m_N0;
+}
+
+inline Long CbandQcomp::n1() const
+{
+	return m_a.n1();
+}
+
+inline Long CbandQcomp::size() const
+{
+	return n0() * n1();
+}
+
+inline Long CbandQcomp::nup() const
+{
+	return m_Nup;
+}
+
+inline Long CbandQcomp::nlow() const
+{
+	return m_Nlow;
+}
+
+inline Long CbandQcomp::lda() const
+{
+	return m_a.n0();
+}
+
+inline Long CbandQcomp::idiag() const
+{
+	return m_idiag;
+}
+
+inline CmatQcomp &CbandQcomp::cmat()
+{
+	return m_a;
+}
+
+inline const CmatQcomp &CbandQcomp::cmat() const
+{
+	return m_a;
+}
+
+inline DcmatQcomp CbandQcomp::band()
+{
+	return DcmatQcomp(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+}
+
+inline DcmatQcomp_c CbandQcomp::band() const
+{
+	return DcmatQcomp_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+}
+
+inline DvecQcomp CbandQcomp::diag()
+{
+	return DvecQcomp(&m_a[m_idiag], n1(), lda());
+}
+
+inline DvecQcomp_c CbandQcomp::diag() const
+{
+	return DvecQcomp_c(&m_a[m_idiag], n1(), lda());
+}
+
+inline void CbandQcomp::resize(Long_I lda, Long_I N1)
+{
+	m_a.resize(lda, N1);
+}
+
+inline void CbandQcomp::reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag)
+{
+	if (idiag >= 0)
+	    m_idiag = idiag;
+#ifdef SLS_CHECK_SHAPES
+	if (m_idiag < Nup || lda() - m_idiag - 1 < Nlow) {
+	    SLS_ERR("CbandQcomp: wrong shape: N0="+num2str(N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(Nup)+", Nlow="+num2str(Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(m_idiag));
+	}
+#endif
+	m_N0 = N0; m_Nup = Nup; m_Nlow = Nlow;
+}
+
+inline void CbandQcomp::resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda, Long_I idiag)
+{
+	resize(lda < 0? Nup+Nlow+1 : lda, N1);
+	reshape(N0, Nup, Nlow, idiag < 0? Nup : idiag);
+}
+
+inline void CbandQcomp::shift(Long_I idiag)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (idiag < m_Nup || lda() - idiag - 1 < m_Nlow)
+	    SLS_ERR("CbandQcomp: wrong shape: N0="+num2str(m_N0)+", N1="+num2str(m_a.n1())+
+	        ", Nup="+num2str(m_Nup)+", Nlow="+num2str(m_Nlow)+
+	        ", lda="+num2str(m_a.n0())+", idiag="+num2str(idiag));
+#endif
+	m_idiag = idiag;
+}
+
+typedef const CbandQcomp &CbandQcomp_I;
+typedef CbandQcomp &CbandQcomp_O, &CbandQcomp_IO;
+
 } // namespace slisc

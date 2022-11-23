@@ -50,14 +50,14 @@ std::ostream &operator<<(std::ostream &os, const unordered_set<T, H> &v) {
 template <class T>
 std::ostream &operator<<(std::ostream &os, const set<T> &v) {
     for (auto &e : v)
-        cout << e << endl;
+        cout << e << " ";
     return os;
 }
 
 template <class T1, class T2, class H>
 std::ostream &operator<<(std::ostream &os, const unordered_map<T1, T2, H> &v) {
     for (auto &e : v)
-        cout << e << endl;
+        cout << e.first << " -> " << e.second << endl;
     return os;
 }
 
@@ -71,7 +71,7 @@ std::ostream &operator<<(std::ostream &os, const map<T1, T2> &v) {
 template <class T>
 std::ostream &operator<<(std::ostream &os, const vector<T> &v) {
     for (Long i = 0; i < (Long)v.size(); ++i)
-        cout << std::setw(3) << i << ":" << v[i] << " " << endl;
+        cout << i << ":" << v[i] << " ";
     return os;
 }
 

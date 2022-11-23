@@ -829,696 +829,744 @@ inline void div_eq_vv(Qdoub *v, const Qdoub *v1, Long_I N)
 	    v[i] /= v1[i];
 }
 
+inline void add_eq_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+	for (Long i = 0; i < N; ++i)
+	    v[i] += v1[i];
+}
 
-inline void operator+=(vecInt_O &v, vecInt_I v1)
+inline void sub_eq_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+	for (Long i = 0; i < N; ++i)
+	    v[i] -= v1[i];
+}
+
+inline void times_eq_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+	for (Long i = 0; i < N; ++i)
+	    v[i] *= v1[i];
+}
+
+inline void div_eq_vv(Qcomp *v, const Qcomp *v1, Long_I N)
+{
+	for (Long i = 0; i < N; ++i)
+	    v[i] /= v1[i];
+}
+
+
+inline void operator+=(vecInt_O v, vecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(vecInt_O &v, vecInt_I v1)
+inline void operator-=(vecInt_O v, vecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(vecInt_O &v, vecInt_I v1)
+inline void operator*=(vecInt_O v, vecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(vecInt_O &v, vecInt_I v1)
+inline void operator/=(vecInt_O v, vecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(vecLlong_O &v, vecLlong_I v1)
+inline void operator+=(vecLlong_O v, vecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(vecLlong_O &v, vecLlong_I v1)
+inline void operator-=(vecLlong_O v, vecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(vecLlong_O &v, vecLlong_I v1)
+inline void operator*=(vecLlong_O v, vecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(vecLlong_O &v, vecLlong_I v1)
+inline void operator/=(vecLlong_O v, vecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(vecDoub_O &v, vecDoub_I v1)
+inline void operator+=(vecDoub_O v, vecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(vecDoub_O &v, vecDoub_I v1)
+inline void operator-=(vecDoub_O v, vecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(vecDoub_O &v, vecDoub_I v1)
+inline void operator*=(vecDoub_O v, vecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(vecDoub_O &v, vecDoub_I v1)
+inline void operator/=(vecDoub_O v, vecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecInt_O &v, VecInt_I v1)
+inline void operator+=(VecInt_O v, VecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecInt_O &v, VecInt_I v1)
+inline void operator-=(VecInt_O v, VecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecInt_O &v, VecInt_I v1)
+inline void operator*=(VecInt_O v, VecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecInt_O &v, VecInt_I v1)
+inline void operator/=(VecInt_O v, VecInt_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecLlong_O &v, VecLlong_I v1)
+inline void operator+=(VecLlong_O v, VecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecLlong_O &v, VecLlong_I v1)
+inline void operator-=(VecLlong_O v, VecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecLlong_O &v, VecLlong_I v1)
+inline void operator*=(VecLlong_O v, VecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecLlong_O &v, VecLlong_I v1)
+inline void operator/=(VecLlong_O v, VecLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecDoub_O &v, VecDoub_I v1)
+inline void operator+=(VecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecDoub_O &v, VecDoub_I v1)
+inline void operator-=(VecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecDoub_O &v, VecDoub_I v1)
+inline void operator*=(VecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecDoub_O &v, VecDoub_I v1)
+inline void operator/=(VecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecDoub_O &v, SvecDoub_I v1)
+inline void operator+=(VecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecDoub_O &v, SvecDoub_I v1)
+inline void operator-=(VecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecDoub_O &v, SvecDoub_I v1)
+inline void operator*=(VecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecDoub_O &v, SvecDoub_I v1)
+inline void operator/=(VecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecComp_O &v, VecDoub_I v1)
+inline void operator+=(VecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecComp_O &v, VecDoub_I v1)
+inline void operator-=(VecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecComp_O &v, VecDoub_I v1)
+inline void operator*=(VecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecComp_O &v, VecDoub_I v1)
+inline void operator/=(VecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecComp_O &v, VecComp_I v1)
+inline void operator+=(VecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecComp_O &v, VecComp_I v1)
+inline void operator-=(VecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecComp_O &v, VecComp_I v1)
+inline void operator*=(VecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecComp_O &v, VecComp_I v1)
+inline void operator/=(VecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecComp_O &v, SvecComp_I v1)
+inline void operator+=(VecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecComp_O &v, SvecComp_I v1)
+inline void operator-=(VecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecComp_O &v, SvecComp_I v1)
+inline void operator*=(VecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecComp_O &v, SvecComp_I v1)
+inline void operator/=(VecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(VecQdoub_O &v, VecQdoub_I v1)
+inline void operator+=(VecQdoub_O v, VecQdoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(VecQdoub_O &v, VecQdoub_I v1)
+inline void operator-=(VecQdoub_O v, VecQdoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(VecQdoub_O &v, VecQdoub_I v1)
+inline void operator*=(VecQdoub_O v, VecQdoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(VecQdoub_O &v, VecQdoub_I v1)
+inline void operator/=(VecQdoub_O v, VecQdoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecDoub_O &v, VecDoub_I v1)
+inline void operator+=(VecQcomp_O v, VecQcomp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecDoub_O &v, VecDoub_I v1)
+inline void operator-=(VecQcomp_O v, VecQcomp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecDoub_O &v, VecDoub_I v1)
+inline void operator*=(VecQcomp_O v, VecQcomp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecDoub_O &v, VecDoub_I v1)
+inline void operator/=(VecQcomp_O v, VecQcomp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecDoub_O &v, SvecDoub_I v1)
+inline void operator+=(SvecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecDoub_O &v, SvecDoub_I v1)
+inline void operator-=(SvecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecDoub_O &v, SvecDoub_I v1)
+inline void operator*=(SvecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecDoub_O &v, SvecDoub_I v1)
+inline void operator/=(SvecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecComp_O &v, VecDoub_I v1)
+inline void operator+=(SvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecComp_O &v, VecDoub_I v1)
+inline void operator-=(SvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecComp_O &v, VecDoub_I v1)
+inline void operator*=(SvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecComp_O &v, VecDoub_I v1)
+inline void operator/=(SvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecComp_O &v, SvecComp_I v1)
+inline void operator+=(SvecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecComp_O &v, SvecComp_I v1)
+inline void operator-=(SvecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecComp_O &v, SvecComp_I v1)
+inline void operator*=(SvecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecComp_O &v, SvecComp_I v1)
+inline void operator/=(SvecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(DvecDoub_O &v, SvecDoub_I v1)
+inline void operator+=(SvecComp_O v, SvecComp_I v1)
+{
+	assert_same_shape(v, v1);
+	add_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator-=(SvecComp_O v, SvecComp_I v1)
+{
+	assert_same_shape(v, v1);
+	sub_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator*=(SvecComp_O v, SvecComp_I v1)
+{
+	assert_same_shape(v, v1);
+	times_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator/=(SvecComp_O v, SvecComp_I v1)
+{
+	assert_same_shape(v, v1);
+	div_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+inline void operator+=(DvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] += v1[i];
 }
 
-inline void operator-=(DvecDoub_O &v, SvecDoub_I v1)
+inline void operator-=(DvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] -= v1[i];
 }
 
-inline void operator*=(DvecDoub_O &v, SvecDoub_I v1)
+inline void operator*=(DvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] *= v1[i];
 }
 
-inline void operator/=(DvecDoub_O &v, SvecDoub_I v1)
+inline void operator/=(DvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] /= v1[i];
 }
 
-inline void operator+=(DvecComp_O &v, VecComp_I v1)
+inline void operator+=(DvecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] += v1[i];
 }
 
-inline void operator-=(DvecComp_O &v, VecComp_I v1)
+inline void operator-=(DvecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] -= v1[i];
 }
 
-inline void operator*=(DvecComp_O &v, VecComp_I v1)
+inline void operator*=(DvecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] *= v1[i];
 }
 
-inline void operator/=(DvecComp_O &v, VecComp_I v1)
+inline void operator/=(DvecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] /= v1[i];
 }
 
-inline void operator+=(DvecComp_O &v, SvecComp_I v1)
+inline void operator+=(DvecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] += v1[i];
 }
 
-inline void operator-=(DvecComp_O &v, SvecComp_I v1)
+inline void operator-=(DvecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] -= v1[i];
 }
 
-inline void operator*=(DvecComp_O &v, SvecComp_I v1)
+inline void operator*=(DvecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] *= v1[i];
 }
 
-inline void operator/=(DvecComp_O &v, SvecComp_I v1)
+inline void operator/=(DvecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] /= v1[i];
 }
 
-inline void operator+=(DvecComp_O &v, SvecDoub_I v1)
+inline void operator+=(DvecComp_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] += v1[i];
 }
 
-inline void operator-=(DvecComp_O &v, SvecDoub_I v1)
+inline void operator-=(DvecComp_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] -= v1[i];
 }
 
-inline void operator*=(DvecComp_O &v, SvecDoub_I v1)
+inline void operator*=(DvecComp_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] *= v1[i];
 }
 
-inline void operator/=(DvecComp_O &v, SvecDoub_I v1)
+inline void operator/=(DvecComp_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] /= v1[i];
 }
 
-inline void operator+=(CmatInt_O &v, CmatInt_I v1)
+inline void operator+=(CmatInt_O v, CmatInt_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(CmatInt_O &v, CmatInt_I v1)
+inline void operator-=(CmatInt_O v, CmatInt_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(CmatInt_O &v, CmatInt_I v1)
+inline void operator*=(CmatInt_O v, CmatInt_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(CmatInt_O &v, CmatInt_I v1)
+inline void operator/=(CmatInt_O v, CmatInt_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(CmatLlong_O &v, CmatLlong_I v1)
+inline void operator+=(CmatLlong_O v, CmatLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(CmatLlong_O &v, CmatLlong_I v1)
+inline void operator-=(CmatLlong_O v, CmatLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(CmatLlong_O &v, CmatLlong_I v1)
+inline void operator*=(CmatLlong_O v, CmatLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(CmatLlong_O &v, CmatLlong_I v1)
+inline void operator/=(CmatLlong_O v, CmatLlong_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(CmatDoub_O &v, CmatDoub_I v1)
+inline void operator+=(CmatDoub_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(CmatDoub_O &v, CmatDoub_I v1)
+inline void operator-=(CmatDoub_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(CmatDoub_O &v, CmatDoub_I v1)
+inline void operator*=(CmatDoub_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(CmatDoub_O &v, CmatDoub_I v1)
+inline void operator/=(CmatDoub_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(CmatComp_O &v, CmatDoub_I v1)
+inline void operator+=(CmatComp_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(CmatComp_O &v, CmatDoub_I v1)
+inline void operator-=(CmatComp_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(CmatComp_O &v, CmatDoub_I v1)
+inline void operator*=(CmatComp_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(CmatComp_O &v, CmatDoub_I v1)
+inline void operator/=(CmatComp_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(CmatComp_O &v, CmatComp_I v1)
+inline void operator+=(CmatComp_O v, CmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(CmatComp_O &v, CmatComp_I v1)
+inline void operator-=(CmatComp_O v, CmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(CmatComp_O &v, CmatComp_I v1)
+inline void operator*=(CmatComp_O v, CmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(CmatComp_O &v, CmatComp_I v1)
+inline void operator/=(CmatComp_O v, CmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(MatDoub_O &v, MatDoub_I v1)
+inline void operator+=(MatDoub_O v, MatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(MatDoub_O &v, MatDoub_I v1)
+inline void operator-=(MatDoub_O v, MatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(MatDoub_O &v, MatDoub_I v1)
+inline void operator*=(MatDoub_O v, MatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(MatDoub_O &v, MatDoub_I v1)
+inline void operator/=(MatDoub_O v, MatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(MatComp_O &v, MatComp_I v1)
+inline void operator+=(MatComp_O v, MatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(MatComp_O &v, MatComp_I v1)
+inline void operator-=(MatComp_O v, MatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(MatComp_O &v, MatComp_I v1)
+inline void operator*=(MatComp_O v, MatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(MatComp_O &v, MatComp_I v1)
+inline void operator/=(MatComp_O v, MatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(ScmatComp_O &v, ScmatDoub_I v1)
+inline void operator+=(ScmatComp_O v, ScmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(ScmatComp_O &v, ScmatDoub_I v1)
+inline void operator-=(ScmatComp_O v, ScmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(ScmatComp_O &v, ScmatDoub_I v1)
+inline void operator*=(ScmatComp_O v, ScmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(ScmatComp_O &v, ScmatDoub_I v1)
+inline void operator/=(ScmatComp_O v, ScmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(ScmatComp_O &v, ScmatComp_I v1)
+inline void operator+=(ScmatComp_O v, ScmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(ScmatComp_O &v, ScmatComp_I v1)
+inline void operator-=(ScmatComp_O v, ScmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(ScmatComp_O &v, ScmatComp_I v1)
+inline void operator*=(ScmatComp_O v, ScmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(ScmatComp_O &v, ScmatComp_I v1)
+inline void operator/=(ScmatComp_O v, ScmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
+inline void operator+=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
@@ -1526,7 +1574,7 @@ inline void operator+=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
 	        v(i, j) += v1(i, j);
 }
 
-inline void operator-=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
+inline void operator-=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
@@ -1534,7 +1582,7 @@ inline void operator-=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
 	        v(i, j) -= v1(i, j);
 }
 
-inline void operator*=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
+inline void operator*=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
@@ -1542,7 +1590,7 @@ inline void operator*=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
 	        v(i, j) *= v1(i, j);
 }
 
-inline void operator/=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
+inline void operator/=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
@@ -1550,73 +1598,73 @@ inline void operator/=(DcmatComp_O &v, DcmatDoub_I v1) // slow!
 	        v(i, j) /= v1(i, j);
 }
 
-inline void operator+=(Cmat3Comp_O &v, Cmat3Comp_I v1)
+inline void operator+=(Cmat3Comp_O v, Cmat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(Cmat3Comp_O &v, Cmat3Comp_I v1)
+inline void operator-=(Cmat3Comp_O v, Cmat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(Cmat3Comp_O &v, Cmat3Comp_I v1)
+inline void operator*=(Cmat3Comp_O v, Cmat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(Cmat3Comp_O &v, Cmat3Comp_I v1)
+inline void operator/=(Cmat3Comp_O v, Cmat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(Mat3Doub_O &v, Mat3Doub_I v1)
+inline void operator+=(Mat3Doub_O v, Mat3Doub_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(Mat3Doub_O &v, Mat3Doub_I v1)
+inline void operator-=(Mat3Doub_O v, Mat3Doub_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(Mat3Doub_O &v, Mat3Doub_I v1)
+inline void operator*=(Mat3Doub_O v, Mat3Doub_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(Mat3Doub_O &v, Mat3Doub_I v1)
+inline void operator/=(Mat3Doub_O v, Mat3Doub_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(Mat3Comp_O &v, Mat3Comp_I v1)
+inline void operator+=(Mat3Comp_O v, Mat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(Mat3Comp_O &v, Mat3Comp_I v1)
+inline void operator-=(Mat3Comp_O v, Mat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(Mat3Comp_O &v, Mat3Comp_I v1)
+inline void operator*=(Mat3Comp_O v, Mat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(Mat3Comp_O &v, Mat3Comp_I v1)
+inline void operator/=(Mat3Comp_O v, Mat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());

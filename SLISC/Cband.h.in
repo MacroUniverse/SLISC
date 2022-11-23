@@ -6,7 +6,7 @@
 
 namespace slisc {
 
-//% tem('Cband', {'Int'; 'Doub'; 'Comp'});
+//% tem('Cband', {'Int'; 'Doub'; 'Comp'; 'Qdoub'; 'Qcomp'});
 //%---------------------
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];

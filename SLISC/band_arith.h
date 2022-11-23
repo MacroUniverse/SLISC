@@ -342,6 +342,7 @@ inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
 	    &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
+
 inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
 {
 	Long incx = 1;

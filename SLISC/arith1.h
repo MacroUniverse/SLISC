@@ -720,7 +720,10 @@ inline Doub max_abs(VecComp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Int max_abs(VecInt_I v) { return max_abs_v(v.p(), v.size()); }
 
 
+
 inline Doub max_abs(SvecComp_I v) { return max_abs_v(v.p(), v.size()); }
+
+
 
 inline Doub max_abs(DvecDoub_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 

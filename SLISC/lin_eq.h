@@ -456,6 +456,8 @@ inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 	}
 }
 
+
+
 inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES

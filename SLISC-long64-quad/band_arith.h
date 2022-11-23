@@ -342,6 +342,18 @@ inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
 	    &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
+#ifdef SLS_USE_MPLAPACK
+inline void mul(VecQcomp_O y, CbandQcomp_I a, VecQcomp_I x)
+{
+	Long incx = 1;
+	Long incy = 1;
+	Qcomp alpha(1, 0), beta(0, 0);
+	Cgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
+	    (Qcomp*)a.p() + a.idiag() - a.nup(), a.lda(), (Qcomp*)x.p(),
+		incx, beta, (Qcomp*)y.p(), incy);
+}
+#endif
+
 inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
 {
 	Long incx = 1;

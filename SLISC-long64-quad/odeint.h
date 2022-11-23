@@ -214,7 +214,7 @@ struct StepperDopr853 : StepperBase, Dopr853_constants {
 		Doub_I atoll, Doub_I rtoll, bool dens);
 	void step(Doub_I htry,D &derivs);
 	void dy(Doub_I h,D &derivs);
-	void prepare_dense(Doub_I h,VecDoub_I &dydxnew,D &derivs);
+	void prepare_dense(Doub_I h,VecDoub_I dydxnew,D &derivs);
 	Doub dense_out(const Int i, Doub_I x, Doub_I h);
 	Doub error(Doub_I h);
 	struct Controller {
@@ -307,7 +307,7 @@ void StepperDopr853<D>::dy(Doub_I h,D &derivs) {
 	}
 }
 template <class D>
-void StepperDopr853<D>::prepare_dense(Doub_I h,VecDoub_I &dydxnew,
+void StepperDopr853<D>::prepare_dense(Doub_I h,VecDoub_I dydxnew,
 	D &derivs) {
 	Int i;
 	Doub ydiff,bspl;
@@ -442,7 +442,7 @@ struct Output {
 			ysave(i,count)=s.dense_out(i,xout,h);
 		xsave[count++]=xout;
 	}
-	void save(Doub_I x, VecDoub_I &y) {
+	void save(Doub_I x, VecDoub_I y) {
 		if (kmax <= 0) return;
 		if (count == kmax) resize();
 		for (Int i=0;i<nvar;i++)
@@ -450,7 +450,7 @@ struct Output {
 		xsave[count++]=x;
 	}
 	template <class Stepper>
-	void out(const Int nstp, Doub_I x,VecDoub_I &y,Stepper &s, Doub_I h) {
+	void out(const Int nstp, Doub_I x,VecDoub_I y,Stepper &s, Doub_I h) {
 		if (!dense)
 			throw("dense output not set in Output!");
 		if (nstp == -1) {

@@ -20,6 +20,8 @@ opt_min = false
 opt_quadmath = false
 # lapack package (reference, openblas, mkl, none)
 opt_lapack = reference
+# use MPLAPACK lib
+opt_mplapack = $(opt_quadmath)
 # use Boost lib
 opt_boost = true
 # use GSL lib
@@ -39,6 +41,7 @@ opt_matfile = false
 # === minimum build ===
 ifeq ($(opt_min), true)
     opt_quadmath = false
+    opt_mplapack = false
     opt_lapack = none
     opt_boost = false
     opt_gsl = false
@@ -125,7 +128,7 @@ endif
 
 # === Boost ===
 ifeq ($(opt_boost), true)
-    boost_flag = -D SLS_USE_BOOST -I ../boost-headers
+    boost_flag = -D SLS_USE_BOOST
     boost_lib = -l boost_system -l boost_filesystem
 endif
 
@@ -152,6 +155,12 @@ ifeq ($(opt_arb), true)
     arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
 endif
 
+# === MPLAPACK ===
+ifeq ($(opt_mplapack), true)
+    mplapack_flag = -D SLS_USE_MPLAPACK
+    mplapack_lib = -l mplapack__Float128 -l mpblas__Float128
+endif
+
 # === Arpack ===
 ifeq ($(opt_arpack), true)
 ifeq ($(opt_lapack), reference) # only works for reference lapack for now
@@ -176,7 +185,7 @@ endif
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11 -fmax-errors=20 -fopenmp
+    compiler_flag = -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation  -std=c++11 -fmax-errors=20 -fopenmp
 endif
 ifeq ($(opt_compiler), clang++)
     compiler_flag = -Wall -Wno-reorder -Wno-misleading-indentation  -std=c++11
@@ -191,11 +200,11 @@ endif
 # ---------------------------------------------------------
 
 # all flags
-flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag)
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag) $(mplapack_flag)
 # -pedantic # show more warnings
 
 # all libs
-libs = $(boost_lib) $(arb_lib) $(arpack_lib)  $(matfile_lib) $(sqlite_lib) $(mkl_stat_link) $(mkl_dyn_link) $(lapacke_lib) $(cblas_lib) $(quad_math_lib) $(gsl_lib)
+libs = $(boost_lib) $(arb_lib) $(arpack_lib)  $(matfile_lib) $(sqlite_lib) $(mkl_stat_link) $(mkl_dyn_link) $(lapacke_lib) $(cblas_lib) $(quad_math_lib) $(gsl_lib) $(mplapack_lib)
 
 # === File Lists ===
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)

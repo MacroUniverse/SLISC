@@ -1254,7 +1254,7 @@ inline void mul(VecComp_IO y, ScmatComp_I a, SvecComp_I x, Comp_I alpha, Comp_I 
 }
 
 
-inline void mul(VecComp_O &y, VecDoub_I x, MatComp_I a)
+inline void mul(VecComp_O y, VecDoub_I x, MatComp_I a)
 {
 	Long Nr_a = a.n0(), Nc_a = a.n1();
 #ifdef SLS_CHECK_SHAPES
@@ -1352,7 +1352,7 @@ inline void mul(ScmatComp_O y, ScmatDoub_I a, CmatComp_I x)
 
 // matrix-vector multiplication
 // y = alpha*A*x + beta*y
-inline void mul_gen(VecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(VecDoub_O y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1367,7 +1367,7 @@ inline void mul_gen(VecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, 
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(VecComp_O &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(VecComp_O y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1386,7 +1386,7 @@ inline void mul_gen(VecComp_O &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, D
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(VecComp_O &y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(VecComp_O y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1405,7 +1405,7 @@ inline void mul_gen(VecComp_O &y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, 
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(VecDoub_O &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(VecDoub_O y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1420,7 +1420,7 @@ inline void mul_gen(VecDoub_O &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, D
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(SvecComp_O y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1439,7 +1439,7 @@ inline void mul_gen(SvecComp_O &y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, ScmatComp_I a, DvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+inline void mul_gen(SvecComp_O y, ScmatComp_I a, DvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1454,7 +1454,7 @@ inline void mul_gen(SvecComp_O &y, ScmatComp_I a, DvecComp_I x, Comp_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+inline void mul_gen(SvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1469,7 +1469,7 @@ inline void mul_gen(SvecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, DcmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(SvecComp_O y, DcmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1488,7 +1488,7 @@ inline void mul_gen(SvecComp_O &y, DcmatDoub_I a, SvecComp_I x, Doub_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(DvecComp_O &y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(DvecComp_O y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1507,7 +1507,7 @@ inline void mul_gen(DvecComp_O &y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(DvecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+inline void mul_gen(DvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1522,7 +1522,7 @@ inline void mul_gen(DvecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(DvecComp_O &y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(DvecComp_O y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1541,7 +1541,7 @@ inline void mul_gen(DvecComp_O &y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1,
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(SvecComp_O y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1560,7 +1560,7 @@ inline void mul_gen(SvecComp_O &y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1,
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, CmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+inline void mul_gen(SvecComp_O y, CmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1575,7 +1575,7 @@ inline void mul_gen(SvecComp_O &y, CmatComp_I a, SvecComp_I x, Comp_I alpha = 1,
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(SvecDoub_O y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1590,7 +1590,7 @@ inline void mul_gen(SvecDoub_O &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1,
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecDoub_O &y, ScmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(SvecDoub_O y, ScmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1605,7 +1605,7 @@ inline void mul_gen(SvecDoub_O &y, ScmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O &y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+inline void mul_gen(SvecComp_O y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1624,7 +1624,7 @@ inline void mul_gen(SvecComp_O &y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(VecComp_O &y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+inline void mul_gen(VecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -1689,7 +1689,7 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1,
 }
 
 
-inline void mul_gen(CmatDoub_O y, CmatDoub_I a, CmatDoub_I &x)
+inline void mul_gen(CmatDoub_O y, CmatDoub_I a, CmatDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.n0() || y.n0() != a.n0() || y.n1() != x.n1())
@@ -1702,7 +1702,7 @@ inline void mul_gen(CmatDoub_O y, CmatDoub_I a, CmatDoub_I &x)
 #endif
 }
 
-inline void mul_gen(CmatComp_O y, CmatComp_I a, CmatDoub_I &x)
+inline void mul_gen(CmatComp_O y, CmatComp_I a, CmatDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.n0() || y.n0() != a.n0() || y.n1() != x.n1())
@@ -1716,7 +1716,7 @@ inline void mul_gen(CmatComp_O y, CmatComp_I a, CmatDoub_I &x)
 #endif
 }
 
-inline void mul_gen(ScmatComp_O y, ScmatDoub_I a, CmatComp_I &x)
+inline void mul_gen(ScmatComp_O y, ScmatDoub_I a, CmatComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.n0() || y.n0() != a.n0() || y.n1() != x.n1())

@@ -122,6 +122,11 @@
 // my std extension
 #include "quad_math.h"
 
+#ifdef SLS_USE_MPLAPACK
+#include <mplapack/mpblas__Float128.h>
+#include <mplapack/mplapack__Float128.h>
+#endif
+
 namespace slisc {
 
 // using std

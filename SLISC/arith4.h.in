@@ -221,6 +221,7 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'VecComp' 'SvecComp';
 //% 'VecComp' 'VecDoub';
 //% 'VecQdoub' 'VecQdoub'
+//% 'VecQcomp' 'VecQcomp'
 //% 'SvecDoub' 'VecDoub'
 //% 'SvecDoub' 'SvecDoub'
 //% 'SvecComp' 'VecDoub'
@@ -249,31 +250,31 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% if is_dense(T) && is_dense(T1) && is_same_major(T, T1)
 //%     req('assert_same_shape', {T, T1});
 //%     req('add_eq_vv', {Ts, Ts1});
-inline void operator+=(@T@_O &v, @T1@_I v1)
+inline void operator+=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(@T@_O &v, @T1@_I v1)
+inline void operator-=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(@T@_O &v, @T1@_I v1)
+inline void operator*=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(@T@_O &v, @T1@_I v1)
+inline void operator/=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 //% elseif ndim(T) == 1 && ndim(T1) == 1
-inline void operator+=(@T@_O &v, @T1@_I v1)
+inline void operator+=(@T@_O v, @T1@_I v1)
 {
 //% req('assert_same_shape', {T, T1});
 	assert_same_shape(v, v1);
@@ -281,28 +282,28 @@ inline void operator+=(@T@_O &v, @T1@_I v1)
 	    v[i] += v1[i];
 }
 
-inline void operator-=(@T@_O &v, @T1@_I v1)
+inline void operator-=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] -= v1[i];
 }
 
-inline void operator*=(@T@_O &v, @T1@_I v1)
+inline void operator*=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] *= v1[i];
 }
 
-inline void operator/=(@T@_O &v, @T1@_I v1)
+inline void operator/=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] /= v1[i];
 }
 //% elseif ndim(T) == 2 && ndim(T1) == 2
-inline void operator+=(@T@_O &v, @T1@_I v1) // slow!
+inline void operator+=(@T@_O v, @T1@_I v1) // slow!
 {
 //% req('assert_same_shape', {T, T1});
 	assert_same_shape(v, v1);
@@ -311,7 +312,7 @@ inline void operator+=(@T@_O &v, @T1@_I v1) // slow!
 	        v(i, j) += v1(i, j);
 }
 
-inline void operator-=(@T@_O &v, @T1@_I v1) // slow!
+inline void operator-=(@T@_O v, @T1@_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
@@ -319,7 +320,7 @@ inline void operator-=(@T@_O &v, @T1@_I v1) // slow!
 	        v(i, j) -= v1(i, j);
 }
 
-inline void operator*=(@T@_O &v, @T1@_I v1) // slow!
+inline void operator*=(@T@_O v, @T1@_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
@@ -327,7 +328,7 @@ inline void operator*=(@T@_O &v, @T1@_I v1) // slow!
 	        v(i, j) *= v1(i, j);
 }
 
-inline void operator/=(@T@_O &v, @T1@_I v1) // slow!
+inline void operator/=(@T@_O v, @T1@_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)

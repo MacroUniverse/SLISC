@@ -135,7 +135,7 @@ inline T sqr(const T &x) { return x * x; }
 inline @T@ abs2(@T@_I a) { return a * a; }
 //% elseif is_comp(T)
 //%     Tr = rm_comp(T);
-inline @Tr@ abs2(@T@_I &a) { return sqr(real(a)) + sqr(imag(a)); }
+inline @Tr@ abs2(@T@_I a) { return sqr(real(a)) + sqr(imag(a)); }
 //% end
 //%------------------------
 

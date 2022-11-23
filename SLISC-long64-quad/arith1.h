@@ -781,6 +781,75 @@ inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qdoub *v, Long_I N0, Long_I
 	return s;
 }
 
+inline Qdoub max_abs_v(const Qcomp *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N <= 0) SLS_ERR("illegal length!");
+#endif
+	Qdoub s = abs(v[0]), val;
+	for (Long i = 1; i < N; ++i) {
+	    val = abs(v[i]);
+	    if (s < val)
+	        s = val;
+	}
+	return s;
+}
+
+inline Qdoub max_abs_v(const Qcomp *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N <= 0) SLS_ERR("illegal length!");
+#endif
+	Qdoub s = abs(v[0]), val;
+	for (Long i = step; i < N*step; i += step) {
+	    val = abs(v[i]);
+	    if (s < val)
+	        s = val;
+	}
+	return s;
+}
+
+inline Qdoub max_abs_dcmat(const Qcomp *v, Long_I N0, Long_I N1, Long_I step1)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+#endif
+	const Qcomp *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	Qdoub s = abs(*v); ++v;
+	while (1) {
+	    if (v == end0) {
+	        beg0 += step1;
+	        if (beg0 >= end) break;
+	        v = beg0; end0 += step1;
+	    }
+	    const Qdoub &t = abs(*v);
+	    if (s < t) s = abs(t);
+	    ++v;
+	}
+	return s;
+}
+
+inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qcomp *v, Long_I N0, Long_I N1, Long_I step1)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+#endif
+	const Qcomp *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	Qdoub s = abs(*v); ++v;
+	while (1) {
+	    if (v == end0) {
+	        beg0 += step1;
+	        if (beg0 >= end) break;
+	        v = beg0; end0 += step1;
+	    }
+	    const Qdoub &t = abs(*v);
+	    if (s < t) s = abs(t), p = v;
+	    ++v;
+	}
+	i = (p - beg) % N0; j = (p - beg) / step1;
+	return s;
+}
+
 
 inline Doub max_abs(VecDoub_I v) { return max_abs_v(v.p(), v.size()); }
 
@@ -790,7 +859,13 @@ inline Int max_abs(VecInt_I v) { return max_abs_v(v.p(), v.size()); }
 
 inline Qdoub max_abs(VecQdoub_I v) { return max_abs_v(v.p(), v.size()); }
 
+inline Qdoub max_abs(VecQcomp_I v) { return max_abs_v(v.p(), v.size()); }
+
 inline Doub max_abs(SvecComp_I v) { return max_abs_v(v.p(), v.size()); }
+
+inline Qdoub max_abs(SvecQdoub_I v) { return max_abs_v(v.p(), v.size()); }
+
+inline Qdoub max_abs(SvecQcomp_I v) { return max_abs_v(v.p(), v.size()); }
 
 inline Doub max_abs(DvecDoub_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 

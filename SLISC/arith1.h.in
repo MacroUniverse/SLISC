@@ -236,7 +236,8 @@ inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1
 //%-------------------------
 
 //% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt';
-//%   'VecQdoub'; 'SvecComp'; 'DvecDoub'; 'DvecComp';
+//%   'VecQdoub'; 'VecQcomp'; 'SvecComp'; 'SvecQdoub'; 'SvecQcomp';
+//%   'DvecDoub'; 'DvecComp';
 //%   'CmatDoub'; 'CmatComp'; 'MatComp'; 'DcmatDoub'; 'DcmatComp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);

@@ -97,7 +97,7 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 //% if ndim(T) ~= 1 || ndim(T1) ~= 1 || ndim(T2) ~= 2
 //%     error('illegal dim!');
 //% end
-inline void mul(@T@_O &y, @T1@_I x, @T2@_I a)
+inline void mul(@T@_O y, @T1@_I x, @T2@_I a)
 {
 	Long Nr_a = a.n0(), Nc_a = a.n1();
 #ifdef SLS_CHECK_SHAPES
@@ -177,7 +177,7 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%     layout = 'CblasRowMajor';
 //% end
 // y = alpha*A*x + beta*y
-inline void mul_gen(@Ty@_O &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
+inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (x.size() != a.n1() || y.size() != a.n0())
@@ -272,7 +272,7 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
-inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I &x)
+inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.n0() || y.n0() != a.n0() || y.n1() != x.n1())

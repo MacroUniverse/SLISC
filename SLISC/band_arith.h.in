@@ -234,12 +234,16 @@ inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
 //%     'VecDoub' 'CbandDoub' 'VecDoub';
 //%     'VecComp' 'CbandDoub' 'VecComp';
 //%     'VecComp' 'CbandComp' 'VecComp';
+//%     'VecQcomp' 'CbandQcomp' 'VecQcomp';
 //%     'VecComp' 'CbandComp' 'SvecComp';
 //%     'SvecComp' 'CbandDoub' 'SvecComp';
 //% });
 //%------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% [Tsx,Tsy,Tsa] = val_t(Tx, Ty, Ta);
+//% if is_Qcomp(Tsx) && is_Qcomp(Tsa) && is_Qcomp(Tsy)
+#ifdef SLS_USE_MPLAPACK
+//% end
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 //% if is_dense_vec(Tx)
@@ -260,6 +264,11 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 	Comp alpha(1, 0), beta(0, 0);
 	cblas_zgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
 	    &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
+//% elseif is_Qcomp(Tsx) && is_Qcomp(Tsa) && is_Qcomp(Tsy)
+	Qcomp alpha(1, 0), beta(0, 0);
+	Cgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
+	    (Qcomp*)a.p() + a.idiag() - a.nup(), a.lda(), (Qcomp*)x.p(),
+		incx, beta, (Qcomp*)y.p(), incy);
 //% elseif is_Comp(Tsx) && is_Doub(Tsa) && is_Comp(Tsy)
 	Doub alpha = 1, beta = 0;
 	// real part
@@ -272,6 +281,9 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //%     error('not implemented!');
 //% end
 }
+//% if is_Qcomp(Tsx) && is_Qcomp(Tsa) && is_Qcomp(Tsy)
+#endif
+//% end
 //%----------------------
 #endif
 
