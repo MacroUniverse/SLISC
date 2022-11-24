@@ -23,8 +23,8 @@ USER ${DOCKER_USER}
 SHELL ["/bin/bash", "-c"] # --shell /bin/bash didn't work
 
 RUN	cd ~/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
-	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04 --depth 2
+	git clone https://github.com/MacroUniverse/SLISC0 --depth 3 && \
+	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04 --depth 3
 
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
@@ -36,13 +36,11 @@ ARG NCPU=8
 RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
 	cd ~/SLISC0 && \
 	git pull origin && touch SLISC/*.h && \
-	source make/set_path2.sh && \
-	make -j$NCPU opt_asan=false && \
+	make -j$NCPU && \
 	./main.x < input.inp
 
 RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
 	cd ~/SLISC0 && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
-	source make/set_path2.sh && \
-	make -j$NCPU opt_long32=false opt_quadmath=true opt_asan=false && \
+	make -j$NCPU opt_long32=false opt_quadmath=true && \
 	./main.x < input.inp
