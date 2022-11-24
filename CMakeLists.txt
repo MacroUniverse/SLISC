@@ -7,56 +7,70 @@ set(CMAKE_CXX_FLAGS "-std=c++11")
 
 # include_directories(SLISC)
 
-# CBLAS
+# === CBLAS ==
 add_definitions(-D SLS_USE_CBLAS)
-list(APPEND LIBS blas)
-# LAPACKE
+list(APPEND LIBS cblas blas)
+
+# === LAPACKE ===
 add_definitions(-D SLS_USE_LAPACKE)
-list(APPEND LIBS lapacke)
-# Boost
-# add_definitions(-D SLS_USE_BOOST)
-# include_directories(../boost-headers)
-# list(APPEND LIBS boost_system boost_filesystem)
-# GSL
+list(APPEND LIBS lapacke lapack)
+
+# === Boost ===
+add_definitions(-D SLS_USE_BOOST)
+list(APPEND LIBS boost_system boost_filesystem)
+
+# === GSL ===
 add_definitions(-D SLS_USE_GSL)
 list(APPEND LIBS gsl)
-# Eigen
+
+# === Eigen ===
 add_definitions(-D SLS_USE_EIGEN)
 include_directories(../EigenTest/Eigen)
-# quad math
-# add_definitions(-D SLS_USE_QUAD_MATH)
-# add_compile_options(-fext-numeric-literals)
-# list(APPEND LIBS quadmath)
-# Arpack
+
+# === quad math ===
+add_definitions(-D SLS_USE_QUAD_MATH)
+add_compile_options(-fext-numeric-literals)
+list(APPEND LIBS quadmath)
+
+# === MPLAPACK ===
+add_definitions(-D SLS_USE_MPLAPACK)
+include_directories(../SLISC0-libs-x64-ubuntu22.04/mplapack-2.0.1/include/)
+list(APPEND LIBS mplapack__Float128 mpblas__Float128)
+
+# === Arpack ===
 add_definitions(-D SLS_USE_ARPACK)
-include_directories(../Arpack_test/include)
+include_directories(../Arpack_test/include/)
 list(APPEND LIBS arpack gfortran)
-# Arb
+
+# === Arb ===
 add_definitions(-D SLS_USE_ARB)
-include_directories(/usr/include/flint/)
 list(APPEND LIBS flint mpfr gmp flint-arb) # replace flint-arb with arb if compiled yourself
-# Address Sanitizer
+
+# === Address Sanitizer ===
 add_definitions(-D SLS_USE_ASAN)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
 set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize=address -static-libasan")
-# Matfile
+
+# === Matfile ===
 # (conflicts with boost_filesystem.so other than version 1.56.0)
-add_definitions(-D SLS_USE_MATFILE)
-include_directories(../MatFile_linux/include)
-link_directories(../MatFile_linux/lib)
-list(APPEND LIBS mat mx)
-set(CMAKE_INSTALL_RPATH ../MatFile_linux/lib)
-# SQLite
+#add_definitions(-D SLS_USE_MATFILE)
+#include_directories(../MatFile_linux/include)
+#link_directories(../MatFile_linux/lib)
+#list(APPEND LIBS mat mx)
+#set(CMAKE_INSTALL_RPATH ../MatFile_linux/lib)
+
+# === SQLite ===
 add_definitions(-D SLS_USE_SQLITE)
 list(APPEND LIBS sqlite3)
-# Debug
+
+# === Debug ===
 add_compile_options(-g -ftrapv)
-# Release
+# === Release ===
 # add_definitions(-D NDEBUG)
 # add_compile_options(-O3)
 
-add_definitions(-D SLS_USE_INT_AS_LONG)
-add_compile_options(-Wall -Wno-reorder -Wno-misleading-indentation -fopenmp -fmax-errors=2)
+# add_definitions(-D SLS_USE_INT_AS_LONG)
+add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
 
 file(GLOB SOURCES "test/*.cpp" "main.cpp")
 

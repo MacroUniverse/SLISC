@@ -55,70 +55,45 @@ int main()
 
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
-## Compiling
-* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04 & 18.04 & 22.04 Windows WSL.
-* `Octave` 4.2 (4.0 works but is slower) or higher is needed for code generation. If you don't want to install `Octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
-* Use `make` to compile, use `make -j4` to compile with 4 threads (or any number you like).
-* Makefile provides multiple options, uncomment one line to enable. The default option does not require any 3rd party binary libraries and is most compatible. Some modules will not be available, some others will run slower. use `make -j8` to use 8 threads to compile.
-* To recompile just one test, use `make test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
-* Use `./main.x < input.inp` to run all tests, or just `./main.x` with hand input. Use `./main.x <test>` to run 1 test.
-* `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used, comment/uncomment sections in `g++_all.mak` to enable/disable them.
-* `libflint-arb-dev` is only tested for 2.19, (currently Ubuntu has an earlier version) compile from source if needed.
+## Dependencies
 
-### Ubuntu 20.04 Instellation
+Depending on the compilatio options, `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used.
+
+`Octave` 4.2 (4.0 works but is slower) or higher is needed for code generation. If you don't want to install `Octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
+
+### Using precompiled binaries or dockerfiles (recommended)
+* All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009). These binaries are compiled with docker using `docker/*.dockerfile`.
+
+for docker image build, use
+```bash
+sudo docker build -t slisc0:xxx -f docker/xxx.dockerfile . # build
+sudo docker run slisc0 # run test (if available)
+sudo docker run -it slisc0 bash # open terminal
+```
+
+### Install with apt (Ubuntu 20.04/22.04)
 ```bash
 apt -y update
 apt -y upgrade
 apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
 apt purge -y libopenblas*
-cd /root
+```
+
+## Building SLISC0
+```bash
 git clone https://github.com/MacroUniverse/SLISC0 --depth 1
 git clone https://github.com/MacroUniverse/Arpack_test --depth 1
 git clone https://github.com/MacroUniverse/EigenTest --depth 1
-git clone https://github.com/MacroUniverse/boost-headers --depth 1
 cd SLISC0
 touch SLISC/*.h
 make -j12
 ```
 
-tested of package versions on Ubuntu 20.04 (tested):
-```
-gfortran: amd64/focal 4:9.3.0-1ubuntu2
-libarpack++2-dev: amd64/focal 2.3-10build1
-libboost-filesystem-dev: amd64/focal 1.71.0.0ubuntu2
-libflint-arb-dev: amd64/focal 1:2.17.0-1
-libarb (compiled from source): 2.19.0
-libflint-dev:a md64/focal 2.5.2-21build1
-libgmp-dev: amd64/focal 2:6.2.0+dfsg-4
-libgsl-dev: amd64/focal 2.5+dfsg-6build1
-liblapacke-dev: amd64/focal 3.9.0-1build1
-libsqlite3-dev: amd64/focal-security 3.31.1-4ubuntu0.3
-```
-note that gfortran needs to have the same version with g++.
-
-for docker image build, use
-```bash
-sudo docker build -t slisc0 -f ./Dockerfile_XXX . # build
-sudo docker run slisc0 # run test
-sudo docker run -it slisc0 bash # open terminal
-```
-
-### Ubuntu 22.04 All Dependencies
-Update: now tested on Ubuntu 22.04 (with g++-9), however, there is a bug in GSL header `/usr/include/gsl/gsl_blas_types.h`: replace all `typedef  enum` with just `typedef `.
-
-tested of package versions on Ubuntu 22.04 (tested):
-```
-gfortran-9: 9.4.0-5ubuntu1
-libarpack++2-dev: 2.3-10build1
-libboost-filesystem-dev: 1.74.0.3ubuntu7
-libflint-arb-dev: 1:2.22.1-1
-libarb (compiled from source): 2.23.0
-libflint-dev: 2.8.4-2build1
-libgmp-dev: 2:6.2.1+dfsg-3ubuntu1
-libgsl-dev: 2.7.1+dfsg-3
-liblapacke-dev: 3.10.0-2ubuntu1
-libsqlite3-dev: 3.37.2-2
-```
+* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04 & 18.04 & 22.04 and Windows WSL, MYSYS2. Note that gfortran needs to have the same version with g++.
+* Use `make` to compile, use `make -j8` to compile with 8 threads (or any number you like).
+* Makefile provides multiple options, uncomment one line to enable. The plan is to merge all of the `make/*.mak` files into one (currently called `make/g++_all.mak`). Each dependent libraries can be optionally turned on or off in `make/g++_all.mak` among other options, or specified by calling `make opt_xxx=xxx`.
+* To recompile just one test, use `make test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
+* Use `./main.x < input.inp` to run all tests. Use `./main.x <test>` to run 1 test.
 
 ## Recommended Programming Style
 * Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
