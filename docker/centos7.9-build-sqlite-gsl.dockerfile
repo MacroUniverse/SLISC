@@ -51,19 +51,6 @@ RUN cd ~ && \
 	./configure --prefix=$INSTALL_DIR/sqlite-3.40.0 --enable-static=yes && \
 	make -j$NCPU && make install
 
-# ======== Boost ========
-# ./bootstrap.sh ... --with-libraries=filesystem to select sub lib
-# ./b2 install -j$NCPU will return exit code 1 since there are missing dependencies
-#      for a few components, which will be skipped.
-RUN cd ~ && \
-	wget -q https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
-	
-RUN cd ~ && \
-	tar -xzf boost_1_80_0.tar.gz && cd boost_1_80_0 && \
-	mkdir $INSTALL_DIR/boost-1.80.0 && \
-	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 && \
-	./b2 install -j$NCPU || echo "--- ignoreing exit code 1 ----"
-
 # ======== GSL ========
 RUN	cd ~/ && wget -q https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
 	tar -xzf gsl-2.7.1.tar.gz && cd gsl-2.7.1 && \

@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -28,14 +28,6 @@ RUN mkdir -p $INSTALL_DIR
 # set number of threads for compilation
 ARG NCPU=8
 
-# ======== Sqlite ========
-RUN cd ~ && \
-	wget -q --no-check-certificate https://www.sqlite.org/2022/sqlite-autoconf-3400000.tar.gz && \
-	tar -xzf ./sqlite-autoconf-3400000.tar.gz && \
-	mkdir $INSTALL_DIR/sqlite-3.40.0 && cd sqlite-autoconf-3400000 && \
-	./configure --prefix=$INSTALL_DIR/sqlite-3.40.0 --enable-static=yes && \
-	make -j$NCPU && make install
-
 # ======== Boost ========
 # ./bootstrap.sh ... --with-libraries=filesystem to select sub lib
 RUN cd ~ && \
@@ -46,10 +38,3 @@ RUN cd ~ && \
 	mkdir $INSTALL_DIR/boost-1.80.0 && \
 	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 && \
 	./b2 install -j$NCPU
-
-# ======== GSL ========
-RUN	cd ~/ && wget -q https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
-	tar -xzf gsl-2.7.1.tar.gz && cd gsl-2.7.1 && \
-	mkdir $INSTALL_DIR/gsl && \
-	./configure --prefix=$INSTALL_DIR/gsl && \
-	make -j$NCPU && make check -j$NCPU && make install
