@@ -42,6 +42,9 @@ USER ${DOCKER_USER}
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
 
+# set number of threads for compilation
+ARG NCPU=8
+
 # ======== CMake ========
 RUN cd ~/ && \
 	wget -q https://github.com/Kitware/CMake/releases/download/v3.25.0-rc4/cmake-3.25.0-rc4-linux-x86_64.tar.gz && \
@@ -57,7 +60,7 @@ RUN	cd ~/ && \
 	mkdir lapack-build && cd lapack-build && \
 	mkdir $INSTALL_DIR/lapack64-shared-3.10.1 && \
 	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack64-shared-3.10.1 -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd ~/lapack-build && make -j12 && make install
+	cd ~/lapack-build && make -j$NCPU && make install
 
 # ======== (C)BLAS and LAPACK(E) 32bit dynamic (reference) ========
 RUN cd ~/ && \
@@ -66,7 +69,7 @@ RUN cd ~/ && \
 	mkdir lapack-build && cd lapack-build && \
 	mkdir $INSTALL_DIR/lapack-shared-3.10.1 && \
 	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack-shared-3.10.1 -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=ON -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd ~/lapack-build && make -j12 && make install
+	cd ~/lapack-build && make -j$NCPU && make install
 
 # ======== (C)BLAS and LAPACK(E) 64bit static (reference) ========
 RUN cd ~/ && \
@@ -75,7 +78,7 @@ RUN cd ~/ && \
 	mkdir lapack-build && cd lapack-build && \
 	mkdir $INSTALL_DIR/lapack64-static-3.10.1 && \
 	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack64-static-3.10.1 -DBUILD_INDEX64=ON -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd ~/lapack-build && make -j12 && make install
+	cd ~/lapack-build && make -j$NCPU && make install
 
 # ======== (C)BLAS and LAPACK(E) 32bit static (reference) ========
 RUN cd ~/ && \
@@ -84,7 +87,7 @@ RUN cd ~/ && \
 	mkdir lapack-build && cd lapack-build && \
 	mkdir $INSTALL_DIR/lapack-static-3.10.1 && \
 	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack-static-3.10.1 -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
-	cd ~/lapack-build && make -j12 && make install
+	cd ~/lapack-build && make -j$NCPU && make install
 
 RUN ln -s lib64 $INSTALL_DIR/lapack-shared-3.10.1/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack-static-3.10.1/lib && \
@@ -100,7 +103,7 @@ RUN cd ~/ && \
 	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib64/ && \
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib64/ && \
 	sh bootstrap && ./configure --prefix=$INSTALL_DIR/arpack-ng-3.8.0 && \
-	make -j12 && make check -j12 && make install
+	make -j$NCPU && make check -j$NCPU && make install
 
 
 RUN cd $INSTALL_DIR && \

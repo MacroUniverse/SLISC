@@ -3,7 +3,7 @@
 # To open a bash, use `sudo docker run -it slisc0 bash`
 # more docker commands https://wuli.wiki/online/Docker.html
 
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -12,12 +12,17 @@ RUN apt -y update && \
 	apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-dev libgsl-dev libboost-filesystem-dev && \
 	apt purge -y libopenblas*
 
+RUN apt install -y libmpfr-dev
+
 # set your timezone
 RUN apt install -y tzdata
 ENV TZ America/Chicago
 RUN echo "${TZ}" > /etc/timezone \
   && ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime \
   && dpkg-reconfigure -f noninteractive tzdata
+
+# set number of threads for compilation
+ARG NCPU=8
 
 RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
@@ -26,11 +31,11 @@ RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
 	git clone https://github.com/fredrik-johansson/arb
 
-RUN cd /root/arb && git checkout 2.19.0 && ./configure && make -j12 && make install && \
+RUN cd /root/arb && git checkout 2.19.0 && ./configure && make -j$NCPU && make install && \
 	ln -s libarb.so /usr/local/lib/libflint-arb.so && \
 	ldconfig
 
-RUN cd /root/SLISC0 && touch SLISC/*.h && make -j12 && \
+RUN cd /root/SLISC0 && touch SLISC/*.h && make -j$NCPU && \
 	echo "#! /bin/bash" > /test.sh && \
 	echo "cd /root/SLISC0" >> /test.sh && \
 	echo "./main.x < input.inp" >> /test.sh && \

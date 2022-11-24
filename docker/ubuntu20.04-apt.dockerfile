@@ -27,7 +27,7 @@ RUN	cd /root/ && \
 
 RUN	cd /root/SLISC0 && \
 	touch SLISC/*.h && \
-	make -j12
+	make -j`getconf _NPROCESSORS_ONLN`
 
 RUN echo "#! /usr/bin/bash" > /test.sh && \
 	echo "cd /root/SLISC0" >> /test.sh && \

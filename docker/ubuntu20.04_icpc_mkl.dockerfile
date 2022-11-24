@@ -36,5 +36,5 @@ RUN cd /root/ && git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && 
 	cd /root/SLISC0 && touch SLISC/*.h
 
 RUN cd /root/SLISC0 && . /opt/intel/oneapi/setvars.sh && \
-	git pull && make -j12 opt_lapack=mkl opt_boost=false opt_gsl=false opt_eigen=false opt_arb=false opt_arpack=false opt_sqlite=false && \
+	git pull && make -j`getconf _NPROCESSORS_ONLN` opt_lapack=mkl opt_boost=false opt_gsl=false opt_eigen=false opt_arb=false opt_arpack=false opt_sqlite=false && \
 	./main.x < input.inp

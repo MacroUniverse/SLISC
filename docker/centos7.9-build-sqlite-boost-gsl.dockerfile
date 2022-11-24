@@ -37,13 +37,11 @@ RUN useradd -u $DOCKER_UID -m $DOCKER_USER --shell /bin/bash -G wheel,root && \
 
 USER ${DOCKER_USER}
 
-RUN	cd ~/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
-	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
-	git clone https://github.com/MacroUniverse/EigenTest --depth 1
-
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
+
+# set number of threads for compilation
+ARG NCPU=8
 
 # ======== Sqlite ========
 RUN cd ~ && \
@@ -51,11 +49,11 @@ RUN cd ~ && \
 	tar -xzf ./sqlite-autoconf-3400000.tar.gz && \
 	mkdir $INSTALL_DIR/sqlite-3.40.0 && cd sqlite-autoconf-3400000 && \
 	./configure --prefix=$INSTALL_DIR/sqlite-3.40.0 --enable-static=yes && \
-	make -j12 && make install
+	make -j$NCPU && make install
 
 # ======== Boost ========
 # ./bootstrap.sh ... --with-libraries=filesystem to select sub lib
-# ./b2 install -j12 will return exit code 1 since there are missing dependencies
+# ./b2 install -j$NCPU will return exit code 1 since there are missing dependencies
 #      for a few components, which will be skipped.
 RUN cd ~ && \
 	wget -q https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
@@ -64,14 +62,14 @@ RUN cd ~ && \
 	tar -xzf boost_1_80_0.tar.gz && cd boost_1_80_0 && \
 	mkdir $INSTALL_DIR/boost-1.80.0 && \
 	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 && \
-	./b2 install -j12 || echo "--- ignoreing exit code 1 ----"
+	./b2 install -j$NCPU || echo "--- ignoreing exit code 1 ----"
 
 # ======== GSL ========
 RUN	cd ~/ && wget -q https://mirror.ibcp.fr/pub/gnu/gsl/gsl-2.7.1.tar.gz && \
 	tar -xzf gsl-2.7.1.tar.gz && cd gsl-2.7.1 && \
 	mkdir $INSTALL_DIR/gsl-2.7.1 && \
 	./configure --prefix=$INSTALL_DIR/gsl-2.7.1 && \
-	make -j12 && make check -j12 && make install
+	make -j$NCPU && make check -j$NCPU && make install
 
 RUN cd $INSTALL_DIR && \
 	tar -czf sqlite-3.40.0.tar.gz sqlite-3.40.0 && rm -r sqlite-3.40.0 && \

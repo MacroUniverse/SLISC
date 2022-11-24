@@ -142,7 +142,7 @@ endif
 
 # === Eigen ===
 ifeq ($(opt_eigen), true)
-    eigen_flag = -D SLS_USE_EIGEN -I ../EigenTest/Eigen
+    eigen_flag = -D SLS_USE_EIGEN
 endif
 
 # === Quad Math ===
@@ -166,7 +166,7 @@ endif
 # === Arpack ===
 ifeq ($(opt_arpack), true)
 ifeq ($(opt_lapack), reference) # only works for reference lapack for now
-    arpack_flag = -D SLS_USE_ARPACK -I ../Arpack_test/include
+    arpack_flag = -D SLS_USE_ARPACK
     arpack_lib = -l arpack -l gfortran -l blas -l lapack
 endif
 endif

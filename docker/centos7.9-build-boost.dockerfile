@@ -40,7 +40,7 @@ RUN mkdir -p $INSTALL_DIR
 
 # ======== Boost ========
 # ./bootstrap.sh ... --with-libraries=filesystem to select sub lib
-# ./b2 install -j12 will return exit code 1 since there are missing dependencies
+# ./b2 install -j`getconf _NPROCESSORS_ONLN` will return exit code 1 since there are missing dependencies
 #      for a few components, which will be skipped.
 RUN cd ~ && \
 	wget -q https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
@@ -49,7 +49,7 @@ RUN cd ~ && \
 	tar -xzf boost_1_80_0.tar.gz && cd boost_1_80_0 && \
 	mkdir $INSTALL_DIR/boost-1.80.0 && \
 	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 || \
-	./b2 install -j12
+	./b2 install -j`getconf _NPROCESSORS_ONLN`
 
 RUN cd $INSTALL_DIR && \
 	tar -czf boost-1.80.0.tar.gz boost-1.80.0 && \

@@ -41,13 +41,16 @@ USER ${DOCKER_USER}
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
 
+# set number of threads for compilation
+ARG NCPU=8
+
 # ======== GMP ========
 RUN cd ~/ && wget -q https://gmplib.org/download/gmp/gmp-6.2.1.tar.lz && \
 	lzip -d gmp-6.2.1.tar.lz && \
 	tar -xf gmp-6.2.1.tar && cd gmp-6.2.1 && \
 	mkdir $INSTALL_DIR/gmp-6.1.2 && \
 	./configure --prefix=$INSTALL_DIR/gmp-6.1.2 && \
-	make -j12 && make check -j12 && make install
+	make -j$NCPU && make check -j$NCPU && make install
 
 # ======== MPFR ========
 RUN cd ~/ && \
@@ -55,21 +58,21 @@ RUN cd ~/ && \
 	tar -xzf mpfr-4.1.0.tar.gz && cd mpfr-4.1.0 && \
 	mkdir $INSTALL_DIR/mpfr-4.1.0 && \
 	./configure --prefix=$INSTALL_DIR/mpfr-4.1.0 --with-gmp=$INSTALL_DIR/gmp-6.1.2 && \
-	make -j12 && make check -j12 && make install
+	make -j$NCPU && make check -j$NCPU && make install
 
 # ======== Flint2 ========
 RUN cd ~ && wget -q https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz && \
 	tar -xzf v2.9.0.tar.gz && cd flint2-2.9.0/ && \
 	mkdir $INSTALL_DIR/flint2-2.9.0 && \
 	./configure --prefix=$INSTALL_DIR/flint2-2.9.0 --with-gmp=$INSTALL_DIR/gmp-6.1.2 --with-mpfr=$INSTALL_DIR/mpfr-4.1.0 && \
-	make -j12 && make check -j12 && make install
+	make -j$NCPU && make check -j$NCPU && make install
 
 # ======== Arb ========
 RUN cd ~ && wget -q https://github.com/fredrik-johansson/arb/archive/refs/tags/2.23.0.tar.gz  && \
 	tar -xzf 2.23.0.tar.gz && cd arb-2.23.0/ && \
 	mkdir $INSTALL_DIR/arb-2.23.0 && \
 	./configure --prefix=$INSTALL_DIR/arb-2.23.0 --with-gmp=$INSTALL_DIR/gmp-6.1.2 --with-mpfr=$INSTALL_DIR/mpfr-4.1.0 --with-flint=$INSTALL_DIR/flint2-2.9.0 && \
-	make -j12 && make check -j12 && make install && \
+	make -j$NCPU && make check -j$NCPU && make install && \
 	ln -s libarb.so $INSTALL_DIR/arb-2.23.0/lib/libflint-arb.so
 
 RUN cd $INSTALL_DIR && \

@@ -3,16 +3,14 @@
 # To open a bash, use `sudo docker run -it slisc0 bash`
 # more docker commands https://wuli.wiki/online/Docker.html
 
-FROM ubuntu:16.04
+FROM ubuntu:22.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt -y update && \
 	apt -y upgrade && \
-	apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-dev libgsl-dev libboost-filesystem-dev && \
+	apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev && \
 	apt purge -y libopenblas*
-
-RUN apt install -y libmpfr-dev
 
 # set your timezone
 RUN apt install -y tzdata
@@ -25,15 +23,18 @@ RUN	cd /root/ && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
 	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
-	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
-	git clone https://github.com/fredrik-johansson/arb
+	git clone https://github.com/MacroUniverse/boost-headers --depth 1
 
-RUN cd /root/arb && git checkout 2.19.0 && ./configure && make -j12 && make install && \
-	ln -s libarb.so /usr/local/lib/libflint-arb.so && \
-	ldconfig
+RUN ln -s libblas.so /usr/lib/x86_64-linux-gnu/libcblas.so && \
+    ln -s libblas.a /usr/lib/x86_64-linux-gnu/libcblas.a && \
+	ln -s libblas64.so /usr/lib/x86_64-linux-gnu/libcblas64.so
+	# libcblas64.a not found
 
-RUN cd /root/SLISC0 && touch SLISC/*.h && make -j12 && \
-	echo "#! /bin/bash" > /test.sh && \
+RUN	cd /root/SLISC0 && \
+	touch SLISC/*.h && \
+	make -j`getconf _NPROCESSORS_ONLN`
+
+RUN echo "#! /usr/bin/bash" > /test.sh && \
 	echo "cd /root/SLISC0" >> /test.sh && \
 	echo "./main.x < input.inp" >> /test.sh && \
 	chmod +x /test.sh

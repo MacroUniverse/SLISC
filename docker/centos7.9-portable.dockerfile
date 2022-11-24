@@ -34,24 +34,24 @@ USER ${DOCKER_USER}
 
 RUN	cd ~/ && \
 	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
-	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
-	git clone https://github.com/MacroUniverse/EigenTest --depth 1
+	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009 --depth 1
 
 # copy prebuilt libraries
 ARG INSTALL_DIR=/home/$DOCKER_USER/SLISC0-libs-x64-centos7.9.2009
-COPY SLISC0-libs-x64-centos7.9.2009 $INSTALL_DIR
-RUN rm -rf $INSTALL_DIR/.git
+
+# set number of threads for compilation
+ARG NCPU=8
 
 # ======== SLISC ========
 RUN cd $INSTALL_DIR && source setup.sh && \
 	cd ~/SLISC0 && \
 	git pull origin && touch SLISC/*.h && \
-	make -j12 opt_asan=false && \
+	make -j$NCPU opt_asan=false && \
 	./main.x < input.inp
 
 RUN cd $INSTALL_DIR && \
 	source setup.sh && \
 	cd ~/SLISC0 && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
-	make -j12 opt_long32=false opt_quadmath=true opt_asan=false && \
+	make -j$NCPU opt_long32=false opt_quadmath=true opt_asan=false && \
 	./main.x < input.inp

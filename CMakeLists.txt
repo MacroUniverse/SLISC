@@ -5,8 +5,6 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
-# include_directories(SLISC)
-
 # === CBLAS ==
 add_definitions(-D SLS_USE_CBLAS)
 list(APPEND LIBS cblas blas)
@@ -25,7 +23,6 @@ list(APPEND LIBS gsl)
 
 # === Eigen ===
 add_definitions(-D SLS_USE_EIGEN)
-include_directories(../EigenTest/Eigen)
 
 # === quad math ===
 add_definitions(-D SLS_USE_QUAD_MATH)
@@ -34,12 +31,10 @@ list(APPEND LIBS quadmath)
 
 # === MPLAPACK ===
 add_definitions(-D SLS_USE_MPLAPACK)
-include_directories(../SLISC0-libs-x64-ubuntu22.04/mplapack-2.0.1/include/)
 list(APPEND LIBS mplapack__Float128 mpblas__Float128)
 
 # === Arpack ===
 add_definitions(-D SLS_USE_ARPACK)
-include_directories(../Arpack_test/include/)
 list(APPEND LIBS arpack gfortran)
 
 # === Arb ===
