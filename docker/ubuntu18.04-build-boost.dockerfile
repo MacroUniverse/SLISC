@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -22,25 +22,18 @@ RUN useradd -u $DOCKER_UID -m $DOCKER_USER --shell /bin/bash && echo "$DOCKER_US
 USER ${DOCKER_USER}
 SHELL ["/bin/bash", "-c"] # --shell /bin/bash didn't work
 
-RUN	cd ~/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 4 && \
-	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04 --depth 1
-
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
 
-# set number of threads for compilation
 ARG NCPU=8
 
-# ======== SLISC ========
-RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
-	cd ~/SLISC0 && \
-	git pull origin && touch SLISC/*.h && \
-	make -j$NCPU && \
-	./main.x < input.inp
-
-RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
-	cd ~/SLISC0 && \
-	cp SLISC-long64-quad/*.h SLISC/ && \
-	make -j$NCPU opt_long32=false opt_quadmath=true && \
-	./main.x < input.inp
+# ======== Boost ========
+# ./bootstrap.sh ... --with-libraries=filesystem to select sub lib
+RUN cd ~ && \
+	wget -q https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
+	
+RUN cd ~ && \
+	tar -xzf boost_1_80_0.tar.gz && cd boost_1_80_0 && \
+	mkdir $INSTALL_DIR/boost-1.80.0 && \
+	./bootstrap.sh --prefix=$INSTALL_DIR/boost-1.80.0 && \
+	./b2 install -j$NCPU

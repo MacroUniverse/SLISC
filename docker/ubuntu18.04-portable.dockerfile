@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt -y update && \
 	apt -y upgrade && \
-	apt install -y git vim time libsqlite3-dev libboost-filesystem-dev \
+	apt install -y git vim time \
 	wget mlocate automake libtool lzip
 
 RUN apt install -y g++ gfortran make
@@ -32,13 +32,11 @@ ARG INSTALL_DIR=/home/$DOCKER_USER/SLISC0-libs-x64-ubuntu18.04
 RUN cd $INSTALL_DIR && source setup.sh && \
 	cd ~/SLISC0 && \
 	git pull origin && touch SLISC/*.h && \
-	source make/set_path2.sh && \
-	make -j`getconf _NPROCESSORS_ONLN` opt_asan=false && \
+	make -j`getconf _NPROCESSORS_ONLN` && \
 	./main.x < input.inp
 
 RUN cd $INSTALL_DIR && source setup.sh && \
 	cd ~/SLISC0 && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
-	source make/set_path2.sh && \
-	make -j`getconf _NPROCESSORS_ONLN` opt_long32=false opt_quadmath=true opt_asan=false && \
+	make -j`getconf _NPROCESSORS_ONLN` opt_long32=false opt_quadmath=true && \
 	./main.x < input.inp

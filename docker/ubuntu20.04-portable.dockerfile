@@ -32,13 +32,11 @@ ARG INSTALL_DIR=/home/$DOCKER_USER/SLISC0-libs-x64-ubuntu20.04
 RUN cd $INSTALL_DIR && source setup.sh && \
 	cd ~/SLISC0 && \
 	git pull origin && touch SLISC/*.h && \
-	source make/set_path2.sh && \
 	make -j`getconf _NPROCESSORS_ONLN` opt_asan=false && \
 	./main.x < input.inp
 
 RUN cd $INSTALL_DIR && source setup.sh && \
 	cd ~/SLISC0 && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
-	source make/set_path2.sh && \
 	make -j`getconf _NPROCESSORS_ONLN` opt_long32=false opt_quadmath=true opt_asan=false && \
 	./main.x < input.inp
