@@ -144,7 +144,7 @@ inline _Float128 pow2(const _Float128 &a) { return a * a; }
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include <complex.h>
+// #include <complex.h>
 #include <complex>
 #include <math.h>
 #ifdef __cplusplus
