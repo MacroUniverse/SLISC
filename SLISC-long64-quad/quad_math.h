@@ -16,6 +16,11 @@
 // typedef std::complex<_Quad> __complex128;
 // #endif
 
+#ifdef SLS_NO__Float128
+// this is missing from centos7.9 `scl enable devtoolset-9 bash`
+typedef __float128 _Float128;
+#endif
+
 namespace std {
 
 inline const __complex128 &to_c(const complex<__float128> &x)

@@ -175,13 +175,13 @@ inline long nint(_Float128 a) {
     long i;
     _Float128 tmp;
     a = a + 0.5;
-    tmp = floorf128(a);
+    tmp = floorq(a);
     i = (long)tmp;
     return i;
 }
 inline double cast2double(_Float128 a) { return (double)a; }
 
-inline _Float128 pi(_Float128 dummy) { return M_PIf128; }
+inline _Float128 pi(_Float128 dummy) { return M_PIq; }
 #endif // (defined ___MPLAPACK__FLOAT128_ONLY___ || defined ___MPLAPACK__FLOAT128_IS_LONGDOUBLE___)
 
 #if defined ___MPLAPACK_LONGDOUBLE_IS_BINARY128___
