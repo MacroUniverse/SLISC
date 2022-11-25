@@ -38,6 +38,9 @@ opt_arpack = true
 opt_sqlite = true
 # read and write Matlab .mat file
 opt_matfile = false
+# define _Float128
+# (only needed for centos7.9 `scl enable devtoolset-9 bash`)
+opt_no__Float128 = false
 #==========================
 
 # === minimum build ===
@@ -185,6 +188,11 @@ ifeq ($(opt_matfile), true)
     matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
 endif
 
+# need to define _Float128
+ifeq ($(opt_no__Float128), true)
+    def__Float128 = -D SLS_NO__Float128
+endif
+
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
     compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -fopenmp
@@ -202,7 +210,7 @@ endif
 # ---------------------------------------------------------
 
 # all flags
-flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag) $(mplapack_flag)
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag) $(mplapack_flag) $(def__Float128)
 # -pedantic # show more warnings
 
 # all libs

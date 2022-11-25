@@ -17,7 +17,7 @@
 // #endif
 
 #ifdef SLS_NO__Float128
-// this is missing from centos7.9 `scl enable devtoolset-9 bash`
+// this is missing from centos7.9 `scl enable devtoolset-9 bash` somehow
 typedef __float128 _Float128;
 #endif
 
