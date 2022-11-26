@@ -53,5 +53,5 @@ RUN cd $INSTALL_DIR && \
 	source setup.sh && \
 	cd ~/SLISC0 && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
-	make -j$NCPU opt_long32=false opt_quadmath=true opt_asan=false && \
+	make -j$NCPU opt_long32=false opt_quadmath=true opt_asan=false opt_no__Float128=true && \
 	./main.x < input.inp
