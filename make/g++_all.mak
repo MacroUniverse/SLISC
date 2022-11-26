@@ -112,21 +112,55 @@ endif
 
 # === MKL ===
 # ref: MKL link advisor https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
+# Intel product: oneMKL 2021; OS: Linux; Language: C/C++; Arch: x86-64; Threading: Sequential
 ifeq ($(opt_lapack), mkl)
-    ifeq ($(opt_compiler), g++)
-        mkl_flag = -D SLS_USE_MKL -m64 -I${MKLROOT}/include
-        ifeq ($(opt_static), true) # static link
-            mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
-        else # dynamic link
-            mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+    # Interface: 32bit int
+    ifeq ($(opt_long32), true)
+        # Compiler: g++
+        ifeq ($(opt_compiler), g++)
+            mkl_flag = -D SLS_USE_MKL -m64 -I "${MKLROOT}/include"
+            # static link
+            ifeq ($(opt_static), true)
+                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+            # dynamic link
+            else
+                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+            endif
         endif
-    endif
-    ifeq ($(icpc_or_icpx), true)
-        mkl_flag = -D SLS_USE_MKL -I${MKLROOT}/include
-        ifeq ($(opt_static), true) # static link
-            mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
-        else # dynamic link
-            mkl_dyn_link = -L${MKLROOT}/lib/intel64 -lmkl_rt -lpthread -lm -ldl
+        # Compiler: icpc
+        ifeq ($(icpc_or_icpx), true)
+            mkl_flag = -D SLS_USE_MKL -I "${MKLROOT}/include"
+            # static link
+            ifeq ($(opt_static), true)
+                mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+            # dynamic link
+            else
+                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+            endif
+        endif
+    # Interface: 64bit int
+    else
+        # Compiler: g++
+        ifeq ($(opt_compiler), g++)
+            mkl_flag = -D SLS_USE_MKL -D MKL_ILP64 -m64 -I "${MKLROOT}/include"
+            # static link
+            ifeq ($(opt_static), true)
+                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+            # dynamic link
+            else
+                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+            endif
+        endif
+        # Compiler: icpc
+        ifeq ($(icpc_or_icpx), true)
+            mkl_flag = -D SLS_USE_MKL -DMKL_ILP64  -I "${MKLROOT}/include"
+            # static link
+            ifeq ($(opt_static), true)
+                mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+            # dynamic link
+            else
+                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+            endif
         endif
     endif
 endif
