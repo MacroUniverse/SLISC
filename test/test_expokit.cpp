@@ -64,10 +64,10 @@ void test_expokit()
 		expv(y2, A, t, Nbase, norm_inf(A), 0, true);
 		
 		y1 -= y0;
-		if (max_abs(y1) > 5e-12)
+		if (max_abs(y1) > 2e-11)
 			SLS_FAIL;
 		y2 -= y0;
-		if (max_abs(y2) > 5e-12)
+		if (max_abs(y2) > 2e-11)
 			SLS_FAIL;
 	}
 #endif
