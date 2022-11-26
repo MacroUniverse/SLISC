@@ -14,7 +14,7 @@ opt_debug = true
 opt_asan = true
 # c++ standard [c++11|gnu++11]
 opt_std = c++11
-# static link (only for MKL for now)
+# static link (not all libs supported)
 opt_static = false
 # minimum build (all below options set to false)
 opt_min = false
@@ -57,19 +57,15 @@ ifeq ($(opt_min), true)
     opt_matfile = false
 endif
 
-ifeq ($(opt_compiler), icpc)
-    icpc_or_icpx = true
-endif
-ifeq ($(opt_compiler), icpx)
-    icpc_or_icpx = true
-endif
-
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
+    $(info Build: Debug)
     # Address Sanitizer
     ifeq ($(opt_asan), true)
     ifeq ($(opt_compiler), g++)
+    ifeq ($(opt_static), false)
         asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+    endif
     endif
     endif
     debug_flag = -g
@@ -77,32 +73,42 @@ ifeq ($(opt_debug), true)
         debug_flag = -g -ftrapv $(asan_flag)
     endif
 else
+    $(info Build: Release)
     release_flag = -O3 -D NDEBUG
 endif
 
 # === 64bit index ===
 ifeq ($(opt_long32), true)
+    $(info Long bits: 32)
     long_flag = -D SLS_USE_INT_AS_LONG
+else
+    $(info Long bits: 64)
+endif
+
+ifeq ($(opt_lapack), none)
+    $(info CBLAS/LAPACKE: off)
 endif
 
 ifeq ($(opt_lapack), reference)
+    $(info CBLAS/LAPACKE: reference)
 # === CBLAS (reference) ===
     cblas_flag = -D SLS_USE_CBLAS
     ifeq ($(opt_long32), false)
-        cblas_lib = -l cblas64
+        cblas_lib = -l cblas64 -l blas64 -l gfortran -l quadmath
     else
-        cblas_lib = -l cblas
+        cblas_lib = -l cblas -l blas -l gfortran -l quadmath
     endif
 # === LAPACKE (reference) ===
     lapacke_flag = -D SLS_USE_LAPACKE
     ifeq ($(opt_long32), false)
-        lapacke_lib = -l lapacke64
+        lapacke_lib = -l lapacke64 -l lapack64
     else
-        lapacke_lib = -l lapacke
+        lapacke_lib = -l lapacke -l lapack
     endif
 endif
 
 ifeq ($(opt_lapack), openblas)
+    $(info CBLAS/LAPACKE: openblas)
 # === CBLAS (openblas) ===
     cblas_flag = -D SLS_USE_CBLAS -I /opt/OpenBLAS/include
     cblas_lib = -l openblas
@@ -112,118 +118,203 @@ endif
 
 # === MKL ===
 # ref: MKL link advisor https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
-# Intel product: oneMKL 2021; OS: Linux; Language: C/C++; Arch: x86-64; Threading: Sequential
 ifeq ($(opt_lapack), mkl)
+    $(info  )
+    $(info === Intel OneAPI config ===)
+    $(info Product: oneMKL 2021)
+    $(info OS: Linux)
+    $(info Language: C/C++)
+    $(info Arch: x86-64)
+    $(info Threading: Sequential)
     # Interface: 32bit int
     ifeq ($(opt_long32), true)
+        $(info Interface: 32bit int)
         # Compiler: g++
         ifeq ($(opt_compiler), g++)
+            $(info Compiler: g++)
             mkl_flag = -D SLS_USE_MKL -m64 -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
+                $(info Link: static)
                 mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
             # dynamic link
             else
+                $(info Link: dynamic)
                 mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
         # Compiler: icpc
-        ifeq ($(icpc_or_icpx), true)
+        ifeq ($(opt_compiler), icpc)
+            $(info Compiler: icpc)
             mkl_flag = -D SLS_USE_MKL -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
-                mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+                $(info Link: static)
+                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
             # dynamic link
             else
+                $(info Link: dynamic)
                 mkl_dyn_link = -L${MKLROOT}/lib/intel64 -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
     # Interface: 64bit int
     else
+        $(info Interface: 64bit int)
         # Compiler: g++
         ifeq ($(opt_compiler), g++)
+            $(info Compiler: g++)
             mkl_flag = -D SLS_USE_MKL -D MKL_ILP64 -m64 -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
+                $(info Link: static)
                 mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
             # dynamic link
             else
+                $(info Link: dynamic)
                 mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
         # Compiler: icpc
-        ifeq ($(icpc_or_icpx), true)
+        ifeq ($(opt_compiler), icpc)
+            $(info Compiler: icpc)
             mkl_flag = -D SLS_USE_MKL -DMKL_ILP64  -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
-                mkl_stat_link = -static -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+                $(info Link: static)
+                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
             # dynamic link
             else
+                $(info Link: dynamic)
                 mkl_dyn_link = -L${MKLROOT}/lib/intel64 -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
     endif
+    $(info ===========================)
+    $(info  )
 endif
 
 # === Boost ===
 ifeq ($(opt_boost), true)
     boost_flag = -D SLS_USE_BOOST
-    boost_lib = -l boost_system -l boost_filesystem
+    ifeq ($(opt_static), false)
+        $(info Boost: dynamic)
+        boost_lib = -l:libboost_system.so -l:libboost_filesystem.so
+    else
+        $(info Boost: static)
+        boost_lib = -l:libboost_system.a -l:libboost_filesystem.a
+    endif
+else
+    $(info Boost: off)
 endif
 
 # === GSL ===
 ifeq ($(opt_gsl), true)
     gsl_flag = -D SLS_USE_GSL
-    gsl_lib = -l gsl
+    ifeq ($(opt_static), false)
+        $(info GSL: dynamic)
+        gsl_lib = -l:libgsl.so
+    else
+        $(info GSL: static)
+        gsl_lib = -l:libgsl.a
+    endif
+else
+    $(info GSL: off)
 endif
 
 # === Eigen ===
 ifeq ($(opt_eigen), true)
+    $(info Eigen: on)
     eigen_flag = -D SLS_USE_EIGEN
+else
+    $(info Eigen: off)
 endif
 
 # === Quad Math ===
 ifeq ($(opt_quadmath), true)
+    $(info Quad Math: on)
     quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
     quad_math_lib = -l quadmath
+else
+    $(info Quad Math: off)
 endif
 
 # === Arb ===
 ifeq ($(opt_arb), true)
     arb_flag = -D SLS_USE_ARB
-    arb_lib = -l flint -l mpfr -l gmp -l flint-arb # use -larb if compiled from source, or create soft link named flint-arb
+    ifeq ($(opt_static), false)
+        $(info Arb: dynamic)
+        # use -larb if compiled from source, or create soft link named flint-arb
+        arb_lib = -l:libflint-arb.so -l:libflint.so -l:libmpfr.so -l:libgmp.so 
+    else
+        $(info Arb: static)
+        arb_lib = -l:libflint-arb.a -l:libflint.a -l:libmpfr.a -l:libgmp.a 
+    endif
+else
+    $(info Arb: off)
 endif
 
 # === MPLAPACK ===
 ifeq ($(opt_mplapack), true)
-    mplapack_flag = -D SLS_USE_MPLAPACK
-    mplapack_lib = -l mplapack__Float128 -l mpblas__Float128
+    ifeq ($(opt_static), false)
+        $(info MPLAPACK: dynamic)
+        mplapack_flag = -D SLS_USE_MPLAPACK
+        mplapack_lib = -l:libmplapack__Float128.so -l:libmpblas__Float128.so
+    else
+        $(info MPLAPACK: off)
+    endif
+else
+    $(info MPLAPACK: off)
 endif
 
 # === Arpack ===
 ifeq ($(opt_arpack), true)
-ifeq ($(opt_lapack), reference) # only works for reference lapack for now
-    arpack_flag = -D SLS_USE_ARPACK
-    arpack_lib = -l arpack -l gfortran -l blas -l lapack
-endif
+    ifeq ($(opt_lapack), reference) # only works for reference lapack for now
+        ifeq ($(opt_static), false)
+            $(info Arpack: dynamic)
+            arpack_flag = -D SLS_USE_ARPACK
+            arpack_lib = -l:libarpack.so -l:liblapack.so -l:libblas.so -l:libgfortran.so
+        else
+            $(info Arpack: off)
+        endif
+    else
+        $(info Arpack: off)
+    endif
+else
+    $(info Arpack: off)
 endif
 
 # === SQLite ===
 ifeq ($(opt_sqlite), true)
     sqlite_flag = -D SLS_USE_SQLITE
-    sqlite_lib = -l sqlite3
+    ifeq ($(opt_static), false)
+        $(info SQLite: dynamic)
+        sqlite_lib = -l:libsqlite3.so
+    else
+        $(info SQLite: static)
+        sqlite_lib = -l:libsqlite3.a
+    endif
+else
+    $(info SQLite: off)
 endif
 
 # === Matlab .mat file ===
 # (conflicts with boost_filesystem.so other than version 1.56.0)
 ifeq ($(opt_matfile), true)
-    matfile_bin_path = ../MatFile_linux/lib
-    matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
-    matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
+    ifeq ($(opt_static), false)
+        $(info Using Matlab .mat (dynamic))
+        matfile_bin_path = ../MatFile_linux/lib
+        matfile_flag = -D SLS_USE_MATFILE -I ../MatFile_linux/include
+        matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
+    else
+        $(info Matlab .mat: off)
+    endif
+else
+    $(info Matlab .mat: off)
 endif
 
 # need to define _Float128
 ifeq ($(opt_no__Float128), true)
+    $(info will add _Float128)
     def__Float128 = -D SLS_NO__Float128
 endif
 
@@ -241,6 +332,7 @@ ifeq ($(opt_compiler), icpx)
     compiler_flag = -std=$(opt_std) -Wall -fp-model precise -qopenmp -Qoption,cpp,--extended_float_types -Wno-reorder-ctor -Wno-overloaded-virtual
 endif
 
+$(info  )$(info  )$(info  )$(info  )
 # ---------------------------------------------------------
 
 # all flags
@@ -248,7 +340,10 @@ flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag)
 # -pedantic # show more warnings
 
 # all libs
-libs = $(boost_lib) $(arb_lib) $(arpack_lib)  $(matfile_lib) $(sqlite_lib) $(mkl_stat_link) $(mkl_dyn_link) $(lapacke_lib) $(cblas_lib) $(quad_math_lib) $(gsl_lib) $(mplapack_lib)
+ifeq ($(opt_static), true)
+    static_flag = -static
+endif
+libs = $(static_flag) $(boost_lib) $(arb_lib) $(arpack_lib)  $(matfile_lib) $(sqlite_lib) $(mkl_stat_link) $(mkl_dyn_link) $(lapacke_lib) $(cblas_lib) $(quad_math_lib) $(gsl_lib) $(mplapack_lib)
 
 # === File Lists ===
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
