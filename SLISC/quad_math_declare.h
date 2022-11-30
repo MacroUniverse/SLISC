@@ -1,6 +1,7 @@
 // declare quad functions before <complex>, to prevent errors
 #pragma once
 
+#ifdef SLS_USE_QUAD_MATH
 namespace std {
 
 inline ostream& operator<<(ostream& os, const __float128 &x);
@@ -72,3 +73,5 @@ SLS_QMATH_DEC_RFUNR(y1)
 // yn
 
 } // namespace std
+
+#endif
