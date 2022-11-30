@@ -5,7 +5,7 @@ elseif is_Comp(T) || is_Imag(T)
     ret = 'Doub';
 elseif is_Lcomp(T) || is_Limag(T)
     ret = 'Ldoub';
-elseif is_Qcomp(T)
+elseif is_Qcomp(T) || is_Qimag(T)
     ret = 'Qdoub';
 elseif is_real(T)
     ret = T;

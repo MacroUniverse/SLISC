@@ -135,6 +135,9 @@ inline Qdoub abs(Qimag_I val) { return val.imag(); }
 
 
 const Imag I(1);
+#ifdef SLS_USE_QUAD_MATH
+const Qimag Iq(1.Q);
+#endif
 
 // imag +-*/ imag
 inline Fimag  operator+(Fimag_I z1, Fimag_I z2) { return Fimag(imag(z1) + imag(z2)); }
@@ -479,6 +482,44 @@ inline Lcomp operator/(Limag_I z1, Lcomp_I z2) {
 inline Bool operator==(Limag_I z1, Lcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
 inline Bool operator!=(Limag_I z1, Lcomp_I z2) { return !(z1 == z2); }
 
+inline Qimag  operator+(Qimag_I z1, Qimag_I z2) { return Qimag(imag(z1) + imag(z2)); }
+inline Qimag operator-(Qimag_I z1, Qimag_I z2) { return Qimag(imag(z1) - imag(z2)); }
+inline Qdoub  operator*(Qimag_I z1, Qimag_I z2) { return -imag(z1) * imag(z2); }
+inline Qdoub  operator/(Qimag_I z1, Qimag_I z2) { return imag(z1) / imag(z2); }
+inline Bool operator==(Qimag_I z1, Qimag_I z2) { return imag(z1) == imag(z2); }
+inline Bool operator!=(Qimag_I z1, Qimag_I z2) { return !(z1 == z2); }
+
+inline Qcomp operator+(Qdoub_I x1, Qimag_I z2) { return Qcomp(x1, imag(z2)); }
+inline Qcomp operator-(Qdoub_I x1, Qimag_I z2) { return Qcomp(x1, -imag(z2)); }
+inline Qimag operator*(Qdoub_I x1, Qimag_I z2) { return Qimag(x1 * imag(z2)); }
+inline Qimag operator/(Qdoub_I x1, Qimag_I z2) { return Qimag(-x1 / imag(z2)); }
+inline Bool operator==(Qdoub_I x1, Qimag_I z2) { return x1 == 0 && imag(z2) == 0; }
+inline Bool operator!=(Qdoub_I x1, Qimag_I z2) { return !(x1 == z2); }
+
+inline Qcomp operator+(Qimag_I z1, Qdoub_I x2) { return Qcomp(x2, imag(z1)); }
+inline Qcomp operator-(Qimag_I z1, Qdoub_I x2) { return Qcomp(-x2, imag(z1)); }
+inline Qimag operator*(Qimag_I z1, Qdoub_I x2) { return Qimag(x2 * imag(z1)); }
+inline Qimag operator/(Qimag_I z1, Qdoub_I x2) { return Qimag(imag(z1) / x2); }
+inline Bool operator==(Qimag_I z1, Qdoub_I x2) { return imag(z1) == 0 && x2 == 0; }
+inline Bool operator!=(Qimag_I z1, Qdoub_I x2) { return !(z1 == x2); }
+
+inline Qcomp operator+(Qcomp_I z1, Qimag_I z2) { return Qcomp(real(z1), imag(z1) + imag(z2)); }
+inline Qcomp operator-(Qcomp_I z1, Qimag_I z2) { return Qcomp(real(z1), imag(z1) - imag(z2)); }
+inline Qcomp operator*(Qcomp_I z1, Qimag_I z2) { return Qcomp(-imag(z1)*imag(z2), real(z1)*imag(z2)); }
+inline Qcomp operator/(Qcomp_I z1, Qimag_I z2) { return Qcomp(imag(z1)/imag(z2), -real(z1)/imag(z2)); }
+inline Bool operator==(Qcomp_I z1, Qimag_I z2) { return real(z1) == 0 && imag(z1) == imag(z2); }
+inline Bool operator!=(Qcomp_I z1, Qimag_I z2) { return !(z1 == z2); }
+
+inline Qcomp operator+(Qimag_I z1, Qcomp_I z2) { return Qcomp(real(z2), imag(z2) + imag(z1)); }
+inline Qcomp operator-(Qimag_I z1, Qcomp_I z2) { return Qcomp(-real(z2), imag(z1) - imag(z2)); }
+inline Qcomp operator*(Qimag_I z1, Qcomp_I z2) { return Qcomp(-imag(z2)*imag(z1), real(z2)*imag(z1)); }
+inline Qcomp operator/(Qimag_I z1, Qcomp_I z2) {
+	const Qdoub &x2 = real(z2), &y2 = imag(z2);
+	return Qcomp(y2, x2) * Qdoub(imag(z1) / (x2*x2 + y2*y2));
+}
+inline Bool operator==(Qimag_I z1, Qcomp_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
+inline Bool operator!=(Qimag_I z1, Qcomp_I z2) { return !(z1 == z2); }
+
 
 // operator-
 inline Fimag operator-(Fimag_I z) { return Fimag(-z.imag()); }
@@ -489,13 +530,24 @@ inline Qimag operator-(Qimag_I z) { return Qimag(-z.imag()); }
 #endif
 
 // TODO: use template
-inline void operator+=(Comp_IO z1, Imag_I z2) { z1 = z1 + z2; }
-inline void operator-=(Comp_IO z1, Imag_I z2) { z1 = z1 - z2; }
+inline void operator+=(Comp_IO z1, Imag_I z2) { imag_r(z1) += imag(z2); }
+inline void operator-=(Comp_IO z1, Imag_I z2) { imag_r(z1) -= imag(z2); }
 inline void operator*=(Comp_IO z1, Imag_I z2) { z1 = z1 * z2; }
 inline void operator/=(Comp_IO z1, Imag_I z2) { z1 = z1 / z2; }
 
+inline void operator+=(Qcomp_IO z1, Qimag_I z2) { imag_r(z1) += imag(z2); }
+inline void operator-=(Qcomp_IO z1, Qimag_I z2) { imag_r(z1) -= imag(z2); }
+inline void operator*=(Qcomp_IO z1, Qimag_I z2) { z1 = z1 * z2; }
+inline void operator/=(Qcomp_IO z1, Qimag_I z2) { z1 = z1 / z2; }
+
 // operator<<
 inline std::ostream &operator<<(std::ostream &out, Imag_I num)
+{
+	out << num.imag() << 'i';
+	return out;
+}
+
+inline std::ostream &operator<<(std::ostream &out, Qimag_I num)
 {
 	out << num.imag() << 'i';
 	return out;

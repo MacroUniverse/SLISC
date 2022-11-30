@@ -12,8 +12,10 @@
 #include "Jcmat3.h"
 
 namespace slisc {
-//% tem('cut', { 'VecInt'; 'VecDoub'; 'VecComp';
-//%  'CmatDoub'; 'CmatComp'; 'ScmatDoub' });
+//% tem('cut', { 'VecInt'; 'VecDoub'; 'VecQdoub';
+//%  'VecComp'; 'VecQcomp';
+//%  'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%  'ScmatDoub'; 'ScmatQdoub'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% T = val_t(Tv);
@@ -139,11 +141,15 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 //% end
 //%------------------------
 
-//% tem('cut0', { 'MatInt'; 'CmatInt'; 'CmatLlong'; 'CmatDoub';
-//%   'CmatComp'; 'ScmatInt'; 'ScmatLlong';
-//%   'ScmatDoub'; 'ScmatComp';
-//%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
-//%   'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; });
+//% tem('cut0', { 'MatInt'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
+//%   'Cmat3Qdoub'; 'Cmat3Qcomp';
+//%   'CmatComp'; 'CmatQcomp'; 'ScmatInt'; 'ScmatLlong';
+//%   'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
+//%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub';
+//%   'DcmatComp'; 'DcmatQcomp';
+//%   'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub';
+//%   'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%    });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
@@ -234,8 +240,11 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut0-2', { 'ScmatInt'; 'ScmatLlong';
-//%    'ScmatDoub'; 'ScmatComp'; 'Cmat3Comp'; });
+//% tem('cut0-2', {
+//%    'ScmatInt'; 'ScmatLlong'; 'CmatDoub'; 'CmatQdoub';
+//%    'CmatComp'; 'CmatQcomp';
+//%    'ScmatDoub'; 'ScmatQdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%    'ScmatComp'; 'ScmatQcomp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
@@ -286,7 +295,9 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1', { 'ScmatComp'; 'MatInt'; 'CmatLlong'; 'Cmat3Comp'; });
+//% tem('cut1', { 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%     'ScmatComp'; 'ScmatQcomp';
+//%     'MatInt'; 'CmatLlong'; 'Cmat3Comp'; 'Cmat3Qcomp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut1_type(Tv);
@@ -377,7 +388,7 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1-2', { 'CmatLlong'; 'CmatComp' });
+//% tem('cut1-2', { 'CmatLlong'; 'CmatComp'; 'CmatQcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -429,7 +440,8 @@ inline @Tsli@_c cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut2', { 'Cmat3Doub'; 'Cmat3Comp'; });
+//% tem('cut2', { 'Cmat3Doub'; 'Cmat3Qdoub';
+//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut2_type(Tv);
@@ -457,8 +469,10 @@ inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I j)
 //% end
 //%-----------------------
 
-//% tem('cut01', { 'Cmat3Comp'; 'Cmat3Int'; 'Cmat3Doub';
-//% 'Cmat3Comp'; 'Scmat3Comp'; 'Cmat4Int'; 'Cmat4Doub' });
+//% tem('cut01', { 'Cmat3Comp'; 'Cmat3Qcomp'; 'Cmat3Int';
+//%  'Cmat3Doub'; 'Cmat3Qdoub';
+//%  'Cmat3Comp'; 'Cmat3Qcomp'; 'Scmat3Comp'; 'Scmat3Qcomp';
+//%  'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Qdoub'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut01_type(Tv);
@@ -509,7 +523,8 @@ inline @Tsli@_c cut01(@Tv@_I v, Long_I k, Long_I l)
 //% end
 //%------------------------
 
-//% tem('cut01-2', { 'Cmat3Doub'; 'Cmat3Comp' });
+//% tem('cut01-2', { 'Cmat3Doub'; 'Cmat3Qdoub';
+//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Scmat' val_t(T)];
@@ -540,7 +555,8 @@ inline @Tsli@_c cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut01-3', { 'Cmat3Doub'; 'Cmat3Comp' });
+//% tem('cut01-3', { 'Cmat3Doub'; 'Cmat3Qdoub';
+//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Dcmat' val_t(T)];

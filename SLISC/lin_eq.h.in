@@ -205,6 +205,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //%     'SvecComp' 'CbandComp' 'SvecLong';
 //%     'VecQcomp' 'CbandQcomp' 'VecLong';
 //%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
+//%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
 //%     'ScmatComp' 'CbandComp' 'SvecLong';
 //% });
 //%---------------------

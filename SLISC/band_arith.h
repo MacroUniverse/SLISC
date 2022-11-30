@@ -21,6 +21,7 @@ inline DcmatDoub_c band(CbandDoub_I a)
 	return DcmatDoub_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
+
 inline DcmatComp band(CbandComp_IO a)
 {
 	return DcmatComp(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
@@ -30,6 +31,7 @@ inline DcmatComp_c band(CbandComp_I a)
 {
 	return DcmatComp_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
+
 
 
 // detect band width of dense matrix
@@ -66,6 +68,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
 	if (!found)
 	    Nlow = 0;
 }
+
 
 inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
 {
@@ -133,6 +136,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
 	    Nlow = 0;
 }
 
+
 inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
 {
 	Bool found = false;
@@ -165,6 +169,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
 	if (!found)
 	    Nlow = 0;
 }
+
 
 
 inline void nband(Long_O Nup, Long_O Nlow, McooDoub_I a, Doub_I tol = 0)
@@ -301,11 +306,14 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 	}
 }
 
+
+
 inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
 {
 	assert_same_shape(v, v1);
 	times(band(v), band(v1), s);
 }
+
 
 
 
@@ -320,6 +328,7 @@ inline void mul(VecDoub_O y, CbandDoub_I a, VecDoub_I x)
 	    alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, beta, y.p(), incy);
 }
 
+
 inline void mul(VecComp_O y, CbandDoub_I a, VecComp_I x)
 {
 	Long incx = 1;
@@ -332,6 +341,7 @@ inline void mul(VecComp_O y, CbandDoub_I a, VecComp_I x)
 	cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
 	    alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
 }
+
 
 inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
 {
@@ -352,6 +362,7 @@ inline void mul(VecComp_O y, CbandComp_I a, SvecComp_I x)
 	    &alpha, a.p() + a.idiag() - a.nup(), a.lda(), x.p(), incx, &beta, y.p(), incy);
 }
 
+
 inline void mul(SvecComp_O y, CbandDoub_I a, SvecComp_I x)
 {
 	Long incx = 1;
@@ -364,6 +375,7 @@ inline void mul(SvecComp_O y, CbandDoub_I a, SvecComp_I x)
 	cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
 	    alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
 }
+
 
 #endif
 

@@ -42,7 +42,8 @@ inline void uniq_elm(vector<T> &v)
 //% 'CmatInt' 'CmatInt'
 //% 'CmatLlong' 'CmatLlong'
 //% 'CmatLlong' 'ScmatLlong'
-//% 'CmatDoub' 'CmatDoub' });
+//% 'CmatDoub' 'CmatDoub'
+//% 'CmatQdoub' 'CmatQdoub'});
 //%--------------------
 //% [T, T1] = varargin{:};
 //% Tcut = cut1_type(T); Tcut1 = cut1_type(T1);

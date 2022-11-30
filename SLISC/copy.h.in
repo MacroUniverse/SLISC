@@ -6,9 +6,9 @@
 #include "cut.h"
 
 namespace slisc {
-//  === pointer interface ===
+// === pointer interface ===
 
-//% tem('vecset', { 'Doub' });
+//% tem('vecset', { 'Doub'; 'Qdoub' });
 //%-----------------------
 //% T = varargin{:};
 inline void vecset(@T@ *v, @T@_I val, Long_I n)
@@ -28,7 +28,9 @@ inline void vecset(@T@ *v, @T@_I val, Long_I n, Long_I step)
 //%     'Int', 'Int';
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
+//%     'Qdoub', 'Qdoub';
 //%     'Comp', 'Doub';
+//%     'Qcomp', 'Qdoub';
 //% });
 //%----------------------------
 //% [T, T1] = varargin{:};
@@ -67,7 +69,8 @@ inline void veccpy(@T@ *v, Long_I step, const @T1@ *v1, Long_I step1, Long_I n)
 }
 //%------------------------
 
-//% tem('matcpy', { 'Comp', 'Doub' });
+//% tem('matcpy', { 'Comp', 'Doub';
+//%     'Qcomp', 'Qdoub' });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1);
@@ -83,7 +86,8 @@ inline void matcpy(@T@ *v, Long_I lda, const @T1@ *v1, Long_I lda1, Long_I Nld, 
 }
 //%------------------------
 
-//% tem('matcpy_diff_major', { 'Doub', 'Doub' });
+//% tem('matcpy_diff_major', { 'Doub', 'Doub'
+//%      'Qdoub', 'Qdoub' });
 //%----------------------------
 //% [T, T1] = varargin{:};
 //% if ~is_promo(T, T1);
@@ -123,14 +127,14 @@ inline void matcpy_diff_major(@T@ *a2, const @T1@ *a1, Long_I N2, Long_I lda2, L
 // scalar to container
 //% tem('copy(v,s)', {
 //% 'vecBool'; 'vecInt'; 'vecLlong';
-//% 'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//% 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//% 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecComp';
+//% 'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//% 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//% 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
 //% 'vvecBool'; 'vvecInt'; 'vvecLlong';
-//% 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//% 'MatInt'; 'VecQdoub'; 'MatDoub'; 'ScmatDoub'; 'ScmatComp';
-//% 'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//% 'Mat3Doub'; 'Cmat3Doub'; 'Cmat4Doub'; });
+//% 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//% 'MatInt'; 'VecQdoub'; 'MatDoub'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
+//% 'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//% 'Mat3Doub'; 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat4Doub'; 'Cmat4Qdoub'; });
 //%-------------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('vecset', {Ts});
@@ -174,7 +178,9 @@ inline void copy(@T@_O v, @Ts@_I s)
 // inline void copy(@T@_O v, ...)
 
 // copy initializer list to containers
-//% tem('copy(v,ini)', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'CmatDoub'; 'CmatComp'; 'CmatQdoub'; 'SvecDoub'; 'ScmatDoub'; 'ScmatComp'; });
+//% tem('copy(v,ini)', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%    'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp'; 'CmatQdoub';
+//%    'SvecDoub'; 'SvecQdoub'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)
@@ -197,29 +203,49 @@ inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'VecInt', 'SvecInt';
 //%   'VecLlong', 'VecLlong';
 //%   'VecDoub', 'VecDoub';
+//%   'VecQdoub', 'VecQdoub';
 //%   'VecDoub', 'SvecDoub';
+//%   'VecQdoub', 'SvecQdoub';
 //%   'VecComp', 'VecComp';
+//%   'VecQcomp', 'VecQcomp';
+//%   'VecQcomp', 'VecQcomp';
 //%   'VecComp', 'SvecComp';
+//%   'VecQcomp', 'SvecQcomp';
+//%   'VecQcomp', 'SvecQcomp';
 //%   'VecComp', 'DvecComp';
+//%   'VecQcomp', 'DvecQcomp';
+//%   'VecQcomp', 'DvecQcomp';
 //%   'VecQdoub' 'VecQdoub'
 //%   'SvecDoub', 'SvecDoub';
+//%   'SvecQdoub', 'SvecQdoub';
 //%   'SvecDoub', 'DvecDoub';
+//%   'SvecQdoub', 'DvecQdoub';
 //%   'SvecComp', 'VecComp';
+//%   'SvecQcomp', 'VecQcomp';
 //%   'SvecComp', 'SvecDoub';
+//%   'SvecQcomp', 'SvecQdoub';
 //%   'SvecComp', 'DvecComp';
+//%   'SvecQcomp', 'DvecQcomp';
+//%   'SvecComp' 'SvecComp'
+//%   'SvecQcomp' 'SvecQcomp'
 //%   'DvecComp' 'VecComp'
+//%   'DvecQcomp' 'VecQcomp'
 //%   'DvecComp' 'SvecComp'
+//%   'DvecQcomp' 'SvecQcomp'
 //%   'MatDoub' 'MatDoub'
 //%   'CmatInt', 'CmatInt';
 //%   'CmatLlong', 'CmatLlong';
 //%   'CmatLlong', 'ScmatLlong';
 //%   'CmatDoub', 'CmatDoub';
+//%   'CmatQdoub', 'CmatQdoub';
 //%   'CmatDoub', 'MatDoub';
 //%   'ScmatComp' 'ScmatComp'
+//%   'ScmatQcomp' 'ScmatQcomp'
 //%   'MatDoub', 'CmatDoub';
 //%   'Cmat3Int', 'Cmat3Int';
 //%   'Cmat3Llong', 'Cmat3Llong';
 //%   'Cmat3Doub', 'Cmat3Doub';
+//%   'Cmat3Qdoub', 'Cmat3Qdoub';
 //%   'Mat3Doub' 'Mat3Doub'
 //% });
 //%---------------------------
@@ -301,7 +327,9 @@ inline void copy(vector<vector<T1>> &v1, const vector<vector<T2>> &v2)
 
 // for sparse containers
 //% tem('copy(coo,coo)', { 'Doub', 'Doub'
-//%    'Comp' 'Doub' });
+//%    'Qdoub', 'Qdoub'
+//%    'Comp' 'Doub'
+//%    'Qcomp' 'Qdoub' });
 //%----------------------------
 //% [T, T1] = varargin{:};
 //% McooT = ['Mcoo', T]; McooT1 = ['Mcoo', T1];
@@ -332,7 +360,9 @@ inline void copy(@McooT@_O v, @McooT1@_I v1)
 // abs(s) < tol is considered 0
 //% tem('copy(coo,mat)', {
 //% 'McooDoub' 'ScmatDoub'
-//% 'McooComp', 'CmatComp' });
+//% 'McooQdoub' 'ScmatQdoub'
+//% 'McooComp', 'CmatComp'
+//% 'McooQcomp', 'CmatQcomp' });
 //%----------------------------
 //% [Tcoo, Tcmat] = varargin{:};
 //% Ts1 = val_t(Tcmat);
@@ -352,7 +382,8 @@ inline void copy(@Tcoo@_O v, @Tcmat@_I v1, Doub_I tol = 0)
 
 //% tem('copy(mat,coo)', {
 //%   'CmatInt', 'Int'
-//%   'CmatDoub', 'Doub' });
+//%   'CmatDoub', 'Doub'
+//%   'CmatQdoub', 'Qdoub' });
 //%----------------------------
 //% [Tmat, Ts] = varargin{:};
 //% if ~((is_dense_mat(Tmat) || is_Dcmat(Tmat) || is_Jcmat(Tmat)) && is_scalar(Ts))
@@ -372,8 +403,11 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 //%-------------------
 
 //% tem('copy(obd,obd)', { 'CmobdDoub', 'CmobdDoub'
+//% 'CmobdQdoub', 'CmobdQdoub'
 //% 'CmobdComp' 'CmobdComp'
-//% 'CmobdComp' 'CmobdDoub' });
+//% 'CmobdQcomp' 'CmobdQcomp'
+//% 'CmobdComp' 'CmobdDoub'
+//% 'CmobdQcomp' 'CmobdQdoub' });
 //%-----------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 //% req('copy(v,v)', {['Cmat3' Ts], ['Cmat3' Ts1]});
@@ -382,6 +416,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //%-------------------
 
 //% tem('copy(obd,coo)', { 'CmobdDoub', 'McooDoub';
+//%   'CmobdQdoub', 'McooQdoub';
 //%   'CmobdInt', 'McooInt' });
 //%-----------------------
 //% [T, T1] = varargin{:};
@@ -401,7 +436,8 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //%--------------------
 
 // not optimized
-//% tem('copy(cmat,obd)', { 'CmatDoub', 'CmobdDoub' });
+//% tem('copy(cmat,obd)', { 'CmatDoub', 'CmobdDoub'
+//%      'CmatQdoub', 'CmobdQdoub' });
 //%-----------------------
 //% [T, T1] = varargin{:};
 inline void copy(@T@_O lhs, @T1@_I rhs)
@@ -462,7 +498,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //     }
 // }
 
-//% tem('copy(band,s)', { 'CbandDoub' });
+//% tem('copy(band,s)', { 'CbandDoub'; 'CbandQdoub' });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% DcmatTs = ['Dcmat' Ts];
@@ -473,7 +509,10 @@ inline void copy(@T@_O a, @Ts@_I s)
 { copy(band(a), s); }
 //%------------------------------
 
-//% tem('copy(band,band)', { 'CbandDoub', 'CbandDoub' });
+//% tem('copy(band,band)', { 'CbandDoub', 'CbandDoub'
+//%   'CbandQdoub', 'CbandQdoub'
+//%   'CbandComp', 'CbandComp'
+//%   'CbandQcomp', 'CbandQcomp' });
 //%------------------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void copy(@T@_O a, @T@_I b)
@@ -490,9 +529,13 @@ inline void copy(@T@_O a, @T@_I b)
 
 //% tem('copy(mat,band)', {
 //%     'CmatDoub', 'CbandDoub';
+//%     'CmatQdoub', 'CbandQdoub';
 //%    'CmatComp' 'CbandComp'
+//%    'CmatQcomp' 'CbandQcomp'
 //%    'CbandComp' 'CmatComp'
+//%    'CbandQcomp' 'CmatQcomp'
 //%     'CbandDoub', 'CmatDoub';
+//%     'CbandQdoub', 'CmatQdoub';
 //% });
 //%------------------------------
 //% [T1, T2] = varargin{:};

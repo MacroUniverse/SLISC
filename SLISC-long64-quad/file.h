@@ -649,6 +649,16 @@ inline void read(ifstream &fin, Doub_O s)
 	fin.read((char*)&s, sizeof(Doub));
 }
 
+inline void write(ofstream &fout, Qdoub_I s)
+{
+	fout.write((char*)&s, sizeof(Qdoub));
+}
+
+inline void read(ifstream &fin, Qdoub_O s)
+{
+	fin.read((char*)&s, sizeof(Qdoub));
+}
+
 inline void write(ofstream &fout, Comp_I s)
 {
 	fout.write((char*)&s, sizeof(Comp));
@@ -657,6 +667,16 @@ inline void write(ofstream &fout, Comp_I s)
 inline void read(ifstream &fin, Comp_O s)
 {
 	fin.read((char*)&s, sizeof(Comp));
+}
+
+inline void write(ofstream &fout, Qcomp_I s)
+{
+	fout.write((char*)&s, sizeof(Qcomp));
+}
+
+inline void read(ifstream &fin, Qcomp_O s)
+{
+	fin.read((char*)&s, sizeof(Qcomp));
 }
 
 
@@ -802,6 +822,47 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 	}
 }
 
+inline void read(CmatQdoub_O mat, Str_I file, Long_I skip_lines = 0)
+{
+	ifstream input(file);
+	if (!input.good())
+	    SLS_ERR(file + " does not exist!");
+	for (Long i = 0; i < skip_lines; ++i)
+	    input.ignore(1000000, '\n');
+	// detect the number of columns
+	Str line;
+	getline(input, line);
+	std::istringstream iss(line);
+	vector<Qdoub> v;
+	Doub num;
+	static bool warned = false;
+	if (!warned) {
+		SLS_WARN("reading Doub instead of Qdoub! >> operator does not support.");
+		warned = true;
+	}
+	while (iss >> num)
+	    v.push_back(num);
+	Long N2 = v.size();
+	while (true) {
+	    num = NaN;
+	    input >> num;
+	    if (std::isnan(num))
+	        break;
+	    v.push_back(num);
+	    if (input.eof())
+	        break;
+	}
+	if (v.size() % N2 != 0)
+	    SLS_ERR(file + ": each row might not have equal number of columns!");
+	Long N1 = v.size() / N2;
+	mat.resize(N1, N2);
+	for (Long i = 0; i < N1; ++i) {
+	    for (Long j = 0; j < N2; ++j) {
+	        mat(i, j) = v[N2*i + j];
+	    }
+	}
+}
+
 
 // read a vector from a text file
 // two numbers should be separated by space or enter
@@ -817,6 +878,30 @@ inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0)
 	    input.ignore(1000000, '\n');
 	// detect the number of columns
 	vector<Doub> v0;
+	Doub num;
+	while (true) {
+	    num = NaN;
+	    input >> num;
+	    if (isnan(num))
+	        break;
+	    v0.push_back(num);
+	    if (input.eof())
+	        break;
+	}
+	v.resize(v0.size());
+	for (Long i = 0; i < size(v0); ++i)
+	    v[i] = v0[i];
+}
+
+inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0)
+{
+	ifstream input(file);
+	if (!input.good())
+	    SLS_ERR(file + " does not exist!");
+	for (Long i = 0; i < skip_lines; ++i)
+	    input.ignore(1000000, '\n');
+	// detect the number of columns
+	vector<Qdoub> v0;
 	Doub num;
 	while (true) {
 	    num = NaN;

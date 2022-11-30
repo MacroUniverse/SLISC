@@ -8,7 +8,9 @@ namespace slisc {
 // max_v(), min_v()
 //% tem('max_v', {
 //%     'max', 'Doub';
+//%     'max', 'Qdoub';
 //%     'min', 'Doub';
+//%     'min', 'Qdoub';
 //% });
 //%--------------------------
 //% [fun, T] = varargin{:};
@@ -79,10 +81,10 @@ inline @T@ @fun@_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, L
 
 //% tem('max', {
 //%  'vecInt'; 'vecLlong';
-//%  'VecInt'; 'VecLlong'; 'VecDoub';
-//%  'SvecInt'; 'SvecLlong'; 'SvecDoub';
+//%  'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub';
+//%  'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub';
 //%  'vvecInt'; 'vvecLlong';
-//%  'DcmatLlong'; 'DcmatDoub'; });
+//%  'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('max_v', { 'max', Ts; 'min', Ts });
@@ -161,7 +163,7 @@ inline T min(const vector<vector<T>> &v)
 	return s;
 }
 
-//% tem('max_abs_v', { 'Doub' });
+//% tem('max_abs_v', { 'Doub'; 'Qdoub' });
 //%------------------------------
 //% T = varargin{:};
 //% Tr = rm_comp(T);
@@ -235,10 +237,12 @@ inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1
 }
 //%-------------------------
 
-//% tem('max_abs', { 'VecDoub'; 'VecComp'; 'VecInt';
-//%   'VecQdoub'; 'VecQcomp'; 'SvecComp'; 'SvecQdoub'; 'SvecQcomp';
-//%   'DvecDoub'; 'DvecComp';
-//%   'CmatDoub'; 'CmatComp'; 'MatComp'; 'DcmatDoub'; 'DcmatComp'; });
+//% tem('max_abs', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp'; 'VecInt';
+//%   'VecQdoub'; 'VecQcomp'; 'SvecComp'; 'SvecQcomp';
+//%   'SvecQdoub'; 'SvecQcomp';
+//%   'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
+//%   'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp'; 'MatComp';
+//%   'DcmatDoub'; 'DcmatQdoub'; 'DcmatComp'; 'DcmatQcomp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
@@ -256,7 +260,7 @@ inline @Tr@ max_abs(Long_O i, Long_O j, @T@_I v) { return max_abs_dcmat(i, j, v.
 //%--------------------------
 
 // sum of absolute values
-//% tem('sum_abs_v', { 'Int'; 'Llong'; 'Doub'; 'Comp' });
+//% tem('sum_abs_v', { 'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp' });
 //%--------------------------
 //% T = varargin{:};
 //% % decide return type
@@ -280,10 +284,11 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 //%---------------------------
 
 // sum of absolute values
-//% tem('sum_abs', {'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp'; });
+//% tem('sum_abs', {'VecInt'; 'VecLlong';
+//%     'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% if is_integral(Ts)
@@ -318,7 +323,7 @@ inline Long sum_abs(@T@_I v)
 }
 //%--------------------------
 
-//% tem('sum_v', { 'Doub' });
+//% tem('sum_v', { 'Doub'; 'Qdoub'; });
 //%--------------------
 //% T = varargin{:};
 //% if is_integral(T)
@@ -349,8 +354,10 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 }
 //%------------------------
 
-//% tem('sum', { 'vecInt'; 'vecLlong'; 'vecDoub'; 'VecInt'; 'VecLlong';
-//%   'VecDoub'; 'VecComp'; 'CmatDoub'; 'CmatComp'; 'MatComp'; });
+//% tem('sum', { 'vecInt'; 'vecLlong';
+//%     'vecDoub'; 'vecQdoub'; 'VecInt'; 'VecLlong';
+//%   'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%   'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp'; 'MatComp'; });
 //%----------------
 //% T = varargin{:}; Ts = val_t(T);
 //% if is_integral(Ts)
@@ -370,10 +377,13 @@ inline @Tret@ prod(@T@_I v) { return prod_v(v.p(), v.size()); }
 //% end
 //%-----------------
 
-//% tem('norm2', { 'VecDoub'; 'VecComp';
-//% 'SvecDoub'; 'SvecComp'; 'DvecDoub'; 'CmatDoub'; 'CmatComp';
+//% tem('norm2', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//% 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//% 'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
+//% 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
 //% 'MatDoub'; 'MatComp';
-//% 'ScmatComp'; 'DcmatComp'; 'Mat3Doub'; 'Mat3Comp'; 'Cmat3Comp'; });
+//% 'ScmatComp'; 'ScmatQcomp'; 'DcmatComp'; 'DcmatQcomp';
+//% 'Mat3Doub'; 'Mat3Comp'; 'Cmat3Comp'; 'Cmat3Qcomp'; });
 //%-------------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);

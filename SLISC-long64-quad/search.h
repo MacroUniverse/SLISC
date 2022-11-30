@@ -242,6 +242,44 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 	}
 }
 
+inline Bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s)
+{
+	Long N = v.size(), ind1 = 0, ind2 = N - 1;
+#ifdef SLS_CHECK_SHAPES
+	if (N < 1) SLS_ERR("empty container!");
+#endif
+	if (s < v[0]) { ind = -1; return false; }
+	if (s == v[0]) { ind = 0; return true; }
+	if (v[ind2] < s) { ind = N - 1; return false; }
+	if (s == v[ind2]) { ind = ind2; return true; }
+	while (1) { // N >= 2 from here
+		if (ind2 - ind1 == 1) { ind = ind1; return false; }
+		ind = (ind1 + ind2) / 2;
+		if (s < v[ind]) ind2 = ind;
+		else if (v[ind] < s) ind1 = ind;
+		else return true;
+	}
+}
+
+inline Bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s, Long ind1, Long ind2)
+{
+#ifdef SLS_CHECK_SHAPES
+	Long N = ind2 - ind1 + 1;
+	if (N < 1) SLS_ERR("range error!");
+#endif
+	if (s < v[0]) { ind = -1; return false; }
+	if (s == v[0]) { ind = 0; return true; }
+	if (v[ind2] < s) { ind = ind2; return false; }
+	if (s == v[ind2]) { ind = ind2; return true; }
+	while (1) { // N >= 2 from here
+		if (ind2 - ind1 == 1) { ind = ind1; return false; }
+		ind = (ind1 + ind2) / 2;
+		if (s < v[ind]) ind2 = ind;
+		else if (v[ind] < s) ind1 = ind;
+		else return true;
+	}
+}
+
 inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
@@ -468,6 +506,19 @@ inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
 }
 
 inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != a.n1())
+		SLS_ERR("wrong shape");
+#endif
+	for (Long i = start; i < a.n0(); ++i) {
+		if (v == cut1(a, i))
+			return i;
+	}
+	return -1;
+}
+
+inline Long search_row(VecQdoub_I v, CmatQdoub_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (v.size() != a.n1())

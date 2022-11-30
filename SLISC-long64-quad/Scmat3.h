@@ -802,6 +802,166 @@ inline Scmat3Doub::~Scmat3Doub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Doub &Scmat3Doub_O, &Scmat3Doub_IO;
 
+class Scmat3Qdoub_c : public SvbaseQdoub_c
+{
+protected:
+	Long m_N0, m_N1, m_N2;
+public:
+	Scmat3Qdoub_c();
+	Scmat3Qdoub_c(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
+
+
+	const Qdoub &operator()(Long_I i, Long_I j, Long_I k) const;
+
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	// resize() is a bad idea, don't try to create it!
+	void reshape(Long_I N0, Long_I N1, Long_I N2);
+	void set(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
+	void set(const Scmat3Qdoub_c &sli);
+	~Scmat3Qdoub_c();
+};
+
+inline Scmat3Qdoub_c::Scmat3Qdoub_c() {}
+
+inline Scmat3Qdoub_c::Scmat3Qdoub_c(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
+	: SvbaseQdoub_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+
+inline const Qdoub &Scmat3Qdoub_c::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Scmat3Qdoub_c::n0() const
+{
+	return m_N0;
+}
+
+inline Long Scmat3Qdoub_c::n1() const
+{
+	return m_N1;
+}
+
+inline Long Scmat3Qdoub_c::n2() const
+{
+	return m_N2;
+}
+
+inline void Scmat3Qdoub_c::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N)
+	    SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qdoub_c::set(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
+{
+	SvbaseQdoub_c::set(data, N0*N1*N2);
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qdoub_c::set(const Scmat3Qdoub_c &sli)
+{
+	SvbaseQdoub_c::set(sli);
+	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
+inline Scmat3Qdoub_c::~Scmat3Qdoub_c() {}
+
+typedef const Scmat3Qdoub_c &Scmat3Qdoub_I;
+
+class Scmat3Qdoub : public SvbaseQdoub
+{
+protected:
+	Long m_N0, m_N1, m_N2;
+public:
+	Scmat3Qdoub();
+	Scmat3Qdoub(Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
+
+	operator Scmat3Qdoub_c() const;
+
+	Qdoub &operator()(Long_I i, Long_I j, Long_I k) const;
+
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	// resize() is a bad idea, don't try to create it!
+	void reshape(Long_I N0, Long_I N1, Long_I N2);
+	void set(Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
+	void set(const Scmat3Qdoub &sli);
+	~Scmat3Qdoub();
+};
+
+inline Scmat3Qdoub::Scmat3Qdoub() {}
+
+inline Scmat3Qdoub::Scmat3Qdoub(Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
+	: SvbaseQdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline Scmat3Qdoub::operator Scmat3Qdoub_c() const
+{
+	return *((Scmat3Qdoub_c *)this);
+}
+
+inline Qdoub &Scmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Scmat3Qdoub::n0() const
+{
+	return m_N0;
+}
+
+inline Long Scmat3Qdoub::n1() const
+{
+	return m_N1;
+}
+
+inline Long Scmat3Qdoub::n2() const
+{
+	return m_N2;
+}
+
+inline void Scmat3Qdoub::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N)
+	    SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qdoub::set(Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
+{
+	SvbaseQdoub::set(data, N0*N1*N2);
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qdoub::set(const Scmat3Qdoub &sli)
+{
+	SvbaseQdoub::set(sli);
+	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
+inline Scmat3Qdoub::~Scmat3Qdoub() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const Scmat3Qdoub &Scmat3Qdoub_O, &Scmat3Qdoub_IO;
+
 class Scmat3Ldoub_c : public SvbaseLdoub_c
 {
 protected:
@@ -1441,6 +1601,166 @@ inline Scmat3Lcomp::~Scmat3Lcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Lcomp &Scmat3Lcomp_O, &Scmat3Lcomp_IO;
+
+class Scmat3Qcomp_c : public SvbaseQcomp_c
+{
+protected:
+	Long m_N0, m_N1, m_N2;
+public:
+	Scmat3Qcomp_c();
+	Scmat3Qcomp_c(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
+
+
+	const Qcomp &operator()(Long_I i, Long_I j, Long_I k) const;
+
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	// resize() is a bad idea, don't try to create it!
+	void reshape(Long_I N0, Long_I N1, Long_I N2);
+	void set(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
+	void set(const Scmat3Qcomp_c &sli);
+	~Scmat3Qcomp_c();
+};
+
+inline Scmat3Qcomp_c::Scmat3Qcomp_c() {}
+
+inline Scmat3Qcomp_c::Scmat3Qcomp_c(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
+	: SvbaseQcomp_c(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+
+inline const Qcomp &Scmat3Qcomp_c::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Scmat3Qcomp_c::n0() const
+{
+	return m_N0;
+}
+
+inline Long Scmat3Qcomp_c::n1() const
+{
+	return m_N1;
+}
+
+inline Long Scmat3Qcomp_c::n2() const
+{
+	return m_N2;
+}
+
+inline void Scmat3Qcomp_c::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N)
+	    SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qcomp_c::set(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
+{
+	SvbaseQcomp_c::set(data, N0*N1*N2);
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qcomp_c::set(const Scmat3Qcomp_c &sli)
+{
+	SvbaseQcomp_c::set(sli);
+	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
+inline Scmat3Qcomp_c::~Scmat3Qcomp_c() {}
+
+typedef const Scmat3Qcomp_c &Scmat3Qcomp_I;
+
+class Scmat3Qcomp : public SvbaseQcomp
+{
+protected:
+	Long m_N0, m_N1, m_N2;
+public:
+	Scmat3Qcomp();
+	Scmat3Qcomp(Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
+
+	operator Scmat3Qcomp_c() const;
+
+	Qcomp &operator()(Long_I i, Long_I j, Long_I k) const;
+
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	// resize() is a bad idea, don't try to create it!
+	void reshape(Long_I N0, Long_I N1, Long_I N2);
+	void set(Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
+	void set(const Scmat3Qcomp &sli);
+	~Scmat3Qcomp();
+};
+
+inline Scmat3Qcomp::Scmat3Qcomp() {}
+
+inline Scmat3Qcomp::Scmat3Qcomp(Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
+	: SvbaseQcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline Scmat3Qcomp::operator Scmat3Qcomp_c() const
+{
+	return *((Scmat3Qcomp_c *)this);
+}
+
+inline Qcomp &Scmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Scmat3Qcomp::n0() const
+{
+	return m_N0;
+}
+
+inline Long Scmat3Qcomp::n1() const
+{
+	return m_N1;
+}
+
+inline Long Scmat3Qcomp::n2() const
+{
+	return m_N2;
+}
+
+inline void Scmat3Qcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N)
+	    SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qcomp::set(Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
+{
+	SvbaseQcomp::set(data, N0*N1*N2);
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Qcomp::set(const Scmat3Qcomp &sli)
+{
+	SvbaseQcomp::set(sli);
+	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
+}
+
+inline Scmat3Qcomp::~Scmat3Qcomp() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const Scmat3Qcomp &Scmat3Qcomp_O, &Scmat3Qcomp_IO;
 
 class Scmat3Fimag_c : public SvbaseFimag_c
 {

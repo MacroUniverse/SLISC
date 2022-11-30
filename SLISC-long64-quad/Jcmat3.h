@@ -1317,6 +1317,225 @@ inline Ldoub *Jcmat3Ldoub::p() const
 
 typedef const Jcmat3Ldoub &Jcmat3Ldoub_O, &Jcmat3Ldoub_IO;
 
+class Jcmat3Qdoub_c
+{
+protected:
+	const Qdoub *m_p;
+	Long m_N;
+	Long m_N0, m_N1, m_N2;
+	Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
+public:
+	Jcmat3Qdoub_c();
+	Jcmat3Qdoub_c(const Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(const Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(const Jcmat3Qdoub_c &sli);
+	Jcmat3Qdoub_c &operator=(const Jcmat3Qdoub_c &) = delete;
+	const Qdoub &operator[](Long_I i) const;
+	const Qdoub &operator()(Long_I i, Long_I j, Long_I k) const;
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+	Long step1() const;
+	Long step2() const;
+	Long step3() const;
+	Long size() const;
+
+	const Qdoub *p() const;
+};
+
+inline Jcmat3Qdoub_c::Jcmat3Qdoub_c() {}
+
+inline Jcmat3Qdoub_c::Jcmat3Qdoub_c(const Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+	: m_p(p), m_N0(N0), m_N1(N1), m_N2(N2), m_N(N0*N1*N2), m_step1(step1), m_step2(step2), m_step3(step3)
+{}
+
+inline void Jcmat3Qdoub_c::set(const Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+{
+	m_p = p; m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_step1 = step1; m_step2 = step2; m_step3 = step3;
+	m_N = N0 * N1 * N2;
+}
+
+inline void Jcmat3Qdoub_c::set(const Jcmat3Qdoub_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_step1 = sli.m_step1; m_step2 = sli.m_step2; m_step3 = sli.m_step3;
+}
+
+
+inline const Qdoub &Jcmat3Qdoub_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+	    SLS_ERR("out of bound!");
+#endif
+	Long N1N2 = m_N0 * m_N1;
+	Long i2 = i % N1N2;
+	return operator()(i2 % m_N0, i2 / m_N0, i / N1N2);
+}
+
+inline const Qdoub &Jcmat3Qdoub_c::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
+}
+
+inline Long Jcmat3Qdoub_c::n0() const
+{
+	return m_N0;
+}
+
+inline Long Jcmat3Qdoub_c::n1() const
+{
+	return m_N1;
+}
+
+inline Long Jcmat3Qdoub_c::n2() const
+{
+	return m_N2;
+}
+
+inline Long Jcmat3Qdoub_c::step1() const
+{
+	return m_step1;
+}
+
+inline Long Jcmat3Qdoub_c::step2() const
+{
+	return m_step2;
+}
+
+inline Long Jcmat3Qdoub_c::step3() const
+{
+	return m_step3;
+}
+
+inline Long Jcmat3Qdoub_c::size() const
+{
+	return m_N;
+}
+
+inline const Qdoub *Jcmat3Qdoub_c::p() const
+{
+	return m_p;
+}
+
+typedef const Jcmat3Qdoub_c &Jcmat3Qdoub_I;
+
+class Jcmat3Qdoub
+{
+protected:
+	Qdoub *m_p;
+	Long m_N;
+	Long m_N0, m_N1, m_N2;
+	Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
+public:
+	Jcmat3Qdoub();
+	Jcmat3Qdoub(Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(const Jcmat3Qdoub &sli);
+	operator Jcmat3Qdoub_c() const;
+	Jcmat3Qdoub &operator=(const Jcmat3Qdoub &) = delete;
+	Qdoub &operator[](Long_I i) const;
+	Qdoub &operator()(Long_I i, Long_I j, Long_I k) const;
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+	Long step1() const;
+	Long step2() const;
+	Long step3() const;
+	Long size() const;
+
+	Qdoub *p() const;
+};
+
+inline Jcmat3Qdoub::Jcmat3Qdoub() {}
+
+inline Jcmat3Qdoub::Jcmat3Qdoub(Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+	: m_p(p), m_N0(N0), m_N1(N1), m_N2(N2), m_N(N0*N1*N2), m_step1(step1), m_step2(step2), m_step3(step3)
+{}
+
+inline void Jcmat3Qdoub::set(Qdoub *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+{
+	m_p = p; m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_step1 = step1; m_step2 = step2; m_step3 = step3;
+	m_N = N0 * N1 * N2;
+}
+
+inline void Jcmat3Qdoub::set(const Jcmat3Qdoub &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_step1 = sli.m_step1; m_step2 = sli.m_step2; m_step3 = sli.m_step3;
+}
+
+inline Jcmat3Qdoub::operator Jcmat3Qdoub_c() const
+{
+	return *((Jcmat3Qdoub_c *)this);
+}
+
+inline Qdoub &Jcmat3Qdoub::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+	    SLS_ERR("out of bound!");
+#endif
+	Long N1N2 = m_N0 * m_N1;
+	Long i2 = i % N1N2;
+	return operator()(i2 % m_N0, i2 / m_N0, i / N1N2);
+}
+
+inline Qdoub &Jcmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
+}
+
+inline Long Jcmat3Qdoub::n0() const
+{
+	return m_N0;
+}
+
+inline Long Jcmat3Qdoub::n1() const
+{
+	return m_N1;
+}
+
+inline Long Jcmat3Qdoub::n2() const
+{
+	return m_N2;
+}
+
+inline Long Jcmat3Qdoub::step1() const
+{
+	return m_step1;
+}
+
+inline Long Jcmat3Qdoub::step2() const
+{
+	return m_step2;
+}
+
+inline Long Jcmat3Qdoub::step3() const
+{
+	return m_step3;
+}
+
+inline Long Jcmat3Qdoub::size() const
+{
+	return m_N;
+}
+
+inline Qdoub *Jcmat3Qdoub::p() const
+{
+	return m_p;
+}
+
+typedef const Jcmat3Qdoub &Jcmat3Qdoub_O, &Jcmat3Qdoub_IO;
+
 class Jcmat3Fcomp_c
 {
 protected:
@@ -1973,6 +2192,225 @@ inline Lcomp *Jcmat3Lcomp::p() const
 }
 
 typedef const Jcmat3Lcomp &Jcmat3Lcomp_O, &Jcmat3Lcomp_IO;
+
+class Jcmat3Qcomp_c
+{
+protected:
+	const Qcomp *m_p;
+	Long m_N;
+	Long m_N0, m_N1, m_N2;
+	Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
+public:
+	Jcmat3Qcomp_c();
+	Jcmat3Qcomp_c(const Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(const Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(const Jcmat3Qcomp_c &sli);
+	Jcmat3Qcomp_c &operator=(const Jcmat3Qcomp_c &) = delete;
+	const Qcomp &operator[](Long_I i) const;
+	const Qcomp &operator()(Long_I i, Long_I j, Long_I k) const;
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+	Long step1() const;
+	Long step2() const;
+	Long step3() const;
+	Long size() const;
+
+	const Qcomp *p() const;
+};
+
+inline Jcmat3Qcomp_c::Jcmat3Qcomp_c() {}
+
+inline Jcmat3Qcomp_c::Jcmat3Qcomp_c(const Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+	: m_p(p), m_N0(N0), m_N1(N1), m_N2(N2), m_N(N0*N1*N2), m_step1(step1), m_step2(step2), m_step3(step3)
+{}
+
+inline void Jcmat3Qcomp_c::set(const Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+{
+	m_p = p; m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_step1 = step1; m_step2 = step2; m_step3 = step3;
+	m_N = N0 * N1 * N2;
+}
+
+inline void Jcmat3Qcomp_c::set(const Jcmat3Qcomp_c &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_step1 = sli.m_step1; m_step2 = sli.m_step2; m_step3 = sli.m_step3;
+}
+
+
+inline const Qcomp &Jcmat3Qcomp_c::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+	    SLS_ERR("out of bound!");
+#endif
+	Long N1N2 = m_N0 * m_N1;
+	Long i2 = i % N1N2;
+	return operator()(i2 % m_N0, i2 / m_N0, i / N1N2);
+}
+
+inline const Qcomp &Jcmat3Qcomp_c::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
+}
+
+inline Long Jcmat3Qcomp_c::n0() const
+{
+	return m_N0;
+}
+
+inline Long Jcmat3Qcomp_c::n1() const
+{
+	return m_N1;
+}
+
+inline Long Jcmat3Qcomp_c::n2() const
+{
+	return m_N2;
+}
+
+inline Long Jcmat3Qcomp_c::step1() const
+{
+	return m_step1;
+}
+
+inline Long Jcmat3Qcomp_c::step2() const
+{
+	return m_step2;
+}
+
+inline Long Jcmat3Qcomp_c::step3() const
+{
+	return m_step3;
+}
+
+inline Long Jcmat3Qcomp_c::size() const
+{
+	return m_N;
+}
+
+inline const Qcomp *Jcmat3Qcomp_c::p() const
+{
+	return m_p;
+}
+
+typedef const Jcmat3Qcomp_c &Jcmat3Qcomp_I;
+
+class Jcmat3Qcomp
+{
+protected:
+	Qcomp *m_p;
+	Long m_N;
+	Long m_N0, m_N1, m_N2;
+	Long m_step1, m_step2, m_step3; // a(i,j,k) = m_p + m_step1*i + m_step2*j + m_step*k
+public:
+	Jcmat3Qcomp();
+	Jcmat3Qcomp(Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
+	void set(const Jcmat3Qcomp &sli);
+	operator Jcmat3Qcomp_c() const;
+	Jcmat3Qcomp &operator=(const Jcmat3Qcomp &) = delete;
+	Qcomp &operator[](Long_I i) const;
+	Qcomp &operator()(Long_I i, Long_I j, Long_I k) const;
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+	Long step1() const;
+	Long step2() const;
+	Long step3() const;
+	Long size() const;
+
+	Qcomp *p() const;
+};
+
+inline Jcmat3Qcomp::Jcmat3Qcomp() {}
+
+inline Jcmat3Qcomp::Jcmat3Qcomp(Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+	: m_p(p), m_N0(N0), m_N1(N1), m_N2(N2), m_N(N0*N1*N2), m_step1(step1), m_step2(step2), m_step3(step3)
+{}
+
+inline void Jcmat3Qcomp::set(Qcomp *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3)
+{
+	m_p = p; m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_step1 = step1; m_step2 = step2; m_step3 = step3;
+	m_N = N0 * N1 * N2;
+}
+
+inline void Jcmat3Qcomp::set(const Jcmat3Qcomp &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2; m_step1 = sli.m_step1; m_step2 = sli.m_step2; m_step3 = sli.m_step3;
+}
+
+inline Jcmat3Qcomp::operator Jcmat3Qcomp_c() const
+{
+	return *((Jcmat3Qcomp_c *)this);
+}
+
+inline Qcomp &Jcmat3Qcomp::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+	    SLS_ERR("out of bound!");
+#endif
+	Long N1N2 = m_N0 * m_N1;
+	Long i2 = i % N1N2;
+	return operator()(i2 % m_N0, i2 / m_N0, i / N1N2);
+}
+
+inline Qcomp &Jcmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
+	    SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
+}
+
+inline Long Jcmat3Qcomp::n0() const
+{
+	return m_N0;
+}
+
+inline Long Jcmat3Qcomp::n1() const
+{
+	return m_N1;
+}
+
+inline Long Jcmat3Qcomp::n2() const
+{
+	return m_N2;
+}
+
+inline Long Jcmat3Qcomp::step1() const
+{
+	return m_step1;
+}
+
+inline Long Jcmat3Qcomp::step2() const
+{
+	return m_step2;
+}
+
+inline Long Jcmat3Qcomp::step3() const
+{
+	return m_step3;
+}
+
+inline Long Jcmat3Qcomp::size() const
+{
+	return m_N;
+}
+
+inline Qcomp *Jcmat3Qcomp::p() const
+{
+	return m_p;
+}
+
+typedef const Jcmat3Qcomp &Jcmat3Qcomp_O, &Jcmat3Qcomp_IO;
 
 
 #ifdef SLS_USE_INT_AS_LONG

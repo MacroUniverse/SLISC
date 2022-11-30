@@ -16,6 +16,7 @@ inline Bool operator==(CmobdComp_I a, CmobdComp_I b)
 
 inline Bool operator!=(CmobdComp_I a, CmobdComp_I b) { return !(a == b); }
 
+
 inline Bool operator==(CmobdComp_I a, CmobdDoub_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
@@ -23,12 +24,14 @@ inline Bool operator==(CmobdComp_I a, CmobdDoub_I b)
 
 inline Bool operator!=(CmobdComp_I a, CmobdDoub_I b) { return !(a == b); }
 
+
 inline Bool operator==(CmobdDoub_I a, CmobdDoub_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
 inline Bool operator!=(CmobdDoub_I a, CmobdDoub_I b) { return !(a == b); }
+
 
 
 inline void mul_cmat_cmat_diag(Comp *c, const Doub *a, Long_I Nr, Long_I Nc, const Comp *b)
@@ -46,6 +49,7 @@ inline void mul_cmat_diag_cmat(Comp *c, const Doub *a, const Comp *b, Long_I Nr,
 		c += Nr; b += Nr;
 	}
 }
+
 
 inline void mul_cmat_cmat_diag(Doub *c, const Doub *a, Long_I Nr, Long_I Nc, const Doub *b)
 {
@@ -100,6 +104,7 @@ inline void mul_v_cooh_v(Comp *y, const Doub *a_ij, const Long *i, const Long *j
 		}
 	}
 }
+
 
 inline void mul_v_coo_v(Comp *y, const Comp *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
 {
@@ -183,6 +188,7 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_si
 		++a;
 	}
 }
+
 
 inline void mul_v_cmatobd_v(Comp *y, const Doub *x, const Comp *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
@@ -354,6 +360,7 @@ inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+
 inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -362,6 +369,7 @@ inline void mul(VecComp_O y, CmobdDoub_I a, SvecComp_I x)
 #endif
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
+
 
 inline void mul(VecInt_O y, CmobdInt_I a, VecInt_I x)
 {
@@ -381,6 +389,7 @@ inline void mul(SvecDoub_O y, CmobdDoub_I a, SvecDoub_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+
 inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -389,6 +398,7 @@ inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
 #endif
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
+
 
 
 inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
@@ -400,6 +410,7 @@ inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+
 inline void mul(SvecDoub_O y, McooDoub_I a, SvecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -408,6 +419,7 @@ inline void mul(SvecDoub_O y, McooDoub_I a, SvecDoub_I x)
 #endif
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
+
 
 inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
 {
@@ -418,6 +430,7 @@ inline void mul(VecDoub_O y, McooDoub_I a, VecDoub_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+
 inline void mul(VecDoub_O y, McooDoub_I a, SvecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -427,6 +440,7 @@ inline void mul(VecDoub_O y, McooDoub_I a, SvecDoub_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+
 inline void mul(VecComp_O y, McooDoub_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -435,6 +449,7 @@ inline void mul(VecComp_O y, McooDoub_I a, SvecComp_I x)
 #endif
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
+
 
 
 inline void mul(CmatDoub_O y, CmatDoub_I a, DiagDoub_I x)
@@ -459,6 +474,7 @@ inline void mul(CmatComp_O y, CmatDoub_I a, DiagComp_I x)
 	mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
+
 inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -470,6 +486,7 @@ inline void mul(CmatComp_O y, CmatComp_I a, DiagDoub_I x)
 	mul_cmat_cmat_diag(y.p(), a.p(), a.n0(), a.n1(), x.p());
 }
 
+
 inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -480,6 +497,7 @@ inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
 #endif
 	mul_cmat_diag_cmat(y.p(), a.p(), x.p(), x.n0(), x.n1());
 }
+
 
 
 inline void sort_r(McooChar_IO a)
@@ -550,6 +568,7 @@ inline void sort_r(McooDoub_IO a)
 	reorder(sli1, order);
 }
 
+
 inline void sort_r(McooComp_IO a)
 {
 	Long Nnz = a.nnz();
@@ -566,6 +585,7 @@ inline void sort_r(McooComp_IO a)
 	sli1.set(a.col_p());
 	reorder(sli1, order);
 }
+
 
 
 // sort_col_dry() sorts elements to column major and combine repeated elements
@@ -812,6 +832,7 @@ inline void rm_zero(McooDoub_IO coo, Doub_I thresh = 0)
 	coo.resize(k);
 }
 
+
 inline Long sort_col_dry(VecLong_O dest, McooComp_I coo)
 {
 	Long N = coo.nnz();
@@ -871,6 +892,7 @@ inline void rm_zero(McooComp_IO coo, Doub_I thresh = 0)
 	}
 	coo.resize(k);
 }
+
 
 
 inline void operator+=(McooInt_O coo, McooInt_I coo1)
@@ -945,6 +967,7 @@ inline void operator-=(McooDoub_O coo, McooDoub_I coo1)
 	}
 }
 
+
 inline void operator+=(McooComp_O coo, McooComp_I coo1)
 {
 	Long Nnz = coo.nnz();
@@ -968,6 +991,7 @@ inline void operator-=(McooComp_O coo, McooComp_I coo1)
 		coo.col(ii) = coo1.col(i);
 	}
 }
+
 
 
 inline Bool operator==(McooInt_IO coo, McooInt_IO coo1)
@@ -1015,6 +1039,7 @@ inline Bool operator==(McooDoub_IO coo, McooDoub_IO coo1)
 	return true;
 }
 
+
 inline Bool operator==(McooComp_IO coo, McooComp_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
@@ -1031,34 +1056,43 @@ inline Bool operator==(McooComp_IO coo, McooComp_IO coo1)
 }
 
 
+
 inline void operator*=(McooDoub_IO v, Doub_I s)
 { times_eq_vs(v.p(), s, v.nnz()); }
 
+
 inline void operator*=(McooComp_IO v, Doub_I s)
 { times_eq_vs(v.p(), s, v.nnz()); }
+
 
 inline void operator*=(McooComp_IO v, Imag_I s)
 { times_eq_vs(v.p(), s, v.nnz()); }
 
 
+
 inline void operator*=(CmobdDoub_IO v, Doub_I s)
 { v.cmat3() *= s; }
+
 
 inline void operator*=(CmobdComp_IO v, Doub_I s)
 { v.cmat3() *= s; }
 
+
 inline void operator*=(CmobdComp_IO v, Comp_I s)
 { v.cmat3() *= s; }
+
 
 
 inline void times(CmobdComp_O v1, CmobdDoub_I v2, Imag_I s)
 { times(v1.cmat3(), v2.cmat3(), s); }
 
 
+
 inline void times(McooComp_O v, McooDoub_I v1, Imag_I s)
 {
 	times_vvs(v.p(), v1.p(), s, v1.nnz());
 }
+
 
 
 // infinity norm (using maximum absolute sum of columns)
@@ -1079,6 +1113,7 @@ inline Doub norm_inf(CmatComp_I A)
 			abs_sum[j] += abs(A(i, j));
 	return max(abs_sum);
 }
+
 
 
 // infinity norm (using maximum absolute sum of columns)
@@ -1142,6 +1177,7 @@ inline Doub norm_inf(CmobdDoub_I A)
 	return max(abs_sum);
 }
 
+
 inline Doub norm_inf(CmobdComp_I A)
 {
 	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
@@ -1173,6 +1209,7 @@ inline Doub norm_inf(CmobdComp_I A)
 }
 
 
+
 // infinity norm (using maximum absolute sum of columns)
 inline Doub norm_inf(McooDoub_I A)
 {
@@ -1183,6 +1220,7 @@ inline Doub norm_inf(McooDoub_I A)
 	return max(abs_sum);
 }
 
+
 inline Doub norm_inf(McooComp_I A)
 {
 	VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
@@ -1191,6 +1229,7 @@ inline Doub norm_inf(McooComp_I A)
 	}
 	return max(abs_sum);
 }
+
 
 
 } // namespace slisc

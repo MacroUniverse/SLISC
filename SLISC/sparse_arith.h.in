@@ -10,8 +10,11 @@
 namespace slisc {
 
 //% tem('obd==obd', { 'Comp' 'Comp'
-//%    'Comp' 'Doub'
-//%    'Doub' 'Doub' });
+//%  'Qcomp' 'Qcomp'
+//%  'Comp' 'Doub'
+//%  'Qcomp' 'Qdoub'
+//%  'Doub' 'Doub'
+//%  'Qdoub' 'Qdoub' });
 //%------------------------------
 //% [Ts, Ts1] = varargin{:};
 inline Bool operator==(Cmobd@Ts@_I a, Cmobd@Ts1@_I b)
@@ -23,7 +26,8 @@ inline Bool operator==(Cmobd@Ts@_I a, Cmobd@Ts1@_I b)
 inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
 //%------------------------------
 
-//% tem('mul_cmat_cmat_diag', { 'Comp', 'Doub', 'Comp'; });
+//% tem('mul_cmat_cmat_diag', { 'Comp', 'Doub', 'Comp';
+//%    'Qcomp', 'Qdoub', 'Qcomp'; });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
 //% if ~(is_promo(T, T1) && is_promo(T, T2))
@@ -50,6 +54,7 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 
 //% tem('mul_v_coo_v', {
 //%     'Comp', 'Doub', 'Comp';
+//%     'Qcomp', 'Qdoub', 'Qcomp';
 //% });
 //%-------------------------------
 //% [Ty,T,Tx] = varargin{:};
@@ -85,6 +90,7 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 
 //% tem('mul_v_cmatobd_v', {
 //%     'Comp', 'Doub', 'Comp';
+//%     'Qcomp', 'Qdoub', 'Qcomp';
 //% });
 //%-------------------------------
 //% [Ty,T,Tx] = varargin{:};
@@ -135,10 +141,14 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 
 //% tem('mul(v,obd,v)', {
 //%    'VecComp', 'CmobdDoub', 'VecComp';
+//%    'VecQcomp', 'CmobdQdoub', 'VecQcomp';
 //%    'VecComp', 'CmobdDoub', 'SvecComp';
+//%    'VecQcomp', 'CmobdQdoub', 'SvecQcomp';
 //%    'VecInt', 'CmobdInt', 'VecInt'
 //%    'SvecDoub', 'CmobdDoub', 'SvecDoub';
+//%    'SvecQdoub', 'CmobdQdoub', 'SvecQdoub';
 //%    'SvecComp', 'CmobdDoub', 'SvecComp';
+//%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
 //% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -155,10 +165,15 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 //%------------------------------
 
 //% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp';
+//% 'SvecQcomp', 'McooQdoub', 'SvecQcomp';
 //% 'SvecDoub' 'McooDoub' 'SvecDoub'
+//% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
 //% 'VecDoub' 'McooDoub' 'VecDoub'
+//% 'VecQdoub' 'McooQdoub' 'VecQdoub'
 //% 'VecDoub' 'McooDoub' 'SvecDoub'
-//% 'VecComp' 'McooDoub' 'SvecComp' });
+//% 'VecQdoub' 'McooQdoub' 'SvecQdoub'
+//% 'VecComp' 'McooDoub' 'SvecComp'
+//% 'VecQcomp' 'McooQdoub' 'SvecQcomp' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
@@ -181,8 +196,11 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 
 //% tem('mul(m,m,diag)', {
 //%     'CmatComp', 'CmatDoub', 'DiagComp';
+//%     'CmatQcomp', 'CmatQdoub', 'DiagQcomp';
 //%     'CmatComp' 'CmatComp' 'DiagDoub'
+//%     'CmatQcomp' 'CmatQcomp' 'DiagQdoub'
 //%     'CmatComp', 'DiagComp', 'ScmatDoub';
+//%     'CmatQcomp', 'DiagQcomp', 'ScmatQdoub';
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -206,7 +224,8 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 }
 //%------------------------
 
-//% tem('sort_r', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
+//% tem('sort_r', {'Char'; 'Int'; 'Llong';
+//%          'Doub'; 'Qdoub'; 'Comp'; 'Qcomp'});
 //%------------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo' T];
@@ -235,7 +254,7 @@ inline void sort_r(@McooT@_IO a)
 // the i-th element should be moved (or +=) to desk[i]-th element
 // reorder() does the actual sorting given output from sort_col_dry()
 // sort_col() in-place sorting
-//% tem('sort_col', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';});
+//% tem('sort_col', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';});
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -303,7 +322,7 @@ inline void rm_zero(@McooT@_IO coo, @Tr@_I thresh = 0)
 }
 //%----------------------------
 
-//% tem('coo+=coo', {'Int'; 'Llong'; 'Doub'; 'Comp';});
+//% tem('coo+=coo', {'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';});
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -334,7 +353,7 @@ inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
 }
 //%----------------------------
 
-//% tem('coo==coo', {'Int'; 'Llong'; 'Doub'; 'Comp';});
+//% tem('coo==coo', {'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';});
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -357,8 +376,11 @@ inline Bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
 //%----------------------------
 
 //% tem('coo*=s', { 'McooDoub', 'Doub'
+//% 'McooQdoub', 'Qdoub'
 //% 'McooComp', 'Doub';
-//% 'McooComp', 'Imag'; });
+//% 'McooQcomp', 'Qdoub';
+//% 'McooComp', 'Imag';
+//% 'McooQcomp', 'Qimag'; });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 //% req('add_eq_vs', {val_t(T),Ts});
@@ -368,8 +390,11 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 
 //% tem('obd*=s', {
 //%   'CmobdDoub' 'Doub'
+//%   'CmobdQdoub' 'Qdoub'
 //%   'CmobdComp' 'Doub'
-//%   'CmobdComp' 'Comp' });
+//%   'CmobdQcomp' 'Qdoub'
+//%   'CmobdComp' 'Comp'
+//%   'CmobdQcomp' 'Qcomp' });
 //%----------------------------
 //% [T, Ts] = varargin{:};
 //% req('v+=s', {['Cmat3' val_t(T)], Ts});
@@ -377,7 +402,8 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 { v.cmat3() *= s; }
 //%------------------------
 
-//% tem('times(obd,obd,s)', { 'CmobdComp', 'CmobdDoub', 'Imag'; });
+//% tem('times(obd,obd,s)', { 'CmobdComp', 'CmobdDoub', 'Imag';
+//%    'CmobdQcomp', 'CmobdQdoub', 'Qimag'; });
 //%----------------------------
 //% [T1, T2, Ts] = varargin{:};
 //% [Ts1, Ts2] = val_t(T1, T2);
@@ -388,6 +414,7 @@ inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
 
 //% tem('times_coo', {
 //%     'McooComp', 'McooDoub', 'Imag';
+//%     'McooQcomp', 'McooQdoub', 'Qimag';
 //% });
 //%----------------------------
 //% [T, T1, Ts] = varargin{:};
@@ -398,7 +425,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 //%------------------------
 
 // infinity norm (using maximum absolute sum of columns)
-//% tem('norm_inf', {'CmatDoub'; 'CmatComp';});
+//% tem('norm_inf', {'CmatDoub'; 'CmatComp'; 'CmatQcomp'; });
 //%-----------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
@@ -416,7 +443,7 @@ inline @Tr@ norm_inf(@T@_I A)
 //%-----------------------------
 
 // infinity norm (using maximum absolute sum of columns)
-//% tem('norm_inf2', {'CmobdInt'; 'CmobdDoub'; 'CmobdComp';});
+//% tem('norm_inf2', {'CmobdInt'; 'CmobdDoub'; 'CmobdQdoub'; 'CmobdComp'; 'CmobdQcomp';});
 //%-----------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
@@ -456,7 +483,7 @@ inline @Tr@ norm_inf(@T@_I A)
 //%---------------------
 
 // infinity norm (using maximum absolute sum of columns)
-//% tem('norm_inf3', {'McooDoub'; 'McooComp';});
+//% tem('norm_inf3', {'McooDoub'; 'McooQdoub'; 'McooComp'; 'McooQcomp';});
 //%-----------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);

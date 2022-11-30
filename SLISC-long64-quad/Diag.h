@@ -208,6 +208,74 @@ inline const DiagDoub &diag(VecDoub_I v)
 typedef const DiagDoub &DiagDoub_I;
 typedef DiagDoub &DiagDoub_O, &DiagDoub_IO;
 
+void veccpy(Qdoub *, const Qdoub *, Llong_I);
+
+class DiagQdoub : public VecQdoub
+{
+private:
+	typedef VecQdoub Base;
+public:
+	DiagQdoub(Long_I N);
+	DiagQdoub(VecQdoub_I v);
+	Long size() const;
+	Long nnz() const;
+	Long n0() const;
+	Long n1() const;
+	Qdoub &ref(Long_I i, Long_I j);
+	Qdoub operator()(Long_I i, Long_I j) const;
+};
+
+inline DiagQdoub::DiagQdoub(Long_I N) : Base(N) {}
+
+inline DiagQdoub::DiagQdoub(VecQdoub_I v) : Base(v.size())
+{
+	veccpy(m_p, v.p(), m_N);
+}
+
+inline Long DiagQdoub::size() const
+{
+	SLS_ERR("use nnz() instead!");
+	return 0;
+}
+
+inline Long DiagQdoub::nnz() const
+{
+	return Base::size();
+}
+
+inline Long DiagQdoub::n0() const
+{
+	return Base::size();
+}
+
+inline Long DiagQdoub::n1() const
+{
+	return Base::size();
+}
+
+inline Qdoub &DiagQdoub::ref(Long_I i, Long_I j)
+{
+	if (i == j)
+	    return (*this)[i];
+	SLS_ERR("not a diagonal element!");
+	return (*this)[i];
+}
+
+inline Qdoub DiagQdoub::operator()(Long_I i, Long_I j) const
+{
+	if (i == j) return (*this)[i];
+	return 0;
+}
+
+// convert vector to diagonal matrix
+inline const DiagQdoub &diag(VecQdoub_I v)
+{
+	return (DiagQdoub&)v;
+}
+
+typedef const DiagQdoub &DiagQdoub_I;
+typedef DiagQdoub &DiagQdoub_O, &DiagQdoub_IO;
+
 void veccpy(Comp *, const Comp *, Llong_I);
 
 class DiagComp : public VecComp
@@ -275,6 +343,74 @@ inline const DiagComp &diag(VecComp_I v)
 
 typedef const DiagComp &DiagComp_I;
 typedef DiagComp &DiagComp_O, &DiagComp_IO;
+
+void veccpy(Qcomp *, const Qcomp *, Llong_I);
+
+class DiagQcomp : public VecQcomp
+{
+private:
+	typedef VecQcomp Base;
+public:
+	DiagQcomp(Long_I N);
+	DiagQcomp(VecQcomp_I v);
+	Long size() const;
+	Long nnz() const;
+	Long n0() const;
+	Long n1() const;
+	Qcomp &ref(Long_I i, Long_I j);
+	Qcomp operator()(Long_I i, Long_I j) const;
+};
+
+inline DiagQcomp::DiagQcomp(Long_I N) : Base(N) {}
+
+inline DiagQcomp::DiagQcomp(VecQcomp_I v) : Base(v.size())
+{
+	veccpy(m_p, v.p(), m_N);
+}
+
+inline Long DiagQcomp::size() const
+{
+	SLS_ERR("use nnz() instead!");
+	return 0;
+}
+
+inline Long DiagQcomp::nnz() const
+{
+	return Base::size();
+}
+
+inline Long DiagQcomp::n0() const
+{
+	return Base::size();
+}
+
+inline Long DiagQcomp::n1() const
+{
+	return Base::size();
+}
+
+inline Qcomp &DiagQcomp::ref(Long_I i, Long_I j)
+{
+	if (i == j)
+	    return (*this)[i];
+	SLS_ERR("not a diagonal element!");
+	return (*this)[i];
+}
+
+inline Qcomp DiagQcomp::operator()(Long_I i, Long_I j) const
+{
+	if (i == j) return (*this)[i];
+	return 0;
+}
+
+// convert vector to diagonal matrix
+inline const DiagQcomp &diag(VecQcomp_I v)
+{
+	return (DiagQcomp&)v;
+}
+
+typedef const DiagQcomp &DiagQcomp_I;
+typedef DiagQcomp &DiagQcomp_O, &DiagQcomp_IO;
 
 
 #ifdef SLS_USE_INT_AS_LONG

@@ -25,10 +25,11 @@
 #include <limits>
 #include <cfloat>
 #include <algorithm>
+#include <iostream>
+#include "quad_math_declare.h"
 #include <complex>
 #include <vector>
 #include <string>
-#include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <cstring>
@@ -152,9 +153,6 @@ using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
 using std::unordered_map; using std::unordered_set; using std::map;
 using std::set; using std::deque; using std::queue; using std::stack;
-#ifdef SLS_USE_QUAD_MATH
-using std::sqr;
-#endif
 
 // Scalar types
 

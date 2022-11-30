@@ -220,6 +220,45 @@ inline Doub mod_eu(Long_O n, Doub_I s, Doub_I d)
 	return r;
 }
 
+inline Qdoub mod(Qdoub_I s, Qdoub_I d)
+{ return s - round(s/d) * d; }
+
+// floating point version of "%", s = n * d + return
+inline Qdoub mod(Long_O n, Qdoub_I s, Qdoub_I d)
+{
+	n = round(s/d);
+	return s - n * d;
+}
+
+inline Qdoub mod_fl(Qdoub_I s, Qdoub_I d)
+{ return s - floor(s/d) * d; }
+
+// s = n * d + return
+inline Qdoub mod_fl(Long_O n, Qdoub_I s, Qdoub_I d)
+{
+	n = floor(s/d);
+	return s - n * d;
+}
+
+inline Qdoub mod_eu(Qdoub_I s, Qdoub_I d)
+{
+	Long n = s/d;
+	Qdoub r = s - n*d;
+	return r < 0 ? r + abs(d) : r;
+}
+
+// s = n * d + return
+inline Qdoub mod_eu(Long_O n, Qdoub_I s, Qdoub_I d)
+{
+	n = s/d;
+	Qdoub r = s - n*d;
+	if (r < 0) {
+		r += abs(d);
+		n -= sign(d);
+	}
+	return r;
+}
+
 
 template <class T>
 inline T sqr(const T &x) { return x * x; }

@@ -56,26 +56,30 @@ inline string quad2str(const complex<__float128> x, const int prec = 5)
 	return quad2str(to_c(x), prec);
 }
 
-inline ostream& operator<<(ostream& os, const __float128 & x)
+inline ostream& operator<<(ostream& os, const __float128 &x)
 {
 	os << quad2str(x, os.precision());
-		return os;
+	return os;
 }
 
 inline ostream& operator<<(ostream& os, const __complex128 &x)
 {
 	os << quad2str(x, os.precision());
-		return os;
+	return os;
 }
 
-inline ostream& operator<<(ostream& os, const complex<__float128> & x)
+inline ostream& operator<<(ostream& os, const complex<__float128> &x)
 {
 	os << quad2str(x, os.precision());
-		return os;
+	return os;
 }
 
-inline __float128 sqr(const __float128 &x) { return x*x; }
-
+inline istream& operator>>(istream& is, __float128 &x)
+{
+	double tmp;
+	is >> tmp; x = tmp;
+	return is;
+}
 
 // === C++ function overloading ===
 
@@ -178,15 +182,16 @@ SLS_QMATH_CFUNC(sqrt)
 SLS_QMATH_CFUNC(tan)
 SLS_QMATH_CFUNC(tanh)
 
-
-inline __float128 abs2(const __float128 &x) { return x*x; }
-inline complex<__float128> sqr(const complex<__float128> &x) { return x*x; }
-
-inline __float128 abs2(const complex<__float128> &x) { return sqr(abs(x)); }
-
 } // namespace std
 
 namespace slisc {
+
+inline __float128 sqr(const __float128 &x) { return x*x; }
+inline std::complex<__float128> sqr(const std::complex<__float128> &x) { return x*x; }
+
+inline __float128 abs2(const __float128 &x) { return x*x; }
+inline __float128 abs2(const std::complex<__float128> &x) { return sqr(abs(x)); }
+
 typedef __float128 Qdoub;
 typedef const Qdoub &Qdoub_I;
 typedef Qdoub &Qdoub_O, &Qdoub_IO;
@@ -198,7 +203,7 @@ typedef Qcomp0 &Qcomp0_O, &Qcomp0_IO;
 // another definition
 typedef std::complex<Qdoub> Qcomp;
 typedef const Qcomp &Qcomp_I;
-typedef Qcomp &Qcomp_O, &Qcomp2_IO;
+typedef Qcomp &Qcomp_O, &Qcomp_IO;
 
 typedef std::vector<Qdoub> vecQdoub;
 typedef const vecQdoub &vecQdoub_I;
@@ -244,7 +249,7 @@ namespace std {
 
 // another definition
 typedef const Qcomp &Qcomp_I;
-typedef Qcomp &Qcomp_O, &Qcomp2_IO;
+typedef Qcomp &Qcomp_O, &Qcomp_IO;
 
 typedef std::vector<Qdoub> vecQdoub;
 typedef const vecQdoub &vecQdoub_I;

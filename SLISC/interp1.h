@@ -19,6 +19,7 @@ inline Doub legendre_interp_poly(VecDoub_I x, Long_I ind, Doub_I x_q)
 	return prod;
 }
 
+
 inline Doub legendre_interp_poly(SvecDoub_I x, Long_I ind, Doub_I x_q)
 {
 	Doub x_ind = x[ind], prod = 1;
@@ -28,6 +29,7 @@ inline Doub legendre_interp_poly(SvecDoub_I x, Long_I ind, Doub_I x_q)
 	    prod *= (x_q - x[i])/(x_ind - x[i]);
 	return prod;
 }
+
 
 
 #ifdef SLS_USE_GSL
@@ -182,88 +184,90 @@ struct poly_comp_interp1
 };
 #endif
 
-struct Base_interp
+// adapted from numerical recipes 3ed
+// save() for scalar
+struct Base_interp_Doub
 {
-	Int n, mm, jsav, cor, dj;
+	Long n, mm, jsav, cor, dj;
 	const Doub *xx, *yy;
-	Base_interp(VecDoub_I x, const Doub *y, Int m)
+	Base_interp_Doub(VecDoub_I x, const Doub *y, Long m)
 	    : n(x.size()), mm(m), jsav(0), cor(0), xx(&x[0]), yy(y) {
-	    dj = min(1,(Int)pow((Doub)n,0.25));
+	    dj = min(1,(Long)pow((Doub)n,(Doub)0.25));
 	}
 
-	Base_interp(const Doub *x, Long_I Nx, const Doub *y,  Int m)
+	Base_interp_Doub(const Doub *x, Long_I Nx, const Doub *y,  Long m)
 	    : n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
-	    dj = min(1,(Int)pow((Doub)n,0.25));
+	    dj = min(1,(Long)pow((Doub)n,(Doub)0.25));
 	}
 
 	Doub interp(Doub x) {
-	    Int jlo = cor ? hunt(x) : locate(x);
+	    Long jlo = cor ? hunt(x) : locate(x);
 	    return rawinterp(jlo,x);
 	}
 
 	void interp(VecDoub &v, const VecDoub &v1) {
 	    v.resize(v1.size());
-	    for (Int i = 0; i < v1.size(); ++i) {
+	    for (Long i = 0; i < v1.size(); ++i) {
 	        v[i] = interp(v1[i]);
 	    }
 	}
 
-	inline Int locate(Doub_I x);
-	inline Int hunt(Doub_I x);
+	inline Long locate(Doub_I x);
+	inline Long hunt(Doub_I x);
 	
-	Doub virtual rawinterp(Int jlo, Doub x) = 0;
+	Doub virtual rawinterp(Long jlo, Doub x) = 0;
 };
 
-struct Poly_interp : Base_interp
+struct Poly_interp_Doub : Base_interp_Doub
 {
 	Doub dy;
-	Poly_interp(VecDoub_I xv, VecDoub_I yv, Int m)
-	    : Base_interp(xv,&yv[0],m), dy(0.) {}
-	inline Doub rawinterp(Int jl, Doub x);
+	Poly_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long m)
+	    : Base_interp_Doub(xv,&yv[0],m), dy(0.) {}
+	inline Doub rawinterp(Long jl, Doub x);
 };
 
-struct Rat_interp : Base_interp
+struct Rat_interp_Doub : Base_interp_Doub
 {
 	Doub dy;
-	Rat_interp(VecDoub_I xv, VecDoub_I yv, Int m)
-	    : Base_interp(xv,&yv[0],m), dy(0.) {}
-	inline Doub rawinterp(Int jl, Doub x);
+	Rat_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long m)
+	    : Base_interp_Doub(xv,&yv[0],m), dy(0.) {}
+	inline Doub rawinterp(Long jl, Doub x);
 };
 
-struct Spline_interp : Base_interp
+struct Spline_interp_Doub : Base_interp_Doub
 {
 	VecDoub y2;
 	
-	Spline_interp(VecDoub_I xv, VecDoub_I yv, Doub yp1=1.e99, Doub ypn=1.e99)
-	: Base_interp(xv,&yv[0],2), y2(xv.size())
+	Spline_interp_Doub(VecDoub_I xv, VecDoub_I yv, Doub yp1=1.e99, Doub ypn=1.e99)
+	: Base_interp_Doub(xv,&yv[0],2), y2(xv.size())
 	{sety2(&xv[0],&yv[0],yp1,ypn);}
 
-	Spline_interp(VecDoub_I xv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
-	: Base_interp(xv,yv,2), y2(xv.size())
+	Spline_interp_Doub(VecDoub_I xv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
+	: Base_interp_Doub(xv,yv,2), y2(xv.size())
 	{sety2(&xv[0],yv,yp1,ypn);}
 
-	Spline_interp(const Doub *xv, Long_I Nxv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
-	: Base_interp(xv,Nxv,yv,2), y2(Nxv)
+	Spline_interp_Doub(const Doub *xv, Long_I Nxv, const Doub *yv, Doub yp1=1.e99, Doub ypn=1.e99)
+	: Base_interp_Doub(xv,Nxv,yv,2), y2(Nxv)
 	{sety2(xv,yv,yp1,ypn);}
 
 	inline void sety2(const Doub *xv, const Doub *yv, Doub_I yp1, Doub_I ypn);
-	inline Doub rawinterp(Int jl, Doub xv);
+	inline Doub rawinterp(Long jl, Doub xv);
 };
 
-struct BaryRat_interp : Base_interp
+struct BaryRat_interp_Doub : Base_interp_Doub
 {
 	VecDoub w;
-	Int d;
-	inline BaryRat_interp(VecDoub_I xv, VecDoub_I yv, Int dd);
-	inline Doub rawinterp(Int jl, Doub x);
+	Long d;
+	inline BaryRat_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long dd);
+	inline Doub rawinterp(Long jl, Doub x);
 	inline Doub interp(Doub x);
 };
 
-// Base_interp implementation
+// Base_interp_Doub implementation
 
-inline Int Base_interp::locate(Doub_I x)
+inline Long Base_interp_Doub::locate(Doub_I x)
 {
-	Int ju, jm, jl;
+	Long ju, jm, jl;
 	if (n < 2 || mm < 2 || mm > n) throw("locate size error");
 	Bool ascnd = (xx[n - 1] >= xx[0]);
 	jl = 0;
@@ -280,9 +284,9 @@ inline Int Base_interp::locate(Doub_I x)
 	return max(0, min(n - mm, jl - ((mm - 2) >> 1)));
 }
 
-inline Int Base_interp::hunt(Doub_I x)
+inline Long Base_interp_Doub::hunt(Doub_I x)
 {
-	Int jl = jsav, jm, ju, inc = 1;
+	Long jl = jsav, jm, ju, inc = 1;
 	if (n < 2 || mm < 2 || mm > n) throw("hunt size error");
 	Bool ascnd = (xx[n - 1] >= xx[0]);
 	if (jl < 0 || jl > n - 1) {
@@ -328,9 +332,9 @@ inline Int Base_interp::hunt(Doub_I x)
 
 // Poly_interp implementation
 
-inline Doub Poly_interp::rawinterp(Int jl, Doub x)
+inline Doub Poly_interp_Doub::rawinterp(Long jl, Doub x)
 {
-	Int i, m, ns = 0;
+	Long i, m, ns = 0;
 	Doub y, den, dif, dift, ho, hp, w;
 	const Doub *xa = &xx[jl], *ya = &yy[jl];
 	VecDoub c(mm), d(mm);
@@ -349,7 +353,7 @@ inline Doub Poly_interp::rawinterp(Int jl, Doub x)
 	        ho = xa[i] - x;
 	        hp = xa[i + m] - x;
 	        w = c[i + 1] - d[i];
-	        if ((den = ho - hp) == 0.0) throw("Poly_interp error");
+	        if ((den = ho - hp) == 0.0) throw("Poly_interp_Doub error");
 	        den = w / den;
 	        d[i] = hp * den;
 	        c[i] = ho * den;
@@ -361,10 +365,10 @@ inline Doub Poly_interp::rawinterp(Int jl, Doub x)
 
 // Rat_interp implementation
 
-inline Doub Rat_interp::rawinterp(Int jl, Doub x)
+inline Doub Rat_interp_Doub::rawinterp(Long jl, Doub x)
 {
 	const Doub TINY = 1.0e-99;
-	Int m, i, ns = 0;
+	Long m, i, ns = 0;
 	Doub y, w, t, hh, h, dd;
 	const Doub *xa = &xx[jl], *ya = &yy[jl];
 	VecDoub c(mm), d(mm);
@@ -401,11 +405,11 @@ inline Doub Rat_interp::rawinterp(Int jl, Doub x)
 
 // Spline_interp implementation
 
-inline void Spline_interp::sety2(const Doub *xv, const Doub *yv, Doub_I yp1, Doub_I ypn)
+inline void Spline_interp_Doub::sety2(const Doub *xv, const Doub *yv, Doub_I yp1, Doub_I ypn)
 {
-	Int i, k;
+	Long i, k;
 	Doub p, qn, sig, un;
-	Int n = y2.size();
+	Long n = y2.size();
 	VecDoub u(n - 1);
 	if (yp1 > 0.99e99)
 	    y2[0] = u[0] = 0.0;
@@ -431,9 +435,9 @@ inline void Spline_interp::sety2(const Doub *xv, const Doub *yv, Doub_I yp1, Dou
 	    y2[k] = y2[k] * y2[k + 1] + u[k];
 }
 
-inline Doub Spline_interp::rawinterp(Int jl, Doub x)
+inline Doub Spline_interp_Doub::rawinterp(Long jl, Doub x)
 {
-	Int klo = jl, khi = jl + 1;
+	Long klo = jl, khi = jl + 1;
 	Doub y, h, b, a;
 	h = xx[khi] - xx[klo];
 	if (h == 0.0) throw("Bad input to routine splint");
@@ -446,19 +450,19 @@ inline Doub Spline_interp::rawinterp(Int jl, Doub x)
 
 // BarryRat_interp implementation
 
-inline BaryRat_interp::BaryRat_interp(VecDoub_I xv, VecDoub_I yv, Int dd)
-	: Base_interp(xv, &yv[0], xv.size()), w(n), d(dd)
+inline BaryRat_interp_Doub::BaryRat_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long dd)
+	: Base_interp_Doub(xv, &yv[0], xv.size()), w(n), d(dd)
 {
-	if (n <= d) throw("d too large for number of points in BaryRat_interp");
-	for (Int k = 0; k<n; k++) {
-	    Int imin = max(k - d, 0);
-	    Int imax = k >= n - d ? n - d - 1 : k;
+	if (n <= d) throw("d too large for number of points in BaryRat_interp_Doub");
+	for (Long k = 0; k<n; k++) {
+	    Long imin = max(k - d, 0);
+	    Long imax = k >= n - d ? n - d - 1 : k;
 	    Doub temp = imin & 1 ? -1.0 : 1.0;
 	    Doub sum = 0.0;
-	    for (Int i = imin; i <= imax; i++) {
-	        Int jmax = min(i + d, n - 1);
+	    for (Long i = imin; i <= imax; i++) {
+	        Long jmax = min(i + d, n - 1);
 	        Doub term = 1.0;
-	        for (Int j = i; j <= jmax; j++) {
+	        for (Long j = i; j <= jmax; j++) {
 	            if (j == k) continue;
 	            term *= (xx[k] - xx[j]);
 	        }
@@ -470,10 +474,10 @@ inline BaryRat_interp::BaryRat_interp(VecDoub_I xv, VecDoub_I yv, Int dd)
 	}
 }
 
-inline Doub BaryRat_interp::rawinterp(Int jl, Doub x)
+inline Doub BaryRat_interp_Doub::rawinterp(Long jl, Doub x)
 {
 	Doub num = 0, den = 0;
-	for (Int i = 0; i<n; i++) {
+	for (Long i = 0; i<n; i++) {
 	    Doub h = x - xx[i];
 	    if (h == 0.0) {
 	        return yy[i];
@@ -487,8 +491,10 @@ inline Doub BaryRat_interp::rawinterp(Int jl, Doub x)
 	return num / den;
 }
 
-inline Doub BaryRat_interp::interp(Doub x) {
+inline Doub BaryRat_interp_Doub::interp(Doub x) {
 	return rawinterp(1, x);
 }
+
+
 
 } // namespace slisc

@@ -7,8 +7,10 @@ namespace slisc {
 
 //% tem('add_eq_vs', {
 //% 'Int' 'Int'; 'Llong' 'Llong';
-//% 'Doub' 'Doub'; 'Comp', 'Doub';
-//% 'Comp' 'Comp'; 'Comp' 'Imag' });
+//% 'Doub' 'Doub'; 'Comp' 'Doub';
+//% 'Qdoub' 'Qdoub'; 'Qcomp' 'Qdoub';
+//% 'Comp' 'Comp'; 'Comp' 'Imag';
+//% 'Qcomp' 'Qcomp'; });
 //%-------------------
 //% [T, Ts] = varargin{:};
 //% if ~is_promo(T, Ts) || ~strcmp(rm_comp(T),rm_comp(Ts))
@@ -77,26 +79,37 @@ inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%   'vecInt' 'Int';
 //%   'vecLlong' 'Llong';
 //%   'vecDoub' 'Doub';
+//%   'vecQdoub' 'Qdoub';
 //%   'vecComp' 'Doub';
+//%   'vecQcomp' 'Qdoub';
 //%   'vecComp' 'Comp';
 //%   'VecInt' 'Int';
 //%   'VecLlong' 'Llong';
 //%   'VecDoub' 'Doub';
+//%   'VecQdoub' 'Qdoub';
 //%   'VecComp' 'Doub';
+//%   'VecQcomp' 'Qdoub';
 //%   'VecComp' 'Comp';
 //%   'SvecInt' 'Int';
 //%   'SvecLlong' 'Llong';
 //%   'SvecDoub' 'Doub';
+//%   'SvecQdoub' 'Qdoub';
 //%   'SvecComp' 'Doub';
+//%   'SvecQcomp' 'Qdoub';
 //%   'SvecComp' 'Comp';
 //%   'DvecComp' 'Doub';
+//%   'DvecQcomp' 'Qdoub';
 //%   'CmatInt' 'Int';
 //%   'CmatLlong' 'Llong';
 //%   'CmatDoub' 'Doub';
+//%   'CmatQdoub' 'Qdoub';
 //%   'CmatComp' 'Doub';
+//%   'CmatQcomp' 'Qdoub';
 //%   'CmatComp' 'Comp';
 //%   'DcmatDoub' 'Doub'
+//%   'DcmatQdoub' 'Qdoub'
 //%   'DcmatComp' 'Doub'
+//%   'DcmatQcomp' 'Qdoub'
 //%   'DcmatComp' 'Comp'
 //%   'vvecInt' 'Int'
 //%   'vvecLlong' 'Llong'
@@ -217,30 +230,45 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'VecDoub' 'VecDoub';
 //% 'VecDoub' 'SvecDoub';
 //% 'VecComp' 'VecDoub';
+//% 'VecQcomp' 'VecQdoub';
 //% 'VecComp' 'VecComp';
+//% 'VecQcomp' 'VecQcomp';
 //% 'VecComp' 'SvecComp';
+//% 'VecQcomp' 'SvecQcomp';
 //% 'VecComp' 'VecDoub';
+//% 'VecQcomp' 'VecQdoub';
 //% 'VecQdoub' 'VecQdoub'
 //% 'VecQcomp' 'VecQcomp'
 //% 'SvecDoub' 'VecDoub'
 //% 'SvecDoub' 'SvecDoub'
 //% 'SvecComp' 'VecDoub'
+//% 'SvecQcomp' 'VecQdoub'
 //% 'SvecComp' 'SvecComp'
+//% 'SvecQcomp' 'SvecQcomp'
 //% 'DvecDoub' 'SvecDoub'
 //% 'DvecComp' 'VecComp'
+//% 'DvecQcomp' 'VecQcomp'
 //% 'DvecComp' 'SvecComp'
+//% 'DvecQcomp' 'SvecQcomp'
 //% 'DvecComp', 'SvecDoub'
+//% 'DvecQcomp', 'SvecQdoub'
 //% 'CmatInt' 'CmatInt'
 //% 'CmatLlong' 'CmatLlong'
 //% 'CmatDoub' 'CmatDoub'
 //% 'CmatComp' 'CmatDoub'
+//% 'CmatQcomp' 'CmatQdoub'
 //% 'CmatComp' 'CmatComp'
+//% 'CmatQcomp' 'CmatQcomp'
 //% 'MatDoub' 'MatDoub'
 //% 'MatComp' 'MatComp'
 //% 'ScmatComp' 'ScmatDoub'
+//% 'ScmatQcomp' 'ScmatQdoub'
 //% 'ScmatComp' 'ScmatComp'
+//% 'ScmatQcomp' 'ScmatQcomp'
 //% 'DcmatComp' 'DcmatDoub'
+//% 'DcmatQcomp' 'DcmatQdoub'
 //% 'Cmat3Comp' 'Cmat3Comp'
+//% 'Cmat3Qcomp' 'Cmat3Qcomp'
 //% 'Mat3Doub' 'Mat3Doub'
 //% 'Mat3Comp' 'Mat3Comp'
 //% });
@@ -345,15 +373,22 @@ inline void operator/=(@T@_O v, @T1@_I v1) // slow!
 //%  'Llong' 'Llong' 'Llong'
 //%  'Doub' 'Doub' 'Doub'
 //%  'Comp' 'Doub' 'Comp'
+//%  'Qcomp' 'Qdoub' 'Qcomp'
 //%  'Comp' 'Comp' 'Doub'
+//%  'Qcomp' 'Qcomp' 'Qdoub'
 //%  'Comp' 'Comp' 'Comp'
+//%  'Qcomp' 'Qcomp' 'Qcomp'
 //%  'Comp' 'Doub' 'Imag'
+//%  'Qcomp' 'Qdoub' 'Qimag'
 //%  'Qdoub' 'Qdoub' 'Qdoub'
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
-//% if ~is_promo(T, T1) || ~is_promo(T, T2)
-//%     error('illegal types');
+//% if ~is_promo(T, T1)
+//%     error('illegal types (388)');
+//% end
+//% if ~is_promo(T, T2)
+//%     error('illegal types (391)');
 //% end
 inline void add_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
@@ -414,13 +449,13 @@ inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Lo
 //% elseif is_fpt(T2) || is_comp(T2) || is_imag(T2)
 inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
-	@T2@ inv_s = 1./s;
+	@T2@ inv_s = @num(1, rm_comp(T2))@/s;
 	times_vvs(v, v1, inv_s, N);
 }
 
 inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, Long_I step1)
 {
-	@T2@ inv_s = 1./s;
+	@T2@ inv_s = @num(1, rm_comp(T2))@/s;
 	times_vvs(v, v1, inv_s, N, step, step1);
 }
 //% else
@@ -433,9 +468,13 @@ inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, Lon
 //%  'Llong' 'Llong' 'Llong'
 //%  'Doub' 'Doub' 'Doub'
 //%  'Comp' 'Doub' 'Comp'
+//%  'Qcomp' 'Qdoub' 'Qcomp'
 //%  'Comp' 'Comp' 'Doub'
+//%  'Qcomp' 'Qcomp' 'Qdoub'
 //%  'Comp' 'Comp' 'Comp'
+//%  'Qcomp' 'Qcomp' 'Qcomp'
 //%  'Comp' 'Doub' 'Imag'
+//%  'Qcomp' 'Qdoub' 'Qimag'
 //%  'Qdoub' 'Qdoub' 'Qdoub' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -476,9 +515,13 @@ inline void div_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step
 //%  'Llong' 'Llong' 'Llong'
 //%  'Doub' 'Doub' 'Doub'
 //%  'Comp' 'Doub' 'Comp'
+//%  'Qcomp' 'Qdoub' 'Qcomp'
 //%  'Comp' 'Comp' 'Doub'
+//%  'Qcomp' 'Qcomp' 'Qdoub'
 //%  'Comp' 'Comp' 'Comp'
+//%  'Qcomp' 'Qcomp' 'Qcomp'
 //%  'Comp' 'Doub' 'Imag'
+//%  'Qcomp' 'Qdoub' 'Qimag'
 //%  'Qdoub' 'Qdoub' 'Qdoub' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -548,14 +591,26 @@ inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I ste
 //%   'VecInt' 'VecInt' 'Int'
 //%   'VecLlong' 'VecLlong' 'Llong'
 //%   'VecDoub' 'VecDoub' 'Doub'
+//%   'VecQdoub' 'VecQdoub' 'Qdoub'
 //%   'VecComp' 'SvecDoub' 'Doub'
+//%   'VecQcomp' 'SvecQdoub' 'Qdoub'
+//%   'VecQcomp' 'SvecQdoub' 'Qdoub'
 //%   'VecComp' 'SvecDoub' 'Imag'
+//%   'VecQcomp' 'SvecQdoub' 'Qimag'
 //%   'VecComp' 'VecComp' 'Doub'
+//%   'VecQcomp' 'VecQcomp' 'Qdoub'
 //%   'VecComp' 'VecComp' 'Comp'
+//%   'VecQcomp' 'VecQcomp' 'Qcomp'
+//%   'VecQcomp' 'VecQcomp' 'Qcomp'
 //%   'SvecDoub' 'SvecDoub' 'Doub'
 //%   'SvecComp' 'SvecComp' 'Doub'
+//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
+//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
 //%   'SvecComp' 'SvecComp' 'Comp'
+//%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
+//%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
 //%   'DcmatComp' 'DcmatComp' 'Doub'
+//%   'DcmatQcomp' 'DcmatQcomp' 'Qdoub'
 //% });
 //%------------------------------
 //% [T, T1, Ts2] = varargin{:};
@@ -738,14 +793,19 @@ inline void div(@T@_O v, const @Ts2@_I s, @T1@_I v1)
 //%   'VecLlong' 'VecLlong' 'VecLlong'
 //%   'VecDoub' 'VecDoub' 'VecDoub'
 //%   'VecComp' 'VecComp' 'VecComp'
+//%   'VecQcomp' 'VecQcomp' 'VecQcomp'
 //%   'SvecDoub' 'SvecDoub' 'SvecDoub'
 //%   'SvecComp' 'SvecComp' 'SvecComp'
+//%   'SvecQcomp' 'SvecQcomp' 'SvecQcomp'
 //%   'SvecComp' 'VecComp' 'SvecComp'
+//%   'SvecQcomp' 'VecQcomp' 'SvecQcomp'
 //%   'DvecComp', 'SvecComp', 'DvecComp'
+//%   'DvecQcomp', 'SvecQcomp', 'DvecQcomp'
 //%   'CmatInt' 'CmatInt' 'CmatInt'
 //%   'CmatLlong' 'CmatLlong' 'CmatLlong'
 //%   'CmatDoub' 'CmatDoub' 'CmatDoub'
 //%   'CmatComp' 'CmatComp' 'CmatComp'
+//%   'CmatQcomp' 'CmatQcomp' 'CmatQcomp'
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};
@@ -823,7 +883,7 @@ inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
 //% end
 //%--------------------------
 
-//% tem('neg_vv', { 'Comp' 'Doub' });
+//% tem('neg_vv', { 'Doub' 'Doub'; 'Comp' 'Doub' });
 //%----------------------------------------------------------
 //% [T, T1] = varargin{:};
 inline void neg_vv(@T@ *v, const @T1@ *v1, Long_I N)

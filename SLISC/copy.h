@@ -6,7 +6,7 @@
 #include "cut.h"
 
 namespace slisc {
-//  === pointer interface ===
+// === pointer interface ===
 
 inline void vecset(Doub *v, Doub_I val, Long_I n)
 {
@@ -17,6 +17,31 @@ inline void vecset(Doub *v, Doub_I val, Long_I n)
 inline void vecset(Doub *v, Doub_I val, Long_I n, Long_I step)
 {
 	for (Doub *p = v; p < v + n*step; p += step)
+	    *p = val;
+}
+
+
+inline void vecset(Int *v, Int_I val, Long_I n)
+{
+	for (Int *p = v; p < v + n; ++p)
+	    *p = val;
+}
+
+inline void vecset(Int *v, Int_I val, Long_I n, Long_I step)
+{
+	for (Int *p = v; p < v + n*step; p += step)
+	    *p = val;
+}
+
+inline void vecset(Llong *v, Llong_I val, Long_I n)
+{
+	for (Llong *p = v; p < v + n; ++p)
+	    *p = val;
+}
+
+inline void vecset(Llong *v, Llong_I val, Long_I n, Long_I step)
+{
+	for (Llong *p = v; p < v + n*step; p += step)
 	    *p = val;
 }
 
@@ -41,30 +66,6 @@ inline void vecset(Bool *v, Bool_I val, Long_I n)
 inline void vecset(Bool *v, Bool_I val, Long_I n, Long_I step)
 {
 	for (Bool *p = v; p < v + n*step; p += step)
-	    *p = val;
-}
-
-inline void vecset(Int *v, Int_I val, Long_I n)
-{
-	for (Int *p = v; p < v + n; ++p)
-	    *p = val;
-}
-
-inline void vecset(Int *v, Int_I val, Long_I n, Long_I step)
-{
-	for (Int *p = v; p < v + n*step; p += step)
-	    *p = val;
-}
-
-inline void vecset(Llong *v, Llong_I val, Long_I n)
-{
-	for (Llong *p = v; p < v + n; ++p)
-	    *p = val;
-}
-
-inline void vecset(Llong *v, Llong_I val, Long_I n, Long_I step)
-{
-	for (Llong *p = v; p < v + n*step; p += step)
 	    *p = val;
 }
 
@@ -174,6 +175,7 @@ inline void veccpy(Doub *v, Long_I step, const Doub *v1, Long_I step1, Long_I n)
 	}
 }
 
+
 inline void veccpy(Comp *v, const Doub *v1, Long_I n)
 {
 	for (Long i = 0; i < n; ++i)
@@ -204,6 +206,7 @@ inline void veccpy(Comp *v, Long_I step, const Doub *v1, Long_I step1, Long_I n)
 	    v1 += step1;
 	}
 }
+
 
 inline void veccpy(Comp *v, const Comp *v1, Long_I n)
 {
@@ -245,7 +248,16 @@ inline void matcpy(Comp *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld,
 	}
 }
 
+
 inline void matcpy(Doub *v, Long_I lda, const Doub *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
+{
+	for (Long j = 0; j < Nsd; ++j) {
+	    veccpy(v, v1, Nld);
+	    v += lda; v1 += lda1;
+	}
+}
+
+inline void matcpy(Comp *v, Long_I lda, const Comp *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
 	for (Long j = 0; j < Nsd; ++j) {
 	    veccpy(v, v1, Nld);
@@ -262,14 +274,6 @@ inline void matcpy(Int *v, Long_I lda, const Int *v1, Long_I lda1, Long_I Nld, L
 }
 
 inline void matcpy(Llong *v, Long_I lda, const Llong *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
-{
-	for (Long j = 0; j < Nsd; ++j) {
-	    veccpy(v, v1, Nld);
-	    v += lda; v1 += lda1;
-	}
-}
-
-inline void matcpy(Comp *v, Long_I lda, const Comp *v1, Long_I lda1, Long_I Nld, Long_I Nsd)
 {
 	for (Long j = 0; j < Nsd; ++j) {
 	    veccpy(v, v1, Nld);
@@ -301,6 +305,7 @@ inline void matcpy_diff_major(Doub *a2, const Doub *a1, Long_I N2, Long_I lda2, 
 }
 
 
+
 // copy dense matrix with different majors
 // lda1 is leading dimension of a1, lda2 is leading dimension of a2
 // if a1 is row major and a2 is column major, N1 is number of columns, N2 is number of rows
@@ -310,11 +315,6 @@ inline void matcpy_diff_major(Doub *a2, const Doub *a1, Long_I N2, Long_I lda2, 
 // === container interface ===
 // must use pointer version
 // scalar to container
-inline void copy(DvecComp_O v, Comp_I s)
-{
-	vecset(v.p(), s, v.size(), v.step());
-}
-
 inline void copy(vecBool_O v, Bool_I s)
 {
 	v.assign(v.size(), s);
@@ -350,10 +350,12 @@ inline void copy(VecDoub_O v, Doub_I s)
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(VecComp_O v, Comp_I s)
 {
 	vecset(v.p(), s, v.size());
 }
+
 
 inline void copy(SvecInt_O v, Int_I s)
 {
@@ -370,10 +372,12 @@ inline void copy(SvecDoub_O v, Doub_I s)
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(SvecComp_O v, Comp_I s)
 {
 	vecset(v.p(), s, v.size());
 }
+
 
 inline void copy(DvecInt_O v, Int_I s)
 {
@@ -389,6 +393,13 @@ inline void copy(DvecDoub_O v, Doub_I s)
 {
 	vecset(v.p(), s, v.size(), v.step());
 }
+
+
+inline void copy(DvecComp_O v, Comp_I s)
+{
+	vecset(v.p(), s, v.size(), v.step());
+}
+
 
 inline void copy(vvecBool_O v, Bool_I s)
 {
@@ -420,16 +431,17 @@ inline void copy(CmatDoub_O v, Doub_I s)
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(CmatComp_O v, Comp_I s)
 {
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(MatInt_O v, Int_I s)
 {
 	vecset(v.p(), s, v.size());
 }
-
 
 inline void copy(MatDoub_O v, Doub_I s)
 {
@@ -441,10 +453,12 @@ inline void copy(ScmatDoub_O v, Doub_I s)
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(ScmatComp_O v, Comp_I s)
 {
 	vecset(v.p(), s, v.size());
 }
+
 
 inline void copy(Cmat3Int_O v, Int_I s)
 {
@@ -461,10 +475,12 @@ inline void copy(Cmat3Doub_O v, Doub_I s)
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(Cmat3Comp_O v, Comp_I s)
 {
 	vecset(v.p(), s, v.size());
 }
+
 
 inline void copy(Mat3Doub_O v, Doub_I s)
 {
@@ -476,19 +492,21 @@ inline void copy(Cmat4Doub_O v, Doub_I s)
 	vecset(v.p(), s, v.size());
 }
 
+
 inline void copy(MatComp_O v, Comp_I s)
 {
 	vecset(v.p(), s, v.size());
 }
 
-inline void copy(DcmatComp_O v, Comp_I s)
+inline void copy(DcmatDoub_O v, Doub_I s)
 {
 	Long N1 = v.n0(), N2 = v.n1();
 	for (Long j = 0; j < N2; ++j)
 	    vecset(&v(0, j), s, N1);
 }
 
-inline void copy(DcmatDoub_O v, Doub_I s)
+
+inline void copy(DcmatComp_O v, Comp_I s)
 {
 	Long N1 = v.n0(), N2 = v.n1();
 	for (Long j = 0; j < N2; ++j)
@@ -526,6 +544,7 @@ inline void copy(VecComp_O v, const std::initializer_list<Comp> &v1)
 	    v[i] = p1[i];
 }
 
+
 inline void copy(CmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
 	const Doub *p1 = v1.begin();
@@ -537,6 +556,7 @@ inline void copy(CmatDoub_O v, const std::initializer_list<Doub> &v1)
 	for (Long i = 0; i < N; ++i)
 	    v[i] = p1[i];
 }
+
 
 inline void copy(CmatComp_O v, const std::initializer_list<Comp> &v1)
 {
@@ -563,6 +583,7 @@ inline void copy(SvecDoub_O v, const std::initializer_list<Doub> &v1)
 	    v[i] = p1[i];
 }
 
+
 inline void copy(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
 {
 	const Doub *p1 = v1.begin();
@@ -575,6 +596,7 @@ inline void copy(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
 	    v[i] = p1[i];
 }
 
+
 inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
 {
 	const Comp *p1 = v1.begin();
@@ -586,6 +608,7 @@ inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
 	for (Long i = 0; i < N; ++i)
 	    v[i] = p1[i];
 }
+
 
 
 // container to container
@@ -629,6 +652,7 @@ inline void copy(VecDoub_O v, VecDoub_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+
 inline void copy(VecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -636,6 +660,7 @@ inline void copy(VecDoub_O v, SvecDoub_I v1)
 	    return;
 	veccpy(v.p(), v1.p(), v.size());
 }
+
 
 inline void copy(VecComp_O v, VecComp_I v1)
 {
@@ -645,6 +670,7 @@ inline void copy(VecComp_O v, VecComp_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+
 inline void copy(VecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
@@ -652,6 +678,7 @@ inline void copy(VecComp_O v, SvecComp_I v1)
 	    return;
 	veccpy(v.p(), v1.p(), v.size());
 }
+
 
 inline void copy(VecComp_O v, DvecComp_I v1)
 {
@@ -670,6 +697,7 @@ inline void copy(SvecDoub_O v, SvecDoub_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+
 inline void copy(SvecDoub_O v, DvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -677,6 +705,7 @@ inline void copy(SvecDoub_O v, DvecDoub_I v1)
 	    return;
 	veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
+
 
 inline void copy(SvecComp_O v, VecComp_I v1)
 {
@@ -686,6 +715,7 @@ inline void copy(SvecComp_O v, VecComp_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+
 inline void copy(SvecComp_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -693,6 +723,7 @@ inline void copy(SvecComp_O v, SvecDoub_I v1)
 	    return;
 	veccpy(v.p(), v1.p(), v.size());
 }
+
 
 inline void copy(SvecComp_O v, DvecComp_I v1)
 {
@@ -702,6 +733,16 @@ inline void copy(SvecComp_O v, DvecComp_I v1)
 	veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
 
+
+inline void copy(SvecComp_O v, SvecComp_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+
 inline void copy(DvecComp_O v, VecComp_I v1)
 {
 	assert_same_shape(v, v1);
@@ -710,6 +751,7 @@ inline void copy(DvecComp_O v, VecComp_I v1)
 	veccpy(v.p(), v.step(), v1.p(), v1.size());
 }
 
+
 inline void copy(DvecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
@@ -717,6 +759,7 @@ inline void copy(DvecComp_O v, SvecComp_I v1)
 	    return;
 	veccpy(v.p(), v.step(), v1.p(), v1.size());
 }
+
 
 inline void copy(MatDoub_O v, MatDoub_I v1)
 {
@@ -758,6 +801,7 @@ inline void copy(CmatDoub_O v, CmatDoub_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+
 inline void copy(CmatDoub_O v, MatDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -773,6 +817,7 @@ inline void copy(ScmatComp_O v, ScmatComp_I v1)
 	    return;
 	veccpy(v.p(), v1.p(), v.size());
 }
+
 
 inline void copy(MatDoub_O v, CmatDoub_I v1)
 {
@@ -806,6 +851,7 @@ inline void copy(Cmat3Doub_O v, Cmat3Doub_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
+
 inline void copy(Mat3Doub_O v, Mat3Doub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -815,14 +861,6 @@ inline void copy(Mat3Doub_O v, Mat3Doub_I v1)
 }
 
 inline void copy(CmatComp_O v, CmatComp_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(SvecComp_O v, SvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	if (v.size() == 0)
@@ -878,6 +916,16 @@ inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
 	matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
 }
 
+
+inline void copy(DcmatComp_O v, DcmatComp_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
+
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -927,14 +975,6 @@ inline void copy(DcmatInt_O v, DcmatInt_I v1)
 }
 
 inline void copy(DcmatLlong_O v, DcmatLlong_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
-}
-
-inline void copy(DcmatComp_O v, DcmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	if (v.size() == 0)
@@ -1004,6 +1044,7 @@ inline void copy(McooDoub_O v, McooDoub_I v1)
 	veccpy(v.col_p(), v1.col_p(), Nnz);
 }
 
+
 inline void copy(McooComp_O v, McooDoub_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1021,6 +1062,7 @@ inline void copy(McooComp_O v, McooDoub_I v1)
 }
 
 
+
 // copy dense matrix to Mcoo matrix
 // abs(s) < tol is considered 0
 inline void copy(McooDoub_O v, ScmatDoub_I v1, Doub_I tol = 0)
@@ -1035,6 +1077,7 @@ inline void copy(McooDoub_O v, ScmatDoub_I v1, Doub_I tol = 0)
 	}
 }
 
+
 inline void copy(McooComp_O v, CmatComp_I v1, Doub_I tol = 0)
 {
 	assert_same_shape(v, v1);
@@ -1046,6 +1089,7 @@ inline void copy(McooComp_O v, CmatComp_I v1, Doub_I tol = 0)
 	    }
 	}
 }
+
 
 
 inline void copy(CmatInt_O lhs, McooInt_I rhs)
@@ -1067,14 +1111,18 @@ inline void copy(CmatDoub_O lhs, McooDoub_I rhs)
 }
 
 
+
 inline void copy(CmobdDoub_O lhs, CmobdDoub_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
+
 
 inline void copy(CmobdComp_O lhs, CmobdComp_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
 
+
 inline void copy(CmobdComp_O lhs, CmobdDoub_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
+
 
 
 inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
@@ -1087,6 +1135,7 @@ inline void copy(CmobdDoub_O lhs, McooDoub_I rhs)
 	    lhs.ref(i, j) = rhs[k];
 	}
 }
+
 
 inline void copy(CmobdInt_O lhs, McooInt_I rhs)
 {
@@ -1108,6 +1157,7 @@ inline void copy(CmatDoub_O lhs, CmobdDoub_I rhs)
 	    for (Long i = 0; i < lhs.n0(); ++i)
 	        lhs(i, j) = rhs(i, j);
 }
+
 
 
 // inline void cooh2dense(@Tmat@_O lhs, @McoohTs@_I rhs)
@@ -1158,14 +1208,19 @@ inline void copy(CmatDoub_O lhs, CmobdDoub_I rhs)
 //     }
 // }
 
-DcmatComp band(CbandComp_IO);
-DcmatComp_c band(CbandComp_I);
-inline void copy(CbandComp_O a, Comp_I s)
-{ copy(band(a), s); }
-
 DcmatDoub band(CbandDoub_IO);
 DcmatDoub_c band(CbandDoub_I);
 inline void copy(CbandDoub_O a, Doub_I s)
+{ copy(band(a), s); }
+
+DcmatQdoub band(CbandQdoub_IO);
+DcmatQdoub_c band(CbandQdoub_I);
+inline void copy(CbandQdoub_O a, Qdoub_I s)
+{ copy(band(a), s); }
+
+DcmatComp band(CbandComp_IO);
+DcmatComp_c band(CbandComp_I);
+inline void copy(CbandComp_O a, Comp_I s)
 { copy(band(a), s); }
 
 
@@ -1179,7 +1234,27 @@ inline void copy(CbandDoub_O a, CbandDoub_I b)
 	copy(band(a), band(b));
 }
 
+inline void copy(CbandQdoub_O a, CbandQdoub_I b)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
+	    SLS_ERR("wrong shape!");
+#endif
+	a.reshape(b.n0(), b.nup(), b.nlow());
+	copy(band(a), band(b));
+}
+
 inline void copy(CbandComp_O a, CbandComp_I b)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
+	    SLS_ERR("wrong shape!");
+#endif
+	a.reshape(b.n0(), b.nup(), b.nlow());
+	copy(band(a), band(b));
+}
+
+inline void copy(CbandQcomp_O a, CbandQcomp_I b)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
@@ -1208,6 +1283,7 @@ inline void copy(CmatDoub_O a, CbandDoub_I b)
 	}
 }
 
+
 inline void copy(CmatComp_O a, CbandComp_I b)
 {
 	assert_same_shape(a, b);
@@ -1226,6 +1302,7 @@ inline void copy(CmatComp_O a, CbandComp_I b)
 	}
 }
 
+
 inline void copy(CbandComp_O b, CmatComp_I a)
 {
 	assert_same_shape(a, b);
@@ -1240,6 +1317,7 @@ inline void copy(CbandComp_O b, CmatComp_I a)
 	}
 }
 
+
 inline void copy(CbandDoub_O b, CmatDoub_I a)
 {
 	assert_same_shape(a, b);
@@ -1253,6 +1331,7 @@ inline void copy(CbandDoub_O b, CmatDoub_I a)
 	        cut_b[k + i] = cut_a[i];
 	}
 }
+
 
 
 // void copy(Matrix<T> &b, const Matrix<T> &a, Long_I Nup, Long_I Nlow)

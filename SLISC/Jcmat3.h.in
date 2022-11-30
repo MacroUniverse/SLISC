@@ -16,12 +16,16 @@ namespace slisc {
 //%     'Doub', false;
 //%     'Ldoub', true;
 //%     'Ldoub', false;
+//%     'Qdoub', true;
+//%     'Qdoub', false;
 //%     'Fcomp', true;
 //%     'Fcomp', false;
 //%     'Comp', true;
 //%     'Comp', false;
 //%     'Lcomp', true;
 //%     'Lcomp', false;
+//%     'Qcomp', true;
+//%     'Qcomp', false;
 //% });
 //%------------------------
 //% [T, constness] = varargin{:};

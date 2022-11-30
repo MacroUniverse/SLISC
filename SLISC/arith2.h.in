@@ -8,6 +8,7 @@ namespace slisc {
 //% tem('mod_vvs', {
 //%     'Llong', 'Llong';
 //%     'Doub', 'Doub';
+//%     'Qdoub', 'Qdoub';
 //% });
 //%--------------------------
 //% [T, T1] = varargin{:};
@@ -54,7 +55,7 @@ inline void imag_v(@T@ *v, Long_I N)
 }
 //%---------------------
 
-//% tem('real_vv', { 'Doub', 'Comp' });
+//% tem('real_vv', { 'Doub', 'Comp'; 'Qdoub', 'Qcomp' });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void real_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -81,7 +82,7 @@ inline void imag(@T@_IO v)
 { imag_v(v.p(), v.size()); }
 //%---------------------
 
-//% tem('real(v,v)', { 'VecDoub', 'VecComp' });
+//% tem('real(v,v)', { 'VecDoub', 'VecComp'; 'VecQdoub', 'VecQcomp' });
 //%---------------------
 //% [T, T1] = varargin{:};
 //% [Ts, Ts1] = val_t(T, T1);
@@ -100,7 +101,7 @@ inline void imag(@T@_O v, @T1@_I v1)
 }
 //%--------------------
 
-//% tem('abs_v', { 'Doub' });
+//% tem('abs_v', { 'Doub'; 'Qdoub' });
 //%---------------------
 //% T = varargin{:}; Tr = rm_comp(T);
 inline void abs_v(@T@ *v, Long_I N)
@@ -110,7 +111,7 @@ inline void abs_v(@T@ *v, Long_I N)
 }
 //%---------------------
 
-//% tem('abs_vv', { 'Doub', 'Comp' });
+//% tem('abs_vv', { 'Doub', 'Comp'; 'Qdoub', 'Qcomp' });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -120,7 +121,8 @@ inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%---------------------
 
-//% tem('abs', { 'VecDoub'; 'VecComp'; 'SvecComp'; });
+//% tem('abs', { 'VecDoub'; 'VecQdoub'; 'VecComp';
+//%     'VecQcomp'; 'SvecComp'; 'SvecQcomp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('abs_v', {Ts});
@@ -130,7 +132,9 @@ inline void abs(@T@_IO v)
 
 //% tem('abs(v,v)', {
 //% 'VecDoub' 'VecDoub'
-//% 'VecDoub', 'VecComp' });
+//% 'VecQdoub' 'VecQdoub'
+//% 'VecDoub', 'VecComp'
+//% 'VecQdoub', 'VecQcomp' });
 //%---------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void abs(@T@_O v, @T1@_I v1)
@@ -197,7 +201,7 @@ inline void conj(@T@_O v, @T1@_I v1)
 }
 //%----------------------------
 
-//% tem('linspace_vss', { 'Doub' });
+//% tem('linspace_vss', { 'Doub'; 'Qdoub' });
 //%-----------------------
 //% T = varargin{:};
 inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
@@ -215,12 +219,12 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 //%-------------------------
 
 //% tem('linspace', {
-//% 'vecInt'; 'vecLlong'; 'vecDoub';
-//% 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//% 'CmatInt'; 'CmatDoub'; 'CmatComp';
+//% 'vecInt'; 'vecLlong'; 'vecDoub'; 'vecQdoub';
+//% 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//% 'CmatInt'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
 //% 'Cmat4Int'; 'ScmatInt';
 //% 'MatInt'; 'MatComp';
-//% 'Cmat3Doub'; 'Cmat3Doub'
+//% 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Doub'; 'Cmat3Qdoub'
 //% });
 //%---------------------------------
 //% Tv = varargin{:};
@@ -238,7 +242,7 @@ inline void linspace(@Tv@_O v, @Ts@_I first, @Ts@_I last)
 //%-------------------------
 
 
-//% tem('pow_vs', { 'Doub', 'Llong' });
+//% tem('pow_vs', { 'Doub', 'Llong'; 'Qdoub', 'Llong' });
 //%----------------------------------------------------------
 //% [T, Ts] = varargin{:};
 inline void pow_vs(@T@ *v, @Ts@_I s, Long_I N)
@@ -256,7 +260,7 @@ inline void pow(@T@_IO v, @Ts@_I s)
 { pow_vs(v.p(), s, v.size()); }
 //%-------------------------
 
-//% tem('pow_vvs', { 'Doub', 'Doub', 'Int' });
+//% tem('pow_vvs', { 'Doub', 'Doub', 'Int'; 'Qdoub', 'Qdoub', 'Int' });
 //%----------------------------------------------------------
 //% [T, T1, Ts] = varargin{:};
 inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
@@ -268,10 +272,15 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 
 //% tem('pow(v,v,s)', {
 //% 'VecDoub', 'VecDoub', 'Int'
+//% 'VecQdoub', 'VecQdoub', 'Int'
 //% 'VecDoub' 'VecDoub' 'Doub'
+//% 'VecQdoub' 'VecQdoub' 'Qdoub'
 //% 'VecComp' 'VecDoub' 'Comp'
+//% 'VecQcomp' 'VecQdoub' 'Qcomp'
 //% 'VecComp' 'VecComp' 'Doub'
+//% 'VecQcomp' 'VecQcomp' 'Qdoub'
 //% 'VecComp' 'VecComp' 'Comp'
+//% 'VecQcomp' 'VecQcomp' 'Qcomp'
 //% });
 //%---------------------
 //% [T, T1, Ts] = varargin{:};
@@ -285,7 +294,7 @@ inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 }
 //%-------------------------
 
-//% tem('dot_vv', { 'Doub', 'Comp' });
+//% tem('dot_vv', { 'Doub', 'Comp'; 'Qdoub', 'Qcomp' });
 //%----------------------------------------------------------
 //% [T1, T2] = varargin{:};
 //% T = promo_type(T1, T2);
@@ -311,16 +320,27 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%-------------------------
 
 //% tem('dot', { 'VecDoub' 'VecDoub'
+//%   'VecQdoub' 'VecQdoub'
 //%   'VecComp' 'VecDoub'
+//%   'VecQcomp' 'VecQdoub'
 //%   'VecComp' 'VecComp'
+//%   'VecQcomp' 'VecQcomp'
 //%   'SvecDoub' 'VecDoub'
+//%   'SvecQdoub' 'VecQdoub'
 //%   'SvecDoub' 'SvecDoub'
+//%   'SvecQdoub' 'SvecQdoub'
 //%   'SvecDoub' 'SvecComp'
+//%   'SvecQdoub' 'SvecQcomp'
 //%   'SvecComp' 'VecComp'
+//%   'SvecQcomp' 'VecQcomp'
 //%   'DvecComp' 'SvecDoub'
+//%   'DvecQcomp' 'SvecQdoub'
 //%   'Cmat3Comp', 'Jcmat3Comp'
+//%   'Cmat3Qcomp', 'Jcmat3Qcomp'
 //%   'Cmat3Comp', 'Cmat3Doub'
-//%   'Cmat3Comp', 'Cmat3Comp' });
+//%   'Cmat3Qcomp', 'Cmat3Qdoub'
+//%   'Cmat3Comp', 'Cmat3Comp'
+//%   'Cmat3Qcomp', 'Cmat3Qcomp' });
 //%---------------------
 //% [T1, T2] = varargin{:};
 //% [Ts1,Ts2] = val_t(T1,T2);
@@ -356,7 +376,7 @@ inline @T@ dot(@T1@_I v1, @T2@_I v2)
 }
 //%-------------------------
 
-//% tem('cumsum_vv', { 'Doub', 'Doub' });
+//% tem('cumsum_vv', { 'Doub' 'Doub'; 'Qdoub' 'Qdoub' });
 //%---------------------
 //% [T, T1] = varargin{:};
 inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -373,7 +393,8 @@ inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% tem('cumsum', {
 //% 'VecInt' 'VecInt'
 //% 'VecLlong' 'VecLlong'
-//% 'VecDoub' 'VecDoub' });
+//% 'VecDoub' 'VecDoub'
+//% 'VecQdoub' 'VecQdoub' });
 //%---------------------
 //% [T, T1] = varargin{:};
 //% req('cumsum_vv', {val_t(T), val_t(T1)});

@@ -649,6 +649,7 @@ inline void read(ifstream &fin, Doub_O s)
 	fin.read((char*)&s, sizeof(Doub));
 }
 
+
 inline void write(ofstream &fout, Comp_I s)
 {
 	fout.write((char*)&s, sizeof(Comp));
@@ -658,6 +659,7 @@ inline void read(ifstream &fin, Comp_O s)
 {
 	fin.read((char*)&s, sizeof(Comp));
 }
+
 
 
 // string
@@ -803,6 +805,7 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 }
 
 
+
 // read a vector from a text file
 // two numbers should be separated by space or enter
 // skipt specific number of lines at the beginning
@@ -817,6 +820,30 @@ inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0)
 	    input.ignore(1000000, '\n');
 	// detect the number of columns
 	vector<Doub> v0;
+	Doub num;
+	while (true) {
+	    num = NaN;
+	    input >> num;
+	    if (isnan(num))
+	        break;
+	    v0.push_back(num);
+	    if (input.eof())
+	        break;
+	}
+	v.resize(v0.size());
+	for (Long i = 0; i < size(v0); ++i)
+	    v[i] = v0[i];
+}
+
+inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0)
+{
+	ifstream input(file);
+	if (!input.good())
+	    SLS_ERR(file + " does not exist!");
+	for (Long i = 0; i < skip_lines; ++i)
+	    input.ignore(1000000, '\n');
+	// detect the number of columns
+	vector<Qdoub> v0;
 	Doub num;
 	while (true) {
 	    num = NaN;

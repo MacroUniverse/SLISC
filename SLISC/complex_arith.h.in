@@ -7,51 +7,62 @@ namespace slisc {
 //%     'Char', 'Fcomp';
 //%     'Char', 'Comp';
 //%     'Char', 'Lcomp';
+//%     'Char', 'Qcomp';
 //%     'Int', 'Fcomp';
 //%     'Int', 'Comp';
 //%     'Int', 'Lcomp';
+//%     'Int', 'Qcomp';
 //%     'Float', 'Comp';
 //%     'Float', 'Lcomp';
+//%     'Float', 'Qcomp';
 //%     'Doub', 'Fcomp';
 //%     'Doub', 'Lcomp';
 //%     'Ldoub', 'Fcomp';
 //%     'Ldoub', 'Comp';
+//%     'Ldoub', 'Qcomp';
 //% %----------------------
 //%     'Fcomp', 'Char';
 //%     'Comp', 'Char';
+//%     'Qcomp', 'Char';
 //%     'Lcomp', 'Char';
 //%     'Fcomp', 'Int';
 //%     'Comp', 'Int';
 //%     'Lcomp', 'Int';
+//%     'Qcomp', 'Int';
 //%     'Comp', 'Float';
 //%     'Lcomp', 'Float';
+//%     'Qcomp', 'Float';
 //%     'Fcomp', 'Doub';
 //%     'Lcomp', 'Doub';
 //%     'Fcomp', 'Ldoub';
 //%     'Comp', 'Ldoub';
+//%     'Qcomp', 'Ldoub';
 //% %----------------------
 //%     'Fcomp', 'Comp';
 //%     'Fcomp', 'Lcomp';
+//%     'Fcomp', 'Qcomp';
 //%     'Comp', 'Fcomp';
 //%     'Comp', 'Lcomp';
+//%     'Comp', 'Qcomp';
 //%     'Lcomp', 'Fcomp';
 //%     'Lcomp', 'Comp';
+//%     'Lcomp', 'Qcomp';
 //%     });
 //%------------------------
 //% [T1, T2] = varargin{1:2};
 //% if is_real(T1)
-inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s2) == s1 && imag(s2) == 0; }
 //% elseif is_real(T2)
-inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == s2 && imag(s1) == 0; }
 //% else
-inline constexpr Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
 //% end
-inline constexpr Bool operator!=(@T1@_I s1, @T2@_I s2) { return !(s1 == s2); }
+inline Bool operator!=(@T1@_I s1, @T2@_I s2) { return !(s1 == s2); }
 //%------------------------
 
 // reference to real/imaginary part
 //% tem('real_r', {
-//%    'Fcomp'; 'Comp'; 'Lcomp';
+//%    'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //% });
 //%----------------------------------
 //% Tc = varargin{:};
@@ -61,22 +72,19 @@ inline @Tr@ &imag_r(@Tc@ &c) { return *((@Tr@*)&c + 1); }
 //%----------------------------------
 
 //% tem('+=comp', {
-//%    'Fcomp', 'Doub';
-//%    'Fcomp', 'Ldoub';
 //%    'Comp', 'Float';
-//%    'Comp', 'Ldoub';
 //%    'Lcomp', 'Float';
 //%    'Lcomp', 'Doub';
 //% %------------------
-//%    'Fcomp', 'Comp';
-//%    'Fcomp', 'Lcomp';
 //%    'Comp', 'Fcomp';
-//%    'Comp', 'Lcomp';
 //%    'Lcomp', 'Fcomp';
 //%    'Lcomp', 'Comp';
 //% });
 //%----------------------------------
 //% [T1, T2] = varargin{:};
+//% if ~is_promo(T1,T2)
+//%     error("illegal");
+//% end
 //% if is_real(T2);
 //%     T = rm_comp(T1);
 //% else
@@ -95,9 +103,11 @@ inline void operator/=(@T1@_O z, @T2@_I x) { z /= (@T@)x; }
 //%     'Int', 'Fcomp';
 //%     'Int', 'Comp';
 //%     'Int', 'Lcomp';
+//%     'Int', 'Qcomp';
 //%     'Llong', 'Fcomp';
 //%     'Llong', 'Comp';
 //%     'Llong', 'Lcomp';
+//%     'Llong', 'Qcomp';
 //%     'Float', 'Comp';
 //%     'Float', 'Lcomp';
 //%     'Doub', 'Fcomp';
@@ -111,9 +121,11 @@ inline void operator/=(@T1@_O z, @T2@_I x) { z /= (@T@)x; }
 //%     'Fcomp', 'Int';
 //%     'Comp', 'Int';
 //%     'Lcomp', 'Int';
+//%     'Qcomp', 'Int';
 //%     'Fcomp', 'Llong';
 //%     'Comp', 'Llong';
 //%     'Lcomp', 'Llong';
+//%     'Qcomp', 'Llong';
 //%     'Comp', 'Float';
 //%     'Lcomp', 'Float';
 //%     'Fcomp', 'Doub';

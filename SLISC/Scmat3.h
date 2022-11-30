@@ -802,6 +802,8 @@ inline Scmat3Doub::~Scmat3Doub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Doub &Scmat3Doub_O, &Scmat3Doub_IO;
 
+
+
 class Scmat3Ldoub_c : public SvbaseLdoub_c
 {
 protected:
@@ -1441,6 +1443,8 @@ inline Scmat3Lcomp::~Scmat3Lcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Lcomp &Scmat3Lcomp_O, &Scmat3Lcomp_IO;
+
+
 
 class Scmat3Fimag_c : public SvbaseFimag_c
 {

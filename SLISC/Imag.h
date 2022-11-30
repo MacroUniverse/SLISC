@@ -104,6 +104,9 @@ inline Ldoub abs(Limag_I val) { return val.imag(); }
 
 
 const Imag I(1);
+#ifdef SLS_USE_QUAD_MATH
+const Qimag Iq(1.Q);
+#endif
 
 // imag +-*/ imag
 inline Fimag  operator+(Fimag_I z1, Fimag_I z2) { return Fimag(imag(z1) + imag(z2)); }
@@ -449,6 +452,7 @@ inline Bool operator==(Limag_I z1, Lcomp_I z2) { return real(z2) == 0 && imag(z1
 inline Bool operator!=(Limag_I z1, Lcomp_I z2) { return !(z1 == z2); }
 
 
+
 // operator-
 inline Fimag operator-(Fimag_I z) { return Fimag(-z.imag()); }
 inline Imag operator-(Imag_I z) { return Imag(-z.imag()); }
@@ -458,13 +462,24 @@ inline Qimag operator-(Qimag_I z) { return Qimag(-z.imag()); }
 #endif
 
 // TODO: use template
-inline void operator+=(Comp_IO z1, Imag_I z2) { z1 = z1 + z2; }
-inline void operator-=(Comp_IO z1, Imag_I z2) { z1 = z1 - z2; }
+inline void operator+=(Comp_IO z1, Imag_I z2) { imag_r(z1) += imag(z2); }
+inline void operator-=(Comp_IO z1, Imag_I z2) { imag_r(z1) -= imag(z2); }
 inline void operator*=(Comp_IO z1, Imag_I z2) { z1 = z1 * z2; }
 inline void operator/=(Comp_IO z1, Imag_I z2) { z1 = z1 / z2; }
 
+inline void operator+=(Qcomp_IO z1, Qimag_I z2) { imag_r(z1) += imag(z2); }
+inline void operator-=(Qcomp_IO z1, Qimag_I z2) { imag_r(z1) -= imag(z2); }
+inline void operator*=(Qcomp_IO z1, Qimag_I z2) { z1 = z1 * z2; }
+inline void operator/=(Qcomp_IO z1, Qimag_I z2) { z1 = z1 / z2; }
+
 // operator<<
 inline std::ostream &operator<<(std::ostream &out, Imag_I num)
+{
+	out << num.imag() << 'i';
+	return out;
+}
+
+inline std::ostream &operator<<(std::ostream &out, Qimag_I num)
 {
 	out << num.imag() << 'i';
 	return out;

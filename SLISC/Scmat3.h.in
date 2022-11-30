@@ -8,10 +8,12 @@ namespace slisc {
 //%     'Llong', true;  'Llong', false;
 //%     'Float', true;  'Float', false;
 //%     'Doub', true;   'Doub', false;
+//%     'Qdoub', true;  'Qdoub', false;
 //%     'Ldoub', true;  'Ldoub', false;
 //%     'Fcomp', true;  'Fcomp', false;
 //%     'Comp', true;   'Comp', false;
 //%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;

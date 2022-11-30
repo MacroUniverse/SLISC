@@ -396,6 +396,7 @@ inline void save_matb(Doub_I s, Str_I varname, Str_I matb_file, Bool_I replace =
 	matb.close();
 }
 
+
 inline void save(Comp_I s, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -422,6 +423,7 @@ inline void save_matb(Comp_I s, Str_I varname, Str_I matb_file, Bool_I replace =
 	save(s, varname, matb);
 	matb.close();
 }
+
 
 
 // save() for containers
@@ -541,6 +543,7 @@ inline void save_matb(VecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replac
 	matb.close();
 }
 
+
 inline void save(VecComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -569,6 +572,7 @@ inline void save_matb(VecComp_I v, Str_I varname, Str_I matb_file, Bool_I replac
 	save(v, varname, matb);
 	matb.close();
 }
+
 
 inline void save(SvecChar_I v, Str_I varname, Matb_IO matb)
 {
@@ -657,6 +661,7 @@ inline void save_matb(SvecDoub_I v, Str_I varname, Str_I matb_file, Bool_I repla
 	matb.close();
 }
 
+
 inline void save(SvecComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -685,6 +690,7 @@ inline void save_matb(SvecComp_I v, Str_I varname, Str_I matb_file, Bool_I repla
 	save(v, varname, matb);
 	matb.close();
 }
+
 
 inline void save(vecInt_I v, Str_I varname, Matb_IO matb)
 {
@@ -773,6 +779,35 @@ inline void save_matb(vecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replac
 	matb.close();
 }
 
+inline void save(vecQdoub_I v, Str_I varname, Matb_IO matb)
+{
+	if (matb.search(varname) >= 0)
+	    SLS_ERR("variable already exist: " + varname);
+	ofstream &fout = matb.m_out;
+	if (!fout.is_open())
+	    SLS_ERR("matb file not open!");
+	// record position
+	matb.m_name.push_back(varname);
+	matb.m_ind.push_back(fout.tellp());
+	// write variable name info
+	write(fout, (Llong)varname.size()); write(fout, varname);
+	// write data type info
+	write(fout, Llong(23));
+	// write shape info
+	write(fout, Llong(1));
+	// write matrix data
+	write(fout, (Llong)v.size());
+	for (Long i = 0; i < (Long)v.size(); ++i)
+	    write(fout, v[i]);
+}
+
+inline void save_matb(vecQdoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
+{
+	Matb matb(matb_file, "w", replace);
+	save(v, varname, matb);
+	matb.close();
+}
+
 inline void save(vecComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -796,6 +831,35 @@ inline void save(vecComp_I v, Str_I varname, Matb_IO matb)
 }
 
 inline void save_matb(vecComp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
+{
+	Matb matb(matb_file, "w", replace);
+	save(v, varname, matb);
+	matb.close();
+}
+
+inline void save(vecQcomp_I v, Str_I varname, Matb_IO matb)
+{
+	if (matb.search(varname) >= 0)
+	    SLS_ERR("variable already exist: " + varname);
+	ofstream &fout = matb.m_out;
+	if (!fout.is_open())
+	    SLS_ERR("matb file not open!");
+	// record position
+	matb.m_name.push_back(varname);
+	matb.m_ind.push_back(fout.tellp());
+	// write variable name info
+	write(fout, (Llong)varname.size()); write(fout, varname);
+	// write data type info
+	write(fout, Llong(43));
+	// write shape info
+	write(fout, Llong(1));
+	// write matrix data
+	write(fout, (Llong)v.size());
+	for (Long i = 0; i < (Long)v.size(); ++i)
+	    write(fout, v[i]);
+}
+
+inline void save_matb(vecQcomp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
 {
 	Matb matb(matb_file, "w", replace);
 	save(v, varname, matb);
@@ -1009,6 +1073,7 @@ inline void save_matb(CmatDoub_I v, Str_I varname, Str_I matb_file, Bool_I repla
 	matb.close();
 }
 
+
 inline void save(CmatComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -1038,6 +1103,7 @@ inline void save_matb(CmatComp_I v, Str_I varname, Str_I matb_file, Bool_I repla
 	save(v, varname, matb);
 	matb.close();
 }
+
 
 inline void save(MatChar_I v, Str_I varname, Matb_IO matb)
 {
@@ -1848,6 +1914,7 @@ inline void load_matb(Doub_O var, Str_I varname, Str_I matb_file)
 	matb.close();
 }
 
+
 inline void load(Comp_O s, Str_I varname, Matb_IO matb)
 {
 	ifstream &fin = matb.m_in;
@@ -1870,6 +1937,7 @@ inline void load_matb(Comp_O var, Str_I varname, Str_I matb_file)
 	load(var, varname, matb);
 	matb.close();
 }
+
 
 inline void load(VecChar_O v, Str_I varname, Matb_IO matb)
 {
@@ -1975,6 +2043,7 @@ inline void load_matb(VecDoub_O var, Str_I varname, Str_I matb_file)
 	matb.close();
 }
 
+
 inline void load(VecComp_O v, Str_I varname, Matb_IO matb)
 {
 	ifstream &fin = matb.m_in;
@@ -2000,6 +2069,7 @@ inline void load_matb(VecComp_O var, Str_I varname, Str_I matb_file)
 	load(var, varname, matb);
 	matb.close();
 }
+
 
 inline void load(MatInt_O a, Str_I varname, Matb_IO matb)
 {
@@ -2257,6 +2327,7 @@ inline void load_matb(CmatDoub_O var, Str_I varname, Str_I matb_file)
 	matb.close();
 }
 
+
 inline void load(CmatComp_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, m, n;
@@ -2284,6 +2355,7 @@ inline void load_matb(CmatComp_O var, Str_I varname, Str_I matb_file)
 	load(var, varname, matb);
 	matb.close();
 }
+
 
 inline void load(Cmat3Int_O a, Str_I varname, Matb_IO matb)
 {
@@ -2405,6 +2477,7 @@ inline void load_matb(Cmat3Comp_O var, Str_I varname, Str_I matb_file)
 	matb.close();
 }
 
+
 inline void load(Cmat4Doub_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
@@ -2436,6 +2509,7 @@ inline void load_matb(Cmat4Doub_O var, Str_I varname, Str_I matb_file)
 	matb.close();
 }
 
+
 inline void load(Cmat4Comp_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
@@ -2466,6 +2540,7 @@ inline void load_matb(Cmat4Comp_O var, Str_I varname, Str_I matb_file)
 	load(var, varname, matb);
 	matb.close();
 }
+
 
 
 // convert a single .matb file to .matt file

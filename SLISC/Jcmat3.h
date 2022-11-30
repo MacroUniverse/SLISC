@@ -1317,6 +1317,8 @@ inline Ldoub *Jcmat3Ldoub::p() const
 
 typedef const Jcmat3Ldoub &Jcmat3Ldoub_O, &Jcmat3Ldoub_IO;
 
+
+
 class Jcmat3Fcomp_c
 {
 protected:
@@ -1973,6 +1975,8 @@ inline Lcomp *Jcmat3Lcomp::p() const
 }
 
 typedef const Jcmat3Lcomp &Jcmat3Lcomp_O, &Jcmat3Lcomp_IO;
+
+
 
 
 #ifdef SLS_USE_INT_AS_LONG

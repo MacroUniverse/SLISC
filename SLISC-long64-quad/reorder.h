@@ -212,6 +212,26 @@ inline void resize_cpy(Cmat3Comp_IO v, Long_I N0, Long_I N1, Long_I N2, Comp_I v
 	}
 }
 
+inline void resize_cpy(CmatQdoub_IO v, Long_I N0, Long_I N1, Qdoub_I val = 0)
+{
+	Long N10 = v.n0(), N20 = v.n1(), Nold = N0*N1;
+	Long N = N0 * N1;
+	if (N0 != N10 || N1 != N20) {
+		if (Nold == 0) {
+			v.resize(N0, N1); copy(v, val);
+		}
+		else if (N == 0)
+			v.resize(0, 0);
+		else {
+			CmatQdoub v1(N0, N1); copy(v1, val);
+			Long N1min = min(N0, N10), N2min = min(N1, N20);
+			copy(cut(v1, 0, N1min, 0, N2min),
+				cut(v, 0, N1min, 0, N2min));
+			v << v1;
+		}
+	}
+}
+
 
 inline void flip_v(Doub *v, Long_I N)
 {
@@ -551,6 +571,38 @@ inline void reorder(SvecDoub_O v, VecInt_I order)
 		v[i] = u[i];
 }
 
+inline void reorder(SvecQdoub_O v, VecLlong_I order)
+{
+#ifdef SLS_CHECK_SHAPES
+	if ((Long)order.size() != (Long)v.size())
+		SLS_ERR("wrong shape!");
+#endif
+	Long N = v.size();
+	static VecQdoub u; u.resize(N);
+	if (N > (Long)u.size())
+		u.resize(max(N, Long(2*u.size())));
+	for (Long i = 0; i < N; ++i)
+		u[i] = v[order[i]];
+	for (Long i = 0; i < N; ++i)
+		v[i] = u[i];
+}
+
+inline void reorder(SvecQdoub_O v, VecInt_I order)
+{
+#ifdef SLS_CHECK_SHAPES
+	if ((Long)order.size() != (Long)v.size())
+		SLS_ERR("wrong shape!");
+#endif
+	Long N = v.size();
+	static VecQdoub u; u.resize(N);
+	if (N > (Long)u.size())
+		u.resize(max(N, Long(2*u.size())));
+	for (Long i = 0; i < N; ++i)
+		u[i] = v[order[i]];
+	for (Long i = 0; i < N; ++i)
+		v[i] = u[i];
+}
+
 inline void reorder(SvecComp_O v, VecInt_I order)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -559,6 +611,38 @@ inline void reorder(SvecComp_O v, VecInt_I order)
 #endif
 	Long N = v.size();
 	static VecComp u; u.resize(N);
+	if (N > (Long)u.size())
+		u.resize(max(N, Long(2*u.size())));
+	for (Long i = 0; i < N; ++i)
+		u[i] = v[order[i]];
+	for (Long i = 0; i < N; ++i)
+		v[i] = u[i];
+}
+
+inline void reorder(SvecQcomp_O v, VecLlong_I order)
+{
+#ifdef SLS_CHECK_SHAPES
+	if ((Long)order.size() != (Long)v.size())
+		SLS_ERR("wrong shape!");
+#endif
+	Long N = v.size();
+	static VecQcomp u; u.resize(N);
+	if (N > (Long)u.size())
+		u.resize(max(N, Long(2*u.size())));
+	for (Long i = 0; i < N; ++i)
+		u[i] = v[order[i]];
+	for (Long i = 0; i < N; ++i)
+		v[i] = u[i];
+}
+
+inline void reorder(SvecQcomp_O v, VecInt_I order)
+{
+#ifdef SLS_CHECK_SHAPES
+	if ((Long)order.size() != (Long)v.size())
+		SLS_ERR("wrong shape!");
+#endif
+	Long N = v.size();
+	static VecQcomp u; u.resize(N);
 	if (N > (Long)u.size())
 		u.resize(max(N, Long(2*u.size())));
 	for (Long i = 0; i < N; ++i)

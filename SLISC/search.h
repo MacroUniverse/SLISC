@@ -242,6 +242,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 	}
 }
 
+
 inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
@@ -479,5 +480,6 @@ inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
 	}
 	return -1;
 }
+
 
 } // namespace slisc

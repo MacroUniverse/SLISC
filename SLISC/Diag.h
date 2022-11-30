@@ -208,6 +208,7 @@ inline const DiagDoub &diag(VecDoub_I v)
 typedef const DiagDoub &DiagDoub_I;
 typedef DiagDoub &DiagDoub_O, &DiagDoub_IO;
 
+
 void veccpy(Comp *, const Comp *, Llong_I);
 
 class DiagComp : public VecComp
@@ -275,6 +276,7 @@ inline const DiagComp &diag(VecComp_I v)
 
 typedef const DiagComp &DiagComp_I;
 typedef DiagComp &DiagComp_O, &DiagComp_IO;
+
 
 
 #ifdef SLS_USE_INT_AS_LONG

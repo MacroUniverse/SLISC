@@ -128,5 +128,26 @@ inline void uniq_rows(CmatDoub_O a, CmatDoub_I a1)
 	resize_cpy(a, k, a1.n1());
 }
 
+inline void uniq_rows(CmatQdoub_O a, CmatQdoub_I a1)
+{
+	Long k = 0;
+	a.resize(a1.n0(), a1.n1());
+	for (Long i = 0; i < a1.n0(); ++i) {
+	    // check repeat
+	    Bool repeat = false;
+	    DvecQdoub_c s1 = cut1(a1, i);
+	    for (Long j = 0; j < k; ++j) {
+	        if (cut1(a, j) == s1) {
+	            repeat = true; break;
+	        }
+	    }
+	    if (repeat)
+	        continue;
+	    copy(cut1(a, k), s1);
+	    ++k;
+	}
+	resize_cpy(a, k, a1.n1());
+}
+
 
 } // namespace slisc

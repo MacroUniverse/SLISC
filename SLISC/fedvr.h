@@ -5,6 +5,104 @@
 
 namespace slisc {
 
+// calculate FEDVR global index from FE index and DVR index  
+inline Long indFEDVR(Long_I iFE, Long_I iDVR, Long_I Ngs)
+{ return (Ngs-1) * iFE + iDVR - 1; }
+
+// calculate FE index and DVR index from global FEDVR index
+inline Long indFE(Long_I iFEDVR, Long_I Ngs)
+{ return (iFEDVR + 1) / (Ngs - 1); }
+
+inline Long indDVR(Long_I iFEDVR, Long_I Ngs)
+{ return (iFEDVR + 1) % (Ngs - 1); }
+
+// interp 1D FEDVR grid
+// x does not include both end points
+// bounds include both end points
+#ifdef SLS_USE_GSL
+Doub fe_min(VecDoub_I x, Long_I Ngs);
+Doub fe_max(VecDoub_I x, Long_I Ngs);
+
+inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
+{
+	Long Nx = x.size();
+	if ((Nx+1)%(Ngs-1) != 0)
+	    SLS_ERR("(Nx+1)%(Ngs-1) != 0");
+	Long Nb = (Nx+1)/(Ngs-1);
+	// Doub xmin = fe_min(x, Ngs), xmax = fe_max(x, Ngs);
+	Long ix; // grid index
+	if (lookup(ix, x, x_q))
+	    return y[ix];
+	Long iFE = indFE(ix, Ngs); // FE index
+	Long start = indFEDVR(iFE, 0, Ngs);
+
+	if (iFE == 0) { // first FE
+	    VecDoub x1(Ngs); VecComp y1(Ngs);
+	    Doub xmin = fe_min(x, Ngs);
+	    if (x_q <= xmin)
+	        return 0;
+	    x1[0] = xmin;
+	    copy(cut(x1, 1, Ngs-1), cut(x, 0, Ngs-1));
+	    y1[0] = 0;
+	    copy(cut(y1, 1, Ngs-1), cut(y, 0, Ngs-1));
+	    poly_comp_interp1 poly(x1, y1);
+	    return poly(x_q);
+	}
+	else if (iFE == Nb - 1) { // last FE
+	    VecDoub x1(Ngs); VecComp y1(Ngs);
+	    Doub xmax = fe_max(x, Ngs);
+	    if (x_q >= xmax)
+	        return 0;
+	    x1.end() = xmax;
+	    copy(cut(x1, 0, Ngs-1), cut(x, Nx-Ngs+1, Ngs-1));
+	    y1.end() = 0;
+	    copy(cut(y1, 0, Ngs-1), cut(y, Nx-Ngs+1, Ngs-1));
+	    poly_comp_interp1 poly(x1, y1);
+	    return poly(x_q);
+	}
+	else {
+	    poly_comp_interp1 poly(cut(x, start, Ngs), cut(y, start, Ngs));
+	    return poly(x_q);
+	}
+}
+
+// 2d interp for fedvr
+inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
+	Long_I Ngs, Doub_I x_q, Doub_I y_q)
+{
+	Long Nx = x.size(), Ny = y.size();
+	if ((Nx+1)%(Ngs-1) != 0)
+	    SLS_ERR("(Nx+1)%(Ngs-1) != 0");
+	if ((Ny+1)%(Ngs-1) != 0)
+	    SLS_ERR("(Ny+1)%(Ngs-1) != 0");
+	Long Nbx = (Nx+1)/(Ngs-1), Nby = (Ny+1)/(Ngs-1);
+	// Doub x_min = fe_min(x, Ngs), x_max = fe_max(x, Ngs);
+	// Doub y_min = fe_min(y, Ngs), y_max = fe_max(y, Ngs);
+	Long ix, iy; // grid index
+	lookup(ix, x, x_q); lookup(iy, y, y_q);
+	Long iFEx = indFE(ix, Ngs), iFEy = indFE(iy, Ngs); // FE index
+	if (iFEx == 0 || iFEy == 0 || iFEx == Nbx - 1 || iFEy == Nby - 1) // 1st FE
+	    SLS_ERR("not implemented!");
+	VecDoub y1(Ngs); VecComp val1(Ngs);
+	Long start = indFEDVR(iFEy, 0, Ngs);
+	SvecDoub_c x_sli =  cut(x, ix, Ngs);
+	for (Long j = start; j < start + Ngs; ++j) {
+	    poly_comp_interp1 poly(x_sli, cut0(val, ix, Ngs, j));
+	    val1[j-start] = poly(x_q);
+	    y1[j-start] = y[j];
+	}
+	poly_comp_interp1 poly(y1, val1);
+	return poly(y_q);
+}
+#endif
+
+// number of non-zero elements in fedvr second derivative matrix
+inline Long fedvr_d2_nnz(Long_I Ngs, Long_I Nfe)
+{
+	return (Ngs*Ngs - 1)*Nfe - 4 * Ngs + 3;
+}
+
+
 // generate Gauss-Lobatto abscissas x and weights w
 // x is in [-1,1]
 // data from https://keisan.casio.com/exec/system/1280801905
@@ -112,17 +210,6 @@ inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 	    w[i] = w[N - i - 1];
 }
 
-// calculate FEDVR global index from FE index and DVR index  
-inline Long indFEDVR(Long_I iFE, Long_I iDVR, Long_I Ngs)
-{ return (Ngs-1) * iFE + iDVR - 1; }
-
-// calculate FE index and DVR index from global FEDVR index
-inline Long indFE(Long_I iFEDVR, Long_I Ngs)
-{ return (iFEDVR + 1) / (Ngs - 1); }
-
-inline Long indDVR(Long_I iFEDVR, Long_I Ngs)
-{ return (iFEDVR + 1) % (Ngs - 1); }
-
 inline Doub fe_min(VecDoub_I x, Long_I Ngs)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -140,85 +227,6 @@ inline Doub fe_max(VecDoub_I x, Long_I Ngs)
 #endif
 	return x.end() + (x[x.size()-Ngs+2] - x[x.size()-Ngs+1]);
 }
-
-// interp 1D FEDVR grid
-// x does not include both end points
-// bounds include both end points
-#ifdef SLS_USE_GSL
-inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
-{
-	Long Nx = x.size();
-	if ((Nx+1)%(Ngs-1) != 0)
-	    SLS_ERR("(Nx+1)%(Ngs-1) != 0");
-	Long Nb = (Nx+1)/(Ngs-1);
-	// Doub xmin = fe_min(x, Ngs), xmax = fe_max(x, Ngs);
-	Long ix; // grid index
-	if (lookup(ix, x, x_q))
-	    return y[ix];
-	Long iFE = indFE(ix, Ngs); // FE index
-	Long start = indFEDVR(iFE, 0, Ngs);
-
-	if (iFE == 0) { // first FE
-	    VecDoub x1(Ngs); VecComp y1(Ngs);
-	    Doub xmin = fe_min(x, Ngs);
-	    if (x_q <= xmin)
-	        return 0;
-	    x1[0] = xmin;
-	    copy(cut(x1, 1, Ngs-1), cut(x, 0, Ngs-1));
-	    y1[0] = 0;
-	    copy(cut(y1, 1, Ngs-1), cut(y, 0, Ngs-1));
-	    poly_comp_interp1 poly(x1, y1);
-	    return poly(x_q);
-	}
-	else if (iFE == Nb - 1) { // last FE
-	    VecDoub x1(Ngs); VecComp y1(Ngs);
-	    Doub xmax = fe_max(x, Ngs);
-	    if (x_q >= xmax)
-	        return 0;
-	    x1.end() = xmax;
-	    copy(cut(x1, 0, Ngs-1), cut(x, Nx-Ngs+1, Ngs-1));
-	    y1.end() = 0;
-	    copy(cut(y1, 0, Ngs-1), cut(y, Nx-Ngs+1, Ngs-1));
-	    poly_comp_interp1 poly(x1, y1);
-	    return poly(x_q);
-	}
-	else {
-	    poly_comp_interp1 poly(cut(x, start, Ngs), cut(y, start, Ngs));
-	    return poly(x_q);
-	}
-}
-#endif
-
-// 2d interp for fedvr
-#ifdef SLS_USE_GSL
-inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
-	Long_I Ngs, Doub_I x_q, Doub_I y_q)
-{
-	Long Nx = x.size(), Ny = y.size();
-	if ((Nx+1)%(Ngs-1) != 0)
-	    SLS_ERR("(Nx+1)%(Ngs-1) != 0");
-	if ((Ny+1)%(Ngs-1) != 0)
-	    SLS_ERR("(Ny+1)%(Ngs-1) != 0");
-	Long Nbx = (Nx+1)/(Ngs-1), Nby = (Ny+1)/(Ngs-1);
-	// Doub x_min = fe_min(x, Ngs), x_max = fe_max(x, Ngs);
-	// Doub y_min = fe_min(y, Ngs), y_max = fe_max(y, Ngs);
-	Long ix, iy; // grid index
-	lookup(ix, x, x_q); lookup(iy, y, y_q);
-	Long iFEx = indFE(ix, Ngs), iFEy = indFE(iy, Ngs); // FE index
-	if (iFEx == 0 || iFEy == 0 || iFEx == Nbx - 1 || iFEy == Nby - 1) // 1st FE
-	    SLS_ERR("not implemented!");
-	VecDoub y1(Ngs); VecComp val1(Ngs);
-	Long start = indFEDVR(iFEy, 0, Ngs);
-	SvecDoub_c x_sli =  cut(x, ix, Ngs);
-	for (Long j = start; j < start + Ngs; ++j) {
-	    poly_comp_interp1 poly(x_sli, cut0(val, ix, Ngs, j));
-	    val1[j-start] = poly(x_q);
-	    y1[j-start] = y[j];
-	}
-	poly_comp_interp1 poly(y1, val1);
-	return poly(y_q);
-}
-#endif
 
 // single FEDVR basis function, with maximum 1
 inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
@@ -349,12 +357,6 @@ inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I bounds, Long_I Ngs)
 	FEDVR_grid(x, w, wFE, xFE, x0, w0);
 }
 
-// number of non-zero elements in fedvr second derivative matrix
-inline Long fedvr_d2_nnz(Long_I Ngs, Long_I Nfe)
-{
-	return (Ngs*Ngs - 1)*Nfe - 4 * Ngs + 3;
-}
-
 // sparse second derivative matrix for normalized FEDVR basis
 inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 {
@@ -400,7 +402,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	for (i = 0; i < Nfe - 1; ++i) {
 	    // block right boundary
 	    n = Ngs - 1;
-	    coeff = -1. / (pow(wFE[i], 1.5) * ::sqrt(wFE[i] + wFE[i + 1]));
+	    coeff = -1. / (pow(wFE[i], 1.5) * sqrt(wFE[i] + wFE[i + 1]));
 	    for (m = 1; m < n; ++m) {
 	        mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
 	        s = coeff * block(m, n);
@@ -415,7 +417,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	    D2.push(s, mm, mm);
 
 	    // block upper boundary
-	    coeff = -1. / (pow(wFE[i+1], 1.5) * ::sqrt(wFE[i] + wFE[i+1]));
+	    coeff = -1. / (pow(wFE[i+1], 1.5) * sqrt(wFE[i] + wFE[i+1]));
 	    for (n = 1; n < Ngs - 1; ++n) {
 	        mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
 	        s = coeff * block(0, n);
@@ -425,7 +427,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 
 	for (i = 0; i < Nfe - 2; ++i) {
 	    // block upper right corner
-	    coeff = -1. / (wFE[i+1] * ::sqrt((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
+	    coeff = -1. / (wFE[i+1] * sqrt((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
 	    mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
 	    s = coeff * block(0, Ngs - 1);
 	    D2.push(s, mm, nn); D2.push(s, nn, mm);
@@ -472,5 +474,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 	// Sparse Hamiltonian
 	D2_matrix(D2, w0, wFE, df);
 }
+
+
 
 } // namespace slisc

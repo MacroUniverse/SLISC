@@ -12,10 +12,10 @@ namespace slisc {
 //%--------------------------------
 //% [Tv, Tm, Tm2] = varargin{:};
 //% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);
-//% if is_dense_vec(Tv) && is_Doub(Tsv) && is_dense_mat(Tm) && is_same_major(Tm, Tm2) && is_dense_mat(Tm2) && is_Doub(Tsm2)
+//% if is_dense_vec(Tv) && is_dense_mat(Tm) && is_same_major(Tm, Tm2) && is_dense_mat(Tm2)
 inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 {
-#ifdef SLS_CHECK_BOUNDS
+#ifdef SLS_CHECK_SHAPES
 //% req('shape_cmp', {Tm,Tm2});
 	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
 	    || eigVal.size() != eigVec.n0())
@@ -25,10 +25,14 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 	copy(eigVec, A);
 	Long N = A.n1();
 	Long ret;
-//% if is_cmajor(Tm)
+//% if is_Doub(Tsv) && is_Doub(Tsm2)
+//%     if is_cmajor(Tm)
 	ret = LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
-//% else
+//%     else
 	ret = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', N, eigVec.p(), N, eigVal.p());
+//%     end
+//% else
+//%     error('Not implemented!');
 //% end
 	if (ret != 0)
 	    SLS_ERR("failed!");
@@ -57,5 +61,47 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 	if (ret != 0)
 	    SLS_ERR("failed!");
 }
+#endif
+
+#ifdef SLS_USE_MPLAPACK
+// same as eig_sym(), for quad precision, needs workspace
+//% tem('eig_sym_Q', {
+//% 'SvecQdoub' 'ScmatQdoub' 'CmatQdoub' 'VecQdoub'
+//% 'SvecQdoub' 'ScmatQdoub' 'ScmatQdoub' 'VecQdoub'
+//%  'VecQdoub' 'CmatQdoub' 'CmatQdoub' 'VecQdoub' });
+//%--------------------------------
+//% [Tv, Tm, Tm2, Twsp] = varargin{:};
+//% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);
+//% if is_dense_vec(Tv) && is_dense_mat(Tm) && is_same_major(Tm, Tm2) && is_dense_mat(Tm2)
+inline void eig_sym_Q(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A, @Twsp@_IO wsp_qd)
+{
+	Long N = A.n1();
+#ifdef SLS_CHECK_SHAPES
+//% req('shape_cmp', {Tm,Tm2});
+	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	    || eigVal.size() != eigVec.n0())
+	    SLS_ERR("wrong shape!");
+	if (wsp_qd.size() != 3*N) // this is gessed, Rsyev will show have error is not enough.
+		SLS_ERR("wrong shape!");
+#endif
+
+//% req('copy(v,v)', {Tm,Tm2});
+	copy(eigVec, A);
+	Long ret;
+//% if is_Qdoub(Tsv) && is_Qdoub(Tsm2) && is_cmajor(Tm)
+	// Rsyev(const char *jobz, const char *uplo, mplapackint const n, _Float128 *a, mplapackint const lda, _Float128 *w, _Float128 *work, mplapackint const lwork, mplapackint &info);
+	mplapackint ret0;
+	Rsyev("V", "U", N, eigVec.p(), N, eigVal.p(), wsp_qd.p(), wsp_qd.size(), ret0);
+	ret = ret0;
+//% else
+//%     error('Not implemented!');
+//% end
+	if (ret != 0)
+	    SLS_ERR("failed!");
+}
+//% else
+//%     error('Not implemented!');
+//% end
+//%------------------------
 #endif
 } // namespace slisc

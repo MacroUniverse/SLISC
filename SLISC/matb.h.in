@@ -288,7 +288,8 @@ inline Matb::~Matb()
 // save() functions
 
 // save() for scalar
-//% tem('save', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'});
+//% tem('save', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Qdoub';
+//%    'Comp'; 'Qcomp'; });
 //%--------------------
 //% T = varargin{:};
 inline void save(@T@_I s, Str_I varname, Matb_IO matb)
@@ -321,11 +322,15 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 //%----------------------
 
 // save() for containers
-//% tem('save1', {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//%     'SvecChar'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
+//% tem('save1', {'VecChar'; 'VecInt'; 'VecLlong';
+//%     'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%     'SvecChar'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub';
+//%     'SvecComp'; 'SvecQcomp';
+//%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecQdoub';
+//%     'vecComp'; 'vecQcomp';
 //%     'DvecLlong'; 'DvecDoub'; 'DvecComp'; 'CmatChar'; 'CmatInt';
-//%     'CmatLlong'; 'CmatDoub'; 'CmatComp'; 'MatChar'; 'MatInt';
+//%     'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
+//%     'CmatComp'; 'CmatQcomp'; 'MatChar'; 'MatInt';
 //%     'MatLlong'; 'MatDoub'; 'MatComp'; 'ScmatInt';
 //%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp'; 'DcmatInt';
 //%     'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
@@ -401,19 +406,19 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 
 // read matb files
 // return 0 if successful, -1 if variable not found
-//% tem('load', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
-//%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
-//%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//%         'Cmat4Doub'; 'Cmat4Comp';
+//% tem('load', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';
+//%    'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%    'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
+//%    'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%    'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%    'Cmat4Doub'; 'Cmat4Qdoub'; 'Cmat4Comp'; 'Cmat4Qcomp';
 //% });
 //%---------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
-//% if ~(is_Char(Ts) || is_Int(Ts) || is_Llong(Ts) || is_Doub(Ts) || is_Comp(Ts))
-//%     error('not implemented!');
+//% if ~(is_Char(Ts) || is_Int(Ts) || is_Llong(Ts) || is_Doub(Ts) || is_Qdoub(Ts) || is_Comp(Ts) || is_Qcomp(Ts))
+//%     error('not implemented (421)!');
 //% end
 //% if is_scalar(T)
 inline void load(@T@_O s, Str_I varname, Matb_IO matb)
