@@ -835,6 +835,7 @@ inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0)
 	    v[i] = v0[i];
 }
 
+#ifdef SLS_USE_QUAD_MATH
 inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0)
 {
 	ifstream input(file);
@@ -858,6 +859,7 @@ inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0)
 	for (Long i = 0; i < size(v0); ++i)
 	    v[i] = v0[i];
 }
+#endif
 
 // get time-stamp of a file
 #ifndef SLS_USE_MSVC

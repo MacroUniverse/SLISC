@@ -505,7 +505,6 @@ inline void copy(DcmatDoub_O v, Doub_I s)
 	    vecset(&v(0, j), s, N1);
 }
 
-
 inline void copy(DcmatComp_O v, Comp_I s)
 {
 	Long N1 = v.n0(), N2 = v.n1();
@@ -916,7 +915,6 @@ inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
 	matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
 }
 
-
 inline void copy(DcmatComp_O v, DcmatComp_I v1)
 {
 	assert_same_shape(v, v1);
@@ -924,7 +922,6 @@ inline void copy(DcmatComp_O v, DcmatComp_I v1)
 	    return;
 	matcpy(v.p(), v.lda(), v1.p(), v1.lda(), v.n0(), v.n1());
 }
-
 
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
 {
@@ -1213,10 +1210,6 @@ DcmatDoub_c band(CbandDoub_I);
 inline void copy(CbandDoub_O a, Doub_I s)
 { copy(band(a), s); }
 
-DcmatQdoub band(CbandQdoub_IO);
-DcmatQdoub_c band(CbandQdoub_I);
-inline void copy(CbandQdoub_O a, Qdoub_I s)
-{ copy(band(a), s); }
 
 DcmatComp band(CbandComp_IO);
 DcmatComp_c band(CbandComp_I);
@@ -1234,15 +1227,6 @@ inline void copy(CbandDoub_O a, CbandDoub_I b)
 	copy(band(a), band(b));
 }
 
-inline void copy(CbandQdoub_O a, CbandQdoub_I b)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
-	    SLS_ERR("wrong shape!");
-#endif
-	a.reshape(b.n0(), b.nup(), b.nlow());
-	copy(band(a), band(b));
-}
 
 inline void copy(CbandComp_O a, CbandComp_I b)
 {
@@ -1254,15 +1238,6 @@ inline void copy(CbandComp_O a, CbandComp_I b)
 	copy(band(a), band(b));
 }
 
-inline void copy(CbandQcomp_O a, CbandQcomp_I b)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (a.idiag() < b.nup() || a.lda() - a.idiag() - 1 < b.nlow())
-	    SLS_ERR("wrong shape!");
-#endif
-	a.reshape(b.n0(), b.nup(), b.nlow());
-	copy(band(a), band(b));
-}
 
 
 inline void copy(CmatDoub_O a, CbandDoub_I b)

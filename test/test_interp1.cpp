@@ -83,14 +83,14 @@ void test_interp1()
 			y1[i] = sin(x1[i]);
 		}
 			
-		Spline_interp spline(x0.p(), x0.size(), y0.p());
+		Spline_interp_Doub spline(x0.p(), x0.size(), y0.p());
 		for (Long i = 0; i < N0; ++i) {
 			if (abs(spline.interp(x1[i]) - y1[i]) > 1e-5)
 				SLS_FAIL;
 		}
 
 		linspace(x0, 1, N0);
-		Spline_interp spline1(x0, x0);
+		Spline_interp_Doub spline1(x0, x0);
 		for (Long i = 1; i < N0; ++i) {
 			if (abs(spline1.interp(x0[i] - 0.5) - (x0[i]-0.5)) > 1e-10)
 				SLS_FAIL;

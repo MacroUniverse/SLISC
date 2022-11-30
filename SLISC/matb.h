@@ -779,34 +779,6 @@ inline void save_matb(vecDoub_I v, Str_I varname, Str_I matb_file, Bool_I replac
 	matb.close();
 }
 
-inline void save(vecQdoub_I v, Str_I varname, Matb_IO matb)
-{
-	if (matb.search(varname) >= 0)
-	    SLS_ERR("variable already exist: " + varname);
-	ofstream &fout = matb.m_out;
-	if (!fout.is_open())
-	    SLS_ERR("matb file not open!");
-	// record position
-	matb.m_name.push_back(varname);
-	matb.m_ind.push_back(fout.tellp());
-	// write variable name info
-	write(fout, (Llong)varname.size()); write(fout, varname);
-	// write data type info
-	write(fout, Llong(23));
-	// write shape info
-	write(fout, Llong(1));
-	// write matrix data
-	write(fout, (Llong)v.size());
-	for (Long i = 0; i < (Long)v.size(); ++i)
-	    write(fout, v[i]);
-}
-
-inline void save_matb(vecQdoub_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
-{
-	Matb matb(matb_file, "w", replace);
-	save(v, varname, matb);
-	matb.close();
-}
 
 inline void save(vecComp_I v, Str_I varname, Matb_IO matb)
 {
@@ -837,34 +809,6 @@ inline void save_matb(vecComp_I v, Str_I varname, Str_I matb_file, Bool_I replac
 	matb.close();
 }
 
-inline void save(vecQcomp_I v, Str_I varname, Matb_IO matb)
-{
-	if (matb.search(varname) >= 0)
-	    SLS_ERR("variable already exist: " + varname);
-	ofstream &fout = matb.m_out;
-	if (!fout.is_open())
-	    SLS_ERR("matb file not open!");
-	// record position
-	matb.m_name.push_back(varname);
-	matb.m_ind.push_back(fout.tellp());
-	// write variable name info
-	write(fout, (Llong)varname.size()); write(fout, varname);
-	// write data type info
-	write(fout, Llong(43));
-	// write shape info
-	write(fout, Llong(1));
-	// write matrix data
-	write(fout, (Llong)v.size());
-	for (Long i = 0; i < (Long)v.size(); ++i)
-	    write(fout, v[i]);
-}
-
-inline void save_matb(vecQcomp_I v, Str_I varname, Str_I matb_file, Bool_I replace = false)
-{
-	Matb matb(matb_file, "w", replace);
-	save(v, varname, matb);
-	matb.close();
-}
 
 inline void save(DvecLlong_I v, Str_I varname, Matb_IO matb)
 {

@@ -14,6 +14,7 @@ elseif (is_Diag(T)), ret = 31;
 elseif (is_Mcoo(T)), ret = 32;
 elseif (is_Mcooh(T)), ret = 33;
 elseif (is_Cmobd(T)), ret = 34;
+elseif (is_Cband(T)), ret = 35;
 
 elseif (is_Svec(T)), ret = 40;
 elseif (is_Dvec(T)), ret = 41;
@@ -27,6 +28,7 @@ elseif (is_Svec_c(T)), ret = 48;
 elseif (is_Scmat_c(T)), ret = 49;
 elseif (is_Scmat3(T)), ret = 50;
 elseif (is_Scmat3_c(T)), ret = 51;
+elseif (is_vec(T)), ret = 100;
 else, ret = -1;
 end
 end

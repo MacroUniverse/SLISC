@@ -975,9 +975,6 @@ inline Doub sum(vecDoub_I v) { return sum_v(v.data(), v.size()); }
 
 inline Doub prod(vecDoub_I v) { return prod_v(v.data(), v.size()); }
 
-inline Qdoub sum(vecQdoub_I v) { return sum_v(v.data(), v.size()); }
-
-inline Qdoub prod(vecQdoub_I v) { return prod_v(v.data(), v.size()); }
 
 inline Llong sum(VecInt_I v) { return sum_v(v.p(), v.size()); }
 
