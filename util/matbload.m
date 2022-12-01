@@ -2,21 +2,32 @@
 % varnames is a cell array containing the names of the variables exported
 % use mattload(fname, 'var1', 'var2', ...) to load specific variables
 
-function matbload(fname, varargin)
+function varnames = matbload(fname, varargin)
 fid = fopen(fname, 'r');
-for ii = 1:1e10
+end_mark = 'Matb_End_of_File';
+fseek(fid, -numel(end_mark), 'eof');
+tmp = fread(fid, [1,numel(end_mark)], '*char');
+if ~strcmp(end_mark, tmp)
+    error(['file corrupted: ' fname]);
+end
+fseek(fid, -numel(end_mark)-8, 'eof');
+numvars = fread(fid, 1, 'int64');
+fseek(fid, 0, 'bof');
+varnames = {};
+Nloaded = 0;
+for ii = 1:numvars
     Nname = fread(fid, 1, 'int64');
     if (Nname > 100)
-        break;
+        error('var name too long!');
     end
     varname = fread(fid, [1,Nname], '*char');
     matclass = fread(fid, 1, 'int64'); % 21:double, 41:complex
     if ~(matclass >= 0 && matclass < 60)
-        break;
+        error('illegal class!');
     end
     ndim = fread(fid, 1, 'int64');
     if ndim > 4
-        break;
+        error('illegal dimension!');
     end
     if (ndim == 0) % scalar
         matsize = [1,1];
@@ -51,17 +62,30 @@ for ii = 1:1e10
         else
             error('not implemented!');
         end
-        if feof(fid), break; end
+        if feof(fid), error('wrong number of elements!'); end
         data = reshape(data, matsize);
         assignin('caller', varname, data);
+        Nloaded = Nloaded + 1;
+        if Nloaded == numel(varargin)
+            break;
+        end
     else
-        if matclass == 21 % double
-            seekg(fid, matnumel*8, 'cof');
+        if matclass == 1 % char
+            fseek(fid, matnumel, 'cof');
+        elseif matclass == 2 % int32
+            fseek(fid, matnumel*4, 'cof');
+        elseif matclass == 3 % int64
+            fseek(fid, matnumel*8, 'cof');
+        elseif matclass == 21 % double
+            fseek(fid, matnumel*8, 'cof');
         elseif matclass == 41 % complex
-            seekg(fid, matnumel*16, 'cof');
+            fseek(fid, matnumel*16, 'cof');
         else
             error('not implemented!');
         end
+        if feof(fid), error('wrong number of elements!'); end
     end
+    varnames = [varnames, {varname}];
 end
+fclose(fid);
 end
