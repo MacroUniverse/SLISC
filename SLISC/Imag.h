@@ -461,7 +461,6 @@ inline Limag operator-(Limag_I z) { return Limag(-z.imag()); }
 inline Qimag operator-(Qimag_I z) { return Qimag(-z.imag()); }
 #endif
 
-// TODO: use template
 Doub &imag_r(Comp_IO);
 inline void operator+=(Comp_IO z1, Imag_I z2) { imag_r(z1) += imag(z2); }
 inline void operator-=(Comp_IO z1, Imag_I z2) { imag_r(z1) -= imag(z2); }

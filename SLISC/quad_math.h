@@ -74,10 +74,57 @@ inline ostream& operator<<(ostream& os, const complex<__float128> &x)
 	return os;
 }
 
+// scanf("%Qg") doesn't work, not enough precision
 inline istream& operator>>(istream& is, __float128 &x)
 {
-	double tmp;
-	is >> tmp; x = tmp;
+	// ignore space and 0
+	bool has_dot = false;
+	int dot_pos = 0;
+	bool negative = false;
+	char c;
+	while (true) {
+		is.get(c);
+		if (!is) break;
+		else if (c == ' ' || c == '\r' || c == '\t' ||
+			c == '\n' ||  c == '0' || c == '+')
+			continue;
+		else if (c == '-') {
+			negative = !negative; continue;
+		}
+		else if ('1' <= c && c <= '9') {
+			// first number
+			x = __float128(c - '0');
+			break;
+		}
+		else if (c == '.') {
+			x = 0.Q; has_dot = true; break;
+		}
+		else
+			SLS_ERR("unexpected stdin char!");
+	}
+
+	// get rest of 0-9 and '.'
+	while (is) {
+		is.get(c);
+		if (!is) break;
+		if ('0' <= c && c <= '9') {
+			x = 10.Q*x + __float128(c - '0');
+			if (has_dot) { ++dot_pos; }
+		}
+		else if (c == '.')
+			has_dot = true;
+		else if (c == 'e' || c == 'E') {
+			long long expo;
+			cin >> expo;
+			x *= pow(10.Q, expo - dot_pos);
+			break;
+		}
+		else {
+			x *= pow(10.Q, -dot_pos);
+			break;
+		}
+	}
+	if (negative) x = -x;
 	return is;
 }
 
