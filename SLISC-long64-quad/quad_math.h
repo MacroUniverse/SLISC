@@ -40,7 +40,7 @@ inline string quad2str(const __float128 x, const int prec = 5)
 {
 	char buf[128];
 	int width = 46;
-	quadmath_snprintf(buf, sizeof buf, ("%." + to_string(prec-1) + "Qe").c_str(), width, x);
+	quadmath_snprintf(buf, sizeof buf, ("%." + to_string(prec-1) + "Qg").c_str(), width, x);
 	return buf;
 }
 
@@ -86,12 +86,12 @@ inline istream& operator>>(istream& is, __float128 &x)
 		is.get(c);
 		if (!is) break;
 		else if (c == ' ' || c == '\r' || c == '\t' ||
-			c == '\n' ||  c == '0' || c == '+')
+			c == '\n' || c == '+')
 			continue;
 		else if (c == '-') {
 			negative = !negative; continue;
 		}
-		else if ('1' <= c && c <= '9') {
+		else if ('0' <= c && c <= '9') {
 			// first number
 			x = __float128(c - '0');
 			break;

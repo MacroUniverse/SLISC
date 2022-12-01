@@ -74,7 +74,7 @@ inline ostream& operator<<(ostream& os, const complex<__float128> &x)
 	return os;
 }
 
-// scanf("%Qg") doesn't work, not enough precision
+// scanf("%Qe") doesn't work, not enough precision
 inline istream& operator>>(istream& is, __float128 &x)
 {
 	// ignore space and 0
@@ -86,12 +86,12 @@ inline istream& operator>>(istream& is, __float128 &x)
 		is.get(c);
 		if (!is) break;
 		else if (c == ' ' || c == '\r' || c == '\t' ||
-			c == '\n' ||  c == '0' || c == '+')
+			c == '\n' || c == '+')
 			continue;
 		else if (c == '-') {
 			negative = !negative; continue;
 		}
-		else if ('1' <= c && c <= '9') {
+		else if ('0' <= c && c <= '9') {
 			// first number
 			x = __float128(c - '0');
 			break;
