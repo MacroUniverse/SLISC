@@ -73,7 +73,7 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 //% [Tv, Tm, Tm2, Twsp] = varargin{:};
 //% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);
 //% if is_dense_vec(Tv) && is_dense_mat(Tm) && is_same_major(Tm, Tm2) && is_dense_mat(Tm2)
-inline void eig_sym_Q(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A, @Twsp@_IO wsp_qd)
+inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A, @Twsp@_IO wsp_qd)
 {
 	Long N = A.n1();
 #ifdef SLS_CHECK_SHAPES

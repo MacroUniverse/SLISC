@@ -223,7 +223,7 @@ inline Bool operator>(Bint_I x, Llong_I y)
 inline Bool operator>(Llong_I y, Bint_I x)
 { return fmpz_cmp_si(x.m_n, y) < 0; }
 
-inline Bool is_odd(Bint_I x)
+inline Bool isodd(Bint_I x)
 { return fmpz_is_odd(x.m_n); }
 
 // arithmetic

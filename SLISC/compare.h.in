@@ -16,7 +16,7 @@
 #include "Jcmat3.h"
 
 namespace slisc {
-//% tem('equals_vs', { 'Comp', 'Doub' });
+//% tem('equals_vs', { 'Comp' 'Doub'; 'Qcomp' 'Qdoub'; });
 //%------------------------
 //% [T, T1] = varargin{:};
 inline Bool equals_vs(const @T@ *v, @T1@_I s, Long_I N)
@@ -43,6 +43,7 @@ inline Bool equals_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //% tem('shape_cmp', {
 //% 'vecInt', 'vecInt';  
 //% 'CmatDoub', 'CmatDoub';
+//% 'CmatQdoub', 'CmatQdoub';
 //% 'Mat3Doub', 'Mat3Comp'; });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
@@ -94,8 +95,11 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //%   'VecInt', 'VecInt';
 //%   'VecLlong', 'VecLlong';
 //%   'VecDoub', 'VecDoub';
+//%   'VecQdoub', 'VecQdoub';
 //%   'VecDoub', 'VecComp';
+//%   'VecQdoub', 'VecQcomp';
 //%   'VecComp', 'VecComp';
+//%   'VecQcomp', 'VecQcomp';
 //%   'MatLlong', 'MatLlong';
 //%   'MatDoub' 'MatDoub'
 //%   'MatDoub' 'CmatDoub'
@@ -105,15 +109,21 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //%   'CmatInt' 'CmatInt'
 //%   'CmatLlong' 'CmatLlong'
 //%   'CmatDoub', 'CmatDoub';
+//%   'CmatQdoub', 'CmatQdoub';
 //%   'CmatDoub', 'MatDoub';
 //%   'CmatComp', 'MatComp';
 //%   'CmatComp', 'CmatComp';
+//%   'CmatQcomp', 'CmatQcomp';
 //%   'Cmat3Llong' 'Cmat3Llong'
 //%   'Cmat3Doub' 'Cmat3Doub'
+//%   'Cmat3Qdoub' 'Cmat3Qdoub'
 //%   'Cmat3Comp' 'Cmat3Comp'
+//%   'Cmat3Qcomp' 'Cmat3Qcomp'
 //%   'Mat3Doub' 'Mat3Doub'
 //%   'DcmatDoub' 'CmatDoub'
+//%   'DcmatQdoub' 'CmatQdoub'
 //%   'Jcmat3Doub' 'Cmat3Doub'
+//%   'Jcmat3Qdoub' 'Cmat3Qdoub'
 //% });
 //%--------------------------
 //% [T1, T2] = varargin{:};
@@ -171,9 +181,10 @@ inline Bool operator!=(VecBool_I v1, VecBool_I v2)
 { return !(v1 == v2); }
 
 //% tem('v==s', { 'VecInt'; 'VecLlong';
-//%   'VecDoub'; 'VecComp'; 'DvecInt'; 'DvecDoub';
-//%  'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%   'MatDoub'; 'Mat3Doub'; 'Cmat3Doub'; });
+//%   'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp'; 'DvecInt';
+//%   'DvecDoub'; 'DvecQdoub';
+//%  'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%   'MatDoub'; 'Mat3Doub'; 'Cmat3Doub'; 'Cmat3Qdoub'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline Bool operator==(@T@_I v, @Ts@_I s)

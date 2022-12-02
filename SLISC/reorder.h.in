@@ -4,10 +4,11 @@
 
 namespace slisc {
 
-//% tem('resize_cpy', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//% tem('resize_cpy', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub';
+//%     'VecComp'; 'VecQcomp';
 //%     'CmatInt'; 'CmatLlong';
-//%     'CmatDoub'; 'CmatComp'; 'Cmat3Doub';
-//%     'Cmat3Comp';});
+//%     'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'Cmat3Doub'; 'Cmat3Qdoub';
+//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
 //%--------------------------------
 //% Tv = varargin{:};
 //% T = val_t(Tv);
@@ -86,7 +87,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
 //% end
 //%-------------------------
 
-//% tem('flip_v', { 'Doub' });
+//% tem('flip_v', { 'Doub'; 'Qdoub'; });
 //%---------------------------------
 //% T = varargin{:};
 inline void flip_v(@T@ *v, Long_I N)
@@ -96,7 +97,7 @@ inline void flip_v(@T@ *v, Long_I N)
 }
 //%---------------------
 
-//% tem('flip_vv', { 'Doub', 'Doub' });
+//% tem('flip_vv', { 'Doub' 'Doub'; 'Qdoub' 'Qdoub' });
 //%---------------------------------
 //% [T, T1] = varargin{:};
 inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
@@ -106,8 +107,9 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%----------------------------
 
-//% tem('flip_vec', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
-//%  'vecLlong'; 'vecDoub'; 'vecComp'; 'vecStr'; });
+//% tem('flip_vec', { 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub';
+//%  'VecComp'; 'VecQcomp';
+//%  'vecLlong'; 'vecDoub'; 'vecQdoub'; 'vecComp'; 'vecQcomp'; 'vecStr'; });
 //%---------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
 //% if is_dense(Tv)
@@ -120,7 +122,8 @@ inline void flip(@Tv@_IO v)
 //%---------------------------
 
 //% tem('flip(v,v)', { 'VecInt', 'VecInt';
-//%    'VecDoub', 'VecDoub' });
+//%    'VecDoub', 'VecDoub'
+//%    'VecQdoub', 'VecQdoub' });
 //%---------------------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 //% if is_dense(T) && is_dense(T1)
@@ -140,7 +143,9 @@ inline void flip(@T@_O v, @T1@_I v1)
 //%     'VecInt', 'VecInt';
 //%     'VecLlong', 'VecLlong';
 //%     'VecDoub', 'VecLlong';
+//%     'VecQdoub', 'VecLlong';
 //%     'SvecComp', 'VecLlong';
+//%     'SvecQcomp', 'VecLlong';
 //%     'vecStr', 'vecLlong';
 //%     'vecStr32', 'vecLlong';
 //% });
@@ -168,7 +173,8 @@ inline void reorder(@Tv@_O v, @To@_I order)
 }
 //%-------------------------
 
-//% tem('trans', { 'CmatInt'; 'CmatDoub'; 'ScmatDoub'; 'DcmatDoub';
+//% tem('trans', { 'CmatInt'; 'CmatDoub'; 'CmatQdoub';
+//%     'ScmatDoub'; 'ScmatQdoub'; 'DcmatDoub'; 'DcmatQdoub';
 //% 'CmatQdoub' });
 //%--------------------------
 //% T = varargin{:};
@@ -189,11 +195,14 @@ inline void trans(@T@_IO v)
 //%   'CmatInt' 'CmatInt';
 //%   'CmatLlong' 'CmatLlong';
 //%   'CmatDoub' 'CmatDoub';
+//%   'CmatQdoub' 'CmatQdoub';
 //%   'CmatComp' 'CmatComp';
+//%   'CmatQcomp' 'CmatQcomp';
 //%   'MatComp' 'CmatComp'
 //%   'ScmatDoub' 'ScmatDoub';
+//%   'ScmatQdoub' 'ScmatQdoub';
 //%   'ScmatComp' 'ScmatComp';
-//%   'CmatQdoub' 'CmatQdoub' });
+//%   'ScmatQcomp' 'ScmatQcomp'; });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% [Ts,Ts1] = val_t(T,T1);

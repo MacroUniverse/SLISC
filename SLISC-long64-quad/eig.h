@@ -73,7 +73,7 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 
 #ifdef SLS_USE_MPLAPACK
 // same as eig_sym(), for quad precision, needs workspace
-inline void eig_sym_Q(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, CmatQdoub_I A, VecQdoub_IO wsp_qd)
+inline void eig_sym(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, CmatQdoub_I A, VecQdoub_IO wsp_qd)
 {
 	Long N = A.n1();
 #ifdef SLS_CHECK_SHAPES
@@ -94,7 +94,7 @@ inline void eig_sym_Q(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, CmatQdoub_I A, Ve
 	    SLS_ERR("failed!");
 }
 
-inline void eig_sym_Q(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, ScmatQdoub_I A, VecQdoub_IO wsp_qd)
+inline void eig_sym(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, ScmatQdoub_I A, VecQdoub_IO wsp_qd)
 {
 	Long N = A.n1();
 #ifdef SLS_CHECK_SHAPES
@@ -115,7 +115,7 @@ inline void eig_sym_Q(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, ScmatQdoub_I A, V
 	    SLS_ERR("failed!");
 }
 
-inline void eig_sym_Q(VecQdoub_O eigVal, CmatQdoub_O eigVec, CmatQdoub_I A, VecQdoub_IO wsp_qd)
+inline void eig_sym(VecQdoub_O eigVal, CmatQdoub_O eigVec, CmatQdoub_I A, VecQdoub_IO wsp_qd)
 {
 	Long N = A.n1();
 #ifdef SLS_CHECK_SHAPES

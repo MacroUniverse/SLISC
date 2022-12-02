@@ -70,6 +70,7 @@ inline void resize_cpy(VecDoub_IO v, Long_I N, Doub_I val = 0)
 	}
 }
 
+
 inline void resize_cpy(VecComp_IO v, Long_I N, Comp_I val = 0)
 {
 	Long Nold = v.size();
@@ -91,6 +92,7 @@ inline void resize_cpy(VecComp_IO v, Long_I N, Comp_I val = 0)
 		}
 	}
 }
+
 
 inline void resize_cpy(CmatInt_IO v, Long_I N0, Long_I N1, Int_I val = 0)
 {
@@ -152,6 +154,7 @@ inline void resize_cpy(CmatDoub_IO v, Long_I N0, Long_I N1, Doub_I val = 0)
 	}
 }
 
+
 inline void resize_cpy(CmatComp_IO v, Long_I N0, Long_I N1, Comp_I val = 0)
 {
 	Long N10 = v.n0(), N20 = v.n1(), Nold = N0*N1;
@@ -192,6 +195,7 @@ inline void resize_cpy(Cmat3Doub_IO v, Long_I N0, Long_I N1, Long_I N2, Doub_I v
 	}
 }
 
+
 inline void resize_cpy(Cmat3Comp_IO v, Long_I N0, Long_I N1, Long_I N2, Comp_I val = 0)
 {
 	Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), Nold = N0*N1;
@@ -213,11 +217,13 @@ inline void resize_cpy(Cmat3Comp_IO v, Long_I N0, Long_I N1, Long_I N2, Comp_I v
 }
 
 
+
 inline void flip_v(Doub *v, Long_I N)
 {
 	for (Long i = 0; i < N / 2; ++i)
 		swap(v[i], v[N - i - 1]);
 }
+
 
 inline void flip_v(Int *v, Long_I N)
 {
@@ -250,6 +256,7 @@ inline void flip_vv(Doub *v, const Doub *v1, Long_I N)
 		v[i] = v1[N - i - 1];
 }
 
+
 inline void flip_vv(Int *v, const Int *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
@@ -266,8 +273,10 @@ inline void flip(VecLlong_IO v)
 inline void flip(VecDoub_IO v)
 { flip_v(&v[0], v.size()); }
 
+
 inline void flip(VecComp_IO v)
 { flip_v(&v[0], v.size()); }
+
 
 inline void flip(vecLlong_IO v)
 { flip_v(&v[0], v.size()); }
@@ -275,8 +284,10 @@ inline void flip(vecLlong_IO v)
 inline void flip(vecDoub_IO v)
 { flip_v(&v[0], v.size()); }
 
+
 inline void flip(vecComp_IO v)
 { flip_v(&v[0], v.size()); }
+
 
 inline void flip(vecStr_IO v)
 { flip_v(&v[0], v.size()); }
@@ -293,6 +304,7 @@ inline void flip(VecDoub_O v, VecDoub_I v1)
 	assert_same_shape(v, v1);
 	flip_vv(v.p(), v1.p(), v1.size());
 }
+
 
 
 inline void reorder(VecInt_O v, VecInt_I order)
@@ -343,6 +355,7 @@ inline void reorder(VecDoub_O v, VecLlong_I order)
 		v[i] = u[i];
 }
 
+
 inline void reorder(SvecComp_O v, VecLlong_I order)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -358,6 +371,7 @@ inline void reorder(SvecComp_O v, VecLlong_I order)
 	for (Long i = 0; i < N; ++i)
 		v[i] = u[i];
 }
+
 
 inline void reorder(vecStr_O v, vecLlong_I order)
 {
@@ -590,6 +604,7 @@ inline void trans(CmatDoub_IO v)
 			swap(v(i, j), v(j, i));
 }
 
+
 inline void trans(ScmatDoub_IO v)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -600,6 +615,7 @@ inline void trans(ScmatDoub_IO v)
 		for (Long j = 0; j < i; ++j)
 			swap(v(i, j), v(j, i));
 }
+
 
 inline void trans(DcmatDoub_IO v)
 {
@@ -658,6 +674,7 @@ inline void trans(CmatDoub_O v, CmatDoub_I v1)
 			v(i, j) = v1(j, i);
 }
 
+
 inline void trans(CmatComp_O v, CmatComp_I v1)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -668,6 +685,7 @@ inline void trans(CmatComp_O v, CmatComp_I v1)
 		for (Long j = 0; j < v.n1(); ++j)
 			v(i, j) = v1(j, i);
 }
+
 
 inline void trans(MatComp_O v, CmatComp_I v1)
 {
@@ -690,6 +708,7 @@ inline void trans(ScmatDoub_O v, ScmatDoub_I v1)
 		for (Long j = 0; j < v.n1(); ++j)
 			v(i, j) = v1(j, i);
 }
+
 
 inline void trans(ScmatComp_O v, ScmatComp_I v1)
 {

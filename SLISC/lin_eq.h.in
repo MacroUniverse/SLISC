@@ -4,8 +4,9 @@
 
 #ifdef SLS_USE_LAPACKE
 namespace slisc {
-//not the most accurate, see also ?gerfs
-//% tem('inv_mat', {'CmatDoub'; 'ScmatDoub';});
+// invert matrix
+//% tem('inv_mat', { 'CmatDoub'; 'ScmatDoub';
+//%     'CmatComp'; 'ScmatComp'; });
 //%---------------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -15,19 +16,52 @@ inline void inv_mat(@T@_IO A)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
-	Long N = A.n0();
+	Long N = A.n0(), ret;
 	VecLong ipiv(N);
 //% if is_dense_mat(T) && is_Doub(Ts)
-	LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
-	LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
+	ret = LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+	ret = LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
 //% elseif is_dense_mat(T) && is_Comp(Ts)
-	LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
-	LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.p(), N, (double _Complex*)ipiv.p());
+	ret = LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, (double _Complex*)A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+	ret = LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
 //% else
 //%     error('not implemented (1)!');
 //% end
 }
-//%------------------------ 
+//%------------------------
+
+// invert matrix
+//% tem('inv_mat_Q', { 'CmatQdoub' 'VecQdoub';
+//%   'ScmatQdoub' 'VecQdoub';
+//%   'CmatQcomp' 'VecQcomp';
+//%   'ScmatQcomp' 'VecQcomp'; });
+//%---------------------------------
+//% [T, Twsp] = varargin{:};
+//% Ts = val_t(T);
+inline void inv_mat(@T@_IO A, @Twsp@_IO wsp)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (A.n0() != A.n1())
+	    SLS_ERR("wrong shape!");
+#endif
+	mplapackint N = A.n0(), ret;
+	VecLlong ipiv(N);
+	static_assert(sizeof(Llong) == sizeof(mplapackint));
+//% if is_dense_mat(T) && is_Qdoub(Ts)
+	Rgetrf(N, N, A.p(), N, (mplapackint*)ipiv.p(), ret); SLS_ASSERT(ret == 0);
+	Rgetri(N, A.p(), N, (mplapackint*)ipiv.p(), wsp.p(), wsp.size(), ret); SLS_ASSERT(ret == 0);
+//% elseif is_dense_mat(T) && is_Qcomp(Ts)
+	Cgetrf(N, N, A.p(), N, (mplapackint*)ipiv.p(), ret); SLS_ASSERT(ret == 0);
+	Cgetri(N, A.p(), N, (mplapackint*)ipiv.p(), wsp.p(), wsp.size(), ret); SLS_ASSERT(ret == 0);
+//% else
+//%     error('not implemented (1)!');
+//% end
+}
+//%------------------------
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
 // ####### Not Thread Safe ######

@@ -12,12 +12,18 @@ namespace slisc {
 #ifdef SLS_USE_GSL
 //% tem('hydrogen_rR', {
 //%   'VecDoub' 'VecDoub';
+//%   'VecQdoub' 'VecQdoub';
 //%   'VecDoub' 'SvecDoub';
+//%   'VecQdoub' 'SvecQdoub';
 //%   'SvecDoub' 'VecDoub';
+//%   'SvecQdoub' 'VecQdoub';
 //%   'SvecDoub' 'SvecDoub';
+//%   'SvecQdoub' 'SvecQdoub';
 //% });
 //%-----------------------
 //% [Tv, Tv1] = varargin{:};
+//% Ts = val_t(Tv);
+//% if is_Doub(Ts)
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 {
@@ -39,6 +45,66 @@ inline void hydrogen_R(@Tv@_O rR, Int_I n, Int_I l, Doub_I Z, @Tv1@_I r)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
 	gsl_set_error_handler(NULL);
 }
+//% elseif is_Qdoub(Ts)
+// ref: https://wuli.wiki/online/HWF.html#HWF_eq7
+inline void hydrogen_rR(@Tv@_O rR, Long_I n, Long_I l, Qdoub_I Z, @Tv1@_I r)
+{
+//% req('assert_same_shape', {Tv, Tv1});
+	assert_same_shape(rR, r);
+	if (n == 1 && l == 0) {
+		Qdoub coef = 2.Q*pow(Z, 3.Q/2.Q);
+		for (Long i = 0; i < r.size(); ++i)
+			rR[i] = r[i] * coef *exp(-Z*r[i]);
+		return;
+	}
+	else if (n == 2) {
+		if (l == 0) {
+			Qdoub coef = 1.Q/sqrt(2.Q)*pow(Z, 3.Q/2.Q);
+			for (Long i = 0; i < r.size(); ++i)
+				rR[i] = r[i] * coef * (1.Q - 0.5Q*Z*r[i]) * exp(-Z*r[i]*0.5Q);
+			return;
+		}
+		else if (l == 1) {
+			Qdoub coef = 0.5Q/sqrt(6.Q) * pow(Z, 5.Q/2.Q);
+			for (Long i = 0; i < r.size(); ++i)
+				rR[i] = r[i] * coef * r[i] * exp(-Z*r[i]*0.5Q);
+			return;
+		}
+	}
+	else if (n == 3) {
+		if (l == 0) {
+			Qdoub coef = 2.Q/(3.Q*sqrt(3.Q))*pow(Z, 3.Q/2.Q);
+			for (Long i = 0; i < r.size(); ++i)
+				rR[i] = r[i] * coef * (1.Q - 2.Q/3.Q*Z*r[i] + 2.Q/27.Q*sqr(Z*r[i]))
+				 * exp(-Z*r[i]/3.Q);
+			return;
+		}
+		else if (l == 1) {
+			Qdoub coef = 8.Q/(27.Q*sqrt(6.Q))*pow(Z, 5.Q/2.Q);
+			for (Long i = 0; i < r.size(); ++i)
+				rR[i] = r[i] * coef * (1.Q - 1.Q/6.Q*Z*r[i]) *
+				    r[i] * exp(-Z*r[i]/3.Q);
+			return;
+		}
+		else if (l == 2) {
+			Qdoub coef = 4.Q/(81.Q*sqrt(30.Q)) * pow(Z, 7.Q/2.Q);
+			for (Long i = 0; i < r.size(); ++i)
+				rR[i] = r[i] * coef * sqr(r[i]) * exp(-Z*r[i]/3.Q);
+			return;
+		}
+	}
+	SLS_ERR("not implemented!");
+}
+
+// unscaled hydrogen bound state radial wave function
+inline void hydrogen_R(@Tv@_O rR, Long_I n, Long_I l, Qdoub_I Z, @Tv1@_I r)
+{
+//% req('assert_same_shape', {Tv, Tv1});
+	assert_same_shape(rR, r);
+	for (Long i = 0; i < r.size(); ++i)
+		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
+}
+//% end
 //%----------------
 #endif
 } // namespace slisc

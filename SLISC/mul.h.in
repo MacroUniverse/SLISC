@@ -212,8 +212,11 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I bet
 //%-------------------------
 
 //% tem('mul_sym', { 'VecComp', 'CmatDoub', 'VecComp'
+//%    'VecQcomp', 'CmatQdoub', 'VecQcomp'
 //%     'VecDoub', 'CmatDoub', 'VecDoub'
+//%     'VecQdoub', 'CmatQdoub', 'VecQdoub'
 //%     'VecDoub', 'CmatDoub', 'SvecDoub'
+//%     'VecQdoub', 'CmatQdoub', 'SvecQdoub'
 //% });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -259,6 +262,13 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 	// do imag part
 	cblas_dsymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
 		@lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
+//% elseif is_Qdoub(Tsy) && is_Qdoub(Tsa) && is_Qdoub(Tsx)
+	Rsymv("U", a.n0(), alpha, (@Tsa@*)a.p(), @lda@, (@Tsa@*)x.p(), @incx@, beta, y.p(), @incy@);
+//% elseif is_Qcomp(Tsy) && is_Qdoub(Tsa) && is_Qcomp(Tsx)
+	// do real part
+	Rsymv("U", a.n0(), alpha, (@Tsa@*)a.p(), @lda@, (@Tsa@*)x.p(), 2*@incx@, beta, (@Tsa@*)y.p(), 2*@incy@);
+	// do imag part
+	Rsymv("U", a.n0(), alpha, (@Tsa@*)a.p(), @lda@, (@Tsa@*)x.p()+1, 2*@incx@, beta, (@Tsa@*)y.p()+1, 2*@incy@);
 //% else
 //%     error('not implemented (18)!');
 //% end

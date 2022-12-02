@@ -40,7 +40,7 @@ inline string quad2str(const __float128 x, const int prec = 5)
 {
 	char buf[128];
 	int width = 46;
-	quadmath_snprintf(buf, sizeof buf, ("%." + to_string(prec-1) + "Qg").c_str(), width, x);
+	quadmath_snprintf(buf, sizeof buf, ("%." + to_string(prec-1) + "Qe").c_str(), width, x);
 	return buf;
 }
 
@@ -74,7 +74,7 @@ inline ostream& operator<<(ostream& os, const complex<__float128> &x)
 	return os;
 }
 
-// scanf("%Qg") doesn't work, not enough precision
+// scanf("%Qe") doesn't work, not enough precision
 inline istream& operator>>(istream& is, __float128 &x)
 {
 	// ignore space and 0

@@ -4,11 +4,11 @@
 namespace slisc {
 
 // bisection method to get the root of a function
-template <class Tfun>
-inline Doub bisection(Tfun f, Doub_I x1, Doub_I x2, Doub_I tol_x)
+template <class Tfun, class Ts>
+inline Ts bisection(Tfun f, const Ts &x1, const Ts &x2, const Ts &tol_x)
 {
-	Doub a = x1, b = x2, mid;
-	Doub fl = f(a), fr = f(b), fm;
+	Ts a = x1, b = x2, mid;
+	Ts fl = f(a), fr = f(b), fm;
 	if (fl == 0)
 		return a;
 	else if (fr == 0)
@@ -32,15 +32,15 @@ inline Doub bisection(Tfun f, Doub_I x1, Doub_I x2, Doub_I tol_x)
 
 // multi-intervel bisection method
 // not optimized
-template <class Tfun>
-void bisectionN(vecDoub_O roots, Tfun f, Doub_I x1, Doub_I x2, Long N, Doub_I tol_x)
+template <class Tfun, class Ts>
+void bisectionN(vector<Ts> &roots, Tfun f, const Ts &x1, const Ts &x2, Long N, const Ts &tol_x)
 {
 	roots.clear();
-	Doub dx = (x2 - x1) / (N-1);
+	Ts dx = (x2 - x1) / (N-1);
 	for (Long i = 0; i < N - 1; ++i) {
-		Doub a = x1 + dx*i, b = a + dx;
+		Ts a = x1 + dx*i, b = a + dx;
 		if (f(a) * f(b) <= 0) {
-			Doub x = bisection(f, a, b, tol_x);
+			Ts x = bisection(f, a, b, tol_x);
 			roots.push_back(x);
 		}
 	}

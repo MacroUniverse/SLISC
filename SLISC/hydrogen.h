@@ -30,6 +30,7 @@ inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 	gsl_set_error_handler(NULL);
 }
 
+
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
@@ -49,6 +50,7 @@ inline void hydrogen_R(VecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
 	gsl_set_error_handler(NULL);
 }
+
 
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
@@ -70,6 +72,7 @@ inline void hydrogen_R(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, VecDoub_I r)
 	gsl_set_error_handler(NULL);
 }
 
+
 // scaled hydrogen bound state radial wave function, normalized
 inline void hydrogen_rR(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 {
@@ -89,6 +92,7 @@ inline void hydrogen_R(SvecDoub_O rR, Int_I n, Int_I l, Doub_I Z, SvecDoub_I r)
 		rR[i] = gsl_sf_hydrogenicR(n, l, Z, r[i]);
 	gsl_set_error_handler(NULL);
 }
+
 
 #endif
 } // namespace slisc

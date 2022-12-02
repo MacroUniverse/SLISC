@@ -868,6 +868,7 @@ inline void save_matb(DvecDoub_I v, Str_I varname, Str_I matb_file, Bool_I repla
 	matb.close();
 }
 
+
 inline void save(DvecComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -896,6 +897,7 @@ inline void save_matb(DvecComp_I v, Str_I varname, Str_I matb_file, Bool_I repla
 	save(v, varname, matb);
 	matb.close();
 }
+
 
 inline void save(CmatChar_I v, Str_I varname, Matb_IO matb)
 {
@@ -1289,6 +1291,7 @@ inline void save_matb(ScmatDoub_I v, Str_I varname, Str_I matb_file, Bool_I repl
 	matb.close();
 }
 
+
 inline void save(ScmatComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -1409,6 +1412,7 @@ inline void save_matb(DcmatDoub_I v, Str_I varname, Str_I matb_file, Bool_I repl
 	matb.close();
 }
 
+
 inline void save(DcmatComp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -1438,6 +1442,7 @@ inline void save_matb(DcmatComp_I v, Str_I varname, Str_I matb_file, Bool_I repl
 	save(v, varname, matb);
 	matb.close();
 }
+
 
 inline void save(Cmat3Int_I v, Str_I varname, Matb_IO matb)
 {
@@ -1532,6 +1537,7 @@ inline void save_matb(Cmat3Doub_I v, Str_I varname, Str_I matb_file, Bool_I repl
 	matb.close();
 }
 
+
 inline void save(Cmat3Comp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -1562,6 +1568,7 @@ inline void save_matb(Cmat3Comp_I v, Str_I varname, Str_I matb_file, Bool_I repl
 	save(v, varname, matb);
 	matb.close();
 }
+
 
 inline void save(Mat3Int_I v, Str_I varname, Matb_IO matb)
 {
@@ -1720,6 +1727,7 @@ inline void save_matb(Cmat4Doub_I v, Str_I varname, Str_I matb_file, Bool_I repl
 	matb.close();
 }
 
+
 inline void save(Cmat4Comp_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
@@ -1754,6 +1762,7 @@ inline void save_matb(Cmat4Comp_I v, Str_I varname, Str_I matb_file, Bool_I repl
 }
 
 
+
 // save string as VecChar
 inline void save(Str_I str, Str_I varname, Matb_IO matb)
 {
@@ -1774,7 +1783,7 @@ inline void load(Char_O s, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (1 < matb.m_type[i])
+	if (1 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
 	    SLS_ERR("wrong dimension!");
@@ -1797,7 +1806,7 @@ inline void load(Int_O s, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (2 < matb.m_type[i])
+	if (2 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
 	    SLS_ERR("wrong dimension!");
@@ -1820,7 +1829,7 @@ inline void load(Llong_O s, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (3 < matb.m_type[i])
+	if (3 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
 	    SLS_ERR("wrong dimension!");
@@ -1843,7 +1852,7 @@ inline void load(Doub_O s, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
 	    SLS_ERR("wrong dimension!");
@@ -1867,7 +1876,7 @@ inline void load(Comp_O s, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
 	    SLS_ERR("wrong dimension!");
@@ -1891,7 +1900,7 @@ inline void load(VecChar_O v, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (1 < matb.m_type[i])
+	if (1 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
 	    SLS_ERR("wrong dimension!");
@@ -1917,7 +1926,7 @@ inline void load(VecInt_O v, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (2 < matb.m_type[i])
+	if (2 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
 	    SLS_ERR("wrong dimension!");
@@ -1943,7 +1952,7 @@ inline void load(VecLlong_O v, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (3 < matb.m_type[i])
+	if (3 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
 	    SLS_ERR("wrong dimension!");
@@ -1969,7 +1978,7 @@ inline void load(VecDoub_O v, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
 	    SLS_ERR("wrong dimension!");
@@ -1996,7 +2005,7 @@ inline void load(VecComp_O v, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
 	    SLS_ERR("wrong dimension!");
@@ -2024,7 +2033,7 @@ inline void load(MatInt_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (2 < matb.m_type[i])
+	if (2 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2052,7 +2061,7 @@ inline void load(MatLlong_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (3 < matb.m_type[i])
+	if (3 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2080,7 +2089,7 @@ inline void load(MatDoub_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2108,7 +2117,7 @@ inline void load(MatComp_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2136,7 +2145,7 @@ inline void load(Mat3Doub_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -2166,7 +2175,7 @@ inline void load(Mat3Comp_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -2196,7 +2205,7 @@ inline void load(CmatInt_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (2 < matb.m_type[i])
+	if (2 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2224,7 +2233,7 @@ inline void load(CmatLlong_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (3 < matb.m_type[i])
+	if (3 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2252,7 +2261,7 @@ inline void load(CmatDoub_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2281,7 +2290,7 @@ inline void load(CmatComp_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -2310,7 +2319,7 @@ inline void load(Cmat3Int_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (2 < matb.m_type[i])
+	if (2 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -2340,7 +2349,7 @@ inline void load(Cmat3Llong_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (3 < matb.m_type[i])
+	if (3 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -2370,7 +2379,7 @@ inline void load(Cmat3Doub_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -2391,6 +2400,7 @@ inline void load_matb(Cmat3Doub_O var, Str_I varname, Str_I matb_file)
 	matb.close();
 }
 
+
 inline void load(Cmat3Comp_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, k, m, n, q;
@@ -2400,7 +2410,7 @@ inline void load(Cmat3Comp_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -2431,7 +2441,7 @@ inline void load(Cmat4Doub_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (21 < matb.m_type[i])
+	if (21 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 4)
 	    SLS_ERR("wrong dimension!");
@@ -2463,7 +2473,7 @@ inline void load(Cmat4Comp_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (41 < matb.m_type[i])
+	if (41 != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 4)
 	    SLS_ERR("wrong dimension!");

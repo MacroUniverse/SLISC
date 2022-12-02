@@ -1706,6 +1706,23 @@ inline void mul_sym(VecComp_IO &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, 
 }
 
 // y = alpha*A*x + beta*y (only use upper triangle)
+inline void mul_sym(VecQcomp_IO &y, CmatQdoub_I a, VecQcomp_I x, Qdoub_I alpha = 1, Qdoub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	// do real part
+	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p(), 2*1, beta, (Qdoub*)y.p(), 2*1);
+	// do imag part
+	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p()+1, 2*1, beta, (Qdoub*)y.p()+1, 2*1);
+#else
+	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
+#endif
+}
+
+// y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1721,6 +1738,20 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, 
 }
 
 // y = alpha*A*x + beta*y (only use upper triangle)
+inline void mul_sym(VecQdoub_IO &y, CmatQdoub_I a, VecQdoub_I x, Qdoub_I alpha = 1, Qdoub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p(), 1, beta, y.p(), 1);
+#else
+	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
+#endif
+}
+
+// y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -1730,6 +1761,20 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1,
 #ifdef SLS_USE_CBLAS
 	cblas_dsymv(CblasColMajor, CblasUpper, a.n0(), alpha, a.p(),
 		a.n0(), x.p(), 1, beta, y.p(), 1);
+#else
+	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
+#endif
+}
+
+// y = alpha*A*x + beta*y (only use upper triangle)
+inline void mul_sym(VecQdoub_IO &y, CmatQdoub_I a, SvecQdoub_I x, Qdoub_I alpha = 1, Qdoub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p(), 1, beta, y.p(), 1);
 #else
 	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
 #endif

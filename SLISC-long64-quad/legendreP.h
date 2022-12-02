@@ -1,5 +1,5 @@
 // associated legendre polynomial
-// code from GSL-2.5
+// code adapted from GSL-2.5
 #pragma once
 #include "global.h"
 
@@ -10,19 +10,16 @@ namespace slisc {
  *            = 1 , m = 0
  */
 
-inline Doub legendre_Pmm(int m, Doub_I x)
+inline Doub legendre_Pmm(Long m, Doub_I x)
 {
-  if(m == 0)
-  {
-	return 1.0;
-  }
+  if (m == 0)
+	return 1;
   else
   {
 	Doub p_mm = 1;
 	Doub root_factor = sqrt(1-x)*sqrt(1+x);
 	Doub fact_coeff = 1;
-	int i;
-	for(i=1; i<=m; i++) {
+	for(Long i=1; i <= m; ++i) {
 	  p_mm *= -fact_coeff * root_factor;
 	  fact_coeff += 2;
 	}
@@ -30,19 +27,16 @@ inline Doub legendre_Pmm(int m, Doub_I x)
   }
 }
 
-inline Qdoub legendre_Pmm(int m, Qdoub_I x)
+inline Qdoub legendre_Pmm(Long m, Qdoub_I x)
 {
-  if(m == 0)
-  {
-	return 1.0;
-  }
+  if (m == 0)
+	return 1;
   else
   {
 	Qdoub p_mm = 1;
 	Qdoub root_factor = sqrt(1-x)*sqrt(1+x);
 	Qdoub fact_coeff = 1;
-	int i;
-	for(i=1; i<=m; i++) {
+	for(Long i=1; i <= m; ++i) {
 	  p_mm *= -fact_coeff * root_factor;
 	  fact_coeff += 2;
 	}
@@ -51,7 +45,7 @@ inline Qdoub legendre_Pmm(int m, Qdoub_I x)
 }
 
 
-inline Doub legendre_Plm(Int_I l, Int_I m, Doub_I x)
+inline Doub legendre_Plm(Long_I l, Long_I m, Doub_I x)
 {
   /* If l is large and m is large, then we have to worry
    * about overflow. Calculate an approximate exponent which
@@ -62,37 +56,34 @@ inline Doub legendre_Plm(Int_I l, Int_I m, Doub_I x)
 	* representation of 1-x.
 	*/
 
-/* P_m^m(x) and P_{m+1}^m(x) */
-Doub p_mm   = legendre_Pmm(m, x);
-Doub p_mmp1 = x * (2*m + 1) * p_mm;
+	/* P_m^m(x) and P_{m+1}^m(x) */
+	Doub p_mm   = legendre_Pmm(m, x);
+	Doub p_mmp1 = x * (2*m + 1) * p_mm;
 
-if(l == m){
-	return p_mm;
-}
-else if(l == m + 1) {
-	return p_mmp1;
-}
-else{
-	/* upward recurrence: (l-m) P(l,m) = (2l-1) z P(l-1,m) - (l+m-1) P(l-2,m)
-	* start at P(m,m), P(m+1,m)
-	*/
-
-	Doub p_ellm2 = p_mm;
-	Doub p_ellm1 = p_mmp1;
-	Doub p_ell = 0.0;
-	Int ell;
-
-	for(ell=m+2; ell <= l; ell++){
-	p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
-	p_ellm2 = p_ellm1;
-	p_ellm1 = p_ell;
+	if (l == m) {
+		return p_mm;
 	}
+	else if (l == m + 1) {
+		return p_mmp1;
+	}
+	else {
+		/* upward recurrence: (l-m) P(l,m) = (2l-1) z P(l-1,m) - (l+m-1) P(l-2,m)
+		* start at P(m,m), P(m+1,m)
+		*/
 
-	return p_ell;
-}
+		Doub p_ellm2 = p_mm;
+		Doub p_ellm1 = p_mmp1;
+		Doub p_ell = 0.0;
+		for(Long ell=m+2; ell <= l; ++ell) {
+			p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
+			p_ellm2 = p_ellm1;
+			p_ellm1 = p_ell;
+		}
+		return p_ell;
+	}
 }
 
-inline Qdoub legendre_Plm(Int_I l, Int_I m, Qdoub_I x)
+inline Qdoub legendre_Plm(Long_I l, Long_I m, Qdoub_I x)
 {
   /* If l is large and m is large, then we have to worry
    * about overflow. Calculate an approximate exponent which
@@ -103,34 +94,31 @@ inline Qdoub legendre_Plm(Int_I l, Int_I m, Qdoub_I x)
 	* representation of 1-x.
 	*/
 
-/* P_m^m(x) and P_{m+1}^m(x) */
-Qdoub p_mm   = legendre_Pmm(m, x);
-Qdoub p_mmp1 = x * (2*m + 1) * p_mm;
+	/* P_m^m(x) and P_{m+1}^m(x) */
+	Qdoub p_mm   = legendre_Pmm(m, x);
+	Qdoub p_mmp1 = x * (2*m + 1) * p_mm;
 
-if(l == m){
-	return p_mm;
-}
-else if(l == m + 1) {
-	return p_mmp1;
-}
-else{
-	/* upward recurrence: (l-m) P(l,m) = (2l-1) z P(l-1,m) - (l+m-1) P(l-2,m)
-	* start at P(m,m), P(m+1,m)
-	*/
-
-	Qdoub p_ellm2 = p_mm;
-	Qdoub p_ellm1 = p_mmp1;
-	Qdoub p_ell = 0.0;
-	Int ell;
-
-	for(ell=m+2; ell <= l; ell++){
-	p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
-	p_ellm2 = p_ellm1;
-	p_ellm1 = p_ell;
+	if (l == m) {
+		return p_mm;
 	}
+	else if (l == m + 1) {
+		return p_mmp1;
+	}
+	else {
+		/* upward recurrence: (l-m) P(l,m) = (2l-1) z P(l-1,m) - (l+m-1) P(l-2,m)
+		* start at P(m,m), P(m+1,m)
+		*/
 
-	return p_ell;
-}
+		Qdoub p_ellm2 = p_mm;
+		Qdoub p_ellm1 = p_mmp1;
+		Qdoub p_ell = 0.0;
+		for(Long ell=m+2; ell <= l; ++ell) {
+			p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
+			p_ellm2 = p_ellm1;
+			p_ellm1 = p_ell;
+		}
+		return p_ell;
+	}
 }
 
 

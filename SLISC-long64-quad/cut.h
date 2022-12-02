@@ -470,6 +470,26 @@ inline Jcmat3Doub_c cut(Cmat3Doub_I v, Long_I start1, Long_I N1, Long_I start2, 
 	return sli;
 }
 
+inline Jcmat3Qdoub cut(Cmat3Qdoub_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
+	    SLS_ERR("index out of bound!");
+#endif
+	Jcmat3Qdoub sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
+	return sli;
+}
+
+inline Jcmat3Qdoub_c cut(Cmat3Qdoub_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
+	    SLS_ERR("index out of bound!");
+#endif
+	Jcmat3Qdoub_c sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
+	return sli;
+}
+
 inline Jcmat3Comp cut(Cmat3Comp_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -487,6 +507,26 @@ inline Jcmat3Comp_c cut(Cmat3Comp_I v, Long_I start1, Long_I N1, Long_I start2, 
 	    SLS_ERR("index out of bound!");
 #endif
 	Jcmat3Comp_c sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
+	return sli;
+}
+
+inline Jcmat3Qcomp cut(Cmat3Qcomp_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
+	    SLS_ERR("index out of bound!");
+#endif
+	Jcmat3Qcomp sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
+	return sli;
+}
+
+inline Jcmat3Qcomp_c cut(Cmat3Qcomp_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
+	    SLS_ERR("index out of bound!");
+#endif
+	Jcmat3Qcomp_c sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
 	return sli;
 }
 

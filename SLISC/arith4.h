@@ -140,6 +140,7 @@ inline void div_eq_vs(Doub *v, Doub_I s, Long_I N)
 inline void div_eq_vs(Doub *v, Doub_I s, Long_I N, Long_I step)
 { times_eq_vs(v, 1./s, N, step); }
 
+
 inline void add_eq_vs(Comp *v, Doub_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
@@ -180,7 +181,6 @@ inline void div_eq_vs(Comp *v, Doub_I s, Long_I N)
 
 inline void div_eq_vs(Comp *v, Doub_I s, Long_I N, Long_I step)
 { times_eq_vs(v, 1./s, N, step); }
-
 
 
 inline void add_eq_vs(Comp *v, Comp_I s, Long_I N)
@@ -224,6 +224,7 @@ inline void div_eq_vs(Comp *v, Comp_I s, Long_I N)
 inline void div_eq_vs(Comp *v, Comp_I s, Long_I N, Long_I step)
 { times_eq_vs(v, 1./s, N, step); }
 
+
 inline void add_eq_vs(Comp *v, Imag_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
@@ -264,7 +265,6 @@ inline void div_eq_vs(Comp *v, Imag_I s, Long_I N)
 
 inline void div_eq_vs(Comp *v, Imag_I s, Long_I N, Long_I step)
 { times_eq_vs(v, 1./s, N, step); }
-
 
 
 inline void operator+=(vecInt_IO v, Int_I s)
@@ -892,6 +892,7 @@ inline void operator/=(vecDoub_O v, vecDoub_I v1)
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
+
 inline void operator+=(VecInt_O v, VecInt_I v1)
 {
 	assert_same_shape(v, v1);
@@ -964,6 +965,7 @@ inline void operator/=(VecDoub_O v, VecDoub_I v1)
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
+
 inline void operator+=(VecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -987,6 +989,7 @@ inline void operator/=(VecDoub_O v, SvecDoub_I v1)
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
+
 
 inline void operator+=(VecComp_O v, VecDoub_I v1)
 {
@@ -1063,7 +1066,6 @@ inline void operator/=(VecComp_O v, SvecComp_I v1)
 }
 
 
-
 inline void operator+=(SvecDoub_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -1088,6 +1090,7 @@ inline void operator/=(SvecDoub_O v, VecDoub_I v1)
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
+
 inline void operator+=(SvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape(v, v1);
@@ -1111,6 +1114,7 @@ inline void operator/=(SvecDoub_O v, SvecDoub_I v1)
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
+
 
 inline void operator+=(SvecComp_O v, VecDoub_I v1)
 {
@@ -1189,6 +1193,7 @@ inline void operator/=(DvecDoub_O v, SvecDoub_I v1)
 	for (Long i = 0; i < v.size(); ++i)
 	    v[i] /= v1[i];
 }
+
 
 inline void operator+=(DvecComp_O v, VecComp_I v1)
 {
@@ -1348,6 +1353,7 @@ inline void operator/=(CmatDoub_O v, CmatDoub_I v1)
 	assert_same_shape(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
+
 
 inline void operator+=(CmatComp_O v, CmatDoub_I v1)
 {
@@ -1770,6 +1776,7 @@ inline void div_vvs(Doub *v, const Doub *v1, Doub_I s, Long_I N, Long_I step, Lo
 	times_vvs(v, v1, inv_s, N, step, step1);
 }
 
+
 inline void add_vvs(Comp *v, const Doub *v1, Comp_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
@@ -1990,7 +1997,6 @@ inline void div_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step, Lo
 }
 
 
-
 inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
@@ -2130,6 +2136,7 @@ inline void div_vsv(Doub *v, const Doub &s, const Doub *v1, Long_I N, Long_I ste
 	}
 }
 
+
 inline void sub_vsv(Comp *v, const Doub &s, const Comp *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
@@ -2244,7 +2251,6 @@ inline void div_vsv(Comp *v, const Doub &s, const Imag *v1, Long_I N, Long_I ste
 	    v += step; v1 += step1;
 	}
 }
-
 
 
 inline void sub_vsv(Comp *v, const Doub &s, const Doub *v1, Long_I N)
@@ -2443,6 +2449,7 @@ inline void div_vvv(Doub *v, const Doub *v1, const Doub *v2, Long_I N, Long_I st
 	    v += step; v1 += step1; v2 += step2;
 	}
 }
+
 
 inline void add_vvv(Comp *v, const Doub *v1, const Comp *v2, Long_I N)
 {
@@ -2670,7 +2677,6 @@ inline void div_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N, Long_I st
 	    v += step; v1 += step1; v2 += step2;
 	}
 }
-
 
 
 
@@ -3541,6 +3547,7 @@ inline void div(VecDoub_O v, VecDoub_I v1, VecDoub_I v2)
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
+
 inline void add(VecComp_O v, VecComp_I v1, VecComp_I v2)
 {
 	assert_same_shape(v, v1, v2);
@@ -3589,6 +3596,7 @@ inline void div(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
 	assert_same_shape(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
+
 
 inline void add(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
@@ -3737,6 +3745,7 @@ inline void div(CmatDoub_O v, CmatDoub_I v1, CmatDoub_I v2)
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
+
 inline void add(CmatComp_O v, CmatComp_I v1, CmatComp_I v2)
 {
 	assert_same_shape(v, v1, v2);
@@ -3793,11 +3802,13 @@ inline void neg_vv(Doub *v, const Doub *v1, Long_I N)
 	    v[i] = -v1[i];
 }
 
+
 inline void neg_vv(Comp *v, const Doub *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
 	    v[i] = -v1[i];
 }
+
 
 inline void neg_vv(Llong *v, const Llong *v1, Long_I N)
 {
@@ -3824,11 +3835,13 @@ inline void neg(VecDoub_O v, VecDoub_I v1)
 	neg_vv(v.p(), v1.p(), v1.size());
 }
 
+
 inline void neg(VecComp_O v, VecDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	neg_vv(v.p(), v1.p(), v1.size());
 }
+
 
 inline void neg(VecComp_O v, VecComp_I v1)
 {
@@ -3836,11 +3849,13 @@ inline void neg(VecComp_O v, VecComp_I v1)
 	neg_vv(v.p(), v1.p(), v1.size());
 }
 
+
 inline void neg(ScmatDoub_O v, CmatDoub_I v1)
 {
 	assert_same_shape(v, v1);
 	neg_vv(v.p(), v1.p(), v1.size());
 }
+
 
 
 } // namespace slisc

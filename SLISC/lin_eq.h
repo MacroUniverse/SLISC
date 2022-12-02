@@ -4,17 +4,19 @@
 
 #ifdef SLS_USE_LAPACKE
 namespace slisc {
-//not the most accurate, see also ?gerfs
+// invert matrix
 inline void inv_mat(CmatDoub_IO A)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
-	Long N = A.n0();
+	Long N = A.n0(), ret;
 	VecLong ipiv(N);
-	LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
-	LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
+	ret = LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+	ret = LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
 }
 
 inline void inv_mat(ScmatDoub_IO A)
@@ -23,11 +25,47 @@ inline void inv_mat(ScmatDoub_IO A)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
-	Long N = A.n0();
+	Long N = A.n0(), ret;
 	VecLong ipiv(N);
-	LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
-	LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
+	ret = LAPACKE_dgetrf(LAPACK_COL_MAJOR, N, N, A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+	ret = LAPACKE_dgetri(LAPACK_COL_MAJOR, N, A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
 }
+
+inline void inv_mat(CmatComp_IO A)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (A.n0() != A.n1())
+	    SLS_ERR("wrong shape!");
+#endif
+	Long N = A.n0(), ret;
+	VecLong ipiv(N);
+	ret = LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, (double _Complex*)A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+	ret = LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+}
+
+inline void inv_mat(ScmatComp_IO A)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (A.n0() != A.n1())
+	    SLS_ERR("wrong shape!");
+#endif
+	Long N = A.n0(), ret;
+	VecLong ipiv(N);
+	ret = LAPACKE_zgetrf(LAPACK_COL_MAJOR, N, N, (double _Complex*)A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+	ret = LAPACKE_zgetri(LAPACK_COL_MAJOR, N, (double _Complex*)A.p(), N, ipiv.p());
+	SLS_ASSERT(ret == 0);
+}
+
+
+// invert matrix
+
+
+
 
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.

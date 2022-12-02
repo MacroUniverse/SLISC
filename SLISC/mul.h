@@ -1658,6 +1658,7 @@ inline void mul_sym(VecComp_IO &y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, 
 #endif
 }
 
+
 // y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
@@ -1673,6 +1674,7 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, 
 #endif
 }
 
+
 // y = alpha*A*x + beta*y (only use upper triangle)
 inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
@@ -1687,6 +1689,7 @@ inline void mul_sym(VecDoub_IO &y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1,
 	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
 #endif
 }
+
 
 
 inline void mul_gen(CmatDoub_O y, CmatDoub_I a, CmatDoub_I x)

@@ -1461,7 +1461,33 @@ inline void copy(Jcmat3Doub_O v, Jcmat3Doub_I v1)
 	            v(i, j, k) = v1(i, j, k);
 }
 
+inline void copy(Jcmat3Qdoub_O v, Jcmat3Qdoub_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	// slow
+	if (v1.size() != 0)
+	for (Long k = 0; k < v.n2(); ++k)
+	    for (Long j = 0; j < v.n1(); ++j)
+	        for (Long i = 0; i < v.n0(); ++i)
+	            v(i, j, k) = v1(i, j, k);
+}
+
 inline void copy(Jcmat3Comp_O v, Jcmat3Comp_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	// slow
+	if (v1.size() != 0)
+	for (Long k = 0; k < v.n2(); ++k)
+	    for (Long j = 0; j < v.n1(); ++j)
+	        for (Long i = 0; i < v.n0(); ++i)
+	            v(i, j, k) = v1(i, j, k);
+}
+
+inline void copy(Jcmat3Qcomp_O v, Jcmat3Qcomp_I v1)
 {
 	assert_same_shape(v, v1);
 	if (v.size() == 0)

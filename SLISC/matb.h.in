@@ -328,15 +328,15 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 //%     'SvecComp'; 'SvecQcomp';
 //%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecQdoub';
 //%     'vecComp'; 'vecQcomp';
-//%     'DvecLlong'; 'DvecDoub'; 'DvecComp'; 'CmatChar'; 'CmatInt';
+//%     'DvecLlong'; 'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp'; 'CmatChar'; 'CmatInt';
 //%     'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
 //%     'CmatComp'; 'CmatQcomp'; 'MatChar'; 'MatInt';
 //%     'MatLlong'; 'MatDoub'; 'MatComp'; 'ScmatInt';
-//%     'ScmatLlong'; 'ScmatDoub'; 'ScmatComp'; 'DcmatInt';
-//%     'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
-//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'DcmatInt';
+//%     'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub'; 'DcmatComp'; 'DcmatQcomp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
 //%     'Mat3Int'; 'Mat3Llong'; 'Mat3Doub'; 'Mat3Comp';
-//%     'Cmat4Doub'; 'Cmat4Comp';
+//%     'Cmat4Doub'; 'Cmat4Qdoub'; 'Cmat4Comp'; 'Cmat4Qcomp';
 //% });
 //%--------------------
 //% Tv = varargin{:};
@@ -410,7 +410,7 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 //%    'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
 //%    'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
 //%    'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
-//%    'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%    'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
 //%    'Cmat4Doub'; 'Cmat4Qdoub'; 'Cmat4Comp'; 'Cmat4Qcomp';
 //% });
 //%---------------------
@@ -429,7 +429,7 @@ inline void load(@T@_O s, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (@numTs@ < matb.m_type[i])
+	if (@numTs@ != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
 	    SLS_ERR("wrong dimension!");
@@ -445,7 +445,7 @@ inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (@numTs@ < matb.m_type[i])
+	if (@numTs@ != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
 	    SLS_ERR("wrong dimension!");
@@ -465,7 +465,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (@numTs@ < matb.m_type[i])
+	if (@numTs@ != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
 	    SLS_ERR("wrong dimension!");
@@ -486,7 +486,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (@numTs@ < matb.m_type[i])
+	if (@numTs@ != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
 	    SLS_ERR("wrong dimension!");
@@ -509,7 +509,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	    throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
-	if (@numTs@ < matb.m_type[i])
+	if (@numTs@ != matb.m_type[i])
 	    SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 4)
 	    SLS_ERR("wrong dimension!");
