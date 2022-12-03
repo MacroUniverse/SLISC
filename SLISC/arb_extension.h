@@ -36,8 +36,9 @@ inline int arf_set_str(arf_t res, const char * inp, slong prec)
 #ifdef SLS_USE_QUAD_MATH
 // get a quad precision number from arf_t type
 // similar to arf_get_d()
-inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
+inline Qdoub arf_get_q(const arf_t x, arf_rnd_t rnd)
 {
+	Qdoub v;
 	arf_t t;
 	// mp_limb_t is the type of a limb, with FLINT_BITS bits
 	// typedef const mp_limb_t *mp_srcptr;
@@ -70,6 +71,7 @@ inline void arf_get_q(Qdoub_O v, const arf_t x, arf_rnd_t rnd)
 	if (ARF_SGNBIT(t)) // 1 for negative
 		v = -v;
 	arf_clear(t);
+	return v;
 }
 
 // similar to arf_set_d()

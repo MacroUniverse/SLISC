@@ -39,8 +39,7 @@ void test_arb()
 	// test my arf_get_q() fun
 	arb_init(a); prec = 150;
 	arb_set_str(a, "1.23456789022345678903234567890423456789e123", prec);
-	Qdoub v;
-	arf_get_q(v, arb_midref(a), ARF_RND_NEAR);
+	Qdoub v = arf_get_q(arb_midref(a), ARF_RND_NEAR);
 	SLS_ASSERT(std::quad2str(v, 36) == Str("1.23456789022345678903234567890423455e+123"));
 	arb_clear(a);
 

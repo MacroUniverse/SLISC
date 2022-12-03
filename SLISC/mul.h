@@ -1366,6 +1366,7 @@ inline void mul_gen(VecDoub_O y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, D
 #endif
 }
 
+
 // y = alpha*A*x + beta*y
 inline void mul_gen(VecComp_O y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
@@ -1384,6 +1385,7 @@ inline void mul_gen(VecComp_O y, CmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Do
 	mul(y, a, x, alpha, beta);
 #endif
 }
+
 
 // y = alpha*A*x + beta*y
 inline void mul_gen(VecComp_O y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
@@ -1404,6 +1406,7 @@ inline void mul_gen(VecComp_O y, ScmatDoub_I a, VecComp_I x, Doub_I alpha = 1, D
 #endif
 }
 
+
 // y = alpha*A*x + beta*y
 inline void mul_gen(VecDoub_O y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
@@ -1418,6 +1421,8 @@ inline void mul_gen(VecDoub_O y, CmatDoub_I a, VecDoub_I x, Doub_I alpha = 1, Do
 	mul(y, a, x, alpha, beta);
 #endif
 }
+
+
 
 // y = alpha*A*x + beta*y
 inline void mul_gen(SvecComp_O y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
@@ -1438,6 +1443,7 @@ inline void mul_gen(SvecComp_O y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1,
 #endif
 }
 
+
 // y = alpha*A*x + beta*y
 inline void mul_gen(SvecComp_O y, ScmatComp_I a, DvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
@@ -1453,6 +1459,7 @@ inline void mul_gen(SvecComp_O y, ScmatComp_I a, DvecComp_I x, Comp_I alpha = 1,
 #endif
 }
 
+
 // y = alpha*A*x + beta*y
 inline void mul_gen(SvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
@@ -1467,6 +1474,7 @@ inline void mul_gen(SvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1,
 	mul(y, a, x, alpha, beta);
 #endif
 }
+
 
 // y = alpha*A*x + beta*y
 inline void mul_gen(SvecComp_O y, DcmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
@@ -1487,6 +1495,7 @@ inline void mul_gen(SvecComp_O y, DcmatDoub_I a, SvecComp_I x, Doub_I alpha = 1,
 #endif
 }
 
+
 // y = alpha*A*x + beta*y
 inline void mul_gen(DvecComp_O y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
@@ -1506,6 +1515,7 @@ inline void mul_gen(DvecComp_O y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1,
 #endif
 }
 
+
 // y = alpha*A*x + beta*y
 inline void mul_gen(DvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
 {
@@ -1520,6 +1530,7 @@ inline void mul_gen(DvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1,
 	mul(y, a, x, alpha, beta);
 #endif
 }
+
 
 // y = alpha*A*x + beta*y
 inline void mul_gen(DvecComp_O y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
@@ -1539,6 +1550,7 @@ inline void mul_gen(DvecComp_O y, CmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, 
 	mul(y, a, x, alpha, beta);
 #endif
 }
+
 
 // y = alpha*A*x + beta*y
 inline void mul_gen(SvecComp_O y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)

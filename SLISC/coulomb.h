@@ -41,8 +41,6 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 	return F;
 }
 
-
-
 // complex version
 // warning: this function differs from my Mathematica definition (FlCode.tex)
 inline Comp acb_coulombF(Comp_I l, Comp_I eta, Comp_I x)
@@ -69,6 +67,8 @@ inline Comp acb_coulombF(Comp_I l, Comp_I eta, Comp_I x)
 	arb_clear(F1_re); arb_clear(F1_im);
 	return F;
 }
+
+
 
 inline Doub arb_gamma(Doub_I x)
 {
@@ -118,6 +118,8 @@ inline Comp arb_gamma(Comp_I z)
 	acb_clear(z1); acb_clear(res1); arb_clear(temp1);
 	return res;
 }
+
+
 
 inline Doub arb_lngamma(Doub_I x)
 {
@@ -172,12 +174,16 @@ inline Comp arb_lngamma(Comp_I z)
 	return res;
 }
 
+
+
 inline Doub arb_coulomb_sigma(Doub_I l, Doub_I eta)
 {
 	if (eta > 0)
 		SLS_ERR("are you sure?");
 	return imag(arb_lngamma(Comp(l + 1, eta)));
 }
+
+
 #endif
 
 using cwfcomp::Coulomb_wave_functions;

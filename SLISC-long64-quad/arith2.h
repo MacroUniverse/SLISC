@@ -687,6 +687,12 @@ inline Qcomp dot(SvecQcomp_I v1, VecQcomp_I v2)
 	return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
+inline Qcomp dot(SvecQcomp_I v1, SvecQcomp_I v2)
+{
+	assert_same_shape(v1, v2);
+	return dot_vv(v1.p(), v2.p(), v2.size());
+}
+
 inline Comp dot(DvecComp_I v1, SvecDoub_I v2)
 {
 	assert_same_shape(v1, v2);

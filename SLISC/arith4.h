@@ -602,6 +602,7 @@ inline void operator/=(DcmatComp_IO v, Comp_I s)
 	    div_eq_vs(&v(0,j), s, v.n0());
 }
 
+
 inline void operator+=(vvecInt_IO v, Int_I s)
 { for (auto &e : v) e += s; }
 

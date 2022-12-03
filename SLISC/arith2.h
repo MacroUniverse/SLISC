@@ -456,6 +456,7 @@ inline Comp dot(SvecComp_I v1, VecComp_I v2)
 }
 
 
+
 inline Comp dot(DvecComp_I v1, SvecDoub_I v2)
 {
 	assert_same_shape(v1, v2);

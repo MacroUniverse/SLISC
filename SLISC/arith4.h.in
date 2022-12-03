@@ -111,6 +111,7 @@ inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%   'DcmatComp' 'Doub'
 //%   'DcmatQcomp' 'Qdoub'
 //%   'DcmatComp' 'Comp'
+//%   'DcmatQcomp' 'Qcomp'
 //%   'vvecInt' 'Int'
 //%   'vvecLlong' 'Llong'
 //%   'vvecDoub' 'Doub'

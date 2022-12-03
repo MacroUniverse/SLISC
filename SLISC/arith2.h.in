@@ -333,6 +333,7 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%   'SvecQdoub' 'SvecQcomp'
 //%   'SvecComp' 'VecComp'
 //%   'SvecQcomp' 'VecQcomp'
+//%   'SvecQcomp' 'SvecQcomp'
 //%   'DvecComp' 'SvecDoub'
 //%   'DvecQcomp' 'SvecQdoub'
 //%   'Cmat3Comp', 'Jcmat3Comp'

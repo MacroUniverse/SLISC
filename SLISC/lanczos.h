@@ -69,8 +69,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -80,6 +79,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 
 	return err;
 }
+
 
 inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
@@ -131,8 +131,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -142,6 +141,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 
 	return err;
 }
+
 
 inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
@@ -193,8 +193,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -204,6 +203,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
 
 	return err;
 }
+
 
 inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
@@ -255,8 +255,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, 
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -266,6 +265,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, 
 
 	return err;
 }
+
 
 inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
@@ -317,8 +317,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -328,6 +327,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 
 	return err;
 }
+
 
 
 // calculate y = exp(-i*H*dt) * x
@@ -380,12 +380,10 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_I x, Doub_I 
 	    v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
-
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -393,6 +391,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_I x, Doub_I 
 	mul_gen(y, bases, vc1);
 	return err;
 }
+
 
 inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
@@ -440,12 +439,10 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I d
 	    v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
-
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -453,6 +450,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I d
 	mul_gen(y, bases, vc1);
 	return err;
 }
+
 
 inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt, Long_I Nkrylov, VecDoub_IO wsp_d, VecComp_IO wsp_c)
 {
@@ -500,12 +498,10 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt,
 	    v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
-
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -513,6 +509,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt,
 	mul_gen(y, bases, vc1);
 	return err;
 }
+
 
 inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
@@ -560,12 +557,10 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I d
 	    v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
-
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -573,6 +568,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I d
 	mul_gen(y, bases, vc1);
 	return err;
 }
+
 
 inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
@@ -620,12 +616,10 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I 
 	    v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
-
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -633,6 +627,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I 
 	mul_gen(y, bases, vc1);
 	return err;
 }
+
 
 inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I dt, Long_I Nkrylov, SvecDoub_IO wsp_d, SvecComp_IO wsp_c)
 {
@@ -680,12 +675,10 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I 
 	    v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
-
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0)
-	    SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -693,6 +686,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I 
 	mul_gen(y, bases, vc1);
 	return err;
 }
+
 
 
 } // namespace slisc

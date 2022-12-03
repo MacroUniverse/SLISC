@@ -1392,6 +1392,10 @@ inline Doub sum(SvecDoub_I v) { return sum_v(v.p(), v.size()); }
 
 inline Doub prod(SvecDoub_I v) { return prod_v(v.p(), v.size()); }
 
+inline Qdoub sum(SvecQdoub_I v) { return sum_v(v.p(), v.size()); }
+
+inline Qdoub prod(SvecQdoub_I v) { return prod_v(v.p(), v.size()); }
+
 
 inline Doub norm2(VecDoub_I v)
 {
