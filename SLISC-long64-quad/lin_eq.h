@@ -599,5 +599,25 @@ inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecLlong_IO ipiv)
 	}
 }
 
+#ifdef SLS_USE_MPLAPACK
+inline void lin_eq(ScmatQcomp_IO x, CbandQcomp_IO a1, SvecLlong_IO ipiv)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (a1.n0() != a1.n1() || a1.n1() != x.n0())
+	    SLS_ERR("wrong shape!");
+	if (a1.lda() < a1.nup() + 2*a1.nlow() + 1 || a1.idiag() < a1.nup() + a1.nup())
+	    SLS_ERR("wrong shape: lda < nup+2nlow+1 || idiag < nup+nlow !");
+#endif
+	Long lda = a1.lda();
+	Long ldx = x.n0(), nrhs = x.n1();
+	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
+	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+	if (ret != 0) {
+	    cout << "LAPACK returned " << ret << endl;
+	    SLS_ERR("something wrong!");
+	}
+}
+#endif
+
 } // namespace slisc
 #endif

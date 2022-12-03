@@ -513,5 +513,6 @@ inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 	}
 }
 
+
 } // namespace slisc
 #endif

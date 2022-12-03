@@ -241,6 +241,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
 //%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
 //%     'ScmatComp' 'CbandComp' 'SvecLong';
+//%     'ScmatQcomp' 'CbandQcomp' 'SvecLong';
 //% });
 //%---------------------
 //% [Tx, Ta, Ti] = varargin{:};
