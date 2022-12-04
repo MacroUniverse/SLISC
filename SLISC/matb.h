@@ -1893,6 +1893,60 @@ inline void load_matb(Comp_O var, Str_I varname, Str_I matb_file)
 }
 
 
+inline void load(vecDoub_O v, Str_I varname, Matb_IO matb)
+{
+	ifstream &fin = matb.m_in;
+	Long i = matb.search(varname);
+	if (i < 0)
+	    throw Str("variable not found!");
+	fin.seekg(matb.data_pos(i));
+
+	if (21 != matb.m_type[i])
+	    SLS_ERR("wrong type!");
+	if (matb.m_size[i].size() != 1)
+	    SLS_ERR("wrong dimension!");
+
+	Long n = matb.m_size[i][0]; v.resize(n);
+	// read var data
+	for (Long i = 0; i < n; ++i)
+	    read(fin, v[i]);
+}
+
+inline void load_matb(vecDoub_O var, Str_I varname, Str_I matb_file)
+{
+	Matb matb(matb_file, "r");
+	load(var, varname, matb);
+	matb.close();
+}
+
+
+inline void load(vecComp_O v, Str_I varname, Matb_IO matb)
+{
+	ifstream &fin = matb.m_in;
+	Long i = matb.search(varname);
+	if (i < 0)
+	    throw Str("variable not found!");
+	fin.seekg(matb.data_pos(i));
+
+	if (41 != matb.m_type[i])
+	    SLS_ERR("wrong type!");
+	if (matb.m_size[i].size() != 1)
+	    SLS_ERR("wrong dimension!");
+
+	Long n = matb.m_size[i][0]; v.resize(n);
+	// read var data
+	for (Long i = 0; i < n; ++i)
+	    read(fin, v[i]);
+}
+
+inline void load_matb(vecComp_O var, Str_I varname, Str_I matb_file)
+{
+	Matb matb(matb_file, "r");
+	load(var, varname, matb);
+	matb.close();
+}
+
+
 inline void load(VecChar_O v, Str_I varname, Matb_IO matb)
 {
 	ifstream &fin = matb.m_in;

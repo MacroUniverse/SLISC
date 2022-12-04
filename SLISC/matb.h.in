@@ -408,6 +408,7 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 // read matb files
 // return 0 if successful, -1 if variable not found
 //% tem('load', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';
+//%    'vecDoub'; 'vecQdoub'; 'vecComp'; 'vecQcomp';
 //%    'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
 //%    'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
 //%    'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
@@ -437,7 +438,7 @@ inline void load(@T@_O s, Str_I varname, Matb_IO matb)
 
 	read(fin, s);
 }
-//% elseif is_Vec(T) == 1
+//% elseif is_Vec(T) || is_vec(T)
 inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 {
 	ifstream &fin = matb.m_in;
