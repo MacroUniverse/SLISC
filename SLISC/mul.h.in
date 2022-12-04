@@ -275,7 +275,11 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
 		SLS_ERR("wrong shape!");
 #endif
+//% if ~has_quad(Tsy)
 #ifdef SLS_USE_CBLAS
+//% else
+#ifdef SLS_USE_MPLAPACK
+//% end
 //% if is_Float(Tsy) && is_Float(Tsa) && is_Float(Tsx)
 	cblas_ssymv(@layout@, CblasUpper, a.n0(), alpha, a.p(),
 		@lda@, x.p(), @incx@, beta, y.p(), @incy@);

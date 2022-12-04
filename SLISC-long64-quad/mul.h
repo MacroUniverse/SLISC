@@ -2778,7 +2778,7 @@ inline void mul_sym(VecQcomp_IO &y, CmatQdoub_I a, VecQcomp_I x, Qdoub_I alpha =
 	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
 		SLS_ERR("wrong shape!");
 #endif
-#ifdef SLS_USE_CBLAS
+#ifdef SLS_USE_MPLAPACK
 	// do real part
 	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p(), 2*1, beta, (Qdoub*)y.p(), 2*1);
 	// do imag part
@@ -2810,7 +2810,7 @@ inline void mul_sym(VecQdoub_IO &y, CmatQdoub_I a, VecQdoub_I x, Qdoub_I alpha =
 	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
 		SLS_ERR("wrong shape!");
 #endif
-#ifdef SLS_USE_CBLAS
+#ifdef SLS_USE_MPLAPACK
 	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p(), 1, beta, y.p(), 1);
 #else
 	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
@@ -2839,7 +2839,7 @@ inline void mul_sym(VecQdoub_IO &y, CmatQdoub_I a, SvecQdoub_I x, Qdoub_I alpha 
 	if (x.size() != a.n1() || y.size() != a.n0() || x.size() != y.size())
 		SLS_ERR("wrong shape!");
 #endif
-#ifdef SLS_USE_CBLAS
+#ifdef SLS_USE_MPLAPACK
 	Rsymv("U", a.n0(), alpha, (Qdoub*)a.p(), a.n0(), (Qdoub*)x.p(), 1, beta, y.p(), 1);
 #else
 	SLS_ERR("not implemented!"); // mul() doesn't work (must only use upper triangle)
