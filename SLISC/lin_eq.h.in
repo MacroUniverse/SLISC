@@ -48,6 +48,7 @@ inline void inv_mat(@T@_IO A, @Twsp@_IO wsp)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
+#ifdef SLS_USE_MPLAPACK
 	mplapackint N = A.n0(), ret;
 	VecLlong ipiv(N);
 	static_assert(sizeof(Llong) == sizeof(mplapackint));
@@ -60,6 +61,9 @@ inline void inv_mat(@T@_IO A, @Twsp@_IO wsp)
 //% else
 //%     error('not implemented (1)!');
 //% end
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 //%------------------------
 
@@ -274,8 +278,12 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a1, @Ti@_IO ipiv)
 //% elseif is_Comp(Tsx) && is_Comp(Tsa)
 	Long ret = LAPACKE_zgbsv(LAPACK_COL_MAJOR, a1.n0(), a1.nlow() , a1.nup(), nrhs, (double _Complex*)a1.p(), lda, ipiv.p(), (double _Complex*)x.p(), ldx);
 //% elseif is_Qcomp(Tsx) && is_Qcomp(Tsa)
+#ifdef SLS_USE_MPLAPACK
 	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
 	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 //% else
 //%     disp(Tx); disp(Ta);
 //%     error('not implemented (2)');

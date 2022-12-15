@@ -127,11 +127,15 @@ inline Qdoub exp_Hdt_v_lanc(VecQcomp_O y, CmatQdoub_I H, VecQcomp_I x, Qdoub_I d
 	}
 	Qdoub err = prod(beta);
 
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -250,11 +254,15 @@ inline Qdoub exp_Hdt_v_lanc(VecQcomp_O y, CmatQdoub_I H, VecQcomp_I x, Qdoub_I d
 	}
 	Qdoub err = prod(beta);
 
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -373,11 +381,15 @@ inline Qdoub exp_Hdt_v_lanc(SvecQcomp_O y, CmobdQdoub_I H, SvecQcomp_I x, Qdoub_
 	}
 	Qdoub err = prod(beta);
 
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -496,11 +508,15 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, McooQdoub_I H, DvecQcomp_I x, Qdoub_I
 	}
 	Qdoub err = prod(beta);
 
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -619,11 +635,15 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, CmobdQdoub_I H, DvecQcomp_I x, Qdoub_
 	}
 	Qdoub err = prod(beta);
 
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	
 	for (Long i = 0; i < Nk; ++i)
 	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
@@ -743,12 +763,16 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, CbandQdoub_I H, DvecQcomp_I x, Qdo
 	    v0.next(); v1.next(); v2.next();
 	}
 	Qdoub err = prod(beta);
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	SvecQcomp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Qcomp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -861,12 +885,16 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, CmatQdoub_I H, DvecQcomp_I x, Qdou
 	    v0.next(); v1.next(); v2.next();
 	}
 	Qdoub err = prod(beta);
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	SvecQcomp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Qcomp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -979,12 +1007,16 @@ inline Qdoub exp_miHdt_v_lanc(VecQcomp_IO y, CmatQdoub_I H, VecQcomp_I x, Qdoub_
 	    v0.next(); v1.next(); v2.next();
 	}
 	Qdoub err = prod(beta);
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	SvecQcomp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Qcomp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -1097,12 +1129,16 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, McooQdoub_I H, DvecQcomp_I x, Qdou
 	    v0.next(); v1.next(); v2.next();
 	}
 	Qdoub err = prod(beta);
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	SvecQcomp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Qcomp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -1215,12 +1251,16 @@ inline Qdoub exp_miHdt_v_lanc(SvecQcomp_IO y, CmobdQdoub_I H, SvecQcomp_I x, Qdo
 	    v0.next(); v1.next(); v2.next();
 	}
 	Qdoub err = prod(beta);
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	SvecQcomp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Qcomp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
@@ -1333,12 +1373,16 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, CmobdQdoub_I H, DvecQcomp_I x, Qdo
 	    v0.next(); v1.next(); v2.next();
 	}
 	Qdoub err = prod(beta);
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	SvecQcomp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
 	    vc2[i] = exp(Qcomp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];

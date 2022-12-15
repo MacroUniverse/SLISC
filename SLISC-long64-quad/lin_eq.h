@@ -69,11 +69,15 @@ inline void inv_mat(CmatQdoub_IO A, VecQdoub_IO wsp)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
+#ifdef SLS_USE_MPLAPACK
 	mplapackint N = A.n0(), ret;
 	VecLlong ipiv(N);
 	static_assert(sizeof(Llong) == sizeof(mplapackint));
 	Rgetrf(N, N, A.p(), N, (mplapackint*)ipiv.p(), ret); SLS_ASSERT(ret == 0);
 	Rgetri(N, A.p(), N, (mplapackint*)ipiv.p(), wsp.p(), wsp.size(), ret); SLS_ASSERT(ret == 0);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 
 inline void inv_mat(ScmatQdoub_IO A, VecQdoub_IO wsp)
@@ -82,11 +86,15 @@ inline void inv_mat(ScmatQdoub_IO A, VecQdoub_IO wsp)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
+#ifdef SLS_USE_MPLAPACK
 	mplapackint N = A.n0(), ret;
 	VecLlong ipiv(N);
 	static_assert(sizeof(Llong) == sizeof(mplapackint));
 	Rgetrf(N, N, A.p(), N, (mplapackint*)ipiv.p(), ret); SLS_ASSERT(ret == 0);
 	Rgetri(N, A.p(), N, (mplapackint*)ipiv.p(), wsp.p(), wsp.size(), ret); SLS_ASSERT(ret == 0);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 
 inline void inv_mat(CmatQcomp_IO A, VecQcomp_IO wsp)
@@ -95,11 +103,15 @@ inline void inv_mat(CmatQcomp_IO A, VecQcomp_IO wsp)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
+#ifdef SLS_USE_MPLAPACK
 	mplapackint N = A.n0(), ret;
 	VecLlong ipiv(N);
 	static_assert(sizeof(Llong) == sizeof(mplapackint));
 	Cgetrf(N, N, A.p(), N, (mplapackint*)ipiv.p(), ret); SLS_ASSERT(ret == 0);
 	Cgetri(N, A.p(), N, (mplapackint*)ipiv.p(), wsp.p(), wsp.size(), ret); SLS_ASSERT(ret == 0);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 
 inline void inv_mat(ScmatQcomp_IO A, VecQcomp_IO wsp)
@@ -108,11 +120,15 @@ inline void inv_mat(ScmatQcomp_IO A, VecQcomp_IO wsp)
 	if (A.n0() != A.n1())
 	    SLS_ERR("wrong shape!");
 #endif
+#ifdef SLS_USE_MPLAPACK
 	mplapackint N = A.n0(), ret;
 	VecLlong ipiv(N);
 	static_assert(sizeof(Llong) == sizeof(mplapackint));
 	Cgetrf(N, N, A.p(), N, (mplapackint*)ipiv.p(), ret); SLS_ASSERT(ret == 0);
 	Cgetri(N, A.p(), N, (mplapackint*)ipiv.p(), wsp.p(), wsp.size(), ret); SLS_ASSERT(ret == 0);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 
 
@@ -553,8 +569,12 @@ inline void lin_eq(VecQcomp_IO x, CbandQcomp_IO a1, VecLlong_IO ipiv)
 #endif
 	Long lda = a1.lda();
 	Long ldx = x.size(), nrhs = 1;
+#ifdef SLS_USE_MPLAPACK
 	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
 	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	if (ret != 0) {
 	    cout << "LAPACK returned " << ret << endl;
 	    SLS_ERR("something wrong!");
@@ -573,8 +593,12 @@ inline void lin_eq(SvecQcomp_IO x, CbandQcomp_IO a1, SvecLlong_IO ipiv)
 #endif
 	Long lda = a1.lda();
 	Long ldx = x.size(), nrhs = 1;
+#ifdef SLS_USE_MPLAPACK
 	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
 	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	if (ret != 0) {
 	    cout << "LAPACK returned " << ret << endl;
 	    SLS_ERR("something wrong!");
@@ -610,8 +634,12 @@ inline void lin_eq(ScmatQcomp_IO x, CbandQcomp_IO a1, SvecLlong_IO ipiv)
 #endif
 	Long lda = a1.lda();
 	Long ldx = x.n0(), nrhs = x.n1();
+#ifdef SLS_USE_MPLAPACK
 	static_assert(sizeof(Llong)==sizeof(mplapackint), "unexpected!");
 	mplapackint ret; Cgbsv(a1.n0(), a1.nlow(), a1.nup(), nrhs, a1.p(), lda, (mplapackint*)ipiv.p(), x.p(), ldx, ret);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 	if (ret != 0) {
 	    cout << "LAPACK returned " << ret << endl;
 	    SLS_ERR("something wrong!");

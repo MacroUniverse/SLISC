@@ -97,12 +97,16 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkryl
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
-//% else
+//% elseif is_Qdoub(Tr)
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 //% end
 	
 	for (Long i = 0; i < Nk; ++i)
@@ -200,13 +204,17 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
-//% else
+//% elseif is_Qdoub(Tr)
+#ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
 	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 //% end
 //% req('cut', { ['Svec' Tc] });
 	Svec@Tc@ vc2 = cut(vc, 0, Nk);
