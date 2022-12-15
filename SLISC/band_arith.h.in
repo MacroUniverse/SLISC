@@ -302,6 +302,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 	cblas_dgbmv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), a.nlow(), a.nup(),
 	    alpha, a.p() + a.idiag() - a.nup(), a.lda(), (Doub*)x.p()+1, incx*2, beta, (Doub*)y.p()+1, incy*2);
 //% elseif is_Qcomp(Tsx) && is_Qdoub(Tsa) && is_Qcomp(Tsy)
+#ifdef SLS_USE_MPLAPACK
 	Qdoub alpha = 1, beta = 0;
 	// real part
 	Rgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
@@ -311,6 +312,9 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 	Rgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
 	    (Qdoub*)a.p() + a.idiag() - a.nup(), a.lda(), (Qdoub*)x.p()+1,
 		incx*2, beta, (Qdoub*)y.p()+1, incy*2);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 //% else
 //%     error('not implemented!');
 //% end

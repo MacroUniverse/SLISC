@@ -579,6 +579,7 @@ inline void mul(VecQcomp_O y, CbandQdoub_I a, VecQcomp_I x)
 {
 	Long incx = 1;
 	Long incy = 1;
+#ifdef SLS_USE_MPLAPACK
 	Qdoub alpha = 1, beta = 0;
 	// real part
 	Rgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
@@ -588,6 +589,9 @@ inline void mul(VecQcomp_O y, CbandQdoub_I a, VecQcomp_I x)
 	Rgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
 	    (Qdoub*)a.p() + a.idiag() - a.nup(), a.lda(), (Qdoub*)x.p()+1,
 		incx*2, beta, (Qdoub*)y.p()+1, incy*2);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 
 inline void mul(VecComp_O y, CbandComp_I a, VecComp_I x)
@@ -657,6 +661,7 @@ inline void mul(SvecQcomp_O y, CbandQdoub_I a, SvecQcomp_I x)
 {
 	Long incx = 1;
 	Long incy = 1;
+#ifdef SLS_USE_MPLAPACK
 	Qdoub alpha = 1, beta = 0;
 	// real part
 	Rgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
@@ -666,6 +671,9 @@ inline void mul(SvecQcomp_O y, CbandQdoub_I a, SvecQcomp_I x)
 	Rgbmv("N", a.n0(), a.n1(), a.nlow(), a.nup(), alpha,
 	    (Qdoub*)a.p() + a.idiag() - a.nup(), a.lda(), (Qdoub*)x.p()+1,
 		incx*2, beta, (Qdoub*)y.p()+1, incy*2);
+#else
+	SLS_ERR("MPLAPACK is turned off!");
+#endif
 }
 
 #endif
