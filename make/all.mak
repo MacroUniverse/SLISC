@@ -268,13 +268,22 @@ endif
 
 # === Arpack ===
 ifeq ($(opt_arpack), true)
-    ifeq ($(opt_lapack), reference) # only works for reference lapack for now
+    ifeq ($(opt_lapack), reference)
+        arpack_flag = -D SLS_USE_ARPACK
         ifeq ($(opt_static), false)
             $(info Arpack: dynamic)
-            arpack_flag = -D SLS_USE_ARPACK
-            arpack_lib = -l:libarpack.so -l:liblapack.so -l:libblas.so -l:libgfortran.so
+            ifeq ($(opt_long32), true)
+                arpack_lib = -l:libarpack.so -l:liblapack.so -l:libblas.so -l:libgfortran.so
+            else
+                arpack_lib = -l:libarpack64.so -l:liblapack64.so -l:libblas64.so -l:libgfortran.so
+            endif
         else
-            $(info Arpack: off)
+            $(info Arpack: static)
+            ifeq ($(opt_long32), true)
+                arpack_lib = -l:libarpack.a -l:liblapack.a -l:libblas.a -l:libgfortran.a
+            else
+                arpack_lib = -l:libarpack64.a -l:liblapack64.a -l:libblas64.a -l:libgfortran.a
+            endif
         endif
     else
         $(info Arpack: off)
