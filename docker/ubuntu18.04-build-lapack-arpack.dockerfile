@@ -79,10 +79,13 @@ RUN cd ~/ && \
 	mkdir $INSTALL_DIR/arpack && \
 	sh bootstrap
 
+# use 64bit integer
+ARG INTERFACE64=1
+
 # delete line 25613 to prevent an error about Eigen, `make check` will be ok
 RUN cd ~/arpack-ng-3.8.0 && \
-	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib/ && \
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib/ && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-a/lib/:$INSTALL_DIR/lapack64-so/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-a/lib/:$INSTALL_DIR/lapack64-so/lib/ && \
 	sed -i '25613d' ./configure && \
-	./configure --prefix=$INSTALL_DIR/arpack && \
+	./configure --prefix=$INSTALL_DIR/arpack --enable-static && \
 	make -j$NCPU && make check -j$NCPU && make install
