@@ -72,18 +72,82 @@ RUN cd ~/ && \
 	~/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/lapack32-a -DBUILD_INDEX64=OFF -DBUILD_SHARED_LIBS=OFF -DLAPACKE=ON -DCBLAS=ON  ../lapack-3.10.1/ && \
 	cd ~/lapack-build && make -j$NCPU && make install
 
-# ======== Arpack-NG ========
-# --with-blas --with-lapack will not work
+# ======== Arpack-NG 32 bit dynamic ========
 RUN cd ~/ && \
  	wget -q https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
  	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
-	mkdir $INSTALL_DIR/arpack && \
+	mkdir $INSTALL_DIR/arpack32-so && \
 	sh bootstrap
 
-# delete line 26616d to prevent an error about Eigen, `make check` will be ok
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
 RUN cd ~/arpack-ng-3.8.0 && \
 	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib/ && \
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack32-so/lib/ && \
 	sed -i '26616d' ./configure && \
-	./configure --prefix=$INSTALL_DIR/arpack && \
+	./configure --prefix=$INSTALL_DIR/arpack32-so && \
 	make -j$NCPU && make check -j$NCPU && make install
+
+# ======== Arpack-NG 32 bit static ========
+# make check will fail for static lib
+RUN cd ~/ && \
+	rm -rf ~/arpack-ng-3.8.0 && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack32-a && \
+	sh bootstrap
+
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack32-a/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack32-a/lib/ && \
+	sed -i '26616d' ./configure && \
+	./configure --prefix=$INSTALL_DIR/arpack32-a --enable-static=yes --enable-shared=no && \
+	make -j$NCPU && make install
+
+# ======== Arpack-NG 64 bit dynamic ========
+RUN cd ~/ && \
+ 	rm -rf ~/arpack-ng-3.8.0 && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack64-so && \
+	sh bootstrap
+
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export INTERFACE64=1 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-so/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-so/lib/ && \
+	sed -i '26616d' ./configure && \
+	./configure --prefix=$INSTALL_DIR/arpack64-so --with-blas=blas64 --with-lapack=lapack64 && \
+	make -j$NCPU
+
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-so/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-so/lib/ && \
+	make check && make install
+
+RUN cd $INSTALL_DIR/arpack64-so/lib && \
+	ln -s libarpack.so libarpack64.so
+
+# ======== Arpack-NG 64 bit static ========
+# make check will fail for static lib
+RUN cd ~/ && \
+ 	rm -rf ~/arpack-ng-3.8.0 && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack64-a && \
+	sh bootstrap
+
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export INTERFACE64=1 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-a/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-a/lib/ && \
+	sed -i '26616d' ./configure && \
+	./configure --prefix=$INSTALL_DIR/arpack64-a --with-blas=blas64 --with-lapack=lapack64 --enable-static=yes --enable-shared=no && \
+	make -j$NCPU
+
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-a/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-a/lib/ && \
+	make install
+
+RUN cd $INSTALL_DIR/arpack64-a/lib && \
+	ln -s libarpack.a libarpack64.a

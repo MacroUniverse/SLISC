@@ -94,21 +94,78 @@ RUN ln -s lib64 $INSTALL_DIR/lapack-shared-3.10.1/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack64-shared-3.10.1/lib && \
 	ln -s lib64 $INSTALL_DIR/lapack64-static-3.10.1/lib
 
-# ======== Arpack-NG ========
-# --with-blas --with-lapack will not work
+# ======== Arpack-NG 32 bit dynamic ========
 RUN cd ~/ && \
  	wget -q https://github.com/opencollab/arpack-ng/archive/refs/tags/3.8.0.tar.gz && \
  	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
-	mkdir $INSTALL_DIR/arpack-ng-3.8.0 && \
-	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib64/ && \
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib64/ && \
-	sh bootstrap && ./configure --prefix=$INSTALL_DIR/arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack-ng-shared-3.8.0 && \
+	sh bootstrap
+
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack-shared-3.10.1/lib/ && \
+	./configure --prefix=$INSTALL_DIR/arpack-ng-shared-3.8.0 && \
 	make -j$NCPU && make check -j$NCPU && make install
 
+# ======== Arpack-NG 32 bit static ========
+# make check will fail for static lib
+RUN cd ~/ && \
+	rm -rf ~/arpack-ng-3.8.0 && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack-ng-static-3.8.0 && \
+	sh bootstrap
 
-RUN cd $INSTALL_DIR && \
-	tar -czf lapack-shared-3.10.1.tar.gz lapack-shared-3.10.1 && rm -r lapack-shared-3.10.1 && \
-	tar -czf lapack-static-3.10.1.tar.gz lapack-static-3.10.1 && rm -r lapack-static-3.10.1 && \
-	tar -czf lapack64-shared-3.10.1.tar.gz lapack64-shared-3.10.1 && rm -r lapack64-shared-3.10.1 && \
-	tar -czf lapack64-static-3.10.1.tar.gz lapack64-static-3.10.1 && rm -r lapack64-static-3.10.1 && \
-	tar -czf arpack-ng-3.8.0.tar.gz arpack-ng-3.8.0 && rm -r arpack-ng-3.8.0
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack-static-3.10.1/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack-static-3.10.1/lib/ && \
+	./configure --prefix=$INSTALL_DIR/arpack-ng-static-3.8.0 --enable-static=yes --enable-shared=no && \
+	make -j$NCPU && make install
+
+# ======== Arpack-NG 64 bit dynamic ========
+RUN cd ~/ && \
+ 	rm -rf ~/arpack-ng-3.8.0 && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack-ng64-shared-3.8.0 && \
+	sh bootstrap
+
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export INTERFACE64=1 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-shared-3.10.1/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-shared-3.10.1/lib/ && \
+	./configure --prefix=$INSTALL_DIR/arpack-ng64-shared-3.8.0 --with-blas=blas64 --with-lapack=lapack64 && \
+	make -j$NCPU
+
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-shared-3.10.1/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-shared-3.10.1/lib/ && \
+	make check && make install
+
+RUN cd $INSTALL_DIR/arpack-ng64-shared-3.8.0/lib && \
+	ln -s libarpack.so libarpack64.so
+
+# ======== Arpack-NG 64 bit static ========
+# make check will fail for static lib
+RUN cd ~/ && \
+ 	rm -rf ~/arpack-ng-3.8.0 && \
+ 	tar -xzf 3.8.0.tar.gz && cd arpack-ng-3.8.0 && \
+	mkdir $INSTALL_DIR/arpack-ng64-static-3.8.0 && \
+	sh bootstrap
+
+# delete line 25613 to prevent an error about Eigen, `make check` will be ok
+RUN cd ~/arpack-ng-3.8.0 && \
+	export INTERFACE64=1 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-static-3.10.1/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-static-3.10.1/lib/ && \
+	./configure --prefix=$INSTALL_DIR/arpack-ng64-static-3.8.0  --with-blas=blas64 --with-lapack=lapack64 --enable-static=yes --enable-shared=no && \
+	make -j$NCPU
+
+RUN cd ~/arpack-ng-3.8.0 && \
+	export LIBRARY_PATH=$LIBRARY_PATH:$INSTALL_DIR/lapack64-static-3.10.1/lib/ && \
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lapack64-static-3.10.1/lib/ && \
+	make install
+
+RUN cd $INSTALL_DIR/arpack-ng64-static-3.8.0 /lib && \
+	ln -s libarpack.a libarpack64.a
