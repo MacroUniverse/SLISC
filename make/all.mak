@@ -255,12 +255,13 @@ endif
 
 # === MPLAPACK ===
 ifeq ($(opt_mplapack), true)
+    mplapack_flag = -D SLS_USE_MPLAPACK
     ifeq ($(opt_static), false)
         $(info MPLAPACK: dynamic)
-        mplapack_flag = -D SLS_USE_MPLAPACK
         mplapack_lib = -l:libmplapack__Float128.so -l:libmpblas__Float128.so
     else
-        $(info MPLAPACK: off)
+        $(info MPLAPACK: static)
+        mplapack_lib = -l:libmplapack__Float128.a -l:libmpblas__Float128.a
     endif
 else
     $(info MPLAPACK: off)
