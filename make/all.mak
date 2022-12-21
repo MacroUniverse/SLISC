@@ -136,11 +136,11 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
             # dynamic link
             else
                 $(info Link: dynamic)
-                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+                mkl_lib = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
         # Compiler: icpc
@@ -150,11 +150,11 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
             # dynamic link
             else
                 $(info Link: dynamic)
-                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+                mkl_lib = -L${MKLROOT}/lib/intel64 -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
     # Interface: 64bit int
@@ -167,11 +167,11 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
             # dynamic link
             else
                 $(info Link: dynamic)
-                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+                mkl_lib = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
         # Compiler: icpc
@@ -181,11 +181,11 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_stat_link = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
             # dynamic link
             else
                 $(info Link: dynamic)
-                mkl_dyn_link = -L${MKLROOT}/lib/intel64 -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+                mkl_lib = -L${MKLROOT}/lib/intel64 -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
             endif
         endif
     endif
@@ -353,7 +353,7 @@ flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag)
 ifeq ($(opt_static), true)
     static_flag = -static
 endif
-libs = $(static_flag) $(boost_lib) $(arb_lib) $(arpack_lib)  $(matfile_lib) $(sqlite_lib) $(mkl_stat_link) $(mkl_dyn_link) $(lapacke_lib) $(cblas_lib) $(quad_math_lib) $(gsl_lib) $(mplapack_lib)
+libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(quad_math_lib)
 
 # === File Lists ===
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
