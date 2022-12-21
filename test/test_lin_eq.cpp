@@ -110,5 +110,7 @@ void test_lin_eq()
 			SLS_FAIL;
 		}
 	}
+#else
+	std::cout << "---------- MPLAPACK disabled! ----------" << std::endl;
 #endif
 }
