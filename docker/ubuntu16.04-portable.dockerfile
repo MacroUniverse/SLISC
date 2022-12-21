@@ -23,14 +23,43 @@ USER ${DOCKER_USER}
 SHELL ["/bin/bash", "-c"] # --shell /bin/bash didn't work
 
 RUN	cd ~/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
+	git clone https://github.com/MacroUniverse/SLISC0 --depth 4 && \
 	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu16.04 --depth 1
 
-ARG INSTALL_DIR=/home/$DOCKER_USER/SLISC0-libs-x64-ubuntu16.04
+ARG INSTALL_DIR=/home/$DOCKER_USER/libs
+RUN mkdir -p $INSTALL_DIR
 
-RUN cd $INSTALL_DIR && source setup.sh && \
-	cd ~/SLISC0 && git pull && \
-	cp SLISC-long64-quad/*.h SLISC/ && \
-	source make/set_path2.sh && \
-	make -j`getconf _NPROCESSORS_ONLN` opt_long32=false opt_quadmath=true opt_asan=false && \
+# set number of threads for compilation
+ARG NCPU=8
+
+# =================================================================================
+# opt_mplapack doesn't support 16.04 build, you can link statically on other distro
+# =================================================================================
+
+# ======== SLISC 32-bit dynamic no-quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu16.04 && source setup.sh && \
+	cd ~/SLISC0 && \
+	git pull origin && git reset --hard && touch SLISC/*.h && \
+	make opt_mplapack=false -j$NCPU && \
+	./main.x < input.inp
+
+# ======== SLISC 64-bit dynamic quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu16.04 && source setup.sh && \
+	cd ~/SLISC0 && \
+	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
+	make opt_long32=false opt_quadmath=true opt_mplapack=false -j$NCPU && \
+	./main.x < input.inp
+
+# ======== SLISC 32-bit dynamic no-quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu16.04 && source setup.sh && \
+	cd ~/SLISC0 && \
+	git pull origin && git reset --hard && touch SLISC/*.h && \
+	make opt_static=true opt_mplapack=false -j$NCPU && \
+	./main.x < input.inp
+
+# ======== SLISC 64-bit dynamic quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu16.04 && source setup.sh && \
+	cd ~/SLISC0 && \
+	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
+	make opt_static=true opt_long32=false opt_quadmath=true opt_mplapack=false -j$NCPU && \
 	./main.x < input.inp
