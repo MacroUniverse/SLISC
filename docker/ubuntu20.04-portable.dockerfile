@@ -28,15 +28,33 @@ RUN	cd ~/ && \
 
 ARG INSTALL_DIR=/home/$DOCKER_USER/SLISC0-libs-x64-ubuntu20.04
 
-# ======== SLISC ========
-RUN cd $INSTALL_DIR && source setup.sh && \
+# set number of threads for compilation
+ARG NCPU=8
+
+# ======== SLISC 32-bit dynamic no-quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu20.04 && source setup.sh && \
 	cd ~/SLISC0 && \
-	git pull origin && touch SLISC/*.h && \
-	make -j`getconf _NPROCESSORS_ONLN` opt_asan=false && \
+	git pull origin && git reset --hard && touch SLISC/*.h && \
+	make -j$NCPU && \
 	./main.x < input.inp
 
-RUN cd $INSTALL_DIR && source setup.sh && \
+# ======== SLISC 64-bit dynamic quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu20.04 && source setup.sh && \
 	cd ~/SLISC0 && \
-	cp SLISC-long64-quad/*.h SLISC/ && \
-	make -j`getconf _NPROCESSORS_ONLN` opt_long32=false opt_quadmath=true opt_asan=false && \
+	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
+	make opt_long32=false opt_quadmath=true -j$NCPU && \
+	./main.x < input.inp
+
+# ======== SLISC 32-bit dynamic no-quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu20.04 && source setup.sh && \
+	cd ~/SLISC0 && \
+	git pull origin && git reset --hard && touch SLISC/*.h && \
+	make opt_static=true -j$NCPU && \
+	./main.x < input.inp
+
+# ======== SLISC 64-bit dynamic quadmath ========
+RUN cd ~/SLISC0-libs-x64-ubuntu20.04 && source setup.sh && \
+	cd ~/SLISC0 && \
+	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
+	make opt_static=true opt_long32=false opt_quadmath=true -j$NCPU && \
 	./main.x < input.inp
