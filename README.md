@@ -63,13 +63,7 @@ Depending on the compilatio options, `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`
 
 ### Using precompiled binaries or dockerfiles (recommended)
 * All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009). These binaries are compiled with docker using `docker/*.dockerfile`.
-
-for docker image build, use
-```bash
-sudo docker build -t slisc0:xxx -f docker/xxx.dockerfile . # build
-sudo docker run slisc0 # run test (if available)
-sudo docker run -it slisc0 bash # open terminal
-```
+* Use `source setup.sh` to add environment vars.
 
 ### Install with apt (Ubuntu 20.04/22.04)
 ```bash
@@ -78,20 +72,19 @@ apt -y upgrade
 apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
 apt purge -y libopenblas*
 ```
+(Note that gfortran needs to have the same version with g++)
 
 ## Building SLISC0
 ```bash
-git clone https://github.com/MacroUniverse/SLISC0 --depth 1
-git clone https://github.com/MacroUniverse/Arpack_test --depth 1
-git clone https://github.com/MacroUniverse/EigenTest --depth 1
+git clone https://github.com/MacroUniverse/SLISC0
 cd SLISC0
 touch SLISC/*.h
 make -j12
 ```
 
-* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04 & 18.04 & 22.04 and Windows WSL, MYSYS2. Note that gfortran needs to have the same version with g++.
+* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
 * Use `make` to compile, use `make -j8` to compile with 8 threads (or any number you like).
-* Makefile provides multiple options, uncomment one line to enable. The plan is to merge all of the `make/*.mak` files into one (currently called `make/g++_all.mak`). Each dependent libraries can be optionally turned on or off in `make/g++_all.mak` among other options, or specified by calling `make opt_xxx=xxx`.
+* Makefile provides multiple options, uncomment one line to enable. The plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`). Each dependent libraries can be optionally turned on or off in `make/all.mak` among other options, or specified by calling `make opt_xxx=xxx`.
 * To recompile just one test, use `make test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * Use `./main.x < input.inp` to run all tests. Use `./main.x <test>` to run 1 test.
 
