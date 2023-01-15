@@ -33,7 +33,7 @@ RUN useradd -u $DOCKER_UID -m $DOCKER_USER --shell /bin/bash -G wheel,root && \
 USER ${DOCKER_USER}
 
 RUN	cd ~/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
+	git clone https://github.com/MacroUniverse/SLISC0 --depth 4 && \
 	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009 --depth 1
 
 # copy prebuilt libraries
@@ -51,12 +51,12 @@ ARG NCPU=8
 RUN cd ~/SLISC0-libs-x64-centos7.9.2009 && source setup.sh && \
 	cd ~/SLISC0 && \
 	git pull origin && git reset --hard && touch SLISC/*.h && \
-	make opt_asan=false -j$NCPU && \
+	rm -f *.o && make opt_asan=false -j$NCPU && \
 	./main.x < input.inp
 
 # ======== SLISC 64-bit dynamic quadmath ========
 RUN cd ~/SLISC0-libs-x64-centos7.9.2009 && source setup.sh && \
 	cd ~/SLISC0 && \
 	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
-	make opt_asan=false opt_long32=false opt_quadmath=true opt_no__Float128=true -j$NCPU && \
+	rm -f *.o && make opt_asan=false opt_long32=false opt_quadmath=true opt_no__Float128=true -j$NCPU && \
 	./main.x < input.inp
