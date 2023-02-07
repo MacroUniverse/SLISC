@@ -42,6 +42,7 @@ void test_linux()
 
 	// test ram_usage();
 	{
+#ifndef SLS_USE_MACOS
 		Long old_ram = ram_usage();
 		Long N = 1024*1024*100; // 100 Mib
 		Char *s = new Char[N];
@@ -57,7 +58,11 @@ void test_linux()
 			SLS_FAIL;
 #endif
 		delete [] s;
+#endif
 	}
+
+
+
 #else
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif

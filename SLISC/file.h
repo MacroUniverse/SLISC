@@ -267,11 +267,8 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 	// save a list of all files (no folder) to temporary file
 
 #ifdef SLS_USE_MACOS
-	cout << "file_list_r using MACOS" << endl;
-	cout << "executing:" << "find " + path.substr(0,path.size()-1) + " -type f" << endl;
 	std::istringstream iss(exec_str(("find " + path.substr(0,path.size()-1) + " -type f").c_str()));
 #else
-	cout << "file_list_r not using MACOS" << endl;
 	std::istringstream iss(exec_str(("find " + path + " -type f").c_str()));
 #endif
 	
