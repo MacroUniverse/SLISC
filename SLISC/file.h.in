@@ -265,7 +265,12 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 	if (!append)
 	    fnames.resize(0);
 	// save a list of all files (no folder) to temporary file
+
+#ifdef SLS_USE_MACOS
+	std::istringstream iss(exec_str(("find " + path.substr(0,path.size()-1) + " -type f").c_str()));
+#else
 	std::istringstream iss(exec_str(("find " + path + " -type f").c_str()));
+#endif
 	
 	// read the temporary file
 	Str name;

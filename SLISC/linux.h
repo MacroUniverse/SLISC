@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 #include <cstdio>
 #include <memory>
 #include <stdexcept>

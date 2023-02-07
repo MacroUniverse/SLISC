@@ -13,8 +13,11 @@ void test_file()
 
 	// file_list_r
 	file_list_r(names, "test/test_file/");
-	if (names[0] != "test/test_file/123.txt" || names[1] != "test/test_file/234.txt" || names[2] != "test/test_file/sub/345.txt")
+	if (names[0] != "test/test_file/123.txt" || names[1] != "test/test_file/234.txt" || names[2] != "test/test_file/sub/345.txt") {
+		cout << "names[]:" << endl << names[0] << endl << names[1] << endl << names[2] << endl;
+		cout << "expected:" << endl << "test/test_file/123.txt" << endl << "test/test_file/234.txt" << endl << "test/test_file/sub/345.txt" << endl;
 		SLS_FAIL;
+	}
 
 	// write()
 	Str data = "abcdefghijklmnopqrstuvwxyz";
