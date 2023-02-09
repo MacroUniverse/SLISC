@@ -8,9 +8,10 @@
 // [STL+SLISC] 4.6s
 // [GCH:STL+SLISC] 1.7s
 #include <bits/stdc++.h>
-#define SLS_USE_INT_AS_LONG
+// #define SLS_USE_INT_AS_LONG
 #include "../SLISC/global.h"
 #include "../SLISC/STL_util.h"
+#include <climits>
 #include "../SLISC/search.h"
 #include "../SLISC/heap.h"
 #include "../SLISC/sort.h"
@@ -38,7 +39,7 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str) {
     while (cin >> num >> str) {
         v_num.push_back(num);
         v_str.push_back(move(str));
-        cin.ignore(ULONG_LONG_MAX, '\n');
+        cin.ignore(ULLONG_MAX, '\n');
     }
 }
 
