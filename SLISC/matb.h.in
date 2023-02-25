@@ -768,9 +768,9 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 //% end
 			for (Long i = 0; i < v.size(); ++i) {
 //% if is_Qcomp(Ts)
-				v1[i] = Comp(v0[i].real(), v0[i].imag());
+				v1[i] = Comp(v[i].real(), v[i].imag());
 //% else
-				v1[i] = v0[i];
+				v1[i] = v[i];
 //% end
 			}
 			save(v1, name, new_matb);

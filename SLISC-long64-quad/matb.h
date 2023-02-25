@@ -3894,7 +3894,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.size());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = v0[i];
+				v1[i] = v[i];
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3905,7 +3905,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.n0(), v.n1());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = v0[i];
+				v1[i] = v[i];
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3916,7 +3916,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.n0(), v.n1(), v.n2());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = v0[i];
+				v1[i] = v[i];
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3927,7 +3927,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = v0[i];
+				v1[i] = v[i];
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3938,7 +3938,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.size());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = Comp(v0[i].real(), v0[i].imag());
+				v1[i] = Comp(v[i].real(), v[i].imag());
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3949,7 +3949,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.n0(), v.n1());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = Comp(v0[i].real(), v0[i].imag());
+				v1[i] = Comp(v[i].real(), v[i].imag());
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3960,7 +3960,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.n0(), v.n1(), v.n2());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = Comp(v0[i].real(), v0[i].imag());
+				v1[i] = Comp(v[i].real(), v[i].imag());
 			}
 			save(v1, name, new_matb);
 	        continue;
@@ -3971,7 +3971,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	        load(v, name, matb);
 	        v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
 			for (Long i = 0; i < v.size(); ++i) {
-				v1[i] = Comp(v0[i].real(), v0[i].imag());
+				v1[i] = Comp(v[i].real(), v[i].imag());
 			}
 			save(v1, name, new_matb);
 	        continue;

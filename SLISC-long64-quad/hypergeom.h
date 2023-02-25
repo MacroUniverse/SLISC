@@ -66,6 +66,18 @@ inline Comp arb_hypergeom1F1(Comp_I a, Comp_I b, Comp_I z)
 	acb_clear(a1); acb_clear(b1); acb_clear(z1); acb_clear(res1); arb_clear(temp1);
 	return res;
 }
+
+inline Comp arb_hypergeom(SvecComp_I a, SvecComp_I b, SvecComp_I z)
+{
+	slong p = a.size(), q = b.size();
+	Int regularized = false;
+	slong prec = 64; // set precision bit (log10/log2 = 3.322)
+	acb_t a1;
+	acb_init(a1);
+	arb_clear(a1);
+
+	acb_hypgeom_pfq(acb_poly_t res, acb_srcptr a, p, acb_srcptr b, q, const acb_t z, int regularized, slong prec)
+}
 #endif
 
 } // namespace slisc

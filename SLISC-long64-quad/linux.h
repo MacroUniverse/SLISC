@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 #include <cstdio>
 #include <memory>
 #include <stdexcept>
@@ -46,6 +46,7 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
 // mem usage by this program in KiB
 // works on computer cluster
 // run time about 5e-5s
+#ifndef SLS_USE_MACOS
 inline Long ram_usage() {
 	FILE* file = fopen("/proc/self/status", "r");
 	Char line[128];
@@ -64,6 +65,12 @@ inline Long ram_usage() {
 	fclose(file);
 	return i;
 }
+#else
+inline Long ram_usage() {
+	SLS_WARN("not implemented for macOS");
+	return -1;
+}
+#endif
 
 } // namespace slisc
 #endif

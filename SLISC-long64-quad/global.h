@@ -58,6 +58,8 @@
 // platform
 #if defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__) || defined(_MSC_VER) || defined(_WIN32) || defined(_WIN64)
 	#define SLS_USE_WINDOWS
+#elif defined(__APPLE__)
+	#define SLS_USE_MACOS
 #else
 	#define SLS_USE_LINUX
 #endif
