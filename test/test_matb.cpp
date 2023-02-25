@@ -428,7 +428,7 @@ void test_matb()
 	// matb_q2d: convert all Qdoub and Qcomp to Doub and Comp
 	{
 		// scalars
-		remove("q2d-test.matb")
+		remove("q2d-test.matb");
 		matb_q2d("test.matb", true);
 		Matb matb("q2d-test.matb", "r");
 
