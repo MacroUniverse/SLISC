@@ -16,6 +16,7 @@ cmake-build-debug/
 *.tar.gz
 test.matt
 test.matb
+q2d-test.matb
 test1.matb
 tem_db.mat
 cpp_gen.m
@@ -27,6 +28,7 @@ util/matbrename
 util/cat_files
 util/echo2
 util/mattinfo
+util/matb_q2d
 test.mat
 example.db
 test_sql_bind.db

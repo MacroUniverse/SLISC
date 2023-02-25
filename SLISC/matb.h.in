@@ -753,7 +753,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 //% [Ts, Ts1] = val_t(T, T1);
 //% numTs = num2str(type_num(Ts));
 	    if (type == @numTs@ && Ndim == @Ndim@) {
-			@T@ v; @T@ v1;
+			@T@ v; @T1@ v1;
 	        load(v, name, matb);
 //% if Ndim == '1'
 	        v1.resize(v.size());

@@ -31,7 +31,7 @@ void test_matb()
 	Qdoub sq(-1.234567890223456789032345678904234567);
 	save(sq, "sq", matb);
 
-	Qcomp scq(s, -s);
+	Qcomp scq(sq, -sq);
 	save(scq, "scq", matb);
 #endif
 
@@ -139,7 +139,7 @@ void test_matb()
 	matb.close();
 
 
-	// test 'c' mode
+	// test 'm' mode
 	{
 		matb.open("test.matb", "m");
 		matb.read_data();
@@ -273,8 +273,8 @@ void test_matb()
 	SLS_ASSERT(r_CD3Q == CD3Q);
 
 	Cmat3Qcomp r_CC3Q;
-	load(r_CD3Q, "CD3Q", matb);
-	SLS_ASSERT(r_CD3Q == CD3Q);
+	load(r_CC3Q, "CC3Q", matb);
+	SLS_ASSERT(r_CC3Q == CC3Q);
 #endif
 
 #ifndef SLS_USE_QUAD_MATH
@@ -423,6 +423,158 @@ void test_matb()
 		SLS_ASSERT(r_CC3 == CC3);
 
 		matb.close();
+	}
+
+	// matb_q2d: convert all Qdoub and Qcomp to Doub and Comp
+	{
+		// scalars
+		remove("q2d-test.matb")
+		matb_q2d("test.matb", true);
+		Matb matb("q2d-test.matb", "r");
+
+		Int r_si;
+		load(r_si, "si", matb);
+		if (r_si != si) SLS_FAIL;
+
+		Doub r_s;
+		load(r_s, "s", matb);
+		if (abs(r_s-s) != 0) SLS_FAIL;
+
+		Comp r_sc;
+		load(r_sc, "sc", matb);
+		if (abs(r_sc-sc) != 0) SLS_FAIL;
+
+	#ifdef SLS_USE_QUAD_MATH
+		Doub r_sq;
+		load(r_sq, "sq", matb);
+		SLS_ASSERT(r_sq == Doub(sq));
+
+		Comp r_scq;
+		load(r_scq, "scq", matb);
+		SLS_ASSERT(r_scq == Doub(scq));
+	#endif
+
+		// vectors
+		// TODO: Char
+
+		VecInt r_vi;
+		load(r_vi, "vi", matb);
+		if (r_vi != vi)
+			SLS_FAIL;
+
+		VecDoub r_v;
+		load(r_v, "v", matb);
+		r_v -= v;
+		if (norm(r_v) != 0)
+			SLS_FAIL;
+
+		VecComp r_vc;
+		load(r_vc, "vc", matb);
+		r_vc -= vc;
+		if (norm(r_v) != 0)
+			SLS_FAIL;
+
+		VecDoub r_vd;
+		load(r_vd, "vd", matb);
+		if (r_vd[0] != 1.1 || r_vd[1] != 2.2 || r_vd[2] != 3.3)
+			SLS_FAIL;
+
+	#ifdef SLS_USE_QUAD_MATH
+		VecDoub r_vq;
+		load(r_vq, "vq", matb);
+		SLS_ASSERT(r_vq.size() == vq.size());
+		for (Long i = 0; i < r_vq.size(); ++i)
+			SLS_ASSERT(r_vq[i] == Doub(vq[i]));
+
+		VecComp r_vcq;
+		load(r_vcq, "vcq", matb);
+		SLS_ASSERT(r_vcq.size() == vcq.size());
+		for (Long i = 0; i < r_vcq.size(); ++i)
+			SLS_ASSERT(r_vcq[i] == Comp(vcq[i].real(),vcq[i].imag()));
+
+		vecDoub r_vdq;
+		load(r_vdq, "vdq", matb);
+		SLS_ASSERT(r_vdq.size() == vdq.size());
+		for (Long i = 0; i < r_vdq.size(); ++i)
+			SLS_ASSERT(r_vdq[i] == Comp(vdq[i].real(),vdq[i].imag()));
+	#endif
+
+		// matrices
+		// TODO: Char
+
+		MatInt r_AI(0,0);
+		load(r_AI, "AI", matb);
+		if (r_AI != AI) SLS_FAIL;
+
+		MatDoub r_A(0,0);
+		load(r_A, "A", matb);
+		r_A -= A;
+		if (norm(r_A) != 0) SLS_FAIL;
+
+		MatComp r_C(0,0);
+		load(r_C, "C", matb);
+		r_C -= C;
+		if (norm(r_C) != 0) SLS_FAIL;
+
+		CmatDoub r_CD;
+		load(r_CD, "CD", matb);
+		SLS_ASSERT(r_CD == CD);
+
+		CmatComp r_CC;
+		load(r_CC, "CC", matb);
+		SLS_ASSERT(r_CC == CC);
+
+	#ifdef SLS_USE_QUAD_MATH
+		CmatDoub r_CDQ;
+		load(r_CDQ, "CDQ", matb);
+		SLS_ASSERT(r_CDQ.n0() == CDQ.n0());
+		SLS_ASSERT(r_CDQ.n1() == CDQ.n1());
+		for (Long i = 0; i < r_CDQ.size(); ++i)
+			SLS_ASSERT(r_CDQ[i] == Doub(CDQ[i]));
+
+		CmatComp r_CCQ;
+		load(r_CCQ, "CCQ", matb);
+		SLS_ASSERT(r_CCQ.n0() == CCQ.n0());
+		SLS_ASSERT(r_CCQ.n1() == CCQ.n1());
+		for (Long i = 0; i < r_CCQ.size(); ++i)
+			SLS_ASSERT(r_CCQ[i] == Comp(CCQ[i].real(), CCQ[i].imag()));
+	#endif
+
+		// 3D arrays
+		Mat3Doub r_A3;
+		load(r_A3, "A3", matb);
+		SLS_ASSERT(r_A3 == A3);
+
+		Mat3Comp r_C3;
+		load(r_C3, "C3", matb);
+		r_C3 -= C3;
+		SLS_ASSERT(norm(r_C3) == 0);
+
+		Cmat3Doub r_CD3;
+		load(r_CD3, "CD3", matb);
+		SLS_ASSERT(r_CD3 == CD3);
+
+		Cmat3Comp r_CC3;
+		load(r_CC3, "CC3", matb);
+		SLS_ASSERT(r_CC3 == CC3);
+
+	#ifdef SLS_USE_QUAD_MATH
+		Cmat3Doub r_CD3Q;
+		load(r_CD3Q, "CD3Q", matb);
+		SLS_ASSERT(r_CD3Q.n0() == CD3Q.n0());
+		SLS_ASSERT(r_CD3Q.n1() == CD3Q.n1());
+		SLS_ASSERT(r_CD3Q.n1() == CD3Q.n1());
+		for (Long i = 0; i < CD3Q.size(); ++i)
+			SLS_ASSERT(r_CD3Q[i] == Doub(CD3Q[i]));
+
+		Cmat3Comp r_CC3Q;
+		load(r_CC3Q, "r_CC3Q", matb);
+		SLS_ASSERT(r_CC3Q.n0() == CC3Q.n0());
+		SLS_ASSERT(r_CC3Q.n1() == CC3Q.n1());
+		SLS_ASSERT(r_CC3Q.n1() == CC3Q.n1());
+		for (Long i = 0; i < CC3Q.size(); ++i)
+			SLS_ASSERT(r_CC3Q[i] == Comp(CC3Q[i].real(),CC3Q[i].imag()));
+	#endif
 	}
 #endif
 
