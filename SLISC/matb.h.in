@@ -756,13 +756,13 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 			@T@ v; @T@ v1;
 	        load(v, name, matb);
 //% if Ndim == '1'
-	        v1.resize(v0.size());
+	        v1.resize(v.size());
 //% elseif Ndim == '2'
-	        v1.resize(v0.n0(), v0.n1());
+	        v1.resize(v.n0(), v.n1());
 //% elseif Ndim == '3'
-	        v1.resize(v0.n0(), v0.n1(), v0.n2());
+	        v1.resize(v.n0(), v.n1(), v.n2());
 //% elseif Ndim == '4'
-	        v1.resize(v0.n0(), v0.n1(), v0.n2(), v0.n3());
+	        v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
 //% else
 //%         error('not implemented!');
 //% end

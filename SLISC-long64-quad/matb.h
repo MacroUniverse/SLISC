@@ -3892,7 +3892,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 23 && Ndim == 1) {
 			VecQdoub v; VecQdoub v1;
 	        load(v, name, matb);
-	        v1.resize(v0.size());
+	        v1.resize(v.size());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = v0[i];
 			}
@@ -3903,7 +3903,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 23 && Ndim == 2) {
 			CmatQdoub v; CmatQdoub v1;
 	        load(v, name, matb);
-	        v1.resize(v0.n0(), v0.n1());
+	        v1.resize(v.n0(), v.n1());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = v0[i];
 			}
@@ -3914,7 +3914,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 23 && Ndim == 3) {
 			Cmat3Qdoub v; Cmat3Qdoub v1;
 	        load(v, name, matb);
-	        v1.resize(v0.n0(), v0.n1(), v0.n2());
+	        v1.resize(v.n0(), v.n1(), v.n2());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = v0[i];
 			}
@@ -3925,7 +3925,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 23 && Ndim == 4) {
 			Cmat4Qdoub v; Cmat4Qdoub v1;
 	        load(v, name, matb);
-	        v1.resize(v0.n0(), v0.n1(), v0.n2(), v0.n3());
+	        v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = v0[i];
 			}
@@ -3936,7 +3936,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 43 && Ndim == 1) {
 			VecQcomp v; VecQcomp v1;
 	        load(v, name, matb);
-	        v1.resize(v0.size());
+	        v1.resize(v.size());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = Comp(v0[i].real(), v0[i].imag());
 			}
@@ -3947,7 +3947,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 43 && Ndim == 2) {
 			CmatQcomp v; CmatQcomp v1;
 	        load(v, name, matb);
-	        v1.resize(v0.n0(), v0.n1());
+	        v1.resize(v.n0(), v.n1());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = Comp(v0[i].real(), v0[i].imag());
 			}
@@ -3958,7 +3958,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 43 && Ndim == 3) {
 			Cmat3Qcomp v; Cmat3Qcomp v1;
 	        load(v, name, matb);
-	        v1.resize(v0.n0(), v0.n1(), v0.n2());
+	        v1.resize(v.n0(), v.n1(), v.n2());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = Comp(v0[i].real(), v0[i].imag());
 			}
@@ -3969,7 +3969,7 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	    if (type == 43 && Ndim == 4) {
 			Cmat4Qcomp v; Cmat4Qcomp v1;
 	        load(v, name, matb);
-	        v1.resize(v0.n0(), v0.n1(), v0.n2(), v0.n3());
+	        v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
 			for (Long i = 0; i < v.size(); ++i) {
 				v1[i] = Comp(v0[i].real(), v0[i].imag());
 			}

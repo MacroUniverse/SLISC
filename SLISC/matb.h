@@ -2613,91 +2613,91 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 
 // containers
 	    if (type == 1 && Ndim == 1) {
-	        VecChar v(0);
+			VecChar v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 2 && Ndim == 1) {
-	        VecInt v(0);
+			VecInt v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 3 && Ndim == 1) {
-	        VecLlong v(0);
+			VecLlong v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 1) {
-	        VecDoub v(0);
+			VecDoub v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 1) {
-	        VecComp v(0);
+			VecComp v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 2 && Ndim == 2) {
-	        CmatInt v(0, 0);
+			CmatInt v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 3 && Ndim == 2) {
-	        CmatLlong v(0, 0);
+			CmatLlong v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 2) {
-	        CmatDoub v(0, 0);
+			CmatDoub v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 2) {
-	        CmatComp v(0, 0);
+			CmatComp v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 2 && Ndim == 3) {
-	        Cmat3Int v(0, 0, 0);
+			Cmat3Int v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 3 && Ndim == 3) {
-	        Cmat3Llong v(0, 0, 0);
+			Cmat3Llong v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 3) {
-	        Cmat3Doub v(0, 0, 0);
+			Cmat3Doub v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 3) {
-	        Cmat3Comp v(0, 0, 0);
+			Cmat3Comp v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 4) {
-	        Cmat4Doub v(0, 0, 0, 0);
+			Cmat4Doub v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 4) {
-	        Cmat4Comp v(0, 0, 0, 0);
+			Cmat4Comp v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
@@ -2767,91 +2767,91 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 
 // containers
 	    if (type == 1 && Ndim == 1) {
-	        VecChar v(0);
+			VecChar v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 2 && Ndim == 1) {
-	        VecInt v(0);
+			VecInt v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 3 && Ndim == 1) {
-	        VecLlong v(0);
+			VecLlong v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 1) {
-	        VecDoub v(0);
+			VecDoub v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 1) {
-	        VecComp v(0);
+			VecComp v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 2 && Ndim == 2) {
-	        CmatInt v(0, 0);
+			CmatInt v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 3 && Ndim == 2) {
-	        CmatLlong v(0, 0);
+			CmatLlong v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 2) {
-	        CmatDoub v(0, 0);
+			CmatDoub v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 2) {
-	        CmatComp v(0, 0);
+			CmatComp v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 2 && Ndim == 3) {
-	        Cmat3Int v(0, 0, 0);
+			Cmat3Int v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 3 && Ndim == 3) {
-	        Cmat3Llong v(0, 0, 0);
+			Cmat3Llong v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 3) {
-	        Cmat3Doub v(0, 0, 0);
+			Cmat3Doub v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 3) {
-	        Cmat3Comp v(0, 0, 0);
+			Cmat3Comp v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 21 && Ndim == 4) {
-	        Cmat4Doub v(0, 0, 0, 0);
+			Cmat4Doub v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
 
 	    if (type == 41 && Ndim == 4) {
-	        Cmat4Comp v(0, 0, 0, 0);
+			Cmat4Comp v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
@@ -2860,6 +2860,187 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 	matt.close(); matb.close();
 	return 0;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+// convert Qdoub and Qcomp types in .matb files to Doub and Comp
+// if `replace = false`, `q2d-` will be prepend to filename
+// return 0 if successful, -1 if skipped due to `replace = false`
+inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
+{
+	Long N = matb_name.size();
+	Str new_matb_name;
+	if (matb_name.substr(N-5, 5) != ".matb")
+	    SLS_ERR(matb_name + " : file does not have .matb extension!");
+	new_matb_name = "q2d-" + matb_name;
+	if (file_exist(new_matb_name)) {
+	    if (replace)
+	        file_remove(new_matb_name);
+	    else
+	        return -1;
+	}
+
+	Matb matb(matb_name, "r");
+	Matb new_matb(new_matb_name, "w");
+	Long Nvar = matb.m_name.size();
+	for (Long i = 0; i < Nvar; ++i) {
+	    const Long &type = matb.m_type[i];
+	    const Str &name = matb.m_name[i];
+	    const Long Ndim = matb.m_size[i].size();
+	    if (Ndim == 0) {
+// scalars
+	        if (type == 1) {
+	            Char s;
+	            load(s, name, matb); save(s, name, new_matb);
+	            continue;
+	        }
+
+	        if (type == 2) {
+	            Int s;
+	            load(s, name, matb); save(s, name, new_matb);
+	            continue;
+	        }
+
+	        if (type == 3) {
+	            Llong s;
+	            load(s, name, matb); save(s, name, new_matb);
+	            continue;
+	        }
+
+	        if (type == 21) {
+	            Doub s;
+	            load(s, name, matb); save(s, name, new_matb);
+	            continue;
+	        }
+
+	        if (type == 41) {
+	            Comp s;
+	            load(s, name, matb); save(s, name, new_matb);
+	            continue;
+	        }
+
+
+	        if (type == 23) { // Qdoub
+	            Qdoub s;
+	            load(s, name, matb); save(Doub(s), name, new_matb);
+	            continue;
+	        }
+
+			if (type == 43) { // Qcomp
+	            Qcomp s;
+	            load(s, name, matb);
+				save(Comp(s.real(), s.imag()), name, new_matb);
+	            continue;
+	        }
+
+			SLS_ERR("not implemented!");
+	    }
+
+// containers
+	    if (type == 1 && Ndim == 1) {
+            VecChar v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 2 && Ndim == 1) {
+            VecInt v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 3 && Ndim == 1) {
+            VecLlong v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 21 && Ndim == 1) {
+            VecDoub v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 41 && Ndim == 1) {
+            VecComp v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 2 && Ndim == 2) {
+            CmatInt v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 3 && Ndim == 2) {
+            CmatLlong v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 21 && Ndim == 2) {
+            CmatDoub v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 41 && Ndim == 2) {
+            CmatComp v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 2 && Ndim == 3) {
+            Cmat3Int v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 3 && Ndim == 3) {
+            Cmat3Llong v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 21 && Ndim == 3) {
+            Cmat3Doub v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 41 && Ndim == 3) {
+            Cmat3Comp v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 21 && Ndim == 4) {
+            Cmat4Doub v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+	    if (type == 41 && Ndim == 4) {
+            Cmat4Comp v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+
+
+// quad precision containers
+
+
+
+
+
+
+
+
+	}
+	matb.close(); new_matb.close();
+	return 0;
+}
+#endif
 
 } // namespace slisc
 #endif
