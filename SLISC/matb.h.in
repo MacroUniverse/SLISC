@@ -592,17 +592,7 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
 	    if (type == @numTs@ && Ndim == @Ndim@) {
-//% if Ndim == '1'
-	        @T@ v(0);
-//% elseif Ndim == '2'
-	        @T@ v(0, 0);
-//% elseif Ndim == '3'
-	        @T@ v(0, 0, 0);
-//% elseif Ndim == '4'
-	        @T@ v(0, 0, 0, 0);
-//% else
-//%         error('not implemented!');
-//% end
+			@T@ v;
 	        load(v, name, matb); save(v, name, matt);
 	        continue;
 	    }
@@ -665,17 +655,7 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
 	    if (type == @numTs@ && Ndim == @Ndim@) {
-//% if Ndim == '1'
-	        @T@ v(0);
-//% elseif Ndim == '2'
-	        @T@ v(0, 0);
-//% elseif Ndim == '3'
-	        @T@ v(0, 0, 0);
-//% elseif Ndim == '4'
-	        @T@ v(0, 0, 0, 0);
-//% else
-//%         error('not implemented!');
-//% end
+			@T@ v;
 	        load(v, name, matt); save(v, name, matb);
 	        continue;
 	    }
@@ -684,6 +664,124 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 	matt.close(); matb.close();
 	return 0;
 }
+
+#ifdef SLS_USE_QUAD_MATH
+// convert Qdoub and Qcomp types in .matb files to Doub and Comp
+// if `replace = false`, `q2d-` will be prepend to filename
+// return 0 if successful, -1 if skipped due to `replace = false`
+inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
+{
+	Long N = matb_name.size();
+	Str new_matb_name;
+	if (matb_name.substr(N-5, 5) != ".matb")
+	    SLS_ERR(matb_name + " : file does not have .matb extension!");
+	new_matb_name = "q2d-" + matb_name;
+	if (file_exist(new_matb_name)) {
+	    if (replace)
+	        file_remove(new_matb_name);
+	    else
+	        return -1;
+	}
+
+	Matb matb(matb_name, "r");
+	Matb new_matb(new_matb_name, "w");
+	Long Nvar = matb.m_name.size();
+	for (Long i = 0; i < Nvar; ++i) {
+	    const Long &type = matb.m_type[i];
+	    const Str &name = matb.m_name[i];
+	    const Long Ndim = matb.m_size[i].size();
+	    if (Ndim == 0) {
+// scalars
+//% tem('matb_q2d', {
+//%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
+//% });
+//%----------------------
+//% T = varargin{:};
+//% numT = num2str(type_num(T));
+	        if (type == @numT@) {
+	            @T@ s;
+	            load(s, name, matb); save(s, name, new_matb);
+	            continue;
+	        }
+//%---------------------
+
+	        if (type == 23) { // Qdoub
+	            Qdoub s;
+	            load(s, name, matb); save(Doub(s), name, new_matb);
+	            continue;
+	        }
+
+			if (type == 43) { // Qcomp
+	            Qcomp s;
+	            load(s, name, matb);
+				save(Comp(s.real(), s.imag()), name, new_matb);
+	            continue;
+	        }
+
+			SLS_ERR("not implemented!");
+	    }
+
+// containers
+//% tem('matb_q2d2', {
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
+//% });
+//%----------------------
+//% T = varargin{:};
+//% Ndim = num2str(ndim(T));
+//% Ts = val_t(T);
+//% numTs = num2str(type_num(Ts));
+	    if (type == @numTs@ && Ndim == @Ndim@) {
+            @T@ v;
+	        load(v, name, matb); save(v, name, new_matb);
+	        continue;
+	    }
+//%--------------------
+
+// quad precision containers
+//% tem('matb_q2d3', {
+//%     'VecQdoub' 'VecDoub'; 'CmatQdoub' 'CmatDoub';
+//%     'Cmat3Qdoub' 'Cmat3Doub'; 'Cmat4Qdoub' 'Cmat4Doub';
+//%     'VecQcomp' 'VecComp'; 'CmatQcomp' 'CmatComp';
+//%     'Cmat3Qcomp' 'Cmat3Comp'; 'Cmat4Qcomp' 'Cmat4Comp';
+//% });
+//%----------------------
+//% [T, T1] = varargin{:};
+//% Ndim = num2str(ndim(T));
+//% [Ts, Ts1] = val_t(T, T1);
+//% numTs = num2str(type_num(Ts));
+	    if (type == @numTs@ && Ndim == @Ndim@) {
+			@T@ v; @T@ v1;
+	        load(v, name, matb);
+//% if Ndim == '1'
+	        v1.resize(v0.size());
+//% elseif Ndim == '2'
+	        v1.resize(v0.n0(), v0.n1());
+//% elseif Ndim == '3'
+	        v1.resize(v0.n0(), v0.n1(), v0.n2());
+//% elseif Ndim == '4'
+	        v1.resize(v0.n0(), v0.n1(), v0.n2(), v0.n3());
+//% else
+//%         error('not implemented!');
+//% end
+			for (Long i = 0; i < v.size(); ++i) {
+//% if is_Qcomp(Ts)
+				v1[i] = Comp(v0[i].real(), v0[i].imag());
+//% else
+				v1[i] = v0[i];
+//% end
+			}
+			save(v1, name, new_matb);
+	        continue;
+	    }
+//%--------------------
+	}
+	matb.close(); new_matb.close();
+	return 0;
+}
+#endif
 
 } // namespace slisc
 #endif

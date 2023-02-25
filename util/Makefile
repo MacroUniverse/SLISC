@@ -9,6 +9,10 @@ matb2matt: matb2matt.cpp
 	cd ..; cd -;
 	g++ $(flags) matb2matt.cpp -o matb2matt
 
+matb_q2d: matb_q2d.cpp
+	cd ..; cd -;
+	g++ $(flags) matb_q2d.cpp -o matb_q2d
+
 matbrename: matbrename.cpp
 	cd ..; cd -;
 	g++ $(flags) matbrename.cpp -o matbrename
