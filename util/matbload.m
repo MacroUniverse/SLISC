@@ -8,7 +8,10 @@ end_mark = 'Matb_End_of_File';
 fseek(fid, -numel(end_mark), 'eof');
 tmp = fread(fid, [1,numel(end_mark)], '*char');
 if ~strcmp(end_mark, tmp)
-    error(['file corrupted: ' fname]);
+    warning(['matb file corrupted Matb_End_of_File not found: ' fname]);
+    varnames = [];
+    return;
+    % error(['file corrupted: ' fname]);
 end
 fseek(fid, -numel(end_mark)-8, 'eof');
 numvars = fread(fid, 1, 'int64');
