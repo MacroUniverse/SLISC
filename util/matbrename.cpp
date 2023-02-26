@@ -3,12 +3,13 @@
 using namespace slisc;
 
 // usage: matbrename <filename.matb> <varname> <newname>
+// cuttently only support rename to same size!
 int main(int argc, char **argv)
 {
 	Str fname = argv[1], varname = argv[2], newname = argv[3];
 	cout << fname << ": " << varname << " -> " << newname << endl;
 	if (varname.size() != newname.size())
-		SLS_ERR("cuttently only support rename to same size name!");
+		SLS_ERR("cuttently only support rename to same size!");
 	Matb matb(fname, "r");
 	Long ind = matb.search(varname);
 	if (ind < 0)

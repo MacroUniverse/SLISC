@@ -67,8 +67,7 @@ Depending on the compilatio options, `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`
 
 ### Install with apt (Ubuntu 20.04/22.04)
 ```bash
-apt -y update
-apt -y upgrade
+apt -y update && apt -y upgrade
 apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
 apt purge -y libopenblas*
 ```
@@ -79,21 +78,21 @@ apt purge -y libopenblas*
 git clone https://github.com/MacroUniverse/SLISC0
 cd SLISC0
 touch SLISC/*.h
-make -j12
+make [options] -j8
 ```
 
 * Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
 * Use `make` to compile, use `make -j8` to compile with 8 threads (or any number you like).
-* Makefile provides multiple options, uncomment one line to enable. The plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`). Each dependent libraries can be optionally turned on or off in `make/all.mak` among other options, or specified by calling `make opt_xxx=xxx`.
-* To recompile just one test, use `make test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
+* Makefile provides multiple options, uncomment one line to enable. The future plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`). Each dependent libraries can be manually turned on or off in `make/all.mak` among other options, or specified by calling `make opt_xxx=xxx`.
+* To recompile just one test, use `make [options] test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * Use `./main.x < input.inp` to run all tests. Use `./main.x <test>` to run 1 test.
 
 ## Recommended Programming Style
 * Only very trivial templates and classes should be used for code readability. Code generation should be used in place of complex templates and classes.
-* Function overloading should be preferred over class members.
+* Function overloading should be preferred over class members functions.
 * Avoid using unsigned integer types when possible. They are not supported by the library for now. Use `size(std::vector<>)` in `arithmetic.h` instead of `vector::size()` when needed.
 * All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference as a parameter of a function.
-* Generally, functions output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
+* Generally, function output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
 * Intrinsic types are renamed inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
 * A type with `_I` suffix is the `const` or `reference to const` version of that type, used in function parameter declarations to indicate an input argument. Similarly, `_O` means output (reference type), `_IO` means both input and output (reference type). Note that a reference to an `_O` or `_IO` types is still a reference type.
 
@@ -438,11 +437,10 @@ A template file (`demo.h.in`) looks like
 #include <complex>
 #include <vector>
 using namespace std;
-
-//% types = {
-//%     'vector<double>', 'Int', 'vector<float>';
-//%     'vector<complex<double>>', 'vector<complex<double>>', 'vector<Int>';
-//% };
+//% tem('add', {
+//%  'vector<double>', 'Int', 'vector<float>';
+//%  'vector<complex<double>>', 'vector<complex<double>>', 'vector<Int>';
+//% });
 //%----------------------------------
 //% [Tz, Tx, Ty] = varargin{:};
 void add(@Tz@ &z, const @Tx@ &x, const @Ty@ &y)
