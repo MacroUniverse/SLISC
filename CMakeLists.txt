@@ -11,7 +11,7 @@ set(opt_std "c++11" CACHE STRING "")
 set(opt_static OFF CACHE BOOL "")
 set(opt_min OFF CACHE BOOL "")
 set(opt_quadmath OFF CACHE BOOL "enable quadmath")
-set(opt_lapack "reference" CACHE STRING "")
+set(opt_lapack "reference" CACHE STRING "reference, mkl, none")
 set(opt_mplapack ${opt_quadmath} CACHE BOOL "")
 set(opt_boost ON CACHE BOOL "enable boost")
 set(opt_gsl ON CACHE BOOL "")
@@ -25,13 +25,27 @@ set(opt_no__Float128 OFF CACHE BOOL "")
 
 message(STATUS "------------------------")
 
+# === minimum build ===
+if(opt_min)
+    set(opt_quadmath OFF)
+	set(opt_mplapack OFF)
+	set(opt_lapack "none")
+	set(opt_boost OFF)
+	set(opt_gsl OFF)
+	set(opt_eigen OFF)
+	set(opt_arb OFF)
+	set(opt_arpack OFF)
+	set(opt_sqlite OFF)
+	set(opt_matfile OFF)
+endif()
+
 message(STATUS "compiler: ${opt_compiler}")
 set(CMAKE_CXX_COMPILER "/usr/bin/${opt_compiler}")
 
 set(CMAKE_CXX_FLAGS "-std=${opt_std}")
 
 # === 64bit index ===
-if (opt_long32)
+if(opt_long32)
 	message(STATUS "Long bits: 32")
 	add_definitions(-D SLS_USE_INT_AS_LONG)
 else()
@@ -43,6 +57,8 @@ if(opt_gsl)
 	message(STATUS "gsl: on")
 	add_definitions(-D SLS_USE_GSL)
 	list(APPEND LIBS gsl)
+else()
+message(STATUS "gsl: off")
 endif()
 
 # === Arpack ===
@@ -56,6 +72,8 @@ if(opt_arpack)
 		add_definitions(-D SLS_USE_ARPACK)
 		list(APPEND LIBS arpack)
 	endif()
+else()
+	message(STATUS "arpack: off")
 endif()
 
 # === MPLAPACK ===
@@ -63,6 +81,8 @@ if(opt_mplapack)
 	message(STATUS "mplapack: on")
 	add_definitions(-D SLS_USE_MPLAPACK)
 	list(APPEND LIBS mplapack__Float128 mpblas__Float128)
+else()
+	message(STATUS "mplapack: off")
 endif()
 
 if(opt_lapack STREQUAL "reference")
@@ -85,8 +105,11 @@ if(opt_lapack STREQUAL "reference")
 		message(STATUS "cblas: ref32")
 		list(APPEND LIBS cblas blas gfortran)
 	endif()
-else()
+elseif(opt_lapack STREQUAL "mkl")
 	message(FATAL_ERROR "not implemented!")
+else()
+	message(STATUS "lapacke: off")
+	message(STATUS "cblas: off")
 endif()
 
 # === Boost ===
@@ -94,12 +117,16 @@ if(opt_boost)
 	message(STATUS "boost: on")
 	add_definitions(-D SLS_USE_BOOST)
 	list(APPEND LIBS boost_system boost_filesystem)
+else()
+	message(STATUS "boost: off")
 endif()
 
 # === Eigen ===
 if(opt_eigen)
 	message(STATUS "eigen: on")
 	add_definitions(-D SLS_USE_EIGEN)
+else()
+	message(STATUS "eigen: off")
 endif()
 
 # === quad math ===
@@ -108,6 +135,8 @@ if(opt_quadmath)
 	add_definitions(-D SLS_USE_QUAD_MATH)
 	add_compile_options(-fext-numeric-literals)
 	list(APPEND LIBS quadmath)
+else()
+	message(STATUS "quadmath: off")
 endif()
 
 # === Arb ===
@@ -115,6 +144,8 @@ if(opt_arb)
 	message(STATUS "arb: on")
 	add_definitions(-D SLS_USE_ARB)
 	list(APPEND LIBS flint-arb flint mpfr gmp) # replace flint-arb with arb if compiled yourself
+else()
+	message(STATUS "arb: off")
 endif()
 
 # === Address Sanitizer ===
@@ -123,6 +154,8 @@ if(opt_asan)
 	add_definitions(-D SLS_USE_ASAN)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
 	set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize=address -static-libasan")
+else()
+	message(STATUS "asan: off")
 endif()
 
 # === Matfile ===
@@ -134,6 +167,8 @@ if(opt_matfile)
 	link_directories(../MatFile_linux/lib)
 	list(APPEND LIBS mat mx)
 	set(CMAKE_INSTALL_RPATH ../MatFile_linux/lib)
+else()
+	message(STATUS "matfile: off")
 endif()
 
 # === SQLite ===
@@ -141,6 +176,8 @@ if(opt_sqlite)
 	message(STATUS "sqlite: on")
 	add_definitions(-D SLS_USE_SQLITE)
 	list(APPEND LIBS sqlite3)
+else()
+	message(STATUS "sqlite: off")
 endif()
 
 # === Debug/Release ===
@@ -191,6 +228,7 @@ if(opt_octave)
 endif()
 
 # precompile header (total compilation time remains the same, but single recompilation might be slower. Can help to check `#pragma once` and `inline` before functions if they are missing)
+
 # file(GLOB SLISC_HEADERS "SLISC/*.h")
 # file(GLOB STL_HEADERS "/usr/include/c++/9/*")
 # list(REMOVE_ITEM STL_HEADERS /usr/include/c++/9/backward /usr/include/c++/9/bits /usr/include/c++/9/debug /usr/include/c++/9/decimal /usr/include/c++/9/experimental /usr/include/c++/9/ext /usr/include/c++/9/parallel /usr/include/c++/9/profile /usr/include/c++/9/pstl /usr/include/c++/9/tr1 /usr/include/c++/9/tr2)
