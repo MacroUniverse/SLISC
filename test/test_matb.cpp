@@ -277,7 +277,6 @@ void test_matb()
 	SLS_ASSERT(r_CC3Q == CC3Q);
 #endif
 
-#ifndef SLS_USE_QUAD_MATH
 	// matb2matt: convert matb to matt
 	{
 		remove("test.matt");
@@ -425,6 +424,7 @@ void test_matb()
 		matb.close();
 	}
 
+#ifdef SLS_USE_QUAD_MATH
 	// matb_q2d: convert all Qdoub and Qcomp to Doub and Comp
 	{
 		// scalars

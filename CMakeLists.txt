@@ -26,7 +26,14 @@ set(CMAKE_CXX_COMPILER "/usr/bin/${opt_compiler}")
 
 set(CMAKE_CXX_FLAGS "-std=${opt_std}")
 
+# === GSL ===
+if(opt_gsl)
+	add_definitions(-D SLS_USE_GSL)
+	list(APPEND LIBS gsl)
+endif()
+
 if(opt_lapack STREQUAL reference)
+
 # === CBLAS ===
 	add_definitions(-D SLS_USE_CBLAS)
 	if($(opt_long32) EQUAL FALSE)
@@ -55,12 +62,6 @@ endif()
 if(opt_boost)
 	add_definitions(-D SLS_USE_BOOST)
 	list(APPEND LIBS boost_system boost_filesystem)
-endif()
-
-# === GSL ===
-if(opt_gsl)
-	add_definitions(-D SLS_USE_GSL)
-	list(APPEND LIBS gsl)
 endif()
 
 # === Eigen ===
