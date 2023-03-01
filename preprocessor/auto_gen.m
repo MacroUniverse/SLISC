@@ -1,9 +1,10 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 % in_paths must end with '/' or '\'
-function auto_gen(in_paths, fname, SLS_USE_QUADMATH, use_int_as_long)
-global tem_db is_batch_mode SLS_USE_INT_AS_LONG; % is_batch_mode: delete db and process all files
+function auto_gen(in_paths, fname, SLS_USE_QUADMATH, use_int_as_long, verbose)
+global tem_db is_batch_mode SLS_USE_INT_AS_LONG VERBOSE; % is_batch_mode: delete db and process all files
 SLS_USE_INT_AS_LONG = use_int_as_long;
+if ~exist('verbose', 'var') || ~verbose, VERBOSE = false; else, VERBOSE = true; end
 if ~exist('fname', 'var'), fname = []; end
 is_batch_mode = isempty(fname);
 proc_paths = {'../preprocessor/', ...
@@ -71,7 +72,9 @@ end
 % execute all meta outside template body
 for i = 1:Nfile
     in_file = in_list{i};
-    fprintf(['=========== scaning file: ' in_file ' ============' newline]);
+    if VERBOSE
+        fprintf(['=========== scaning file: ' in_file ' ============' newline]);
+    end
     str = fileread(in_file);
     str(str == 13) = [];
     ind = 1;
@@ -122,7 +125,7 @@ while ~quit
             if ~tem_db(i).done(j)
                 temp = ['instantiating template: ' ...
                     tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))];
-                disp(temp);
+                if VERBOSE, disp(temp); end
                 if ~SLS_USE_QUADMATH && has_quad(tem_db(i).param{j,:})
                     continue;
                 end
@@ -147,7 +150,7 @@ end
 ind = 1;
 out_strs = cell(numel(changed_file), 1);
 for i = 1:numel(changed_file)
-    disp(['output text: ' changed_file{i}]);
+    if VERBOSE, disp(['output text: ' changed_file{i}]); end
     str = fileread(changed_file{i}); ind = 1;
     str(str == 13) = [];
     while true
@@ -179,7 +182,7 @@ end
 
 %% write output files
 for i = 1:numel(changed_file)
-    disp(['writing (' num2str(i) '): ' changed_file{i}(1:end-3)]);
+    if VERBOSE, disp(['writing (' num2str(i) '): ' changed_file{i}(1:end-3)]); end
     str = out_strs{i};
     ind = 1;
     while true

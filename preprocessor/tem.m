@@ -1,10 +1,10 @@
 % define template and required params
 function tem(name, param)
-global tem_db is_batch_mode;
+global tem_db is_batch_mode VERBOSE;
 if isempty(name)
     error('template name empty!');
 end
-disp(['scaning template: ' name]);
+if VERBOSE, disp(['scanning template: ' name]); end
 ind = tem_search(name);
 if ind > 0
     if is_batch_mode && ~isempty(tem_db(ind).body)

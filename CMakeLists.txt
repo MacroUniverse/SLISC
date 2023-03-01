@@ -3,7 +3,7 @@ project(SLISC0)
 
 # == options ===
 set(opt_compiler "g++" CACHE STRING "")
-set(opt_octave OFF CACHE BOOL "use octave for code generation")
+set(opt_octave ON CACHE BOOL "use octave for code generation")
 set(opt_long32 ON CACHE BOOL "use 32bit integer or 64bit integer for indexing (Long type)")
 set(opt_debug ON CACHE BOOL "")
 set(opt_asan ON CACHE BOOL "")
@@ -23,17 +23,24 @@ set(opt_matfile OFF CACHE BOOL "")
 set(opt_no__Float128 OFF CACHE BOOL "")
 # ==============
 
+message(STATUS "------------------------")
+
+message(STATUS "compiler: ${opt_compiler}")
 set(CMAKE_CXX_COMPILER "/usr/bin/${opt_compiler}")
 
 set(CMAKE_CXX_FLAGS "-std=${opt_std}")
 
 # === 64bit index ===
 if (opt_long32)
+	message(STATUS "Long bits: 32")
 	add_definitions(-D SLS_USE_INT_AS_LONG)
+else()
+	message(STATUS "Long bits: 64")
 endif()
 
 # === GSL ===
 if(opt_gsl)
+	message(STATUS "gsl: on")
 	add_definitions(-D SLS_USE_GSL)
 	list(APPEND LIBS gsl)
 endif()
@@ -146,44 +153,65 @@ else()
 	add_compile_options(-O3)
 endif()
 
+add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
+
+# get all .cpp and .h files
+file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/test/*.cpp" "main.cpp")
+file(GLOB HEADERS "${PROJECT_SOURCE_DIR}/SLISC/*.h")
+file(GLOB HEADERS_IN "${PROJECT_SOURCE_DIR}/SLISC/*.h.in")
+string(REPLACE ".h.in" ".h"  HEADERS2 "${HEADERS_IN}")
+list(REMOVE_ITEM HEADERS ${HEADERS2})
+
+add_executable(main ${SOURCES} ${HEADERS} ${HEADERS2})
+set_target_properties(main PROPERTIES OUTPUT_NAME main.x)
+
 # === build *.h from *.h.in ===
 if(opt_octave)
-	message(STATUS "generation of code!")
-	message(STATUS "CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")
 	file(GLOB H_INs "SLISC/*.h.in")
-	set(octave_quadmath, "false")
+	set(octave_quadmath "false")
 	if(opt_quadmath)
-		set(octave_quadmath, "true")
+		set(octave_quadmath "true")
 	endif()
-	set(octave_long32, "false")
+	set(octave_long32 "false")
 	if(opt_long32)
-		set(octave_long32, "true")
+		set(octave_long32 "true")
 	endif()
-	find_program(octave_cmd "octave")
-	message(STATUS "octave_cmd: ${octave_cmd}")
 	foreach(H_IN ${H_INs})
-		message(STATUS "H_IN: ${H_IN}")
 		string(REPLACE ".h.in" ".h"  H_OUT "${H_IN}")
-		message(STATUS "H_OUT: ${H_OUT}")
-		add_custom_command(OUTPUT ${H_OUT}
-		  COMMAND ${octave_cmd} "--no-window-system" "--eval" "\"cd preprocessor; auto_gen({'../SLISC/'}, '${H_OUT}', ${octave_quadmath}, ${octave_long32})\""
+		get_filename_component(H_OUT0 "${H_OUT}" NAME)
+		set(MY_CMD "octave --no-window-system --eval \"auto_gen({'../SLISC/','../test/'}, '${H_OUT0}.in', ${octave_quadmath}, ${octave_long32})\"")
+		string(REPLACE " " ";" MY_CMD ${MY_CMD})
+
+		add_custom_command(OUTPUT "${H_OUT}"
+		  COMMAND ${MY_CMD}
+		  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/preprocessor
 		  DEPENDS "${H_IN}"
 		  COMMENT "generating file: ${H_OUT}")
 	endforeach()
 endif()
-
-add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
-
-file(GLOB SOURCES "test/*.cpp" "main.cpp")
-
-add_executable(main.x ${SOURCES})
 
 # precompile header (total compilation time remains the same, but single recompilation might be slower. Can help to check `#pragma once` and `inline` before functions if they are missing)
 # file(GLOB SLISC_HEADERS "SLISC/*.h")
 # file(GLOB STL_HEADERS "/usr/include/c++/9/*")
 # list(REMOVE_ITEM STL_HEADERS /usr/include/c++/9/backward /usr/include/c++/9/bits /usr/include/c++/9/debug /usr/include/c++/9/decimal /usr/include/c++/9/experimental /usr/include/c++/9/ext /usr/include/c++/9/parallel /usr/include/c++/9/profile /usr/include/c++/9/pstl /usr/include/c++/9/tr1 /usr/include/c++/9/tr2)
 # target_precompile_headers(main.x PRIVATE ${STL_HEADERS} ${SLISC_HEADERS})
-# target_include_directories(main.x PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/SLISC")
+# target_include_directories(main PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/SLISC")
 
 # link
-target_link_libraries(main.x ${LIBS})
+target_link_libraries(main ${LIBS})
+
+# clean_h
+add_custom_target(clean_h
+		  COMMAND rm -f ${HEADERS2} ${PROJECT_SOURCE_DIR}/SLISC/tem_db.mat
+		  COMMENT "removing generated headers and template database...")
+
+# h
+set(MY_CMD "octave --no-window-system --eval \"auto_gen({'../SLISC/','../test/'}, [], ${octave_quadmath}, ${octave_long32})\"")
+string(REPLACE " " ";" MY_CMD ${MY_CMD})
+add_custom_target(h
+		  COMMAND ${MY_CMD}
+		  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/preprocessor
+		  DEPENDS ${HEADERS_IN}
+		  COMMENT "generating all header files...")
+
+message(STATUS "------------------------")
