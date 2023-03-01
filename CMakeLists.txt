@@ -26,6 +26,11 @@ set(CMAKE_CXX_COMPILER "/usr/bin/${opt_compiler}")
 
 set(CMAKE_CXX_FLAGS "-std=${opt_std}")
 
+# === 64bit index ===
+if (opt_long32)
+	add_definitions(-D SLS_USE_INT_AS_LONG)
+endif()
+
 # === GSL ===
 if(opt_gsl)
 	add_definitions(-D SLS_USE_GSL)
@@ -34,17 +39,16 @@ endif()
 
 if(opt_lapack STREQUAL reference)
 
-# === CBLAS ===
-	add_definitions(-D SLS_USE_CBLAS)
-	if($(opt_long32) EQUAL FALSE)
-		list(APPEND LIBS cblas64 blas64 gfortran quadmath)
-	else()
-		list(APPEND LIBS cblas blas gfortran quadmath)
-	endif()
+# === Arpack ===
+if(opt_arpack)
+	add_definitions(-D SLS_USE_ARPACK)
+	list(APPEND LIBS arpack gfortran)
+endif()
 
-# === 64bit index ===
-if (opt_long32)
-	add_definitions(-D SLS_USE_INT_AS_LONG)
+# === MPLAPACK ===
+if(opt_mplapack)
+	add_definitions(-D SLS_USE_MPLAPACK)
+	list(APPEND LIBS mplapack__Float128 mpblas__Float128)
 endif()
 
 # === LAPACKE ===
@@ -56,6 +60,14 @@ add_definitions(-D SLS_USE_LAPACKE)
     endif()
 else()
 	message(FATAL_ERROR "not implemented!")
+endif()
+
+# === CBLAS ===
+add_definitions(-D SLS_USE_CBLAS)
+if($(opt_long32) EQUAL FALSE)
+	list(APPEND LIBS cblas64 blas64 gfortran quadmath)
+else()
+	list(APPEND LIBS cblas blas gfortran quadmath)
 endif()
 
 # === Boost ===
@@ -76,22 +88,10 @@ if(opt_quadmath)
 	list(APPEND LIBS quadmath)
 endif()
 
-# === MPLAPACK ===
-if(opt_mplapack)
-	add_definitions(-D SLS_USE_MPLAPACK)
-	list(APPEND LIBS mplapack__Float128 mpblas__Float128)
-endif()
-
-# === Arpack ===
-if(opt_arpack)
-	add_definitions(-D SLS_USE_ARPACK)
-	list(APPEND LIBS arpack gfortran)
-endif()
-
 # === Arb ===
 if(opt_arb)
 	add_definitions(-D SLS_USE_ARB)
-	list(APPEND LIBS flint mpfr gmp flint-arb) # replace flint-arb with arb if compiled yourself
+	list(APPEND LIBS flint-arb flint mpfr gmp) # replace flint-arb with arb if compiled yourself
 endif()
 
 # === Address Sanitizer ===

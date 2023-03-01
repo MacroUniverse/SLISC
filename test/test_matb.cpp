@@ -278,6 +278,7 @@ void test_matb()
 #endif
 
 	// matb2matt: convert matb to matt
+#ifndef SLS_USE_QUAD_MATH
 	{
 		remove("test.matt");
 		matb2matt("test.matb");
@@ -423,6 +424,7 @@ void test_matb()
 
 		matb.close();
 	}
+#endif
 
 #ifdef SLS_USE_QUAD_MATH
 	// matb_q2d: convert all Qdoub and Qcomp to Doub and Comp
@@ -451,7 +453,7 @@ void test_matb()
 
 		Comp r_scq;
 		load(r_scq, "scq", matb);
-		SLS_ASSERT(r_scq == Doub(scq));
+		SLS_ASSERT(r_scq == Comp(scq.real(), scq.imag()));
 	#endif
 
 		// vectors
@@ -495,8 +497,8 @@ void test_matb()
 		vecDoub r_vdq;
 		load(r_vdq, "vdq", matb);
 		SLS_ASSERT(r_vdq.size() == vdq.size());
-		for (Long i = 0; i < r_vdq.size(); ++i)
-			SLS_ASSERT(r_vdq[i] == Comp(vdq[i].real(),vdq[i].imag()));
+		for (Long i = 0; i < size(r_vdq); ++i)
+			SLS_ASSERT(r_vdq[i] == Doub(vdq[i]));
 	#endif
 
 		// matrices
@@ -568,7 +570,7 @@ void test_matb()
 			SLS_ASSERT(r_CD3Q[i] == Doub(CD3Q[i]));
 
 		Cmat3Comp r_CC3Q;
-		load(r_CC3Q, "r_CC3Q", matb);
+		load(r_CC3Q, "CC3Q", matb);
 		SLS_ASSERT(r_CC3Q.n0() == CC3Q.n0());
 		SLS_ASSERT(r_CC3Q.n1() == CC3Q.n1());
 		SLS_ASSERT(r_CC3Q.n1() == CC3Q.n1());
