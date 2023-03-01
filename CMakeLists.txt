@@ -27,7 +27,7 @@ set(CMAKE_CXX_COMPILER "/usr/bin/${opt_compiler}")
 set(CMAKE_CXX_FLAGS "-std=${opt_std}")
 
 if(opt_lapack STREQUAL reference)
-# === CBLAS ==
+# === CBLAS ===
 	add_definitions(-D SLS_USE_CBLAS)
 	if($(opt_long32) EQUAL FALSE)
 		list(APPEND LIBS cblas64 blas64 gfortran quadmath)
