@@ -136,11 +136,11 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+                mkl_lib = -Wl,--start-group -l:libmkl_intel_lp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
             # dynamic link
             else
                 $(info Link: dynamic)
-                mkl_lib = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+                mkl_lib = -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l:libmkl_intel_lp64.so -l:libmkl_sequential.so -l:libmkl_core.so -l pthread -l m -l dl
             endif
         endif
         # Compiler: icpc
@@ -150,11 +150,11 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+                mkl_lib = -Wl,--start-group -l:libmkl_intel_lp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
             # dynamic link
             else
                 $(info Link: dynamic)
-                mkl_lib = -L${MKLROOT}/lib/intel64 -l mkl_intel_lp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
+                mkl_lib = -L${MKLROOT}/lib/intel64 -l:libmkl_intel_lp64.so -l:libmkl_sequential.so -l:libmkl_core.so -l pthread -l m -l dl
             endif
         endif
     # Interface: 64bit int
@@ -167,7 +167,7 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
+                mkl_lib = -Wl,--start-group -l:libmkl_intel_ilp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
             # dynamic link
             else
                 $(info Link: dynamic)
@@ -181,7 +181,7 @@ ifeq ($(opt_lapack), mkl)
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
-                mkl_lib = -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_sequential.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+                mkl_lib = -Wl,--start-group -l:libmkl_intel_ilp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
             # dynamic link
             else
                 $(info Link: dynamic)
