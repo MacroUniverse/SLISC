@@ -601,7 +601,7 @@ inline Long pair_brace(Str32_I str, Long ind)
 		}
 		c0 = c;
 	}
-	throw Str32(U"pair_brace() failed!");
+	throw Str32(U"pair_brace() failed：" + str.substr(ind, 20));
 }
 
 // match braces
