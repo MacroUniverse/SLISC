@@ -39,7 +39,7 @@ opt_sqlite = true
 # read and write Matlab .mat file
 opt_matfile = false
 # define _Float128
-# (only needed for centos7.9 `scl enable devtoolset-9 bash`)
+# (only needed for centos7.9 `scl enable devtoolset-9 bash`, and clang++)
 opt_no__Float128 = false
 #==========================
 
@@ -55,6 +55,11 @@ ifeq ($(opt_min), true)
     opt_arpack = false
     opt_sqlite = false
     opt_matfile = false
+endif
+
+ifneq ($(opt_compiler), g++)
+    opt_quadmath = false
+    opt_mplapack = false
 endif
 
 # === Debug / Release ===
@@ -238,6 +243,7 @@ else
 endif
 
 # === Quad Math ===
+# only supports g++
 ifeq ($(opt_quadmath), true)
     $(info Quad Math: on)
     quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
@@ -341,7 +347,7 @@ ifeq ($(opt_compiler), g++)
     compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -fopenmp
 endif
 ifeq ($(opt_compiler), clang++)
-    compiler_flag = -std=$(opt_std) -Wall -Wno-reorder -Wno-misleading-indentation
+    compiler_flag = -std=$(opt_std) -Wall -Wno-reorder -Wno-misleading-indentation -Wno-overloaded-virtual -ferror-limit=20
 endif
 ifeq ($(opt_compiler), icpc)
     compiler_flag = -std=$(opt_std) -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
