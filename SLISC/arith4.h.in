@@ -784,7 +784,7 @@ inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 	}
 }
 
-inline void div(@T@_O v, const @Ts2@_I s, @T1@_I v1)
+inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();

@@ -3248,7 +3248,7 @@ inline void div(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 	}
 }
 
-inline void div(DcmatComp_O v, const Doub_I s, DcmatComp_I v1)
+inline void div(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 {
 	assert_same_shape(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
