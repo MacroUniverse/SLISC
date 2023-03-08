@@ -1,12 +1,13 @@
 # SLISC0
-* Simple Scientific Library in Simple C++, using code generation instead of non-trivial `template`s
+* Scientific Library in Simple C++, using code generation instead of non-trivial `template`s
 * Matlab/Octave is used for code generation (see `## Code generation`)
+* For a Chinese introduction, see [here](https://wuli.wiki/online/SLISC.html)。
 
 ## Introduction
 
-SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read, debug and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and col-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of viewing classes are supported. Code from many other projects or libraries has been incorporated (e.g. Numerical Recipes, Boost, Eigen, Intel MKL etc. , which might not be header-only), and Macros can be defined to turn them on or off. The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
+SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read, debug and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and column-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of viewing classes are supported. Code from many other projects or libraries has been incorporated (e.g. Numerical Recipes, Boost, Eigen, Intel MKL etc. , which might not be header-only), and Macros can be defined to turn them on or off. The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
 
-SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed on Linux using g++ and Intel compiler. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
+SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed on Linux using g++, clang++ and Intel compiler. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
 
 A simple example:
 
@@ -30,7 +31,7 @@ int main()
 	a.resize(2, 3); // resize a to 2 rows and 3 columns
 	a(0, 0) = 1.1; // access element by row and column indices
 	a[3] = 9.9; // access element by a single index
-	a.end() = 5.5; a.end(-2) = 4.4; // access last element and last but 2 element
+	a.end() = 5.5; a.end(2) = 4.4; // access last element and last but 2 element
 	cout << "a has " << a.n0() << " rows and " << a.n1()
 	<< " columns, and a total of " << a.size() << " elements." << endl;
 	disp(a); // display
@@ -55,35 +56,36 @@ int main()
 
 SLISC has a modular design like the Standard Template Library. Just include any header file(s) in the `SLISC/` folder. All definitions have namespace `slisc`.
 
-## Dependencies
-
-Depending on the compilatio options, `CBLAS`, `LAPACKE`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `Matfile` (see my `Matfile_linux` repo), `SQLite` might be used.
+## Installing Optional Dependencies
+Depending on the compilation options, `CBLAS`, `LAPACKE`, `MKL`, `Boost`, `GSL`, `Eigen`, `Arpack`, `Arb`, `MPLAPACK`, `Matfile` (see my `Matfile_linux` repo), `SQLite` etc. might be used.
 
 `Octave` 4.2 (4.0 works but is slower) or higher is needed for code generation. If you don't want to install `Octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
 
 ### Using precompiled binaries or dockerfiles (recommended)
-* All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009). These binaries are compiled with docker using `docker/*.dockerfile`.
-* Use `source setup.sh` to add environment vars.
+* All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009). Check your Ubuntu version with `lsb_release -a`. These binaries are compiled with docker using `docker/*-build-*.dockerfile`. Note that Ubuntu16.04 is not fully supported (missing MPLAPACK)
+* Use `source setup.sh` to add header and library paths to environment variables. You can add this command to `~/.bashrc` so it will run everytime you login.
+* See also `docker/ubuntu*-portable.dockerfile` to build docker images.
 
-### Install with apt (Ubuntu 20.04/22.04)
+### Install with apt
 ```bash
 apt -y update && apt -y upgrade
 apt install -y vim git make g++ gdb gfortran libarpack++2-dev liblapacke-dev libsqlite3-dev libgmp-dev libflint-arb-dev libflint-dev libgsl-dev libboost-filesystem-dev
 apt purge -y libopenblas*
 ```
-(Note that gfortran needs to have the same version with g++)
+See also `docker/ubuntu*-apt.dockerfile` to build docker images.
 
 ## Building SLISC0
+To build with `Makefile`:
 ```bash
-git clone https://github.com/MacroUniverse/SLISC0
 cd SLISC0
 touch SLISC/*.h
-make [options] -j8
+make [options] [-j8]
 ```
-
-* Supports Makefile, CMake, Visual Studio compilation, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
-* Use `make` to compile, use `make -j8` to compile with 8 threads (or any number you like).
-* Makefile provides multiple options, uncomment one line to enable. The future plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`). Each dependent libraries can be manually turned on or off in `make/all.mak` among other options, or specified by calling `make opt_xxx=xxx`.
+* `-j8` option is to compile with 8 thread in parallel, you can choose other numbers to.
+* For `[options]`, first try `opt_min=true` to compile with minimum dependency. For a full list of options and default values, see `make/all.mak`. You can also directly modify the values in the file.
+* Changing options `opt_long32` and `opt_quadmath` will require header regeneration with `make h` (requires Octave). For convenience, the generated headers by `make opt_long32=false, opt_quadmath=true h` are stored in `SLISC-64q`. Use `cp SLISC-64q/*h SLISC` if you don't want to regenerate.
+* Also supports CMake and partially suport Visual Studio project file, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
+* Makefile provides multiple options, uncomment one line to enable. The future plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`).
 * To recompile just one test, use `make [options] test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * Use `./main.x < input.inp` to run all tests. Use `./main.x <test>` to run 1 test.
 
@@ -98,8 +100,8 @@ make [options] -j8
 
 ## Headers Introduction
 When using something in any header file, just including that header file will be enough. Header files can be included in any order. Here is some brief introduction for each header file:
-* `global.h` has all the container declaration and typedef etc.
-* `Bit.h` defines utilities for single-bit operations, and a pointer for bit
+* `global.h` has all the common macros and `typedef` etc.
+* `Bit.h` defines utilities for single-bit operations, and a pointer class for bit
 * `complex_arith.h` defines extra operators used by `std::complex<>`, such as  `+, -, *, /, +=, -=, *=, /=, ==, !=` for mixed complex types.
 * `imag.h` defines a pure imaginary number types `Fimag` (`float`), `Imag` (`double`), and `Limag` (`ldouble`).
 * `quad_math.h` C++ extension to `quadmath.h`, for 128-bit floating point numbers.

@@ -64,9 +64,16 @@ ifeq ($(opt_debug), true)
     ifeq ($(opt_asan), true)
     ifeq ($(opt_compiler), g++)
     ifeq ($(opt_static), false)
+    	$(info Address Sanitizer: on)
         asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+    else
+        $(info Address Sanitizer: off)
     endif
+    else
+	$(info Address Sanitizer: off)
     endif
+    else
+	$(info Address Sanitizer: off)
     endif
     debug_flag = -g
     ifeq ($(opt_compiler), g++)
@@ -74,6 +81,7 @@ ifeq ($(opt_debug), true)
     endif
 else
     $(info Build: Release)
+    $(info Address Sanitizer: off)
     release_flag = -O3 -D NDEBUG
 endif
 
