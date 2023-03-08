@@ -6,19 +6,19 @@
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
 opt_compiler = g++
-# define Long (array index type) as 32bit integer
+# define Long (array index type) as 32 or 64 bit integer
 opt_long32 = true
 # debug mode
 opt_debug = true
-# address sanitizer (only for g++ for now)
-opt_asan = true
+# address sanitizer (only for g++ dynamic debug build)
+opt_asan = $(opt_debug)
 # c++ standard [c++11|gnu++11]
 opt_std = c++11
 # static link (not all libs supported)
 opt_static = false
 # minimum build (all below options set to false)
 opt_min = false
-# use quad precision float
+# use quad precision float (`__float128` extension of gcc)
 opt_quadmath = false
 # lapack package (reference, openblas, mkl, none)
 opt_lapack = reference
@@ -60,29 +60,29 @@ endif
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
     $(info Build: Debug)
-    # Address Sanitizer
-    ifeq ($(opt_asan), true)
-    ifeq ($(opt_compiler), g++)
-    ifeq ($(opt_static), false)
-    	$(info Address Sanitizer: on)
-        asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
-    else
-        $(info Address Sanitizer: off)
-    endif
-    else
-	$(info Address Sanitizer: off)
-    endif
-    else
-	$(info Address Sanitizer: off)
-    endif
     debug_flag = -g
     ifeq ($(opt_compiler), g++)
         debug_flag = -g -ftrapv $(asan_flag)
     endif
 else
     $(info Build: Release)
-    $(info Address Sanitizer: off)
     release_flag = -O3 -D NDEBUG
+endif
+
+# Address Sanitizer
+ifeq ($(opt_asan), true)
+    ifeq ($(opt_compiler), g++)
+        ifeq ($(opt_static), false)
+            $(info Address Sanitizer: on)
+            asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+        else
+            $(info Address Sanitizer: off)
+        endif
+    else
+        $(info Address Sanitizer: off)
+    endif
+else
+    $(info Address Sanitizer: off)
 endif
 
 # === 64bit index ===
