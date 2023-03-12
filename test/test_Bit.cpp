@@ -16,23 +16,24 @@ void test_Bit()
 			SLS_FAIL;
 	}
 
-	if (to_bitstr(bit2char(128)) != "10000000")
+	if (to_bitstr(-128) != "10000000")
 		SLS_FAIL;
 
 	for (Long i = 0; i < 8; ++i) {
 		Char byte = 0;
-		set_bitR(&byte, i);
-		if (byte != bit2char(pow(2, i)))
+		set_bitR(byte, i);
+		if (byte != (Char)pow(2, i)) {
 			SLS_FAIL;
-		unset_bitR(&byte, i);
+		}
+		unset_bitR(byte, i);
 		if (byte != 0)
 			SLS_FAIL;
 
 		byte = 0;
-		set_bitL(&byte, i);
-		if (byte != bit2char(pow(2, 7-i)))
+		set_bitL(byte, i);
+		if (byte != Char(pow(2, 7-i)))
 			SLS_FAIL;
-		unset_bitL(&byte, i);
+		unset_bitL(byte, i);
 		if (byte != 0)
 			SLS_FAIL;
 	}
@@ -44,12 +45,12 @@ void test_Bit()
 		SLS_FAIL;
 	if (to_bitstr(ui+2) != "01010101")
 		SLS_FAIL;
-	if (str2bit("10100101") != bit2char(165))
+	if (str2bit("10100101") != Char(165))
 		SLS_FAIL;
 
 	Char uc = (Char)165; // 0b10100101
 	toggle_bitL(&uc, 1);
-	if (uc != bit2char(229)) // 0b11100101
+	if (uc != Char(229)) // 0b11100101
 		SLS_FAIL;
 
 	// base conversion
