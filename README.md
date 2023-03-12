@@ -12,9 +12,10 @@ SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Test
 A simple example:
 
 ```cpp
-#include "SLISC/algorithm.h"
+#include "SLISC/arithmetic.h"
 #include "SLISC/disp.h"
 #include "SLISC/cut.h"
+#include "SLISC/matb.h"
 int main()
 {
 	using namespace slisc;

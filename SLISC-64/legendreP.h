@@ -1,0 +1,72 @@
+// associated legendre polynomial
+// code adapted from GSL-2.5
+#pragma once
+#include "global.h"
+
+namespace slisc {
+
+/* Calculate P_m^m(x) from the analytic result:
+ *   P_m^m(x) = (-1)^m (2m-1)!! (1-x^2)^(m/2) , m > 0
+ *            = 1 , m = 0
+ */
+
+inline Doub legendre_Pmm(Long m, Doub_I x)
+{
+  if (m == 0)
+	return 1;
+  else
+  {
+	Doub p_mm = 1;
+	Doub root_factor = sqrt(1-x)*sqrt(1+x);
+	Doub fact_coeff = 1;
+	for(Long i=1; i <= m; ++i) {
+	  p_mm *= -fact_coeff * root_factor;
+	  fact_coeff += 2;
+	}
+	return p_mm;
+  }
+}
+
+
+
+inline Doub legendre_Plm(Long_I l, Long_I m, Doub_I x)
+{
+  /* If l is large and m is large, then we have to worry
+   * about overflow. Calculate an approximate exponent which
+   * measures the normalization of this thing.
+   */
+
+/* Account for the error due to the
+	* representation of 1-x.
+	*/
+
+	/* P_m^m(x) and P_{m+1}^m(x) */
+	Doub p_mm   = legendre_Pmm(m, x);
+	Doub p_mmp1 = x * (2*m + 1) * p_mm;
+
+	if (l == m) {
+		return p_mm;
+	}
+	else if (l == m + 1) {
+		return p_mmp1;
+	}
+	else {
+		/* upward recurrence: (l-m) P(l,m) = (2l-1) z P(l-1,m) - (l+m-1) P(l-2,m)
+		* start at P(m,m), P(m+1,m)
+		*/
+
+		Doub p_ellm2 = p_mm;
+		Doub p_ellm1 = p_mmp1;
+		Doub p_ell = 0.0;
+		for(Long ell=m+2; ell <= l; ++ell) {
+			p_ell = (x*(2*ell-1)*p_ellm1 - (ell+m-1)*p_ellm2) / (ell-m);
+			p_ellm2 = p_ellm1;
+			p_ellm1 = p_ell;
+		}
+		return p_ell;
+	}
+}
+
+
+
+} // namespace slisc
