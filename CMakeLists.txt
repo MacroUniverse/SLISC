@@ -20,7 +20,6 @@ set(opt_arb ON CACHE BOOL "")
 set(opt_arpack ON CACHE BOOL "enable arpack")
 set(opt_sqlite ON CACHE BOOL "")
 set(opt_matfile OFF CACHE BOOL "")
-set(opt_no__Float128 OFF CACHE BOOL "")
 # ==============
 
 message(STATUS "------------------------")

@@ -38,9 +38,6 @@ opt_arpack = true
 opt_sqlite = true
 # read and write Matlab .mat file
 opt_matfile = false
-# define _Float128
-# (only needed for centos7.9 `scl enable devtoolset-9 bash`, and clang++)
-opt_no__Float128 = false
 #==========================
 
 # === minimum build ===
@@ -334,12 +331,6 @@ ifeq ($(opt_matfile), true)
     endif
 else
     $(info Matlab .mat: off)
-endif
-
-# need to define _Float128
-ifeq ($(opt_no__Float128), true)
-    $(info will add _Float128)
-    def__Float128 = -D SLS_NO__Float128
 endif
 
 # === compiler flags ===

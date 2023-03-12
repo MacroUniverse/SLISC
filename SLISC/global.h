@@ -347,6 +347,10 @@ struct turn_on_floating_exceptions {
 #endif
 #endif
 
+#if defined(SLS_USE_MPLAPACK) && !defined(_Float128)
+typedef __float128 _Float128;
+#endif
+
 // === constants ===
 
 const Doub PI = 3.14159265358979323;
