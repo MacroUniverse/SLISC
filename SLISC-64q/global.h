@@ -3,6 +3,8 @@
 #define SLS_VER_MINOR 1
 #define SLS_VER_PATCH 0
 
+#include "config.h"
+
 #pragma once
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS

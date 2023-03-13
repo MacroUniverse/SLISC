@@ -90,7 +90,6 @@ endif
 # === 64bit index ===
 ifeq ($(opt_long32), true)
     $(info Long bits: 32)
-    long_flag = -D SLS_USE_INT_AS_LONG
 else
     $(info Long bits: 64)
 endif
@@ -243,7 +242,7 @@ endif
 # only supports g++
 ifeq ($(opt_quadmath), true)
     $(info Quad Math: on)
-    quad_math_flag = -D SLS_USE_QUAD_MATH -fext-numeric-literals
+    quad_math_flag = -fext-numeric-literals
     quad_math_lib = -l quadmath
 else
     $(info Quad Math: off)
@@ -351,7 +350,7 @@ $(info  )$(info  )$(info  )$(info  )
 # ---------------------------------------------------------
 
 # all flags
-flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(long_flag) $(mplapack_flag) $(def__Float128)
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(mplapack_flag) $(def__Float128)
 # -pedantic # show more warnings
 
 # all libs

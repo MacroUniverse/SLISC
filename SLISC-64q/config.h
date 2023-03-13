@@ -1,0 +1,1 @@
+#define SLS_USE_QUAD_MATH

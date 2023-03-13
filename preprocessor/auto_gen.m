@@ -1,9 +1,22 @@
 % if input filename, only that file is processed
 % otherwise, all '.in' files will be processed
 % in_paths must end with '/' or '\'
-function auto_gen(in_paths, fname, SLS_USE_QUADMATH, use_int_as_long, verbose)
+function auto_gen(in_paths, fname, SLS_USE_QUAD_MATH, use_int_as_long, verbose)
 global tem_db is_batch_mode SLS_USE_INT_AS_LONG VERBOSE; % is_batch_mode: delete db and process all files
 SLS_USE_INT_AS_LONG = use_int_as_long;
+
+% write config.h
+fid = fopen("../SLISC/config.h", "w");
+config = '';
+if (SLS_USE_INT_AS_LONG)
+    config = [config '#define SLS_USE_INT_AS_LONG' char(10)];
+end
+if (SLS_USE_QUAD_MATH)
+    config = [config '#define SLS_USE_QUAD_MATH' char(10)]
+end
+fputs (fid, config);
+fclose (fid);
+
 if ~exist('verbose', 'var') || ~verbose, VERBOSE = false; else, VERBOSE = true; end
 if ~exist('fname', 'var'), fname = []; end
 is_batch_mode = isempty(fname);
@@ -126,7 +139,7 @@ while ~quit
                 temp = ['instantiating template: ' ...
                     tem_db(i).name ': ' cell2str_disp(tem_db(i).param(j,:))];
                 if VERBOSE, disp(temp); end
-                if ~SLS_USE_QUADMATH && has_quad(tem_db(i).param{j,:})
+                if ~SLS_USE_QUAD_MATH && has_quad(tem_db(i).param{j,:})
                     continue;
                 end
                 tem_db(i).out{j} = instantiate(tem_db(i).body, tem_db(i).param{j,:});

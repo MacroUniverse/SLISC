@@ -1,4 +1,10 @@
 // bit operations and endian related
+
+// Notes:
+// 1. C-style conversion between Char and Uchar does not change any bit.
+// 2. Char(-128) = Char(128) = 0b10000000
+// 3. negative operand for C operator >> or << are undefined!
+
 #pragma once
 #include "global.h"
 
@@ -16,109 +22,97 @@ inline Bool little_endian()
 }
 
 // convert endianness
-inline void change_endian(Char *data, Long_I elm_size, Long_I Nelm)
+inline void change_endian(void *data, Long_I elm_size, Long_I Nelm)
 {
+	Char *p = (Char *)data;
 	Long half = elm_size/2;
 	for (Long i = 0; i < Nelm; ++i) {
 	    for (Long j = 0; j < half; ++j) {
-	        swap(data[j], data[elm_size-j]);
+	        swap(p[j], p[elm_size-j]);
 	    }
-	    data += elm_size;
+	    p += elm_size;
 	}
 }
 
-// bitwise conversion between uchar and char
-inline Uchar bit2uchar(Char_I c)
-{
-	return reinterpret_cast<const Uchar&>(c);
-}
-
-inline Char bit2char(Uchar_I uc)
-{
-	return reinterpret_cast<const Char&>(uc);
-}
-
-// extract a bit at the i-th place from the right
+// get i-th bit from the right
 inline Bool bitR(Char_I byte, Int_I i)
-{
-	return byte & Uchar(1) << i;
-}
+{ return (Uchar)byte & Uchar(1) << i; }
+
+inline Bool bitR(Uchar_I byte, Int_I i)
+{ return byte & Uchar(1) << i; }
 
 inline Bool bitR(const void *byte, Int_I i)
-{
-	return *(Uchar*)byte & Uchar(1) << i;
-}
+{ return *(Uchar*)byte & Uchar(1) << i; }
 
-// extract a bit at the i-th place from the left
+// get i-th bit from the left
 inline Bool bitL(Char_I byte, Int_I i)
-{
-	return byte & Uchar(128) >> i;
-}
+{ return (Uchar)byte & Uchar(128) >> i; }
+
+inline Bool bitL(Uchar_I byte, Int_I i)
+{ return byte & Uchar(128) >> i; }
 
 inline Bool bitL(const void *byte, Int_I i)
-{
-	return *(Uchar*)byte & Uchar(128) >> i;
-}
+{ return *(Uchar*)byte & Uchar(128) >> i; }
 
-// set i-th bit from the right
-inline void set_bitR(Char_IO byte, Int_I i)
-{
-	byte |= Uchar(1) << i;
-}
-
+// set i-th bit from the right to 1
 inline void set_bitR(void *byte, Int_I i)
-{
-	*(Uchar*)byte |= Uchar(1) << i;
-}
+{ *(Uchar*)byte |= Uchar(1) << i; }
 
-// set i-th bit from the left
-inline void set_bitL(Char_IO byte, Int_I i)
-{
-	byte |= Uchar(128) >> i;
-}
+inline void set_bitR(Char_IO byte, Int_I i)
+{ set_bitR(&byte, i); }
 
+inline void set_bitR(Uchar_IO byte, Int_I i)
+{ set_bitR(&byte, i); }
+
+// set i-th bit from the left to 1
 inline void set_bitL(void *byte, Int_I i)
-{
-	*(Uchar*)byte |= Uchar(128) >> i;
-}
+{ *(Uchar*)byte |= Uchar(128) >> i; }
 
-// unset i-th bit from the right
-inline void unset_bitR(Char_IO byte, Int_I i)
-{
-	byte &= ~(Uchar(1) << i);
-}
+inline void set_bitL(Char_IO byte, Int_I i)
+{ set_bitL(&byte, i); }
 
+inline void set_bitL(Uchar_IO byte, Int_I i)
+{ set_bitL(&byte, i); }
+
+// set i-th bit from the right to 0
 inline void unset_bitR(void *byte, Int_I i)
-{
-	*(Uchar*)byte &= ~(Uchar(1) << i);
-}
+{ *(Uchar*)byte &= Uchar(254) << i; }
 
-// unset i-th bit from the left
-inline void unset_bitL(Char_IO byte, Int_I i)
-{
-	byte &= ~(Uchar(128) >> i);
-}
+inline void unset_bitR(Char_IO byte, Int_I i)
+{ unset_bitR(&byte, i); }
 
+inline void unset_bitR(Uchar_IO byte, Int_I i)
+{ unset_bitR(&byte, i); }
+
+// set i-th bit from the left to 0
 inline void unset_bitL(void *byte, Int_I i)
-{ unset_bitL(*(Char*)byte, i); }
+{ *(Uchar*)byte &= Uchar(127) >> i; }
 
-// change the i-th bit from the right
+inline void unset_bitL(Char_IO byte, Int_I i)
+{ unset_bitL(&byte, i); }
+
+inline void unset_bitL(Uchar_IO byte, Int_I i)
+{ unset_bitL(&byte, i); }
+
+// flip the i-th bit from the right
+inline void toggle_bitR(void *byte, Int_I i)
+{ *(Uchar*)byte ^= Uchar(1) << i; }
+
 inline void toggle_bitR(Char_IO byte, Int_I i)
-{
-	byte ^= Uchar(1) << i;
-}
+{ toggle_bitR(&byte, i); }
 
-inline void toggle_bitR(Char *byte, Int_I i)
-{ toggle_bitR(*byte, i); }
+inline void toggle_bitR(Uchar_IO byte, Int_I i)
+{ toggle_bitR(&byte, i); }
 
 // flip the i-th bit from the left
-inline void toggle_bitL(Char_IO byte, Int_I i)
-{
-	byte ^= Uchar(128) >> i;
-}
+inline void toggle_bitL(void *byte, Int_I i)
+{ *(Uchar*)byte ^= Uchar(128) >> i; }
 
-inline void toggle_bitL(Char *byte, Int_I i)
-{ toggle_bitL(*byte, i); }
+inline void toggle_bitL(Char_IO byte, Int_I i)
+{ toggle_bitL(&byte, i); }
+
+inline void toggle_bitL(Uchar_IO byte, Int_I i)
+{ toggle_bitL(&byte, i); }
 
 // convert a byte to bit string (8 char '0' or '1')
 inline Str to_bitstr(Char_I byte)
@@ -133,20 +127,23 @@ inline Str to_bitstr(Char_I byte)
 	return str;
 }
 
-// convert memory to bit string
-inline Str to_bitstr(const void *byte, Int_I Nbyte = 1, Bool add_space = true, Bool auto_endian = false)
+// convert data to bit string
+// Nbyte: bytes of data
+// add_space: add a space to every byte
+// auto_endian: flip the bytes for little endian
+inline Str to_bitstr(const void *byte, Long_I Nbyte = 1, Bool add_space = true, Bool auto_endian = false)
 {
 	Char *p = (Char *)byte;
 	Str str;
-	if (!auto_endian || (!little_endian() && auto_endian)) {
+	if (!auto_endian || !little_endian()) {
 	    if (!add_space) {
 	        str.reserve(8*Nbyte);
-	        for (Int i = 0; i < Nbyte; ++i)
+	        for (Long i = 0; i < Nbyte; ++i)
 	            str += to_bitstr(p[i]);
 	    }
 	    else {
 	        str.reserve(9*Nbyte);
-	        for (Int i = 0; i < Nbyte; ++i)
+	        for (Long i = 0; i < Nbyte; ++i)
 	            str += to_bitstr(p[i]) + ' ';
 	        str.pop_back();
 	    }
@@ -154,12 +151,12 @@ inline Str to_bitstr(const void *byte, Int_I Nbyte = 1, Bool add_space = true, B
 	else {
 	    if (!add_space) {
 	        str.reserve(8*Nbyte);
-	        for (Int i = Nbyte-1; i >= 0; --i)
+	        for (Long i = Nbyte-1; i >= 0; --i)
 	            str += to_bitstr(p[i]);
 	    }
 	    else {
 	        str.reserve(9*Nbyte);
-	        for (Int i = Nbyte-1; i >= 0; --i)
+	        for (Long i = Nbyte-1; i >= 0; --i)
 	            str += to_bitstr(p[i]) + ' ';
 	        str.pop_back();
 	    }
@@ -168,19 +165,19 @@ inline Str to_bitstr(const void *byte, Int_I Nbyte = 1, Bool add_space = true, B
 }
 
 // convert each char to a bit, '0' is 'false', otherwise 'true'
-// also consider to use binary literal e.g. `Char(10100101b)`
+// also consider to use binary literal e.g. `Char(0b10100101)`
 inline Char str2bit(Str_I str)
 {
 	Char byte = 0;
-	for (Int i = 0; i < 8; ++i) {
+	for (Long i = 0; i < 8; ++i)
 	    if (str[i] != '0')
 	        set_bitL(&byte, i);
-	}
 	return byte;
 }
 
-// convert any base (up to 256) to integer (little endian)
-inline Int baseN2Int(const Uchar *p, Int_I N, Int_I base)
+// convert `N` digits of any base (up to 256) to integer (little endian)
+// i.e. p[0] + p[1]*base + p[2]*base^2 ...
+inline Int baseN2Int(const Uchar *p, Int_I N, Uchar_I base)
 {
 	Int n = p[0], exp = base;
 	for (Int i = 1; i < N; ++i) {
@@ -191,7 +188,7 @@ inline Int baseN2Int(const Uchar *p, Int_I N, Int_I base)
 }
 
 // convert integer to any base (little endian)
-inline void Int2baseN(Uchar *p, Int_I N, Int_I base, Int_I n)
+inline void Int2baseN(Uchar *p, Int_I N, Uchar_I base, Int_I n)
 {
 	Int m = n;
 	p[0] = m % base;
@@ -201,7 +198,7 @@ inline void Int2baseN(Uchar *p, Int_I N, Int_I base, Int_I n)
 	}
 }
 
-// convert 4 bytes to one of the
+// =========== Character Sets ===============
 
 // visible ASCII chars (in order)
 // !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
@@ -226,14 +223,6 @@ inline Char b87(Long_I i)
 	return s[i];
 }
 
-// base 64 (2) : safe filename and paths
-// 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_
-inline Char b64_2(Long_I i)
-{
-	static const Str s = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
-	return s[i];
-}
-
 // widely used on internet
 // https://en.wikipedia.org/wiki/Base64
 // for a library that converts a file to Base64 string, see
@@ -241,6 +230,14 @@ inline Char b64_2(Long_I i)
 inline Char b64(Long_I i)
 {
 	static const Str s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	return s[i];
+}
+
+// base 64 (2) : safe filename and paths
+// 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_
+inline Char b64_2(Long_I i)
+{
+	static const Str s = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
 	return s[i];
 }
 
@@ -285,7 +282,7 @@ inline Long b87_ind(Char_I c)
 	return -1;
 }
 
-// convert 5-digit base87 to 4-byte integer (little endian)
+// convert 5-digit base87 to 4-byte int (little endian)
 inline Int b872Int(const Char *p)
 {
 	Int n = b87_ind(p[0]), exp = 1;
@@ -296,7 +293,7 @@ inline Int b872Int(const Char *p)
 	return n;
 }
 
-// convert 4-byte integer to 5-digit base87 (little endian)
+// convert 4-byte int to 5-digit base87 (little endian)
 inline void Int2b87(Char *p, Int_I n)
 {
 	Int m = n;
@@ -306,6 +303,8 @@ inline void Int2b87(Char *p, Int_I n)
 	    p[i] = b87(m % 87);
 	}
 }
+
+// =========== encode data to string =============
 
 // assuming little endian
 // not tested!
