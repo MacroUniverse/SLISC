@@ -129,6 +129,9 @@
 #include "quad_math.h"
 
 #ifdef SLS_USE_MPLAPACK
+#ifndef _Float128
+typedef __float128 _Float128;
+#endif
 #include "my_mplapack_utils__Float128.h"
 #include <mplapack/mpblas__Float128.h>
 #include <mplapack/mplapack__Float128.h>
@@ -345,10 +348,6 @@ struct turn_on_floating_exceptions {
 // in case of ODR error, put this in main function;
 // turn_on_floating_exceptions yes_turn_on_floating_exceptions;turn_on_floating_exceptions yes_turn_on_floating_exceptions;
 #endif
-#endif
-
-#if defined(SLS_USE_MPLAPACK) && !defined(_Float128)
-typedef __float128 _Float128;
 #endif
 
 // === constants ===
