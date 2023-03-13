@@ -44,7 +44,7 @@ RUN cd /root/SLISC0 && \
 
 RUN echo "source /root/SLISC0/make/ld_path_append.sh /opt/OpenBLAS/lib" >> ~/.bashrc
 
-RUN echo "#! /usr/bin/bash" > /test.sh && \
+RUN echo "#! /bin/bash" > /test.sh && \
 	echo "source /root/SLISC0/make/ld_path_append.sh /opt/OpenBLAS/lib" >> /test.sh && \
 	echo "cd /root/SLISC0" >> /test.sh && \
 	echo "./main32.x < input.inp" >> /test.sh && \

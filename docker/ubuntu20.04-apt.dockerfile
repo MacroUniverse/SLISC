@@ -29,7 +29,7 @@ RUN	cd /root/SLISC0 && \
 	touch SLISC/*.h && \
 	make -j`getconf _NPROCESSORS_ONLN`
 
-RUN echo "#! /usr/bin/bash" > /test.sh && \
+RUN echo "#! /bin/bash" > /test.sh && \
 	echo "cd /root/SLISC0" >> /test.sh && \
 	echo "./main.x < input.inp" >> /test.sh && \
 	chmod +x /test.sh
