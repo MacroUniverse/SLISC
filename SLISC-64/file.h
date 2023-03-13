@@ -25,6 +25,20 @@ inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
 inline void write(Str_I str, Str_I fname);
 
+#ifdef SLS_USE_LINUX
+inline Str pwd()
+{
+	Char buff[FILENAME_MAX];
+	getcwd(buff, FILENAME_MAX);
+	return buff;
+}
+
+inline void cd(Str_I path)
+{
+	chdir(path.c_str());
+}
+#endif
+
 #ifdef SLS_USE_MSVC
 inline Str wstr2utf8(const std::wstring& wstr);
 inline std::wstring utf82wstr(Str_I str);
