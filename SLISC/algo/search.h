@@ -17,7 +17,27 @@ inline Long search(Int_I s, VecInt_I v, Long_I start = 0)
 	return -1;
 }
 
+inline Long search(Int_I s, vecInt_I v, Long_I start = 0)
+{
+	Long N = v.size();
+	for (Long i = start; i < N; ++i) {
+		if (s == v[i])
+			return i;
+	}
+	return -1;
+}
+
 inline Long search(Llong_I s, VecLlong_I v, Long_I start = 0)
+{
+	Long N = v.size();
+	for (Long i = start; i < N; ++i) {
+		if (s == v[i])
+			return i;
+	}
+	return -1;
+}
+
+inline Long search(Llong_I s, vecLlong_I v, Long_I start = 0)
 {
 	Long N = v.size();
 	for (Long i = start; i < N; ++i) {
@@ -58,16 +78,6 @@ inline Long search(Str_I s, vecStr_I v, Long_I start = 0)
 }
 
 inline Long search(Str32_I s, vecStr32_I v, Long_I start = 0)
-{
-	Long N = v.size();
-	for (Long i = start; i < N; ++i) {
-		if (s == v[i])
-			return i;
-	}
-	return -1;
-}
-
-inline Long search(Llong_I s, vecLlong_I v, Long_I start = 0)
 {
 	Long N = v.size();
 	for (Long i = start; i < N; ++i) {

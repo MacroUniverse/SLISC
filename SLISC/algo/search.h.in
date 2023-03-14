@@ -9,12 +9,13 @@ namespace slisc {
 // return -1 if not found
 //% tem('search', {
 //%     'Int', 'VecInt';
+//%     'Int', 'vecInt';
 //%     'Llong', 'VecLlong';
+//%     'Llong', 'vecLlong';
 //%     'Char', 'Str';
 //%     'Char32', 'Str32';
 //%     'Str', 'vecStr';
 //%     'Str32', 'vecStr32';
-//%     'Llong', 'vecLlong';
 //% });
 //%------------------------
 //% [Ts, Tv] = varargin{:};
