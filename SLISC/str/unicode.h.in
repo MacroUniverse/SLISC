@@ -1,5 +1,5 @@
 #pragma once
-#include "arithmetic.h"
+#include "../arith/arithmetic.h"
 #include <sstream>
 #include <fstream>
 #include <locale>

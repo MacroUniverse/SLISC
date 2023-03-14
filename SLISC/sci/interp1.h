@@ -1,6 +1,6 @@
 #pragma once
-#include "Vec.h"
-#include "arithmetic.h"
+#include "../dense/Vec.h"
+#include "../arith/arithmetic.h"
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_interp.h>
 #include <gsl/gsl_spline.h>

@@ -1,7 +1,7 @@
 // Directed Graph (Acyclic or/and Weighted)
 #pragma once
-#include "random.h"
-#include "disjoint_sets.h"
+#include "../util/random.h"
+#include "../algo/disjoint_sets.h"
 
 namespace slisc {
 

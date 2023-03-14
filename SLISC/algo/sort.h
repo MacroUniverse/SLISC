@@ -1,8 +1,7 @@
 #pragma once
-#include "compare.h"
-#include "arithmetic.h"
-#include "unicode.h"
-#include "heap.h"
+#include "../arith/arithmetic.h"
+#include "../str/unicode.h"
+#include "../algo/heap.h"
 
 namespace slisc {
 

@@ -1,8 +1,8 @@
 // band diagonal matrix class
 #pragma once
-#include "Cmat.h"
-#include "Dvec.h"
-#include "Dcmat.h"
+#include "../dense/Cmat.h"
+#include "../dense/Dvec.h"
+#include "../dense/Dcmat.h"
 
 namespace slisc {
 

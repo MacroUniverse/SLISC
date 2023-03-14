@@ -4,8 +4,8 @@
 // currently, first overlapping element must be zero (e.g. matrix-vector multiplication will depend on this)
 
 #pragma once
-#include "scalar_arith.h"
-#include "Cmat3.h"
+#include "../arith/scalar_arith.h"
+#include "../dense/Cmat3.h"
 
 namespace slisc {
 

@@ -1,10 +1,10 @@
 #pragma once
-#include "arithmetic.h"
+#include "../arith/arithmetic.h"
 #include "Diag.h"
 #include "Mcoo.h"
 #include "Cmobd.h"
-#include "copy.h"
-#include "sort.h"
+#include "../arith/copy.h"
+#include "../algo/sort.h"
 #include "disp.h"
 
 namespace slisc {

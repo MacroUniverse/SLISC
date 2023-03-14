@@ -1,7 +1,7 @@
 // square diagonal matrix
 // mostly a clone a Vector<T>
 #pragma once
-#include "Vec.h"
+#include "../dense/Vec.h"
 
 namespace slisc {
 void veccpy(Int *, const Int *, Llong_I);

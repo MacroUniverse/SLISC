@@ -1,6 +1,6 @@
 // singly linked list utilities
 #pragma once
-#include "random.h"
+#include "../util/random.h"
 
 namespace slisc {
 

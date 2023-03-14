@@ -1,7 +1,7 @@
 #pragma once
 #include "sparse_arith.h"
 #include "interp1.h"
-#include "search.h"
+#include "../arith/search.h"
 
 namespace slisc {
 

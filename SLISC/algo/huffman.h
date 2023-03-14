@@ -1,7 +1,7 @@
 // C++(STL) program for Huffman Coding with STL
 // from https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
 #pragma once
-#include "global.h"
+#include "../global.h"
 
 namespace slisc {
 

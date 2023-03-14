@@ -1,12 +1,12 @@
 #pragma once
-#include "compare.h"
-#include "scalar_arith.h"
+#include "../arith/compare.h"
+#include "../arith/scalar_arith.h"
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint/flint.h>
 #include "arb_hypgeom.h" // real functions
 #include "acb_hypgeom.h" // complex functions
-#include "arb_extension.h"
+#include "../prec/arb_extension.h"
 #endif
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_specfunc.h>

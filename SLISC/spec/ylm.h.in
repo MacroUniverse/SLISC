@@ -1,6 +1,6 @@
 // calculate spherical harmonics Y_{lm}(\theta,\phi) and coupled spherical harmonics
 #pragma once
-#include "anglib.h"
+#include "../spec/unicode.h"
 #include "legendreP.h"
 
 namespace slisc {

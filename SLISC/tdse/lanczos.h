@@ -5,9 +5,9 @@
 #pragma once
 #include "global.h"
 #ifdef SLS_USE_LAPACKE
-#include "cut.h"
+#include "../dense/cut.h"
 #include "sparse_arith.h"
-#include "band_arith.h"
+#include "../sparse/band_arith.h"
 #include "disp.h"
 
 namespace slisc {

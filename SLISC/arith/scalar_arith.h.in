@@ -1,6 +1,6 @@
 #pragma once
-#include "complex_arith.h"
-#include "Imag.h"
+#include "../arith/complex_arith.h"
+#include "../arith/Imag.h"
 
 namespace slisc {
 

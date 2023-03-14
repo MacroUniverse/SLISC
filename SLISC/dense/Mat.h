@@ -1,6 +1,6 @@
 // row-major matrix container
 #pragma once
-#include "Vbase.h"
+#include "../dense/Vbase.h"
 
 namespace slisc {
 class MatChar : public VbaseChar

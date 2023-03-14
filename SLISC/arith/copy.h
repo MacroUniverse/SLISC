@@ -2,8 +2,8 @@
 // includes container shape checking
 // all `container = container` should be implemented using copy
 #pragma once
-#include "compare.h"
-#include "cut.h"
+#include "../arith/compare.h"
+#include "../dense/cut.h"
 
 namespace slisc {
 // === pointer interface ===

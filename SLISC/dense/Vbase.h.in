@@ -1,7 +1,7 @@
 // basic vector
 #pragma once
 #include "global.h"
-#include "Imag.h"
+#include "../arith/Imag.h"
 #include "string.h"
 
 namespace slisc {

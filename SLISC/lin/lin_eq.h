@@ -1,6 +1,6 @@
 #pragma once
-#include "compare.h"
-#include "band_arith.h"
+#include "../arith/compare.h"
+#include "../sparse/band_arith.h"
 
 #ifdef SLS_USE_LAPACKE
 namespace slisc {

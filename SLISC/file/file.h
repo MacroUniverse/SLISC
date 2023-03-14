@@ -2,17 +2,17 @@
 #include "global.h"
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 #include "time.h"
-#include "arithmetic.h"
+#include "../arith/arithmetic.h"
 #include "linux.h"
 #include <sstream>
 #include <fstream>
 #include <sys/types.h> // for time_stamp
 #include <sys/stat.h> // for time_stamp
-#include "unicode.h"
-#include "sort.h"
+#include "../str/unicode.h"
+#include "../algo/sort.h"
 #include "Bit.h"
 #ifdef SLS_USE_MSVC
-#include "search.h"
+#include "../arith/search.h"
 #include "string.h"
 #endif
 

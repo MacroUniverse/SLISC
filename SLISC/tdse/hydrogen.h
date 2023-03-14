@@ -1,6 +1,6 @@
 #pragma once
-#include "Vec.h"
-#include "Svec.h"
+#include "../dense/Vec.h"
+#include "../dense/Svec.h"
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_sf_coulomb.h>
 #include <gsl/gsl_errno.h>

@@ -1,8 +1,8 @@
 // save vectors and matrices to ".matt" file
 
 #pragma once
-#include "scalar_arith.h"
-#include "file.h"
+#include "../arith/scalar_arith.h"
+#include "../file/file.h"
 
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 

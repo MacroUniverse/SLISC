@@ -1,6 +1,6 @@
 #pragma once
-#include "arithmetic.h"
-#include "unicode.h"
+#include "../arith/arithmetic.h"
+#include "../str/unicode.h"
 
 namespace slisc {
 const Int def_disp_prec = 8;

@@ -1,11 +1,11 @@
 #pragma once
-#include "arith1.h"
-#include "arith2.h"
-#include "arith4.h"
-#include "reorder.h"
-#include "copy.h"
-#include "mul.h"
-#include "cut.h"
+#include "../arith/arith1.h"
+#include "../arith/arith2.h"
+#include "../arith/arith4.h"
+#include "../arith/reorder.h"
+#include "../arith/copy.h"
+#include "../lin/mul.h"
+#include "../dense/cut.h"
 
 namespace slisc {
 

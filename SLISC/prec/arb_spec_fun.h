@@ -3,9 +3,9 @@
 #pragma once
 #include <gmp.h>
 #include <flint/flint.h>
-#include "compare.h"
-#include "scalar_arith.h"
-#include "arb_extension.h"
+#include "../arith/compare.h"
+#include "../arith/scalar_arith.h"
+#include "../prec/arb_extension.h"
 
 namespace slisc {
 

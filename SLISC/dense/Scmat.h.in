@@ -1,5 +1,5 @@
 #pragma once
-#include "Svec.h"
+#include "../dense/Svec.h"
 // "_c" means lower level const
 
 namespace slisc {

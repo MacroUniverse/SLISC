@@ -18,8 +18,8 @@
  * 
  * This version is written by Fernando B. Giannasi */
 #pragma once
-#include "copy.h"
-#include "arithmetic.h"
+#include "../arith/copy.h"
+#include "../arith/arithmetic.h"
 
 namespace slisc {
 

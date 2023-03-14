@@ -1,6 +1,6 @@
 #pragma once
 #include "global.h"
-#include "Imag.h"
+#include "../arith/Imag.h"
 
 // this class is not memory safe!
 // "_c" means lower level const

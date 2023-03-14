@@ -1,8 +1,8 @@
 // functions of square matrix
 #pragma once
-#include "arithmetic.h"
+#include "../arith/arithmetic.h"
 #include "sparse_arith.h"
-#include "eig.h"
+#include "../lin/eig.h"
 #ifdef SLS_USE_LAPACKE
 namespace slisc {
 

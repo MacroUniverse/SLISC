@@ -1,5 +1,5 @@
 #pragma once
-#include "Vec.h"
+#include "../dense/Vec.h"
 
 namespace slisc {
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "random.h"
+#include "../util/random.h"
 
 namespace slisc {
     // To heapify a subtree rooted with `node`

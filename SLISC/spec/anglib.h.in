@@ -5,7 +5,7 @@
 // Copyright (C) 1998  Paul Stevenson
 
 #pragma once
-#include "scalar_arith.h"
+#include "../arith/scalar_arith.h"
 
 namespace slisc {
 

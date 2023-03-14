@@ -2,7 +2,7 @@
 // support forward and backward
 // very high performance for element traversal
 #pragma once
-#include "Dcmat.h"
+#include "../dense/Dcmat.h"
 
 namespace slisc {
 

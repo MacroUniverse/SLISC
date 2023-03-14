@@ -1,6 +1,6 @@
 // row-major 3D container
 #pragma once
-#include "Vbase.h"
+#include "../dense/Vbase.h"
 
 namespace slisc {
 class Mat3Char : public VbaseChar

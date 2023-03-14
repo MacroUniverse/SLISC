@@ -1,6 +1,6 @@
 // Cmat container
 #pragma once
-#include "Vbase.h"
+#include "../dense/Vbase.h"
 
 namespace slisc {
 //% tem('Cmat4', {

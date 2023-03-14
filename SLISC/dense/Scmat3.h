@@ -1,5 +1,5 @@
 #pragma once
-#include "Svec.h"
+#include "../dense/Svec.h"
 
 namespace slisc {
 class Scmat3Char_c : public SvbaseChar_c

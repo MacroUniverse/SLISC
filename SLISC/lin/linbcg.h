@@ -1,8 +1,8 @@
 // solving sparse linear equations by the preconditioned biconjugate gradient method
 // see Numerical Recipes 3ed page 90
 #pragma once
-#include "cut.h"
-#include "arithmetic.h"
+#include "../dense/cut.h"
+#include "../arith/arithmetic.h"
 
 namespace slisc {
 

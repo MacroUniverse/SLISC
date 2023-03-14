@@ -1,6 +1,6 @@
 // disjoint sets
 #pragma once
-#include "global.h"
+#include "../global.h"
 
 namespace slisc {
 	struct disjoint_sets

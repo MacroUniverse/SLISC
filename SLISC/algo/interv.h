@@ -5,7 +5,7 @@
 // elements at the bounds are included.
 
 #pragma once
-#include "sort.h"
+#include "../algo/sort.h"
 
 namespace slisc {
 

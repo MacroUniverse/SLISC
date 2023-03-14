@@ -2,7 +2,7 @@
 // always use Llong when reading and writing index in matb file
 
 #pragma once
-#include "matt.h"
+#include "../file/matt.h"
 #include "Bit.h"
 #include "quad_math.h"
 

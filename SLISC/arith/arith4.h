@@ -1,7 +1,7 @@
 // element-wise +, -, *, /
 #pragma once
-#include "scalar_arith.h"
-#include "compare.h"
+#include "../arith/scalar_arith.h"
+#include "../arith/compare.h"
 
 namespace slisc {
 

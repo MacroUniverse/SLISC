@@ -24,7 +24,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <stdint.h>
-#include "file.h"
+#include "../file/file.h"
 
 namespace slisc {
 	namespace sha1

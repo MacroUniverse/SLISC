@@ -1,6 +1,6 @@
 // functions that loop through every element of a container
 #pragma once
-#include "copy.h"
+#include "../arith/copy.h"
 
 namespace slisc {
 
