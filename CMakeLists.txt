@@ -237,7 +237,7 @@ target_link_libraries(main ${LIBS})
 
 # clean_h
 add_custom_target(clean_h
-		  COMMAND rm -f ${HEADERS2} ${PROJECT_SOURCE_DIR}/SLISC/tem_db.mat
+		  COMMAND rm -f ${HEADERS2} ${PROJECT_SOURCE_DIR}/tem_db.mat
 		  COMMENT "removing generated headers and template database...")
 
 # h

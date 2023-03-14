@@ -25,11 +25,11 @@ proc_paths = {'../preprocessor/', ...
     '../preprocessor/SLISC/case_conflict/'};
 old_path = pwd;
 cd(in_paths{1});
-if is_batch_mode && exist('./tem_db.mat', 'file')
-    delete './tem_db.mat';
+if is_batch_mode && exist('../tem_db.mat', 'file')
+    delete '../tem_db.mat';
 end
-if exist('./tem_db.mat', 'file')
-    load('./tem_db.mat', 'tem_db');
+if exist('../tem_db.mat', 'file')
+    load('../tem_db.mat', 'tem_db');
 else
     tem_db = struct('name', '', 'file', '', 'body', '', ...
         'param', {}, 'done', [], 'out', []);
@@ -219,6 +219,6 @@ for i = 1:numel(changed_file)
 end
 
 % rmpath(paths{:});
-save('./tem_db.mat', 'tem_db');
+save('../tem_db.mat', 'tem_db');
 cd(old_path);
 end
