@@ -19,7 +19,7 @@ void test_all(const std::string &test_name)
 	SLS_TEST(band);
 	SLS_TEST(bin_tree);
 	SLS_TEST(bisection);
-	SLS_TEST(Bit);
+	SLS_TEST(bit);
 	SLS_TEST(boost);
 	SLS_TEST(Cmat);
 	SLS_TEST(Cmat3);

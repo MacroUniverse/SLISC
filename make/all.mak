@@ -371,7 +371,7 @@ path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 
 goal: main.x
 
-in_paths = ../SLISC/algo/:../SLISC/arith/:../SLISC/dense/:../SLISC/file/:../SLISC/lin/:../SLISC/sci/:../SLISC/sparse/:../SLISC/spec/:../SLISC/str/:../SLISC/tdse/:../test/
+in_paths = ../SLISC/algo/:../SLISC/arith/:../SLISC/dense/:../SLISC/file/:../SLISC/lin/:../SLISC/prec/:../SLISC/sci/:../SLISC/sparse/:../SLISC/spec/:../SLISC/str/:../SLISC/tdse/:../SLISC/util/:../test/
 
 h: # remake all headers
 	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', [], $(opt_quadmath), $(opt_long32))"
