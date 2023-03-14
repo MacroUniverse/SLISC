@@ -1,6 +1,6 @@
 // tree utility
 #pragma once
-#include "../arith/search.h"
+#include "../algo/search.h"
 
 namespace slisc {
 

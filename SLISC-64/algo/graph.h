@@ -9,10 +9,10 @@ namespace slisc {
 
 	// node for directed graph (including DAG)
 	// node[i] are the next connected nodes
-	// node.prev is the last connected node
+	// node.last is the last connected node
 	struct DGnode : vector<Long> {
 	    Long val;
-	    vector<Long> last;
+	    // vector<Long> last;
 	};
 
 	// add edge to DAG
@@ -261,10 +261,10 @@ namespace slisc {
 
 	// node for directed weighted graph (including DAG)
 	// node[i] are the next connected nodes (.first) and weights (.second)
-	// node.prev is the last connected node
+	// node.last are the last connected nodes (.first) and weights (.second)
 	struct DWGnode : vector<pair<Long,Long>> {
 	    Long val;
-	    vector<Long> last;
+	    // vector<pair<Long,Long>> last;
 	};
 
 	inline void dwg_add_edge(vector<DWGedge> &dwg, Long_I from, Long_I to, Long_I weight)

@@ -12,7 +12,7 @@
 #include "../algo/sort.h"
 #include "../util/bit.h"
 #ifdef SLS_USE_MSVC
-#include "../arith/search.h"
+#include "../algo/search.h"
 #include "../str/str.h"
 #endif
 

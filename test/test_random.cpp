@@ -1,5 +1,5 @@
 #include "../SLISC/util/random.h"
-#include "../SLISC/arith/search.h"
+#include "../SLISC/algo/search.h"
 
 void test_random()
 {
