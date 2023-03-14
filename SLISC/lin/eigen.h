@@ -1,4 +1,4 @@
-#include "global.h"
+#include "../global.h"
 #ifdef SLS_USE_EIGEN
 #include "Eigen/Dense"
 #include "Eigen/Sparse"

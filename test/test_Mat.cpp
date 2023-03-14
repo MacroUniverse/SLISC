@@ -1,4 +1,4 @@
-#include "../SLISC/Mat.h"
+#include "../SLISC/dense/Mat.h"
 
 void test_Mat()
 {

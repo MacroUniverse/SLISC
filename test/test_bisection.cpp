@@ -1,4 +1,4 @@
-#include "../SLISC/bisection.h"
+#include "../SLISC/algo/bisection.h"
 using namespace slisc;
 
 class Sinfun

@@ -28,7 +28,7 @@
 #include <cfloat>
 #include <algorithm>
 #include <iostream>
-#include "quad_math_declare.h"
+#include "prec/quad_math_declare.h"
 #include <complex>
 #include <vector>
 #include <string>
@@ -90,7 +90,7 @@
 	#endif
 	#include <mkl.h>
 	#ifdef SLS_USE_GSL
-		#include "my_gsl_blas_types.h"
+		#include "util/my_gsl_blas_types.h"
 	#endif
 	#define SLS_USE_CBLAS
 	#define SLS_USE_LAPACKE
@@ -128,13 +128,13 @@
 #define SLS_ASSERT(condition) if (!(condition)) SLS_FAIL
 
 // my std extension
-#include "quad_math.h"
+#include "prec/quad_math.h"
 
 #ifdef SLS_USE_MPLAPACK
 #ifndef _Float128
 typedef __float128 _Float128;
 #endif
-#include "my_mplapack_utils__Float128.h"
+#include "prec/my_mplapack_utils__Float128.h"
 #include <mplapack/mpblas__Float128.h>
 #include <mplapack/mplapack__Float128.h>
 #endif

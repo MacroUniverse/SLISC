@@ -6,7 +6,7 @@
 // 3. negative operand for C operator >> or << are undefined!
 
 #pragma once
-#include "global.h"
+#include "../global.h"
 
 namespace slisc {
 

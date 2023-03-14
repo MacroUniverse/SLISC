@@ -1,4 +1,4 @@
-#include "../SLISC/graph.h"
+#include "../SLISC/algo/graph.h"
 
 void test_graph()
 {

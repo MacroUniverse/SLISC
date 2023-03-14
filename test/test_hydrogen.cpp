@@ -1,5 +1,5 @@
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/hydrogen.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/tdse/hydrogen.h"
 
 void test_hydrogen()
 {

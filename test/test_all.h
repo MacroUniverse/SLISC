@@ -1,6 +1,6 @@
 // do all available tests of SLISC
 #pragma once
-#include "../SLISC/unicode.h"
+#include "../SLISC/str/unicode.h"
 
 #define SLS_TEST(name) do{ if (test_name.empty() || test_name == #name) {void test_##name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} } while(0)
 

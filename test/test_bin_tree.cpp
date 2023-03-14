@@ -1,4 +1,4 @@
-#include "../SLISC/bin_tree.h"
+#include "../SLISC/algo/bin_tree.h"
 
 void test_bin_tree() {
 	using namespace slisc;

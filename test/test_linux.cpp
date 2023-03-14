@@ -1,4 +1,4 @@
-#include "../SLISC/linux.h"
+#include "../SLISC/util/linux.h"
 #ifdef SLS_USE_LINUX
 #include <signal.h>
 #endif

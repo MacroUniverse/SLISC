@@ -1,4 +1,4 @@
-#include "../SLISC/SafeInt.h"
+#include "../SLISC/arith/SafeInt.h"
 #include <iostream>
 #include <climits>
 #include <unordered_map>

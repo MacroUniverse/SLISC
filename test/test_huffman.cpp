@@ -1,4 +1,4 @@
-#include "../SLISC/huffman.h"
+#include "../SLISC/algo/huffman.h"
 
 void test_huffman()
 {

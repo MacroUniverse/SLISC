@@ -3,8 +3,8 @@
 
 #pragma once
 #include "../file/matt.h"
-#include "Bit.h"
-#include "quad_math.h"
+#include "../util/bit.h"
+#include "../prec/quad_math.h"
 
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 

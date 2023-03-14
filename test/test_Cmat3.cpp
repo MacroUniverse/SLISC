@@ -1,4 +1,4 @@
-#include "../SLISC/Cmat3.h"
+#include "../SLISC/dense/Cmat3.h"
 
 void test_Cmat3()
 {

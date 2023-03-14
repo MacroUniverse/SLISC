@@ -1,7 +1,7 @@
-#include "../SLISC/sparse_arith.h"
-#include "../SLISC/disp.h"
-#include "../SLISC/random.h"
-#include "../SLISC/arith4.h"
+#include "../SLISC/sparse/sparse_arith.h"
+#include "../SLISC/str/disp.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/arith/arith4.h"
 
 void test_Mcoo()
 {

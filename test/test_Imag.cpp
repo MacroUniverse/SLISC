@@ -1,4 +1,4 @@
-#include "../SLISC/Imag.h"
+#include "../SLISC/arith/Imag.h"
 
 void test_Imag()
 {

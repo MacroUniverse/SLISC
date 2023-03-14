@@ -2,7 +2,7 @@
 // c++ wrapper for fmpz_t, arf_t, and arb_t
 
 #pragma once
-#include "Bit.h"
+#include "../util/bit.h"
 #include "arf.h"
 #include "acb_hypgeom.h"
 

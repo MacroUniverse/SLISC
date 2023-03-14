@@ -9,7 +9,7 @@
 	#undef max
 	#undef min
 #endif
-#include "string.h"
+#include "../str/str.h"
 #include "utfcpp/utf8.h"
 
 #ifdef SLS_USE_WINDOWS

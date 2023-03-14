@@ -1,4 +1,4 @@
-#include "../SLISC/string.h"
+#include "../SLISC/str/str.h"
 
 void test_string()
 {

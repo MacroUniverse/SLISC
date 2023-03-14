@@ -1,6 +1,6 @@
 #pragma once
-#include "sparse_arith.h"
-#include "interp1.h"
+#include "../sparse/sparse_arith.h"
+#include "../sci/interp1.h"
 #include "../arith/search.h"
 
 namespace slisc {

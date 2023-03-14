@@ -1,4 +1,4 @@
-#include "../SLISC/anglib.h"
+#include "../SLISC/spec/anglib.h"
 
 void test_anglib()
 {

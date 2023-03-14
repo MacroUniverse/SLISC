@@ -1,6 +1,6 @@
-#include "../SLISC/disjoint_sets.h"
-#include "../SLISC/random.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/algo/disjoint_sets.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/str/disp.h"
 
 void test_disjoint_sets()
 {

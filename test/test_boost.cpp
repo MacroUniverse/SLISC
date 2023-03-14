@@ -1,6 +1,6 @@
 #include <iostream>
 #ifdef SLS_USE_BOOST
-#include "../SLISC/file.h"
+#include "../SLISC/file/file.h"
 #include <boost/filesystem.hpp>
 #include <boost/json/src.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
@@ -48,7 +48,7 @@ void test_boost()
 
 	// current path (pwd)
 	Str path = current_path().string();
-	if (path.substr(path.size()-7) != "/SLISC")
+	if (path.substr(path.size()-6) != "/SLISC")
 		SLS_FAIL;
 
 	// manipulate path

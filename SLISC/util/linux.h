@@ -1,6 +1,6 @@
 // linux utilities
 #pragma once
-#include "global.h"
+#include "../global.h"
 #include <iostream>
 #include <string>
 #include <sstream>

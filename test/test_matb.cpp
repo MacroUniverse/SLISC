@@ -1,7 +1,7 @@
-#include "../SLISC/matb.h"
-#include "../SLISC/random.h"
-#include "../SLISC/disp.h"
-#include "../SLISC/sha1sum.h"
+#include "../SLISC/file/matb.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/str/disp.h"
+#include "../SLISC/util/sha1sum.h"
 
 void test_matb()
 {

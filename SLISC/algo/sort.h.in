@@ -1,5 +1,4 @@
 #pragma once
-#include "../arith/compare.h"
 #include "../arith/arithmetic.h"
 #include "../str/unicode.h"
 #include "../algo/heap.h"

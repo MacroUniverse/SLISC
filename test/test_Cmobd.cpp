@@ -1,5 +1,5 @@
-#include "../SLISC/sparse_arith.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/sparse/sparse_arith.h"
+#include "../SLISC/str/disp.h"
 
 void test_Cmobd()
 {

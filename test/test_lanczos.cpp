@@ -1,8 +1,8 @@
-#include "../SLISC/lanczos.h"
-#include "../SLISC/disp.h"
-#include "../SLISC/random.h"
-#include "../SLISC/mat_fun.h"
-#include "../SLISC/cut.h"
+#include "../SLISC/tdse/lanczos.h"
+#include "../SLISC/str/disp.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/lin/mat_fun.h"
+#include "../SLISC/dense/cut.h"
 
 void test_lanczos()
 {

@@ -3,12 +3,12 @@
 // however, (dt^Nk / Nk!) is extremely small and omitted.
 
 #pragma once
-#include "global.h"
+#include "../global.h"
 #ifdef SLS_USE_LAPACKE
 #include "../dense/cut.h"
-#include "sparse_arith.h"
+#include "../sparse/sparse_arith.h"
 #include "../sparse/band_arith.h"
-#include "disp.h"
+#include "../str/disp.h"
 
 namespace slisc {
 

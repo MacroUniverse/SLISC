@@ -1,4 +1,4 @@
-#include "../SLISC/sha1sum.h"
+#include "../SLISC/util/sha1sum.h"
 using namespace slisc;
 
 void test_sha1sum() {

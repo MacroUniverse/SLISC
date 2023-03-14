@@ -1,4 +1,4 @@
-#include "../SLISC/sing_list.h"
+#include "../SLISC/algo/sing_list.h"
 
 void test_sing_list()
 {

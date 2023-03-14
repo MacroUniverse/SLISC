@@ -1,4 +1,4 @@
-#include "../SLISC/fft.h"
+#include "../SLISC/sci/fft.h"
 
 // test fft module
 void test_fft()

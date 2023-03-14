@@ -1,5 +1,5 @@
-#include "../SLISC/file.h"
-#include "../SLISC/json.h"
+#include "../SLISC/file/file.h"
+#include "../SLISC/util/json.h"
 
 using namespace slisc;
 using json = nlohmann::json; // the main class

@@ -1,8 +1,8 @@
-#include "../SLISC/sort.h"
-#include "../SLISC/random.h"
-#include "../SLISC/copy.h"
-#include "../SLISC/compare.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/algo/sort.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/arith/copy.h"
+#include "../SLISC/arith/compare.h"
+#include "../SLISC/str/disp.h"
 
 void test_sort()
 {

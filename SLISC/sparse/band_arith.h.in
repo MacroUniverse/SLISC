@@ -1,7 +1,7 @@
 #pragma once
 #include "../arith/arithmetic.h"
 #include "../dense/cut.h"
-#include "Cband.h"
+#include "../sparse/Cband.h"
 
 namespace slisc {
 

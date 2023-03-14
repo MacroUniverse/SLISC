@@ -1,4 +1,4 @@
-#include "../SLISC/Vbase.h"
+#include "../SLISC/dense/Vbase.h"
 
 void test_Vbase()
 {

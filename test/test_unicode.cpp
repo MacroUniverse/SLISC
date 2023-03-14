@@ -1,4 +1,4 @@
-#include "../SLISC/unicode.h"
+#include "../SLISC/str/unicode.h"
 
 void test_unicode()
 {

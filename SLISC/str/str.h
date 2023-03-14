@@ -1,30 +1,29 @@
 // string utilities
 
 #pragma once
-#include "global.h"
+#include "../global.h"
 
 namespace slisc {
 
 // string utilities
 
 // see if a string match the first part of another string
-//% tem('match_head', {
-//%     'Str'; 'Str32';
-//% });
-//%------------------------
-//% T = varargin{:};
-inline Bool match_head(@T@_I str_short, @T@_I str_long)
+inline Bool match_head(Str_I str_short, Str_I str_long)
 {
 	if (str_short.size() > str_long.size())
 		return false;
 	return str_long.substr(0, str_short.size()) == str_short;
 }
-//%------------------------
 
-//% tem('num2str', {'Char'; 'Int'; 'Llong'; 'Doub';});
-//%---------------------
-//% T = varargin{:};
-inline void num2str(Str_O str, @T@_I s, Long_I min_len = -1)
+inline Bool match_head(Str32_I str_short, Str32_I str_long)
+{
+	if (str_short.size() > str_long.size())
+		return false;
+	return str_long.substr(0, str_short.size()) == str_short;
+}
+
+
+inline void num2str(Str_O str, Char_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
 	// erase trailing zeros
@@ -42,13 +41,88 @@ inline void num2str(Str_O str, @T@_I s, Long_I min_len = -1)
 	}
 }
 
-inline Str num2str(@T@_I s, Long_I min_len = -1)
+inline Str num2str(Char_I s, Long_I min_len = -1)
 {
 	Str str;
 	num2str(str, s, min_len);
 	return str;
 }
-//%------------------------
+
+inline void num2str(Str_O str, Int_I s, Long_I min_len = -1)
+{
+	str = to_string(s);
+	// erase trailing zeros
+	if (str.find('.') != Str::npos) {
+		str.erase(str.find_last_not_of('0') + 1);
+		if (str.back() == '.')
+			str.pop_back();
+	}
+	// 0 padding on the left
+	if (min_len > 0 && (Long)str.size() < min_len) {
+		Str str1;
+		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+			str1 += '0';
+		str = str1 + str;
+	}
+}
+
+inline Str num2str(Int_I s, Long_I min_len = -1)
+{
+	Str str;
+	num2str(str, s, min_len);
+	return str;
+}
+
+inline void num2str(Str_O str, Llong_I s, Long_I min_len = -1)
+{
+	str = to_string(s);
+	// erase trailing zeros
+	if (str.find('.') != Str::npos) {
+		str.erase(str.find_last_not_of('0') + 1);
+		if (str.back() == '.')
+			str.pop_back();
+	}
+	// 0 padding on the left
+	if (min_len > 0 && (Long)str.size() < min_len) {
+		Str str1;
+		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+			str1 += '0';
+		str = str1 + str;
+	}
+}
+
+inline Str num2str(Llong_I s, Long_I min_len = -1)
+{
+	Str str;
+	num2str(str, s, min_len);
+	return str;
+}
+
+inline void num2str(Str_O str, Doub_I s, Long_I min_len = -1)
+{
+	str = to_string(s);
+	// erase trailing zeros
+	if (str.find('.') != Str::npos) {
+		str.erase(str.find_last_not_of('0') + 1);
+		if (str.back() == '.')
+			str.pop_back();
+	}
+	// 0 padding on the left
+	if (min_len > 0 && (Long)str.size() < min_len) {
+		Str str1;
+		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+			str1 += '0';
+		str = str1 + str;
+	}
+}
+
+inline Str num2str(Doub_I s, Long_I min_len = -1)
+{
+	Str str;
+	num2str(str, s, min_len);
+	return str;
+}
+
 
 // trim all occurance of key on the left
 // return the number of charaters trimed
@@ -184,12 +258,9 @@ inline Long replace(Str_O str1, Str_I str, Str_I key, Str_I new_key)
 }
 
 // convert string to lower case
-//% tem('to_lower', {'Str'; 'Str32'});
-//%----------------------------
-//% T = varargin{:}; Ts = val_t(T);
-inline void to_lower(@T@_O str)
+inline void to_lower(Str_O str)
 {
-	@Ts@ C, diff = 'a' - 'A';
+	Char C, diff = 'a' - 'A';
 	Long N = str.size();
 	for (Long i = 0; i < N; ++i) {
 		C = str[i];
@@ -199,15 +270,25 @@ inline void to_lower(@T@_O str)
 			str[i] = C;
 	}
 }
-//%----------------------------
+
+inline void to_lower(Str32_O str)
+{
+	Char32 C, diff = 'a' - 'A';
+	Long N = str.size();
+	for (Long i = 0; i < N; ++i) {
+		C = str[i];
+		if (C >= 'A' && C <= 'Z')
+			str[i] = C + diff;
+		else
+			str[i] = C;
+	}
+}
+
 
 // convert string to lower case
-//% tem('to_lower2', {'Str'; 'Str32'});
-//%----------------------------
-//% T = varargin{:}; Ts = val_t(T);
-inline void to_lower(@T@_O str, @T@_I STR)
+inline void to_lower(Str_O str, Str_I STR)
 {
-	@Ts@ C, diff = 'a' - 'A';
+	Char C, diff = 'a' - 'A';
 	Long N = STR.size();
 	str.resize(N);
 	for (Long i = 0; i < N; ++i) {
@@ -218,15 +299,26 @@ inline void to_lower(@T@_O str, @T@_I STR)
 			str[i] = C;
 	}
 }
-//%----------------------------
+
+inline void to_lower(Str32_O str, Str32_I STR)
+{
+	Char32 C, diff = 'a' - 'A';
+	Long N = STR.size();
+	str.resize(N);
+	for (Long i = 0; i < N; ++i) {
+		C = STR[i];
+		if (C >= 'A' && C <= 'Z')
+			str[i] = C + diff;
+		else
+			str[i] = C;
+	}
+}
+
 
 // convert string to lower case
-//% tem('to_upper', {'Str'; 'Str32'});
-//%----------------------------
-//% T = varargin{:}; Ts = val_t(T);
-inline void to_upper(@T@_O STR, @T@_I str)
+inline void to_upper(Str_O STR, Str_I str)
 {
-	@Ts@ c, diff = 'A' - 'a';
+	Char c, diff = 'A' - 'a';
 	Long N = str.size();
 	STR.resize(N);
 	for (Long i = 0; i < N; ++i) {
@@ -237,15 +329,26 @@ inline void to_upper(@T@_O STR, @T@_I str)
 			STR[i] = c;
 	}
 }
-//%----------------------------
+
+inline void to_upper(Str32_O STR, Str32_I str)
+{
+	Char32 c, diff = 'A' - 'a';
+	Long N = str.size();
+	STR.resize(N);
+	for (Long i = 0; i < N; ++i) {
+		c = str[i];
+		if (c >= 'a' && c <= 'z')
+			STR[i] = c + diff;
+		else
+			STR[i] = c;
+	}
+}
+
 
 // convert string to lower case
-//% tem('to_upper2', {'Str'; 'Str32'});
-//%----------------------------
-//% T = varargin{:}; Ts = val_t(T);
-inline void to_upper(@T@_IO str)
+inline void to_upper(Str_IO str)
 {
-	@Ts@ c, diff = 'A' - 'a';
+	Char c, diff = 'A' - 'a';
 	Long N = str.size();
 	for (Long i = 0; i < N; ++i) {
 		c = str[i];
@@ -255,53 +358,85 @@ inline void to_upper(@T@_IO str)
 			str[i] = c;
 	}
 }
-//%----------------------------
 
-//% tem('to_lower3', {'vecStr'; 'vecStr32'});
-//%----------------------------
-//% T = varargin{:};
-inline void to_lower(@T@_O vs, @T@_I VS)
+inline void to_upper(Str32_IO str)
+{
+	Char32 c, diff = 'A' - 'a';
+	Long N = str.size();
+	for (Long i = 0; i < N; ++i) {
+		c = str[i];
+		if (c >= 'a' && c <= 'z')
+			str[i] = c + diff;
+		else
+			str[i] = c;
+	}
+}
+
+
+inline void to_lower(vecStr_O vs, vecStr_I VS)
 {
 	Long N = VS.size();
 	vs.resize(N);
 	for (Long i = 0; i < N; ++i)
 		to_lower(vs[i], VS[i]);
 }
-//%-----------------------------
 
-//% tem('to_lower4', {'vecStr'; 'vecStr32'});
-//%----------------------------
-//% T = varargin{:};
-inline void to_lower(@T@_IO vs)
+inline void to_lower(vecStr32_O vs, vecStr32_I VS)
+{
+	Long N = VS.size();
+	vs.resize(N);
+	for (Long i = 0; i < N; ++i)
+		to_lower(vs[i], VS[i]);
+}
+
+
+inline void to_lower(vecStr_IO vs)
 {
 	Long N = vs.size();
 	for (Long i = 0; i < N; ++i)
 		to_lower(vs[i]);
 }
-//%-----------------------------
 
-//% tem('to_upper3', {'vecStr'; 'vecStr32'});
-//%----------------------------
-//% T = varargin{:};
-inline void to_upper(@T@_O VS, @T@_I vs)
+inline void to_lower(vecStr32_IO vs)
+{
+	Long N = vs.size();
+	for (Long i = 0; i < N; ++i)
+		to_lower(vs[i]);
+}
+
+
+inline void to_upper(vecStr_O VS, vecStr_I vs)
 {
 	Long N = vs.size();
 	VS.resize(N);
 	for (Long i = 0; i < N; ++i)
 		to_upper(VS[i], vs[i]);
 }
-//%-----------------------------
 
-//% tem('to_upper4', {'vecStr'; 'vecStr32'});
-//%----------------------------
-//% T = varargin{:};
-inline void to_upper(@T@_IO vs)
+inline void to_upper(vecStr32_O VS, vecStr32_I vs)
+{
+	Long N = vs.size();
+	VS.resize(N);
+	for (Long i = 0; i < N; ++i)
+		to_upper(VS[i], vs[i]);
+}
+
+
+inline void to_upper(vecStr_IO vs)
 {
 	Long N = vs.size();
 	vs.resize(N);
 	for (Long i = 0; i < N; ++i)
 		to_upper(vs[i]);
 }
-//%-----------------------------
+
+inline void to_upper(vecStr32_IO vs)
+{
+	Long N = vs.size();
+	vs.resize(N);
+	for (Long i = 0; i < N; ++i)
+		to_upper(vs[i]);
+}
+
 
 } // namespace slisc

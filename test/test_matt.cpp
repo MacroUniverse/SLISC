@@ -1,5 +1,5 @@
-#include "../SLISC/matt.h"
-#include "../SLISC/random.h"
+#include "../SLISC/file/matt.h"
+#include "../SLISC/util/random.h"
 
 void test_matt()
 {

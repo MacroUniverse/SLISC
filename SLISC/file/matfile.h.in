@@ -4,7 +4,7 @@
 #pragma once
 #include "../arith/arithmetic.h"
 #include "../file/file.h"
-#include "time.h"
+#include "../util/time.h"
 #ifdef SLS_USE_MATFILE
 #include <mat.h>
 

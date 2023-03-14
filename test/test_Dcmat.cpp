@@ -1,7 +1,7 @@
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/cut.h"
-#include "../SLISC/Dcit.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/dense/cut.h"
+#include "../SLISC/dense/Dcit.h"
+#include "../SLISC/str/disp.h"
 
 using namespace slisc;
 

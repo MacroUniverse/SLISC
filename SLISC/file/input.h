@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "../global.h"
 #define SLS_INP(var) do {cin >> var; cout << #var << " = " << var << ";    "; if (!cin.good()) SLS_ERR("illegal input file!");} while(0);
 
 namespace slisc {

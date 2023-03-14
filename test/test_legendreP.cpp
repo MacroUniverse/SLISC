@@ -1,4 +1,4 @@
-#include "../SLISC/legendreP.h"
+#include "../SLISC/spec/legendreP.h"
 
 void test_legendreP()
 {

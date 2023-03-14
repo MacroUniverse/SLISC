@@ -1,4 +1,4 @@
-#include "../SLISC/hypergeom.h"
+#include "../SLISC/spec/hypergeom.h"
 
 void test_hypergeom()
 {

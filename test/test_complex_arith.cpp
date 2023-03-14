@@ -1,4 +1,4 @@
-#include "../SLISC/complex_arith.h"
+#include "../SLISC/arith/complex_arith.h"
 
 void test_complex_arith()
 {

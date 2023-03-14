@@ -1,6 +1,6 @@
-#include "../SLISC/Cmat.h"
-#include "../SLISC/quad_math.h"
-#include "../SLISC/random.h"
+#include "../SLISC/dense/Cmat.h"
+#include "../SLISC/prec/quad_math.h"
+#include "../SLISC/util/random.h"
 
 void test_quad_math()
 {

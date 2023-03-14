@@ -5,7 +5,7 @@
 #include <string.h>
 #include <chrono>
 #include <ctime>
-#include "string.h"
+#include "../str/str.h"
 
 namespace slisc {
 

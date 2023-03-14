@@ -1,8 +1,8 @@
-#include "../SLISC/eig.h"
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/sparse_arith.h"
-#include "../SLISC/random.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/lin/eig.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/sparse/sparse_arith.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/str/disp.h"
 
 void test_eig()
 {

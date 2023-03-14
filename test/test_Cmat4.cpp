@@ -1,5 +1,5 @@
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/cut.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/dense/cut.h"
 
 void test_Cmat4()
 {

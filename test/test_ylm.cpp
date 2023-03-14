@@ -1,4 +1,4 @@
-#include "../SLISC/ylm.h"
+#include "../SLISC/spec/ylm.h"
 
 void test_ylm()
 {

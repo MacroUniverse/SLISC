@@ -1,5 +1,5 @@
-#include "../SLISC/eig.h"
-#include "../SLISC/fedvr.h"
+#include "../SLISC/lin/eig.h"
+#include "../SLISC/tdse/fedvr.h"
 
 using namespace slisc;
 

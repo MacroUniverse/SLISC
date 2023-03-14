@@ -1,8 +1,8 @@
 // basic vector
 #pragma once
-#include "global.h"
+#include "../global.h"
 #include "../arith/Imag.h"
-#include "string.h"
+#include "../str/str.h"
 
 namespace slisc {
 //% tem('Vbase', {

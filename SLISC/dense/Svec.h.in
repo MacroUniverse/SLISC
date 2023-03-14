@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "../global.h"
 #include "../arith/Imag.h"
 
 // this class is not memory safe!

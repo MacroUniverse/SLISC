@@ -1,5 +1,5 @@
-#include "../SLISC/Scmat3.h"
-#include "../SLISC/random.h"
+#include "../SLISC/dense/Scmat3.h"
+#include "../SLISC/util/random.h"
 
 void test_Scmat3()
 {

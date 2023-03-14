@@ -1,9 +1,9 @@
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/compare.h"
-#include "../SLISC/random.h"
-#include "../SLISC/sort.h"
-#include "../SLISC/cut.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/arith/compare.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/algo/sort.h"
+#include "../SLISC/dense/cut.h"
+#include "../SLISC/str/disp.h"
 
 void test_arithmetic()
 {

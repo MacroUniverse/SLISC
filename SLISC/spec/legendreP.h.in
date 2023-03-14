@@ -1,7 +1,7 @@
 // associated legendre polynomial
 // code adapted from GSL-2.5
 #pragma once
-#include "global.h"
+#include "../global.h"
 
 namespace slisc {
 

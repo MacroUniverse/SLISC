@@ -1,7 +1,7 @@
-#include "../SLISC/file.h"
-#include "../SLISC/matfile.h"
-#include "../SLISC/random.h"
-#include "../SLISC/disp.h"
+#include "../SLISC/file/file.h"
+#include "../SLISC/file/matfile.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/str/disp.h"
 
 void test_matfile()
 {

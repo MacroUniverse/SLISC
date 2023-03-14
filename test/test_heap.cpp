@@ -1,4 +1,4 @@
-#include "../SLISC/heap.h"
+#include "../SLISC/algo/heap.h"
 
 using namespace slisc;
 

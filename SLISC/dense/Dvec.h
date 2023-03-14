@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "../global.h"
 // "_c" means lower level const
 
 namespace slisc {

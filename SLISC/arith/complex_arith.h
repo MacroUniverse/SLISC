@@ -1,6 +1,6 @@
 // complex related functions
 #pragma once
-#include "global.h"
+#include "../global.h"
 
 namespace slisc {
 inline Bool operator==(Char_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }

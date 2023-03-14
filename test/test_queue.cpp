@@ -1,5 +1,5 @@
-#include "../SLISC/queue.h"
-#include "../SLISC/random.h"
+#include "../SLISC/algo/queue.h"
+#include "../SLISC/util/random.h"
 
 void test_queue()
 {

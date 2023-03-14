@@ -1,7 +1,7 @@
-#include "../SLISC/lin_eq.h"
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/disp.h"
-#include "../SLISC/random.h"
+#include "../SLISC/lin/lin_eq.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/str/disp.h"
+#include "../SLISC/util/random.h"
 
 void test_lin_eq()
 {

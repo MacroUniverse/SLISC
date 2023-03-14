@@ -1,7 +1,7 @@
-#include "../SLISC/copy.h"
-#include "../SLISC/cut.h"
-#include "../SLISC/arithmetic.h"
-#include "../SLISC/compare.h"
+#include "../SLISC/arith/copy.h"
+#include "../SLISC/dense/cut.h"
+#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/arith/compare.h"
 
 void test_copy()
 {

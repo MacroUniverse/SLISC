@@ -1,4 +1,4 @@
-#include "../SLISC/disp.h"
+#include "../SLISC/str/disp.h"
 
 void test_disp()
 {

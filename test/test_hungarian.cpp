@@ -1,4 +1,4 @@
-#include "../SLISC/hungarian.h"
+#include "../SLISC/algo/hungarian.h"
 
 void test_hungarian() //example of usage
 {

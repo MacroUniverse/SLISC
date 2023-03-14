@@ -1,4 +1,4 @@
-#include "../SLISC/input.h"
+#include "../SLISC/file/input.h"
 
 void test_input()
 {

@@ -1,5 +1,5 @@
-#include "../SLISC/odeint.h"
-#include "../SLISC/file.h"
+#include "../SLISC/sci/odeint.h"
+#include "../SLISC/file/file.h"
 using namespace slisc;
 
 // a functor for derivative
