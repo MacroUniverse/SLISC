@@ -1,4 +1,4 @@
-## run folloing in SLISC0 to build and export library
+## run folloing in SLISC to build and export library
 
 # sudo docker build -t addiszx/slisc0:centos7.9-build-sqlite-boost-gsl -f docker/centos7.9-build-sqlite-boost-gsl.dockerfile . | tee docker-centos7.9-build-sqlite-boost-gsl.log
 # sudo docker run --name centos7.9-build-sqlite-boost-gsl -itd addiszx/slisc0:centos7.9-build-sqlite-boost-gsl bash

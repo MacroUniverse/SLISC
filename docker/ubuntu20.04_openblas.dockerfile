@@ -30,23 +30,23 @@ RUN cd /root/OpenBLAS-0.3.21/ && \
 	make install
 
 RUN	cd /root/ && \
-	git clone --depth 1 https://github.com/MacroUniverse/SLISC0 && \
-	touch SLISC0/SLISC/*.h
+	git clone --depth 1 https://github.com/MacroUniverse/SLISC && \
+	touch SLISC/SLISC/*.h
 
-RUN cd /root/SLISC0 && \
+RUN cd /root/SLISC && \
 	make -j$NCPU opt_lapack=openblas opt_boost=false opt_gsl=false opt_eigen=false opt_arb=false opt_arpack=false opt_sqlite=false && \
 	mv main.x main32.x
 
-RUN cd /root/SLISC0 && \
+RUN cd /root/SLISC && \
 	cp SLISC-long64-quad/*.h SLISC/ && \
 	rm -f *.o *.x && \
 	make -j$NCPU opt_lapack=openblas opt_boost=false opt_gsl=false opt_eigen=false opt_arb=false opt_arpack=false opt_sqlite=false
 
-RUN echo "source /root/SLISC0/make/ld_path_append.sh /opt/OpenBLAS/lib" >> ~/.bashrc
+RUN echo "source /root/SLISC/make/ld_path_append.sh /opt/OpenBLAS/lib" >> ~/.bashrc
 
 RUN echo "#! /bin/bash" > /test.sh && \
-	echo "source /root/SLISC0/make/ld_path_append.sh /opt/OpenBLAS/lib" >> /test.sh && \
-	echo "cd /root/SLISC0" >> /test.sh && \
+	echo "source /root/SLISC/make/ld_path_append.sh /opt/OpenBLAS/lib" >> /test.sh && \
+	echo "cd /root/SLISC" >> /test.sh && \
 	echo "./main32.x < input.inp" >> /test.sh && \
 	echo "printf '\n\n\n\n\n\n'" >> /test.sh && \
 	echo "./main.x < input.inp" >> /test.sh && \

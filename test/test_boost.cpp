@@ -48,7 +48,7 @@ void test_boost()
 
 	// current path (pwd)
 	Str path = current_path().string();
-	if (path.substr(path.size()-7) != "/SLISC0")
+	if (path.substr(path.size()-7) != "/SLISC")
 		SLS_FAIL;
 
 	// manipulate path

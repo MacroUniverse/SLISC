@@ -1,6 +1,7 @@
-# SLISC0
+# SLISC
 * Scientific Library in Simple C++, using code generation instead of non-trivial `template`s
 * Matlab/Octave is used for code generation (see `## Code generation`)
+* For the original project using template see [SLISCt](https://github.com/MacroUniverse/SLISCt)
 * For a Chinese introduction, see [here](https://wuli.wiki/online/SLISC.html)。
 
 ## Introduction
@@ -63,7 +64,7 @@ Depending on the compilation options, `CBLAS`, `LAPACKE`, `MKL`, `Boost`, `GSL`,
 `Octave` 4.2 (4.0 works but is slower) or higher is needed for code generation. If you don't want to install `Octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
 
 ### Using precompiled binaries or dockerfiles (recommended)
-* All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC0-libs-x64-centos7.9.2009). Check your Ubuntu version with `lsb_release -a`. These binaries are compiled with docker using `docker/*-build-*.dockerfile`. Note that Ubuntu16.04 is not fully supported (missing MPLAPACK)
+* All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC-libs-x64-centos7.9.2009). Check your Ubuntu version with `lsb_release -a`. These binaries are compiled with docker using `docker/*-build-*.dockerfile`. Note that Ubuntu16.04 is not fully supported (missing MPLAPACK)
 * Use `source setup.sh` to add header and library paths to environment variables. You can add this command to `~/.bashrc` so it will run everytime you login.
 * See also `docker/ubuntu*-portable.dockerfile` to build docker images.
 
@@ -75,10 +76,10 @@ apt purge -y libopenblas*
 ```
 See also `docker/ubuntu*-apt.dockerfile` to build docker images.
 
-## Building SLISC0
+## Building SLISC
 To build with `Makefile`:
 ```bash
-cd SLISC0
+cd SLISC
 touch SLISC/*.h
 make [options] [-j8]
 ```

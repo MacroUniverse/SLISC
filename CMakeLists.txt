@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(SLISC0)
+project(SLISC)
 
 # == options ===
 set(opt_compiler "g++" CACHE STRING "")

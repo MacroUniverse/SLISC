@@ -23,8 +23,8 @@ USER ${DOCKER_USER}
 SHELL ["/bin/bash", "-c"] # --shell /bin/bash didn't work
 
 RUN	cd ~/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 4 && \
-	git clone https://github.com/MacroUniverse/SLISC0-libs-x64-ubuntu22.04 --depth 1
+	git clone https://github.com/MacroUniverse/SLISC --depth 4 && \
+	git clone https://github.com/MacroUniverse/SLISC-libs-x64-ubuntu22.04 --depth 1
 
 ARG INSTALL_DIR=/home/$DOCKER_USER/libs
 RUN mkdir -p $INSTALL_DIR
@@ -33,29 +33,29 @@ RUN mkdir -p $INSTALL_DIR
 ARG NCPU=8
 
 # ======== SLISC 32-bit dynamic no-quadmath ========
-RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
-	cd ~/SLISC0 && \
+RUN cd ~/SLISC-libs-x64-ubuntu22.04 && source setup.sh && \
+	cd ~/SLISC && \
 	git pull origin && git reset --hard && touch SLISC/*.h && \
 	rm -f *.o && make -j$NCPU && \
 	./main.x < input.inp
 
 # ======== SLISC 64-bit dynamic quadmath ========
-RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
-	cd ~/SLISC0 && \
+RUN cd ~/SLISC-libs-x64-ubuntu22.04 && source setup.sh && \
+	cd ~/SLISC && \
 	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
 	rm -f *.o && make opt_long32=false opt_quadmath=true -j$NCPU && \
 	./main.x < input.inp
 
 # ======== SLISC 32-bit dynamic no-quadmath ========
-RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
-	cd ~/SLISC0 && \
+RUN cd ~/SLISC-libs-x64-ubuntu22.04 && source setup.sh && \
+	cd ~/SLISC && \
 	git pull origin && git reset --hard && touch SLISC/*.h && \
 	rm -f *.o && make opt_static=true -j$NCPU && \
 	./main.x < input.inp
 
 # ======== SLISC 64-bit dynamic quadmath ========
-RUN cd ~/SLISC0-libs-x64-ubuntu22.04 && source setup.sh && \
-	cd ~/SLISC0 && \
+RUN cd ~/SLISC-libs-x64-ubuntu22.04 && source setup.sh && \
+	cd ~/SLISC && \
 	git pull origin && git reset --hard && cp SLISC-long64-quad/*.h SLISC/ && \
 	rm -f *.o && make opt_static=true opt_long32=false opt_quadmath=true -j$NCPU && \
 	./main.x < input.inp

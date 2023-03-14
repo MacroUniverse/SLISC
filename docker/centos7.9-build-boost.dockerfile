@@ -1,4 +1,4 @@
-## run folloing in SLISC0 to build and export library
+## run folloing in SLISC to build and export library
 
 # sudo docker build -t addiszx/slisc0:centos7.9-build-boost -f docker/centos7.9-build-boost.dockerfile . | tee docker-centos7.9-build-boost.log
 # sudo docker run --name centos7.9-build-boost -itd addiszx/slisc0:centos7.9-build-boost bash

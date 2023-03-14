@@ -1,4 +1,4 @@
-## run folloing in SLISC0 to build and export library
+## run folloing in SLISC to build and export library
 
 # sudo docker build -t addiszx/slisc0:centos7.9-build-lapack-arpack -f docker/centos7.9-build-lapack-arpack.dockerfile . | tee docker-centos7.9-build-lapack-arpack.log
 # sudo docker run --name centos7.9-build-lapack-arpack -itd addiszx/slisc0:centos7.9-build-lapack-arpack bash

@@ -20,7 +20,7 @@ RUN echo "${TZ}" > /etc/timezone \
   && dpkg-reconfigure -f noninteractive tzdata
 
 RUN	cd /root/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
+	git clone https://github.com/MacroUniverse/SLISC --depth 1 && \
 	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1
@@ -30,12 +30,12 @@ RUN ln -s libblas.so /usr/lib/x86_64-linux-gnu/libcblas.so && \
 	ln -s libblas64.so /usr/lib/x86_64-linux-gnu/libcblas64.so
 	# libcblas64.a not found
 
-RUN	cd /root/SLISC0 && \
+RUN	cd /root/SLISC && \
 	touch SLISC/*.h && \
 	make -j`getconf _NPROCESSORS_ONLN`
 
 RUN echo "#! /bin/bash" > /test.sh && \
-	echo "cd /root/SLISC0" >> /test.sh && \
+	echo "cd /root/SLISC" >> /test.sh && \
 	echo "./main.x < input.inp" >> /test.sh && \
 	chmod +x /test.sh
 

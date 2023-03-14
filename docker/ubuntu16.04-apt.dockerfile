@@ -25,7 +25,7 @@ RUN echo "${TZ}" > /etc/timezone \
 ARG NCPU=8
 
 RUN	cd /root/ && \
-	git clone https://github.com/MacroUniverse/SLISC0 --depth 1 && \
+	git clone https://github.com/MacroUniverse/SLISC --depth 1 && \
 	git clone https://github.com/MacroUniverse/Arpack_test --depth 1 && \
 	git clone https://github.com/MacroUniverse/EigenTest --depth 1 && \
 	git clone https://github.com/MacroUniverse/boost-headers --depth 1 && \
@@ -35,9 +35,9 @@ RUN cd /root/arb && git checkout 2.19.0 && ./configure && make -j$NCPU && make i
 	ln -s libarb.so /usr/local/lib/libflint-arb.so && \
 	ldconfig
 
-RUN cd /root/SLISC0 && touch SLISC/*.h && make -j$NCPU && \
+RUN cd /root/SLISC && touch SLISC/*.h && make -j$NCPU && \
 	echo "#! /bin/bash" > /test.sh && \
-	echo "cd /root/SLISC0" >> /test.sh && \
+	echo "cd /root/SLISC" >> /test.sh && \
 	echo "./main.x < input.inp" >> /test.sh && \
 	chmod +x /test.sh
 

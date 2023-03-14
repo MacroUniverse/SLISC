@@ -1,4 +1,4 @@
-## run folloing in SLISC0 to build and export library
+## run folloing in SLISC to build and export library
 
 # sudo docker build -t addiszx/slisc0:centos7.9-build-gmp-flint2-mpfr-arb -f docker/centos7.9-build-gmp-flint2-mpfr-arb.dockerfile . | tee docker-centos7.9-build-gmp-flint2-mpfr-arb.log
 # sudo docker run --name centos7.9-build-gmp-flint2-mpfr-arb -itd addiszx/slisc0:centos7.9-build-gmp-flint2-mpfr-arb bash

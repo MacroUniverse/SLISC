@@ -1,4 +1,4 @@
---- SLISC0 SQLite data file for variables -----
+--- SLISC SQLite data file for variables -----
 --- similar to Matlab's mat file ---
 
 CREATE TABLE VARS (
