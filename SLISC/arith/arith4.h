@@ -3301,6 +3301,48 @@ inline void div(VecComp_O v, Comp_I s, VecDoub_I v1)
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
+inline void add(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+{
+	assert_same_shape(v, v1);
+	add_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void add(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+{ add(v, v1, s); }
+
+inline void sub(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+{
+	assert_same_shape(v, v1);
+	sub_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void sub(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+{
+	assert_same_shape(v, v1);
+	sub_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void times(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+{
+	assert_same_shape(v, v1);
+	times_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void times(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+{ times(v, v1, s); }
+
+inline void div(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
+{
+	assert_same_shape(v, v1);
+	div_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void div(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
+{
+	assert_same_shape(v, v1);
+	div_vsv(&v[0], s, &v1[0], v1.size());
+}
+
 inline void add(SvecComp_O v, VecComp_I v1, Doub_I s)
 {
 	assert_same_shape(v, v1);
@@ -3383,48 +3425,6 @@ inline void div(SvecComp_O v, Doub_I s, DvecComp_I v1)
 {
 	assert_same_shape(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size(), 1, v1.step());
-}
-
-inline void add(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
-{
-	assert_same_shape(v, v1);
-	add_vvs(&v[0], &v1[0], s, v1.size());
-}
-
-inline void add(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
-{ add(v, v1, s); }
-
-inline void sub(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
-{
-	assert_same_shape(v, v1);
-	sub_vvs(&v[0], &v1[0], s, v1.size());
-}
-
-inline void sub(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
-{
-	assert_same_shape(v, v1);
-	sub_vsv(&v[0], s, &v1[0], v1.size());
-}
-
-inline void times(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
-{
-	assert_same_shape(v, v1);
-	times_vvs(&v[0], &v1[0], s, v1.size());
-}
-
-inline void times(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
-{ times(v, v1, s); }
-
-inline void div(Cmat3Comp_O v, Cmat3Doub_I v1, Imag_I s)
-{
-	assert_same_shape(v, v1);
-	div_vvs(&v[0], &v1[0], s, v1.size());
-}
-
-inline void div(Cmat3Comp_O v, Imag_I s, Cmat3Doub_I v1)
-{
-	assert_same_shape(v, v1);
-	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 

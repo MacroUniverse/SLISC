@@ -371,8 +371,10 @@ path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 
 goal: main.x
 
+in_paths = ../SLISC/algo/:../SLISC/arith/:../SLISC/dense/:../SLISC/file/:../SLISC/lin/:../SLISC/sci/:../SLISC/sparse/:../SLISC/spec/:../SLISC/str/:../SLISC/tdse/:../test/
+
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quadmath), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', [], $(opt_quadmath), $(opt_long32))"
 
 main.x: main.o $(test_o) # link
 	@printf "\n\n   --- link ---\n\n"
@@ -394,4 +396,4 @@ main.o: main.cpp test/test_all.h
 	$(opt_compiler) $(flags) -c $<
 
 %.h: %.h.in # code gen
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"

@@ -5,6 +5,14 @@ function auto_gen(in_paths, fname, SLS_USE_QUAD_MATH, use_int_as_long, verbose)
 global tem_db is_batch_mode SLS_USE_INT_AS_LONG VERBOSE; % is_batch_mode: delete db and process all files
 SLS_USE_INT_AS_LONG = use_int_as_long;
 
+% split in_paths
+inds = [0 strfind(in_paths, ':') numel(in_paths)+1];
+in_paths1 = cell(numel(inds)-1, 1);
+for i = 1:numel(in_paths1)
+    in_paths1{i} = in_paths(inds(i)+1:inds(i+1)-1);
+end
+in_paths = in_paths1;
+
 % write config.h
 fid = fopen("../SLISC/config.h", "w");
 config = '';
@@ -12,7 +20,7 @@ if (SLS_USE_INT_AS_LONG)
     config = [config '#define SLS_USE_INT_AS_LONG' char(10)];
 end
 if (SLS_USE_QUAD_MATH)
-    config = [config '#define SLS_USE_QUAD_MATH' char(10)]
+    config = [config '#define SLS_USE_QUAD_MATH' char(10)];
 end
 fputs (fid, config);
 fclose (fid);
@@ -24,7 +32,6 @@ proc_paths = {'../preprocessor/', ...
     '../preprocessor/SLISC/', ...
     '../preprocessor/SLISC/case_conflict/'};
 old_path = pwd;
-cd(in_paths{1});
 if is_batch_mode && exist('../tem_db.mat', 'file')
     delete '../tem_db.mat';
 end
@@ -52,9 +59,6 @@ if is_batch_mode
         else
             tmp = cellstr(ls([in_paths{i} '*.in']));
         end
-        for j = 1:numel(tmp)
-            tmp{j} = [in_paths{i} tmp{j}];
-        end
         in_list = [in_list; tmp];
     end
     Nfile = numel(in_list);
@@ -71,7 +75,7 @@ else
         end
         for j = 1:numel(tmp)
             if strcmp(tmp{j}, fname)
-                in_list = {[in_paths{i} tmp{j}]}; break;
+                in_list = tmp(j); break;
             end
         end
         if ~isempty(in_list), break; end
