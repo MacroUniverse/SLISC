@@ -1,4 +1,6 @@
 // functions that loop through every element of a container
+// and output a scalar
+
 #pragma once
 #include "../arith/scalar_arith.h"
 #include "../arith/compare.h"

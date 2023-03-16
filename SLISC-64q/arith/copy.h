@@ -1,6 +1,7 @@
 // copy data from one container to another
 // includes container shape checking
-// all `container = container` should be implemented using copy
+// all `container = container` should be implemented using `copy()`
+
 #pragma once
 #include "../arith/compare.h"
 #include "../dense/cut.h"
@@ -1280,38 +1281,6 @@ inline void copy(CmatComp_O v, CmatComp_I v1)
 	veccpy(v.p(), v1.p(), v.size());
 }
 
-inline void copy(DvecInt_O v, DvecInt_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
-}
-
-inline void copy(DvecLlong_O v, DvecLlong_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
-}
-
-inline void copy(DvecDoub_O v, DvecDoub_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
-}
-
-inline void copy(DvecQdoub_O v, DvecQdoub_I v1)
-{
-	assert_same_shape(v, v1);
-	if (v.size() == 0)
-	    return;
-	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
-}
-
 inline void copy(Cmat3Comp_O v, Cmat3Comp_I v1)
 {
 	assert_same_shape(v, v1);
@@ -1442,6 +1411,38 @@ inline void copy(Jcmat3Qcomp_O v, Jcmat3Qcomp_I v1)
 	    for (Long j = 0; j < v.n1(); ++j)
 	        for (Long i = 0; i < v.n0(); ++i)
 	            v(i, j, k) = v1(i, j, k);
+}
+
+inline void copy(DvecInt_O v, DvecInt_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
+inline void copy(DvecLlong_O v, DvecLlong_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
+inline void copy(DvecDoub_O v, DvecDoub_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
+inline void copy(DvecQdoub_O v, DvecQdoub_I v1)
+{
+	assert_same_shape(v, v1);
+	if (v.size() == 0)
+	    return;
+	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
 }
 
 inline void copy(ScmatDoub_O v, CmatDoub_I v1)
@@ -1974,6 +1975,20 @@ inline void copy(CbandQdoub_O b, CmatQdoub_I a)
 	        cut_b[k + i] = cut_a[i];
 	}
 }
+
+
+// concatinate std::vector
+inline void cat(vecInt_IO v, vecInt_I v1)
+{ v.insert(v.end(), v1.begin(), v1.end()); }
+
+inline void cat(vecLlong_IO v, vecLlong_I v1)
+{ v.insert(v.end(), v1.begin(), v1.end()); }
+
+inline void cat(vecStr_IO v, vecStr_I v1)
+{ v.insert(v.end(), v1.begin(), v1.end()); }
+
+inline void cat(vecStr32_IO v, vecStr32_I v1)
+{ v.insert(v.end(), v1.begin(), v1.end()); }
 
 
 // void copy(Matrix<T> &b, const Matrix<T> &a, Long_I Nup, Long_I Nlow)

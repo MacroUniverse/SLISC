@@ -2,7 +2,8 @@
 #include "../global.h"
 #ifdef SLS_USE_CBLAS
 #include "../sparse/sparse_arith.h"
-#include "../arith/arithmetic.h"
+#include "../arith/arith1.h"
+#include "../lin/mul.h"
 
 namespace slisc {
 

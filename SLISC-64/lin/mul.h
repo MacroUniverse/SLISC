@@ -1,6 +1,7 @@
 // functions that loop through every element of a container
 #pragma once
 #include "../arith/scalar_arith.h"
+#include "../arith/copy.h"
 
 namespace slisc {
 

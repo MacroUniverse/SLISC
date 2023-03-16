@@ -1,6 +1,6 @@
 #pragma once
-#include "../arith/arithmetic.h"
-#include "../dense/cut.h"
+#include "../arith/arith4.h"
+#include "../arith/copy.h"
 #include "../sparse/Cband.h"
 
 namespace slisc {
