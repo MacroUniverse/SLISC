@@ -4,7 +4,6 @@
 #include "../sparse/Cmobd.h"
 #include "../arith/copy.h"
 #include "../algo/sort.h"
-#include "../str/disp.h"
 
 namespace slisc {
 

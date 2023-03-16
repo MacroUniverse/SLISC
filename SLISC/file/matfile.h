@@ -2,7 +2,7 @@
 // see README.txt for details
 
 #pragma once
-#include "../arith/arithmetic.h"
+#include "../arith/arith1.h"
 #include "../file/file.h"
 #include "../util/time.h"
 #ifdef SLS_USE_MATFILE

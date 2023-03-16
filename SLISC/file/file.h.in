@@ -8,7 +8,7 @@
 #include "../util/time.h"
 #include "../util/linux.h"
 #include "../util/bit.h"
-#include "../arith/arithmetic.h"
+#include "../arith/arith1.h"
 #include "../str/unicode.h"
 #include "../algo/sort.h"
 

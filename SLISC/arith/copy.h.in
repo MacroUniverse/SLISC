@@ -1,6 +1,7 @@
 // copy data from one container to another
 // includes container shape checking
-// all `container = container` should be implemented using copy
+// all `container = container` should be implemented using `copy()`
+
 #pragma once
 #include "../arith/compare.h"
 #include "../dense/cut.h"
@@ -579,6 +580,14 @@ inline void copy(@T1@_O a, @T2@_I b)
 }
 //% end
 //%------------------------------
+
+// concatinate std::vector
+//% tem('cat_vec', {'vecInt'; 'vecLlong'; 'vecStr'; 'vecStr32';});
+//%---------------------
+//% T = varargin{:};
+inline void cat(@T@_IO v, @T@_I v1)
+{ v.insert(v.end(), v1.begin(), v1.end()); }
+//%---------------------
 
 // void copy(Matrix<T> &b, const Matrix<T> &a, Long_I Nup, Long_I Nlow)
 // {

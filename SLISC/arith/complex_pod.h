@@ -1,4 +1,6 @@
-/* Modified by Hongyu Shi 2018/10/4:
+// POD complex type
+
+/* Modified by MacroUniverse 2018/10/4:
 1. fixed some warnings by adding "CUDA_CALLABLE_MEMBER" before some functions.
 2. added inline for one function to prevent multidefinition.
 3. defined empty constructor instead of using default arguments in complex<>(real, imag)

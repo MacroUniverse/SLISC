@@ -1,4 +1,5 @@
 // pure imaginary scalar type and arithmetics
+// this might not be necessary due to compiler optimization, need benchmark
 
 #pragma once
 #include "../global.h"

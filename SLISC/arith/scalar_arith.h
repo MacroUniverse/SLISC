@@ -1,3 +1,5 @@
+// basic scalar arithmetic
+
 #pragma once
 #include "../arith/complex_arith.h"
 #include "../arith/Imag.h"

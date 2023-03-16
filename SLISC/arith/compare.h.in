@@ -1,3 +1,5 @@
+// compare containers
+
 #pragma once
 #include "../dense/Vec.h"
 #include "../dense/Mat.h"
