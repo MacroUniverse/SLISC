@@ -10,26 +10,27 @@
 #include <bits/stdc++.h>
 // #define SLS_USE_INT_AS_LONG
 #include "../SLISC/global.h"
-#include "../SLISC/STL_util.h"
+#include "../SLISC/util/STL_util.h"
 #include <climits>
-#include "../SLISC/search.h"
-#include "../SLISC/heap.h"
-#include "../SLISC/sort.h"
+#include "../SLISC/algo/search.h"
+#include "../SLISC/algo/heap.h"
+#include "../SLISC/algo/sort.h"
+#include "../SLISC/algo/sing_list.h"
+#include "../SLISC/algo/bin_tree.h"
+#include "../SLISC/algo/disjoint_sets.h"
+#include "../SLISC/algo/graph.h"
+#include "../SLISC/algo/queue.h"
+#include "../SLISC/algo/disjoint_sets.h"
+#include "../SLISC/algo/hungarian.h"
+#include "../SLISC/algo/huffman.h"
 // #define SLS_RAND_SEED 0
-#include "../SLISC/random.h"
-#include "../SLISC/sing_list.h"
-#include "../SLISC/bin_tree.h"
-#include "../SLISC/disjoint_sets.h"
-#include "../SLISC/graph.h"
-#include "../SLISC/string.h"
-#include "../SLISC/Bit.h"
-#include "../SLISC/disp.h"
-#include "../SLISC/input.h"
-#include "../SLISC/file.h"
-#include "../SLISC/queue.h"
-#include "../SLISC/disjoint_sets.h"
-#include "../SLISC/hungarian.h"
-#include "../SLISC/huffman.h"
+#include "../SLISC/util/random.h"
+#include "../SLISC/util/bit.h"
+#include "../SLISC/util/input.h"
+#include "../SLISC/str/str.h"
+#include "../SLISC/str/disp.h"
+#include "../SLISC/file/file.h"
+
 using namespace slisc;
 
 using namespace std;

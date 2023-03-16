@@ -23,9 +23,14 @@ void test_boost()
 	cout << "boost version: " << major_ver << "." << minor_ver << "."
 		<< sub_minor_ver << endl;
 	if (BOOST_VERSION < 106500)
-		SLS_ERR("faild! boost version not tested");
-	if (file_size("test/test_file/测试.txt") != 12)
-		SLS_FAIL;
+		SLS_ERR("failed! boost version not tested");
+    if (!file_exist(U"test/test_file/测试.txt")) {
+        cout << "pwd() = " << pwd() << endl;
+        SLS_ERR("failed!");
+    }
+	if (file_size("test/test_file/测试.txt") != 12) {
+        SLS_ERR("failed!" + to_string(file_size("test/test_file/测试.txt")));
+    }
 	file_copy("test/test_file/测试1.txt", "test/test_file/测试.txt", true);
 	error_code ec;
 
