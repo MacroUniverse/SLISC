@@ -1,5 +1,5 @@
 #pragma once
-#include "../arith/arithmetic.h"
+#include "../arith/scalar_arith.h"
 #include <sstream>
 #include <fstream>
 #include <locale>

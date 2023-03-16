@@ -1,5 +1,7 @@
 #pragma once
-#include "../arith/arithmetic.h"
+#include "../dense/cut.h"
+#include "../arith/copy.h"
+#include "../arith/scalar_arith.h"
 
 namespace slisc {
 

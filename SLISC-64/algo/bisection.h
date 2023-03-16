@@ -1,5 +1,5 @@
 #pragma once
-#include "../arith/arithmetic.h"
+#include "../global.h"
 
 namespace slisc {
 

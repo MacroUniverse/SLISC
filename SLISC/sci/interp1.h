@@ -2,6 +2,7 @@
 #include "../dense/Vec.h"
 #include "../dense/Svec.h"
 #include "../dense/Dvec.h"
+#include "../arith/arith1.h"
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_interp.h>
 #include <gsl/gsl_spline.h>

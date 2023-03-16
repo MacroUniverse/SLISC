@@ -1,6 +1,5 @@
 // functions of square matrix
 #pragma once
-#include "../arith/arithmetic.h"
 #include "../sparse/sparse_arith.h"
 #include "../lin/eig.h"
 #ifdef SLS_USE_LAPACKE

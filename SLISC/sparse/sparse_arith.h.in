@@ -1,6 +1,5 @@
 #pragma once
-#include "../arith/arithmetic.h"
-#include "Diag.h"
+#include "../sparse/Diag.h"
 #include "../sparse/Mcoo.h"
 #include "../sparse/Cmobd.h"
 #include "../arith/copy.h"

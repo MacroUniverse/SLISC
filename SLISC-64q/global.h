@@ -160,6 +160,7 @@ using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
 using std::unordered_map; using std::unordered_set; using std::map;
 using std::set; using std::deque; using std::queue; using std::stack;
+using std::make_pair;
 
 // Scalar types
 

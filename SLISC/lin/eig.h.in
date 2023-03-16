@@ -1,6 +1,6 @@
 // solve eigen problem
 #pragma once
-#include "../arith/arithmetic.h"
+#include "../arith/copy.h"
 
 namespace slisc {
 #ifdef SLS_USE_LAPACKE

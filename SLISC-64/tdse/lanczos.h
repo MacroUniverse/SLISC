@@ -8,7 +8,6 @@
 #include "../dense/cut.h"
 #include "../sparse/sparse_arith.h"
 #include "../sparse/band_arith.h"
-#include "../str/disp.h"
 
 namespace slisc {
 
