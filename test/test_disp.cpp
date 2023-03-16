@@ -1,4 +1,5 @@
 #include "../SLISC/str/disp.h"
+#include "../SLISC/arith/arith2.h"
 
 void test_disp()
 {

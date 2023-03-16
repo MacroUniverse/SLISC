@@ -1,9 +1,11 @@
 #pragma once
+#include "../arith/arith1.h"
+#include "../arith/arith4.h"
+#include "../arith/copy.h"
+#include "../algo/sort.h"
 #include "../sparse/Diag.h"
 #include "../sparse/Mcoo.h"
 #include "../sparse/Cmobd.h"
-#include "../arith/copy.h"
-#include "../algo/sort.h"
 
 namespace slisc {
 

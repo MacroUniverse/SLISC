@@ -1,6 +1,6 @@
 #include <iostream>
 #ifdef SLS_USE_ARPACK
-#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/arith/arith2.h"
 #include <arssym.h>
 // #include "arpack-*.*.*/examples/product/sym/symsol.h"
 #include "../SLISC/str/disp.h"

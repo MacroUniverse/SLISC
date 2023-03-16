@@ -1,3 +1,4 @@
+#include "../SLISC/arith/arith4.h"
 #include "../SLISC/file/matb.h"
 #include "../SLISC/util/sha1sum.h"
 // #include "../SLISC/str/disp.h"

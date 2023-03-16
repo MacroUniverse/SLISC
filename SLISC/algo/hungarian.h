@@ -19,6 +19,7 @@
  * This version is written by Fernando B. Giannasi */
 #pragma once
 #include "../arith/copy.h"
+#include "../arith/arith1.h"
 #include "../arith/arith4.h"
 
 namespace slisc {

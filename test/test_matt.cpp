@@ -1,3 +1,4 @@
+#include "../SLISC/arith/arith4.h"
 #include "../SLISC/file/matt.h"
 #include "../SLISC/util/random.h"
 

@@ -1,4 +1,7 @@
-#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/arith/arith1.h"
+#include "../SLISC/arith/arith2.h"
+#include "../SLISC/arith/arith4.h"
+#include "../SLISC/lin/mul.h"
 #include "../SLISC/util/random.h"
 #include "../SLISC/algo/sort.h"
 // #include "../SLISC/str/disp.h"

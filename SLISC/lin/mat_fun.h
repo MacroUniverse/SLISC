@@ -2,6 +2,7 @@
 #pragma once
 #include "../sparse/sparse_arith.h"
 #include "../lin/eig.h"
+#include "../lin/mul.h"
 #ifdef SLS_USE_LAPACKE
 namespace slisc {
 

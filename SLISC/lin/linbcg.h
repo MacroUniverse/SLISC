@@ -2,6 +2,10 @@
 // see Numerical Recipes 3ed page 90
 #pragma once
 #include "../arith/arith1.h"
+#include "../arith/arith2.h"
+#include "../arith/arith4.h"
+#include "../dense/cut.h"
+#include "../lin/mul.h"
 
 namespace slisc {
 

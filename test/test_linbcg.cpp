@@ -1,4 +1,5 @@
 #include "../SLISC/lin/linbcg.h"
+#include "../SLISC/arith/reorder.h"
 // #include "../SLISC/str/disp.h"
 
 using namespace slisc;

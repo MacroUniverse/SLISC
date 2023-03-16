@@ -1,4 +1,5 @@
 #include "../SLISC/algo/search.h"
+#include "../SLISC/arith/arith2.h"
 
 void test_search()
 {

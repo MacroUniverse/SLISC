@@ -1,5 +1,6 @@
 #include "../SLISC/lin/eig.h"
 #include "../SLISC/sparse/sparse_arith.h"
+#include "../SLISC/lin/mul.h"
 // #include "../SLISC/str/disp.h"
 
 void test_eig()
