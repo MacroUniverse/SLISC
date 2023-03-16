@@ -1,7 +1,4 @@
-#include "../SLISC/global.h"
 #include "../SLISC/util/time.h"
-#include <string>
-#include <iostream>
 
 #ifdef NDEBUG // release mode
 #define SLS_TIME_H_ERR(str) SLS_ERR(str)

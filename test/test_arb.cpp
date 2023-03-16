@@ -2,10 +2,9 @@
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint/flint.h>
-#include <flint/fmpz.h>
+// #include <flint/fmpz.h>
 #include <arb_hypgeom.h>
 #include "../SLISC/prec/arb_extension.h"
-#include "../SLISC/prec/arb_spec_fun.h"
 #endif
 
 void test_arb()

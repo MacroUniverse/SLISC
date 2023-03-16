@@ -1,4 +1,3 @@
-#include "../SLISC/dense/Vec.h"
 #include "../SLISC/arith/compare.h"
 
 void test_Vec()

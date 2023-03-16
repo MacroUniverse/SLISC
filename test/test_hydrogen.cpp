@@ -1,4 +1,4 @@
-#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/arith/arith2.h"
 #include "../SLISC/tdse/hydrogen.h"
 
 void test_hydrogen()

@@ -1,8 +1,9 @@
 // test dense containers here
-#include "../SLISC/arith/arithmetic.h"
-#include "../SLISC/dense/cut.h"
+#include "../SLISC/arith/arith2.h"
+#include "../SLISC/arith/copy.h"
+#include "../SLISC/arith/reorder.h"
 #include "../SLISC/util/random.h"
-#include "../SLISC/str/disp.h"
+// #include "../SLISC/str/disp.h"
 
 void test_dense()
 {

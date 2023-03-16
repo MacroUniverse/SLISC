@@ -1,6 +1,6 @@
+// don't use SLISC
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <algorithm>
 #include <utility>
 #include <string>

@@ -1,16 +1,17 @@
 #pragma once
 #include "../global.h"
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
-#include "../util/time.h"
-#include "../arith/arithmetic.h"
-#include "../util/linux.h"
 #include <sstream>
 #include <fstream>
 #include <sys/types.h> // for time_stamp
 #include <sys/stat.h> // for time_stamp
+#include "../util/time.h"
+#include "../util/linux.h"
+#include "../util/bit.h"
+#include "../arith/arithmetic.h"
 #include "../str/unicode.h"
 #include "../algo/sort.h"
-#include "../util/bit.h"
+
 #ifdef SLS_USE_MSVC
 #include "../algo/search.h"
 #include "../str/str.h"

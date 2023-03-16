@@ -1,6 +1,5 @@
-#include "../SLISC/str/disp.h"
+// #include "../SLISC/str/disp.h"
 #include "../SLISC/lin/mat_fun.h"
-#include "../SLISC/dense/cut.h"
 
 void test_mat_fun()
 {

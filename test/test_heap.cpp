@@ -5,8 +5,7 @@ using namespace slisc;
 void test_heap()
 {
 	// heapsort is tested in "test_sort()"
-	
-	// 
+
 	Long N = randInt(150);
     vecLong v(N);
     randPerm(v);

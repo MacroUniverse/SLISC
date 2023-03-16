@@ -1,5 +1,4 @@
 #include "../SLISC/arith/copy.h"
-#include "../SLISC/arith/compare.h"
 
 void test_compare()
 {

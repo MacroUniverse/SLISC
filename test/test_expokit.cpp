@@ -1,10 +1,6 @@
 #include "../SLISC/lin/expokit.h"
-#include "../SLISC/str/disp.h"
-#include "../SLISC/arith/arithmetic.h"
-#include "../SLISC/util/random.h"
-#include "../SLISC/str/disp.h"
-#include "../SLISC/sparse/sparse_arith.h"
 #include "../SLISC/lin/mat_fun.h"
+// #include "../SLISC/str/disp.h"
 
 void test_expokit()
 {

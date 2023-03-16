@@ -4,8 +4,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/json/src.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
-#include <boost/multiprecision/cpp_bin_float.hpp>
-#include <boost/math/special_functions/gamma.hpp>
+// #include <boost/multiprecision/cpp_bin_float.hpp>
+// #include <boost/math/special_functions/gamma.hpp>
 #endif
 
 void test_boost()

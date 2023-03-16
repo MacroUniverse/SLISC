@@ -1,4 +1,5 @@
-#include "../SLISC/arith/arithmetic.h"
+#include "../SLISC/arith/arith2.h"
+
 #ifdef SLS_USE_GSL
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_sf_coupling.h>

@@ -1,4 +1,7 @@
 #include "../SLISC/sci/interp1.h"
+#include "../SLISC/arith/arith1.h"
+#include "../SLISC/arith/arith2.h"
+#include "../SLISC/arith/arith4.h"
 
 void test_interp1()
 {

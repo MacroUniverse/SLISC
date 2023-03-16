@@ -1,7 +1,7 @@
 #pragma once
-#include "../arith/arithmetic.h"
 #include "../str/unicode.h"
 #include "../algo/heap.h"
+#include "../arith/reorder.h"
 
 namespace slisc {
 

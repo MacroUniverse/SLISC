@@ -1,7 +1,7 @@
 // generate random numbers
 
 #pragma once
-#include "../arith/arithmetic.h"
+#include "../arith/arith2.h"
 #include <ctime>
 
 #ifndef SLS_RAND_SEED

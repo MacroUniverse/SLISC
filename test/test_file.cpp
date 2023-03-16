@@ -1,5 +1,5 @@
 ﻿#include "../SLISC/file/file.h"
-#include "../SLISC/str/disp.h"
+// #include "../SLISC/str/disp.h"
 
 void test_file()
 {

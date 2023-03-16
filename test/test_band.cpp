@@ -1,6 +1,6 @@
 #include "../SLISC/sparse/band_arith.h"
 #include "../SLISC/util/random.h"
-#include "../SLISC/str/disp.h"
+// #include "../SLISC/str/disp.h"
 
 using namespace slisc;
 void test_band()

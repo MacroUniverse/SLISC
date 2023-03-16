@@ -1,4 +1,3 @@
-#include "../SLISC/dense/Cmat.h"
 #include "../SLISC/arith/compare.h"
 #include "../SLISC/util/random.h"
 

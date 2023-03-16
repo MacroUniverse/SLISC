@@ -1,4 +1,7 @@
 #include "../SLISC/sci/fft.h"
+#include "../SLISC/arith/arith1.h"
+#include "../SLISC/arith/arith2.h"
+#include "../SLISC/arith/arith4.h"
 
 // test fft module
 void test_fft()
