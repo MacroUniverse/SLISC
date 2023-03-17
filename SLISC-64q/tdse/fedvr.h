@@ -105,9 +105,11 @@ inline Long fedvr_d2_nnz(Long_I Ngs, Long_I Nfe)
 
 
 // generate Gauss-Lobatto abscissas x and weights w
+// ref: https://wuli.wiki/changed/GLquad.html
 // x is in [-1,1]
 // data from https://keisan.casio.com/exec/system/1280801905
-// use 38 digits data in case long double is needed
+// also verified with Mathematica to last digit
+// use ~38 digits data in case Qdoub is needed
 inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -518,9 +520,11 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 
 
 // generate Gauss-Lobatto abscissas x and weights w
+// ref: https://wuli.wiki/changed/GLquad.html
 // x is in [-1,1]
 // data from https://keisan.casio.com/exec/system/1280801905
-// use 38 digits data in case long double is needed
+// also verified with Mathematica to last digit
+// use ~38 digits data in case Qdoub is needed
 inline void GaussLobatto(VecQdoub_O x, VecQdoub_O w)
 {
 #ifdef SLS_CHECK_SHAPES
