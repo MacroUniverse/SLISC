@@ -1,1 +1,0 @@
-#define SLS_USE_INT_AS_LONG

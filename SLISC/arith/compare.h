@@ -306,7 +306,7 @@ inline Bool shape_cmp(McooDoub_I v1, CbandComp_I v2) {return v1.n0() == v2.n0() 
 
 inline Bool shape_cmp(CbandComp_I v1, CbandComp_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
-inline Bool shape_cmp(vecStr_I v1, VecInt_I v2) {return (Long)v1.size() == (Long)v2.size();}
+inline Bool shape_cmp(vecStr_I v1, VecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
 inline Bool shape_cmp(vecStr_I v1, vecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
@@ -933,7 +933,7 @@ inline void assert_same_shape(CbandComp_I v1, CbandComp_I v2)
 #endif
 }
 
-inline void assert_same_shape(vecStr_I v1, VecInt_I v2)
+inline void assert_same_shape(vecStr_I v1, VecLlong_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (!shape_cmp(v1, v2))

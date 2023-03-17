@@ -212,7 +212,7 @@ inline void sort(vecStr32_IO v, vecStr32_IO v1)
 	sort_vv(&v[0], &v1[0], v.size());
 }
 
-inline void sort(vecStr_IO v, VecInt_IO v1)
+inline void sort(vecStr_IO v, VecLlong_IO v1)
 {
 	assert_same_shape(v, v1);
 	sort_vv(&v[0], &v1[0], v.size());

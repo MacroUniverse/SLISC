@@ -3,6 +3,26 @@
 
 using namespace slisc;
 
+void test_gauss_lobatto()
+{
+	for (Long N = 4; N <= 18; N += 2) {
+		// cout << "N = " << N << endl;
+		VecDoub x(N), w(N);
+		GaussLobatto(x, w);
+		GaussLobatto_check(x, w);
+	}
+	#ifdef SLS_USE_QUAD_MATH
+	for (Long N = 4; N <= 18; N += 2) {
+		{
+			// cout << "N = " << N << endl;
+			VecQdoub x(N), w(N);
+			GaussLobatto(x, w);
+			GaussLobatto_check(x, w);
+		}
+	}
+	#endif
+}
+
 Doub test_fedvr_fun(Doub_I x, Int_I n)
 {
 	Doub y = (x + 1)*(x - 1);
@@ -161,6 +181,7 @@ void test_fedvr_interp1()
 
 void test_fedvr()
 {
+	test_gauss_lobatto();
 	test_gauss();
 	test_D2_mat();
 #ifdef SLS_USE_LAPACKE

@@ -2,6 +2,7 @@
 #include "../sparse/sparse_arith.h"
 #include "../sci/interp1.h"
 #include "../algo/search.h"
+#include "../spec/legendreP.h"
 
 namespace slisc {
 
@@ -201,6 +202,26 @@ inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 	    w[14] = 0.0508503610059199054032449195654553145;
 	    w[15] = 0.0083333333333333333333333333333333333333;
 	}
+	else if (N == 18) {
+		x[9] = 0.0897490934846521110226450100885617349606;
+		x[10] = 0.2663626528782809841676653320255959420651;
+		x[11] = 0.4344150369121239753422871367406747958497;
+		x[12] = 0.5885048343186617611735358931935594690008;
+		x[13] = 0.7236793292832426813062103653020706791495;
+		x[14] = 0.8355935352180902137136463623279372574336;
+		x[15] = 0.9206491853475338738378546254312774235623;
+		x[16] = 0.9761055574121985428645189243417000667618;
+
+		w[9] = 0.179015863439703082293818806943525168195;
+		w[10] = 0.1732621094894562260106144038266834217245;
+		w[11] = 0.1619395172376024892643267067002284719607;
+		w[12] = 0.1454119615738022679830032104944267724854;
+		w[13] = 0.1242105331329671002633963588967467799607;
+		w[14] = 0.099016271717502802394423605318672107918;
+		w[15] = 0.07063716688563366499922296016778633310129;
+		w[16] = 0.0399706288109140661375991764101008792943;
+		w[17] = 0.006535947712418300653594771241830065359477;
+	}
 	else {
 	    SLS_ERR("no data!");
 	}
@@ -208,6 +229,26 @@ inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 	    x[i] = -x[N - i - 1];
 	for (Long i = 0; i < N2; ++i)
 	    w[i] = w[N - i - 1];
+}
+
+inline void GaussLobatto_check(VecDoub_I x, VecDoub_I w)
+{
+	Long N = x.size();
+	Doub x_err_max = 0, w_err_max = 0;
+	for (Long i = 0; i < N; ++i) {
+		if (i > 0 && i < N-1) {
+			Doub err = legendreP_der(N-1, x[i]);
+			if (abs(err) > x_err_max) x_err_max = err;
+			if (abs(err) > 1e-12)
+				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
+		}
+		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
+		if (abs(err) > w_err_max) w_err_max = err;
+		if (abs(err) > 1e-12)
+			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
+	}
+	// cout << "x_err_max = " << x_err_max << endl;
+	// cout << "w_err_max = " << w_err_max << endl;
 }
 
 inline Doub fe_min(VecDoub_I x, Long_I Ngs)
@@ -574,6 +615,26 @@ inline void GaussLobatto(VecQdoub_O x, VecQdoub_O w)
 	    w[14] = 0.0508503610059199054032449195654553145Q;
 	    w[15] = 0.0083333333333333333333333333333333333333Q;
 	}
+	else if (N == 18) {
+		x[9] = 0.0897490934846521110226450100885617349606Q;
+		x[10] = 0.2663626528782809841676653320255959420651Q;
+		x[11] = 0.4344150369121239753422871367406747958497Q;
+		x[12] = 0.5885048343186617611735358931935594690008Q;
+		x[13] = 0.7236793292832426813062103653020706791495Q;
+		x[14] = 0.8355935352180902137136463623279372574336Q;
+		x[15] = 0.9206491853475338738378546254312774235623Q;
+		x[16] = 0.9761055574121985428645189243417000667618Q;
+
+		w[9] = 0.179015863439703082293818806943525168195Q;
+		w[10] = 0.1732621094894562260106144038266834217245Q;
+		w[11] = 0.1619395172376024892643267067002284719607Q;
+		w[12] = 0.1454119615738022679830032104944267724854Q;
+		w[13] = 0.1242105331329671002633963588967467799607Q;
+		w[14] = 0.099016271717502802394423605318672107918Q;
+		w[15] = 0.07063716688563366499922296016778633310129Q;
+		w[16] = 0.0399706288109140661375991764101008792943Q;
+		w[17] = 0.006535947712418300653594771241830065359477Q;
+	}
 	else {
 	    SLS_ERR("no data!");
 	}
@@ -581,6 +642,26 @@ inline void GaussLobatto(VecQdoub_O x, VecQdoub_O w)
 	    x[i] = -x[N - i - 1];
 	for (Long i = 0; i < N2; ++i)
 	    w[i] = w[N - i - 1];
+}
+
+inline void GaussLobatto_check(VecQdoub_I x, VecQdoub_I w)
+{
+	Long N = x.size();
+	Doub x_err_max = 0, w_err_max = 0;
+	for (Long i = 0; i < N; ++i) {
+		if (i > 0 && i < N-1) {
+			Doub err = legendreP_der(N-1, x[i]);
+			if (abs(err) > x_err_max) x_err_max = err;
+			if (abs(err) > 1e-31)
+				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
+		}
+		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
+		if (abs(err) > w_err_max) w_err_max = err;
+		if (abs(err) > 1e-31)
+			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
+	}
+	// cout << "x_err_max = " << x_err_max << endl;
+	// cout << "w_err_max = " << w_err_max << endl;
 }
 
 inline Qdoub fe_min(VecQdoub_I x, Long_I Ngs)

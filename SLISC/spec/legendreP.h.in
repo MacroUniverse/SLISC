@@ -1,7 +1,7 @@
 // associated legendre polynomial
 // code adapted from GSL-2.5
 #pragma once
-#include "../global.h"
+#include "../arith/scalar_arith.h"
 
 namespace slisc {
 
@@ -74,6 +74,21 @@ inline @T@ legendre_Plm(Long_I l, Long_I m, @T@_I x)
 		}
 		return p_ell;
 	}
+}
+//%--------------------------
+
+// derivative of Legendre polynomial
+// ref: https://wuli.wiki/changed/Legen.html#Legen_eq6
+//% tem('legendreP_der', {
+//%     'Doub'; 'Qdoub';
+//% });
+//%--------------------------
+//% T = varargin{:};
+inline @T@ legendreP_der(Long_I l, @T@_I x)
+{
+	if (x == 1) return l*(l+1)/@T@(2);
+	if (x == -1) return isodd(l) ? l*(l+1)/@T@(2) : -l*(l+1)/@T@(2);
+	return (l+1)/(1-x*x)*(x*legendre_Plm(l,0,x) - legendre_Plm(l+1,0,x));
 }
 //%--------------------------
 
