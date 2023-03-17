@@ -235,7 +235,7 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_I a)
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
 // A will be changed to LU matrix
 // ipiv: integer work space of size a.n0()
-inline void lin_eq(CmatDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(CmatDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.n0())
@@ -253,7 +253,7 @@ inline void lin_eq(CmatDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(ScmatDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(ScmatDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.n0())
@@ -271,7 +271,7 @@ inline void lin_eq(ScmatDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(ScmatDoub_IO x, ScmatDoub_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(ScmatDoub_IO x, ScmatDoub_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.n0())
@@ -289,7 +289,7 @@ inline void lin_eq(ScmatDoub_IO x, ScmatDoub_IO a, SvecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(VecDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(VecDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.size())
@@ -307,7 +307,7 @@ inline void lin_eq(VecDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(SvecDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(SvecDoub_IO x, CmatDoub_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.size())
@@ -325,7 +325,7 @@ inline void lin_eq(SvecDoub_IO x, CmatDoub_IO a, SvecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(VecComp_IO x, CmatComp_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(VecComp_IO x, CmatComp_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.size())
@@ -343,7 +343,7 @@ inline void lin_eq(VecComp_IO x, CmatComp_IO a, SvecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(SvecComp_IO x, ScmatComp_IO a, SvecLlong_IO ipiv)
+inline void lin_eq(SvecComp_IO x, ScmatComp_IO a, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.size())
@@ -443,7 +443,7 @@ inline void lin_eq(SvecComp_IO x, CbandComp_I a)
 // VecLong ipiv(a.n0());
 // @Ta@ a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
 // copy(a1, a);
-inline void lin_eq(VecDoub_IO x, CbandDoub_IO a1, VecLlong_IO ipiv)
+inline void lin_eq(VecDoub_IO x, CbandDoub_IO a1, VecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a1.n0() != a1.n1() || a1.n1() != x.size())
@@ -460,7 +460,7 @@ inline void lin_eq(VecDoub_IO x, CbandDoub_IO a1, VecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(VecComp_IO x, CbandComp_IO a1, VecLlong_IO ipiv)
+inline void lin_eq(VecComp_IO x, CbandComp_IO a1, VecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a1.n0() != a1.n1() || a1.n1() != x.size())
@@ -477,7 +477,7 @@ inline void lin_eq(VecComp_IO x, CbandComp_IO a1, VecLlong_IO ipiv)
 	}
 }
 
-inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecLlong_IO ipiv)
+inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a1.n0() != a1.n1() || a1.n1() != x.size())
@@ -496,7 +496,7 @@ inline void lin_eq(SvecComp_IO x, CbandComp_IO a1, SvecLlong_IO ipiv)
 
 
 
-inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecLlong_IO ipiv)
+inline void lin_eq(ScmatComp_IO x, CbandComp_IO a1, SvecInt_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a1.n0() != a1.n1() || a1.n1() != x.n0())

@@ -3,6 +3,11 @@
 # any change in *.h.in file will cause all *.cpp files to compile
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
+# version numbers
+SLS_MAJOR = 0
+SLS_MINOR = 1
+SLS_PATCH = 5
+
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
 opt_compiler = g++
@@ -349,8 +354,10 @@ endif
 $(info  )$(info  )$(info  )$(info  )
 # ---------------------------------------------------------
 
+version_flag = -D SLS_MAJOR=$(SLS_MAJOR) -D SLS_MINOR=$(SLS_MINOR) -D SLS_PATCH=$(SLS_PATCH)
+
 # all flags
-flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(mplapack_flag) $(def__Float128)
+flags = $(version_flag) $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(mplapack_flag)
 # -pedantic # show more warnings
 
 # all libs
@@ -373,8 +380,44 @@ goal: main.x
 
 in_paths = ../SLISC/algo/:../SLISC/arith/:../SLISC/dense/:../SLISC/file/:../SLISC/lin/:../SLISC/prec/:../SLISC/sci/:../SLISC/sparse/:../SLISC/spec/:../SLISC/str/:../SLISC/tdse/:../SLISC/util/:../test/
 
-h: # remake all headers
+h:
+	$(info remake all headers - default options)
 	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', [], $(opt_quadmath), $(opt_long32))"
+
+test32:
+	$(info remake and run all tests - default options)
+	make clean && \
+	make -j`getconf _NPROCESSORS_ONLN` && \
+	./main.x < input.inp
+
+h64:
+	$(info remake all headers - 64bit)
+	make opt_long32=false h && \
+	rm -rf SLISC-64 && \
+	cp -r SLISC SLISC-64 && \
+	find SLISC-64 -name "*.h.in" -delete
+
+test64:
+	$(info remake and run all tests - 64bit)
+	make clean && \
+	make opt_long32=false -j`getconf _NPROCESSORS_ONLN` && \
+	./main.x < input.inp
+
+all: h test32 h64 test64 h64q test64q
+
+h64q:
+	$(info remake all headers - 64bit+quad)
+	make clean && \
+	make opt_long32=false opt_quadmath=true h && \
+	rm -rf SLISC-64q && \
+	cp -r SLISC SLISC-64q && \
+	find SLISC-64q -name "*.h.in" -delete
+
+test64q:
+	$(info remake and run all tests - 64bit+quad)
+	make clean && \
+	make opt_long32=false opt_quadmath=true -j`getconf _NPROCESSORS_ONLN` && \
+	./main.x < input.inp
 
 main.x: main.o $(test_o) # link
 	@printf "\n\n   --- link ---\n\n"
