@@ -56,7 +56,7 @@ if is_batch_mode
         in_paths{i} = strrep(in_paths{i}, '\', '/');
         if in_octave
             tmp = cellstr(ls([in_paths{i} '*.in'], '-1'));
-        else
+        else % in matlab
             tmp = cellstr(ls([in_paths{i} '*.in']));
         end
         in_list = [in_list; tmp];
@@ -67,14 +67,11 @@ else
         in_paths{i} = strrep(in_paths{i}, '\', '/');
         if in_octave
             tmp = cellstr(ls([in_paths{i} '*.in'], '-1'));
-            for ii = 1:numel(tmp)
-                [~,name,ext] = fileparts(tmp{ii}); tmp{ii} = [name,ext];
-            end
         else % in matlab
             tmp = cellstr(ls([in_paths{i} '*.in']));
         end
         for j = 1:numel(tmp)
-            if strcmp(tmp{j}, fname)
+            if strcmp(tmp{j}(end-numel(fname)+1:end), fname)
                 in_list = tmp(j); break;
             end
         end

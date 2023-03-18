@@ -369,12 +369,10 @@ libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapa
 # === File Lists ===
 test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
 test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files (no path)
-header_in = $(shell cd SLISC && echo *.h.in) # SLISC/*.h.in (no path)
-gen_headers = $(header_in:.h.in=.h) # generated headers in SLISC/ (no path)
-path_gen_headers = $(addprefix SLISC/,$(gen_headers)) # (with path)
-cur_headers = $(shell cd SLISC && echo *.h) # current headers in SLISC/, including hand written ones (no path)
-headers = $(gen_headers) $(cur_headers) # all headers (no path)
-path_headers = $(addprefix SLISC/,$(headers)) # (with path)
+path_header_in = $(shell ls SLISC/*/*.h.in) # SLISC/*/*.h.in
+path_gen_headers = $(path_header_in:.h.in=.h) # generated headers in SLISC/
+path_cur_headers = $(shell ls SLISC/*/*.h) # current headers in SLISC/, including hand written ones
+path_headers = $(path_gen_headers) $(path_cur_headers) # all headers
 
 goal: main.x
 
@@ -427,6 +425,7 @@ link: # force link
 	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
+	$(info path_header_in: $(path_header_in))
 	rm -f *.o *.x
 
 clean_h:
