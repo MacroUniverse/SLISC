@@ -6,7 +6,7 @@
 # version numbers
 SLS_MAJOR = 0
 SLS_MINOR = 1
-SLS_PATCH = 5
+SLS_PATCH = 6
 
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
@@ -367,12 +367,14 @@ endif
 libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(quad_math_lib)
 
 # === File Lists ===
-test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
-test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files (no path)
+test_cpp = $(shell ls test/*.cpp) # test/*.cpp
+path_test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files
+test_o = $(notdir $(path_test_o))
 path_header_in = $(shell ls SLISC/*/*.h.in) # SLISC/*/*.h.in
 path_gen_headers = $(path_header_in:.h.in=.h) # generated headers in SLISC/
 path_cur_headers = $(shell ls SLISC/*/*.h) # current headers in SLISC/, including hand written ones
-path_headers = $(path_gen_headers) $(path_cur_headers) # all headers
+path_headers = $(sort $(path_gen_headers) $(path_cur_headers)) # all headers
+path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-generated headers
 
 goal: main.x
 
@@ -434,8 +436,15 @@ clean_h:
 main.o: main.cpp test/test_all.h
 	$(opt_compiler) $(flags) -c main.cpp
 
-%.o: test/%.cpp $(path_headers)
-	$(opt_compiler) $(flags) -c $<
+depend: $(test_cpp) $(path_headers) $(path_header_in) # generate dependency file
+	for cpp in $(test_cpp); do \
+		g++ -MM $${cpp} > make/deps/$$(basename $${cpp}).mak; \
+		echo "	\$$(opt_compiler) \$$(flags) -c \$$<" >> make/deps/$$(basename $${cpp}).mak; \
+	done
+
+# implicit rules
 
 %.h: %.h.in # code gen
 	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
+
+include make/deps/*.mak
