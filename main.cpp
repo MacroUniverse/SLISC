@@ -1,5 +1,5 @@
 // comprehensive test of SLISC
-#include "test/test_all.h"
+#include "tests/test_all.h"
 
 int main (int argc, char **argv)
 {

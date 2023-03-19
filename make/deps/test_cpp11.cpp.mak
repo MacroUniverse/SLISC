@@ -1,2 +1,2 @@
-test_cpp11.o: test/test_cpp11.cpp make/deps/test_cpp11.cpp.mak
-	$(opt_compiler) $(flags) -c test/test_cpp11.cpp
+test_cpp11.o: tests/test_cpp11.cpp
+	$(opt_compiler) $(flags) -c tests/test_cpp11.cpp

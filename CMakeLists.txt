@@ -190,7 +190,7 @@ endif()
 add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
 
 # get all .cpp and .h files
-file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/test/*.cpp" "main.cpp")
+file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/tests/*.cpp" "main.cpp")
 file(GLOB HEADERS "${PROJECT_SOURCE_DIR}/SLISC/*.h")
 file(GLOB HEADERS_IN "${PROJECT_SOURCE_DIR}/SLISC/*.h.in")
 string(REPLACE ".h.in" ".h"  HEADERS2 "${HEADERS_IN}")
@@ -214,7 +214,7 @@ if(opt_octave)
 	foreach(H_IN ${H_INs})
 		string(REPLACE ".h.in" ".h"  H_OUT "${H_IN}")
 		get_filename_component(H_OUT0 "${H_OUT}" NAME)
-		set(MY_CMD "octave --no-window-system --eval \"auto_gen({'../SLISC/','../test/'}, '${H_OUT0}.in', ${octave_quadmath}, ${octave_long32})\"")
+		set(MY_CMD "octave --no-window-system --eval \"auto_gen({'../SLISC/','../tests/'}, '${H_OUT0}.in', ${octave_quadmath}, ${octave_long32})\"")
 		string(REPLACE " " ";" MY_CMD ${MY_CMD})
 
 		add_custom_command(OUTPUT "${H_OUT}"
@@ -242,7 +242,7 @@ add_custom_target(clean_h
 		  COMMENT "removing generated headers and template database...")
 
 # h
-set(MY_CMD "octave --no-window-system --eval \"auto_gen({'../SLISC/','../test/'}, [], ${octave_quadmath}, ${octave_long32})\"")
+set(MY_CMD "octave --no-window-system --eval \"auto_gen({'../SLISC/','../tests/'}, [], ${octave_quadmath}, ${octave_long32})\"")
 string(REPLACE " " ";" MY_CMD ${MY_CMD})
 add_custom_target(h
 		  COMMAND ${MY_CMD}

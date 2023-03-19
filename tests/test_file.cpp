@@ -12,10 +12,10 @@ void test_file()
 		SLS_FAIL;
 
 	// file_list_r
-	file_list_r(names, "test/test_file/");
-	if (names[0] != "test/test_file/123.txt" || names[1] != "test/test_file/234.txt" || names[2] != "test/test_file/sub/345.txt") {
+	file_list_r(names, "tests/test_file/");
+	if (names[0] != "tests/test_file/123.txt" || names[1] != "tests/test_file/234.txt" || names[2] != "tests/test_file/sub/345.txt") {
 		cout << "names[]:" << endl << names[0] << endl << names[1] << endl << names[2] << endl;
-		cout << "expected:" << endl << "test/test_file/123.txt" << endl << "test/test_file/234.txt" << endl << "test/test_file/sub/345.txt" << endl;
+		cout << "expected:" << endl << "tests/test_file/123.txt" << endl << "tests/test_file/234.txt" << endl << "tests/test_file/sub/345.txt" << endl;
 		SLS_FAIL;
 	}
 
@@ -109,7 +109,7 @@ void test_file()
 
 	{ // read matrix/vector from file
 		CmatDoub mat, mat1(3, 3);
-		read(mat, "test/test_file_matrix.txt", 2);
+		read(mat, "tests/test_file_matrix.txt", 2);
 		mat1(0, 0) = 1.315; mat1(0, 1) = -2.531; mat1(0, 2) = -6.65;
 		mat1(1, 0) = 2.351; mat1(1, 1) = 2.265; mat1(1, 2) = -2.376;
 		mat1(2, 0) = -2.53; mat1(2, 1) = 6.65; mat1(2, 2) =  0.28;
@@ -117,7 +117,7 @@ void test_file()
 			SLS_FAIL;
 		
 		VecDoub v; MatDoub mat2(3, 3); copy(mat2, mat1);
-		read(v, "test/test_file_matrix.txt", 2);
+		read(v, "tests/test_file_matrix.txt", 2);
 		for (i = 0; i < mat2.size(); ++i) {
 			if (v[i] != mat2[i])
 				SLS_FAIL;

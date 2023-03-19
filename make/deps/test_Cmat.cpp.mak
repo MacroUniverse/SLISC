@@ -1,24 +1,26 @@
-test_Cmat.o: test/test_Cmat.cpp make/deps/test_Cmat.cpp.mak \
- test/../SLISC/arith/compare.h test/../SLISC/arith/../dense/Vec.h \
- test/../SLISC/arith/../dense/../dense/Vbase.h \
- test/../SLISC/arith/../dense/../dense/../global.h \
- test/../SLISC/arith/../dense/../dense/../config.h \
- test/../SLISC/arith/../dense/../dense/../prec/quad_math_declare.h \
- test/../SLISC/arith/../dense/../dense/../prec/quad_math.h \
- test/../SLISC/arith/../dense/../dense/../arith/Imag.h \
- test/../SLISC/arith/../dense/../dense/../str/str.h \
- test/../SLISC/arith/../dense/Mat.h test/../SLISC/arith/../dense/Mat3.h \
- test/../SLISC/arith/../dense/Cmat.h test/../SLISC/arith/../dense/Cmat3.h \
- test/../SLISC/arith/../dense/Cmat4.h \
- test/../SLISC/arith/../sparse/Cband.h \
- test/../SLISC/arith/../sparse/../dense/Dvec.h \
- test/../SLISC/arith/../sparse/../dense/Dcmat.h \
- test/../SLISC/arith/../sparse/Mcoo.h \
- test/../SLISC/arith/../sparse/Cmobd.h \
- test/../SLISC/arith/../sparse/../arith/scalar_arith.h \
- test/../SLISC/arith/../sparse/../arith/../arith/complex_arith.h \
- test/../SLISC/arith/../dense/Svec.h test/../SLISC/arith/../dense/Scmat.h \
- test/../SLISC/arith/../dense/Scmat3.h \
- test/../SLISC/arith/../dense/Jcmat3.h test/../SLISC/util/random.h \
- test/../SLISC/util/../arith/arith2.h
-	$(opt_compiler) $(flags) -c test/test_Cmat.cpp
+test_Cmat.o: tests/test_Cmat.cpp tests/../SLISC/arith/compare.h \
+ tests/../SLISC/arith/../dense/Vec.h \
+ tests/../SLISC/arith/../dense/../dense/Vbase.h \
+ tests/../SLISC/arith/../dense/../dense/../global.h \
+ tests/../SLISC/arith/../dense/../dense/../config.h \
+ tests/../SLISC/arith/../dense/../dense/../prec/quad_math_declare.h \
+ tests/../SLISC/arith/../dense/../dense/../prec/quad_math.h \
+ tests/../SLISC/arith/../dense/../dense/../arith/Imag.h \
+ tests/../SLISC/arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/arith/../dense/Mat.h tests/../SLISC/arith/../dense/Mat3.h \
+ tests/../SLISC/arith/../dense/Cmat.h \
+ tests/../SLISC/arith/../dense/Cmat3.h \
+ tests/../SLISC/arith/../dense/Cmat4.h \
+ tests/../SLISC/arith/../sparse/Cband.h \
+ tests/../SLISC/arith/../sparse/../dense/Dvec.h \
+ tests/../SLISC/arith/../sparse/../dense/Dcmat.h \
+ tests/../SLISC/arith/../sparse/Mcoo.h \
+ tests/../SLISC/arith/../sparse/Cmobd.h \
+ tests/../SLISC/arith/../sparse/../arith/scalar_arith.h \
+ tests/../SLISC/arith/../sparse/../arith/../arith/complex_arith.h \
+ tests/../SLISC/arith/../dense/Svec.h \
+ tests/../SLISC/arith/../dense/Scmat.h \
+ tests/../SLISC/arith/../dense/Scmat3.h \
+ tests/../SLISC/arith/../dense/Jcmat3.h tests/../SLISC/util/random.h \
+ tests/../SLISC/util/../arith/arith2.h
+	$(opt_compiler) $(flags) -c tests/test_Cmat.cpp

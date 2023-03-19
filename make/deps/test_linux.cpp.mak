@@ -1,6 +1,5 @@
-test_linux.o: test/test_linux.cpp make/deps/test_linux.cpp.mak \
- test/../SLISC/util/linux.h test/../SLISC/util/../global.h \
- test/../SLISC/util/../config.h \
- test/../SLISC/util/../prec/quad_math_declare.h \
- test/../SLISC/util/../prec/quad_math.h
-	$(opt_compiler) $(flags) -c test/test_linux.cpp
+test_linux.o: tests/test_linux.cpp tests/../SLISC/util/linux.h \
+ tests/../SLISC/util/../global.h tests/../SLISC/util/../config.h \
+ tests/../SLISC/util/../prec/quad_math_declare.h \
+ tests/../SLISC/util/../prec/quad_math.h
+	$(opt_compiler) $(flags) -c tests/test_linux.cpp

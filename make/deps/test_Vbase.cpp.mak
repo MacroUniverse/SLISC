@@ -1,7 +1,6 @@
-test_Vbase.o: test/test_Vbase.cpp make/deps/test_Vbase.cpp.mak \
- test/../SLISC/dense/Vbase.h test/../SLISC/dense/../global.h \
- test/../SLISC/dense/../config.h \
- test/../SLISC/dense/../prec/quad_math_declare.h \
- test/../SLISC/dense/../prec/quad_math.h \
- test/../SLISC/dense/../arith/Imag.h test/../SLISC/dense/../str/str.h
-	$(opt_compiler) $(flags) -c test/test_Vbase.cpp
+test_Vbase.o: tests/test_Vbase.cpp tests/../SLISC/dense/Vbase.h \
+ tests/../SLISC/dense/../global.h tests/../SLISC/dense/../config.h \
+ tests/../SLISC/dense/../prec/quad_math_declare.h \
+ tests/../SLISC/dense/../prec/quad_math.h \
+ tests/../SLISC/dense/../arith/Imag.h tests/../SLISC/dense/../str/str.h
+	$(opt_compiler) $(flags) -c tests/test_Vbase.cpp

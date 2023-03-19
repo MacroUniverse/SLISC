@@ -389,6 +389,246 @@ inline void mul(VecQdoub_IO y, CmatQdoub_I a, VecQdoub_I x, Qdoub_I alpha, Qdoub
 	}
 }
 
+inline void mul(VecComp_O y, ScmatComp_I a, SvecDoub_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(VecComp_IO y, ScmatComp_I a, SvecDoub_I x, Comp_I alpha, Comp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Comp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(VecQcomp_O y, ScmatQcomp_I a, SvecQdoub_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(VecQcomp_IO y, ScmatQcomp_I a, SvecQdoub_I x, Qcomp_I alpha, Qcomp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Qcomp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(SvecQcomp_O y, ScmatQcomp_I a, SvecQdoub_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(SvecQcomp_IO y, ScmatQcomp_I a, SvecQdoub_I x, Qcomp_I alpha, Qcomp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Qcomp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(DvecComp_O y, ScmatComp_I a, SvecDoub_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(DvecComp_IO y, ScmatComp_I a, SvecDoub_I x, Comp_I alpha, Comp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Comp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(DvecQcomp_O y, ScmatQcomp_I a, SvecQdoub_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(DvecQcomp_IO y, ScmatQcomp_I a, SvecQdoub_I x, Qcomp_I alpha, Qcomp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Qcomp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
 inline void mul(VecDoub_O y, CmatDoub_I a, SvecDoub_I x)
 {
 	Long Nr = a.n0(), Nc = a.n1();
@@ -1445,390 +1685,6 @@ inline void mul(DvecQcomp_IO y, CmatQdoub_I a, DvecQcomp_I x, Qdoub_I alpha, Qco
 	}
 }
 
-inline void mul(SvecComp_O y, CmatDoub_I a, SvecComp_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(SvecComp_IO y, CmatDoub_I a, SvecComp_I x, Doub_I alpha, Comp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Comp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(SvecComp_O y, CmatComp_I a, SvecComp_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(SvecComp_IO y, CmatComp_I a, SvecComp_I x, Comp_I alpha, Comp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Comp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(SvecDoub_O y, CmatDoub_I a, SvecDoub_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(SvecDoub_IO y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha, Doub_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Doub b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(VecComp_O y, ScmatComp_I a, SvecDoub_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(VecComp_IO y, ScmatComp_I a, SvecDoub_I x, Comp_I alpha, Comp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Comp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(VecQcomp_O y, ScmatQcomp_I a, SvecQdoub_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(VecQcomp_IO y, ScmatQcomp_I a, SvecQdoub_I x, Qcomp_I alpha, Qcomp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Qcomp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(SvecQcomp_O y, ScmatQcomp_I a, SvecQdoub_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(SvecQcomp_IO y, ScmatQcomp_I a, SvecQdoub_I x, Qcomp_I alpha, Qcomp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Qcomp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(DvecComp_O y, ScmatComp_I a, SvecDoub_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(DvecComp_IO y, ScmatComp_I a, SvecDoub_I x, Comp_I alpha, Comp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Comp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
-inline void mul(DvecQcomp_O y, ScmatQcomp_I a, SvecQdoub_I x)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	for (Long i = 0; i < Nr; ++i)
-		y[i] = a(i, 0) * x[0];
-	for (Long j = 1; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-}
-
-// y = alpha*A*x + beta*y
-// algorithm: y = alpha*(A*x + beta/alpha *y)
-inline void mul(DvecQcomp_IO y, ScmatQcomp_I a, SvecQdoub_I x, Qcomp_I alpha, Qcomp_I beta)
-{
-	Long Nr = a.n0(), Nc = a.n1();
-#ifdef SLS_CHECK_SHAPES
-	if (Nc != x.size() || y.size() != Nr)
-		SLS_ERR("illegal shape!");
-#endif
-	// y = beta/alpha *y
-	if (beta == 0) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] = 0;
-	}
-	else {
-		Qcomp b_a = beta/alpha;
-		if (b_a != 1) {
-			for (Long i = 0; i < Nr; ++i)
-				y[i] *= b_a;
-		}
-	}
-	// y += A*x
-	for (Long j = 0; j < Nc; ++j) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] += a(i, j) * x[j];
-	}
-	// y *= alpha
-	if (alpha != 1) {
-		for (Long i = 0; i < Nr; ++i)
-			y[i] *= alpha;
-	}
-}
-
 inline void mul(SvecDoub_O y, ScmatDoub_I a, SvecDoub_I x)
 {
 	Long Nr = a.n0(), Nc = a.n1();
@@ -2100,6 +1956,150 @@ inline void mul(VecQcomp_IO y, ScmatQcomp_I a, SvecQcomp_I x, Qcomp_I alpha, Qco
 	}
 	else {
 		Qcomp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(SvecComp_O y, CmatDoub_I a, SvecComp_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(SvecComp_IO y, CmatDoub_I a, SvecComp_I x, Doub_I alpha, Comp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Comp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(SvecComp_O y, CmatComp_I a, SvecComp_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(SvecComp_IO y, CmatComp_I a, SvecComp_I x, Comp_I alpha, Comp_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Comp b_a = beta/alpha;
+		if (b_a != 1) {
+			for (Long i = 0; i < Nr; ++i)
+				y[i] *= b_a;
+		}
+	}
+	// y += A*x
+	for (Long j = 0; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+	// y *= alpha
+	if (alpha != 1) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] *= alpha;
+	}
+}
+
+inline void mul(SvecDoub_O y, CmatDoub_I a, SvecDoub_I x)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	for (Long i = 0; i < Nr; ++i)
+		y[i] = a(i, 0) * x[0];
+	for (Long j = 1; j < Nc; ++j) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] += a(i, j) * x[j];
+	}
+}
+
+// y = alpha*A*x + beta*y
+// algorithm: y = alpha*(A*x + beta/alpha *y)
+inline void mul(SvecDoub_IO y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha, Doub_I beta)
+{
+	Long Nr = a.n0(), Nc = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (Nc != x.size() || y.size() != Nr)
+		SLS_ERR("illegal shape!");
+#endif
+	// y = beta/alpha *y
+	if (beta == 0) {
+		for (Long i = 0; i < Nr; ++i)
+			y[i] = 0;
+	}
+	else {
+		Doub b_a = beta/alpha;
 		if (b_a != 1) {
 			for (Long i = 0; i < Nr; ++i)
 				y[i] *= b_a;
@@ -2608,55 +2608,6 @@ inline void mul_gen(DvecQcomp_O y, CmatQdoub_I a, DvecQcomp_I x, Qdoub_I alpha =
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (x.size() != a.n1() || y.size() != a.n0())
-		SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-	// do real part
-	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
-		a.n0(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
-	// do imag part
-	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
-		a.n0(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
-#else
-	mul(y, a, x, alpha, beta);
-#endif
-}
-
-// y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O y, CmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (x.size() != a.n1() || y.size() != a.n0())
-		SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-	cblas_zgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), &alpha, a.p(),
-		a.n0(), x.p(), 1, &beta, y.p(), 1);
-#else
-	mul(y, a, x, alpha, beta);
-#endif
-}
-
-// y = alpha*A*x + beta*y
-inline void mul_gen(SvecDoub_O y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (x.size() != a.n1() || y.size() != a.n0())
-		SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
-		a.n0(), x.p(), 1, beta, y.p(), 1);
-#else
-	mul(y, a, x, alpha, beta);
-#endif
-}
-
-// y = alpha*A*x + beta*y
 inline void mul_gen(SvecDoub_O y, ScmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -2747,6 +2698,55 @@ inline void mul_gen(VecQcomp_O y, ScmatQcomp_I a, SvecQcomp_I x, Qcomp_I alpha =
 #endif
 #ifdef SLS_USE_MPLAPACK
 	Cgemv("N", a.n0(), a.n1(), alpha, (Qcomp*)a.p(), a.n0(), (Qcomp*)x.p(), 1, beta, (Qcomp*)y.p(), 1);
+#else
+	mul(y, a, x, alpha, beta);
+#endif
+}
+
+// y = alpha*A*x + beta*y
+inline void mul_gen(SvecComp_O y, CmatDoub_I a, SvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	// do real part
+	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+		a.n0(), (Doub*)x.p(), 2*1, beta, (Doub*)y.p(), 2*1);
+	// do imag part
+	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+		a.n0(), (Doub*)x.p()+1, 2*1, beta, (Doub*)y.p()+1, 2*1);
+#else
+	mul(y, a, x, alpha, beta);
+#endif
+}
+
+// y = alpha*A*x + beta*y
+inline void mul_gen(SvecComp_O y, CmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	cblas_zgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), &alpha, a.p(),
+		a.n0(), x.p(), 1, &beta, y.p(), 1);
+#else
+	mul(y, a, x, alpha, beta);
+#endif
+}
+
+// y = alpha*A*x + beta*y
+inline void mul_gen(SvecDoub_O y, CmatDoub_I a, SvecDoub_I x, Doub_I alpha = 1, Doub_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
+		a.n0(), x.p(), 1, beta, y.p(), 1);
 #else
 	mul(y, a, x, alpha, beta);
 #endif

@@ -1,9 +1,9 @@
-test_scalar_arith.o: test/test_scalar_arith.cpp \
- make/deps/test_scalar_arith.cpp.mak test/../SLISC/arith/scalar_arith.h \
- test/../SLISC/arith/../arith/complex_arith.h \
- test/../SLISC/arith/../arith/../global.h \
- test/../SLISC/arith/../arith/../config.h \
- test/../SLISC/arith/../arith/../prec/quad_math_declare.h \
- test/../SLISC/arith/../arith/../prec/quad_math.h \
- test/../SLISC/arith/../arith/Imag.h test/../SLISC/util/STL_util.h
-	$(opt_compiler) $(flags) -c test/test_scalar_arith.cpp
+test_scalar_arith.o: tests/test_scalar_arith.cpp \
+ tests/../SLISC/arith/scalar_arith.h \
+ tests/../SLISC/arith/../arith/complex_arith.h \
+ tests/../SLISC/arith/../arith/../global.h \
+ tests/../SLISC/arith/../arith/../config.h \
+ tests/../SLISC/arith/../arith/../prec/quad_math_declare.h \
+ tests/../SLISC/arith/../arith/../prec/quad_math.h \
+ tests/../SLISC/arith/../arith/Imag.h tests/../SLISC/util/STL_util.h
+	$(opt_compiler) $(flags) -c tests/test_scalar_arith.cpp

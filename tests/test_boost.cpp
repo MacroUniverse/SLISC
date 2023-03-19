@@ -24,14 +24,14 @@ void test_boost()
 		<< sub_minor_ver << endl;
 	if (BOOST_VERSION < 106500)
 		SLS_ERR("failed! boost version not tested");
-    if (!file_exist(U"test/test_file/测试.txt")) {
+    if (!file_exist(U"tests/test_file/测试.txt")) {
         cout << "pwd() = " << pwd() << endl;
         SLS_ERR("failed!");
     }
-	if (file_size("test/test_file/测试.txt") != 12) {
-        SLS_ERR("failed!" + to_string(file_size("test/test_file/测试.txt")));
+	if (file_size("tests/test_file/测试.txt") != 12) {
+        SLS_ERR("failed!" + to_string(file_size("tests/test_file/测试.txt")));
     }
-	file_copy("test/test_file/测试1.txt", "test/test_file/测试.txt", true);
+	file_copy("tests/test_file/测试1.txt", "tests/test_file/测试.txt", true);
 	error_code ec;
 
 	// If old_p and new_p resolve to the same existing file, no action is taken.
@@ -39,7 +39,7 @@ void test_boost()
 	// if new_p resolves to an existing directory, it is removed if empty on ISO/IEC 9945 but is an error on Windows.
 	// A symbolic link is itself renamed, rather than the file it resolves to being renamed.
 	file_remove("测试1.txt");
-	rename("test/test_file/测试1.txt", "测试1.txt");
+	rename("tests/test_file/测试1.txt", "测试1.txt");
 	if (!file_exist("测试1.txt"))
 		SLS_FAIL;
 	

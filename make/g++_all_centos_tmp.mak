@@ -109,8 +109,8 @@ flags = -Wall -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -std=c++1
 libs = $(boost_lib) $(arb_lib) $(arpack_lib)  $(matfile_lib) $(sqlite_lib) $(mkl_stat_link) $(mkl_dyn_link) $(lapacke_lib) $(cblas_lib) $(quad_math_lib) $(gsl_lib)
 
 # === File Lists ===
-test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
-test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files (no path)
+test_cpp = $(shell cd test && echo *.cpp) # tests/*.cpp (no path)
+test_o = $(test_cpp:.cpp=.o) # tests/*.cpp object files (no path)
 header_in = $(shell cd SLISC && echo *.h.in) # SLISC/*.h.in (no path)
 gen_headers = $(header_in:.h.in=.h) # generated headers in SLISC/ (no path)
 path_gen_headers = $(addprefix SLISC/,$(gen_headers)) # (with path)
@@ -121,7 +121,7 @@ path_headers = $(addprefix SLISC/,$(headers)) # (with path)
 goal: main.x
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], $(opt_quad), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../tests/'}, [], $(opt_quad), $(opt_long32))"
 
 main.x: main.o $(test_o)
     $(compiler) $(flags) -o main.x main.o test_*.o $(libs)
@@ -132,10 +132,10 @@ link: # link only
 clean:
 	rm -f *.o *.x $(path_gen_headers)
 
-main.o: main.cpp test/test_all.h
+main.o: main.cpp tests/test_all.h
 	$(compiler) $(flags) -c main.cpp
 
-%.o: test/%.cpp $(path_headers)
+%.o: tests/%.cpp $(path_headers)
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in

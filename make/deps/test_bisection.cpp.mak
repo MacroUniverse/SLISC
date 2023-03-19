@@ -1,6 +1,6 @@
-test_bisection.o: test/test_bisection.cpp \
- make/deps/test_bisection.cpp.mak test/../SLISC/algo/bisection.h \
- test/../SLISC/algo/../global.h test/../SLISC/algo/../config.h \
- test/../SLISC/algo/../prec/quad_math_declare.h \
- test/../SLISC/algo/../prec/quad_math.h
-	$(opt_compiler) $(flags) -c test/test_bisection.cpp
+test_bisection.o: tests/test_bisection.cpp \
+ tests/../SLISC/algo/bisection.h tests/../SLISC/algo/../global.h \
+ tests/../SLISC/algo/../config.h \
+ tests/../SLISC/algo/../prec/quad_math_declare.h \
+ tests/../SLISC/algo/../prec/quad_math.h
+	$(opt_compiler) $(flags) -c tests/test_bisection.cpp

@@ -1,10 +1,10 @@
-test_legendreP.o: test/test_legendreP.cpp \
- make/deps/test_legendreP.cpp.mak test/../SLISC/spec/legendreP.h \
- test/../SLISC/spec/../arith/scalar_arith.h \
- test/../SLISC/spec/../arith/../arith/complex_arith.h \
- test/../SLISC/spec/../arith/../arith/../global.h \
- test/../SLISC/spec/../arith/../arith/../config.h \
- test/../SLISC/spec/../arith/../arith/../prec/quad_math_declare.h \
- test/../SLISC/spec/../arith/../arith/../prec/quad_math.h \
- test/../SLISC/spec/../arith/../arith/Imag.h
-	$(opt_compiler) $(flags) -c test/test_legendreP.cpp
+test_legendreP.o: tests/test_legendreP.cpp \
+ tests/../SLISC/spec/legendreP.h \
+ tests/../SLISC/spec/../arith/scalar_arith.h \
+ tests/../SLISC/spec/../arith/../arith/complex_arith.h \
+ tests/../SLISC/spec/../arith/../arith/../global.h \
+ tests/../SLISC/spec/../arith/../arith/../config.h \
+ tests/../SLISC/spec/../arith/../arith/../prec/quad_math_declare.h \
+ tests/../SLISC/spec/../arith/../arith/../prec/quad_math.h \
+ tests/../SLISC/spec/../arith/../arith/Imag.h
+	$(opt_compiler) $(flags) -c tests/test_legendreP.cpp

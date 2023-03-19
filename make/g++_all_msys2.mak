@@ -27,7 +27,7 @@ compiler = g++
 # arpack_lib = -larpack -lgfortran
 # 
 
-arb_path = /c/baltamatica/bex/test/plugins/arb/windows
+arb_path = /c/baltamatica/bex/tests/plugins/arb/windows
 arb_flag = -D SLS_USE_ARB -I $(arb_path)/include/flint -I $(arb_path)/include/flint/flintxx -I $(arb_path)/include/ -L /usr/local/bin
 arb_lib = -l arb-2 -l mpfr-6 -l flint -l gmp-23 # use -larb if compiled from source, or create soft link named flint-arb
 # Address Sanitizer
@@ -50,8 +50,8 @@ flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp $(deb
 libs = $(gsl_lib) $(lapacke_lib) $(boost_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
 # file lists
-test_cpp = $(shell cd test && echo *.cpp) # test/*.cpp (no path)
-test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files (no path)
+test_cpp = $(shell cd test && echo *.cpp) # tests/*.cpp (no path)
+test_o = $(test_cpp:.cpp=.o) # tests/*.cpp object files (no path)
 header_in = $(shell cd SLISC && echo *.h.in) # SLISC/*.h.in (no path)
 gen_headers = $(header_in:.h.in=.h) # generated headers in SLISC/ (no path)
 path_gen_headers = $(addprefix SLISC/,$(gen_headers)) # (with path)
@@ -65,7 +65,7 @@ main.x: main.o $(test_o)
 	make link
 
 h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../test/'}, [], false, true)"
+	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../tests/'}, [], false, true)"
 
 link: # link only
 	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
@@ -73,10 +73,10 @@ link: # link only
 clean:
 	rm -f *.o *.x $(path_gen_headers)
 
-main.o: main.cpp test/test_all.h
+main.o: main.cpp tests/test_all.h
 	$(compiler) $(flags) -c main.cpp
 
-%.o: test/%.cpp $(path_headers)
+%.o: tests/%.cpp $(path_headers)
 	$(compiler) $(flags) -c $<
 
 %.h: %.h.in

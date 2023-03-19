@@ -1,4 +1,4 @@
-test_global.o: test/test_global.cpp make/deps/test_global.cpp.mak \
- test/../SLISC/global.h test/../SLISC/config.h \
- test/../SLISC/prec/quad_math_declare.h test/../SLISC/prec/quad_math.h
-	$(opt_compiler) $(flags) -c test/test_global.cpp
+test_global.o: tests/test_global.cpp tests/../SLISC/global.h \
+ tests/../SLISC/config.h tests/../SLISC/prec/quad_math_declare.h \
+ tests/../SLISC/prec/quad_math.h
+	$(opt_compiler) $(flags) -c tests/test_global.cpp

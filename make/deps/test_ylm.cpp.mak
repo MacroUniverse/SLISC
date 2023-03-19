@@ -1,17 +1,17 @@
-test_ylm.o: test/test_ylm.cpp make/deps/test_ylm.cpp.mak \
- test/../SLISC/spec/ylm.h test/../SLISC/spec/../str/unicode.h \
- test/../SLISC/spec/../str/../arith/scalar_arith.h \
- test/../SLISC/spec/../str/../arith/../arith/complex_arith.h \
- test/../SLISC/spec/../str/../arith/../arith/../global.h \
- test/../SLISC/spec/../str/../arith/../arith/../config.h \
- test/../SLISC/spec/../str/../arith/../arith/../prec/quad_math_declare.h \
- test/../SLISC/spec/../str/../arith/../arith/../prec/quad_math.h \
- test/../SLISC/spec/../str/../arith/../arith/Imag.h \
- test/../SLISC/spec/../str/../str/str.h \
- test/../SLISC/spec/../str/utfcpp/utf8.h \
- test/../SLISC/spec/../str/utfcpp/utf8/checked.h \
- test/../SLISC/spec/../str/utfcpp/utf8/core.h \
- test/../SLISC/spec/../str/utfcpp/utf8/unchecked.h \
- test/../SLISC/spec/../spec/legendreP.h \
- test/../SLISC/spec/../spec/anglib.h
-	$(opt_compiler) $(flags) -c test/test_ylm.cpp
+test_ylm.o: tests/test_ylm.cpp tests/../SLISC/spec/ylm.h \
+ tests/../SLISC/spec/../str/unicode.h \
+ tests/../SLISC/spec/../str/../arith/scalar_arith.h \
+ tests/../SLISC/spec/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/spec/../str/../arith/../arith/../global.h \
+ tests/../SLISC/spec/../str/../arith/../arith/../config.h \
+ tests/../SLISC/spec/../str/../arith/../arith/../prec/quad_math_declare.h \
+ tests/../SLISC/spec/../str/../arith/../arith/../prec/quad_math.h \
+ tests/../SLISC/spec/../str/../arith/../arith/Imag.h \
+ tests/../SLISC/spec/../str/../str/str.h \
+ tests/../SLISC/spec/../str/utfcpp/utf8.h \
+ tests/../SLISC/spec/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/spec/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/spec/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/spec/../spec/legendreP.h \
+ tests/../SLISC/spec/../spec/anglib.h
+	$(opt_compiler) $(flags) -c tests/test_ylm.cpp

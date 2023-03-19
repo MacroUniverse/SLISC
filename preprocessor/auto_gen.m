@@ -5,6 +5,8 @@ function auto_gen(in_paths, fname, SLS_USE_QUAD_MATH, use_int_as_long, verbose)
 global tem_db is_batch_mode SLS_USE_INT_AS_LONG VERBOSE; % is_batch_mode: delete db and process all files
 SLS_USE_INT_AS_LONG = use_int_as_long;
 
+is_batch_mode = isempty(fname) || ~exist('../tem_db.mat', 'file');
+
 % split in_paths
 inds = [0 strfind(in_paths, ':') numel(in_paths)+1];
 in_paths1 = cell(numel(inds)-1, 1);
@@ -29,7 +31,6 @@ end
 
 if ~exist('verbose', 'var') || ~verbose, VERBOSE = false; else, VERBOSE = true; end
 if ~exist('fname', 'var'), fname = []; end
-is_batch_mode = isempty(fname);
 proc_paths = {'../preprocessor/', ...
     '../preprocessor/SLISC/', ...
     '../preprocessor/SLISC/case_conflict/'};

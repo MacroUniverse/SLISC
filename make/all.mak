@@ -6,7 +6,7 @@
 # version numbers
 SLS_MAJOR = 0
 SLS_MINOR = 1
-SLS_PATCH = 6
+SLS_PATCH = 7
 
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
@@ -63,6 +63,8 @@ ifneq ($(opt_compiler), g++)
     opt_quadmath = false
     opt_mplapack = false
 endif
+
+$(info ) $(info ) $(info ) $(info ) $(info ) $(info )
 
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
@@ -366,10 +368,13 @@ ifeq ($(opt_static), true)
 endif
 libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(quad_math_lib)
 
+# subfolders of SLISC, including SLISC, e.g. "SLISC/:SLISC/prec/:...:SLISC/lin/"
+in_paths = $(shell find SLISC -maxdepth 1 -type d -printf "../%p/:" | head -c -2)/
+
 # === File Lists ===
-test_cpp = $(shell ls test/*.cpp) # test/*.cpp
-cpp_dep = $(addsuffix .mak, $(subst test/, make/deps/, $(test_cpp)))
-path_test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files
+test_cpp = $(shell ls tests/*.cpp) # tests/*.cpp
+cpp_dep = $(addsuffix .mak, $(subst tests/, make/deps/, $(test_cpp)))
+path_test_o = $(test_cpp:.cpp=.o) # tests/*.cpp object files
 test_o = $(notdir $(path_test_o))
 path_header_in = $(shell ls SLISC/*/*.h.in) # SLISC/*/*.h.in
 path_gen_headers = $(path_header_in:.h.in=.h) # generated headers in SLISC/
@@ -377,83 +382,90 @@ path_cur_headers = $(shell ls SLISC/*/*.h) # current headers in SLISC/, includin
 path_headers = $(sort $(path_gen_headers) $(path_cur_headers)) # all headers
 path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-generated headers
 
-goal: main.x
+# number of cpu
+Ncpu = $(shell getconf _NPROCESSORS_ONLN)
 
-# subfolders of SLISC, including SLISC, e.g. "SLISC/:SLISC/prec/:...:SLISC/lin/"
-noop=
-space = $(noop) $(noop) # define space
-in_paths = $(shell find SLISC -maxdepth 1 -type d -printf "../%p/:" | head -c -2)/
+# default target
+main.x: main.o $(test_o) # link
+	@printf "\n\n   --- link ---\n\n"
+	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
+
+# remake all and test all
+all: clean_all
+	make depend
+	make test
+	make h64
+	make test64
+	make h64q
+	make test64q
+	make h
+
+# [manual] rule files for *.o [make/deps/*.mak]
+# use when you change `#include`
+depend: h
+	make $(cpp_dep)
+
+link: # force link
+	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 h:
 	$(info remake all headers - default options)
 	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32))"
 
-debug123:
-	$(info $(in_paths))
-
-test32:
+test:
 	$(info remake and run all tests - default options)
-	make clean && \
-	make -j`getconf _NPROCESSORS_ONLN` && \
+	make clean
+	make -j$(Ncpu)
 	./main.x < input.inp
 
 h64:
 	$(info remake all headers - 64bit)
-	make opt_long32=false h && \
-	rm -rf SLISC-64 && \
-	cp -r SLISC SLISC-64 && \
+	make opt_long32=false h
+	rm -rf SLISC-64
+	cp -r SLISC SLISC-64
 	find SLISC-64 -name "*.h.in" -delete
 
 test64:
 	$(info remake and run all tests - 64bit)
-	make clean && \
-	make opt_long32=false -j`getconf _NPROCESSORS_ONLN` && \
+	make clean
+	make opt_long32=false -j$(Ncpu)
 	./main.x < input.inp
-
-all: h test32 h64 test64 h64q test64q
 
 h64q:
 	$(info remake all headers - 64bit+quad)
-	make clean && \
-	make opt_long32=false opt_quadmath=true h && \
-	rm -rf SLISC-64q && \
-	cp -r SLISC SLISC-64q && \
+	make clean
+	make opt_long32=false opt_quadmath=true h
+	rm -rf SLISC-64q
+	cp -r SLISC SLISC-64q
 	find SLISC-64q -name "*.h.in" -delete
 
 test64q:
 	$(info remake and run all tests - 64bit+quad)
-	make clean && \
-	make opt_long32=false opt_quadmath=true -j`getconf _NPROCESSORS_ONLN` && \
+	make clean
+	make opt_long32=false opt_quadmath=true -j$(Ncpu)
 	./main.x < input.inp
 
-main.x: main.o $(test_o) # link
-	@printf "\n\n   --- link ---\n\n"
-	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
-
-main.o: main.cpp test/test_all.h
-	$(opt_compiler) $(flags) -c main.cpp
-
-# dependency files for *.o
-make/deps/%.cpp.mak: test/%.cpp $(path_headers) $(path_header_in)
-	g++ -MM -include $@ $< > $@
-	echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
-
-tmp = $(shell find make/deps -name "*.mak")
-ifneq ($(tmp),)
-	include make/deps/*.mak
-endif
-
-# header generation with octave
-%.h: %.h.in # code gen
-	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
-
-depend: $(cpp_dep)
-
-link: # force link
-	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
+clean_all: clean clean_h clean_dep
 
 clean:
 	rm -f *.o *.x
 
 clean_h:
 	rm -f $(path_gen_headers)
+
+clean_dep:
+	rm -f make/deps/*
+
+# ======= implicit/generated rules =======
+main.o: main.cpp tests/test_all.h
+	$(opt_compiler) $(flags) -c main.cpp
+
+make/deps/%.cpp.mak: tests/%.cpp
+	g++ -MM $< > $@
+	echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
+
+-include make/deps/*.mak
+
+# header generation with octave
+%.h: %.h.in # code gen
+	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"

@@ -490,26 +490,6 @@ inline Jcmat3Qcomp_c cut(Cmat3Qcomp_I v, Long_I start1, Long_I N1, Long_I start2
 	return sli;
 }
 
-inline SvecDoub cut(SvecDoub_IO v, Long_I start, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (start < 0 || start + N > v.size())
-	    SLS_ERR("index out of bound!");
-#endif
-	SvecDoub sli(&v[start], N);
-	return sli;
-}
-
-inline SvecDoub_c cut(SvecDoub_I v, Long_I start, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (start < 0 || start + N > v.size())
-	    SLS_ERR("index out of bound!");
-#endif
-	SvecDoub_c sli(&v[start], N);
-	return sli;
-}
-
 inline SvecComp cut(SvecComp_IO v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -547,6 +527,26 @@ inline SvecQcomp_c cut(SvecQcomp_I v, Long_I start, Long_I N)
 	    SLS_ERR("index out of bound!");
 #endif
 	SvecQcomp_c sli(&v[start], N);
+	return sli;
+}
+
+inline SvecDoub cut(SvecDoub_IO v, Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start < 0 || start + N > v.size())
+	    SLS_ERR("index out of bound!");
+#endif
+	SvecDoub sli(&v[start], N);
+	return sli;
+}
+
+inline SvecDoub_c cut(SvecDoub_I v, Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start < 0 || start + N > v.size())
+	    SLS_ERR("index out of bound!");
+#endif
+	SvecDoub_c sli(&v[start], N);
 	return sli;
 }
 

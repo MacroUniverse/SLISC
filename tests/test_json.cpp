@@ -8,7 +8,7 @@ void test_json()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	string str;
-	read(str, "test/test_file/test1.json");
+	read(str, "tests/test_file/test1.json");
 	// can parse string or fstream
 	json data = json::parse(str);
 

@@ -1,6 +1,5 @@
-test_huffman.o: test/test_huffman.cpp make/deps/test_huffman.cpp.mak \
- test/../SLISC/algo/huffman.h test/../SLISC/algo/../global.h \
- test/../SLISC/algo/../config.h \
- test/../SLISC/algo/../prec/quad_math_declare.h \
- test/../SLISC/algo/../prec/quad_math.h
-	$(opt_compiler) $(flags) -c test/test_huffman.cpp
+test_huffman.o: tests/test_huffman.cpp tests/../SLISC/algo/huffman.h \
+ tests/../SLISC/algo/../global.h tests/../SLISC/algo/../config.h \
+ tests/../SLISC/algo/../prec/quad_math_declare.h \
+ tests/../SLISC/algo/../prec/quad_math.h
+	$(opt_compiler) $(flags) -c tests/test_huffman.cpp
