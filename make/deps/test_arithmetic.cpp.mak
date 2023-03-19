@@ -1,4 +1,5 @@
-test_arithmetic.o: test/test_arithmetic.cpp test/../SLISC/arith/arith1.h \
+test_arithmetic.o: test/test_arithmetic.cpp \
+ make/deps/test_arithmetic.cpp.mak test/../SLISC/arith/arith1.h \
  test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
@@ -33,4 +34,4 @@ test_arithmetic.o: test/test_arithmetic.cpp test/../SLISC/arith/arith1.h \
  test/../SLISC/algo/../str/utfcpp/utf8/core.h \
  test/../SLISC/algo/../str/utfcpp/utf8/unchecked.h \
  test/../SLISC/algo/../algo/heap.h test/../SLISC/algo/../arith/reorder.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_arithmetic.cpp

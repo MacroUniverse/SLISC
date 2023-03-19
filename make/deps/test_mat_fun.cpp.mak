@@ -1,5 +1,5 @@
-test_mat_fun.o: test/test_mat_fun.cpp test/../SLISC/lin/mat_fun.h \
- test/../SLISC/lin/../sparse/sparse_arith.h \
+test_mat_fun.o: test/test_mat_fun.cpp make/deps/test_mat_fun.cpp.mak \
+ test/../SLISC/lin/mat_fun.h test/../SLISC/lin/../sparse/sparse_arith.h \
  test/../SLISC/lin/../sparse/../arith/arith1.h \
  test/../SLISC/lin/../sparse/../arith/../arith/scalar_arith.h \
  test/../SLISC/lin/../sparse/../arith/../arith/../arith/complex_arith.h \
@@ -41,4 +41,4 @@ test_mat_fun.o: test/test_mat_fun.cpp test/../SLISC/lin/mat_fun.h \
  test/../SLISC/lin/../sparse/../algo/../arith/reorder.h \
  test/../SLISC/lin/../sparse/../sparse/Diag.h \
  test/../SLISC/lin/../lin/eig.h test/../SLISC/lin/../lin/mul.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_mat_fun.cpp

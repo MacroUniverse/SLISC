@@ -1,5 +1,5 @@
-test_compare.o: test/test_compare.cpp test/../SLISC/arith/copy.h \
- test/../SLISC/arith/../arith/compare.h \
+test_compare.o: test/test_compare.cpp make/deps/test_compare.cpp.mak \
+ test/../SLISC/arith/copy.h test/../SLISC/arith/../arith/compare.h \
  test/../SLISC/arith/../arith/../dense/Vec.h \
  test/../SLISC/arith/../arith/../dense/../dense/Vbase.h \
  test/../SLISC/arith/../arith/../dense/../dense/../global.h \
@@ -25,4 +25,4 @@ test_compare.o: test/test_compare.cpp test/../SLISC/arith/copy.h \
  test/../SLISC/arith/../arith/../dense/Scmat3.h \
  test/../SLISC/arith/../arith/../dense/Jcmat3.h \
  test/../SLISC/arith/../dense/cut.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_compare.cpp

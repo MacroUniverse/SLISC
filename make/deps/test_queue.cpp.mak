@@ -1,5 +1,6 @@
-test_queue.o: test/test_queue.cpp test/../SLISC/algo/queue.h \
- test/../SLISC/algo/../global.h test/../SLISC/algo/../config.h \
+test_queue.o: test/test_queue.cpp make/deps/test_queue.cpp.mak \
+ test/../SLISC/algo/queue.h test/../SLISC/algo/../global.h \
+ test/../SLISC/algo/../config.h \
  test/../SLISC/algo/../prec/quad_math_declare.h \
  test/../SLISC/algo/../prec/quad_math.h test/../SLISC/util/random.h \
  test/../SLISC/util/../arith/arith2.h \
@@ -24,4 +25,4 @@ test_queue.o: test/test_queue.cpp test/../SLISC/algo/queue.h \
  test/../SLISC/util/../arith/../arith/../dense/Scmat.h \
  test/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/util/../arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_queue.cpp

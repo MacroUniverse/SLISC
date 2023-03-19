@@ -1,6 +1,6 @@
 test_disjoint_sets.o: test/test_disjoint_sets.cpp \
- test/../SLISC/algo/disjoint_sets.h test/../SLISC/algo/../global.h \
- test/../SLISC/algo/../config.h \
+ make/deps/test_disjoint_sets.cpp.mak test/../SLISC/algo/disjoint_sets.h \
+ test/../SLISC/algo/../global.h test/../SLISC/algo/../config.h \
  test/../SLISC/algo/../prec/quad_math_declare.h \
  test/../SLISC/algo/../prec/quad_math.h test/../SLISC/util/random.h \
  test/../SLISC/util/../arith/arith2.h \
@@ -25,4 +25,4 @@ test_disjoint_sets.o: test/test_disjoint_sets.cpp \
  test/../SLISC/util/../arith/../arith/../dense/Scmat.h \
  test/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/util/../arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_disjoint_sets.cpp

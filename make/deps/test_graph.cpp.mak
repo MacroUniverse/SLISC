@@ -1,5 +1,5 @@
-test_graph.o: test/test_graph.cpp test/../SLISC/algo/graph.h \
- test/../SLISC/algo/../util/random.h \
+test_graph.o: test/test_graph.cpp make/deps/test_graph.cpp.mak \
+ test/../SLISC/algo/graph.h test/../SLISC/algo/../util/random.h \
  test/../SLISC/algo/../util/../arith/arith2.h \
  test/../SLISC/algo/../util/../arith/../arith/scalar_arith.h \
  test/../SLISC/algo/../util/../arith/../arith/../arith/complex_arith.h \
@@ -30,4 +30,4 @@ test_graph.o: test/test_graph.cpp test/../SLISC/algo/graph.h \
  test/../SLISC/algo/../algo/search.h \
  test/../SLISC/algo/../algo/../arith/arith1.h \
  test/../SLISC/algo/../algo/../dense/cut.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_graph.cpp

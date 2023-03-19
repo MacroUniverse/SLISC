@@ -1,5 +1,5 @@
-test_eig.o: test/test_eig.cpp test/../SLISC/lin/eig.h \
- test/../SLISC/lin/../arith/copy.h \
+test_eig.o: test/test_eig.cpp make/deps/test_eig.cpp.mak \
+ test/../SLISC/lin/eig.h test/../SLISC/lin/../arith/copy.h \
  test/../SLISC/lin/../arith/../arith/compare.h \
  test/../SLISC/lin/../arith/../arith/../dense/Vec.h \
  test/../SLISC/lin/../arith/../arith/../dense/../dense/Vbase.h \
@@ -40,4 +40,4 @@ test_eig.o: test/test_eig.cpp test/../SLISC/lin/eig.h \
  test/../SLISC/sparse/../algo/../algo/../util/../arith/arith2.h \
  test/../SLISC/sparse/../algo/../arith/reorder.h \
  test/../SLISC/sparse/../sparse/Diag.h test/../SLISC/lin/mul.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_eig.cpp

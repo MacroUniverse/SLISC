@@ -1,5 +1,5 @@
-test_matb.o: test/test_matb.cpp test/../SLISC/arith/arith4.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_matb.o: test/test_matb.cpp make/deps/test_matb.cpp.mak \
+ test/../SLISC/arith/arith4.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -43,4 +43,4 @@ test_matb.o: test/test_matb.cpp test/../SLISC/arith/arith4.h \
  test/../SLISC/file/../file/../file/../algo/../arith/../arith/copy.h \
  test/../SLISC/file/../file/../file/../algo/../arith/../arith/../dense/cut.h \
  test/../SLISC/util/sha1sum.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_matb.cpp

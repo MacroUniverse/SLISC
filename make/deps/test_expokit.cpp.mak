@@ -1,5 +1,6 @@
-test_expokit.o: test/test_expokit.cpp test/../SLISC/lin/expokit.h \
- test/../SLISC/lin/../global.h test/../SLISC/lin/../config.h \
+test_expokit.o: test/test_expokit.cpp make/deps/test_expokit.cpp.mak \
+ test/../SLISC/lin/expokit.h test/../SLISC/lin/../global.h \
+ test/../SLISC/lin/../config.h \
  test/../SLISC/lin/../prec/quad_math_declare.h \
  test/../SLISC/lin/../prec/quad_math.h test/../SLISC/lin/mat_fun.h \
  test/../SLISC/lin/../sparse/sparse_arith.h \
@@ -40,4 +41,4 @@ test_expokit.o: test/test_expokit.cpp test/../SLISC/lin/expokit.h \
  test/../SLISC/lin/../sparse/../algo/../arith/reorder.h \
  test/../SLISC/lin/../sparse/../sparse/Diag.h \
  test/../SLISC/lin/../lin/eig.h test/../SLISC/lin/../lin/mul.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_expokit.cpp

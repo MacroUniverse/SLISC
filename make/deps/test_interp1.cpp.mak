@@ -1,5 +1,5 @@
-test_interp1.o: test/test_interp1.cpp test/../SLISC/sci/interp1.h \
- test/../SLISC/sci/../dense/Vec.h \
+test_interp1.o: test/test_interp1.cpp make/deps/test_interp1.cpp.mak \
+ test/../SLISC/sci/interp1.h test/../SLISC/sci/../dense/Vec.h \
  test/../SLISC/sci/../dense/../dense/Vbase.h \
  test/../SLISC/sci/../dense/../dense/../global.h \
  test/../SLISC/sci/../dense/../dense/../config.h \
@@ -25,4 +25,4 @@ test_interp1.o: test/test_interp1.cpp test/../SLISC/sci/interp1.h \
  test/../SLISC/sci/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/sci/../arith/../arith/../dense/Jcmat3.h \
  test/../SLISC/arith/arith2.h test/../SLISC/arith/arith4.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_interp1.cpp

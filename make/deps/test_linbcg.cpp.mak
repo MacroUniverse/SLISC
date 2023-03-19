@@ -1,5 +1,5 @@
-test_linbcg.o: test/test_linbcg.cpp test/../SLISC/lin/linbcg.h \
- test/../SLISC/lin/../arith/arith1.h \
+test_linbcg.o: test/test_linbcg.cpp make/deps/test_linbcg.cpp.mak \
+ test/../SLISC/lin/linbcg.h test/../SLISC/lin/../arith/arith1.h \
  test/../SLISC/lin/../arith/../arith/scalar_arith.h \
  test/../SLISC/lin/../arith/../arith/../arith/complex_arith.h \
  test/../SLISC/lin/../arith/../arith/../arith/../global.h \
@@ -28,4 +28,4 @@ test_linbcg.o: test/test_linbcg.cpp test/../SLISC/lin/linbcg.h \
  test/../SLISC/lin/../arith/arith2.h test/../SLISC/lin/../arith/arith4.h \
  test/../SLISC/lin/../dense/cut.h test/../SLISC/lin/../lin/mul.h \
  test/../SLISC/lin/../lin/../arith/copy.h test/../SLISC/arith/reorder.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_linbcg.cpp

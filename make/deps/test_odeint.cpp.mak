@@ -1,5 +1,5 @@
-test_odeint.o: test/test_odeint.cpp test/../SLISC/sci/odeint.h \
- test/../SLISC/sci/../arith/copy.h \
+test_odeint.o: test/test_odeint.cpp make/deps/test_odeint.cpp.mak \
+ test/../SLISC/sci/odeint.h test/../SLISC/sci/../arith/copy.h \
  test/../SLISC/sci/../arith/../arith/compare.h \
  test/../SLISC/sci/../arith/../arith/../dense/Vec.h \
  test/../SLISC/sci/../arith/../arith/../dense/../dense/Vbase.h \
@@ -38,4 +38,4 @@ test_odeint.o: test/test_odeint.cpp test/../SLISC/sci/odeint.h \
  test/../SLISC/file/../algo/../algo/../util/random.h \
  test/../SLISC/file/../algo/../algo/../util/../arith/arith2.h \
  test/../SLISC/file/../algo/../arith/reorder.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_odeint.cpp

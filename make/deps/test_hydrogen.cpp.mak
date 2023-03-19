@@ -1,5 +1,5 @@
-test_hydrogen.o: test/test_hydrogen.cpp test/../SLISC/arith/arith2.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_hydrogen.o: test/test_hydrogen.cpp make/deps/test_hydrogen.cpp.mak \
+ test/../SLISC/arith/arith2.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -25,4 +25,4 @@ test_hydrogen.o: test/test_hydrogen.cpp test/../SLISC/arith/arith2.h \
  test/../SLISC/arith/../arith/../dense/Scmat3.h \
  test/../SLISC/arith/../arith/../dense/Jcmat3.h \
  test/../SLISC/tdse/hydrogen.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_hydrogen.cpp

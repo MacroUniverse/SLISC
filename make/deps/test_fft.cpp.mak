@@ -1,5 +1,5 @@
-test_fft.o: test/test_fft.cpp test/../SLISC/sci/fft.h \
- test/../SLISC/sci/../dense/cut.h \
+test_fft.o: test/test_fft.cpp make/deps/test_fft.cpp.mak \
+ test/../SLISC/sci/fft.h test/../SLISC/sci/../dense/cut.h \
  test/../SLISC/sci/../dense/../dense/Vec.h \
  test/../SLISC/sci/../dense/../dense/../dense/Vbase.h \
  test/../SLISC/sci/../dense/../dense/../dense/../global.h \
@@ -28,4 +28,4 @@ test_fft.o: test/test_fft.cpp test/../SLISC/sci/fft.h \
  test/../SLISC/sci/../arith/../arith/../sparse/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/arith1.h test/../SLISC/arith/arith2.h \
  test/../SLISC/arith/arith4.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_fft.cpp

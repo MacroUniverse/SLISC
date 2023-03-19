@@ -1,5 +1,5 @@
-test_heap.o: test/test_heap.cpp test/../SLISC/algo/heap.h \
- test/../SLISC/algo/../util/random.h \
+test_heap.o: test/test_heap.cpp make/deps/test_heap.cpp.mak \
+ test/../SLISC/algo/heap.h test/../SLISC/algo/../util/random.h \
  test/../SLISC/algo/../util/../arith/arith2.h \
  test/../SLISC/algo/../util/../arith/../arith/scalar_arith.h \
  test/../SLISC/algo/../util/../arith/../arith/../arith/complex_arith.h \
@@ -26,4 +26,4 @@ test_heap.o: test/test_heap.cpp test/../SLISC/algo/heap.h \
  test/../SLISC/algo/../util/../arith/../arith/../dense/Scmat.h \
  test/../SLISC/algo/../util/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/algo/../util/../arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_heap.cpp

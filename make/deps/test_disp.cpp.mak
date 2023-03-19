@@ -1,5 +1,5 @@
-test_disp.o: test/test_disp.cpp test/../SLISC/str/disp.h \
- test/../SLISC/str/../arith/arith1.h \
+test_disp.o: test/test_disp.cpp make/deps/test_disp.cpp.mak \
+ test/../SLISC/str/disp.h test/../SLISC/str/../arith/arith1.h \
  test/../SLISC/str/../arith/../arith/scalar_arith.h \
  test/../SLISC/str/../arith/../arith/../arith/complex_arith.h \
  test/../SLISC/str/../arith/../arith/../arith/../global.h \
@@ -31,4 +31,4 @@ test_disp.o: test/test_disp.cpp test/../SLISC/str/disp.h \
  test/../SLISC/str/../str/utfcpp/utf8/core.h \
  test/../SLISC/str/../str/utfcpp/utf8/unchecked.h \
  test/../SLISC/arith/arith2.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_disp.cpp

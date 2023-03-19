@@ -1,5 +1,5 @@
-test_fedvr.o: test/test_fedvr.cpp test/../SLISC/lin/eig.h \
- test/../SLISC/lin/../arith/copy.h \
+test_fedvr.o: test/test_fedvr.cpp make/deps/test_fedvr.cpp.mak \
+ test/../SLISC/lin/eig.h test/../SLISC/lin/../arith/copy.h \
  test/../SLISC/lin/../arith/../arith/compare.h \
  test/../SLISC/lin/../arith/../arith/../dense/Vec.h \
  test/../SLISC/lin/../arith/../arith/../dense/../dense/Vbase.h \
@@ -42,4 +42,4 @@ test_fedvr.o: test/test_fedvr.cpp test/../SLISC/lin/eig.h \
  test/../SLISC/tdse/../sparse/../sparse/Diag.h \
  test/../SLISC/tdse/../sci/interp1.h test/../SLISC/tdse/../algo/search.h \
  test/../SLISC/tdse/../spec/legendreP.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_fedvr.cpp

@@ -1,4 +1,5 @@
-test_hungarian.o: test/test_hungarian.cpp test/../SLISC/algo/hungarian.h \
+test_hungarian.o: test/test_hungarian.cpp \
+ make/deps/test_hungarian.cpp.mak test/../SLISC/algo/hungarian.h \
  test/../SLISC/algo/../arith/copy.h \
  test/../SLISC/algo/../arith/../arith/compare.h \
  test/../SLISC/algo/../arith/../arith/../dense/Vec.h \
@@ -28,4 +29,4 @@ test_hungarian.o: test/test_hungarian.cpp test/../SLISC/algo/hungarian.h \
  test/../SLISC/algo/../arith/../dense/cut.h \
  test/../SLISC/algo/../arith/arith1.h \
  test/../SLISC/algo/../arith/arith4.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_hungarian.cpp

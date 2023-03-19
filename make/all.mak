@@ -368,6 +368,7 @@ libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapa
 
 # === File Lists ===
 test_cpp = $(shell ls test/*.cpp) # test/*.cpp
+cpp_dep = $(addsuffix .mak, $(subst test/, make/deps/, $(test_cpp)))
 path_test_o = $(test_cpp:.cpp=.o) # test/*.cpp object files
 test_o = $(notdir $(path_test_o))
 path_header_in = $(shell ls SLISC/*/*.h.in) # SLISC/*/*.h.in
@@ -378,11 +379,17 @@ path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-gen
 
 goal: main.x
 
-in_paths = ../SLISC/algo/:../SLISC/arith/:../SLISC/dense/:../SLISC/file/:../SLISC/lin/:../SLISC/prec/:../SLISC/sci/:../SLISC/sparse/:../SLISC/spec/:../SLISC/str/:../SLISC/tdse/:../SLISC/util/:../test/
+# subfolders of SLISC, including SLISC, e.g. "SLISC/:SLISC/prec/:...:SLISC/lin/"
+noop=
+space = $(noop) $(noop) # define space
+in_paths = $(shell find SLISC -maxdepth 1 -type d -printf "../%p/:" | head -c -2)/
 
 h:
 	$(info remake all headers - default options)
-	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', [], $(opt_quadmath), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32))"
+
+debug123:
+	$(info $(in_paths))
 
 test32:
 	$(info remake and run all tests - default options)
@@ -423,28 +430,30 @@ main.x: main.o $(test_o) # link
 	@printf "\n\n   --- link ---\n\n"
 	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
+main.o: main.cpp test/test_all.h
+	$(opt_compiler) $(flags) -c main.cpp
+
+# dependency files for *.o
+make/deps/%.cpp.mak: test/%.cpp $(path_headers) $(path_header_in)
+	g++ -MM -include $@ $< > $@
+	echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
+
+tmp = $(shell find make/deps -name "*.mak")
+ifneq ($(tmp),)
+	include make/deps/*.mak
+endif
+
+# header generation with octave
+%.h: %.h.in # code gen
+	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
+
+depend: $(cpp_dep)
+
 link: # force link
 	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 clean:
-	$(info path_header_in: $(path_header_in))
 	rm -f *.o *.x
 
 clean_h:
 	rm -f $(path_gen_headers)
-
-main.o: main.cpp test/test_all.h
-	$(opt_compiler) $(flags) -c main.cpp
-
-depend: $(test_cpp) $(path_headers) $(path_header_in) # generate dependency file
-	for cpp in $(test_cpp); do \
-		g++ -MM $${cpp} > make/deps/$$(basename $${cpp}).mak; \
-		echo "	\$$(opt_compiler) \$$(flags) -c \$$<" >> make/deps/$$(basename $${cpp}).mak; \
-	done
-
-# implicit rules
-
-%.h: %.h.in # code gen
-	octave --no-window-system --eval "cd preprocessor; auto_gen('${in_paths}', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
-
-include make/deps/*.mak

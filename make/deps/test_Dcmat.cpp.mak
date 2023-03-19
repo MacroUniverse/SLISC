@@ -1,5 +1,5 @@
-test_Dcmat.o: test/test_Dcmat.cpp test/../SLISC/arith/arith2.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_Dcmat.o: test/test_Dcmat.cpp make/deps/test_Dcmat.cpp.mak \
+ test/../SLISC/arith/arith2.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -25,4 +25,4 @@ test_Dcmat.o: test/test_Dcmat.cpp test/../SLISC/arith/arith2.h \
  test/../SLISC/arith/../arith/../dense/Scmat3.h \
  test/../SLISC/arith/../arith/../dense/Jcmat3.h test/../SLISC/dense/cut.h \
  test/../SLISC/dense/Dcit.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_Dcmat.cpp

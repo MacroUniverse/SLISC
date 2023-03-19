@@ -1,5 +1,5 @@
-test_gsl.o: test/test_gsl.cpp test/../SLISC/arith/arith2.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_gsl.o: test/test_gsl.cpp make/deps/test_gsl.cpp.mak \
+ test/../SLISC/arith/arith2.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -24,4 +24,4 @@ test_gsl.o: test/test_gsl.cpp test/../SLISC/arith/arith2.h \
  test/../SLISC/arith/../arith/../dense/Scmat.h \
  test/../SLISC/arith/../arith/../dense/Scmat3.h \
  test/../SLISC/arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_gsl.cpp

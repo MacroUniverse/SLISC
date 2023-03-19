@@ -1,5 +1,5 @@
-test_lin_eq.o: test/test_lin_eq.cpp test/../SLISC/arith/arith1.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_lin_eq.o: test/test_lin_eq.cpp make/deps/test_lin_eq.cpp.mak \
+ test/../SLISC/arith/arith1.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -30,4 +30,4 @@ test_lin_eq.o: test/test_lin_eq.cpp test/../SLISC/arith/arith1.h \
  test/../SLISC/lin/../sparse/../arith/../dense/cut.h \
  test/../SLISC/lin/mul.h test/../SLISC/util/random.h \
  test/../SLISC/util/../arith/arith2.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_lin_eq.cpp

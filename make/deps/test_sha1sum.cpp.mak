@@ -1,5 +1,6 @@
-test_sha1sum.o: test/test_sha1sum.cpp test/../SLISC/util/sha1sum.h \
- test/../SLISC/util/../file/file.h test/../SLISC/util/../file/../global.h \
+test_sha1sum.o: test/test_sha1sum.cpp make/deps/test_sha1sum.cpp.mak \
+ test/../SLISC/util/sha1sum.h test/../SLISC/util/../file/file.h \
+ test/../SLISC/util/../file/../global.h \
  test/../SLISC/util/../file/../config.h \
  test/../SLISC/util/../file/../prec/quad_math_declare.h \
  test/../SLISC/util/../file/../prec/quad_math.h \
@@ -40,4 +41,4 @@ test_sha1sum.o: test/test_sha1sum.cpp test/../SLISC/util/sha1sum.h \
  test/../SLISC/util/../file/../algo/../arith/reorder.h \
  test/../SLISC/util/../file/../algo/../arith/../arith/copy.h \
  test/../SLISC/util/../file/../algo/../arith/../arith/../dense/cut.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_sha1sum.cpp

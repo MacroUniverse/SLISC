@@ -1,5 +1,5 @@
-test_coulomb.o: test/test_coulomb.cpp test/../SLISC/arith/arith2.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_coulomb.o: test/test_coulomb.cpp make/deps/test_coulomb.cpp.mak \
+ test/../SLISC/arith/arith2.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -27,4 +27,4 @@ test_coulomb.o: test/test_coulomb.cpp test/../SLISC/arith/arith2.h \
  test/../SLISC/spec/coulomb.h test/../SLISC/spec/cwfcomp/cwfcomp.h \
  test/../SLISC/spec/cwfcomp/complex_functions.h \
  test/../SLISC/spec/cwfcomp/cwfcomp.inl
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_coulomb.cpp

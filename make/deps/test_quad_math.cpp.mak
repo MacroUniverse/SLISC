@@ -1,4 +1,5 @@
-test_quad_math.o: test/test_quad_math.cpp test/../SLISC/dense/Cmat.h \
+test_quad_math.o: test/test_quad_math.cpp \
+ make/deps/test_quad_math.cpp.mak test/../SLISC/dense/Cmat.h \
  test/../SLISC/dense/../dense/Vbase.h \
  test/../SLISC/dense/../dense/../global.h \
  test/../SLISC/dense/../dense/../config.h \
@@ -24,4 +25,4 @@ test_quad_math.o: test/test_quad_math.cpp test/../SLISC/dense/Cmat.h \
  test/../SLISC/util/../arith/../arith/../dense/Scmat.h \
  test/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/util/../arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_quad_math.cpp

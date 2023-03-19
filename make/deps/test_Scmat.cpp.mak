@@ -1,5 +1,5 @@
-test_Scmat.o: test/test_Scmat.cpp test/../SLISC/dense/Scmat.h \
- test/../SLISC/dense/../dense/Svec.h \
+test_Scmat.o: test/test_Scmat.cpp make/deps/test_Scmat.cpp.mak \
+ test/../SLISC/dense/Scmat.h test/../SLISC/dense/../dense/Svec.h \
  test/../SLISC/dense/../dense/../global.h \
  test/../SLISC/dense/../dense/../config.h \
  test/../SLISC/dense/../dense/../prec/quad_math_declare.h \
@@ -24,4 +24,4 @@ test_Scmat.o: test/test_Scmat.cpp test/../SLISC/dense/Scmat.h \
  test/../SLISC/util/../arith/../arith/../sparse/Cmobd.h \
  test/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/util/../arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_Scmat.cpp

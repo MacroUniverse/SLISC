@@ -1,4 +1,5 @@
-test_Mcoo.o: test/test_Mcoo.cpp test/../SLISC/sparse/sparse_arith.h \
+test_Mcoo.o: test/test_Mcoo.cpp make/deps/test_Mcoo.cpp.mak \
+ test/../SLISC/sparse/sparse_arith.h \
  test/../SLISC/sparse/../arith/arith1.h \
  test/../SLISC/sparse/../arith/../arith/scalar_arith.h \
  test/../SLISC/sparse/../arith/../arith/../arith/complex_arith.h \
@@ -39,4 +40,4 @@ test_Mcoo.o: test/test_Mcoo.cpp test/../SLISC/sparse/sparse_arith.h \
  test/../SLISC/sparse/../algo/../algo/../util/../arith/arith2.h \
  test/../SLISC/sparse/../algo/../arith/reorder.h \
  test/../SLISC/sparse/../sparse/Diag.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_Mcoo.cpp

@@ -1,5 +1,5 @@
-test_Cmat.o: test/test_Cmat.cpp test/../SLISC/arith/compare.h \
- test/../SLISC/arith/../dense/Vec.h \
+test_Cmat.o: test/test_Cmat.cpp make/deps/test_Cmat.cpp.mak \
+ test/../SLISC/arith/compare.h test/../SLISC/arith/../dense/Vec.h \
  test/../SLISC/arith/../dense/../dense/Vbase.h \
  test/../SLISC/arith/../dense/../dense/../global.h \
  test/../SLISC/arith/../dense/../dense/../config.h \
@@ -21,4 +21,4 @@ test_Cmat.o: test/test_Cmat.cpp test/../SLISC/arith/compare.h \
  test/../SLISC/arith/../dense/Scmat3.h \
  test/../SLISC/arith/../dense/Jcmat3.h test/../SLISC/util/random.h \
  test/../SLISC/util/../arith/arith2.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_Cmat.cpp

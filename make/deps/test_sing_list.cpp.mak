@@ -1,4 +1,5 @@
-test_sing_list.o: test/test_sing_list.cpp test/../SLISC/algo/sing_list.h \
+test_sing_list.o: test/test_sing_list.cpp \
+ make/deps/test_sing_list.cpp.mak test/../SLISC/algo/sing_list.h \
  test/../SLISC/algo/../util/random.h \
  test/../SLISC/algo/../util/../arith/arith2.h \
  test/../SLISC/algo/../util/../arith/../arith/scalar_arith.h \
@@ -26,4 +27,4 @@ test_sing_list.o: test/test_sing_list.cpp test/../SLISC/algo/sing_list.h \
  test/../SLISC/algo/../util/../arith/../arith/../dense/Scmat.h \
  test/../SLISC/algo/../util/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/algo/../util/../arith/../arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_sing_list.cpp

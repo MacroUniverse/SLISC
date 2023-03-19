@@ -1,5 +1,5 @@
-test_cut.o: test/test_cut.cpp test/../SLISC/dense/cut.h \
- test/../SLISC/dense/../dense/Vec.h \
+test_cut.o: test/test_cut.cpp make/deps/test_cut.cpp.mak \
+ test/../SLISC/dense/cut.h test/../SLISC/dense/../dense/Vec.h \
  test/../SLISC/dense/../dense/../dense/Vbase.h \
  test/../SLISC/dense/../dense/../dense/../global.h \
  test/../SLISC/dense/../dense/../dense/../config.h \
@@ -21,4 +21,4 @@ test_cut.o: test/test_cut.cpp test/../SLISC/dense/cut.h \
  test/../SLISC/arith/../arith/../sparse/Cband.h \
  test/../SLISC/arith/../arith/../sparse/Mcoo.h \
  test/../SLISC/arith/../arith/../sparse/Cmobd.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_cut.cpp

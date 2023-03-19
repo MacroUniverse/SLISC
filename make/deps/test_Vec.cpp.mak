@@ -1,5 +1,5 @@
-test_Vec.o: test/test_Vec.cpp test/../SLISC/arith/compare.h \
- test/../SLISC/arith/../dense/Vec.h \
+test_Vec.o: test/test_Vec.cpp make/deps/test_Vec.cpp.mak \
+ test/../SLISC/arith/compare.h test/../SLISC/arith/../dense/Vec.h \
  test/../SLISC/arith/../dense/../dense/Vbase.h \
  test/../SLISC/arith/../dense/../dense/../global.h \
  test/../SLISC/arith/../dense/../dense/../config.h \
@@ -20,4 +20,4 @@ test_Vec.o: test/test_Vec.cpp test/../SLISC/arith/compare.h \
  test/../SLISC/arith/../dense/Svec.h test/../SLISC/arith/../dense/Scmat.h \
  test/../SLISC/arith/../dense/Scmat3.h \
  test/../SLISC/arith/../dense/Jcmat3.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_Vec.cpp

@@ -1,6 +1,6 @@
-test_json.o: test/test_json.cpp test/../SLISC/util/json.h \
- test/../SLISC/file/file.h test/../SLISC/file/../global.h \
- test/../SLISC/file/../config.h \
+test_json.o: test/test_json.cpp make/deps/test_json.cpp.mak \
+ test/../SLISC/util/json.h test/../SLISC/file/file.h \
+ test/../SLISC/file/../global.h test/../SLISC/file/../config.h \
  test/../SLISC/file/../prec/quad_math_declare.h \
  test/../SLISC/file/../prec/quad_math.h test/../SLISC/file/../util/time.h \
  test/../SLISC/file/../util/../str/str.h \
@@ -38,4 +38,4 @@ test_json.o: test/test_json.cpp test/../SLISC/util/json.h \
  test/../SLISC/file/../algo/../arith/reorder.h \
  test/../SLISC/file/../algo/../arith/../arith/copy.h \
  test/../SLISC/file/../algo/../arith/../arith/../dense/cut.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_json.cpp

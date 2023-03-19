@@ -1,5 +1,5 @@
-test_dense.o: test/test_dense.cpp test/../SLISC/arith/arith2.h \
- test/../SLISC/arith/../arith/scalar_arith.h \
+test_dense.o: test/test_dense.cpp make/deps/test_dense.cpp.mak \
+ test/../SLISC/arith/arith2.h test/../SLISC/arith/../arith/scalar_arith.h \
  test/../SLISC/arith/../arith/../arith/complex_arith.h \
  test/../SLISC/arith/../arith/../arith/../global.h \
  test/../SLISC/arith/../arith/../arith/../config.h \
@@ -26,4 +26,4 @@ test_dense.o: test/test_dense.cpp test/../SLISC/arith/arith2.h \
  test/../SLISC/arith/../arith/../dense/Jcmat3.h \
  test/../SLISC/arith/copy.h test/../SLISC/arith/../dense/cut.h \
  test/../SLISC/arith/reorder.h test/../SLISC/util/random.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_dense.cpp

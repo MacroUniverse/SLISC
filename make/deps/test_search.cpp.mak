@@ -1,5 +1,5 @@
-test_search.o: test/test_search.cpp test/../SLISC/algo/search.h \
- test/../SLISC/algo/../arith/arith1.h \
+test_search.o: test/test_search.cpp make/deps/test_search.cpp.mak \
+ test/../SLISC/algo/search.h test/../SLISC/algo/../arith/arith1.h \
  test/../SLISC/algo/../arith/../arith/scalar_arith.h \
  test/../SLISC/algo/../arith/../arith/../arith/complex_arith.h \
  test/../SLISC/algo/../arith/../arith/../arith/../global.h \
@@ -26,4 +26,4 @@ test_search.o: test/test_search.cpp test/../SLISC/algo/search.h \
  test/../SLISC/algo/../arith/../arith/../dense/Scmat3.h \
  test/../SLISC/algo/../arith/../arith/../dense/Jcmat3.h \
  test/../SLISC/algo/../dense/cut.h test/../SLISC/arith/arith2.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_search.cpp

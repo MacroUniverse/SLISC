@@ -1,5 +1,5 @@
-test_random.o: test/test_random.cpp test/../SLISC/util/random.h \
- test/../SLISC/util/../arith/arith2.h \
+test_random.o: test/test_random.cpp make/deps/test_random.cpp.mak \
+ test/../SLISC/util/random.h test/../SLISC/util/../arith/arith2.h \
  test/../SLISC/util/../arith/../arith/scalar_arith.h \
  test/../SLISC/util/../arith/../arith/../arith/complex_arith.h \
  test/../SLISC/util/../arith/../arith/../arith/../global.h \
@@ -27,4 +27,4 @@ test_random.o: test/test_random.cpp test/../SLISC/util/random.h \
  test/../SLISC/util/../arith/../arith/../dense/Jcmat3.h \
  test/../SLISC/algo/search.h test/../SLISC/algo/../arith/arith1.h \
  test/../SLISC/algo/../dense/cut.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_random.cpp

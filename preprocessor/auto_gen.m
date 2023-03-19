@@ -56,6 +56,9 @@ in_list = {};
 if is_batch_mode
     for i = 1:numel(in_paths)
         in_paths{i} = strrep(in_paths{i}, '\', '/');
+        if isempty(dir([in_paths{i} '*.in']))
+            continue;
+        end
         if in_octave
             tmp = cellstr(ls([in_paths{i} '*.in'], '-1'));
         else % in matlab
@@ -67,6 +70,9 @@ if is_batch_mode
 else
     for i = 1:numel(in_paths)
         in_paths{i} = strrep(in_paths{i}, '\', '/');
+        if isempty(dir([in_paths{i} '*.in']))
+            continue;
+        end
         if in_octave
             tmp = cellstr(ls([in_paths{i} '*.in'], '-1'));
         else % in matlab

@@ -1,5 +1,5 @@
-test_sort.o: test/test_sort.cpp test/../SLISC/algo/sort.h \
- test/../SLISC/algo/../str/unicode.h \
+test_sort.o: test/test_sort.cpp make/deps/test_sort.cpp.mak \
+ test/../SLISC/algo/sort.h test/../SLISC/algo/../str/unicode.h \
  test/../SLISC/algo/../str/../arith/scalar_arith.h \
  test/../SLISC/algo/../str/../arith/../arith/complex_arith.h \
  test/../SLISC/algo/../str/../arith/../arith/../global.h \
@@ -37,4 +37,4 @@ test_sort.o: test/test_sort.cpp test/../SLISC/algo/sort.h \
  test/../SLISC/algo/../arith/../arith/../dense/cut.h \
  test/../SLISC/arith/arith4.h test/../SLISC/str/disp.h \
  test/../SLISC/str/../arith/arith1.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_sort.cpp

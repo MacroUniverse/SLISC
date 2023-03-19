@@ -1,5 +1,5 @@
-test_matfile.o: test/test_matfile.cpp test/../SLISC/file/matfile.h \
- test/../SLISC/file/../arith/arith1.h \
+test_matfile.o: test/test_matfile.cpp make/deps/test_matfile.cpp.mak \
+ test/../SLISC/file/matfile.h test/../SLISC/file/../arith/arith1.h \
  test/../SLISC/file/../arith/../arith/scalar_arith.h \
  test/../SLISC/file/../arith/../arith/../arith/complex_arith.h \
  test/../SLISC/file/../arith/../arith/../arith/../global.h \
@@ -41,4 +41,4 @@ test_matfile.o: test/test_matfile.cpp test/../SLISC/file/matfile.h \
  test/../SLISC/file/../file/../algo/../arith/reorder.h \
  test/../SLISC/file/../file/../algo/../arith/../arith/copy.h \
  test/../SLISC/file/../file/../algo/../arith/../arith/../dense/cut.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_matfile.cpp

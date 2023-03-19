@@ -1,5 +1,5 @@
-test_ylm.o: test/test_ylm.cpp test/../SLISC/spec/ylm.h \
- test/../SLISC/spec/../str/unicode.h \
+test_ylm.o: test/test_ylm.cpp make/deps/test_ylm.cpp.mak \
+ test/../SLISC/spec/ylm.h test/../SLISC/spec/../str/unicode.h \
  test/../SLISC/spec/../str/../arith/scalar_arith.h \
  test/../SLISC/spec/../str/../arith/../arith/complex_arith.h \
  test/../SLISC/spec/../str/../arith/../arith/../global.h \
@@ -14,4 +14,4 @@ test_ylm.o: test/test_ylm.cpp test/../SLISC/spec/ylm.h \
  test/../SLISC/spec/../str/utfcpp/utf8/unchecked.h \
  test/../SLISC/spec/../spec/legendreP.h \
  test/../SLISC/spec/../spec/anglib.h
-	$(opt_compiler) $(flags) -c $<
+	$(opt_compiler) $(flags) -c test/test_ylm.cpp
