@@ -89,6 +89,7 @@ else
     if isempty(in_list), error('.in file not found!'); end
     Nfile = 1;
 end
+in_list = sort(in_list);
 
 %% first scan through all files
 % do not deal with template body
