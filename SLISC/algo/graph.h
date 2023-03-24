@@ -11,6 +11,7 @@ namespace slisc {
 	// node for directed graph (including DAG)
 	// node[i] are the next connected nodes
 	typedef vector<Long> DGnode;
+    typedef pair<Long> DAGedge;
 
 	void dag_examp(vector<DGnode> &dag, Long_I ind);
 	void dag_add_edge(vector<DGnode> &dag, Long_I i, Long_I j);
@@ -60,6 +61,55 @@ namespace slisc {
 	// add edge to DAG
 	inline void dag_add_edge(vector<DGnode> &dag, Long_I i, Long_I j)
 	{ dag[i].push_back(j); }
+
+    // generate random DAG (might have -inf cyclic)
+    inline void dag_rand_unsafe(vector<DAGedge> &edges, Long_I Nnode, Long_I Nedge, Long_I max_fork)
+    {
+        edges.clear();
+        vector<Long> fork_count(Nnode, 0);
+        Long Nloop = 0, max_iter = 100*Nedge;
+        while ((Long)edges.size() < Nedge) {
+            if (++Nloop > max_iter) SLS_ERR("dag_rand: max_iter reached, impossible input?");
+            Long from = randLong(Nnode);
+            while (fork_count[from] > max_fork) {
+                if (++Nloop > max_iter) SLS_ERR("dag_rand: max_iter reached, impossible input?");
+                from = randLong(Nnode);
+            }
+            Long to = randLong(Nnode);
+            while (to == from) {
+                if (++Nloop > max_iter) SLS_ERR("dag_rand: max_iter reached, impossible input?");
+                to = randLong(Nnode);
+            }
+            Long i; // check repetition
+            for (i = 0; i < (Long)edges.size(); ++i)
+                if ((edges[i][0] == from && edges[i][1] == to) || (edges[i][0] == to && edges[i][1] == from))
+                    break;
+            if (i == (Long)edges.size()) {
+                edges.push_back({from, to});
+                ++fork_count[from];
+            }
+        }
+    }
+
+    // generate random DAG (prevent -inf cyclic)
+    inline void dag_rand(vector<DGnode> &edges, Long_I Nnode, Long_I Nedge,
+                         const pair<Long,Long> &weight_range, Long_I max_fork)
+    {
+        vector<DAGnode> dag;
+        vector<Long> dists;
+        for (Long i = 0; i < 4000; ++i) {
+            dag_rand_unsafe(edges, Nnode, Nedge, weight_range, max_fork);
+            edges2dag(dag, edges);
+            Long source;
+            for (source = 0; source < size(dag); ++source) {
+                try { dwg_SPFA(dists, dag, source); }
+                catch (...) { break; }
+            }
+            // got a good DAG
+            if (source == size(dag)) return;
+        }
+        SLS_ERR("dag_rand(): always got -inf loops, impossible params?");
+    }
 
 	// check if edge exist in DAG
 	inline bool dag_exist_edge(const vector<DGnode> &dag, Long_I i, Long_I j)
@@ -138,7 +188,7 @@ namespace slisc {
 	}
 
 	// get shortest path between source and target
-	// algo: BFS, add reverse link for each seached edge
+	// algo: BFS, add reverse edge for each seached edge
 	inline void dag_shortest_path(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target)
 	{
 	    path.clear(); path.push_back(target);
@@ -165,10 +215,10 @@ namespace slisc {
 	    reverse(path.begin(), path.end());
 	}
 
-	// if two nodes of a link has other connection, then it is a "short link"
-	// get a list of all short links
-	// algo: temporarily unlink every edge, then try dag_BFS
-	void dag_short_edges(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag)
+    // get a list of all short edges
+	// if two nodes of an edge has other connection, then it is a "short edge"
+	// algo: temporarily remove every edge, then try dag_BFS
+	inline void dag_short_edges(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag)
 	{
 		short_edges.clear();
 		Long N = dag.size();
@@ -287,9 +337,9 @@ namespace slisc {
 	    dag[node].clear(); done[node] = true;
 	}
 
-	// inverse every edge of a (singly linked) sub DAG
+	// inverse every edge of a sub DAG
 	// index of dag will not change
-	// done[node] == true means all it's original links are erased
+	// `done[node]` == true means all it's original edges are erased
 	inline void dag_inv(vector<DGnode> &dag) {
 	    Long N = dag.size();
 	    vector<bool> done(N, false);
@@ -439,7 +489,7 @@ namespace slisc {
 	        edges.push_back({from, to, weight});
 	}
 
-	// BFS algo to find the shortest dists from source node
+	// BFS algo to find the shortest dists from `source` node to all nodes
 	// (Shortest Path Faster Algorithm)
 	// supports negative edge weight
 	// out of reach distance is numeric_limits<Long>::max()
@@ -457,7 +507,7 @@ namespace slisc {
 	            if (d + weight >= dists[next])
 	                continue;
 	            dists[next] = d + weight;
-	            if (dists[next] < -1e-4) throw "-infinity distance?";
+	            if (dists[next] < -1e4) throw "-infinity distance?";
 	            if (!in_q[next])
 	                q.push(next), in_q[next] = true;
 	        }
@@ -485,7 +535,7 @@ namespace slisc {
 	            if (in_q[next])
 	                q.erase(pair<Long, Long>(dists[next], next));
 	            dists[next] = d + weight;
-	            if (dists[next] < -1e-4) throw "-infinity distance?";
+	            if (dists[next] < -1e4) throw "-infinity distance?";
 	            q.insert(pair<Long, Long>(dists[next], next)); in_q[next] = true;
 	        }
 	    }
@@ -504,21 +554,22 @@ namespace slisc {
 	}
 
 	// generate random DWG (might have -inf cyclic)
-	inline void dwg_rand_unsafe(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork)
+	inline void dwg_rand_unsafe(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge,
+                                const pair<Long,Long> &weight_range, Long_I max_fork)
 	{
 	    edges.clear();
 	    vector<Long> fork_count(Nnode, 0);
-	    Long Nloop = 0, max_loop = 100*Nedge;
+	    Long Nloop = 0, max_iter = 100*Nedge;
 	    while ((Long)edges.size() < Nedge) {
-	        if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
+	        if (++Nloop > max_iter) SLS_ERR("dwg_rand: max_iter reached, impossible input?");
 	        Long from = randLong(Nnode);
 	        while (fork_count[from] > max_fork) {
-	            if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
+	            if (++Nloop > max_iter) SLS_ERR("dwg_rand: max_iter reached, impossible input?");
 	            from = randLong(Nnode);
 	        }
 	        Long to = randLong(Nnode);
 	        while (to == from) {
-	            if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
+	            if (++Nloop > max_iter) SLS_ERR("dwg_rand: max_iter reached, impossible input?");
 	            to = randLong(Nnode);
 	        }
 	        Long i; // check repetition
@@ -534,7 +585,8 @@ namespace slisc {
 	}
 
 	// generate random DWG (prevent -inf cyclic)
-	inline void dwg_rand(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork)
+	inline void dwg_rand(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge,
+                         const pair<Long,Long> &weight_range, Long_I max_fork)
 	{
 	    vector<DWGnode> dwg;
 	    vector<Long> dists;

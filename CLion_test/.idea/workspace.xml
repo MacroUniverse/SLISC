@@ -22,6 +22,9 @@
   <component name="ChangeListManager">
     <list default="true" id="223e5e8e-b874-41ec-bda0-6bdd877948e6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/algo/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/algo/graph.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SLISC/algo/tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SLISC/algo/tree.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +70,11 @@
   }
 }</component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="main.x" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="true" REDIRECT_INPUT_PATH="$PROJECT_DIR$/inp.txt" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="test" TARGET_NAME="main.x" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="test" RUN_TARGET_NAME="main.x">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -102,6 +110,7 @@
       <workItem from="1678924994880" duration="43000" />
       <workItem from="1678948283414" duration="935000" />
       <workItem from="1678951645906" duration="20000" />
+      <workItem from="1679602996742" duration="3895000" />
     </task>
     <servers />
   </component>
