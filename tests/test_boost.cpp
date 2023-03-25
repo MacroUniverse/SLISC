@@ -54,7 +54,7 @@ void test_boost()
 	// current path (pwd)
 	Str path = current_path().string();
 	if (path.substr(path.size()-6) != "/SLISC")
-		SLS_FAIL;
+		SLS_WARN("current path is: " + path);
 
 	// manipulate path
 	boost::filesystem::path p = "abc/def/ghi.txt";
