@@ -15,6 +15,8 @@ set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize
 
 add_compile_options(-Wall -Wno-reorder -Wno-misleading-indentation -g -fmax-errors=4)
 
+include_directories(../)
+
 add_executable(main.x main.cpp)
 
 # Precompiled Headers
