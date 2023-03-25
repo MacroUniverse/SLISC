@@ -3,11 +3,6 @@
 # any change in *.h.in file will cause all *.cpp files to compile
 # to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
-# version numbers
-SLS_MAJOR = 0
-SLS_MINOR = 1
-SLS_PATCH = 7
-
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
 opt_compiler = g++
@@ -356,10 +351,8 @@ endif
 $(info  )$(info  )$(info  )$(info  )
 # ---------------------------------------------------------
 
-version_flag = -D SLS_MAJOR=$(SLS_MAJOR) -D SLS_MINOR=$(SLS_MINOR) -D SLS_PATCH=$(SLS_PATCH)
-
 # all flags
-flags = $(version_flag) $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(mplapack_flag)
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(mplapack_flag)
 # -pedantic # show more warnings
 
 # all libs

@@ -191,10 +191,15 @@ add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fop
 
 # get all .cpp and .h files
 file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/tests/*.cpp" "main.cpp")
-file(GLOB HEADERS "${PROJECT_SOURCE_DIR}/SLISC/*.h")
-file(GLOB HEADERS_IN "${PROJECT_SOURCE_DIR}/SLISC/*.h.in")
-string(REPLACE ".h.in" ".h"  HEADERS2 "${HEADERS_IN}")
-list(REMOVE_ITEM HEADERS ${HEADERS2})
+file(GLOB HEADERS "${PROJECT_SOURCE_DIR}/SLISC/*.h" "${PROJECT_SOURCE_DIR}/SLISC/*/*.h")
+file(GLOB HEADERS_IN "${PROJECT_SOURCE_DIR}/SLISC/*/*.h.in")
+if (HEADERS_IN)
+	string(REPLACE ".h.in" ".h"  HEADERS2 "${HEADERS_IN}")
+	list(REMOVE_ITEM HEADERS ${HEADERS2})
+endif()
+
+# message(STATUS "HEADERS = ${HEADERS}")
+# message(STATUS "HEADERS2 = ${HEADERS2}")
 
 add_executable(main ${SOURCES} ${HEADERS} ${HEADERS2})
 set_target_properties(main PROPERTIES OUTPUT_NAME main.x)

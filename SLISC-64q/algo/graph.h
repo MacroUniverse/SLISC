@@ -6,34 +6,36 @@
 
 namespace slisc {
 
-	// ==== DAG (directed acyclic graph) ====
-	
-	// node for directed graph (including DAG)
-	// node[i] are the next connected nodes
-	typedef vector<Long> DGnode;
+    // ==== DG (directed graph) ====
+    // node for directed graph (including DAG)
+    // node[i] are the next connected nodes
+    typedef vector<Long> DGnode;
+    void dg_rand(vector<DGnode> &dg, Long_I Nnode, Long_I Nedge, Long_I max_fork);
+    void dg_from_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges);
 
+	// ==== DAG (directed acyclic graph) ====
+    void dag_rand(vector<DGnode> &dag, Long_I Nnode, Long_I Nedge, Long_I max_fork);
 	void dag_examp(vector<DGnode> &dag, Long_I ind);
-	void dag_add_edge(vector<DGnode> &dag, Long_I i, Long_I j);
-	bool dag_exist_edge(const vector<DGnode> &dag, Long_I i, Long_I j);
 	void dag_inv(vector<DGnode> &dag);
 	void dag_inv(vector<DGnode> &idag, const vector<DGnode> &dag);
 	// BFS
 	Long dag_BFS(const vector<DGnode> &dag, Long_I source, Long_I target);
-	void dag_shortest_path(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target);
-	void dag_short_edges(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag);
+	void dag_BFS(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target);
+	void dag_reduce(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag);
 	// DFS
-	bool dag_is_linked_DFS(const vector<DGnode> &dag, Long_I source, Long_I target);
+	bool dag_DFS(const vector<DGnode> &dag, Long_I source, Long_I target);
+    void dag_topo_sort(const vector<DGnode> &dag, vector<Long> &order);
 	bool dag_check(const vector<DGnode> &dag);
 	bool dag_check(vector<Long> &cycle, const vector<DGnode> &dag);
+    void dg2dag(vector<DGnode> &dag);
 	void dag_downstream(unordered_set<Long> &nodes, const vector<DGnode> &dag, Long_I node);
 	void dag_upstream(unordered_set<Long> &nodes, vector<DGnode> &dag, Long_I node);
-	void dag_topo_sort(const vector<DGnode> &dag, vector<Long> &order);
 	Long dag_num_paths(const vector<DGnode> &dag, Long_I source, Long_I target);
 	void dag_all_paths(vector<vector<Long>> &paths, const vector<DGnode> &dag, Long_I source, Long_I target);
 
 	// ==== DWG (directed weighted graph) ====
 
-	// edge of directed weighted graph, [0]:from, [1]:to [2]:weight
+	// edge of directed weighted graph, [0]:from, [1]:to, [2]:weight
 	typedef array<Long, 3> DWGedge;
 	// node for directed weighted graph (including DAG)
 	// node[i] are the next connected nodes (.first) and weights (.second)
@@ -54,21 +56,44 @@ namespace slisc {
 	// ==== WG (weighted graph) ====
 	Long wg_MST_kruskal(vector<Long> &min_edges, vector<DWGedge> &edges, Long_I Nnode);
 
-
 	// ==================== DAG ========================
 
-	// add edge to DAG
-	inline void dag_add_edge(vector<DGnode> &dag, Long_I i, Long_I j)
-	{ dag[i].push_back(j); }
+    // generate random directed graph (might have cycle, might not be all connected)
+    inline void dg_rand(vector<DGnode> &dg, Long_I Nnode, Long_I Nedge, Long_I max_fork)
+    {
+        assert(max_fork < Nnode);
+        assert(Nedge <= Nnode*max_fork);
+        dg.clear(); dg.resize(Nnode);
+        for (Long i = 0; i < Nedge; ++i) {
+            Long from, to;
+            do
+                from = randLong(Nnode);
+            while (dg[from].size() == max_fork);
+            do
+                to = randLong(Nnode);
+            while (to != from && search(to, dg[from]) >= 0);
+            dg[from].push_back(to);
+        }
+    }
 
-	// check if edge exist in DAG
-	inline bool dag_exist_edge(const vector<DGnode> &dag, Long_I i, Long_I j)
-	{
-	    for (auto &e : dag[i])
-	        if (j == e) // repeated edge
-	            return true;
-	    return false;
-	}
+    // generate random DAG
+    inline void dag_rand(vector<DGnode> &dag, Long_I Nnode, Long_I Nedge, Long_I max_fork)
+    {
+        assert(max_fork < Nnode);
+        dag.clear(); dag.resize(Nnode);
+        vector<Long> nodes_avail; // nodes under max_fork
+        for (Long i = 0; i < Nedge; ++i) {
+            Long from, to;
+            do
+                from = randLong(Nnode);
+            while (dag[from].size() == max_fork);
+            do
+                to = randLong(Nnode);
+            while (to != from && search(to, dag[from]) >= 0
+                && dag_BFS(dag, to, from) < 0);
+            dag[from].push_back(to);
+        }
+    }
 
 	// topological sort for a sub DAG (algo: DFS backtrack)
 	inline void dag_topo_sort1(const vector<DGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
@@ -94,28 +119,29 @@ namespace slisc {
 	    reverse(order.begin(), order.end());
 	}
 
-	// deep first search a node: if node[i] can go to node[j] (including i == j)
-	inline bool dag_is_linked_DFS_helper(const vector<DGnode> &dag, vector<bool> &visited, Long_I source, Long_I target)
-	{
-	    visited[source] = true;
-	    if (source == target)
-	        return true;
-	    for (auto &next : dag[source]) {
-	        if (visited[next]) continue;
-	        if (dag_is_linked_DFS_helper(dag, visited, next, target))
-	            return true;
-	    }
-	    return false;
-	}
+    // deep first search a node: if node[i] can go to node[j] (including i == j)
+    inline bool dag_DFS_helper(const vector<DGnode> &dag, vector<bool> &visited, Long_I source, Long_I target)
+    {
+        visited[source] = true;
+        if (source == target)
+            return true;
+        for (auto &next : dag[source]) {
+            if (visited[next]) continue;
+            if (dag_DFS_helper(dag, visited, next, target))
+                return true;
+        }
+        return false;
+    }
 
-	inline bool dag_is_linked_DFS(const vector<DGnode> &dag, Long_I source, Long_I target)
+	inline bool dag_DFS(const vector<DGnode> &dag, Long_I source, Long_I target)
 	{
 	    vector<bool> visited(dag.size(), false);
-	    return dag_is_linked_DFS_helper(dag, visited, source, target);
+	    return dag_DFS_helper(dag, visited, source, target);
 	}
 
-	// breadth first search from dag[i] for dag[j] (including i == j)
+    // breadth first search from dag[i] for dag[j] (including i == j)
 	// return mininum steps needed, return -1 if not found
+    // return 0 iff source == target
 	inline Long dag_BFS(const vector<DGnode> &dag, Long_I source, Long_I target)
 	{
 	    if (source == target) return 0;
@@ -138,8 +164,8 @@ namespace slisc {
 	}
 
 	// get shortest path between source and target
-	// algo: BFS, add reverse link for each seached edge
-	inline void dag_shortest_path(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target)
+	// algo: BFS, add reverse edge for each seached edge
+	inline void dag_BFS(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target)
 	{
 	    path.clear(); path.push_back(target);
 	    if (source == target) return;
@@ -165,10 +191,11 @@ namespace slisc {
 	    reverse(path.begin(), path.end());
 	}
 
-	// if two nodes of a link has other connection, then it is a "short link"
-	// get a list of all short links
-	// algo: temporarily unlink every edge, then try dag_BFS
-	void dag_short_edges(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag)
+    // Transitive Reduction
+    // if two nodes of an edge has other connection, then it is redundant
+    // get a list of all redundant edges
+	// algo: temporarily remove every edge, then try dag_BFS
+	inline void dag_reduce(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag)
 	{
 		short_edges.clear();
 		Long N = dag.size();
@@ -237,7 +264,7 @@ namespace slisc {
 	}
 
 	// check if a graph is DAG, and output 1 cycle
-	// algo: DFS, same as dag_check 
+	// algo: DFS, same as dag_check
 	inline bool dag_check(vector<Long> &cycle, const vector<DGnode> &dag)
 	{
 	    Long N = dag.size(); cycle.clear();
@@ -250,6 +277,30 @@ namespace slisc {
 		}
 	    return true;
 	}
+
+    inline void dg2dag_helper(vector<DGnode> &dag, vector<char> &states, Long_I node)
+    {
+        states[node] = 'c';
+        for (auto &next : dag[node]) {
+            if (states[next] == 'u')
+                dag_check_helper(dag, states, next);
+            else if (states[next] == 'v')
+                continue;
+            else // states[next] == 'c'
+                dag[node].erase(dag[node].begin()+next);
+        }
+        states[node] = 'v';
+    }
+
+    // remove cycles from dg, making dag
+    inline void dg2dag(vector<DGnode> &dag)
+    {
+        Long N = dag.size();
+        vector<char> states(N, 'u');
+        for (Long i = 0; i < N; ++i)
+            if (states[i] == 'u')
+                dg2dag_helper(dag, states, i);
+    }
 
 	inline void dag_downstream_helper(unordered_set<Long> &nodes, const vector<DGnode> &dag, Long_I node)
 	{
@@ -287,9 +338,9 @@ namespace slisc {
 	    dag[node].clear(); done[node] = true;
 	}
 
-	// inverse every edge of a (singly linked) sub DAG
+	// inverse every edge of a sub DAG
 	// index of dag will not change
-	// done[node] == true means all it's original links are erased
+	// `done[node]` == true means all it's original edges are erased
 	inline void dag_inv(vector<DGnode> &dag) {
 	    Long N = dag.size();
 	    vector<bool> done(N, false);
@@ -394,6 +445,14 @@ namespace slisc {
 	    }
 	}
 
+    inline void dg_from_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges)
+    {
+        for (auto &edge : edges) {
+            dg.resize(edge.first+1);
+            dg[edge.first].push_back(edge.second);
+        }
+    }
+
 	// =============== DWG ===================
 
 	inline void dwg_add_edge(vector<DWGedge> &dwg, Long_I from, Long_I to, Long_I weight)
@@ -439,7 +498,7 @@ namespace slisc {
 	        edges.push_back({from, to, weight});
 	}
 
-	// BFS algo to find the shortest dists from source node
+	// BFS algo to find the shortest dists from `source` node to all nodes
 	// (Shortest Path Faster Algorithm)
 	// supports negative edge weight
 	// out of reach distance is numeric_limits<Long>::max()
@@ -457,7 +516,8 @@ namespace slisc {
 	            if (d + weight >= dists[next])
 	                continue;
 	            dists[next] = d + weight;
-	            if (dists[next] < -1e-4) throw "-infinity distance?";
+	            if (dists[next] < -1e4)
+                    throw "cycle with negative total weight? not allowed.";
 	            if (!in_q[next])
 	                q.push(next), in_q[next] = true;
 	        }
@@ -469,24 +529,22 @@ namespace slisc {
 	// out of reach distance is numeric_limits<Long>::max()
 	inline void dwg_SPFA2(vector<Long> &dists, const vector<DWGnode> &dwg, Long_I source)
 	{
-	    set<pair<Long,Long>> q; // (dist, node)
-	    q.insert(pair<Long,Long>(0, source));
-	    vector<bool> in_q(dwg.size(), false);
+	    set<pair<Long,Long>> q; // (dist, node), ordered by dist
 	    dists.assign(dwg.size(), numeric_limits<Long>::max());
 	    dists[source] = 0;
+        q.insert(make_pair(Long(0), source));
 	    while (!q.empty()) {
-	        Long node = (*q.begin()).second;
-	        q.erase(q.begin()); in_q[node] = false;
-	        Long d = dists[node];
+	        Long node = (*q.begin()).second, d = (*q.begin()).first;
+	        q.erase(q.begin());
 	        for (auto &tmp : dwg[node]) {
 	            Long next = tmp.first, weight = tmp.second;
 	            if (d + weight >= dists[next])
 	                continue;
-	            if (in_q[next])
-	                q.erase(pair<Long, Long>(dists[next], next));
+	            q.erase(make_pair(dists[next], next));
 	            dists[next] = d + weight;
-	            if (dists[next] < -1e-4) throw "-infinity distance?";
-	            q.insert(pair<Long, Long>(dists[next], next)); in_q[next] = true;
+	            if (dists[next] < -1e4)
+                    throw "cycle with negative total weight? not allowed.";
+	            q.insert(make_pair(dists[next], next));
 	        }
 	    }
 	}
@@ -503,22 +561,23 @@ namespace slisc {
 	    edges.push_back({4, 6, 1});
 	}
 
-	// generate random DWG (might have -inf cyclic)
-	inline void dwg_rand_unsafe(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork)
+	// generate random DWG (might have cyclic with negative total weight)
+	inline void dwg_rand_unsafe(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge,
+                                const pair<Long,Long> &weight_range, Long_I max_fork)
 	{
 	    edges.clear();
 	    vector<Long> fork_count(Nnode, 0);
-	    Long Nloop = 0, max_loop = 100*Nedge;
+	    Long Niter = 0, max_iter = 100*Nedge;
 	    while ((Long)edges.size() < Nedge) {
-	        if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
+	        if (++Niter > max_iter) SLS_ERR("dwg_rand: max_iter reached, impossible input?");
 	        Long from = randLong(Nnode);
 	        while (fork_count[from] > max_fork) {
-	            if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
+	            if (++Niter > max_iter) SLS_ERR("dwg_rand: max_iter reached, impossible input?");
 	            from = randLong(Nnode);
 	        }
 	        Long to = randLong(Nnode);
 	        while (to == from) {
-	            if (++Nloop > max_loop) SLS_ERR("dwg_rand: max_loop reached, impossible input?");
+	            if (++Niter > max_iter) SLS_ERR("dwg_rand: max_iter reached, impossible input?");
 	            to = randLong(Nnode);
 	        }
 	        Long i; // check repetition
@@ -533,8 +592,9 @@ namespace slisc {
 	    }
 	}
 
-	// generate random DWG (prevent -inf cyclic)
-	inline void dwg_rand(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge, const pair<Long,Long> &weight_range, Long_I max_fork)
+	// generate random DWG (prevent cycle with negative total weight)
+	inline void dwg_rand(vector<DWGedge> &edges, Long_I Nnode, Long_I Nedge,
+                         const pair<Long,Long> &weight_range, Long_I max_fork)
 	{
 	    vector<DWGnode> dwg;
 	    vector<Long> dists;
@@ -549,7 +609,7 @@ namespace slisc {
 	        // got a good DWG
 	        if (source == size(dwg)) return;
 	    }
-	    SLS_ERR("dwg_rand(): always got -inf loops, impossible params?");
+	    SLS_ERR("dwg_rand(): always got cycles with negative weight, impossible params?");
 	}
 
 

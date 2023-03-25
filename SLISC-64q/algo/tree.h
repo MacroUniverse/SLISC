@@ -4,22 +4,17 @@
 
 namespace slisc {
 
-struct Node
-{
-	vecLong last; // last nodes
-	vecLong next; // next nodes
-};
-
 // links[2n] -> links[2n+1]
 inline void tree_gen(vector<Node> &tree, vecStr32_I entries, vecLong_I links)
 {
-	Long Nlink = links.size();
-	tree.resize(entries.size());
-	for (Long i = 0; i < Nlink; i += 2) {
-		Long ind1 = links[i], ind2 = links[i + 1];
-		tree[ind1].next.push_back(ind2);
-		tree[ind2].last.push_back(ind1);
-	}
+	SLS_ERR("use graph.h instead!");
+	// Long Nlink = links.size();
+	// tree.resize(entries.size());
+	// for (Long i = 0; i < Nlink; i += 2) {
+	// 	Long ind1 = links[i], ind2 = links[i + 1];
+	// 	tree[ind1].next.push_back(ind2);
+	// 	tree[ind2].last.push_back(ind1);
+	// }
 }
 
 // find all upstream nodes of a tree, and the distances
