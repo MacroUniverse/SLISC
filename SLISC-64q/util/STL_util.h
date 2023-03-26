@@ -116,4 +116,15 @@ typename T::const_iterator const max_second(const T &v)
     return it0;
 }
 
+// get n-th element from iterator
+// for iterator supporting only ++
+template<class T>
+inline typename T::iterator iter_ind(T &s, Long_I ind)
+{
+    auto p = s.begin();
+    for (Long i = 0; i < ind; ++i)
+        ++p;
+    return p;
+}
+
 } // namespace slisc

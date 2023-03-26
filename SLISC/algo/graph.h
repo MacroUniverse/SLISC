@@ -68,7 +68,7 @@ namespace slisc {
             Long from, to;
             do
                 from = randLong(Nnode);
-            while (dg[from].size() == max_fork);
+            while (size(dg[from]) == max_fork);
             do
                 to = randLong(Nnode);
             while (to != from && search(to, dg[from]) >= 0);
@@ -80,18 +80,37 @@ namespace slisc {
     inline void dag_rand(vector<DGnode> &dag, Long_I Nnode, Long_I Nedge, Long_I max_fork)
     {
         assert(max_fork < Nnode);
+        assert(Nedge <= Nnode*max_fork);
+        assert(Nedge <= Nnode*(Nnode-1)/2);
         dag.clear(); dag.resize(Nnode);
-        vector<Long> nodes_avail; // nodes under max_fork
+        unordered_set<Long> froms, tos;
+        for (Long i = 0; i < Nnode; ++i) froms.insert(i);
         for (Long i = 0; i < Nedge; ++i) {
             Long from, to;
-            do
-                from = randLong(Nnode);
-            while (dag[from].size() == max_fork);
-            do
-                to = randLong(Nnode);
-            while (to != from && search(to, dag[from]) >= 0
-                && dag_BFS(dag, to, from) < 0);
-            dag[from].push_back(to);
+            label: ;
+            auto p_from = rand_iter(froms);
+            from = *p_from;
+            tos.clear();
+            for (Long j = 0; j < Nnode; ++j) {
+                if (j == from) continue;
+                tos.insert(j);
+            }
+            auto p_to = rand_iter(tos);
+            while (search(*p_to, dag[from]) >= 0 || dag_BFS(dag, *p_to, from) > 0) {
+                tos.erase(p_to);
+                if (tos.empty()) {
+                    froms.erase(p_from);
+                    if (froms.empty())
+                        throw "can't satisfy Nedge!";
+                    goto label;
+                }
+                p_to = rand_iter(tos);
+            }
+            dag[from].push_back(*p_to);
+            if (size(dag[from]) == max_fork) {
+                froms.erase(p_from);
+                if (froms.empty()) throw "can't satisfy Nedge!";
+            }
         }
     }
 

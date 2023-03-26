@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../arith/arith2.h"
+#include "../util/STL_util.h"
 #include <ctime>
 
 #ifndef SLS_RAND_SEED
@@ -145,4 +146,13 @@ inline void rand(@T@_O v)
 //% end
 }
 //%------------------------
+
+// get n-th element from iterator
+// for iterator supporting only ++
+template<class T>
+inline typename T::iterator rand_iter(T &s)
+{
+	return iter_ind(s, randLong(s.size()));
+}
+
 }

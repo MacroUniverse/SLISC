@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../arith/arith2.h"
+#include "../util/STL_util.h"
 #include <ctime>
 
 #ifndef SLS_RAND_SEED
@@ -316,6 +317,15 @@ inline void rand(ScmatComp_O v)
 	Long i, N = v.size();
 	for (i = 0; i < N; ++i)
 		v[i] = randComp();
+}
+
+
+// get n-th element from iterator
+// for iterator supporting only ++
+template<class T>
+inline typename T::iterator rand_iter(T &s)
+{
+	return iter_ind(s, randLong(s.size()));
 }
 
 }
