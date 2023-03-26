@@ -127,4 +127,10 @@ inline typename T::iterator iter_ind(T &s, Long_I ind)
     return p;
 }
 
+template<class T>
+inline void erase(vector<T> &v, Long_I ind)
+{
+    v.erase(v.begin() + ind);
+}
+
 } // namespace slisc

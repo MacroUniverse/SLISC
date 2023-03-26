@@ -3,6 +3,7 @@
 #include "../util/random.h"
 #include "../algo/disjoint_sets.h"
 #include "../algo/search.h"
+#include "../util/STL_util.h"
 
 namespace slisc {
 
@@ -10,8 +11,11 @@ namespace slisc {
     // node for directed graph (including DAG)
     // node[i] are the next connected nodes
     typedef vector<Long> DGnode;
-    void dg_rand(vector<DGnode> &dg, Long_I Nnode, Long_I Nedge, Long_I max_fork);
-    void dg_from_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges);
+    void dg_rand(vector<DGnode> &dg, Long_I Nnode, Long_I Nedge, Long max_fork);
+    void dg_add_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges);
+    void dg_rm_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges);
+    Long dg_Nedges(const vector<DGnode> &dg);
+    std::ostream &operator<<(std::ostream &os, const vector<DGnode> &dg);
 
 	// ==== DAG (directed acyclic graph) ====
     void dag_rand(vector<DGnode> &dag, Long_I Nnode, Long_I Nedge, Long_I max_fork);
@@ -22,6 +26,7 @@ namespace slisc {
 	Long dag_BFS(const vector<DGnode> &dag, Long_I source, Long_I target);
 	void dag_BFS(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target);
 	void dag_reduce(vector<pair<Long,Long>> &short_edges, const vector<DGnode> &dag);
+    Long dag_reduce(vector<DGnode> &dag);
 	// DFS
 	bool dag_DFS(const vector<DGnode> &dag, Long_I source, Long_I target);
     void dag_topo_sort(const vector<DGnode> &dag, vector<Long> &order);
@@ -59,9 +64,9 @@ namespace slisc {
 	// ==================== DAG ========================
 
     // generate random directed graph (might have cycle, might not be all connected)
-    inline void dg_rand(vector<DGnode> &dg, Long_I Nnode, Long_I Nedge, Long_I max_fork)
+    inline void dg_rand(vector<DGnode> &dg, Long_I Nnode, Long_I Nedge, Long max_fork)
     {
-        assert(max_fork < Nnode);
+        max_fork = min(max_fork, Nnode-1);
         assert(Nedge <= Nnode*max_fork);
         dg.clear(); dg.resize(Nnode);
         for (Long i = 0; i < Nedge; ++i) {
@@ -71,22 +76,22 @@ namespace slisc {
             while (size(dg[from]) == max_fork);
             do
                 to = randLong(Nnode);
-            while (to != from && search(to, dg[from]) >= 0);
+            while (to == from || search(to, dg[from]) >= 0);
             dg[from].push_back(to);
         }
     }
 
     // generate random DAG
-    inline void dag_rand(vector<DGnode> &dag, Long_I Nnode, Long_I Nedge, Long_I max_fork)
+    inline void dag_rand(vector<DGnode> &dag, Long_I Nnode, Long_I Nedge, Long max_fork)
     {
-        assert(max_fork < Nnode);
+        max_fork = min(max_fork, Nnode-1);
         assert(Nedge <= Nnode*max_fork);
         assert(Nedge <= Nnode*(Nnode-1)/2);
         dag.clear(); dag.resize(Nnode);
         unordered_set<Long> froms, tos;
         for (Long i = 0; i < Nnode; ++i) froms.insert(i);
         for (Long i = 0; i < Nedge; ++i) {
-            Long from, to;
+            Long from;
             label: ;
             auto p_from = rand_iter(froms);
             from = *p_from;
@@ -115,12 +120,12 @@ namespace slisc {
     }
 
 	// topological sort for a sub DAG (algo: DFS backtrack)
-	inline void dag_topo_sort1(const vector<DGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
+	inline void dag_topo_sort_helper(const vector<DGnode> &dag, vector<Long> &order, vector<bool> &visited, Long_I node)
 	{
 	    visited[node] = true;
 	    for (auto &next : dag[node]) {
 	        if (visited[next]) continue;
-	        dag_topo_sort1(dag, order, visited, next);
+            dag_topo_sort_helper(dag, order, visited, next);
 	    }
 	    order.push_back(node);
 	}
@@ -133,7 +138,7 @@ namespace slisc {
 	    vector<bool> visited(N, false);
 	    for (Long node = 0; node < N; ++node) {
 	        if (!visited[node])
-	            dag_topo_sort1(dag, order, visited, node);
+                dag_topo_sort_helper(dag, order, visited, node);
 	    }
 	    reverse(order.begin(), order.end());
 	}
@@ -222,12 +227,23 @@ namespace slisc {
 			for (auto &targ : dag[node]) {
 				for (auto &next : dag[node]) {
 					if (next == targ) continue;
-					if (dag_BFS(dag, next, targ) > 0)
-						short_edges.push_back(make_pair(node, targ));
+					if (dag_BFS(dag, next, targ) > 0) {
+                        short_edges.push_back(make_pair(node, targ));
+                        break;
+                    }
 				}
 			}
 		}
 	}
+
+    // return # of deleted edges
+    inline Long dag_reduce(vector<DGnode> &dag)
+    {
+        vector<pair<Long,Long>> short_edges;
+        dag_reduce(short_edges, dag);
+        dg_rm_edges(dag, short_edges);
+        return short_edges.size();
+    }
 
 	// `throw false` if cycle found
 	inline void dag_check_helper(const vector<DGnode> &dag, vector<char> &states, Long_I node)
@@ -300,13 +316,15 @@ namespace slisc {
     inline void dg2dag_helper(vector<DGnode> &dag, vector<char> &states, Long_I node)
     {
         states[node] = 'c';
-        for (auto &next : dag[node]) {
+        DGnode &cur = dag[node]; // current node
+        for (Long i = size(cur)-1; i >= 0; --i) {
+            Long next = cur[i];
             if (states[next] == 'u')
-                dag_check_helper(dag, states, next);
+                dg2dag_helper(dag, states, next);
             else if (states[next] == 'v')
                 continue;
             else // states[next] == 'c'
-                dag[node].erase(dag[node].begin()+next);
+                erase(cur, i);
         }
         states[node] = 'v';
     }
@@ -360,7 +378,8 @@ namespace slisc {
 	// inverse every edge of a sub DAG
 	// index of dag will not change
 	// `done[node]` == true means all it's original edges are erased
-	inline void dag_inv(vector<DGnode> &dag) {
+	inline void dag_inv(vector<DGnode> &dag)
+    {
 	    Long N = dag.size();
 	    vector<bool> done(N, false);
 	    for (Long node = 0; node < N; ++node)
@@ -369,7 +388,8 @@ namespace slisc {
 	}
 
 	// create an inverse DAG, idag[i] and dag[i] are the same node
-	inline void dag_inv(vector<DGnode> &idag, const vector<DGnode> &dag) {
+	inline void dag_inv(vector<DGnode> &idag, const vector<DGnode> &dag)
+    {
 		for (auto &node : idag) node.clear();
 		idag.resize(dag.size());
 	    Long N = dag.size();
@@ -393,7 +413,8 @@ namespace slisc {
 
 	// find # of paths from source to target node
 	// algo: DFS, record count from each node to target
-	inline Long dag_num_paths(const vector<DGnode> &dag, Long_I source, Long_I target) {
+	inline Long dag_num_paths(const vector<DGnode> &dag, Long_I source, Long_I target)
+    {
 	    if (source == target) return 1;
 	    unordered_map<Long, Long> count; // # of paths from each node to target
 	    count[target] = 1;
@@ -423,7 +444,8 @@ namespace slisc {
 
 	// find all possible paths from source to target node
 	// algo: DFS, but path to target remains unvisited to allow visiting again
-	inline void dag_all_paths(vector<vector<Long>> &paths, const vector<DGnode> &dag, Long_I source, Long_I target) {
+	inline void dag_all_paths(vector<vector<Long>> &paths, const vector<DGnode> &dag, Long_I source, Long_I target)
+    {
 	    paths.clear();
 	    vector<bool> dead(dag.size(), false); // visited node with no way to target
 	    vector<Long> path;
@@ -464,12 +486,50 @@ namespace slisc {
 	    }
 	}
 
-    inline void dg_from_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges)
+    // will not repeat
+    inline void dg_add_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges)
     {
         for (auto &edge : edges) {
             dg.resize(edge.first+1);
-            dg[edge.first].push_back(edge.second);
+            auto &node = dg[edge.first];
+            if (search(edge.second, node) < 0)
+                node.push_back(edge.second);
         }
+    }
+
+    // doesn't have to exist
+    inline void dg_rm_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges)
+    {
+        for (auto &edge : edges) {
+            if (edge.first >= size(dg))
+                continue;
+            auto &node = dg[edge.first];
+            Long i = search(edge.second, node);
+            if (i >= 0)
+                node.erase(node.begin() + i);
+        }
+    }
+
+    // count edges
+    inline Long dg_Nedges(const vector<DGnode> &dg)
+    {
+        Long N = 0;
+        for (auto &node : dg)
+            N += node.size();
+        return N;
+    }
+
+    std::ostream &operator<<(std::ostream &os, const vector<DGnode> &dg)
+    {
+        cout << "directed graph with " << size(dg) << " nodes and "
+            << dg_Nedges(dg) << " edges:" << endl;
+        for (Long i = 0; i < size(dg); ++i) {
+            cout << i << " -> ";
+            for (auto &next : dg[i])
+                cout << next << " ";
+            cout << endl;
+        }
+        return os;
     }
 
 	// =============== DWG ===================
@@ -568,7 +628,8 @@ namespace slisc {
 	    }
 	}
 
-	inline void dwg_examp(vector<DWGedge> &edges) {
+	inline void dwg_examp(vector<DWGedge> &edges)
+    {
 	    edges.clear();
 	    edges.push_back({0, 1, 1});
 	    edges.push_back({0, 2, 4});
