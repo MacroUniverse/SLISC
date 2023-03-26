@@ -207,6 +207,9 @@ endif()
 add_executable(main ${SOURCES} ${HEADERS} ${HEADERS2})
 set_target_properties(main PROPERTIES OUTPUT_NAME main.x)
 
+# scratch code
+add_executable(scratch "scratch.cpp")
+
 # === build *.h from *.h.in ===
 if(opt_octave)
 	file(GLOB H_INs "SLISC/*/*.h.in")

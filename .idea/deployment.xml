@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeDeletion="false">
+    <option name="confirmBeforeDeletion" value="false" />
     <serverData>
       <paths name="Remote Host (cd0db863-65cb-4ccc-9a58-bb426815a8c4)">
         <serverdata>
@@ -11,7 +12,8 @@
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-Mission-build-debug" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-MinGW-build-debug" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-MinGW-build-debug" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-Mission-build-debug" />
           </excludedPaths>
         </serverdata>
       </paths>
