@@ -26,17 +26,17 @@ void test_sql_bind()
 	// insert data using binding
 	// https://www.sqlite.org/c3ref/bind_blob.html
 	str = "INSERT INTO NAMES(NAME, AGE) VALUES(?, ?)";
-	sqlite3_stmt *stmt;
+	sqlite3_stmt *stmt; // represents str
 	ret = sqlite3_prepare_v2(db, str.c_str(), str.size()+1, &stmt, NULL);
 	SLS_ASSERT(ret == SQLITE_OK);
 
-	int Nparam = sqlite3_bind_parameter_count(stmt);
+	int Nparam = sqlite3_bind_parameter_count(stmt); // # of '?'
 	SLS_ASSERT(Nparam == 2);
 
 	vecStr names = {"Alice", "Bob", "Cindy", "Alice"};
 	vecInt ages = {10, 20, 30, 40};
 
-	for (Long i = 0, N = names.size(); i < N; ++i) {
+	for (Long i = 0, N = size(names); i < N; ++i) {
 		ret = sqlite3_bind_text(stmt, 1, names[i].c_str(), names[i].size(), SQLITE_STATIC);
 		ret = sqlite3_bind_int(stmt, 2, ages[i]);
 		SLS_ASSERT(ret == SQLITE_OK);
@@ -55,10 +55,11 @@ void test_sql_bind()
 	SLS_ASSERT(ret == SQLITE_OK);
 	Nparam = sqlite3_bind_parameter_count(stmt);
 	SLS_ASSERT(Nparam == 1);
-
-	ret = sqlite3_bind_text(stmt, 1, "Alice", strlen("Alice"), SQLITE_STATIC);
+	str = "Alice";
+	ret = sqlite3_bind_text(stmt, 1, str.c_str(), str.size()+1, SQLITE_STATIC);
 	SLS_ASSERT(ret == SQLITE_OK);
 
+    // get return
 	while (sqlite3_step(stmt) == SQLITE_ROW) {
 		res_age.push_back(sqlite3_column_int(stmt, 0));
 		res_name.push_back((char*)sqlite3_column_text(stmt, 1));
