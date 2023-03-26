@@ -1,5 +1,5 @@
 #include "../SLISC/sci/odeint.h"
-#include "../SLISC/file/file.h"
+#include "../SLISC/arith/reorder.h"
 using namespace slisc;
 
 // a functor for derivative
@@ -24,7 +24,7 @@ void test_odeint() {
     Odeint<StepperDopr853<Dfun>> ode(ystartt, xx1, xx2, atol, rtol, h1,
         hminn, outt, dfun);
     ode.integrate();
-    file_remove("ode_x.txt"); file_remove("ode_y.txt");
+    remove("ode_x.txt"); remove("ode_y.txt");
     ofstream fout("ode_x.txt");
     resize_cpy(outt.xsave, nsave+1);
     resize_cpy(outt.ysave, nvar, nsave+1);

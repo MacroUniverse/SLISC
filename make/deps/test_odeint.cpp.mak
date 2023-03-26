@@ -25,17 +25,6 @@ test_odeint.o: tests/test_odeint.cpp tests/../SLISC/sci/odeint.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Jcmat3.h \
- tests/../SLISC/sci/../arith/../dense/cut.h tests/../SLISC/file/file.h \
- tests/../SLISC/file/../util/time.h tests/../SLISC/file/../util/linux.h \
- tests/../SLISC/file/../util/bit.h tests/../SLISC/file/../arith/arith1.h \
- tests/../SLISC/file/../str/unicode.h \
- tests/../SLISC/file/../str/utfcpp/utf8.h \
- tests/../SLISC/file/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/file/../str/utfcpp/utf8/core.h \
- tests/../SLISC/file/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/file/../algo/sort.h \
- tests/../SLISC/file/../algo/../algo/heap.h \
- tests/../SLISC/file/../algo/../algo/../util/random.h \
- tests/../SLISC/file/../algo/../algo/../util/../arith/arith2.h \
- tests/../SLISC/file/../algo/../arith/reorder.h
+ tests/../SLISC/sci/../arith/../dense/cut.h \
+ tests/../SLISC/arith/reorder.h tests/../SLISC/arith/../arith/arith2.h
 	$(opt_compiler) $(flags) -c tests/test_odeint.cpp

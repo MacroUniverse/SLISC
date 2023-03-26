@@ -36,10 +36,13 @@ if(opt_min)
 	set(opt_arpack OFF)
 	set(opt_sqlite OFF)
 	set(opt_matfile OFF)
+	set(opt_asan OFF)
 endif()
 
-message(STATUS "compiler: ${opt_compiler}")
-set(CMAKE_CXX_COMPILER "/usr/bin/${opt_compiler}")
+# === compiler ====
+find_program(tmp ${opt_compiler})
+set(CMAKE_CXX_COMPILER ${tmp})
+message(STATUS "compiler: ${CMAKE_CXX_COMPILER}")
 
 set(CMAKE_CXX_FLAGS "-std=${opt_std}")
 

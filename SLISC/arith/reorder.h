@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../arith/copy.h"
+#include "../arith/arith2.h"
 
 namespace slisc {
 

@@ -128,12 +128,12 @@ inline Doub threej_Doub(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_
 
 inline Doub angdelta_Doub(Long_I two_a, Long_I two_b, Long_I two_c)
 {
-	Doub angdelta, scr1;
-	scr1 = factorial((two_a + two_b - two_c) / 2);
-	scr1 = scr1 / factorial((two_a + two_b + two_c) / 2 + 1);
-	scr1 = scr1 * factorial((two_a - two_b + two_c) / 2);
-	scr1 = scr1 * factorial((-two_a + two_b + two_c) / 2);
-	angdelta = sqrt(scr1);
+	Doub angdelta, _scr1;
+	_scr1 = factorial((two_a + two_b - two_c) / 2);
+	_scr1 = _scr1 / factorial((two_a + two_b + two_c) / 2 + 1);
+	_scr1 = _scr1 * factorial((two_a - two_b + two_c) / 2);
+	_scr1 = _scr1 * factorial((-two_a + two_b + two_c) / 2);
+	angdelta = sqrt(_scr1);
 	return angdelta;
 }
 
@@ -315,12 +315,12 @@ inline Qdoub threej_Qdoub(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I tw
 
 inline Qdoub angdelta_Qdoub(Long_I two_a, Long_I two_b, Long_I two_c)
 {
-	Qdoub angdelta, scr1;
-	scr1 = factorial((two_a + two_b - two_c) / 2);
-	scr1 = scr1 / factorial((two_a + two_b + two_c) / 2 + 1);
-	scr1 = scr1 * factorial((two_a - two_b + two_c) / 2);
-	scr1 = scr1 * factorial((-two_a + two_b + two_c) / 2);
-	angdelta = sqrt(scr1);
+	Qdoub angdelta, _scr1;
+	_scr1 = factorial((two_a + two_b - two_c) / 2);
+	_scr1 = _scr1 / factorial((two_a + two_b + two_c) / 2 + 1);
+	_scr1 = _scr1 * factorial((two_a - two_b + two_c) / 2);
+	_scr1 = _scr1 * factorial((-two_a + two_b + two_c) / 2);
+	angdelta = sqrt(_scr1);
 	return angdelta;
 }
 
