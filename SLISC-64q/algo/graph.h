@@ -15,6 +15,7 @@ namespace slisc {
     void dg_add_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges);
     void dg_rm_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges);
     Long dg_Nedges(const vector<DGnode> &dg);
+    void dg_sort(vector<DGnode> &dg);
     std::ostream &operator<<(std::ostream &os, const vector<DGnode> &dg);
 
 	// ==== DAG (directed acyclic graph) ====
@@ -281,7 +282,7 @@ namespace slisc {
 	    states[node] = 'c'; cycle.push_back(node);
 	    for (auto &next : dag[node]) {
 	        if (states[next] == 'u')
-	            dag_check_helper(dag, states, next);
+	            dag_check_helper(cycle, dag, states, next);
 	        else if (states[next] == 'v')
 	            continue;
 	        else { // states[next] == 'c'
@@ -519,7 +520,15 @@ namespace slisc {
         return N;
     }
 
-    std::ostream &operator<<(std::ostream &os, const vector<DGnode> &dg)
+    // sort every DGnode by "next"
+    inline void dg_sort(vector<DGnode> &dg)
+    {
+        for (auto &node : dg)
+            if (node.size())
+                sort(node.begin(), node.end());
+    }
+
+    inline std::ostream &operator<<(std::ostream &os, const vector<DGnode> &dg)
     {
         cout << "directed graph with " << size(dg) << " nodes and "
             << dg_Nedges(dg) << " edges:" << endl;

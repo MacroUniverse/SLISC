@@ -3,7 +3,14 @@
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeDeletion="false">
     <option name="confirmBeforeDeletion" value="false" />
     <serverData>
-      <paths name="Remote Host (cd0db863-65cb-4ccc-9a58-bb426815a8c4)">
+      <paths name="Mission">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Mission (cd0db863-65cb-4ccc-9a58-bb426815a8c4)">
         <serverdata>
           <mappings>
             <mapping deploy="/tmp/tmp.TH5zt7WrwC" local="$PROJECT_DIR$" />
