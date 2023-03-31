@@ -25,5 +25,6 @@ test_heap.o: tests/test_heap.cpp tests/../SLISC/algo/heap.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Svec.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Scmat3.h \
- tests/../SLISC/algo/../util/../arith/../arith/../dense/Jcmat3.h
+ tests/../SLISC/algo/../util/../arith/../arith/../dense/Jcmat3.h \
+ tests/../SLISC/algo/../util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_heap.cpp

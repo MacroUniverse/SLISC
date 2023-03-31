@@ -36,6 +36,7 @@ test_json.o: tests/test_json.cpp tests/../SLISC/util/json.h \
  tests/../SLISC/file/../algo/../algo/heap.h \
  tests/../SLISC/file/../algo/../algo/../util/random.h \
  tests/../SLISC/file/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/file/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/file/../algo/../arith/reorder.h \
  tests/../SLISC/file/../algo/../arith/../arith/copy.h \
  tests/../SLISC/file/../algo/../arith/../arith/../dense/cut.h

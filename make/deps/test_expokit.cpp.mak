@@ -37,6 +37,7 @@ test_expokit.o: tests/test_expokit.cpp tests/../SLISC/lin/expokit.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/heap.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/../util/random.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/lin/../sparse/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/lin/../sparse/../algo/../arith/reorder.h \
  tests/../SLISC/lin/../sparse/../sparse/Diag.h \
  tests/../SLISC/lin/../lin/eig.h tests/../SLISC/lin/../lin/mul.h

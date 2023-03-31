@@ -23,5 +23,6 @@ test_queue.o: tests/test_queue.cpp tests/../SLISC/algo/queue.h \
  tests/../SLISC/util/../arith/../arith/../dense/Svec.h \
  tests/../SLISC/util/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
- tests/../SLISC/util/../arith/../arith/../dense/Jcmat3.h
+ tests/../SLISC/util/../arith/../arith/../dense/Jcmat3.h \
+ tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_queue.cpp

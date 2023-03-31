@@ -23,5 +23,6 @@ test_Scmat.o: tests/test_Scmat.cpp tests/../SLISC/dense/Scmat.h \
  tests/../SLISC/util/../arith/../arith/../sparse/Mcoo.h \
  tests/../SLISC/util/../arith/../arith/../sparse/Cmobd.h \
  tests/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
- tests/../SLISC/util/../arith/../arith/../dense/Jcmat3.h
+ tests/../SLISC/util/../arith/../arith/../dense/Jcmat3.h \
+ tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_Scmat.cpp

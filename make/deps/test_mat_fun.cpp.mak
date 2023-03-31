@@ -38,6 +38,7 @@ test_mat_fun.o: tests/test_mat_fun.cpp tests/../SLISC/lin/mat_fun.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/heap.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/../util/random.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/lin/../sparse/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/lin/../sparse/../algo/../arith/reorder.h \
  tests/../SLISC/lin/../sparse/../sparse/Diag.h \
  tests/../SLISC/lin/../lin/eig.h tests/../SLISC/lin/../lin/mul.h

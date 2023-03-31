@@ -38,6 +38,7 @@ test_eig.o: tests/test_eig.cpp tests/../SLISC/lin/eig.h \
  tests/../SLISC/sparse/../algo/../algo/heap.h \
  tests/../SLISC/sparse/../algo/../algo/../util/random.h \
  tests/../SLISC/sparse/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/sparse/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/sparse/../algo/../arith/reorder.h \
  tests/../SLISC/sparse/../sparse/Diag.h tests/../SLISC/lin/mul.h
 	$(opt_compiler) $(flags) -c tests/test_eig.cpp

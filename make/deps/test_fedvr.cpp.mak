@@ -38,6 +38,7 @@ test_fedvr.o: tests/test_fedvr.cpp tests/../SLISC/lin/eig.h \
  tests/../SLISC/tdse/../sparse/../algo/../algo/heap.h \
  tests/../SLISC/tdse/../sparse/../algo/../algo/../util/random.h \
  tests/../SLISC/tdse/../sparse/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/tdse/../sparse/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/tdse/../sparse/../algo/../arith/reorder.h \
  tests/../SLISC/tdse/../sparse/../sparse/Diag.h \
  tests/../SLISC/tdse/../sci/interp1.h \

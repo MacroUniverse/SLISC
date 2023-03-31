@@ -38,6 +38,7 @@ test_sha1sum.o: tests/test_sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/../algo/../algo/heap.h \
  tests/../SLISC/util/../file/../algo/../algo/../util/random.h \
  tests/../SLISC/util/../file/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/util/../file/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/util/../file/../algo/../arith/reorder.h \
  tests/../SLISC/util/../file/../algo/../arith/../arith/copy.h \
  tests/../SLISC/util/../file/../algo/../arith/../arith/../dense/cut.h

@@ -29,5 +29,6 @@ test_lin_eq.o: tests/test_lin_eq.cpp tests/../SLISC/arith/arith1.h \
  tests/../SLISC/lin/../sparse/../arith/copy.h \
  tests/../SLISC/lin/../sparse/../arith/../dense/cut.h \
  tests/../SLISC/lin/mul.h tests/../SLISC/util/random.h \
- tests/../SLISC/util/../arith/arith2.h
+ tests/../SLISC/util/../arith/arith2.h \
+ tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_lin_eq.cpp

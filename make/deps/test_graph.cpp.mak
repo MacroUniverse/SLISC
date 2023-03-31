@@ -26,6 +26,7 @@ test_graph.o: tests/test_graph.cpp tests/../SLISC/algo/graph.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Jcmat3.h \
+ tests/../SLISC/algo/../util/../util/STL_util.h \
  tests/../SLISC/algo/../algo/disjoint_sets.h \
  tests/../SLISC/algo/../algo/search.h \
  tests/../SLISC/algo/../algo/../arith/arith1.h \

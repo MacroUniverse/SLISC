@@ -22,5 +22,6 @@ test_Cmat.o: tests/test_Cmat.cpp tests/../SLISC/arith/compare.h \
  tests/../SLISC/arith/../dense/Scmat.h \
  tests/../SLISC/arith/../dense/Scmat3.h \
  tests/../SLISC/arith/../dense/Jcmat3.h tests/../SLISC/util/random.h \
- tests/../SLISC/util/../arith/arith2.h
+ tests/../SLISC/util/../arith/arith2.h \
+ tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_Cmat.cpp

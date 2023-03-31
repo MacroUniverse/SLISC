@@ -28,5 +28,6 @@ test_band.o: tests/test_band.cpp tests/../SLISC/arith/arith1.h \
  tests/../SLISC/sparse/../arith/arith4.h \
  tests/../SLISC/sparse/../arith/copy.h \
  tests/../SLISC/sparse/../arith/../dense/cut.h tests/../SLISC/lin/mul.h \
- tests/../SLISC/util/random.h tests/../SLISC/util/../arith/arith2.h
+ tests/../SLISC/util/random.h tests/../SLISC/util/../arith/arith2.h \
+ tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_band.cpp

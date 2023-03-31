@@ -28,7 +28,8 @@ test_arithmetic.o: tests/test_arithmetic.cpp \
  tests/../SLISC/arith/arith2.h tests/../SLISC/arith/arith4.h \
  tests/../SLISC/lin/mul.h tests/../SLISC/lin/../arith/copy.h \
  tests/../SLISC/lin/../arith/../dense/cut.h tests/../SLISC/util/random.h \
- tests/../SLISC/algo/sort.h tests/../SLISC/algo/../str/unicode.h \
+ tests/../SLISC/util/../util/STL_util.h tests/../SLISC/algo/sort.h \
+ tests/../SLISC/algo/../str/unicode.h \
  tests/../SLISC/algo/../str/utfcpp/utf8.h \
  tests/../SLISC/algo/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/algo/../str/utfcpp/utf8/core.h \

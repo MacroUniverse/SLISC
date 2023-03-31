@@ -37,6 +37,7 @@ test_Cmobd.o: tests/test_Cmobd.cpp tests/../SLISC/sparse/sparse_arith.h \
  tests/../SLISC/sparse/../algo/../algo/heap.h \
  tests/../SLISC/sparse/../algo/../algo/../util/random.h \
  tests/../SLISC/sparse/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/sparse/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/sparse/../algo/../arith/reorder.h \
  tests/../SLISC/sparse/../sparse/Diag.h
 	$(opt_compiler) $(flags) -c tests/test_Cmobd.cpp

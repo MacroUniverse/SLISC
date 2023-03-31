@@ -491,7 +491,11 @@ namespace slisc {
     inline void dg_add_edges(vector<DGnode> &dg, const vector<pair<Long,Long>> &edges)
     {
         for (auto &edge : edges) {
-            dg.resize(edge.first+1);
+            if (edge.first == edge.second)
+                SLS_ERR("illegal edge:" + to_string(edge.first) + "->" + to_string(edge.second));
+            Long sz = max(edge.first,edge.second)+1;
+            if (dg.size() < sz)
+                dg.resize(sz);
             auto &node = dg[edge.first];
             if (search(edge.second, node) < 0)
                 node.push_back(edge.second);

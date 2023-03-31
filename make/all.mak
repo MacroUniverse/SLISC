@@ -35,7 +35,9 @@ opt_arb = true
 # use Arpack++2 lib
 opt_arpack = true
 # use sqlite
-opt_sqlite = true
+opt_sqlite = false
+# use SQLiteCpp
+opt_sqlitecpp = true
 # read and write Matlab .mat file
 opt_matfile = false
 #==========================
@@ -305,6 +307,16 @@ else
     $(info Arpack: off)
 endif
 
+# === SQLiteCpp ===
+ifeq ($(opt_sqlitecpp), true)
+    opt_sqlite = false
+    sqlitecpp_flag = -D SLS_USE_SQLITECPP -D SLS_USE_SQLITE
+    $(info SQLiteCpp: static)
+    sqlitecpp_lib = -l:libSQLiteCpp.a -l:libSQLiteCpp-sqlite3.a
+else
+    $(info SQLiteCpp: off)
+endif
+
 # === SQLite ===
 ifeq ($(opt_sqlite), true)
     sqlite_flag = -D SLS_USE_SQLITE
@@ -352,14 +364,14 @@ $(info  )$(info  )$(info  )$(info  )
 # ---------------------------------------------------------
 
 # all flags
-flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(mplapack_flag)
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(sqlitecpp_flag) $(mplapack_flag)
 # -pedantic # show more warnings
 
 # all libs
 ifeq ($(opt_static), true)
     static_flag = -static
 endif
-libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(quad_math_lib)
+libs = $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(sqlitecpp_lib) $(quad_math_lib)
 
 # subfolders of SLISC, including SLISC, e.g. "SLISC/:SLISC/prec/:...:SLISC/lin/"
 in_paths = $(shell find SLISC -maxdepth 1 -type d -printf "../%p/:" | head -c -2)/

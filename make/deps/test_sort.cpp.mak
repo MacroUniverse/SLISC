@@ -32,6 +32,7 @@ test_sort.o: tests/test_sort.cpp tests/../SLISC/algo/sort.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Jcmat3.h \
+ tests/../SLISC/algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/algo/../arith/reorder.h \
  tests/../SLISC/algo/../arith/../arith/copy.h \
  tests/../SLISC/algo/../arith/../arith/../dense/cut.h \

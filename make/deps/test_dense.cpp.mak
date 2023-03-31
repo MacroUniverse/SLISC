@@ -25,5 +25,6 @@ test_dense.o: tests/test_dense.cpp tests/../SLISC/arith/arith2.h \
  tests/../SLISC/arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/arith/../arith/../dense/Jcmat3.h \
  tests/../SLISC/arith/copy.h tests/../SLISC/arith/../dense/cut.h \
- tests/../SLISC/arith/reorder.h tests/../SLISC/util/random.h
+ tests/../SLISC/arith/reorder.h tests/../SLISC/util/random.h \
+ tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(flags) -c tests/test_dense.cpp

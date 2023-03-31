@@ -39,6 +39,7 @@ test_matb.o: tests/test_matb.cpp tests/../SLISC/arith/arith4.h \
  tests/../SLISC/file/../file/../file/../algo/../algo/heap.h \
  tests/../SLISC/file/../file/../file/../algo/../algo/../util/random.h \
  tests/../SLISC/file/../file/../file/../algo/../algo/../util/../arith/arith2.h \
+ tests/../SLISC/file/../file/../file/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/file/../file/../file/../algo/../arith/reorder.h \
  tests/../SLISC/file/../file/../file/../algo/../arith/../arith/copy.h \
  tests/../SLISC/file/../file/../file/../algo/../arith/../arith/../dense/cut.h \

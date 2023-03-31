@@ -3,6 +3,10 @@
 #ifdef SLS_USE_SQLITE
 #include <sqlite3.h>
 #endif
+#ifdef SLS_USE_SQLITECPP
+#include <SQLiteCpp/Statement.h>
+#include <SQLiteCpp/Database.h>
+#endif
 
 using namespace slisc;
 
@@ -50,22 +54,30 @@ void test_sql_bind()
 	sqlite3_finalize(stmt);
 
 	// query using one bind parameter
-	str = "SELECT AGE, NAME, ID FROM NAMES WHERE NAME=?";
-	ret = sqlite3_prepare_v2(db, str.c_str(), str.size()+1, &stmt, NULL);
+    sqlite3_stmt *stmt2;
+	str = "SELECT \"AGE\", \"NAME\", \"ID\" FROM NAMES WHERE \"NAME\" = ?;";
+	ret = sqlite3_prepare_v2(db, str.c_str(), str.size()+1, &stmt2, NULL);
 	SLS_ASSERT(ret == SQLITE_OK);
-	Nparam = sqlite3_bind_parameter_count(stmt);
+	Nparam = sqlite3_bind_parameter_count(stmt2);
 	SLS_ASSERT(Nparam == 1);
-	str = "Alice";
-	ret = sqlite3_bind_text(stmt, 1, str.c_str(), str.size()+1, SQLITE_STATIC);
-	SLS_ASSERT(ret == SQLITE_OK);
 
-    // get return
-	while (sqlite3_step(stmt) == SQLITE_ROW) {
-		res_age.push_back(sqlite3_column_int(stmt, 0));
-		res_name.push_back((char*)sqlite3_column_text(stmt, 1));
-		res_id.push_back(sqlite3_column_int(stmt, 2));
-	}
-	sqlite3_finalize(stmt);
+    str = "Alice";
+    ret = sqlite3_bind_text(stmt2, 1, str.c_str(), -1, SQLITE_TRANSIENT);
+    SLS_ASSERT(ret == SQLITE_OK);
+    while ((ret = sqlite3_step(stmt2)) == SQLITE_ROW) {
+        // get return
+        res_age.push_back(sqlite3_column_int(stmt2, 0));
+        res_name.push_back((char *) sqlite3_column_text(stmt2, 1));
+        res_id.push_back(sqlite3_column_int(stmt2, 2));
+        // cout << res_id.back() << " " << res_name.back() << " " << res_age.back() << endl;
+    }
+    if (ret != SQLITE_DONE) {
+        Str msg = sqlite3_errmsg(db);
+        sqlite3_finalize(stmt2); sqlite3_close(db);
+        SLS_ERR("sqlite3_step() 2: " + msg);
+    }
+    sqlite3_finalize(stmt2);
+
 	SLS_ASSERT(res_id.size() == 2);
 	SLS_ASSERT(res_id[0] == 1);
 	SLS_ASSERT(res_id[1] == 4);
@@ -140,8 +152,51 @@ void test_sqlite()
 		SLS_ERR("Error Inserting Table :" + Str(messaggeError));
 		sqlite3_free(messaggeError);
 	}
-
 	sqlite3_close(DB);
+
+    // test SQLiteCpp
+#ifdef SLS_USE_SQLITECPP
+    cout << "(testing SQLiteCpp)" << endl;
+    try {
+        SQLite::Database db("test_sql_bind.db");
+        SQLite::Statement query(db, "SELECT * FROM names WHERE age > ?");
+        SLS_ASSERT(query.getColumnName(0) == Str("ID"));
+        SLS_ASSERT(query.getColumnDeclaredType(0) == Str("INTEGER"));
+        SLS_ASSERT(query.getColumnName(1) == Str("NAME"));
+        SLS_ASSERT(query.getColumnDeclaredType(1) == Str("CHAR(50)"));
+        SLS_ASSERT(query.getColumnName(2) == Str("AGE"));
+        SLS_ASSERT(query.getColumnDeclaredType(2) == Str("INTEGER"));
+        query.bind(1, 20);
+
+        vecInt id, age;
+        vecStr name;
+        while (query.executeStep())
+        {
+            SLS_ASSERT(!query.isColumnNull(0));
+            id.push_back(query.getColumn(0));
+            SLS_ASSERT(!query.isColumnNull(1));
+            name.push_back(query.getColumn(1));
+            SLS_ASSERT(!query.isColumnNull(2));
+            age.push_back(query.getColumn(2));
+        }
+        SLS_ASSERT(id.size() == 2);
+        SLS_ASSERT(name.size() == 2);
+        SLS_ASSERT(age.size() == 2);
+        SLS_ASSERT(id[0] == 3);
+        SLS_ASSERT(name[0] == "Cindy");
+        SLS_ASSERT(age[0] == 30);
+        SLS_ASSERT(id[1] == 4);
+        SLS_ASSERT(name[1] == "Alice");
+        SLS_ASSERT(age[1] == 40);
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "exception: " << e.what() << std::endl;
+    }
+#else
+    cout << "---------- sqlite cpp disabled! ----------" << endl;
+#endif
+
 #else
 	cout << "---------- disabled! ----------" << endl;
 #endif

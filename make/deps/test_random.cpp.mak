@@ -25,6 +25,6 @@ test_random.o: tests/test_random.cpp tests/../SLISC/util/random.h \
  tests/../SLISC/util/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/util/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/util/../arith/../arith/../dense/Jcmat3.h \
- tests/../SLISC/algo/search.h tests/../SLISC/algo/../arith/arith1.h \
- tests/../SLISC/algo/../dense/cut.h
+ tests/../SLISC/util/../util/STL_util.h tests/../SLISC/algo/search.h \
+ tests/../SLISC/algo/../arith/arith1.h tests/../SLISC/algo/../dense/cut.h
 	$(opt_compiler) $(flags) -c tests/test_random.cpp
