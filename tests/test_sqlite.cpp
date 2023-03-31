@@ -155,6 +155,7 @@ void test_sqlite()
 	sqlite3_close(DB);
 
     // test SQLiteCpp
+    // https://github.com/SRombauts/SQLiteCpp
 #ifdef SLS_USE_SQLITECPP
     cout << "(testing SQLiteCpp)" << endl;
     try {

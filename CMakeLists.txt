@@ -174,11 +174,11 @@ else()
 endif()
 
 # === SQLiteCpp ===
-if(opt_sqlite)
+if(opt_sqlitecpp)
 	set(opt_sqlite OFF)
 	message(STATUS "sqlitecpp: on")
 	add_definitions(-D SLS_USE_SQLITECPP -D SLS_USE_SQLITE)
-	list(APPEND LIBS SQLiteCpp)
+	list(APPEND LIBS SQLiteCpp sqlite3)
 else()
 	message(STATUS "sqlitecpp: off")
 endif()
