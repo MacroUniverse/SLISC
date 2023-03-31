@@ -48,5 +48,6 @@ int main() {
     disp(v_num);
     disp(v_str);
 //----------------------------------------------
+    cout << "done!" << endl;
     return 0;
 }

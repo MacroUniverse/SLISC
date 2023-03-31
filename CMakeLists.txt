@@ -221,6 +221,7 @@ set_target_properties(main PROPERTIES OUTPUT_NAME main.x)
 
 # scratch code
 add_executable(scratch "scratch.cpp")
+set_target_properties(scratch PROPERTIES OUTPUT_NAME scratch.x)
 
 # === build *.h from *.h.in ===
 if(opt_octave)
