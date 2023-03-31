@@ -32,7 +32,7 @@ util/mattinfo
 util/matb_q2d
 test.mat
 example.db
-test_sql_bind.db
+test*.db
 test1.txt
 test.txt
 CMakeCache.txt

@@ -1,7 +1,7 @@
 #include "../SLISC/file/file.h"
 #include <iostream>
 #ifdef SLS_USE_SQLITE
-#include <sqlite3.h>
+#include "../SLISC/file/sqlite_ext.h"
 #endif
 #ifdef SLS_USE_SQLITECPP
 #include <SQLiteCpp/Statement.h>
@@ -10,7 +10,7 @@
 
 using namespace slisc;
 
-void test_sql_bind()
+void test_sqlite_bind()
 {
 #ifdef SLS_USE_SQLITE
 	Str str;
@@ -18,8 +18,8 @@ void test_sql_bind()
 	vecStr res_name;
 	vecInt res_id, res_age;
 
-	file_remove("test_sql_bind.db");
-	int ret = sqlite3_open("test_sql_bind.db", &db);
+	file_remove("test_sqlite_bind.db");
+	int ret = sqlite3_open("test_sqlite_bind.db", &db);
 	SLS_ASSERT(ret == SQLITE_OK);
 	
 	// create table
@@ -114,52 +114,14 @@ void test_sql_bind()
 #endif
 }
 
-void test_sqlite()
+void test_sqlitecpp()
 {
-#ifdef SLS_USE_SQLITE
-	test_sql_bind();
-	sqlite3* DB;
-	int exit;
-	file_remove("example.db");
-	exit = sqlite3_open("example.db", &DB);
-	if (exit) {
-		cout << sqlite3_errmsg(DB) << endl;
-		SLS_ERR("Error open DB!");
-	}
-	char* messaggeError;
-	string sql = "CREATE TABLE PERSON("
-						"ID INT PRIMARY KEY     NOT NULL, "
-						"NAME           TEXT    NOT NULL, "
-						"SURNAME          TEXT     NOT NULL, "
-						"AGE            INT     NOT NULL, "
-						"ADDRESS        CHAR(50), "
-						"SALARY         REAL );";
-	exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
-	if (exit != SQLITE_OK) {
-		SLS_ERR("Error Create Table");
-		sqlite3_free(messaggeError);
-	}
-
-	sql = "INSERT INTO PERSON"
-						"(ID, NAME, SURNAME, AGE, ADDRESS, SALARY)"
-						" VALUES "
-						"(0, 'Addis', 'Chen', 30, 'Claflin Rd, Manhattan, KS, 66502', 1500.03);"
-			 "INSERT INTO PERSON"
-						" VALUES "
-						"(1, 'Bob', 'Chen', 31, 'Anderson Ave, Manhattan, KS, 66502', 1500.03);";
-	exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
-	if (exit != SQLITE_OK) {
-		SLS_ERR("Error Inserting Table :" + Str(messaggeError));
-		sqlite3_free(messaggeError);
-	}
-	sqlite3_close(DB);
-
     // test SQLiteCpp
     // https://github.com/SRombauts/SQLiteCpp
 #ifdef SLS_USE_SQLITECPP
     cout << "(testing SQLiteCpp)" << endl;
     try {
-        SQLite::Database db("test_sql_bind.db");
+        SQLite::Database db("test_sqlite_bind.db");
         SQLite::Statement query(db, "SELECT * FROM names WHERE age > ?");
         SLS_ASSERT(query.getColumnName(0) == Str("ID"));
         SLS_ASSERT(query.getColumnDeclaredType(0) == Str("INTEGER"));
@@ -197,7 +159,53 @@ void test_sqlite()
 #else
     cout << "---------- sqlite cpp disabled! ----------" << endl;
 #endif
+}
 
+void test_sqlite_exec()
+{
+    sqlite3* db;
+    int exit;
+    file_remove("example.db");
+    exit = sqlite3_open("example.db", &db);
+    if (exit) {
+        cout << sqlite3_errmsg(db) << endl;
+        SLS_ERR("Error open db!");
+    }
+    char* messaggeError;
+    string sql = "CREATE TABLE PERSON("
+                 "ID INT PRIMARY KEY     NOT NULL, "
+                 "NAME           TEXT    NOT NULL, "
+                 "SURNAME          TEXT     NOT NULL, "
+                 "AGE            INT     NOT NULL, "
+                 "ADDRESS        CHAR(50), "
+                 "SALARY         REAL );";
+    exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messaggeError);
+    if (exit != SQLITE_OK) {
+        SLS_ERR("Error Create Table");
+        sqlite3_free(messaggeError);
+    }
+
+    sql = "INSERT INTO PERSON"
+          "(ID, NAME, SURNAME, AGE, ADDRESS, SALARY)"
+          " VALUES "
+          "(0, 'Addis', 'Chen', 30, 'Claflin Rd, Manhattan, KS, 66502', 1500.03);"
+          "INSERT INTO PERSON"
+          " VALUES "
+          "(1, 'Bob', 'Chen', 31, 'Anderson Ave, Manhattan, KS, 66502', 1500.03);";
+    exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messaggeError);
+    if (exit != SQLITE_OK) {
+        SLS_ERR("Error Inserting Table :" + Str(messaggeError));
+        sqlite3_free(messaggeError);
+    }
+    sqlite3_close(db);
+}
+
+void test_sqlite()
+{
+#ifdef SLS_USE_SQLITE
+    test_sqlitecpp(); // recommended
+    test_sqlite_exec();
+    test_sqlite_bind();
 #else
 	cout << "---------- disabled! ----------" << endl;
 #endif
