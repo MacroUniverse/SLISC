@@ -219,5 +219,11 @@ namespace slisc {
 		read(str, fname);
 		return sha1sum(str);
 	}
+
+    inline Str32 sha1sum_f(Str32_I fname) {
+        Str str;
+        read(str, utf32to8(fname));
+        return utf8to32(sha1sum(str));
+    }
 #endif
 } // namespace slisc
