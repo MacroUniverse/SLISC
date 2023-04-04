@@ -9,6 +9,13 @@ test_odeint.o: tests/test_odeint.cpp tests/../SLISC/sci/odeint.h \
  tests/../SLISC/sci/../arith/../arith/../dense/../dense/../prec/quad_math.h \
  tests/../SLISC/sci/../arith/../arith/../dense/../dense/../arith/Imag.h \
  tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Cmat.h \
@@ -19,8 +26,6 @@ test_odeint.o: tests/test_odeint.cpp tests/../SLISC/sci/odeint.h \
  tests/../SLISC/sci/../arith/../arith/../sparse/../dense/Dcmat.h \
  tests/../SLISC/sci/../arith/../arith/../sparse/Mcoo.h \
  tests/../SLISC/sci/../arith/../arith/../sparse/Cmobd.h \
- tests/../SLISC/sci/../arith/../arith/../sparse/../arith/scalar_arith.h \
- tests/../SLISC/sci/../arith/../arith/../sparse/../arith/../arith/complex_arith.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Svec.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Scmat3.h \

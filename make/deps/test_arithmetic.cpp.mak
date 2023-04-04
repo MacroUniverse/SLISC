@@ -11,6 +11,11 @@ test_arithmetic.o: tests/test_arithmetic.cpp \
  tests/../SLISC/arith/../arith/../dense/Vec.h \
  tests/../SLISC/arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/arith/../arith/../dense/Mat.h \
  tests/../SLISC/arith/../arith/../dense/Mat3.h \
  tests/../SLISC/arith/../arith/../dense/Cmat.h \
@@ -29,11 +34,6 @@ test_arithmetic.o: tests/test_arithmetic.cpp \
  tests/../SLISC/lin/mul.h tests/../SLISC/lin/../arith/copy.h \
  tests/../SLISC/lin/../arith/../dense/cut.h tests/../SLISC/util/random.h \
  tests/../SLISC/util/../util/STL_util.h tests/../SLISC/algo/sort.h \
- tests/../SLISC/algo/../str/unicode.h \
- tests/../SLISC/algo/../str/utfcpp/utf8.h \
- tests/../SLISC/algo/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/algo/../str/utfcpp/utf8/core.h \
- tests/../SLISC/algo/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/algo/../algo/heap.h \
  tests/../SLISC/algo/../arith/reorder.h
 	$(opt_compiler) $(flags) -c tests/test_arithmetic.cpp

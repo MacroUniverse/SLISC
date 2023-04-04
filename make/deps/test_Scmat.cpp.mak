@@ -12,6 +12,11 @@ test_Scmat.o: tests/test_Scmat.cpp tests/../SLISC/dense/Scmat.h \
  tests/../SLISC/util/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/util/../arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/util/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/util/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/util/../arith/../arith/../dense/Cmat.h \

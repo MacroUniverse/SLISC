@@ -8,6 +8,13 @@ test_copy.o: tests/test_copy.cpp tests/../SLISC/arith/copy.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../prec/quad_math.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../arith/Imag.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/arith/../arith/../dense/Mat.h \
  tests/../SLISC/arith/../arith/../dense/Mat3.h \
  tests/../SLISC/arith/../arith/../dense/Cmat.h \
@@ -18,8 +25,6 @@ test_copy.o: tests/test_copy.cpp tests/../SLISC/arith/copy.h \
  tests/../SLISC/arith/../arith/../sparse/../dense/Dcmat.h \
  tests/../SLISC/arith/../arith/../sparse/Mcoo.h \
  tests/../SLISC/arith/../arith/../sparse/Cmobd.h \
- tests/../SLISC/arith/../arith/../sparse/../arith/scalar_arith.h \
- tests/../SLISC/arith/../arith/../sparse/../arith/../arith/complex_arith.h \
  tests/../SLISC/arith/../arith/../dense/Svec.h \
  tests/../SLISC/arith/../arith/../dense/Scmat.h \
  tests/../SLISC/arith/../arith/../dense/Scmat3.h \

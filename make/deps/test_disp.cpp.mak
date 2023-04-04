@@ -11,6 +11,11 @@ test_disp.o: tests/test_disp.cpp tests/../SLISC/str/disp.h \
  tests/../SLISC/str/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/str/../arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/str/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/str/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/str/../arith/../arith/../dense/Cmat.h \
@@ -25,10 +30,5 @@ test_disp.o: tests/test_disp.cpp tests/../SLISC/str/disp.h \
  tests/../SLISC/str/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/str/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/str/../arith/../arith/../dense/Jcmat3.h \
- tests/../SLISC/str/../str/unicode.h \
- tests/../SLISC/str/../str/utfcpp/utf8.h \
- tests/../SLISC/str/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/str/../str/utfcpp/utf8/core.h \
- tests/../SLISC/str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/arith/arith2.h
 	$(opt_compiler) $(flags) -c tests/test_disp.cpp

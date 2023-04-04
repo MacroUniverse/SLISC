@@ -238,6 +238,14 @@ typedef string Str;
 typedef const Str &Str_I;
 typedef Str &Str_O, &Str_IO;
 
+typedef char16_t Char16;
+typedef const Char16 Char16_I;
+typedef Char16 &Char16_O, &Char16_IO;
+
+typedef std::u16string Str16;
+typedef const Str16 &Str16_I;
+typedef Str16 &Str16_O, &Str16_IO;
+
 typedef char32_t Char32;
 typedef const Char32 Char32_I;
 typedef Char32 &Char32_O, &Char32_IO;

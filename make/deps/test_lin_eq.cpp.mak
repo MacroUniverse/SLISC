@@ -10,6 +10,11 @@ test_lin_eq.o: tests/test_lin_eq.cpp tests/../SLISC/arith/arith1.h \
  tests/../SLISC/arith/../arith/../dense/Vec.h \
  tests/../SLISC/arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/arith/../arith/../dense/Mat.h \
  tests/../SLISC/arith/../arith/../dense/Mat3.h \
  tests/../SLISC/arith/../arith/../dense/Cmat.h \

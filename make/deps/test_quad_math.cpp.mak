@@ -5,10 +5,15 @@ test_quad_math.o: tests/test_quad_math.cpp tests/../SLISC/dense/Cmat.h \
  tests/../SLISC/dense/../dense/../prec/quad_math_declare.h \
  tests/../SLISC/dense/../dense/../prec/quad_math.h \
  tests/../SLISC/dense/../dense/../arith/Imag.h \
- tests/../SLISC/dense/../dense/../str/str.h tests/../SLISC/util/random.h \
- tests/../SLISC/util/../arith/arith2.h \
- tests/../SLISC/util/../arith/../arith/scalar_arith.h \
- tests/../SLISC/util/../arith/../arith/../arith/complex_arith.h \
+ tests/../SLISC/dense/../dense/../str/str.h \
+ tests/../SLISC/dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/dense/../dense/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/dense/../dense/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/util/random.h tests/../SLISC/util/../arith/arith2.h \
  tests/../SLISC/util/../arith/../arith/compare.h \
  tests/../SLISC/util/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/util/../arith/../arith/../dense/Mat.h \

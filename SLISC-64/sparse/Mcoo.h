@@ -138,7 +138,7 @@ inline void McooChar::push(Char_I s, Long_I i, Long_I j)
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooChar::push(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooChar::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -154,7 +154,7 @@ inline void McooChar::set(Char_I s, Long_I i, Long_I j)
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooChar::set(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooChar::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -414,7 +414,7 @@ inline void McooInt::push(Int_I s, Long_I i, Long_I j)
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooInt::push(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooInt::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -430,7 +430,7 @@ inline void McooInt::set(Int_I s, Long_I i, Long_I j)
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooInt::set(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooInt::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -690,7 +690,7 @@ inline void McooLlong::push(Llong_I s, Long_I i, Long_I j)
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooLlong::push(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooLlong::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -706,7 +706,7 @@ inline void McooLlong::set(Llong_I s, Long_I i, Long_I j)
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooLlong::set(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooLlong::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -966,7 +966,7 @@ inline void McooDoub::push(Doub_I s, Long_I i, Long_I j)
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooDoub::push(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooDoub::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -982,7 +982,7 @@ inline void McooDoub::set(Doub_I s, Long_I i, Long_I j)
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooDoub::set(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooDoub::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -1242,7 +1242,7 @@ inline void McooComp::push(Comp_I s, Long_I i, Long_I j)
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooComp::push(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooComp::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -1258,7 +1258,7 @@ inline void McooComp::set(Comp_I s, Long_I i, Long_I j)
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooComp::set(): out of memory, please reserve! m_N = " + to_string(m_N));
+	    SLS_ERR("McooComp::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }

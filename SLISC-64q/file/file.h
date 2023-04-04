@@ -84,7 +84,7 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 
 // not case sensitive on Windows, see file_exist_case()
 inline Bool file_exist(Str32_I fname) {
-	return file_exist(utf32to8(fname));
+	return file_exist(u8(fname));
 }
 
 // remove a file with error handling
@@ -348,9 +348,9 @@ inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I k
 	vecStr fnames8;
 	if (!append)
 	    fnames.clear();
-	file_list_ext(fnames8, utf32to8(path), utf32to8(ext), keep_ext);
+	file_list_ext(fnames8, u8(path), u8(ext), keep_ext);
 	for (Long i = 0; i < size(fnames8); ++i)
-	    fnames.push_back(utf8to32(fnames8[i]));
+	    fnames.push_back(u32(fnames8[i]));
 }
 
 // copy a file (read then write)
@@ -382,7 +382,7 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 
 inline void file_copy(Str32_I fname_out, Str32_I fname_in, Bool_I replace = false)
 {
-	file_copy(utf32to8(fname_out), utf32to8(fname_in), replace);
+	file_copy(u8(fname_out), u8(fname_in), replace);
 }
 
 // file copy with user buffer (larger buffer is faster)
@@ -534,12 +534,12 @@ inline void write(Str_I str, Str_I fname)
 // write UTF-32 Str32 into a UTF-8 file
 inline void write(Str32_I str32, Str_I fname)
 {
-	write(utf32to8(str32), fname);
+	write(u8(str32), fname);
 }
 
 inline void write(Str32_I str32, Str32_I fname)
 {
-	write(str32, utf32to8(fname));
+	write(str32, u8(fname));
 }
 
 // write a vector of strings to file
@@ -575,12 +575,12 @@ inline void read(Str32_O str32, Str_I fname)
 {
 	Str str;
 	read(str, fname);
-	utf8to32(str32, str);
+	u32(str32, str);
 }
 
 inline void read(Str32_O str32, Str32_I fname)
 {
-	read(str32, utf32to8(fname));
+	read(str32, u8(fname));
 }
 
 // read the file written by `write_vec_str()`

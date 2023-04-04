@@ -7,7 +7,6 @@ test_ylm.o: tests/test_ylm.cpp tests/../SLISC/spec/ylm.h \
  tests/../SLISC/spec/../str/../arith/../arith/../prec/quad_math_declare.h \
  tests/../SLISC/spec/../str/../arith/../arith/../prec/quad_math.h \
  tests/../SLISC/spec/../str/../arith/../arith/Imag.h \
- tests/../SLISC/spec/../str/../str/str.h \
  tests/../SLISC/spec/../str/utfcpp/utf8.h \
  tests/../SLISC/spec/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/spec/../str/utfcpp/utf8/core.h \

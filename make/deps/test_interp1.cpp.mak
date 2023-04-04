@@ -7,10 +7,15 @@ test_interp1.o: tests/test_interp1.cpp tests/../SLISC/sci/interp1.h \
  tests/../SLISC/sci/../dense/../dense/../prec/quad_math.h \
  tests/../SLISC/sci/../dense/../dense/../arith/Imag.h \
  tests/../SLISC/sci/../dense/../dense/../str/str.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/sci/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/sci/../dense/Svec.h tests/../SLISC/sci/../dense/Dvec.h \
  tests/../SLISC/sci/../arith/arith1.h \
- tests/../SLISC/sci/../arith/../arith/scalar_arith.h \
- tests/../SLISC/sci/../arith/../arith/../arith/complex_arith.h \
  tests/../SLISC/sci/../arith/../arith/compare.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Mat3.h \

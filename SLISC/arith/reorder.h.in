@@ -115,11 +115,11 @@ inline void flip_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%---------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
 //% if is_dense(Tv)
-//% req('flip_v', {Ts});
+//%     req('flip_v', {Ts});
 inline void flip(@Tv@_IO v)
 { flip_v(&v[0], v.size()); }
 //% else
-//%     error('flip: not implemented (8)!');
+//%     error(['flip: not implemented (8): ' Tv]);
 //% end
 //%---------------------------
 

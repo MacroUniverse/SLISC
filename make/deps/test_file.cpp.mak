@@ -4,11 +4,16 @@ test_file.o: tests/test_file.cpp tests/../SLISC/file/file.h \
  tests/../SLISC/file/../prec/quad_math.h \
  tests/../SLISC/file/../util/time.h \
  tests/../SLISC/file/../util/../str/str.h \
+ tests/../SLISC/file/../util/../str/../str/unicode.h \
+ tests/../SLISC/file/../util/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/file/../util/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/file/../util/../str/../str/../arith/../arith/Imag.h \
+ tests/../SLISC/file/../util/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/file/../util/linux.h tests/../SLISC/file/../util/bit.h \
  tests/../SLISC/file/../arith/arith1.h \
- tests/../SLISC/file/../arith/../arith/scalar_arith.h \
- tests/../SLISC/file/../arith/../arith/../arith/complex_arith.h \
- tests/../SLISC/file/../arith/../arith/../arith/Imag.h \
  tests/../SLISC/file/../arith/../arith/compare.h \
  tests/../SLISC/file/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/file/../arith/../arith/../dense/../dense/Vbase.h \
@@ -26,11 +31,6 @@ test_file.o: tests/test_file.cpp tests/../SLISC/file/file.h \
  tests/../SLISC/file/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/file/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/file/../arith/../arith/../dense/Jcmat3.h \
- tests/../SLISC/file/../str/unicode.h \
- tests/../SLISC/file/../str/utfcpp/utf8.h \
- tests/../SLISC/file/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/file/../str/utfcpp/utf8/core.h \
- tests/../SLISC/file/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/file/../algo/sort.h \
  tests/../SLISC/file/../algo/../algo/heap.h \
  tests/../SLISC/file/../algo/../algo/../util/random.h \

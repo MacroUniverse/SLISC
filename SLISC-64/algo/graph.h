@@ -494,7 +494,7 @@ namespace slisc {
             if (edge.first == edge.second)
                 SLS_ERR("illegal edge:" + to_string(edge.first) + "->" + to_string(edge.second));
             Long sz = max(edge.first,edge.second)+1;
-            if (dg.size() < sz)
+            if (size(dg) < sz)
                 dg.resize(sz);
             auto &node = dg[edge.first];
             if (search(edge.second, node) < 0)

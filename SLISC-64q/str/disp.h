@@ -962,7 +962,7 @@ inline void disp(vecStr32_I v)
 {
 	Long N = v.size();
 	for (Long i = 0; i < N; ++i)
-	    cout << utf32to8(v[i]) << endl;
+	    cout << u8(v[i]) << endl;
 }
 
 // set stdout text style

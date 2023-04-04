@@ -11,6 +11,11 @@ test_matfile.o: tests/test_matfile.cpp tests/../SLISC/file/matfile.h \
  tests/../SLISC/file/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/file/../arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/file/../arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/file/../arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/file/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/file/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/file/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/file/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/file/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/file/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/file/../arith/../arith/../dense/Cmat.h \
@@ -29,11 +34,6 @@ test_matfile.o: tests/test_matfile.cpp tests/../SLISC/file/matfile.h \
  tests/../SLISC/file/../file/../util/time.h \
  tests/../SLISC/file/../file/../util/linux.h \
  tests/../SLISC/file/../file/../util/bit.h \
- tests/../SLISC/file/../file/../str/unicode.h \
- tests/../SLISC/file/../file/../str/utfcpp/utf8.h \
- tests/../SLISC/file/../file/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/file/../file/../str/utfcpp/utf8/core.h \
- tests/../SLISC/file/../file/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/file/../file/../algo/sort.h \
  tests/../SLISC/file/../file/../algo/../algo/heap.h \
  tests/../SLISC/file/../file/../algo/../algo/../util/random.h \

@@ -9,6 +9,13 @@ test_hungarian.o: tests/test_hungarian.cpp \
  tests/../SLISC/algo/../arith/../arith/../dense/../dense/../prec/quad_math.h \
  tests/../SLISC/algo/../arith/../arith/../dense/../dense/../arith/Imag.h \
  tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/algo/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/algo/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/algo/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/algo/../arith/../arith/../dense/Cmat.h \
@@ -19,8 +26,6 @@ test_hungarian.o: tests/test_hungarian.cpp \
  tests/../SLISC/algo/../arith/../arith/../sparse/../dense/Dcmat.h \
  tests/../SLISC/algo/../arith/../arith/../sparse/Mcoo.h \
  tests/../SLISC/algo/../arith/../arith/../sparse/Cmobd.h \
- tests/../SLISC/algo/../arith/../arith/../sparse/../arith/scalar_arith.h \
- tests/../SLISC/algo/../arith/../arith/../sparse/../arith/../arith/complex_arith.h \
  tests/../SLISC/algo/../arith/../arith/../dense/Svec.h \
  tests/../SLISC/algo/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/algo/../arith/../arith/../dense/Scmat3.h \

@@ -11,6 +11,11 @@ test_expokit.o: tests/test_expokit.cpp tests/../SLISC/lin/expokit.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/str.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/unicode.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/Cmat.h \
@@ -29,11 +34,6 @@ test_expokit.o: tests/test_expokit.cpp tests/../SLISC/lin/expokit.h \
  tests/../SLISC/lin/../sparse/../arith/copy.h \
  tests/../SLISC/lin/../sparse/../arith/../dense/cut.h \
  tests/../SLISC/lin/../sparse/../algo/sort.h \
- tests/../SLISC/lin/../sparse/../algo/../str/unicode.h \
- tests/../SLISC/lin/../sparse/../algo/../str/utfcpp/utf8.h \
- tests/../SLISC/lin/../sparse/../algo/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/lin/../sparse/../algo/../str/utfcpp/utf8/core.h \
- tests/../SLISC/lin/../sparse/../algo/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/heap.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/../util/random.h \
  tests/../SLISC/lin/../sparse/../algo/../algo/../util/../arith/arith2.h \

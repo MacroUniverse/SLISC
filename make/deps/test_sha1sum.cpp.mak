@@ -6,12 +6,17 @@ test_sha1sum.o: tests/test_sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/../prec/quad_math.h \
  tests/../SLISC/util/../file/../util/time.h \
  tests/../SLISC/util/../file/../util/../str/str.h \
+ tests/../SLISC/util/../file/../util/../str/../str/unicode.h \
+ tests/../SLISC/util/../file/../util/../str/../str/../arith/scalar_arith.h \
+ tests/../SLISC/util/../file/../util/../str/../str/../arith/../arith/complex_arith.h \
+ tests/../SLISC/util/../file/../util/../str/../str/../arith/../arith/Imag.h \
+ tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8.h \
+ tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/checked.h \
+ tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/util/../file/../util/linux.h \
  tests/../SLISC/util/../file/../util/bit.h \
  tests/../SLISC/util/../file/../arith/arith1.h \
- tests/../SLISC/util/../file/../arith/../arith/scalar_arith.h \
- tests/../SLISC/util/../file/../arith/../arith/../arith/complex_arith.h \
- tests/../SLISC/util/../file/../arith/../arith/../arith/Imag.h \
  tests/../SLISC/util/../file/../arith/../arith/compare.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/../dense/Vbase.h \
@@ -29,11 +34,6 @@ test_sha1sum.o: tests/test_sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/Scmat.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/Scmat3.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/Jcmat3.h \
- tests/../SLISC/util/../file/../str/unicode.h \
- tests/../SLISC/util/../file/../str/utfcpp/utf8.h \
- tests/../SLISC/util/../file/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/util/../file/../str/utfcpp/utf8/core.h \
- tests/../SLISC/util/../file/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/util/../file/../algo/sort.h \
  tests/../SLISC/util/../file/../algo/../algo/heap.h \
  tests/../SLISC/util/../file/../algo/../algo/../util/random.h \

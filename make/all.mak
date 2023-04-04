@@ -348,10 +348,10 @@ endif
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation -fmax-errors=20 -fopenmp
+    compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -fmax-errors=5 -fopenmp
 endif
 ifeq ($(opt_compiler), clang++)
-    compiler_flag = -std=$(opt_std) -Wall -Wno-reorder -Wno-misleading-indentation -Wno-overloaded-virtual -ferror-limit=20
+    compiler_flag = -std=$(opt_std) -Wall -Wno-overloaded-virtual -ferror-limit=5
 endif
 ifeq ($(opt_compiler), icpc)
     compiler_flag = -std=$(opt_std) -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type

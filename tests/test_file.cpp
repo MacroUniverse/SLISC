@@ -38,7 +38,7 @@ void test_file()
 	read_vec_str(str32_, U"您吃了吗.txt");
 	if (str32 != str32_)
 		SLS_FAIL;
-	file_remove(utf32to8(U"您吃了吗.txt"));
+	file_remove(u8(U"您吃了吗.txt"));
 	
 	// multiple binary write()
 	ofstream fout; open_bin(fout, "test_bin");
