@@ -143,7 +143,7 @@ namespace slisc {
 
 // using std
 
-using std::complex;
+using std::complex; using std::tie;
 using std::vector; using std::string; using std::stringstream;
 using std::to_string; using std::pair; using std::tuple;
 using std::cin; using std::cout; using std::cerr; using std::endl;

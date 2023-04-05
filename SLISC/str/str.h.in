@@ -739,6 +739,14 @@ inline void parse(@Tv@<@Ts@> &v, @Ts@_I str, @Ts@_I sep = @sep@)
     }
     v.@add@(str.substr(ind0));
 }
+
+inline void join(@Ts@_O str, const @Tv@<@Ts@> &v, @Ts@_I sep = @sep@)
+{
+	str.clear();
+	for (auto &e : v)
+		str += e + sep;
+	str.pop_back();
+}
 //%----------------------------
 
 // parse a container of numbers from a string (elements can be empty)
@@ -771,6 +779,14 @@ inline void parse(@Tv@<@Ts@> &v, @Tstr@_I str, @Tstr@_I sep = @sep@)
         ind0 = ind1 + 1;
     }
     v.@add@(str2int(str.substr(ind0)));
+}
+
+inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
+{
+	str.clear();
+	for (auto &e : v)
+		str += to_string(e) + sep;
+	str.pop_back();
 }
 //%----------------------------
 
