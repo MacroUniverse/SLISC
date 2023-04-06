@@ -743,6 +743,7 @@ inline void parse(@Tv@<@Ts@> &v, @Ts@_I str, @Ts@_I sep = @sep@)
 inline void join(@Ts@_O str, const @Tv@<@Ts@> &v, @Ts@_I sep = @sep@)
 {
 	str.clear();
+	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
 	str.pop_back();
@@ -784,6 +785,7 @@ inline void parse(@Tv@<@Ts@> &v, @Tstr@_I str, @Tstr@_I sep = @sep@)
 inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
 {
 	str.clear();
+	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
 	str.pop_back();
