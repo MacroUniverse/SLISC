@@ -202,7 +202,11 @@ else()
 	add_compile_options(-O3)
 endif()
 
-add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
+if(opt_compiler STREQUAL "g++")
+	add_compile_options(-Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
+elseif(opt_compiler STREQUAL "clang++")
+	add_compile_options(-Wall -Wno-overloaded-virtual -ferror-limit=5)
+endif()
 
 # get all .cpp and .h files
 file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/tests/*.cpp" "main.cpp")
