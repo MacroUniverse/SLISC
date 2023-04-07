@@ -954,7 +954,7 @@ inline void join(Str_O str, const vector<Str> &v, Str_I sep = " ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(vector<Str32> &v, Str32_I str, Str32_I sep = U" ")
@@ -976,7 +976,7 @@ inline void join(Str32_O str, const vector<Str32> &v, Str32_I sep = U" ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(set<Str> &v, Str_I str, Str_I sep = " ")
@@ -998,7 +998,7 @@ inline void join(Str_O str, const set<Str> &v, Str_I sep = " ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(set<Str32> &v, Str32_I str, Str32_I sep = U" ")
@@ -1020,7 +1020,7 @@ inline void join(Str32_O str, const set<Str32> &v, Str32_I sep = U" ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(unordered_set<Str> &v, Str_I str, Str_I sep = " ")
@@ -1042,7 +1042,7 @@ inline void join(Str_O str, const unordered_set<Str> &v, Str_I sep = " ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(unordered_set<Str32> &v, Str32_I str, Str32_I sep = U" ")
@@ -1064,7 +1064,7 @@ inline void join(Str32_O str, const unordered_set<Str32> &v, Str32_I sep = U" ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 
@@ -1089,7 +1089,7 @@ inline void join(Str_O str, const vector<Llong> &v, Str_I sep = " ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(vector<Llong> &v, Str32_I str, Str32_I sep = U" ")
@@ -1111,7 +1111,7 @@ inline void join(Str32_O str, const vector<Llong> &v, Str32_I sep = U" ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(set<Llong> &v, Str_I str, Str_I sep = " ")
@@ -1133,7 +1133,7 @@ inline void join(Str_O str, const set<Llong> &v, Str_I sep = " ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(set<Llong> &v, Str32_I str, Str32_I sep = U" ")
@@ -1155,7 +1155,7 @@ inline void join(Str32_O str, const set<Llong> &v, Str32_I sep = U" ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(unordered_set<Llong> &v, Str_I str, Str_I sep = " ")
@@ -1177,7 +1177,7 @@ inline void join(Str_O str, const unordered_set<Llong> &v, Str_I sep = " ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 inline void parse(unordered_set<Llong> &v, Str32_I str, Str32_I sep = U" ")
@@ -1199,7 +1199,7 @@ inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 
 

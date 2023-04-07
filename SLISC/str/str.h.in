@@ -746,7 +746,7 @@ inline void join(@Ts@_O str, const @Tv@<@Ts@> &v, @Ts@_I sep = @sep@)
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += e + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 //%----------------------------
 
@@ -788,7 +788,7 @@ inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
 	if (v.empty()) return;
 	for (auto &e : v)
 		str += to_string(e) + sep;
-	str.pop_back();
+	str.resize(str.size() - sep.size());
 }
 //%----------------------------
 

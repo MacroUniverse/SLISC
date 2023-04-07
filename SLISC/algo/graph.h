@@ -188,11 +188,33 @@ namespace slisc {
 	    return -1;
 	}
 
+    // shortest path from multiple sources to target
+    inline Long dag_BFS(const vector<DGnode> &dag, vecLong_I sources, Long_I target)
+    {
+        if (search(target, sources) >= 0) return 0;
+        vector<bool> visited(dag.size(), false);
+        vector<Long> nodes(sources), nodes1;
+        Long Nstep = 1;
+        while (!nodes.empty()) {
+            ++Nstep;
+            for (auto &node : nodes) {
+                for (auto &next : dag[node]) {
+                    if (visited[next]) continue;
+                    if (next == target)
+                        return Nstep;
+                    nodes1.push_back(next); visited[next] = true;
+                }
+            }
+            swap(nodes, nodes1); nodes1.clear();
+        }
+        return -1;
+    }
+
 	// get shortest path between source and target
-	// algo: BFS, add reverse edge for each seached edge
+	// algo: BFS, store reverse edge for each searched edge
 	inline void dag_BFS(vector<Long> &path, const vector<DGnode> &dag, Long_I source, Long_I target)
 	{
-	    path.clear(); path.push_back(target);
+	    path.clear();
 	    if (source == target) return;
 	    unordered_map<Long, Long> iedge; // all searched edge in reverse
 	    vector<Long> nodes = {source}, nodes1;
@@ -208,13 +230,44 @@ namespace slisc {
 	        swap(nodes, nodes1); nodes1.clear();
 	    }
 	    abc:
+        if (nodes.empty()) return; // not counnected
 	    Long node = target;
+        path.push_back(target);
 	    while (node != source) {
 	        node = iedge[node];
 	        path.push_back(node);
 	    }
 	    reverse(path.begin(), path.end());
 	}
+
+    // shortest path from multiple sources to target
+    inline void dag_BFS(vector<Long> &path, const vector<DGnode> &dag, vecLong_I sources, Long_I target)
+    {
+        path.clear();
+        if (search(target, sources) >= 0) return;
+        unordered_map<Long, Long> iedge; // all searched edge in reverse
+        vector<Long> nodes(sources), nodes1;
+        while (!nodes.empty()) {
+            for (auto &node : nodes) {
+                for (auto &next : dag[node]) {
+                    if (iedge.count(next)) continue;
+                    iedge[next] = node;
+                    if (next == target) goto abc;
+                    nodes1.push_back(next);
+                }
+            }
+            swap(nodes, nodes1); nodes1.clear();
+        }
+        abc:
+        if (nodes.empty()) return; // not counnected
+        Long node = target;
+        path.push_back(target);
+        while (search(node, sources) < 0) {
+            node = iedge[node];
+            path.push_back(node);
+        }
+        reverse(path.begin(), path.end());
+    }
 
     // Transitive Reduction
     // if two nodes of an edge has other connection, then it is redundant
@@ -224,18 +277,39 @@ namespace slisc {
 	{
 		short_edges.clear();
 		Long N = dag.size();
+        vecLong sources;
 		for (Long node = 0; node < N; ++node) {
 			for (auto &targ : dag[node]) {
-				for (auto &next : dag[node]) {
-					if (next == targ) continue;
-					if (dag_BFS(dag, next, targ) > 0) {
-                        short_edges.push_back(make_pair(node, targ));
-                        break;
-                    }
-				}
+                sources.clear();
+                for (auto &next: dag[node]) {
+                    if (next == targ) continue;
+                    sources.push_back(next);
+                }
+                if (dag_BFS(dag, sources, targ) >= 0)
+                    short_edges.push_back(make_pair(node, targ));
 			}
 		}
 	}
+
+    // find all children of dag[node] are redundant, and the alternative paths
+    // paths[i] is the shortest alternative path from `node` to the i-th redundant child
+    inline void dag_reduce(vector<vecLong> &paths, const vector<DGnode> &dag, Long_I node)
+    {
+        paths.clear();
+        vecLong path; vecLong sources;
+        for (auto &targ : dag[node]) {
+            sources.clear();
+            for (auto &next: dag[node]) {
+                if (next == targ) continue;
+                sources.push_back(next);
+            }
+            dag_BFS(path, dag, sources, targ);
+            if (!path.empty()) {
+                path.insert(path.begin(), node);
+                paths.push_back(path);
+            }
+        }
+    }
 
     // return # of deleted edges
     inline Long dag_reduce(vector<DGnode> &dag)
