@@ -192,7 +192,7 @@ inline Str u8char(Str_I str, Long_I ind)
 	return str.substr(ind, char_size);
 }
 
-// skip N utf-8 characters (supports N < 0)
+// skip N utf-8 characters (supports N < 0 and N == s.size())
 inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 {
 	if (N == 0)
@@ -234,21 +234,46 @@ private:
 	Long ind;
 	Str_I s;
 public:
+	// use i == -1 to point to the last character
 	u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
+		if (i == -1)
+			ind = skip_char8(str, size(str), -1);
 		if (!is_char8_start(str, i))
 			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
 	};
 
+	Long operator=(Long_I i) {
+		if (!is_char8_start(str, i))
+			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
+		return i;
+	}
+
 	Str operator*() {
 		return u8char(s, ind);
+	}
+
+	u8_iter operator+(Int_I N) {
+		return u8_iter(s, skip_char8(s, ind, N));
 	}
 
 	u8_iter operator+(Long_I N) {
 		return u8_iter(s, skip_char8(s, ind, N));
 	}
 
+	u8_iter operator-(Int_I N) {
+		return u8_iter(s, skip_char8(s, ind, -N));
+	}
+
 	u8_iter operator-(Long_I N) {
 		return u8_iter(s, skip_char8(s, ind, -N));
+	}
+
+	void operator++() {
+		ind = skip_char8(s, ind, 1);
+	}
+
+	void operator--() {
+		ind = skip_char8(s, ind, -1);
 	}
 
 	void operator+=(Long_I N) {
