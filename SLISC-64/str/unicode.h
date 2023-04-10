@@ -19,7 +19,7 @@ namespace slisc {
 
 using std::stringstream;
 
-inline Long CRLF_to_LF(Str32_IO str);
+inline Long CRLF_to_LF(Str_IO str);
 
 #ifdef SLS_USE_WINDOWS
 // set windows console to display utf-8

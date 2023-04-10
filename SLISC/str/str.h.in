@@ -50,40 +50,6 @@ inline Str num2str(@T@_I s, Long_I min_len = -1)
 }
 //%------------------------
 
-// trim all occurance of key on the left
-// return the number of charaters trimed
-// e.g. key = "\n " to trim space and '\n'
-inline Long trimL(Str_IO str, Str_I key = " ")
-{
-	Long N;
-	Long ind = str.find_first_not_of(key);
-	if (ind < 0) {
-		N = str.size();
-		str.clear();
-		return N;
-	}
-	N = ind;
-	str.erase(0, N);
-	return N;
-}
-
-// trim all occurance of key on the right
-// return the number of charaters trimed
-// e.g. key = "\n " to trim space and '\n'
-inline Long trimR(Str_IO str, Str_I key = " ")
-{
-	Long N;
-	Long ind = str.find_last_not_of(key);
-	if (ind < 0) {
-		N = str.size();
-		str.clear();
-		return N;
-	}
-	str.erase(ind + 1);
-	N = str.size() - ind;
-	return N;
-}
-
 // get a line starting from ind0
 inline Str getline(Str_I str, Long_I start = 0)
 {
@@ -125,7 +91,7 @@ inline Long get_line(Str32_O line, Str32_I str, Long_I start = 0)
 // skip to the next line
 // return the index after `\n`
 // return -1 if `\n` not found
-inline Long skip_line(Str32_I str, Long_I start = 0)
+inline Long skip_line(Str_I str, Long_I start = 0)
 {
 	Long ind = str.find(U'\n', start);
 	if (ind < 0 || ind == Long(str.size()) - 1)
@@ -133,54 +99,12 @@ inline Long skip_line(Str32_I str, Long_I start = 0)
 	return ind + 1;
 }
 
-// trim both sides
-// e.g. key = "\n " to trim space and '\n'
-inline Long trim(Str_IO str, Str_I key = " ")
+inline Long skip_line(Str32_I str, Long_I start = 0)
 {
-	return trimL(str, key) + trimR(str, key);
-}
-
-// replace every "\r\n" with "\n"
-inline Long CRLF_to_LF(Str_IO str)
-{
-	Long ind0{}, N{};
-	while (true) {
-		ind0 = str.find("\r\n", ind0);
-		if (ind0 < 0) return N;
-		str.erase(ind0, 1);
-	}
-}
-
-// replace all occurance of "key" with "new_key"
-// return the number of keys replaced
-// works with utf-8
-inline Long replace(Str_IO str, Str_I key, Str_I new_key)
-{
-	Long ind0 = 0, N = 0, Nkey = key.size();;
-	while (true) {
-		 ind0 = str.find(key, ind0);
-		if (ind0 < 0) break;
-		str.replace(ind0, Nkey, new_key);
-		++N; ind0 += new_key.size();
-	}
-	return N;
-}
-
-// replace to new string
-inline Long replace(Str_O str1, Str_I str, Str_I key, Str_I new_key)
-{
-	Long N = 0, ind0 = 0, Nkey = key.size();
-	str1.clear();
-	while (true) {
-		Long ind1 = str.find(key, ind0);
-		if (ind1 < 0) break;
-		str1 += str.substr(ind0, ind1-ind0) + new_key;
-		ind0 = ind1 + Nkey;
-		++N;
-	}
-	if (ind0 < Long(str.size()))
-		str1 += str.substr(ind0);
-	return N;
+	Long ind = str.find(U'\n', start);
+	if (ind < 0 || ind == Long(str.size()) - 1)
+		return -1;
+	return ind + 1;
 }
 
 // convert string to lower case
@@ -314,14 +238,24 @@ inline std::ostream &operator<<(std::ostream &out, Str32_I str32)
 }
 
 // operator+ that converts Str to Str32
-inline Str32 operator+(Str32_I str32, Str_I str)
+inline Str operator+(Str32_I str32, Str_I str)
 {
-	return str32 + u32(str);
+	return u8(str32) + str;
 }
 
-inline Str32 operator+(Str_I str, Str32_I str32)
+inline Str operator+(Str_I str, Str32_I str32)
 {
-	return u32(str) + str32;
+	return str + u8(str32);
+}
+
+inline void operator+=(Str_IO str, Str32_I str32)
+{
+	str += u8(str32);
+}
+
+inline void operator+=(Str32_IO str32, Str_I str)
+{
+	str32 += u32(str);
 }
 
 //% tem('num2str2', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'});
@@ -340,19 +274,68 @@ inline Str32 num2str32(@T@_I num, Long_I min_len = -1)
 }
 //%--------------
 
-// same as str.insert(), but return one index after key after insertion
-inline Long insert(Str32_IO str, Str32_I key, Long start)
+// check if a character is an ascii character
+inline Bool is_ascii(Char32_I c)
+{
+	if (c >= 0 && c < 128)
+		return true;
+	return false;
+}
+
+//% tem('str_str32', {'Str'; 'Str32';});
+//%-----------------
+//% Ts = varargin{:};
+//% if is_Str32(Ts)
+//%     Tc='Char32';
+//%     U='U';
+//% else
+//%     Tc='Char';
+//%     U='';
+//% end
+
+inline Bool is_num(@Tc@_I c)
+{
+	if (c >= @U@'0' && c <= @U@'9')
+		return true;
+	return false;
+}
+
+// check if a character is a letter (a-z, A-Z)
+inline Bool is_letter(@Tc@_I c)
+{
+	if ((c >= @U@'a' && c <= @U@'z') || (c >= @U@'A' && c <= @U@'Z'))
+		return true;
+	return false;
+}
+
+// check if a character is alphanumeric (a-z, A-Z, 0-9)
+inline Bool is_alphanum(@Tc@_I c)
+{
+	if (is_letter(c) || is_num(c))
+		return true;
+	return false;
+}
+
+// check if a character is alphanumeric or an underscore
+inline Bool is_alphanum_(@Tc@_I c)
+{
+	if (is_alphanum(c) || c == @U@'_')
+		return true;
+	return false;
+}
+
+inline Long insert(@Ts@_IO str, @Ts@_I key, Long start)
 {
 	str.insert(start, key);
 	return start + key.size();
 }
 
-// replace every U"\r\n" with U"\n"
-inline Long CRLF_to_LF(Str32_IO str)
+// replace every "\r\n" with "\n"
+inline Long CRLF_to_LF(@Ts@_IO str)
 {
 	Long ind0{}, N{};
 	while (true) {
-		ind0 = str.find(U"\r\n", ind0);
+		ind0 = str.find(@U@"\r\n", ind0);
 		if (ind0 < 0) return N;
 		str.erase(ind0, 1);
 	}
@@ -361,7 +344,7 @@ inline Long CRLF_to_LF(Str32_IO str)
 // Find the next appearance of one of "key"
 // output the ikey of key[ikey] found
 // return the first index of key[ikey] found, return -1 if nothing found
-inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start = 0)
+inline Long find(Long_O ikey, @Ts@_I str, vec@Ts@_I keys, Long_I start = 0)
 {
 	Long i{}, ind0{}, Nkey{}, imin;
 	Nkey = keys.size();
@@ -380,7 +363,7 @@ inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start = 0)
 // output the ikey of key[ikey] found
 // return the first index of key[ikey] found, return -1 if nothing found
 // keyword will be found even if starting from the middle of it
-inline Long rfind(Long_O ikey, Str32_I str, vecStr32_I key, Long_I start)
+inline Long rfind(Long_O ikey, @Ts@_I str, vec@Ts@_I key, Long_I start)
 {
 	Long i{}, ind0{}, Nkey{}, imax;
 	Nkey = key.size();
@@ -396,7 +379,7 @@ inline Long rfind(Long_O ikey, Str32_I str, vecStr32_I key, Long_I start)
 
 // same as FindMultipleReverse, but able to deal with multiple match
 // return the number of matches, return -1 if not found
-inline Long rfind(vecLong_O ikey, Str32_I str, vecStr32_I key, Long_I start)
+inline Long rfind(vecLong_O ikey, @Ts@_I str, vec@Ts@_I key, Long_I start)
 {
 	Long i{}, ind0{}, Nkey{}, imax;
 	Nkey = key.size();
@@ -416,17 +399,17 @@ inline Long rfind(vecLong_O ikey, Str32_I str, vecStr32_I key, Long_I start)
 
 // see if a key appears followed only by only white space or '\n'
 // return the index after the key found, return -1 if nothing found.
-inline Long expect(Str32_I str, Str32_I key, Long_I start)
+inline Long expect(@Ts@_I str, @Ts@_I key, Long_I start)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start >= size(str))
-		throw Str32(U"内部错误： expect(): out of bound");
+		throw std::runtime_error("内部错误： expect(): out of bound");
 #endif
 	Long ind = start;
 	Long ind0 = 0;
 	Long L = str.size();
 	Long L0 = key.size();
-	Char32 c0, c;
+	@Tc@ c0, c;
 	while (true) {
 		 c0 = key[ind0];
 		 c = str[ind];
@@ -435,7 +418,7 @@ inline Long expect(Str32_I str, Str32_I key, Long_I start)
 			 if (ind0 == L0)
 				 return ind + 1;
 		 }
-		 else if (c != U' ' && c != U'\n')
+		 else if (c != @U@' ' && c != @U@'\n')
 			 return -1;
 		 ++ind;
 		 if (ind == L)
@@ -446,7 +429,7 @@ inline Long expect(Str32_I str, Str32_I key, Long_I start)
 // trim all occurance of key on the left
 // return the number of charaters trimed
 // e.g. key = "\n " to trim space and '\n'
-inline Long trimL(Str32_IO str, Str32_I key = U" ")
+inline Long trimL(@Ts@_IO str, @Ts@_I key = @U@" ")
 {
 	Long N;
 	Long ind = str.find_first_not_of(key);
@@ -463,7 +446,7 @@ inline Long trimL(Str32_IO str, Str32_I key = U" ")
 // trim all occurance of key on the right
 // return the number of charaters trimed
 // e.g. key = "\n " to trim space and '\n'
-inline Long trimR(Str32_IO str, Str32_I key = U" ")
+inline Long trimR(@Ts@_IO str, @Ts@_I key = @U@" ")
 {
 	Long N;
 	Long ind = str.find_last_not_of(key);
@@ -479,52 +462,13 @@ inline Long trimR(Str32_IO str, Str32_I key = U" ")
 
 // trim both sides
 // e.g. key = "\n " to trim space and '\n'
-inline Long trim(Str32_IO str, Str32_I key = U" ")
+inline Long trim(@Ts@_IO str, @Ts@_I key = @U@" ")
 {
 	return trimL(str, key) + trimR(str, key);
 }
 
-// check if a character is a letter (a-z, A-Z)
-inline Bool is_letter(Char32_I c)
-{
-	if ((c >= U'a' && c <= U'z') || (c >= U'A' && c <= U'Z'))
-		return true;
-	return false;
-}
-
-inline Bool is_num(Char32_I c)
-{
-	if (c >= U'0' && c <= U'9')
-		return true;
-	return false;
-}
-
-// check if a character is an ascii character (a-z, A-Z, 0-9)
-inline Bool is_ascii(Char32_I c)
-{
-	if (c > 0 && c < 128)
-		return true;
-	return false;
-}
-
-// check if a character is alphanumeric (a-z, A-Z, 0-9)
-inline Bool is_alphanum(Char32_I c)
-{
-	if (is_letter(c) || is_num(c))
-		return true;
-	return false;
-}
-
-// check if a character is alphanumeric or an underscore
-inline Bool is_alphanum_(Char32_I c)
-{
-	if (is_alphanum(c) || c == U'_')
-		return true;
-	return false;
-}
-
 // check if a word is a whole word
-inline Bool is_whole_word(Str32_I str, Long_I ind, Long_I count)
+inline Bool is_whole_word(@Ts@_I str, Long_I ind, Long_I count)
 {
 	// check left
 	Long ind0 = ind - 1;
@@ -539,7 +483,7 @@ inline Bool is_whole_word(Str32_I str, Long_I ind, Long_I count)
 
 // find whole word, like in Visual Studio Code, begin from "str[start]"
 // return the first index of key found, return -1 if not found
-inline Long find_whole_word(Str32_I str, Str32_I key, Long_I start)
+inline Long find_whole_word(@Ts@_I str, @Ts@_I key, Long_I start)
 {
 	Long ind0 = start;
 	while (true) {
@@ -555,7 +499,7 @@ inline Long find_whole_word(Str32_I str, Str32_I key, Long_I start)
 // replace all occurance of "key" with "new_key"
 // return the number of keys replaced
 // works with utf-8
-inline Long replace(Str32_IO str, Str32_I key, Str32_I new_key)
+inline Long replace(@Ts@_IO str, @Ts@_I key, @Ts@_I new_key)
 {
 	Long ind0 = 0, N = 0, Nkey = key.size();
 	while (true) {
@@ -568,7 +512,7 @@ inline Long replace(Str32_IO str, Str32_I key, Str32_I new_key)
 }
 
 // replace to new string
-inline Long replace(Str32_O str1, Str32_I str, Str32_I key, Str32_I new_key)
+inline Long replace(@Ts@_O str1, @Ts@_I str, @Ts@_I key, @Ts@_I new_key)
 {
 	Long ind0 = 0, N = 0, Nkey = key.size();
 	str1.clear();
@@ -588,11 +532,11 @@ inline Long replace(Str32_O str1, Str32_I str, Str32_I key, Str32_I new_key)
 // output single character c, return the position of the c
 // return -1 if not found
 // TODO: replace this with basic_string::find_first_not_of
-inline Long NextNoSpace(Str32_O c, Str32_I str, Long start)
+inline Long NextNoSpace(@Ts@_O c, @Ts@_I str, Long start)
 {
 	for (Long i = start; i < size(str); ++i) {
 		c = str.at(i);
-		if (c == U" ")
+		if (c == @U@" ")
 			continue;
 		else
 			return i;
@@ -602,14 +546,14 @@ inline Long NextNoSpace(Str32_O c, Str32_I str, Long start)
 
 // reverse version of Expect key
 // return the previous index of the key found, return -2 if nothing found.
-inline Long ExpectKeyReverse(Str32_I str, Str32_I key, Long start)
+inline Long ExpectKeyReverse(@Ts@_I str, @Ts@_I key, Long start)
 {
 	if (start < 0)
 		return -2;
 	Long ind = start;
 	Long L0 = key.size();
 	Long ind0 = L0 - 1;
-	Char32 c0, c;
+	@Tc@ c0, c;
 	while (true) {
 		c0 = key.at(ind0);
 		c = str.at(ind);
@@ -628,10 +572,10 @@ inline Long ExpectKeyReverse(Str32_I str, Str32_I key, Long start)
 
 // Find the next number
 // return -1 if not found
-inline Long find_num(Str32_I str, Long start)
+inline Long find_num(@Ts@_I str, Long start)
 {
 	Long i{}, end = str.size() - 1;
-	Char32 c;
+	@Tc@ c;
 	for (i = start; i <= end; ++i) {
 		c = str.at(i);
 		if (c >= '0' && c <= '9')
@@ -640,17 +584,126 @@ inline Long find_num(Str32_I str, Long start)
 	return -1;
 }
 
+// delete any following ' ' or '\n' characters starting from "start" (including "start")
+// return the number of characters deleted
+inline Long eatR(@Ts@& str, Long start, @Ts@_I chars)
+{
+	Long N;
+	Long ind0 = str.find_first_not_of(chars, start);
+	if (ind0 < 0) {
+		N = str.size() - start;
+		if (N > 0)
+			str.erase(start, N);
+	}
+	N = ind0 - start;
+	if (N > 0)
+		str.erase(start, N);
+	return N;
+}
+
+// eat to left, see eatR
+inline Long eatL(@Ts@& str, Long start, @Ts@_I chars)
+{
+	Long N;
+	Long ind0 = str.find_last_not_of(chars, start);
+	if (ind0 < 0) {
+		N = start + 1;
+		str.erase(0, N);
+	}
+	N = start - ind0;
+	if (N > 0)
+		str.erase(ind0 + 1, N);
+	return N;
+}
+
+// Pair right brace to left one (default)
+// or () or [] or anying single character
+// ind is inddex of left brace
+// return index of right brace
+inline Long pair_brace(@Ts@_I str, Long ind)
+{
+	@Tc@ left, right, type = str[ind];
+	if (type == @U@'{' || type == @U@'}') {
+		left = @U@'{'; right = @U@'}';
+	}
+	else if (type == @U@'(' || type == @U@')') {
+		left = @U@'('; right = @U@')';
+	}
+	else if (type == @U@'[' || type == @U@']') {
+		left = @U@'['; right = @U@']';
+	}
+	else {
+		throw std::runtime_error("pair_brace: illegal brace");
+	}
+
+	@Tc@ c, c0 = ' ';
+	Long Nleft = 1;
+	Long N = str.size();
+	for (Long i = ind + 1; i < N; i++) {
+		c = str[i];
+		if (c == left && c0 != '\\')
+			++Nleft;
+		else if (c == right && c0 != '\\')
+		{
+			--Nleft;
+			if (Nleft == 0)
+				return i;
+		}
+		c0 = c;
+	}
+	throw std::runtime_error("pair_brace() failed：" + str.substr(ind, 20));
+}
+
+// match braces
+// return -1 means failure, otherwise return number of {} paired
+// output ind_left, ind_right, ind_RmatchL
+inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
+	vecLong_O ind_RmatchL, @Ts@_I str, Long start, Long end)
+{
+	ind_left.resize(0); ind_right.resize(0); ind_RmatchL.resize(0);
+	@Tc@ c, c_last = ' ';
+	Long Nleft = 0, Nright = 0;
+	vector<Bool> Lmatched;
+	Bool matched;
+	for (Long i = start; i <= end; ++i)
+	{
+		c = str.at(i);
+		if (c == '{' && c_last != '\\')
+		{
+			++Nleft;
+			ind_left.push_back(i);
+			Lmatched.push_back(false);
+		}
+		else if (c == '}' && c_last != '\\')
+		{
+			++Nright;
+			ind_right.push_back(i);
+			matched = false;
+			for (Long j = Nleft - 1; j >= 0; --j)
+				if (!Lmatched[j])
+				{
+					ind_RmatchL.push_back(j);
+					Lmatched[j] = true;
+					matched = true;
+					break;
+				}
+			if (!matched)
+				return -1; // unbalanced braces
+		}
+		c_last = c;
+	}
+	if (Nleft != Nright)
+		return -1;
+	return Nleft;
+}
+
 // get non-negative integer from string
 // return the index after the last digit, return -1 if failed
 // str[start] must be a number
-
-//% tem('str2int', {'Str'; 'Str32'});
-//%----------------------------
-//% Tstr = varargin{:};
-inline Long str2int(Long_O num, @Tstr@_I str, Long_I start = 0)
+inline Long str2int(Long_O num, @Ts@_I str, Long_I start = 0)
 {
 	Long i{};
-	Char32 c;
+	@Tc@ c;
 	c = str.at(start);
 	if (c < '0' || c > '9') {
 		SLS_ERR("not a number!"); return -1;  // break point here
@@ -666,23 +719,19 @@ inline Long str2int(Long_O num, @Tstr@_I str, Long_I start = 0)
 	return i;
 }
 
-inline Long str2int(@Tstr@_I str, Long_I start = 0)
+inline Long str2int(@Ts@_I str, Long_I start = 0)
 {
 	Long num;
 	if (str2int(num, str, start) < 0)
 		throw Str("str2int()");
 	return num;
 }
-//%----------------------------
 
 // get non-negative double from string
 // return the index after the last digit, return -1 if failed
 // str[start] must be a number
 
-//% tem('str2double', {'Str'; 'Str32'});
-//%----------------------------
-//% Tstr = varargin{:};
-inline Long str2double(Doub& num, @Tstr@_I str, Long_I start = 0)
+inline Long str2double(Doub& num, @Ts@_I str, Long_I start = 0)
 {
 	Long ind0{}, num1{}, num2{};
 	ind0 = str2int(num1, str, start);
@@ -698,7 +747,7 @@ inline Long str2double(Doub& num, @Tstr@_I str, Long_I start = 0)
 	return ind0;
 }
 
-inline Doub str2double(@Tstr@_I str, Long_I start = 0)
+inline Doub str2double(@Ts@_I str, Long_I start = 0)
 {
 	Doub num;
 	if (str2double(num, str, start) < 0)
@@ -707,6 +756,60 @@ inline Doub str2double(@Tstr@_I str, Long_I start = 0)
 }
 //%----------------------------
 
+// convert a number to chinese
+inline Str num2chinese(Long num) {
+	map<Long, Str> digits = {
+		{0, "零"}, {1, "一"}, {2, "二"}, {3, "三"}, {4, "四"},
+		{5, "五"}, {6, "六"}, {7, "七"}, {8, "八"}, {9, "九"},
+	};
+	map<Long, Str> units = {
+		{1, "十"}, {2, "百"}, {3, "千"}, {4, "万"},
+	};
+
+	Str result = "";
+
+	if (num >= 100000 || num < 0)
+		SLS_ERR("not supported yet!");
+
+	if (num >= 10000) {
+		Long num1 = num / 10000;
+		num %= 10000;
+		result += digits[num1] + units[4];
+		if (num > 0 && num < 1000)
+			result += digits[0];
+	}
+
+	if (num >= 1000) {
+		Long num1 = num / 1000;
+		num %= 1000;
+		result += digits[num1] + units[3];
+		if (num > 0 && num < 100)
+			result += digits[0];
+	}
+
+	if (num >= 100) {
+		Long num1 = num / 100;
+		num %= 100;
+		result += digits[num1] + units[2];
+		if (num > 0 && num < 10)
+			result += digits[0];
+	}
+
+	if (num >= 10) {
+		Long num1 = num / 10;
+		num %= 10;
+		if (num1 != 1 || !result.empty())
+			result += digits[num1];
+		result += units[1];
+	}
+
+	if (num > 0 || result.empty())
+		result += digits[num];
+
+	if (result.substr(0, 2) == "一十")
+		result = result.substr(1);
+	return result;
+}
 
 // parse a container of strings from a string (elements can be empty)
 // str = v[0] + sep + v[1] + sep + ... v.back()
@@ -791,174 +894,5 @@ inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
 	str.resize(str.size() - sep.size());
 }
 //%----------------------------
-
-
-// delete any following ' ' or '\n' characters starting from "start" (including "start")
-// return the number of characters deleted
-inline Long eatR(Str32& str, Long start, Str32_I chars)
-{
-	Long N;
-	Long ind0 = str.find_first_not_of(chars, start);
-	if (ind0 < 0) {
-		N = str.size() - start;
-		if (N > 0)
-			str.erase(start, N);
-	}
-	N = ind0 - start;
-	if (N > 0)
-		str.erase(start, N);
-	return N;
-}
-
-// eat to left, see eatR
-inline Long eatL(Str32& str, Long start, Str32_I chars)
-{
-	Long N;
-	Long ind0 = str.find_last_not_of(chars, start);
-	if (ind0 < 0) {
-		N = start + 1;
-		str.erase(0, N);
-	}
-	N = start - ind0;
-	if (N > 0)
-		str.erase(ind0 + 1, N);
-	return N;
-}
-
-// Pair right brace to left one (default)
-// or () or [] or anying single character
-// ind is inddex of left brace
-// return index of right brace
-inline Long pair_brace(Str32_I str, Long ind)
-{
-	Char32 left, right, type = str[ind];
-	if (type == U'{' || type == U'}') {
-		left = U'{'; right = U'}';
-	}
-	else if (type == U'(' || type == U')') {
-		left = U'('; right = U')';
-	}
-	else if (type == U'[' || type == U']') {
-		left = U'['; right = U']';
-	}
-	else {
-		throw Str32(U"pair_brace: illegal brace");
-	}
-
-	Char32 c, c0 = ' ';
-	Long Nleft = 1;
-	Long N = str.size();
-	for (Long i = ind + 1; i < N; i++) {
-		c = str[i];
-		if (c == left && c0 != '\\')
-			++Nleft;
-		else if (c == right && c0 != '\\')
-		{
-			--Nleft;
-			if (Nleft == 0)
-				return i;
-		}
-		c0 = c;
-	}
-	throw Str32(U"pair_brace() failed：" + str.substr(ind, 20));
-}
-
-// match braces
-// return -1 means failure, otherwise return number of {} paired
-// output ind_left, ind_right, ind_RmatchL
-inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
-	vecLong_O ind_RmatchL, Str32_I str, Long start, Long end)
-{
-	ind_left.resize(0); ind_right.resize(0); ind_RmatchL.resize(0);
-	Char32 c, c_last = ' ';
-	Long Nleft = 0, Nright = 0;
-	vector<Bool> Lmatched;
-	Bool matched;
-	for (Long i = start; i <= end; ++i)
-	{
-		c = str.at(i);
-		if (c == '{' && c_last != '\\')
-		{
-			++Nleft;
-			ind_left.push_back(i);
-			Lmatched.push_back(false);
-		}
-		else if (c == '}' && c_last != '\\')
-		{
-			++Nright;
-			ind_right.push_back(i);
-			matched = false;
-			for (Long j = Nleft - 1; j >= 0; --j)
-				if (!Lmatched[j])
-				{
-					ind_RmatchL.push_back(j);
-					Lmatched[j] = true;
-					matched = true;
-					break;
-				}
-			if (!matched)
-				return -1; // unbalanced braces
-		}
-		c_last = c;
-	}
-	if (Nleft != Nright)
-		return -1;
-	return Nleft;
-}
-
-// convert a number to chinese
-inline Str32 num2chinese(Long num) {
-	map<Long, Str32> digits = {
-		{0, U"零"}, {1, U"一"}, {2, U"二"}, {3, U"三"}, {4, U"四"},
-		{5, U"五"}, {6, U"六"}, {7, U"七"}, {8, U"八"}, {9, U"九"},
-	};
-	map<Long, Str32> units = {
-		{1, U"十"}, {2, U"百"}, {3, U"千"}, {4, U"万"},
-	};
-
-	Str32 result = U"";
-
-	if (num >= 100000 || num < 0)
-		SLS_ERR("not supported yet!");
-
-	if (num >= 10000) {
-		Long num1 = num / 10000;
-		num %= 10000;
-		result += digits[num1] + units[4];
-		if (num > 0 && num < 1000)
-			result += digits[0];
-	}
-
-	if (num >= 1000) {
-		Long num1 = num / 1000;
-		num %= 1000;
-		result += digits[num1] + units[3];
-		if (num > 0 && num < 100)
-			result += digits[0];
-	}
-
-	if (num >= 100) {
-		Long num1 = num / 100;
-		num %= 100;
-		result += digits[num1] + units[2];
-		if (num > 0 && num < 10)
-			result += digits[0];
-	}
-
-	if (num >= 10) {
-		Long num1 = num / 10;
-		num %= 10;
-		if (num1 != 1 || !result.empty())
-			result += digits[num1];
-		result += units[1];
-	}
-
-	if (num > 0 || result.empty())
-		result += digits[num];
-
-	if (result.substr(0, 2) == U"一十")
-		result = result.substr(1);
-	return result;
-}
 
 } // namespace slisc
