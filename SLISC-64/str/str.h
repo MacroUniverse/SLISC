@@ -374,22 +374,22 @@ inline std::ostream &operator<<(std::ostream &out, Str32_I str32)
 // operator+ that converts Str to Str32
 inline Str operator+(Str32_I str32, Str_I str)
 {
-	return str32 + str;
+	return u8(str32) + str;
 }
 
 inline Str operator+(Str_I str, Str32_I str32)
 {
-	return str + str32;
+	return str + u8(str32);
 }
 
 inline void operator+=(Str_IO str, Str32_I str32)
 {
-	str += str32;
+	str += u8(str32);
 }
 
 inline void operator+=(Str32_IO str32, Str_I str)
 {
-	str32 += str;
+	str32 += u32(str);
 }
 
 inline void num2str(Str32_O str, Char_I num, Long_I min_len = -1)
