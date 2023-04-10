@@ -192,22 +192,77 @@ inline Str u8char(Str_I str, Long_I ind)
 	return str.substr(ind, char_size);
 }
 
-// skip N utf-8 characters
+// skip N utf-8 characters (supports N < 0)
 inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 {
-    Long utf8_len = s.size();
-    Long i = ind;
-    Long skipped = 0;
+	if (N == 0)
+		return ind;
+	else if (N > 0) {
+		Long utf8_len = s.size();
+		Long i = ind;
+		Long skipped = 0;
+		while (i < utf8_len && skipped < N) {
+			Long char_size = char8_len(s, i);
+			i += char_size;
+			skipped++;
+		}
+		if (skipped < N)
+			throw std::out_of_range("Not enough characters to skip");
+		return i;
+	}
+	else if (N < 0) {
+        Long remaining = -N;
+        Long i = ind;
 
-    while (i < utf8_len && skipped < N) {
-        Long char_size = char8_len(s, i);
-        i += char_size;
-        skipped++;
+        while (i > 0 && remaining > 0) {
+            i--;
+
+            if ((s[i] & 0xC0) != 0x80) {
+                remaining--;
+            }
+        }
+        if (remaining > 0)
+            throw std::out_of_range("Not enough characters to skip");
+        return i;
     }
-    if (skipped < N)
-        throw std::out_of_range("Not enough characters to skip");
-    return i;
 }
+
+// an iterator for utf-8
+class u8_iter
+{
+private:
+	Long ind;
+	Str_I s;
+public:
+	u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
+		if (!is_char8_start(str, i))
+			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
+	};
+
+	Str operator*() {
+		return u8char(s, ind);
+	}
+
+	u8_iter operator+(Long_I N) {
+		return u8_iter(s, skip_char8(s, ind, N));
+	}
+
+	u8_iter operator-(Long_I N) {
+		return u8_iter(s, skip_char8(s, ind, -N));
+	}
+
+	void operator+=(Long_I N) {
+		ind = skip_char8(s, ind, N);
+	}
+
+	void operator-=(Long_I N) {
+		ind = skip_char8(s, ind, -N);
+	}
+
+	operator Long() {
+		return ind;
+	}
+};
 
 // get a substring of utf-8, with N characters
 inline Str substr8(Str_I s, Long_I ind, Long_I N)
