@@ -189,6 +189,74 @@ inline Bool is_chinese(Char32_I c)
     return false;
 }
 
+// see if a character is an emoji
+Bool is_emoji(Char32_I c) {
+    return (
+        (c >= 0x1F600 && c <= 0x1F64F) || // Emoticons
+        (c >= 0x2700 && c <= 0x27BF) || // Dingbats
+        (c >= 0x1F680 && c <= 0x1F6FF) || // Transport and Map Symbols
+        (c >= 0x2600 && c <= 0x26FF) || // Miscellaneous Symbols
+        (c >= 0x1F300 && c <= 0x1F5FF) || // Miscellaneous Symbols and Pictographs
+        (c >= 0x1F900 && c <= 0x1F9FF) || // Supplemental Symbols and Pictographs
+        (c >= 0x1FA00 && c <= 0x1FA6F) // Symbols and Pictographs Extended-A
+    );
+}
+
+// by GPT-4, not verified
+// see if a character is an emoji
+Bool is_emoji(Char32_I c) {
+    return (
+        (c >= 0x1F600 && c <= 0x1F64F) || // Emoticons
+        (c >= 0x2700 && c <= 0x27BF) || // Dingbats
+        (c >= 0x1F680 && c <= 0x1F6FF) || // Transport and Map Symbols
+        (c >= 0x2600 && c <= 0x26FF) || // Miscellaneous Symbols
+        (c >= 0x1F300 && c <= 0x1F5FF) || // Miscellaneous Symbols and Pictographs
+        (c >= 0x1F900 && c <= 0x1F9FF) || // Supplemental Symbols and Pictographs
+        (c >= 0x1FA00 && c <= 0x1FA6F) // Symbols and Pictographs Extended-A
+    );
+}
+
+// convert a utf-32 char to utf-8
+// (verified)
+Str u8(Char32_I c) {
+    Str utf8;
+    if (c <= 0x7F) // 0xxxxxxx
+        utf8.push_back(char(c));
+    else if (c <= 0x7FF) { // 110xxxxx 10xxxxxx
+        utf8.push_back(char(0xC0 | (c >> 6)));
+        utf8.push_back(char(0x80 | (c & 0x3F)));
+    }
+    else if (c <= 0xFFFF) { // 1110xxxx 10xxxxxx 10xxxxxx
+        utf8.push_back(char(0xE0 | (c >> 12)));
+        utf8.push_back(char(0x80 | ((c >> 6) & 0x3F)));
+        utf8.push_back(char(0x80 | (c & 0x3F)));
+    }
+    else if (c <= 0x10FFFF) { // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+        utf8.push_back(char(0xF0 | (c >> 18)));
+        utf8.push_back(char(0x80 | ((c >> 12) & 0x3F)));
+        utf8.push_back(char(0x80 | ((c >> 6) & 0x3F)));
+        utf8.push_back(char(0x80 | (c & 0x3F)));
+    }
+    else
+        throw std::runtime_error("Invalid Unicode codepoint.");
+    return utf8;
+}
+
+// check if is the start of a utf-8 character
+bool is_char8_start(Str_I str, Long_I index) {
+    if (index >= str.size()) {
+        return false;
+    }
+
+    unsigned char byte = str[index];
+    if ((byte & 0b10000000) == 0) { // ASCII character (most significant bit is 0)
+        return true;
+    }
+
+    // Multi-byte character starts with a sequence of 1's followed by a 0
+    return (byte & 0b11000000) == 0b11000000;
+}
+
 // recycle
 // ref: https://stackoverflow.com/questions/1366068/whats-the-complete-range-for-chinese-characters-in-unicode
 // inline Bool is_chinese(Char32_I c)
