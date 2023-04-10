@@ -36,13 +36,13 @@ inline Doub max_dcmat(const Doub *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Doub *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -54,13 +54,13 @@ inline Doub max_dcmat(Long_O i, Long_O j, const Doub *v, Long_I N0, Long_I N1, L
 #endif
 	const Doub *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -95,13 +95,13 @@ inline Qdoub max_dcmat(const Qdoub *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Qdoub *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -113,13 +113,13 @@ inline Qdoub max_dcmat(Long_O i, Long_O j, const Qdoub *v, Long_I N0, Long_I N1,
 #endif
 	const Qdoub *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -154,13 +154,13 @@ inline Doub min_dcmat(const Doub *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Doub *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -172,13 +172,13 @@ inline Doub min_dcmat(Long_O i, Long_O j, const Doub *v, Long_I N0, Long_I N1, L
 #endif
 	const Doub *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -213,13 +213,13 @@ inline Qdoub min_dcmat(const Qdoub *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Qdoub *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -231,13 +231,13 @@ inline Qdoub min_dcmat(Long_O i, Long_O j, const Qdoub *v, Long_I N0, Long_I N1,
 #endif
 	const Qdoub *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -272,13 +272,13 @@ inline Int max_dcmat(const Int *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Int *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -290,13 +290,13 @@ inline Int max_dcmat(Long_O i, Long_O j, const Int *v, Long_I N0, Long_I N1, Lon
 #endif
 	const Int *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -331,13 +331,13 @@ inline Int min_dcmat(const Int *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Int *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -349,13 +349,13 @@ inline Int min_dcmat(Long_O i, Long_O j, const Int *v, Long_I N0, Long_I N1, Lon
 #endif
 	const Int *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -390,13 +390,13 @@ inline Llong max_dcmat(const Llong *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Llong *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -408,13 +408,13 @@ inline Llong max_dcmat(Long_O i, Long_O j, const Llong *v, Long_I N0, Long_I N1,
 #endif
 	const Llong *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p < *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p < *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -449,13 +449,13 @@ inline Llong min_dcmat(const Llong *v, Long_I N0, Long_I N1, Long_I step1)
 #endif
 	const Llong *p = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	return *p;
 }
@@ -467,13 +467,13 @@ inline Llong min_dcmat(Long_O i, Long_O j, const Llong *v, Long_I N0, Long_I N1,
 #endif
 	const Llong *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    if (*p > *v) p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		if (*p > *v) p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return *p;
@@ -644,8 +644,8 @@ inline T min(const vector<vector<T>> &v)
 {
 	T s = numeric_limits<T>::max();
 	for (auto &v1 : v)
-	    for (auto &e : v1)
-	        if (e < s) s = e;
+		for (auto &e : v1)
+			if (e < s) s = e;
 	return s;
 }
 
@@ -656,9 +656,9 @@ inline Doub max_abs_v(const Doub *v, Long_I N)
 #endif
 	Doub s = abs(v[0]), val;
 	for (Long i = 1; i < N; ++i) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -670,9 +670,9 @@ inline Doub max_abs_v(const Doub *v, Long_I N, Long_I step)
 #endif
 	Doub s = abs(v[0]), val;
 	for (Long i = step; i < N*step; i += step) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -685,14 +685,14 @@ inline Doub max_abs_dcmat(const Doub *v, Long_I N0, Long_I N1, Long_I step1)
 	const Doub *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Doub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Doub &t = abs(*v);
-	    if (s < t) s = abs(t);
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Doub &t = abs(*v);
+		if (s < t) s = abs(t);
+		++v;
 	}
 	return s;
 }
@@ -705,14 +705,14 @@ inline Doub max_abs_dcmat(Long_O i, Long_O j, const Doub *v, Long_I N0, Long_I N
 	const Doub *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Doub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Doub &t = abs(*v);
-	    if (s < t) s = abs(t), p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Doub &t = abs(*v);
+		if (s < t) s = abs(t), p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return s;
@@ -725,9 +725,9 @@ inline Qdoub max_abs_v(const Qdoub *v, Long_I N)
 #endif
 	Qdoub s = abs(v[0]), val;
 	for (Long i = 1; i < N; ++i) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -739,9 +739,9 @@ inline Qdoub max_abs_v(const Qdoub *v, Long_I N, Long_I step)
 #endif
 	Qdoub s = abs(v[0]), val;
 	for (Long i = step; i < N*step; i += step) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -754,14 +754,14 @@ inline Qdoub max_abs_dcmat(const Qdoub *v, Long_I N0, Long_I N1, Long_I step1)
 	const Qdoub *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Qdoub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Qdoub &t = abs(*v);
-	    if (s < t) s = abs(t);
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Qdoub &t = abs(*v);
+		if (s < t) s = abs(t);
+		++v;
 	}
 	return s;
 }
@@ -774,14 +774,14 @@ inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qdoub *v, Long_I N0, Long_I
 	const Qdoub *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Qdoub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Qdoub &t = abs(*v);
-	    if (s < t) s = abs(t), p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Qdoub &t = abs(*v);
+		if (s < t) s = abs(t), p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return s;
@@ -794,9 +794,9 @@ inline Doub max_abs_v(const Comp *v, Long_I N)
 #endif
 	Doub s = abs(v[0]), val;
 	for (Long i = 1; i < N; ++i) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -808,9 +808,9 @@ inline Doub max_abs_v(const Comp *v, Long_I N, Long_I step)
 #endif
 	Doub s = abs(v[0]), val;
 	for (Long i = step; i < N*step; i += step) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -823,14 +823,14 @@ inline Doub max_abs_dcmat(const Comp *v, Long_I N0, Long_I N1, Long_I step1)
 	const Comp *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Doub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Doub &t = abs(*v);
-	    if (s < t) s = abs(t);
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Doub &t = abs(*v);
+		if (s < t) s = abs(t);
+		++v;
 	}
 	return s;
 }
@@ -843,14 +843,14 @@ inline Doub max_abs_dcmat(Long_O i, Long_O j, const Comp *v, Long_I N0, Long_I N
 	const Comp *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Doub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Doub &t = abs(*v);
-	    if (s < t) s = abs(t), p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Doub &t = abs(*v);
+		if (s < t) s = abs(t), p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return s;
@@ -863,9 +863,9 @@ inline Qdoub max_abs_v(const Qcomp *v, Long_I N)
 #endif
 	Qdoub s = abs(v[0]), val;
 	for (Long i = 1; i < N; ++i) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -877,9 +877,9 @@ inline Qdoub max_abs_v(const Qcomp *v, Long_I N, Long_I step)
 #endif
 	Qdoub s = abs(v[0]), val;
 	for (Long i = step; i < N*step; i += step) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -892,14 +892,14 @@ inline Qdoub max_abs_dcmat(const Qcomp *v, Long_I N0, Long_I N1, Long_I step1)
 	const Qcomp *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Qdoub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Qdoub &t = abs(*v);
-	    if (s < t) s = abs(t);
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Qdoub &t = abs(*v);
+		if (s < t) s = abs(t);
+		++v;
 	}
 	return s;
 }
@@ -912,14 +912,14 @@ inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qcomp *v, Long_I N0, Long_I
 	const Qcomp *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Qdoub s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Qdoub &t = abs(*v);
-	    if (s < t) s = abs(t), p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Qdoub &t = abs(*v);
+		if (s < t) s = abs(t), p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return s;
@@ -932,9 +932,9 @@ inline Int max_abs_v(const Int *v, Long_I N)
 #endif
 	Int s = abs(v[0]), val;
 	for (Long i = 1; i < N; ++i) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -946,9 +946,9 @@ inline Int max_abs_v(const Int *v, Long_I N, Long_I step)
 #endif
 	Int s = abs(v[0]), val;
 	for (Long i = step; i < N*step; i += step) {
-	    val = abs(v[i]);
-	    if (s < val)
-	        s = val;
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
 	}
 	return s;
 }
@@ -961,14 +961,14 @@ inline Int max_abs_dcmat(const Int *v, Long_I N0, Long_I N1, Long_I step1)
 	const Int *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Int s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Int &t = abs(*v);
-	    if (s < t) s = abs(t);
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Int &t = abs(*v);
+		if (s < t) s = abs(t);
+		++v;
 	}
 	return s;
 }
@@ -981,14 +981,14 @@ inline Int max_abs_dcmat(Long_O i, Long_O j, const Int *v, Long_I N0, Long_I N1,
 	const Int *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
 	Int s = abs(*v); ++v;
 	while (1) {
-	    if (v == end0) {
-	        beg0 += step1;
-	        if (beg0 >= end) break;
-	        v = beg0; end0 += step1;
-	    }
-	    const Int &t = abs(*v);
-	    if (s < t) s = abs(t), p = v;
-	    ++v;
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Int &t = abs(*v);
+		if (s < t) s = abs(t), p = v;
+		++v;
 	}
 	i = (p - beg) % N0; j = (p - beg) / step1;
 	return s;
@@ -1050,7 +1050,7 @@ inline Llong sum_abs_v(const Int *v, Long_I N)
 #endif
 	Llong s = abs(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s += abs(v[i]);
+		s += abs(v[i]);
 	return s;
 }
 
@@ -1061,7 +1061,7 @@ inline Llong sum_abs_v(const Llong *v, Long_I N)
 #endif
 	Llong s = abs(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s += abs(v[i]);
+		s += abs(v[i]);
 	return s;
 }
 
@@ -1072,7 +1072,7 @@ inline Doub sum_abs_v(const Doub *v, Long_I N)
 #endif
 	Doub s = abs(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s += abs(v[i]);
+		s += abs(v[i]);
 	return s;
 }
 
@@ -1083,7 +1083,7 @@ inline Qdoub sum_abs_v(const Qdoub *v, Long_I N)
 #endif
 	Qdoub s = abs(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s += abs(v[i]);
+		s += abs(v[i]);
 	return s;
 }
 
@@ -1094,7 +1094,7 @@ inline Doub sum_abs_v(const Comp *v, Long_I N)
 #endif
 	Doub s = abs(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s += abs(v[i]);
+		s += abs(v[i]);
 	return s;
 }
 
@@ -1105,7 +1105,7 @@ inline Qdoub sum_abs_v(const Qcomp *v, Long_I N)
 #endif
 	Qdoub s = abs(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s += abs(v[i]);
+		s += abs(v[i]);
 	return s;
 }
 
@@ -1192,7 +1192,7 @@ inline Long sum_abs(VecBool_I v)
 #endif
 	Long s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1204,7 +1204,7 @@ inline Doub sum_v(const Doub *v, Long_I N)
 #endif
 	Doub s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1215,7 +1215,7 @@ inline Doub prod_v(const Doub *v, Long_I N)
 #endif
 	Doub s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s *= v[i];
+		s *= v[i];
 	return s;
 }
 
@@ -1226,7 +1226,7 @@ inline Qdoub sum_v(const Qdoub *v, Long_I N)
 #endif
 	Qdoub s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1237,7 +1237,7 @@ inline Qdoub prod_v(const Qdoub *v, Long_I N)
 #endif
 	Qdoub s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s *= v[i];
+		s *= v[i];
 	return s;
 }
 
@@ -1248,7 +1248,7 @@ inline Llong sum_v(const Int *v, Long_I N)
 #endif
 	Llong s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1259,7 +1259,7 @@ inline Llong prod_v(const Int *v, Long_I N)
 #endif
 	Llong s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s *= v[i];
+		s *= v[i];
 	return s;
 }
 
@@ -1270,7 +1270,7 @@ inline Llong sum_v(const Llong *v, Long_I N)
 #endif
 	Llong s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1281,7 +1281,7 @@ inline Llong prod_v(const Llong *v, Long_I N)
 #endif
 	Llong s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s *= v[i];
+		s *= v[i];
 	return s;
 }
 
@@ -1292,7 +1292,7 @@ inline Comp sum_v(const Comp *v, Long_I N)
 #endif
 	Comp s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1303,7 +1303,7 @@ inline Comp prod_v(const Comp *v, Long_I N)
 #endif
 	Comp s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s *= v[i];
+		s *= v[i];
 	return s;
 }
 
@@ -1314,7 +1314,7 @@ inline Qcomp sum_v(const Qcomp *v, Long_I N)
 #endif
 	Qcomp s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s += v[i];
+		s += v[i];
 	return s;
 }
 
@@ -1325,7 +1325,7 @@ inline Qcomp prod_v(const Qcomp *v, Long_I N)
 #endif
 	Qcomp s = v[0];
 	for (Long i = 1; i < N; ++i)
-	    s *= v[i];
+		s *= v[i];
 	return s;
 }
 
@@ -1404,7 +1404,7 @@ inline Doub norm2(VecDoub_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1413,7 +1413,7 @@ inline Doub norm2_dif(VecDoub_I v, VecDoub_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(VecDoub_I v)
@@ -1431,7 +1431,7 @@ inline Qdoub norm2(VecQdoub_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1440,7 +1440,7 @@ inline Qdoub norm2_dif(VecQdoub_I v, VecQdoub_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(VecQdoub_I v)
@@ -1458,7 +1458,7 @@ inline Doub norm2(VecComp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1467,7 +1467,7 @@ inline Doub norm2_dif(VecComp_I v, VecComp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(VecComp_I v)
@@ -1485,7 +1485,7 @@ inline Qdoub norm2(VecQcomp_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1494,7 +1494,7 @@ inline Qdoub norm2_dif(VecQcomp_I v, VecQcomp_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(VecQcomp_I v)
@@ -1512,7 +1512,7 @@ inline Doub norm2(SvecDoub_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1521,7 +1521,7 @@ inline Doub norm2_dif(SvecDoub_I v, SvecDoub_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(SvecDoub_I v)
@@ -1539,7 +1539,7 @@ inline Qdoub norm2(SvecQdoub_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1548,7 +1548,7 @@ inline Qdoub norm2_dif(SvecQdoub_I v, SvecQdoub_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(SvecQdoub_I v)
@@ -1566,7 +1566,7 @@ inline Doub norm2(SvecComp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1575,7 +1575,7 @@ inline Doub norm2_dif(SvecComp_I v, SvecComp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(SvecComp_I v)
@@ -1593,7 +1593,7 @@ inline Qdoub norm2(SvecQcomp_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1602,7 +1602,7 @@ inline Qdoub norm2_dif(SvecQcomp_I v, SvecQcomp_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(SvecQcomp_I v)
@@ -1620,7 +1620,7 @@ inline Doub norm2(DvecDoub_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1629,7 +1629,7 @@ inline Doub norm2_dif(DvecDoub_I v, DvecDoub_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(DvecDoub_I v)
@@ -1647,7 +1647,7 @@ inline Qdoub norm2(DvecQdoub_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1656,7 +1656,7 @@ inline Qdoub norm2_dif(DvecQdoub_I v, DvecQdoub_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(DvecQdoub_I v)
@@ -1674,7 +1674,7 @@ inline Doub norm2(DvecComp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1683,7 +1683,7 @@ inline Doub norm2_dif(DvecComp_I v, DvecComp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(DvecComp_I v)
@@ -1701,7 +1701,7 @@ inline Qdoub norm2(DvecQcomp_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1710,7 +1710,7 @@ inline Qdoub norm2_dif(DvecQcomp_I v, DvecQcomp_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(DvecQcomp_I v)
@@ -1728,7 +1728,7 @@ inline Doub norm2(CmatDoub_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1737,7 +1737,7 @@ inline Doub norm2_dif(CmatDoub_I v, CmatDoub_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(CmatDoub_I v)
@@ -1755,7 +1755,7 @@ inline Qdoub norm2(CmatQdoub_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1764,7 +1764,7 @@ inline Qdoub norm2_dif(CmatQdoub_I v, CmatQdoub_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(CmatQdoub_I v)
@@ -1782,7 +1782,7 @@ inline Doub norm2(CmatComp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1791,7 +1791,7 @@ inline Doub norm2_dif(CmatComp_I v, CmatComp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(CmatComp_I v)
@@ -1809,7 +1809,7 @@ inline Qdoub norm2(CmatQcomp_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1818,7 +1818,7 @@ inline Qdoub norm2_dif(CmatQcomp_I v, CmatQcomp_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(CmatQcomp_I v)
@@ -1836,7 +1836,7 @@ inline Doub norm2(MatDoub_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1845,7 +1845,7 @@ inline Doub norm2_dif(MatDoub_I v, MatDoub_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(MatDoub_I v)
@@ -1863,7 +1863,7 @@ inline Doub norm2(MatComp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1872,7 +1872,7 @@ inline Doub norm2_dif(MatComp_I v, MatComp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(MatComp_I v)
@@ -1890,7 +1890,7 @@ inline Doub norm2(ScmatComp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1899,7 +1899,7 @@ inline Doub norm2_dif(ScmatComp_I v, ScmatComp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(ScmatComp_I v)
@@ -1917,7 +1917,7 @@ inline Qdoub norm2(ScmatQcomp_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -1926,7 +1926,7 @@ inline Qdoub norm2_dif(ScmatQcomp_I v, ScmatQcomp_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(ScmatQcomp_I v)
@@ -1945,9 +1945,9 @@ inline Doub norm2(DcmatComp_I a)
 	Long Nr = a.n0(), lda = a.lda();
 	Doub s2 = 0;
 	for (Long j = 0; j < a.n1(); ++j) {
-	    for (Long i = 0; i < Nr; ++i)
-	        s2 += abs2(p[i]);
-	    p += lda;
+		for (Long i = 0; i < Nr; ++i)
+			s2 += abs2(p[i]);
+		p += lda;
 	}
 	return s2;
 }
@@ -1958,9 +1958,9 @@ inline Doub norm2_dif(DcmatComp_I a, DcmatComp_I a1)
 	Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
 	Doub s2 = 0;
 	for (Long j = 0; j < a.n1(); ++j) {
-	    for (Long i = 0; i < Nr; ++i)
-	        s2 += abs2(p[i] - p1[i]);
-	    p += lda; p1 += lda1;
+		for (Long i = 0; i < Nr; ++i)
+			s2 += abs2(p[i] - p1[i]);
+		p += lda; p1 += lda1;
 	}
 	return s2;
 }
@@ -1980,9 +1980,9 @@ inline Qdoub norm2(DcmatQcomp_I a)
 	Long Nr = a.n0(), lda = a.lda();
 	Qdoub s2 = 0;
 	for (Long j = 0; j < a.n1(); ++j) {
-	    for (Long i = 0; i < Nr; ++i)
-	        s2 += abs2(p[i]);
-	    p += lda;
+		for (Long i = 0; i < Nr; ++i)
+			s2 += abs2(p[i]);
+		p += lda;
 	}
 	return s2;
 }
@@ -1993,9 +1993,9 @@ inline Qdoub norm2_dif(DcmatQcomp_I a, DcmatQcomp_I a1)
 	Long Nr = a.n0(), lda = a.lda(), lda1 = a1.lda();
 	Qdoub s2 = 0;
 	for (Long j = 0; j < a.n1(); ++j) {
-	    for (Long i = 0; i < Nr; ++i)
-	        s2 += abs2(p[i] - p1[i]);
-	    p += lda; p1 += lda1;
+		for (Long i = 0; i < Nr; ++i)
+			s2 += abs2(p[i] - p1[i]);
+		p += lda; p1 += lda1;
 	}
 	return s2;
 }
@@ -2014,7 +2014,7 @@ inline Doub norm2(Mat3Doub_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -2023,7 +2023,7 @@ inline Doub norm2_dif(Mat3Doub_I v, Mat3Doub_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(Mat3Doub_I v)
@@ -2041,7 +2041,7 @@ inline Doub norm2(Mat3Comp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -2050,7 +2050,7 @@ inline Doub norm2_dif(Mat3Comp_I v, Mat3Comp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(Mat3Comp_I v)
@@ -2068,7 +2068,7 @@ inline Doub norm2(Cmat3Comp_I v)
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -2077,7 +2077,7 @@ inline Doub norm2_dif(Cmat3Comp_I v, Cmat3Comp_I v1)
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Doub norm(Cmat3Comp_I v)
@@ -2095,7 +2095,7 @@ inline Qdoub norm2(Cmat3Qcomp_I v)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i]);
+		s2 += abs2(v[i]);
 	return s2;
 }
 
@@ -2104,7 +2104,7 @@ inline Qdoub norm2_dif(Cmat3Qcomp_I v, Cmat3Qcomp_I v1)
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
 	for (Long i = 1; i < N; ++i)
-	    s2 += abs2(v[i] - v1[i]);
+		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
 inline Qdoub norm(Cmat3Qcomp_I v)

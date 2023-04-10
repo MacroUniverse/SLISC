@@ -51,91 +51,91 @@
 #define FLOAT128_FORMAT "%.40e"
 #define FLOAT128_SHORT_FORMAT "%.16e"
 
-    inline void printnum(_Float128 rtmp) {
-    char buf[__MPLAPACK_BUFLEN__];
-    strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp);
-    if (rtmp >= 0.0)
-        printf("+%s", buf);
-    else
-        printf("%s", buf);
+	inline void printnum(_Float128 rtmp) {
+	char buf[__MPLAPACK_BUFLEN__];
+	strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp);
+	if (rtmp >= 0.0)
+		printf("+%s", buf);
+	else
+		printf("%s", buf);
 }
 inline void printnum_short(_Float128 rtmp) {
-    char buf[__MPLAPACK_BUFLEN__];
-    strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp);
-    if (rtmp >= 0.0)
-        printf("+%s", buf);
-    else
-        printf("%s", buf);
+	char buf[__MPLAPACK_BUFLEN__];
+	strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp);
+	if (rtmp >= 0.0)
+		printf("+%s", buf);
+	else
+		printf("%s", buf);
 }
 inline void printnum(std::complex<_Float128> rtmp) {
-    char buf[__MPLAPACK_BUFLEN__];
-    strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.real());
-    if (rtmp.real() >= 0.0)
-        printf("+%s", buf);
-    else
-        printf("%s", buf);
-    strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.imag());
-    if (rtmp.imag() >= 0.0)
-        printf("+%s", buf);
-    else
-        printf("%s", buf);
-    printf("i");
+	char buf[__MPLAPACK_BUFLEN__];
+	strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.real());
+	if (rtmp.real() >= 0.0)
+		printf("+%s", buf);
+	else
+		printf("%s", buf);
+	strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.imag());
+	if (rtmp.imag() >= 0.0)
+		printf("+%s", buf);
+	else
+		printf("%s", buf);
+	printf("i");
 }
 inline void printnum_short(std::complex<_Float128> rtmp) {
-    char buf[__MPLAPACK_BUFLEN__];
-    strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.real());
-    if (rtmp.real() >= 0.0)
-        printf("+%s", buf);
-    else
-        printf("%s", buf);
-    strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.imag());
-    if (rtmp.imag() >= 0.0)
-        printf("+%s", buf);
-    else
-        printf("%s", buf);
-    printf("i");
+	char buf[__MPLAPACK_BUFLEN__];
+	strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.real());
+	if (rtmp.real() >= 0.0)
+		printf("+%s", buf);
+	else
+		printf("%s", buf);
+	strfromf128(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.imag());
+	if (rtmp.imag() >= 0.0)
+		printf("+%s", buf);
+	else
+		printf("%s", buf);
+	printf("i");
 }
 inline void sprintnum(char *buf, _Float128 rtmp) {
-    char buf1[__MPLAPACK_BUFLEN__];
-    buf[0] = '\0';
-    if (rtmp >= 0.0)
-        strcat(buf, "+");
-    strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp);
-    strcat(buf, buf1);
+	char buf1[__MPLAPACK_BUFLEN__];
+	buf[0] = '\0';
+	if (rtmp >= 0.0)
+		strcat(buf, "+");
+	strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp);
+	strcat(buf, buf1);
 }
 inline void sprintnum_short(char *buf, _Float128 rtmp) {
-    char buf1[__MPLAPACK_BUFLEN__];
-    buf[0] = '\0';
-    if (rtmp >= 0.0)
-        strcat(buf, "+");
-    strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp);
-    strcat(buf, buf1);
+	char buf1[__MPLAPACK_BUFLEN__];
+	buf[0] = '\0';
+	if (rtmp >= 0.0)
+		strcat(buf, "+");
+	strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp);
+	strcat(buf, buf1);
 }
 inline void sprintnum(char *buf, std::complex<_Float128> rtmp) {
-    char buf1[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
-    buf[0] = '\0';
-    if (rtmp.real() >= 0.0)
-        strcat(buf, "+");
-    strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.real());
-    strcat(buf, buf1);
-    if (rtmp.imag() >= 0.0)
-        strcat(buf, "+");
-    strfromf128(buf2, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.imag());
-    strcat(buf, buf2);
-    strcat(buf, "i");
+	char buf1[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
+	buf[0] = '\0';
+	if (rtmp.real() >= 0.0)
+		strcat(buf, "+");
+	strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.real());
+	strcat(buf, buf1);
+	if (rtmp.imag() >= 0.0)
+		strcat(buf, "+");
+	strfromf128(buf2, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp.imag());
+	strcat(buf, buf2);
+	strcat(buf, "i");
 }
 inline void sprintnum_short(char *buf, std::complex<_Float128> rtmp) {
-    char buf1[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
-    buf[0] = '\0';
-    if (rtmp.real() >= 0.0)
-        strcat(buf, "+");
-    strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.real());
-    strcat(buf, buf1);
-    if (rtmp.imag() >= 0.0)
-        strcat(buf, "+");
-    strfromf128(buf2, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.imag());
-    strcat(buf, buf2);
-    strcat(buf, "i");
+	char buf1[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
+	buf[0] = '\0';
+	if (rtmp.real() >= 0.0)
+		strcat(buf, "+");
+	strfromf128(buf1, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.real());
+	strcat(buf, buf1);
+	if (rtmp.imag() >= 0.0)
+		strcat(buf, "+");
+	strfromf128(buf2, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp.imag());
+	strcat(buf, buf2);
+	strcat(buf, "i");
 }
 #endif
 
@@ -155,31 +155,31 @@ extern "C" {
 
 // implementation of sign transfer function.
 inline _Float128 sign(_Float128 a, _Float128 b) {
-    _Float128 mtmp;
-    mtmp = std::abs(a);
-    if (b < 0.0) {
-        mtmp = -mtmp;
-    }
-    return mtmp;
+	_Float128 mtmp;
+	mtmp = std::abs(a);
+	if (b < 0.0) {
+		mtmp = -mtmp;
+	}
+	return mtmp;
 }
 
 inline _Float128 castREAL__Float128(mplapackint n) {
-    _Float128 ret = n;
-    return ret;
+	_Float128 ret = n;
+	return ret;
 }
 
 inline mplapackint castINTEGER__Float128(_Float128 a) {
-    mplapackint i = a;
-    return i;
+	mplapackint i = a;
+	return i;
 }
 
 inline long nint(_Float128 a) {
-    long i;
-    _Float128 tmp;
-    a = a + 0.5;
-    tmp = floorq(a);
-    i = (long)tmp;
-    return i;
+	long i;
+	_Float128 tmp;
+	a = a + 0.5;
+	tmp = floorq(a);
+	i = (long)tmp;
+	return i;
 }
 inline double cast2double(_Float128 a) { return (double)a; }
 
@@ -198,36 +198,36 @@ inline _Float128 pi(_Float128 dummy) { return M_PIq; }
 #define FLOAT128_SHORT_FORMAT "%+.16Le"
 
 inline void printnum(long double rtmp) {
-    printf(FLOAT128_FORMAT, rtmp);
-    return;
+	printf(FLOAT128_FORMAT, rtmp);
+	return;
 }
 inline void printnum(std::complex<long double> ctmp) {
-    printf(FLOAT128_FORMAT FLOAT128_FORMAT "i", ctmp.real(), ctmp.imag());
-    return;
+	printf(FLOAT128_FORMAT FLOAT128_FORMAT "i", ctmp.real(), ctmp.imag());
+	return;
 }
 inline void sprintnum(char *buf, long double rtmp) {
-    snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp);
-    return;
+	snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, rtmp);
+	return;
 }
 inline void sprintnum(char *buf, std::complex<long double> ctmp) {
-    snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT FLOAT128_FORMAT "i", ctmp.real(), ctmp.imag());
-    return;
+	snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT FLOAT128_FORMAT "i", ctmp.real(), ctmp.imag());
+	return;
 }
 inline void printnum_short(long double rtmp) {
-    printf(FLOAT128_SHORT_FORMAT, rtmp);
-    return;
+	printf(FLOAT128_SHORT_FORMAT, rtmp);
+	return;
 }
 inline void printnum_short(std::complex<long double> ctmp) {
-    printf(FLOAT128_SHORT_FORMAT FLOAT128_SHORT_FORMAT "i", ctmp.real(), ctmp.imag());
-    return;
+	printf(FLOAT128_SHORT_FORMAT FLOAT128_SHORT_FORMAT "i", ctmp.real(), ctmp.imag());
+	return;
 }
 inline void sprintnum_short(char *buf, long double rtmp) {
-    snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp);
-    return;
+	snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, rtmp);
+	return;
 }
 inline void sprintnum_short(char *buf, std::complex<long double> ctmp) {
-    snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT FLOAT128_SHORT_FORMAT "i", ctmp.real(), ctmp.imag());
-    return;
+	snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT FLOAT128_SHORT_FORMAT "i", ctmp.real(), ctmp.imag());
+	return;
 }
 #endif
 
@@ -246,31 +246,31 @@ inline long double pow2(const long double &a) { return a * a; }
 
 // implementation of sign transfer function.
 inline long double sign(long double a, long double b) {
-    long double mtmp;
-    mtmp = std::abs(a);
-    if (b < 0.0) {
-        mtmp = -mtmp;
-    }
-    return mtmp;
+	long double mtmp;
+	mtmp = std::abs(a);
+	if (b < 0.0) {
+		mtmp = -mtmp;
+	}
+	return mtmp;
 }
 
 inline long double castREAL__Float128(mplapackint n) {
-    long double ret = n;
-    return ret;
+	long double ret = n;
+	return ret;
 }
 
 inline mplapackint castINTEGER__Float128(long double a) {
-    mplapackint i = a;
-    return i;
+	mplapackint i = a;
+	return i;
 }
 
 inline long nint(long double a) {
-    long i;
-    long double tmp;
-    a = a + 0.5;
-    tmp = floorl(a);
-    i = (long)tmp;
-    return i;
+	long i;
+	long double tmp;
+	a = a + 0.5;
+	tmp = floorl(a);
+	i = (long)tmp;
+	return i;
 }
 
 inline double cast2double(long double a) { return (double)a; }
@@ -299,71 +299,71 @@ typedef __float128 _Float128;
 #define FLOAT128_SHORT_FORMAT "%+-#*.16Qe"
 
 inline void printnum(_Float128 rtmp) {
-    int width = 42;
-    char buf[__MPLAPACK_BUFLEN__];
-    int n = quadmath_snprintf(buf, sizeof buf, FLOAT128_FORMAT, width, rtmp);
-    if ((size_t)n < sizeof buf)
-        printf("%s", buf);
-    return;
+	int width = 42;
+	char buf[__MPLAPACK_BUFLEN__];
+	int n = quadmath_snprintf(buf, sizeof buf, FLOAT128_FORMAT, width, rtmp);
+	if ((size_t)n < sizeof buf)
+		printf("%s", buf);
+	return;
 }
 
 inline void printnum(std::complex<_Float128> rtmp) {
-    int width = 42, n;
-    char buf[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
-    n = quadmath_snprintf(buf, sizeof buf, FLOAT128_FORMAT, width, rtmp.real());
-    if ((size_t)n < sizeof buf)
-        printf("%s", buf);
-    n = quadmath_snprintf(buf2, sizeof buf, FLOAT128_FORMAT, width, rtmp.imag());
-    if ((size_t)n < sizeof buf2)
-        printf("%s", buf2);
-    printf("i");
-    return;
+	int width = 42, n;
+	char buf[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
+	n = quadmath_snprintf(buf, sizeof buf, FLOAT128_FORMAT, width, rtmp.real());
+	if ((size_t)n < sizeof buf)
+		printf("%s", buf);
+	n = quadmath_snprintf(buf2, sizeof buf, FLOAT128_FORMAT, width, rtmp.imag());
+	if ((size_t)n < sizeof buf2)
+		printf("%s", buf2);
+	printf("i");
+	return;
 }
 
 inline void sprintnum(char *buf, _Float128 rtmp) {
-    int width = 42;
-    quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, width, rtmp);
-    return;
+	int width = 42;
+	quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT, width, rtmp);
+	return;
 }
 
 inline void sprintnum(char *buf, std::complex<_Float128> rtmp) {
-    int width = 42;
-    quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT FLOAT128_FORMAT, width, rtmp.real(), rtmp.imag());
-    return;
+	int width = 42;
+	quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_FORMAT FLOAT128_FORMAT, width, rtmp.real(), rtmp.imag());
+	return;
 }
 
 inline void printnum_short(_Float128 rtmp) {
-    int width = 42;
-    char buf[__MPLAPACK_BUFLEN__];
-    int n = quadmath_snprintf(buf, sizeof buf, FLOAT128_SHORT_FORMAT, width, rtmp);
-    if ((size_t)n < sizeof buf)
-        printf("%s", buf);
-    return;
+	int width = 42;
+	char buf[__MPLAPACK_BUFLEN__];
+	int n = quadmath_snprintf(buf, sizeof buf, FLOAT128_SHORT_FORMAT, width, rtmp);
+	if ((size_t)n < sizeof buf)
+		printf("%s", buf);
+	return;
 }
 
 inline void printnum_short(std::complex<_Float128> rtmp) {
-    int width = 42, n;
-    char buf[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
-    n = quadmath_snprintf(buf, sizeof buf, FLOAT128_SHORT_FORMAT, width, rtmp.real());
-    if ((size_t)n < sizeof buf)
-        printf("%s", buf);
-    n = quadmath_snprintf(buf2, sizeof buf, FLOAT128_SHORT_FORMAT, width, rtmp.imag());
-    if ((size_t)n < sizeof buf2)
-        printf("%s", buf2);
-    printf("i");
-    return;
+	int width = 42, n;
+	char buf[__MPLAPACK_BUFLEN__], buf2[__MPLAPACK_BUFLEN__];
+	n = quadmath_snprintf(buf, sizeof buf, FLOAT128_SHORT_FORMAT, width, rtmp.real());
+	if ((size_t)n < sizeof buf)
+		printf("%s", buf);
+	n = quadmath_snprintf(buf2, sizeof buf, FLOAT128_SHORT_FORMAT, width, rtmp.imag());
+	if ((size_t)n < sizeof buf2)
+		printf("%s", buf2);
+	printf("i");
+	return;
 }
 
 inline void sprintnum_short(char *buf, _Float128 rtmp) {
-    int width = 42;
-    quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, width, rtmp);
-    return;
+	int width = 42;
+	quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT, width, rtmp);
+	return;
 }
 
 inline void sprintnum_short(char *buf, std::complex<_Float128> rtmp) {
-    int width = 42;
-    quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT FLOAT128_SHORT_FORMAT, width, rtmp.real(), rtmp.imag());
-    return;
+	int width = 42;
+	quadmath_snprintf(buf, __MPLAPACK_BUFLEN__, FLOAT128_SHORT_FORMAT FLOAT128_SHORT_FORMAT, width, rtmp.real(), rtmp.imag());
+	return;
 }
 
 #endif
@@ -399,96 +399,96 @@ extern "C" {
 #endif
 
 inline _Float128 abs(const std::complex<_Float128> &a) {
-    _Float128 _Complex b;
-    _Float128 c;
-    __real__(b) = (a.real());
-    __imag__(b) = (a.imag());
-    c = cabsq(b);
-    return c;
+	_Float128 _Complex b;
+	_Float128 c;
+	__real__(b) = (a.real());
+	__imag__(b) = (a.imag());
+	c = cabsq(b);
+	return c;
 }
 
 inline std::complex<_Float128> sqrt(const std::complex<_Float128> a) {
-    _Float128 _Complex b, tmp;
-    std::complex<_Float128> c;
-    __real__(b) = (a.real());
-    __imag__(b) = (a.imag());
-    tmp = csqrtq(b);
-    c.real(__real__(tmp));
-    c.imag(__imag__(tmp));
-    return c;
+	_Float128 _Complex b, tmp;
+	std::complex<_Float128> c;
+	__real__(b) = (a.real());
+	__imag__(b) = (a.imag());
+	tmp = csqrtq(b);
+	c.real(__real__(tmp));
+	c.imag(__imag__(tmp));
+	return c;
 }
 
 inline std::complex<_Float128> sin(const std::complex<_Float128> a) {
-    _Float128 _Complex b, tmp;
-    std::complex<_Float128> c;
-    __real__(b) = (a.real());
-    __imag__(b) = (a.imag());
-    tmp = csinq(b);
-    c.real(__real__(tmp));
-    c.imag(__imag__(tmp));
-    return c;
+	_Float128 _Complex b, tmp;
+	std::complex<_Float128> c;
+	__real__(b) = (a.real());
+	__imag__(b) = (a.imag());
+	tmp = csinq(b);
+	c.real(__real__(tmp));
+	c.imag(__imag__(tmp));
+	return c;
 }
 
 inline std::complex<_Float128> cos(const std::complex<_Float128> a) {
-    _Float128 _Complex b, tmp;
-    std::complex<_Float128> c;
-    __real__(b) = (a.real());
-    __imag__(b) = (a.imag());
-    tmp = ccosq(b);
-    c.real(__real__(tmp));
-    c.imag(__imag__(tmp));
-    return c;
+	_Float128 _Complex b, tmp;
+	std::complex<_Float128> c;
+	__real__(b) = (a.real());
+	__imag__(b) = (a.imag());
+	tmp = ccosq(b);
+	c.real(__real__(tmp));
+	c.imag(__imag__(tmp));
+	return c;
 }
 
 inline std::complex<_Float128> exp(const std::complex<_Float128> &a) {
-    _Float128 _Complex b, tmp;
-    std::complex<_Float128> c;
-    __real__(b) = (a.real());
-    __imag__(b) = (a.imag());
-    tmp = cexpq(b);
-    c.real(__real__(tmp));
-    c.imag(__imag__(tmp));
-    return c;
+	_Float128 _Complex b, tmp;
+	std::complex<_Float128> c;
+	__real__(b) = (a.real());
+	__imag__(b) = (a.imag());
+	tmp = cexpq(b);
+	c.real(__real__(tmp));
+	c.imag(__imag__(tmp));
+	return c;
 }
 
 inline std::complex<_Float128> log(const std::complex<_Float128> &a) {
-    _Float128 _Complex b, tmp;
-    std::complex<_Float128> c;
-    __real__(b) = (a.real());
-    __imag__(b) = (a.imag());
-    tmp = clogq(b);
-    c.real(__real__(tmp));
-    c.imag(__imag__(tmp));
-    return c;
+	_Float128 _Complex b, tmp;
+	std::complex<_Float128> c;
+	__real__(b) = (a.real());
+	__imag__(b) = (a.imag());
+	tmp = clogq(b);
+	c.real(__real__(tmp));
+	c.imag(__imag__(tmp));
+	return c;
 }
 
 // implementation of sign transfer function.
 inline _Float128 sign(_Float128 a, _Float128 b) {
-    _Float128 mtmp;
-    mtmp = std::abs(a);
-    if (b < 0.0) {
-        mtmp = -mtmp;
-    }
-    return mtmp;
+	_Float128 mtmp;
+	mtmp = std::abs(a);
+	if (b < 0.0) {
+		mtmp = -mtmp;
+	}
+	return mtmp;
 }
 
 inline _Float128 castREAL__Float128(mplapackint n) {
-    _Float128 ret = n;
-    return ret;
+	_Float128 ret = n;
+	return ret;
 }
 
 inline mplapackint castINTEGER__Float128(_Float128 a) {
-    mplapackint i = a;
-    return i;
+	mplapackint i = a;
+	return i;
 }
 
 inline long nint(_Float128 a) {
-    long i;
-    _Float128 tmp;
-    a = a + 0.5;
-    tmp = floorq(a);
-    i = (long)tmp;
-    return i;
+	long i;
+	_Float128 tmp;
+	a = a + 0.5;
+	tmp = floorq(a);
+	i = (long)tmp;
+	return i;
 }
 
 inline _Float128 ceil(_Float128 a) { return ceilq(a); }
@@ -501,27 +501,27 @@ inline _Float128 pi(_Float128 dummy) { return M_PIq; }
 //Following specialization should be done in the libc/compiler side.
 #if !defined ___MPLAPACK__FLOAT128_IS_LONGDOUBLE___  && !defined ___MPLAPACK_LONGDOUBLE_IS_BINARY128___
 template <> template <> inline std::complex<_Float128> &std::complex<_Float128>::operator/=(const std::complex<_Float128> &b) {
-    _Float128 abr, abi, ratio, den;
-    if ((abr = b.real()) < 0.)
-        abr = -abr;
-    if ((abi = b.imag()) < 0.)
-        abi = -abi;
-    if (abr <= abi) {
-        if (abi == 0) {
-            if (this->imag() != 0 || this->real() != 0)
-                abi = 1.;
-            *this = std::complex<_Float128>(abi / abr, abi / abr);
-            return (*this);
-        }
-        ratio = b.real() / b.imag();
-        den = b.imag() * (1.0 + ratio * ratio);
-        (*this) = std::complex<_Float128>((this->real() * ratio + this->imag()) / den, (this->imag() * ratio - this->real()) / den);
-    } else {
-        ratio = b.imag() / b.real();
-        den = b.real() * (1.0 + ratio * ratio);
-        (*this) = std::complex<_Float128>((this->real() + this->imag() * ratio) / den, (this->imag() - this->real() * ratio) / den);
-    }
-    return *this;
+	_Float128 abr, abi, ratio, den;
+	if ((abr = b.real()) < 0.)
+		abr = -abr;
+	if ((abi = b.imag()) < 0.)
+		abi = -abi;
+	if (abr <= abi) {
+		if (abi == 0) {
+			if (this->imag() != 0 || this->real() != 0)
+				abi = 1.;
+			*this = std::complex<_Float128>(abi / abr, abi / abr);
+			return (*this);
+		}
+		ratio = b.real() / b.imag();
+		den = b.imag() * (1.0 + ratio * ratio);
+		(*this) = std::complex<_Float128>((this->real() * ratio + this->imag()) / den, (this->imag() * ratio - this->real()) / den);
+	} else {
+		ratio = b.imag() / b.real();
+		den = b.real() * (1.0 + ratio * ratio);
+		(*this) = std::complex<_Float128>((this->real() + this->imag() * ratio) / den, (this->imag() - this->real() * ratio) / den);
+	}
+	return *this;
 }
 #endif
 

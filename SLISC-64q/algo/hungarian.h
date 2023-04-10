@@ -30,13 +30,13 @@ inline void hungarian_handle_negatives(vvecLong& matrix, bool allowed = true)
 {
 	Long minval = min(matrix);
 	if (minval < 0) {
-	    if (!allowed) { //throw
-	        throw std::runtime_error("Only non-negative values allowed");
-	    }
-	    else { // add abs(minval) to every element to create one zero
-	        minval = abs(minval);
+		if (!allowed) { //throw
+			throw std::runtime_error("Only non-negative values allowed");
+		}
+		else { // add abs(minval) to every element to create one zero
+			minval = abs(minval);
 			matrix += minval;
-	    }
+		}
 	}
 }
 
@@ -48,18 +48,18 @@ inline void hungarian_step1(vvecLong& matrix, Long& step)
 {
 	// process rows
 	for (auto& row: matrix) {
-	    auto smallest = *std::min_element(begin(row), end(row));
-	    if (smallest > 0) row -= smallest;
+		auto smallest = *std::min_element(begin(row), end(row));
+		if (smallest > 0) row -= smallest;
 	}
 	// process cols
 	Long sz = matrix.size(); // square matrix is granted
 	for (Long j = 0; j < sz; ++j) {
-	    Long minval = std::numeric_limits<Long>::max();
-	    for (Long i = 0; i < sz; ++i)
-	        minval = std::min(minval, matrix[i][j]);
-	    if (minval > 0)
-	        for (Long i=0; i<sz; ++i)
-	            matrix[i][j] -= minval;
+		Long minval = std::numeric_limits<Long>::max();
+		for (Long i = 0; i < sz; ++i)
+			minval = std::min(minval, matrix[i][j]);
+		if (minval > 0)
+			for (Long i=0; i<sz; ++i)
+				matrix[i][j] -= minval;
 	}
 	step = 2;
 }
@@ -76,15 +76,15 @@ inline void hungarian_step1(vvecLong& matrix, Long& step)
  * Before we go on to Step 3, we uncover all rows and columns so that we can use the 
  * cover vectors to help us count the number of starred zeros. */
 inline void hungarian_step2(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCover,
-	       vecBool_IO ColCover, Long& step)
+		   vecBool_IO ColCover, Long& step)
 {
 	Long sz = matrix.size();
 	for (Long r=0; r<sz; ++r) 
-	    for (Long c=0; c<sz; ++c) 
-	        if (matrix[r][c] == 0)
-	            if (RowCover[r] == 0 && ColCover[c] == 0) {
-	                M[r][c] = 1; RowCover[r] = 1; ColCover[c] = 1;
-	            }
+		for (Long c=0; c<sz; ++c) 
+			if (matrix[r][c] == 0)
+				if (RowCover[r] == 0 && ColCover[c] == 0) {
+					M[r][c] = 1; RowCover[r] = 1; ColCover[c] = 1;
+				}
 	copy(RowCover, false); copy(ColCover, false);
 	step = 3;
 }
@@ -98,38 +98,38 @@ inline void hungarian_step3(vvecChar_I M, vecBool_IO ColCover, Long_IO step)
 {
 	Long sz = M.size(), colcount = 0;
 	for (Long r=0; r<sz; ++r)
-	    for (Long c=0; c<sz; ++c)
-	        if (M[r][c] == 1)
-	            ColCover[c] = 1;
+		for (Long c=0; c<sz; ++c)
+			if (M[r][c] == 1)
+				ColCover[c] = 1;
 	for (auto n : ColCover)
-	    if (n == 1)
-	        colcount++;
+		if (n == 1)
+			colcount++;
 	if (colcount >= sz)
-	    step = 7; // solution found
+		step = 7; // solution found
 	else
-	    step = 4;
+		step = 4;
 }
 
 // Following functions to support step 4
 inline void hungarian_find_a_zero(Long& row, Long& col,
-	             vvecLong_I matrix, vecBool_I RowCover, vecBool_I ColCover)
+				 vvecLong_I matrix, vecBool_I RowCover, vecBool_I ColCover)
 {
 	Long r = 0, c = 0, sz = matrix.size();
 	bool done = false;
 	row = col = -1;
 	while (!done) {
-	    c = 0;
-	    while (true) {
-	        if (matrix[r][c] == 0 && !RowCover[r] && !ColCover[c]) {
-	            row = r; col = c; done = true;
-	        }
-	        c += 1;
-	        if (c >= sz || done)
-	            break;
-	    }
-	    r += 1;
-	    if (r >= sz)
-	        done = true;
+		c = 0;
+		while (true) {
+			if (matrix[r][c] == 0 && !RowCover[r] && !ColCover[c]) {
+				row = r; col = c; done = true;
+			}
+			c += 1;
+			if (c >= sz || done)
+				break;
+		}
+		r += 1;
+		if (r >= sz)
+			done = true;
 	}
 }
 
@@ -137,8 +137,8 @@ inline bool hungarian_star_in_row(Long row, vvecChar_I M)
 {
 	bool tmp = false;
 	for (Long c = 0; c < size(M); c++)
-	    if (M[row][c] == 1)
-	        tmp = true;
+		if (M[row][c] == 1)
+			tmp = true;
 	return tmp;
 }
 
@@ -147,32 +147,32 @@ inline bool hungarian_star_in_row(Long row, vvecChar_I M)
  * containing the starred zero. Continue in this manner until there are no uncovered zeros
  * left. Save the smallest uncovered value and Go to Step 6. */
 inline void hungarian_step4(vvecLong_I matrix, vvecChar_IO M, vecBool_IO RowCover,
-	       vecBool_IO ColCover, Long& path_row_0, Long& path_col_0, Long& step)
+		   vecBool_IO ColCover, Long& path_row_0, Long& path_col_0, Long& step)
 {
 	Long row = -1, col = -1, sz = M.size();
 	bool done = false;
 	while (!done) {
-	    hungarian_find_a_zero(row, col, matrix, RowCover, ColCover);
-	    if (row == -1){
-	        done = true;
-	        step = 6;
-	    }
-	    else {
-	        M[row][col] = 2;
-	        if (hungarian_star_in_row(row, M)) {
-	            // hungarian_find_star_in_row(row, col, M);
-	            col = -1;
-	            for (Long c = 0; c < sz; c++)
-	                if (M[row][c] == 1)
-	                    col = c;
-	            RowCover[row] = 1; ColCover[col] = 0;
-	        }
-	        else {
-	            done = true; step = 5;
-	            path_row_0 = row;
-	            path_col_0 = col;
-	        }
-	    }
+		hungarian_find_a_zero(row, col, matrix, RowCover, ColCover);
+		if (row == -1){
+			done = true;
+			step = 6;
+		}
+		else {
+			M[row][col] = 2;
+			if (hungarian_star_in_row(row, M)) {
+				// hungarian_find_star_in_row(row, col, M);
+				col = -1;
+				for (Long c = 0; c < sz; c++)
+					if (M[row][c] == 1)
+						col = c;
+				RowCover[row] = 1; ColCover[col] = 0;
+			}
+			else {
+				done = true; step = 5;
+				path_row_0 = row;
+				path_col_0 = col;
+			}
+		}
 	}
 }
 
@@ -181,15 +181,15 @@ inline void hungarian_find_star_in_col(Long c, Long& r, vvecChar_I M)
 {
 	r = -1;
 	for (Long i = 0; i < size(M); i++)
-	    if (M[i][c] == 1)
-	        r = i;
+		if (M[i][c] == 1)
+			r = i;
 }
 
 inline void hungarian_find_prime_in_row(Long r, Long& c, vvecChar_I M)
 {
 	for (unsigned j = 0; j < M.size(); j++)
-	    if (M[r][j] == 2)
-	        c = j;
+		if (M[r][j] == 2)
+			c = j;
 }
 
 /* Construct a series of alternating primed and starred zeros as follows.  
@@ -202,7 +202,7 @@ inline void hungarian_find_prime_in_row(Long r, Long& c, vvecChar_I M)
  * familiar.  It is a verbal description of the augmenting path algorithm (for solving
  * the maximal matching problem). */
 inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0, 
-	       vvecChar_IO M, vecBool_IO RowCover, vecBool_IO ColCover, Long& step)
+		   vvecChar_IO M, vecBool_IO RowCover, vecBool_IO ColCover, Long& step)
 {
 	Long r = -1, c = -1;
 	Long path_count = 1;
@@ -210,33 +210,33 @@ inline void hungarian_step5(vvecLong& path, Long path_row_0, Long path_col_0,
 	path[path_count - 1][1] = path_col_0;
 	bool done = false;
 	while (!done) {
-	    hungarian_find_star_in_col(path[path_count - 1][1], r, M);
-	    if (r > -1) {
-	        path_count += 1;
-	        path[path_count - 1][0] = r;
-	        path[path_count - 1][1] = path[path_count - 2][1];
-	    }
-	    else {done = true;}
-	    
-	    if (!done) {
-	        hungarian_find_prime_in_row(path[path_count - 1][0], c, M);
-	        path_count += 1;
-	        path[path_count - 1][0] = path[path_count - 2][0];
-	        path[path_count - 1][1] = c;
-	    }
+		hungarian_find_star_in_col(path[path_count - 1][1], r, M);
+		if (r > -1) {
+			path_count += 1;
+			path[path_count - 1][0] = r;
+			path[path_count - 1][1] = path[path_count - 2][1];
+		}
+		else {done = true;}
+		
+		if (!done) {
+			hungarian_find_prime_in_row(path[path_count - 1][0], c, M);
+			path_count += 1;
+			path[path_count - 1][0] = path[path_count - 2][0];
+			path[path_count - 1][1] = c;
+		}
 	}
 	// augment_path
 	for (Long p = 0; p < path_count; p++)
-	    if (M[path[p][0]][path[p][1]] == 1)
-	        M[path[p][0]][path[p][1]] = 0;
-	    else
-	        M[path[p][0]][path[p][1]] = 1;
+		if (M[path[p][0]][path[p][1]] == 1)
+			M[path[p][0]][path[p][1]] = 0;
+		else
+			M[path[p][0]][path[p][1]] = 1;
 	copy(RowCover, false); copy(ColCover, false);
 	// erase primes
 	for (auto& row: M)
-	    for (auto& val: row)
-	        if (val == 2)
-	            val = 0;
+		for (auto& val: row)
+			if (val == 2)
+				val = 0;
 	step = 3;
 }
 
@@ -255,16 +255,16 @@ inline void hungarian_step6(vvecLong& matrix, vecBool_I RowCover, vecBool_I ColC
 {
 	Long sz = matrix.size(), minval = std::numeric_limits<Long>::max();
 	for (Long r = 0; r < sz; r++)
-	    for (Long c = 0; c < sz; c++)
-	        if (RowCover[r] == 0 && ColCover[c] == 0)
-	            if (minval > matrix[r][c])
-	                minval = matrix[r][c];
+		for (Long c = 0; c < sz; c++)
+			if (RowCover[r] == 0 && ColCover[c] == 0)
+				if (minval > matrix[r][c])
+					minval = matrix[r][c];
 	for (Long r = 0; r < sz; r++)
-	    for (Long c = 0; c < sz; c++) {
-	        if (RowCover[r] == 1)
-	            matrix[r][c] += minval;
-	        if (ColCover[c] == 0)
-	            matrix[r][c] -= minval;
+		for (Long c = 0; c < sz; c++) {
+			if (RowCover[r] == 1)
+				matrix[r][c] += minval;
+			if (ColCover[c] == 0)
+				matrix[r][c] -= minval;
 	}
 	step = 4;
 }
@@ -276,7 +276,7 @@ inline Long hungarian(vvecLong_I cost, bool allow_negatives = true)
 	const Long sz = cost.size();
 #ifdef SLS_CHECK_SHAPES
 	if (cost.empty() || size(cost[0]) != sz)
-	    SLS_ERR("wrong shape!");
+		SLS_ERR("wrong shape!");
 #endif
 	vvecLong matrix(sz, vecLong(sz));
 	copy(matrix, cost);
@@ -290,38 +290,38 @@ inline Long hungarian(vvecLong_I cost, bool allow_negatives = true)
 	bool done = false;
 	Long step = 1;
 	while (!done) {
-	    switch (step) {
-	        case 1:
-	            hungarian_step1(matrix, step); break;
-	        case 2:
-	            hungarian_step2(matrix, M, RowCover, ColCover, step); break;
-	        case 3:
-	            hungarian_step3(M, ColCover, step); break;
-	        case 4:
-	            hungarian_step4(matrix, M, RowCover, ColCover, path_row_0, path_col_0, step); break;
-	        case 5:
-	            hungarian_step5(path, path_row_0, path_col_0, M, RowCover, ColCover, step); break;
-	        case 6:
-	            hungarian_step6(matrix, RowCover, ColCover, step); break;
-	        case 7:
-	            for (auto &vec: M) { vec.resize(sz); }
-	            M.resize(sz); done = true; break;
-	        default:
-	            done = true; break;
-	    }
+		switch (step) {
+			case 1:
+				hungarian_step1(matrix, step); break;
+			case 2:
+				hungarian_step2(matrix, M, RowCover, ColCover, step); break;
+			case 3:
+				hungarian_step3(M, ColCover, step); break;
+			case 4:
+				hungarian_step4(matrix, M, RowCover, ColCover, path_row_0, path_col_0, step); break;
+			case 5:
+				hungarian_step5(path, path_row_0, path_col_0, M, RowCover, ColCover, step); break;
+			case 6:
+				hungarian_step6(matrix, RowCover, ColCover, step); break;
+			case 7:
+				for (auto &vec: M) { vec.resize(sz); }
+				M.resize(sz); done = true; break;
+			default:
+				done = true; break;
+		}
 	}
 	// total cost
 	Long res = 0;
 	for (Long j = 0; j < sz; ++j)
-	    for (Long i = 0; i < sz; ++i)
-	        if (M[i][j]) {
-	            auto it1 = cost.begin();
-	            std::advance(it1, i);
-	            auto it2 = it1->begin();
-	            std::advance(it2, j);
-	            res += *it2;
-	            continue;                
-	        }
+		for (Long i = 0; i < sz; ++i)
+			if (M[i][j]) {
+				auto it1 = cost.begin();
+				std::advance(it1, i);
+				auto it2 = it1->begin();
+				std::advance(it2, j);
+				res += *it2;
+				continue;                
+			}
 	return res;
 }
 

@@ -89,46 +89,46 @@ inline void Matb::get_profile()
 	Str mark; mark.resize(strlen("Matb_End_of_File"));
 	read(fin, mark);
 	if (mark != "Matb_End_of_File")
-	    throw Matb_file_not_complete();
+		throw Matb_file_not_complete();
 	fin.seekg(m_filesize-strlen("Matb_End_of_File"));
 	Long Nvar = lastLlong(fin);
 	if (Nvar < 1)
-	    SLS_ERR("unknown!");
+		SLS_ERR("unknown!");
 	m_ind.resize(Nvar);
 	for (Long i = 0; i < Nvar; ++i) {
-	    m_ind[i] = lastLlong(fin);
-	    if (m_ind[i] >= m_filesize || m_ind[i] < 0)
-	        SLS_ERR("unknown!");
-	    if (i > 0 && m_ind[i] <= m_ind[i-1])
-	        SLS_ERR("unknown!");
+		m_ind[i] = lastLlong(fin);
+		if (m_ind[i] >= m_filesize || m_ind[i] < 0)
+			SLS_ERR("unknown!");
+		if (i > 0 && m_ind[i] <= m_ind[i-1])
+			SLS_ERR("unknown!");
 	}
 
 	// loop through each variable
 	m_size.resize(Nvar);
 	for (Long i = 0; i < Nvar; ++i) {
-	    fin.seekg(m_ind[i]);
-	    // read var name
-	    Llong n;
-	    read(fin, n);
-	    name.resize(n);
-	    read(fin, name);
-	    m_name.push_back(name);
-	    // read var type
-	    read(fin, n);
-	    if (n < 0)
-	        SLS_ERR("unknown!");
-	    m_type.push_back(n);
-	    // read var dim
-	    read(fin, n);
-	    if (n < 0)
-	        SLS_ERR("unknown!");
-	    m_size[i].resize(n);
-	    for (Long j = 0; j < n; ++j) {
-	        Llong tmp;
-	        read(fin, tmp); m_size[i][j] = tmp;
-	        if (m_size[i][j] < 0)
-	            SLS_ERR("unknown!");
-	    }
+		fin.seekg(m_ind[i]);
+		// read var name
+		Llong n;
+		read(fin, n);
+		name.resize(n);
+		read(fin, name);
+		m_name.push_back(name);
+		// read var type
+		read(fin, n);
+		if (n < 0)
+			SLS_ERR("unknown!");
+		m_type.push_back(n);
+		// read var dim
+		read(fin, n);
+		if (n < 0)
+			SLS_ERR("unknown!");
+		m_size[i].resize(n);
+		for (Long j = 0; j < n; ++j) {
+			Llong tmp;
+			read(fin, tmp); m_size[i][j] = tmp;
+			if (m_size[i][j] < 0)
+				SLS_ERR("unknown!");
+		}
 	}
 }
 
@@ -136,7 +136,7 @@ inline Long Matb::data_pos(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <0 || i >= size())
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	return m_ind[i] + 8 + m_name[i].size() + 8 + 8 + (Long)m_size[i].size() * 8;
 }
@@ -146,8 +146,8 @@ inline Long Matb::data_pos(Long_I i) const
 inline Long Matb::search(Str_I name)
 {
 	for (Long i = 0; i < size(); ++i)
-	    if (name == m_name[i])
-	        return i;
+		if (name == m_name[i])
+			return i;
 	return -1;
 }
 
@@ -159,50 +159,50 @@ inline Matb::Matb(Str_I fname, Str_I rw, Bool_I replace)
 inline void Matb::open(Str_I fname, Str_I rw, Bool_I replace)
 {
 	if (!little_endian())
-	    SLS_ERR("only support little endian for now!");
+		SLS_ERR("only support little endian for now!");
 	if (isopen())
-	    close();
+		close();
 	if (fname.substr(fname.size()-5) != ".matb")
-	    SLS_ERR("file must have \".matb\" extension!");
+		SLS_ERR("file must have \".matb\" extension!");
 	m_rw = rw;
 	m_fname = fname;
 	if (rw == "w") {
 #ifndef SLS_MATB_REPLACE
-	    if (!replace && file_exist(m_fname)) {
-	        while (true) {
-	            if (file_exist(m_fname)) {
-	                SLS_WARN("\n\nfile [" + m_fname + "] already exist! delete file to continue...\n"
-	                    "  (define SLS_MATB_REPLACE to replace file by default)\n\n");
-	            }
-	            else {
-	                break;
-	            }
-	            pause(10);
-	        }
-	    }
+		if (!replace && file_exist(m_fname)) {
+			while (true) {
+				if (file_exist(m_fname)) {
+					SLS_WARN("\n\nfile [" + m_fname + "] already exist! delete file to continue...\n"
+						"  (define SLS_MATB_REPLACE to replace file by default)\n\n");
+				}
+				else {
+					break;
+				}
+				pause(10);
+			}
+		}
 #endif
-	    open_bin(m_out, m_fname);
-	    if (!m_out.good())
-	        SLS_ERR("error: file not created (does directory exist?): " + m_fname);
+		open_bin(m_out, m_fname);
+		if (!m_out.good())
+			SLS_ERR("error: file not created (does directory exist?): " + m_fname);
 	}
 	else if (rw == "r" || "m") {
-	    open_bin(m_in, m_fname);
-	    if (!m_in.good())
-	        SLS_ERR("error: file not found: " + m_fname);
-	    get_profile(); // get var names
+		open_bin(m_in, m_fname);
+		if (!m_in.good())
+			SLS_ERR("error: file not found: " + m_fname);
+		get_profile(); // get var names
 	}
 	else
-	    SLS_ERR("illegal mode!");
+		SLS_ERR("illegal mode!");
 }
 
 inline Long Matb::data_size(Long_I i) const
 {
 	Long len;
 	if (i+1 < size())
-	    len = m_ind[i+1] - data_pos(i);
+		len = m_ind[i+1] - data_pos(i);
 	else {
-	    Long end = m_filesize - strlen("Matb_End_of_File") - 8*(size() + 1);
-	    len = end - data_pos(i);
+		Long end = m_filesize - strlen("Matb_End_of_File") - 8*(size() + 1);
+		len = end - data_pos(i);
 	}
 	return len;
 }
@@ -215,39 +215,39 @@ inline Bool Matb::isopen()
 inline void Matb::read_data()
 {
 	if (m_rw != "m")
-	    SLS_ERR("read_data() can only be used in \"m\" mode!");
+		SLS_ERR("read_data() can only be used in \"m\" mode!");
 	for (Long i = 0; i < size(); ++i) {
-	    m_data.push_back(Str()); m_data[i].resize(data_size(i));
-	    m_in.seekg(data_pos(i));
-	    read(m_in, m_data[i]);
-	    if (Long(m_data[i].size()) != data_size(i))
-	        SLS_ERR("unknown!");
+		m_data.push_back(Str()); m_data[i].resize(data_size(i));
+		m_in.seekg(data_pos(i));
+		read(m_in, m_data[i]);
+		if (Long(m_data[i].size()) != data_size(i))
+			SLS_ERR("unknown!");
 	}
 }
 
 inline void Matb::write_data(Str_I fname)
 {
 	if (m_rw != "m")
-	    SLS_ERR("write_data() can only be used in \"m\" mode!");
+		SLS_ERR("write_data() can only be used in \"m\" mode!");
 	m_in.close();
 	open_bin(m_out, fname);
 	m_out.seekp(0, std::ios::beg);
 	for (Long i = 0; i < size(); ++i) {
-	    // debug
-	    if (m_ind[i] != m_out.tellp())
-	        SLS_ERR("unknown!");
-	    write(m_out, (Llong)m_name[i].size());
-	    write(m_out, m_name[i]); // name
-	    write(m_out, (Llong)m_type[i]);
-	    Long Ndim = m_size[i].size();
-	    write(m_out, (Llong)Ndim); // dim
-	    for (Long j = 0; j < Ndim; ++j)
-	        write(m_out, (Llong)m_size[i][j]);
-	    write(m_out, m_data[i]);
+		// debug
+		if (m_ind[i] != m_out.tellp())
+			SLS_ERR("unknown!");
+		write(m_out, (Llong)m_name[i].size());
+		write(m_out, m_name[i]); // name
+		write(m_out, (Llong)m_type[i]);
+		Long Ndim = m_size[i].size();
+		write(m_out, (Llong)Ndim); // dim
+		for (Long j = 0; j < Ndim; ++j)
+			write(m_out, (Llong)m_size[i][j]);
+		write(m_out, m_data[i]);
 	}
 	// write position of variables
 	for (Long i = size() - 1; i >= 0; --i)
-	    write(m_out, m_ind[i]);
+		write(m_out, m_ind[i]);
 	// write number of variables
 	write(m_out, (Llong)size());
 	// mark end-of-file
@@ -259,17 +259,17 @@ inline void Matb::write_data(Str_I fname)
 inline void Matb::close()
 {
 	if (m_rw == "w") {
-	    // write position of variables
-	    for (Long i = m_ind.size() - 1; i >= 0; --i)
-	        write(m_out, m_ind[i]);
-	    // write number of variables
-	    write(m_out, (Llong)size());
-	    // mark end-of-file
-	    write(m_out, "Matb_End_of_File");
-	    m_out.close();
+		// write position of variables
+		for (Long i = m_ind.size() - 1; i >= 0; --i)
+			write(m_out, m_ind[i]);
+		// write number of variables
+		write(m_out, (Llong)size());
+		// mark end-of-file
+		write(m_out, "Matb_End_of_File");
+		m_out.close();
 	}
 	else {
-	    m_in.close();
+		m_in.close();
 	}
 	m_rw = '\0';
 	m_name.clear();
@@ -281,9 +281,9 @@ inline void Matb::close()
 inline Matb::~Matb()
 {
 	if (isopen())
-	    close();
+		close();
 	else if (m_in.is_open() && m_out.is_open())
-	    SLS_ERR("unknown!");
+		SLS_ERR("unknown!");
 }
 
 // save() functions
@@ -296,10 +296,10 @@ inline Matb::~Matb()
 inline void save(@T@_I s, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
-	    SLS_ERR("variable already exist: " + varname);
+		SLS_ERR("variable already exist: " + varname);
 	ofstream &fout = matb.m_out;
 	if (!fout.is_open())
-	    SLS_ERR("matb file not open: " + matb.m_fname);
+		SLS_ERR("matb file not open: " + matb.m_fname);
 	matb.m_name.push_back(varname);
 	matb.m_ind.push_back(fout.tellp());
 	// write variable name info
@@ -347,10 +347,10 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
-	    SLS_ERR("variable already exist: " + varname);
+		SLS_ERR("variable already exist: " + varname);
 	ofstream &fout = matb.m_out;
 	if (!fout.is_open())
-	    SLS_ERR("matb file not open!");
+		SLS_ERR("matb file not open!");
 	// record position
 	matb.m_name.push_back(varname);
 	matb.m_ind.push_back(fout.tellp());
@@ -364,26 +364,26 @@ inline void save(@Tv@_I v, Str_I varname, Matb_IO matb)
 //% if Ndim == '1'
 	write(fout, (Llong)v.size());
 	for (Long i = 0; i < (Long)v.size(); ++i)
-	    write(fout, v[i]);
+		write(fout, v[i]);
 //% elseif Ndim == '2'
 	write(fout, (Llong)v.n0()); write(fout, (Llong)v.n1());
 	for (Long j = 0; j < v.n1(); ++j)
-	    for (Long i = 0; i < v.n0(); ++i)
-	        write(fout, v(i, j));
+		for (Long i = 0; i < v.n0(); ++i)
+			write(fout, v(i, j));
 //% elseif Ndim == '3'
 	write(fout, (Llong)v.n0()); write(fout, (Llong)v.n1()); write(fout, (Llong)v.n2());
 	for (Long k = 0; k < v.n2(); ++k)
-	    for (Long j = 0; j < v.n1(); ++j)
-	        for (Long i = 0; i < v.n0(); ++i)
-	            write(fout, v(i, j, k));
+		for (Long j = 0; j < v.n1(); ++j)
+			for (Long i = 0; i < v.n0(); ++i)
+				write(fout, v(i, j, k));
 //% elseif Ndim == '4'
 	write(fout, (Llong)v.n0()); write(fout, (Llong)v.n1());
 	write(fout, (Llong)v.n2()); write(fout, (Llong)v.n3());
 	for (Long l = 0; l < v.n3(); ++l)
-	    for (Long k = 0; k < v.n2(); ++k)
-	        for (Long j = 0; j < v.n1(); ++j)
-	            for (Long i = 0; i < v.n0(); ++i)
-	                write(fout, v(i, j, k, l));
+		for (Long k = 0; k < v.n2(); ++k)
+			for (Long j = 0; j < v.n1(); ++j)
+				for (Long i = 0; i < v.n0(); ++i)
+					write(fout, v(i, j, k, l));
 //% end
 }
 
@@ -399,7 +399,7 @@ inline void save_matb(@Tv@_I v, Str_I varname, Str_I matb_file, Bool_I replace =
 inline void save(Str_I str, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
-	    SLS_ERR("variable already exist: " + varname);
+		SLS_ERR("variable already exist: " + varname);
 	SvecChar_c sli; sli.set(str.data(), str.size());
 	save(sli, varname, matb);
 }
@@ -428,13 +428,13 @@ inline void load(@T@_O s, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	Long i = matb.search(varname);
 	if (i < 0)
-	    throw Str("variable not found!");
+		throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
-	    SLS_ERR("wrong type!");
+		SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 0)
-	    SLS_ERR("wrong dimension!");
+		SLS_ERR("wrong dimension!");
 
 	read(fin, s);
 }
@@ -444,18 +444,18 @@ inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	Long i = matb.search(varname);
 	if (i < 0)
-	    throw Str("variable not found!");
+		throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
-	    SLS_ERR("wrong type!");
+		SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 1)
-	    SLS_ERR("wrong dimension!");
+		SLS_ERR("wrong dimension!");
 
 	Long n = matb.m_size[i][0]; v.resize(n);
 	// read var data
 	for (Long i = 0; i < n; ++i)
-	    read(fin, v[i]);
+		read(fin, v[i]);
 }
 //% elseif is_Mat(T) || is_Cmat(T)
 inline void load(@T@_O a, Str_I varname, Matb_IO matb)
@@ -464,19 +464,19 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	i = matb.search(varname);
 	if (i < 0)
-	    throw Str("variable not found!");
+		throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
-	    SLS_ERR("wrong type!");
+		SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 2)
-	    SLS_ERR("wrong dimension!");
+		SLS_ERR("wrong dimension!");
 
 	m = matb.m_size[i][0]; n = matb.m_size[i][1]; a.resize(m, n);
 	// read var data
 	for (j = 0; j < n; ++j)
-	    for (i = 0; i < m; ++i)
-	        read(fin, a(i, j));
+		for (i = 0; i < m; ++i)
+			read(fin, a(i, j));
 }
 //% elseif is_Mat3(T) || is_Cmat3(T)
 inline void load(@T@_O a, Str_I varname, Matb_IO matb)
@@ -485,21 +485,21 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	i = matb.search(varname);
 	if (i < 0)
-	    throw Str("variable not found!");
+		throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
-	    SLS_ERR("wrong type!");
+		SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 3)
-	    SLS_ERR("wrong dimension!");
+		SLS_ERR("wrong dimension!");
 	
 	m = matb.m_size[i][0]; n = matb.m_size[i][1]; q = matb.m_size[i][2];
 	a.resize(m, n, q);
 	// read var data
 	for (k = 0; k < q; ++k)
-	    for (j = 0; j < n; ++j)
-	        for (i = 0; i < m; ++i)
-	            read(fin, a(i, j, k));
+		for (j = 0; j < n; ++j)
+			for (i = 0; i < m; ++i)
+				read(fin, a(i, j, k));
 }
 //% elseif is_Cmat4(T)
 inline void load(@T@_O a, Str_I varname, Matb_IO matb)
@@ -508,22 +508,22 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	i = matb.search(varname);
 	if (i < 0)
-	    throw Str("variable not found!");
+		throw Str("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
-	    SLS_ERR("wrong type!");
+		SLS_ERR("wrong type!");
 	if (matb.m_size[i].size() != 4)
-	    SLS_ERR("wrong dimension!");
+		SLS_ERR("wrong dimension!");
 	
 	N1 = matb.m_size[i][0]; N2 = matb.m_size[i][1]; N3 = matb.m_size[i][2]; N4 = matb.m_size[i][3];
 	a.resize(N1, N2, N3, N4);
 	// read var data
 	for (l = 0; l < N4; ++l)
-	    for (k = 0; k < N3; ++k)
-	        for (j = 0; j < N2; ++j)
-	            for (i = 0; i < N1; ++i)
-	                read(fin, a(i, j, k, l));
+		for (k = 0; k < N3; ++k)
+			for (j = 0; j < N2; ++j)
+				for (i = 0; i < N1; ++i)
+					read(fin, a(i, j, k, l));
 }
 //% else
 //%     disp(T); error('not implemented!');
@@ -546,23 +546,23 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 	Long N = matb_name.size();
 	Str matt_name;
 	if (matb_name.substr(N-5, 5) != ".matb")
-	    SLS_ERR(matb_name + " : file does not have .matb extension!");
+		SLS_ERR(matb_name + " : file does not have .matb extension!");
 	matt_name = matb_name.substr(0, N - 1) + "t";
 	if (file_exist(matt_name)) {
-	    if (replace)
-	        file_remove(matt_name);
-	    else
-	        return -1;
+		if (replace)
+			file_remove(matt_name);
+		else
+			return -1;
 	}
 
 	Matb matb(matb_name, "r");
 	Matt matt(matt_name, "w");
 	Long Nvar = matb.m_name.size();
 	for (Long i = 0; i < Nvar; ++i) {
-	    const Long &type = matb.m_type[i];
-	    const Str &name = matb.m_name[i];
-	    const Long Ndim = matb.m_size[i].size();
-	    if (Ndim == 0) {
+		const Long &type = matb.m_type[i];
+		const Str &name = matb.m_name[i];
+		const Long Ndim = matb.m_size[i].size();
+		if (Ndim == 0) {
 // scalars
 //% tem('matb2matt', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
@@ -570,14 +570,14 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 //%----------------------
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
-	        if (type == @numT@) {
-	            @T@ s;
-	            load(s, name, matb); save(s, name, matt);
-	            continue;
-	        }
+			if (type == @numT@) {
+				@T@ s;
+				load(s, name, matb); save(s, name, matt);
+				continue;
+			}
 //%---------------------
-	        SLS_ERR("not implemented!");
-	    }
+			SLS_ERR("not implemented!");
+		}
 
 // containers
 //% tem('matb2matt2', {
@@ -591,11 +591,11 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 //% Ndim = num2str(ndim(T));
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
-	    if (type == @numTs@ && Ndim == @Ndim@) {
+		if (type == @numTs@ && Ndim == @Ndim@) {
 			@T@ v;
-	        load(v, name, matb); save(v, name, matt);
-	        continue;
-	    }
+			load(v, name, matb); save(v, name, matt);
+			continue;
+		}
 //%--------------------
 	}
 	matb.close(); matt.close();
@@ -610,22 +610,22 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 	Long N = matt_name.size();
 	Str matb_name;
 	if (matt_name.substr(N-5, 5) != ".matt")
-	    SLS_ERR(matt_name + " : file does not have .matt extension!");
+		SLS_ERR(matt_name + " : file does not have .matt extension!");
 	matb_name = matt_name.substr(0, N - 1) + "b";
 	if (file_exist(matb_name)) {
-	    if (replace)
-	        file_remove(matb_name);
-	    else
-	        return -1;
+		if (replace)
+			file_remove(matb_name);
+		else
+			return -1;
 	}
 	Matt matt(matt_name, "r");
 	Matb matb(matb_name, "w");
 	Long Nvar = matt.m_name.size();
 	for (Long i = 0; i < Nvar; ++i) {
-	    const Long &type = matt.m_type[i];
-	    const Str &name = matt.m_name[i];
-	    const Long Ndim = matt.m_size[i].size();
-	    if (Ndim == 0) {
+		const Long &type = matt.m_type[i];
+		const Str &name = matt.m_name[i];
+		const Long Ndim = matt.m_size[i].size();
+		if (Ndim == 0) {
 // scalars
 //% tem('matt2matb', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
@@ -633,14 +633,14 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 //%----------------------
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
-	        if (type == @numT@) {
-	            @T@ s{};
-	            load(s, name, matt); save(s, name, matb);
-	            continue;
-	        }
+			if (type == @numT@) {
+				@T@ s{};
+				load(s, name, matt); save(s, name, matb);
+				continue;
+			}
 //%---------------------
-	        SLS_ERR("not implemented!");
-	    }
+			SLS_ERR("not implemented!");
+		}
 
 // containers
 //% tem('matt2matb2', {
@@ -654,11 +654,11 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 //% Ndim = num2str(ndim(T));
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
-	    if (type == @numTs@ && Ndim == @Ndim@) {
+		if (type == @numTs@ && Ndim == @Ndim@) {
 			@T@ v;
-	        load(v, name, matt); save(v, name, matb);
-	        continue;
-	    }
+			load(v, name, matt); save(v, name, matb);
+			continue;
+		}
 //%--------------------
 	}
 	matt.close(); matb.close();
@@ -674,23 +674,23 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 	Long N = matb_name.size();
 	Str new_matb_name;
 	if (matb_name.substr(N-5, 5) != ".matb")
-	    SLS_ERR(matb_name + " : file does not have .matb extension!");
+		SLS_ERR(matb_name + " : file does not have .matb extension!");
 	new_matb_name = "q2d-" + matb_name;
 	if (file_exist(new_matb_name)) {
-	    if (replace)
-	        file_remove(new_matb_name);
-	    else
-	        return -1;
+		if (replace)
+			file_remove(new_matb_name);
+		else
+			return -1;
 	}
 
 	Matb matb(matb_name, "r");
 	Matb new_matb(new_matb_name, "w");
 	Long Nvar = matb.m_name.size();
 	for (Long i = 0; i < Nvar; ++i) {
-	    const Long &type = matb.m_type[i];
-	    const Str &name = matb.m_name[i];
-	    const Long Ndim = matb.m_size[i].size();
-	    if (Ndim == 0) {
+		const Long &type = matb.m_type[i];
+		const Str &name = matb.m_name[i];
+		const Long Ndim = matb.m_size[i].size();
+		if (Ndim == 0) {
 // scalars
 //% tem('matb_q2d', {
 //%     'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
@@ -698,28 +698,28 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 //%----------------------
 //% T = varargin{:};
 //% numT = num2str(type_num(T));
-	        if (type == @numT@) {
-	            @T@ s;
-	            load(s, name, matb); save(s, name, new_matb);
-	            continue;
-	        }
+			if (type == @numT@) {
+				@T@ s;
+				load(s, name, matb); save(s, name, new_matb);
+				continue;
+			}
 //%---------------------
 
-	        if (type == 23) { // Qdoub
-	            Qdoub s;
-	            load(s, name, matb); save(Doub(s), name, new_matb);
-	            continue;
-	        }
+			if (type == 23) { // Qdoub
+				Qdoub s;
+				load(s, name, matb); save(Doub(s), name, new_matb);
+				continue;
+			}
 
 			if (type == 43) { // Qcomp
-	            Qcomp s;
-	            load(s, name, matb);
+				Qcomp s;
+				load(s, name, matb);
 				save(Comp(s.real(), s.imag()), name, new_matb);
-	            continue;
-	        }
+				continue;
+			}
 
 			SLS_ERR("not implemented!");
-	    }
+		}
 
 // containers
 //% tem('matb_q2d2', {
@@ -733,11 +733,11 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 //% Ndim = num2str(ndim(T));
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
-	    if (type == @numTs@ && Ndim == @Ndim@) {
-            @T@ v;
-	        load(v, name, matb); save(v, name, new_matb);
-	        continue;
-	    }
+		if (type == @numTs@ && Ndim == @Ndim@) {
+			@T@ v;
+			load(v, name, matb); save(v, name, new_matb);
+			continue;
+		}
 //%--------------------
 
 // quad precision containers
@@ -752,17 +752,17 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 //% Ndim = num2str(ndim(T));
 //% [Ts, Ts1] = val_t(T, T1);
 //% numTs = num2str(type_num(Ts));
-	    if (type == @numTs@ && Ndim == @Ndim@) {
+		if (type == @numTs@ && Ndim == @Ndim@) {
 			@T@ v; @T1@ v1;
-	        load(v, name, matb);
+			load(v, name, matb);
 //% if Ndim == '1'
-	        v1.resize(v.size());
+			v1.resize(v.size());
 //% elseif Ndim == '2'
-	        v1.resize(v.n0(), v.n1());
+			v1.resize(v.n0(), v.n1());
 //% elseif Ndim == '3'
-	        v1.resize(v.n0(), v.n1(), v.n2());
+			v1.resize(v.n0(), v.n1(), v.n2());
 //% elseif Ndim == '4'
-	        v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
+			v1.resize(v.n0(), v.n1(), v.n2(), v.n3());
 //% else
 //%         error('not implemented!');
 //% end
@@ -774,8 +774,8 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 //% end
 			}
 			save(v1, name, new_matb);
-	        continue;
-	    }
+			continue;
+		}
 //%--------------------
 	}
 	matb.close(); new_matb.close();

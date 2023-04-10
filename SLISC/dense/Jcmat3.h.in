@@ -96,7 +96,7 @@ inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -107,7 +107,7 @@ inline @CT@ &@Class@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }

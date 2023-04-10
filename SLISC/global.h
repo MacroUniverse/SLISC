@@ -71,7 +71,7 @@
 	#ifdef __GSL_CBLAS_H__
 		#error include SLISC/global.h before any GSL headers
 	#else
-	    #define __GSL_CBLAS_H__
+		#define __GSL_CBLAS_H__
 	#endif
 	#ifdef __GSL_BLAS_TYPES_H__
 		#error include SLISC/global.h before any GSL headers
@@ -98,15 +98,15 @@
 	#ifdef SLS_USE_CBLAS
 		#ifdef __GSL_CBLAS_H__
 			#error include SLISC/global.h becore any GSL headers
-	    #else
-	        #define __GSL_CBLAS_H__
-	    #endif
+		#else
+			#define __GSL_CBLAS_H__
+		#endif
 		#ifdef SLS_USE_INT_AS_LONG
 			#define CBLAS_INT int
 		#else
 			#define CBLAS_INT long long
 		#endif
-	    #include <cblas.h>
+		#include <cblas.h>
 	#endif
 	#ifdef SLS_USE_LAPACKE
 		#ifdef SLS_USE_INT_AS_LONG
@@ -114,10 +114,10 @@
 		#else
 			#define lapack_int long long
 		#endif
-	    #include <lapacke.h>
-	    #ifdef I // I is already defined in "/usr/include/complex.h"
-	        #undef I
-	    #endif
+		#include <lapacke.h>
+		#ifdef I // I is already defined in "/usr/include/complex.h"
+			#undef I
+		#endif
 	#endif
 #endif
 
@@ -350,10 +350,10 @@ inline Bool isnan(Comp s)
 #ifdef SLS_USE_MSVC
 struct turn_on_floating_exceptions {
 	turn_on_floating_exceptions() {
-	    unsigned cw; _controlfp_s(&cw, 0, 0);
-	    // also: EM_INEXACT, EM_UNDERFLOW
-	    cw &= ~(EM_INVALID | EM_OVERFLOW | EM_ZERODIVIDE | EM_DENORMAL);
-	    unsigned cw1; _controlfp_s(&cw1, cw, MCW_EM);
+		unsigned cw; _controlfp_s(&cw, 0, 0);
+		// also: EM_INEXACT, EM_UNDERFLOW
+		cw &= ~(EM_INVALID | EM_OVERFLOW | EM_ZERODIVIDE | EM_DENORMAL);
+		unsigned cw1; _controlfp_s(&cw1, cw, MCW_EM);
 	}
 };
 // in case of ODR error, put this in main function;

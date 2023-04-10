@@ -51,8 +51,8 @@ inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(
 inline void @Cmat3T@::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -60,8 +60,8 @@ inline @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("@Cmat3T@ index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("@Cmat3T@ index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -70,8 +70,8 @@ inline const @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("@Cmat3T@ index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("@Cmat3T@ index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }

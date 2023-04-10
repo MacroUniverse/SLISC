@@ -46,11 +46,11 @@ inline @VbaseT@::@VbaseT@(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new @T@[N];
+		m_p = new @T@[N];
 	else
 		m_p = nullptr;
 }
@@ -63,8 +63,8 @@ inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new @T@[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(@T@));
+		m_p = new @T@[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(@T@));
 	}
 	else
 		m_p = nullptr;
@@ -74,7 +74,7 @@ inline @T@ * @VbaseT@::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -83,7 +83,7 @@ inline const @T@ * @VbaseT@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -96,27 +96,27 @@ inline Long @VbaseT@::size() const
 inline void @VbaseT@::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new @T@[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new @T@[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new @T@[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new @T@[N];
+			}
+		}
 	}
 }
 
 inline void @VbaseT@::operator<<(@VbaseT@ &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -134,7 +134,7 @@ inline const @T@ &@VbaseT@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("@VbaseT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("@VbaseT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -143,7 +143,7 @@ inline @T@ &@VbaseT@::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -152,7 +152,7 @@ inline const @T@ &@VbaseT@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -161,7 +161,7 @@ inline @T@ &@VbaseT@::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -170,7 +170,7 @@ inline const @T@ &@VbaseT@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -178,7 +178,7 @@ inline const @T@ &@VbaseT@::end(Long_I i) const
 inline @VbaseT@::~@VbaseT@()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 //%------------------------
 
@@ -215,10 +215,10 @@ inline VbaseBool::VbaseBool(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	if (N > 0)
-	    m_v.resize(N);
+		m_v.resize(N);
 }
 
 inline VbaseBool::VbaseBool(const VbaseBool &rhs): m_v(rhs.m_v)
@@ -241,7 +241,7 @@ inline void VbaseBool::resize(Long_I N)
 inline void VbaseBool::operator<<(VbaseBool &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	m_v.swap(rhs.m_v);
 }
 
@@ -249,7 +249,7 @@ inline VbaseBool::ref VbaseBool::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=size())
-	    SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+		SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
 	return m_v[i];
 }
@@ -258,7 +258,7 @@ inline Bool VbaseBool::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=size())
-	    SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+		SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
 	return m_v[i];
 }
@@ -267,7 +267,7 @@ inline VbaseBool::ref VbaseBool::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_v.empty())
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_v.back();
 }
@@ -276,7 +276,7 @@ inline Bool VbaseBool::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_v.empty())
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_v.back();
 }
@@ -285,7 +285,7 @@ inline VbaseBool::ref VbaseBool::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > size())
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
 	return m_v[size() - i];
 }
@@ -294,7 +294,7 @@ inline Bool VbaseBool::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > size())
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
 	return m_v[size() - i];
 }

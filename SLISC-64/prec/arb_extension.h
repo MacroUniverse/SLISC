@@ -23,14 +23,14 @@ inline char *arf_get_str(const arf_t x, slong prec)
 
 inline int arf_set_str(arf_t res, const char * inp, slong prec)
 {
-    arb_t y; arb_init(y);
-    if (arb_set_str(y, inp, prec)) {
+	arb_t y; arb_init(y);
+	if (arb_set_str(y, inp, prec)) {
 		arb_clear(y);
-        return 1;
+		return 1;
 	}
-    arf_set(res, &y->mid);
+	arf_set(res, &y->mid);
 	arb_clear(y);
-    return 0;
+	return 0;
 }
 
 #ifdef SLS_USE_QUAD_MATH
@@ -175,8 +175,8 @@ inline Str to_string(Bint_I x)
 }
 
 inline std::ostream &operator<<(std::ostream &os, Bint_I x) {
-    cout << to_string(x) << endl;
-    return os;
+	cout << to_string(x) << endl;
+	return os;
 }
 
 // compare
@@ -325,10 +325,10 @@ struct Breal {
 	// constructors
 	Breal() { arf_init(m_n); }
 	Breal(Doub_I val) { arf_init(m_n); arf_set_d(m_n, val); }
-    Breal(Str_I str)
-    {
-        arf_init(m_n); arf_set_str(m_n, str.c_str(), arb_prec());
-    }
+	Breal(Str_I str)
+	{
+		arf_init(m_n); arf_set_str(m_n, str.c_str(), arb_prec());
+	}
 	Breal(const Breal &x) // copy constructor
 	{
 		arf_init(m_n); arf_set(m_n, x.m_n);
@@ -354,8 +354,8 @@ inline Str to_string(Breal_I x, Llong_I digits = 10)
 }
 
 inline std::ostream &operator<<(std::ostream &os, Breal_I x) {
-    cout << to_string(x) << endl;
-    return os;
+	cout << to_string(x) << endl;
+	return os;
 }
 
 inline void clear(Breal_O x) { arf_clear(x.m_n); }
@@ -385,9 +385,9 @@ struct Areal {
 	arb_t m_n;
 	// constructors
 	Areal() { arb_init(m_n); }
-    Areal(arb_t val) { arb_init(m_n); arb_set(m_n, val); }
-    Areal(arf_t val) { arb_init(m_n); arb_set_arf(m_n, val); }
-    Areal(Breal_I val) { arb_init(m_n); arb_set_arf(m_n, val.m_n); }
+	Areal(arb_t val) { arb_init(m_n); arb_set(m_n, val); }
+	Areal(arf_t val) { arb_init(m_n); arb_set_arf(m_n, val); }
+	Areal(Breal_I val) { arb_init(m_n); arb_set_arf(m_n, val.m_n); }
 	Areal(Doub_I val) {	arb_init(m_n); arb_set_d(m_n, val);	}
 	// e.g. for arb_prec(30), Areal("1.23") will be [1.229999999999999999999999999999621 +/- 1.58e-30]
 	Areal(Str_I str) { arb_init(m_n); arb_set_str(m_n, str.c_str(), arb_prec()); }
@@ -418,8 +418,8 @@ inline Str to_string(Areal_I x, Llong_I digits = -1)
 }
 
 inline std::ostream &operator<<(std::ostream &os, Areal_I x) {
-    cout << to_string(x) << endl;
-    return os;
+	cout << to_string(x) << endl;
+	return os;
 }
 
 inline void print_rad(Areal_I x) { mag_print(arb_radref(x.m_n)); }
@@ -537,9 +537,9 @@ struct Acomp {
 	acb_t m_n;
 	// constructors
 	Acomp() { acb_init(m_n); }
-    Acomp(acb_t val) { acb_init(m_n); acb_set(m_n, val); }
-    // Acomp(arf_t val, arf_t val) { acb_init(m_n); acb_set_arf(m_n, val); }
-    Acomp(Areal_I val) { acb_init(m_n); acb_set_arb(m_n, val.m_n); }
+	Acomp(acb_t val) { acb_init(m_n); acb_set(m_n, val); }
+	// Acomp(arf_t val, arf_t val) { acb_init(m_n); acb_set_arf(m_n, val); }
+	Acomp(Areal_I val) { acb_init(m_n); acb_set_arb(m_n, val.m_n); }
 	// Acomp(Breal_I val, Breal_I val) { acb_init(m_n); acb_set_arf(m_n, val.m_n); }
 	// Acomp(Doub_I val, Doub_I val) {	acb_init(m_n); acb_set_d(m_n, val);	}
 	// e.g. for acb_prec(30), Acomp("1.23") will be [1.229999999999999999999999999999621 +/- 1.58e-30]

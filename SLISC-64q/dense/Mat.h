@@ -40,7 +40,7 @@ inline Char& MatChar::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatChar subscript out of bounds");
+		SLS_ERR("MatChar subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -49,7 +49,7 @@ inline const Char &MatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatChar subscript out of bounds");
+		SLS_ERR("MatChar subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -67,8 +67,8 @@ inline Long MatChar::n1() const
 inline void MatChar::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -112,7 +112,7 @@ inline Uchar& MatUchar::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatUchar subscript out of bounds");
+		SLS_ERR("MatUchar subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -121,7 +121,7 @@ inline const Uchar &MatUchar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatUchar subscript out of bounds");
+		SLS_ERR("MatUchar subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -139,8 +139,8 @@ inline Long MatUchar::n1() const
 inline void MatUchar::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -184,7 +184,7 @@ inline Int& MatInt::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatInt subscript out of bounds");
+		SLS_ERR("MatInt subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -193,7 +193,7 @@ inline const Int &MatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatInt subscript out of bounds");
+		SLS_ERR("MatInt subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -211,8 +211,8 @@ inline Long MatInt::n1() const
 inline void MatInt::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -256,7 +256,7 @@ inline Llong& MatLlong::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLlong subscript out of bounds");
+		SLS_ERR("MatLlong subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -265,7 +265,7 @@ inline const Llong &MatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLlong subscript out of bounds");
+		SLS_ERR("MatLlong subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -283,8 +283,8 @@ inline Long MatLlong::n1() const
 inline void MatLlong::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -328,7 +328,7 @@ inline Float& MatFloat::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatFloat subscript out of bounds");
+		SLS_ERR("MatFloat subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -337,7 +337,7 @@ inline const Float &MatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatFloat subscript out of bounds");
+		SLS_ERR("MatFloat subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -355,8 +355,8 @@ inline Long MatFloat::n1() const
 inline void MatFloat::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -400,7 +400,7 @@ inline Doub& MatDoub::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatDoub subscript out of bounds");
+		SLS_ERR("MatDoub subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -409,7 +409,7 @@ inline const Doub &MatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatDoub subscript out of bounds");
+		SLS_ERR("MatDoub subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -427,8 +427,8 @@ inline Long MatDoub::n1() const
 inline void MatDoub::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -472,7 +472,7 @@ inline Ldoub& MatLdoub::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLdoub subscript out of bounds");
+		SLS_ERR("MatLdoub subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -481,7 +481,7 @@ inline const Ldoub &MatLdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLdoub subscript out of bounds");
+		SLS_ERR("MatLdoub subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -499,8 +499,8 @@ inline Long MatLdoub::n1() const
 inline void MatLdoub::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -544,7 +544,7 @@ inline Qdoub& MatQdoub::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatQdoub subscript out of bounds");
+		SLS_ERR("MatQdoub subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -553,7 +553,7 @@ inline const Qdoub &MatQdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatQdoub subscript out of bounds");
+		SLS_ERR("MatQdoub subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -571,8 +571,8 @@ inline Long MatQdoub::n1() const
 inline void MatQdoub::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -616,7 +616,7 @@ inline Fcomp& MatFcomp::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatFcomp subscript out of bounds");
+		SLS_ERR("MatFcomp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -625,7 +625,7 @@ inline const Fcomp &MatFcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatFcomp subscript out of bounds");
+		SLS_ERR("MatFcomp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -643,8 +643,8 @@ inline Long MatFcomp::n1() const
 inline void MatFcomp::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -688,7 +688,7 @@ inline Comp& MatComp::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatComp subscript out of bounds");
+		SLS_ERR("MatComp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -697,7 +697,7 @@ inline const Comp &MatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatComp subscript out of bounds");
+		SLS_ERR("MatComp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -715,8 +715,8 @@ inline Long MatComp::n1() const
 inline void MatComp::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -760,7 +760,7 @@ inline Lcomp& MatLcomp::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLcomp subscript out of bounds");
+		SLS_ERR("MatLcomp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -769,7 +769,7 @@ inline const Lcomp &MatLcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLcomp subscript out of bounds");
+		SLS_ERR("MatLcomp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -787,8 +787,8 @@ inline Long MatLcomp::n1() const
 inline void MatLcomp::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -832,7 +832,7 @@ inline Qcomp& MatQcomp::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatQcomp subscript out of bounds");
+		SLS_ERR("MatQcomp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -841,7 +841,7 @@ inline const Qcomp &MatQcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatQcomp subscript out of bounds");
+		SLS_ERR("MatQcomp subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -859,8 +859,8 @@ inline Long MatQcomp::n1() const
 inline void MatQcomp::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -904,7 +904,7 @@ inline Fimag& MatFimag::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatFimag subscript out of bounds");
+		SLS_ERR("MatFimag subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -913,7 +913,7 @@ inline const Fimag &MatFimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatFimag subscript out of bounds");
+		SLS_ERR("MatFimag subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -931,8 +931,8 @@ inline Long MatFimag::n1() const
 inline void MatFimag::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -976,7 +976,7 @@ inline Imag& MatImag::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatImag subscript out of bounds");
+		SLS_ERR("MatImag subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -985,7 +985,7 @@ inline const Imag &MatImag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatImag subscript out of bounds");
+		SLS_ERR("MatImag subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -1003,8 +1003,8 @@ inline Long MatImag::n1() const
 inline void MatImag::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1048,7 +1048,7 @@ inline Limag& MatLimag::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLimag subscript out of bounds");
+		SLS_ERR("MatLimag subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -1057,7 +1057,7 @@ inline const Limag &MatLimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("MatLimag subscript out of bounds");
+		SLS_ERR("MatLimag subscript out of bounds");
 #endif
 	return m_p[m_N1*i+j];
 }
@@ -1075,8 +1075,8 @@ inline Long MatLimag::n1() const
 inline void MatLimag::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 

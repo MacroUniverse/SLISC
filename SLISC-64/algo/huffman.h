@@ -37,10 +37,10 @@ struct compare {
 void printCodes(unordered_map<char,string> &dict, struct MinHeapNode* root, string &str)
 {
 	if (!root) {
-	    str.pop_back(); return;
+		str.pop_back(); return;
 	}
 	if (root->data != '$')
-	    dict[root->data] = str;
+		dict[root->data] = str;
 	str += '0'; printCodes(dict, root->left, str);
 	str += '1'; printCodes(dict, root->right, str);
 	str.pop_back();

@@ -39,7 +39,7 @@ inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rh
 	SLS_ERR("copy constructor forbidden!");
 #endif
 	for (Long i = 0; i < m_N; ++i)
-	    m_p[i] = rhs.m_p[i];
+		m_p[i] = rhs.m_p[i];
 }
 
 inline void @CmatT@::operator<<(@CmatT@ &rhs)
@@ -53,8 +53,8 @@ inline @T@ &@CmatT@::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("@CmatT@ index ("+num2str(i)+", "+num2str(j)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+		SLS_ERR("@CmatT@ index ("+num2str(i)+", "+num2str(j)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -63,8 +63,8 @@ inline const @T@ &@CmatT@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("@CmatT@ index ("+num2str(i)+", "+num2str(j)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+		SLS_ERR("@CmatT@ index ("+num2str(i)+", "+num2str(j)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -78,8 +78,8 @@ inline Long @CmatT@::n1() const
 inline void @CmatT@::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -87,8 +87,8 @@ inline void @CmatT@::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0 * N1 != m_N)
-	    SLS_ERR("@CmatT@ reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-	        +") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+		SLS_ERR("@CmatT@ reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
+			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -132,7 +132,7 @@ inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs.size()), m_N0(rhs.m_N0
 #endif
 	Long N = size();
 	for (Long i = 0; i < N; ++i)
-	    (*this)[i] = rhs[i];
+		(*this)[i] = rhs[i];
 }
 
 inline void CmatBool::operator<<(CmatBool &rhs)
@@ -146,8 +146,8 @@ inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
 #endif
 	return (*this)[i+m_N0*j];
 }
@@ -156,8 +156,8 @@ inline Bool CmatBool::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
 #endif
 	return (*this)[i+m_N0*j];
 }
@@ -171,8 +171,8 @@ inline Long CmatBool::n1() const
 inline void CmatBool::resize(Long_I N0, Long_I N1)
 {
 	if (N0 != m_N0 || N1 != m_N1) {
-	    Base::resize(N0*N1);
-	    m_N0 = N0; m_N1 = N1;
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 

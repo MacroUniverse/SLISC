@@ -165,9 +165,9 @@ inline void save(@T@_I a, Str_I varname, Mat mat)
 	}
 //% else
 	@Ts@ *ppa = (@Ts@*)mxGetPr(pa);
-	    for (i = 0; i < m; ++i)
-	        for (j = 0; j < n; ++j)
-	            ppa[i + m * j] = a(i,j);
+		for (i = 0; i < m; ++i)
+			for (j = 0; j < n; ++j)
+				ppa[i + m * j] = a(i,j);
 //% end
 	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
@@ -198,20 +198,20 @@ inline void save(@T@_I a, Str_I varname, Mat mat)
 //% if is_Comp(Ts)
 	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
 	for (i = 0; i < m; ++i) {
-	    for (j = 0; j < n; ++j) {
-	        for (k = 0; k < q; ++k) {
-	            Long ind = i + m * j + mn * k;
-	            const Comp &c = a(i,j,k);
-	            ppar[ind] = real(c); ppai[ind] = imag(c);
-	        }
-	    }
+		for (j = 0; j < n; ++j) {
+			for (k = 0; k < q; ++k) {
+				Long ind = i + m * j + mn * k;
+				const Comp &c = a(i,j,k);
+				ppar[ind] = real(c); ppai[ind] = imag(c);
+			}
+		}
 	}
 //% else
 	@Ts@ *ppa = (@Ts@*)mxGetPr(pa);
-	    for (i = 0; i < m; ++i)
-	        for (j = 0; j < n; ++j)
-	            for (k = 0; k < q; ++k)
-	                ppa[i + m*j + mn*k] = a(i,j,k);
+		for (i = 0; i < m; ++i)
+			for (j = 0; j < n; ++j)
+				for (k = 0; k < q; ++k)
+					ppa[i + m*j + mn*k] = a(i,j,k);
 //% end
 	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
@@ -238,7 +238,7 @@ inline void load(@Ts@_O s, Str_I varname, Mat mat)
 //% elseif is_Comp(Ts)
 	if (!mxIsDouble(ps))
 //% end
-	    SLS_ERR("'matfile: load(): wrong type!");
+		SLS_ERR("'matfile: load(): wrong type!");
 //% if is_Comp(Ts)
 	Doub *ppsr = mxGetPr(ps), *ppsi = mxGetPi(ps);
 	s = ppsi ? Comp(ppsr[0], ppsi[0]) : ppsr[0];
@@ -273,7 +273,7 @@ inline void load(@T@_O v, Str_I varname, Mat mat)
 //% elseif is_Comp(Ts)
 	if (!mxIsDouble(pv))
 //% end
-	    SLS_ERR("'matfile: load(): wrong type!");
+		SLS_ERR("'matfile: load(): wrong type!");
 	n = mxGetDimensions(pv)[1];
 //% if is_Vec(T)
 	v.resize(n);
@@ -331,14 +331,14 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
 	if (ppai)
 		for (i = 0; i < m; ++i)
-	        for (j = 0; j < n; ++j){
-	            Long ind = i + m * j;
-	            a(i,j) = Comp(ppar[ind], ppai[ind]);
-	        }
+			for (j = 0; j < n; ++j){
+				Long ind = i + m * j;
+				a(i,j) = Comp(ppar[ind], ppai[ind]);
+			}
 	else
 		for (i = 0; i < m; ++i)
-	        for (j = 0; j < n; ++j)
-	            a(i,j) = ppar[i + m*j];
+			for (j = 0; j < n; ++j)
+				a(i,j) = ppar[i + m*j];
 //% else
 	@Ts@ *ppa = (@Ts@ *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)

@@ -35,7 +35,7 @@ inline const Char &ScmatChar_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -54,7 +54,7 @@ inline void ScmatChar_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -112,7 +112,7 @@ inline Char &ScmatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -131,7 +131,7 @@ inline void ScmatChar::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -185,7 +185,7 @@ inline const Uchar &ScmatUchar_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -204,7 +204,7 @@ inline void ScmatUchar_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -262,7 +262,7 @@ inline Uchar &ScmatUchar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -281,7 +281,7 @@ inline void ScmatUchar::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -335,7 +335,7 @@ inline const Int &ScmatInt_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -354,7 +354,7 @@ inline void ScmatInt_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -412,7 +412,7 @@ inline Int &ScmatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -431,7 +431,7 @@ inline void ScmatInt::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -485,7 +485,7 @@ inline const Llong &ScmatLlong_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -504,7 +504,7 @@ inline void ScmatLlong_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -562,7 +562,7 @@ inline Llong &ScmatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -581,7 +581,7 @@ inline void ScmatLlong::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -635,7 +635,7 @@ inline const Float &ScmatFloat_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -654,7 +654,7 @@ inline void ScmatFloat_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -712,7 +712,7 @@ inline Float &ScmatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -731,7 +731,7 @@ inline void ScmatFloat::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -785,7 +785,7 @@ inline const Doub &ScmatDoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -804,7 +804,7 @@ inline void ScmatDoub_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -862,7 +862,7 @@ inline Doub &ScmatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -881,7 +881,7 @@ inline void ScmatDoub::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -935,7 +935,7 @@ inline const Ldoub &ScmatLdoub_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -954,7 +954,7 @@ inline void ScmatLdoub_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1012,7 +1012,7 @@ inline Ldoub &ScmatLdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1031,7 +1031,7 @@ inline void ScmatLdoub::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1087,7 +1087,7 @@ inline const Fcomp &ScmatFcomp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1106,7 +1106,7 @@ inline void ScmatFcomp_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1164,7 +1164,7 @@ inline Fcomp &ScmatFcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1183,7 +1183,7 @@ inline void ScmatFcomp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1237,7 +1237,7 @@ inline const Comp &ScmatComp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1256,7 +1256,7 @@ inline void ScmatComp_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1314,7 +1314,7 @@ inline Comp &ScmatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1333,7 +1333,7 @@ inline void ScmatComp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1387,7 +1387,7 @@ inline const Lcomp &ScmatLcomp_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1406,7 +1406,7 @@ inline void ScmatLcomp_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1464,7 +1464,7 @@ inline Lcomp &ScmatLcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1483,7 +1483,7 @@ inline void ScmatLcomp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1539,7 +1539,7 @@ inline const Fimag &ScmatFimag_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1558,7 +1558,7 @@ inline void ScmatFimag_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1616,7 +1616,7 @@ inline Fimag &ScmatFimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1635,7 +1635,7 @@ inline void ScmatFimag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1689,7 +1689,7 @@ inline const Imag &ScmatImag_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1708,7 +1708,7 @@ inline void ScmatImag_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1766,7 +1766,7 @@ inline Imag &ScmatImag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1785,7 +1785,7 @@ inline void ScmatImag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1839,7 +1839,7 @@ inline const Limag &ScmatLimag_c::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1858,7 +1858,7 @@ inline void ScmatLimag_c::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1916,7 +1916,7 @@ inline Limag &ScmatLimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -1935,7 +1935,7 @@ inline void ScmatLimag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }

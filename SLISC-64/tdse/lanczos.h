@@ -24,11 +24,11 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -46,23 +46,23 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	mul_gen(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul_gen(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul_gen(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	        v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul_gen(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul_gen(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+			v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul_gen(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 
@@ -72,7 +72,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
-	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
@@ -86,11 +86,11 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -108,23 +108,23 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	mul_gen(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul_gen(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul_gen(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	        v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul_gen(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul_gen(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+			v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul_gen(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 
@@ -134,7 +134,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, CmatDoub_I H, VecComp_I x, Doub_I dt, Lo
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
-	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
@@ -148,11 +148,11 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -170,23 +170,23 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	        v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+			v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 
@@ -196,7 +196,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, CmobdDoub_I H, SvecComp_I x, Doub_I dt,
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
-	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
@@ -210,11 +210,11 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, 
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -232,23 +232,23 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, 
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	        v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+			v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 
@@ -258,7 +258,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, McooDoub_I H, DvecComp_I x, Doub_I dt, 
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
-	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
@@ -272,11 +272,11 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -294,23 +294,23 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	        v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+			v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 
@@ -320,7 +320,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, CmobdDoub_I H, DvecComp_I x, Doub_I dt,
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	
 	for (Long i = 0; i < Nk; ++i)
-	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
@@ -339,11 +339,11 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_I x, Doub_I 
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -361,23 +361,23 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_I x, Doub_I 
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 	lapack_int info =
@@ -386,7 +386,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CbandDoub_I H, DvecComp_I x, Doub_I 
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
 	return err;
@@ -398,11 +398,11 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I d
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -420,23 +420,23 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I d
 	mul_gen(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul_gen(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul_gen(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul_gen(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul_gen(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul_gen(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 	lapack_int info =
@@ -445,7 +445,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmatDoub_I H, DvecComp_I x, Doub_I d
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
 	return err;
@@ -457,11 +457,11 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt,
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -479,23 +479,23 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt,
 	mul_gen(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul_gen(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul_gen(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul_gen(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul_gen(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul_gen(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 	lapack_int info =
@@ -504,7 +504,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, CmatDoub_I H, VecComp_I x, Doub_I dt,
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
 	return err;
@@ -516,11 +516,11 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I d
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -538,23 +538,23 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I d
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 	lapack_int info =
@@ -563,7 +563,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, McooDoub_I H, DvecComp_I x, Doub_I d
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
 	return err;
@@ -575,11 +575,11 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I 
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -597,23 +597,23 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I 
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 	lapack_int info =
@@ -622,7 +622,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, CmobdDoub_I H, SvecComp_I x, Doub_I 
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
 	return err;
@@ -634,11 +634,11 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I 
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	Doub *pd = wsp_d.p();
@@ -656,23 +656,23 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I 
 	mul(vc, H, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	mul(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    mul(v2, H, v1);
-	    Doub a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    mul(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		Long j1 = j+1, j2 = j+2;
+		mul(v2, H, v1);
+		Doub a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		mul(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 	Doub err = prod(beta);
 	lapack_int info =
@@ -681,7 +681,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, CmobdDoub_I H, DvecComp_I x, Doub_I 
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 	SvecComp vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(Comp(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
 	return err;

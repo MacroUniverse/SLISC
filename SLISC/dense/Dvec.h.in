@@ -71,7 +71,7 @@ inline @CT@ * @Class@::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -90,7 +90,7 @@ inline @CT@ &@Class@::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -99,7 +99,7 @@ inline @CT@ &@Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }

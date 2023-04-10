@@ -27,10 +27,10 @@ inline void change_endian(void *data, Long_I elm_size, Long_I Nelm)
 	Char *p = (Char *)data;
 	Long half = elm_size/2;
 	for (Long i = 0; i < Nelm; ++i) {
-	    for (Long j = 0; j < half; ++j) {
-	        swap(p[j], p[elm_size-j]);
-	    }
-	    p += elm_size;
+		for (Long j = 0; j < half; ++j) {
+			swap(p[j], p[elm_size-j]);
+		}
+		p += elm_size;
 	}
 }
 
@@ -119,10 +119,10 @@ inline Str to_bitstr(Char_I byte)
 {
 	Str str; str.resize(8);
 	for (Int i = 0; i < 8; ++i) {
-	    if (bitL(byte, i))
-	        str[i] = '1';
-	    else
-	        str[i] = '0';
+		if (bitL(byte, i))
+			str[i] = '1';
+		else
+			str[i] = '0';
 	}
 	return str;
 }
@@ -136,30 +136,30 @@ inline Str to_bitstr(const void *byte, Long_I Nbyte = 1, Bool add_space = true, 
 	Char *p = (Char *)byte;
 	Str str;
 	if (!auto_endian || !little_endian()) {
-	    if (!add_space) {
-	        str.reserve(8*Nbyte);
-	        for (Long i = 0; i < Nbyte; ++i)
-	            str += to_bitstr(p[i]);
-	    }
-	    else {
-	        str.reserve(9*Nbyte);
-	        for (Long i = 0; i < Nbyte; ++i)
-	            str += to_bitstr(p[i]) + ' ';
-	        str.pop_back();
-	    }
+		if (!add_space) {
+			str.reserve(8*Nbyte);
+			for (Long i = 0; i < Nbyte; ++i)
+				str += to_bitstr(p[i]);
+		}
+		else {
+			str.reserve(9*Nbyte);
+			for (Long i = 0; i < Nbyte; ++i)
+				str += to_bitstr(p[i]) + ' ';
+			str.pop_back();
+		}
 	}
 	else {
-	    if (!add_space) {
-	        str.reserve(8*Nbyte);
-	        for (Long i = Nbyte-1; i >= 0; --i)
-	            str += to_bitstr(p[i]);
-	    }
-	    else {
-	        str.reserve(9*Nbyte);
-	        for (Long i = Nbyte-1; i >= 0; --i)
-	            str += to_bitstr(p[i]) + ' ';
-	        str.pop_back();
-	    }
+		if (!add_space) {
+			str.reserve(8*Nbyte);
+			for (Long i = Nbyte-1; i >= 0; --i)
+				str += to_bitstr(p[i]);
+		}
+		else {
+			str.reserve(9*Nbyte);
+			for (Long i = Nbyte-1; i >= 0; --i)
+				str += to_bitstr(p[i]) + ' ';
+			str.pop_back();
+		}
 	}
 	return str;
 }
@@ -170,8 +170,8 @@ inline Char str2bit(Str_I str)
 {
 	Char byte = 0;
 	for (Long i = 0; i < 8; ++i)
-	    if (str[i] != '0')
-	        set_bitL(&byte, i);
+		if (str[i] != '0')
+			set_bitL(&byte, i);
 	return byte;
 }
 
@@ -181,8 +181,8 @@ inline Int baseN2Int(const Uchar *p, Int_I N, Uchar_I base)
 {
 	Int n = p[0], exp = base;
 	for (Int i = 1; i < N; ++i) {
-	    n += p[i] * exp;
-	    exp *= base;
+		n += p[i] * exp;
+		exp *= base;
 	}
 	return n;
 }
@@ -193,8 +193,8 @@ inline void Int2baseN(Uchar *p, Int_I N, Uchar_I base, Int_I n)
 	Int m = n;
 	p[0] = m % base;
 	for (Int i = 1; i < N; ++i) {
-	    m /= base;
-	    p[i] = m % base;
+		m /= base;
+		p[i] = m % base;
 	}
 }
 
@@ -277,8 +277,8 @@ inline Char b36(Long_I i)
 inline Long b87_ind(Char_I c)
 {
 	for (Long i = 0; i < 87; ++i)
-	    if (c == b87(i))
-	        return i;
+		if (c == b87(i))
+			return i;
 	return -1;
 }
 
@@ -287,8 +287,8 @@ inline Int b872Int(const Char *p)
 {
 	Int n = b87_ind(p[0]), exp = 1;
 	for (Int i = 1; i < 5; ++i) {
-	    exp *= 87;
-	    n += b87_ind(p[i]) * exp;
+		exp *= 87;
+		n += b87_ind(p[i]) * exp;
 	}
 	return n;
 }
@@ -299,8 +299,8 @@ inline void Int2b87(Char *p, Int_I n)
 	Int m = n;
 	p[0] = b87(m % 87);
 	for (Int i = 1; i < 5; ++i) {
-	    m /= 87;
-	    p[i] = b87(m % 87);
+		m /= 87;
+		p[i] = b87(m % 87);
 	}
 }
 

@@ -42,8 +42,8 @@ inline Cmat3Char::Cmat3Char(const Cmat3Char &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 inline void Cmat3Char::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -51,8 +51,8 @@ inline Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Char index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Char index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -61,8 +61,8 @@ inline const Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Char index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Char index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -121,8 +121,8 @@ inline Cmat3Uchar::Cmat3Uchar(const Cmat3Uchar &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Uchar::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -130,8 +130,8 @@ inline Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -140,8 +140,8 @@ inline const Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -200,8 +200,8 @@ inline Cmat3Int::Cmat3Int(const Cmat3Int &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(
 inline void Cmat3Int::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -209,8 +209,8 @@ inline Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Int index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Int index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -219,8 +219,8 @@ inline const Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Int index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Int index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -279,8 +279,8 @@ inline Cmat3Llong::Cmat3Llong(const Cmat3Llong &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Llong::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -288,8 +288,8 @@ inline Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Llong index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Llong index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -298,8 +298,8 @@ inline const Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Llong index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Llong index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -358,8 +358,8 @@ inline Cmat3Float::Cmat3Float(const Cmat3Float &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Float::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -367,8 +367,8 @@ inline Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Float index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Float index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -377,8 +377,8 @@ inline const Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Float index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Float index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -437,8 +437,8 @@ inline Cmat3Doub::Cmat3Doub(const Cmat3Doub &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 inline void Cmat3Doub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -446,8 +446,8 @@ inline Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Doub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Doub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -456,8 +456,8 @@ inline const Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Doub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Doub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -516,8 +516,8 @@ inline Cmat3Ldoub::Cmat3Ldoub(const Cmat3Ldoub &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Ldoub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -525,8 +525,8 @@ inline Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Ldoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Ldoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -535,8 +535,8 @@ inline const Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Ldoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Ldoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -596,8 +596,8 @@ inline Cmat3Fcomp::Cmat3Fcomp(const Cmat3Fcomp &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Fcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -605,8 +605,8 @@ inline Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Fcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Fcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -615,8 +615,8 @@ inline const Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Fcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Fcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -675,8 +675,8 @@ inline Cmat3Comp::Cmat3Comp(const Cmat3Comp &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 inline void Cmat3Comp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -684,8 +684,8 @@ inline Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Comp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Comp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -694,8 +694,8 @@ inline const Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Comp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Comp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -754,8 +754,8 @@ inline Cmat3Lcomp::Cmat3Lcomp(const Cmat3Lcomp &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Lcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -763,8 +763,8 @@ inline Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Lcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Lcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -773,8 +773,8 @@ inline const Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Lcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Lcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -834,8 +834,8 @@ inline Cmat3Fimag::Cmat3Fimag(const Cmat3Fimag &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Fimag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -843,8 +843,8 @@ inline Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Fimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Fimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -853,8 +853,8 @@ inline const Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Fimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Fimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -913,8 +913,8 @@ inline Cmat3Imag::Cmat3Imag(const Cmat3Imag &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 inline void Cmat3Imag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -922,8 +922,8 @@ inline Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Imag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Imag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -932,8 +932,8 @@ inline const Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Imag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Imag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -992,8 +992,8 @@ inline Cmat3Limag::Cmat3Limag(const Cmat3Limag &rhs): Base(rhs), m_N0(rhs.m_N0),
 inline void Cmat3Limag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -1001,8 +1001,8 @@ inline Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Limag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Limag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1011,8 +1011,8 @@ inline const Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Cmat3Limag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-	        +") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+		SLS_ERR("Cmat3Limag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }

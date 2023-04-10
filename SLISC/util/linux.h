@@ -20,9 +20,9 @@ inline Str exec_str(Str_I cmd) {
 	Str result;
 	std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
 	if (!pipe)
-	    throw std::runtime_error("popen() failed!");
+		throw std::runtime_error("popen() failed!");
 	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-	    result += buffer.data();
+		result += buffer.data();
 	return result;
 }
 
@@ -36,10 +36,10 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
 	Str pid_str;
 	child_pids.clear();
 	while (true) {
-	    std::getline(iss, pid_str);
-	    if (iss.eof())
-	        break;
-	    child_pids.push_back(stoi(pid_str));
+		std::getline(iss, pid_str);
+		if (iss.eof())
+			break;
+		child_pids.push_back(stoi(pid_str));
 	}
 }
 
@@ -53,14 +53,14 @@ inline Long ram_usage() {
 
 	Long i = -1;
 	while (fgets(line, 128, file) != NULL) {
-	    if (strncmp(line, "VmRSS:", 6) == 0){
-	        i = strlen(line);
-	        const Char* p = line;
-	        while (*p <'0' || *p > '9') p++;
-	        line[i-3] = '\0';
-	        i = atoi(p);
-	        break;
-	    }
+		if (strncmp(line, "VmRSS:", 6) == 0){
+			i = strlen(line);
+			const Char* p = line;
+			while (*p <'0' || *p > '9') p++;
+			line[i-3] = '\0';
+			i = atoi(p);
+			break;
+		}
 	}
 	fclose(file);
 	return i;

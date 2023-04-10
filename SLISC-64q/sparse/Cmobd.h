@@ -50,7 +50,7 @@ inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-	    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Int &CmobdInt::operator[](Long_I i) const
@@ -67,7 +67,7 @@ inline Long CmobdInt::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long i = i1 + 1; Long j = i2 + 1;
 	Long N = nblk0() - 1;
@@ -75,18 +75,18 @@ inline Long CmobdInt::find(Long_I i1, Long_I i2) const
 	Long m = i % N;
 	Long step2 = nblk0(), step3 = step2 * step2;
 	if (iblk == jblk) {
-	    if (i == j && m == 0 && iblk > 0)
-	        return step3 * iblk;
-	    return m + step2 * (j % N) + step3 * iblk;
+		if (i == j && m == 0 && iblk > 0)
+			return step3 * iblk;
+		return m + step2 * (j % N) + step3 * iblk;
 	}
 	else if (jblk == iblk - 1) {
-	    if (m == 0)
-	        return N + step2 * (j % N) + step3 * jblk;
+		if (m == 0)
+			return N + step2 * (j % N) + step3 * jblk;
 	}
 	else if (jblk == iblk + 1) {
-	    Long n = j % N;
-	    if (n == 0)
-	        return m + step2 * N + step3 * iblk;
+		Long n = j % N;
+		if (n == 0)
+			return m + step2 * N + step3 * iblk;
 	}
 	return -1;
 }
@@ -154,9 +154,9 @@ inline Int CmobdInt::operator()(Long_I i1, Long_I i2) const
 {
 	Long ind0 = find(i1, i2);
 	if (ind0 >= 0)
-	    return m_data[ind0];
+		return m_data[ind0];
 	else
-	    return 0;
+		return 0;
 }
 
 inline Int& CmobdInt::ref(Long_I i, Long_I j)
@@ -164,7 +164,7 @@ inline Int& CmobdInt::ref(Long_I i, Long_I j)
 	Long ind = find(i, j);
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0)
-	    SLS_ERR("Cmobd: ref out of block!");
+		SLS_ERR("Cmobd: ref out of block!");
 #endif
 	return m_data[ind];
 }
@@ -219,7 +219,7 @@ inline CmobdLlong::CmobdLlong(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-	    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Llong &CmobdLlong::operator[](Long_I i) const
@@ -236,7 +236,7 @@ inline Long CmobdLlong::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long i = i1 + 1; Long j = i2 + 1;
 	Long N = nblk0() - 1;
@@ -244,18 +244,18 @@ inline Long CmobdLlong::find(Long_I i1, Long_I i2) const
 	Long m = i % N;
 	Long step2 = nblk0(), step3 = step2 * step2;
 	if (iblk == jblk) {
-	    if (i == j && m == 0 && iblk > 0)
-	        return step3 * iblk;
-	    return m + step2 * (j % N) + step3 * iblk;
+		if (i == j && m == 0 && iblk > 0)
+			return step3 * iblk;
+		return m + step2 * (j % N) + step3 * iblk;
 	}
 	else if (jblk == iblk - 1) {
-	    if (m == 0)
-	        return N + step2 * (j % N) + step3 * jblk;
+		if (m == 0)
+			return N + step2 * (j % N) + step3 * jblk;
 	}
 	else if (jblk == iblk + 1) {
-	    Long n = j % N;
-	    if (n == 0)
-	        return m + step2 * N + step3 * iblk;
+		Long n = j % N;
+		if (n == 0)
+			return m + step2 * N + step3 * iblk;
 	}
 	return -1;
 }
@@ -323,9 +323,9 @@ inline Llong CmobdLlong::operator()(Long_I i1, Long_I i2) const
 {
 	Long ind0 = find(i1, i2);
 	if (ind0 >= 0)
-	    return m_data[ind0];
+		return m_data[ind0];
 	else
-	    return 0;
+		return 0;
 }
 
 inline Llong& CmobdLlong::ref(Long_I i, Long_I j)
@@ -333,7 +333,7 @@ inline Llong& CmobdLlong::ref(Long_I i, Long_I j)
 	Long ind = find(i, j);
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0)
-	    SLS_ERR("Cmobd: ref out of block!");
+		SLS_ERR("Cmobd: ref out of block!");
 #endif
 	return m_data[ind];
 }
@@ -388,7 +388,7 @@ inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-	    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Doub &CmobdDoub::operator[](Long_I i) const
@@ -405,7 +405,7 @@ inline Long CmobdDoub::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long i = i1 + 1; Long j = i2 + 1;
 	Long N = nblk0() - 1;
@@ -413,18 +413,18 @@ inline Long CmobdDoub::find(Long_I i1, Long_I i2) const
 	Long m = i % N;
 	Long step2 = nblk0(), step3 = step2 * step2;
 	if (iblk == jblk) {
-	    if (i == j && m == 0 && iblk > 0)
-	        return step3 * iblk;
-	    return m + step2 * (j % N) + step3 * iblk;
+		if (i == j && m == 0 && iblk > 0)
+			return step3 * iblk;
+		return m + step2 * (j % N) + step3 * iblk;
 	}
 	else if (jblk == iblk - 1) {
-	    if (m == 0)
-	        return N + step2 * (j % N) + step3 * jblk;
+		if (m == 0)
+			return N + step2 * (j % N) + step3 * jblk;
 	}
 	else if (jblk == iblk + 1) {
-	    Long n = j % N;
-	    if (n == 0)
-	        return m + step2 * N + step3 * iblk;
+		Long n = j % N;
+		if (n == 0)
+			return m + step2 * N + step3 * iblk;
 	}
 	return -1;
 }
@@ -492,9 +492,9 @@ inline Doub CmobdDoub::operator()(Long_I i1, Long_I i2) const
 {
 	Long ind0 = find(i1, i2);
 	if (ind0 >= 0)
-	    return m_data[ind0];
+		return m_data[ind0];
 	else
-	    return 0;
+		return 0;
 }
 
 inline Doub& CmobdDoub::ref(Long_I i, Long_I j)
@@ -502,7 +502,7 @@ inline Doub& CmobdDoub::ref(Long_I i, Long_I j)
 	Long ind = find(i, j);
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0)
-	    SLS_ERR("Cmobd: ref out of block!");
+		SLS_ERR("Cmobd: ref out of block!");
 #endif
 	return m_data[ind];
 }
@@ -557,7 +557,7 @@ inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-	    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Comp &CmobdComp::operator[](Long_I i) const
@@ -574,7 +574,7 @@ inline Long CmobdComp::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long i = i1 + 1; Long j = i2 + 1;
 	Long N = nblk0() - 1;
@@ -582,18 +582,18 @@ inline Long CmobdComp::find(Long_I i1, Long_I i2) const
 	Long m = i % N;
 	Long step2 = nblk0(), step3 = step2 * step2;
 	if (iblk == jblk) {
-	    if (i == j && m == 0 && iblk > 0)
-	        return step3 * iblk;
-	    return m + step2 * (j % N) + step3 * iblk;
+		if (i == j && m == 0 && iblk > 0)
+			return step3 * iblk;
+		return m + step2 * (j % N) + step3 * iblk;
 	}
 	else if (jblk == iblk - 1) {
-	    if (m == 0)
-	        return N + step2 * (j % N) + step3 * jblk;
+		if (m == 0)
+			return N + step2 * (j % N) + step3 * jblk;
 	}
 	else if (jblk == iblk + 1) {
-	    Long n = j % N;
-	    if (n == 0)
-	        return m + step2 * N + step3 * iblk;
+		Long n = j % N;
+		if (n == 0)
+			return m + step2 * N + step3 * iblk;
 	}
 	return -1;
 }
@@ -661,9 +661,9 @@ inline Comp CmobdComp::operator()(Long_I i1, Long_I i2) const
 {
 	Long ind0 = find(i1, i2);
 	if (ind0 >= 0)
-	    return m_data[ind0];
+		return m_data[ind0];
 	else
-	    return 0;
+		return 0;
 }
 
 inline Comp& CmobdComp::ref(Long_I i, Long_I j)
@@ -671,7 +671,7 @@ inline Comp& CmobdComp::ref(Long_I i, Long_I j)
 	Long ind = find(i, j);
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0)
-	    SLS_ERR("Cmobd: ref out of block!");
+		SLS_ERR("Cmobd: ref out of block!");
 #endif
 	return m_data[ind];
 }
@@ -726,7 +726,7 @@ inline CmobdQdoub::CmobdQdoub(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-	    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Qdoub &CmobdQdoub::operator[](Long_I i) const
@@ -743,7 +743,7 @@ inline Long CmobdQdoub::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long i = i1 + 1; Long j = i2 + 1;
 	Long N = nblk0() - 1;
@@ -751,18 +751,18 @@ inline Long CmobdQdoub::find(Long_I i1, Long_I i2) const
 	Long m = i % N;
 	Long step2 = nblk0(), step3 = step2 * step2;
 	if (iblk == jblk) {
-	    if (i == j && m == 0 && iblk > 0)
-	        return step3 * iblk;
-	    return m + step2 * (j % N) + step3 * iblk;
+		if (i == j && m == 0 && iblk > 0)
+			return step3 * iblk;
+		return m + step2 * (j % N) + step3 * iblk;
 	}
 	else if (jblk == iblk - 1) {
-	    if (m == 0)
-	        return N + step2 * (j % N) + step3 * jblk;
+		if (m == 0)
+			return N + step2 * (j % N) + step3 * jblk;
 	}
 	else if (jblk == iblk + 1) {
-	    Long n = j % N;
-	    if (n == 0)
-	        return m + step2 * N + step3 * iblk;
+		Long n = j % N;
+		if (n == 0)
+			return m + step2 * N + step3 * iblk;
 	}
 	return -1;
 }
@@ -830,9 +830,9 @@ inline Qdoub CmobdQdoub::operator()(Long_I i1, Long_I i2) const
 {
 	Long ind0 = find(i1, i2);
 	if (ind0 >= 0)
-	    return m_data[ind0];
+		return m_data[ind0];
 	else
-	    return 0;
+		return 0;
 }
 
 inline Qdoub& CmobdQdoub::ref(Long_I i, Long_I j)
@@ -840,7 +840,7 @@ inline Qdoub& CmobdQdoub::ref(Long_I i, Long_I j)
 	Long ind = find(i, j);
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0)
-	    SLS_ERR("Cmobd: ref out of block!");
+		SLS_ERR("Cmobd: ref out of block!");
 #endif
 	return m_data[ind];
 }
@@ -895,7 +895,7 @@ inline CmobdQcomp::CmobdQcomp(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-	    vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
 }
 
 inline const Qcomp &CmobdQcomp::operator[](Long_I i) const
@@ -912,7 +912,7 @@ inline Long CmobdQcomp::find(Long_I i1, Long_I i2) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i1 < 0 || i1 >= m_N0 || i2 < 0 || i2 >= m_N0)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long i = i1 + 1; Long j = i2 + 1;
 	Long N = nblk0() - 1;
@@ -920,18 +920,18 @@ inline Long CmobdQcomp::find(Long_I i1, Long_I i2) const
 	Long m = i % N;
 	Long step2 = nblk0(), step3 = step2 * step2;
 	if (iblk == jblk) {
-	    if (i == j && m == 0 && iblk > 0)
-	        return step3 * iblk;
-	    return m + step2 * (j % N) + step3 * iblk;
+		if (i == j && m == 0 && iblk > 0)
+			return step3 * iblk;
+		return m + step2 * (j % N) + step3 * iblk;
 	}
 	else if (jblk == iblk - 1) {
-	    if (m == 0)
-	        return N + step2 * (j % N) + step3 * jblk;
+		if (m == 0)
+			return N + step2 * (j % N) + step3 * jblk;
 	}
 	else if (jblk == iblk + 1) {
-	    Long n = j % N;
-	    if (n == 0)
-	        return m + step2 * N + step3 * iblk;
+		Long n = j % N;
+		if (n == 0)
+			return m + step2 * N + step3 * iblk;
 	}
 	return -1;
 }
@@ -999,9 +999,9 @@ inline Qcomp CmobdQcomp::operator()(Long_I i1, Long_I i2) const
 {
 	Long ind0 = find(i1, i2);
 	if (ind0 >= 0)
-	    return m_data[ind0];
+		return m_data[ind0];
 	else
-	    return 0;
+		return 0;
 }
 
 inline Qcomp& CmobdQcomp::ref(Long_I i, Long_I j)
@@ -1009,7 +1009,7 @@ inline Qcomp& CmobdQcomp::ref(Long_I i, Long_I j)
 	Long ind = find(i, j);
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0)
-	    SLS_ERR("Cmobd: ref out of block!");
+		SLS_ERR("Cmobd: ref out of block!");
 #endif
 	return m_data[ind];
 }

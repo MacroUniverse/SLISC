@@ -29,11 +29,11 @@ inline void disp(@T@_I v, Int_I precision = def_disp_prec)
 	cout.precision(precision);
 	Long N = v.size();
 	if (N == 0)
-	    cout << "empty";
+		cout << "empty";
 	else
-	    for (Long i = 0; i < N; ++i) {
-	        cout << to_num(v[i]) << "   ";
-	    }
+		for (Long i = 0; i < N; ++i) {
+			cout << to_num(v[i]) << "   ";
+		}
 	cout << endl << endl;
 	cout.precision(oldPrecision);
 }
@@ -45,12 +45,12 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec)
 	cout.precision(precision);
 	if (a.size() == 0) cout << "empty";
 	else
-	    for (i = 0; i < m; ++i) {
-	        for (j = 0; j < n; ++j) {
-	            cout << to_num(a(i, j)) << "   ";
-	        }
-	        cout << endl;
-	    }
+		for (i = 0; i < m; ++i) {
+			for (j = 0; j < n; ++j) {
+				cout << to_num(a(i, j)) << "   ";
+			}
+			cout << endl;
+		}
 	cout << endl;
 	cout.precision(oldPrecision);
 }
@@ -61,16 +61,16 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
 	cout.precision(precision);
 	if (a.size() == 0) cout << "empty";
 	else
-	    for (k = 0; k < q; ++k) {
-	        cout << "(:, :, " << k << ")" << endl;
-	        for (i = 0; i < m; ++i) {
-	            for (j = 0; j < n; ++j) {
-	                cout << to_num(a(i, j, k)) << "   ";
-	            }
-	            cout << endl;
-	        }
-	        cout << endl;
-	    }
+		for (k = 0; k < q; ++k) {
+			cout << "(:, :, " << k << ")" << endl;
+			for (i = 0; i < m; ++i) {
+				for (j = 0; j < n; ++j) {
+					cout << to_num(a(i, j, k)) << "   ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+		}
 	cout.precision(oldPrecision);
 }
 //% elseif ndim(T) == 4
@@ -79,19 +79,19 @@ inline void disp(@T@_I a, Int_I precision = def_disp_prec) {
 	auto oldPrecision = cout.precision();
 	cout.precision(precision);
 	if (a.size() == 0)
-	    cout << "empty";
+		cout << "empty";
 	else
-	    for (l = 0; l < N4; ++l)
-	    for (k = 0; k < N3; ++k) {
-	        cout << "(:, :, " << k << ", " << l << ")" << endl;
-	        for (i = 0; i < N1; ++i) {
-	            for (j = 0; j < N2; ++j) {
-	                cout << to_num(a(i, j, k, l)) << "   ";
-	            }
-	            cout << endl;
-	        }
-	        cout << endl;
-	    }
+		for (l = 0; l < N4; ++l)
+		for (k = 0; k < N3; ++k) {
+			cout << "(:, :, " << k << ", " << l << ")" << endl;
+			for (i = 0; i < N1; ++i) {
+				for (j = 0; j < N2; ++j) {
+					cout << to_num(a(i, j, k, l)) << "   ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+		}
 	cout.precision(oldPrecision);
 }
 //% else
@@ -104,14 +104,14 @@ inline void disp(vecStr_I v)
 {
 	Long N = v.size();
 	for (Long i = 0; i < N; ++i)
-	    cout << v[i] << endl;
+		cout << v[i] << endl;
 }
 
 inline void disp(vecStr32_I v)
 {
 	Long N = v.size();
 	for (Long i = 0; i < N; ++i)
-	    cout << u8(v[i]) << endl;
+		cout << u8(v[i]) << endl;
 }
 
 // set stdout text style
@@ -120,7 +120,7 @@ inline void disp(vecStr32_I v)
 inline string text_style(Char_I color = 'n', Char_I style = 'n')
 {
 	if (color == 'n' && style == 'n')
-	    return "\033[0m";
+		return "\033[0m";
 	string str = "\033[";
 	if (style == 'n') ;
 	else if (style == 'b') str += '1'; // bold

@@ -44,11 +44,11 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkryl
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	@Tr@ *pd = wsp_d.p();
@@ -70,24 +70,24 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkryl
 //% req('dot', { ['Svec' Tc] ['Svec' Tc] });
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
 	@mul_fun@(vc, H, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    @mul_fun@(v2, H, v1);
-	    @Tr@ a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
+		Long j1 = j+1, j2 = j+2;
+		@mul_fun@(v2, H, v1);
+		@Tr@ a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
 //% req('v+=s', { ['Svec' Tc] Tc; ['Svec' Tc] Tr});
-	        v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    @mul_fun@(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+			v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		@mul_fun@(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 //% req('sum', { ['Svec' Tr] });
 	@Tr@ err = prod(beta);
@@ -110,7 +110,7 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkryl
 //% end
 	
 	for (Long i = 0; i < Nk; ++i)
-	    alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * beta[0];
 	// alpha, beta are just work spaces now
 //% req('mul_gen', { ['Svec' Tr] ['Scmat' Tr] ['Svec' Tr]});
 	mul_gen(beta, eigV, alpha);
@@ -151,11 +151,11 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
-	    SLS_ERR("Nk > N !");
+		SLS_ERR("Nk > N !");
 	if (wsp_d.size() < Nk*Nk + 2*Nk)
-	    SLS_ERR("wsp_d too short!");
+		SLS_ERR("wsp_d too short!");
 	if (wsp_c.size() < N*Nk + N + Nk)
-	    SLS_ERR("wsp_c too short!");
+		SLS_ERR("wsp_c too short!");
 #endif
 
 	@Tr@ *pd = wsp_d.p();
@@ -177,7 +177,7 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 //% req('dot', {['Svec' Tc] ['Svec' Tc]});
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
-	    v1[i] = vc[i] - alpha[0] * v0[i];
+		v1[i] = vc[i] - alpha[0] * v0[i];
 //% req('norm2', { ['Svec' Tc] });
 	beta[1] = norm(v1);
 	v1 /= beta[1];
@@ -185,17 +185,17 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
-	    Long j1 = j+1, j2 = j+2;
-	    @mul_fun@(v2, H, v1);
-	    @Tr@ a = alpha[j1], b = beta[j1];
-	    for (Long i = 0; i < N; ++i)
+		Long j1 = j+1, j2 = j+2;
+		@mul_fun@(v2, H, v1);
+		@Tr@ a = alpha[j1], b = beta[j1];
+		for (Long i = 0; i < N; ++i)
 //% req('v+=s', {['Svec' Tc] Tc; ['Svec' Tc] Tr});
-	    v2[i] -= a * v1[i] + b * v0[i];
-	    beta[j2] = norm(v2);
-	    v2 /= beta[j2];
-	    @mul_fun@(vc, H, v2);
-	    alpha[j2] = real(dot(v2, vc));
-	    v0.next(); v1.next(); v2.next();
+		v2[i] -= a * v1[i] + b * v0[i];
+		beta[j2] = norm(v2);
+		v2 /= beta[j2];
+		@mul_fun@(vc, H, v2);
+		alpha[j2] = real(dot(v2, vc));
+		v0.next(); v1.next(); v2.next();
 	}
 //% req('sum', { ['Svec' Tr] });
 	@Tr@ err = prod(beta);
@@ -219,7 +219,7 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 //% req('cut', { ['Svec' Tc] });
 	Svec@Tc@ vc2 = cut(vc, 0, Nk);
 	for (Long i = 0; i < Nk; ++i)
-	    vc2[i] = exp(@Tc@(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
+		vc2[i] = exp(@Tc@(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * beta[0];
 //% req('mul_gen', { ['Svec' Tc] ['Scmat' Tr] ['Svec' Tc]; Tv ['Scmat' Tc] ['Svec' Tc]});
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);

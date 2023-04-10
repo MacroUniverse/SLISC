@@ -328,18 +328,18 @@ void StepperDopr853<D>::prepare_dense(Doub_I h,VecDoub_I dydxnew,
 		rcont8[i]=d71*dydx[i]+d76*k6[i]+d77*k7[i]+d78*k8[i]+
 			d79*k9[i]+d710*k10[i]+d711*k2[i]+d712*k3[i];
 	}
-    for (i=0;i<n;i++)
+	for (i=0;i<n;i++)
 		ytemp[i]=y[i]+h*(a141*dydx[i]+a147*k7[i]+a148*k8[i]+a149*k9[i]+
 			a1410*k10[i]+a1411*k2[i]+a1412*k3[i]+a1413*dydxnew[i]);
-    derivs(x+c14*h,ytemp,k10);
-    for (i=0;i<n;i++)
+	derivs(x+c14*h,ytemp,k10);
+	for (i=0;i<n;i++)
 		ytemp[i]=y[i]+h*(a151*dydx[i]+a156*k6[i]+a157*k7[i]+a158*k8[i]+
 			a1511*k2[i]+a1512*k3[i]+a1513*dydxnew[i]+a1514*k10[i]);
-    derivs(x+c15*h,ytemp,k2);
-    for (i=0;i<n;i++)
+	derivs(x+c15*h,ytemp,k2);
+	for (i=0;i<n;i++)
 		ytemp[i]=y[i]+h*(a161*dydx[i]+a166*k6[i]+a167*k7[i]+a168*k8[i]+
 			a169*k9[i]+a1613*dydxnew[i]+a1614*k10[i]+a1615*k2[i]);
-    derivs(x+c16*h,ytemp,k3);
+	derivs(x+c16*h,ytemp,k3);
 	for (i=0;i<n;i++)
 	{
 		rcont5[i]=h*(rcont5[i]+d413*dydxnew[i]+d414*k10[i]+d415*k2[i]+d416*k3[i]);

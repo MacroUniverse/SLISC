@@ -44,8 +44,8 @@ inline void Cmat4Char::operator<<(Cmat4Char &rhs)
 inline void Cmat4Char::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -53,8 +53,8 @@ inline Char &Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -64,8 +64,8 @@ inline const Char &Cmat4Char::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -131,8 +131,8 @@ inline void Cmat4Int::operator<<(Cmat4Int &rhs)
 inline void Cmat4Int::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -140,8 +140,8 @@ inline Int &Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -151,8 +151,8 @@ inline const Int &Cmat4Int::operator()(Long_I i, Long_I j, Long_I k, Long_I l) c
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -218,8 +218,8 @@ inline void Cmat4Llong::operator<<(Cmat4Llong &rhs)
 inline void Cmat4Llong::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -227,8 +227,8 @@ inline Llong &Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -238,8 +238,8 @@ inline const Llong &Cmat4Llong::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -305,8 +305,8 @@ inline void Cmat4Float::operator<<(Cmat4Float &rhs)
 inline void Cmat4Float::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -314,8 +314,8 @@ inline Float &Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -325,8 +325,8 @@ inline const Float &Cmat4Float::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -392,8 +392,8 @@ inline void Cmat4Doub::operator<<(Cmat4Doub &rhs)
 inline void Cmat4Doub::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -401,8 +401,8 @@ inline Doub &Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -412,8 +412,8 @@ inline const Doub &Cmat4Doub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -479,8 +479,8 @@ inline void Cmat4Ldoub::operator<<(Cmat4Ldoub &rhs)
 inline void Cmat4Ldoub::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -488,8 +488,8 @@ inline Ldoub &Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -499,8 +499,8 @@ inline const Ldoub &Cmat4Ldoub::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -566,8 +566,8 @@ inline void Cmat4Qdoub::operator<<(Cmat4Qdoub &rhs)
 inline void Cmat4Qdoub::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -575,8 +575,8 @@ inline Qdoub &Cmat4Qdoub::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -586,8 +586,8 @@ inline const Qdoub &Cmat4Qdoub::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -653,8 +653,8 @@ inline void Cmat4Fcomp::operator<<(Cmat4Fcomp &rhs)
 inline void Cmat4Fcomp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -662,8 +662,8 @@ inline Fcomp &Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -673,8 +673,8 @@ inline const Fcomp &Cmat4Fcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -740,8 +740,8 @@ inline void Cmat4Comp::operator<<(Cmat4Comp &rhs)
 inline void Cmat4Comp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -749,8 +749,8 @@ inline Comp &Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -760,8 +760,8 @@ inline const Comp &Cmat4Comp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -827,8 +827,8 @@ inline void Cmat4Lcomp::operator<<(Cmat4Lcomp &rhs)
 inline void Cmat4Lcomp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -836,8 +836,8 @@ inline Lcomp &Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -847,8 +847,8 @@ inline const Lcomp &Cmat4Lcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -914,8 +914,8 @@ inline void Cmat4Qcomp::operator<<(Cmat4Qcomp &rhs)
 inline void Cmat4Qcomp::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -923,8 +923,8 @@ inline Qcomp &Cmat4Qcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -934,8 +934,8 @@ inline const Qcomp &Cmat4Qcomp::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -1001,8 +1001,8 @@ inline void Cmat4Fimag::operator<<(Cmat4Fimag &rhs)
 inline void Cmat4Fimag::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -1010,8 +1010,8 @@ inline Fimag &Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -1021,8 +1021,8 @@ inline const Fimag &Cmat4Fimag::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -1088,8 +1088,8 @@ inline void Cmat4Imag::operator<<(Cmat4Imag &rhs)
 inline void Cmat4Imag::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -1097,8 +1097,8 @@ inline Imag &Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -1108,8 +1108,8 @@ inline const Imag &Cmat4Imag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];
@@ -1175,8 +1175,8 @@ inline void Cmat4Limag::operator<<(Cmat4Limag &rhs)
 inline void Cmat4Limag::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2 || N3 != m_N3) {
-	    Base::resize(N0*N1*N2*N3);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
+		Base::resize(N0*N1*N2*N3);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
 }
 
@@ -1184,8 +1184,8 @@ inline Limag &Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0*j + N1N2 *k + N1N2 *m_N2*l];
@@ -1195,8 +1195,8 @@ inline const Limag &Cmat4Limag::operator()(Long_I i, Long_I j, Long_I k, Long_I 
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 ||
-	    k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
-	    SLS_ERR("Matrix subscript out of bounds");
+		k < 0 || k >= m_N2 || l < 0 || l >= m_N3)
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	return m_p[i + m_N0 * j + N1N2 * k + N1N2 * m_N2*l];

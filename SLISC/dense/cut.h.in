@@ -25,7 +25,7 @@ inline @Tsli@ cut(@Tv@_IO v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start + N > v.size())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 //%     if is_dense_vec(Tv)
 	@Tsli@ sli(&v[start], N);
@@ -42,7 +42,7 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start + N > v.size())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 //%     if is_dense_vec(Tv)
 	@Tsli@_c sli(&v[start], N);
@@ -59,8 +59,8 @@ inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() ||
-	        start2 < 0 || start2 + N2 > v.n1())
-	    SLS_ERR("index out of bound!");
+			start2 < 0 || start2 + N2 > v.n1())
+		SLS_ERR("index out of bound!");
 #endif
 //%     if is_Cmat(Tv) || is_Scmat(Tv)
 	@Tsli@ sli(&v(start1, start2), N1, N2, v.n0());
@@ -78,8 +78,8 @@ inline @Tsli@_c cut(@Tv@_I v,
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() ||
-	        start2 < 0 || start2 + N2 > v.n1())
-	    SLS_ERR("index out of bound!");
+			start2 < 0 || start2 + N2 > v.n1())
+		SLS_ERR("index out of bound!");
 #endif
 //%     if is_Cmat(Tv) || is_Scmat(Tv)
 	@Tsli@_c sli(&v(start1, start2), N1, N2, v.n0());
@@ -97,7 +97,7 @@ inline @ScmatT@ cut(@Tv@_IO v, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start2 < 0 || start2 + N2 > v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@ScmatT@ sli(&v(0, start2), v.n0(), N2);
 	return sli;
@@ -107,7 +107,7 @@ inline @ScmatT@_c cut(@Tv@_I v, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start2 < 0 || start2 + N2 > v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@ScmatT@_c sli(&v(0, start2), v.n0(), N2);
 	return sli;
@@ -119,7 +119,7 @@ inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2,
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
 	return sli;
@@ -129,7 +129,7 @@ inline @Tsli@_c cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
 	return sli;
@@ -159,7 +159,7 @@ inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, j), v.n0());
 	return sli;
@@ -169,7 +169,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, j), v.n0());
 	return sli;
@@ -179,7 +179,7 @@ inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, j), v.n0());
 	return sli;
@@ -189,7 +189,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, j), v.n0());
 	return sli;
@@ -199,7 +199,7 @@ inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, j), v.n0(), v.n1());
 	return sli;
@@ -209,7 +209,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, j), v.n0(), v.n1());
 	return sli;
@@ -219,7 +219,7 @@ inline @Tsli@ cut0(@Tv@_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, j, k), v.n0());
 	return sli;
@@ -229,7 +229,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, j, k), v.n0());
 	return sli;
@@ -254,7 +254,7 @@ inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, j), N1);
 	return sli;
@@ -264,7 +264,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, j), N1);
 	return sli;
@@ -274,7 +274,7 @@ inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, j, k), N1);
 	return sli;
@@ -284,7 +284,7 @@ inline @Tsli@_c cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, j, k), N1);
 	return sli;
@@ -307,7 +307,7 @@ inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, 0), v.n1(), v.n0());
 	return sli;
@@ -317,7 +317,7 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, 0), v.n1(), v.n0());
 	return sli;
@@ -327,7 +327,7 @@ inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, 0), v.n1(), v.lda());
 	return sli;
@@ -337,7 +337,7 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, 0), v.n1(), v.lda());
 	return sli;
@@ -348,7 +348,7 @@ inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, 0), v.n1());
 	return sli;
@@ -358,7 +358,7 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, 0), v.n1());
 	return sli;
@@ -368,7 +368,7 @@ inline @Tsli@ cut1(@Tv@_IO v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, 0, k), v.n1(), v.n0());
 	return sli;
@@ -378,7 +378,7 @@ inline @Tsli@_c cut1(@Tv@_I v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, 0, k), v.n1(), v.n0());
 	return sli;
@@ -398,7 +398,7 @@ inline @Tsli@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	@Tsli@ sli(&v(i, j), N2, v.n0());
 	return sli;
@@ -408,7 +408,7 @@ inline @Tsli@_c cut1(@T@_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, j), N2, v.n0());
 	return sli;
@@ -419,7 +419,7 @@ inline @Tsli@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	@Tsli@ sli(&v(i, j, k), N2, v.n0());
 	return sli;
@@ -429,7 +429,7 @@ inline @Tsli@_c cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, j, k), N2, v.n0());
 	return sli;
@@ -451,7 +451,7 @@ inline @Tsli@ cut2(@Tv@_IO v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(i, j, 0), v.n2(), v.n0()*v.n1());
 	return sli;
@@ -461,7 +461,7 @@ inline @Tsli@_c cut2(@Tv@_I v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(i, j, 0), v.n2(), v.n0()*v.n1());
 	return sli;
@@ -482,7 +482,7 @@ inline @Tsli@ cut01(@Tv@_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, 0, k), v.n0(), v.n1());
 	return sli;
@@ -492,7 +492,7 @@ inline @Tsli@_c cut01(@Tv@_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, 0, k), v.n0(), v.n1());
 	return sli;
@@ -502,7 +502,7 @@ inline @Tsli@ cut01(@Tv@_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, 0, k, l), v.n0(), v.n1());
 	return sli;
@@ -512,7 +512,7 @@ inline @Tsli@_c cut01(@Tv@_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, 0, k, l), v.n0(), v.n1());
 	return sli;
@@ -534,7 +534,7 @@ inline @Tsli@ cut01(@T@_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@ sli(&v(0, j, k), v.n0(), N2);
 	return sli;
@@ -544,7 +544,7 @@ inline @Tsli@_c cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
-	    SLS_ERR("index out of bound!");
+		SLS_ERR("index out of bound!");
 #endif
 	@Tsli@_c sli(&v(0, j, k), v.n0(), N2);
 	return sli;

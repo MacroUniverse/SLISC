@@ -57,7 +57,7 @@ inline Long @DiagT@::n1() const
 inline @T@ &@DiagT@::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }

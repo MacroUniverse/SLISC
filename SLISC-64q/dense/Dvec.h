@@ -42,7 +42,7 @@ inline const Char * DvecChar_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -61,7 +61,7 @@ inline const Char &DvecChar_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -70,7 +70,7 @@ inline const Char &DvecChar_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -164,7 +164,7 @@ inline Char * DvecChar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -183,7 +183,7 @@ inline Char &DvecChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -192,7 +192,7 @@ inline Char &DvecChar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -290,7 +290,7 @@ inline const Uchar * DvecUchar_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -309,7 +309,7 @@ inline const Uchar &DvecUchar_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -318,7 +318,7 @@ inline const Uchar &DvecUchar_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -412,7 +412,7 @@ inline Uchar * DvecUchar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -431,7 +431,7 @@ inline Uchar &DvecUchar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -440,7 +440,7 @@ inline Uchar &DvecUchar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -538,7 +538,7 @@ inline const Int * DvecInt_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -557,7 +557,7 @@ inline const Int &DvecInt_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -566,7 +566,7 @@ inline const Int &DvecInt_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -660,7 +660,7 @@ inline Int * DvecInt::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -679,7 +679,7 @@ inline Int &DvecInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -688,7 +688,7 @@ inline Int &DvecInt::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -786,7 +786,7 @@ inline const Llong * DvecLlong_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -805,7 +805,7 @@ inline const Llong &DvecLlong_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -814,7 +814,7 @@ inline const Llong &DvecLlong_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -908,7 +908,7 @@ inline Llong * DvecLlong::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -927,7 +927,7 @@ inline Llong &DvecLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -936,7 +936,7 @@ inline Llong &DvecLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1034,7 +1034,7 @@ inline const Float * DvecFloat_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1053,7 +1053,7 @@ inline const Float &DvecFloat_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1062,7 +1062,7 @@ inline const Float &DvecFloat_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1156,7 +1156,7 @@ inline Float * DvecFloat::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1175,7 +1175,7 @@ inline Float &DvecFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1184,7 +1184,7 @@ inline Float &DvecFloat::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1282,7 +1282,7 @@ inline const Doub * DvecDoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1301,7 +1301,7 @@ inline const Doub &DvecDoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1310,7 +1310,7 @@ inline const Doub &DvecDoub_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1404,7 +1404,7 @@ inline Doub * DvecDoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1423,7 +1423,7 @@ inline Doub &DvecDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1432,7 +1432,7 @@ inline Doub &DvecDoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1530,7 +1530,7 @@ inline const Ldoub * DvecLdoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1549,7 +1549,7 @@ inline const Ldoub &DvecLdoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1558,7 +1558,7 @@ inline const Ldoub &DvecLdoub_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1652,7 +1652,7 @@ inline Ldoub * DvecLdoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1671,7 +1671,7 @@ inline Ldoub &DvecLdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1680,7 +1680,7 @@ inline Ldoub &DvecLdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1778,7 +1778,7 @@ inline const Qdoub * DvecQdoub_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1797,7 +1797,7 @@ inline const Qdoub &DvecQdoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1806,7 +1806,7 @@ inline const Qdoub &DvecQdoub_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -1900,7 +1900,7 @@ inline Qdoub * DvecQdoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1919,7 +1919,7 @@ inline Qdoub &DvecQdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -1928,7 +1928,7 @@ inline Qdoub &DvecQdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2026,7 +2026,7 @@ inline const Fcomp * DvecFcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2045,7 +2045,7 @@ inline const Fcomp &DvecFcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2054,7 +2054,7 @@ inline const Fcomp &DvecFcomp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2148,7 +2148,7 @@ inline Fcomp * DvecFcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2167,7 +2167,7 @@ inline Fcomp &DvecFcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2176,7 +2176,7 @@ inline Fcomp &DvecFcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2274,7 +2274,7 @@ inline const Comp * DvecComp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2293,7 +2293,7 @@ inline const Comp &DvecComp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2302,7 +2302,7 @@ inline const Comp &DvecComp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2396,7 +2396,7 @@ inline Comp * DvecComp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2415,7 +2415,7 @@ inline Comp &DvecComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2424,7 +2424,7 @@ inline Comp &DvecComp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2522,7 +2522,7 @@ inline const Lcomp * DvecLcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2541,7 +2541,7 @@ inline const Lcomp &DvecLcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2550,7 +2550,7 @@ inline const Lcomp &DvecLcomp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2644,7 +2644,7 @@ inline Lcomp * DvecLcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2663,7 +2663,7 @@ inline Lcomp &DvecLcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2672,7 +2672,7 @@ inline Lcomp &DvecLcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2770,7 +2770,7 @@ inline const Qcomp * DvecQcomp_c::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2789,7 +2789,7 @@ inline const Qcomp &DvecQcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2798,7 +2798,7 @@ inline const Qcomp &DvecQcomp_c::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }
@@ -2892,7 +2892,7 @@ inline Qcomp * DvecQcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2911,7 +2911,7 @@ inline Qcomp &DvecQcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("Vbase subscript out of bounds");
+		SLS_ERR("Vbase subscript out of bounds");
 #endif
 	return m_p[m_step*i];
 }
@@ -2920,7 +2920,7 @@ inline Qcomp &DvecQcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_step*(m_N - 1)];
 }

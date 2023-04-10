@@ -15,9 +15,9 @@ inline Doub legendre_interp_poly(VecDoub_I x, Long_I ind, Doub_I x_q)
 {
 	Doub x_ind = x[ind], prod = 1;
 	for (Long i = 0; i < ind; ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	for (Long i = ind + 1; i < x.size(); ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	return prod;
 }
 
@@ -25,9 +25,9 @@ inline Doub legendre_interp_poly(VecQdoub_I x, Long_I ind, Doub_I x_q)
 {
 	Doub x_ind = x[ind], prod = 1;
 	for (Long i = 0; i < ind; ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	for (Long i = ind + 1; i < x.size(); ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	return prod;
 }
 
@@ -35,9 +35,9 @@ inline Doub legendre_interp_poly(SvecDoub_I x, Long_I ind, Doub_I x_q)
 {
 	Doub x_ind = x[ind], prod = 1;
 	for (Long i = 0; i < ind; ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	for (Long i = ind + 1; i < x.size(); ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	return prod;
 }
 
@@ -45,9 +45,9 @@ inline Doub legendre_interp_poly(SvecQdoub_I x, Long_I ind, Doub_I x_q)
 {
 	Doub x_ind = x[ind], prod = 1;
 	for (Long i = 0; i < ind; ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	for (Long i = ind + 1; i < x.size(); ++i)
-	    prod *= (x_q - x[i])/(x_ind - x[i]);
+		prod *= (x_q - x[i])/(x_ind - x[i]);
 	return prod;
 }
 
@@ -61,54 +61,54 @@ struct poly_interp1
 // real polynomial interpolation using gsl
 	poly_interp1(VecDoub_I x, VecDoub_I y)
 	{
-	    if (x.size() != y.size())
-	        SLS_ERR("x, y not the same length!");
-	    m_acc = gsl_interp_accel_alloc();
-	    m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-	    gsl_spline_init(m_spline, x.p(), y.p(), x.size());
+		if (x.size() != y.size())
+			SLS_ERR("x, y not the same length!");
+		m_acc = gsl_interp_accel_alloc();
+		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
+		gsl_spline_init(m_spline, x.p(), y.p(), x.size());
 	}
 
 	poly_interp1(SvecDoub_I x, SvecDoub_I y)
 	{
-	    if (x.size() != y.size())
-	        SLS_ERR("x, y not the same length!");
-	    m_acc = gsl_interp_accel_alloc();
-	    m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-	    gsl_spline_init(m_spline, x.p(), y.p(), x.size());
+		if (x.size() != y.size())
+			SLS_ERR("x, y not the same length!");
+		m_acc = gsl_interp_accel_alloc();
+		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
+		gsl_spline_init(m_spline, x.p(), y.p(), x.size());
 	}
 
 	poly_interp1(DvecDoub_I x, DvecDoub_I y)
 	{
-	    if (x.size() != y.size())
-	        SLS_ERR("x, y not the same length!");
-	    m_acc = gsl_interp_accel_alloc();
-	    m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
-	    gsl_spline_init(m_spline, x.p(), y.p(), x.size());
+		if (x.size() != y.size())
+			SLS_ERR("x, y not the same length!");
+		m_acc = gsl_interp_accel_alloc();
+		m_spline = gsl_spline_alloc(gsl_interp_polynomial, x.size());
+		gsl_spline_init(m_spline, x.p(), y.p(), x.size());
 	}
 
 
 	// evaluate
 	Doub operator()(Doub_I x)
 	{
-	    return gsl_spline_eval(m_spline, x, m_acc);
+		return gsl_spline_eval(m_spline, x, m_acc);
 	}
 
 	// evaluate derivative
 	Doub der(Doub_I x)
 	{
-	    return gsl_spline_eval_deriv(m_spline, x, m_acc);
+		return gsl_spline_eval_deriv(m_spline, x, m_acc);
 	}
 
 	// evaluate second derivative
 	Doub der2(Doub_I x)
 	{
-	    return gsl_spline_eval_deriv2(m_spline, x, m_acc);
+		return gsl_spline_eval_deriv2(m_spline, x, m_acc);
 	}
 
 	~poly_interp1()
 	{
-	    gsl_spline_free(m_spline);
-	    gsl_interp_accel_free(m_acc);
+		gsl_spline_free(m_spline);
+		gsl_interp_accel_free(m_acc);
 	}
 };
 #endif
@@ -123,83 +123,83 @@ struct poly_comp_interp1
 // complex valued polynomial interpolation using gsl
 	poly_comp_interp1(VecDoub_I x, VecComp_I y)
 	{
-	    Long N = x.size();
-	    if (N != y.size())
-	        SLS_ERR("x, y not the same length!");
-	    m_acc1 = gsl_interp_accel_alloc();
-	    m_acc2 = gsl_interp_accel_alloc();
-	    m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
-	    m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
-	    y_real.resize(N); y_imag.resize(N);
-	    for (Long i = 0; i < N; ++i) {
-	        y_real[i] = real(y[i]);
-	        y_imag[i] = imag(y[i]);
-	    }
-	    gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
-	    gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
+		Long N = x.size();
+		if (N != y.size())
+			SLS_ERR("x, y not the same length!");
+		m_acc1 = gsl_interp_accel_alloc();
+		m_acc2 = gsl_interp_accel_alloc();
+		m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
+		m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
+		y_real.resize(N); y_imag.resize(N);
+		for (Long i = 0; i < N; ++i) {
+			y_real[i] = real(y[i]);
+			y_imag[i] = imag(y[i]);
+		}
+		gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
+		gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
 	}
 
 	poly_comp_interp1(SvecDoub_I x, SvecComp_I y)
 	{
-	    Long N = x.size();
-	    if (N != y.size())
-	        SLS_ERR("x, y not the same length!");
-	    m_acc1 = gsl_interp_accel_alloc();
-	    m_acc2 = gsl_interp_accel_alloc();
-	    m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
-	    m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
-	    y_real.resize(N); y_imag.resize(N);
-	    for (Long i = 0; i < N; ++i) {
-	        y_real[i] = real(y[i]);
-	        y_imag[i] = imag(y[i]);
-	    }
-	    gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
-	    gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
+		Long N = x.size();
+		if (N != y.size())
+			SLS_ERR("x, y not the same length!");
+		m_acc1 = gsl_interp_accel_alloc();
+		m_acc2 = gsl_interp_accel_alloc();
+		m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
+		m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
+		y_real.resize(N); y_imag.resize(N);
+		for (Long i = 0; i < N; ++i) {
+			y_real[i] = real(y[i]);
+			y_imag[i] = imag(y[i]);
+		}
+		gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
+		gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
 	}
 
 	poly_comp_interp1(DvecDoub_I x, DvecComp_I y)
 	{
-	    Long N = x.size();
-	    if (N != y.size())
-	        SLS_ERR("x, y not the same length!");
-	    m_acc1 = gsl_interp_accel_alloc();
-	    m_acc2 = gsl_interp_accel_alloc();
-	    m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
-	    m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
-	    y_real.resize(N); y_imag.resize(N);
-	    for (Long i = 0; i < N; ++i) {
-	        y_real[i] = real(y[i]);
-	        y_imag[i] = imag(y[i]);
-	    }
-	    gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
-	    gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
+		Long N = x.size();
+		if (N != y.size())
+			SLS_ERR("x, y not the same length!");
+		m_acc1 = gsl_interp_accel_alloc();
+		m_acc2 = gsl_interp_accel_alloc();
+		m_spline1 = gsl_spline_alloc(gsl_interp_polynomial, N);
+		m_spline2 = gsl_spline_alloc(gsl_interp_polynomial, N);
+		y_real.resize(N); y_imag.resize(N);
+		for (Long i = 0; i < N; ++i) {
+			y_real[i] = real(y[i]);
+			y_imag[i] = imag(y[i]);
+		}
+		gsl_spline_init(m_spline1, x.p(), y_real.data(), N);
+		gsl_spline_init(m_spline2, x.p(), y_imag.data(), N);
 	}
 
 
 	Comp operator()(Doub_I x)
 	{
-	    return Comp(gsl_spline_eval(m_spline1, x, m_acc1),
-	            gsl_spline_eval(m_spline2, x, m_acc2));
+		return Comp(gsl_spline_eval(m_spline1, x, m_acc1),
+				gsl_spline_eval(m_spline2, x, m_acc2));
 	}
 
 	Comp der(Doub_I x)
 	{
-	    return Comp(gsl_spline_eval_deriv(m_spline1, x, m_acc1),
-	            gsl_spline_eval_deriv(m_spline2, x, m_acc2));
+		return Comp(gsl_spline_eval_deriv(m_spline1, x, m_acc1),
+				gsl_spline_eval_deriv(m_spline2, x, m_acc2));
 	}
 
 	Comp der2(Doub_I x)
 	{
-	    return Comp(gsl_spline_eval_deriv2(m_spline1, x, m_acc1),
-	            gsl_spline_eval_deriv2(m_spline2, x, m_acc2));
+		return Comp(gsl_spline_eval_deriv2(m_spline1, x, m_acc1),
+				gsl_spline_eval_deriv2(m_spline2, x, m_acc2));
 	}
 
 	~poly_comp_interp1()
 	{
-	    gsl_spline_free(m_spline1);
-	    gsl_spline_free(m_spline2);
-	    gsl_interp_accel_free(m_acc1);
-	    gsl_interp_accel_free(m_acc2);
+		gsl_spline_free(m_spline1);
+		gsl_spline_free(m_spline2);
+		gsl_interp_accel_free(m_acc1);
+		gsl_interp_accel_free(m_acc2);
 	}
 };
 #endif
@@ -211,25 +211,25 @@ struct Base_interp_Doub
 	Long n, mm, jsav, cor, dj;
 	const Doub *xx, *yy;
 	Base_interp_Doub(VecDoub_I x, const Doub *y, Long m)
-	    : n(x.size()), mm(m), jsav(0), cor(0), xx(&x[0]), yy(y) {
-	    dj = min(1,(Long)pow((Doub)n,(Doub)0.25));
+		: n(x.size()), mm(m), jsav(0), cor(0), xx(&x[0]), yy(y) {
+		dj = min(1,(Long)pow((Doub)n,(Doub)0.25));
 	}
 
 	Base_interp_Doub(const Doub *x, Long_I Nx, const Doub *y,  Long m)
-	    : n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
-	    dj = min(1,(Long)pow((Doub)n,(Doub)0.25));
+		: n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
+		dj = min(1,(Long)pow((Doub)n,(Doub)0.25));
 	}
 
 	Doub interp(Doub x) {
-	    Long jlo = cor ? hunt(x) : locate(x);
-	    return rawinterp(jlo,x);
+		Long jlo = cor ? hunt(x) : locate(x);
+		return rawinterp(jlo,x);
 	}
 
 	void interp(VecDoub &v, const VecDoub &v1) {
-	    v.resize(v1.size());
-	    for (Long i = 0; i < v1.size(); ++i) {
-	        v[i] = interp(v1[i]);
-	    }
+		v.resize(v1.size());
+		for (Long i = 0; i < v1.size(); ++i) {
+			v[i] = interp(v1[i]);
+		}
 	}
 
 	inline Long locate(Doub_I x);
@@ -242,7 +242,7 @@ struct Poly_interp_Doub : Base_interp_Doub
 {
 	Doub dy;
 	Poly_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long m)
-	    : Base_interp_Doub(xv,&yv[0],m), dy(0.) {}
+		: Base_interp_Doub(xv,&yv[0],m), dy(0.) {}
 	inline Doub rawinterp(Long jl, Doub x);
 };
 
@@ -250,7 +250,7 @@ struct Rat_interp_Doub : Base_interp_Doub
 {
 	Doub dy;
 	Rat_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long m)
-	    : Base_interp_Doub(xv,&yv[0],m), dy(0.) {}
+		: Base_interp_Doub(xv,&yv[0],m), dy(0.) {}
 	inline Doub rawinterp(Long jl, Doub x);
 };
 
@@ -293,11 +293,11 @@ inline Long Base_interp_Doub::locate(Doub_I x)
 	jl = 0;
 	ju = n - 1;
 	while (ju - jl > 1) {
-	    jm = (ju + jl) >> 1;
-	    if ((x >= xx[jm]) == ascnd)
-	        jl = jm;
-	    else
-	        ju = jm;
+		jm = (ju + jl) >> 1;
+		if ((x >= xx[jm]) == ascnd)
+			jl = jm;
+		else
+			ju = jm;
 	}
 	cor = abs(jl - jsav) > dj ? 0 : 1;
 	jsav = jl;
@@ -310,40 +310,40 @@ inline Long Base_interp_Doub::hunt(Doub_I x)
 	if (n < 2 || mm < 2 || mm > n) throw("hunt size error");
 	Bool ascnd = (xx[n - 1] >= xx[0]);
 	if (jl < 0 || jl > n - 1) {
-	    jl = 0;
-	    ju = n - 1;
+		jl = 0;
+		ju = n - 1;
 	}
 	else {
-	    if ((x >= xx[jl]) == ascnd) {
-	        for (;;) {
-	            ju = jl + inc;
-	            if (ju >= n - 1) { ju = n - 1; break; }
-	            else if ((x < xx[ju]) == ascnd) break;
-	            else {
-	                jl = ju;
-	                inc += inc;
-	            }
-	        }
-	    }
-	    else {
-	        ju = jl;
-	        for (;;) {
-	            jl = jl - inc;
-	            if (jl <= 0) { jl = 0; break; }
-	            else if ((x >= xx[jl]) == ascnd) break;
-	            else {
-	                ju = jl;
-	                inc += inc;
-	            }
-	        }
-	    }
+		if ((x >= xx[jl]) == ascnd) {
+			for (;;) {
+				ju = jl + inc;
+				if (ju >= n - 1) { ju = n - 1; break; }
+				else if ((x < xx[ju]) == ascnd) break;
+				else {
+					jl = ju;
+					inc += inc;
+				}
+			}
+		}
+		else {
+			ju = jl;
+			for (;;) {
+				jl = jl - inc;
+				if (jl <= 0) { jl = 0; break; }
+				else if ((x >= xx[jl]) == ascnd) break;
+				else {
+					ju = jl;
+					inc += inc;
+				}
+			}
+		}
 	}
 	while (ju - jl > 1) {
-	    jm = (ju + jl) >> 1;
-	    if ((x >= xx[jm]) == ascnd)
-	        jl = jm;
-	    else
-	        ju = jm;
+		jm = (ju + jl) >> 1;
+		if ((x >= xx[jm]) == ascnd)
+			jl = jm;
+		else
+			ju = jm;
 	}
 	cor = abs(jl - jsav) > dj ? 0 : 1;
 	jsav = jl;
@@ -360,25 +360,25 @@ inline Doub Poly_interp_Doub::rawinterp(Long jl, Doub x)
 	VecDoub c(mm), d(mm);
 	dif = abs(x - xa[0]);
 	for (i = 0; i<mm; i++) {
-	    if ((dift = abs(x - xa[i])) < dif) {
-	        ns = i;
-	        dif = dift;
-	    }
-	    c[i] = ya[i];
-	    d[i] = ya[i];
+		if ((dift = abs(x - xa[i])) < dif) {
+			ns = i;
+			dif = dift;
+		}
+		c[i] = ya[i];
+		d[i] = ya[i];
 	}
 	y = ya[ns--];
 	for (m = 1; m<mm; m++) {
-	    for (i = 0; i<mm - m; i++) {
-	        ho = xa[i] - x;
-	        hp = xa[i + m] - x;
-	        w = c[i + 1] - d[i];
-	        if ((den = ho - hp) == 0.0) throw("Poly_interp_Doub error");
-	        den = w / den;
-	        d[i] = hp * den;
-	        c[i] = ho * den;
-	    }
-	    y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
+		for (i = 0; i<mm - m; i++) {
+			ho = xa[i] - x;
+			hp = xa[i + m] - x;
+			w = c[i + 1] - d[i];
+			if ((den = ho - hp) == 0.0) throw("Poly_interp_Doub error");
+			den = w / den;
+			d[i] = hp * den;
+			c[i] = ho * den;
+		}
+		y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
 	}
 	return y;
 }
@@ -394,31 +394,31 @@ inline Doub Rat_interp_Doub::rawinterp(Long jl, Doub x)
 	VecDoub c(mm), d(mm);
 	hh = abs(x - xa[0]);
 	for (i = 0; i<mm; i++) {
-	    h = abs(x - xa[i]);
-	    if (h == 0.0) {
-	        dy = 0.0;
-	        return ya[i];
-	    }
-	    else if (h < hh) {
-	        ns = i;
-	        hh = h;
-	    }
-	    c[i] = ya[i];
-	    d[i] = ya[i] + TINY;
+		h = abs(x - xa[i]);
+		if (h == 0.0) {
+			dy = 0.0;
+			return ya[i];
+		}
+		else if (h < hh) {
+			ns = i;
+			hh = h;
+		}
+		c[i] = ya[i];
+		d[i] = ya[i] + TINY;
 	}
 	y = ya[ns--];
 	for (m = 1; m<mm; m++) {
-	    for (i = 0; i<mm - m; i++) {
-	        w = c[i + 1] - d[i];
-	        h = xa[i + m] - x;
-	        t = (xa[i] - x)*d[i] / h;
-	        dd = t - c[i + 1];
-	        if (dd == 0.0) throw("Error in routine ratint");
-	        dd = w / dd;
-	        d[i] = c[i + 1] * dd;
-	        c[i] = t * dd;
-	    }
-	    y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
+		for (i = 0; i<mm - m; i++) {
+			w = c[i + 1] - d[i];
+			h = xa[i + m] - x;
+			t = (xa[i] - x)*d[i] / h;
+			dd = t - c[i + 1];
+			if (dd == 0.0) throw("Error in routine ratint");
+			dd = w / dd;
+			d[i] = c[i + 1] * dd;
+			c[i] = t * dd;
+		}
+		y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
 	}
 	return y;
 }
@@ -432,27 +432,27 @@ inline void Spline_interp_Doub::sety2(const Doub *xv, const Doub *yv, Doub_I yp1
 	Long n = y2.size();
 	VecDoub u(n - 1);
 	if (yp1 > 0.99e99)
-	    y2[0] = u[0] = 0.0;
+		y2[0] = u[0] = 0.0;
 	else {
-	    y2[0] = -0.5;
-	    u[0] = (3.0 / (xv[1] - xv[0]))*((yv[1] - yv[0]) / (xv[1] - xv[0]) - yp1);
+		y2[0] = -0.5;
+		u[0] = (3.0 / (xv[1] - xv[0]))*((yv[1] - yv[0]) / (xv[1] - xv[0]) - yp1);
 	}
 	for (i = 1; i<n - 1; i++) {
-	    sig = (xv[i] - xv[i - 1]) / (xv[i + 1] - xv[i - 1]);
-	    p = sig * y2[i - 1] + 2.0;
-	    y2[i] = (sig - 1.0) / p;
-	    u[i] = (yv[i + 1] - yv[i]) / (xv[i + 1] - xv[i]) - (yv[i] - yv[i - 1]) / (xv[i] - xv[i - 1]);
-	    u[i] = (6.0*u[i] / (xv[i + 1] - xv[i - 1]) - sig * u[i - 1]) / p;
+		sig = (xv[i] - xv[i - 1]) / (xv[i + 1] - xv[i - 1]);
+		p = sig * y2[i - 1] + 2.0;
+		y2[i] = (sig - 1.0) / p;
+		u[i] = (yv[i + 1] - yv[i]) / (xv[i + 1] - xv[i]) - (yv[i] - yv[i - 1]) / (xv[i] - xv[i - 1]);
+		u[i] = (6.0*u[i] / (xv[i + 1] - xv[i - 1]) - sig * u[i - 1]) / p;
 	}
 	if (ypn > 0.99e99)
-	    qn = un = 0.0;
+		qn = un = 0.0;
 	else {
-	    qn = 0.5;
-	    un = (3.0 / (xv[n - 1] - xv[n - 2]))*(ypn - (yv[n - 1] - yv[n - 2]) / (xv[n - 1] - xv[n - 2]));
+		qn = 0.5;
+		un = (3.0 / (xv[n - 1] - xv[n - 2]))*(ypn - (yv[n - 1] - yv[n - 2]) / (xv[n - 1] - xv[n - 2]));
 	}
 	y2[n - 1] = (un - qn * u[n - 2]) / (qn*y2[n - 2] + 1.0);
 	for (k = n - 2; k >= 0; k--)
-	    y2[k] = y2[k] * y2[k + 1] + u[k];
+		y2[k] = y2[k] * y2[k + 1] + u[k];
 }
 
 inline Doub Spline_interp_Doub::rawinterp(Long jl, Doub x)
@@ -464,7 +464,7 @@ inline Doub Spline_interp_Doub::rawinterp(Long jl, Doub x)
 	a = (xx[khi] - x) / h;
 	b = (x - xx[klo]) / h;
 	y = a * yy[klo] + b * yy[khi] + ((a*a*a - a)*y2[klo]
-	    + (b*b*b - b)*y2[khi])*(h*h) / 6.0;
+		+ (b*b*b - b)*y2[khi])*(h*h) / 6.0;
 	return y;
 }
 
@@ -475,22 +475,22 @@ inline BaryRat_interp_Doub::BaryRat_interp_Doub(VecDoub_I xv, VecDoub_I yv, Long
 {
 	if (n <= d) throw("d too large for number of points in BaryRat_interp_Doub");
 	for (Long k = 0; k<n; k++) {
-	    Long imin = max(k - d, 0);
-	    Long imax = k >= n - d ? n - d - 1 : k;
-	    Doub temp = imin & 1 ? -1.0 : 1.0;
-	    Doub sum = 0.0;
-	    for (Long i = imin; i <= imax; i++) {
-	        Long jmax = min(i + d, n - 1);
-	        Doub term = 1.0;
-	        for (Long j = i; j <= jmax; j++) {
-	            if (j == k) continue;
-	            term *= (xx[k] - xx[j]);
-	        }
-	        term = temp / term;
-	        temp = -temp;
-	        sum += term;
-	    }
-	    w[k] = sum;
+		Long imin = max(k - d, 0);
+		Long imax = k >= n - d ? n - d - 1 : k;
+		Doub temp = imin & 1 ? -1.0 : 1.0;
+		Doub sum = 0.0;
+		for (Long i = imin; i <= imax; i++) {
+			Long jmax = min(i + d, n - 1);
+			Doub term = 1.0;
+			for (Long j = i; j <= jmax; j++) {
+				if (j == k) continue;
+				term *= (xx[k] - xx[j]);
+			}
+			term = temp / term;
+			temp = -temp;
+			sum += term;
+		}
+		w[k] = sum;
 	}
 }
 
@@ -498,15 +498,15 @@ inline Doub BaryRat_interp_Doub::rawinterp(Long jl, Doub x)
 {
 	Doub num = 0, den = 0;
 	for (Long i = 0; i<n; i++) {
-	    Doub h = x - xx[i];
-	    if (h == 0.0) {
-	        return yy[i];
-	    }
-	    else {
-	        Doub temp = w[i] / h;
-	        num += temp * yy[i];
-	        den += temp;
-	    }
+		Doub h = x - xx[i];
+		if (h == 0.0) {
+			return yy[i];
+		}
+		else {
+			Doub temp = w[i] / h;
+			num += temp * yy[i];
+			den += temp;
+		}
 	}
 	return num / den;
 }
@@ -520,25 +520,25 @@ struct Base_interp_Qdoub
 	Long n, mm, jsav, cor, dj;
 	const Qdoub *xx, *yy;
 	Base_interp_Qdoub(VecQdoub_I x, const Qdoub *y, Long m)
-	    : n(x.size()), mm(m), jsav(0), cor(0), xx(&x[0]), yy(y) {
-	    dj = min(1,(Long)pow((Qdoub)n,(Qdoub)0.25));
+		: n(x.size()), mm(m), jsav(0), cor(0), xx(&x[0]), yy(y) {
+		dj = min(1,(Long)pow((Qdoub)n,(Qdoub)0.25));
 	}
 
 	Base_interp_Qdoub(const Qdoub *x, Long_I Nx, const Qdoub *y,  Long m)
-	    : n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
-	    dj = min(1,(Long)pow((Qdoub)n,(Qdoub)0.25));
+		: n(Nx), mm(m), jsav(0), cor(0), xx(x), yy(y) {
+		dj = min(1,(Long)pow((Qdoub)n,(Qdoub)0.25));
 	}
 
 	Qdoub interp(Qdoub x) {
-	    Long jlo = cor ? hunt(x) : locate(x);
-	    return rawinterp(jlo,x);
+		Long jlo = cor ? hunt(x) : locate(x);
+		return rawinterp(jlo,x);
 	}
 
 	void interp(VecQdoub &v, const VecQdoub &v1) {
-	    v.resize(v1.size());
-	    for (Long i = 0; i < v1.size(); ++i) {
-	        v[i] = interp(v1[i]);
-	    }
+		v.resize(v1.size());
+		for (Long i = 0; i < v1.size(); ++i) {
+			v[i] = interp(v1[i]);
+		}
 	}
 
 	inline Long locate(Qdoub_I x);
@@ -551,7 +551,7 @@ struct Poly_interp_Qdoub : Base_interp_Qdoub
 {
 	Qdoub dy;
 	Poly_interp_Qdoub(VecQdoub_I xv, VecQdoub_I yv, Long m)
-	    : Base_interp_Qdoub(xv,&yv[0],m), dy(0.) {}
+		: Base_interp_Qdoub(xv,&yv[0],m), dy(0.) {}
 	inline Qdoub rawinterp(Long jl, Qdoub x);
 };
 
@@ -559,7 +559,7 @@ struct Rat_interp_Qdoub : Base_interp_Qdoub
 {
 	Qdoub dy;
 	Rat_interp_Qdoub(VecQdoub_I xv, VecQdoub_I yv, Long m)
-	    : Base_interp_Qdoub(xv,&yv[0],m), dy(0.) {}
+		: Base_interp_Qdoub(xv,&yv[0],m), dy(0.) {}
 	inline Qdoub rawinterp(Long jl, Qdoub x);
 };
 
@@ -602,11 +602,11 @@ inline Long Base_interp_Qdoub::locate(Qdoub_I x)
 	jl = 0;
 	ju = n - 1;
 	while (ju - jl > 1) {
-	    jm = (ju + jl) >> 1;
-	    if ((x >= xx[jm]) == ascnd)
-	        jl = jm;
-	    else
-	        ju = jm;
+		jm = (ju + jl) >> 1;
+		if ((x >= xx[jm]) == ascnd)
+			jl = jm;
+		else
+			ju = jm;
 	}
 	cor = abs(jl - jsav) > dj ? 0 : 1;
 	jsav = jl;
@@ -619,40 +619,40 @@ inline Long Base_interp_Qdoub::hunt(Qdoub_I x)
 	if (n < 2 || mm < 2 || mm > n) throw("hunt size error");
 	Bool ascnd = (xx[n - 1] >= xx[0]);
 	if (jl < 0 || jl > n - 1) {
-	    jl = 0;
-	    ju = n - 1;
+		jl = 0;
+		ju = n - 1;
 	}
 	else {
-	    if ((x >= xx[jl]) == ascnd) {
-	        for (;;) {
-	            ju = jl + inc;
-	            if (ju >= n - 1) { ju = n - 1; break; }
-	            else if ((x < xx[ju]) == ascnd) break;
-	            else {
-	                jl = ju;
-	                inc += inc;
-	            }
-	        }
-	    }
-	    else {
-	        ju = jl;
-	        for (;;) {
-	            jl = jl - inc;
-	            if (jl <= 0) { jl = 0; break; }
-	            else if ((x >= xx[jl]) == ascnd) break;
-	            else {
-	                ju = jl;
-	                inc += inc;
-	            }
-	        }
-	    }
+		if ((x >= xx[jl]) == ascnd) {
+			for (;;) {
+				ju = jl + inc;
+				if (ju >= n - 1) { ju = n - 1; break; }
+				else if ((x < xx[ju]) == ascnd) break;
+				else {
+					jl = ju;
+					inc += inc;
+				}
+			}
+		}
+		else {
+			ju = jl;
+			for (;;) {
+				jl = jl - inc;
+				if (jl <= 0) { jl = 0; break; }
+				else if ((x >= xx[jl]) == ascnd) break;
+				else {
+					ju = jl;
+					inc += inc;
+				}
+			}
+		}
 	}
 	while (ju - jl > 1) {
-	    jm = (ju + jl) >> 1;
-	    if ((x >= xx[jm]) == ascnd)
-	        jl = jm;
-	    else
-	        ju = jm;
+		jm = (ju + jl) >> 1;
+		if ((x >= xx[jm]) == ascnd)
+			jl = jm;
+		else
+			ju = jm;
 	}
 	cor = abs(jl - jsav) > dj ? 0 : 1;
 	jsav = jl;
@@ -669,25 +669,25 @@ inline Qdoub Poly_interp_Qdoub::rawinterp(Long jl, Qdoub x)
 	VecQdoub c(mm), d(mm);
 	dif = abs(x - xa[0]);
 	for (i = 0; i<mm; i++) {
-	    if ((dift = abs(x - xa[i])) < dif) {
-	        ns = i;
-	        dif = dift;
-	    }
-	    c[i] = ya[i];
-	    d[i] = ya[i];
+		if ((dift = abs(x - xa[i])) < dif) {
+			ns = i;
+			dif = dift;
+		}
+		c[i] = ya[i];
+		d[i] = ya[i];
 	}
 	y = ya[ns--];
 	for (m = 1; m<mm; m++) {
-	    for (i = 0; i<mm - m; i++) {
-	        ho = xa[i] - x;
-	        hp = xa[i + m] - x;
-	        w = c[i + 1] - d[i];
-	        if ((den = ho - hp) == 0.0) throw("Poly_interp_Qdoub error");
-	        den = w / den;
-	        d[i] = hp * den;
-	        c[i] = ho * den;
-	    }
-	    y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
+		for (i = 0; i<mm - m; i++) {
+			ho = xa[i] - x;
+			hp = xa[i + m] - x;
+			w = c[i + 1] - d[i];
+			if ((den = ho - hp) == 0.0) throw("Poly_interp_Qdoub error");
+			den = w / den;
+			d[i] = hp * den;
+			c[i] = ho * den;
+		}
+		y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
 	}
 	return y;
 }
@@ -703,31 +703,31 @@ inline Qdoub Rat_interp_Qdoub::rawinterp(Long jl, Qdoub x)
 	VecQdoub c(mm), d(mm);
 	hh = abs(x - xa[0]);
 	for (i = 0; i<mm; i++) {
-	    h = abs(x - xa[i]);
-	    if (h == 0.0) {
-	        dy = 0.0;
-	        return ya[i];
-	    }
-	    else if (h < hh) {
-	        ns = i;
-	        hh = h;
-	    }
-	    c[i] = ya[i];
-	    d[i] = ya[i] + TINY;
+		h = abs(x - xa[i]);
+		if (h == 0.0) {
+			dy = 0.0;
+			return ya[i];
+		}
+		else if (h < hh) {
+			ns = i;
+			hh = h;
+		}
+		c[i] = ya[i];
+		d[i] = ya[i] + TINY;
 	}
 	y = ya[ns--];
 	for (m = 1; m<mm; m++) {
-	    for (i = 0; i<mm - m; i++) {
-	        w = c[i + 1] - d[i];
-	        h = xa[i + m] - x;
-	        t = (xa[i] - x)*d[i] / h;
-	        dd = t - c[i + 1];
-	        if (dd == 0.0) throw("Error in routine ratint");
-	        dd = w / dd;
-	        d[i] = c[i + 1] * dd;
-	        c[i] = t * dd;
-	    }
-	    y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
+		for (i = 0; i<mm - m; i++) {
+			w = c[i + 1] - d[i];
+			h = xa[i + m] - x;
+			t = (xa[i] - x)*d[i] / h;
+			dd = t - c[i + 1];
+			if (dd == 0.0) throw("Error in routine ratint");
+			dd = w / dd;
+			d[i] = c[i + 1] * dd;
+			c[i] = t * dd;
+		}
+		y += (dy = (2 * (ns + 1) < (mm - m) ? c[ns + 1] : d[ns--]));
 	}
 	return y;
 }
@@ -741,27 +741,27 @@ inline void Spline_interp_Qdoub::sety2(const Qdoub *xv, const Qdoub *yv, Qdoub_I
 	Long n = y2.size();
 	VecQdoub u(n - 1);
 	if (yp1 > 0.99e99)
-	    y2[0] = u[0] = 0.0;
+		y2[0] = u[0] = 0.0;
 	else {
-	    y2[0] = -0.5;
-	    u[0] = (3.0 / (xv[1] - xv[0]))*((yv[1] - yv[0]) / (xv[1] - xv[0]) - yp1);
+		y2[0] = -0.5;
+		u[0] = (3.0 / (xv[1] - xv[0]))*((yv[1] - yv[0]) / (xv[1] - xv[0]) - yp1);
 	}
 	for (i = 1; i<n - 1; i++) {
-	    sig = (xv[i] - xv[i - 1]) / (xv[i + 1] - xv[i - 1]);
-	    p = sig * y2[i - 1] + 2.0;
-	    y2[i] = (sig - 1.0) / p;
-	    u[i] = (yv[i + 1] - yv[i]) / (xv[i + 1] - xv[i]) - (yv[i] - yv[i - 1]) / (xv[i] - xv[i - 1]);
-	    u[i] = (6.0*u[i] / (xv[i + 1] - xv[i - 1]) - sig * u[i - 1]) / p;
+		sig = (xv[i] - xv[i - 1]) / (xv[i + 1] - xv[i - 1]);
+		p = sig * y2[i - 1] + 2.0;
+		y2[i] = (sig - 1.0) / p;
+		u[i] = (yv[i + 1] - yv[i]) / (xv[i + 1] - xv[i]) - (yv[i] - yv[i - 1]) / (xv[i] - xv[i - 1]);
+		u[i] = (6.0*u[i] / (xv[i + 1] - xv[i - 1]) - sig * u[i - 1]) / p;
 	}
 	if (ypn > 0.99e99)
-	    qn = un = 0.0;
+		qn = un = 0.0;
 	else {
-	    qn = 0.5;
-	    un = (3.0 / (xv[n - 1] - xv[n - 2]))*(ypn - (yv[n - 1] - yv[n - 2]) / (xv[n - 1] - xv[n - 2]));
+		qn = 0.5;
+		un = (3.0 / (xv[n - 1] - xv[n - 2]))*(ypn - (yv[n - 1] - yv[n - 2]) / (xv[n - 1] - xv[n - 2]));
 	}
 	y2[n - 1] = (un - qn * u[n - 2]) / (qn*y2[n - 2] + 1.0);
 	for (k = n - 2; k >= 0; k--)
-	    y2[k] = y2[k] * y2[k + 1] + u[k];
+		y2[k] = y2[k] * y2[k + 1] + u[k];
 }
 
 inline Qdoub Spline_interp_Qdoub::rawinterp(Long jl, Qdoub x)
@@ -773,7 +773,7 @@ inline Qdoub Spline_interp_Qdoub::rawinterp(Long jl, Qdoub x)
 	a = (xx[khi] - x) / h;
 	b = (x - xx[klo]) / h;
 	y = a * yy[klo] + b * yy[khi] + ((a*a*a - a)*y2[klo]
-	    + (b*b*b - b)*y2[khi])*(h*h) / 6.0;
+		+ (b*b*b - b)*y2[khi])*(h*h) / 6.0;
 	return y;
 }
 
@@ -784,22 +784,22 @@ inline BaryRat_interp_Qdoub::BaryRat_interp_Qdoub(VecQdoub_I xv, VecQdoub_I yv, 
 {
 	if (n <= d) throw("d too large for number of points in BaryRat_interp_Qdoub");
 	for (Long k = 0; k<n; k++) {
-	    Long imin = max(k - d, 0);
-	    Long imax = k >= n - d ? n - d - 1 : k;
-	    Qdoub temp = imin & 1 ? -1.0 : 1.0;
-	    Qdoub sum = 0.0;
-	    for (Long i = imin; i <= imax; i++) {
-	        Long jmax = min(i + d, n - 1);
-	        Qdoub term = 1.0;
-	        for (Long j = i; j <= jmax; j++) {
-	            if (j == k) continue;
-	            term *= (xx[k] - xx[j]);
-	        }
-	        term = temp / term;
-	        temp = -temp;
-	        sum += term;
-	    }
-	    w[k] = sum;
+		Long imin = max(k - d, 0);
+		Long imax = k >= n - d ? n - d - 1 : k;
+		Qdoub temp = imin & 1 ? -1.0 : 1.0;
+		Qdoub sum = 0.0;
+		for (Long i = imin; i <= imax; i++) {
+			Long jmax = min(i + d, n - 1);
+			Qdoub term = 1.0;
+			for (Long j = i; j <= jmax; j++) {
+				if (j == k) continue;
+				term *= (xx[k] - xx[j]);
+			}
+			term = temp / term;
+			temp = -temp;
+			sum += term;
+		}
+		w[k] = sum;
 	}
 }
 
@@ -807,15 +807,15 @@ inline Qdoub BaryRat_interp_Qdoub::rawinterp(Long jl, Qdoub x)
 {
 	Qdoub num = 0, den = 0;
 	for (Long i = 0; i<n; i++) {
-	    Qdoub h = x - xx[i];
-	    if (h == 0.0) {
-	        return yy[i];
-	    }
-	    else {
-	        Qdoub temp = w[i] / h;
-	        num += temp * yy[i];
-	        den += temp;
-	    }
+		Qdoub h = x - xx[i];
+		if (h == 0.0) {
+			return yy[i];
+		}
+		else {
+			Qdoub temp = w[i] / h;
+			num += temp * yy[i];
+			den += temp;
+		}
 	}
 	return num / den;
 }

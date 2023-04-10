@@ -18,8 +18,8 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 #ifdef SLS_CHECK_SHAPES
 //% req('shape_cmp', {Tm,Tm2});
 	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
-	    || eigVal.size() != eigVec.n0())
-	    SLS_ERR("wrong shape!");
+		|| eigVal.size() != eigVec.n0())
+		SLS_ERR("wrong shape!");
 #endif
 //% req('copy(v,v)', {Tm,Tm2});
 	copy(eigVec, A);
@@ -35,7 +35,7 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 //%     error('Not implemented!');
 //% end
 	if (ret != 0)
-	    SLS_ERR("failed!");
+		SLS_ERR("failed!");
 }
 //% else
 //%     error('Not implemented!');
@@ -49,17 +49,17 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 #ifdef SLS_CHECK_BOUNDS
 //% req('shape_cmp', {'CmatComp','CmatComp'});
 	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
-	    || eigVal.size() != eigVec.n0())
-	    SLS_ERR("wrong shape!");
+		|| eigVal.size() != eigVec.n0())
+		SLS_ERR("wrong shape!");
 #endif
 //% req('copy(v,v)', {'CmatComp','CmatComp'});
 	copy(eigVec, A);
 	Long N = A.n1();
 	eigVal.resize(N);
 	Long ret = LAPACKE_zheev(LAPACK_COL_MAJOR, 'V', 'U', N,
-	    (double _Complex*)eigVec.p(), N, eigVal.p());
+		(double _Complex*)eigVec.p(), N, eigVal.p());
 	if (ret != 0)
-	    SLS_ERR("failed!");
+		SLS_ERR("failed!");
 }
 #endif
 
@@ -79,8 +79,8 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A, @Twsp@_IO wsp_qd)
 #ifdef SLS_CHECK_SHAPES
 //% req('shape_cmp', {Tm,Tm2});
 	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
-	    || eigVal.size() != eigVec.n0())
-	    SLS_ERR("wrong shape!");
+		|| eigVal.size() != eigVec.n0())
+		SLS_ERR("wrong shape!");
 	if (wsp_qd.size() != 3*N) // this is gessed, Rsyev will show have error is not enough.
 		SLS_ERR("wrong shape!");
 #endif
@@ -97,7 +97,7 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A, @Twsp@_IO wsp_qd)
 //%     error('Not implemented!');
 //% end
 	if (ret != 0)
-	    SLS_ERR("failed!");
+		SLS_ERR("failed!");
 }
 //% else
 //%     error('Not implemented!');

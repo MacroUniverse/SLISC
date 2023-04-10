@@ -52,7 +52,7 @@ inline Long DiagInt::n1() const
 inline Int &DiagInt::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }
@@ -120,7 +120,7 @@ inline Long DiagLlong::n1() const
 inline Llong &DiagLlong::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }
@@ -188,7 +188,7 @@ inline Long DiagDoub::n1() const
 inline Doub &DiagDoub::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }
@@ -256,7 +256,7 @@ inline Long DiagQdoub::n1() const
 inline Qdoub &DiagQdoub::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }
@@ -324,7 +324,7 @@ inline Long DiagComp::n1() const
 inline Comp &DiagComp::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }
@@ -392,7 +392,7 @@ inline Long DiagQcomp::n1() const
 inline Qcomp &DiagQcomp::ref(Long_I i, Long_I j)
 {
 	if (i == j)
-	    return (*this)[i];
+		return (*this)[i];
 	SLS_ERR("not a diagonal element!");
 	return (*this)[i];
 }

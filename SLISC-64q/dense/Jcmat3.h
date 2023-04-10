@@ -52,7 +52,7 @@ inline const Char &Jcmat3Char_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -63,7 +63,7 @@ inline const Char &Jcmat3Char_c::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -164,7 +164,7 @@ inline Char &Jcmat3Char::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -175,7 +175,7 @@ inline Char &Jcmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -271,7 +271,7 @@ inline const Int &Jcmat3Int_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -282,7 +282,7 @@ inline const Int &Jcmat3Int_c::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -383,7 +383,7 @@ inline Int &Jcmat3Int::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -394,7 +394,7 @@ inline Int &Jcmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -490,7 +490,7 @@ inline const Llong &Jcmat3Llong_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -501,7 +501,7 @@ inline const Llong &Jcmat3Llong_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -602,7 +602,7 @@ inline Llong &Jcmat3Llong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -613,7 +613,7 @@ inline Llong &Jcmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -709,7 +709,7 @@ inline const Float &Jcmat3Float_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -720,7 +720,7 @@ inline const Float &Jcmat3Float_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -821,7 +821,7 @@ inline Float &Jcmat3Float::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -832,7 +832,7 @@ inline Float &Jcmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -928,7 +928,7 @@ inline const Doub &Jcmat3Doub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -939,7 +939,7 @@ inline const Doub &Jcmat3Doub_c::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1040,7 +1040,7 @@ inline Doub &Jcmat3Doub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1051,7 +1051,7 @@ inline Doub &Jcmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1147,7 +1147,7 @@ inline const Ldoub &Jcmat3Ldoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1158,7 +1158,7 @@ inline const Ldoub &Jcmat3Ldoub_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1259,7 +1259,7 @@ inline Ldoub &Jcmat3Ldoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1270,7 +1270,7 @@ inline Ldoub &Jcmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1366,7 +1366,7 @@ inline const Qdoub &Jcmat3Qdoub_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1377,7 +1377,7 @@ inline const Qdoub &Jcmat3Qdoub_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1478,7 +1478,7 @@ inline Qdoub &Jcmat3Qdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1489,7 +1489,7 @@ inline Qdoub &Jcmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1585,7 +1585,7 @@ inline const Fcomp &Jcmat3Fcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1596,7 +1596,7 @@ inline const Fcomp &Jcmat3Fcomp_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1697,7 +1697,7 @@ inline Fcomp &Jcmat3Fcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1708,7 +1708,7 @@ inline Fcomp &Jcmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1804,7 +1804,7 @@ inline const Comp &Jcmat3Comp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1815,7 +1815,7 @@ inline const Comp &Jcmat3Comp_c::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -1916,7 +1916,7 @@ inline Comp &Jcmat3Comp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -1927,7 +1927,7 @@ inline Comp &Jcmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -2023,7 +2023,7 @@ inline const Lcomp &Jcmat3Lcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -2034,7 +2034,7 @@ inline const Lcomp &Jcmat3Lcomp_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -2135,7 +2135,7 @@ inline Lcomp &Jcmat3Lcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -2146,7 +2146,7 @@ inline Lcomp &Jcmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -2242,7 +2242,7 @@ inline const Qcomp &Jcmat3Qcomp_c::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -2253,7 +2253,7 @@ inline const Qcomp &Jcmat3Qcomp_c::operator()(Long_I i, Long_I j, Long_I k) cons
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }
@@ -2354,7 +2354,7 @@ inline Qcomp &Jcmat3Qcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
-	    SLS_ERR("out of bound!");
+		SLS_ERR("out of bound!");
 #endif
 	Long N1N2 = m_N0 * m_N1;
 	Long i2 = i % N1N2;
@@ -2365,7 +2365,7 @@ inline Qcomp &Jcmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k > m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_step1 * i + m_step2 * j + m_step3 * k];
 }

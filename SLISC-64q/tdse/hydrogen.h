@@ -66,7 +66,7 @@ inline void hydrogen_rR(VecQdoub_O rR, Long_I n, Long_I l, Qdoub_I Z, VecQdoub_I
 			Qdoub coef = 8.Q/(27.Q*sqrt(6.Q))*pow(Z, 5.Q/2.Q);
 			for (Long i = 0; i < r.size(); ++i)
 				rR[i] = r[i] * coef * (1.Q - 1.Q/6.Q*Z*r[i]) *
-				    r[i] * exp(-Z*r[i]/3.Q);
+					r[i] * exp(-Z*r[i]/3.Q);
 			return;
 		}
 		else if (l == 2) {
@@ -143,7 +143,7 @@ inline void hydrogen_rR(VecQdoub_O rR, Long_I n, Long_I l, Qdoub_I Z, SvecQdoub_
 			Qdoub coef = 8.Q/(27.Q*sqrt(6.Q))*pow(Z, 5.Q/2.Q);
 			for (Long i = 0; i < r.size(); ++i)
 				rR[i] = r[i] * coef * (1.Q - 1.Q/6.Q*Z*r[i]) *
-				    r[i] * exp(-Z*r[i]/3.Q);
+					r[i] * exp(-Z*r[i]/3.Q);
 			return;
 		}
 		else if (l == 2) {
@@ -220,7 +220,7 @@ inline void hydrogen_rR(SvecQdoub_O rR, Long_I n, Long_I l, Qdoub_I Z, VecQdoub_
 			Qdoub coef = 8.Q/(27.Q*sqrt(6.Q))*pow(Z, 5.Q/2.Q);
 			for (Long i = 0; i < r.size(); ++i)
 				rR[i] = r[i] * coef * (1.Q - 1.Q/6.Q*Z*r[i]) *
-				    r[i] * exp(-Z*r[i]/3.Q);
+					r[i] * exp(-Z*r[i]/3.Q);
 			return;
 		}
 		else if (l == 2) {
@@ -297,7 +297,7 @@ inline void hydrogen_rR(SvecQdoub_O rR, Long_I n, Long_I l, Qdoub_I Z, SvecQdoub
 			Qdoub coef = 8.Q/(27.Q*sqrt(6.Q))*pow(Z, 5.Q/2.Q);
 			for (Long i = 0; i < r.size(); ++i)
 				rR[i] = r[i] * coef * (1.Q - 1.Q/6.Q*Z*r[i]) *
-				    r[i] * exp(-Z*r[i]/3.Q);
+					r[i] * exp(-Z*r[i]/3.Q);
 			return;
 		}
 		else if (l == 2) {

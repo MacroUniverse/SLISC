@@ -220,10 +220,10 @@ namespace slisc {
 		return sha1sum(str);
 	}
 
-    inline Str32 sha1sum_f(Str32_I fname) {
-        Str str;
-        read(str, u8(fname));
-        return u32(sha1sum(str));
-    }
+	inline Str32 sha1sum_f(Str32_I fname) {
+		Str str;
+		read(str, u8(fname));
+		return u32(sha1sum(str));
+	}
 #endif
 } // namespace slisc

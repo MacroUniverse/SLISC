@@ -86,8 +86,8 @@ inline const Long *McooChar::col_p() const
 inline Long McooChar::find(Long_I i, Long_I j) const
 {
 	for (Long n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        return n;
+		if (row(n) == i && col(n) == j)
+			return n;
 	}
 	return -1;
 }
@@ -96,11 +96,11 @@ inline Char& McooChar::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooChar::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooChar::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    SLS_ERR("McooChar::operator()(i,j): element does not exist!");
+		SLS_ERR("McooChar::operator()(i,j): element does not exist!");
 	return m_p[n];
 }
 
@@ -108,11 +108,11 @@ inline Char McooChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooChar::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooChar::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    return 0; // never return a (const) reference to a temporary
+		return 0; // never return a (const) reference to a temporary
 	return m_p[n];
 }
 
@@ -128,17 +128,17 @@ inline void McooChar::push(Char_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
-	    SLS_ERR("McooChar::push(): index out of bounds!");
+		SLS_ERR("McooChar::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
 	Long n;
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        SLS_ERR("McooChar::push(s,i,j): element already exists!");
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooChar::push(s,i,j): element already exists!");
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooChar::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooChar::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -148,13 +148,13 @@ inline void McooChar::set(Char_I s, Long_I i, Long_I j)
 	Long n;
 	// change
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j) {
-	        m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
-	    }
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooChar::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooChar::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -188,7 +188,7 @@ inline Char &McooChar::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooChar::operator(): subscript out of bounds!");
+		SLS_ERR("McooChar::operator(): subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -197,7 +197,7 @@ inline Char McooChar::operator[](Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooChar::operator() const: subscript out of bounds!");
+		SLS_ERR("McooChar::operator() const: subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -206,7 +206,7 @@ inline const Long &McooChar::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooChar::row() subscript out of bounds");
+		SLS_ERR("McooChar::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -215,7 +215,7 @@ inline Long &McooChar::row(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooChar::row() subscript out of bounds");
+		SLS_ERR("McooChar::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -224,7 +224,7 @@ inline const Long &McooChar::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooChar::col() subscript out of bounds");
+		SLS_ERR("McooChar::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -233,7 +233,7 @@ inline Long &McooChar::col(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooChar::col() subscript out of bounds");
+		SLS_ERR("McooChar::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -242,7 +242,7 @@ inline void McooChar::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (Nnz < 0)
-	    SLS_ERR("McooChar::trim() negative input!");
+		SLS_ERR("McooChar::trim() negative input!");
 #endif
 	if (Nnz < m_Nnz) m_Nnz = Nnz;
 	else if (Nnz > m_Nnz) SLS_ERR("McooChar::trim(): Nnz > m_Nnz!");
@@ -252,7 +252,7 @@ inline void McooChar::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (N > m_N)
-	    SLS_ERR("not enough capacity!");
+		SLS_ERR("not enough capacity!");
 #endif
 	m_Nnz = N;
 }
@@ -362,8 +362,8 @@ inline const Long *McooInt::col_p() const
 inline Long McooInt::find(Long_I i, Long_I j) const
 {
 	for (Long n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        return n;
+		if (row(n) == i && col(n) == j)
+			return n;
 	}
 	return -1;
 }
@@ -372,11 +372,11 @@ inline Int& McooInt::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooInt::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooInt::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    SLS_ERR("McooInt::operator()(i,j): element does not exist!");
+		SLS_ERR("McooInt::operator()(i,j): element does not exist!");
 	return m_p[n];
 }
 
@@ -384,11 +384,11 @@ inline Int McooInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooInt::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooInt::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    return 0; // never return a (const) reference to a temporary
+		return 0; // never return a (const) reference to a temporary
 	return m_p[n];
 }
 
@@ -404,17 +404,17 @@ inline void McooInt::push(Int_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
-	    SLS_ERR("McooInt::push(): index out of bounds!");
+		SLS_ERR("McooInt::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
 	Long n;
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        SLS_ERR("McooInt::push(s,i,j): element already exists!");
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooInt::push(s,i,j): element already exists!");
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooInt::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooInt::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -424,13 +424,13 @@ inline void McooInt::set(Int_I s, Long_I i, Long_I j)
 	Long n;
 	// change
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j) {
-	        m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
-	    }
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooInt::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooInt::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -464,7 +464,7 @@ inline Int &McooInt::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooInt::operator(): subscript out of bounds!");
+		SLS_ERR("McooInt::operator(): subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -473,7 +473,7 @@ inline Int McooInt::operator[](Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooInt::operator() const: subscript out of bounds!");
+		SLS_ERR("McooInt::operator() const: subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -482,7 +482,7 @@ inline const Long &McooInt::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooInt::row() subscript out of bounds");
+		SLS_ERR("McooInt::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -491,7 +491,7 @@ inline Long &McooInt::row(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooInt::row() subscript out of bounds");
+		SLS_ERR("McooInt::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -500,7 +500,7 @@ inline const Long &McooInt::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooInt::col() subscript out of bounds");
+		SLS_ERR("McooInt::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -509,7 +509,7 @@ inline Long &McooInt::col(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooInt::col() subscript out of bounds");
+		SLS_ERR("McooInt::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -518,7 +518,7 @@ inline void McooInt::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (Nnz < 0)
-	    SLS_ERR("McooInt::trim() negative input!");
+		SLS_ERR("McooInt::trim() negative input!");
 #endif
 	if (Nnz < m_Nnz) m_Nnz = Nnz;
 	else if (Nnz > m_Nnz) SLS_ERR("McooInt::trim(): Nnz > m_Nnz!");
@@ -528,7 +528,7 @@ inline void McooInt::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (N > m_N)
-	    SLS_ERR("not enough capacity!");
+		SLS_ERR("not enough capacity!");
 #endif
 	m_Nnz = N;
 }
@@ -638,8 +638,8 @@ inline const Long *McooLlong::col_p() const
 inline Long McooLlong::find(Long_I i, Long_I j) const
 {
 	for (Long n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        return n;
+		if (row(n) == i && col(n) == j)
+			return n;
 	}
 	return -1;
 }
@@ -648,11 +648,11 @@ inline Llong& McooLlong::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooLlong::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooLlong::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    SLS_ERR("McooLlong::operator()(i,j): element does not exist!");
+		SLS_ERR("McooLlong::operator()(i,j): element does not exist!");
 	return m_p[n];
 }
 
@@ -660,11 +660,11 @@ inline Llong McooLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooLlong::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooLlong::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    return 0; // never return a (const) reference to a temporary
+		return 0; // never return a (const) reference to a temporary
 	return m_p[n];
 }
 
@@ -680,17 +680,17 @@ inline void McooLlong::push(Llong_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
-	    SLS_ERR("McooLlong::push(): index out of bounds!");
+		SLS_ERR("McooLlong::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
 	Long n;
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        SLS_ERR("McooLlong::push(s,i,j): element already exists!");
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooLlong::push(s,i,j): element already exists!");
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooLlong::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooLlong::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -700,13 +700,13 @@ inline void McooLlong::set(Llong_I s, Long_I i, Long_I j)
 	Long n;
 	// change
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j) {
-	        m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
-	    }
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooLlong::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooLlong::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -740,7 +740,7 @@ inline Llong &McooLlong::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooLlong::operator(): subscript out of bounds!");
+		SLS_ERR("McooLlong::operator(): subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -749,7 +749,7 @@ inline Llong McooLlong::operator[](Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooLlong::operator() const: subscript out of bounds!");
+		SLS_ERR("McooLlong::operator() const: subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -758,7 +758,7 @@ inline const Long &McooLlong::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooLlong::row() subscript out of bounds");
+		SLS_ERR("McooLlong::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -767,7 +767,7 @@ inline Long &McooLlong::row(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooLlong::row() subscript out of bounds");
+		SLS_ERR("McooLlong::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -776,7 +776,7 @@ inline const Long &McooLlong::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooLlong::col() subscript out of bounds");
+		SLS_ERR("McooLlong::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -785,7 +785,7 @@ inline Long &McooLlong::col(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooLlong::col() subscript out of bounds");
+		SLS_ERR("McooLlong::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -794,7 +794,7 @@ inline void McooLlong::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (Nnz < 0)
-	    SLS_ERR("McooLlong::trim() negative input!");
+		SLS_ERR("McooLlong::trim() negative input!");
 #endif
 	if (Nnz < m_Nnz) m_Nnz = Nnz;
 	else if (Nnz > m_Nnz) SLS_ERR("McooLlong::trim(): Nnz > m_Nnz!");
@@ -804,7 +804,7 @@ inline void McooLlong::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (N > m_N)
-	    SLS_ERR("not enough capacity!");
+		SLS_ERR("not enough capacity!");
 #endif
 	m_Nnz = N;
 }
@@ -914,8 +914,8 @@ inline const Long *McooDoub::col_p() const
 inline Long McooDoub::find(Long_I i, Long_I j) const
 {
 	for (Long n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        return n;
+		if (row(n) == i && col(n) == j)
+			return n;
 	}
 	return -1;
 }
@@ -924,11 +924,11 @@ inline Doub& McooDoub::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooDoub::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooDoub::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    SLS_ERR("McooDoub::operator()(i,j): element does not exist!");
+		SLS_ERR("McooDoub::operator()(i,j): element does not exist!");
 	return m_p[n];
 }
 
@@ -936,11 +936,11 @@ inline Doub McooDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooDoub::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooDoub::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    return 0; // never return a (const) reference to a temporary
+		return 0; // never return a (const) reference to a temporary
 	return m_p[n];
 }
 
@@ -956,17 +956,17 @@ inline void McooDoub::push(Doub_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
-	    SLS_ERR("McooDoub::push(): index out of bounds!");
+		SLS_ERR("McooDoub::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
 	Long n;
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        SLS_ERR("McooDoub::push(s,i,j): element already exists!");
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooDoub::push(s,i,j): element already exists!");
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooDoub::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooDoub::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -976,13 +976,13 @@ inline void McooDoub::set(Doub_I s, Long_I i, Long_I j)
 	Long n;
 	// change
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j) {
-	        m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
-	    }
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooDoub::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooDoub::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -1016,7 +1016,7 @@ inline Doub &McooDoub::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooDoub::operator(): subscript out of bounds!");
+		SLS_ERR("McooDoub::operator(): subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -1025,7 +1025,7 @@ inline Doub McooDoub::operator[](Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooDoub::operator() const: subscript out of bounds!");
+		SLS_ERR("McooDoub::operator() const: subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -1034,7 +1034,7 @@ inline const Long &McooDoub::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooDoub::row() subscript out of bounds");
+		SLS_ERR("McooDoub::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -1043,7 +1043,7 @@ inline Long &McooDoub::row(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooDoub::row() subscript out of bounds");
+		SLS_ERR("McooDoub::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -1052,7 +1052,7 @@ inline const Long &McooDoub::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooDoub::col() subscript out of bounds");
+		SLS_ERR("McooDoub::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -1061,7 +1061,7 @@ inline Long &McooDoub::col(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooDoub::col() subscript out of bounds");
+		SLS_ERR("McooDoub::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -1070,7 +1070,7 @@ inline void McooDoub::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (Nnz < 0)
-	    SLS_ERR("McooDoub::trim() negative input!");
+		SLS_ERR("McooDoub::trim() negative input!");
 #endif
 	if (Nnz < m_Nnz) m_Nnz = Nnz;
 	else if (Nnz > m_Nnz) SLS_ERR("McooDoub::trim(): Nnz > m_Nnz!");
@@ -1080,7 +1080,7 @@ inline void McooDoub::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (N > m_N)
-	    SLS_ERR("not enough capacity!");
+		SLS_ERR("not enough capacity!");
 #endif
 	m_Nnz = N;
 }
@@ -1190,8 +1190,8 @@ inline const Long *McooComp::col_p() const
 inline Long McooComp::find(Long_I i, Long_I j) const
 {
 	for (Long n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        return n;
+		if (row(n) == i && col(n) == j)
+			return n;
 	}
 	return -1;
 }
@@ -1200,11 +1200,11 @@ inline Comp& McooComp::ref(Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooComp::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooComp::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    SLS_ERR("McooComp::operator()(i,j): element does not exist!");
+		SLS_ERR("McooComp::operator()(i,j): element does not exist!");
 	return m_p[n];
 }
 
@@ -1212,11 +1212,11 @@ inline Comp McooComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("McooComp::operator()(i,j): index out of bounds!");
+		SLS_ERR("McooComp::operator()(i,j): index out of bounds!");
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-	    return 0; // never return a (const) reference to a temporary
+		return 0; // never return a (const) reference to a temporary
 	return m_p[n];
 }
 
@@ -1232,17 +1232,17 @@ inline void McooComp::push(Comp_I s, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
-	    SLS_ERR("McooComp::push(): index out of bounds!");
+		SLS_ERR("McooComp::push(): index out of bounds!");
 #endif
 #ifdef SLS_CHECK_COO_REPEAT
 	Long n;
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j)
-	        SLS_ERR("McooComp::push(s,i,j): element already exists!");
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooComp::push(s,i,j): element already exists!");
 	}
 #endif
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooComp::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooComp::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -1252,13 +1252,13 @@ inline void McooComp::set(Comp_I s, Long_I i, Long_I j)
 	Long n;
 	// change
 	for (n = 0; n < m_Nnz; ++n) {
-	    if (row(n) == i && col(n) == j) {
-	        m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
-	    }
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
 	}
 	// push
 	if (m_Nnz == m_N)
-	    SLS_ERR("McooComp::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+		SLS_ERR("McooComp::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
 	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
 	++m_Nnz;
 }
@@ -1292,7 +1292,7 @@ inline Comp &McooComp::operator[](Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooComp::operator(): subscript out of bounds!");
+		SLS_ERR("McooComp::operator(): subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -1301,7 +1301,7 @@ inline Comp McooComp::operator[](Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooComp::operator() const: subscript out of bounds!");
+		SLS_ERR("McooComp::operator() const: subscript out of bounds!");
 #endif
 	return m_p[ind];
 }
@@ -1310,7 +1310,7 @@ inline const Long &McooComp::row(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooComp::row() subscript out of bounds");
+		SLS_ERR("McooComp::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -1319,7 +1319,7 @@ inline Long &McooComp::row(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind<0 || ind>=m_Nnz)
-	    SLS_ERR("McooComp::row() subscript out of bounds");
+		SLS_ERR("McooComp::row() subscript out of bounds");
 #endif
 	return m_row[ind];
 }
@@ -1328,7 +1328,7 @@ inline const Long &McooComp::col(Long_I ind) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooComp::col() subscript out of bounds");
+		SLS_ERR("McooComp::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -1337,7 +1337,7 @@ inline Long &McooComp::col(Long_I ind)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (ind < 0 || ind >= m_Nnz)
-	    SLS_ERR("McooComp::col() subscript out of bounds");
+		SLS_ERR("McooComp::col() subscript out of bounds");
 #endif
 	return m_col[ind];
 }
@@ -1346,7 +1346,7 @@ inline void McooComp::trim(Long_I Nnz)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (Nnz < 0)
-	    SLS_ERR("McooComp::trim() negative input!");
+		SLS_ERR("McooComp::trim() negative input!");
 #endif
 	if (Nnz < m_Nnz) m_Nnz = Nnz;
 	else if (Nnz > m_Nnz) SLS_ERR("McooComp::trim(): Nnz > m_Nnz!");
@@ -1356,7 +1356,7 @@ inline void McooComp::resize(Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (N > m_N)
-	    SLS_ERR("not enough capacity!");
+		SLS_ERR("not enough capacity!");
 #endif
 	m_Nnz = N;
 }

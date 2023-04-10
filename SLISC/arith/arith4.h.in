@@ -20,49 +20,49 @@ namespace slisc {
 inline void add_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] += s;
+		v[i] += s;
 }
 
 inline void add_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
 {
 	for (Long i = 0; i < N*step; i += step)
-	    v[i] += s;
+		v[i] += s;
 }
 
 inline void sub_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] -= s;
+		v[i] -= s;
 }
 
 inline void sub_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
 {
 	for (Long i = 0; i < N*step; i += step)
-	    v[i] -= s;
+		v[i] -= s;
 }
 
 inline void times_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] *= s;
+		v[i] *= s;
 }
 
 inline void times_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long step)
 {
 	for (Long i = 0; i < N*step; i += step)
-	    v[i] *= s;
+		v[i] *= s;
 }
 //% if is_integral(T)
 inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] /= s;
+		v[i] /= s;
 }
 
 inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 {
 	for (Long i = 0; i < N*step; i += step)
-	    v[i] /= s;
+		v[i] /= s;
 }
 //% elseif is_fpt(Ts) || is_comp(Ts) || is_imag(Ts)
 inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N)
@@ -163,25 +163,25 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 inline void operator+=(@T@_IO v, @Ts@_I s)
 {
 	for (Long j = 0; j < v.n1(); ++j)
-	    add_eq_vs(&v(0,j), s, v.n0());
+		add_eq_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator-=(@T@_IO v, @Ts@_I s)
 {
 	for (Long j = 0; j < v.n1(); ++j)
-	    sub_eq_vs(&v(0,j), s, v.n0());
+		sub_eq_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator*=(@T@_IO v, @Ts@_I s)
 {
 	for (Long j = 0; j < v.n1(); ++j)
-	    times_eq_vs(&v(0,j), s, v.n0());
+		times_eq_vs(&v(0,j), s, v.n0());
 }
 
 inline void operator/=(@T@_IO v, @Ts@_I s)
 {
 	for (Long j = 0; j < v.n1(); ++j)
-	    div_eq_vs(&v(0,j), s, v.n0());
+		div_eq_vs(&v(0,j), s, v.n0());
 }
 //% else
 //%     disp(T); disp(Ts);
@@ -201,25 +201,25 @@ inline void operator/=(@T@_IO v, @Ts@_I s)
 inline void add_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] += v1[i];
+		v[i] += v1[i];
 }
 
 inline void sub_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] -= v1[i];
+		v[i] -= v1[i];
 }
 
 inline void times_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] *= v1[i];
+		v[i] *= v1[i];
 }
 
 inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] /= v1[i];
+		v[i] /= v1[i];
 }
 //%-------------------------
 
@@ -315,28 +315,28 @@ inline void operator+=(@T@_O v, @T1@_I v1)
 //% req('assert_same_shape', {T, T1});
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
-	    v[i] += v1[i];
+		v[i] += v1[i];
 }
 
 inline void operator-=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
-	    v[i] -= v1[i];
+		v[i] -= v1[i];
 }
 
 inline void operator*=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
-	    v[i] *= v1[i];
+		v[i] *= v1[i];
 }
 
 inline void operator/=(@T@_O v, @T1@_I v1)
 {
 	assert_same_shape(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
-	    v[i] /= v1[i];
+		v[i] /= v1[i];
 }
 //% elseif ndim(T) == 2 && ndim(T1) == 2
 inline void operator+=(@T@_O v, @T1@_I v1) // slow!
@@ -344,32 +344,32 @@ inline void operator+=(@T@_O v, @T1@_I v1) // slow!
 //% req('assert_same_shape', {T, T1});
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
-	    for (Long i = 0; i < v.n0(); ++i)
-	        v(i, j) += v1(i, j);
+		for (Long i = 0; i < v.n0(); ++i)
+			v(i, j) += v1(i, j);
 }
 
 inline void operator-=(@T@_O v, @T1@_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
-	    for (Long i = 0; i < v.n0(); ++i)
-	        v(i, j) -= v1(i, j);
+		for (Long i = 0; i < v.n0(); ++i)
+			v(i, j) -= v1(i, j);
 }
 
 inline void operator*=(@T@_O v, @T1@_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
-	    for (Long i = 0; i < v.n0(); ++i)
-	        v(i, j) *= v1(i, j);
+		for (Long i = 0; i < v.n0(); ++i)
+			v(i, j) *= v1(i, j);
 }
 
 inline void operator/=(@T@_O v, @T1@_I v1) // slow!
 {
 	assert_same_shape(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
-	    for (Long i = 0; i < v.n0(); ++i)
-	        v(i, j) /= v1(i, j);
+		for (Long i = 0; i < v.n0(); ++i)
+			v(i, j) /= v1(i, j);
 }
 //% else
 //%     error('not implemented (12)!');
@@ -402,42 +402,42 @@ inline void operator/=(@T@_O v, @T1@_I v1) // slow!
 inline void add_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] + s;
+		v[i] = v1[i] + s;
 }
 
 inline void add_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 + s;
-	    v += step1; v1 += step2;
+		*v = *v1 + s;
+		v += step1; v1 += step2;
 	}
 }
 
 inline void sub_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] - s;
+		v[i] = v1[i] - s;
 }
 
 inline void sub_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 - s;
-	    v += step1; v1 += step2;
+		*v = *v1 - s;
+		v += step1; v1 += step2;
 	}
 }
 
 inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] * s;
+		v[i] = v1[i] * s;
 }
 
 inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 * s;
-	    v += step1; v1 += step2;
+		*v = *v1 * s;
+		v += step1; v1 += step2;
 	}
 }
 
@@ -445,14 +445,14 @@ inline void times_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, 
 inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] / s;
+		v[i] = v1[i] / s;
 }
 
 inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 / s;
-	    v += step1; v1 += step2;
+		*v = *v1 / s;
+		v += step1; v1 += step2;
 	}
 }
 //% elseif is_fpt(T2) || is_comp(T2) || is_imag(T2)
@@ -494,28 +494,28 @@ inline void div_vvs(@T@ *v, const @T1@ *v1, @T2@_I s, Long_I N, Long_I step, Lon
 inline void sub_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = s - v1[i];
+		v[i] = s - v1[i];
 }
 
 inline void sub_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step, Long_I step1)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = s - *v1;
-	    v += step; v1 += step1;
+		*v = s - *v1;
+		v += step; v1 += step1;
 	}
 }
 
 inline void div_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = s / v1[i];
+		v[i] = s / v1[i];
 }
 
 inline void div_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step, Long_I step1)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = s / *v1;
-	    v += step; v1 += step1;
+		*v = s / *v1;
+		v += step; v1 += step1;
 	}
 }
 //%-------------------------
@@ -542,56 +542,56 @@ inline void div_vsv(@T@ *v, const @T1@ &s, const @T2@ *v1, Long_I N, Long_I step
 inline void add_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] + v2[i];
+		v[i] = v1[i] + v2[i];
 }
 
 inline void add_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 + *v2;
-	    v += step; v1 += step1; v2 += step2;
+		*v = *v1 + *v2;
+		v += step; v1 += step1; v2 += step2;
 	}
 }
 
 inline void sub_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] - v2[i];
+		v[i] = v1[i] - v2[i];
 }
 
 inline void sub_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 - *v2;
-	    v += step; v1 += step1; v2 += step2;
+		*v = *v1 - *v2;
+		v += step; v1 += step1; v2 += step2;
 	}
 }
 
 inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] * v2[i];
+		v[i] = v1[i] * v2[i];
 }
 
 inline void times_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 * *v2;
-	    v += step; v1 += step1; v2 += step2;
+		*v = *v1 * *v2;
+		v += step; v1 += step1; v2 += step2;
 	}
 }
 
 inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = v1[i] / v2[i];
+		v[i] = v1[i] / v2[i];
 }
 
 inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I step, Long_I step1, Long_I step2)
 {
 	for (Long i = 0; i < N; ++i) {
-	    *v = *v1 / *v2;
-	    v += step; v1 += step1; v2 += step2;
+		*v = *v1 / *v2;
+		v += step; v1 += step1; v2 += step2;
 	}
 }
 //%-------------------------
@@ -734,8 +734,8 @@ inline void add(@T@_O v, @T1@_I v1, @Ts2@_I s)
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
-	    add_vvs(p, p1, s, v.n0());
-	    p += v.lda(); p1 += v1.lda();
+		add_vvs(p, p1, s, v.n0());
+		p += v.lda(); p1 += v1.lda();
 	}
 }
 
@@ -747,8 +747,8 @@ inline void sub(@T@_O v, @T1@_I v1, @Ts2@_I s)
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
-	    sub_vvs(p, p1, s, v.n0());
-	    p += v.lda(); p1 += v1.lda();
+		sub_vvs(p, p1, s, v.n0());
+		p += v.lda(); p1 += v1.lda();
 	}
 }
 
@@ -757,8 +757,8 @@ inline void sub(@T@_O v, @Ts2@_I s, @T1@_I v1)
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
-	    sub_vsv(p, s, p1, v.n0());
-	    p += v.lda(); p1 += v1.lda();
+		sub_vsv(p, s, p1, v.n0());
+		p += v.lda(); p1 += v1.lda();
 	}
 }
 
@@ -767,8 +767,8 @@ inline void times(@T@_O v, @T1@_I v1, @Ts2@_I s)
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
-	    times_vvs(p, p1, s, v.n0());
-	    p += v.lda(); p1 += v1.lda();
+		times_vvs(p, p1, s, v.n0());
+		p += v.lda(); p1 += v1.lda();
 	}
 }
 
@@ -780,8 +780,8 @@ inline void div(@T@_O v, @T1@_I v1, @Ts2@_I s)
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
-	    div_vvs(p, p1, s, v.n0());
-	    p += v.lda(); p1 += v1.lda();
+		div_vvs(p, p1, s, v.n0());
+		p += v.lda(); p1 += v1.lda();
 	}
 }
 
@@ -790,8 +790,8 @@ inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 	assert_same_shape(v, v1);
 	@Ts@ *p = v.p(); const @Ts1@ *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
-	    div_vsv(p, s, p1, v.n0());
-	    p += v.lda(); p1 += v1.lda();
+		div_vsv(p, s, p1, v.n0());
+		p += v.lda(); p1 += v1.lda();
 	}
 }
 //% end
@@ -905,7 +905,7 @@ inline void div(@T@_O v, @T1@_I v1, @T2@_I v2)
 inline void neg_vv(@T@ *v, const @T1@ *v1, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)
-	    v[i] = -v1[i];
+		v[i] = -v1[i];
 }
 //%--------------------------
 

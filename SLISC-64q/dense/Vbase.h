@@ -38,11 +38,11 @@ inline VbaseChar::VbaseChar(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Char[N];
+		m_p = new Char[N];
 	else
 		m_p = nullptr;
 }
@@ -55,8 +55,8 @@ inline VbaseChar::VbaseChar(const VbaseChar &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Char[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Char));
+		m_p = new Char[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Char));
 	}
 	else
 		m_p = nullptr;
@@ -66,7 +66,7 @@ inline Char * VbaseChar::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -75,7 +75,7 @@ inline const Char * VbaseChar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -88,27 +88,27 @@ inline Long VbaseChar::size() const
 inline void VbaseChar::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Char[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Char[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Char[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Char[N];
+			}
+		}
 	}
 }
 
 inline void VbaseChar::operator<<(VbaseChar &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -126,7 +126,7 @@ inline const Char &VbaseChar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseChar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseChar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -135,7 +135,7 @@ inline Char &VbaseChar::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -144,7 +144,7 @@ inline const Char &VbaseChar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -153,7 +153,7 @@ inline Char &VbaseChar::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -162,7 +162,7 @@ inline const Char &VbaseChar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -170,7 +170,7 @@ inline const Char &VbaseChar::end(Long_I i) const
 inline VbaseChar::~VbaseChar()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseUchar
@@ -206,11 +206,11 @@ inline VbaseUchar::VbaseUchar(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Uchar[N];
+		m_p = new Uchar[N];
 	else
 		m_p = nullptr;
 }
@@ -223,8 +223,8 @@ inline VbaseUchar::VbaseUchar(const VbaseUchar &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Uchar[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Uchar));
+		m_p = new Uchar[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Uchar));
 	}
 	else
 		m_p = nullptr;
@@ -234,7 +234,7 @@ inline Uchar * VbaseUchar::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -243,7 +243,7 @@ inline const Uchar * VbaseUchar::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -256,27 +256,27 @@ inline Long VbaseUchar::size() const
 inline void VbaseUchar::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Uchar[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Uchar[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Uchar[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Uchar[N];
+			}
+		}
 	}
 }
 
 inline void VbaseUchar::operator<<(VbaseUchar &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -294,7 +294,7 @@ inline const Uchar &VbaseUchar::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseUchar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseUchar index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -303,7 +303,7 @@ inline Uchar &VbaseUchar::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -312,7 +312,7 @@ inline const Uchar &VbaseUchar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -321,7 +321,7 @@ inline Uchar &VbaseUchar::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -330,7 +330,7 @@ inline const Uchar &VbaseUchar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -338,7 +338,7 @@ inline const Uchar &VbaseUchar::end(Long_I i) const
 inline VbaseUchar::~VbaseUchar()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseInt
@@ -374,11 +374,11 @@ inline VbaseInt::VbaseInt(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Int[N];
+		m_p = new Int[N];
 	else
 		m_p = nullptr;
 }
@@ -391,8 +391,8 @@ inline VbaseInt::VbaseInt(const VbaseInt &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Int[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Int));
+		m_p = new Int[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Int));
 	}
 	else
 		m_p = nullptr;
@@ -402,7 +402,7 @@ inline Int * VbaseInt::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -411,7 +411,7 @@ inline const Int * VbaseInt::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -424,27 +424,27 @@ inline Long VbaseInt::size() const
 inline void VbaseInt::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Int[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Int[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Int[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Int[N];
+			}
+		}
 	}
 }
 
 inline void VbaseInt::operator<<(VbaseInt &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -462,7 +462,7 @@ inline const Int &VbaseInt::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseInt index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseInt index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -471,7 +471,7 @@ inline Int &VbaseInt::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -480,7 +480,7 @@ inline const Int &VbaseInt::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -489,7 +489,7 @@ inline Int &VbaseInt::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -498,7 +498,7 @@ inline const Int &VbaseInt::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -506,7 +506,7 @@ inline const Int &VbaseInt::end(Long_I i) const
 inline VbaseInt::~VbaseInt()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseLlong
@@ -542,11 +542,11 @@ inline VbaseLlong::VbaseLlong(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Llong[N];
+		m_p = new Llong[N];
 	else
 		m_p = nullptr;
 }
@@ -559,8 +559,8 @@ inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Llong[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Llong));
+		m_p = new Llong[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Llong));
 	}
 	else
 		m_p = nullptr;
@@ -570,7 +570,7 @@ inline Llong * VbaseLlong::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -579,7 +579,7 @@ inline const Llong * VbaseLlong::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -592,27 +592,27 @@ inline Long VbaseLlong::size() const
 inline void VbaseLlong::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Llong[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Llong[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Llong[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Llong[N];
+			}
+		}
 	}
 }
 
 inline void VbaseLlong::operator<<(VbaseLlong &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -630,7 +630,7 @@ inline const Llong &VbaseLlong::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseLlong index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseLlong index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -639,7 +639,7 @@ inline Llong &VbaseLlong::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -648,7 +648,7 @@ inline const Llong &VbaseLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -657,7 +657,7 @@ inline Llong &VbaseLlong::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -666,7 +666,7 @@ inline const Llong &VbaseLlong::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -674,7 +674,7 @@ inline const Llong &VbaseLlong::end(Long_I i) const
 inline VbaseLlong::~VbaseLlong()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseFloat
@@ -710,11 +710,11 @@ inline VbaseFloat::VbaseFloat(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Float[N];
+		m_p = new Float[N];
 	else
 		m_p = nullptr;
 }
@@ -727,8 +727,8 @@ inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Float[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Float));
+		m_p = new Float[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Float));
 	}
 	else
 		m_p = nullptr;
@@ -738,7 +738,7 @@ inline Float * VbaseFloat::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -747,7 +747,7 @@ inline const Float * VbaseFloat::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -760,27 +760,27 @@ inline Long VbaseFloat::size() const
 inline void VbaseFloat::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Float[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Float[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Float[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Float[N];
+			}
+		}
 	}
 }
 
 inline void VbaseFloat::operator<<(VbaseFloat &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -798,7 +798,7 @@ inline const Float &VbaseFloat::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseFloat index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseFloat index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -807,7 +807,7 @@ inline Float &VbaseFloat::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -816,7 +816,7 @@ inline const Float &VbaseFloat::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -825,7 +825,7 @@ inline Float &VbaseFloat::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -834,7 +834,7 @@ inline const Float &VbaseFloat::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -842,7 +842,7 @@ inline const Float &VbaseFloat::end(Long_I i) const
 inline VbaseFloat::~VbaseFloat()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseDoub
@@ -878,11 +878,11 @@ inline VbaseDoub::VbaseDoub(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Doub[N];
+		m_p = new Doub[N];
 	else
 		m_p = nullptr;
 }
@@ -895,8 +895,8 @@ inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Doub[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Doub));
+		m_p = new Doub[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Doub));
 	}
 	else
 		m_p = nullptr;
@@ -906,7 +906,7 @@ inline Doub * VbaseDoub::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -915,7 +915,7 @@ inline const Doub * VbaseDoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -928,27 +928,27 @@ inline Long VbaseDoub::size() const
 inline void VbaseDoub::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Doub[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Doub[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Doub[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Doub[N];
+			}
+		}
 	}
 }
 
 inline void VbaseDoub::operator<<(VbaseDoub &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -966,7 +966,7 @@ inline const Doub &VbaseDoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseDoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseDoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -975,7 +975,7 @@ inline Doub &VbaseDoub::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -984,7 +984,7 @@ inline const Doub &VbaseDoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -993,7 +993,7 @@ inline Doub &VbaseDoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1002,7 +1002,7 @@ inline const Doub &VbaseDoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1010,7 +1010,7 @@ inline const Doub &VbaseDoub::end(Long_I i) const
 inline VbaseDoub::~VbaseDoub()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseLdoub
@@ -1046,11 +1046,11 @@ inline VbaseLdoub::VbaseLdoub(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Ldoub[N];
+		m_p = new Ldoub[N];
 	else
 		m_p = nullptr;
 }
@@ -1063,8 +1063,8 @@ inline VbaseLdoub::VbaseLdoub(const VbaseLdoub &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Ldoub[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Ldoub));
+		m_p = new Ldoub[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Ldoub));
 	}
 	else
 		m_p = nullptr;
@@ -1074,7 +1074,7 @@ inline Ldoub * VbaseLdoub::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1083,7 +1083,7 @@ inline const Ldoub * VbaseLdoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1096,27 +1096,27 @@ inline Long VbaseLdoub::size() const
 inline void VbaseLdoub::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Ldoub[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Ldoub[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Ldoub[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Ldoub[N];
+			}
+		}
 	}
 }
 
 inline void VbaseLdoub::operator<<(VbaseLdoub &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -1134,7 +1134,7 @@ inline const Ldoub &VbaseLdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseLdoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseLdoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -1143,7 +1143,7 @@ inline Ldoub &VbaseLdoub::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1152,7 +1152,7 @@ inline const Ldoub &VbaseLdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1161,7 +1161,7 @@ inline Ldoub &VbaseLdoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1170,7 +1170,7 @@ inline const Ldoub &VbaseLdoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1178,7 +1178,7 @@ inline const Ldoub &VbaseLdoub::end(Long_I i) const
 inline VbaseLdoub::~VbaseLdoub()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseQdoub
@@ -1214,11 +1214,11 @@ inline VbaseQdoub::VbaseQdoub(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Qdoub[N];
+		m_p = new Qdoub[N];
 	else
 		m_p = nullptr;
 }
@@ -1231,8 +1231,8 @@ inline VbaseQdoub::VbaseQdoub(const VbaseQdoub &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Qdoub[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Qdoub));
+		m_p = new Qdoub[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Qdoub));
 	}
 	else
 		m_p = nullptr;
@@ -1242,7 +1242,7 @@ inline Qdoub * VbaseQdoub::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1251,7 +1251,7 @@ inline const Qdoub * VbaseQdoub::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1264,27 +1264,27 @@ inline Long VbaseQdoub::size() const
 inline void VbaseQdoub::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Qdoub[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Qdoub[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Qdoub[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Qdoub[N];
+			}
+		}
 	}
 }
 
 inline void VbaseQdoub::operator<<(VbaseQdoub &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -1302,7 +1302,7 @@ inline const Qdoub &VbaseQdoub::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseQdoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseQdoub index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -1311,7 +1311,7 @@ inline Qdoub &VbaseQdoub::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1320,7 +1320,7 @@ inline const Qdoub &VbaseQdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1329,7 +1329,7 @@ inline Qdoub &VbaseQdoub::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1338,7 +1338,7 @@ inline const Qdoub &VbaseQdoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1346,7 +1346,7 @@ inline const Qdoub &VbaseQdoub::end(Long_I i) const
 inline VbaseQdoub::~VbaseQdoub()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseFcomp
@@ -1382,11 +1382,11 @@ inline VbaseFcomp::VbaseFcomp(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Fcomp[N];
+		m_p = new Fcomp[N];
 	else
 		m_p = nullptr;
 }
@@ -1399,8 +1399,8 @@ inline VbaseFcomp::VbaseFcomp(const VbaseFcomp &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Fcomp[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Fcomp));
+		m_p = new Fcomp[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Fcomp));
 	}
 	else
 		m_p = nullptr;
@@ -1410,7 +1410,7 @@ inline Fcomp * VbaseFcomp::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1419,7 +1419,7 @@ inline const Fcomp * VbaseFcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1432,27 +1432,27 @@ inline Long VbaseFcomp::size() const
 inline void VbaseFcomp::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Fcomp[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Fcomp[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Fcomp[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Fcomp[N];
+			}
+		}
 	}
 }
 
 inline void VbaseFcomp::operator<<(VbaseFcomp &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -1470,7 +1470,7 @@ inline const Fcomp &VbaseFcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseFcomp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseFcomp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -1479,7 +1479,7 @@ inline Fcomp &VbaseFcomp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1488,7 +1488,7 @@ inline const Fcomp &VbaseFcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1497,7 +1497,7 @@ inline Fcomp &VbaseFcomp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1506,7 +1506,7 @@ inline const Fcomp &VbaseFcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1514,7 +1514,7 @@ inline const Fcomp &VbaseFcomp::end(Long_I i) const
 inline VbaseFcomp::~VbaseFcomp()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseComp
@@ -1550,11 +1550,11 @@ inline VbaseComp::VbaseComp(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Comp[N];
+		m_p = new Comp[N];
 	else
 		m_p = nullptr;
 }
@@ -1567,8 +1567,8 @@ inline VbaseComp::VbaseComp(const VbaseComp &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Comp[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Comp));
+		m_p = new Comp[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Comp));
 	}
 	else
 		m_p = nullptr;
@@ -1578,7 +1578,7 @@ inline Comp * VbaseComp::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1587,7 +1587,7 @@ inline const Comp * VbaseComp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1600,27 +1600,27 @@ inline Long VbaseComp::size() const
 inline void VbaseComp::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Comp[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Comp[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Comp[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Comp[N];
+			}
+		}
 	}
 }
 
 inline void VbaseComp::operator<<(VbaseComp &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -1638,7 +1638,7 @@ inline const Comp &VbaseComp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseComp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseComp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -1647,7 +1647,7 @@ inline Comp &VbaseComp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1656,7 +1656,7 @@ inline const Comp &VbaseComp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1665,7 +1665,7 @@ inline Comp &VbaseComp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1674,7 +1674,7 @@ inline const Comp &VbaseComp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1682,7 +1682,7 @@ inline const Comp &VbaseComp::end(Long_I i) const
 inline VbaseComp::~VbaseComp()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseLcomp
@@ -1718,11 +1718,11 @@ inline VbaseLcomp::VbaseLcomp(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Lcomp[N];
+		m_p = new Lcomp[N];
 	else
 		m_p = nullptr;
 }
@@ -1735,8 +1735,8 @@ inline VbaseLcomp::VbaseLcomp(const VbaseLcomp &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Lcomp[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Lcomp));
+		m_p = new Lcomp[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Lcomp));
 	}
 	else
 		m_p = nullptr;
@@ -1746,7 +1746,7 @@ inline Lcomp * VbaseLcomp::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1755,7 +1755,7 @@ inline const Lcomp * VbaseLcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1768,27 +1768,27 @@ inline Long VbaseLcomp::size() const
 inline void VbaseLcomp::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Lcomp[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Lcomp[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Lcomp[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Lcomp[N];
+			}
+		}
 	}
 }
 
 inline void VbaseLcomp::operator<<(VbaseLcomp &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -1806,7 +1806,7 @@ inline const Lcomp &VbaseLcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseLcomp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseLcomp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -1815,7 +1815,7 @@ inline Lcomp &VbaseLcomp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1824,7 +1824,7 @@ inline const Lcomp &VbaseLcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1833,7 +1833,7 @@ inline Lcomp &VbaseLcomp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1842,7 +1842,7 @@ inline const Lcomp &VbaseLcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -1850,7 +1850,7 @@ inline const Lcomp &VbaseLcomp::end(Long_I i) const
 inline VbaseLcomp::~VbaseLcomp()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseQcomp
@@ -1886,11 +1886,11 @@ inline VbaseQcomp::VbaseQcomp(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Qcomp[N];
+		m_p = new Qcomp[N];
 	else
 		m_p = nullptr;
 }
@@ -1903,8 +1903,8 @@ inline VbaseQcomp::VbaseQcomp(const VbaseQcomp &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Qcomp[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Qcomp));
+		m_p = new Qcomp[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Qcomp));
 	}
 	else
 		m_p = nullptr;
@@ -1914,7 +1914,7 @@ inline Qcomp * VbaseQcomp::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1923,7 +1923,7 @@ inline const Qcomp * VbaseQcomp::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -1936,27 +1936,27 @@ inline Long VbaseQcomp::size() const
 inline void VbaseQcomp::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Qcomp[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Qcomp[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Qcomp[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Qcomp[N];
+			}
+		}
 	}
 }
 
 inline void VbaseQcomp::operator<<(VbaseQcomp &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -1974,7 +1974,7 @@ inline const Qcomp &VbaseQcomp::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseQcomp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseQcomp index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -1983,7 +1983,7 @@ inline Qcomp &VbaseQcomp::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -1992,7 +1992,7 @@ inline const Qcomp &VbaseQcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2001,7 +2001,7 @@ inline Qcomp &VbaseQcomp::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2010,7 +2010,7 @@ inline const Qcomp &VbaseQcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2018,7 +2018,7 @@ inline const Qcomp &VbaseQcomp::end(Long_I i) const
 inline VbaseQcomp::~VbaseQcomp()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseFimag
@@ -2054,11 +2054,11 @@ inline VbaseFimag::VbaseFimag(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Fimag[N];
+		m_p = new Fimag[N];
 	else
 		m_p = nullptr;
 }
@@ -2071,8 +2071,8 @@ inline VbaseFimag::VbaseFimag(const VbaseFimag &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Fimag[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Fimag));
+		m_p = new Fimag[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Fimag));
 	}
 	else
 		m_p = nullptr;
@@ -2082,7 +2082,7 @@ inline Fimag * VbaseFimag::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2091,7 +2091,7 @@ inline const Fimag * VbaseFimag::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2104,27 +2104,27 @@ inline Long VbaseFimag::size() const
 inline void VbaseFimag::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Fimag[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Fimag[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Fimag[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Fimag[N];
+			}
+		}
 	}
 }
 
 inline void VbaseFimag::operator<<(VbaseFimag &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -2142,7 +2142,7 @@ inline const Fimag &VbaseFimag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseFimag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseFimag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -2151,7 +2151,7 @@ inline Fimag &VbaseFimag::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2160,7 +2160,7 @@ inline const Fimag &VbaseFimag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2169,7 +2169,7 @@ inline Fimag &VbaseFimag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2178,7 +2178,7 @@ inline const Fimag &VbaseFimag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2186,7 +2186,7 @@ inline const Fimag &VbaseFimag::end(Long_I i) const
 inline VbaseFimag::~VbaseFimag()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseImag
@@ -2222,11 +2222,11 @@ inline VbaseImag::VbaseImag(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Imag[N];
+		m_p = new Imag[N];
 	else
 		m_p = nullptr;
 }
@@ -2239,8 +2239,8 @@ inline VbaseImag::VbaseImag(const VbaseImag &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Imag[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Imag));
+		m_p = new Imag[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Imag));
 	}
 	else
 		m_p = nullptr;
@@ -2250,7 +2250,7 @@ inline Imag * VbaseImag::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2259,7 +2259,7 @@ inline const Imag * VbaseImag::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2272,27 +2272,27 @@ inline Long VbaseImag::size() const
 inline void VbaseImag::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Imag[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Imag[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Imag[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Imag[N];
+			}
+		}
 	}
 }
 
 inline void VbaseImag::operator<<(VbaseImag &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -2310,7 +2310,7 @@ inline const Imag &VbaseImag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseImag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseImag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -2319,7 +2319,7 @@ inline Imag &VbaseImag::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2328,7 +2328,7 @@ inline const Imag &VbaseImag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2337,7 +2337,7 @@ inline Imag &VbaseImag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2346,7 +2346,7 @@ inline const Imag &VbaseImag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2354,7 +2354,7 @@ inline const Imag &VbaseImag::end(Long_I i) const
 inline VbaseImag::~VbaseImag()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 class VbaseLimag
@@ -2390,11 +2390,11 @@ inline VbaseLimag::VbaseLimag(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	m_N = N;
 	if (N > 0)
-	    m_p = new Limag[N];
+		m_p = new Limag[N];
 	else
 		m_p = nullptr;
 }
@@ -2407,8 +2407,8 @@ inline VbaseLimag::VbaseLimag(const VbaseLimag &rhs)
 #endif
 	m_N = rhs.m_N;
 	if (m_N > 0) {
-	    m_p = new Limag[m_N];
-	    memcpy(m_p, rhs.p(), m_N*sizeof(Limag));
+		m_p = new Limag[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(Limag));
 	}
 	else
 		m_p = nullptr;
@@ -2418,7 +2418,7 @@ inline Limag * VbaseLimag::p()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2427,7 +2427,7 @@ inline const Limag * VbaseLimag::p() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("using p() for empty container!");
+		SLS_ERR("using p() for empty container!");
 #endif
 	return m_p;
 }
@@ -2440,27 +2440,27 @@ inline Long VbaseLimag::size() const
 inline void VbaseLimag::resize(Long_I N)
 {
 	if (N != m_N) {
-	    if (m_N == 0) { // N != 0
-	        m_N = N; m_p = new Limag[N];
-	    }
-	    else { // m_N != 0
-	        delete[] m_p;
-	        if (N == 0)
-	            m_N = 0;
-	        else {
-	            m_N = N;
-	            m_p = new Limag[N];
-	        }
-	    }
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new Limag[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new Limag[N];
+			}
+		}
 	}
 }
 
 inline void VbaseLimag::operator<<(VbaseLimag &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 	m_N = rhs.m_N; rhs.m_N = 0;
 	m_p = rhs.m_p;
 }
@@ -2478,7 +2478,7 @@ inline const Limag &VbaseLimag::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=m_N)
-	    SLS_ERR("VbaseLimag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+		SLS_ERR("VbaseLimag index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
 #endif
 	return m_p[i];
 }
@@ -2487,7 +2487,7 @@ inline Limag &VbaseLimag::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2496,7 +2496,7 @@ inline const Limag &VbaseLimag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
@@ -2505,7 +2505,7 @@ inline Limag &VbaseLimag::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2514,7 +2514,7 @@ inline const Limag &VbaseLimag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
 #endif
 	return m_p[m_N - i];
 }
@@ -2522,7 +2522,7 @@ inline const Limag &VbaseLimag::end(Long_I i) const
 inline VbaseLimag::~VbaseLimag()
 {
 	if (m_N != 0)
-	    delete[] m_p;
+		delete[] m_p;
 }
 
 
@@ -2559,10 +2559,10 @@ inline VbaseBool::VbaseBool(Long_I N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
-	    SLS_ERR("size less than 0!");
+		SLS_ERR("size less than 0!");
 #endif
 	if (N > 0)
-	    m_v.resize(N);
+		m_v.resize(N);
 }
 
 inline VbaseBool::VbaseBool(const VbaseBool &rhs): m_v(rhs.m_v)
@@ -2585,7 +2585,7 @@ inline void VbaseBool::resize(Long_I N)
 inline void VbaseBool::operator<<(VbaseBool &rhs)
 {
 	if (this == &rhs)
-	    SLS_ERR("self move is forbidden!");
+		SLS_ERR("self move is forbidden!");
 	m_v.swap(rhs.m_v);
 }
 
@@ -2593,7 +2593,7 @@ inline VbaseBool::ref VbaseBool::operator[](Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=size())
-	    SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+		SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
 	return m_v[i];
 }
@@ -2602,7 +2602,7 @@ inline Bool VbaseBool::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=size())
-	    SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+		SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
 	return m_v[i];
 }
@@ -2611,7 +2611,7 @@ inline VbaseBool::ref VbaseBool::end()
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_v.empty())
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_v.back();
 }
@@ -2620,7 +2620,7 @@ inline Bool VbaseBool::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_v.empty())
-	    SLS_ERR("tring to use end() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_v.back();
 }
@@ -2629,7 +2629,7 @@ inline VbaseBool::ref VbaseBool::end(Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > size())
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
 	return m_v[size() - i];
 }
@@ -2638,7 +2638,7 @@ inline Bool VbaseBool::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > size())
-	    SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
 	return m_v[size() - i];
 }

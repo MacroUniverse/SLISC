@@ -12,14 +12,14 @@ inline void bit_inv(Comp *v, Int_I n)
 	Int i, j, m, nn = n>>1;
 	j = 0;
 	for (i=0; i < n; ++i) {
-	    if (j > i)
-	        swap(v[j],v[i]);
-	    m = nn;
-	    while (m >= 2 && j >= m) {
-	        j -= m;
-	        m >>= 1;
-	    }
-	    j += m;
+		if (j > i)
+			swap(v[j],v[i]);
+		m = nn;
+		while (m >= 2 && j >= m) {
+			j -= m;
+			m >>= 1;
+		}
+		j += m;
 	}
 }
 
@@ -28,13 +28,13 @@ inline void bit_inv(Comp *out, const Comp *in, Int_I n)
 	Int i, j, m, nn = n>>1;
 	j = 0;
 	for (i=0; i < n; ++i) {
-	    out[j] = in[i];
-	    m = nn;
-	    while (m >= 2 && j >= m) {
-	        j -= m;
-	        m >>= 1;
-	    }
-	    j += m;
+		out[j] = in[i];
+		m = nn;
+		while (m >= 2 && j >= m) {
+			j -= m;
+			m >>= 1;
+		}
+		j += m;
 	}
 }
 
@@ -62,7 +62,7 @@ struct WrapVecDoub {
 
 	WrapVecDoub(VecDoub &vec) : vvec(0), v(vec), n(vec.size()/2),
 	mask(n-1) {validate();}
-	    
+		
 	void validate() {if (n&(n-1)) throw("vec size must be power of 2");}
 
 	inline Comp& operator[] (Int i) {return (Comp &)v[(i&mask) << 1];}
@@ -90,50 +90,50 @@ inline void fftshift(VecInt_IO v)
 {
 	Long n = v.size();
 	if (isodd(n))
-	    SLS_ERR("fftshift only supports even columns!");
+		SLS_ERR("fftshift only supports even columns!");
 	Long halfn = n / 2;
 	for (Long i = 0; i < halfn; ++i)
-	    swap(v[i], v[i + halfn]);
+		swap(v[i], v[i + halfn]);
 }
 
 inline void fftshift(VecDoub_IO v)
 {
 	Long n = v.size();
 	if (isodd(n))
-	    SLS_ERR("fftshift only supports even columns!");
+		SLS_ERR("fftshift only supports even columns!");
 	Long halfn = n / 2;
 	for (Long i = 0; i < halfn; ++i)
-	    swap(v[i], v[i + halfn]);
+		swap(v[i], v[i + halfn]);
 }
 
 inline void fftshift(VecComp_IO v)
 {
 	Long n = v.size();
 	if (isodd(n))
-	    SLS_ERR("fftshift only supports even columns!");
+		SLS_ERR("fftshift only supports even columns!");
 	Long halfn = n / 2;
 	for (Long i = 0; i < halfn; ++i)
-	    swap(v[i], v[i + halfn]);
+		swap(v[i], v[i + halfn]);
 }
 
 inline void fftshift(DvecDoub_IO v)
 {
 	Long n = v.size();
 	if (isodd(n))
-	    SLS_ERR("fftshift only supports even columns!");
+		SLS_ERR("fftshift only supports even columns!");
 	Long halfn = n / 2;
 	for (Long i = 0; i < halfn; ++i)
-	    swap(v[i], v[i + halfn]);
+		swap(v[i], v[i + halfn]);
 }
 
 inline void fftshift(DvecComp_IO v)
 {
 	Long n = v.size();
 	if (isodd(n))
-	    SLS_ERR("fftshift only supports even columns!");
+		SLS_ERR("fftshift only supports even columns!");
 	Long halfn = n / 2;
 	for (Long i = 0; i < halfn; ++i)
-	    swap(v[i], v[i + halfn]);
+		swap(v[i], v[i + halfn]);
 }
 
 
@@ -141,24 +141,24 @@ inline void fftshift(MatDoub_IO a, Int_I dim = 1)
 {
 	Long N1 = a.n0(), N2 = a.n1();
 	if (dim == 1) {
-	    if (isodd(N1))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N1 / 2;
-	    for (Long j = 0; j < N2; ++j) {
-	        DvecDoub sli = cut0(a, j);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N1))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N1 / 2;
+		for (Long j = 0; j < N2; ++j) {
+			DvecDoub sli = cut0(a, j);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 	else if (dim == 2) {
-	    if (isodd(N2))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N2 / 2;
-	    for (Long i = 0; i < N1; ++i) {
-	        SvecDoub sli = cut1(a, i);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N2))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N2 / 2;
+		for (Long i = 0; i < N1; ++i) {
+			SvecDoub sli = cut1(a, i);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 }
 
@@ -166,24 +166,24 @@ inline void fftshift(MatComp_IO a, Int_I dim = 1)
 {
 	Long N1 = a.n0(), N2 = a.n1();
 	if (dim == 1) {
-	    if (isodd(N1))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N1 / 2;
-	    for (Long j = 0; j < N2; ++j) {
-	        DvecComp sli = cut0(a, j);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N1))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N1 / 2;
+		for (Long j = 0; j < N2; ++j) {
+			DvecComp sli = cut0(a, j);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 	else if (dim == 2) {
-	    if (isodd(N2))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N2 / 2;
-	    for (Long i = 0; i < N1; ++i) {
-	        SvecComp sli = cut1(a, i);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N2))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N2 / 2;
+		for (Long i = 0; i < N1; ++i) {
+			SvecComp sli = cut1(a, i);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 }
 
@@ -191,24 +191,24 @@ inline void fftshift(CmatDoub_IO a, Int_I dim = 1)
 {
 	Long N1 = a.n0(), N2 = a.n1();
 	if (dim == 1) {
-	    if (isodd(N1))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N1 / 2;
-	    for (Long j = 0; j < N2; ++j) {
-	        SvecDoub sli = cut0(a, j);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N1))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N1 / 2;
+		for (Long j = 0; j < N2; ++j) {
+			SvecDoub sli = cut0(a, j);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 	else if (dim == 2) {
-	    if (isodd(N2))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N2 / 2;
-	    for (Long i = 0; i < N1; ++i) {
-	        DvecDoub sli = cut1(a, i);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N2))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N2 / 2;
+		for (Long i = 0; i < N1; ++i) {
+			DvecDoub sli = cut1(a, i);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 }
 
@@ -216,24 +216,24 @@ inline void fftshift(CmatComp_IO a, Int_I dim = 1)
 {
 	Long N1 = a.n0(), N2 = a.n1();
 	if (dim == 1) {
-	    if (isodd(N1))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N1 / 2;
-	    for (Long j = 0; j < N2; ++j) {
-	        SvecComp sli = cut0(a, j);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N1))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N1 / 2;
+		for (Long j = 0; j < N2; ++j) {
+			SvecComp sli = cut0(a, j);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 	else if (dim == 2) {
-	    if (isodd(N2))
-	        SLS_ERR("fftshift only supports even rows!");
-	    Long halfn = N2 / 2;
-	    for (Long i = 0; i < N1; ++i) {
-	        DvecComp sli = cut1(a, i);
-	        for (Long i = 0; i < halfn; ++i)
-	            swap(sli[i], sli[i + halfn]);
-	    }
+		if (isodd(N2))
+			SLS_ERR("fftshift only supports even rows!");
+		Long halfn = N2 / 2;
+		for (Long i = 0; i < N1; ++i) {
+			DvecComp sli = cut1(a, i);
+			for (Long i = 0; i < halfn; ++i)
+				swap(sli[i], sli[i + halfn]);
+		}
 	}
 }
 
@@ -268,27 +268,27 @@ inline void four1(Doub *data, Int_I n, Int_I isign) {
 	nn = n << 1;
 	mmax=2;
 	while (nn > mmax) {
-	    istep=mmax << 1;
-	    theta=isign*(6.28318530717959/mmax);
-	    wtemp=sin(0.5*theta);
-	    wpr = -2.0*wtemp*wtemp;
-	    wpi=sin(theta);
-	    wr=1.0;
-	    wi=0.0;
-	    for (m=1;m<mmax;m+=2) {
-	        for (i=m;i<=nn;i+=istep) {
-	            j=i+mmax;
-	            tempr=wr*data[j-1]-wi*data[j];
-	            tempi=wr*data[j]+wi*data[j-1];
-	            data[j-1]=data[i-1]-tempr;
-	            data[j]=data[i]-tempi;
-	            data[i-1] += tempr;
-	            data[i] += tempi;
-	        }
-	        wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	        wi=wi*wpr+wtemp*wpi+wi;
-	    }
-	    mmax=istep;
+		istep=mmax << 1;
+		theta=isign*(6.28318530717959/mmax);
+		wtemp=sin(0.5*theta);
+		wpr = -2.0*wtemp*wtemp;
+		wpi=sin(theta);
+		wr=1.0;
+		wi=0.0;
+		for (m=1;m<mmax;m+=2) {
+			for (i=m;i<=nn;i+=istep) {
+				j=i+mmax;
+				tempr=wr*data[j-1]-wi*data[j];
+				tempi=wr*data[j]+wi*data[j-1];
+				data[j-1]=data[i-1]-tempr;
+				data[j]=data[i]-tempi;
+				data[i-1] += tempr;
+				data[i] += tempi;
+			}
+			wr=(wtemp=wr)*wpr-wi*wpi+wr;
+			wi=wi*wpr+wtemp*wpi+wi;
+		}
+		mmax=istep;
 	}
 }
 
@@ -305,11 +305,11 @@ inline void fft(MatComp_IO data)
 	Long i, j, m{ data.n0() }, n{ data.n1() };
 	VecComp column(m);
 	for (j = 0; j < n; ++j) {
-	    for (i = 0; i < m; ++i)
-	        column[i] = data(i, j);
-	    fft(column);
-	    for (i = 0; i < m; ++i)
-	        data(i, j) = column[i];
+		for (i = 0; i < m; ++i)
+			column[i] = data(i, j);
+		fft(column);
+		for (i = 0; i < m; ++i)
+			data(i, j) = column[i];
 	}
 }
 
@@ -318,11 +318,11 @@ inline void ifft(MatComp_IO data)
 	Long i, j, m{ data.n0() }, n{ data.n1() };
 	VecComp column(m);
 	for (j = 0; j < n; ++j) {
-	    for (i = 0; i < m; ++i)
-	        column[i] = data(i, j);
-	    ifft(column);
-	    for (i = 0; i < m; ++i)
-	        data(i, j) = column[i];
+		for (i = 0; i < m; ++i)
+			column[i] = data(i, j);
+		ifft(column);
+		for (i = 0; i < m; ++i)
+			data(i, j) = column[i];
 	}
 }
 
@@ -336,11 +336,11 @@ inline void realft(VecDoub_IO data, Int_I isign)
 	Doub c1=0.5,c2,h1r,h1i,h2r,h2i,wr,wi,wpr,wpi,wtemp;
 	Doub theta=3.141592653589793238/Doub(n>>1);
 	if (isign == 1) {
-	    c2 = -0.5;
-	    four1(data,1);
+		c2 = -0.5;
+		four1(data,1);
 	} else {
-	    c2=0.5;
-	    theta = -theta;
+		c2=0.5;
+		theta = -theta;
 	}
 	wtemp=sin(0.5*theta);
 	wpr = -2.0*wtemp*wtemp;
@@ -348,26 +348,26 @@ inline void realft(VecDoub_IO data, Int_I isign)
 	wr=1.0+wpr;
 	wi=wpi;
 	for (i=1;i<(n>>2);i++) {
-	    i2=1+(i1=i+i);
-	    i4=1+(i3=n-i1);
-	    h1r=c1*(data[i1]+data[i3]);
-	    h1i=c1*(data[i2]-data[i4]);
-	    h2r= -c2*(data[i2]+data[i4]);
-	    h2i=c2*(data[i1]-data[i3]);
-	    data[i1]=h1r+wr*h2r-wi*h2i;
-	    data[i2]=h1i+wr*h2i+wi*h2r;
-	    data[i3]=h1r-wr*h2r+wi*h2i;
-	    data[i4]= -h1i+wr*h2i+wi*h2r;
-	    wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	    wi=wi*wpr+wtemp*wpi+wi;
+		i2=1+(i1=i+i);
+		i4=1+(i3=n-i1);
+		h1r=c1*(data[i1]+data[i3]);
+		h1i=c1*(data[i2]-data[i4]);
+		h2r= -c2*(data[i2]+data[i4]);
+		h2i=c2*(data[i1]-data[i3]);
+		data[i1]=h1r+wr*h2r-wi*h2i;
+		data[i2]=h1i+wr*h2i+wi*h2r;
+		data[i3]=h1r-wr*h2r+wi*h2i;
+		data[i4]= -h1i+wr*h2i+wi*h2r;
+		wr=(wtemp=wr)*wpr-wi*wpi+wr;
+		wi=wi*wpr+wtemp*wpi+wi;
 	}
 	if (isign == 1) {
-	    data[0] = (h1r=data[0])+data[1];
-	    data[1] = h1r-data[1];
+		data[0] = (h1r=data[0])+data[1];
+		data[1] = h1r-data[1];
 	} else {
-	    data[0]=c1*((h1r=data[0])+data[1]);
-	    data[1]=c1*(h1r-data[1]);
-	    four1(data,-1);
+		data[0]=c1*((h1r=data[0])+data[1]);
+		data[1]=c1*(h1r-data[1]);
+		four1(data,-1);
 	}
 }
 
@@ -380,20 +380,20 @@ inline void sinft(VecDoub_IO y) {
 	wpi=sin(theta);
 	y[0]=0.0;
 	for (j=1;j<(n>>1)+1;j++) {
-	    wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	    wi=wi*wpr+wtemp*wpi+wi;
-	    y1=wi*(y[j]+y[n-j]);
-	    y2=0.5*(y[j]-y[n-j]);
-	    y[j]=y1+y2;
-	    y[n-j]=y1-y2;
+		wr=(wtemp=wr)*wpr-wi*wpi+wr;
+		wi=wi*wpr+wtemp*wpi+wi;
+		y1=wi*(y[j]+y[n-j]);
+		y2=0.5*(y[j]-y[n-j]);
+		y[j]=y1+y2;
+		y[n-j]=y1-y2;
 	}
 	realft(y,1);
 	y[0]*=0.5;
 	sum=y[1]=0.0;
 	for (j=0;j<n-1;j+=2) {
-	    sum += y[j];
-	    y[j]=y[j+1];
-	    y[j+1]=sum;
+		sum += y[j];
+		y[j]=y[j+1];
+		y[j+1]=sum;
 	}
 }
 
@@ -409,13 +409,13 @@ inline void cosft1(VecDoub_IO y) {
 	sum=0.5*(y[0]-y[n]);
 	yy[0]=0.5*(y[0]+y[n]);
 	for (j=1;j<n/2;j++) {
-	    wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	    wi=wi*wpr+wtemp*wpi+wi;
-	    y1=0.5*(y[j]+y[n-j]);
-	    y2=(y[j]-y[n-j]);
-	    yy[j]=y1-wi*y2;
-	    yy[n-j]=y1+wi*y2;
-	    sum += wr*y2;
+		wr=(wtemp=wr)*wpr-wi*wpi+wr;
+		wi=wi*wpr+wtemp*wpi+wi;
+		y1=0.5*(y[j]+y[n-j]);
+		y2=(y[j]-y[n-j]);
+		yy[j]=y1-wi*y2;
+		yy[n-j]=y1+wi*y2;
+		sum += wr*y2;
 	}
 	yy[n/2]=y[n/2];
 	realft(yy,1);
@@ -423,8 +423,8 @@ inline void cosft1(VecDoub_IO y) {
 	y[n]=y[1];
 	y[1]=sum;
 	for (j=3;j<n;j+=2) {
-	    sum += y[j];
-	    y[j]=sum;
+		sum += y[j];
+		y[j]=sum;
 	}
 }
 
@@ -438,51 +438,51 @@ inline void cosft2(VecDoub_IO y, Int_I isign) {
 	wpr = -2.0*wi1*wi1;
 	wpi=sin(2.0*theta);
 	if (isign == 1) {
-	    for (i=0;i<n/2;i++) {
-	        y1=0.5*(y[i]+y[n-1-i]);
-	        y2=wi1*(y[i]-y[n-1-i]);
-	        y[i]=y1+y2;
-	        y[n-1-i]=y1-y2;
-	        wr1=(wtemp=wr1)*wpr-wi1*wpi+wr1;
-	        wi1=wi1*wpr+wtemp*wpi+wi1;
-	    }
-	    realft(y,1);
-	    for (i=2;i<n;i+=2) {
-	        wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	        wi=wi*wpr+wtemp*wpi+wi;
-	        y1=y[i]*wr-y[i+1]*wi;
-	        y2=y[i+1]*wr+y[i]*wi;
-	        y[i]=y1;
-	        y[i+1]=y2;
-	    }
-	    sum=0.5*y[1];
-	    for (i=n-1;i>0;i-=2) {
-	        sum1=sum;
-	        sum += y[i];
-	        y[i]=sum1;
-	    }
+		for (i=0;i<n/2;i++) {
+			y1=0.5*(y[i]+y[n-1-i]);
+			y2=wi1*(y[i]-y[n-1-i]);
+			y[i]=y1+y2;
+			y[n-1-i]=y1-y2;
+			wr1=(wtemp=wr1)*wpr-wi1*wpi+wr1;
+			wi1=wi1*wpr+wtemp*wpi+wi1;
+		}
+		realft(y,1);
+		for (i=2;i<n;i+=2) {
+			wr=(wtemp=wr)*wpr-wi*wpi+wr;
+			wi=wi*wpr+wtemp*wpi+wi;
+			y1=y[i]*wr-y[i+1]*wi;
+			y2=y[i+1]*wr+y[i]*wi;
+			y[i]=y1;
+			y[i+1]=y2;
+		}
+		sum=0.5*y[1];
+		for (i=n-1;i>0;i-=2) {
+			sum1=sum;
+			sum += y[i];
+			y[i]=sum1;
+		}
 	} else if (isign == -1) {
-	    ytemp=y[n-1];
-	    for (i=n-1;i>2;i-=2)
-	        y[i]=y[i-2]-y[i];
-	    y[1]=2.0*ytemp;
-	    for (i=2;i<n;i+=2) {
-	        wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	        wi=wi*wpr+wtemp*wpi+wi;
-	        y1=y[i]*wr+y[i+1]*wi;
-	        y2=y[i+1]*wr-y[i]*wi;
-	        y[i]=y1;
-	        y[i+1]=y2;
-	    }
-	    realft(y,-1);
-	    for (i=0;i<n/2;i++) {
-	        y1=y[i]+y[n-1-i];
-	        y2=(0.5/wi1)*(y[i]-y[n-1-i]);
-	        y[i]=0.5*(y1+y2);
-	        y[n-1-i]=0.5*(y1-y2);
-	        wr1=(wtemp=wr1)*wpr-wi1*wpi+wr1;
-	        wi1=wi1*wpr+wtemp*wpi+wi1;
-	    }
+		ytemp=y[n-1];
+		for (i=n-1;i>2;i-=2)
+			y[i]=y[i-2]-y[i];
+		y[1]=2.0*ytemp;
+		for (i=2;i<n;i+=2) {
+			wr=(wtemp=wr)*wpr-wi*wpi+wr;
+			wi=wi*wpr+wtemp*wpi+wi;
+			y1=y[i]*wr+y[i+1]*wi;
+			y2=y[i+1]*wr-y[i]*wi;
+			y[i]=y1;
+			y[i+1]=y2;
+		}
+		realft(y,-1);
+		for (i=0;i<n/2;i++) {
+			y1=y[i]+y[n-1-i];
+			y2=(0.5/wi1)*(y[i]-y[n-1-i]);
+			y[i]=0.5*(y1+y2);
+			y[n-1-i]=0.5*(y1-y2);
+			wr1=(wtemp=wr1)*wpr-wi1*wpi+wr1;
+			wi1=wi1*wpr+wtemp*wpi+wi1;
+		}
 	}
 }
 
@@ -496,7 +496,7 @@ inline Comp fft_interp(Doub_I x1, VecDoub_I x, VecComp_I y)
 	Doub dx{ (x.end() - x[0]) / (x.size() - 1.) }, a{ PI/dx };
 	Long i, N{ y.size() };
 	for (i = 0; i < N; ++i)
-	    sum += y[i] * sinc(a*(x1 - x[i]));
+		sum += y[i] * sinc(a*(x1 - x[i]));
 	return sum;
 }
 
@@ -507,8 +507,8 @@ inline void fft_interp(VecComp_O y1, VecDoub_I x1, VecDoub_I x, VecComp_I y)
 	Long i, j, N{ y.size() }, N1{ x1.size() };
 	y1.resize(x1.size());
 	for (j = 0; j < N1; ++j)
-	    for (i = 0; i < N; ++i)
-	        y1[j] += y[i] * sinc(a*(x1[j] - x[i]));
+		for (i = 0; i < N; ++i)
+			y1[j] += y[i] * sinc(a*(x1[j] - x[i]));
 }
 
 // optimized double zero padding: four1([data, 0, 0, data])
@@ -523,37 +523,37 @@ inline void four2x(Doub *data2, const Doub *data, Int_I n, Int_I isign) {
 	// do two element dft
 	Doub *p = data2;
 	for (i = 0; i < n>>1; ++i) {
-	    p[2] = p[0] = pwork[0];
-	    p[3] = p[1] = pwork[1];
-	    p[6] = -(p[4] = pwork[2]);
-	    p[7] = -(p[5] = pwork[3]);
-	    pwork += 4; p += 8;
+		p[2] = p[0] = pwork[0];
+		p[3] = p[1] = pwork[1];
+		p[6] = -(p[4] = pwork[2]);
+		p[7] = -(p[5] = pwork[3]);
+		pwork += 4; p += 8;
 	}
 	// do the rest
 	nn <<= 1;
 	mmax=4;
 	while (nn > mmax) {
-	    istep=mmax << 1;
-	    theta=isign*(6.28318530717959/mmax);
-	    wtemp=sin(0.5*theta);
-	    wpr = -2.0*wtemp*wtemp;
-	    wpi=sin(theta);
-	    wr=1.0;
-	    wi=0.0;
-	    for (m=1;m<mmax;m+=2) {
-	        for (i=m;i<=nn;i+=istep) {
-	            j=i+mmax;
-	            tempr=wr*data2[j-1]-wi*data2[j];
-	            tempi=wr*data2[j]+wi*data2[j-1];
-	            data2[j-1]=data2[i-1]-tempr;
-	            data2[j]=data2[i]-tempi;
-	            data2[i-1] += tempr;
-	            data2[i] += tempi;
-	        }
-	        wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	        wi=wi*wpr+wtemp*wpi+wi;
-	    }
-	    mmax=istep;
+		istep=mmax << 1;
+		theta=isign*(6.28318530717959/mmax);
+		wtemp=sin(0.5*theta);
+		wpr = -2.0*wtemp*wtemp;
+		wpi=sin(theta);
+		wr=1.0;
+		wi=0.0;
+		for (m=1;m<mmax;m+=2) {
+			for (i=m;i<=nn;i+=istep) {
+				j=i+mmax;
+				tempr=wr*data2[j-1]-wi*data2[j];
+				tempi=wr*data2[j]+wi*data2[j-1];
+				data2[j-1]=data2[i-1]-tempr;
+				data2[j]=data2[i]-tempi;
+				data2[i-1] += tempr;
+				data2[i] += tempi;
+			}
+			wr=(wtemp=wr)*wpr-wi*wpi+wr;
+			wi=wi*wpr+wtemp*wpi+wi;
+		}
+		mmax=istep;
 	}
 }
 
@@ -581,48 +581,48 @@ inline void four4x(Doub *data2, const Doub *data, Int_I n, Int_I isign) {
 	// do two element dft
 	Doub *p = data2, temp;
 	if (isign < 0)
-	    for (i = 0; i < n>>1; ++i) {
-	        p[6] = p[4] = p[2] = p[0] = pwork[0];
-	        p[7] = p[5] = p[3] = p[1] = pwork[1];
-	        p += 8; temp = pwork[3];
-	        p[7] = p[4] = -(p[3] = p[0] = pwork[2]);
-	        p[5] = p[2] = -(p[6] = p[1] = temp);
-	        pwork += 4; p += 8;
-	    }
+		for (i = 0; i < n>>1; ++i) {
+			p[6] = p[4] = p[2] = p[0] = pwork[0];
+			p[7] = p[5] = p[3] = p[1] = pwork[1];
+			p += 8; temp = pwork[3];
+			p[7] = p[4] = -(p[3] = p[0] = pwork[2]);
+			p[5] = p[2] = -(p[6] = p[1] = temp);
+			pwork += 4; p += 8;
+		}
 	else
-	    for (i = 0; i < n>>1; ++i) {
-	        p[6] = p[4] = p[2] = p[0] = pwork[0];
-	        p[7] = p[5] = p[3] = p[1] = pwork[1];
-	        p += 8; temp = pwork[3];
-	        p[4] = p[3] = -(p[7] = p[0] = pwork[2]);
-	        p[6] = p[5] = -(p[2] = p[1] = temp);
-	        pwork += 4; p += 8;
-	    }
+		for (i = 0; i < n>>1; ++i) {
+			p[6] = p[4] = p[2] = p[0] = pwork[0];
+			p[7] = p[5] = p[3] = p[1] = pwork[1];
+			p += 8; temp = pwork[3];
+			p[4] = p[3] = -(p[7] = p[0] = pwork[2]);
+			p[6] = p[5] = -(p[2] = p[1] = temp);
+			pwork += 4; p += 8;
+		}
 	// do the rest
 	nn <<= 2;
 	mmax=8;
 	while (nn > mmax) {
-	    istep=mmax << 1;
-	    theta=isign*(6.28318530717959/mmax);
-	    wtemp=sin(0.5*theta);
-	    wpr = -2.0*wtemp*wtemp;
-	    wpi=sin(theta);
-	    wr=1.0;
-	    wi=0.0;
-	    for (m=1;m<mmax;m+=2) {
-	        for (i=m;i<=nn;i+=istep) {
-	            j=i+mmax;
-	            tempr=wr*data2[j-1]-wi*data2[j];
-	            tempi=wr*data2[j]+wi*data2[j-1];
-	            data2[j-1]=data2[i-1]-tempr;
-	            data2[j]=data2[i]-tempi;
-	            data2[i-1] += tempr;
-	            data2[i] += tempi;
-	        }
-	        wr=(wtemp=wr)*wpr-wi*wpi+wr;
-	        wi=wi*wpr+wtemp*wpi+wi;
-	    }
-	    mmax=istep;
+		istep=mmax << 1;
+		theta=isign*(6.28318530717959/mmax);
+		wtemp=sin(0.5*theta);
+		wpr = -2.0*wtemp*wtemp;
+		wpi=sin(theta);
+		wr=1.0;
+		wi=0.0;
+		for (m=1;m<mmax;m+=2) {
+			for (i=m;i<=nn;i+=istep) {
+				j=i+mmax;
+				tempr=wr*data2[j-1]-wi*data2[j];
+				tempi=wr*data2[j]+wi*data2[j-1];
+				data2[j-1]=data2[i-1]-tempr;
+				data2[j]=data2[i]-tempi;
+				data2[i-1] += tempr;
+				data2[i] += tempi;
+			}
+			wr=(wtemp=wr)*wpr-wi*wpi+wr;
+			wi=wi*wpr+wtemp*wpi+wi;
+		}
+		mmax=istep;
 	}
 }
 
@@ -630,7 +630,7 @@ inline void fft4x(VecComp_O data4, VecComp_I data)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (data4.size() != data.size() * 4)
-	    SLS_ERR("wrong shape!");
+		SLS_ERR("wrong shape!");
 #endif
 	four4x((Doub*)data4.p(), (Doub*)data.p(), data.size(), -1);
 }
@@ -649,15 +649,15 @@ inline void dft(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, Doub 
 	Comp *pyj, expo, dexpo;
 	Y.resize(Nk, Nc); copy(Y, 0);
 	for (j = 0; j < Nk; ++j) {
-	    pyj = Y.p() + Nc*j;
-	    expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
-	    dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
-	    for (i = 0; i < Nx; ++i) {
-	        pxi = X.p() + Nc*i;
-	        expo *= dexpo;
-	        for (k = 0; k < Nc; ++k)
-	            pyj[k] += expo*pxi[k];
-	    }
+		pyj = Y.p() + Nc*j;
+		expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
+		dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
+		for (i = 0; i < Nx; ++i) {
+			pxi = X.p() + Nc*i;
+			expo *= dexpo;
+			for (k = 0; k < Nc; ++k)
+				pyj[k] += expo*pxi[k];
+		}
 	}
 }
 
@@ -669,18 +669,18 @@ inline void dft_par(MatComp_O Y, Doub kmin, Doub kmax, Long_I Nk, MatComp_I X, D
 	Y.resize(Nk, Nc); copy(Y, 0);
 #pragma omp parallel for
 	for (j = 0; j < Nk; ++j) {
-	    Long i, k;
-	    const Comp *pxi;
-	    Comp *pyj, expo, dexpo;
-	    pyj = Y.p() + Nc*j;
-	    expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
-	    dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
-	    for (i = 0; i < Nx; ++i) {
-	        pxi = X.p() + Nc*i;
-	        expo *= dexpo;
-	        for (k = 0; k < Nc; ++k)
-	            pyj[k] += expo*pxi[k];
-	    }
+		Long i, k;
+		const Comp *pxi;
+		Comp *pyj, expo, dexpo;
+		pyj = Y.p() + Nc*j;
+		expo = exp(Comp(0, -(kmin + dk*j)*(xmin - dx)));
+		dexpo = exp(Comp(0, -(kmin + dk*j)*dx));
+		for (i = 0; i < Nx; ++i) {
+			pxi = X.p() + Nc*i;
+			expo *= dexpo;
+			for (k = 0; k < Nc; ++k)
+				pyj[k] += expo*pxi[k];
+		}
 	}
 }
 
@@ -692,15 +692,15 @@ inline void idft(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, Doub
 	Comp *pxj, expo, dexpo;
 	X.resize(Nx, Nc); copy(X, 0);
 	for (j = 0; j < Nx; ++j) {
-	    pxj = X.p() + Nc*j;
-	    expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
-	    dexpo = exp(Comp(0, (xmin + dx*j)*dk));
-	    for (i = 0; i < Nk; ++i) {
-	        pyi = Y.p() + Nc*i;
-	        expo *= dexpo;
-	        for (k = 0; k < Nc; ++k)
-	            pxj[k] += expo*pyi[k];
-	    }
+		pxj = X.p() + Nc*j;
+		expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
+		dexpo = exp(Comp(0, (xmin + dx*j)*dk));
+		for (i = 0; i < Nk; ++i) {
+			pyi = Y.p() + Nc*i;
+			expo *= dexpo;
+			for (k = 0; k < Nc; ++k)
+				pxj[k] += expo*pyi[k];
+		}
 	}
 }
 
@@ -711,18 +711,18 @@ inline void idft_par(MatComp_O X, Doub xmin, Doub xmax, Long_I Nx, MatComp_I Y, 
 	X.resize(Nx, Nc); copy(X, 0);
 #pragma omp parallel for
 	for (j = 0; j < Nx; ++j) {
-	    Long i, k;
-	    const Comp *pyi;
-	    Comp *pxj, expo, dexpo;
-	    pxj = X.p() + Nc*j;
-	    expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
-	    dexpo = exp(Comp(0, (xmin + dx*j)*dk));
-	    for (i = 0; i < Nk; ++i) {
-	        pyi = Y.p() + Nc*i;
-	        expo *= dexpo;
-	        for (k = 0; k < Nc; ++k)
-	            pxj[k] += expo*pyi[k];
-	    }
+		Long i, k;
+		const Comp *pyi;
+		Comp *pxj, expo, dexpo;
+		pxj = X.p() + Nc*j;
+		expo = exp(Comp(0, (xmin + dx*j)*(kmin - dk)));
+		dexpo = exp(Comp(0, (xmin + dx*j)*dk));
+		for (i = 0; i < Nk; ++i) {
+			pyi = Y.p() + Nc*i;
+			expo *= dexpo;
+			for (k = 0; k < Nc; ++k)
+				pxj[k] += expo*pyi[k];
+		}
 	}
 }
 

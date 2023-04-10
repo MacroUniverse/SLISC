@@ -76,7 +76,7 @@ inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -95,7 +95,7 @@ inline void @Class@::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
-	    SLS_ERR("illegal reshape!");
+		SLS_ERR("illegal reshape!");
 #endif
 	m_N0 = N0; m_N1 = N1;
 }

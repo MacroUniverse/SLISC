@@ -34,8 +34,8 @@ inline void Mat3Char::operator<<(Mat3Char &rhs)
 inline void Mat3Char::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -43,7 +43,7 @@ inline Char &Mat3Char::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -52,7 +52,7 @@ inline const Char &Mat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -106,8 +106,8 @@ inline void Mat3Int::operator<<(Mat3Int &rhs)
 inline void Mat3Int::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -115,7 +115,7 @@ inline Int &Mat3Int::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -124,7 +124,7 @@ inline const Int &Mat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -178,8 +178,8 @@ inline void Mat3Llong::operator<<(Mat3Llong &rhs)
 inline void Mat3Llong::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -187,7 +187,7 @@ inline Llong &Mat3Llong::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -196,7 +196,7 @@ inline const Llong &Mat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -250,8 +250,8 @@ inline void Mat3Float::operator<<(Mat3Float &rhs)
 inline void Mat3Float::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -259,7 +259,7 @@ inline Float &Mat3Float::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -268,7 +268,7 @@ inline const Float &Mat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -322,8 +322,8 @@ inline void Mat3Doub::operator<<(Mat3Doub &rhs)
 inline void Mat3Doub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -331,7 +331,7 @@ inline Doub &Mat3Doub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -340,7 +340,7 @@ inline const Doub &Mat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -394,8 +394,8 @@ inline void Mat3Ldoub::operator<<(Mat3Ldoub &rhs)
 inline void Mat3Ldoub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -403,7 +403,7 @@ inline Ldoub &Mat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -412,7 +412,7 @@ inline const Ldoub &Mat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -466,8 +466,8 @@ inline void Mat3Fcomp::operator<<(Mat3Fcomp &rhs)
 inline void Mat3Fcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -475,7 +475,7 @@ inline Fcomp &Mat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -484,7 +484,7 @@ inline const Fcomp &Mat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -538,8 +538,8 @@ inline void Mat3Comp::operator<<(Mat3Comp &rhs)
 inline void Mat3Comp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -547,7 +547,7 @@ inline Comp &Mat3Comp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -556,7 +556,7 @@ inline const Comp &Mat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -610,8 +610,8 @@ inline void Mat3Lcomp::operator<<(Mat3Lcomp &rhs)
 inline void Mat3Lcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -619,7 +619,7 @@ inline Lcomp &Mat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -628,7 +628,7 @@ inline const Lcomp &Mat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -682,8 +682,8 @@ inline void Mat3Fimag::operator<<(Mat3Fimag &rhs)
 inline void Mat3Fimag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -691,7 +691,7 @@ inline Fimag &Mat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -700,7 +700,7 @@ inline const Fimag &Mat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -754,8 +754,8 @@ inline void Mat3Imag::operator<<(Mat3Imag &rhs)
 inline void Mat3Imag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -763,7 +763,7 @@ inline Imag &Mat3Imag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -772,7 +772,7 @@ inline const Imag &Mat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -826,8 +826,8 @@ inline void Mat3Limag::operator<<(Mat3Limag &rhs)
 inline void Mat3Limag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
 	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
-	    Base::resize(N0*N1*N2);
-	    m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
 }
 
@@ -835,7 +835,7 @@ inline Limag &Mat3Limag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }
@@ -844,7 +844,7 @@ inline const Limag &Mat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-	    SLS_ERR("Matrix subscript out of bounds");
+		SLS_ERR("Matrix subscript out of bounds");
 #endif
 	return m_p[m_N1*m_N2*i + m_N2*j + k];
 }

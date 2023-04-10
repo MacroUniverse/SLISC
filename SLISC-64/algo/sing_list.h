@@ -71,7 +71,7 @@ inline void slist_delete(SNode *head)
 	while (head != NULL) {
 		SNode *next = head->next;
 		delete head;
-        head = next;
+		head = next;
 	}
 }
 
@@ -94,20 +94,20 @@ inline SNode *slist_end(SNode *node)
 // return the last node and size of singly linked list
 inline SNode *slist_end_size(Long_O N, SNode *node)
 {
-    if (node == NULL) { N = 0; return NULL; }
-    N = 1;
-    while (node->next != NULL) {
-        node = node->next; ++N;
-    }
-    return node;
+	if (node == NULL) { N = 0; return NULL; }
+	N = 1;
+	while (node->next != NULL) {
+		node = node->next; ++N;
+	}
+	return node;
 }
 
 inline SNode *slist_locate(SNode *node, Long_I ind)
 {
 	for (Long i = 0; i < ind; ++i) {
-        if (node == NULL) return NULL;
-        node = node->next;
-    }
+		if (node == NULL) return NULL;
+		node = node->next;
+	}
 	return node;
 }
 
@@ -117,14 +117,14 @@ inline SNode *slist_locate(SNode *node, Long_I ind)
 // (verified with leetcode 19)
 inline SNode *slist_rlocate(SNode *beg, Long_I ind, SNode *node)
 {
-    SNode *node0 = beg;
-    for (Long i = 0; i < ind; ++i) {
-        if (beg == node) return NULL;
-        beg = beg->next;
-    }
-    while (beg != node)
-        beg = beg->next, node0 = node0->next;
-    return node0;
+	SNode *node0 = beg;
+	for (Long i = 0; i < ind; ++i) {
+		if (beg == node) return NULL;
+		beg = beg->next;
+	}
+	while (beg != node)
+		beg = beg->next, node0 = node0->next;
+	return node0;
 }
 
 inline void slist_rand_perm(SNode *head, Long_I N)
@@ -142,12 +142,12 @@ inline void slist_rand_perm(SNode *head, Long_I N)
 // print singly linked list, will detect loop
 inline void slist_print(SNode* node)
 {
-    unordered_set<SNode*> uset;
+	unordered_set<SNode*> uset;
 	while (node != NULL) {
-        if (uset.count(node) > 0) {
-            cout << " cyclic link to " << node->val; return;
-        }
-        uset.insert(node);
+		if (uset.count(node) > 0) {
+			cout << " cyclic link to " << node->val; return;
+		}
+		uset.insert(node);
 		cout << node->val << " ";
 		node = node->next;
 	}
@@ -196,11 +196,11 @@ inline void slist_insert_after(SNode* node, int val)
 
 inline void slist_erase_after(SNode* node)
 {
-    if (node == NULL) return;
-    SNode *node0 = node; node = node->next;
-    if (node == NULL) return;
-    node0->next = node->next;
-    delete node;
+	if (node == NULL) return;
+	SNode *node0 = node; node = node->next;
+	if (node == NULL) return;
+	node0->next = node->next;
+	delete node;
 }
 
 inline void slist_erase_N_after(SNode* node, Long N)
@@ -208,7 +208,7 @@ inline void slist_erase_N_after(SNode* node, Long N)
 	if (N == 0) return;
 	SNode *node0 = node; node = node->next;
 	for (Long i = 0; i < N; ++i) {
-        if (node == NULL) break;
+		if (node == NULL) break;
 		SNode *next = node->next;
 		delete node;
 		node = next;
@@ -218,9 +218,9 @@ inline void slist_erase_N_after(SNode* node, Long N)
 
 inline void slist_erase_all_after(SNode* node)
 {
-    if (node == NULL) return;
-    SNode *node0 = node; node = node->next;
-    slist_delete(node); node0->next = NULL;
+	if (node == NULL) return;
+	SNode *node0 = node; node = node->next;
+	slist_delete(node); node0->next = NULL;
 }
 
 inline SNode* slist_split_half(SNode* head)
@@ -270,9 +270,9 @@ inline SNode* slist_mergesort(SNode *head)
 	if (head == NULL || head->next == NULL)
 		return head;
 	SNode* head1 = slist_split_half(head);
-    head = slist_mergesort(head);
-    head1 = slist_mergesort(head1);
-    return slist_merge_sorted(head, head1);
+	head = slist_mergesort(head);
+	head1 = slist_mergesort(head1);
+	return slist_merge_sorted(head, head1);
 }
 
 } // namespace slisc

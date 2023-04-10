@@ -14,23 +14,23 @@ namespace slisc {
 inline void cgTableDim(Long_O Ndim, Long_O m1_max, Long_I l1, Long_I l2, Long_I M)
 {
 	if (abs(M) > abs(l1 - l2))
-	    Ndim = l1 + l2 - abs(M) + 1;
+		Ndim = l1 + l2 - abs(M) + 1;
 	else
-	    Ndim = 2 * min(l1, l2) + 1;
+		Ndim = 2 * min(l1, l2) + 1;
 
 	if (M >= l1 - l2)
-	    m1_max = l1;
+		m1_max = l1;
 	else
-	    m1_max = l2 + M;
+		m1_max = l2 + M;
 }
 
 inline Doub binom_Doub(Long_I n, Long_I r) {
 	if (n == r || r == 0)
-	    return 1;
+		return 1;
 	else if (r == 1)
-	    return (Doub)n;
+		return (Doub)n;
 	else
-	    return (Doub)n / Doub(n - r)*binom_Doub(n - 1, r);
+		return (Doub)n / Doub(n - r)*binom_Doub(n - 1, r);
 }
 
 // clebsch gordan coefficient [j1,m1,j2,m2,j,m] for integer numbers
@@ -40,29 +40,29 @@ inline Doub cleb_int_Doub(Long_I j1, Long_I m1, Long_I j2, Long_I m2, Long_I j, 
 	Long par, z, zmin, zmax;
 
 	if (j1 < 0 || j2 < 0 || j < 0 ||
-	    abs(m1)>j1 || abs(m2)>j2 || abs(m)>j ||
-	    j>j1+j2 || j<abs(j1-j2) || m1+m2!=m) {
-	    cleb = 0;
+		abs(m1)>j1 || abs(m2)>j2 || abs(m)>j ||
+		j>j1+j2 || j<abs(j1-j2) || m1+m2!=m) {
+		cleb = 0;
 	}
 	else if (isodd(j1+j2+j) && ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))) {
-	    cleb = 0;
+		cleb = 0;
 	}
 	else {
-	    factor = binom_Doub(2*j1, j1 + j2 - j) / binom_Doub(j1 + j2 + j + 1, j1 + j2 - j);
-	    factor *= binom_Doub(2*j2, j1 + j2 - j) / binom_Doub(2*j1, j1 - m1);
-	    factor /= binom_Doub(2*j2, j2 - m2) * binom_Doub(2*j, j - m);
-	    factor = sqrt(factor);
+		factor = binom_Doub(2*j1, j1 + j2 - j) / binom_Doub(j1 + j2 + j + 1, j1 + j2 - j);
+		factor *= binom_Doub(2*j2, j1 + j2 - j) / binom_Doub(2*j1, j1 - m1);
+		factor /= binom_Doub(2*j2, j2 - m2) * binom_Doub(2*j, j - m);
+		factor = sqrt(factor);
 
-	    zmin = max(Long(0), max(2*j2 + j1 - m1 - (j1 + j2 + j), 2*j1 + j2 + m2 - (j1 + j2 + j)));
-	    zmax = min(j1 + j2 - j, min(j1 - m1, j2 + m2));
+		zmin = max(Long(0), max(2*j2 + j1 - m1 - (j1 + j2 + j), 2*j1 + j2 + m2 - (j1 + j2 + j)));
+		zmax = min(j1 + j2 - j, min(j1 - m1, j2 + m2));
 
-	    sum = 0;
-	    for (z = zmin; z <= zmax; ++z) {
-	        par = isodd(z)? -1: 1;
-	        sum += par * binom_Doub(j1 + j2 - j, z)*binom_Doub(j1 - j2 + j, j1 - m1 - z)
-	            * binom_Doub(-j1 + j2 + j, j2 + m2 - z);
-	    }
-	    cleb = factor * sum;
+		sum = 0;
+		for (z = zmin; z <= zmax; ++z) {
+			par = isodd(z)? -1: 1;
+			sum += par * binom_Doub(j1 + j2 - j, z)*binom_Doub(j1 - j2 + j, j1 - m1 - z)
+				* binom_Doub(-j1 + j2 + j, j2 + m2 - z);
+		}
+		cleb = factor * sum;
 	}
 	return cleb;
 }
@@ -75,34 +75,34 @@ inline Doub cleb_Doub(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_m2
 	Long par, z, zmin, zmax;
 
 	if (2 * (j1 / 2) - j1 != 2 * (abs(m1) / 2) - abs(m1) ||
-	    2 * (j2 / 2) - j2 != 2 * (abs(m2) / 2) - abs(m2) ||
-	    2 * (j / 2) - j != 2 * (abs(m) / 2) - abs(m) ||
-	    j1<0 || j2<0  || j<0 || abs(m1)>j1 || abs(m2)>j2 ||
-	    abs(m)>j || j1 + j2<j || abs(j1 - j2)>j || m1 + m2 != m) {
-	    cleb = 0;
+		2 * (j2 / 2) - j2 != 2 * (abs(m2) / 2) - abs(m2) ||
+		2 * (j / 2) - j != 2 * (abs(m) / 2) - abs(m) ||
+		j1<0 || j2<0  || j<0 || abs(m1)>j1 || abs(m2)>j2 ||
+		abs(m)>j || j1 + j2<j || abs(j1 - j2)>j || m1 + m2 != m) {
+		cleb = 0;
 	}
 	else if (!isodd(j1) && !isodd(j2) && !isodd(j) && isodd((j1+j2+j)/2) && ((m1==0 && m2==0 && m==0) ||
 		(j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))) {
-	    cleb = 0;
+		cleb = 0;
 	}
 	else {
-	    factor = binom_Doub(j1, (j1 + j2 - j) / 2) / binom_Doub((j1 + j2 + j + 2) / 2, (j1 + j2 - j) / 2);
-	    factor = factor * binom_Doub(j2, (j1 + j2 - j) / 2) / binom_Doub(j1, (j1 - m1) / 2);
-	    factor = factor / binom_Doub(j2, (j2 - m2) / 2) / binom_Doub(j, (j - m) / 2);
-	    factor = sqrt(factor);
+		factor = binom_Doub(j1, (j1 + j2 - j) / 2) / binom_Doub((j1 + j2 + j + 2) / 2, (j1 + j2 - j) / 2);
+		factor = factor * binom_Doub(j2, (j1 + j2 - j) / 2) / binom_Doub(j1, (j1 - m1) / 2);
+		factor = factor / binom_Doub(j2, (j2 - m2) / 2) / binom_Doub(j, (j - m) / 2);
+		factor = sqrt(factor);
 
-	    zmin = max(Long(0), max(j2 + (j1 - m1) / 2 - (j1 + j2 + j) / 2, j1 + (j2 + m2) / 2 - (j1 + j2 + j) / 2));
-	    zmax = min((j1 + j2 - j) / 2, min((j1 - m1) / 2, (j2 + m2) / 2));
+		zmin = max(Long(0), max(j2 + (j1 - m1) / 2 - (j1 + j2 + j) / 2, j1 + (j2 + m2) / 2 - (j1 + j2 + j) / 2));
+		zmax = min((j1 + j2 - j) / 2, min((j1 - m1) / 2, (j2 + m2) / 2));
 
-	    sum = 0;
-	    for (z = zmin; z <= zmax; ++z) {
-	        par = 1;
-	            if (2 * (z / 2) - z != 0)
-	                par = -1;
-	        sum = sum + par * binom_Doub((j1 + j2 - j) / 2, z)*binom_Doub((j1 - j2 + j) / 2, (j1 - m1) / 2 - z)
-	            * binom_Doub((-j1 + j2 + j) / 2, (j2 + m2) / 2 - z);
-	    }
-	    cleb = factor * sum;
+		sum = 0;
+		for (z = zmin; z <= zmax; ++z) {
+			par = 1;
+				if (2 * (z / 2) - z != 0)
+					par = -1;
+			sum = sum + par * binom_Doub((j1 + j2 - j) / 2, z)*binom_Doub((j1 - j2 + j) / 2, (j1 - m1) / 2 - z)
+				* binom_Doub((-j1 + j2 + j) / 2, (j2 + m2) / 2 - z);
+		}
+		cleb = factor * sum;
 	}
 	return cleb;
 }
@@ -163,7 +163,7 @@ inline Doub sixj_Doub(Long_I two_a, Long_I two_b, Long_I two_c, Long_I two_d, Lo
 
 	sum = 0;
 	for (n = nlo; n <= nhi; ++n) {
-	    sumterm = pow(-1,n);
+		sumterm = pow(-1,n);
 	   sumterm = sumterm * binom_Doub(n+1,n-(two_a+two_b+two_c)/2);
 	   sumterm = sumterm * binom_Doub((two_a+two_b-two_c)/2,n-(two_c+two_d+two_e)/2);
 	   sumterm = sumterm * binom_Doub((two_a-two_b+two_c)/2,n-(two_b+two_d+two_f)/2);
@@ -192,8 +192,8 @@ inline Doub ninej_Doub(Long_I two_a, Long_I two_b, Long_I two_c, Long_I two_d, L
 	
 	sum = 0;
 	for (x = xlo; x <= xhi; x += 2) {
-	    sum = sum + pow(-1,x)*(x + 1)*sixj_Doub(two_a, two_b, two_c, two_f, two_i, x)*sixj_Doub(two_d, two_e, two_f, two_b, x, two_h)*
-	        sixj_Doub(two_g, two_h, two_i, x, two_a, two_d);
+		sum = sum + pow(-1,x)*(x + 1)*sixj_Doub(two_a, two_b, two_c, two_f, two_i, x)*sixj_Doub(two_d, two_e, two_f, two_b, x, two_h)*
+			sixj_Doub(two_g, two_h, two_i, x, two_a, two_d);
 	}
 	ninej = sum;
 	return ninej;
@@ -205,19 +205,19 @@ inline Doub yyy_Doub(Long_I l1, Long_I l2, Long_I L, Long_I M, Long_I l,
 	Long_I l1_, Long_I l2_, Long_I L_, Long_I M_)
 {
 	Doub out = (2 * l + 1) / (4 * PI)*sqrt((2 * l1_ + 1)*(2 * l2_ + 1)*(2 * L_ + 1))*
-	    cleb_Doub(l * 2, 0, l1_ * 2, 0, l1 * 2, 0) *
-	    cleb_Doub(l * 2, 0, l2_ * 2, 0, l2 * 2, 0) *
-	    ninej_Doub(l * 2, l1_ * 2, l1 * 2, l * 2, l2_ * 2, l2 * 2, 0, L_ * 2, L * 2);
+		cleb_Doub(l * 2, 0, l1_ * 2, 0, l1 * 2, 0) *
+		cleb_Doub(l * 2, 0, l2_ * 2, 0, l2 * 2, 0) *
+		ninej_Doub(l * 2, l1_ * 2, l1 * 2, l * 2, l2_ * 2, l2 * 2, 0, L_ * 2, L * 2);
 	return out;
 }
 
 inline Qdoub binom_Qdoub(Long_I n, Long_I r) {
 	if (n == r || r == 0)
-	    return 1;
+		return 1;
 	else if (r == 1)
-	    return (Qdoub)n;
+		return (Qdoub)n;
 	else
-	    return (Qdoub)n / Qdoub(n - r)*binom_Qdoub(n - 1, r);
+		return (Qdoub)n / Qdoub(n - r)*binom_Qdoub(n - 1, r);
 }
 
 // clebsch gordan coefficient [j1,m1,j2,m2,j,m] for integer numbers
@@ -227,29 +227,29 @@ inline Qdoub cleb_int_Qdoub(Long_I j1, Long_I m1, Long_I j2, Long_I m2, Long_I j
 	Long par, z, zmin, zmax;
 
 	if (j1 < 0 || j2 < 0 || j < 0 ||
-	    abs(m1)>j1 || abs(m2)>j2 || abs(m)>j ||
-	    j>j1+j2 || j<abs(j1-j2) || m1+m2!=m) {
-	    cleb = 0;
+		abs(m1)>j1 || abs(m2)>j2 || abs(m)>j ||
+		j>j1+j2 || j<abs(j1-j2) || m1+m2!=m) {
+		cleb = 0;
 	}
 	else if (isodd(j1+j2+j) && ((m1==0 && m2==0 && m==0) || (j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))) {
-	    cleb = 0;
+		cleb = 0;
 	}
 	else {
-	    factor = binom_Qdoub(2*j1, j1 + j2 - j) / binom_Qdoub(j1 + j2 + j + 1, j1 + j2 - j);
-	    factor *= binom_Qdoub(2*j2, j1 + j2 - j) / binom_Qdoub(2*j1, j1 - m1);
-	    factor /= binom_Qdoub(2*j2, j2 - m2) * binom_Qdoub(2*j, j - m);
-	    factor = sqrt(factor);
+		factor = binom_Qdoub(2*j1, j1 + j2 - j) / binom_Qdoub(j1 + j2 + j + 1, j1 + j2 - j);
+		factor *= binom_Qdoub(2*j2, j1 + j2 - j) / binom_Qdoub(2*j1, j1 - m1);
+		factor /= binom_Qdoub(2*j2, j2 - m2) * binom_Qdoub(2*j, j - m);
+		factor = sqrt(factor);
 
-	    zmin = max(Long(0), max(2*j2 + j1 - m1 - (j1 + j2 + j), 2*j1 + j2 + m2 - (j1 + j2 + j)));
-	    zmax = min(j1 + j2 - j, min(j1 - m1, j2 + m2));
+		zmin = max(Long(0), max(2*j2 + j1 - m1 - (j1 + j2 + j), 2*j1 + j2 + m2 - (j1 + j2 + j)));
+		zmax = min(j1 + j2 - j, min(j1 - m1, j2 + m2));
 
-	    sum = 0;
-	    for (z = zmin; z <= zmax; ++z) {
-	        par = isodd(z)? -1: 1;
-	        sum += par * binom_Qdoub(j1 + j2 - j, z)*binom_Qdoub(j1 - j2 + j, j1 - m1 - z)
-	            * binom_Qdoub(-j1 + j2 + j, j2 + m2 - z);
-	    }
-	    cleb = factor * sum;
+		sum = 0;
+		for (z = zmin; z <= zmax; ++z) {
+			par = isodd(z)? -1: 1;
+			sum += par * binom_Qdoub(j1 + j2 - j, z)*binom_Qdoub(j1 - j2 + j, j1 - m1 - z)
+				* binom_Qdoub(-j1 + j2 + j, j2 + m2 - z);
+		}
+		cleb = factor * sum;
 	}
 	return cleb;
 }
@@ -262,34 +262,34 @@ inline Qdoub cleb_Qdoub(Long_I two_j1, Long_I two_m1, Long_I two_j2, Long_I two_
 	Long par, z, zmin, zmax;
 
 	if (2 * (j1 / 2) - j1 != 2 * (abs(m1) / 2) - abs(m1) ||
-	    2 * (j2 / 2) - j2 != 2 * (abs(m2) / 2) - abs(m2) ||
-	    2 * (j / 2) - j != 2 * (abs(m) / 2) - abs(m) ||
-	    j1<0 || j2<0  || j<0 || abs(m1)>j1 || abs(m2)>j2 ||
-	    abs(m)>j || j1 + j2<j || abs(j1 - j2)>j || m1 + m2 != m) {
-	    cleb = 0;
+		2 * (j2 / 2) - j2 != 2 * (abs(m2) / 2) - abs(m2) ||
+		2 * (j / 2) - j != 2 * (abs(m) / 2) - abs(m) ||
+		j1<0 || j2<0  || j<0 || abs(m1)>j1 || abs(m2)>j2 ||
+		abs(m)>j || j1 + j2<j || abs(j1 - j2)>j || m1 + m2 != m) {
+		cleb = 0;
 	}
 	else if (!isodd(j1) && !isodd(j2) && !isodd(j) && isodd((j1+j2+j)/2) && ((m1==0 && m2==0 && m==0) ||
 		(j1==j2 && m1==m2) || (j1==j && m1==m) || (j2==j && m2==m))) {
-	    cleb = 0;
+		cleb = 0;
 	}
 	else {
-	    factor = binom_Qdoub(j1, (j1 + j2 - j) / 2) / binom_Qdoub((j1 + j2 + j + 2) / 2, (j1 + j2 - j) / 2);
-	    factor = factor * binom_Qdoub(j2, (j1 + j2 - j) / 2) / binom_Qdoub(j1, (j1 - m1) / 2);
-	    factor = factor / binom_Qdoub(j2, (j2 - m2) / 2) / binom_Qdoub(j, (j - m) / 2);
-	    factor = sqrt(factor);
+		factor = binom_Qdoub(j1, (j1 + j2 - j) / 2) / binom_Qdoub((j1 + j2 + j + 2) / 2, (j1 + j2 - j) / 2);
+		factor = factor * binom_Qdoub(j2, (j1 + j2 - j) / 2) / binom_Qdoub(j1, (j1 - m1) / 2);
+		factor = factor / binom_Qdoub(j2, (j2 - m2) / 2) / binom_Qdoub(j, (j - m) / 2);
+		factor = sqrt(factor);
 
-	    zmin = max(Long(0), max(j2 + (j1 - m1) / 2 - (j1 + j2 + j) / 2, j1 + (j2 + m2) / 2 - (j1 + j2 + j) / 2));
-	    zmax = min((j1 + j2 - j) / 2, min((j1 - m1) / 2, (j2 + m2) / 2));
+		zmin = max(Long(0), max(j2 + (j1 - m1) / 2 - (j1 + j2 + j) / 2, j1 + (j2 + m2) / 2 - (j1 + j2 + j) / 2));
+		zmax = min((j1 + j2 - j) / 2, min((j1 - m1) / 2, (j2 + m2) / 2));
 
-	    sum = 0;
-	    for (z = zmin; z <= zmax; ++z) {
-	        par = 1;
-	            if (2 * (z / 2) - z != 0)
-	                par = -1;
-	        sum = sum + par * binom_Qdoub((j1 + j2 - j) / 2, z)*binom_Qdoub((j1 - j2 + j) / 2, (j1 - m1) / 2 - z)
-	            * binom_Qdoub((-j1 + j2 + j) / 2, (j2 + m2) / 2 - z);
-	    }
-	    cleb = factor * sum;
+		sum = 0;
+		for (z = zmin; z <= zmax; ++z) {
+			par = 1;
+				if (2 * (z / 2) - z != 0)
+					par = -1;
+			sum = sum + par * binom_Qdoub((j1 + j2 - j) / 2, z)*binom_Qdoub((j1 - j2 + j) / 2, (j1 - m1) / 2 - z)
+				* binom_Qdoub((-j1 + j2 + j) / 2, (j2 + m2) / 2 - z);
+		}
+		cleb = factor * sum;
 	}
 	return cleb;
 }
@@ -350,7 +350,7 @@ inline Qdoub sixj_Qdoub(Long_I two_a, Long_I two_b, Long_I two_c, Long_I two_d, 
 
 	sum = 0;
 	for (n = nlo; n <= nhi; ++n) {
-	    sumterm = pow(-1,n);
+		sumterm = pow(-1,n);
 	   sumterm = sumterm * binom_Qdoub(n+1,n-(two_a+two_b+two_c)/2);
 	   sumterm = sumterm * binom_Qdoub((two_a+two_b-two_c)/2,n-(two_c+two_d+two_e)/2);
 	   sumterm = sumterm * binom_Qdoub((two_a-two_b+two_c)/2,n-(two_b+two_d+two_f)/2);
@@ -379,8 +379,8 @@ inline Qdoub ninej_Qdoub(Long_I two_a, Long_I two_b, Long_I two_c, Long_I two_d,
 	
 	sum = 0;
 	for (x = xlo; x <= xhi; x += 2) {
-	    sum = sum + pow(-1,x)*(x + 1)*sixj_Qdoub(two_a, two_b, two_c, two_f, two_i, x)*sixj_Qdoub(two_d, two_e, two_f, two_b, x, two_h)*
-	        sixj_Qdoub(two_g, two_h, two_i, x, two_a, two_d);
+		sum = sum + pow(-1,x)*(x + 1)*sixj_Qdoub(two_a, two_b, two_c, two_f, two_i, x)*sixj_Qdoub(two_d, two_e, two_f, two_b, x, two_h)*
+			sixj_Qdoub(two_g, two_h, two_i, x, two_a, two_d);
 	}
 	ninej = sum;
 	return ninej;
@@ -392,9 +392,9 @@ inline Qdoub yyy_Qdoub(Long_I l1, Long_I l2, Long_I L, Long_I M, Long_I l,
 	Long_I l1_, Long_I l2_, Long_I L_, Long_I M_)
 {
 	Qdoub out = (2 * l + 1) / (4 * PI)*sqrt((2 * l1_ + 1)*(2 * l2_ + 1)*(2 * L_ + 1))*
-	    cleb_Qdoub(l * 2, 0, l1_ * 2, 0, l1 * 2, 0) *
-	    cleb_Qdoub(l * 2, 0, l2_ * 2, 0, l2 * 2, 0) *
-	    ninej_Qdoub(l * 2, l1_ * 2, l1 * 2, l * 2, l2_ * 2, l2 * 2, 0, L_ * 2, L * 2);
+		cleb_Qdoub(l * 2, 0, l1_ * 2, 0, l1 * 2, 0) *
+		cleb_Qdoub(l * 2, 0, l2_ * 2, 0, l2 * 2, 0) *
+		ninej_Qdoub(l * 2, l1_ * 2, l1 * 2, l * 2, l2_ * 2, l2 * 2, 0, L_ * 2, L * 2);
 	return out;
 }
 
@@ -418,7 +418,7 @@ inline Doub sixj(Long_I two_a, Long_I two_b, Long_I two_c, Long_I two_d, Long_I 
 { return sixj_Doub(two_a, two_b, two_c, two_d, two_e, two_f); }
 
 inline Doub ninej(Long_I two_a, Long_I two_b, Long_I two_c, Long_I two_d, Long_I two_e,
-    Long_I two_f, Long_I two_g, Long_I two_h, Long_I two_i)
+	Long_I two_f, Long_I two_g, Long_I two_h, Long_I two_i)
 { return ninej_Doub(two_a, two_b, two_c, two_d, two_e, two_f, two_g, two_h, two_i); }
 
 inline Doub yyy(Long_I l1, Long_I l2, Long_I L, Long_I M, Long_I l,

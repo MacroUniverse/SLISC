@@ -157,104 +157,91 @@ inline Str utf32to16(Str32_I str32)
 // see also: chinese_unicode.m (Matlab code)
 inline Bool is_chinese(Char32_I c)
 {
-    // not sorted
-    static const Char32 range[] = {
-        0x4E00, 0x9FA5, // '基本汉字'
-        0x9FA6, 0x9FFF, // '基本汉字补充（紧接上一行）'
-        0x3400, 0x4DBF, // '扩展A'U'\u
-        0x20000, 0x2A6DF, // '扩展B'
-        0x2A700, 0x2B739, // '扩展C'
-        0x2B740, 0x2B81D, // '扩展D'
-        0x2B820, 0x2CEA1, // '扩展E'
-        0x2CEB0, 0x2EBE0, // '扩展F'
-        0x30000, 0x3134A, // '扩展G'
-        0x31350, 0x323AF, // '扩展H'
-        0x2F00, 0x2FD5, // '康熙部首'
-        0x2E80, 0x2EF3, // '部首扩展'
-        0xF900, 0xFAD9, // '兼容汉字'
-        0x2F800, 0x2FA1D, // '兼容扩展'
-        0x31C0, 0x31E3, // '汉字笔画'
-        0x2FF0, 0x2FFB, // '汉字结构'
-        0x3105, 0x312F, // '汉语注音'
-        0x31A0, 0x31BF, // '注音扩展'
-        0x3007, 0x3007 // '〇'
-    };
+	// not sorted
+	static const Char32 range[] = {
+		0x4E00, 0x9FA5, // '基本汉字'
+		0x9FA6, 0x9FFF, // '基本汉字补充（紧接上一行）'
+		0x3400, 0x4DBF, // '扩展A'U'\u
+		0x20000, 0x2A6DF, // '扩展B'
+		0x2A700, 0x2B739, // '扩展C'
+		0x2B740, 0x2B81D, // '扩展D'
+		0x2B820, 0x2CEA1, // '扩展E'
+		0x2CEB0, 0x2EBE0, // '扩展F'
+		0x30000, 0x3134A, // '扩展G'
+		0x31350, 0x323AF, // '扩展H'
+		0x2F00, 0x2FD5, // '康熙部首'
+		0x2E80, 0x2EF3, // '部首扩展'
+		0xF900, 0xFAD9, // '兼容汉字'
+		0x2F800, 0x2FA1D, // '兼容扩展'
+		0x31C0, 0x31E3, // '汉字笔画'
+		0x2FF0, 0x2FFB, // '汉字结构'
+		0x3105, 0x312F, // '汉语注音'
+		0x31A0, 0x31BF, // '注音扩展'
+		0x3007, 0x3007 // '〇'
+	};
 	static_assert(sizeof(Char32) == 4, "unexpected!");
-    Long N = sizeof(range) / sizeof(range[0]);
-    // TODO: use bisection to optimize
-    for (Long i = 0; i < N; i += 2) {
-        if (c >= range[i] && c <= range[i+1])
-            return true;
-    }
-    return false;
+	Long N = sizeof(range) / sizeof(range[0]);
+	// TODO: use bisection to optimize
+	for (Long i = 0; i < N; i += 2) {
+		if (c >= range[i] && c <= range[i+1])
+			return true;
+	}
+	return false;
 }
 
 // see if a character is an emoji
-Bool is_emoji(Char32_I c) {
-    return (
-        (c >= 0x1F600 && c <= 0x1F64F) || // Emoticons
-        (c >= 0x2700 && c <= 0x27BF) || // Dingbats
-        (c >= 0x1F680 && c <= 0x1F6FF) || // Transport and Map Symbols
-        (c >= 0x2600 && c <= 0x26FF) || // Miscellaneous Symbols
-        (c >= 0x1F300 && c <= 0x1F5FF) || // Miscellaneous Symbols and Pictographs
-        (c >= 0x1F900 && c <= 0x1F9FF) || // Supplemental Symbols and Pictographs
-        (c >= 0x1FA00 && c <= 0x1FA6F) // Symbols and Pictographs Extended-A
-    );
-}
-
 // by GPT-4, not verified
-// see if a character is an emoji
-Bool is_emoji(Char32_I c) {
-    return (
-        (c >= 0x1F600 && c <= 0x1F64F) || // Emoticons
-        (c >= 0x2700 && c <= 0x27BF) || // Dingbats
-        (c >= 0x1F680 && c <= 0x1F6FF) || // Transport and Map Symbols
-        (c >= 0x2600 && c <= 0x26FF) || // Miscellaneous Symbols
-        (c >= 0x1F300 && c <= 0x1F5FF) || // Miscellaneous Symbols and Pictographs
-        (c >= 0x1F900 && c <= 0x1F9FF) || // Supplemental Symbols and Pictographs
-        (c >= 0x1FA00 && c <= 0x1FA6F) // Symbols and Pictographs Extended-A
-    );
+inline Bool is_emoji(Char32_I c) {
+	return (
+		(c >= 0x1F600 && c <= 0x1F64F) || // Emoticons
+		(c >= 0x2700 && c <= 0x27BF) || // Dingbats
+		(c >= 0x1F680 && c <= 0x1F6FF) || // Transport and Map Symbols
+		(c >= 0x2600 && c <= 0x26FF) || // Miscellaneous Symbols
+		(c >= 0x1F300 && c <= 0x1F5FF) || // Miscellaneous Symbols and Pictographs
+		(c >= 0x1F900 && c <= 0x1F9FF) || // Supplemental Symbols and Pictographs
+		(c >= 0x1FA00 && c <= 0x1FA6F) // Symbols and Pictographs Extended-A
+	);
 }
 
 // convert a utf-32 char to utf-8
 // (verified)
-Str u8(Char32_I c) {
-    Str utf8;
-    if (c <= 0x7F) // 0xxxxxxx
-        utf8.push_back(char(c));
-    else if (c <= 0x7FF) { // 110xxxxx 10xxxxxx
-        utf8.push_back(char(0xC0 | (c >> 6)));
-        utf8.push_back(char(0x80 | (c & 0x3F)));
-    }
-    else if (c <= 0xFFFF) { // 1110xxxx 10xxxxxx 10xxxxxx
-        utf8.push_back(char(0xE0 | (c >> 12)));
-        utf8.push_back(char(0x80 | ((c >> 6) & 0x3F)));
-        utf8.push_back(char(0x80 | (c & 0x3F)));
-    }
-    else if (c <= 0x10FFFF) { // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-        utf8.push_back(char(0xF0 | (c >> 18)));
-        utf8.push_back(char(0x80 | ((c >> 12) & 0x3F)));
-        utf8.push_back(char(0x80 | ((c >> 6) & 0x3F)));
-        utf8.push_back(char(0x80 | (c & 0x3F)));
-    }
-    else
-        throw std::runtime_error("Invalid Unicode codepoint.");
-    return utf8;
+inline Str u8(Char32_I c) {
+	Str utf8;
+	if (c <= 0x7F)
+		utf8.push_back(char(c));
+	else if (c <= 0x7FF) {
+		utf8.push_back(char(0xC0 | (c >> 6)));
+		utf8.push_back(char(0x80 | (c & 0x3F)));
+	}
+	else if (c <= 0xFFFF) {
+		utf8.push_back(char(0xE0 | (c >> 12)));
+		utf8.push_back(char(0x80 | ((c >> 6) & 0x3F)));
+		utf8.push_back(char(0x80 | (c & 0x3F)));
+	}
+	else if (c <= 0x10FFFF) {
+		utf8.push_back(char(0xF0 | (c >> 18)));
+		utf8.push_back(char(0x80 | ((c >> 12) & 0x3F)));
+		utf8.push_back(char(0x80 | ((c >> 6) & 0x3F)));
+		utf8.push_back(char(0x80 | (c & 0x3F)));
+	}
+	else
+		throw std::runtime_error("Invalid Unicode codepoint.");
+	return utf8;
 }
 
 // check if is the start of a utf-8 character
-bool is_char8_start(Str_I str, Long_I index) {
-    if (index >= str.size()) {
-        return false;
-    }
+inline bool is_char8_start(Str_I str, Long_I index) {
+	if (index >= size(str)) {
+		return false;
+	}
 
-    unsigned char byte = str[index];
-    if ((byte & 0b10000000) == 0) { // ASCII character (most significant bit is 0)
-        return true;
-    }
+	unsigned char byte = str[index];
+	if ((byte & 0b10000000) == 0) { // ASCII character (most significant bit is 0)
+		return true;
+	}
 
-    // Multi-byte character starts with a sequence of 1's followed by a 0
-    return (byte & 0b11000000) == 0b11000000;
+	// Multi-byte character starts with a sequence of 1's followed by a 0
+	return (byte & 0b11000000) == 0b11000000;
 }
 
 // recycle
@@ -275,19 +262,19 @@ bool is_char8_start(Str_I str, Long_I index) {
 // include punctuations
 inline Bool is_chinese_punc(Char32_I c)
 {
-    static const Str32 s = U"，。？！、：；“”‘’（）【】…—《》￥·";
+	static const Str32 s = U"，。？！、：；“”‘’（）【】…—《》￥·";
 
-    static Bool check = false;
-    if (!check) {
-        check = true;
-        for (auto c1 : s)
-            if (is_chinese(c1))
-                SLS_ERR("I didn't expect is_chinese() to contain punc, modify that function.");
-    }
+	static Bool check = false;
+	if (!check) {
+		check = true;
+		for (auto c1 : s)
+			if (is_chinese(c1))
+				SLS_ERR("I didn't expect is_chinese() to contain punc, modify that function.");
+	}
 
-    if ((Long)s.find(c) >= 0)
-        return true;
-    return false;
+	if ((Long)s.find(c) >= 0)
+		return true;
+	return false;
 }
 
 } // namespace slisc

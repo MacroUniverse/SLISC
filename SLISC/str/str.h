@@ -937,15 +937,15 @@ inline Doub str2double(Str32_I str, Long_I start = 0)
 // str = v[0] + sep + v[1] + sep + ... v.back()
 inline void parse(vector<Str> &v, Str_I str, Str_I sep = " ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.push_back(str.substr(ind0, ind1-ind0));
-        ind0 = ind1 + 1;
-    }
-    v.push_back(str.substr(ind0));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.push_back(str.substr(ind0, ind1-ind0));
+		ind0 = ind1 + 1;
+	}
+	v.push_back(str.substr(ind0));
 }
 
 inline void join(Str_O str, const vector<Str> &v, Str_I sep = " ")
@@ -959,15 +959,15 @@ inline void join(Str_O str, const vector<Str> &v, Str_I sep = " ")
 
 inline void parse(vector<Str32> &v, Str32_I str, Str32_I sep = U" ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.push_back(str.substr(ind0, ind1-ind0));
-        ind0 = ind1 + 1;
-    }
-    v.push_back(str.substr(ind0));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.push_back(str.substr(ind0, ind1-ind0));
+		ind0 = ind1 + 1;
+	}
+	v.push_back(str.substr(ind0));
 }
 
 inline void join(Str32_O str, const vector<Str32> &v, Str32_I sep = U" ")
@@ -981,15 +981,15 @@ inline void join(Str32_O str, const vector<Str32> &v, Str32_I sep = U" ")
 
 inline void parse(set<Str> &v, Str_I str, Str_I sep = " ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str.substr(ind0, ind1-ind0));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str.substr(ind0));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str.substr(ind0, ind1-ind0));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str.substr(ind0));
 }
 
 inline void join(Str_O str, const set<Str> &v, Str_I sep = " ")
@@ -1003,15 +1003,15 @@ inline void join(Str_O str, const set<Str> &v, Str_I sep = " ")
 
 inline void parse(set<Str32> &v, Str32_I str, Str32_I sep = U" ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str.substr(ind0, ind1-ind0));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str.substr(ind0));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str.substr(ind0, ind1-ind0));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str.substr(ind0));
 }
 
 inline void join(Str32_O str, const set<Str32> &v, Str32_I sep = U" ")
@@ -1025,15 +1025,15 @@ inline void join(Str32_O str, const set<Str32> &v, Str32_I sep = U" ")
 
 inline void parse(unordered_set<Str> &v, Str_I str, Str_I sep = " ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str.substr(ind0, ind1-ind0));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str.substr(ind0));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str.substr(ind0, ind1-ind0));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str.substr(ind0));
 }
 
 inline void join(Str_O str, const unordered_set<Str> &v, Str_I sep = " ")
@@ -1047,15 +1047,15 @@ inline void join(Str_O str, const unordered_set<Str> &v, Str_I sep = " ")
 
 inline void parse(unordered_set<Str32> &v, Str32_I str, Str32_I sep = U" ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str.substr(ind0, ind1-ind0));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str.substr(ind0));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str.substr(ind0, ind1-ind0));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str.substr(ind0));
 }
 
 inline void join(Str32_O str, const unordered_set<Str32> &v, Str32_I sep = U" ")
@@ -1072,15 +1072,15 @@ inline void join(Str32_O str, const unordered_set<Str32> &v, Str32_I sep = U" ")
 // str = v[0] + sep + v[1] + sep + ... v.back()
 inline void parse(vector<Llong> &v, Str_I str, Str_I sep = " ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.push_back(str2int(str.substr(ind0, ind1-ind0)));
-        ind0 = ind1 + 1;
-    }
-    v.push_back(str2int(str.substr(ind0)));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.push_back(str2int(str.substr(ind0, ind1-ind0)));
+		ind0 = ind1 + 1;
+	}
+	v.push_back(str2int(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const vector<Llong> &v, Str_I sep = " ")
@@ -1094,15 +1094,15 @@ inline void join(Str_O str, const vector<Llong> &v, Str_I sep = " ")
 
 inline void parse(vector<Llong> &v, Str32_I str, Str32_I sep = U" ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.push_back(str2int(str.substr(ind0, ind1-ind0)));
-        ind0 = ind1 + 1;
-    }
-    v.push_back(str2int(str.substr(ind0)));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.push_back(str2int(str.substr(ind0, ind1-ind0)));
+		ind0 = ind1 + 1;
+	}
+	v.push_back(str2int(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const vector<Llong> &v, Str32_I sep = U" ")
@@ -1116,15 +1116,15 @@ inline void join(Str32_O str, const vector<Llong> &v, Str32_I sep = U" ")
 
 inline void parse(set<Llong> &v, Str_I str, Str_I sep = " ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str2int(str.substr(ind0, ind1-ind0)));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str2int(str.substr(ind0)));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str2int(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const set<Llong> &v, Str_I sep = " ")
@@ -1138,15 +1138,15 @@ inline void join(Str_O str, const set<Llong> &v, Str_I sep = " ")
 
 inline void parse(set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str2int(str.substr(ind0, ind1-ind0)));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str2int(str.substr(ind0)));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str2int(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const set<Llong> &v, Str32_I sep = U" ")
@@ -1160,15 +1160,15 @@ inline void join(Str32_O str, const set<Llong> &v, Str32_I sep = U" ")
 
 inline void parse(unordered_set<Llong> &v, Str_I str, Str_I sep = " ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str2int(str.substr(ind0, ind1-ind0)));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str2int(str.substr(ind0)));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str2int(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const unordered_set<Llong> &v, Str_I sep = " ")
@@ -1182,15 +1182,15 @@ inline void join(Str_O str, const unordered_set<Llong> &v, Str_I sep = " ")
 
 inline void parse(unordered_set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 {
-    Long ind0 = 0; v.clear();
-    if (str.empty()) return;
-    while (1) {
-        Long ind1 = str.find(sep, ind0);
-        if (ind1 < 0) break;
-        v.insert(str2int(str.substr(ind0, ind1-ind0)));
-        ind0 = ind1 + 1;
-    }
-    v.insert(str2int(str.substr(ind0)));
+	Long ind0 = 0; v.clear();
+	if (str.empty()) return;
+	while (1) {
+		Long ind1 = str.find(sep, ind0);
+		if (ind1 < 0) break;
+		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		ind0 = ind1 + 1;
+	}
+	v.insert(str2int(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")
@@ -1319,57 +1319,57 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 
 // convert a number to chinese
 inline Str32 num2chinese(Long num) {
-    map<Long, Str32> digits = {
-        {0, U"零"}, {1, U"一"}, {2, U"二"}, {3, U"三"}, {4, U"四"},
-        {5, U"五"}, {6, U"六"}, {7, U"七"}, {8, U"八"}, {9, U"九"},
-    };
-    map<Long, Str32> units = {
-        {1, U"十"}, {2, U"百"}, {3, U"千"}, {4, U"万"},
-    };
+	map<Long, Str32> digits = {
+		{0, U"零"}, {1, U"一"}, {2, U"二"}, {3, U"三"}, {4, U"四"},
+		{5, U"五"}, {6, U"六"}, {7, U"七"}, {8, U"八"}, {9, U"九"},
+	};
+	map<Long, Str32> units = {
+		{1, U"十"}, {2, U"百"}, {3, U"千"}, {4, U"万"},
+	};
 
-    Str32 result = U"";
+	Str32 result = U"";
 
 	if (num >= 100000 || num < 0)
 		SLS_ERR("not supported yet!");
 
 	if (num >= 10000) {
-        Long num1 = num / 10000;
-        num %= 10000;
-        result += digits[num1] + units[4];
-        if (num > 0 && num < 1000)
-            result += digits[0];
-    }
+		Long num1 = num / 10000;
+		num %= 10000;
+		result += digits[num1] + units[4];
+		if (num > 0 && num < 1000)
+			result += digits[0];
+	}
 
-    if (num >= 1000) {
-        Long num1 = num / 1000;
-        num %= 1000;
-        result += digits[num1] + units[3];
-        if (num > 0 && num < 100)
-            result += digits[0];
-    }
+	if (num >= 1000) {
+		Long num1 = num / 1000;
+		num %= 1000;
+		result += digits[num1] + units[3];
+		if (num > 0 && num < 100)
+			result += digits[0];
+	}
 
-    if (num >= 100) {
-        Long num1 = num / 100;
-        num %= 100;
-        result += digits[num1] + units[2];
-        if (num > 0 && num < 10)
-            result += digits[0];
-    }
+	if (num >= 100) {
+		Long num1 = num / 100;
+		num %= 100;
+		result += digits[num1] + units[2];
+		if (num > 0 && num < 10)
+			result += digits[0];
+	}
 
-    if (num >= 10) {
-        Long num1 = num / 10;
-        num %= 10;
-        if (num1 != 1 || !result.empty())
-            result += digits[num1];
-        result += units[1];
-    }
+	if (num >= 10) {
+		Long num1 = num / 10;
+		num %= 10;
+		if (num1 != 1 || !result.empty())
+			result += digits[num1];
+		result += units[1];
+	}
 
-    if (num > 0 || result.empty())
-        result += digits[num];
+	if (num > 0 || result.empty())
+		result += digits[num];
 
 	if (result.substr(0, 2) == U"一十")
 		result = result.substr(1);
-    return result;
+	return result;
 }
 
 } // namespace slisc
