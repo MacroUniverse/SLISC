@@ -11,6 +11,8 @@ test_sqlite.o: tests/test_sqlite.cpp tests/../SLISC/file/file.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/file/../util/linux.h tests/../SLISC/file/../util/bit.h \
  tests/../SLISC/file/../arith/arith1.h \

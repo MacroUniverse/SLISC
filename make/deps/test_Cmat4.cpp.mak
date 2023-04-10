@@ -14,6 +14,8 @@ test_Cmat4.o: tests/test_Cmat4.cpp tests/../SLISC/arith/arith2.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/arith/../arith/../dense/Mat.h \
  tests/../SLISC/arith/../arith/../dense/Mat3.h \

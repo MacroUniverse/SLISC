@@ -15,6 +15,8 @@ test_disp.o: tests/test_disp.cpp tests/../SLISC/str/disp.h \
  tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/str/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/str/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/str/../arith/../arith/../dense/Mat3.h \

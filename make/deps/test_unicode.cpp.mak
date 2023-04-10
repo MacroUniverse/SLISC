@@ -9,5 +9,7 @@ test_unicode.o: tests/test_unicode.cpp tests/../SLISC/str/unicode.h \
  tests/../SLISC/str/utfcpp/utf8.h \
  tests/../SLISC/str/utfcpp/utf8/checked.h \
  tests/../SLISC/str/utfcpp/utf8/core.h \
+ tests/../SLISC/str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/str/utfcpp/utf8/checked.h \
  tests/../SLISC/str/utfcpp/utf8/unchecked.h
 	$(opt_compiler) $(flags) -c tests/test_unicode.cpp

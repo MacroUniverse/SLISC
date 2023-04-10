@@ -16,6 +16,8 @@ test_Scmat3.o: tests/test_Scmat3.cpp tests/../SLISC/dense/Scmat3.h \
  tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/util/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/util/../arith/../arith/../dense/Mat3.h \

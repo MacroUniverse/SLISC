@@ -480,4 +480,32 @@ inline void maxN_quick3(T *v, Long_I N, Long_I Nmax)
 	maxN_quick3(v+i, N-i, Nmax);
 }
 
+template <class Tv, class To>
+inline Long reorder_inplace_helper(Tv &v, const To &order, Long_I i, Long_I j)
+{
+	Long k = order[j];
+	if (k >= i)
+		return k;
+
+	return reorder_inplace_helper(v, order, i, k);	
+}
+
+template <class Tv, class To>
+inline void reorder_inplace(Tv &v, const To &order)
+{
+	Long N = v.size();
+	for (Long i = 0; i < N; ++i) {
+		Long j = order[i];
+		if (j > i) {
+			swap(v[i], v[j]);
+		}
+		else if (j < i) {
+			// return k >= i
+			Long k = reorder_inplace_helper(v, order, i, j);
+			if (k > i)
+				swap(v[i], v[k]);
+		}
+	}
+}
+
 } // namespace slisc

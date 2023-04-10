@@ -10,6 +10,8 @@ test_ylm.o: tests/test_ylm.cpp tests/../SLISC/spec/ylm.h \
  tests/../SLISC/spec/../str/utfcpp/utf8.h \
  tests/../SLISC/spec/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/spec/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/spec/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/spec/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/spec/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/spec/../spec/legendreP.h \
  tests/../SLISC/spec/../spec/anglib.h

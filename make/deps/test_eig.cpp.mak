@@ -15,6 +15,8 @@ test_eig.o: tests/test_eig.cpp tests/../SLISC/lin/eig.h \
  tests/../SLISC/lin/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/lin/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/lin/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/lin/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/lin/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/lin/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/lin/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/lin/../arith/../arith/../dense/Mat3.h \

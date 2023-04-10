@@ -10,6 +10,8 @@ test_sort.o: tests/test_sort.cpp tests/../SLISC/algo/sort.h \
  tests/../SLISC/algo/../str/utfcpp/utf8.h \
  tests/../SLISC/algo/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/algo/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/algo/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/algo/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/algo/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/algo/../algo/heap.h \
  tests/../SLISC/algo/../algo/../util/random.h \

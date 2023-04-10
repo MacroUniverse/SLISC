@@ -16,6 +16,8 @@ test_mat_fun.o: tests/test_mat_fun.cpp tests/../SLISC/lin/mat_fun.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/lin/../sparse/../arith/../arith/../dense/Mat3.h \

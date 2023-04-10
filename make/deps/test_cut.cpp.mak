@@ -13,6 +13,8 @@ test_cut.o: tests/test_cut.cpp tests/../SLISC/dense/cut.h \
  tests/../SLISC/dense/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/dense/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/dense/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/dense/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/dense/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/dense/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/dense/../dense/Mat.h tests/../SLISC/dense/../dense/Cmat.h \
  tests/../SLISC/dense/../dense/Cmat3.h \

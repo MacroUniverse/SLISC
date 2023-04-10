@@ -15,6 +15,8 @@ test_Cmobd.o: tests/test_Cmobd.cpp tests/../SLISC/sparse/sparse_arith.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/Mat3.h \

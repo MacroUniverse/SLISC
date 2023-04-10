@@ -14,6 +14,8 @@ test_fft.o: tests/test_fft.cpp tests/../SLISC/sci/fft.h \
  tests/../SLISC/sci/../dense/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/sci/../dense/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/sci/../dense/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/sci/../dense/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/sci/../dense/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/sci/../dense/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/sci/../dense/../dense/Mat.h \
  tests/../SLISC/sci/../dense/../dense/Cmat.h \

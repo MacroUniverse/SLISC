@@ -13,6 +13,8 @@ test_Vec.o: tests/test_Vec.cpp tests/../SLISC/arith/compare.h \
  tests/../SLISC/arith/../dense/../dense/../str/../str/utfcpp/utf8.h \
  tests/../SLISC/arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/arith/../dense/../dense/../str/../str/utfcpp/utf8/core.h \
+ tests/../SLISC/arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
+ tests/../SLISC/arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
  tests/../SLISC/arith/../dense/Mat.h tests/../SLISC/arith/../dense/Mat3.h \
  tests/../SLISC/arith/../dense/Cmat.h \

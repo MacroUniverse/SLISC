@@ -11,10 +11,6 @@
 #endif
 #include "utfcpp/utf8.h"
 
-#ifdef SLS_USE_WINDOWS
-	#define SLS_USE_UTFCPP
-#endif
-
 namespace slisc {
 
 using std::stringstream;
@@ -238,13 +234,13 @@ public:
 	u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
 		if (i == -1)
 			ind = skip_char8(str, size(str), -1);
-		if (!is_char8_start(str, i))
+		if (!is_char8_start(s, i))
 			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
 	};
 
 	Long operator=(Long_I i) {
-		if (!is_char8_start(str, i))
-			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
+		if (!is_char8_start(s, i))
+			throw std::runtime_error("u8_iter::operator=(i): not the start of a utf-8 char!");
 		return i;
 	}
 
@@ -256,7 +252,7 @@ public:
 		return u8_iter(s, skip_char8(s, ind, N));
 	}
 
-	u8_iter operator+(Long_I N) {
+	u8_iter operator+(Llong_I N) {
 		return u8_iter(s, skip_char8(s, ind, N));
 	}
 
@@ -264,7 +260,7 @@ public:
 		return u8_iter(s, skip_char8(s, ind, -N));
 	}
 
-	u8_iter operator-(Long_I N) {
+	u8_iter operator-(Llong_I N) {
 		return u8_iter(s, skip_char8(s, ind, -N));
 	}
 
@@ -276,7 +272,7 @@ public:
 		ind = skip_char8(s, ind, -1);
 	}
 
-	void operator+=(Long_I N) {
+	void operator+=(Llong_I N) {
 		ind = skip_char8(s, ind, N);
 	}
 
