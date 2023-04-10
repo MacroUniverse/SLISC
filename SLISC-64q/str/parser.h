@@ -10,13 +10,13 @@ namespace slisc {
 // return one index after '}', return -1 if failed
 // might return str.size()
 // type can only be '{' for now
-inline Long skip_scope(Str32_I str, Long_I ind, Long_I N = 1, Char32_I type = U'{')
+inline Long skip_scope(Str_I str, Long_I ind, Long_I N = 1, Char32_I type = '{')
 {
 	Long ind0 = ind;
 	for (Long i = 0; i < N; ++i) {
-		ind0 = expect(str, U"{", ind0);
+		ind0 = expect(str, u8"{", ind0);
 		if (ind0 < 0)
-			throw Str32(U"skip_scope(): failed!");
+			throw Str(u8"skip_scope(): failed!");
 		ind0 = pair_brace(str, ind0 - 1) + 1;
 	}
 	return ind0;
@@ -27,18 +27,18 @@ inline Long skip_scope(Str32_I str, Long_I ind, Long_I N = 1, Char32_I type = U'
 // if option = 'i', range does not include {}, if 'o', range from first character of <key> to '}'
 // return the left interval boundary, output the right boundary
 // return -1 if not found.
-inline Long find_scope(Long_O right, Str32_I key, Str32_I str, Long_I start, Char option = 'i')
+inline Long find_scope(Long_O right, Str_I key, Str_I str, Long_I start, Char option = 'i')
 {
 	Long ind0 = start, ind1;
 	Long left;
 	while (true) {
-		ind1 = str.find(/*U"\\" +*/ key, ind0);
+		ind1 = str.find(/*u8"\\" +*/ key, ind0);
 		if (ind1 < 0) {
 			right = -1;
 			return -1;
 		}
 		ind0 = ind1 + key.size();
-		ind0 = expect(str, U"{", ind0);
+		ind0 = expect(str, u8"{", ind0);
 		if (ind0 < 0) {
 			ind0 = ind1 + key.size(); continue;
 		}
@@ -49,7 +49,7 @@ inline Long find_scope(Long_O right, Str32_I key, Str32_I str, Long_I start, Cha
 			break;
 		}
 		else {
-			ind0 = expect(str, U"{", ind0 + 1);
+			ind0 = expect(str, u8"{", ind0 + 1);
 			if (ind0 < 0)
 				continue;
 			ind0 = pair_brace(str, ind0 - 1);
@@ -65,7 +65,7 @@ inline Long find_scope(Long_O right, Str32_I key, Str32_I str, Long_I start, Cha
 // if option = 'i', intervals are the strings inside "{}" (not including)
 // if option = 'o', range from first character of "key" to '}' (including)
 // return number of scopes found
-inline Long find_scopes(Intvs_O intv, Str32_I key, Str32_I str, Char option = 'i')
+inline Long find_scopes(Intvs_O intv, Str_I key, Str_I str, Char option = 'i')
 {
 	intv.clear();
 	Long ind0 = 0, right;
@@ -85,7 +85,7 @@ inline Long find_scopes(Intvs_O intv, Str32_I key, Str32_I str, Char option = 'i
 // return number of comments found.
 // interval is from key[0] to '\n' (including)
 // if the comment is at the end of file, right bound is one after the laster char
-inline Long find_comments(Intvs_O intv, Str32_I str, Str32_I key)
+inline Long find_comments(Intvs_O intv, Str_I str, Str_I key)
 {
 	Long ind0{}, ind1{};
 	Long N{}; // number of comments found
@@ -94,14 +94,14 @@ inline Long find_comments(Intvs_O intv, Str32_I str, Str32_I key)
 		ind1 = str.find(key, ind0);
 		if (ind1 < 0)
 			return N;
-		if (ind1 == 0 || (ind1 > 0 && str.at(ind1 - 1) != U'\\')) {
+		if (ind1 == 0 || (ind1 > 0 && str.at(ind1 - 1) != '\\')) {
 			intv.pushL(ind1); ++N;
 		}
 		else {
 			ind0 = ind1 + 1;  continue;
 		}
 
-		ind1 = str.find(U'\n', ind1 + 1);
+		ind1 = str.find('\n', ind1 + 1);
 		if (ind1 < 0) {// not found
 			intv.pushR(str.size());
 			return N;
