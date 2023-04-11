@@ -146,9 +146,16 @@ inline Str utf32to16(Str32_I str32)
 	return str;
 }
 
+// check utf-8 string
+using utf8::is_valid; // Bool is_valid(Str_I s);
+
+// replace invalid codepoint
+using utf8::replace_invalid; // Str replace_invalid(Str_I s, Char32 replacement);
+
 // check if is the start of a utf-8 character
-inline bool is_char8_start(Str_I str, Long_I index) {
-	if (index >= size(str)) {
+inline bool is_char8_start(Str_I str, Long_I index)
+{
+	if (index >= size(str) || index < 0) {
 		return false;
 	}
 
@@ -163,6 +170,8 @@ inline bool is_char8_start(Str_I str, Long_I index) {
 
 // bytes of a utf-8 character
 inline Long char8_len(Str_I s, Long_I ind) {
+	if (s.empty())
+		throw std::out_of_range("char8_len(): empty string!");
 	unsigned char byte = s[ind];
 	Long char_size;
 	if (byte <= 0x7F) {
@@ -174,10 +183,10 @@ inline Long char8_len(Str_I s, Long_I ind) {
 	} else if ((byte >> 3) == 0x1E) {
 		char_size = 4;
 	} else {
-		throw std::runtime_error("Invalid UTF-8 encoding");
+		throw std::runtime_error("char8_len(): Invalid UTF-8 encoding");
 	}
 	if (ind + char_size > size(s))
-		throw std::out_of_range("Invalid UTF-8 encoding (out of range)");
+		throw std::out_of_range("char8_len(): Invalid UTF-8 encoding (out of range)");
 	return char_size;
 }
 
@@ -191,11 +200,13 @@ inline Str u8char(Str_I str, Long_I ind)
 // skip N utf-8 characters (supports N < 0 and N == s.size())
 inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 {
+	if (ind < 0 || ind > size(s))
+		throw std::out_of_range("skip_char8(): input error!");
+	Long i = ind;
 	if (N == 0)
 		return ind;
 	else if (N > 0) {
 		Long utf8_len = s.size();
-		Long i = ind;
 		Long skipped = 0;
 		while (i < utf8_len && skipped < N) {
 			Long char_size = char8_len(s, i);
@@ -203,24 +214,37 @@ inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 			skipped++;
 		}
 		if (skipped < N)
-			throw std::out_of_range("Not enough characters to skip");
-		return i;
+			throw std::out_of_range("skip_char8(): Not enough characters to skip");
 	}
 	else if (N < 0) {
         Long remaining = -N;
-        Long i = ind;
-
         while (i > 0 && remaining > 0) {
             i--;
-
-            if ((s[i] & 0xC0) != 0x80) {
+            if ((s[i] & 0xC0) != 0x80)
                 remaining--;
-            }
         }
         if (remaining > 0)
-            throw std::out_of_range("Not enough characters to skip");
-        return i;
+            throw std::out_of_range("skip_char8(): Not enough characters to skip back");
     }
+	return i;
+}
+
+// get a substring of utf-8, with N characters
+inline Str substr8(Str_I s, Long_I ind, Long_I N)
+{
+	Long ind1;
+	try { ind1 = skip_char8(s, ind, N); }
+	catch (const std::out_of_range &) {
+		ind1 = s.size();
+	}
+	return s.substr(ind, ind1-ind);
+}
+
+// get a Char32 from a utf-8 string
+inline Char32 char32(Str_I str, Long_I ind)
+{
+    Str c = u8char(str, ind);
+	return u32(c)[0];
 }
 
 // an iterator for utf-8
@@ -229,23 +253,42 @@ class u8_iter
 private:
 	Long ind;
 	Str_I s;
+
 public:
 	// use i == -1 to point to the last character
 	u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
 		if (i == -1)
 			ind = skip_char8(str, size(str), -1);
-		if (!is_char8_start(s, i))
+		if (!is_char8_start(s, ind))
 			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
 	};
 
+	// set string index
 	Long operator=(Long_I i) {
 		if (!is_char8_start(s, i))
 			throw std::runtime_error("u8_iter::operator=(i): not the start of a utf-8 char!");
+		ind = i;
 		return i;
 	}
 
+	// convert to string index
+	operator Long() {
+		return ind;
+	}
+
+	// dereference
 	Str operator*() {
 		return u8char(s, ind);
+	}
+
+	bool operator==(const u8_iter &rhs) {
+		if (s.empty() || rhs.s.empty())
+			throw std::runtime_error("u8_iter::operator=(=: out of range!");
+		return (ind == rhs.ind && &s == &rhs.s);
+	}
+
+	bool operator!=(const u8_iter &rhs) {
+		return !(*this == rhs);
 	}
 
 	u8_iter operator+(Int_I N) {
@@ -264,40 +307,26 @@ public:
 		return u8_iter(s, skip_char8(s, ind, -N));
 	}
 
+	// next utf-8 position
 	void operator++() {
 		ind = skip_char8(s, ind, 1);
 	}
 
+	// last utf-8 position
 	void operator--() {
 		ind = skip_char8(s, ind, -1);
 	}
 
+	// skip N utf-8 chars
 	void operator+=(Llong_I N) {
 		ind = skip_char8(s, ind, N);
 	}
 
+	// skip back N utf-8 chars
 	void operator-=(Long_I N) {
 		ind = skip_char8(s, ind, -N);
 	}
-
-	operator Long() {
-		return ind;
-	}
 };
-
-// get a substring of utf-8, with N characters
-inline Str substr8(Str_I s, Long_I ind, Long_I N)
-{
-	Long ind1 = skip_char8(s, ind, N);
-	return s.substr(ind, ind1-ind);
-}
-
-// get a Char32 from a utf-8 string
-inline Char32 char32(Str_I str, Long_I ind)
-{
-    Str c = u8char(str, ind);
-	return u32(c)[0];
-}
 
 // check if is a chinese character
 // does not include punctuations
@@ -375,7 +404,7 @@ inline Str u8(Char32_I c) {
 		utf8.push_back(char(0x80 | (c & 0x3F)));
 	}
 	else
-		throw std::runtime_error("Invalid Unicode codepoint.");
+		throw std::runtime_error("u8(Char32_I): Invalid Unicode codepoint.");
 	return utf8;
 }
 
