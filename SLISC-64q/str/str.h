@@ -516,7 +516,7 @@ inline Long CRLF_to_LF(Str_IO str)
 inline Long find(Long_O ikey, Str_I str, vecStr_I keys, Long_I start = 0)
 {
 	Long i{}, ind0{}, Nkey{}, imin;
-	Nkey = keys.size();
+	Nkey = keys.size(); ikey = -1;
 	imin = str.size();
 	for (i = 0; i < Nkey; ++i) {
 		 ind0 = str.find(keys[i], start);
@@ -535,7 +535,7 @@ inline Long find(Long_O ikey, Str_I str, vecStr_I keys, Long_I start = 0)
 inline Long rfind(Long_O ikey, Str_I str, vecStr_I key, Long_I start)
 {
 	Long i{}, ind0{}, Nkey{}, imax;
-	Nkey = key.size();
+	Nkey = key.size(); ikey = -1;
 	imax = -1;
 	for (i = 0; i < Nkey; ++i) {
 		ind0 = str.rfind(key[i], start);
@@ -979,7 +979,7 @@ inline Long CRLF_to_LF(Str32_IO str)
 inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start = 0)
 {
 	Long i{}, ind0{}, Nkey{}, imin;
-	Nkey = keys.size();
+	Nkey = keys.size(); ikey = -1;
 	imin = str.size();
 	for (i = 0; i < Nkey; ++i) {
 		 ind0 = str.find(keys[i], start);
@@ -998,7 +998,7 @@ inline Long find(Long_O ikey, Str32_I str, vecStr32_I keys, Long_I start = 0)
 inline Long rfind(Long_O ikey, Str32_I str, vecStr32_I key, Long_I start)
 {
 	Long i{}, ind0{}, Nkey{}, imax;
-	Nkey = key.size();
+	Nkey = key.size(); ikey = -1;
 	imax = -1;
 	for (i = 0; i < Nkey; ++i) {
 		ind0 = str.rfind(key[i], start);
