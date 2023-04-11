@@ -2,7 +2,7 @@
 * Scientific Library in Simple C++, using code generation instead of non-trivial `template`s
 * Matlab/Octave is used for code generation (see `## Code generation`)
 * For the original project using template see [SLISCt](https://github.com/MacroUniverse/SLISCt)
-* For a Chinese introduction, see [here](https://wuli.wiki/online/SLISC.html)。
+* For a Chinese introduction, see [here](https://wuli.wiki/online/SLISC.html)
 
 ## Introduction
 
@@ -153,7 +153,7 @@ When using something in any header file, just including that header file will be
 * `mat_fun.h` functions of square matrix
 * `legendreP.h` Legendre polynomial
 * `ylm.h` (generalized) spherical harmonics
-* `anglib.h` has functions for Clebsch–Gordan coefficients, 3j, 6j, and 9j symbols.
+* `anglib.h` has functions for Clebsch-Gordan coefficients, 3j, 6j, and 9j symbols.
 * `hypergeom.h` hypergeometric functions
 * `coulomb.h` calculates coulomb functions (F, G, H), and their derivatives.
 * `fedvr.h` utilities for Finite Element Discrete Variable Representations, could be used to solve TDSE.

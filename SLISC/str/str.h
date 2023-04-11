@@ -572,7 +572,7 @@ inline Long expect(Str_I str, Str_I key, Long_I start)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start >= size(str))
-		throw std::runtime_error("内部错误： expect(): out of bound");
+		throw std::runtime_error("expect(): out of bound");
 #endif
 	Long ind = start;
 	Long ind0 = 0;
@@ -820,7 +820,7 @@ inline Long pair_brace(Str_I str, Long ind)
 		}
 		c0 = c;
 	}
-	throw std::runtime_error("pair_brace() failed：" + str.substr(ind, 20));
+	throw std::runtime_error("pair_brace() failed: " + str.substr(ind, 20));
 }
 
 // match braces
@@ -1035,7 +1035,7 @@ inline Long expect(Str32_I str, Str32_I key, Long_I start)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start >= size(str))
-		throw std::runtime_error("内部错误： expect(): out of bound");
+		throw std::runtime_error("expect(): out of bound");
 #endif
 	Long ind = start;
 	Long ind0 = 0;
@@ -1283,7 +1283,7 @@ inline Long pair_brace(Str32_I str, Long ind)
 		}
 		c0 = c;
 	}
-	throw std::runtime_error("pair_brace() failed：" + str.substr(ind, 20));
+	throw std::runtime_error("pair_brace() failed: " + str.substr(ind, 20));
 }
 
 // match braces
@@ -1391,11 +1391,11 @@ inline Doub str2double(Str32_I str, Long_I start = 0)
 // convert a number to chinese
 inline Str num2chinese(Long num) {
 	map<Long, Str> digits = {
-		{0, "零"}, {1, "一"}, {2, "二"}, {3, "三"}, {4, "四"},
-		{5, "五"}, {6, "六"}, {7, "七"}, {8, "八"}, {9, "九"},
+		{0, u8"零"}, {1, u8"一"}, {2, u8"二"}, {3, u8"三"}, {4, u8"四"},
+		{5, u8"五"}, {6, u8"六"}, {7, u8"七"}, {8, u8"八"}, {9, u8"九"},
 	};
 	map<Long, Str> units = {
-		{1, "十"}, {2, "百"}, {3, "千"}, {4, "万"},
+		{1, u8"十"}, {2, u8"百"}, {3, u8"千"}, {4, u8"万"},
 	};
 
 	Str result = "";
@@ -1438,7 +1438,7 @@ inline Str num2chinese(Long num) {
 	if (num > 0 || result.empty())
 		result += digits[num];
 
-	if (result.substr(0, 2) == "一十")
+	if (result.substr(0, 2) == u8"一十")
 		result = result.substr(1);
 	return result;
 }

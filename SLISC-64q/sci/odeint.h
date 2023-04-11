@@ -466,7 +466,7 @@ struct Output {
 };
 
 // Driver for ODE solvers with adaptive stepsize control. The template parameter should be one
-// of the derived classes of StepperBase deﬁning a particular integration algorithm.
+// of the derived classes of StepperBase defining a particular integration algorithm.
 // suggestion: use Stepper853 as Stepper
 template<class Stepper>
 struct Odeint {
