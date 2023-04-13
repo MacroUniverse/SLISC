@@ -31,8 +31,9 @@ void test_bit()
 
 		byte = 0;
 		set_bitL(byte, i);
-		if (byte != Char(pow(2, 7-i)))
+		if (byte != Char((int)pow(2, 7-i))) {
 			SLS_FAIL;
+		}
 		unset_bitL(byte, i);
 		if (byte != 0)
 			SLS_FAIL;

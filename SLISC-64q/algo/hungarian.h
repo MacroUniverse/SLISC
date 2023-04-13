@@ -284,7 +284,7 @@ inline Long hungarian(vvecLong_I cost, bool allow_negatives = true)
 
 	vvecChar M(sz, vecChar(sz, 0)); // The masked matrix M
 	vecBool RowCover(sz, 0), ColCover(sz, 0); // "cover" the cost matrix
-	Long path_row_0, path_col_0; // temporary to hold the smallest uncovered value
+	Long path_row_0 = 0, path_col_0 = 0; // temporary to hold the smallest uncovered value
 	vvecLong path(2*sz, vecLong(2, 0)); // Array for the augmenting path algorithm
 	
 	bool done = false;
