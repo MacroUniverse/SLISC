@@ -14,9 +14,9 @@ inline Long skip_scope(Str_I str, Long_I ind, Long_I N = 1, Char32_I type = '{')
 {
 	Long ind0 = ind;
 	for (Long i = 0; i < N; ++i) {
-		ind0 = expect(str, u8"{", ind0);
+		ind0 = expect(str, "{", ind0);
 		if (ind0 < 0)
-			throw Str(u8"skip_scope(): failed!");
+			throw Str("skip_scope(): failed!");
 		ind0 = pair_brace(str, ind0 - 1) + 1;
 	}
 	return ind0;
@@ -32,13 +32,13 @@ inline Long find_scope(Long_O right, Str_I key, Str_I str, Long_I start, Char op
 	Long ind0 = start, ind1;
 	Long left;
 	while (true) {
-		ind1 = str.find(/*u8"\\" +*/ key, ind0);
+		ind1 = str.find(/*"\\" +*/ key, ind0);
 		if (ind1 < 0) {
 			right = -1;
 			return -1;
 		}
 		ind0 = ind1 + key.size();
-		ind0 = expect(str, u8"{", ind0);
+		ind0 = expect(str, "{", ind0);
 		if (ind0 < 0) {
 			ind0 = ind1 + key.size(); continue;
 		}
@@ -49,7 +49,7 @@ inline Long find_scope(Long_O right, Str_I key, Str_I str, Long_I start, Char op
 			break;
 		}
 		else {
-			ind0 = expect(str, u8"{", ind0 + 1);
+			ind0 = expect(str, "{", ind0 + 1);
 			if (ind0 < 0)
 				continue;
 			ind0 = pair_brace(str, ind0 - 1);

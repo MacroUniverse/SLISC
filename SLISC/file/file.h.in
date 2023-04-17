@@ -496,6 +496,8 @@ inline void open_bin(ofstream &fout, Str_I fname)
 // open binary file to read
 inline void open_bin(ifstream &fin, Str_I fname)
 {
+	if (!file_exist(fname))
+		throw std::runtime_error("file not found: " + fname);
 	if (fin.is_open())
 		fin.close();
 #ifndef SLS_USE_MSVC
