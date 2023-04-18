@@ -193,7 +193,7 @@ inline Long char8_len(Str_I s, Long_I ind) {
 // get a utf-8 char from a utf-8 string
 inline Str u8char(Str_I str, Long_I ind)
 {
-    Long char_size = char8_len(str, ind);
+	Long char_size = char8_len(str, ind);
 	return str.substr(ind, char_size);
 }
 
@@ -217,15 +217,15 @@ inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 			throw std::out_of_range("skip_char8(): Not enough characters to skip");
 	}
 	else if (N < 0) {
-        Long remaining = -N;
-        while (i > 0 && remaining > 0) {
-            i--;
-            if ((s[i] & 0xC0) != 0x80)
-                remaining--;
-        }
-        if (remaining > 0)
-            throw std::out_of_range("skip_char8(): Not enough characters to skip back");
-    }
+		Long remaining = -N;
+		while (i > 0 && remaining > 0) {
+			i--;
+			if ((s[i] & 0xC0) != 0x80)
+				remaining--;
+		}
+		if (remaining > 0)
+			throw std::out_of_range("skip_char8(): Not enough characters to skip back");
+	}
 	return i;
 }
 
@@ -243,7 +243,7 @@ inline Str substr8(Str_I s, Long_I ind, Long_I N)
 // get a Char32 from a utf-8 string
 inline Char32 char32(Str_I str, Long_I ind)
 {
-    Str c = u8char(str, ind);
+	Str c = u8char(str, ind);
 	return u32(c)[0];
 }
 

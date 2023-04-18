@@ -10,10 +10,10 @@ namespace slisc {
 template <class T>
 inline Long search(const T &s, const T *v, Long_I N, Long_I start = 0)
 {
-    for (Long i = start; i < N; ++i)
-        if (s == v[i])
-            return i;
-    return -1;
+	for (Long i = start; i < N; ++i)
+		if (s == v[i])
+			return i;
+	return -1;
 }
 
 // for complex classes
