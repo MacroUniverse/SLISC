@@ -24,10 +24,10 @@ elseif (is_Dmat(T)), ret = 44;
 elseif (is_Dcmat(T)), ret = 45;
 elseif (is_Jcmat(T)), ret = 46;
 elseif (is_Jcmat3(T)), ret = 47;
-elseif (is_Svec_c(T)), ret = 48;
-elseif (is_Scmat_c(T)), ret = 49;
+elseif (is_SvecC(T)), ret = 48;
+elseif (is_ScmatC(T)), ret = 49;
 elseif (is_Scmat3(T)), ret = 50;
-elseif (is_Scmat3_c(T)), ret = 51;
+elseif (is_Scmat3C(T)), ret = 51;
 elseif (is_vec(T)), ret = 100;
 else, ret = -1;
 end
