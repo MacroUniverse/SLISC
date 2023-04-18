@@ -1,7 +1,7 @@
 // every program that uses SLISC should include "global.h" first
 #define SLS_MAJOR 0
 #define SLS_MINOR 1
-#define SLS_PATCH 9
+#define SLS_PATCH 10
 
 #include "config.h"
 
@@ -121,9 +121,26 @@
 	#endif
 #endif
 
-// error handling
-#define SLS_WARN(str) do{std::cout << "\033[1;31mWarning\033[0m: " << __FILE__ << ": line " << __LINE__ << ": \033[1;31m" << str << "\033[0m" << std::endl;} while(0)
-#define SLS_ERR(str) do{std::cout << "\033[1;31mError\033[0m: " << __FILE__ << ": line " << __LINE__ << ": \033[1;31m" << str << "\033[0m" << std::endl; abort();} while(0)
+// text styles (see also text_style() in disp.h)
+#define SLS_RED_BOLD "\033[1;31m"
+#define SLS_YELLOW_BOLD "\033[1;33m"
+#define SLS_NO_STYLE "\033[0m"
+
+// SLS_TO_STR(x) converts a numeric macro to a string
+#define SLS_STRINGIFY(x) #x
+#define SLS_TO_STR(x) SLS_STRINGIFY(x)
+
+// __LINE__ is a number, we need a string of that number
+#define SLS_LINE SLS_TO_STR(__LINE__)
+
+// get a string literal of file and line number
+#define SLS_WHERE "[file: " __FILE__ ", line: " SLS_LINE "]"
+
+// print a warning with file and line number
+#define SLS_WARN(str) do { std::cout << SLS_YELLOW_BOLD "Warning: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::cout.flush(); } while(0)
+
+// print an error with file and line number
+#define SLS_ERR(str) do { std::cout << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); } while(0)
 #define SLS_FAIL SLS_ERR("failed!")
 #define SLS_ASSERT(condition) if (!(condition)) SLS_FAIL
 

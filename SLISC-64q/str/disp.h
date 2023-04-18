@@ -966,7 +966,7 @@ inline void disp(vecStr32_I v)
 }
 
 // set stdout text style
-// example: cout << text_deco('r', 'b') + "Red bold text" + text_deco() << endl;
+// example: cout << text_style('r', 'b') + "Red bold text" + text_style() << endl;
 // ref: https://www.tutorialspoint.com/how-to-output-colored-text-to-a-linux-terminal
 inline string text_style(Char_I color = 'n', Char_I style = 'n')
 {
