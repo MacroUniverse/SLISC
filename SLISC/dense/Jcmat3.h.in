@@ -1,6 +1,6 @@
 #pragma once
 #include "../global.h"
-// "_c" means lower level const
+// "C" means lower level const
 
 namespace slisc {
 //% tem('Jcmat3', {
@@ -30,10 +30,10 @@ namespace slisc {
 //%------------------------
 //% [T, constness] = varargin{:};
 //% Jcmat3T = ['Jcmat3' T];
-//% Jcmat3T_c = [Jcmat3T '_c'];
+//% Jcmat3TC = [Jcmat3T 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = Jcmat3T_c;
+//%     Class = Jcmat3TC;
 //% else
 //%     CT = T;
 //%     Class = Jcmat3T;
@@ -51,7 +51,7 @@ public:
 	void set(@CT@ *p, Long_I N0, Long_I N1, Long_I N2, Long_I step1, Long_I step2, Long_I step3);
 	void set(const @Class@ &sli);
 //% if ~constness
-	operator @Jcmat3T_c@() const;
+	operator @Jcmat3TC@() const;
 //% end
 	@Class@ &operator=(const @Class@ &) = delete;
 	@CT@ &operator[](Long_I i) const;
@@ -86,9 +86,9 @@ inline void @Class@::set(const @Class@ &sli)
 }
 
 //% if ~constness
-inline @Class@::operator @Jcmat3T_c@() const
+inline @Class@::operator @Jcmat3TC@() const
 {
-	return *((@Jcmat3T_c@ *)this);
+	return *((@Jcmat3TC@ *)this);
 }
 //% end
 
@@ -161,12 +161,12 @@ typedef const @Class@ &@Jcmat3T@_O, &@Jcmat3T@_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef Jcmat3Int Jcmat3Long;
-typedef Jcmat3Int_c Jcmat3Long_c;
+typedef Jcmat3IntC Jcmat3LongC;
 #else
 typedef Jcmat3Llong Jcmat3Long;
-typedef Jcmat3Llong_c Jcmat3Long_c;
+typedef Jcmat3LlongC Jcmat3LongC;
 #endif
-typedef const Jcmat3Long_c &Jcmat3Long_I;
+typedef const Jcmat3LongC &Jcmat3Long_I;
 typedef const Jcmat3Long &Jcmat3Long_O, &Jcmat3Long_IO;
 
 } // namespace slisc

@@ -3,7 +3,7 @@
 #include "../arith/Imag.h"
 
 // this class is not memory safe!
-// "_c" means lower level const
+// "C" means lower level const
 
 namespace slisc {
 //% tem('Svbase', {
@@ -26,10 +26,10 @@ namespace slisc {
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvbaseT = ['Svbase' T];
-//% SvbaseT_c = [SvbaseT '_c'];
+//% SvbaseTC = [SvbaseT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = SvbaseT_c;
+//%     Class = SvbaseTC;
 //% else
 //%     CT = T;
 //%     Class = SvbaseT;
@@ -50,7 +50,7 @@ public:
 	@CT@ &end() const;
 	@CT@ &end(Long_I i) const;
 //% if ~constness
-	operator @SvbaseT_c@() const;
+	operator @SvbaseTC@() const;
 //% end
 	void set(const @Class@ &sli);
 	void next(); // m_p += m_N
@@ -120,9 +120,9 @@ inline @CT@ &@Class@::end(Long_I i) const
 }
 
 //% if ~constness
-inline @Class@::operator @SvbaseT_c@() const
+inline @Class@::operator @SvbaseTC@() const
 {
-	return *((@SvbaseT_c@ *)this);
+	return *((@SvbaseTC@ *)this);
 }
 //% end
 
@@ -166,10 +166,10 @@ inline @Class@::~@Class@() {}
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvbaseInt SvbaseLong;
-typedef SvbaseInt_c SvbaseLong_c;
+typedef SvbaseIntC SvbaseLongC;
 #else
 typedef SvbaseLlong SvbaseLong;
-typedef SvbaseLlong_c SvbaseLong_c;
+typedef SvbaseLlongC SvbaseLongC;
 #endif
 
 //% tem('Svec', {
@@ -192,10 +192,10 @@ typedef SvbaseLlong_c SvbaseLong_c;
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvecT = ['Svec' T]; SvbaseT = ['Svbase' T];
-//% SvecT_c = [SvecT '_c']; SvbaseT_c = [SvbaseT '_c'];
+//% SvecTC = [SvecT 'C']; SvbaseTC = [SvbaseT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = SvecT_c; Base = SvbaseT_c;
+//%     Class = SvecTC; Base = SvbaseTC;
 //% else
 //%     CT = T;
 //%     Class = SvecT; Base = SvbaseT;
@@ -208,7 +208,7 @@ public:
 	@Class@(@CT@ *data, Long_I N); // unsafe
 	@Class@ &operator=(const @Class@ &rhs) = delete;
 //% if ~constness
-	operator @SvecT_c@() const;
+	operator @SvecTC@() const;
 //% end
 };
 
@@ -219,9 +219,9 @@ inline @Class@::@Class@(@CT@ *data, Long_I N)
 	: @Base@(data, N) {}
 
 //% if ~constness
-inline @Class@::operator @SvecT_c@() const
+inline @Class@::operator @SvecTC@() const
 {
-	return *((@SvecT_c@ *)this);
+	return *((@SvecTC@ *)this);
 }
 //% end
 
@@ -245,12 +245,12 @@ inline @T@ *p(@SvecT@ &v) { return v.p(); }
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvecInt SvecLong;
-typedef SvecInt_c SvecLong_c;
+typedef SvecIntC SvecLongC;
 #else
 typedef SvecLlong SvecLong;
-typedef SvecLlong_c SvecLong_c;
+typedef SvecLlongC SvecLongC;
 #endif
-typedef const SvecLong_c &SvecLong_I;
+typedef const SvecLongC &SvecLong_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 

@@ -39,9 +39,9 @@ public:
 	@CmatT@ &cmat();
 	const @CmatT@ &cmat() const;
 	@DcmatT@ band();
-	@DcmatT@_c band() const;
+	@DcmatT@C band() const;
 	@DvecT@ diag();
-	@DvecT@_c diag() const;
+	@DvecT@C diag() const;
 	void resize(Long_I lda, Long_I N1);
 	void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 	void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -144,9 +144,9 @@ inline @DcmatT@ @CbandT@::band()
 	return @DcmatT@(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
-inline @DcmatT@_c @CbandT@::band() const
+inline @DcmatT@C @CbandT@::band() const
 {
-	return @DcmatT@_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+	return @DcmatT@C(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
 inline @DvecT@ @CbandT@::diag()
@@ -154,9 +154,9 @@ inline @DvecT@ @CbandT@::diag()
 	return @DvecT@(&m_a[m_idiag], n1(), lda());
 }
 
-inline @DvecT@_c @CbandT@::diag() const
+inline @DvecT@C @CbandT@::diag() const
 {
-	return @DvecT@_c(&m_a[m_idiag], n1(), lda());
+	return @DvecT@C(&m_a[m_idiag], n1(), lda());
 }
 
 inline void @CbandT@::resize(Long_I lda, Long_I N1)

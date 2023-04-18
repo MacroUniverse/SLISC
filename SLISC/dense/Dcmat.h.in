@@ -18,10 +18,10 @@ namespace slisc {
 //%------------------------
 //% [T, constness] = varargin{:};
 //% DcmatT = ['Dcmat' T];
-//% DcmatT_c = [DcmatT '_c'];
+//% DcmatTC = [DcmatT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = DcmatT_c;
+//%     Class = DcmatTC;
 //% else
 //%     CT = T;
 //%     Class = DcmatT;
@@ -40,7 +40,7 @@ public:
 	void set(const @Class@ &sli);
 
 //% if ~constness
-	operator @DcmatT_c@() const;
+	operator @DcmatTC@() const;
 	@T@& operator[](Long_I i);
 	@T@& operator()(Long_I i, Long_I j);
 //% end
@@ -71,9 +71,9 @@ inline void @Class@::set(const @Class@ &sli)
 }
 
 //% if ~constness
-inline @Class@::operator @DcmatT_c@() const
+inline @Class@::operator @DcmatTC@() const
 {
-	return *((@DcmatT_c@ *)this);
+	return *((@DcmatTC@ *)this);
 }
 
 inline @T@ &@Class@::operator[](Long_I i)
@@ -148,13 +148,13 @@ typedef const @Class@ &@DcmatT@_O, &@DcmatT@_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DcmatInt DcmatLong;
-typedef DcmatInt_c DcmatLong_c;
+typedef DcmatIntC DcmatLongC;
 #else
 typedef DcmatLlong DcmatLong;
-typedef DcmatLlong_c DcmatLong_c;
+typedef DcmatLlongC DcmatLongC;
 #endif
 
-typedef const DcmatLong_c &DcmatLong_I;
+typedef const DcmatLongC &DcmatLong_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLong &DcmatLong_O, &DcmatLong_IO;
 

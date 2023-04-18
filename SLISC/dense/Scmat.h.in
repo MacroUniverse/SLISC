@@ -1,6 +1,6 @@
 #pragma once
 #include "../dense/Svec.h"
-// "_c" means lower level const
+// "C" means lower level const
 
 namespace slisc {
 //% tem('Scmat', {
@@ -23,13 +23,13 @@ namespace slisc {
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvbaseT = ['Svbase' T];
-//% SvbaseT_c = [SvbaseT '_c'];
+//% SvbaseTC = [SvbaseT 'C'];
 //% ScmatT = ['Scmat' T];
-//% ScmatT_c = [ScmatT '_c'];
+//% ScmatTC = [ScmatT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Base = SvbaseT_c;
-//%     Class = ScmatT_c;
+//%     Base = SvbaseTC;
+//%     Class = ScmatTC;
 //% else
 //%     CT = T;
 //%     Base = SvbaseT;
@@ -44,7 +44,7 @@ public:
 	@Class@(@CT@ *data, Long_I N0, Long_I N1); // unsafe
 
 //% if ~constness
-	operator @ScmatT_c@() const;
+	operator @ScmatTC@() const;
 //% end
 
 	@CT@ &operator()(Long_I i, Long_I j) const; // double indexing
@@ -66,9 +66,9 @@ inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1)
 	: @Base@(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 //% if ~constness
-inline @Class@::operator @ScmatT_c@() const
+inline @Class@::operator @ScmatTC@() const
 {
-	return *((@ScmatT_c@ *)this);
+	return *((@ScmatTC@ *)this);
 }
 //% end
 
@@ -133,13 +133,13 @@ inline @T@ *p(@ScmatT@ &v) { return v.p(); }
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef ScmatInt ScmatLong;
-typedef ScmatInt_c ScmatLong_c;
+typedef ScmatIntC ScmatLongC;
 #else
 typedef ScmatLlong ScmatLong;
-typedef ScmatLlong_c ScmatLong_c;
+typedef ScmatLlongC ScmatLongC;
 #endif
 
-typedef const ScmatLong_c &ScmatLong_I;
+typedef const ScmatLongC &ScmatLong_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLong &ScmatLong_O, &ScmatLong_IO;
 } // namespace slisc

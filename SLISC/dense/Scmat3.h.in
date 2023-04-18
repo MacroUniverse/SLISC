@@ -21,13 +21,13 @@ namespace slisc {
 //%------------------------
 //% [T, constness] = varargin{:};
 //% SvbaseT = ['Svbase' T];
-//% SvbaseT_c = [SvbaseT '_c'];
+//% SvbaseTC = [SvbaseT 'C'];
 //% Scmat3T = ['Scmat3' T];
-//% Scmat3T_c = [Scmat3T '_c'];
+//% Scmat3TC = [Scmat3T 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Base = SvbaseT_c;
-//%     Class = Scmat3T_c;
+//%     Base = SvbaseTC;
+//%     Class = Scmat3TC;
 //% else
 //%     CT = T;
 //%     Base = SvbaseT;
@@ -42,7 +42,7 @@ public:
 	@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);
 
 //% if ~constness
-	operator @Scmat3T_c@() const;
+	operator @Scmat3TC@() const;
 //% end
 
 	@CT@ &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -64,9 +64,9 @@ inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
 	: @Base@(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 //% if ~constness
-inline @Class@::operator @Scmat3T_c@() const
+inline @Class@::operator @Scmat3TC@() const
 {
-	return *((@Scmat3T_c@ *)this);
+	return *((@Scmat3TC@ *)this);
 }
 //% end
 
@@ -136,13 +136,13 @@ inline @T@ *p(@Scmat3T@ &v) { return v.p(); }
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef Scmat3Int Scmat3Long;
-typedef Scmat3Int_c Scmat3Long_c;
+typedef Scmat3IntC Scmat3LongC;
 #else
 typedef Scmat3Llong Scmat3Long;
-typedef Scmat3Llong_c Scmat3Long_c;
+typedef Scmat3LlongC Scmat3LongC;
 #endif
 
-typedef const Scmat3Long_c &Scmat3Long_I;
+typedef const Scmat3LongC &Scmat3Long_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const Scmat3Long &Scmat3Long_O, &Scmat3Long_IO;
 

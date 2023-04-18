@@ -7,8 +7,8 @@ using namespace slisc;
 
 void test_Dcmat() {
 	CmatDoub a(6, 7); linspace(a, 0, 41);
-	const DcmatDoub_c b = cut(a, 0, 4, 0, 3);
-	DcitDoub_c it;
+	const DcmatDoubC b = cut(a, 0, 4, 0, 3);
+	DcitDoubC it;
 	Long k = 0;
 	for (it.beg(b); it.ckend(); ++it)
 		if (*it != b[k++]) SLS_FAIL;

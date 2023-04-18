@@ -1,6 +1,6 @@
 #pragma once
 #include "../global.h"
-// "_c" means lower level const
+// "C" means lower level const
 
 namespace slisc {
 //% tem('Dvec', {
@@ -20,10 +20,10 @@ namespace slisc {
 //%------------------------
 //% [T, constness] = varargin{:};
 //% DvecT = ['Dvec' T];
-//% DvecT_c = [DvecT '_c'];
+//% DvecTC = [DvecT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = DvecT_c;
+//%     Class = DvecTC;
 //% else
 //%     CT = T;
 //%     Class = DvecT;
@@ -45,7 +45,7 @@ public:
 	Long step() const;
 
 //% if ~constness
-	operator @DvecT_c@() const;
+	operator @DvecTC@() const;
 //% end
 	@Class@ &operator=(const @Class@ &) = delete;
 	// === other member functions ===
@@ -118,9 +118,9 @@ inline void @Class@::set(Long_I N)
 }
 
 //% if ~constness
-inline @Class@::operator @DvecT_c@() const
+inline @Class@::operator @DvecTC@() const
 {
-	return *((@DvecT_c@ *)this);
+	return *((@DvecTC@ *)this);
 }
 //% end
 
@@ -167,12 +167,12 @@ typedef const @Class@ &@DvecT@_O, &@DvecT@_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DvecInt DvecLong;
-typedef DvecInt_c DvecLong_c;
+typedef DvecIntC DvecLongC;
 #else
 typedef DvecLlong DvecLong;
-typedef DvecLlong_c DvecLong_c;
+typedef DvecLlongC DvecLongC;
 #endif
-typedef const DvecLong_c &DvecLong_I;
+typedef const DvecLongC &DvecLong_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLong &DvecLong_O, &DvecLong_IO;
 

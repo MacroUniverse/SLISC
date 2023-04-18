@@ -1,15 +1,15 @@
 #pragma once
 #include "../dense/Svec.h"
-// "_c" means lower level const
+// "C" means lower level const
 
 namespace slisc {
-class ScmatChar_c : public SvbaseChar_c
+class ScmatCharC : public SvbaseCharC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatChar_c();
-	ScmatChar_c(const Char *data, Long_I N0, Long_I N1); // unsafe
+	ScmatCharC();
+	ScmatCharC(const Char *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Char &operator()(Long_I i, Long_I j) const; // double indexing
@@ -20,18 +20,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatChar_c &sli);
+	void set(const ScmatCharC &sli);
 	void set(const Char *data, Long_I N0, Long_I N1);
-	~ScmatChar_c();
+	~ScmatCharC();
 };
 
-inline ScmatChar_c::ScmatChar_c() {}
+inline ScmatCharC::ScmatCharC() {}
 
-inline ScmatChar_c::ScmatChar_c(const Char *data, Long_I N0, Long_I N1)
-	: SvbaseChar_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatCharC::ScmatCharC(const Char *data, Long_I N0, Long_I N1)
+	: SvbaseCharC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Char &ScmatChar_c::operator()(Long_I i, Long_I j) const
+inline const Char &ScmatCharC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -40,17 +40,17 @@ inline const Char &ScmatChar_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatChar_c::n0() const
+inline Long ScmatCharC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatChar_c::n1() const
+inline Long ScmatCharC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatChar_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatCharC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -59,21 +59,21 @@ inline void ScmatChar_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatChar_c::set(const Char *data, Long_I N0, Long_I N1)
+inline void ScmatCharC::set(const Char *data, Long_I N0, Long_I N1)
 {
-	SvbaseChar_c::set(data, N0*N1);
+	SvbaseCharC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatChar_c::set(const ScmatChar_c &sli)
+inline void ScmatCharC::set(const ScmatCharC &sli)
 {
-	SvbaseChar_c::set(sli);
+	SvbaseCharC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatChar_c::~ScmatChar_c() {}
+inline ScmatCharC::~ScmatCharC() {}
 
-typedef const ScmatChar_c &ScmatChar_I;
+typedef const ScmatCharC &ScmatChar_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatChar_I v) { return v.size(); }
@@ -89,7 +89,7 @@ public:
 	ScmatChar();
 	ScmatChar(Char *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatChar_c() const;
+	operator ScmatCharC() const;
 
 	Char &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -109,9 +109,9 @@ inline ScmatChar::ScmatChar() {}
 inline ScmatChar::ScmatChar(Char *data, Long_I N0, Long_I N1)
 	: SvbaseChar(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatChar::operator ScmatChar_c() const
+inline ScmatChar::operator ScmatCharC() const
 {
-	return *((ScmatChar_c *)this);
+	return *((ScmatCharC *)this);
 }
 
 inline Char &ScmatChar::operator()(Long_I i, Long_I j) const
@@ -163,13 +163,13 @@ typedef const ScmatChar &ScmatChar_O, &ScmatChar_IO;
 inline Char *p(ScmatChar &v) { return v.p(); }
 
 
-class ScmatUchar_c : public SvbaseUchar_c
+class ScmatUcharC : public SvbaseUcharC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatUchar_c();
-	ScmatUchar_c(const Uchar *data, Long_I N0, Long_I N1); // unsafe
+	ScmatUcharC();
+	ScmatUcharC(const Uchar *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Uchar &operator()(Long_I i, Long_I j) const; // double indexing
@@ -180,18 +180,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatUchar_c &sli);
+	void set(const ScmatUcharC &sli);
 	void set(const Uchar *data, Long_I N0, Long_I N1);
-	~ScmatUchar_c();
+	~ScmatUcharC();
 };
 
-inline ScmatUchar_c::ScmatUchar_c() {}
+inline ScmatUcharC::ScmatUcharC() {}
 
-inline ScmatUchar_c::ScmatUchar_c(const Uchar *data, Long_I N0, Long_I N1)
-	: SvbaseUchar_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatUcharC::ScmatUcharC(const Uchar *data, Long_I N0, Long_I N1)
+	: SvbaseUcharC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Uchar &ScmatUchar_c::operator()(Long_I i, Long_I j) const
+inline const Uchar &ScmatUcharC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -200,17 +200,17 @@ inline const Uchar &ScmatUchar_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatUchar_c::n0() const
+inline Long ScmatUcharC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatUchar_c::n1() const
+inline Long ScmatUcharC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatUchar_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatUcharC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -219,21 +219,21 @@ inline void ScmatUchar_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatUchar_c::set(const Uchar *data, Long_I N0, Long_I N1)
+inline void ScmatUcharC::set(const Uchar *data, Long_I N0, Long_I N1)
 {
-	SvbaseUchar_c::set(data, N0*N1);
+	SvbaseUcharC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatUchar_c::set(const ScmatUchar_c &sli)
+inline void ScmatUcharC::set(const ScmatUcharC &sli)
 {
-	SvbaseUchar_c::set(sli);
+	SvbaseUcharC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatUchar_c::~ScmatUchar_c() {}
+inline ScmatUcharC::~ScmatUcharC() {}
 
-typedef const ScmatUchar_c &ScmatUchar_I;
+typedef const ScmatUcharC &ScmatUchar_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatUchar_I v) { return v.size(); }
@@ -249,7 +249,7 @@ public:
 	ScmatUchar();
 	ScmatUchar(Uchar *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatUchar_c() const;
+	operator ScmatUcharC() const;
 
 	Uchar &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -269,9 +269,9 @@ inline ScmatUchar::ScmatUchar() {}
 inline ScmatUchar::ScmatUchar(Uchar *data, Long_I N0, Long_I N1)
 	: SvbaseUchar(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatUchar::operator ScmatUchar_c() const
+inline ScmatUchar::operator ScmatUcharC() const
 {
-	return *((ScmatUchar_c *)this);
+	return *((ScmatUcharC *)this);
 }
 
 inline Uchar &ScmatUchar::operator()(Long_I i, Long_I j) const
@@ -323,13 +323,13 @@ typedef const ScmatUchar &ScmatUchar_O, &ScmatUchar_IO;
 inline Uchar *p(ScmatUchar &v) { return v.p(); }
 
 
-class ScmatInt_c : public SvbaseInt_c
+class ScmatIntC : public SvbaseIntC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatInt_c();
-	ScmatInt_c(const Int *data, Long_I N0, Long_I N1); // unsafe
+	ScmatIntC();
+	ScmatIntC(const Int *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Int &operator()(Long_I i, Long_I j) const; // double indexing
@@ -340,18 +340,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatInt_c &sli);
+	void set(const ScmatIntC &sli);
 	void set(const Int *data, Long_I N0, Long_I N1);
-	~ScmatInt_c();
+	~ScmatIntC();
 };
 
-inline ScmatInt_c::ScmatInt_c() {}
+inline ScmatIntC::ScmatIntC() {}
 
-inline ScmatInt_c::ScmatInt_c(const Int *data, Long_I N0, Long_I N1)
-	: SvbaseInt_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatIntC::ScmatIntC(const Int *data, Long_I N0, Long_I N1)
+	: SvbaseIntC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Int &ScmatInt_c::operator()(Long_I i, Long_I j) const
+inline const Int &ScmatIntC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -360,17 +360,17 @@ inline const Int &ScmatInt_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatInt_c::n0() const
+inline Long ScmatIntC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatInt_c::n1() const
+inline Long ScmatIntC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatInt_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatIntC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -379,21 +379,21 @@ inline void ScmatInt_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatInt_c::set(const Int *data, Long_I N0, Long_I N1)
+inline void ScmatIntC::set(const Int *data, Long_I N0, Long_I N1)
 {
-	SvbaseInt_c::set(data, N0*N1);
+	SvbaseIntC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatInt_c::set(const ScmatInt_c &sli)
+inline void ScmatIntC::set(const ScmatIntC &sli)
 {
-	SvbaseInt_c::set(sli);
+	SvbaseIntC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatInt_c::~ScmatInt_c() {}
+inline ScmatIntC::~ScmatIntC() {}
 
-typedef const ScmatInt_c &ScmatInt_I;
+typedef const ScmatIntC &ScmatInt_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatInt_I v) { return v.size(); }
@@ -409,7 +409,7 @@ public:
 	ScmatInt();
 	ScmatInt(Int *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatInt_c() const;
+	operator ScmatIntC() const;
 
 	Int &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -429,9 +429,9 @@ inline ScmatInt::ScmatInt() {}
 inline ScmatInt::ScmatInt(Int *data, Long_I N0, Long_I N1)
 	: SvbaseInt(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatInt::operator ScmatInt_c() const
+inline ScmatInt::operator ScmatIntC() const
 {
-	return *((ScmatInt_c *)this);
+	return *((ScmatIntC *)this);
 }
 
 inline Int &ScmatInt::operator()(Long_I i, Long_I j) const
@@ -483,13 +483,13 @@ typedef const ScmatInt &ScmatInt_O, &ScmatInt_IO;
 inline Int *p(ScmatInt &v) { return v.p(); }
 
 
-class ScmatLlong_c : public SvbaseLlong_c
+class ScmatLlongC : public SvbaseLlongC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatLlong_c();
-	ScmatLlong_c(const Llong *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLlongC();
+	ScmatLlongC(const Llong *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Llong &operator()(Long_I i, Long_I j) const; // double indexing
@@ -500,18 +500,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLlong_c &sli);
+	void set(const ScmatLlongC &sli);
 	void set(const Llong *data, Long_I N0, Long_I N1);
-	~ScmatLlong_c();
+	~ScmatLlongC();
 };
 
-inline ScmatLlong_c::ScmatLlong_c() {}
+inline ScmatLlongC::ScmatLlongC() {}
 
-inline ScmatLlong_c::ScmatLlong_c(const Llong *data, Long_I N0, Long_I N1)
-	: SvbaseLlong_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatLlongC::ScmatLlongC(const Llong *data, Long_I N0, Long_I N1)
+	: SvbaseLlongC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Llong &ScmatLlong_c::operator()(Long_I i, Long_I j) const
+inline const Llong &ScmatLlongC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -520,17 +520,17 @@ inline const Llong &ScmatLlong_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLlong_c::n0() const
+inline Long ScmatLlongC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatLlong_c::n1() const
+inline Long ScmatLlongC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatLlong_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatLlongC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -539,21 +539,21 @@ inline void ScmatLlong_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLlong_c::set(const Llong *data, Long_I N0, Long_I N1)
+inline void ScmatLlongC::set(const Llong *data, Long_I N0, Long_I N1)
 {
-	SvbaseLlong_c::set(data, N0*N1);
+	SvbaseLlongC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLlong_c::set(const ScmatLlong_c &sli)
+inline void ScmatLlongC::set(const ScmatLlongC &sli)
 {
-	SvbaseLlong_c::set(sli);
+	SvbaseLlongC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatLlong_c::~ScmatLlong_c() {}
+inline ScmatLlongC::~ScmatLlongC() {}
 
-typedef const ScmatLlong_c &ScmatLlong_I;
+typedef const ScmatLlongC &ScmatLlong_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatLlong_I v) { return v.size(); }
@@ -569,7 +569,7 @@ public:
 	ScmatLlong();
 	ScmatLlong(Llong *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatLlong_c() const;
+	operator ScmatLlongC() const;
 
 	Llong &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -589,9 +589,9 @@ inline ScmatLlong::ScmatLlong() {}
 inline ScmatLlong::ScmatLlong(Llong *data, Long_I N0, Long_I N1)
 	: SvbaseLlong(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLlong::operator ScmatLlong_c() const
+inline ScmatLlong::operator ScmatLlongC() const
 {
-	return *((ScmatLlong_c *)this);
+	return *((ScmatLlongC *)this);
 }
 
 inline Llong &ScmatLlong::operator()(Long_I i, Long_I j) const
@@ -643,13 +643,13 @@ typedef const ScmatLlong &ScmatLlong_O, &ScmatLlong_IO;
 inline Llong *p(ScmatLlong &v) { return v.p(); }
 
 
-class ScmatFloat_c : public SvbaseFloat_c
+class ScmatFloatC : public SvbaseFloatC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatFloat_c();
-	ScmatFloat_c(const Float *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFloatC();
+	ScmatFloatC(const Float *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Float &operator()(Long_I i, Long_I j) const; // double indexing
@@ -660,18 +660,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFloat_c &sli);
+	void set(const ScmatFloatC &sli);
 	void set(const Float *data, Long_I N0, Long_I N1);
-	~ScmatFloat_c();
+	~ScmatFloatC();
 };
 
-inline ScmatFloat_c::ScmatFloat_c() {}
+inline ScmatFloatC::ScmatFloatC() {}
 
-inline ScmatFloat_c::ScmatFloat_c(const Float *data, Long_I N0, Long_I N1)
-	: SvbaseFloat_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatFloatC::ScmatFloatC(const Float *data, Long_I N0, Long_I N1)
+	: SvbaseFloatC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Float &ScmatFloat_c::operator()(Long_I i, Long_I j) const
+inline const Float &ScmatFloatC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -680,17 +680,17 @@ inline const Float &ScmatFloat_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFloat_c::n0() const
+inline Long ScmatFloatC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatFloat_c::n1() const
+inline Long ScmatFloatC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatFloat_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatFloatC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -699,21 +699,21 @@ inline void ScmatFloat_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFloat_c::set(const Float *data, Long_I N0, Long_I N1)
+inline void ScmatFloatC::set(const Float *data, Long_I N0, Long_I N1)
 {
-	SvbaseFloat_c::set(data, N0*N1);
+	SvbaseFloatC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFloat_c::set(const ScmatFloat_c &sli)
+inline void ScmatFloatC::set(const ScmatFloatC &sli)
 {
-	SvbaseFloat_c::set(sli);
+	SvbaseFloatC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatFloat_c::~ScmatFloat_c() {}
+inline ScmatFloatC::~ScmatFloatC() {}
 
-typedef const ScmatFloat_c &ScmatFloat_I;
+typedef const ScmatFloatC &ScmatFloat_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatFloat_I v) { return v.size(); }
@@ -729,7 +729,7 @@ public:
 	ScmatFloat();
 	ScmatFloat(Float *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatFloat_c() const;
+	operator ScmatFloatC() const;
 
 	Float &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -749,9 +749,9 @@ inline ScmatFloat::ScmatFloat() {}
 inline ScmatFloat::ScmatFloat(Float *data, Long_I N0, Long_I N1)
 	: SvbaseFloat(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatFloat::operator ScmatFloat_c() const
+inline ScmatFloat::operator ScmatFloatC() const
 {
-	return *((ScmatFloat_c *)this);
+	return *((ScmatFloatC *)this);
 }
 
 inline Float &ScmatFloat::operator()(Long_I i, Long_I j) const
@@ -803,13 +803,13 @@ typedef const ScmatFloat &ScmatFloat_O, &ScmatFloat_IO;
 inline Float *p(ScmatFloat &v) { return v.p(); }
 
 
-class ScmatDoub_c : public SvbaseDoub_c
+class ScmatDoubC : public SvbaseDoubC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatDoub_c();
-	ScmatDoub_c(const Doub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatDoubC();
+	ScmatDoubC(const Doub *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Doub &operator()(Long_I i, Long_I j) const; // double indexing
@@ -820,18 +820,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatDoub_c &sli);
+	void set(const ScmatDoubC &sli);
 	void set(const Doub *data, Long_I N0, Long_I N1);
-	~ScmatDoub_c();
+	~ScmatDoubC();
 };
 
-inline ScmatDoub_c::ScmatDoub_c() {}
+inline ScmatDoubC::ScmatDoubC() {}
 
-inline ScmatDoub_c::ScmatDoub_c(const Doub *data, Long_I N0, Long_I N1)
-	: SvbaseDoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatDoubC::ScmatDoubC(const Doub *data, Long_I N0, Long_I N1)
+	: SvbaseDoubC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Doub &ScmatDoub_c::operator()(Long_I i, Long_I j) const
+inline const Doub &ScmatDoubC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -840,17 +840,17 @@ inline const Doub &ScmatDoub_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatDoub_c::n0() const
+inline Long ScmatDoubC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatDoub_c::n1() const
+inline Long ScmatDoubC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatDoub_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatDoubC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -859,21 +859,21 @@ inline void ScmatDoub_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatDoub_c::set(const Doub *data, Long_I N0, Long_I N1)
+inline void ScmatDoubC::set(const Doub *data, Long_I N0, Long_I N1)
 {
-	SvbaseDoub_c::set(data, N0*N1);
+	SvbaseDoubC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatDoub_c::set(const ScmatDoub_c &sli)
+inline void ScmatDoubC::set(const ScmatDoubC &sli)
 {
-	SvbaseDoub_c::set(sli);
+	SvbaseDoubC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatDoub_c::~ScmatDoub_c() {}
+inline ScmatDoubC::~ScmatDoubC() {}
 
-typedef const ScmatDoub_c &ScmatDoub_I;
+typedef const ScmatDoubC &ScmatDoub_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatDoub_I v) { return v.size(); }
@@ -889,7 +889,7 @@ public:
 	ScmatDoub();
 	ScmatDoub(Doub *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatDoub_c() const;
+	operator ScmatDoubC() const;
 
 	Doub &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -909,9 +909,9 @@ inline ScmatDoub::ScmatDoub() {}
 inline ScmatDoub::ScmatDoub(Doub *data, Long_I N0, Long_I N1)
 	: SvbaseDoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatDoub::operator ScmatDoub_c() const
+inline ScmatDoub::operator ScmatDoubC() const
 {
-	return *((ScmatDoub_c *)this);
+	return *((ScmatDoubC *)this);
 }
 
 inline Doub &ScmatDoub::operator()(Long_I i, Long_I j) const
@@ -963,13 +963,13 @@ typedef const ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
 inline Doub *p(ScmatDoub &v) { return v.p(); }
 
 
-class ScmatLdoub_c : public SvbaseLdoub_c
+class ScmatLdoubC : public SvbaseLdoubC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatLdoub_c();
-	ScmatLdoub_c(const Ldoub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLdoubC();
+	ScmatLdoubC(const Ldoub *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
@@ -980,18 +980,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLdoub_c &sli);
+	void set(const ScmatLdoubC &sli);
 	void set(const Ldoub *data, Long_I N0, Long_I N1);
-	~ScmatLdoub_c();
+	~ScmatLdoubC();
 };
 
-inline ScmatLdoub_c::ScmatLdoub_c() {}
+inline ScmatLdoubC::ScmatLdoubC() {}
 
-inline ScmatLdoub_c::ScmatLdoub_c(const Ldoub *data, Long_I N0, Long_I N1)
-	: SvbaseLdoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatLdoubC::ScmatLdoubC(const Ldoub *data, Long_I N0, Long_I N1)
+	: SvbaseLdoubC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Ldoub &ScmatLdoub_c::operator()(Long_I i, Long_I j) const
+inline const Ldoub &ScmatLdoubC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1000,17 +1000,17 @@ inline const Ldoub &ScmatLdoub_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLdoub_c::n0() const
+inline Long ScmatLdoubC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatLdoub_c::n1() const
+inline Long ScmatLdoubC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatLdoub_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatLdoubC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1019,21 +1019,21 @@ inline void ScmatLdoub_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLdoub_c::set(const Ldoub *data, Long_I N0, Long_I N1)
+inline void ScmatLdoubC::set(const Ldoub *data, Long_I N0, Long_I N1)
 {
-	SvbaseLdoub_c::set(data, N0*N1);
+	SvbaseLdoubC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLdoub_c::set(const ScmatLdoub_c &sli)
+inline void ScmatLdoubC::set(const ScmatLdoubC &sli)
 {
-	SvbaseLdoub_c::set(sli);
+	SvbaseLdoubC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatLdoub_c::~ScmatLdoub_c() {}
+inline ScmatLdoubC::~ScmatLdoubC() {}
 
-typedef const ScmatLdoub_c &ScmatLdoub_I;
+typedef const ScmatLdoubC &ScmatLdoub_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatLdoub_I v) { return v.size(); }
@@ -1049,7 +1049,7 @@ public:
 	ScmatLdoub();
 	ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatLdoub_c() const;
+	operator ScmatLdoubC() const;
 
 	Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1069,9 +1069,9 @@ inline ScmatLdoub::ScmatLdoub() {}
 inline ScmatLdoub::ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1)
 	: SvbaseLdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLdoub::operator ScmatLdoub_c() const
+inline ScmatLdoub::operator ScmatLdoubC() const
 {
-	return *((ScmatLdoub_c *)this);
+	return *((ScmatLdoubC *)this);
 }
 
 inline Ldoub &ScmatLdoub::operator()(Long_I i, Long_I j) const
@@ -1123,13 +1123,13 @@ typedef const ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
 inline Ldoub *p(ScmatLdoub &v) { return v.p(); }
 
 
-class ScmatQdoub_c : public SvbaseQdoub_c
+class ScmatQdoubC : public SvbaseQdoubC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatQdoub_c();
-	ScmatQdoub_c(const Qdoub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatQdoubC();
+	ScmatQdoubC(const Qdoub *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Qdoub &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1140,18 +1140,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatQdoub_c &sli);
+	void set(const ScmatQdoubC &sli);
 	void set(const Qdoub *data, Long_I N0, Long_I N1);
-	~ScmatQdoub_c();
+	~ScmatQdoubC();
 };
 
-inline ScmatQdoub_c::ScmatQdoub_c() {}
+inline ScmatQdoubC::ScmatQdoubC() {}
 
-inline ScmatQdoub_c::ScmatQdoub_c(const Qdoub *data, Long_I N0, Long_I N1)
-	: SvbaseQdoub_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatQdoubC::ScmatQdoubC(const Qdoub *data, Long_I N0, Long_I N1)
+	: SvbaseQdoubC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Qdoub &ScmatQdoub_c::operator()(Long_I i, Long_I j) const
+inline const Qdoub &ScmatQdoubC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1160,17 +1160,17 @@ inline const Qdoub &ScmatQdoub_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatQdoub_c::n0() const
+inline Long ScmatQdoubC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatQdoub_c::n1() const
+inline Long ScmatQdoubC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatQdoub_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatQdoubC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1179,21 +1179,21 @@ inline void ScmatQdoub_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatQdoub_c::set(const Qdoub *data, Long_I N0, Long_I N1)
+inline void ScmatQdoubC::set(const Qdoub *data, Long_I N0, Long_I N1)
 {
-	SvbaseQdoub_c::set(data, N0*N1);
+	SvbaseQdoubC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatQdoub_c::set(const ScmatQdoub_c &sli)
+inline void ScmatQdoubC::set(const ScmatQdoubC &sli)
 {
-	SvbaseQdoub_c::set(sli);
+	SvbaseQdoubC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatQdoub_c::~ScmatQdoub_c() {}
+inline ScmatQdoubC::~ScmatQdoubC() {}
 
-typedef const ScmatQdoub_c &ScmatQdoub_I;
+typedef const ScmatQdoubC &ScmatQdoub_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatQdoub_I v) { return v.size(); }
@@ -1209,7 +1209,7 @@ public:
 	ScmatQdoub();
 	ScmatQdoub(Qdoub *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatQdoub_c() const;
+	operator ScmatQdoubC() const;
 
 	Qdoub &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1229,9 +1229,9 @@ inline ScmatQdoub::ScmatQdoub() {}
 inline ScmatQdoub::ScmatQdoub(Qdoub *data, Long_I N0, Long_I N1)
 	: SvbaseQdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatQdoub::operator ScmatQdoub_c() const
+inline ScmatQdoub::operator ScmatQdoubC() const
 {
-	return *((ScmatQdoub_c *)this);
+	return *((ScmatQdoubC *)this);
 }
 
 inline Qdoub &ScmatQdoub::operator()(Long_I i, Long_I j) const
@@ -1283,13 +1283,13 @@ typedef const ScmatQdoub &ScmatQdoub_O, &ScmatQdoub_IO;
 inline Qdoub *p(ScmatQdoub &v) { return v.p(); }
 
 
-class ScmatFcomp_c : public SvbaseFcomp_c
+class ScmatFcompC : public SvbaseFcompC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatFcomp_c();
-	ScmatFcomp_c(const Fcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFcompC();
+	ScmatFcompC(const Fcomp *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1300,18 +1300,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFcomp_c &sli);
+	void set(const ScmatFcompC &sli);
 	void set(const Fcomp *data, Long_I N0, Long_I N1);
-	~ScmatFcomp_c();
+	~ScmatFcompC();
 };
 
-inline ScmatFcomp_c::ScmatFcomp_c() {}
+inline ScmatFcompC::ScmatFcompC() {}
 
-inline ScmatFcomp_c::ScmatFcomp_c(const Fcomp *data, Long_I N0, Long_I N1)
-	: SvbaseFcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatFcompC::ScmatFcompC(const Fcomp *data, Long_I N0, Long_I N1)
+	: SvbaseFcompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Fcomp &ScmatFcomp_c::operator()(Long_I i, Long_I j) const
+inline const Fcomp &ScmatFcompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1320,17 +1320,17 @@ inline const Fcomp &ScmatFcomp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFcomp_c::n0() const
+inline Long ScmatFcompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatFcomp_c::n1() const
+inline Long ScmatFcompC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatFcomp_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatFcompC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1339,21 +1339,21 @@ inline void ScmatFcomp_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFcomp_c::set(const Fcomp *data, Long_I N0, Long_I N1)
+inline void ScmatFcompC::set(const Fcomp *data, Long_I N0, Long_I N1)
 {
-	SvbaseFcomp_c::set(data, N0*N1);
+	SvbaseFcompC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFcomp_c::set(const ScmatFcomp_c &sli)
+inline void ScmatFcompC::set(const ScmatFcompC &sli)
 {
-	SvbaseFcomp_c::set(sli);
+	SvbaseFcompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatFcomp_c::~ScmatFcomp_c() {}
+inline ScmatFcompC::~ScmatFcompC() {}
 
-typedef const ScmatFcomp_c &ScmatFcomp_I;
+typedef const ScmatFcompC &ScmatFcomp_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatFcomp_I v) { return v.size(); }
@@ -1369,7 +1369,7 @@ public:
 	ScmatFcomp();
 	ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatFcomp_c() const;
+	operator ScmatFcompC() const;
 
 	Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1389,9 +1389,9 @@ inline ScmatFcomp::ScmatFcomp() {}
 inline ScmatFcomp::ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1)
 	: SvbaseFcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatFcomp::operator ScmatFcomp_c() const
+inline ScmatFcomp::operator ScmatFcompC() const
 {
-	return *((ScmatFcomp_c *)this);
+	return *((ScmatFcompC *)this);
 }
 
 inline Fcomp &ScmatFcomp::operator()(Long_I i, Long_I j) const
@@ -1443,13 +1443,13 @@ typedef const ScmatFcomp &ScmatFcomp_O, &ScmatFcomp_IO;
 inline Fcomp *p(ScmatFcomp &v) { return v.p(); }
 
 
-class ScmatComp_c : public SvbaseComp_c
+class ScmatCompC : public SvbaseCompC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatComp_c();
-	ScmatComp_c(const Comp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatCompC();
+	ScmatCompC(const Comp *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Comp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1460,18 +1460,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatComp_c &sli);
+	void set(const ScmatCompC &sli);
 	void set(const Comp *data, Long_I N0, Long_I N1);
-	~ScmatComp_c();
+	~ScmatCompC();
 };
 
-inline ScmatComp_c::ScmatComp_c() {}
+inline ScmatCompC::ScmatCompC() {}
 
-inline ScmatComp_c::ScmatComp_c(const Comp *data, Long_I N0, Long_I N1)
-	: SvbaseComp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatCompC::ScmatCompC(const Comp *data, Long_I N0, Long_I N1)
+	: SvbaseCompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Comp &ScmatComp_c::operator()(Long_I i, Long_I j) const
+inline const Comp &ScmatCompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1480,17 +1480,17 @@ inline const Comp &ScmatComp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatComp_c::n0() const
+inline Long ScmatCompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatComp_c::n1() const
+inline Long ScmatCompC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatComp_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatCompC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1499,21 +1499,21 @@ inline void ScmatComp_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatComp_c::set(const Comp *data, Long_I N0, Long_I N1)
+inline void ScmatCompC::set(const Comp *data, Long_I N0, Long_I N1)
 {
-	SvbaseComp_c::set(data, N0*N1);
+	SvbaseCompC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatComp_c::set(const ScmatComp_c &sli)
+inline void ScmatCompC::set(const ScmatCompC &sli)
 {
-	SvbaseComp_c::set(sli);
+	SvbaseCompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatComp_c::~ScmatComp_c() {}
+inline ScmatCompC::~ScmatCompC() {}
 
-typedef const ScmatComp_c &ScmatComp_I;
+typedef const ScmatCompC &ScmatComp_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatComp_I v) { return v.size(); }
@@ -1529,7 +1529,7 @@ public:
 	ScmatComp();
 	ScmatComp(Comp *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatComp_c() const;
+	operator ScmatCompC() const;
 
 	Comp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1549,9 +1549,9 @@ inline ScmatComp::ScmatComp() {}
 inline ScmatComp::ScmatComp(Comp *data, Long_I N0, Long_I N1)
 	: SvbaseComp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatComp::operator ScmatComp_c() const
+inline ScmatComp::operator ScmatCompC() const
 {
-	return *((ScmatComp_c *)this);
+	return *((ScmatCompC *)this);
 }
 
 inline Comp &ScmatComp::operator()(Long_I i, Long_I j) const
@@ -1603,13 +1603,13 @@ typedef const ScmatComp &ScmatComp_O, &ScmatComp_IO;
 inline Comp *p(ScmatComp &v) { return v.p(); }
 
 
-class ScmatLcomp_c : public SvbaseLcomp_c
+class ScmatLcompC : public SvbaseLcompC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatLcomp_c();
-	ScmatLcomp_c(const Lcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLcompC();
+	ScmatLcompC(const Lcomp *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1620,18 +1620,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLcomp_c &sli);
+	void set(const ScmatLcompC &sli);
 	void set(const Lcomp *data, Long_I N0, Long_I N1);
-	~ScmatLcomp_c();
+	~ScmatLcompC();
 };
 
-inline ScmatLcomp_c::ScmatLcomp_c() {}
+inline ScmatLcompC::ScmatLcompC() {}
 
-inline ScmatLcomp_c::ScmatLcomp_c(const Lcomp *data, Long_I N0, Long_I N1)
-	: SvbaseLcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatLcompC::ScmatLcompC(const Lcomp *data, Long_I N0, Long_I N1)
+	: SvbaseLcompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Lcomp &ScmatLcomp_c::operator()(Long_I i, Long_I j) const
+inline const Lcomp &ScmatLcompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1640,17 +1640,17 @@ inline const Lcomp &ScmatLcomp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLcomp_c::n0() const
+inline Long ScmatLcompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatLcomp_c::n1() const
+inline Long ScmatLcompC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatLcomp_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatLcompC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1659,21 +1659,21 @@ inline void ScmatLcomp_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLcomp_c::set(const Lcomp *data, Long_I N0, Long_I N1)
+inline void ScmatLcompC::set(const Lcomp *data, Long_I N0, Long_I N1)
 {
-	SvbaseLcomp_c::set(data, N0*N1);
+	SvbaseLcompC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLcomp_c::set(const ScmatLcomp_c &sli)
+inline void ScmatLcompC::set(const ScmatLcompC &sli)
 {
-	SvbaseLcomp_c::set(sli);
+	SvbaseLcompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatLcomp_c::~ScmatLcomp_c() {}
+inline ScmatLcompC::~ScmatLcompC() {}
 
-typedef const ScmatLcomp_c &ScmatLcomp_I;
+typedef const ScmatLcompC &ScmatLcomp_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatLcomp_I v) { return v.size(); }
@@ -1689,7 +1689,7 @@ public:
 	ScmatLcomp();
 	ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatLcomp_c() const;
+	operator ScmatLcompC() const;
 
 	Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1709,9 +1709,9 @@ inline ScmatLcomp::ScmatLcomp() {}
 inline ScmatLcomp::ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1)
 	: SvbaseLcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLcomp::operator ScmatLcomp_c() const
+inline ScmatLcomp::operator ScmatLcompC() const
 {
-	return *((ScmatLcomp_c *)this);
+	return *((ScmatLcompC *)this);
 }
 
 inline Lcomp &ScmatLcomp::operator()(Long_I i, Long_I j) const
@@ -1763,13 +1763,13 @@ typedef const ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
 inline Lcomp *p(ScmatLcomp &v) { return v.p(); }
 
 
-class ScmatQcomp_c : public SvbaseQcomp_c
+class ScmatQcompC : public SvbaseQcompC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatQcomp_c();
-	ScmatQcomp_c(const Qcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatQcompC();
+	ScmatQcompC(const Qcomp *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Qcomp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1780,18 +1780,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatQcomp_c &sli);
+	void set(const ScmatQcompC &sli);
 	void set(const Qcomp *data, Long_I N0, Long_I N1);
-	~ScmatQcomp_c();
+	~ScmatQcompC();
 };
 
-inline ScmatQcomp_c::ScmatQcomp_c() {}
+inline ScmatQcompC::ScmatQcompC() {}
 
-inline ScmatQcomp_c::ScmatQcomp_c(const Qcomp *data, Long_I N0, Long_I N1)
-	: SvbaseQcomp_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatQcompC::ScmatQcompC(const Qcomp *data, Long_I N0, Long_I N1)
+	: SvbaseQcompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Qcomp &ScmatQcomp_c::operator()(Long_I i, Long_I j) const
+inline const Qcomp &ScmatQcompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1800,17 +1800,17 @@ inline const Qcomp &ScmatQcomp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatQcomp_c::n0() const
+inline Long ScmatQcompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatQcomp_c::n1() const
+inline Long ScmatQcompC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatQcomp_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatQcompC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1819,21 +1819,21 @@ inline void ScmatQcomp_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatQcomp_c::set(const Qcomp *data, Long_I N0, Long_I N1)
+inline void ScmatQcompC::set(const Qcomp *data, Long_I N0, Long_I N1)
 {
-	SvbaseQcomp_c::set(data, N0*N1);
+	SvbaseQcompC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatQcomp_c::set(const ScmatQcomp_c &sli)
+inline void ScmatQcompC::set(const ScmatQcompC &sli)
 {
-	SvbaseQcomp_c::set(sli);
+	SvbaseQcompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatQcomp_c::~ScmatQcomp_c() {}
+inline ScmatQcompC::~ScmatQcompC() {}
 
-typedef const ScmatQcomp_c &ScmatQcomp_I;
+typedef const ScmatQcompC &ScmatQcomp_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatQcomp_I v) { return v.size(); }
@@ -1849,7 +1849,7 @@ public:
 	ScmatQcomp();
 	ScmatQcomp(Qcomp *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatQcomp_c() const;
+	operator ScmatQcompC() const;
 
 	Qcomp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1869,9 +1869,9 @@ inline ScmatQcomp::ScmatQcomp() {}
 inline ScmatQcomp::ScmatQcomp(Qcomp *data, Long_I N0, Long_I N1)
 	: SvbaseQcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatQcomp::operator ScmatQcomp_c() const
+inline ScmatQcomp::operator ScmatQcompC() const
 {
-	return *((ScmatQcomp_c *)this);
+	return *((ScmatQcompC *)this);
 }
 
 inline Qcomp &ScmatQcomp::operator()(Long_I i, Long_I j) const
@@ -1923,13 +1923,13 @@ typedef const ScmatQcomp &ScmatQcomp_O, &ScmatQcomp_IO;
 inline Qcomp *p(ScmatQcomp &v) { return v.p(); }
 
 
-class ScmatFimag_c : public SvbaseFimag_c
+class ScmatFimagC : public SvbaseFimagC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatFimag_c();
-	ScmatFimag_c(const Fimag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFimagC();
+	ScmatFimagC(const Fimag *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Fimag &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1940,18 +1940,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFimag_c &sli);
+	void set(const ScmatFimagC &sli);
 	void set(const Fimag *data, Long_I N0, Long_I N1);
-	~ScmatFimag_c();
+	~ScmatFimagC();
 };
 
-inline ScmatFimag_c::ScmatFimag_c() {}
+inline ScmatFimagC::ScmatFimagC() {}
 
-inline ScmatFimag_c::ScmatFimag_c(const Fimag *data, Long_I N0, Long_I N1)
-	: SvbaseFimag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatFimagC::ScmatFimagC(const Fimag *data, Long_I N0, Long_I N1)
+	: SvbaseFimagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Fimag &ScmatFimag_c::operator()(Long_I i, Long_I j) const
+inline const Fimag &ScmatFimagC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1960,17 +1960,17 @@ inline const Fimag &ScmatFimag_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatFimag_c::n0() const
+inline Long ScmatFimagC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatFimag_c::n1() const
+inline Long ScmatFimagC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatFimag_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatFimagC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -1979,21 +1979,21 @@ inline void ScmatFimag_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFimag_c::set(const Fimag *data, Long_I N0, Long_I N1)
+inline void ScmatFimagC::set(const Fimag *data, Long_I N0, Long_I N1)
 {
-	SvbaseFimag_c::set(data, N0*N1);
+	SvbaseFimagC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFimag_c::set(const ScmatFimag_c &sli)
+inline void ScmatFimagC::set(const ScmatFimagC &sli)
 {
-	SvbaseFimag_c::set(sli);
+	SvbaseFimagC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatFimag_c::~ScmatFimag_c() {}
+inline ScmatFimagC::~ScmatFimagC() {}
 
-typedef const ScmatFimag_c &ScmatFimag_I;
+typedef const ScmatFimagC &ScmatFimag_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatFimag_I v) { return v.size(); }
@@ -2009,7 +2009,7 @@ public:
 	ScmatFimag();
 	ScmatFimag(Fimag *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatFimag_c() const;
+	operator ScmatFimagC() const;
 
 	Fimag &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -2029,9 +2029,9 @@ inline ScmatFimag::ScmatFimag() {}
 inline ScmatFimag::ScmatFimag(Fimag *data, Long_I N0, Long_I N1)
 	: SvbaseFimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatFimag::operator ScmatFimag_c() const
+inline ScmatFimag::operator ScmatFimagC() const
 {
-	return *((ScmatFimag_c *)this);
+	return *((ScmatFimagC *)this);
 }
 
 inline Fimag &ScmatFimag::operator()(Long_I i, Long_I j) const
@@ -2083,13 +2083,13 @@ typedef const ScmatFimag &ScmatFimag_O, &ScmatFimag_IO;
 inline Fimag *p(ScmatFimag &v) { return v.p(); }
 
 
-class ScmatImag_c : public SvbaseImag_c
+class ScmatImagC : public SvbaseImagC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatImag_c();
-	ScmatImag_c(const Imag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatImagC();
+	ScmatImagC(const Imag *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Imag &operator()(Long_I i, Long_I j) const; // double indexing
@@ -2100,18 +2100,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatImag_c &sli);
+	void set(const ScmatImagC &sli);
 	void set(const Imag *data, Long_I N0, Long_I N1);
-	~ScmatImag_c();
+	~ScmatImagC();
 };
 
-inline ScmatImag_c::ScmatImag_c() {}
+inline ScmatImagC::ScmatImagC() {}
 
-inline ScmatImag_c::ScmatImag_c(const Imag *data, Long_I N0, Long_I N1)
-	: SvbaseImag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatImagC::ScmatImagC(const Imag *data, Long_I N0, Long_I N1)
+	: SvbaseImagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Imag &ScmatImag_c::operator()(Long_I i, Long_I j) const
+inline const Imag &ScmatImagC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -2120,17 +2120,17 @@ inline const Imag &ScmatImag_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatImag_c::n0() const
+inline Long ScmatImagC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatImag_c::n1() const
+inline Long ScmatImagC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatImag_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatImagC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -2139,21 +2139,21 @@ inline void ScmatImag_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatImag_c::set(const Imag *data, Long_I N0, Long_I N1)
+inline void ScmatImagC::set(const Imag *data, Long_I N0, Long_I N1)
 {
-	SvbaseImag_c::set(data, N0*N1);
+	SvbaseImagC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatImag_c::set(const ScmatImag_c &sli)
+inline void ScmatImagC::set(const ScmatImagC &sli)
 {
-	SvbaseImag_c::set(sli);
+	SvbaseImagC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatImag_c::~ScmatImag_c() {}
+inline ScmatImagC::~ScmatImagC() {}
 
-typedef const ScmatImag_c &ScmatImag_I;
+typedef const ScmatImagC &ScmatImag_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatImag_I v) { return v.size(); }
@@ -2169,7 +2169,7 @@ public:
 	ScmatImag();
 	ScmatImag(Imag *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatImag_c() const;
+	operator ScmatImagC() const;
 
 	Imag &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -2189,9 +2189,9 @@ inline ScmatImag::ScmatImag() {}
 inline ScmatImag::ScmatImag(Imag *data, Long_I N0, Long_I N1)
 	: SvbaseImag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatImag::operator ScmatImag_c() const
+inline ScmatImag::operator ScmatImagC() const
 {
-	return *((ScmatImag_c *)this);
+	return *((ScmatImagC *)this);
 }
 
 inline Imag &ScmatImag::operator()(Long_I i, Long_I j) const
@@ -2243,13 +2243,13 @@ typedef const ScmatImag &ScmatImag_O, &ScmatImag_IO;
 inline Imag *p(ScmatImag &v) { return v.p(); }
 
 
-class ScmatLimag_c : public SvbaseLimag_c
+class ScmatLimagC : public SvbaseLimagC
 {
 protected:
 	Long m_N0, m_N1;
 public:
-	ScmatLimag_c();
-	ScmatLimag_c(const Limag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLimagC();
+	ScmatLimagC(const Limag *data, Long_I N0, Long_I N1); // unsafe
 
 
 	const Limag &operator()(Long_I i, Long_I j) const; // double indexing
@@ -2260,18 +2260,18 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLimag_c &sli);
+	void set(const ScmatLimagC &sli);
 	void set(const Limag *data, Long_I N0, Long_I N1);
-	~ScmatLimag_c();
+	~ScmatLimagC();
 };
 
-inline ScmatLimag_c::ScmatLimag_c() {}
+inline ScmatLimagC::ScmatLimagC() {}
 
-inline ScmatLimag_c::ScmatLimag_c(const Limag *data, Long_I N0, Long_I N1)
-	: SvbaseLimag_c(data, N0*N1), m_N0(N0), m_N1(N1) {}
+inline ScmatLimagC::ScmatLimagC(const Limag *data, Long_I N0, Long_I N1)
+	: SvbaseLimagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 
-inline const Limag &ScmatLimag_c::operator()(Long_I i, Long_I j) const
+inline const Limag &ScmatLimagC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -2280,17 +2280,17 @@ inline const Limag &ScmatLimag_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_N0 * j];
 }
 
-inline Long ScmatLimag_c::n0() const
+inline Long ScmatLimagC::n0() const
 {
 	return m_N0;
 }
 
-inline Long ScmatLimag_c::n1() const
+inline Long ScmatLimagC::n1() const
 {
 	return m_N1;
 }
 
-inline void ScmatLimag_c::reshape(Long_I N0, Long_I N1)
+inline void ScmatLimagC::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N0*N1 != m_N)
@@ -2299,21 +2299,21 @@ inline void ScmatLimag_c::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLimag_c::set(const Limag *data, Long_I N0, Long_I N1)
+inline void ScmatLimagC::set(const Limag *data, Long_I N0, Long_I N1)
 {
-	SvbaseLimag_c::set(data, N0*N1);
+	SvbaseLimagC::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLimag_c::set(const ScmatLimag_c &sli)
+inline void ScmatLimagC::set(const ScmatLimagC &sli)
 {
-	SvbaseLimag_c::set(sli);
+	SvbaseLimagC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
-inline ScmatLimag_c::~ScmatLimag_c() {}
+inline ScmatLimagC::~ScmatLimagC() {}
 
-typedef const ScmatLimag_c &ScmatLimag_I;
+typedef const ScmatLimagC &ScmatLimag_I;
 
 // common api for STL and SLISC
 inline Long size(ScmatLimag_I v) { return v.size(); }
@@ -2329,7 +2329,7 @@ public:
 	ScmatLimag();
 	ScmatLimag(Limag *data, Long_I N0, Long_I N1); // unsafe
 
-	operator ScmatLimag_c() const;
+	operator ScmatLimagC() const;
 
 	Limag &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -2349,9 +2349,9 @@ inline ScmatLimag::ScmatLimag() {}
 inline ScmatLimag::ScmatLimag(Limag *data, Long_I N0, Long_I N1)
 	: SvbaseLimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLimag::operator ScmatLimag_c() const
+inline ScmatLimag::operator ScmatLimagC() const
 {
-	return *((ScmatLimag_c *)this);
+	return *((ScmatLimagC *)this);
 }
 
 inline Limag &ScmatLimag::operator()(Long_I i, Long_I j) const
@@ -2406,13 +2406,13 @@ inline Limag *p(ScmatLimag &v) { return v.p(); }
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef ScmatInt ScmatLong;
-typedef ScmatInt_c ScmatLong_c;
+typedef ScmatIntC ScmatLongC;
 #else
 typedef ScmatLlong ScmatLong;
-typedef ScmatLlong_c ScmatLong_c;
+typedef ScmatLlongC ScmatLongC;
 #endif
 
-typedef const ScmatLong_c &ScmatLong_I;
+typedef const ScmatLongC &ScmatLong_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLong &ScmatLong_O, &ScmatLong_IO;
 } // namespace slisc

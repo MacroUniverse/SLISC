@@ -429,7 +429,7 @@ inline void times(@T@_O v, @T1@_I v1, @Ts@_I s)
 //%-----------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
-//% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
+//% VecTr = ['Vec' Tr]; SvecTsC = ['Svec' Ts 'C'];
 inline @Tr@ norm_inf(@T@_I A)
 {
 //% req('copy(v,s)', {VecTr});
@@ -447,14 +447,14 @@ inline @Tr@ norm_inf(@T@_I A)
 //%-----------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% Tr = rm_comp(Ts);
-//% VecTr = ['Vec' Tr]; SvecTs_c = ['Svec' Ts '_c'];
+//% VecTr = ['Vec' Tr]; SvecTsC = ['Svec' Ts 'C'];
 inline @Tr@ norm_inf(@T@_I A)
 {
 	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
 //% req('copy(v,s)', {VecTr});
 	@VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
 	Long k = 0;
-	@SvecTs_c@ sli(A.p() + N0 + 1, N1);
+	@SvecTsC@ sli(A.p() + N0 + 1, N1);
 	// first block
 	for (Long j = 1; j < N0; ++j) {
 //% req('sum_abs', {['Svec' Ts]});

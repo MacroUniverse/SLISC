@@ -1,7 +1,7 @@
 #pragma once
 
 namespace slisc {
-class DcmatChar_c
+class DcmatCharC
 {
 protected:
 	const Char *m_p;
@@ -9,10 +9,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatChar_c();
-	DcmatChar_c(const Char *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatCharC();
+	DcmatCharC(const Char *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Char *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatChar_c &sli);
+	void set(const DcmatCharC &sli);
 
 
 	const Char& operator[](Long_I i) const;
@@ -24,24 +24,24 @@ public:
 	const Char *p() const;
 };
 
-inline DcmatChar_c::DcmatChar_c() {}
+inline DcmatCharC::DcmatCharC() {}
 
-inline DcmatChar_c::DcmatChar_c(const Char *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatCharC::DcmatCharC(const Char *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatChar_c::set(const Char *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatCharC::set(const Char *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatChar_c::set(const DcmatChar_c &sli)
+inline void DcmatCharC::set(const DcmatCharC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Char &DcmatChar_c::operator[](Long_I i) const
+inline const Char &DcmatCharC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -50,7 +50,7 @@ inline const Char &DcmatChar_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Char &DcmatChar_c::operator()(Long_I i, Long_I j) const
+inline const Char &DcmatCharC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -59,32 +59,32 @@ inline const Char &DcmatChar_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatChar_c::n0() const
+inline Long DcmatCharC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatChar_c::n1() const
+inline Long DcmatCharC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatChar_c::lda() const
+inline Long DcmatCharC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatChar_c::size() const
+inline Long DcmatCharC::size() const
 {
 	return m_N;
 }
 
-inline const Char * DcmatChar_c::p() const
+inline const Char * DcmatCharC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatChar_c &DcmatChar_I;
+typedef const DcmatCharC &DcmatChar_I;
 
 class DcmatChar
 {
@@ -99,7 +99,7 @@ public:
 	void set(Char *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatChar &sli);
 
-	operator DcmatChar_c() const;
+	operator DcmatCharC() const;
 	Char& operator[](Long_I i);
 	Char& operator()(Long_I i, Long_I j);
 
@@ -128,9 +128,9 @@ inline void DcmatChar::set(const DcmatChar &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatChar::operator DcmatChar_c() const
+inline DcmatChar::operator DcmatCharC() const
 {
-	return *((DcmatChar_c *)this);
+	return *((DcmatCharC *)this);
 }
 
 inline Char &DcmatChar::operator[](Long_I i)
@@ -197,7 +197,7 @@ inline Char * DcmatChar::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatChar &DcmatChar_O, &DcmatChar_IO;
 
-class DcmatUchar_c
+class DcmatUcharC
 {
 protected:
 	const Uchar *m_p;
@@ -205,10 +205,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatUchar_c();
-	DcmatUchar_c(const Uchar *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatUcharC();
+	DcmatUcharC(const Uchar *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Uchar *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatUchar_c &sli);
+	void set(const DcmatUcharC &sli);
 
 
 	const Uchar& operator[](Long_I i) const;
@@ -220,24 +220,24 @@ public:
 	const Uchar *p() const;
 };
 
-inline DcmatUchar_c::DcmatUchar_c() {}
+inline DcmatUcharC::DcmatUcharC() {}
 
-inline DcmatUchar_c::DcmatUchar_c(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatUcharC::DcmatUcharC(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatUchar_c::set(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatUcharC::set(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatUchar_c::set(const DcmatUchar_c &sli)
+inline void DcmatUcharC::set(const DcmatUcharC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Uchar &DcmatUchar_c::operator[](Long_I i) const
+inline const Uchar &DcmatUcharC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -246,7 +246,7 @@ inline const Uchar &DcmatUchar_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Uchar &DcmatUchar_c::operator()(Long_I i, Long_I j) const
+inline const Uchar &DcmatUcharC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -255,32 +255,32 @@ inline const Uchar &DcmatUchar_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatUchar_c::n0() const
+inline Long DcmatUcharC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatUchar_c::n1() const
+inline Long DcmatUcharC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatUchar_c::lda() const
+inline Long DcmatUcharC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatUchar_c::size() const
+inline Long DcmatUcharC::size() const
 {
 	return m_N;
 }
 
-inline const Uchar * DcmatUchar_c::p() const
+inline const Uchar * DcmatUcharC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatUchar_c &DcmatUchar_I;
+typedef const DcmatUcharC &DcmatUchar_I;
 
 class DcmatUchar
 {
@@ -295,7 +295,7 @@ public:
 	void set(Uchar *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatUchar &sli);
 
-	operator DcmatUchar_c() const;
+	operator DcmatUcharC() const;
 	Uchar& operator[](Long_I i);
 	Uchar& operator()(Long_I i, Long_I j);
 
@@ -324,9 +324,9 @@ inline void DcmatUchar::set(const DcmatUchar &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatUchar::operator DcmatUchar_c() const
+inline DcmatUchar::operator DcmatUcharC() const
 {
-	return *((DcmatUchar_c *)this);
+	return *((DcmatUcharC *)this);
 }
 
 inline Uchar &DcmatUchar::operator[](Long_I i)
@@ -393,7 +393,7 @@ inline Uchar * DcmatUchar::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatUchar &DcmatUchar_O, &DcmatUchar_IO;
 
-class DcmatInt_c
+class DcmatIntC
 {
 protected:
 	const Int *m_p;
@@ -401,10 +401,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatInt_c();
-	DcmatInt_c(const Int *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatIntC();
+	DcmatIntC(const Int *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Int *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatInt_c &sli);
+	void set(const DcmatIntC &sli);
 
 
 	const Int& operator[](Long_I i) const;
@@ -416,24 +416,24 @@ public:
 	const Int *p() const;
 };
 
-inline DcmatInt_c::DcmatInt_c() {}
+inline DcmatIntC::DcmatIntC() {}
 
-inline DcmatInt_c::DcmatInt_c(const Int *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatIntC::DcmatIntC(const Int *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatInt_c::set(const Int *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatIntC::set(const Int *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatInt_c::set(const DcmatInt_c &sli)
+inline void DcmatIntC::set(const DcmatIntC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Int &DcmatInt_c::operator[](Long_I i) const
+inline const Int &DcmatIntC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -442,7 +442,7 @@ inline const Int &DcmatInt_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Int &DcmatInt_c::operator()(Long_I i, Long_I j) const
+inline const Int &DcmatIntC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -451,32 +451,32 @@ inline const Int &DcmatInt_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatInt_c::n0() const
+inline Long DcmatIntC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatInt_c::n1() const
+inline Long DcmatIntC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatInt_c::lda() const
+inline Long DcmatIntC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatInt_c::size() const
+inline Long DcmatIntC::size() const
 {
 	return m_N;
 }
 
-inline const Int * DcmatInt_c::p() const
+inline const Int * DcmatIntC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatInt_c &DcmatInt_I;
+typedef const DcmatIntC &DcmatInt_I;
 
 class DcmatInt
 {
@@ -491,7 +491,7 @@ public:
 	void set(Int *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatInt &sli);
 
-	operator DcmatInt_c() const;
+	operator DcmatIntC() const;
 	Int& operator[](Long_I i);
 	Int& operator()(Long_I i, Long_I j);
 
@@ -520,9 +520,9 @@ inline void DcmatInt::set(const DcmatInt &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatInt::operator DcmatInt_c() const
+inline DcmatInt::operator DcmatIntC() const
 {
-	return *((DcmatInt_c *)this);
+	return *((DcmatIntC *)this);
 }
 
 inline Int &DcmatInt::operator[](Long_I i)
@@ -589,7 +589,7 @@ inline Int * DcmatInt::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatInt &DcmatInt_O, &DcmatInt_IO;
 
-class DcmatLlong_c
+class DcmatLlongC
 {
 protected:
 	const Llong *m_p;
@@ -597,10 +597,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatLlong_c();
-	DcmatLlong_c(const Llong *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatLlongC();
+	DcmatLlongC(const Llong *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Llong *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatLlong_c &sli);
+	void set(const DcmatLlongC &sli);
 
 
 	const Llong& operator[](Long_I i) const;
@@ -612,24 +612,24 @@ public:
 	const Llong *p() const;
 };
 
-inline DcmatLlong_c::DcmatLlong_c() {}
+inline DcmatLlongC::DcmatLlongC() {}
 
-inline DcmatLlong_c::DcmatLlong_c(const Llong *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatLlongC::DcmatLlongC(const Llong *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatLlong_c::set(const Llong *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatLlongC::set(const Llong *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatLlong_c::set(const DcmatLlong_c &sli)
+inline void DcmatLlongC::set(const DcmatLlongC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Llong &DcmatLlong_c::operator[](Long_I i) const
+inline const Llong &DcmatLlongC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -638,7 +638,7 @@ inline const Llong &DcmatLlong_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Llong &DcmatLlong_c::operator()(Long_I i, Long_I j) const
+inline const Llong &DcmatLlongC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -647,32 +647,32 @@ inline const Llong &DcmatLlong_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLlong_c::n0() const
+inline Long DcmatLlongC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatLlong_c::n1() const
+inline Long DcmatLlongC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatLlong_c::lda() const
+inline Long DcmatLlongC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatLlong_c::size() const
+inline Long DcmatLlongC::size() const
 {
 	return m_N;
 }
 
-inline const Llong * DcmatLlong_c::p() const
+inline const Llong * DcmatLlongC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatLlong_c &DcmatLlong_I;
+typedef const DcmatLlongC &DcmatLlong_I;
 
 class DcmatLlong
 {
@@ -687,7 +687,7 @@ public:
 	void set(Llong *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatLlong &sli);
 
-	operator DcmatLlong_c() const;
+	operator DcmatLlongC() const;
 	Llong& operator[](Long_I i);
 	Llong& operator()(Long_I i, Long_I j);
 
@@ -716,9 +716,9 @@ inline void DcmatLlong::set(const DcmatLlong &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatLlong::operator DcmatLlong_c() const
+inline DcmatLlong::operator DcmatLlongC() const
 {
-	return *((DcmatLlong_c *)this);
+	return *((DcmatLlongC *)this);
 }
 
 inline Llong &DcmatLlong::operator[](Long_I i)
@@ -785,7 +785,7 @@ inline Llong * DcmatLlong::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLlong &DcmatLlong_O, &DcmatLlong_IO;
 
-class DcmatFloat_c
+class DcmatFloatC
 {
 protected:
 	const Float *m_p;
@@ -793,10 +793,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatFloat_c();
-	DcmatFloat_c(const Float *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatFloatC();
+	DcmatFloatC(const Float *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Float *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatFloat_c &sli);
+	void set(const DcmatFloatC &sli);
 
 
 	const Float& operator[](Long_I i) const;
@@ -808,24 +808,24 @@ public:
 	const Float *p() const;
 };
 
-inline DcmatFloat_c::DcmatFloat_c() {}
+inline DcmatFloatC::DcmatFloatC() {}
 
-inline DcmatFloat_c::DcmatFloat_c(const Float *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatFloatC::DcmatFloatC(const Float *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatFloat_c::set(const Float *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatFloatC::set(const Float *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatFloat_c::set(const DcmatFloat_c &sli)
+inline void DcmatFloatC::set(const DcmatFloatC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Float &DcmatFloat_c::operator[](Long_I i) const
+inline const Float &DcmatFloatC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -834,7 +834,7 @@ inline const Float &DcmatFloat_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Float &DcmatFloat_c::operator()(Long_I i, Long_I j) const
+inline const Float &DcmatFloatC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -843,32 +843,32 @@ inline const Float &DcmatFloat_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatFloat_c::n0() const
+inline Long DcmatFloatC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatFloat_c::n1() const
+inline Long DcmatFloatC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatFloat_c::lda() const
+inline Long DcmatFloatC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatFloat_c::size() const
+inline Long DcmatFloatC::size() const
 {
 	return m_N;
 }
 
-inline const Float * DcmatFloat_c::p() const
+inline const Float * DcmatFloatC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatFloat_c &DcmatFloat_I;
+typedef const DcmatFloatC &DcmatFloat_I;
 
 class DcmatFloat
 {
@@ -883,7 +883,7 @@ public:
 	void set(Float *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatFloat &sli);
 
-	operator DcmatFloat_c() const;
+	operator DcmatFloatC() const;
 	Float& operator[](Long_I i);
 	Float& operator()(Long_I i, Long_I j);
 
@@ -912,9 +912,9 @@ inline void DcmatFloat::set(const DcmatFloat &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatFloat::operator DcmatFloat_c() const
+inline DcmatFloat::operator DcmatFloatC() const
 {
-	return *((DcmatFloat_c *)this);
+	return *((DcmatFloatC *)this);
 }
 
 inline Float &DcmatFloat::operator[](Long_I i)
@@ -981,7 +981,7 @@ inline Float * DcmatFloat::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatFloat &DcmatFloat_O, &DcmatFloat_IO;
 
-class DcmatDoub_c
+class DcmatDoubC
 {
 protected:
 	const Doub *m_p;
@@ -989,10 +989,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatDoub_c();
-	DcmatDoub_c(const Doub *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatDoubC();
+	DcmatDoubC(const Doub *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Doub *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatDoub_c &sli);
+	void set(const DcmatDoubC &sli);
 
 
 	const Doub& operator[](Long_I i) const;
@@ -1004,24 +1004,24 @@ public:
 	const Doub *p() const;
 };
 
-inline DcmatDoub_c::DcmatDoub_c() {}
+inline DcmatDoubC::DcmatDoubC() {}
 
-inline DcmatDoub_c::DcmatDoub_c(const Doub *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatDoubC::DcmatDoubC(const Doub *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatDoub_c::set(const Doub *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatDoubC::set(const Doub *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatDoub_c::set(const DcmatDoub_c &sli)
+inline void DcmatDoubC::set(const DcmatDoubC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Doub &DcmatDoub_c::operator[](Long_I i) const
+inline const Doub &DcmatDoubC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -1030,7 +1030,7 @@ inline const Doub &DcmatDoub_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Doub &DcmatDoub_c::operator()(Long_I i, Long_I j) const
+inline const Doub &DcmatDoubC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1039,32 +1039,32 @@ inline const Doub &DcmatDoub_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatDoub_c::n0() const
+inline Long DcmatDoubC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatDoub_c::n1() const
+inline Long DcmatDoubC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatDoub_c::lda() const
+inline Long DcmatDoubC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatDoub_c::size() const
+inline Long DcmatDoubC::size() const
 {
 	return m_N;
 }
 
-inline const Doub * DcmatDoub_c::p() const
+inline const Doub * DcmatDoubC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatDoub_c &DcmatDoub_I;
+typedef const DcmatDoubC &DcmatDoub_I;
 
 class DcmatDoub
 {
@@ -1079,7 +1079,7 @@ public:
 	void set(Doub *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatDoub &sli);
 
-	operator DcmatDoub_c() const;
+	operator DcmatDoubC() const;
 	Doub& operator[](Long_I i);
 	Doub& operator()(Long_I i, Long_I j);
 
@@ -1108,9 +1108,9 @@ inline void DcmatDoub::set(const DcmatDoub &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatDoub::operator DcmatDoub_c() const
+inline DcmatDoub::operator DcmatDoubC() const
 {
-	return *((DcmatDoub_c *)this);
+	return *((DcmatDoubC *)this);
 }
 
 inline Doub &DcmatDoub::operator[](Long_I i)
@@ -1177,7 +1177,7 @@ inline Doub * DcmatDoub::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatDoub &DcmatDoub_O, &DcmatDoub_IO;
 
-class DcmatLdoub_c
+class DcmatLdoubC
 {
 protected:
 	const Ldoub *m_p;
@@ -1185,10 +1185,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatLdoub_c();
-	DcmatLdoub_c(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatLdoubC();
+	DcmatLdoubC(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatLdoub_c &sli);
+	void set(const DcmatLdoubC &sli);
 
 
 	const Ldoub& operator[](Long_I i) const;
@@ -1200,24 +1200,24 @@ public:
 	const Ldoub *p() const;
 };
 
-inline DcmatLdoub_c::DcmatLdoub_c() {}
+inline DcmatLdoubC::DcmatLdoubC() {}
 
-inline DcmatLdoub_c::DcmatLdoub_c(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatLdoubC::DcmatLdoubC(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatLdoub_c::set(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatLdoubC::set(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatLdoub_c::set(const DcmatLdoub_c &sli)
+inline void DcmatLdoubC::set(const DcmatLdoubC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Ldoub &DcmatLdoub_c::operator[](Long_I i) const
+inline const Ldoub &DcmatLdoubC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -1226,7 +1226,7 @@ inline const Ldoub &DcmatLdoub_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Ldoub &DcmatLdoub_c::operator()(Long_I i, Long_I j) const
+inline const Ldoub &DcmatLdoubC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1235,32 +1235,32 @@ inline const Ldoub &DcmatLdoub_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLdoub_c::n0() const
+inline Long DcmatLdoubC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatLdoub_c::n1() const
+inline Long DcmatLdoubC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatLdoub_c::lda() const
+inline Long DcmatLdoubC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatLdoub_c::size() const
+inline Long DcmatLdoubC::size() const
 {
 	return m_N;
 }
 
-inline const Ldoub * DcmatLdoub_c::p() const
+inline const Ldoub * DcmatLdoubC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatLdoub_c &DcmatLdoub_I;
+typedef const DcmatLdoubC &DcmatLdoub_I;
 
 class DcmatLdoub
 {
@@ -1275,7 +1275,7 @@ public:
 	void set(Ldoub *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatLdoub &sli);
 
-	operator DcmatLdoub_c() const;
+	operator DcmatLdoubC() const;
 	Ldoub& operator[](Long_I i);
 	Ldoub& operator()(Long_I i, Long_I j);
 
@@ -1304,9 +1304,9 @@ inline void DcmatLdoub::set(const DcmatLdoub &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatLdoub::operator DcmatLdoub_c() const
+inline DcmatLdoub::operator DcmatLdoubC() const
 {
-	return *((DcmatLdoub_c *)this);
+	return *((DcmatLdoubC *)this);
 }
 
 inline Ldoub &DcmatLdoub::operator[](Long_I i)
@@ -1375,7 +1375,7 @@ typedef const DcmatLdoub &DcmatLdoub_O, &DcmatLdoub_IO;
 
 
 
-class DcmatFcomp_c
+class DcmatFcompC
 {
 protected:
 	const Fcomp *m_p;
@@ -1383,10 +1383,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatFcomp_c();
-	DcmatFcomp_c(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatFcompC();
+	DcmatFcompC(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatFcomp_c &sli);
+	void set(const DcmatFcompC &sli);
 
 
 	const Fcomp& operator[](Long_I i) const;
@@ -1398,24 +1398,24 @@ public:
 	const Fcomp *p() const;
 };
 
-inline DcmatFcomp_c::DcmatFcomp_c() {}
+inline DcmatFcompC::DcmatFcompC() {}
 
-inline DcmatFcomp_c::DcmatFcomp_c(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatFcompC::DcmatFcompC(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatFcomp_c::set(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatFcompC::set(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatFcomp_c::set(const DcmatFcomp_c &sli)
+inline void DcmatFcompC::set(const DcmatFcompC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Fcomp &DcmatFcomp_c::operator[](Long_I i) const
+inline const Fcomp &DcmatFcompC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -1424,7 +1424,7 @@ inline const Fcomp &DcmatFcomp_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Fcomp &DcmatFcomp_c::operator()(Long_I i, Long_I j) const
+inline const Fcomp &DcmatFcompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1433,32 +1433,32 @@ inline const Fcomp &DcmatFcomp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatFcomp_c::n0() const
+inline Long DcmatFcompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatFcomp_c::n1() const
+inline Long DcmatFcompC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatFcomp_c::lda() const
+inline Long DcmatFcompC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatFcomp_c::size() const
+inline Long DcmatFcompC::size() const
 {
 	return m_N;
 }
 
-inline const Fcomp * DcmatFcomp_c::p() const
+inline const Fcomp * DcmatFcompC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatFcomp_c &DcmatFcomp_I;
+typedef const DcmatFcompC &DcmatFcomp_I;
 
 class DcmatFcomp
 {
@@ -1473,7 +1473,7 @@ public:
 	void set(Fcomp *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatFcomp &sli);
 
-	operator DcmatFcomp_c() const;
+	operator DcmatFcompC() const;
 	Fcomp& operator[](Long_I i);
 	Fcomp& operator()(Long_I i, Long_I j);
 
@@ -1502,9 +1502,9 @@ inline void DcmatFcomp::set(const DcmatFcomp &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatFcomp::operator DcmatFcomp_c() const
+inline DcmatFcomp::operator DcmatFcompC() const
 {
-	return *((DcmatFcomp_c *)this);
+	return *((DcmatFcompC *)this);
 }
 
 inline Fcomp &DcmatFcomp::operator[](Long_I i)
@@ -1571,7 +1571,7 @@ inline Fcomp * DcmatFcomp::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatFcomp &DcmatFcomp_O, &DcmatFcomp_IO;
 
-class DcmatComp_c
+class DcmatCompC
 {
 protected:
 	const Comp *m_p;
@@ -1579,10 +1579,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatComp_c();
-	DcmatComp_c(const Comp *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatCompC();
+	DcmatCompC(const Comp *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Comp *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatComp_c &sli);
+	void set(const DcmatCompC &sli);
 
 
 	const Comp& operator[](Long_I i) const;
@@ -1594,24 +1594,24 @@ public:
 	const Comp *p() const;
 };
 
-inline DcmatComp_c::DcmatComp_c() {}
+inline DcmatCompC::DcmatCompC() {}
 
-inline DcmatComp_c::DcmatComp_c(const Comp *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatCompC::DcmatCompC(const Comp *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatComp_c::set(const Comp *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatCompC::set(const Comp *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatComp_c::set(const DcmatComp_c &sli)
+inline void DcmatCompC::set(const DcmatCompC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Comp &DcmatComp_c::operator[](Long_I i) const
+inline const Comp &DcmatCompC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -1620,7 +1620,7 @@ inline const Comp &DcmatComp_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Comp &DcmatComp_c::operator()(Long_I i, Long_I j) const
+inline const Comp &DcmatCompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1629,32 +1629,32 @@ inline const Comp &DcmatComp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatComp_c::n0() const
+inline Long DcmatCompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatComp_c::n1() const
+inline Long DcmatCompC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatComp_c::lda() const
+inline Long DcmatCompC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatComp_c::size() const
+inline Long DcmatCompC::size() const
 {
 	return m_N;
 }
 
-inline const Comp * DcmatComp_c::p() const
+inline const Comp * DcmatCompC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatComp_c &DcmatComp_I;
+typedef const DcmatCompC &DcmatComp_I;
 
 class DcmatComp
 {
@@ -1669,7 +1669,7 @@ public:
 	void set(Comp *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatComp &sli);
 
-	operator DcmatComp_c() const;
+	operator DcmatCompC() const;
 	Comp& operator[](Long_I i);
 	Comp& operator()(Long_I i, Long_I j);
 
@@ -1698,9 +1698,9 @@ inline void DcmatComp::set(const DcmatComp &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatComp::operator DcmatComp_c() const
+inline DcmatComp::operator DcmatCompC() const
 {
-	return *((DcmatComp_c *)this);
+	return *((DcmatCompC *)this);
 }
 
 inline Comp &DcmatComp::operator[](Long_I i)
@@ -1767,7 +1767,7 @@ inline Comp * DcmatComp::p() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatComp &DcmatComp_O, &DcmatComp_IO;
 
-class DcmatLcomp_c
+class DcmatLcompC
 {
 protected:
 	const Lcomp *m_p;
@@ -1775,10 +1775,10 @@ protected:
 	Long m_N0, m_N1;
 	Long m_lda; // leading dimension (here is m_N0 of host matrix)
 public:
-	DcmatLcomp_c();
-	DcmatLcomp_c(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
+	DcmatLcompC();
+	DcmatLcompC(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
-	void set(const DcmatLcomp_c &sli);
+	void set(const DcmatLcompC &sli);
 
 
 	const Lcomp& operator[](Long_I i) const;
@@ -1790,24 +1790,24 @@ public:
 	const Lcomp *p() const;
 };
 
-inline DcmatLcomp_c::DcmatLcomp_c() {}
+inline DcmatLcompC::DcmatLcompC() {}
 
-inline DcmatLcomp_c::DcmatLcomp_c(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
+inline DcmatLcompC::DcmatLcompC(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
 	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
 {}
 
-inline void DcmatLcomp_c::set(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
+inline void DcmatLcompC::set(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
 {
 	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
 }
 
-inline void DcmatLcomp_c::set(const DcmatLcomp_c &sli)
+inline void DcmatLcompC::set(const DcmatLcompC &sli)
 {
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
 
-inline const Lcomp &DcmatLcomp_c::operator[](Long_I i) const
+inline const Lcomp &DcmatLcompC::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N)
@@ -1816,7 +1816,7 @@ inline const Lcomp &DcmatLcomp_c::operator[](Long_I i) const
 	return m_p[i%m_N0 + (i/m_N0)*m_lda];
 }
 
-inline const Lcomp &DcmatLcomp_c::operator()(Long_I i, Long_I j) const
+inline const Lcomp &DcmatLcompC::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
@@ -1825,32 +1825,32 @@ inline const Lcomp &DcmatLcomp_c::operator()(Long_I i, Long_I j) const
 	return m_p[i + m_lda * j];
 }
 
-inline Long DcmatLcomp_c::n0() const
+inline Long DcmatLcompC::n0() const
 {
 	return m_N0;
 }
 
-inline Long DcmatLcomp_c::n1() const
+inline Long DcmatLcompC::n1() const
 {
 	return m_N1;
 }
 
-inline Long DcmatLcomp_c::lda() const
+inline Long DcmatLcompC::lda() const
 {
 	return m_lda;
 }
 
-inline Long DcmatLcomp_c::size() const
+inline Long DcmatLcompC::size() const
 {
 	return m_N;
 }
 
-inline const Lcomp * DcmatLcomp_c::p() const
+inline const Lcomp * DcmatLcompC::p() const
 {
 	return m_p;
 }
 
-typedef const DcmatLcomp_c &DcmatLcomp_I;
+typedef const DcmatLcompC &DcmatLcomp_I;
 
 class DcmatLcomp
 {
@@ -1865,7 +1865,7 @@ public:
 	void set(Lcomp *p, Long_I N0, Long_I N1, Long_I lda);
 	void set(const DcmatLcomp &sli);
 
-	operator DcmatLcomp_c() const;
+	operator DcmatLcompC() const;
 	Lcomp& operator[](Long_I i);
 	Lcomp& operator()(Long_I i, Long_I j);
 
@@ -1894,9 +1894,9 @@ inline void DcmatLcomp::set(const DcmatLcomp &sli)
 	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
 }
 
-inline DcmatLcomp::operator DcmatLcomp_c() const
+inline DcmatLcomp::operator DcmatLcompC() const
 {
-	return *((DcmatLcomp_c *)this);
+	return *((DcmatLcompC *)this);
 }
 
 inline Lcomp &DcmatLcomp::operator[](Long_I i)
@@ -1968,13 +1968,13 @@ typedef const DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DcmatInt DcmatLong;
-typedef DcmatInt_c DcmatLong_c;
+typedef DcmatIntC DcmatLongC;
 #else
 typedef DcmatLlong DcmatLong;
-typedef DcmatLlong_c DcmatLong_c;
+typedef DcmatLlongC DcmatLongC;
 #endif
 
-typedef const DcmatLong_c &DcmatLong_I;
+typedef const DcmatLongC &DcmatLong_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DcmatLong &DcmatLong_O, &DcmatLong_IO;
 

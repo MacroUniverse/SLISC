@@ -1769,7 +1769,7 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 {
 	if (matb.search(varname) >= 0)
 		SLS_ERR("variable already exist: " + varname);
-	SvecChar_c sli; sli.set(str.data(), str.size());
+	SvecCharC sli; sli.set(str.data(), str.size());
 	save(sli, varname, matb);
 }
 

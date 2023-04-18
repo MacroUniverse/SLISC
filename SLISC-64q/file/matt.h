@@ -1662,7 +1662,7 @@ inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file, Int_I preci
 
 inline void save(Str_I str, Str_I varname, Matt_IO matt)
 {
-	SvecChar_c sli; sli.set(str.data(), str.size());
+	SvecCharC sli; sli.set(str.data(), str.size());
 	save(sli, varname, matt);
 }
 

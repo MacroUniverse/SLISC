@@ -56,7 +56,7 @@ struct DcitInt {
 };
 typedef DcitInt &DcitInt_O, &DcitInt_IO;
 
-struct DcitInt_c {
+struct DcitIntC {
 		const Int *m_p; // current pos
 		const Int *m_beg, *m_end; // tot range
 		const Int *m_beg0, *m_end0; // current column range
@@ -104,7 +104,7 @@ struct DcitInt_c {
 		Bool operator<(const Int *p) { return m_p < p; }
 		Bool operator<=(const Int *p) { return m_p <= p; }
 };
-typedef const DcitInt_c &DcitInt_I;
+typedef const DcitIntC &DcitInt_I;
 
 struct DcitLlong {
 		Llong *m_p; // current pos
@@ -156,7 +156,7 @@ struct DcitLlong {
 };
 typedef DcitLlong &DcitLlong_O, &DcitLlong_IO;
 
-struct DcitLlong_c {
+struct DcitLlongC {
 		const Llong *m_p; // current pos
 		const Llong *m_beg, *m_end; // tot range
 		const Llong *m_beg0, *m_end0; // current column range
@@ -204,7 +204,7 @@ struct DcitLlong_c {
 		Bool operator<(const Llong *p) { return m_p < p; }
 		Bool operator<=(const Llong *p) { return m_p <= p; }
 };
-typedef const DcitLlong_c &DcitLlong_I;
+typedef const DcitLlongC &DcitLlong_I;
 
 struct DcitDoub {
 		Doub *m_p; // current pos
@@ -256,7 +256,7 @@ struct DcitDoub {
 };
 typedef DcitDoub &DcitDoub_O, &DcitDoub_IO;
 
-struct DcitDoub_c {
+struct DcitDoubC {
 		const Doub *m_p; // current pos
 		const Doub *m_beg, *m_end; // tot range
 		const Doub *m_beg0, *m_end0; // current column range
@@ -304,7 +304,7 @@ struct DcitDoub_c {
 		Bool operator<(const Doub *p) { return m_p < p; }
 		Bool operator<=(const Doub *p) { return m_p <= p; }
 };
-typedef const DcitDoub_c &DcitDoub_I;
+typedef const DcitDoubC &DcitDoub_I;
 
 struct DcitComp {
 		Comp *m_p; // current pos
@@ -356,7 +356,7 @@ struct DcitComp {
 };
 typedef DcitComp &DcitComp_O, &DcitComp_IO;
 
-struct DcitComp_c {
+struct DcitCompC {
 		const Comp *m_p; // current pos
 		const Comp *m_beg, *m_end; // tot range
 		const Comp *m_beg0, *m_end0; // current column range
@@ -404,7 +404,7 @@ struct DcitComp_c {
 		Bool operator<(const Comp *p) { return m_p < p; }
 		Bool operator<=(const Comp *p) { return m_p <= p; }
 };
-typedef const DcitComp_c &DcitComp_I;
+typedef const DcitCompC &DcitComp_I;
 
 
 } // namespace slisc

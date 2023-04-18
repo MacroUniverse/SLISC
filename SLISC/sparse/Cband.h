@@ -32,9 +32,9 @@ public:
 	CmatInt &cmat();
 	const CmatInt &cmat() const;
 	DcmatInt band();
-	DcmatInt_c band() const;
+	DcmatIntC band() const;
 	DvecInt diag();
-	DvecInt_c diag() const;
+	DvecIntC diag() const;
 	void resize(Long_I lda, Long_I N1);
 	void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 	void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -137,9 +137,9 @@ inline DcmatInt CbandInt::band()
 	return DcmatInt(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
-inline DcmatInt_c CbandInt::band() const
+inline DcmatIntC CbandInt::band() const
 {
-	return DcmatInt_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+	return DcmatIntC(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
 inline DvecInt CbandInt::diag()
@@ -147,9 +147,9 @@ inline DvecInt CbandInt::diag()
 	return DvecInt(&m_a[m_idiag], n1(), lda());
 }
 
-inline DvecInt_c CbandInt::diag() const
+inline DvecIntC CbandInt::diag() const
 {
-	return DvecInt_c(&m_a[m_idiag], n1(), lda());
+	return DvecIntC(&m_a[m_idiag], n1(), lda());
 }
 
 inline void CbandInt::resize(Long_I lda, Long_I N1)
@@ -217,9 +217,9 @@ public:
 	CmatDoub &cmat();
 	const CmatDoub &cmat() const;
 	DcmatDoub band();
-	DcmatDoub_c band() const;
+	DcmatDoubC band() const;
 	DvecDoub diag();
-	DvecDoub_c diag() const;
+	DvecDoubC diag() const;
 	void resize(Long_I lda, Long_I N1);
 	void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 	void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -322,9 +322,9 @@ inline DcmatDoub CbandDoub::band()
 	return DcmatDoub(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
-inline DcmatDoub_c CbandDoub::band() const
+inline DcmatDoubC CbandDoub::band() const
 {
-	return DcmatDoub_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+	return DcmatDoubC(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
 inline DvecDoub CbandDoub::diag()
@@ -332,9 +332,9 @@ inline DvecDoub CbandDoub::diag()
 	return DvecDoub(&m_a[m_idiag], n1(), lda());
 }
 
-inline DvecDoub_c CbandDoub::diag() const
+inline DvecDoubC CbandDoub::diag() const
 {
-	return DvecDoub_c(&m_a[m_idiag], n1(), lda());
+	return DvecDoubC(&m_a[m_idiag], n1(), lda());
 }
 
 inline void CbandDoub::resize(Long_I lda, Long_I N1)
@@ -402,9 +402,9 @@ public:
 	CmatComp &cmat();
 	const CmatComp &cmat() const;
 	DcmatComp band();
-	DcmatComp_c band() const;
+	DcmatCompC band() const;
 	DvecComp diag();
-	DvecComp_c diag() const;
+	DvecCompC diag() const;
 	void resize(Long_I lda, Long_I N1);
 	void resize(Long_I N0, Long_I N1, Long_I Nup, Long_I Nlow, Long_I lda = -1, Long_I idiag = -1);
 	void reshape(Long_I N0, Long_I Nup, Long_I Nlow, Long_I idiag = -1);
@@ -507,9 +507,9 @@ inline DcmatComp CbandComp::band()
 	return DcmatComp(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
-inline DcmatComp_c CbandComp::band() const
+inline DcmatCompC CbandComp::band() const
 {
-	return DcmatComp_c(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
+	return DcmatCompC(&m_a[m_idiag - m_Nup], m_Nup + m_Nlow + 1, n1(), lda());
 }
 
 inline DvecComp CbandComp::diag()
@@ -517,9 +517,9 @@ inline DvecComp CbandComp::diag()
 	return DvecComp(&m_a[m_idiag], n1(), lda());
 }
 
-inline DvecComp_c CbandComp::diag() const
+inline DvecCompC CbandComp::diag() const
 {
-	return DvecComp_c(&m_a[m_idiag], n1(), lda());
+	return DvecCompC(&m_a[m_idiag], n1(), lda());
 }
 
 inline void CbandComp::resize(Long_I lda, Long_I N1)

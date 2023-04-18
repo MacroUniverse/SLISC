@@ -33,7 +33,7 @@ public:
 	// mean value / eigen value
 	Doub mean(const Doub *v, const Doub *w) const
 	{
-		SvecDoub_c sv(v, m_N), sw(w, m_N);
+		SvecDoubC sv(v, m_N), sw(w, m_N);
 		return dot(sv, sw)/dot(sv, sv);
 	}
 

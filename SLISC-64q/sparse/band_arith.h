@@ -16,9 +16,9 @@ inline DcmatDoub band(CbandDoub_IO a)
 	return DcmatDoub(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
-inline DcmatDoub_c band(CbandDoub_I a)
+inline DcmatDoubC band(CbandDoub_I a)
 {
-	return DcmatDoub_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+	return DcmatDoubC(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 inline DcmatQdoub band(CbandQdoub_IO a)
@@ -26,9 +26,9 @@ inline DcmatQdoub band(CbandQdoub_IO a)
 	return DcmatQdoub(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
-inline DcmatQdoub_c band(CbandQdoub_I a)
+inline DcmatQdoubC band(CbandQdoub_I a)
 {
-	return DcmatQdoub_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+	return DcmatQdoubC(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 inline DcmatComp band(CbandComp_IO a)
@@ -36,9 +36,9 @@ inline DcmatComp band(CbandComp_IO a)
 	return DcmatComp(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
-inline DcmatComp_c band(CbandComp_I a)
+inline DcmatCompC band(CbandComp_I a)
 {
-	return DcmatComp_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+	return DcmatCompC(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 inline DcmatQcomp band(CbandQcomp_IO a)
@@ -46,9 +46,9 @@ inline DcmatQcomp band(CbandQcomp_IO a)
 	return DcmatQcomp(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
-inline DcmatQcomp_c band(CbandQcomp_I a)
+inline DcmatQcompC band(CbandQcomp_I a)
 {
-	return DcmatQcomp_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+	return DcmatQcompC(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
 
@@ -299,7 +299,7 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 	Long N0 = a.n0(), N1 = a.n1();
 	for (Long j = 0; j < N1; ++j) {
 		SvecComp cut_b = cut0(b.cmat(), j);
-		SvecDoub_c cut_a = cut0(a, j);
+		SvecDoubC cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
 		for (Long i = i_beg; i < i_end; ++i)
@@ -316,7 +316,7 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_tim
 	Doub dt4 = 0.25*dt;
 	for (Long j = 0; j < N1; ++j) {
 		SvecComp cut_b = cut0(b.cmat(), j);
-		SvecDoub_c cut_a = cut0(a, j);
+		SvecDoubC cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
 		if (!imag_time) {
@@ -433,7 +433,7 @@ inline void copy_imag(CbandQcomp_O b, ScmatQdoub_I a)
 	Long N0 = a.n0(), N1 = a.n1();
 	for (Long j = 0; j < N1; ++j) {
 		SvecQcomp cut_b = cut0(b.cmat(), j);
-		SvecQdoub_c cut_a = cut0(a, j);
+		SvecQdoubC cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
 		for (Long i = i_beg; i < i_end; ++i)
@@ -450,7 +450,7 @@ inline void cn_band_mat(CbandQcomp_O b, ScmatQdoub_I a, Qdoub_I dt, Bool_I imag_
 	Qdoub dt4 = 0.25*dt;
 	for (Long j = 0; j < N1; ++j) {
 		SvecQcomp cut_b = cut0(b.cmat(), j);
-		SvecQdoub_c cut_a = cut0(a, j);
+		SvecQdoubC cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
 		if (!imag_time) {

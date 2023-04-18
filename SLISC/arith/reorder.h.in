@@ -286,7 +286,7 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
 		// check repeat
 		Bool repeat = false;
 //% req('cut1', {T;T1});
-		@Tcut1@_c s1 = cut1(a1, i);
+		@Tcut1@C s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 //% req('v==v', {Tcut,Tcut1});
 			if (cut1(a, j) == s1) {

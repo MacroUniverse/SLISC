@@ -504,7 +504,7 @@ inline void copy(@T@_O lhs, @T1@_I rhs)
 //% T = varargin{:}; Ts = val_t(T);
 //% DcmatTs = ['Dcmat' Ts];
 @DcmatTs@ band(@T@_IO);
-@DcmatTs@_c band(@T@_I);
+@DcmatTs@C band(@T@_I);
 //% req('copy(v,s)', {DcmatTs});
 inline void copy(@T@_O a, @Ts@_I s)
 { copy(band(a), s); }
@@ -551,7 +551,7 @@ inline void copy(@T1@_O b, @T2@_I a)
 	for (Long j = 0; j < N2; ++j) {
 //% req('cut0', {['Cmat' val_t(T1)]; T2});
 		@SvecTs1@ cut_b = cut0(b.cmat(), j);
-		@SvecTs2@_c cut_a = cut0(a, j);
+		@SvecTs2@C cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
 		for (Long i = i_beg; i < i_end; ++i)
@@ -569,7 +569,7 @@ inline void copy(@T1@_O a, @T2@_I b)
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N1, j + b.nlow() + 1);
 //% req('cut0', {T1; ['Cmat' val_t(T2)]});
 		@SvecTs1@ cut_a = cut0(a, j);
-		@SvecTs2@_c cut_b = cut0(b.cmat(), j);
+		@SvecTs2@C cut_b = cut0(b.cmat(), j);
 		for (Long i = 0; i < i_beg; ++i)
 			cut_a[i] = 0;
 		for (Long i = i_beg; i < i_end; i++)

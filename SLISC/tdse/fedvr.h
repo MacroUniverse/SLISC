@@ -86,7 +86,7 @@ inline Comp fedvr_interp2(VecDoub_I x, VecDoub_I y, CmatComp_I val,
 		SLS_ERR("not implemented!");
 	VecDoub y1(Ngs); VecComp val1(Ngs);
 	Long start = indFEDVR(iFEy, 0, Ngs);
-	SvecDoub_c x_sli =  cut(x, ix, Ngs);
+	SvecDoubC x_sli =  cut(x, ix, Ngs);
 	for (Long j = start; j < start + Ngs; ++j) {
 		poly_comp_interp1 poly(x_sli, cut0(val, ix, Ngs, j));
 		val1[j-start] = poly(x_q);

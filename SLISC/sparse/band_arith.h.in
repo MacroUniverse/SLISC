@@ -22,9 +22,9 @@ inline @DcmatT@ band(@CbandT@_IO a)
 	return @DcmatT@(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 
-inline @DcmatT@_c band(@CbandT@_I a)
+inline @DcmatT@C band(@CbandT@_I a)
 {
-	return @DcmatT@_c(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
+	return @DcmatT@C(&a.cmat()[a.idiag() - a.nup()], a.nup() + a.nlow() + 1, a.n1(), a.lda());
 }
 //%------------------------------
 
@@ -122,7 +122,7 @@ inline void copy_imag(Cband@Tc@_O b, Scmat@Tr@_I a)
 	for (Long j = 0; j < N1; ++j) {
 //% req('cut0', { ['Cmat' Tc]; ['Scmat' Tr]; });
 		Svec@Tc@ cut_b = cut0(b.cmat(), j);
-		Svec@Tr@_c cut_a = cut0(a, j);
+		Svec@Tr@C cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
 		for (Long i = i_beg; i < i_end; ++i)
@@ -141,7 +141,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Scmat@Tr@_I a, @Tr@_I dt, Bool_I imag_tim
 	for (Long j = 0; j < N1; ++j) {
 //% req('cut0', { ['Cmat' Tc]; ['Scmat' Tr]; });
 		Svec@Tc@ cut_b = cut0(b.cmat(), j);
-		Svec@Tr@_c cut_a = cut0(a, j);
+		Svec@Tr@C cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
 		if (!imag_time) {

@@ -1122,7 +1122,7 @@ inline Int norm_inf(CmobdInt_I A)
 	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
 	VecInt abs_sum(A.n1()); copy(abs_sum, 0);
 	Long k = 0;
-	SvecInt_c sli(A.p() + N0 + 1, N1);
+	SvecIntC sli(A.p() + N0 + 1, N1);
 	// first block
 	for (Long j = 1; j < N0; ++j) {
 		abs_sum[k] += sum_abs(sli);
@@ -1152,7 +1152,7 @@ inline Doub norm_inf(CmobdDoub_I A)
 	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
 	VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
 	Long k = 0;
-	SvecDoub_c sli(A.p() + N0 + 1, N1);
+	SvecDoubC sli(A.p() + N0 + 1, N1);
 	// first block
 	for (Long j = 1; j < N0; ++j) {
 		abs_sum[k] += sum_abs(sli);
@@ -1183,7 +1183,7 @@ inline Doub norm_inf(CmobdComp_I A)
 	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
 	VecDoub abs_sum(A.n1()); copy(abs_sum, 0);
 	Long k = 0;
-	SvecComp_c sli(A.p() + N0 + 1, N1);
+	SvecCompC sli(A.p() + N0 + 1, N1);
 	// first block
 	for (Long j = 1; j < N0; ++j) {
 		abs_sum[k] += sum_abs(sli);

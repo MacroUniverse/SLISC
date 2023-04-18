@@ -13,11 +13,11 @@ namespace slisc {
 //%------------------------------
 //% [Ts, constness] = varargin{:};
 //% if constness
-//%     T_c = [Ts '_c']; Tc = ['const ' Ts]; T_IO = [Ts '_I'];
+//%     TC = [Ts 'C']; Tc = ['const ' Ts]; T_IO = [Ts '_I'];
 //% else
-//%     T_c = Ts; Tc = Ts; T_IO = [Ts '_IO'];
+//%     TC = Ts; Tc = Ts; T_IO = [Ts '_IO'];
 //% end
-struct Dcit@T_c@ {
+struct Dcit@TC@ {
 		@Tc@ *m_p; // current pos
 		@Tc@ *m_beg, *m_end; // tot range
 		@Tc@ *m_beg0, *m_end0; // current column range
@@ -66,7 +66,7 @@ struct Dcit@T_c@ {
 		Bool operator<=(const @Ts@ *p) { return m_p <= p; }
 };
 //% if constness
-typedef const Dcit@T_c@ &Dcit@Ts@_I;
+typedef const Dcit@TC@ &Dcit@Ts@_I;
 //% else
 typedef Dcit@Ts@ &Dcit@Ts@_O, &Dcit@Ts@_IO;
 //% end
