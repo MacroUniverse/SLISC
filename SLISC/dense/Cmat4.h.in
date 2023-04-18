@@ -98,6 +98,14 @@ inline Long @Cmat4T@::n3() const {
 
 typedef const @Cmat4T@ &@Cmat4T@_I;
 typedef @Cmat4T@ &@Cmat4T@_O, &@Cmat4T@_IO;
+
+// common api for STL and SLISC
+inline Long size(@Cmat4T@_I v) { return v.size(); }
+
+inline const @T@ *p(@Cmat4T@_I v) { return v.p(); }
+
+inline @T@ *p(@Cmat4T@ &v) { return v.p(); }
+
 //%-----------------------------
 
 #ifdef SLS_USE_INT_AS_LONG

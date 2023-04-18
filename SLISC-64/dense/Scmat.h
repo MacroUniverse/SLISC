@@ -75,6 +75,12 @@ inline ScmatChar_c::~ScmatChar_c() {}
 
 typedef const ScmatChar_c &ScmatChar_I;
 
+// common api for STL and SLISC
+inline Long size(ScmatChar_I v) { return v.size(); }
+
+inline const Char *p(ScmatChar_I v) { return v.p(); }
+
+
 class ScmatChar : public SvbaseChar
 {
 protected:
@@ -153,6 +159,10 @@ inline ScmatChar::~ScmatChar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatChar &ScmatChar_O, &ScmatChar_IO;
 
+// common api for STL and SLISC
+inline Char *p(ScmatChar &v) { return v.p(); }
+
+
 class ScmatUchar_c : public SvbaseUchar_c
 {
 protected:
@@ -224,6 +234,12 @@ inline void ScmatUchar_c::set(const ScmatUchar_c &sli)
 inline ScmatUchar_c::~ScmatUchar_c() {}
 
 typedef const ScmatUchar_c &ScmatUchar_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatUchar_I v) { return v.size(); }
+
+inline const Uchar *p(ScmatUchar_I v) { return v.p(); }
+
 
 class ScmatUchar : public SvbaseUchar
 {
@@ -303,6 +319,10 @@ inline ScmatUchar::~ScmatUchar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatUchar &ScmatUchar_O, &ScmatUchar_IO;
 
+// common api for STL and SLISC
+inline Uchar *p(ScmatUchar &v) { return v.p(); }
+
+
 class ScmatInt_c : public SvbaseInt_c
 {
 protected:
@@ -374,6 +394,12 @@ inline void ScmatInt_c::set(const ScmatInt_c &sli)
 inline ScmatInt_c::~ScmatInt_c() {}
 
 typedef const ScmatInt_c &ScmatInt_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatInt_I v) { return v.size(); }
+
+inline const Int *p(ScmatInt_I v) { return v.p(); }
+
 
 class ScmatInt : public SvbaseInt
 {
@@ -453,6 +479,10 @@ inline ScmatInt::~ScmatInt() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatInt &ScmatInt_O, &ScmatInt_IO;
 
+// common api for STL and SLISC
+inline Int *p(ScmatInt &v) { return v.p(); }
+
+
 class ScmatLlong_c : public SvbaseLlong_c
 {
 protected:
@@ -524,6 +554,12 @@ inline void ScmatLlong_c::set(const ScmatLlong_c &sli)
 inline ScmatLlong_c::~ScmatLlong_c() {}
 
 typedef const ScmatLlong_c &ScmatLlong_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatLlong_I v) { return v.size(); }
+
+inline const Llong *p(ScmatLlong_I v) { return v.p(); }
+
 
 class ScmatLlong : public SvbaseLlong
 {
@@ -603,6 +639,10 @@ inline ScmatLlong::~ScmatLlong() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLlong &ScmatLlong_O, &ScmatLlong_IO;
 
+// common api for STL and SLISC
+inline Llong *p(ScmatLlong &v) { return v.p(); }
+
+
 class ScmatFloat_c : public SvbaseFloat_c
 {
 protected:
@@ -674,6 +714,12 @@ inline void ScmatFloat_c::set(const ScmatFloat_c &sli)
 inline ScmatFloat_c::~ScmatFloat_c() {}
 
 typedef const ScmatFloat_c &ScmatFloat_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatFloat_I v) { return v.size(); }
+
+inline const Float *p(ScmatFloat_I v) { return v.p(); }
+
 
 class ScmatFloat : public SvbaseFloat
 {
@@ -753,6 +799,10 @@ inline ScmatFloat::~ScmatFloat() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFloat &ScmatFloat_O, &ScmatFloat_IO;
 
+// common api for STL and SLISC
+inline Float *p(ScmatFloat &v) { return v.p(); }
+
+
 class ScmatDoub_c : public SvbaseDoub_c
 {
 protected:
@@ -824,6 +874,12 @@ inline void ScmatDoub_c::set(const ScmatDoub_c &sli)
 inline ScmatDoub_c::~ScmatDoub_c() {}
 
 typedef const ScmatDoub_c &ScmatDoub_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatDoub_I v) { return v.size(); }
+
+inline const Doub *p(ScmatDoub_I v) { return v.p(); }
+
 
 class ScmatDoub : public SvbaseDoub
 {
@@ -903,6 +959,10 @@ inline ScmatDoub::~ScmatDoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
 
+// common api for STL and SLISC
+inline Doub *p(ScmatDoub &v) { return v.p(); }
+
+
 class ScmatLdoub_c : public SvbaseLdoub_c
 {
 protected:
@@ -974,6 +1034,12 @@ inline void ScmatLdoub_c::set(const ScmatLdoub_c &sli)
 inline ScmatLdoub_c::~ScmatLdoub_c() {}
 
 typedef const ScmatLdoub_c &ScmatLdoub_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatLdoub_I v) { return v.size(); }
+
+inline const Ldoub *p(ScmatLdoub_I v) { return v.p(); }
+
 
 class ScmatLdoub : public SvbaseLdoub
 {
@@ -1053,6 +1119,10 @@ inline ScmatLdoub::~ScmatLdoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
 
+// common api for STL and SLISC
+inline Ldoub *p(ScmatLdoub &v) { return v.p(); }
+
+
 
 
 class ScmatFcomp_c : public SvbaseFcomp_c
@@ -1126,6 +1196,12 @@ inline void ScmatFcomp_c::set(const ScmatFcomp_c &sli)
 inline ScmatFcomp_c::~ScmatFcomp_c() {}
 
 typedef const ScmatFcomp_c &ScmatFcomp_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatFcomp_I v) { return v.size(); }
+
+inline const Fcomp *p(ScmatFcomp_I v) { return v.p(); }
+
 
 class ScmatFcomp : public SvbaseFcomp
 {
@@ -1205,6 +1281,10 @@ inline ScmatFcomp::~ScmatFcomp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFcomp &ScmatFcomp_O, &ScmatFcomp_IO;
 
+// common api for STL and SLISC
+inline Fcomp *p(ScmatFcomp &v) { return v.p(); }
+
+
 class ScmatComp_c : public SvbaseComp_c
 {
 protected:
@@ -1276,6 +1356,12 @@ inline void ScmatComp_c::set(const ScmatComp_c &sli)
 inline ScmatComp_c::~ScmatComp_c() {}
 
 typedef const ScmatComp_c &ScmatComp_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatComp_I v) { return v.size(); }
+
+inline const Comp *p(ScmatComp_I v) { return v.p(); }
+
 
 class ScmatComp : public SvbaseComp
 {
@@ -1355,6 +1441,10 @@ inline ScmatComp::~ScmatComp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatComp &ScmatComp_O, &ScmatComp_IO;
 
+// common api for STL and SLISC
+inline Comp *p(ScmatComp &v) { return v.p(); }
+
+
 class ScmatLcomp_c : public SvbaseLcomp_c
 {
 protected:
@@ -1426,6 +1516,12 @@ inline void ScmatLcomp_c::set(const ScmatLcomp_c &sli)
 inline ScmatLcomp_c::~ScmatLcomp_c() {}
 
 typedef const ScmatLcomp_c &ScmatLcomp_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatLcomp_I v) { return v.size(); }
+
+inline const Lcomp *p(ScmatLcomp_I v) { return v.p(); }
+
 
 class ScmatLcomp : public SvbaseLcomp
 {
@@ -1505,6 +1601,10 @@ inline ScmatLcomp::~ScmatLcomp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
 
+// common api for STL and SLISC
+inline Lcomp *p(ScmatLcomp &v) { return v.p(); }
+
+
 
 
 class ScmatFimag_c : public SvbaseFimag_c
@@ -1578,6 +1678,12 @@ inline void ScmatFimag_c::set(const ScmatFimag_c &sli)
 inline ScmatFimag_c::~ScmatFimag_c() {}
 
 typedef const ScmatFimag_c &ScmatFimag_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatFimag_I v) { return v.size(); }
+
+inline const Fimag *p(ScmatFimag_I v) { return v.p(); }
+
 
 class ScmatFimag : public SvbaseFimag
 {
@@ -1657,6 +1763,10 @@ inline ScmatFimag::~ScmatFimag() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFimag &ScmatFimag_O, &ScmatFimag_IO;
 
+// common api for STL and SLISC
+inline Fimag *p(ScmatFimag &v) { return v.p(); }
+
+
 class ScmatImag_c : public SvbaseImag_c
 {
 protected:
@@ -1728,6 +1838,12 @@ inline void ScmatImag_c::set(const ScmatImag_c &sli)
 inline ScmatImag_c::~ScmatImag_c() {}
 
 typedef const ScmatImag_c &ScmatImag_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatImag_I v) { return v.size(); }
+
+inline const Imag *p(ScmatImag_I v) { return v.p(); }
+
 
 class ScmatImag : public SvbaseImag
 {
@@ -1807,6 +1923,10 @@ inline ScmatImag::~ScmatImag() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatImag &ScmatImag_O, &ScmatImag_IO;
 
+// common api for STL and SLISC
+inline Imag *p(ScmatImag &v) { return v.p(); }
+
+
 class ScmatLimag_c : public SvbaseLimag_c
 {
 protected:
@@ -1878,6 +1998,12 @@ inline void ScmatLimag_c::set(const ScmatLimag_c &sli)
 inline ScmatLimag_c::~ScmatLimag_c() {}
 
 typedef const ScmatLimag_c &ScmatLimag_I;
+
+// common api for STL and SLISC
+inline Long size(ScmatLimag_I v) { return v.size(); }
+
+inline const Limag *p(ScmatLimag_I v) { return v.p(); }
+
 
 class ScmatLimag : public SvbaseLimag
 {
@@ -1956,6 +2082,10 @@ inline ScmatLimag::~ScmatLimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLimag &ScmatLimag_O, &ScmatLimag_IO;
+
+// common api for STL and SLISC
+inline Limag *p(ScmatLimag &v) { return v.p(); }
+
 
 
 #ifdef SLS_USE_INT_AS_LONG

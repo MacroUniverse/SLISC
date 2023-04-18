@@ -119,10 +119,19 @@ inline @Class@::~@Class@() {}
 
 //% if constness
 typedef const @Class@ &@Scmat3T@_I;
+
+// common api for STL and SLISC
+inline Long size(@Scmat3T@_I v) { return v.size(); }
+
+inline const @T@ *p(@Scmat3T@_I v) { return v.p(); }
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@Scmat3T@_O, &@Scmat3T@_IO;
+
+// common api for STL and SLISC
+inline @T@ *p(@Scmat3T@ &v) { return v.p(); }
 //% end
+
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG

@@ -82,6 +82,14 @@ inline Long Cmat3Char::n2() const {
 typedef const Cmat3Char &Cmat3Char_I;
 typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Char_I v) { return v.size(); }
+
+inline const Char *p(Cmat3Char_I v) { return v.p(); }
+
+inline Char *p(Cmat3Char &v) { return v.p(); }
+
+
 class Cmat3Uchar : public VbaseUchar
 {
 protected:
@@ -160,6 +168,14 @@ inline Long Cmat3Uchar::n2() const {
 
 typedef const Cmat3Uchar &Cmat3Uchar_I;
 typedef Cmat3Uchar &Cmat3Uchar_O, &Cmat3Uchar_IO;
+
+// common api for STL and SLISC
+inline Long size(Cmat3Uchar_I v) { return v.size(); }
+
+inline const Uchar *p(Cmat3Uchar_I v) { return v.p(); }
+
+inline Uchar *p(Cmat3Uchar &v) { return v.p(); }
+
 
 class Cmat3Int : public VbaseInt
 {
@@ -240,6 +256,14 @@ inline Long Cmat3Int::n2() const {
 typedef const Cmat3Int &Cmat3Int_I;
 typedef Cmat3Int &Cmat3Int_O, &Cmat3Int_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Int_I v) { return v.size(); }
+
+inline const Int *p(Cmat3Int_I v) { return v.p(); }
+
+inline Int *p(Cmat3Int &v) { return v.p(); }
+
+
 class Cmat3Llong : public VbaseLlong
 {
 protected:
@@ -318,6 +342,14 @@ inline Long Cmat3Llong::n2() const {
 
 typedef const Cmat3Llong &Cmat3Llong_I;
 typedef Cmat3Llong &Cmat3Llong_O, &Cmat3Llong_IO;
+
+// common api for STL and SLISC
+inline Long size(Cmat3Llong_I v) { return v.size(); }
+
+inline const Llong *p(Cmat3Llong_I v) { return v.p(); }
+
+inline Llong *p(Cmat3Llong &v) { return v.p(); }
+
 
 class Cmat3Float : public VbaseFloat
 {
@@ -398,6 +430,14 @@ inline Long Cmat3Float::n2() const {
 typedef const Cmat3Float &Cmat3Float_I;
 typedef Cmat3Float &Cmat3Float_O, &Cmat3Float_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Float_I v) { return v.size(); }
+
+inline const Float *p(Cmat3Float_I v) { return v.p(); }
+
+inline Float *p(Cmat3Float &v) { return v.p(); }
+
+
 class Cmat3Doub : public VbaseDoub
 {
 protected:
@@ -477,6 +517,14 @@ inline Long Cmat3Doub::n2() const {
 typedef const Cmat3Doub &Cmat3Doub_I;
 typedef Cmat3Doub &Cmat3Doub_O, &Cmat3Doub_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Doub_I v) { return v.size(); }
+
+inline const Doub *p(Cmat3Doub_I v) { return v.p(); }
+
+inline Doub *p(Cmat3Doub &v) { return v.p(); }
+
+
 class Cmat3Ldoub : public VbaseLdoub
 {
 protected:
@@ -555,6 +603,14 @@ inline Long Cmat3Ldoub::n2() const {
 
 typedef const Cmat3Ldoub &Cmat3Ldoub_I;
 typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
+
+// common api for STL and SLISC
+inline Long size(Cmat3Ldoub_I v) { return v.size(); }
+
+inline const Ldoub *p(Cmat3Ldoub_I v) { return v.p(); }
+
+inline Ldoub *p(Cmat3Ldoub &v) { return v.p(); }
+
 
 
 class Cmat3Fcomp : public VbaseFcomp
@@ -636,6 +692,14 @@ inline Long Cmat3Fcomp::n2() const {
 typedef const Cmat3Fcomp &Cmat3Fcomp_I;
 typedef Cmat3Fcomp &Cmat3Fcomp_O, &Cmat3Fcomp_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Fcomp_I v) { return v.size(); }
+
+inline const Fcomp *p(Cmat3Fcomp_I v) { return v.p(); }
+
+inline Fcomp *p(Cmat3Fcomp &v) { return v.p(); }
+
+
 class Cmat3Comp : public VbaseComp
 {
 protected:
@@ -715,6 +779,14 @@ inline Long Cmat3Comp::n2() const {
 typedef const Cmat3Comp &Cmat3Comp_I;
 typedef Cmat3Comp &Cmat3Comp_O, &Cmat3Comp_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Comp_I v) { return v.size(); }
+
+inline const Comp *p(Cmat3Comp_I v) { return v.p(); }
+
+inline Comp *p(Cmat3Comp &v) { return v.p(); }
+
+
 class Cmat3Lcomp : public VbaseLcomp
 {
 protected:
@@ -793,6 +865,14 @@ inline Long Cmat3Lcomp::n2() const {
 
 typedef const Cmat3Lcomp &Cmat3Lcomp_I;
 typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
+
+// common api for STL and SLISC
+inline Long size(Cmat3Lcomp_I v) { return v.size(); }
+
+inline const Lcomp *p(Cmat3Lcomp_I v) { return v.p(); }
+
+inline Lcomp *p(Cmat3Lcomp &v) { return v.p(); }
+
 
 
 class Cmat3Fimag : public VbaseFimag
@@ -874,6 +954,14 @@ inline Long Cmat3Fimag::n2() const {
 typedef const Cmat3Fimag &Cmat3Fimag_I;
 typedef Cmat3Fimag &Cmat3Fimag_O, &Cmat3Fimag_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Fimag_I v) { return v.size(); }
+
+inline const Fimag *p(Cmat3Fimag_I v) { return v.p(); }
+
+inline Fimag *p(Cmat3Fimag &v) { return v.p(); }
+
+
 class Cmat3Imag : public VbaseImag
 {
 protected:
@@ -953,6 +1041,14 @@ inline Long Cmat3Imag::n2() const {
 typedef const Cmat3Imag &Cmat3Imag_I;
 typedef Cmat3Imag &Cmat3Imag_O, &Cmat3Imag_IO;
 
+// common api for STL and SLISC
+inline Long size(Cmat3Imag_I v) { return v.size(); }
+
+inline const Imag *p(Cmat3Imag_I v) { return v.p(); }
+
+inline Imag *p(Cmat3Imag &v) { return v.p(); }
+
+
 class Cmat3Limag : public VbaseLimag
 {
 protected:
@@ -1031,6 +1127,14 @@ inline Long Cmat3Limag::n2() const {
 
 typedef const Cmat3Limag &Cmat3Limag_I;
 typedef Cmat3Limag &Cmat3Limag_O, &Cmat3Limag_IO;
+
+// common api for STL and SLISC
+inline Long size(Cmat3Limag_I v) { return v.size(); }
+
+inline const Limag *p(Cmat3Limag_I v) { return v.p(); }
+
+inline Limag *p(Cmat3Limag &v) { return v.p(); }
+
 
 
 #ifdef SLS_USE_INT_AS_LONG

@@ -3678,6 +3678,13 @@ inline SvecChar_c::SvecChar_c(const Char *data, Long_I N)
 
 typedef const SvecChar_c &SvecChar_I;
 
+// common api for STL and SLISC
+inline Long size(SvecChar_I v) { return v.size(); }
+
+inline const Char *p(SvecChar_I v) { return v.p(); }
+
+
+
 class SvecChar : public SvbaseChar
 {
 public:
@@ -3702,6 +3709,10 @@ inline SvecChar::operator SvecChar_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecChar &SvecChar_O, &SvecChar_IO;
 
+// common api for STL and SLISC
+inline Char *p(SvecChar &v) { return v.p(); }
+
+
 class SvecUchar_c : public SvbaseUchar_c
 {
 public:
@@ -3719,6 +3730,13 @@ inline SvecUchar_c::SvecUchar_c(const Uchar *data, Long_I N)
 
 
 typedef const SvecUchar_c &SvecUchar_I;
+
+// common api for STL and SLISC
+inline Long size(SvecUchar_I v) { return v.size(); }
+
+inline const Uchar *p(SvecUchar_I v) { return v.p(); }
+
+
 
 class SvecUchar : public SvbaseUchar
 {
@@ -3744,6 +3762,10 @@ inline SvecUchar::operator SvecUchar_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecUchar &SvecUchar_O, &SvecUchar_IO;
 
+// common api for STL and SLISC
+inline Uchar *p(SvecUchar &v) { return v.p(); }
+
+
 class SvecInt_c : public SvbaseInt_c
 {
 public:
@@ -3761,6 +3783,13 @@ inline SvecInt_c::SvecInt_c(const Int *data, Long_I N)
 
 
 typedef const SvecInt_c &SvecInt_I;
+
+// common api for STL and SLISC
+inline Long size(SvecInt_I v) { return v.size(); }
+
+inline const Int *p(SvecInt_I v) { return v.p(); }
+
+
 
 class SvecInt : public SvbaseInt
 {
@@ -3786,6 +3815,10 @@ inline SvecInt::operator SvecInt_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecInt &SvecInt_O, &SvecInt_IO;
 
+// common api for STL and SLISC
+inline Int *p(SvecInt &v) { return v.p(); }
+
+
 class SvecLlong_c : public SvbaseLlong_c
 {
 public:
@@ -3803,6 +3836,13 @@ inline SvecLlong_c::SvecLlong_c(const Llong *data, Long_I N)
 
 
 typedef const SvecLlong_c &SvecLlong_I;
+
+// common api for STL and SLISC
+inline Long size(SvecLlong_I v) { return v.size(); }
+
+inline const Llong *p(SvecLlong_I v) { return v.p(); }
+
+
 
 class SvecLlong : public SvbaseLlong
 {
@@ -3828,6 +3868,10 @@ inline SvecLlong::operator SvecLlong_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLlong &SvecLlong_O, &SvecLlong_IO;
 
+// common api for STL and SLISC
+inline Llong *p(SvecLlong &v) { return v.p(); }
+
+
 class SvecFloat_c : public SvbaseFloat_c
 {
 public:
@@ -3845,6 +3889,13 @@ inline SvecFloat_c::SvecFloat_c(const Float *data, Long_I N)
 
 
 typedef const SvecFloat_c &SvecFloat_I;
+
+// common api for STL and SLISC
+inline Long size(SvecFloat_I v) { return v.size(); }
+
+inline const Float *p(SvecFloat_I v) { return v.p(); }
+
+
 
 class SvecFloat : public SvbaseFloat
 {
@@ -3870,6 +3921,10 @@ inline SvecFloat::operator SvecFloat_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFloat &SvecFloat_O, &SvecFloat_IO;
 
+// common api for STL and SLISC
+inline Float *p(SvecFloat &v) { return v.p(); }
+
+
 class SvecDoub_c : public SvbaseDoub_c
 {
 public:
@@ -3887,6 +3942,13 @@ inline SvecDoub_c::SvecDoub_c(const Doub *data, Long_I N)
 
 
 typedef const SvecDoub_c &SvecDoub_I;
+
+// common api for STL and SLISC
+inline Long size(SvecDoub_I v) { return v.size(); }
+
+inline const Doub *p(SvecDoub_I v) { return v.p(); }
+
+
 
 class SvecDoub : public SvbaseDoub
 {
@@ -3912,6 +3974,10 @@ inline SvecDoub::operator SvecDoub_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecDoub &SvecDoub_O, &SvecDoub_IO;
 
+// common api for STL and SLISC
+inline Doub *p(SvecDoub &v) { return v.p(); }
+
+
 class SvecLdoub_c : public SvbaseLdoub_c
 {
 public:
@@ -3929,6 +3995,13 @@ inline SvecLdoub_c::SvecLdoub_c(const Ldoub *data, Long_I N)
 
 
 typedef const SvecLdoub_c &SvecLdoub_I;
+
+// common api for STL and SLISC
+inline Long size(SvecLdoub_I v) { return v.size(); }
+
+inline const Ldoub *p(SvecLdoub_I v) { return v.p(); }
+
+
 
 class SvecLdoub : public SvbaseLdoub
 {
@@ -3954,6 +4027,10 @@ inline SvecLdoub::operator SvecLdoub_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
 
+// common api for STL and SLISC
+inline Ldoub *p(SvecLdoub &v) { return v.p(); }
+
+
 class SvecQdoub_c : public SvbaseQdoub_c
 {
 public:
@@ -3971,6 +4048,13 @@ inline SvecQdoub_c::SvecQdoub_c(const Qdoub *data, Long_I N)
 
 
 typedef const SvecQdoub_c &SvecQdoub_I;
+
+// common api for STL and SLISC
+inline Long size(SvecQdoub_I v) { return v.size(); }
+
+inline const Qdoub *p(SvecQdoub_I v) { return v.p(); }
+
+
 
 class SvecQdoub : public SvbaseQdoub
 {
@@ -3996,6 +4080,10 @@ inline SvecQdoub::operator SvecQdoub_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecQdoub &SvecQdoub_O, &SvecQdoub_IO;
 
+// common api for STL and SLISC
+inline Qdoub *p(SvecQdoub &v) { return v.p(); }
+
+
 class SvecFcomp_c : public SvbaseFcomp_c
 {
 public:
@@ -4013,6 +4101,13 @@ inline SvecFcomp_c::SvecFcomp_c(const Fcomp *data, Long_I N)
 
 
 typedef const SvecFcomp_c &SvecFcomp_I;
+
+// common api for STL and SLISC
+inline Long size(SvecFcomp_I v) { return v.size(); }
+
+inline const Fcomp *p(SvecFcomp_I v) { return v.p(); }
+
+
 
 class SvecFcomp : public SvbaseFcomp
 {
@@ -4038,6 +4133,10 @@ inline SvecFcomp::operator SvecFcomp_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFcomp &SvecFcomp_O, &SvecFcomp_IO;
 
+// common api for STL and SLISC
+inline Fcomp *p(SvecFcomp &v) { return v.p(); }
+
+
 class SvecComp_c : public SvbaseComp_c
 {
 public:
@@ -4055,6 +4154,13 @@ inline SvecComp_c::SvecComp_c(const Comp *data, Long_I N)
 
 
 typedef const SvecComp_c &SvecComp_I;
+
+// common api for STL and SLISC
+inline Long size(SvecComp_I v) { return v.size(); }
+
+inline const Comp *p(SvecComp_I v) { return v.p(); }
+
+
 
 class SvecComp : public SvbaseComp
 {
@@ -4080,6 +4186,10 @@ inline SvecComp::operator SvecComp_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecComp &SvecComp_O, &SvecComp_IO;
 
+// common api for STL and SLISC
+inline Comp *p(SvecComp &v) { return v.p(); }
+
+
 class SvecLcomp_c : public SvbaseLcomp_c
 {
 public:
@@ -4097,6 +4207,13 @@ inline SvecLcomp_c::SvecLcomp_c(const Lcomp *data, Long_I N)
 
 
 typedef const SvecLcomp_c &SvecLcomp_I;
+
+// common api for STL and SLISC
+inline Long size(SvecLcomp_I v) { return v.size(); }
+
+inline const Lcomp *p(SvecLcomp_I v) { return v.p(); }
+
+
 
 class SvecLcomp : public SvbaseLcomp
 {
@@ -4122,6 +4239,10 @@ inline SvecLcomp::operator SvecLcomp_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
 
+// common api for STL and SLISC
+inline Lcomp *p(SvecLcomp &v) { return v.p(); }
+
+
 class SvecQcomp_c : public SvbaseQcomp_c
 {
 public:
@@ -4139,6 +4260,13 @@ inline SvecQcomp_c::SvecQcomp_c(const Qcomp *data, Long_I N)
 
 
 typedef const SvecQcomp_c &SvecQcomp_I;
+
+// common api for STL and SLISC
+inline Long size(SvecQcomp_I v) { return v.size(); }
+
+inline const Qcomp *p(SvecQcomp_I v) { return v.p(); }
+
+
 
 class SvecQcomp : public SvbaseQcomp
 {
@@ -4164,6 +4292,10 @@ inline SvecQcomp::operator SvecQcomp_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecQcomp &SvecQcomp_O, &SvecQcomp_IO;
 
+// common api for STL and SLISC
+inline Qcomp *p(SvecQcomp &v) { return v.p(); }
+
+
 class SvecFimag_c : public SvbaseFimag_c
 {
 public:
@@ -4181,6 +4313,13 @@ inline SvecFimag_c::SvecFimag_c(const Fimag *data, Long_I N)
 
 
 typedef const SvecFimag_c &SvecFimag_I;
+
+// common api for STL and SLISC
+inline Long size(SvecFimag_I v) { return v.size(); }
+
+inline const Fimag *p(SvecFimag_I v) { return v.p(); }
+
+
 
 class SvecFimag : public SvbaseFimag
 {
@@ -4206,6 +4345,10 @@ inline SvecFimag::operator SvecFimag_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecFimag &SvecFimag_O, &SvecFimag_IO;
 
+// common api for STL and SLISC
+inline Fimag *p(SvecFimag &v) { return v.p(); }
+
+
 class SvecImag_c : public SvbaseImag_c
 {
 public:
@@ -4223,6 +4366,13 @@ inline SvecImag_c::SvecImag_c(const Imag *data, Long_I N)
 
 
 typedef const SvecImag_c &SvecImag_I;
+
+// common api for STL and SLISC
+inline Long size(SvecImag_I v) { return v.size(); }
+
+inline const Imag *p(SvecImag_I v) { return v.p(); }
+
+
 
 class SvecImag : public SvbaseImag
 {
@@ -4248,6 +4398,10 @@ inline SvecImag::operator SvecImag_c() const
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecImag &SvecImag_O, &SvecImag_IO;
 
+// common api for STL and SLISC
+inline Imag *p(SvecImag &v) { return v.p(); }
+
+
 class SvecLimag_c : public SvbaseLimag_c
 {
 public:
@@ -4265,6 +4419,13 @@ inline SvecLimag_c::SvecLimag_c(const Limag *data, Long_I N)
 
 
 typedef const SvecLimag_c &SvecLimag_I;
+
+// common api for STL and SLISC
+inline Long size(SvecLimag_I v) { return v.size(); }
+
+inline const Limag *p(SvecLimag_I v) { return v.p(); }
+
+
 
 class SvecLimag : public SvbaseLimag
 {
@@ -4289,6 +4450,10 @@ inline SvecLimag::operator SvecLimag_c() const
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
+
+// common api for STL and SLISC
+inline Limag *p(SvecLimag &v) { return v.p(); }
+
 
 
 #ifdef SLS_USE_INT_AS_LONG

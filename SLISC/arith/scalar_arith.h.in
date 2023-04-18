@@ -161,11 +161,27 @@ inline Qdoub factorialq(Int_I n) {
 }
 #endif
 
+// common api for STL and SLISC
 template <class T>
-inline Long size(const vector<T> &v) { return v.size(); }
+inline Long size(const T &v) { return v.size(); }
 
 template <class T>
-inline Long size(const std::basic_string<T> &v) { return v.size(); }
+inline const T *p(const T &v)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(!v.empty());
+#endif
+	return v.data();
+}
+
+template <class T>
+inline T *p(T &v)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(!v.empty());
+#endif
+	return v.data();
+}
 
 // number of prime numbers smaller than n
 // verified with leetcode 204
