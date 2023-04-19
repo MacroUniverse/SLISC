@@ -130,17 +130,28 @@
 #define SLS_STRINGIFY(x) #x
 #define SLS_TO_STR(x) SLS_STRINGIFY(x)
 
-// __LINE__ is a number, we need a string of that number
-#define SLS_LINE SLS_TO_STR(__LINE__)
-
 // get a string literal of file and line number
-#define SLS_WHERE "[file: " __FILE__ ", line: " SLS_LINE "]"
+#define SLS_WHERE "[file: " __FILE__ ", line: " SLS_TO_STR(__LINE__) "]"
 
 // print a warning with file and line number
-#define SLS_WARN(str) do { std::cout << SLS_YELLOW_BOLD "Warning: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::cout.flush(); } while(0)
+#define SLS_WARN(str) do { \
+		std::cout << SLS_YELLOW_BOLD "Warning: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; \
+		std::cout.flush(); \
+	} while(0)
 
 // print an error with file and line number
-#define SLS_ERR(str) do { std::cout << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); } while(0)
+#ifndef SLS_THROW_ERR
+	#define SLS_ERR(str) do { \
+		std::cout << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
+	} while(0)
+#else
+	#define SLS_ERR(str) do { \
+		std::stringstream ss; ss << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE; \
+		throw slisc::sls_err(std::move(ss.str()));
+	} while(0)
+#endif
+
+
 #define SLS_FAIL SLS_ERR("failed!")
 #define SLS_ASSERT(condition) if (!(condition)) SLS_FAIL
 
@@ -148,12 +159,12 @@
 #include "prec/quad_math.h"
 
 #ifdef SLS_USE_MPLAPACK
-#ifndef _Float128
+	#ifndef _Float128
 typedef __float128 _Float128;
-#endif
-#include "prec/my_mplapack_utils__Float128.h"
-#include <mplapack/mpblas__Float128.h>
-#include <mplapack/mplapack__Float128.h>
+	#endif
+	#include "prec/my_mplapack_utils__Float128.h"
+	#include <mplapack/mpblas__Float128.h>
+	#include <mplapack/mplapack__Float128.h>
 #endif
 
 namespace slisc {
@@ -163,11 +174,13 @@ namespace slisc {
 using std::complex; using std::tie;
 using std::vector; using std::string; using std::stringstream;
 using std::to_string; using std::pair; using std::tuple;
+using std::make_pair; using std::make_tuple;
 using std::cin; using std::cout; using std::cerr; using std::endl;
 using std::setw; using std::ifstream; using std::ofstream;
 using std::min; using std::max; using std::swap; using std::reverse;
 using std::numeric_limits; using std::unordered_set; using std::set;
 using std::unordered_map; using std::map; using std::get;
+using std::deque; using std::queue; using std::stack;
 using std::isinf; using std::round; using std::ceil; using std::floor;
 using std::abs; using std::real; using std::imag; using std::array;
 using std::conj; using std::pow; using std::priority_queue;
@@ -175,9 +188,6 @@ using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
-using std::unordered_map; using std::unordered_set; using std::map;
-using std::set; using std::deque; using std::queue; using std::stack;
-using std::make_pair;
 
 // Scalar types
 
@@ -358,13 +368,12 @@ static const Doub NaN = std::numeric_limits<Doub>::quiet_NaN();
 // inline Bool isnan(Doub s)
 // { return s != s; }
 
-inline Bool isnan(Comp s)
-{ return s != s; }
+inline Bool isnan(Comp s) { return s != s; }
 
 // Floating Point Exceptions for Microsoft compilers
 // no exception for integer overflow
 #ifdef SLS_FP_EXCEPT
-#ifdef SLS_USE_MSVC
+	#ifdef SLS_USE_MSVC
 struct turn_on_floating_exceptions {
 	turn_on_floating_exceptions() {
 		unsigned cw; _controlfp_s(&cw, 0, 0);
@@ -375,8 +384,21 @@ struct turn_on_floating_exceptions {
 };
 // in case of ODR error, put this in main function;
 // turn_on_floating_exceptions yes_turn_on_floating_exceptions;turn_on_floating_exceptions yes_turn_on_floating_exceptions;
+	#endif
 #endif
-#endif
+
+// error type
+class sls_err : public std::exception
+{
+private:
+    Str m_msg;
+public:
+    explicit sls_err(Str_I msg): m_msg(msg) {}
+
+    const char* what() const noexcept override {
+        return m_msg.c_str();
+    }
+};
 
 // === constants ===
 
