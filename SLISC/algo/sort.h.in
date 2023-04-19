@@ -5,6 +5,9 @@
 
 namespace slisc {
 
+template <class T>
+inline void sort(vector<T> &v) { sort(v.begin(), v.end()); }
+
 // sort elements of arr
 // adapted from Numerical Recipes 3ed
 template <class T>
