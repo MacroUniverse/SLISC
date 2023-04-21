@@ -897,21 +897,27 @@ inline Long str2int(Str_I str, Long_I start = 0)
 	return num;
 }
 
-// get non-negative double from string
+// get non-negative double from string with format dddd.dddd or .dddd
 // return the index after the last digit, return -1 if failed
 // str[start] must be a number
 inline Long str2double(Doub& num, Str_I str, Long_I start = 0)
 {
 	Long ind0{}, num1{}, num2{};
-	ind0 = str2int(num1, str, start);
+	if (str.empty()) return -1;
+	if (is_num(str[0])) {
+		ind0 = str2int(num1, str, start);
+		num = (Doub) num1;
+	}
+	if (ind0 == size(str))
+		return ind0;
+
 	if (str.at(ind0) != '.') {
 		num = (Doub)num1;
 		return ind0;
 	}
-	ind0 = str2int(num2, str, ind0 + 1);
-	num = (Doub)num2;
-	while (num >= 1)
-		num /= 10;
+	++ind0;
+	Long ind1 = str2int(num2, str, ind0);
+	num = (Doub)num2 / (ind1 - ind0);
 	num += (Doub)num1;
 	return ind0;
 }

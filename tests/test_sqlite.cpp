@@ -163,6 +163,7 @@ void test_sqlitecpp()
 
 void test_sqlite_exec()
 {
+#ifdef SLS_USE_SQLITECPP
     sqlite3* db;
     int exit;
     file_remove("example.db");
@@ -198,6 +199,7 @@ void test_sqlite_exec()
         sqlite3_free(messaggeError);
     }
     sqlite3_close(db);
+#endif
 }
 
 void test_sqlite()

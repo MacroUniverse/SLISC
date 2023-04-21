@@ -119,14 +119,29 @@ inline void matt_read_scalar(Comp_O c, ifstream &m_in)
 {
 	if (!m_in.good())
 		SLS_ERR("unknown!");
-	Doub cr = 0, ci = 0;
+	Doub &cr = real_r(c), &ci = imag_r(c);
 	Char ch;
-	m_in >> cr;
+    Str str;
+    m_in >> str;
+    Bool neg1 = false, neg2 = false;
+    if (str.empty()) SLS_ERR("unknown!");
+    Long ind0 = 0;
+    if (str[0] == '-') ind0 = 1;
+    if (!is_num(str[ind0])) SLS_ERR("unknown!");
+    ind0 = str2double(cr, str, ind0);
+	if (ind0 == size(str)) {
+        cr = 0; return;
+    }
+
 	ch = m_in.get();
+    Char ch_test = m_in.get();
+    Char ch_test2 = m_in.get();
 	if (ch == Matt::dlm) {
 		c = cr; return;
 	}
 	m_in >> ci;
+    Char ch_test3 = m_in.get();
+    Char ch_test4 = m_in.get();
 	if (ch == '-')
 		ci *= -1.;
 	c = Comp(cr, ci);

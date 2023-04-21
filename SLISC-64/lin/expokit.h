@@ -61,7 +61,7 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 	if (ldh < m) iflag = -1;
 	if (lwsp < 4 * mm + ideg + 1) iflag = -2;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGPADM): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGPADM): iflag = " + num2str(iflag));
 
 	icoef = 0;
 	ih2 = icoef + ideg + 1;
@@ -70,22 +70,22 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 	ifree = iq + mm;
 
 	for (i = 0; i < m; ++i) {
-		wsp[i] = zero;
+	    wsp[i] = zero;
 	}
 	for (j = 0; j < m; ++j) {
-		for (i = 0; i < m; ++i) {
-			wsp[i] = wsp[i] + abs(H[i + ldh*j]);
-		}
+	    for (i = 0; i < m; ++i) {
+	        wsp[i] = wsp[i] + abs(H[i + ldh*j]);
+	    }
 	}
 
 	hnorm = 0.;
 	for (i = 0; i < m; ++i) {
-		hnorm = max(hnorm, real(wsp[i]));
+	    hnorm = max(hnorm, real(wsp[i]));
 	}
 
 	hnorm = abs(t*hnorm);
 	if (hnorm == 0.)
-		SLS_ERR("Error - null H in input of ZGPADM.");
+	    SLS_ERR("Error - null H in input of ZGPADM.");
 	ns = max(0, Long(log(hnorm) / log(2.)) + 2);
 	scale = Comp(t / pow(2, ns), 0.);
 	scale2 = scale*scale;
@@ -94,21 +94,21 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 	j = 2 * ideg;
 	wsp[icoef] = one;
 	for (k = 0; k < ideg; ++k) {
-		wsp[icoef + k + 1] = (wsp[icoef + k] * Doub(i - k)) / Doub((k + 1)*(j - k));
+	    wsp[icoef + k + 1] = (wsp[icoef + k] * Doub(i - k)) / Doub((k + 1)*(j - k));
 	}
 
 	cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &scale2, H, ldh,
-		H, ldh, &zero, wsp + ih2, m);
+	    H, ldh, &zero, wsp + ih2, m);
 
 	cp = wsp[icoef + ideg - 1];
 	cq = wsp[icoef + ideg];
 	for (j = 0; j < m; ++j) {
-		for (i = 0; i < m; ++i) {
-			wsp[ip + j*m + i] = zero;
-			wsp[iq + j*m + i] = zero;
-		}
-		wsp[ip + j*(m + 1)] = cp;
-		wsp[iq + j*(m + 1)] = cq;
+	    for (i = 0; i < m; ++i) {
+	        wsp[ip + j*m + i] = zero;
+	        wsp[iq + j*m + i] = zero;
+	    }
+	    wsp[ip + j*(m + 1)] = cp;
+	    wsp[iq + j*(m + 1)] = cq;
 	}
 
 	iodd = 1;
@@ -116,53 +116,53 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 
 	/*100*/
 	do {
-		iused = iodd*(iq - ip) + ip;
-		cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &one, wsp + iused, m,
-			wsp + ih2, m, &zero, wsp + ifree, m);
-		for (j = 0; j < m; ++j)
-			wsp[ifree + j*(m + 1)] = wsp[ifree + j*(m + 1)] + wsp[icoef + k];
+	    iused = iodd*(iq - ip) + ip;
+	    cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &one, wsp + iused, m,
+	        wsp + ih2, m, &zero, wsp + ifree, m);
+	    for (j = 0; j < m; ++j)
+	        wsp[ifree + j*(m + 1)] = wsp[ifree + j*(m + 1)] + wsp[icoef + k];
 
-		ip = ifree + iodd*(ip - ifree);
-		iq = iodd*(ifree - iq) + iq;
-		ifree = iused;
-		iodd = 1 - iodd;
-		--k;
+	    ip = ifree + iodd*(ip - ifree);
+	    iq = iodd*(ifree - iq) + iq;
+	    ifree = iused;
+	    iodd = 1 - iodd;
+	    --k;
 	} while (k + 1 > 0);
 
 
 	if (iodd != 0) {
-		cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &scale, wsp + iq, m,
-			H, ldh, &zero, wsp + ifree, m);
-		iq = ifree;
+	    cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &scale, wsp + iq, m,
+	        H, ldh, &zero, wsp + ifree, m);
+	    iq = ifree;
 	}
 	else {
-		cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &scale, wsp + ip, m,
-			H, ldh, &zero, wsp + ifree, m);
-		ip = ifree;
+	    cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &scale, wsp + ip, m,
+	        H, ldh, &zero, wsp + ifree, m);
+	    ip = ifree;
 	}
 	temp = -one;
 	cblas_zaxpy(mm, &temp, wsp + ip, 1, wsp + iq, 1);
 	iflag = LAPACKE_zgesv(LAPACK_COL_MAJOR, m, m, (double _Complex*)(wsp + iq), m, ipiv,
-		(double _Complex*)(wsp + ip), m);
+	    (double _Complex*)(wsp + ip), m);
 	if (iflag != 0)
-		SLS_ERR("Problem in ZGESV (within ZGPADM): iflag = " + num2str(iflag));
+	    SLS_ERR("Problem in ZGESV (within ZGPADM): iflag = " + num2str(iflag));
 	cblas_zdscal(mm, 2., wsp + ip, 1);
 	for (j = 0; j < m; ++j)
-		wsp[ip + j*(m + 1)] = wsp[ip + j*(m + 1)] + one;
+	    wsp[ip + j*(m + 1)] = wsp[ip + j*(m + 1)] + one;
 
 	iput = ip;
 	if (ns == 0 && iodd != 0) {
-		cblas_zdscal(mm, -1., wsp + ip, 1);
+	    cblas_zdscal(mm, -1., wsp + ip, 1);
 	}
 	else {
-		iodd = 1;
-		for (k = 0; k < ns; ++k) {
-			iget = iodd*(ip - iq) + iq;
-			iput = ip + iodd*(iq - ip);
-			cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &one, wsp + iget, m,
-				wsp + iget, m, &zero, wsp + iput, m);
-			iodd = 1 - iodd;
-		}
+	    iodd = 1;
+	    for (k = 0; k < ns; ++k) {
+	        iget = iodd*(ip - iq) + iq;
+	        iput = ip + iodd*(iq - ip);
+	        cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, m, m, m, &one, wsp + iget, m,
+	            wsp + iget, m, &zero, wsp + iput, m);
+	        iodd = 1 - iodd;
+	    }
 	}
 
 	iexph = iput;
@@ -205,53 +205,53 @@ inline void ZNCHBV(Long_I m, Doub_I t, const Comp *H, Long_I ldh, Comp *y, Comp 
 	theta[6] = Comp(0.889777151877331107e+01, 0.166309842834712071e+02);
 
 	for (ip = 1; ip <= ndeg; ++ip) {
-		theta[ndeg + ip - 1] = conj(theta[ip - 1]);
-		alpha[ndeg + ip - 1] = conj(alpha[ip - 1]);
+	    theta[ndeg + ip - 1] = conj(theta[ip - 1]);
+	    alpha[ndeg + ip - 1] = conj(alpha[ip - 1]);
 	}
 
 	for (j = 1; j <= m; ++j) {
-		wsp[iz + j - 2] = y[j - 1];
-		y[j - 1] = y[j - 1] * alpha0;
+	    wsp[iz + j - 2] = y[j - 1];
+	    y[j - 1] = y[j - 1] * alpha0;
 	}
 
 	for (ip = 1; ip <= 2 * ndeg; ++ip) {
-		alpha[ip - 1] = 0.5*alpha[ip - 1];
-		for (j = 1; j <= m; ++j) {
-			wsp[iy + j - 2] = wsp[iz + j - 2];
-			for (i = 1; i <= min(j + 1, m); ++i) {
-				wsp[ih + (j - 1)*m + i - 2] = -t*H[i + ldh*(j-1) - 1];
-			}
-			wsp[ih + (j - 1)*m + j - 2] = wsp[ih + (j - 1)*m + j - 2] - theta[ip - 1];
-			for (k = i; k <= m; ++k) {
-				wsp[ih + (j - 1)*m + k - 2] = zero;
-			}
-		}
-		for (j = 1; j <= m; ++j) {
+	    alpha[ip - 1] = 0.5*alpha[ip - 1];
+	    for (j = 1; j <= m; ++j) {
+	        wsp[iy + j - 2] = wsp[iz + j - 2];
+	        for (i = 1; i <= min(j + 1, m); ++i) {
+	            wsp[ih + (j - 1)*m + i - 2] = -t*H[i + ldh*(j-1) - 1];
+	        }
+	        wsp[ih + (j - 1)*m + j - 2] = wsp[ih + (j - 1)*m + j - 2] - theta[ip - 1];
+	        for (k = i; k <= m; ++k) {
+	            wsp[ih + (j - 1)*m + k - 2] = zero;
+	        }
+	    }
+	    for (j = 1; j <= m; ++j) {
 
-		}
-		for (i = 1; i <= m - 1; ++i) {
-			if (abs(wsp[ih + (i - 1)*m + i - 2]) < abs(wsp[ih + (i - 1)*m + i - 1])) {
-				cblas_zswap(m - i + 1, wsp + ih + (i - 1)*m + i - 2, m,
-					wsp + ih + (i - 1)*m + i - 1, m);
-				cblas_zswap(1, wsp + iy + i - 2, 1, wsp + iy + i - 1, 1);
-			}
+	    }
+	    for (i = 1; i <= m - 1; ++i) {
+	        if (abs(wsp[ih + (i - 1)*m + i - 2]) < abs(wsp[ih + (i - 1)*m + i - 1])) {
+	            cblas_zswap(m - i + 1, wsp + ih + (i - 1)*m + i - 2, m,
+	                wsp + ih + (i - 1)*m + i - 1, m);
+	            cblas_zswap(1, wsp + iy + i - 2, 1, wsp + iy + i - 1, 1);
+	        }
 
-			tmpc = wsp[ih + (i - 1)*m + i - 1] / wsp[ih + (i - 1)*m + i - 2];
-			Comp temp = -tmpc;
-			cblas_zaxpy(m - i, &temp, wsp + ih + i*m + i - 2, m, wsp + ih + i*m + i - 1, m);
-			wsp[iy + i - 1] = wsp[iy + i - 1] - tmpc*wsp[iy + i - 2];
-		}
+	        tmpc = wsp[ih + (i - 1)*m + i - 1] / wsp[ih + (i - 1)*m + i - 2];
+	        Comp temp = -tmpc;
+	        cblas_zaxpy(m - i, &temp, wsp + ih + i*m + i - 2, m, wsp + ih + i*m + i - 1, m);
+	        wsp[iy + i - 1] = wsp[iy + i - 1] - tmpc*wsp[iy + i - 2];
+	    }
 
-		for (i = m; i >= 1; --i) {
-			tmpc = wsp[iy + i - 2];
-			for (j = i + 1; j <= m; ++j) {
-				tmpc = tmpc - wsp[ih + (j - 1)*m + i - 2]*wsp[iy + j - 2];
-			}
-			wsp[iy + i - 2] = tmpc / wsp[ih + (i - 1)*m + i - 2];
-		}
-		for (j = 1; j <= m; ++j) {
-			y[j - 1] = y[j - 1] + alpha[ip - 1]*wsp[iy + j - 2];
-		}
+	    for (i = m; i >= 1; --i) {
+	        tmpc = wsp[iy + i - 2];
+	        for (j = i + 1; j <= m; ++j) {
+	            tmpc = tmpc - wsp[ih + (j - 1)*m + i - 2]*wsp[iy + j - 2];
+	        }
+	        wsp[iy + i - 2] = tmpc / wsp[ih + (i - 1)*m + i - 2];
+	    }
+	    for (j = 1; j <= m; ++j) {
+	        y[j - 1] = y[j - 1] + alpha[ip - 1]*wsp[iy + j - 2];
+	    }
 	}
 }
 
@@ -269,7 +269,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -278,22 +278,22 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -321,9 +321,9 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -344,148 +344,148 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	t_new = trunc(t_new / p1 + 0.55) * p1;
 
 	do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i)
-			wsp[iv + i] = p1*w[i];
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i)
+	        wsp[iv + i] = p1*w[i];
 
-		for (i = 0; i < mh*mh; ++i)
-			wsp[ih + i] = zero;
+	    for (i = 0; i < mh*mh; ++i)
+	        wsp[ih + i] = zero;
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			for (i = 0; i < j + 1; ++i) {
-				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
-				Comp temp = -hij;
-				cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
-				wsp[ih + j*mh + i] = hij;
-			}
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        for (i = 0; i < j + 1; ++i) {
+	            cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
+	            Comp temp = -hij;
+	            cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
+	            wsp[ih + j*mh + i] = hij;
+	        }
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m*mh + m + 1] = one;
-		ireject = 0;
+	    wsp[ih + m*mh + m + 1] = one;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i)
-					wsp[iexph + i] = zero;
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i)
+	                wsp[iexph + i] = zero;
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10.*p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10.*p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step = " << t_old << std::endl;
-					std::cout << "err_loc = " << err_loc << std::endl;
-					std::cout << "err_required =" << delta*t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZGEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step = " << t_old << std::endl;
+	                std::cout << "err_loc = " << err_loc << std::endl;
+	                std::cout << "err_required =" << delta*t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZGEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hij = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hij = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration " << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square = " << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   = " << err_loc << std::endl;
-			std::cout << "next_step = " << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration " << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square = " << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   = " << err_loc << std::endl;
+	        std::cout << "next_step = " << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -516,7 +516,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -525,22 +525,22 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -568,9 +568,9 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -591,148 +591,148 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	t_new = trunc(t_new / p1 + 0.55) * p1;
 
 	do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i)
-			wsp[iv + i] = p1*w[i];
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i)
+	        wsp[iv + i] = p1*w[i];
 
-		for (i = 0; i < mh*mh; ++i)
-			wsp[ih + i] = zero;
+	    for (i = 0; i < mh*mh; ++i)
+	        wsp[ih + i] = zero;
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			for (i = 0; i < j + 1; ++i) {
-				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
-				Comp temp = -hij;
-				cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
-				wsp[ih + j*mh + i] = hij;
-			}
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        for (i = 0; i < j + 1; ++i) {
+	            cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
+	            Comp temp = -hij;
+	            cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
+	            wsp[ih + j*mh + i] = hij;
+	        }
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m*mh + m + 1] = one;
-		ireject = 0;
+	    wsp[ih + m*mh + m + 1] = one;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i)
-					wsp[iexph + i] = zero;
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i)
+	                wsp[iexph + i] = zero;
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10.*p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10.*p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step = " << t_old << std::endl;
-					std::cout << "err_loc = " << err_loc << std::endl;
-					std::cout << "err_required =" << delta*t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZGEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step = " << t_old << std::endl;
+	                std::cout << "err_loc = " << err_loc << std::endl;
+	                std::cout << "err_required =" << delta*t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZGEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hij = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hij = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration " << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square = " << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   = " << err_loc << std::endl;
-			std::cout << "next_step = " << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration " << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square = " << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   = " << err_loc << std::endl;
+	        std::cout << "next_step = " << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -763,7 +763,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -772,22 +772,22 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -815,9 +815,9 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -838,148 +838,148 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	t_new = trunc(t_new / p1 + 0.55) * p1;
 
 	do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i)
-			wsp[iv + i] = p1*w[i];
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i)
+	        wsp[iv + i] = p1*w[i];
 
-		for (i = 0; i < mh*mh; ++i)
-			wsp[ih + i] = zero;
+	    for (i = 0; i < mh*mh; ++i)
+	        wsp[ih + i] = zero;
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			for (i = 0; i < j + 1; ++i) {
-				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
-				Comp temp = -hij;
-				cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
-				wsp[ih + j*mh + i] = hij;
-			}
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        for (i = 0; i < j + 1; ++i) {
+	            cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
+	            Comp temp = -hij;
+	            cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
+	            wsp[ih + j*mh + i] = hij;
+	        }
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m*mh + m + 1] = one;
-		ireject = 0;
+	    wsp[ih + m*mh + m + 1] = one;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i)
-					wsp[iexph + i] = zero;
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i)
+	                wsp[iexph + i] = zero;
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10.*p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10.*p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step = " << t_old << std::endl;
-					std::cout << "err_loc = " << err_loc << std::endl;
-					std::cout << "err_required =" << delta*t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZGEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step = " << t_old << std::endl;
+	                std::cout << "err_loc = " << err_loc << std::endl;
+	                std::cout << "err_required =" << delta*t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZGEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hij = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hij = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration " << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square = " << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   = " << err_loc << std::endl;
-			std::cout << "next_step = " << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration " << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square = " << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   = " << err_loc << std::endl;
+	        std::cout << "next_step = " << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -1010,7 +1010,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -1019,22 +1019,22 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -1062,9 +1062,9 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -1085,148 +1085,148 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	t_new = trunc(t_new / p1 + 0.55) * p1;
 
 	do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i)
-			wsp[iv + i] = p1*w[i];
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i)
+	        wsp[iv + i] = p1*w[i];
 
-		for (i = 0; i < mh*mh; ++i)
-			wsp[ih + i] = zero;
+	    for (i = 0; i < mh*mh; ++i)
+	        wsp[ih + i] = zero;
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			for (i = 0; i < j + 1; ++i) {
-				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
-				Comp temp = -hij;
-				cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
-				wsp[ih + j*mh + i] = hij;
-			}
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        for (i = 0; i < j + 1; ++i) {
+	            cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
+	            Comp temp = -hij;
+	            cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
+	            wsp[ih + j*mh + i] = hij;
+	        }
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m*mh + m + 1] = one;
-		ireject = 0;
+	    wsp[ih + m*mh + m + 1] = one;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i)
-					wsp[iexph + i] = zero;
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i)
+	                wsp[iexph + i] = zero;
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10.*p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10.*p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step = " << t_old << std::endl;
-					std::cout << "err_loc = " << err_loc << std::endl;
-					std::cout << "err_required =" << delta*t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZGEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step = " << t_old << std::endl;
+	                std::cout << "err_loc = " << err_loc << std::endl;
+	                std::cout << "err_required =" << delta*t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZGEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hij = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hij = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration " << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square = " << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   = " << err_loc << std::endl;
-			std::cout << "next_step = " << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration " << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square = " << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   = " << err_loc << std::endl;
+	        std::cout << "next_step = " << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -1257,7 +1257,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -1266,22 +1266,22 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -1309,9 +1309,9 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -1332,148 +1332,148 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	t_new = trunc(t_new / p1 + 0.55) * p1;
 
 	do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i)
-			wsp[iv + i] = p1*w[i];
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i)
+	        wsp[iv + i] = p1*w[i];
 
-		for (i = 0; i < mh*mh; ++i)
-			wsp[ih + i] = zero;
+	    for (i = 0; i < mh*mh; ++i)
+	        wsp[ih + i] = zero;
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			for (i = 0; i < j + 1; ++i) {
-				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
-				Comp temp = -hij;
-				cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
-				wsp[ih + j*mh + i] = hij;
-			}
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        for (i = 0; i < j + 1; ++i) {
+	            cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
+	            Comp temp = -hij;
+	            cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
+	            wsp[ih + j*mh + i] = hij;
+	        }
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m*mh + m + 1] = one;
-		ireject = 0;
+	    wsp[ih + m*mh + m + 1] = one;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i)
-					wsp[iexph + i] = zero;
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i)
+	                wsp[iexph + i] = zero;
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10.*p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10.*p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step = " << t_old << std::endl;
-					std::cout << "err_loc = " << err_loc << std::endl;
-					std::cout << "err_required =" << delta*t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZGEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step = " << t_old << std::endl;
+	                std::cout << "err_loc = " << err_loc << std::endl;
+	                std::cout << "err_required =" << delta*t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZGEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hij = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hij = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration " << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square = " << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   = " << err_loc << std::endl;
-			std::cout << "next_step = " << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration " << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square = " << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   = " << err_loc << std::endl;
+	        std::cout << "next_step = " << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -1504,7 +1504,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -1513,22 +1513,22 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hij;
 	iflag = 0;
 	if (lwsp < n*(m + 2) + 5 * sqr(m + 2) + ideg + 1)
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -1556,9 +1556,9 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -1579,148 +1579,148 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	t_new = trunc(t_new / p1 + 0.55) * p1;
 
 	do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i)
-			wsp[iv + i] = p1*w[i];
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i)
+	        wsp[iv + i] = p1*w[i];
 
-		for (i = 0; i < mh*mh; ++i)
-			wsp[ih + i] = zero;
+	    for (i = 0; i < mh*mh; ++i)
+	        wsp[ih + i] = zero;
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			for (i = 0; i < j + 1; ++i) {
-				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
-				Comp temp = -hij;
-				cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
-				wsp[ih + j*mh + i] = hij;
-			}
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        for (i = 0; i < j + 1; ++i) {
+	            cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
+	            Comp temp = -hij;
+	            cblas_zaxpy(n, &temp, wsp + iv + i*n, 1, wsp + j1v, 1);
+	            wsp[ih + j*mh + i] = hij;
+	        }
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn = " << j + 1 << "h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m*mh + m + 1] = one;
-		ireject = 0;
+	    wsp[ih + m*mh + m + 1] = one;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i)
-					wsp[iexph + i] = zero;
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i)
+	                wsp[iexph + i] = zero;
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10.*p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10.*p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step = " << t_old << std::endl;
-					std::cout << "err_loc = " << err_loc << std::endl;
-					std::cout << "err_required =" << delta*t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZGEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step = " << t_old << std::endl;
+	                std::cout << "err_loc = " << err_loc << std::endl;
+	                std::cout << "err_required =" << delta*t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZGEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hij = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hij = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hij, wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration " << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square = " << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   = " << err_loc << std::endl;
-			std::cout << "next_step = " << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration " << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square = " << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   = " << err_loc << std::endl;
+	        std::cout << "next_step = " << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -1757,11 +1757,11 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 // modified so that w is both input and output vector
 
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdDoub_I mat, Long_I itrace, Long_O iflag )
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdDoub_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -1769,23 +1769,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
 	if ( lwsp < n*(m+2)+5*sqr(m+2)+ideg+2 )
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -1813,9 +1813,9 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		/*1*/  p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    /*1*/  p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -1837,161 +1837,161 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 
 	/*100*/ do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		beta = cblas_dznrm2(n, w, 1);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i) {
-			wsp[iv + i] = p1 * w[i];
-		}
-		for (i = 0; i < mh * mh; ++i) {
-			wsp[ih + i] = zero;
-		}
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    beta = cblas_dznrm2(n, w, 1);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i) {
+	        wsp[iv + i] = p1 * w[i];
+	    }
+	    for (i = 0; i < mh * mh; ++i) {
+	        wsp[ih + i] = zero;
+	    }
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			if (j > 0) {
-				temp = -wsp[ih + j*mh + j - 1];
-				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
-			}
-				
-			cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
-			temp = -hjj;
-			cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
-			wsp[ih + j*(mh + 1)] = hjj;
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        if (j > 0) {
+	            temp = -wsp[ih + j*mh + j - 1];
+	            cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
+	        }
+	            
+	        cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
+	        temp = -hjj;
+	        cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	        wsp[ih + j*(mh + 1)] = hjj;
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m * mh + m - 1] = zero;
-		wsp[ih + m * mh + m] = one;
+	    wsp[ih + m * mh + m - 1] = zero;
+	    wsp[ih + m * mh + m] = one;
 
-		ireject = 0;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i) {
-					wsp[iexph + i] = zero;
-				}
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i) {
+	                wsp[iexph + i] = zero;
+	            }
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			/*402*/
+	        /*402*/
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10. * p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10. * p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step =" << t_old << std::endl;
-					std::cout << "err_loc =" << err_loc << std::endl;
-					std::cout << "err_required =" << delta * t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZHEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step =" << t_old << std::endl;
+	                std::cout << "err_loc =" << err_loc << std::endl;
+	                std::cout << "err_required =" << delta * t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZHEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hjj = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
-			wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hjj = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
+	        wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		// prevent dividing by zero
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    // prevent dividing by zero
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration" << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square =" << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   =" << err_loc << std::endl;
-			std::cout << "next_step =" << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration" << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square =" << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   =" << err_loc << std::endl;
+	        std::cout << "next_step =" << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -2020,11 +2020,11 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 }
 
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdComp_I mat, Long_I itrace, Long_O iflag )
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmobdComp_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -2032,23 +2032,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
 	if ( lwsp < n*(m+2)+5*sqr(m+2)+ideg+2 )
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -2076,9 +2076,9 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		/*1*/  p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    /*1*/  p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -2100,161 +2100,161 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 
 	/*100*/ do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		beta = cblas_dznrm2(n, w, 1);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i) {
-			wsp[iv + i] = p1 * w[i];
-		}
-		for (i = 0; i < mh * mh; ++i) {
-			wsp[ih + i] = zero;
-		}
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    beta = cblas_dznrm2(n, w, 1);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i) {
+	        wsp[iv + i] = p1 * w[i];
+	    }
+	    for (i = 0; i < mh * mh; ++i) {
+	        wsp[ih + i] = zero;
+	    }
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			if (j > 0) {
-				temp = -wsp[ih + j*mh + j - 1];
-				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
-			}
-				
-			cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
-			temp = -hjj;
-			cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
-			wsp[ih + j*(mh + 1)] = hjj;
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        if (j > 0) {
+	            temp = -wsp[ih + j*mh + j - 1];
+	            cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
+	        }
+	            
+	        cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
+	        temp = -hjj;
+	        cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	        wsp[ih + j*(mh + 1)] = hjj;
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m * mh + m - 1] = zero;
-		wsp[ih + m * mh + m] = one;
+	    wsp[ih + m * mh + m - 1] = zero;
+	    wsp[ih + m * mh + m] = one;
 
-		ireject = 0;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i) {
-					wsp[iexph + i] = zero;
-				}
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i) {
+	                wsp[iexph + i] = zero;
+	            }
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			/*402*/
+	        /*402*/
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10. * p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10. * p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step =" << t_old << std::endl;
-					std::cout << "err_loc =" << err_loc << std::endl;
-					std::cout << "err_required =" << delta * t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZHEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step =" << t_old << std::endl;
+	                std::cout << "err_loc =" << err_loc << std::endl;
+	                std::cout << "err_required =" << delta * t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZHEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hjj = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
-			wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hjj = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
+	        wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		// prevent dividing by zero
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    // prevent dividing by zero
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration" << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square =" << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   =" << err_loc << std::endl;
-			std::cout << "next_step =" << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration" << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square =" << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   =" << err_loc << std::endl;
+	        std::cout << "next_step =" << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -2283,11 +2283,11 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 }
 
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooDoub_I mat, Long_I itrace, Long_O iflag )
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooDoub_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -2295,23 +2295,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
 	if ( lwsp < n*(m+2)+5*sqr(m+2)+ideg+2 )
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -2339,9 +2339,9 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		/*1*/  p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    /*1*/  p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -2363,161 +2363,161 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 
 	/*100*/ do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		beta = cblas_dznrm2(n, w, 1);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i) {
-			wsp[iv + i] = p1 * w[i];
-		}
-		for (i = 0; i < mh * mh; ++i) {
-			wsp[ih + i] = zero;
-		}
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    beta = cblas_dznrm2(n, w, 1);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i) {
+	        wsp[iv + i] = p1 * w[i];
+	    }
+	    for (i = 0; i < mh * mh; ++i) {
+	        wsp[ih + i] = zero;
+	    }
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			if (j > 0) {
-				temp = -wsp[ih + j*mh + j - 1];
-				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
-			}
-				
-			cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
-			temp = -hjj;
-			cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
-			wsp[ih + j*(mh + 1)] = hjj;
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        if (j > 0) {
+	            temp = -wsp[ih + j*mh + j - 1];
+	            cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
+	        }
+	            
+	        cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
+	        temp = -hjj;
+	        cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	        wsp[ih + j*(mh + 1)] = hjj;
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m * mh + m - 1] = zero;
-		wsp[ih + m * mh + m] = one;
+	    wsp[ih + m * mh + m - 1] = zero;
+	    wsp[ih + m * mh + m] = one;
 
-		ireject = 0;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i) {
-					wsp[iexph + i] = zero;
-				}
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i) {
+	                wsp[iexph + i] = zero;
+	            }
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			/*402*/
+	        /*402*/
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10. * p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10. * p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step =" << t_old << std::endl;
-					std::cout << "err_loc =" << err_loc << std::endl;
-					std::cout << "err_required =" << delta * t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZHEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step =" << t_old << std::endl;
+	                std::cout << "err_loc =" << err_loc << std::endl;
+	                std::cout << "err_required =" << delta * t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZHEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hjj = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
-			wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hjj = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
+	        wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		// prevent dividing by zero
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    // prevent dividing by zero
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration" << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square =" << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   =" << err_loc << std::endl;
-			std::cout << "next_step =" << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration" << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square =" << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   =" << err_loc << std::endl;
+	        std::cout << "next_step =" << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -2546,11 +2546,11 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 }
 
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooComp_I mat, Long_I itrace, Long_O iflag )
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, McooComp_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -2558,23 +2558,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
 	if ( lwsp < n*(m+2)+5*sqr(m+2)+ideg+2 )
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -2602,9 +2602,9 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		/*1*/  p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    /*1*/  p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -2626,161 +2626,161 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 
 	/*100*/ do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		beta = cblas_dznrm2(n, w, 1);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i) {
-			wsp[iv + i] = p1 * w[i];
-		}
-		for (i = 0; i < mh * mh; ++i) {
-			wsp[ih + i] = zero;
-		}
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    beta = cblas_dznrm2(n, w, 1);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i) {
+	        wsp[iv + i] = p1 * w[i];
+	    }
+	    for (i = 0; i < mh * mh; ++i) {
+	        wsp[ih + i] = zero;
+	    }
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			if (j > 0) {
-				temp = -wsp[ih + j*mh + j - 1];
-				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
-			}
-				
-			cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
-			temp = -hjj;
-			cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
-			wsp[ih + j*(mh + 1)] = hjj;
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        if (j > 0) {
+	            temp = -wsp[ih + j*mh + j - 1];
+	            cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
+	        }
+	            
+	        cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
+	        temp = -hjj;
+	        cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	        wsp[ih + j*(mh + 1)] = hjj;
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m * mh + m - 1] = zero;
-		wsp[ih + m * mh + m] = one;
+	    wsp[ih + m * mh + m - 1] = zero;
+	    wsp[ih + m * mh + m] = one;
 
-		ireject = 0;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i) {
-					wsp[iexph + i] = zero;
-				}
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i) {
+	                wsp[iexph + i] = zero;
+	            }
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			/*402*/
+	        /*402*/
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10. * p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10. * p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step =" << t_old << std::endl;
-					std::cout << "err_loc =" << err_loc << std::endl;
-					std::cout << "err_required =" << delta * t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZHEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step =" << t_old << std::endl;
+	                std::cout << "err_loc =" << err_loc << std::endl;
+	                std::cout << "err_required =" << delta * t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZHEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hjj = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
-			wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hjj = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
+	        wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		// prevent dividing by zero
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    // prevent dividing by zero
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration" << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square =" << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   =" << err_loc << std::endl;
-			std::cout << "next_step =" << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration" << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square =" << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   =" << err_loc << std::endl;
+	        std::cout << "next_step =" << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -2809,11 +2809,11 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 }
 
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatDoub_I mat, Long_I itrace, Long_O iflag )
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatDoub_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -2821,23 +2821,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
 	if ( lwsp < n*(m+2)+5*sqr(m+2)+ideg+2 )
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -2865,9 +2865,9 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		/*1*/  p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    /*1*/  p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -2889,161 +2889,161 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 
 	/*100*/ do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		beta = cblas_dznrm2(n, w, 1);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i) {
-			wsp[iv + i] = p1 * w[i];
-		}
-		for (i = 0; i < mh * mh; ++i) {
-			wsp[ih + i] = zero;
-		}
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    beta = cblas_dznrm2(n, w, 1);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i) {
+	        wsp[iv + i] = p1 * w[i];
+	    }
+	    for (i = 0; i < mh * mh; ++i) {
+	        wsp[ih + i] = zero;
+	    }
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			if (j > 0) {
-				temp = -wsp[ih + j*mh + j - 1];
-				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
-			}
-				
-			cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
-			temp = -hjj;
-			cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
-			wsp[ih + j*(mh + 1)] = hjj;
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        if (j > 0) {
+	            temp = -wsp[ih + j*mh + j - 1];
+	            cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
+	        }
+	            
+	        cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
+	        temp = -hjj;
+	        cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	        wsp[ih + j*(mh + 1)] = hjj;
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m * mh + m - 1] = zero;
-		wsp[ih + m * mh + m] = one;
+	    wsp[ih + m * mh + m - 1] = zero;
+	    wsp[ih + m * mh + m] = one;
 
-		ireject = 0;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i) {
-					wsp[iexph + i] = zero;
-				}
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i) {
+	                wsp[iexph + i] = zero;
+	            }
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			/*402*/
+	        /*402*/
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10. * p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10. * p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step =" << t_old << std::endl;
-					std::cout << "err_loc =" << err_loc << std::endl;
-					std::cout << "err_required =" << delta * t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZHEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step =" << t_old << std::endl;
+	                std::cout << "err_loc =" << err_loc << std::endl;
+	                std::cout << "err_required =" << delta * t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZHEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hjj = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
-			wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hjj = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
+	        wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		// prevent dividing by zero
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    // prevent dividing by zero
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration" << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square =" << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   =" << err_loc << std::endl;
-			std::cout << "next_step =" << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration" << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square =" << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   =" << err_loc << std::endl;
+	        std::cout << "next_step =" << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -3072,11 +3072,11 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 }
 
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatComp_I mat, Long_I itrace, Long_O iflag )
+	        Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, CmatComp_I mat, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
-		SLS_ERR("zero vector is not allowed!");
+	    SLS_ERR("zero vector is not allowed!");
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -3084,23 +3084,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	const Comp zero = 0., one = 1.;
 
 	Long i, j, k1, mh, mx, ih, j1v, ns, ifree, lfree, iexph,
-		ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
-		nstep;
+	    ireject, ibrkflag, mbrkdwn, nmult, nreject, nexph, nscale,
+	    nstep;
 	Doub sgn, t_out, tbrkdwn, step_min, step_max, err_loc,
-		s_error, x_error, t_now, t_new, t_step, t_old,
-		xm, beta, break_tol, p1, p2, p3, eps, rndoff,
-		vnorm, avnorm=0, hj1j, hump, sqr1;
+	    s_error, x_error, t_now, t_new, t_step, t_old,
+	    xm, beta, break_tol, p1, p2, p3, eps, rndoff,
+	    vnorm, avnorm=0, hj1j, hump, sqr1;
 	Comp hjj, temp;
 
 	iflag = 0;
 	if ( lwsp < n*(m+2)+5*sqr(m+2)+ideg+2 )
-		iflag = -1;
+	    iflag = -1;
 	if (liwsp < m + 2)
-		iflag = -2;
+	    iflag = -2;
 	if (m >= n || m <= 0)
-		iflag = -3;
+	    iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+	    SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -3128,9 +3128,9 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 	p1 = 4. / 3.;
 	do {
-		/*1*/  p2 = p1 - 1.;
-		p3 = p2 + p2 + p2;
-		eps = abs(p3 - 1.);
+	    /*1*/  p2 = p1 - 1.;
+	    p3 = p2 + p2 + p2;
+	    eps = abs(p3 - 1.);
 	} while (eps == 0.);
 
 	if (tol <= eps) tol = sqrt(eps);
@@ -3152,161 +3152,161 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 
 	/*100*/ do {
-		if (t_now >= t_out)
-			break;
+	    if (t_now >= t_out)
+	        break;
 
-		nstep = nstep + 1;
-		t_step = min(t_out - t_now, t_new);
-		beta = cblas_dznrm2(n, w, 1);
-		p1 = 1. / beta;
-		for (i = 0; i < n; ++i) {
-			wsp[iv + i] = p1 * w[i];
-		}
-		for (i = 0; i < mh * mh; ++i) {
-			wsp[ih + i] = zero;
-		}
+	    nstep = nstep + 1;
+	    t_step = min(t_out - t_now, t_new);
+	    beta = cblas_dznrm2(n, w, 1);
+	    p1 = 1. / beta;
+	    for (i = 0; i < n; ++i) {
+	        wsp[iv + i] = p1 * w[i];
+	    }
+	    for (i = 0; i < mh * mh; ++i) {
+	        wsp[ih + i] = zero;
+	    }
 
-		j1v = iv + n;
-		Bool break_flag = false;
-		for (j = 0; j < m; ++j) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			if (j > 0) {
-				temp = -wsp[ih + j*mh + j - 1];
-				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
-			}
-				
-			cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
-			temp = -hjj;
-			cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
-			hj1j = cblas_dznrm2(n, wsp + j1v, 1);
-			wsp[ih + j*(mh + 1)] = hjj;
+	    j1v = iv + n;
+	    Bool break_flag = false;
+	    for (j = 0; j < m; ++j) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        if (j > 0) {
+	            temp = -wsp[ih + j*mh + j - 1];
+	            cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
+	        }
+	            
+	        cblas_zdotc_sub(n, wsp + j1v - n, 1, wsp + j1v, 1, &hjj);
+	        temp = -hjj;
+	        cblas_zaxpy(n, &temp, wsp + j1v - n, 1, wsp + j1v, 1);
+	        hj1j = cblas_dznrm2(n, wsp + j1v, 1);
+	        wsp[ih + j*(mh + 1)] = hjj;
 
-			if (hj1j <= break_tol) {
-				// std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
-				k1 = 0;
-				ibrkflag = 1;
-				mbrkdwn = j + 1;
-				tbrkdwn = t_now;
-				t_step = t_out - t_now;
-				break_flag = true;
-				break;
-			}
-			wsp[ih + j*mh + j + 1] = Comp(hj1j);
-			wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
-			cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
-			j1v += n;
-		}
+	        if (hj1j <= break_tol) {
+	            // std::cout << "happy breakdown: mbrkdwn =" << j + 1 << " h = " << hj1j << std::endl;
+	            k1 = 0;
+	            ibrkflag = 1;
+	            mbrkdwn = j + 1;
+	            tbrkdwn = t_now;
+	            t_step = t_out - t_now;
+	            break_flag = true;
+	            break;
+	        }
+	        wsp[ih + j*mh + j + 1] = Comp(hj1j);
+	        wsp[ih + (j + 1) * mh + j] = Comp(hj1j);
+	        cblas_zdscal(n, 1. / hj1j, wsp + j1v, 1);
+	        j1v += n;
+	    }
 
-		if (!break_flag) {
-			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
-			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
-		}
+	    if (!break_flag) {
+	        nmult = nmult + 1;
+	        expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+	        avnorm = cblas_dznrm2(n, wsp + j1v, 1);
+	    }
 
-		wsp[ih + m * mh + m - 1] = zero;
-		wsp[ih + m * mh + m] = one;
+	    wsp[ih + m * mh + m - 1] = zero;
+	    wsp[ih + m * mh + m] = one;
 
-		ireject = 0;
+	    ireject = 0;
 
-		while (true) {
-			nexph = nexph + 1;
-			mx = mbrkdwn + k1;
-			if (ideg != 0) {
-				ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
-					wsp + ifree, lfree, iwsp, iexph, ns, iflag);
-				iexph += ifree;
-				nscale = nscale + ns;
-			}
-			else {
-				iexph = ifree;
-				for (i = 0; i < mx; ++i) {
-					wsp[iexph + i] = zero;
-				}
-				wsp[iexph] = one;
-				ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
-			}
+	    while (true) {
+	        nexph = nexph + 1;
+	        mx = mbrkdwn + k1;
+	        if (ideg != 0) {
+	            ZGPADM(ideg, mx, sgn*t_step, wsp + ih, mh,
+	                wsp + ifree, lfree, iwsp, iexph, ns, iflag);
+	            iexph += ifree;
+	            nscale = nscale + ns;
+	        }
+	        else {
+	            iexph = ifree;
+	            for (i = 0; i < mx; ++i) {
+	                wsp[iexph + i] = zero;
+	            }
+	            wsp[iexph] = one;
+	            ZNCHBV(mx, sgn*t_step, wsp + ih, mh, wsp + iexph, wsp + ifree + mx);
+	        }
 
-			/*402*/
+	        /*402*/
 
-			if (k1 == 0) {
-				err_loc = tol;
-			}
-			else {
-				p1 = abs(wsp[iexph + m])   * beta;
-				p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
-				if (p1 > 10. * p2) {
-					err_loc = p2;
-					xm = 1. / Doub(m);
-				}
-				else if (p1 > p2) {
-					err_loc = (p1*p2) / (p1 - p2);
-					xm = 1. / Doub(m);
-				}
-				else {
-					err_loc = p1;
-					xm = 1. / Doub(m - 1);
-				}
-			}
+	        if (k1 == 0) {
+	            err_loc = tol;
+	        }
+	        else {
+	            p1 = abs(wsp[iexph + m])   * beta;
+	            p2 = abs(wsp[iexph + m + 1]) * beta * avnorm;
+	            if (p1 > 10. * p2) {
+	                err_loc = p2;
+	                xm = 1. / Doub(m);
+	            }
+	            else if (p1 > p2) {
+	                err_loc = (p1*p2) / (p1 - p2);
+	                xm = 1. / Doub(m);
+	            }
+	            else {
+	                err_loc = p1;
+	                xm = 1. / Doub(m - 1);
+	            }
+	        }
 
-			if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
-				(mxreject == 0 || ireject < mxreject)) {
-				t_old = t_step;
-				t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
-				p1 = pow(10., round(log10(t_step) - sqr1) - 1);
-				t_step = trunc(t_step / p1 + 0.55) * p1;
-				if (itrace != 0) {
-					std::cout << "t_step =" << t_old << std::endl;
-					std::cout << "err_loc =" << err_loc << std::endl;
-					std::cout << "err_required =" << delta * t_old*tol << std::endl;
-					std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
-				}
-				ireject = ireject + 1;
-				nreject = nreject + 1;
-				if (mxreject != 0 && ireject > mxreject) {
-					std::cout << "Failure in ZHEXPV: ---" << std::endl;
-					std::cout << "The requested tolerance is too high." << std::endl;
-					std::cout << "Rerun with a smaller value." << std::endl;
-					iflag = 2;
-					return;
-				}
-				continue;
-			}
-			break;
-		}
+	        if ((k1 != 0) && (err_loc > delta*t_step*tol) &&
+	            (mxreject == 0 || ireject < mxreject)) {
+	            t_old = t_step;
+	            t_step = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	            p1 = pow(10., round(log10(t_step) - sqr1) - 1);
+	            t_step = trunc(t_step / p1 + 0.55) * p1;
+	            if (itrace != 0) {
+	                std::cout << "t_step =" << t_old << std::endl;
+	                std::cout << "err_loc =" << err_loc << std::endl;
+	                std::cout << "err_required =" << delta * t_old*tol << std::endl;
+	                std::cout << "stepsize rejected, stepping down to:" << t_step << std::endl;
+	            }
+	            ireject = ireject + 1;
+	            nreject = nreject + 1;
+	            if (mxreject != 0 && ireject > mxreject) {
+	                std::cout << "Failure in ZHEXPV: ---" << std::endl;
+	                std::cout << "The requested tolerance is too high." << std::endl;
+	                std::cout << "Rerun with a smaller value." << std::endl;
+	                iflag = 2;
+	                return;
+	            }
+	            continue;
+	        }
+	        break;
+	    }
 
-		mx = mbrkdwn + max(0, k1 - 1);
-		hjj = Comp(beta);
-		cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
-			wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
-		beta = cblas_dznrm2(n, w, 1);
-		hump = max(hump, beta);
+	    mx = mbrkdwn + max(0, k1 - 1);
+	    hjj = Comp(beta);
+	    cblas_zgemv(CblasColMajor, CblasNoTrans, n, mx, &hjj,
+	        wsp + iv, n, wsp + iexph, 1, &zero, w, 1);
+	    beta = cblas_dznrm2(n, w, 1);
+	    hump = max(hump, beta);
 
-		// prevent dividing by zero
-		if (err_loc == 0)
-			t_new = p1 = 1e300;
-		else {
-			t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
-			p1 = pow(10., round(log10(t_new) - sqr1) - 1);
-			t_new = trunc(t_new / p1 + 0.55) * p1;
-		}
+	    // prevent dividing by zero
+	    if (err_loc == 0)
+	        t_new = p1 = 1e300;
+	    else {
+	        t_new = gamma * t_step * pow(t_step*tol / err_loc, xm);
+	        p1 = pow(10., round(log10(t_new) - sqr1) - 1);
+	        t_new = trunc(t_new / p1 + 0.55) * p1;
+	    }
 
-		err_loc = max(err_loc, rndoff);
+	    err_loc = max(err_loc, rndoff);
 
-		t_now = t_now + t_step;
+	    t_now = t_now + t_step;
 
-		if (itrace != 0) {
-			std::cout << "integration" << nstep << "---------------------------------" << std::endl;
-			std::cout << "scale-square =" << ns << std::endl;
-			std::cout << "step_size = " << t_step << std::endl;
-			std::cout << "err_loc   =" << err_loc << std::endl;
-			std::cout << "next_step =" << t_new << std::endl;
-		}
+	    if (itrace != 0) {
+	        std::cout << "integration" << nstep << "---------------------------------" << std::endl;
+	        std::cout << "scale-square =" << ns << std::endl;
+	        std::cout << "step_size = " << t_step << std::endl;
+	        std::cout << "err_loc   =" << err_loc << std::endl;
+	        std::cout << "next_step =" << t_new << std::endl;
+	    }
 
-		step_min = min(step_min, t_step);
-		step_max = max(step_max, t_step);
-		s_error = s_error + err_loc;
-		x_error = max(x_error, err_loc);
+	    step_min = min(step_min, t_step);
+	    step_max = max(step_max, t_step);
+	    s_error = s_error + err_loc;
+	    x_error = max(x_error, err_loc);
 
 	} while (mxstep == 0 || nstep < mxstep);
 
@@ -3344,21 +3344,21 @@ inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(SvecComp_IO v, CmobdDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
@@ -3374,21 +3374,21 @@ inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I 
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, McooDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
@@ -3404,21 +3404,21 @@ inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(SvecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
@@ -3434,21 +3434,21 @@ inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I 
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, McooComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
@@ -3464,21 +3464,21 @@ inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Long_I Nkrylov, Doub_
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(SvecComp_IO v, CmobdComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
@@ -3494,21 +3494,21 @@ inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I 
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, CmatDoub_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
@@ -3524,21 +3524,21 @@ inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I 
 {
 #ifdef SLS_CHECK_SHAPES
 	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
-		SLS_ERR("wrong shape!");
+	    SLS_ERR("wrong shape!");
 #endif
 	Long iflag;
 	if (!her)
-		ZGEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZGEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 	else
-		ZHEXPV(v.size(), Nkrylov, t, v.p(),
-			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+	    ZHEXPV(v.size(), Nkrylov, t, v.p(),
+	        tol, mat_norm, wsp_c.p(), wsp_c.size(),
+	        wsp_i.p(), wsp_i.size(), mat, 0, iflag);
 }
 
 inline void expv(VecComp_IO v, CmatComp_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
