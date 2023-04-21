@@ -698,106 +698,79 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 
 // get non-negative integer from string
 // str[start] must be a number
-// return the index after the last digit, return -1 if failed
-inline Long str2int0(Int_O num, @Ts@_I str, Long_I start = 0)
+// return the index after the last digit
+// return -1 if failed
+// return -i if overflow, where i is the index after processed digit (num will be the front digits before overflow)
+template <class T>
+inline Long str2int0(T &num, @Ts@_I str, Long_I start = 0)
 {
-	Long i;
-	if (start >= size(str)) return -1;
+	Long i, N = size(str);
+	if (start >= N) return -1;
 	@Tc@ c = str[start];
 	if (!is_num(c)) return -1;
 	num = c - '0';
-	for (i = start + 1; i < size(str); ++i) {
+	T max1 = numeric_limits<T>::max() / 10;
+	T max2 = numeric_limits<T>::max() % 10;
+	for (i = start + 1; i < N; ++i) {
 		c = str[i];
-		if (is_num(c)) {
-			if (num > INT_MAX/10 || (num == INT_MAX/10 && c > INT_MAX%10))
-				return -1; // overflow
-			num = 10 * num + (Long)(c - '0');
-		}
-		else
-			return i;
+		if (!is_num(c)) return i;
+		if (num > max1 || (num == max1 && c > max2))
+			return -i; // overflow
+		num = 10 * num + (c - '0');
 	}
-	return i;
+	return N;
 }
 
-inline Long str2int0(Llong_O num, @Ts@_I str, Long_I start = 0)
+// get integer from string: dddd, +dddd, -dddd
+// str[start] must be a number or '+' or '-' or ' '
+// return the index after the last digit
+// return -1 if failed
+// return -i if overflow, where i is the index after processed digit (num will be the front digits before overflow)
+template <class T>
+inline Long str2int(T &num, @Ts@_I str, Long_I start = 0)
 {
-	Long i;
-	if (start >= size(str)) return -1;
-	@Tc@ c = str[start];
-	if (!is_num(c)) return -1;
-	num = c - '0';
-	for (i = start + 1; i < size(str); ++i) {
-		c = str[i];
-		if (is_num(c)) {
-			if (num > LLONG_MAX/10 || (num == LLONG_MAX/10 && c > LLONG_MAX%10))
-				return -1; // overflow
-			num = 10 * num + (Long)(c - '0');
-		}
-		else
-			return i;
-	}
-	return i;
-}
-
-// get integer from string
-// str[start] must be a number or '+' or '-'
-// return the index after the last digit, return -1 if failed
-inline Long str2int(Int_O num, @Ts@_I str, Long_I start = 0)
-{
-	if (start >= size(str)) return -1;
+	Long N = size(str);
+	if (start >= N) return -1;
 	Long ind = start;
+	while (str[ind] == ' ')
+		if (++ind == N) return -1;
 	Bool neg = false;
-	if (str[ind] == '+') ++ind;
-	if (str[ind] == '-') {
-		neg = true; ++ind;
-		static_assert(INT_MAX == 2147483647 && INT_MIN == -INT_MAX-1);
-		const @Tc@ *neg_max = @U@"2147483648";
-		if (ind + 10 <= size(str)) {
-			Long i;
-			for (i = 0; i < 10; ++i)
-				if (str[ind+i] != neg_max[i])
-					break;
-			if (i == 10 && (ind+10 == size(str) || !is_num(str[ind+10]))) {
-				num = INT_MIN; return ind+10;
-			}
+	if (is_num(str[ind]))
+		return str2int(num, str, ind);
+	else if (str[ind] == '+')
+		return str2int(num, str, ind+1);
+	else if (str[ind] == '-') {
+		if (++ind == N) return -1;
+		@Tc@ c = str[ind];
+		if (!is_num(c)) return -1;
+		num = '0' - c;
+		T min1 = numeric_limits<T>::min() / 10;
+		T min2 = -numeric_limits<T>::min() % 10;
+		for (i = ind + 1; i < N; ++i) {
+			c = str[i];
+			if (!is_num(c)) return i;
+			if (num < min1 || (num == min1 && c > min2))
+				return -i; // overflow
+			num = 10 * num + ('0' - c);
 		}
+		return N;
 	}
-	Long ret = str2int(num, str, ind);
-	if (ret < 0) return -1;
-	if (neg) num = -num;
-	return ret;
-}
-
-inline Long str2int(Llong_O num, @Ts@_I str, Long_I start = 0)
-{
-	if (start >= size(str)) return -1;
-	Long ind = start;
-	Bool neg = false;
-	if (str[ind] == '+') ++ind;
-	if (str[ind] == '-') {
-		neg = true; ++ind;
-		static_assert(LLONG_MAX == 9223372036854775807LL && LLONG_MIN == -LLONG_MAX-1);
-		const @Tc@ *neg_max = @U@"9223372036854775808";
-		if (ind + 19 <= size(str)) {
-			Long i;
-			for (i = 0; i < 19; ++i)
-				if (str[ind+i] != neg_max[i])
-					break;
-			if (i == 19 && (ind+19 == size(str) || !is_num(str[ind+19]))) {
-				num = LLONG_MIN; return ind+19;
-			}
-		}
-	}
-	Long ret = str2int(num, str, ind);
-	if (ret < 0) return -1;
-	if (neg) num = -num;
-	return ret;
+	return -1;
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Long str2int(@Ts@_I str, Long_I start = 0)
+inline Int str2i(@Ts@_I str, Long_I start = 0)
 {
-	Long num;
+	Int num;
+	if (str2int(num, str, start) < 0)
+		SLS_ERR("str2int(): not an integer: " + str.substr(start, 20));
+	return num;
+}
+
+// str must be +ddd, -ddd, or ddd
+inline Llong str2ll(@Ts@_I str, Long_I start = 0)
+{
+	Llong num;
 	if (str2int(num, str, start) < 0)
 		SLS_ERR("str2int(): not an integer: " + str.substr(start, 20));
 	return num;
@@ -818,8 +791,9 @@ inline Long str2double0(Doub& num, @Ts@_I str, Long_I start = 0)
 		return ind;
 	++ind;
 	Long ind1 = str2int0(num1, str, ind);
-	if (ind1 < 0) return -1;
-	num += num1 * pow(10, ind-ind1);
+	if (ind1 == -1) return -1;
+	int exp = (ind1 < 0 ? ind+ind1 : ind-ind1);
+	num += num1 * pow(10, exp);
 	return ind1;
 }
 
