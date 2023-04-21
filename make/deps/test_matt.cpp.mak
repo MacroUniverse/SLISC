@@ -43,5 +43,6 @@ test_matt.o: tests/test_matt.cpp tests/../SLISC/arith/arith4.h \
  tests/../SLISC/file/../file/../algo/../algo/../util/../util/STL_util.h \
  tests/../SLISC/file/../file/../algo/../arith/reorder.h \
  tests/../SLISC/file/../file/../algo/../arith/../arith/copy.h \
- tests/../SLISC/file/../file/../algo/../arith/../arith/../dense/cut.h
+ tests/../SLISC/file/../file/../algo/../arith/../arith/../dense/cut.h \
+ tests/../SLISC/str/disp.h
 	$(opt_compiler) $(flags) -c tests/test_matt.cpp

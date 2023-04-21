@@ -867,66 +867,161 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 }
 
 // get non-negative integer from string
-// return the index after the last digit, return -1 if failed
 // str[start] must be a number
-inline Long str2int(Long_O num, Str_I str, Long_I start = 0)
+// return the index after the last digit, return -1 if failed
+inline Long str2int0(Int_O num, Str_I str, Long_I start = 0)
 {
-	Long i{};
-	Char c;
-	c = str.at(start);
-	if (c < '0' || c > '9') {
-		SLS_ERR("not a number!"); return -1;  // break point here
-	}
+	Long i;
+	if (start >= size(str)) return -1;
+	Char c = str[start];
+	if (!is_num(c)) return -1;
 	num = c - '0';
 	for (i = start + 1; i < size(str); ++i) {
 		c = str[i];
-		if (c >= '0' && c <= '9')
+		if (is_num(c)) {
+			if (num > INT_MAX/10 || (num == INT_MAX/10 && c > INT_MAX%10))
+				return -1; // overflow
 			num = 10 * num + (Long)(c - '0');
+		}
 		else
 			return i;
 	}
 	return i;
 }
 
-// str[i] must all be digits
+inline Long str2int0(Llong_O num, Str_I str, Long_I start = 0)
+{
+	Long i;
+	if (start >= size(str)) return -1;
+	Char c = str[start];
+	if (!is_num(c)) return -1;
+	num = c - '0';
+	for (i = start + 1; i < size(str); ++i) {
+		c = str[i];
+		if (is_num(c)) {
+			if (num > LLONG_MAX/10 || (num == LLONG_MAX/10 && c > LLONG_MAX%10))
+				return -1; // overflow
+			num = 10 * num + (Long)(c - '0');
+		}
+		else
+			return i;
+	}
+	return i;
+}
+
+// get integer from string
+// str[start] must be a number or '+' or '-'
+// return the index after the last digit, return -1 if failed
+inline Long str2int(Int_O num, Str_I str, Long_I start = 0)
+{
+	if (start >= size(str)) return -1;
+	Long ind = start;
+	Bool neg = false;
+	if (str[ind] == '+') ++ind;
+	if (str[ind] == '-') {
+		neg = true; ++ind;
+		static_assert(INT_MAX == 2147483647 && INT_MIN == -INT_MAX-1);
+		const Char *neg_max = "2147483648";
+		if (ind + 10 <= size(str)) {
+			Long i;
+			for (i = 0; i < 10; ++i)
+				if (str[ind+i] != neg_max[i])
+					break;
+			if (i == 10 && (ind+10 == size(str) || !is_num(str[ind+10]))) {
+				num = INT_MIN; return ind+10;
+			}
+		}
+	}
+	Long ret = str2int(num, str, ind);
+	if (ret < 0) return -1;
+	if (neg) num = -num;
+	return ret;
+}
+
+inline Long str2int(Llong_O num, Str_I str, Long_I start = 0)
+{
+	if (start >= size(str)) return -1;
+	Long ind = start;
+	Bool neg = false;
+	if (str[ind] == '+') ++ind;
+	if (str[ind] == '-') {
+		neg = true; ++ind;
+		static_assert(LLONG_MAX == 9223372036854775807LL && LLONG_MIN == -LLONG_MAX-1);
+		const Char *neg_max = "9223372036854775808";
+		if (ind + 19 <= size(str)) {
+			Long i;
+			for (i = 0; i < 19; ++i)
+				if (str[ind+i] != neg_max[i])
+					break;
+			if (i == 19 && (ind+19 == size(str) || !is_num(str[ind+19]))) {
+				num = LLONG_MIN; return ind+19;
+			}
+		}
+	}
+	Long ret = str2int(num, str, ind);
+	if (ret < 0) return -1;
+	if (neg) num = -num;
+	return ret;
+}
+
+// str must be +ddd, -ddd, or ddd
 inline Long str2int(Str_I str, Long_I start = 0)
 {
 	Long num;
-	if (str2int(num, str, start) != size(str))
-		SLS_ERR("str2int(): not a number" + str.substr(start, 20));
+	if (str2int(num, str, start) < 0)
+		SLS_ERR("str2int(): not an integer: " + str.substr(start, 20));
 	return num;
 }
 
 // get non-negative double from string with format dddd.dddd or .dddd
-// return the index after the last digit, return -1 if failed
+// return the index after the last digit (might be str.size()), return -1 if failed
+// str[start] must be a number
+inline Long str2double0(Doub& num, Str_I str, Long_I start = 0)
+{
+	Llong num1;
+	if (!is_num(str[start])) return -1;
+	Long ind = start;
+	ind = str2int0(num1, str, ind);
+	if (ind < 0) return -1;
+	num = Doub(num1);
+	if (ind == size(str) || str[ind] != '.')
+		return ind;
+	++ind;
+	Long ind1 = str2int0(num1, str, ind);
+	if (ind1 < 0) return -1;
+	num += num1 * pow(10, ind-ind1);
+	return ind1;
+}
+
+// get non-negative double from string with format dddd.dddd or .dddd (there can be +,- at from and eddd,e+ddd,e-ddd at the end)
+// return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
 inline Long str2double(Doub& num, Str_I str, Long_I start = 0)
 {
-	Long ind0{}, num1{}, num2{};
-	if (str.empty()) return -1;
-	if (is_num(str[0])) {
-		ind0 = str2int(num1, str, start);
-		num = (Doub) num1;
-	}
-	if (ind0 == size(str))
-		return ind0;
-
-	if (str.at(ind0) != '.') {
-		num = (Doub)num1;
-		return ind0;
-	}
-	++ind0;
-	Long ind1 = str2int(num2, str, ind0);
-	num = (Doub)num2 / (ind1 - ind0);
-	num += (Doub)num1;
-	return ind0;
+	if (start >= size(str)) return -1;
+	Long ind = start, num1 = 0;
+	Bool neg = false;
+	if (str[ind] == '+') ++ind;
+	if (str[ind] == '-') { neg = true; ++ind; }
+	// ddd.ddd or .ddd
+	ind = str2double0(num, str, ind);
+	if (ind < 0) return -1;
+	if (neg) num = -num;
+	if (ind+1 >= size(str) || (str[ind] != 'e' && str[ind] != 'E'))
+		return ind;
+	// exponent
+	++ind;
+	ind = str2int(num1, str, ind);
+	if (ind < 0) return -1;
+	num *= pow(10, num1);
+	return ind;
 }
 
 inline Doub str2double(Str_I str, Long_I start = 0)
 {
 	Doub num;
 	if (str2double(num, str, start) < 0)
-		throw Str("str2double()");
+		SLS_ERR("str2int(): not a double: " + str.substr(start, 20));
 	return num;
 }
 
@@ -1336,60 +1431,161 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 }
 
 // get non-negative integer from string
-// return the index after the last digit, return -1 if failed
 // str[start] must be a number
-inline Long str2int(Long_O num, Str32_I str, Long_I start = 0)
+// return the index after the last digit, return -1 if failed
+inline Long str2int0(Int_O num, Str32_I str, Long_I start = 0)
 {
-	Long i{};
-	Char32 c;
-	c = str.at(start);
-	if (c < '0' || c > '9') {
-		SLS_ERR("not a number!"); return -1;  // break point here
-	}
+	Long i;
+	if (start >= size(str)) return -1;
+	Char32 c = str[start];
+	if (!is_num(c)) return -1;
 	num = c - '0';
 	for (i = start + 1; i < size(str); ++i) {
 		c = str[i];
-		if (c >= '0' && c <= '9')
+		if (is_num(c)) {
+			if (num > INT_MAX/10 || (num == INT_MAX/10 && c > INT_MAX%10))
+				return -1; // overflow
 			num = 10 * num + (Long)(c - '0');
+		}
 		else
 			return i;
 	}
 	return i;
 }
 
-// str[i] must all be digits
+inline Long str2int0(Llong_O num, Str32_I str, Long_I start = 0)
+{
+	Long i;
+	if (start >= size(str)) return -1;
+	Char32 c = str[start];
+	if (!is_num(c)) return -1;
+	num = c - '0';
+	for (i = start + 1; i < size(str); ++i) {
+		c = str[i];
+		if (is_num(c)) {
+			if (num > LLONG_MAX/10 || (num == LLONG_MAX/10 && c > LLONG_MAX%10))
+				return -1; // overflow
+			num = 10 * num + (Long)(c - '0');
+		}
+		else
+			return i;
+	}
+	return i;
+}
+
+// get integer from string
+// str[start] must be a number or '+' or '-'
+// return the index after the last digit, return -1 if failed
+inline Long str2int(Int_O num, Str32_I str, Long_I start = 0)
+{
+	if (start >= size(str)) return -1;
+	Long ind = start;
+	Bool neg = false;
+	if (str[ind] == '+') ++ind;
+	if (str[ind] == '-') {
+		neg = true; ++ind;
+		static_assert(INT_MAX == 2147483647 && INT_MIN == -INT_MAX-1);
+		const Char32 *neg_max = U"2147483648";
+		if (ind + 10 <= size(str)) {
+			Long i;
+			for (i = 0; i < 10; ++i)
+				if (str[ind+i] != neg_max[i])
+					break;
+			if (i == 10 && (ind+10 == size(str) || !is_num(str[ind+10]))) {
+				num = INT_MIN; return ind+10;
+			}
+		}
+	}
+	Long ret = str2int(num, str, ind);
+	if (ret < 0) return -1;
+	if (neg) num = -num;
+	return ret;
+}
+
+inline Long str2int(Llong_O num, Str32_I str, Long_I start = 0)
+{
+	if (start >= size(str)) return -1;
+	Long ind = start;
+	Bool neg = false;
+	if (str[ind] == '+') ++ind;
+	if (str[ind] == '-') {
+		neg = true; ++ind;
+		static_assert(LLONG_MAX == 9223372036854775807LL && LLONG_MIN == -LLONG_MAX-1);
+		const Char32 *neg_max = U"9223372036854775808";
+		if (ind + 19 <= size(str)) {
+			Long i;
+			for (i = 0; i < 19; ++i)
+				if (str[ind+i] != neg_max[i])
+					break;
+			if (i == 19 && (ind+19 == size(str) || !is_num(str[ind+19]))) {
+				num = LLONG_MIN; return ind+19;
+			}
+		}
+	}
+	Long ret = str2int(num, str, ind);
+	if (ret < 0) return -1;
+	if (neg) num = -num;
+	return ret;
+}
+
+// str must be +ddd, -ddd, or ddd
 inline Long str2int(Str32_I str, Long_I start = 0)
 {
 	Long num;
-	if (str2int(num, str, start) != size(str))
-		SLS_ERR("str2int(): not a number" + str.substr(start, 20));
+	if (str2int(num, str, start) < 0)
+		SLS_ERR("str2int(): not an integer: " + str.substr(start, 20));
 	return num;
 }
 
-// get non-negative double from string
-// return the index after the last digit, return -1 if failed
+// get non-negative double from string with format dddd.dddd or .dddd
+// return the index after the last digit (might be str.size()), return -1 if failed
+// str[start] must be a number
+inline Long str2double0(Doub& num, Str32_I str, Long_I start = 0)
+{
+	Llong num1;
+	if (!is_num(str[start])) return -1;
+	Long ind = start;
+	ind = str2int0(num1, str, ind);
+	if (ind < 0) return -1;
+	num = Doub(num1);
+	if (ind == size(str) || str[ind] != '.')
+		return ind;
+	++ind;
+	Long ind1 = str2int0(num1, str, ind);
+	if (ind1 < 0) return -1;
+	num += num1 * pow(10, ind-ind1);
+	return ind1;
+}
+
+// get non-negative double from string with format dddd.dddd or .dddd (there can be +,- at from and eddd,e+ddd,e-ddd at the end)
+// return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
 inline Long str2double(Doub& num, Str32_I str, Long_I start = 0)
 {
-	Long ind0{}, num1{}, num2{};
-	ind0 = str2int(num1, str, start);
-	if (str.at(ind0) != '.') {
-		num = (Doub)num1;
-		return ind0;
-	}
-	ind0 = str2int(num2, str, ind0 + 1);
-	num = (Doub)num2;
-	while (num >= 1)
-		num /= 10;
-	num += (Doub)num1;
-	return ind0;
+	if (start >= size(str)) return -1;
+	Long ind = start, num1 = 0;
+	Bool neg = false;
+	if (str[ind] == '+') ++ind;
+	if (str[ind] == '-') { neg = true; ++ind; }
+	// ddd.ddd or .ddd
+	ind = str2double0(num, str, ind);
+	if (ind < 0) return -1;
+	if (neg) num = -num;
+	if (ind+1 >= size(str) || (str[ind] != 'e' && str[ind] != 'E'))
+		return ind;
+	// exponent
+	++ind;
+	ind = str2int(num1, str, ind);
+	if (ind < 0) return -1;
+	num *= pow(10, num1);
+	return ind;
 }
 
 inline Doub str2double(Str32_I str, Long_I start = 0)
 {
 	Doub num;
 	if (str2double(num, str, start) < 0)
-		throw Str("str2double()");
+		SLS_ERR("str2int(): not a double: " + str.substr(start, 20));
 	return num;
 }
 

@@ -96,21 +96,22 @@ inline void matt_read_scalar(@T@_O s, ifstream &m_in)
 	m_in >> s;
 }
 //% elseif is_Comp(T)
+// format : "[Doub][+/-][Doub]i"
 inline void matt_read_scalar(@T@_O c, ifstream &m_in)
 {
 	if (!m_in.good())
-		SLS_ERR("unknown!");
-	Doub cr = 0, ci = 0;
-	Char ch;
-	m_in >> cr;
-	ch = m_in.get();
-	if (ch == Matt::dlm) {
-		c = cr; return;
-	}
-	m_in >> ci;
-	if (ch == '-')
-		ci *= -1.;
-	c = Comp(cr, ci);
+		SLS_ERR("unknown! ");
+	Doub &cr = real_r(c), &ci = imag_r(c);
+    static Str str;
+    m_in >> str;
+	if (str.empty()) SLS_ERR("unknown!");
+	Long ind = 0;
+	Long ind1 = str2double(cr, str, ind);
+	if (ind1 < 0) SLS_ERR("unknown! " + str.substr(ind));
+	if (ind1 == size(str)) return;
+	Long ind2 = str2double(ci, str, ind1);
+	if (ind2 < 0) SLS_ERR("unknown! " + str.substr(ind1));
+	if (str.at(ind2) != 'i') SLS_ERR("unknown!");
 	m_in.ignore(100, Matt::dlm);
 }
 //% end
