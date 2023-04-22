@@ -6,8 +6,13 @@
 #include <ctime>
 
 #ifndef SLS_RAND_SEED
-// default random seed, update every second
-#define SLS_RAND_SEED std::time(nullptr)
+	#ifdef NDEBUG
+		// default random seed, update every second
+		#define SLS_RAND_SEED std::time(nullptr)
+	#else
+		// stable seed for debug
+		#define SLS_RAND_SEED 0
+	#endif
 #endif
 
 namespace slisc

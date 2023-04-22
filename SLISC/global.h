@@ -191,11 +191,13 @@ using std::sinh; using std::cosh; using std::tanh;
 
 // Scalar types
 
-typedef char Char;
-typedef const Char Char_I; // 8 bit integer
+// note that `char` might be signed or unsigned, and is not a typedef
+// e.g. `char *` is not `signed char*` nor `unsigned char*`
+typedef signed char Char; // 8 bit signed integer
+typedef const Char Char_I;
 typedef Char &Char_O, &Char_IO;
 
-typedef unsigned char Uchar;
+typedef unsigned char Uchar; // 8 bit unsigned integer
 typedef const Uchar Uchar_I;
 typedef Uchar &Uchar_O, &Uchar_IO;
 

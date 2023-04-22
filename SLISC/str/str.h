@@ -904,7 +904,6 @@ inline Long str2int(T &num, Str_I str, Long_I start = 0)
 	Long ind = start;
 	while (str[ind] == ' ')
 		if (++ind == N) return -1;
-	Bool neg = false;
 	if (is_num(str[ind]))
 		return str2int(num, str, ind);
 	else if (str[ind] == '+')
@@ -915,8 +914,8 @@ inline Long str2int(T &num, Str_I str, Long_I start = 0)
 		if (!is_num(c)) return -1;
 		num = '0' - c;
 		T min1 = numeric_limits<T>::min() / 10;
-		T min2 = -numeric_limits<T>::min() % 10;
-		for (i = ind + 1; i < N; ++i) {
+		Char min2 = abs(numeric_limits<T>::min()) % 10;
+		for (Long i = ind + 1; i < N; ++i) {
 			c = str[i];
 			if (!is_num(c)) return i;
 			if (num < min1 || (num == min1 && c > min2))
@@ -962,8 +961,47 @@ inline Long str2double0(Doub& num, Str_I str, Long_I start = 0)
 	++ind;
 	Long ind1 = str2int0(num1, str, ind);
 	if (ind1 == -1) return -1;
-	int exp = (ind1 < 0 ? ind+ind1 : ind-ind1);
-	num += num1 * pow(10, exp);
+	int exp = abs(ind1)-ind;
+	Doub d = num1 / pow(10LL, exp);
+	cout.precision(18);
+	
+	while (1) { // correction for last digits
+		Llong num11, num12; Int exp;
+		double_parts(num11, exp, d);
+		if (num11 == num1) {
+			cout << d << "\n (exact)" << endl;
+			break;
+		}
+		else if (num11 < num1) {
+			cout << d << " +-> ";
+			mantissa_add(d, 1);
+			cout << d << endl;
+			double_parts(num12, exp, d);
+			if (num12 > num1) {
+				if (num11+num12 > 2*num1) {
+					cout << d << " 2--> ";
+					mantissa_sub(d, 1);
+					cout << d << endl;
+				}
+				break;
+			}
+		}
+		else { // num11 > num1
+			cout << d << " --> ";
+			mantissa_sub(d, 1);
+			cout << d << endl;
+			double_parts(num12, exp, d);
+			if (num12 < num1) {
+				if (num11+num12 < 2*num1) {
+					cout << d << " 2+-> ";
+					mantissa_add(d, 1);
+					cout << d << endl;
+				}
+				break;
+			}
+		}
+	}
+	num += d;
 	return ind1;
 }
 
@@ -987,7 +1025,7 @@ inline Long str2double(Doub& num, Str_I str, Long_I start = 0)
 	++ind;
 	ind = str2int(num1, str, ind);
 	if (ind < 0) return -1;
-	num *= pow(10, num1);
+	num *= pow(10., num1);
 	return ind;
 }
 
@@ -1442,7 +1480,6 @@ inline Long str2int(T &num, Str32_I str, Long_I start = 0)
 	Long ind = start;
 	while (str[ind] == ' ')
 		if (++ind == N) return -1;
-	Bool neg = false;
 	if (is_num(str[ind]))
 		return str2int(num, str, ind);
 	else if (str[ind] == '+')
@@ -1453,8 +1490,8 @@ inline Long str2int(T &num, Str32_I str, Long_I start = 0)
 		if (!is_num(c)) return -1;
 		num = '0' - c;
 		T min1 = numeric_limits<T>::min() / 10;
-		T min2 = -numeric_limits<T>::min() % 10;
-		for (i = ind + 1; i < N; ++i) {
+		Char32 min2 = abs(numeric_limits<T>::min()) % 10;
+		for (Long i = ind + 1; i < N; ++i) {
 			c = str[i];
 			if (!is_num(c)) return i;
 			if (num < min1 || (num == min1 && c > min2))
@@ -1500,8 +1537,47 @@ inline Long str2double0(Doub& num, Str32_I str, Long_I start = 0)
 	++ind;
 	Long ind1 = str2int0(num1, str, ind);
 	if (ind1 == -1) return -1;
-	int exp = (ind1 < 0 ? ind+ind1 : ind-ind1);
-	num += num1 * pow(10, exp);
+	int exp = abs(ind1)-ind;
+	Doub d = num1 / pow(10LL, exp);
+	cout.precision(18);
+	
+	while (1) { // correction for last digits
+		Llong num11, num12; Int exp;
+		double_parts(num11, exp, d);
+		if (num11 == num1) {
+			cout << d << "\n (exact)" << endl;
+			break;
+		}
+		else if (num11 < num1) {
+			cout << d << " +-> ";
+			mantissa_add(d, 1);
+			cout << d << endl;
+			double_parts(num12, exp, d);
+			if (num12 > num1) {
+				if (num11+num12 > 2*num1) {
+					cout << d << " 2--> ";
+					mantissa_sub(d, 1);
+					cout << d << endl;
+				}
+				break;
+			}
+		}
+		else { // num11 > num1
+			cout << d << " --> ";
+			mantissa_sub(d, 1);
+			cout << d << endl;
+			double_parts(num12, exp, d);
+			if (num12 < num1) {
+				if (num11+num12 < 2*num1) {
+					cout << d << " 2+-> ";
+					mantissa_add(d, 1);
+					cout << d << endl;
+				}
+				break;
+			}
+		}
+	}
+	num += d;
 	return ind1;
 }
 
@@ -1525,7 +1601,7 @@ inline Long str2double(Doub& num, Str32_I str, Long_I start = 0)
 	++ind;
 	ind = str2int(num1, str, ind);
 	if (ind < 0) return -1;
-	num *= pow(10, num1);
+	num *= pow(10., num1);
 	return ind;
 }
 
@@ -1537,6 +1613,13 @@ inline Doub str2double(Str32_I str, Long_I start = 0)
 	return num;
 }
 
+
+inline Str to_string(Doub_I x, std::streamsize prec)
+{
+	std::ostringstream os; os.precision(prec);
+	os << x;
+	return os.str();
+}
 
 // convert a number to chinese
 inline Str num2chinese(Long num) {
@@ -1737,10 +1820,10 @@ inline void parse(vector<Llong> &v, Str_I str, Str_I sep = " ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.push_back(str2int(str.substr(ind0, ind1-ind0)));
+		v.push_back(str2ll(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.push_back(str2int(str.substr(ind0)));
+	v.push_back(str2ll(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const vector<Llong> &v, Str_I sep = " ")
@@ -1759,10 +1842,10 @@ inline void parse(vector<Llong> &v, Str32_I str, Str32_I sep = U" ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.push_back(str2int(str.substr(ind0, ind1-ind0)));
+		v.push_back(str2ll(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.push_back(str2int(str.substr(ind0)));
+	v.push_back(str2ll(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const vector<Llong> &v, Str32_I sep = U" ")
@@ -1781,10 +1864,10 @@ inline void parse(set<Llong> &v, Str_I str, Str_I sep = " ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2int(str.substr(ind0)));
+	v.insert(str2ll(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const set<Llong> &v, Str_I sep = " ")
@@ -1803,10 +1886,10 @@ inline void parse(set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2int(str.substr(ind0)));
+	v.insert(str2ll(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const set<Llong> &v, Str32_I sep = U" ")
@@ -1825,10 +1908,10 @@ inline void parse(unordered_set<Llong> &v, Str_I str, Str_I sep = " ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2int(str.substr(ind0)));
+	v.insert(str2ll(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const unordered_set<Llong> &v, Str_I sep = " ")
@@ -1847,10 +1930,10 @@ inline void parse(unordered_set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2int(str.substr(ind0, ind1-ind0)));
+		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2int(str.substr(ind0)));
+	v.insert(str2ll(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")

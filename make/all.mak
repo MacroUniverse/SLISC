@@ -415,7 +415,7 @@ link: # force link
 
 h:
 	$(info remake all headers - default options)
-	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), 1)"
 
 test:
 	$(info remake and run all tests - default options)

@@ -11,10 +11,10 @@ namespace slisc {
 class Matt {
 public:
 	Matt();
-	Matt(Str_I fname, Char_I *rw, Int_I precision = 17, Bool_I replace = false);
+	Matt(Str_I fname, const char *rw, Int_I precision = 18, Bool_I replace = false);
 	// delimiter between two numbers, can only be ' ' for now.
-	static const Char dlm = ' ';
-	Char m_rw; // 'r' for read 'w' for write
+	static const char dlm = ' ';
+	char m_rw; // 'r' for read 'w' for write
 	ifstream m_in; // read file
 	ofstream m_out; // write file
 	Str fname; // name of the opened file
@@ -24,7 +24,7 @@ public:
 	vector<Long> m_ind; // variable positions (line indices)
 
 	// open a file
-	void open(Str_I fname, Char_I *rw, Int_I precision = 17, Bool_I replace = false);
+	void open(Str_I fname, const char *rw, Int_I precision = 18, Bool_I replace = false);
 
 	Bool isopen();
 
@@ -82,11 +82,11 @@ inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 //%------------------------------
 //% T = varargin{:};
 //% if is_Char(T)
-inline void matt_read_scalar(Char_O s, ifstream &m_in)
+inline void matt_read_scalar(@T@_O s, ifstream &m_in)
 {
 	if (!m_in.good())
 		SLS_ERR("unknown!");
-	Int temp; m_in >> temp; s = (Char)temp;
+	Int temp; m_in >> temp; s = (@T@)temp;
 }
 //% elseif is_Int(T) || is_Llong(T) || is_Doub(T)
 inline void matt_read_scalar(@T@_O s, ifstream &m_in)
@@ -120,7 +120,7 @@ inline void matt_read_scalar(@T@_O c, ifstream &m_in)
 // read the next variable after previous delimiter
 inline Long scanInverse(ifstream &fin)
 {
-	Char c;
+	char c;
 	Long ind, i, N;
 
 	ind = fin.tellg();
@@ -152,7 +152,7 @@ inline void Matt::get_profile()
 	Long gmax = m_in.tellg();
 	// check end mark
 	m_in.seekg(gmax-2);
-	Char c1 = m_in.get(), c2 = m_in.get();
+	char c1 = m_in.get(), c2 = m_in.get();
 	if (c1 != Matt::dlm || c2 != Matt::dlm) {
 		throw Matt_file_not_complete();
 	}
@@ -179,7 +179,7 @@ inline void Matt::get_profile()
 			m_in >> temp;
 			if (temp <= 0 || temp > 127)
 				SLS_ERR("unknown!");
-			name.push_back((Char)temp);
+			name.push_back((char)temp);
 		}
 		m_name.push_back(name);
 		// read var type
@@ -232,10 +232,10 @@ inline Int Matt::search(Str_I name)
 
 inline Matt::Matt() {}
 
-inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision, Bool_I replace)
+inline Matt::Matt(Str_I fname, const char * rw, Int_I precision, Bool_I replace)
 { open(fname, rw, precision, replace); }
 
-inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
+inline void Matt::open(Str_I fname, const char *rw, Int_I precision, Bool_I replace)
 {
 	if (isopen())
 		close();
@@ -269,7 +269,7 @@ inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
 		m_in.open(fname);
 		if (!m_in.good())
 			SLS_ERR("error: file not found: " + fname);
-		m_in.precision(17);
+		m_in.precision(18);
 		get_profile(); // get var names
 	}
 }
@@ -464,7 +464,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% end
 
 //% % save one var to one file (replace old file)
-inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file, Int_I precision = 18, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -474,7 +474,7 @@ inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file, Int_I precision =
 
 inline void save(Str_I str, Str_I varname, Matt_IO matt)
 {
-	SvecCharC sli; sli.set(str.data(), str.size());
+	SvecCharC sli; sli.set((Char*)str.data(), str.size());
 	save(sli, varname, matt);
 }
 

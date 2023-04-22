@@ -278,8 +278,80 @@ inline void primes2(vecLong_O v, Long_I Nprime)
 
 //% tem('sinc', { 'Doub' });
 //%---------------------
-//% T = varargin{:}; if ~is_fpt(T), error('illegal type!'); end
+//% T = varargin{:};
+//% if ~is_fpt(T), error('illegal type!'); end
 inline @T@ sinc(@T@_I x) { return x == @num(0,T)@ ? @num(1,T)@ : sin(x) / x; }
 //%---------------------
+
+// b^n that output an integer 
+//% tem('pow', { 'Int', 'Llong' });
+//%---------------------
+//% T = varargin{:};
+inline @T@ pow(@T@ b, Uint n) {
+    @T@ r = 1;
+    while (n > 0) {
+        if (n & 1) {
+            r *= b;
+        }
+        b *= b; n >>= 1;
+    }
+    return r;
+}
+//%---------------------
+
+// break a double into different parts
+// d = man * 2^exp2 (exact)
+// flag = "-Inf", "+Inf", "qNaN" or "sNaN" if not a normal number
+// ref: https://wuli.wiki/online/FltCpp.html
+inline const char *double_parts(Llong_O man, Int_O exp2, Doub x)
+{
+	const char *flag;
+	// split the bits
+	Bool neg = x < 0; // 1 bit
+	x = abs(x);
+	exp2 = *(int16_t*)&x >> 4; // 11 bits
+	man = *(Llong*)&x;
+	man &= 0xFFFFFFFFFFFFF; // 52 bits
+	
+	// interpret
+	exp2 -= 1023;
+	if (exp2 == 1024) { // Inf or nan
+		if (man == 0) // inf
+			flag = neg ? "-Inf" : "+Inf";
+		if (man & 0x1000000000000)
+			flag = "qNaN"; // quiet NaN
+		else
+			flag = "sNaN"; // signaling NaN
+		return flag;
+	}
+	if (exp2 == -1023) {
+		exp2 = -1022 - 52;
+		return NULL;
+	}
+	
+	exp2 -= 1023 + 52;
+	man |= 0x10000000000000; // set the 53-th bit
+	if (neg) man = -man;
+	return NULL;
+}
+
+// get mantissa of double as ullong
+inline Ullong mantissa(Doub_I x) {
+	return *(Ullong *)&x;
+}
+
+// add the mantissa by n bits
+inline void mantissa_add(Doub_IO x, Ullong_I n) {
+	Ullong *p = (Ullong *)&x;
+	if (n > ULLONG_MAX - *p) SLS_ERR("overflow!");
+	*p += n;
+}
+
+// subtract the mantissa by n bits
+inline void mantissa_sub(Doub_IO x, Ullong_I n) {
+	Ullong *p = (Ullong *)&x;
+	if (n > *p) SLS_ERR("overflow!");
+	*p -= n;
+}
 
 } // namespace slisc
