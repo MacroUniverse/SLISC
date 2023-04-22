@@ -1,6 +1,6 @@
 #include "../SLISC/arith/Imag.h"
 
-void test_Imag()
+int main()
 {
 	using namespace slisc;
 	

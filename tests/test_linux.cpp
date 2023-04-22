@@ -3,7 +3,7 @@
 #include <signal.h>
 #endif
 
-void test_linux()
+int main()
 {
 #ifdef SLS_USE_LINUX
 	using namespace slisc;

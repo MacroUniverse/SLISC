@@ -2,7 +2,7 @@
 #include "../SLISC/spec/coulomb.h"
 // #include "../SLISC/str/disp.h"
 
-void test_coulomb()
+int main()
 {
 	using std::cout; using std::endl;
 	using namespace slisc;

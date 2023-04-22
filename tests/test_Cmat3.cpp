@@ -1,6 +1,6 @@
 #include "../SLISC/dense/Cmat3.h"
 
-void test_Cmat3()
+int main()
 {
 	using namespace slisc;
 	Long N1 = 3, N2 = 4, N3 = 2;

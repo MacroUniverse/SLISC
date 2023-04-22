@@ -4,7 +4,7 @@
 using namespace slisc;
 using json = nlohmann::json; // the main class
 
-void test_json()
+int main()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	string str;

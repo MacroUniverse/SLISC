@@ -3,7 +3,7 @@
 #include "../SLISC/lin/mul.h"
 // #include "../SLISC/str/disp.h"
 
-void test_eig()
+int main()
 {
 	using namespace slisc;
 #ifdef SLS_USE_LAPACKE

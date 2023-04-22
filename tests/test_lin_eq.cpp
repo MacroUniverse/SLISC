@@ -4,7 +4,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-void test_lin_eq()
+int main()
 {
 #ifdef SLS_USE_LAPACKE
 	using namespace slisc;

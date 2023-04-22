@@ -1,7 +1,7 @@
 #include "../SLISC/arith/arith2.h"
 #include "../SLISC/dense/cut.h"
 
-void test_Cmat4()
+int main()
 {
 	using namespace slisc;
 	{

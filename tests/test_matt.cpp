@@ -4,7 +4,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-void test_matt()
+int main()
 {
 	using namespace slisc;
 	cout.precision(18);

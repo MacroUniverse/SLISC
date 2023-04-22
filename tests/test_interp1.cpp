@@ -3,7 +3,7 @@
 #include "../SLISC/arith/arith2.h"
 #include "../SLISC/arith/arith4.h"
 
-void test_interp1()
+int main()
 {
 #ifdef SLS_USE_GSL
 	// real polynomial interp with gsl

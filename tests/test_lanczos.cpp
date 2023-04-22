@@ -1,7 +1,7 @@
 #include "../SLISC/tdse/lanczos.h"
 // #include "../SLISC/str/disp.h"
 
-void test_lanczos()
+int main()
 {
 #ifdef SLS_USE_LAPACKE
 	using namespace slisc;

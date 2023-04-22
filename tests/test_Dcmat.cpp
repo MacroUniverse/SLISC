@@ -5,7 +5,8 @@
 
 using namespace slisc;
 
-void test_Dcmat() {
+int main()
+{
 	CmatDoub a(6, 7); linspace(a, 0, 41);
 	const DcmatDoubC b = cut(a, 0, 4, 0, 3);
 	DcitDoubC it;

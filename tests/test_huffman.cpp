@@ -1,6 +1,6 @@
 #include "../SLISC/algo/huffman.h"
 
-void test_huffman()
+int main()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;

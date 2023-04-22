@@ -179,7 +179,7 @@ void test_fedvr_interp1()
 }
 #endif
 
-void test_fedvr()
+int main()
 {
 	test_gauss_lobatto();
 	test_gauss();

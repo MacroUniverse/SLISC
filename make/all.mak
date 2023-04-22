@@ -381,6 +381,7 @@ test_cpp = $(shell ls tests/*.cpp) # tests/*.cpp
 cpp_dep = $(addsuffix .mak, $(subst tests/, make/deps/, $(test_cpp)))
 path_test_o = $(test_cpp:.cpp=.o) # tests/*.cpp object files
 test_o = $(notdir $(path_test_o))
+test_x = $(test_o:.o=.x)
 path_header_in = $(shell ls SLISC/*/*.h.in) # SLISC/*/*.h.in
 path_gen_headers = $(path_header_in:.h.in=.h) # generated headers in SLISC/
 path_cur_headers = $(shell ls SLISC/*/*.h) # current headers in SLISC/, including hand written ones
@@ -389,11 +390,6 @@ path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-gen
 
 # number of cpu
 Ncpu = $(shell getconf _NPROCESSORS_ONLN)
-
-# default target
-main.x: main.o $(test_o) # link
-	@printf "\n\n   --- link ---\n\n"
-	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
 
 # remake all and test all
 all: clean_all
@@ -462,8 +458,17 @@ clean_dep:
 	rm -f make/deps/*
 
 # ======= implicit/generated rules =======
-main.o: main.cpp tests/test_all.h
+# default target
+%.x: %.o # link
+	@printf "\n\033[1;33m$@\033[0m: "
+	$(opt_compiler) $(flags) $< -o $@ $(libs)
+
+main.o: main.cpp tests/test_all.h $(test_x)
 	$(opt_compiler) $(flags) -c main.cpp
+
+%.o: tests/%.cpp
+	@printf "\n\033[1;32m$@\033[0m: "
+	$(opt_compiler) $(flags) -c $<
 
 make/deps/%.cpp.mak: tests/%.cpp
 	g++ -MM $< > $@
@@ -473,4 +478,5 @@ make/deps/%.cpp.mak: tests/%.cpp
 
 # header generation with octave
 %.h: %.h.in # code gen
+	@printf "\n\033[1;32m$@\033[0m: "
 	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"

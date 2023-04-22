@@ -6,7 +6,7 @@
 #include "../SLISC/algo/sort.h"
 // #include "../SLISC/str/disp.h"
 
-void test_arithmetic()
+int main()
 {
 	using namespace slisc;
 

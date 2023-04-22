@@ -2,7 +2,7 @@
 #include "../SLISC/prec/quad_math.h"
 #include "../SLISC/util/random.h"
 
-void test_quad_math()
+int main()
 {
 	using namespace slisc;
 #ifdef SLS_USE_QUAD_MATH

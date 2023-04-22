@@ -3,7 +3,7 @@
 #include <climits>
 #include <unordered_map>
 
-void test_SafeInt()
+int main()
 {
 	using namespace std;
 	SafeInt<unsigned int> a = 1, b = 2, c;

@@ -1,7 +1,7 @@
 #include "../SLISC/str/disp.h"
 #include "../SLISC/arith/arith2.h"
 
-void test_disp()
+int main()
 {
 	using namespace slisc;
 	CmatDoub a(3, 4);

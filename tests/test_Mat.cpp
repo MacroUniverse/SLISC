@@ -1,6 +1,6 @@
 #include "../SLISC/dense/Mat.h"
 
-void test_Mat()
+int main()
 {
 	using namespace slisc;
 	MatDoub a(3, 4);

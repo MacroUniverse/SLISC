@@ -1,6 +1,7 @@
 #include "../SLISC/algo/bin_tree.h"
 
-void test_bin_tree() {
+int main()
+{
 	using namespace slisc;
 	// 4-level binary tree with 15 nodes, val 1~15
 	// 3 and 10 switched to test error

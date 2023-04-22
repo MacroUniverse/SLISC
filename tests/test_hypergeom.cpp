@@ -1,6 +1,6 @@
 #include "../SLISC/spec/hypergeom.h"
 
-void test_hypergeom()
+int main()
 {
 	using std::cout; using std::endl;
 	using namespace slisc;

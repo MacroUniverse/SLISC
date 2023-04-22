@@ -6,7 +6,7 @@ using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;
 #endif
 
-void test_eigen()
+int main()
 {
 #ifdef SLS_USE_EIGEN
 	// get diagonal

@@ -1,7 +1,7 @@
 ﻿#include "../SLISC/file/file.h"
 // #include "../SLISC/str/disp.h"
 
-void test_file()
+int main()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;

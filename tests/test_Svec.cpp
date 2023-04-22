@@ -1,6 +1,6 @@
 #include "../SLISC/arith/arith2.h"
 
-void test_Svec()
+int main()
 {
 	using namespace slisc;
 	SvecDoub sli;

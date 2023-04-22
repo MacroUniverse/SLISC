@@ -1,6 +1,6 @@
 #include "../SLISC/dense/Vbase.h"
 
-void test_Vbase()
+int main()
 {
 	using namespace slisc;
 	Long N = 3;

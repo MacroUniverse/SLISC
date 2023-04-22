@@ -8,7 +8,7 @@
 #include <gsl/gsl_sf_coulomb.h>
 #endif
 
-void test_GSL()
+int main()
 {
 	using namespace slisc;
 #ifdef SLS_USE_GSL

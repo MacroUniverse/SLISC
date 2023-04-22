@@ -9,7 +9,7 @@ public:
 	}
 };
 
-void test_bisection()
+int main()
 {
 	// test bisection
 	Sinfun f;

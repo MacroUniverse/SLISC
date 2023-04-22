@@ -202,7 +202,7 @@ void test_sqlite_exec()
 #endif
 }
 
-void test_sqlite()
+int main()
 {
 #ifdef SLS_USE_SQLITE
     test_sqlitecpp(); // recommended

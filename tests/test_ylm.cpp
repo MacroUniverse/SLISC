@@ -1,6 +1,6 @@
 #include "../SLISC/spec/ylm.h"
 
-void test_ylm()
+int main()
 {
 #ifdef SLS_USE_GSL
 	using namespace slisc;

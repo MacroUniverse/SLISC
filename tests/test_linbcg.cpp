@@ -38,7 +38,7 @@ class LinbcgQdoub2: public LinbcgQdoub
 };
 #endif
 
-void test_linbcg()
+int main()
 {
 	{
 		LinbcgDoub2 solver;

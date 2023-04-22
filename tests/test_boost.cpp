@@ -8,7 +8,7 @@
 // #include <boost/math/special_functions/gamma.hpp>
 #endif
 
-void test_boost()
+int main()
 {
 #ifdef SLS_USE_BOOST
 	using namespace slisc;

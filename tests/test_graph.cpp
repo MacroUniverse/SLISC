@@ -1,6 +1,6 @@
 #include "../SLISC/algo/graph.h"
 
-void test_graph()
+int main()
 {
 	// convert edges to/from text
 	using namespace slisc;

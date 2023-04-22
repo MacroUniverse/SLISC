@@ -1,6 +1,6 @@
 #include "../SLISC/global.h"
 
-void test_global()
+int main()
 {
 	using namespace slisc;
 	// test isnan()

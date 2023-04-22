@@ -2,7 +2,7 @@
 #include "../SLISC/arith/arith4.h"
 #include "../SLISC/str/disp.h"
 
-void test_sort()
+int main()
 {
 	using namespace slisc;
 

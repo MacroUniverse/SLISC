@@ -4,7 +4,7 @@
 #include "../SLISC/arith/arith4.h"
 
 // test fft module
-void test_fft()
+int main()
 {
 	using namespace slisc;
 	// test bit_inv()

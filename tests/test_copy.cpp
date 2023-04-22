@@ -1,7 +1,7 @@
 #include "../SLISC/arith/copy.h"
 #include "../SLISC/arith/arith2.h"
 
-void test_copy()
+int main()
 {
 	using namespace slisc;
 

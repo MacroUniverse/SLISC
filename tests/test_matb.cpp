@@ -3,7 +3,7 @@
 #include "../SLISC/util/sha1sum.h"
 // #include "../SLISC/str/disp.h"
 
-void test_matb()
+int main()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;

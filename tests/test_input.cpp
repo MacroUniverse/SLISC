@@ -1,6 +1,6 @@
 #include "../SLISC/util/input.h"
 
-void test_input()
+int main()
 {
 	using namespace slisc;
 	Long i1, i2, i3, i4;

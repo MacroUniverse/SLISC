@@ -1,7 +1,7 @@
 #include "../SLISC/algo/queue.h"
 #include "../SLISC/util/random.h"
 
-void test_queue()
+int main()
 {
 	using namespace slisc;
 	Long N = 100;

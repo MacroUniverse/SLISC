@@ -41,7 +41,7 @@ struct My_v
 	My_p end() { return My_p(m_a, m_a.size()); }
 };
 
-void test_cpp11()
+int main()
 {
 	// sort(), pair<>, and lambda expr, function<>, function to pointer
 	vector<int> v1 = {1,3,2,4,5}, v2 = {1,2,3,4,5}, v3;

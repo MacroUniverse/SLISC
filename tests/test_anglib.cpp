@@ -1,6 +1,6 @@
 #include "../SLISC/spec/anglib.h"
 
-void test_anglib()
+int main()
 {
 	using namespace slisc;
 	SLS_ASSERT(factorial(5) == 120);

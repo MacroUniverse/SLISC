@@ -1,7 +1,7 @@
 #include "../SLISC/arith/compare.h"
 #include "../SLISC/util/random.h"
 
-void test_Cmat()
+int main()
 {
 	using namespace slisc;
 	Long N1 = 3, N2 = 4;

@@ -1,6 +1,6 @@
 #include "../SLISC/arith/copy.h"
 
-void test_compare()
+int main()
 {
 	using namespace slisc;
 	Long N = 3;

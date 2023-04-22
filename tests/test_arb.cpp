@@ -7,7 +7,7 @@
 #include "../SLISC/prec/arb_extension.h"
 #endif
 
-void test_arb()
+int main()
 {
 #ifdef SLS_USE_ARB
 	using namespace slisc;

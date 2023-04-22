@@ -1,6 +1,6 @@
 #include "../SLISC/arith/arith2.h"
 
-void test_Dvec()
+int main()
 {
 	using namespace slisc;
 	DvecDoub cut;

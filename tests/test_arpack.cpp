@@ -48,7 +48,7 @@ public:
 };
 #endif
 
-void test_arpack()
+int main()
 {
 #ifdef SLS_USE_ARPACK
 	Long N = 10, Nsol = 3;

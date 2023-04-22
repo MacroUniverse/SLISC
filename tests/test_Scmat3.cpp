@@ -1,7 +1,7 @@
 #include "../SLISC/dense/Scmat3.h"
 #include "../SLISC/util/random.h"
 
-void test_Scmat3()
+int main()
 {
 	using namespace slisc;
 	Long N1 = 3, N2 = 4, N3 = 5;

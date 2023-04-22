@@ -1,6 +1,6 @@
 #include "../SLISC/str/str.h"
 
-void test_string()
+int main()
 {
 	using namespace slisc;
 	Str str = "abcdefghijklmnopqrstuvwxyz", str1;

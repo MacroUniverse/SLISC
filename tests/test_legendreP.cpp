@@ -1,6 +1,6 @@
 #include "../SLISC/spec/legendreP.h"
 
-void test_legendreP()
+int main()
 {
 #ifdef SLS_USE_QUAD_MATH
 	using namespace slisc;

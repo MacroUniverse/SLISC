@@ -4,7 +4,7 @@
 // >> and << operating on signed integer is "undefined"!
 // Char and Uchar reinterpret cast conserves bit, but static cast might not (for older architecture)
 
-void test_bit()
+int main()
 {
 	using namespace slisc;
 	if (!little_endian())

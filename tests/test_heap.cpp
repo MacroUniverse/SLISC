@@ -2,7 +2,7 @@
 
 using namespace slisc;
 
-void test_heap()
+int main()
 {
 	// heapsort is tested in "test_sort()"
 

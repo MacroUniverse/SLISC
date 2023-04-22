@@ -7,7 +7,7 @@ void SLS_TIME_H_ERR(const std::string &str) {}
 #endif
 
 // test time utilities
-void test_time()
+int main()
 {
 #ifndef NDEBUG
 	std::cout << "no fail in debug mode!" << std::endl;

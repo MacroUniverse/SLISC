@@ -2,7 +2,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-void test_matfile()
+int main()
 {
 	using namespace slisc;
 #ifdef SLS_USE_MATFILE
