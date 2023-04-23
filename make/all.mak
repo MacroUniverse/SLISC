@@ -391,33 +391,20 @@ path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-gen
 # number of cpu
 Ncpu = $(shell getconf _NPROCESSORS_ONLN)
 
-# remake all and test all
-all: clean_all
-	make depend
-	make test
-	make h64
-	make test64
-	make h64q
-	make test64q
-	make h
-
 # [manual] rule files for *.o [make/deps/*.mak]
 # use when you change `#include`
 depend: h
 	make $(cpp_dep)
 
-link: # force link
-	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
+# remake all headers
+h_all:
+	make h64
+	make h64q
+	make h
 
 h:
 	$(info remake all headers - default options)
 	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), 1)"
-
-test:
-	$(info remake and run all tests - default options)
-	make clean
-	make -j$(Ncpu)
-	./main.x < input.inp
 
 h64:
 	$(info remake all headers - 64bit)
@@ -426,12 +413,6 @@ h64:
 	cp -r SLISC SLISC-64
 	find SLISC-64 -name "*.h.in" -delete
 
-test64:
-	$(info remake and run all tests - 64bit)
-	make clean
-	make opt_long32=false -j$(Ncpu)
-	./main.x < input.inp
-
 h64q:
 	$(info remake all headers - 64bit+quad)
 	make clean
@@ -439,12 +420,7 @@ h64q:
 	rm -rf SLISC-64q
 	cp -r SLISC SLISC-64q
 	find SLISC-64q -name "*.h.in" -delete
-
-test64q:
-	$(info remake and run all tests - 64bit+quad)
-	make clean
-	make opt_long32=false opt_quadmath=true -j$(Ncpu)
-	./main.x < input.inp
+	
 
 clean_all: clean clean_h clean_dep
 
@@ -462,9 +438,6 @@ clean_dep:
 %.x: %.o # link
 	@printf "\n\033[1;33m$@\033[0m: "
 	$(opt_compiler) $(flags) $< -o $@ $(libs)
-
-main.o: main.cpp tests/test_all.h $(test_x)
-	$(opt_compiler) $(flags) -c main.cpp
 
 %.o: tests/%.cpp
 	@printf "\n\033[1;32m$@\033[0m: "
