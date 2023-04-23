@@ -4,7 +4,7 @@
 using namespace slisc;
 using json = nlohmann::json; // the main class
 
-int main()
+void test_json()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	string str;
@@ -28,3 +28,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_json(); }
+#endif

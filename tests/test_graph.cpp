@@ -1,6 +1,6 @@
 #include "../SLISC/algo/graph.h"
 
-int main()
+void test_graph()
 {
 	// convert edges to/from text
 	using namespace slisc;
@@ -76,3 +76,7 @@ int main()
 		SLS_ASSERT(tot_wt == 37);
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_graph(); }
+#endif

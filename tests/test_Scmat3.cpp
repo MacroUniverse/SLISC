@@ -1,7 +1,7 @@
 #include "../SLISC/dense/Scmat3.h"
 #include "../SLISC/util/random.h"
 
-int main()
+void test_Scmat3()
 {
 	using namespace slisc;
 	Long N1 = 3, N2 = 4, N3 = 5;
@@ -25,3 +25,7 @@ int main()
 	if (sli1.p() != a.p())
 		SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Scmat3(); }
+#endif

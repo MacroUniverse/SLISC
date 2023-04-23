@@ -6,7 +6,7 @@ using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;
 #endif
 
-int main()
+void test_eigen()
 {
 #ifdef SLS_USE_EIGEN
 	// get diagonal
@@ -158,3 +158,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_eigen(); }
+#endif

@@ -1,7 +1,7 @@
 #include "../SLISC/util/random.h"
 #include "../SLISC/algo/search.h"
 
-int main()
+void test_random()
 {
 	using namespace slisc;
 	using internal::Ran;
@@ -53,3 +53,7 @@ int main()
 	}
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_random(); }
+#endif

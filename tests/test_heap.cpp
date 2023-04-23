@@ -2,7 +2,7 @@
 
 using namespace slisc;
 
-int main()
+void test_heap()
 {
 	// heapsort is tested in "test_sort()"
 
@@ -14,3 +14,7 @@ int main()
     for (Long i = 0; i < N; ++i)
         SLS_ASSERT(v[i] == i);
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_heap(); }
+#endif

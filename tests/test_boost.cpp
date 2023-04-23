@@ -8,7 +8,7 @@
 // #include <boost/math/special_functions/gamma.hpp>
 #endif
 
-int main()
+void test_boost()
 {
 #ifdef SLS_USE_BOOST
 	using namespace slisc;
@@ -140,3 +140,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_boost(); }
+#endif

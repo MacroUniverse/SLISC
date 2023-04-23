@@ -7,7 +7,7 @@
 #include "../SLISC/prec/arb_extension.h"
 #endif
 
-int main()
+void test_arb()
 {
 #ifdef SLS_USE_ARB
 	using namespace slisc;
@@ -127,3 +127,8 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+
+#ifndef SLS_TEST_ALL
+int main() { test_arb(); }
+#endif

@@ -12,7 +12,7 @@ struct Dfun
     }
 };
 
-int main() {
+void test_odeint() {
 	// SHO
     int nvar = 2;
     VecDoub ystartt(nvar); ystartt[0] = 1; ystartt[1] = 0;
@@ -46,3 +46,7 @@ int main() {
 		fout << endl;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_odeint(); }
+#endif

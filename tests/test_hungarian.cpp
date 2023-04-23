@@ -1,6 +1,6 @@
 #include "../SLISC/algo/hungarian.h"
 
-int main() //example of usage
+void test_hungarian() //example of usage
 {
 	using namespace slisc;
 	using namespace std;
@@ -39,3 +39,7 @@ int main() //example of usage
 		SLS_ASSERT(hungarian(tests[i]) == res[i]);
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_hungarian(); }
+#endif

@@ -16,8 +16,8 @@ test_sha1sum.o: tests/test_sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/util/../file/../util/../str/../util/bit.h \
  tests/../SLISC/util/../file/../util/linux.h \
- tests/../SLISC/util/../file/../util/bit.h \
  tests/../SLISC/util/../file/../arith/arith1.h \
  tests/../SLISC/util/../file/../arith/../arith/compare.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/Vec.h \

@@ -3,7 +3,7 @@
 #include "../SLISC/lin/mul.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_eig()
 {
 	using namespace slisc;
 #ifdef SLS_USE_LAPACKE
@@ -69,3 +69,7 @@ int main()
 	}
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_eig(); }
+#endif

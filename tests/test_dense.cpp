@@ -5,7 +5,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_dense()
 {
 	using namespace slisc;
 
@@ -205,3 +205,7 @@ int main()
 	// operator()
 	// TODO:
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_dense(); }
+#endif

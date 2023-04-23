@@ -2,7 +2,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_matfile()
 {
 	using namespace slisc;
 #ifdef SLS_USE_MATFILE
@@ -322,3 +322,7 @@ int main()
 	cout << "---------- disabled! ----------" << endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_matfile(); }
+#endif

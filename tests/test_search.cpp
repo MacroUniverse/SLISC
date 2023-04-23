@@ -1,7 +1,7 @@
 #include "../SLISC/algo/search.h"
 #include "../SLISC/arith/arith2.h"
 
-int main()
+void test_search()
 {
 	using namespace slisc;
 	// test lookup
@@ -44,3 +44,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_search(); }
+#endif

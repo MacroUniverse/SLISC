@@ -1,7 +1,7 @@
 #include "../SLISC/dense/Scmat.h"
 #include "../SLISC/util/random.h"
 
-int main()
+void test_Scmat()
 {
 	using namespace slisc;
 	ScmatDoub sli;
@@ -15,3 +15,7 @@ int main()
 		}
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Scmat(); }
+#endif

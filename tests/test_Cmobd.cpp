@@ -1,7 +1,7 @@
 #include "../SLISC/sparse/sparse_arith.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_Cmobd()
 {
 	using namespace slisc;
 
@@ -79,3 +79,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Cmobd(); }
+#endif

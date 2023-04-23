@@ -1,7 +1,7 @@
 #include "../SLISC/algo/queue.h"
 #include "../SLISC/util/random.h"
 
-int main()
+void test_queue()
 {
 	using namespace slisc;
 	Long N = 100;
@@ -24,3 +24,7 @@ int main()
 		SLS_ASSERT(vals[elm] == i); ++i;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_queue(); }
+#endif

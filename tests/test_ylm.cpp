@@ -1,6 +1,6 @@
 #include "../SLISC/spec/ylm.h"
 
-int main()
+void test_ylm()
 {
 #ifdef SLS_USE_GSL
 	using namespace slisc;
@@ -17,3 +17,7 @@ int main()
 		SLS_ERR("failed");
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_ylm(); }
+#endif

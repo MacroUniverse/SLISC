@@ -1,6 +1,6 @@
 #include "../SLISC/dense/Vbase.h"
 
-int main()
+void test_Vbase()
 {
 	using namespace slisc;
 	Long N = 3;
@@ -11,3 +11,7 @@ int main()
 	if (v[1] != 2)
 		SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Vbase(); }
+#endif

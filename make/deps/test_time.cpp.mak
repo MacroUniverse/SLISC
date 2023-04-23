@@ -13,5 +13,6 @@ test_time.o: tests/test_time.cpp tests/../SLISC/util/time.h \
  tests/../SLISC/util/../str/../str/utfcpp/utf8/core.h \
  tests/../SLISC/util/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/util/../str/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/util/../str/../str/utfcpp/utf8/unchecked.h
+ tests/../SLISC/util/../str/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/util/../str/../util/bit.h
 	$(opt_compiler) $(flags) -c tests/test_time.cpp

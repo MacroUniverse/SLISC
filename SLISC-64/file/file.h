@@ -7,7 +7,6 @@
 #include <sys/stat.h> // for time_stamp
 #include "../util/time.h"
 #include "../util/linux.h"
-#include "../util/bit.h"
 #include "../arith/arith1.h"
 #include "../str/unicode.h"
 #include "../algo/sort.h"
@@ -15,6 +14,11 @@
 #ifdef SLS_USE_MSVC
 #include "../algo/search.h"
 #include "../str/str.h"
+#else
+#include <sys/stat.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdio.h>
 #endif
 
 namespace slisc {
@@ -886,10 +890,6 @@ inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0)
 
 // get time-stamp of a file
 #ifndef SLS_USE_MSVC
-#include <sys/stat.h>
-#include <unistd.h>
-#include <time.h>
-#include <stdio.h>
 inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
 	struct tm *time;
 	struct stat attrib;

@@ -1,7 +1,7 @@
 // #include "../SLISC/str/disp.h"
 #include "../SLISC/lin/mat_fun.h"
 
-int main()
+void test_mat_fun()
 {
 #ifdef SLS_USE_LAPACKE
 	using namespace slisc;
@@ -29,3 +29,7 @@ int main()
 	}
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_mat_fun(); }
+#endif

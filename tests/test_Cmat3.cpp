@@ -1,6 +1,6 @@
 #include "../SLISC/dense/Cmat3.h"
 
-int main()
+void test_Cmat3()
 {
 	using namespace slisc;
 	Long N1 = 3, N2 = 4, N3 = 2;
@@ -15,3 +15,7 @@ int main()
 	if (v(1, 2, 1) != 2)
 		SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Cmat3(); }
+#endif

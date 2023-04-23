@@ -4,7 +4,7 @@
 // >> and << operating on signed integer is "undefined"!
 // Char and Uchar reinterpret cast conserves bit, but static cast might not (for older architecture)
 
-int main()
+void test_bit()
 {
 	using namespace slisc;
 	if (!little_endian())
@@ -76,3 +76,7 @@ int main()
 	// int2b87(str87, "12345");
 	// cout << str87 << endl;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_bit(); }
+#endif

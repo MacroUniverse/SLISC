@@ -8,7 +8,7 @@
 #include <gsl/gsl_sf_coulomb.h>
 #endif
 
-int main()
+void test_gsl()
 {
 	using namespace slisc;
 #ifdef SLS_USE_GSL
@@ -139,3 +139,7 @@ int main()
 	cout << "---------- disabled! ----------" << endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_gsl(); }
+#endif

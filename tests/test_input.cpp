@@ -1,6 +1,6 @@
 #include "../SLISC/util/input.h"
 
-int main()
+void test_input()
 {
 	using namespace slisc;
 	Long i1, i2, i3, i4;
@@ -23,3 +23,7 @@ int main()
 	if (d3 != 789.1 || i4 != 890 || s2 != "yoyo")
 		SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_input(); }
+#endif

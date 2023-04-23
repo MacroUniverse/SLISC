@@ -4,7 +4,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_lin_eq()
 {
 #ifdef SLS_USE_LAPACKE
 	using namespace slisc;
@@ -115,3 +115,7 @@ int main()
 	std::cout << "---------- MPLAPACK disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_lin_eq(); }
+#endif

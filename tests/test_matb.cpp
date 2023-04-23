@@ -3,7 +3,7 @@
 #include "../SLISC/util/sha1sum.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_matb()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
@@ -584,3 +584,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_matb(); }
+#endif

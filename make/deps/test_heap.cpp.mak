@@ -19,6 +19,7 @@ test_heap.o: tests/test_heap.cpp tests/../SLISC/algo/heap.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/algo/../util/../arith/../arith/../dense/../dense/../str/../util/bit.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/algo/../util/../arith/../arith/../dense/Cmat.h \

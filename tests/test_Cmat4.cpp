@@ -1,7 +1,7 @@
 #include "../SLISC/arith/arith2.h"
 #include "../SLISC/dense/cut.h"
 
-int main()
+void test_Cmat4()
 {
 	using namespace slisc;
 	{
@@ -48,3 +48,7 @@ int main()
 		}
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Cmat4(); }
+#endif

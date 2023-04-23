@@ -2,7 +2,7 @@
 #include "../SLISC/lin/mat_fun.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_expokit()
 {
 #ifdef SLS_USE_CBLAS
 	using namespace slisc;
@@ -68,3 +68,7 @@ int main()
 	}
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_expokit(); }
+#endif

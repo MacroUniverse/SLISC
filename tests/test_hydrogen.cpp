@@ -1,7 +1,7 @@
 #include "../SLISC/arith/arith2.h"
 #include "../SLISC/tdse/hydrogen.h"
 
-int main()
+void test_hydrogen()
 {
 #ifdef SLS_USE_GSL
 	using namespace slisc;
@@ -21,3 +21,7 @@ int main()
 		SLS_FAIL;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_hydrogen(); }
+#endif

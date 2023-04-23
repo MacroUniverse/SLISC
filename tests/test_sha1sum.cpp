@@ -1,7 +1,7 @@
 #include "../SLISC/util/sha1sum.h"
 using namespace slisc;
 
-int main() {
+void test_sha1sum() {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	Str str = "The quick brown fox jumps over the lazy dog";
 	if (sha1sum(str.c_str(), str.size()) != "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12")
@@ -21,3 +21,7 @@ int main() {
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_sha1sum(); }
+#endif

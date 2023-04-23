@@ -1,7 +1,7 @@
 #include "../SLISC/str/disp.h"
 #include "../SLISC/arith/arith2.h"
 
-int main()
+void test_disp()
 {
 	using namespace slisc;
 	CmatDoub a(3, 4);
@@ -16,3 +16,7 @@ int main()
 	cout << text_style('b') + "Blue text" + text_style() << endl;
 	cout.flush();
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_disp(); }
+#endif

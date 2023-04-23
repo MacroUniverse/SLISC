@@ -1,7 +1,7 @@
 #include "../SLISC/dense/cut.h"
 #include "../SLISC/arith/arith2.h"
 
-int main()
+void test_cut()
 {
 	using namespace slisc;
 
@@ -37,3 +37,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_cut(); }
+#endif

@@ -48,7 +48,7 @@ public:
 };
 #endif
 
-int main()
+void test_arpack()
 {
 #ifdef SLS_USE_ARPACK
 	Long N = 10, Nsol = 3;
@@ -89,3 +89,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_arpack(); }
+#endif

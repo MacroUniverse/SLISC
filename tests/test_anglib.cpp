@@ -1,6 +1,6 @@
 #include "../SLISC/spec/anglib.h"
 
-int main()
+void test_anglib()
 {
 	using namespace slisc;
 	SLS_ASSERT(factorial(5) == 120);
@@ -14,3 +14,7 @@ int main()
 	SLS_ASSERT(abs(threej_int(6, 0, 4, 0, 2, 0) - sqrt(5. / 143.)) < 1e-15);
 	SLS_ASSERT(abs(sixj(2, 4, 6, 4, 2, 4) - 1. / (5 * sqrt(21.))) < 1e-15);
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_anglib(); }
+#endif

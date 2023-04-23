@@ -1,6 +1,6 @@
 #include "../SLISC/global.h"
 
-int main()
+void test_global()
 {
 	using namespace slisc;
 	// test isnan()
@@ -43,3 +43,7 @@ int main()
 		SLS_WARN("Ldoub mantessa bits: =" + to_string(log2(std::numeric_limits<Ldoub>::epsilon())));
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_global(); }
+#endif

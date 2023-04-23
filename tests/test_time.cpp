@@ -7,7 +7,7 @@ void SLS_TIME_H_ERR(const std::string &str) {}
 #endif
 
 // test time utilities
-int main()
+void test_time()
 {
 #ifndef NDEBUG
 	std::cout << "no fail in debug mode!" << std::endl;
@@ -32,3 +32,7 @@ int main()
 	t.tic(); pause(0.114);
 	if (abs(t.toc() - 0.114) > 1e-4) SLS_TIME_H_ERR("failed!");
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_time(); }
+#endif

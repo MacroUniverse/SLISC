@@ -38,7 +38,7 @@ class LinbcgQdoub2: public LinbcgQdoub
 };
 #endif
 
-int main()
+void test_linbcg()
 {
 	{
 		LinbcgDoub2 solver;
@@ -131,3 +131,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_linbcg(); }
+#endif

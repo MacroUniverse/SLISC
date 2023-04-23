@@ -2,7 +2,7 @@
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_disjoint_sets()
 {
 	using namespace slisc;
 	{
@@ -72,3 +72,7 @@ int main()
 			SLS_ASSERT(s.parent[i] == v[0]);
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_disjoint_sets(); }
+#endif

@@ -1,7 +1,7 @@
 #include "../SLISC/arith/compare.h"
 #include "../SLISC/util/random.h"
 
-int main()
+void test_Cmat()
 {
 	using namespace slisc;
 	Long N1 = 3, N2 = 4;
@@ -39,3 +39,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Cmat(); }
+#endif

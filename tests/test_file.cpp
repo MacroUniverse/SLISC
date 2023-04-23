@@ -1,7 +1,7 @@
 ﻿#include "../SLISC/file/file.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_file()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
@@ -128,9 +128,11 @@ int main()
 	{
 #ifndef _MSC_VER
 		Str yyyymmddhhmmss;
-		last_modified(yyyymmddhhmmss, "main.cpp");
-		if (yyyymmddhhmmss.size() != 14)
+		last_modified(yyyymmddhhmmss, "Makefile");
+		if (yyyymmddhhmmss.size() != 14) {
+			cout << yyyymmddhhmmss << endl;
 			SLS_FAIL;
+		}
 #endif
 	}
 
@@ -190,3 +192,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_file(); }
+#endif

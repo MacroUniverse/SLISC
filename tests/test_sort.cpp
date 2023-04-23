@@ -2,7 +2,7 @@
 #include "../SLISC/arith/arith4.h"
 #include "../SLISC/str/disp.h"
 
-int main()
+void test_sort()
 {
 	using namespace slisc;
 
@@ -170,3 +170,7 @@ int main()
 			SLS_ASSERT(vals[i] == v[N-i-1]);
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_sort(); }
+#endif

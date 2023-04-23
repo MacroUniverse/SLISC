@@ -1,6 +1,6 @@
 #include "../SLISC/arith/complex_arith.h"
 
-int main()
+void test_complex_arith()
 {
 	using namespace slisc;
 	if (Comp(2, 3) != Fcomp(2, 3))
@@ -16,3 +16,7 @@ int main()
 	if (c != Comp(4.2, 6.4))
 		SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_complex_arith(); }
+#endif

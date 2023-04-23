@@ -11,5 +11,6 @@ test_Vbase.o: tests/test_Vbase.cpp tests/../SLISC/dense/Vbase.h \
  tests/../SLISC/dense/../str/../str/utfcpp/utf8/core.h \
  tests/../SLISC/dense/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/dense/../str/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/dense/../str/../str/utfcpp/utf8/unchecked.h
+ tests/../SLISC/dense/../str/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/dense/../str/../util/bit.h
 	$(opt_compiler) $(flags) -c tests/test_Vbase.cpp

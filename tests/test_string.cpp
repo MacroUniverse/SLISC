@@ -1,6 +1,6 @@
 #include "../SLISC/str/str.h"
 
-int main()
+void test_string()
 {
 	using namespace slisc;
 	Str str = "abcdefghijklmnopqrstuvwxyz", str1;
@@ -25,3 +25,7 @@ int main()
 	// 	90000})
 	// 	cout << i << ": " << num2chinese(i) << endl;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_string(); }
+#endif

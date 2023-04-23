@@ -1,7 +1,7 @@
 #include "../SLISC/arith/copy.h"
 #include "../SLISC/arith/arith2.h"
 
-int main()
+void test_copy()
 {
 	using namespace slisc;
 
@@ -44,3 +44,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_copy(); }
+#endif

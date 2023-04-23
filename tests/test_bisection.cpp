@@ -9,7 +9,7 @@ public:
 	}
 };
 
-int main()
+void test_bisection()
 {
 	// test bisection
 	Sinfun f;
@@ -27,3 +27,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_bisection(); }
+#endif

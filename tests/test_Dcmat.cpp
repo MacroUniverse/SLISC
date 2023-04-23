@@ -5,7 +5,7 @@
 
 using namespace slisc;
 
-int main()
+void test_Dcmat()
 {
 	CmatDoub a(6, 7); linspace(a, 0, 41);
 	const DcmatDoubC b = cut(a, 0, 4, 0, 3);
@@ -19,3 +19,7 @@ int main()
 		if (*it != b[k--]) SLS_FAIL;
 	if (k != -1)  SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Dcmat(); }
+#endif

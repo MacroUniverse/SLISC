@@ -41,7 +41,7 @@ struct My_v
 	My_p end() { return My_p(m_a, m_a.size()); }
 };
 
-int main()
+void test_cpp11()
 {
 	// sort(), pair<>, and lambda expr, function<>, function to pointer
 	vector<int> v1 = {1,3,2,4,5}, v2 = {1,2,3,4,5}, v3;
@@ -103,3 +103,7 @@ int main()
 	bb = move(aa);
 	swap(aa, bb);
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_cpp11(); }
+#endif

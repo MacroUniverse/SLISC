@@ -4,7 +4,7 @@
 #include "../SLISC/arith/arith4.h"
 
 // test fft module
-int main()
+void test_fft()
 {
 	using namespace slisc;
 	// test bit_inv()
@@ -70,3 +70,7 @@ int main()
 	v4 -= v5;
 	if (max_abs(v4) > 1e-14) SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_fft(); }
+#endif

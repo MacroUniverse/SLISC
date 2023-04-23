@@ -1,6 +1,6 @@
 #include "../SLISC/algo/sing_list.h"
 
-int main()
+void test_sing_list()
 {
 	// ==== test merge sort ===
 	using namespace slisc;
@@ -25,3 +25,7 @@ int main()
 	// slist_print(head);
 	slist_delete(head);
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_sing_list(); }
+#endif

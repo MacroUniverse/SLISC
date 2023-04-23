@@ -1,6 +1,6 @@
 #include "../SLISC/arith/copy.h"
 
-int main()
+void test_compare()
 {
 	using namespace slisc;
 	Long N = 3;
@@ -11,3 +11,7 @@ int main()
 	if (!shape_cmp(v, v1))
 		SLS_FAIL;
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_compare(); }
+#endif

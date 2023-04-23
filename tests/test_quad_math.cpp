@@ -2,7 +2,7 @@
 #include "../SLISC/prec/quad_math.h"
 #include "../SLISC/util/random.h"
 
-int main()
+void test_quad_math()
 {
 	using namespace slisc;
 #ifdef SLS_USE_QUAD_MATH
@@ -50,3 +50,7 @@ int main()
 	cout << "---------- disabled! ----------" << endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_quad_math(); }
+#endif

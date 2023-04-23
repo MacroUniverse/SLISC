@@ -6,7 +6,7 @@
 #include "../SLISC/algo/sort.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_arithmetic()
 {
 	using namespace slisc;
 
@@ -621,3 +621,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_arithmetic(); }
+#endif

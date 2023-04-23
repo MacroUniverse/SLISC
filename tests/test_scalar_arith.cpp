@@ -8,7 +8,7 @@ inline Bool is_equiv(const T1 &s1, const T2 &s2)
 	return s1 == s2 && sizeof(T1) == sizeof(T2);
 }
 
-int main()
+void test_scalar_arith()
 {
 	// to_num(s)
 	if (!is_equiv(to_num(false), 0)) SLS_FAIL;
@@ -153,3 +153,7 @@ int main()
 		SLS_ASSERT(v == v1);
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_scalar_arith(); }
+#endif

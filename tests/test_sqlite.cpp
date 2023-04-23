@@ -202,7 +202,7 @@ void test_sqlite_exec()
 #endif
 }
 
-int main()
+void test_sqlite()
 {
 #ifdef SLS_USE_SQLITE
     test_sqlitecpp(); // recommended
@@ -212,3 +212,7 @@ int main()
 	cout << "---------- disabled! ----------" << endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_sqlite(); }
+#endif

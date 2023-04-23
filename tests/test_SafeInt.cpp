@@ -3,7 +3,7 @@
 #include <climits>
 #include <unordered_map>
 
-int main()
+void test_SafeInt()
 {
 	using namespace std;
 	SafeInt<unsigned int> a = 1, b = 2, c;
@@ -70,3 +70,7 @@ int main()
 
 // 	// =========  see also SafeInt library and similar ==============
 // }
+
+#ifndef SLS_TEST_ALL
+int main() { test_SafeInt(); }
+#endif

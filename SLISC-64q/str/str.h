@@ -2,7 +2,6 @@
 
 #pragma once
 #include "../str/unicode.h"
-#include "../util/bit.h"
 
 namespace slisc {
 

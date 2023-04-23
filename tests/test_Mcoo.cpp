@@ -1,7 +1,7 @@
 #include "../SLISC/sparse/sparse_arith.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_Mcoo()
 {
 	using namespace slisc;
 	McooDoub a(3, 3, 4);
@@ -84,3 +84,7 @@ int main()
 		SLS_ASSERT(a == b);
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Mcoo(); }
+#endif

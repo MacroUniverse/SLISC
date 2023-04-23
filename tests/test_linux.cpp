@@ -3,7 +3,7 @@
 #include <signal.h>
 #endif
 
-int main()
+void test_linux()
 {
 #ifdef SLS_USE_LINUX
 	using namespace slisc;
@@ -67,3 +67,7 @@ int main()
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_linux(); }
+#endif

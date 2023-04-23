@@ -1,6 +1,6 @@
 #include "../SLISC/spec/hypergeom.h"
 
-int main()
+void test_hypergeom()
 {
 	using std::cout; using std::endl;
 	using namespace slisc;
@@ -21,3 +21,7 @@ int main()
     cout << "---------- disabled! ----------" << endl;
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_hypergeom(); }
+#endif

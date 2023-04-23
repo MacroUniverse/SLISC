@@ -2,7 +2,7 @@
 #include "../SLISC/spec/coulomb.h"
 // #include "../SLISC/str/disp.h"
 
-int main()
+void test_coulomb()
 {
 	using std::cout; using std::endl;
 	using namespace slisc;
@@ -65,3 +65,7 @@ int main()
 	flint_cleanup();
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_coulomb(); }
+#endif

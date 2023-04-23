@@ -5,7 +5,7 @@
 // #include "../SLISC/str/disp.h"
 
 using namespace slisc;
-int main()
+void test_band()
 {
 	// copy scalar
 	{
@@ -134,3 +134,7 @@ int main()
 	}
 #endif
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_band(); }
+#endif

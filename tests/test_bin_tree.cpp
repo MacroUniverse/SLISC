@@ -1,6 +1,6 @@
 #include "../SLISC/algo/bin_tree.h"
 
-int main()
+void test_bin_tree()
 {
 	using namespace slisc;
 	// 4-level binary tree with 15 nodes, val 1~15
@@ -40,3 +40,7 @@ int main()
 		SLS_ASSERT(btree_search(root, key)->val == key);
 	btree_delete(root);
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_bin_tree(); }
+#endif

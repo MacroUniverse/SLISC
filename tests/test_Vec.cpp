@@ -1,6 +1,6 @@
 #include "../SLISC/arith/compare.h"
 
-int main()
+void test_Vec()
 {
 	using namespace slisc;
 	Long N = 3;
@@ -42,3 +42,7 @@ int main()
 			SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Vec(); }
+#endif

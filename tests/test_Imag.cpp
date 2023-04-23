@@ -1,6 +1,6 @@
 #include "../SLISC/arith/Imag.h"
 
-int main()
+void test_Imag()
 {
 	using namespace slisc;
 	
@@ -88,3 +88,7 @@ int main()
 		if (real(c) != -1. || imag(c) != -.5) SLS_FAIL;
 	}
 }
+
+#ifndef SLS_TEST_ALL
+int main() { test_Imag(); }
+#endif

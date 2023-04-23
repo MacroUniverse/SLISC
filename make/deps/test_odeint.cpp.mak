@@ -18,6 +18,7 @@ test_odeint.o: tests/test_odeint.cpp tests/../SLISC/sci/odeint.h \
  tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
+ tests/../SLISC/sci/../arith/../arith/../dense/../dense/../str/../util/bit.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/sci/../arith/../arith/../dense/Cmat.h \
