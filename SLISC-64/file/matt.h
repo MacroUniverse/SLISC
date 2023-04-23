@@ -6,15 +6,20 @@
 
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 
+#ifndef SLS_MATT_DEFAULT_PREC
+// 17 digits decimal is enough to represent any double
+#define SLS_MATT_DEFAULT_PREC 17
+#endif
+
 namespace slisc {
 // Matt class for text mode
 class Matt {
 public:
 	Matt();
-	Matt(Str_I fname, Char_I *rw, Int_I precision = 17, Bool_I replace = false);
+	Matt(Str_I fname, const char *rw, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false);
 	// delimiter between two numbers, can only be ' ' for now.
-	static const Char dlm = ' ';
-	Char m_rw; // 'r' for read 'w' for write
+	static const char dlm = ' ';
+	char m_rw; // 'r' for read 'w' for write
 	ifstream m_in; // read file
 	ofstream m_out; // write file
 	Str fname; // name of the opened file
@@ -24,7 +29,7 @@ public:
 	vector<Long> m_ind; // variable positions (line indices)
 
 	// open a file
-	void open(Str_I fname, Char_I *rw, Int_I precision = 17, Bool_I replace = false);
+	void open(Str_I fname, const char *rw, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false);
 
 	Bool isopen();
 
@@ -115,21 +120,22 @@ inline void matt_read_scalar(Doub_O s, ifstream &m_in)
 	m_in >> s;
 }
 
+// format : "[Doub][+/-][Doub]i"
 inline void matt_read_scalar(Comp_O c, ifstream &m_in)
 {
 	if (!m_in.good())
-		SLS_ERR("unknown!");
-	Doub cr = 0, ci = 0;
-	Char ch;
-	m_in >> cr;
-	ch = m_in.get();
-	if (ch == Matt::dlm) {
-		c = cr; return;
-	}
-	m_in >> ci;
-	if (ch == '-')
-		ci *= -1.;
-	c = Comp(cr, ci);
+		SLS_ERR("unknown! ");
+	Doub &cr = real_r(c), &ci = imag_r(c);
+    static Str str;
+    m_in >> str;
+	if (str.empty()) SLS_ERR("unknown!");
+	Long ind = 0;
+	Long ind1 = str2Doub(cr, str, ind);
+	if (ind1 < 0) SLS_ERR("unknown! " + str.substr(ind));
+	if (ind1 == size(str)) return;
+	Long ind2 = str2Doub(ci, str, ind1);
+	if (ind2 < 0) SLS_ERR("unknown! " + str.substr(ind1));
+	if (str.at(ind2) != 'i') SLS_ERR("unknown!");
 	m_in.ignore(100, Matt::dlm);
 }
 
@@ -137,7 +143,7 @@ inline void matt_read_scalar(Comp_O c, ifstream &m_in)
 // read the next variable after previous delimiter
 inline Long scanInverse(ifstream &fin)
 {
-	Char c;
+	char c;
 	Long ind, i, N;
 
 	ind = fin.tellg();
@@ -169,7 +175,7 @@ inline void Matt::get_profile()
 	Long gmax = m_in.tellg();
 	// check end mark
 	m_in.seekg(gmax-2);
-	Char c1 = m_in.get(), c2 = m_in.get();
+	char c1 = m_in.get(), c2 = m_in.get();
 	if (c1 != Matt::dlm || c2 != Matt::dlm) {
 		throw Matt_file_not_complete();
 	}
@@ -196,7 +202,7 @@ inline void Matt::get_profile()
 			m_in >> temp;
 			if (temp <= 0 || temp > 127)
 				SLS_ERR("unknown!");
-			name.push_back((Char)temp);
+			name.push_back((char)temp);
 		}
 		m_name.push_back(name);
 		// read var type
@@ -249,10 +255,10 @@ inline Int Matt::search(Str_I name)
 
 inline Matt::Matt() {}
 
-inline Matt::Matt(Str_I fname, Char_I * rw, Int_I precision, Bool_I replace)
+inline Matt::Matt(Str_I fname, const char * rw, Int_I precision, Bool_I replace)
 { open(fname, rw, precision, replace); }
 
-inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
+inline void Matt::open(Str_I fname, const char *rw, Int_I precision, Bool_I replace)
 {
 	if (isopen())
 		close();
@@ -286,7 +292,7 @@ inline void Matt::open(Str_I fname, Char_I *rw, Int_I precision, Bool_I replace)
 		m_in.open(fname);
 		if (!m_in.good())
 			SLS_ERR("error: file not found: " + fname);
-		m_in.precision(17);
+		m_in.precision(SLS_MATT_DEFAULT_PREC);
 		get_profile(); // get var names
 	}
 }
@@ -354,7 +360,7 @@ inline void save(Char_I s, Str_I varname, Matt_IO matt)
 	}
 }
 
-inline void save_matt(Char_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Char_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -387,7 +393,7 @@ inline void save(Int_I s, Str_I varname, Matt_IO matt)
 	}
 }
 
-inline void save_matt(Int_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Int_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -420,7 +426,7 @@ inline void save(Llong_I s, Str_I varname, Matt_IO matt)
 	}
 }
 
-inline void save_matt(Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -453,7 +459,7 @@ inline void save(Doub_I s, Str_I varname, Matt_IO matt)
 	}
 }
 
-inline void save_matt(Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -486,7 +492,7 @@ inline void save(Comp_I s, Str_I varname, Matt_IO matt)
 	}
 }
 
-inline void save_matt(Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -518,7 +524,7 @@ inline void save(VecChar_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecChar_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(VecChar_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -550,7 +556,7 @@ inline void save(VecInt_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(VecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -582,7 +588,7 @@ inline void save(VecLlong_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(VecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -614,7 +620,7 @@ inline void save(VecDoub_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(VecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -646,7 +652,7 @@ inline void save(VecComp_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(VecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(VecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -678,7 +684,7 @@ inline void save(SvecChar_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecChar_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(SvecChar_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -710,7 +716,7 @@ inline void save(SvecInt_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(SvecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -742,7 +748,7 @@ inline void save(SvecLlong_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(SvecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -774,7 +780,7 @@ inline void save(SvecDoub_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(SvecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -806,7 +812,7 @@ inline void save(SvecComp_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(SvecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(SvecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -838,7 +844,7 @@ inline void save(vecInt_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(vecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(vecInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -870,7 +876,7 @@ inline void save(vecLlong_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(vecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(vecLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -902,7 +908,7 @@ inline void save(vecDoub_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(vecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(vecDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -934,7 +940,7 @@ inline void save(vecComp_I v, Str_I varname, Matt_IO matt)
 		matt_write_scalar(v[i], fout);
 }
 
-inline void save_matt(vecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(vecComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -966,7 +972,7 @@ inline void save(MatInt_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(MatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -998,7 +1004,7 @@ inline void save(MatLlong_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(MatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1030,7 +1036,7 @@ inline void save(MatDoub_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(MatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1062,7 +1068,7 @@ inline void save(MatComp_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(MatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(MatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1094,7 +1100,7 @@ inline void save(CmatInt_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(CmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1126,7 +1132,7 @@ inline void save(CmatLlong_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(CmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1158,7 +1164,7 @@ inline void save(CmatDoub_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(CmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1190,7 +1196,7 @@ inline void save(CmatComp_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(CmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(CmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1224,7 +1230,7 @@ inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
 				matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Int_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Cmat3Int_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1258,7 +1264,7 @@ inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
 				matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Cmat3Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1292,7 +1298,7 @@ inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
 				matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Cmat3Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1326,7 +1332,7 @@ inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
 				matt_write_scalar(a(i, j, k), fout);
 }
 
-inline void save_matt(Cmat3Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Cmat3Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1361,7 +1367,7 @@ inline void save(Cmat4Doub_I a, Str_I varname, Matt_IO matt)
 					matt_write_scalar(a(i, j, k, l), fout);
 }
 
-inline void save_matt(Cmat4Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Cmat4Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1396,7 +1402,7 @@ inline void save(Cmat4Comp_I a, Str_I varname, Matt_IO matt)
 					matt_write_scalar(a(i, j, k, l), fout);
 }
 
-inline void save_matt(Cmat4Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(Cmat4Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1428,7 +1434,7 @@ inline void save(ScmatInt_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(ScmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1460,7 +1466,7 @@ inline void save(ScmatLlong_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(ScmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1492,7 +1498,7 @@ inline void save(ScmatDoub_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(ScmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1524,7 +1530,7 @@ inline void save(ScmatComp_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(ScmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(ScmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1556,7 +1562,7 @@ inline void save(DcmatInt_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(DcmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1588,7 +1594,7 @@ inline void save(DcmatLlong_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(DcmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1620,7 +1626,7 @@ inline void save(DcmatDoub_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(DcmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1652,7 +1658,7 @@ inline void save(DcmatComp_I a, Str_I varname, Matt_IO matt)
 			matt_write_scalar(a(i, j), fout);
 }
 
-inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = 17, Bool_I replace = false)
+inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -1662,7 +1668,7 @@ inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file, Int_I preci
 
 inline void save(Str_I str, Str_I varname, Matt_IO matt)
 {
-	SvecCharC sli; sli.set(str.data(), str.size());
+	SvecCharC sli; sli.set((Char*)str.data(), str.size());
 	save(sli, varname, matt);
 }
 

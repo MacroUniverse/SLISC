@@ -6,14 +6,6 @@
 
 int main()
 {
-	using namespace slisc;
-	cout.precision(18);
-	Doub d1 = std::stod("0.20224140236637414");
-	Doub d2 = str2double("0.20224140236637414");
-	cout << to_string(d1, 18) << endl;
-	cout << to_string(d2, 18) << endl;
-	exit(0);
-
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 

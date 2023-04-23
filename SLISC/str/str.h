@@ -463,7 +463,7 @@ inline Bool is_ascii(Char32_I c)
 }
 
 
-inline Bool is_num(Char_I c)
+inline Bool is_num(char c)
 {
 	if (c >= '0' && c <= '9')
 		return true;
@@ -471,7 +471,7 @@ inline Bool is_num(Char_I c)
 }
 
 // check if a character is a letter (a-z, A-Z)
-inline Bool is_letter(Char_I c)
+inline Bool is_letter(char c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return true;
@@ -479,7 +479,7 @@ inline Bool is_letter(Char_I c)
 }
 
 // check if a character is alphanumeric (a-z, A-Z, 0-9)
-inline Bool is_alphanum(Char_I c)
+inline Bool is_alphanum(char c)
 {
 	if (is_letter(c) || is_num(c))
 		return true;
@@ -487,7 +487,7 @@ inline Bool is_alphanum(Char_I c)
 }
 
 // check if a character is alphanumeric or an underscore
-inline Bool is_alphanum_(Char_I c)
+inline Bool is_alphanum_(char c)
 {
 	if (is_alphanum(c) || c == '_')
 		return true;
@@ -579,7 +579,7 @@ inline Long expect(Str_I str, Str_I key, Long_I start)
 	Long ind0 = 0;
 	Long L = str.size();
 	Long L0 = key.size();
-	Char c0, c;
+	char c0, c;
 	while (true) {
 		 c0 = key[ind0];
 		 c = str[ind];
@@ -723,7 +723,7 @@ inline Long ExpectKeyReverse(Str_I str, Str_I key, Long start)
 	Long ind = start;
 	Long L0 = key.size();
 	Long ind0 = L0 - 1;
-	Char c0, c;
+	char c0, c;
 	while (true) {
 		c0 = key.at(ind0);
 		c = str.at(ind);
@@ -745,7 +745,7 @@ inline Long ExpectKeyReverse(Str_I str, Str_I key, Long start)
 inline Long find_num(Str_I str, Long start)
 {
 	Long i{}, end = str.size() - 1;
-	Char c;
+	char c;
 	for (i = start; i <= end; ++i) {
 		c = str.at(i);
 		if (c >= '0' && c <= '9')
@@ -792,7 +792,7 @@ inline Long eatL(Str& str, Long start, Str_I chars)
 // return index of right brace
 inline Long pair_brace(Str_I str, Long ind)
 {
-	Char left, right, type = str[ind];
+	char left, right, type = str[ind];
 	if (type == '{' || type == '}') {
 		left = '{'; right = '}';
 	}
@@ -806,7 +806,7 @@ inline Long pair_brace(Str_I str, Long ind)
 		throw std::runtime_error("pair_brace: illegal brace");
 	}
 
-	Char c, c0 = ' ';
+	char c, c0 = ' ';
 	Long Nleft = 1;
 	Long N = str.size();
 	for (Long i = ind + 1; i < N; i++) {
@@ -831,7 +831,7 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 	vecLong_O ind_RmatchL, Str_I str, Long start, Long end)
 {
 	ind_left.resize(0); ind_right.resize(0); ind_RmatchL.resize(0);
-	Char c, c_last = ' ';
+	char c, c_last = ' ';
 	Long Nleft = 0, Nright = 0;
 	vector<Bool> Lmatched;
 	Bool matched;
@@ -877,7 +877,7 @@ inline Long str2int0(T &num, Str_I str, Long_I start = 0)
 {
 	Long i, N = size(str);
 	if (start >= N) return -1;
-	Char c = str[start];
+	char c = str[start];
 	if (!is_num(c)) return -1;
 	num = c - '0';
 	T max1 = numeric_limits<T>::max() / 10;
@@ -911,11 +911,11 @@ inline Long str2int(T &num, Str_I str, Long_I start = 0)
 		return str2int(num, str, ind+1);
 	else if (str[ind] == '-') {
 		if (++ind == N) return -1;
-		Char c = str[ind];
+		char c = str[ind];
 		if (!is_num(c)) return -1;
 		num = '0' - c;
 		T min1 = numeric_limits<T>::min() / 10;
-		Char min2 = abs(numeric_limits<T>::min()) % 10;
+		char min2 = abs(numeric_limits<T>::min()) % 10;
 		for (Long i = ind + 1; i < N; ++i) {
 			c = str[i];
 			if (!is_num(c)) return i;
@@ -929,7 +929,7 @@ inline Long str2int(T &num, Str_I str, Long_I start = 0)
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Int str2i(Str_I str, Long_I start = 0)
+inline Int str2Int(Str_I str, Long_I start = 0)
 {
 	Int num;
 	if (str2int(num, str, start) < 0)
@@ -938,7 +938,7 @@ inline Int str2i(Str_I str, Long_I start = 0)
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Llong str2ll(Str_I str, Long_I start = 0)
+inline Llong str2Llong(Str_I str, Long_I start = 0)
 {
 	Llong num;
 	if (str2int(num, str, start) < 0)
@@ -946,6 +946,7 @@ inline Llong str2ll(Str_I str, Long_I start = 0)
 	return num;
 }
 
+// [warning] last 2 digits might be wrong
 // get non-negative double from string with format dddd.dddd or .dddd
 // return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
@@ -965,50 +966,11 @@ inline Long str2double0(Doub& num, Str_I str, Long_I start = 0)
 	int exp = abs(ind1)-ind;
 	Doub d = num1 * pow(10LL, -exp);
 	cout.precision(18);
-
-	// Str str_d = to_string(x, exp);
-
-	
-	while (1) { // correction for last digits
-		Llong num11, num12; Int exp;
-		double_parts(num11, exp, d);
-		if (num11 == num1) {
-			cout << d << "\n (exact)" << endl;
-			break;
-		}
-		else if (num11 < num1) {
-			cout << d << " +-> ";
-			mantissa_add(d, 1);
-			cout << d << endl;
-			double_parts(num12, exp, d);
-			if (num12 > num1) {
-				if (num11+num12 > 2*num1) {
-					cout << d << " 2--> ";
-					mantissa_sub(d, 1);
-					cout << d << endl;
-				}
-				break;
-			}
-		}
-		else { // num11 > num1
-			cout << d << " --> ";
-			mantissa_sub(d, 1);
-			cout << d << endl;
-			double_parts(num12, exp, d);
-			if (num12 < num1) {
-				if (num11+num12 < 2*num1) {
-					cout << d << " 2+-> ";
-					mantissa_add(d, 1);
-					cout << d << endl;
-				}
-				break;
-			}
-		}
-	}
 	num += d;
 	return ind1;
 }
 
+// [warning] last 2 digits might be wrong
 // get non-negative double from string with format dddd.dddd or .dddd (there can be +,- at from and eddd,e+ddd,e-ddd at the end)
 // return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
@@ -1042,7 +1004,7 @@ inline Doub str2double(Str_I str, Long_I start = 0)
 }
 
 
-inline Bool is_num(Char32_I c)
+inline Bool is_num(Char32 c)
 {
 	if (c >= U'0' && c <= U'9')
 		return true;
@@ -1050,7 +1012,7 @@ inline Bool is_num(Char32_I c)
 }
 
 // check if a character is a letter (a-z, A-Z)
-inline Bool is_letter(Char32_I c)
+inline Bool is_letter(Char32 c)
 {
 	if ((c >= U'a' && c <= U'z') || (c >= U'A' && c <= U'Z'))
 		return true;
@@ -1058,7 +1020,7 @@ inline Bool is_letter(Char32_I c)
 }
 
 // check if a character is alphanumeric (a-z, A-Z, 0-9)
-inline Bool is_alphanum(Char32_I c)
+inline Bool is_alphanum(Char32 c)
 {
 	if (is_letter(c) || is_num(c))
 		return true;
@@ -1066,7 +1028,7 @@ inline Bool is_alphanum(Char32_I c)
 }
 
 // check if a character is alphanumeric or an underscore
-inline Bool is_alphanum_(Char32_I c)
+inline Bool is_alphanum_(Char32 c)
 {
 	if (is_alphanum(c) || c == U'_')
 		return true;
@@ -1508,7 +1470,7 @@ inline Long str2int(T &num, Str32_I str, Long_I start = 0)
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Int str2i(Str32_I str, Long_I start = 0)
+inline Int str2Int(Str32_I str, Long_I start = 0)
 {
 	Int num;
 	if (str2int(num, str, start) < 0)
@@ -1517,7 +1479,7 @@ inline Int str2i(Str32_I str, Long_I start = 0)
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Llong str2ll(Str32_I str, Long_I start = 0)
+inline Llong str2Llong(Str32_I str, Long_I start = 0)
 {
 	Llong num;
 	if (str2int(num, str, start) < 0)
@@ -1525,6 +1487,7 @@ inline Llong str2ll(Str32_I str, Long_I start = 0)
 	return num;
 }
 
+// [warning] last 2 digits might be wrong
 // get non-negative double from string with format dddd.dddd or .dddd
 // return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
@@ -1544,50 +1507,11 @@ inline Long str2double0(Doub& num, Str32_I str, Long_I start = 0)
 	int exp = abs(ind1)-ind;
 	Doub d = num1 * pow(10LL, -exp);
 	cout.precision(18);
-
-	// Str str_d = to_string(x, exp);
-
-	
-	while (1) { // correction for last digits
-		Llong num11, num12; Int exp;
-		double_parts(num11, exp, d);
-		if (num11 == num1) {
-			cout << d << "\n (exact)" << endl;
-			break;
-		}
-		else if (num11 < num1) {
-			cout << d << " +-> ";
-			mantissa_add(d, 1);
-			cout << d << endl;
-			double_parts(num12, exp, d);
-			if (num12 > num1) {
-				if (num11+num12 > 2*num1) {
-					cout << d << " 2--> ";
-					mantissa_sub(d, 1);
-					cout << d << endl;
-				}
-				break;
-			}
-		}
-		else { // num11 > num1
-			cout << d << " --> ";
-			mantissa_sub(d, 1);
-			cout << d << endl;
-			double_parts(num12, exp, d);
-			if (num12 < num1) {
-				if (num11+num12 < 2*num1) {
-					cout << d << " 2+-> ";
-					mantissa_add(d, 1);
-					cout << d << endl;
-				}
-				break;
-			}
-		}
-	}
 	num += d;
 	return ind1;
 }
 
+// [warning] last 2 digits might be wrong
 // get non-negative double from string with format dddd.dddd or .dddd (there can be +,- at from and eddd,e+ddd,e-ddd at the end)
 // return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
@@ -1829,10 +1753,10 @@ inline void parse(vector<Llong> &v, Str_I str, Str_I sep = " ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.push_back(str2ll(str.substr(ind0, ind1-ind0)));
+		v.push_back(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.push_back(str2ll(str.substr(ind0)));
+	v.push_back(str2Llong(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const vector<Llong> &v, Str_I sep = " ")
@@ -1851,10 +1775,10 @@ inline void parse(vector<Llong> &v, Str32_I str, Str32_I sep = U" ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.push_back(str2ll(str.substr(ind0, ind1-ind0)));
+		v.push_back(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.push_back(str2ll(str.substr(ind0)));
+	v.push_back(str2Llong(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const vector<Llong> &v, Str32_I sep = U" ")
@@ -1873,10 +1797,10 @@ inline void parse(set<Llong> &v, Str_I str, Str_I sep = " ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
+		v.insert(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2ll(str.substr(ind0)));
+	v.insert(str2Llong(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const set<Llong> &v, Str_I sep = " ")
@@ -1895,10 +1819,10 @@ inline void parse(set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
+		v.insert(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2ll(str.substr(ind0)));
+	v.insert(str2Llong(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const set<Llong> &v, Str32_I sep = U" ")
@@ -1917,10 +1841,10 @@ inline void parse(unordered_set<Llong> &v, Str_I str, Str_I sep = " ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
+		v.insert(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2ll(str.substr(ind0)));
+	v.insert(str2Llong(str.substr(ind0)));
 }
 
 inline void join(Str_O str, const unordered_set<Llong> &v, Str_I sep = " ")
@@ -1939,10 +1863,10 @@ inline void parse(unordered_set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.insert(str2ll(str.substr(ind0, ind1-ind0)));
+		v.insert(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.insert(str2ll(str.substr(ind0)));
+	v.insert(str2Llong(str.substr(ind0)));
 }
 
 inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")
@@ -1955,42 +1879,59 @@ inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")
 }
 
 
-// set the exp of a double (from -1023 to 1024)
-// sign will be kept
-inline Doub double_set_exp(Doub x, int16_t exp)
+// give the mantissa of a double
+// if `prec` is big enough, there will be no error
+inline Str mantissa_str(Doub x, char prec = 17)
 {
-	Bool neg = (x < 0);
-	exp += 1023;
-	int16_t b2;
-	memcpy(&b2, (char*)&x+6, 2);
-	b2 &= (int16_t)0xF;
-	b2 |= (exp << 4);
-	memcpy((char*)&x+6, &b2, 2);
-	if (neg) x = -x;
-	return x;
-}
-
-// double to digits
-inline Str dtos(Doub x, char prec)
-{
+	Str str;
 	// Bool neg = false;
 	if (x < 0) x = -x; // neg = true;
 	x = double_set_exp(x, 0); // erase exponent
-	if (x < 1) x *= 10;
-	if (x >= 10) SLS_ERR("x >= 10!!!");
-	
-	Str str;
+	if (x < 1) {
+		x *= 10; str = '0';
+	}
+	else {
+		char i = floor(x);
+		str = '0' + i;
+		x -= i; x *= 10;
+	}
+	if (x > 0) str += '.';
+	assert(x < 10);
 	while (x != 0 && size(str) <= prec) {
 		char i = floor(x);
-		cout << "x = " << x << endl;
-		cout << "floor(x) = " << floor(x) << endl;
-		cout << "i = " << int(i) << endl;
 		str += '0' + i;
 		x -= i;
-		cout << "x - i = " << x << endl;
 		x *= 10;
 	}
 	return str;
+}
+
+// parse a double, return the index after the processed char
+// return -1 if failed
+inline Long str2Doub(Doub_O x, Str_I str, Long start = 0)
+{
+	if (start < 0 || start >= size(str))
+		return -1;
+	const char *beg = str.c_str() + start;
+	char* end = nullptr;
+    errno = 0;
+	x = std::strtod(beg, &end);
+    if (errno == ERANGE)
+		return -1;
+	start += end - beg;
+	// if there are too many digits, strtod will not process the extra ones
+	// but we still want to jump them
+	while (start < size(str) && is_num(str[start]))
+		++start;
+	return start;
+}
+
+inline Doub str2Doub(Str_I str, Long_I start = 0)
+{
+	Doub x;
+	if (str2Doub(x, str, start) < 0)
+		SLS_ERR("str2Doub(): not a double: " + str.substr(start, 20));
+	return x;
 }
 
 } // namespace slisc

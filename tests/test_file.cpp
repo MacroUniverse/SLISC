@@ -109,7 +109,7 @@ int main()
 
 	{ // read matrix/vector from file
 		CmatDoub mat, mat1(3, 3);
-		read(mat, "tests/test_file_matrix.txt", 2);
+		read(mat, "tests/test_file/test_file_matrix.txt", 2);
 		mat1(0, 0) = 1.315; mat1(0, 1) = -2.531; mat1(0, 2) = -6.65;
 		mat1(1, 0) = 2.351; mat1(1, 1) = 2.265; mat1(1, 2) = -2.376;
 		mat1(2, 0) = -2.53; mat1(2, 1) = 6.65; mat1(2, 2) =  0.28;
@@ -117,7 +117,7 @@ int main()
 			SLS_FAIL;
 		
 		VecDoub v; MatDoub mat2(3, 3); copy(mat2, mat1);
-		read(v, "tests/test_file_matrix.txt", 2);
+		read(v, "tests/test_file/test_file_matrix.txt", 2);
 		for (i = 0; i < mat2.size(); ++i) {
 			if (v[i] != mat2[i])
 				SLS_FAIL;

@@ -49,13 +49,13 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
 #ifndef SLS_USE_MACOS
 inline Long ram_usage() {
 	FILE* file = fopen("/proc/self/status", "r");
-	Char line[128];
+	char line[128];
 
 	Long i = -1;
 	while (fgets(line, 128, file) != NULL) {
 		if (strncmp(line, "VmRSS:", 6) == 0){
 			i = strlen(line);
-			const Char* p = line;
+			const char* p = line;
 			while (*p <'0' || *p > '9') p++;
 			line[i-3] = '\0';
 			i = atoi(p);

@@ -289,11 +289,11 @@ inline Bool is_ascii(Char32_I c)
 //%     Tc='Char32';
 //%     U='U';
 //% else
-//%     Tc='Char';
+//%     Tc='char';
 //%     U='';
 //% end
 
-inline Bool is_num(@Tc@_I c)
+inline Bool is_num(@Tc@ c)
 {
 	if (c >= @U@'0' && c <= @U@'9')
 		return true;
@@ -301,7 +301,7 @@ inline Bool is_num(@Tc@_I c)
 }
 
 // check if a character is a letter (a-z, A-Z)
-inline Bool is_letter(@Tc@_I c)
+inline Bool is_letter(@Tc@ c)
 {
 	if ((c >= @U@'a' && c <= @U@'z') || (c >= @U@'A' && c <= @U@'Z'))
 		return true;
@@ -309,7 +309,7 @@ inline Bool is_letter(@Tc@_I c)
 }
 
 // check if a character is alphanumeric (a-z, A-Z, 0-9)
-inline Bool is_alphanum(@Tc@_I c)
+inline Bool is_alphanum(@Tc@ c)
 {
 	if (is_letter(c) || is_num(c))
 		return true;
@@ -317,7 +317,7 @@ inline Bool is_alphanum(@Tc@_I c)
 }
 
 // check if a character is alphanumeric or an underscore
-inline Bool is_alphanum_(@Tc@_I c)
+inline Bool is_alphanum_(@Tc@ c)
 {
 	if (is_alphanum(c) || c == @U@'_')
 		return true;
@@ -759,7 +759,7 @@ inline Long str2int(T &num, @Ts@_I str, Long_I start = 0)
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Int str2i(@Ts@_I str, Long_I start = 0)
+inline Int str2Int(@Ts@_I str, Long_I start = 0)
 {
 	Int num;
 	if (str2int(num, str, start) < 0)
@@ -768,7 +768,7 @@ inline Int str2i(@Ts@_I str, Long_I start = 0)
 }
 
 // str must be +ddd, -ddd, or ddd
-inline Llong str2ll(@Ts@_I str, Long_I start = 0)
+inline Llong str2Llong(@Ts@_I str, Long_I start = 0)
 {
 	Llong num;
 	if (str2int(num, str, start) < 0)
@@ -800,6 +800,7 @@ inline Long str2double0(Doub& num, @Ts@_I str, Long_I start = 0)
 	return ind1;
 }
 
+// [warning] last 2 digits might be wrong
 // get non-negative double from string with format dddd.dddd or .dddd (there can be +,- at from and eddd,e+ddd,e-ddd at the end)
 // return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
@@ -965,10 +966,10 @@ inline void parse(@Tv@<@Ts@> &v, @Tstr@_I str, @Tstr@_I sep = @sep@)
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.@add@(str2ll(str.substr(ind0, ind1-ind0)));
+		v.@add@(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.@add@(str2ll(str.substr(ind0)));
+	v.@add@(str2Llong(str.substr(ind0)));
 }
 
 inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
@@ -1006,6 +1007,34 @@ inline Str mantissa_str(Doub x, char prec = 17)
 		x *= 10;
 	}
 	return str;
+}
+
+// parse a double, return the index after the processed char
+// return -1 if failed
+inline Long str2Doub(Doub_O x, Str_I str, Long start = 0)
+{
+	if (start < 0 || start >= size(str))
+		return -1;
+	const char *beg = str.c_str() + start;
+	char* end = nullptr;
+    errno = 0;
+	x = std::strtod(beg, &end);
+    if (errno == ERANGE)
+		return -1;
+	start += end - beg;
+	// if there are too many digits, strtod will not process the extra ones
+	// but we still want to jump them
+	while (start < size(str) && is_num(str[start]))
+		++start;
+	return start;
+}
+
+inline Doub str2Doub(Str_I str, Long_I start = 0)
+{
+	Doub x;
+	if (str2Doub(x, str, start) < 0)
+		SLS_ERR("str2Doub(): not a double: " + str.substr(start, 20));
+	return x;
 }
 
 } // namespace slisc

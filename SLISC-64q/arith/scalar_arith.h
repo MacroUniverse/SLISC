@@ -94,6 +94,16 @@ inline Lcomp to_num(Lcomp_I x) { return x; }
 inline Qcomp to_num(Qcomp_I x) { return x; }
 
 
+// check number of decimal digits of an integer
+template<typename T>
+constexpr int digits(const T &n) {
+	static_assert(std::is_integral<T>::value, "T must be an integral type " SLS_WHERE);
+    int count = 0;
+    if (n < 0) n = -n;
+    do { count++; n /= 10; } while (n != 0);
+    return count;
+}
+
 // modulus
 // all mod variants satisfies "s = div(s,d)*d + mod(s,d)"
 // however, "div" can have different truncation:
@@ -399,5 +409,88 @@ inline void primes2(vecLong_O v, Long_I Nprime)
 
 inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
 
+
+// b^n that output an integer 
+inline Int pow(Int b, Uint n) {
+    Int r = 1;
+    while (n > 0) {
+        if (n & 1) {
+            r *= b;
+        }
+        b *= b; n >>= 1;
+    }
+    return r;
+}
+
+
+// break a double into different parts
+// d = man * 2^exp2 (exact)
+// flag = "-Inf", "+Inf", "qNaN" or "sNaN" if not a normal number
+// ref: https://wuli.wiki/online/FltCpp.html
+inline const char *double_parts(Llong_O man, Int_O exp2, Doub x)
+{
+	const char *flag;
+	// split the bits
+	Bool neg = x < 0; // 1 bit
+	x = abs(x);
+	exp2 = *((int16_t*)&x+3) >> 4; // 11 bits
+	man = *(Llong*)&x;
+	man &= 0xFFFFFFFFFFFFF; // 52 bits
+	
+	// interpret
+	exp2 -= 1023;
+	if (exp2 == 1024) { // Inf or nan
+		if (man == 0) // inf
+			flag = neg ? "-Inf" : "+Inf";
+		if (man & 0x1000000000000)
+			flag = "qNaN"; // quiet NaN
+		else
+			flag = "sNaN"; // signaling NaN
+		return flag;
+	}
+	if (exp2 == -1023) {
+		exp2 = -1022 - 52;
+		return NULL;
+	}
+	
+	exp2 -= 1023 + 52;
+	man |= 0x10000000000000; // set the 53-th bit
+	if (neg) man = -man;
+	return NULL;
+}
+
+// get mantissa of double as ullong
+inline Ullong mantissa(Doub_I x) {
+	return *(Ullong *)&x;
+}
+
+// add the mantissa by n bits
+inline void mantissa_add(Doub_IO x, Ullong_I n) {
+	Ullong *p = (Ullong *)&x;
+	if (n > ULLONG_MAX - *p) SLS_ERR("overflow!");
+	*p += n;
+}
+
+// subtract the mantissa by n bits
+inline void mantissa_sub(Doub_IO x, Ullong_I n) {
+	Ullong *p = (Ullong *)&x;
+	if (n > *p) SLS_ERR("overflow!");
+	*p -= n;
+}
+
+// set the exp of a double (from -1023 to 1024)
+// sign will be kept
+inline Doub double_set_exp(Doub x, int16_t exp)
+{
+	Bool neg = (x < 0);
+	exp += 1023;
+	int16_t b2;
+	memcpy(&b2, (char*)&x+6, 2);
+	b2 &= (int16_t)0xF;
+	b2 |= (exp << 4);
+	memcpy((char*)&x+6, &b2, 2);
+	if (neg) x = -x;
+	return x;
+}
 
 } // namespace slisc

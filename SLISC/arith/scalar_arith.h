@@ -433,4 +433,19 @@ inline void mantissa_sub(Doub_IO x, Ullong_I n) {
 	*p -= n;
 }
 
+// set the exp of a double (from -1023 to 1024)
+// sign will be kept
+inline Doub double_set_exp(Doub x, int16_t exp)
+{
+	Bool neg = (x < 0);
+	exp += 1023;
+	int16_t b2;
+	memcpy(&b2, (char*)&x+6, 2);
+	b2 &= (int16_t)0xF;
+	b2 |= (exp << 4);
+	memcpy((char*)&x+6, &b2, 2);
+	if (neg) x = -x;
+	return x;
+}
+
 } // namespace slisc

@@ -47,6 +47,8 @@
 #include <queue>
 #include <stack>
 #include <array>
+#include <cerrno>
+#include <cstdlib>
 
 // compilers
 #ifdef _MSC_VER
