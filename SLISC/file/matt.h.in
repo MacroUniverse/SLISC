@@ -6,12 +6,17 @@
 
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 
+#ifndef SLS_MATT_DEFAULT_PREC
+// 17 digits decimal is enough to represent any double
+#define SLS_MATT_DEFAULT_PREC 17
+#endif
+
 namespace slisc {
 // Matt class for text mode
 class Matt {
 public:
 	Matt();
-	Matt(Str_I fname, const char *rw, Int_I precision = 18, Bool_I replace = false);
+	Matt(Str_I fname, const char *rw, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false);
 	// delimiter between two numbers, can only be ' ' for now.
 	static const char dlm = ' ';
 	char m_rw; // 'r' for read 'w' for write
@@ -24,7 +29,7 @@ public:
 	vector<Long> m_ind; // variable positions (line indices)
 
 	// open a file
-	void open(Str_I fname, const char *rw, Int_I precision = 18, Bool_I replace = false);
+	void open(Str_I fname, const char *rw, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false);
 
 	Bool isopen();
 
@@ -269,7 +274,7 @@ inline void Matt::open(Str_I fname, const char *rw, Int_I precision, Bool_I repl
 		m_in.open(fname);
 		if (!m_in.good())
 			SLS_ERR("error: file not found: " + fname);
-		m_in.precision(18);
+		m_in.precision(SLS_MATT_DEFAULT_PREC);
 		get_profile(); // get var names
 	}
 }
@@ -464,7 +469,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 //% end
 
 //% % save one var to one file (replace old file)
-inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file, Int_I precision = 18, Bool_I replace = false)
+inline void save_matt(@T@_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);

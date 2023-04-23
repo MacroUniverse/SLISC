@@ -476,6 +476,9 @@ make/deps/%.cpp.mak: tests/%.cpp
 
 -include make/deps/*.mak
 
+test_x: $(test_x)
+	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+
 # header generation with octave
 %.h: %.h.in # code gen
 	@printf "\n\033[1;32m$@\033[0m: "

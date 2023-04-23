@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../str/unicode.h"
+#include "../util/bit.h"
 
 namespace slisc {
 
@@ -962,8 +963,11 @@ inline Long str2double0(Doub& num, Str_I str, Long_I start = 0)
 	Long ind1 = str2int0(num1, str, ind);
 	if (ind1 == -1) return -1;
 	int exp = abs(ind1)-ind;
-	Doub d = num1 / pow(10LL, exp);
+	Doub d = num1 * pow(10LL, -exp);
 	cout.precision(18);
+
+	// Str str_d = to_string(x, exp);
+
 	
 	while (1) { // correction for last digits
 		Llong num11, num12; Int exp;
@@ -1538,8 +1542,11 @@ inline Long str2double0(Doub& num, Str32_I str, Long_I start = 0)
 	Long ind1 = str2int0(num1, str, ind);
 	if (ind1 == -1) return -1;
 	int exp = abs(ind1)-ind;
-	Doub d = num1 / pow(10LL, exp);
+	Doub d = num1 * pow(10LL, -exp);
 	cout.precision(18);
+
+	// Str str_d = to_string(x, exp);
+
 	
 	while (1) { // correction for last digits
 		Llong num11, num12; Int exp;
@@ -1614,6 +1621,8 @@ inline Doub str2double(Str32_I str, Long_I start = 0)
 }
 
 
+// if `prec` is enough, this will give the exact decimal conversion of x,
+// and trailing zeros are omitted
 inline Str to_string(Doub_I x, std::streamsize prec)
 {
 	std::ostringstream os; os.precision(prec);
@@ -1945,5 +1954,43 @@ inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
+
+// set the exp of a double (from -1023 to 1024)
+// sign will be kept
+inline Doub double_set_exp(Doub x, int16_t exp)
+{
+	Bool neg = (x < 0);
+	exp += 1023;
+	int16_t b2;
+	memcpy(&b2, (char*)&x+6, 2);
+	b2 &= (int16_t)0xF;
+	b2 |= (exp << 4);
+	memcpy((char*)&x+6, &b2, 2);
+	if (neg) x = -x;
+	return x;
+}
+
+// double to digits
+inline Str dtos(Doub x, char prec)
+{
+	// Bool neg = false;
+	if (x < 0) x = -x; // neg = true;
+	x = double_set_exp(x, 0); // erase exponent
+	if (x < 1) x *= 10;
+	if (x >= 10) SLS_ERR("x >= 10!!!");
+	
+	Str str;
+	while (x != 0 && size(str) <= prec) {
+		char i = floor(x);
+		cout << "x = " << x << endl;
+		cout << "floor(x) = " << floor(x) << endl;
+		cout << "i = " << int(i) << endl;
+		str += '0' + i;
+		x -= i;
+		cout << "x - i = " << x << endl;
+		x *= 10;
+	}
+	return str;
+}
 
 } // namespace slisc

@@ -388,7 +388,7 @@ inline const char *double_parts(Llong_O man, Int_O exp2, Doub x)
 	// split the bits
 	Bool neg = x < 0; // 1 bit
 	x = abs(x);
-	exp2 = *(int16_t*)&x >> 4; // 11 bits
+	exp2 = *((int16_t*)&x+3) >> 4; // 11 bits
 	man = *(Llong*)&x;
 	man &= 0xFFFFFFFFFFFFF; // 52 bits
 	

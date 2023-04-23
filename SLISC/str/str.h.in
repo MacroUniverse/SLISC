@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../str/unicode.h"
+#include "../util/bit.h"
 
 namespace slisc {
 
@@ -775,6 +776,7 @@ inline Llong str2ll(@Ts@_I str, Long_I start = 0)
 	return num;
 }
 
+// [warning] last 2 digits might be wrong
 // get non-negative double from string with format dddd.dddd or .dddd
 // return the index after the last digit (might be str.size()), return -1 if failed
 // str[start] must be a number
@@ -792,45 +794,8 @@ inline Long str2double0(Doub& num, @Ts@_I str, Long_I start = 0)
 	Long ind1 = str2int0(num1, str, ind);
 	if (ind1 == -1) return -1;
 	int exp = abs(ind1)-ind;
-	Doub d = num1 / pow(10LL, exp);
+	Doub d = num1 * pow(10LL, -exp);
 	cout.precision(18);
-	
-	while (1) { // correction for last digits
-		Llong num11, num12; Int exp;
-		double_parts(num11, exp, d);
-		if (num11 == num1) {
-			cout << d << "\n (exact)" << endl;
-			break;
-		}
-		else if (num11 < num1) {
-			cout << d << " +-> ";
-			mantissa_add(d, 1);
-			cout << d << endl;
-			double_parts(num12, exp, d);
-			if (num12 > num1) {
-				if (num11+num12 > 2*num1) {
-					cout << d << " 2--> ";
-					mantissa_sub(d, 1);
-					cout << d << endl;
-				}
-				break;
-			}
-		}
-		else { // num11 > num1
-			cout << d << " --> ";
-			mantissa_sub(d, 1);
-			cout << d << endl;
-			double_parts(num12, exp, d);
-			if (num12 < num1) {
-				if (num11+num12 < 2*num1) {
-					cout << d << " 2+-> ";
-					mantissa_add(d, 1);
-					cout << d << endl;
-				}
-				break;
-			}
-		}
-	}
 	num += d;
 	return ind1;
 }
@@ -868,6 +833,8 @@ inline Doub str2double(@Ts@_I str, Long_I start = 0)
 }
 //%----------------------------
 
+// if `prec` is enough, this will give the exact decimal conversion of x,
+// and trailing zeros are omitted
 inline Str to_string(Doub_I x, std::streamsize prec)
 {
 	std::ostringstream os; os.precision(prec);
@@ -1013,5 +980,32 @@ inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
 	str.resize(str.size() - sep.size());
 }
 //%----------------------------
+
+// give the mantissa of a double
+// if `prec` is big enough, there will be no error
+inline Str mantissa_str(Doub x, char prec = 17)
+{
+	Str str;
+	// Bool neg = false;
+	if (x < 0) x = -x; // neg = true;
+	x = double_set_exp(x, 0); // erase exponent
+	if (x < 1) {
+		x *= 10; str = '0';
+	}
+	else {
+		char i = floor(x);
+		str = '0' + i;
+		x -= i; x *= 10;
+	}
+	if (x > 0) str += '.';
+	assert(x < 10);
+	while (x != 0 && size(str) <= prec) {
+		char i = floor(x);
+		str += '0' + i;
+		x -= i;
+		x *= 10;
+	}
+	return str;
+}
 
 } // namespace slisc
