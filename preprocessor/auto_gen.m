@@ -15,20 +15,6 @@ for i = 1:numel(in_paths1)
 end
 in_paths = in_paths1;
 
-% write config.h
-if is_batch_mode
-    fid = fopen("../SLISC/config.h", "w");
-    config = '';
-    if (SLS_USE_INT_AS_LONG)
-        config = [config '#define SLS_USE_INT_AS_LONG' char(10)];
-    end
-    if (SLS_USE_QUAD_MATH)
-        config = [config '#define SLS_USE_QUAD_MATH' char(10)];
-    end
-    fputs (fid, config);
-    fclose (fid);
-end
-
 if ~exist('verbose', 'var') || ~verbose, VERBOSE = false; else, VERBOSE = true; end
 if ~exist('fname', 'var'), fname = []; end
 proc_paths = {'../preprocessor/', ...
