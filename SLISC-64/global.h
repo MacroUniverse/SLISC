@@ -405,23 +405,32 @@ public:
 };
 
 // === print() like python ===
-// too bad template trick is necessary in this case...
-template<typename T>
-void print_helper(T&& value) {
-    std::cout << std::forward<T>(value);
+template<class T>
+void print(const T &s) { cout << s << endl; }
+
+template<class T1, class T2>
+void print(const T1 &s1, const T2 &s2) {
+	cout << s1 << ' ' << s2 << endl;
 }
 
-// Recursive variadic template function to print each argument
-template<typename T, typename... Args>
-void print_helper(T&& first, Args&&... args) {
-    std::cout << std::forward<T>(first) << ' ';
-    print_helper(std::forward<Args>(args)...);
+template<class T1, class T2, class T3>
+void print(const T1 &s1, const T2 &s2, const T3 &s3) {
+	cout << s1 << ' ' << s2 << ' ' << s3 << endl;
 }
 
-template<typename... Args>
-void print(Args&&... args) {
-    print_helper(std::forward<Args>(args)...);
-    std::cout << std::endl;
+template<class T1, class T2, class T3, class T4>
+void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4) {
+	cout << s1 << ' ' << s2 << ' ' << s3 << ' ' << s4 << endl;
+}
+
+template<class T1, class T2, class T3, class T4, class T5>
+void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4, const T5 &s5) {
+	cout << s1 << ' ' << s2 << ' ' << s3 << ' ' << s4 << ' ' << s5 << endl;
+}
+
+template<class T1, class T2, class T3, class T4, class T5, class T6>
+void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4, const T5 &s5, const T6 &s6) {
+	cout << s1 << ' ' << s2 << ' ' << s3 << ' ' << s4 << ' ' << s5 << ' ' << s6 << endl;
 }
 
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
