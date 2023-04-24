@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../util/bit.h"
+#include "../str/str.h"
 #include "arf.h"
 #include "acb_hypgeom.h"
 
@@ -350,7 +351,7 @@ inline Str to_string(Breal_I x, Llong_I digits = 10)
 {
 	char * s = arf_get_str(x.m_n, digits);
 	Str str(s); free(s);
-	rm_float_zeros(s);
+	rm_float_zeros(str);
 	return str;
 }
 

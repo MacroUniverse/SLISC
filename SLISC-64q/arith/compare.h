@@ -1987,6 +1987,15 @@ inline Bool operator==(Mat3Doub_I v1, Mat3Doub_I v2)
 inline Bool operator!=(Mat3Doub_I v1, Mat3Doub_I v2)
 { return !(v1 == v2); }
 
+inline Bool operator==(Mat3Comp_I v1, Mat3Comp_I v2)
+{
+	return shape_cmp(v1, v2) &&
+		equals_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Bool operator!=(Mat3Comp_I v1, Mat3Comp_I v2)
+{ return !(v1 == v2); }
+
 inline Bool operator==(DcmatDoub_I v1, CmatDoub_I v2)
 {
 	if (!shape_cmp(v1, v2))

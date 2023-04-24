@@ -261,6 +261,12 @@ inline Qdoub factorialq(Int_I n) {
 template <class T>
 inline Long size(const T &v) { return v.size(); }
 
+// return the size of an std::tuple
+template <typename... Ts>
+constexpr Long size(const std::tuple<Ts...>&) {
+	return (Long)sizeof...(Ts);
+}
+
 template <class T>
 inline const T *p(const T &v)
 {

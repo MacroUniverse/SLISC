@@ -491,21 +491,21 @@ else # opt_main == false
 
     test: clean_all
 		$(info remake and run all tests - default options)
-		make depend
+		make h
 		make $(test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		make run_test_x
 
     test64: clean_all
 		$(info remake and run all tests - 64bit)
-		make opt_long32=false depend -j$(Ncpu)
+		make opt_long32=false h64
 		make opt_long32=false $(test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		make run_test_x
 
     test64q: clean_all
 		$(info remake and run all tests - 64bit)
-		make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
+		make opt_long32=false opt_quadmath=true h64q
 		make opt_long32=false opt_quadmath=true $(test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		make run_test_x
@@ -543,8 +543,7 @@ endif
 
 # [manual] rule files for *.o [make/deps/*.mak]
 # use when you change `#include`
-depend: h
-	make $(cpp_dep)
+depend: $(cpp_dep)
 
 # remake all headers
 h_all:
@@ -595,14 +594,12 @@ else
 		$(error opt_main if off!)
 endif
 
-make/deps/%.cpp.mak: tests/%.cpp
-	@mv SLISC/config.h SLISC/config.h.tmp
-	@touch SLISC/config.h
+make/deps/%.cpp.mak: tests/%.cpp SLISC/config.h
 	@echo "# this file is auto generated with Makefile and g++" > $@
 	g++ -MM $< >> $@
 	@echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
-	@mv SLISC/config.h.tmp SLISC/config.h
 
+# rules for test_*.o
 -include make/deps/*.mak
 
 # header generation with octave

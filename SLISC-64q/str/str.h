@@ -42,6 +42,18 @@ inline Str num2str(Char_I s, Long_I min_len = -1)
 	return str;
 }
 
+inline void num2str(Str32_O str, Char_I num, Long_I min_len = -1)
+{
+	u32(str, num2str(num, min_len));
+}
+
+inline Str32 num2str32(Char_I num, Long_I min_len = -1)
+{
+	Str32 str;
+	num2str(str, num, min_len);
+	return str;
+}
+
 inline void num2str(Str_O str, Int_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
@@ -58,6 +70,18 @@ inline Str num2str(Int_I s, Long_I min_len = -1)
 {
 	Str str;
 	num2str(str, s, min_len);
+	return str;
+}
+
+inline void num2str(Str32_O str, Int_I num, Long_I min_len = -1)
+{
+	u32(str, num2str(num, min_len));
+}
+
+inline Str32 num2str32(Int_I num, Long_I min_len = -1)
+{
+	Str32 str;
+	num2str(str, num, min_len);
 	return str;
 }
 
@@ -78,6 +102,49 @@ inline Str num2str(Llong_I s, Long_I min_len = -1)
 	Str str;
 	num2str(str, s, min_len);
 	return str;
+}
+
+inline void num2str(Str32_O str, Llong_I num, Long_I min_len = -1)
+{
+	u32(str, num2str(num, min_len));
+}
+
+inline Str32 num2str32(Llong_I num, Long_I min_len = -1)
+{
+	Str32 str;
+	num2str(str, num, min_len);
+	return str;
+}
+
+
+// if `prec` is enough, this will give the exact decimal conversion of x,
+// and trailing zeros are omitted
+inline Str num2str(Float_I x, std::streamsize prec = 5)
+{
+	std::ostringstream os; os.precision(prec);
+	os << x;
+	return os.str();
+}
+
+inline Str num2str(Doub_I x, std::streamsize prec = 5)
+{
+	std::ostringstream os; os.precision(prec);
+	os << x;
+	return os.str();
+}
+
+inline Str num2str(Comp_I x, std::streamsize prec = 5)
+{
+	std::ostringstream os; os.precision(prec);
+	os << x;
+	return os.str();
+}
+
+inline Str num2str(Qdoub_I x, std::streamsize prec = 5)
+{
+	std::ostringstream os; os.precision(prec);
+	os << x;
+	return os.str();
 }
 
 
@@ -348,67 +415,6 @@ inline void operator+=(Str32_IO str32, Str_I str)
 {
 	str32 += u32(str);
 }
-
-inline void num2str(Str32_O str, Char_I num, Long_I min_len = -1)
-{
-	u32(str, num2str(num, min_len));
-}
-
-inline Str32 num2str32(Char_I num, Long_I min_len = -1)
-{
-	Str32 str;
-	num2str(str, num, min_len);
-	return str;
-}
-
-inline void num2str(Str32_O str, Int_I num, Long_I min_len = -1)
-{
-	u32(str, num2str(num, min_len));
-}
-
-inline Str32 num2str32(Int_I num, Long_I min_len = -1)
-{
-	Str32 str;
-	num2str(str, num, min_len);
-	return str;
-}
-
-inline void num2str(Str32_O str, Llong_I num, Long_I min_len = -1)
-{
-	u32(str, num2str(num, min_len));
-}
-
-inline Str32 num2str32(Llong_I num, Long_I min_len = -1)
-{
-	Str32 str;
-	num2str(str, num, min_len);
-	return str;
-}
-
-inline void num2str(Str32_O str, Float_I num, Long_I min_len = -1)
-{
-	u32(str, num2str(num, min_len));
-}
-
-inline Str32 num2str32(Float_I num, Long_I min_len = -1)
-{
-	Str32 str;
-	num2str(str, num, min_len);
-	return str;
-}
-
-inline void num2str(Str32_O str, Doub_I num, Long_I min_len = -1)
-{
-	u32(str, num2str(num, min_len));
-}
-
-inline Str32 num2str32(Doub_I num, Long_I min_len = -1)
-{
-	Str32 str;
-	num2str(str, num, min_len);
-	return str;
-}
-
 
 // check if a character is an ascii character
 inline Bool is_ascii(Char32_I c)
@@ -1519,15 +1525,6 @@ inline void rm_float_zeros(Str_IO str, Long start = 0)
 				str.erase(ind, ind1-ind+1);
 		}
 	}
-}
-
-// if `prec` is enough, this will give the exact decimal conversion of x,
-// and trailing zeros are omitted
-inline Str num2str(Doub_I x, std::streamsize prec)
-{
-	std::ostringstream os; os.precision(prec);
-	os << x;
-	return os.str();
 }
 
 // convert a number to chinese
