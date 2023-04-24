@@ -404,6 +404,28 @@ public:
     }
 };
 
+// === print() like python ===
+// too bad template trick is necessary in this case...
+template<typename T>
+void print_helper(T&& value) {
+    std::cout << std::forward<T>(value);
+}
+
+// Recursive variadic template function to print each argument
+template<typename T, typename... Args>
+void print_helper(T&& first, Args&&... args) {
+    std::cout << std::forward<T>(first) << ' ';
+    print_helper(std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+void print(Args&&... args) {
+    print_helper(std::forward<Args>(args)...);
+    std::cout << std::endl;
+}
+
+#define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
+
 // === constants ===
 
 const Doub PI = 3.14159265358979323;
@@ -412,5 +434,41 @@ const Doub E = 2.71828182845904524;
 const Qdoub PIq = 3.14159265358979323846264338327950288Q;
 const Qdoub Eq = 2.71828182845904523536028747135266250Q;
 #endif
+
+namespace c {
+	// exact
+	const Doub
+	c0 = 299792458,                   // speed of light
+	h = 6.62607015e-34,               // Plank constant
+	hbar = h/(2*PI),                  // reduced Plank constant
+	qe = 1.602176634e-19,             // elementary charge
+	Na = 6.02214076e23,               // Avogadro constant
+	kb = 1.380649e-23,                // Boltzmann constant
+	R = Na*kb,                        // gas constant
+	u = 0.9999999996530e-3/Na,        // atomic mass unit
+	AU = 149597870700,                // astronomical unit
+	ly = c0*3600*24*365.25,           // light-year
+
+	// measured
+	mu0 = 1.25663706212e-6,                // vacuum permeability
+	epsilon0 = 1/(mu0*c0*c0),              // vacuum permittivity
+	k = 1/(4*PI*epsilon0),                 // Coulomb's constant
+	G = 6.67430e-11,                       // gravitational constant
+	alpha = qe*qe/(4*PI*epsilon0*hbar*c0), // fine structure constant
+	me = 9.1093837015e-31,                 // electron mass
+	mp = 1.67262192369e-27,                // proton mass
+	Rh = 1.0973731568160e7,                // Rydberg constant
+	a0 = 5.29177210903e-11,                // Bohr radius
+
+	// conversion constants
+	inch = 2.54e-2,                   // length
+	gauss = 1e-4,                     // electric field
+	mile = 6.09e+2,                   // length
+	lb = 0.454, pound=0.454,          // mass
+	au_x = a0,                        // 1 a.u. distance
+	au_t = me*a0*a0/hbar,             // 1 a.u. time
+	au_E = hbar*hbar/(me*a0*a0),      // 1 a.u. energy
+	au_Ef = qe/(4*PI*epsilon0*a0*a0); // 1 a.u. electric field
+}
 
 } // namespace slisc

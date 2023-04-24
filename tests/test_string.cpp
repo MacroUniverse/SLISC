@@ -24,6 +24,14 @@ void test_string()
 	// 	90005, 98000, 90060, 90700,
 	// 	90000})
 	// 	cout << i << ": " << num2chinese(i) << endl;
+
+	str = "123.501203000";
+	rm_float_zeros(str);
+	SLS_ASSERT(str == "123.501203");
+
+	str = "123.501203000e-18";
+	rm_float_zeros(str);
+	SLS_ASSERT(str == "123.501203e-18");
 }
 
 #ifndef SLS_TEST_ALL

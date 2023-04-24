@@ -350,6 +350,7 @@ inline Str to_string(Breal_I x, Llong_I digits = 10)
 {
 	char * s = arf_get_str(x.m_n, digits);
 	Str str(s); free(s);
+	rm_float_zeros(s);
 	return str;
 }
 

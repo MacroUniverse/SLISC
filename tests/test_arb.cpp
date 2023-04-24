@@ -80,8 +80,8 @@ void test_arb()
 	{
 		arb_prec(200);
 		Breal x(PI), y("1.23456789022345678903234567890423456789e-2"), z;
-        SLS_ASSERT(to_string(y, 42) == "0.0123456789022345678903234567890423456789000" || // newer version
-			to_string(y, 42) == "[0.0123456789022345678903234567890423456789000 +/- 3e-48]"); // older version
+        SLS_ASSERT(to_string(y, 42) == "0.0123456789022345678903234567890423456789" || // newer version
+			to_string(y, 42) == "[0.0123456789022345678903234567890423456789 +/- 3e-48]"); // older version
 		add(z, x, y);
 		// cout << to_string(z) << endl;
 		add(z, z, y);

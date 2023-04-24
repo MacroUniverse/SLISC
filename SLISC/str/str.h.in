@@ -21,18 +21,12 @@ inline Bool match_head(@T@_I str_short, @T@_I str_long)
 }
 //%------------------------
 
-//% tem('num2str', {'Char'; 'Int'; 'Llong'; 'Doub';});
+//% tem('num2str', {'Char'; 'Int'; 'Llong'; });
 //%---------------------
 //% T = varargin{:};
 inline void num2str(Str_O str, @T@_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
-	// erase trailing zeros
-	if (str.find('.') != Str::npos) {
-		str.erase(str.find_last_not_of('0') + 1);
-		if (str.back() == '.')
-			str.pop_back();
-	}
 	// 0 padding on the left
 	if (min_len > 0 && (Long)str.size() < min_len) {
 		Str str1;
@@ -48,7 +42,32 @@ inline Str num2str(@T@_I s, Long_I min_len = -1)
 	num2str(str, s, min_len);
 	return str;
 }
+
+inline void num2str(Str32_O str, @T@_I num, Long_I min_len = -1)
+{
+	u32(str, num2str(num, min_len));
+}
+
+inline Str32 num2str32(@T@_I num, Long_I min_len = -1)
+{
+	Str32 str;
+	num2str(str, num, min_len);
+	return str;
+}
 //%------------------------
+
+// if `prec` is enough, this will give the exact decimal conversion of x,
+// and trailing zeros are omitted
+//% tem('num2str3', {'Float'; 'Doub'; 'Comp'; 'Qdoub'; });
+//%---------------------
+//% T = varargin{:};
+inline Str num2str(@T@_I x, std::streamsize prec = 5)
+{
+	std::ostringstream os; os.precision(prec);
+	os << x;
+	return os.str();
+}
+//%---------------------
 
 // get a line starting from ind0
 inline Str getline(Str_I str, Long_I start = 0)
@@ -256,22 +275,6 @@ inline void operator+=(Str32_IO str32, Str_I str)
 {
 	str32 += u32(str);
 }
-
-//% tem('num2str2', {'Char'; 'Int'; 'Llong'; 'Float'; 'Doub'});
-//%-----------------
-//% T = varargin{:};
-inline void num2str(Str32_O str, @T@_I num, Long_I min_len = -1)
-{
-	u32(str, num2str(num, min_len));
-}
-
-inline Str32 num2str32(@T@_I num, Long_I min_len = -1)
-{
-	Str32 str;
-	num2str(str, num, min_len);
-	return str;
-}
-//%--------------
 
 // check if a character is an ascii character
 inline Bool is_ascii(Char32_I c)
@@ -833,13 +836,24 @@ inline Doub str2double(@Ts@_I str, Long_I start = 0)
 }
 //%----------------------------
 
-// if `prec` is enough, this will give the exact decimal conversion of x,
-// and trailing zeros are omitted
-inline Str to_string(Doub_I x, std::streamsize prec)
+
+// find the longest sequence of numbers after '.'
+//     then remove 0s at the end of the sequence
+inline void rm_float_zeros(Str_IO str, Long start = 0)
 {
-	std::ostringstream os; os.precision(prec);
-	os << x;
-	return os.str();
+	Long ind = str.find('.', start);
+	if (ind > 0) {
+		++ind;
+		while (ind < size(str) && is_num(str[ind])) ++ind;
+		if (str[--ind] == '0') {
+			Long ind1 = ind;
+			while (str[--ind] == '0') ;
+			if (str[ind] != '.')
+				str.erase(ind+1, ind1 - ind);
+			else
+				str.erase(ind, ind1-ind+1);
+		}
+	}
 }
 
 // convert a number to chinese

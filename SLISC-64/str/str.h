@@ -26,12 +26,6 @@ inline Bool match_head(Str32_I str_short, Str32_I str_long)
 inline void num2str(Str_O str, Char_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
-	// erase trailing zeros
-	if (str.find('.') != Str::npos) {
-		str.erase(str.find_last_not_of('0') + 1);
-		if (str.back() == '.')
-			str.pop_back();
-	}
 	// 0 padding on the left
 	if (min_len > 0 && (Long)str.size() < min_len) {
 		Str str1;
@@ -51,12 +45,6 @@ inline Str num2str(Char_I s, Long_I min_len = -1)
 inline void num2str(Str_O str, Int_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
-	// erase trailing zeros
-	if (str.find('.') != Str::npos) {
-		str.erase(str.find_last_not_of('0') + 1);
-		if (str.back() == '.')
-			str.pop_back();
-	}
 	// 0 padding on the left
 	if (min_len > 0 && (Long)str.size() < min_len) {
 		Str str1;
@@ -76,12 +64,6 @@ inline Str num2str(Int_I s, Long_I min_len = -1)
 inline void num2str(Str_O str, Llong_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
-	// erase trailing zeros
-	if (str.find('.') != Str::npos) {
-		str.erase(str.find_last_not_of('0') + 1);
-		if (str.back() == '.')
-			str.pop_back();
-	}
 	// 0 padding on the left
 	if (min_len > 0 && (Long)str.size() < min_len) {
 		Str str1;
@@ -92,31 +74,6 @@ inline void num2str(Str_O str, Llong_I s, Long_I min_len = -1)
 }
 
 inline Str num2str(Llong_I s, Long_I min_len = -1)
-{
-	Str str;
-	num2str(str, s, min_len);
-	return str;
-}
-
-inline void num2str(Str_O str, Doub_I s, Long_I min_len = -1)
-{
-	str = to_string(s);
-	// erase trailing zeros
-	if (str.find('.') != Str::npos) {
-		str.erase(str.find_last_not_of('0') + 1);
-		if (str.back() == '.')
-			str.pop_back();
-	}
-	// 0 padding on the left
-	if (min_len > 0 && (Long)str.size() < min_len) {
-		Str str1;
-		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
-			str1 += '0';
-		str = str1 + str;
-	}
-}
-
-inline Str num2str(Doub_I s, Long_I min_len = -1)
 {
 	Str str;
 	num2str(str, s, min_len);
@@ -1544,9 +1501,29 @@ inline Doub str2double(Str32_I str, Long_I start = 0)
 }
 
 
+
+// find the longest sequence of numbers after '.'
+//     then remove 0s at the end of the sequence
+inline void rm_float_zeros(Str_IO str, Long start = 0)
+{
+	Long ind = str.find('.', start);
+	if (ind > 0) {
+		++ind;
+		while (ind < size(str) && is_num(str[ind])) ++ind;
+		if (str[--ind] == '0') {
+			Long ind1 = ind;
+			while (str[--ind] == '0') ;
+			if (str[ind] != '.')
+				str.erase(ind+1, ind1 - ind);
+			else
+				str.erase(ind, ind1-ind+1);
+		}
+	}
+}
+
 // if `prec` is enough, this will give the exact decimal conversion of x,
 // and trailing zeros are omitted
-inline Str to_string(Doub_I x, std::streamsize prec)
+inline Str num2str(Doub_I x, std::streamsize prec)
 {
 	std::ostringstream os; os.precision(prec);
 	os << x;

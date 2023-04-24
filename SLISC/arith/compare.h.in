@@ -122,6 +122,7 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //%   'Cmat3Comp' 'Cmat3Comp'
 //%   'Cmat3Qcomp' 'Cmat3Qcomp'
 //%   'Mat3Doub' 'Mat3Doub'
+//%   'Mat3Comp' 'Mat3Comp'
 //%   'DcmatDoub' 'CmatDoub'
 //%   'DcmatQdoub' 'CmatQdoub'
 //%   'Jcmat3Doub' 'Cmat3Doub'
