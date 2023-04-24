@@ -20,7 +20,6 @@ test_sort.o: tests/test_sort.cpp tests/../SLISC/algo/sort.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/../dense/Vbase.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/../dense/../str/str.h \
- tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/../dense/../str/../util/bit.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/algo/../algo/../util/../arith/../arith/../dense/Cmat.h \

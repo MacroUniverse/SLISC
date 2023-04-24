@@ -12,6 +12,5 @@ test_string.o: tests/test_string.cpp tests/../SLISC/str/str.h \
  tests/../SLISC/str/../str/utfcpp/utf8/core.h \
  tests/../SLISC/str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/str/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/str/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/str/../util/bit.h
+ tests/../SLISC/str/../str/utfcpp/utf8/unchecked.h
 	$(opt_compiler) $(flags) -c tests/test_string.cpp

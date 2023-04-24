@@ -17,7 +17,6 @@ test_dense.o: tests/test_dense.cpp tests/../SLISC/arith/arith2.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/arith/../arith/../dense/../dense/../str/../util/bit.h \
  tests/../SLISC/arith/../arith/../dense/Mat.h \
  tests/../SLISC/arith/../arith/../dense/Mat3.h \
  tests/../SLISC/arith/../arith/../dense/Cmat.h \

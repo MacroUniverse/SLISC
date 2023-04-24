@@ -1,4 +1,5 @@
-#include <iostream>
+#include "../SLISC/global.h"
+
 #ifdef SLS_USE_ARPACK
 #include "../SLISC/arith/arith2.h"
 #include <arssym.h>

@@ -18,6 +18,10 @@ opt_std = c++11
 opt_static = false
 # minimum build (all below options set to false)
 opt_min = false
+# verbose output for Octave debug
+opt_verb = false
+# compile all tests as main.x or into individual test_*.x
+opt_main = false
 # use quad precision float (`__float128` extension of gcc)
 opt_quadmath = false
 # lapack package (reference, openblas, mkl, none)
@@ -69,12 +73,20 @@ ifeq ($(opt_debug), true)
     $(info Build: Debug)
     debug_flag = -g
     ifeq ($(opt_compiler), g++)
-        debug_flag = -g -ftrapv $(asan_flag)
+        debug_flag = -g -ftrapv $(asan_flag) # -pedantic # show more warnings
     endif
 else
     $(info Build: Release)
     $(shell echo "#define NDEBUG" >> SLISC/config.h)
     release_flag = -O3
+endif
+
+# === main.x ===
+ifeq ($(opt_main), true)
+    $(info main.x: on)
+    $(shell echo "#define SLS_TEST_ALL" >> SLISC/config.h)
+else
+    $(info main.x: off)
 endif
 
 # Address Sanitizer
@@ -165,7 +177,7 @@ ifeq ($(opt_lapack), mkl)
         ifeq ($(opt_compiler), icpc)
             $(info Compiler: icpc)
             $(shell echo "#define SLS_USE_MKL" >> SLISC/config.h)
-            # mkl_flag = -I "${MKLROOT}/include"
+            mkl_flag = # -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
@@ -200,7 +212,7 @@ ifeq ($(opt_lapack), mkl)
             $(info Compiler: icpc)
             $(shell echo "#define SLS_USE_MKL" >> SLISC/config.h)
             $(shell echo "#define MKL_ILP64" >> SLISC/config.h)
-            # mkl_flag = -I "${MKLROOT}/include"
+            mkl_flag = # -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
                 $(info Link: static)
@@ -348,10 +360,8 @@ endif
 ifeq ($(opt_matfile), true)
     ifeq ($(opt_static), false)
         $(info Using Matlab .mat (dynamic))
-        matfile_bin_path = ../MatFile_linux/lib
-        matfile_flag = -I ../MatFile_linux/include
         $(shell echo "#define SLS_USE_MATFILE" >> SLISC/config.h)
-        matfile_lib = -Wl,-rpath,$(matfile_bin_path) -L $(matfile_bin_path) -l mat -l mx
+        matfile_lib = -l mat -l mx
     else
         $(info Matlab .mat: off)
     endif
@@ -377,8 +387,7 @@ $(info  )$(info  )$(info  )$(info  )
 # ---------------------------------------------------------
 
 # all flags
-flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(cblas_flag) $(lapacke_flag)  $(arpack_flag)  $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(matfile_flag) $(sqlite_flag) $(sqlitecpp_flag) $(mplapack_flag)
-# -pedantic # show more warnings
+flags = $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(quad_math_flag)
 
 # all libs
 ifeq ($(opt_static), true)
@@ -404,6 +413,83 @@ path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-gen
 # number of cpu
 Ncpu = $(shell getconf _NPROCESSORS_ONLN)
 
+# remake all and test all
+all: clean_all
+	make depend
+	make test
+	make h64
+	make test64
+	make h64q
+	make test64q
+	make h
+
+ifeq ($(opt_main), true)
+
+test:
+	$(info remake and run all tests - default options)
+	make clean
+	make depend -j$(Ncpu)
+	make main.x -j$(Ncpu)
+	@printf "\n\n\n"
+	./main.x < input.inp
+
+test64:
+	$(info remake and run all tests - 64bit)
+	make clean
+	make opt_long32=false depend -j$(Ncpu)
+	make opt_long32=false main.x -j$(Ncpu)
+	@printf "\n\n\n"
+	./main.x < input.inp
+
+test64q:
+	$(info remake and run all tests - 64bit)
+	make clean
+	make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
+	make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
+	@printf "\n\n\n"
+	./main.x < input.inp
+
+else
+
+test:
+	$(info remake and run all tests - default options)
+	make clean
+	make depend
+	make $(test_x) -j$(Ncpu)
+	@printf "\n\n\n"
+	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+
+test64:
+	$(info remake and run all tests - 64bit)
+	make clean
+	make opt_long32=false depend -j$(Ncpu)
+	make opt_long32=false $(test_x) -j$(Ncpu)
+	@printf "\n\n\n"
+	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+
+test64q:
+	$(info remake and run all tests - 64bit)
+	make clean
+	make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
+	make opt_long32=false opt_quadmath=true $(test_x) -j$(Ncpu)
+	@printf "\n\n\n"
+	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+
+endif
+
+
+ifeq ($(opt_main), true)
+main.x: main.o
+	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
+main.o: main.cpp tests/test_all.h $(test_x)
+	$(opt_compiler) $(flags) -c main.cpp
+else
+main.x:
+	$(error opt_main if off!)
+main.o:
+	$(error opt_main if off!)
+endif
+
 # [manual] rule files for *.o [make/deps/*.mak]
 # use when you change `#include`
 depend: h
@@ -417,7 +503,7 @@ h_all:
 
 h:
 	$(info remake all headers - default options)
-	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), 1)"
+	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), $(opt_verb))"
 
 h64:
 	$(info remake all headers - 64bit)
@@ -448,7 +534,7 @@ clean_dep:
 
 # ======= implicit/generated rules =======
 # default target
-%.x: %.o # link
+test_%.x: test_%.o # link
 	@printf "\n\033[1;33m$@\033[0m: "
 	$(opt_compiler) $(flags) $< -o $@ $(libs)
 
@@ -457,15 +543,15 @@ clean_dep:
 	$(opt_compiler) $(flags) -c $<
 
 make/deps/%.cpp.mak: tests/%.cpp
+	@mv SLISC/config.h SLISC/config.h.tmp
+	@touch SLISC/config.h
 	g++ -MM $< > $@
-	echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
+	@echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
+	@mv SLISC/config.h.tmp SLISC/config.h
 
 -include make/deps/*.mak
-
-test_x: $(test_x)
-	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
 
 # header generation with octave
 %.h: %.h.in # code gen
 	@printf "\n\033[1;32m$@\033[0m: "
-	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32))"
+	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32), $(opt_verb))"

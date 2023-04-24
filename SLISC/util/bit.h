@@ -2,7 +2,7 @@
 
 // Notes:
 // 1. C-style conversion between char and Uchar does not change any bit.
-// 2. char(-128) = char(128) = 0b10000000
+// 2. char(-128) = char(128) = 0x80 = 0b10000000
 // 3. negative operand for C operator >> or << are undefined!
 
 #pragma once

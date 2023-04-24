@@ -13,6 +13,5 @@ test_hypergeom.o: tests/test_hypergeom.cpp \
  tests/../SLISC/spec/../str/../str/utfcpp/utf8/core.h \
  tests/../SLISC/spec/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/spec/../str/../str/utfcpp/utf8/checked.h \
- tests/../SLISC/spec/../str/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/spec/../str/../util/bit.h
+ tests/../SLISC/spec/../str/../str/utfcpp/utf8/unchecked.h
 	$(opt_compiler) $(flags) -c tests/test_hypergeom.cpp

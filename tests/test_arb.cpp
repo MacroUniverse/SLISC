@@ -1,4 +1,5 @@
-#include <iostream>
+#include "../SLISC/global.h"
+
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint/flint.h>
@@ -34,7 +35,7 @@ void test_arb()
 		free(cs); arb_clear(a);
 	}
 
-#ifdef SLS_USE_QUAD_MATH
+	#ifdef SLS_USE_QUAD_MATH
 	// test my arf_get_q() fun
 	arb_init(a); prec = 150;
 	arb_set_str(a, "1.23456789022345678903234567890423456789e123", prec);
@@ -45,7 +46,7 @@ void test_arb()
 	arf_t af; arf_init(af);
 	arf_set_q(af, 1.23456789022345678903234567890423455e+123Q);
 	arf_clear(af);
-#endif
+	#endif
 
 	// test fmpz_t wrapper
 	{

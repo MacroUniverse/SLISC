@@ -1,4 +1,5 @@
-#include <iostream>
+#include "../SLISC/global.h"
+
 #ifdef SLS_USE_BOOST
 #include "../SLISC/file/file.h"
 #include <boost/filesystem.hpp>

@@ -160,12 +160,12 @@ inline bool is_char8_start(Str_I str, Long_I index)
 	}
 
 	unsigned char byte = str[index];
-	if ((byte & 0b10000000) == 0) { // ASCII character (most significant bit is 0)
+	if ((byte & 0x80) == 0) { // ASCII character (most significant bit is 0)
 		return true;
 	}
 
 	// Multi-byte character starts with a sequence of 1's followed by a 0
-	return (byte & 0b11000000) == 0b11000000;
+	return (byte & 0xC0) == 0xC0;
 }
 
 // bytes of a utf-8 character

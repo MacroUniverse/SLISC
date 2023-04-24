@@ -1,7 +1,5 @@
+#include "../SLISC/global.h"
 #include "../SLISC/arith/SafeInt.h"
-#include <iostream>
-#include <climits>
-#include <unordered_map>
 
 void test_SafeInt()
 {

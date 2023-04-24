@@ -18,7 +18,6 @@ test_Mcoo.o: tests/test_Mcoo.cpp tests/../SLISC/sparse/sparse_arith.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/cpp17.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/sparse/../arith/../arith/../dense/../dense/../str/../util/bit.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/Mat.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/Mat3.h \
  tests/../SLISC/sparse/../arith/../arith/../dense/Cmat.h \

@@ -1,4 +1,5 @@
-#include <iostream>
+#include "../SLISC/global.h"
+
 #ifdef SLS_USE_EIGEN
 #include "../SLISC/lin/eigen.h"
 
