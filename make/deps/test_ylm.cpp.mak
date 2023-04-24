@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_ylm.o: tests/test_ylm.cpp tests/../SLISC/spec/ylm.h \
  tests/../SLISC/spec/../str/unicode.h \
  tests/../SLISC/spec/../str/../arith/scalar_arith.h \

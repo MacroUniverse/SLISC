@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_lin_eq.o: tests/test_lin_eq.cpp tests/../SLISC/arith/arith1.h \
  tests/../SLISC/arith/../arith/scalar_arith.h \
  tests/../SLISC/arith/../arith/../arith/complex_arith.h \

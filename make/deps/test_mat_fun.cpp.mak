@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_mat_fun.o: tests/test_mat_fun.cpp tests/../SLISC/lin/mat_fun.h \
  tests/../SLISC/lin/../sparse/sparse_arith.h \
  tests/../SLISC/lin/../sparse/../arith/arith1.h \

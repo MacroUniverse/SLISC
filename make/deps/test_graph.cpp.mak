@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_graph.o: tests/test_graph.cpp tests/../SLISC/algo/graph.h \
  tests/../SLISC/algo/../util/random.h \
  tests/../SLISC/algo/../util/../arith/arith2.h \

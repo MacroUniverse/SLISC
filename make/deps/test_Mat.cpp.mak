@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_Mat.o: tests/test_Mat.cpp tests/../SLISC/dense/Mat.h \
  tests/../SLISC/dense/../dense/Vbase.h \
  tests/../SLISC/dense/../dense/../global.h \

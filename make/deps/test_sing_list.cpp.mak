@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_sing_list.o: tests/test_sing_list.cpp \
  tests/../SLISC/algo/sing_list.h tests/../SLISC/algo/../util/random.h \
  tests/../SLISC/algo/../util/../arith/arith2.h \

@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_Scmat3.o: tests/test_Scmat3.cpp tests/../SLISC/dense/Scmat3.h \
  tests/../SLISC/dense/../dense/Svec.h \
  tests/../SLISC/dense/../dense/../global.h \

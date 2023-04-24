@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_unicode.o: tests/test_unicode.cpp tests/../SLISC/str/unicode.h \
  tests/../SLISC/str/../arith/scalar_arith.h \
  tests/../SLISC/str/../arith/../arith/complex_arith.h \

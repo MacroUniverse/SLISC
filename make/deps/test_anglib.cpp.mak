@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_anglib.o: tests/test_anglib.cpp tests/../SLISC/spec/anglib.h \
  tests/../SLISC/spec/../arith/scalar_arith.h \
  tests/../SLISC/spec/../arith/../arith/complex_arith.h \

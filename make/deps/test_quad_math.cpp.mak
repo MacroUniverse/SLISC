@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_quad_math.o: tests/test_quad_math.cpp tests/../SLISC/dense/Cmat.h \
  tests/../SLISC/dense/../dense/Vbase.h \
  tests/../SLISC/dense/../dense/../global.h \

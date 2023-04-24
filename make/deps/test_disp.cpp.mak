@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_disp.o: tests/test_disp.cpp tests/../SLISC/str/disp.h \
  tests/../SLISC/str/../arith/arith1.h \
  tests/../SLISC/str/../arith/../arith/scalar_arith.h \

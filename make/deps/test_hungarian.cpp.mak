@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_hungarian.o: tests/test_hungarian.cpp \
  tests/../SLISC/algo/hungarian.h tests/../SLISC/algo/../arith/copy.h \
  tests/../SLISC/algo/../arith/../arith/compare.h \

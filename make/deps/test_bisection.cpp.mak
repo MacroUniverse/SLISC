@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_bisection.o: tests/test_bisection.cpp \
  tests/../SLISC/algo/bisection.h tests/../SLISC/algo/../global.h \
  tests/../SLISC/algo/../config.h \

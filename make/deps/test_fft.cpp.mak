@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_fft.o: tests/test_fft.cpp tests/../SLISC/sci/fft.h \
  tests/../SLISC/sci/../dense/cut.h \
  tests/../SLISC/sci/../dense/../dense/Vec.h \

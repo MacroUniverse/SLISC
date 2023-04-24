@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_time.o: tests/test_time.cpp tests/../SLISC/util/time.h \
  tests/../SLISC/util/../str/str.h \
  tests/../SLISC/util/../str/../str/unicode.h \

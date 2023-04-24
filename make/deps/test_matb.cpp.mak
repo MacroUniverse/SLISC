@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_matb.o: tests/test_matb.cpp tests/../SLISC/arith/arith4.h \
  tests/../SLISC/arith/../arith/scalar_arith.h \
  tests/../SLISC/arith/../arith/../arith/complex_arith.h \

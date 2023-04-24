@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_expokit.o: tests/test_expokit.cpp tests/../SLISC/lin/expokit.h \
  tests/../SLISC/lin/../global.h tests/../SLISC/lin/../config.h \
  tests/../SLISC/lin/../prec/quad_math_declare.h \

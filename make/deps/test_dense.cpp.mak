@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_dense.o: tests/test_dense.cpp tests/../SLISC/arith/arith2.h \
  tests/../SLISC/arith/../arith/scalar_arith.h \
  tests/../SLISC/arith/../arith/../arith/complex_arith.h \

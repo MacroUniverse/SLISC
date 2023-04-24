@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_cut.o: tests/test_cut.cpp tests/../SLISC/dense/cut.h \
  tests/../SLISC/dense/../dense/Vec.h \
  tests/../SLISC/dense/../dense/../dense/Vbase.h \

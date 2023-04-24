@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_sqlite.o: tests/test_sqlite.cpp tests/../SLISC/file/file.h \
  tests/../SLISC/file/../global.h tests/../SLISC/file/../config.h \
  tests/../SLISC/file/../prec/quad_math_declare.h \

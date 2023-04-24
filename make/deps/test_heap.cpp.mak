@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_heap.o: tests/test_heap.cpp tests/../SLISC/algo/heap.h \
  tests/../SLISC/algo/../util/random.h \
  tests/../SLISC/algo/../util/../arith/arith2.h \

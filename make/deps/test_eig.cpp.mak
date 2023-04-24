@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_eig.o: tests/test_eig.cpp tests/../SLISC/lin/eig.h \
  tests/../SLISC/lin/../arith/copy.h \
  tests/../SLISC/lin/../arith/../arith/compare.h \

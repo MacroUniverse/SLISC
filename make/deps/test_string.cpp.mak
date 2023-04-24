@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_string.o: tests/test_string.cpp tests/../SLISC/str/str.h \
  tests/../SLISC/str/../str/unicode.h \
  tests/../SLISC/str/../str/../arith/scalar_arith.h \

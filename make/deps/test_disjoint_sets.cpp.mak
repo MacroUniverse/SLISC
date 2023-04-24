@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_disjoint_sets.o: tests/test_disjoint_sets.cpp \
  tests/../SLISC/algo/disjoint_sets.h tests/../SLISC/algo/../global.h \
  tests/../SLISC/algo/../config.h \

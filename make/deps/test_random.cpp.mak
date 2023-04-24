@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_random.o: tests/test_random.cpp tests/../SLISC/util/random.h \
  tests/../SLISC/util/../arith/arith2.h \
  tests/../SLISC/util/../arith/../arith/scalar_arith.h \

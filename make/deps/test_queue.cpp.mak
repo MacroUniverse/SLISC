@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_queue.o: tests/test_queue.cpp tests/../SLISC/algo/queue.h \
  tests/../SLISC/algo/../global.h tests/../SLISC/algo/../config.h \
  tests/../SLISC/algo/../prec/quad_math_declare.h \

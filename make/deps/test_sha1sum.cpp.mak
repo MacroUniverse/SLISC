@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_sha1sum.o: tests/test_sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/file.h \
  tests/../SLISC/util/../file/../global.h \

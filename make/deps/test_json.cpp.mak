@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_json.o: tests/test_json.cpp tests/../SLISC/util/json.h \
  tests/../SLISC/file/file.h tests/../SLISC/file/../global.h \
  tests/../SLISC/file/../config.h \

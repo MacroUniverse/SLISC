@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_sort.o: tests/test_sort.cpp tests/../SLISC/algo/sort.h \
  tests/../SLISC/algo/../str/unicode.h \
  tests/../SLISC/algo/../str/../arith/scalar_arith.h \

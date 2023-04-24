@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_complex_arith.o: tests/test_complex_arith.cpp \
  tests/../SLISC/arith/complex_arith.h tests/../SLISC/arith/../global.h \
  tests/../SLISC/arith/../config.h \

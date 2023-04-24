@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_legendreP.o: tests/test_legendreP.cpp \
  tests/../SLISC/spec/legendreP.h \
  tests/../SLISC/spec/../arith/scalar_arith.h \

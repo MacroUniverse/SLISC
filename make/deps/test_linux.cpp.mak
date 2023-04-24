@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_linux.o: tests/test_linux.cpp tests/../SLISC/util/linux.h \
  tests/../SLISC/util/../global.h tests/../SLISC/util/../config.h \
  tests/../SLISC/util/../prec/quad_math_declare.h \

@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_Vec.o: tests/test_Vec.cpp tests/../SLISC/arith/compare.h \
  tests/../SLISC/arith/../dense/Vec.h \
  tests/../SLISC/arith/../dense/../dense/Vbase.h \

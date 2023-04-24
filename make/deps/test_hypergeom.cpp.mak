@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_hypergeom.o: tests/test_hypergeom.cpp \
  tests/../SLISC/spec/hypergeom.h tests/../SLISC/spec/../str/str.h \
  tests/../SLISC/spec/../str/../str/unicode.h \

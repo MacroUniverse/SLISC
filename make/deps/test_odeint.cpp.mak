@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_odeint.o: tests/test_odeint.cpp tests/../SLISC/sci/odeint.h \
  tests/../SLISC/sci/../arith/copy.h \
  tests/../SLISC/sci/../arith/../arith/compare.h \

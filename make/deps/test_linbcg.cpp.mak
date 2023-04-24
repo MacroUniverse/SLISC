@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_linbcg.o: tests/test_linbcg.cpp tests/../SLISC/lin/linbcg.h \
  tests/../SLISC/lin/../arith/arith1.h \
  tests/../SLISC/lin/../arith/../arith/scalar_arith.h \

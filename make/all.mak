@@ -545,7 +545,8 @@ test_%.x: test_%.o # link
 make/deps/%.cpp.mak: tests/%.cpp
 	@mv SLISC/config.h SLISC/config.h.tmp
 	@touch SLISC/config.h
-	g++ -MM $< > $@
+	@echo "# this file is auto generated with Makefile and g++" > $@
+	g++ -MM $< >> $@
 	@echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
 	@mv SLISC/config.h.tmp SLISC/config.h
 

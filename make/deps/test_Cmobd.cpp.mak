@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_Cmobd.o: tests/test_Cmobd.cpp tests/../SLISC/sparse/sparse_arith.h \
  tests/../SLISC/sparse/../arith/arith1.h \
  tests/../SLISC/sparse/../arith/../arith/scalar_arith.h \

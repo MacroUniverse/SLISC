@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_copy.o: tests/test_copy.cpp tests/../SLISC/arith/copy.h \
  tests/../SLISC/arith/../arith/compare.h \
  tests/../SLISC/arith/../arith/../dense/Vec.h \

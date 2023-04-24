@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_interp1.o: tests/test_interp1.cpp tests/../SLISC/sci/interp1.h \
  tests/../SLISC/sci/../dense/Vec.h \
  tests/../SLISC/sci/../dense/../dense/Vbase.h \

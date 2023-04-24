@@ -1,3 +1,4 @@
+# this file is auto generated with Makefile and g++
 test_search.o: tests/test_search.cpp tests/../SLISC/algo/search.h \
  tests/../SLISC/algo/../arith/arith1.h \
  tests/../SLISC/algo/../arith/../arith/scalar_arith.h \
