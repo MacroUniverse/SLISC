@@ -94,11 +94,11 @@ void test_matt()
 
 	Doub r_s;
 	load(r_s, "s", matt);
-	if (abs(r_s-s) > 1e-15) SLS_FAIL;
+	if (r_s != s) SLS_FAIL;
 
 	Comp r_sc;
 	load(r_sc, "sc", matt);
-	if (abs(r_sc-sc) > 1e-15) SLS_FAIL;
+	if (r_sc != sc) SLS_FAIL;
 
 	// vectors
 	// TODO: Char
@@ -109,13 +109,11 @@ void test_matt()
 
 	VecDoub r_v(0);
 	load(r_v, "v", matt);
-	r_v -= v;
-	if (norm(r_v) > 1e-15) SLS_FAIL;
+	if (r_v != v) SLS_FAIL;
 
 	VecComp r_vc(0);
 	load(r_vc, "vc", matt);
-	r_vc -= vc;
-	if (norm(r_v) > 1e-15) SLS_FAIL;
+	if (r_vc != vc) SLS_FAIL;
 
 	VecDoub r_vd(0);
 	load(r_vd, "vd", matt);
@@ -131,35 +129,25 @@ void test_matt()
 
 	MatDoub r_A(0,0);
 	load(r_A, "A", matt);
-	r_A -= A;
-	if (norm(r_A) > 1e-15) SLS_FAIL;
+	if (r_A != A) SLS_FAIL;
 
 	MatComp r_C(0,0);
 	load(r_C, "C", matt);
-	r_C -= C;
-	if (norm(r_C) > 1e-15) SLS_FAIL;
+	if (r_C != C) SLS_FAIL;
 
 	// 3D arrays
 	// Mat3Doub r_A3(0,0,0);
 	// load(r_A3, "A3", matt);
-	// r_A3 -= A3;
-	// if (norm(r_A3) > 1e-15) SLS_FAIL;
+	// if (r_A3 != A3) SLS_FAIL;
 
 	// Mat3Comp r_C3(0,0,0);
 	// load(r_C3, "C3", matt);
-	// r_C3 -= C3;
-	// if (norm(r_C3) > 1e-15) SLS_FAIL;
+	// if (r_C3 != C3) SLS_FAIL;
 
 	Cmat3Comp r_CC3(0, 0, 0);
 	load(r_CC3, "CC3", matt);
 	cout.precision(18);
-	for (Long i = 0; i < CC3.size(); ++i) {
-		if (r_CC3[i] != CC3[i])
-			cout << "i = " << i << ", CC3[i] = " << CC3[i] << ", r_CC3[i] = " << r_CC3[i] << endl;
-	}
-	r_CC3 -= CC3;
-	
-	if (norm(r_CC3) > 1e-14) SLS_FAIL;
+	if (r_CC3 != CC3) SLS_FAIL;
 
 	matt.close();
 #else

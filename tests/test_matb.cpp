@@ -159,11 +159,11 @@ void test_matb()
 
 	Doub r_s;
 	load(r_s, "s", matb);
-	if (abs(r_s-s) != 0) SLS_FAIL;
+	if (r_s != s) SLS_FAIL;
 
 	Comp r_sc;
 	load(r_sc, "sc", matb);
-	if (abs(r_sc-sc) != 0) SLS_FAIL;
+	if (r_sc != sc) SLS_FAIL;
 
 #ifdef SLS_USE_QUAD_MATH
 	Qdoub r_sq;
@@ -185,15 +185,11 @@ void test_matb()
 
 	VecDoub r_v;
 	load(r_v, "v", matb);
-	r_v -= v;
-	if (norm(r_v) != 0)
-		SLS_FAIL;
+	if (r_v != v) SLS_FAIL;
 
 	VecComp r_vc;
 	load(r_vc, "vc", matb);
-	r_vc -= vc;
-	if (norm(r_v) != 0)
-		SLS_FAIL;
+	if (r_vc != vc)	SLS_FAIL;
 
 	VecDoub r_vd;
 	load(r_vd, "vd", matb);
@@ -223,13 +219,11 @@ void test_matb()
 
 	MatDoub r_A(0,0);
 	load(r_A, "A", matb);
-	r_A -= A;
-	if (norm(r_A) != 0) SLS_FAIL;
+	if (r_A != A) SLS_FAIL;
 
 	MatComp r_C(0,0);
 	load(r_C, "C", matb);
-	r_C -= C;
-	if (norm(r_C) != 0) SLS_FAIL;
+	if (r_C != C) SLS_FAIL;
 
 	CmatDoub r_CD;
 	load(r_CD, "CD", matb);
@@ -291,11 +285,11 @@ void test_matb()
 
 		Doub r_s;
 		load(r_s, "s", matt);
-		if (abs(r_s-s) > 1e-15) SLS_FAIL;
+		if (r_s != s) SLS_FAIL;
 
 		Comp r_sc;
 		load(r_sc, "sc", matt);
-		if (abs(r_sc-sc) > 1e-15) SLS_FAIL;
+		if (r_sc != sc) SLS_FAIL;
 
 		// vectors
 		// TODO: Char
@@ -306,13 +300,11 @@ void test_matb()
 
 		VecDoub r_v;
 		load(r_v, "v", matt);
-		r_v -= v;
-		if (norm(r_v) > 1e-15) SLS_FAIL;
+		if (r_v != v) SLS_FAIL;
 
 		VecComp r_vc;
 		load(r_vc, "vc", matt);
-		r_vc -= vc;
-		if (norm(r_v) > 1e-15) SLS_FAIL;
+		if (r_vc != vc) SLS_FAIL;
 
 		// matrices
 		// TODO: Char
@@ -323,29 +315,24 @@ void test_matb()
 
 		MatDoub r_A(0,0);
 		load(r_A, "A", matt);
-		r_A -= A;
-		if (norm(r_A) > 1e-15) SLS_FAIL;
+		if (r_A != A) SLS_FAIL;
 
 		MatComp r_C(0,0);
 		load(r_C, "C", matt);
-		r_C -= C;
-		if (norm(r_C) > 1e-15) SLS_FAIL;
+		if (r_C != C) SLS_FAIL;
 
 		// 3D arrays
 		// Mat3Doub r_A3(0,0,0);
 		// load(r_A3, "A3", matt);
-		// r_A3 -= A3;
-		// if (norm(r_A3) > 1e-15) SLS_FAIL;
+		// if (r_A3 != A3) SLS_FAIL;
 
 		// Mat3Comp r_C3(0,0,0);
 		// load(r_C3, "C3", matt);
-		// r_C3 -= C3;
-		// if (norm(r_C3) > 1e-15) SLS_FAIL;
+		// if (r_C3 != C3) SLS_FAIL;
 
 		Cmat3Comp r_CC3;
 		load(r_CC3, "CC3", matt);
-		r_CC3 -= CC3;
-		if (norm(r_CC3) > 1e-15) SLS_FAIL;
+		if (r_CC3 != CC3) SLS_FAIL;
 
 		matt.close();
 	}
@@ -363,11 +350,11 @@ void test_matb()
 
 		Doub r_s;
 		load(r_s, "s", matb);
-		if (abs(r_s-s) > 1e-15) SLS_FAIL;
+		if (r_s != s) SLS_FAIL;
 
 		Comp r_sc;
 		load(r_sc, "sc", matb);
-		if (abs(r_sc-sc) > 1e-15) SLS_FAIL;
+		if (r_sc != sc) SLS_FAIL;
 
 		// vectors
 		// TODO: Char
@@ -378,13 +365,11 @@ void test_matb()
 
 		VecDoub r_v;
 		load(r_v, "v", matb);
-		r_v -= v;
-		if (norm(r_v) > 1e-15) SLS_FAIL;
+		if (r_v != v) SLS_FAIL;
 
 		VecComp r_vc;
 		load(r_vc, "vc", matb);
-		r_vc -= vc;
-		if (norm(r_v) > 1e-15) SLS_FAIL;
+		if (r_vc != vc) SLS_FAIL;
 
 		// matrices
 		// TODO: Char
@@ -395,24 +380,20 @@ void test_matb()
 
 		MatDoub r_A(0,0);
 		load(r_A, "A", matb);
-		r_A -= A;
-		if (norm(r_A) > 1e-15) SLS_FAIL;
+		if (r_A != A) SLS_FAIL;
 
 		MatComp r_C(0,0);
 		load(r_C, "C", matb);
-		r_C -= C;
-		if (norm(r_C) > 1e-15) SLS_FAIL;
+		if (r_C != C) SLS_FAIL;
 
 		// 3D arrays
 		// Mat3Doub r_A3(0,0,0);
 		// load(r_A3, "A3", matb);
-		// r_A3 -= A3;
-		// if (norm(r_A3) > 1e-15) SLS_FAIL;
+		// if (r_A3 != A3) SLS_FAIL;
 
 		// Mat3Comp r_C3(0,0,0);
 		// load(r_C3, "C3", matb);
-		// r_C3 -= C3;
-		// if (norm(r_C3) > 1e-15) SLS_FAIL;
+		// if (r_C3 != C3) SLS_FAIL;
 
 		Cmat3Doub r_CD3;
 		load(r_CD3, "CD3", matb);
@@ -440,11 +421,11 @@ void test_matb()
 
 		Doub r_s;
 		load(r_s, "s", matb);
-		if (abs(r_s-s) != 0) SLS_FAIL;
+		if (r_s != s) SLS_FAIL;
 
 		Comp r_sc;
 		load(r_sc, "sc", matb);
-		if (abs(r_sc-sc) != 0) SLS_FAIL;
+		if (r_sc != sc) SLS_FAIL;
 
 	#ifdef SLS_USE_QUAD_MATH
 		Doub r_sq;
@@ -461,20 +442,15 @@ void test_matb()
 
 		VecInt r_vi;
 		load(r_vi, "vi", matb);
-		if (r_vi != vi)
-			SLS_FAIL;
+		if (r_vi != vi)	SLS_FAIL;
 
 		VecDoub r_v;
 		load(r_v, "v", matb);
-		r_v -= v;
-		if (norm(r_v) != 0)
-			SLS_FAIL;
+		if (r_v != v) SLS_FAIL;
 
 		VecComp r_vc;
 		load(r_vc, "vc", matb);
-		r_vc -= vc;
-		if (norm(r_v) != 0)
-			SLS_FAIL;
+		if (r_vc != vc)	SLS_FAIL;
 
 		VecDoub r_vd;
 		load(r_vd, "vd", matb);
@@ -510,8 +486,7 @@ void test_matb()
 
 		MatDoub r_A(0,0);
 		load(r_A, "A", matb);
-		r_A -= A;
-		if (norm(r_A) != 0) SLS_FAIL;
+		if (r_A != A) SLS_FAIL;
 
 		MatComp r_C(0,0);
 		load(r_C, "C", matb);
@@ -549,8 +524,7 @@ void test_matb()
 
 		Mat3Comp r_C3;
 		load(r_C3, "C3", matb);
-		r_C3 -= C3;
-		SLS_ASSERT(norm(r_C3) == 0);
+		SLS_ASSERT(r_C3 == C3);
 
 		Cmat3Doub r_CD3;
 		load(r_CD3, "CD3", matb);
