@@ -41,7 +41,7 @@ void test_all(const std::string &test_name)
 	SLS_TEST(file);
 	SLS_TEST(global);
 	SLS_TEST(graph);
-	SLS_TEST(GSL);
+	SLS_TEST(gsl);
 	SLS_TEST(heap);
 	SLS_TEST(huffman);
 	SLS_TEST(hungarian);
@@ -80,15 +80,8 @@ void test_all(const std::string &test_name)
 	SLS_TEST(Vbase);
 	SLS_TEST(Vec);
 	SLS_TEST(ylm);
-	
-	if (test_name.empty()) {
-		cout << "do optional tests? (y/[n])" << endl;
-		if (getchar() == 'y') {
-			SLS_TEST(disp);
-			SLS_TEST(input);
-		}
-		else
-			cout << "optional tests skipped." << endl;
-	}
+	SLS_TEST(disp);
+	SLS_TEST(input);
+
 	cout << "end of testing!" << endl;
 }

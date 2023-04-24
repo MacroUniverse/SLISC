@@ -1,4 +1,5 @@
 // don't use SLISC
+#include "../SLISC/config.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
