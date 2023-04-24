@@ -414,10 +414,8 @@ path_nogen_headers = $(filter-out $(path_headers),$(path_gen_headers)) # non-gen
 Ncpu = $(shell getconf _NPROCESSORS_ONLN)
 
 # remake all and test all
-all: clean_all
-	make depend
+all:
 	make test
-	make h64
 	make test64
 	make h64q
 	make test64q
@@ -425,63 +423,72 @@ all: clean_all
 
 ifeq ($(opt_main), true)
 
-test:
-	$(info remake and run all tests - default options)
-	make clean
-	make depend -j$(Ncpu)
-	make main.x -j$(Ncpu)
-	@printf "\n\n\n"
-	./main.x < input.inp
+    test: clean_all
+		$(info remake and run all tests - default options)
+		make depend -j$(Ncpu)
+		make main.x -j$(Ncpu)
+		@printf "\n\n\n"
+		./main.x < input.inp
 
-test64:
-	$(info remake and run all tests - 64bit)
-	make clean
-	make opt_long32=false depend -j$(Ncpu)
-	make opt_long32=false main.x -j$(Ncpu)
-	@printf "\n\n\n"
-	./main.x < input.inp
+    test64: clean_all
+		$(info remake and run all tests - 64bit)
+		make opt_long32=false depend -j$(Ncpu)
+		make opt_long32=false main.x -j$(Ncpu)
+		@printf "\n\n\n"
+		./main.x < input.inp
 
-test64q:
-	$(info remake and run all tests - 64bit)
-	make clean
-	make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
-	make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
-	@printf "\n\n\n"
-	./main.x < input.inp
+    test64q: clean_all
+		$(info remake and run all tests - 64bit)
+		make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
+		make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
+		@printf "\n\n\n"
+		./main.x < input.inp
 
-else
+else # opt_main == false
 
-test:
-	$(info remake and run all tests - default options)
-	make clean
-	make depend
-	make $(test_x) -j$(Ncpu)
-	@printf "\n\n\n"
-	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+    test: clean_all
+		$(info remake and run all tests - default options)
+		make depend
+		make $(test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		make run_test_x
 
-test64:
-	$(info remake and run all tests - 64bit)
-	make clean
-	make opt_long32=false depend -j$(Ncpu)
-	make opt_long32=false $(test_x) -j$(Ncpu)
-	@printf "\n\n\n"
-	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+    test64: clean_all
+		$(info remake and run all tests - 64bit)
+		make opt_long32=false depend -j$(Ncpu)
+		make opt_long32=false $(test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		make run_test_x
 
-test64q:
-	$(info remake and run all tests - 64bit)
-	make clean
-	make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
-	make opt_long32=false opt_quadmath=true $(test_x) -j$(Ncpu)
-	@printf "\n\n\n"
-	@for x in ${test_x}; do echo $${x}; ./$${x} < input.inp; done
+    test64q: clean_all
+		$(info remake and run all tests - 64bit)
+		make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
+		make opt_long32=false opt_quadmath=true $(test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		make run_test_x
 
-endif
+    run_test_x:
+		@for x in ${test_x}; do \
+			echo $${x}; ./$${x} < input.inp; \
+			if [ $$? -ne 0 ]; then \
+				printf "returned non-zero! \n\n"; \
+				failed=1; \
+				break; \
+			fi \
+		done; \
+		if [ -n "$$failed" ]; then \
+			false; \
+		else \
+			printf "\nall tests successful!\n"; \
+		fi
+
+endif # opt_main
 
 
 ifeq ($(opt_main), true)
-main.x: main.o
+main.x: main.o $(test_o)
 	$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
-main.o: main.cpp tests/test_all.h $(test_x)
+main.o: main.cpp tests/test_all.h
 	$(opt_compiler) $(flags) -c main.cpp
 else
 main.x:

@@ -11,18 +11,18 @@ void test_eig()
 	{
 		Long N = 20;
 		CmatDoub a(N, N);
-		CmatDoub eigVec;
+		CmatDoub eigVec(N, N);
 		VecDoub eigVal(a.n0());
 		CmatDoub eigVec1, eigVec2;
 		for (Long k = 0; k < 5; ++k) {
 			// fill upper triangle
 			for (Long j = 0; j < N; ++j) {
 				for (Long i = 0; i < j; ++i) {
-					a(i, j) = a(j, i) = 20 * rand() - 10;
+					a(i, j) = a(j, i) = 20 * randDoub() - 10;
 				}
 			}
 			for (Long i = 0; i < N; ++i)
-				a(i, i) = 20 * rand() - 10;
+				a(i, i) = 20 * randDoub() - 10;
 
 			eig_sym(eigVal, eigVec, a);
 			eigVec1.resize(a.n0(), eigVec.n1());
@@ -41,19 +41,19 @@ void test_eig()
 	{
 		Long N = 20;
 		CmatComp a(N, N);
-		CmatComp eigVec;
+		CmatComp eigVec(N, N);
 		VecDoub eigVal(a.n0());
 		CmatComp eigVec1, eigVec2;
 		for (Long k = 0; k < 5; ++k) {
 			// fill upper triangle
 			for (Long j = 0; j < N; ++j) {
 				for (Long i = 0; i < j; ++i) {
-					a(i, j) = Comp(20 * rand() - 10, 20 * rand() - 10);
+					a(i, j) = Comp(20 * randDoub() - 10, 20 * randDoub() - 10);
 					a(j, i) = conj(a(i, j));
 				}
 			}
 			for (Long i = 0; i < N; ++i)
-				a(i, i) = 20 * rand() - 10;
+				a(i, i) = 20 * randDoub() - 10;
 
 			eig_her(eigVal, eigVec, a);
 			eigVec1.resize(a.n0(), eigVec.n1());
