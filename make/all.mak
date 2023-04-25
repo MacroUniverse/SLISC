@@ -403,10 +403,10 @@ endif
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -fmax-errors=5 -fopenmp
+    compiler_flag = -std=$(opt_std) -Wall -Wno-reorder -fmax-errors=5 -fopenmp # -ffast-math (includin -fno-math-errno, -funsafe-math-optimizations, -fno-signed-zeros, -fno-trapping-math, -ffinite-math-only)
 endif
 ifeq ($(opt_compiler), clang++)
-    compiler_flag = -std=$(opt_std) -Wall -Wno-overloaded-virtual -ferror-limit=5
+    compiler_flag = -std=$(opt_std) -Wall -Wno-overloaded-virtual -ferror-limit=5 -fopenmp # -ffast-math
 endif
 ifeq ($(opt_compiler), icpc)
     compiler_flag = -std=$(opt_std) -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type

@@ -1,9 +1,9 @@
 // basic scalar arithmetic
 
 #pragma once
+#include "../arith/fp_arith.h"
 #include "../arith/complex_arith.h"
 #include "../arith/Imag.h"
-#include "../arith/fp_arith.h"
 
 namespace slisc {
 

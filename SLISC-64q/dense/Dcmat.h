@@ -27,7 +27,7 @@ public:
 inline DcmatCharC::DcmatCharC() {}
 
 inline DcmatCharC::DcmatCharC(const Char *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatCharC::set(const Char *p, Long_I N0, Long_I N1, Long_I lda)
@@ -115,7 +115,7 @@ public:
 inline DcmatChar::DcmatChar() {}
 
 inline DcmatChar::DcmatChar(Char *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatChar::set(Char *p, Long_I N0, Long_I N1, Long_I lda)
@@ -223,7 +223,7 @@ public:
 inline DcmatUcharC::DcmatUcharC() {}
 
 inline DcmatUcharC::DcmatUcharC(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatUcharC::set(const Uchar *p, Long_I N0, Long_I N1, Long_I lda)
@@ -311,7 +311,7 @@ public:
 inline DcmatUchar::DcmatUchar() {}
 
 inline DcmatUchar::DcmatUchar(Uchar *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatUchar::set(Uchar *p, Long_I N0, Long_I N1, Long_I lda)
@@ -419,7 +419,7 @@ public:
 inline DcmatIntC::DcmatIntC() {}
 
 inline DcmatIntC::DcmatIntC(const Int *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatIntC::set(const Int *p, Long_I N0, Long_I N1, Long_I lda)
@@ -507,7 +507,7 @@ public:
 inline DcmatInt::DcmatInt() {}
 
 inline DcmatInt::DcmatInt(Int *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatInt::set(Int *p, Long_I N0, Long_I N1, Long_I lda)
@@ -615,7 +615,7 @@ public:
 inline DcmatLlongC::DcmatLlongC() {}
 
 inline DcmatLlongC::DcmatLlongC(const Llong *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatLlongC::set(const Llong *p, Long_I N0, Long_I N1, Long_I lda)
@@ -703,7 +703,7 @@ public:
 inline DcmatLlong::DcmatLlong() {}
 
 inline DcmatLlong::DcmatLlong(Llong *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatLlong::set(Llong *p, Long_I N0, Long_I N1, Long_I lda)
@@ -811,7 +811,7 @@ public:
 inline DcmatFloatC::DcmatFloatC() {}
 
 inline DcmatFloatC::DcmatFloatC(const Float *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatFloatC::set(const Float *p, Long_I N0, Long_I N1, Long_I lda)
@@ -899,7 +899,7 @@ public:
 inline DcmatFloat::DcmatFloat() {}
 
 inline DcmatFloat::DcmatFloat(Float *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatFloat::set(Float *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1007,7 +1007,7 @@ public:
 inline DcmatDoubC::DcmatDoubC() {}
 
 inline DcmatDoubC::DcmatDoubC(const Doub *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatDoubC::set(const Doub *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1095,7 +1095,7 @@ public:
 inline DcmatDoub::DcmatDoub() {}
 
 inline DcmatDoub::DcmatDoub(Doub *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatDoub::set(Doub *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1203,7 +1203,7 @@ public:
 inline DcmatLdoubC::DcmatLdoubC() {}
 
 inline DcmatLdoubC::DcmatLdoubC(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatLdoubC::set(const Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1291,7 +1291,7 @@ public:
 inline DcmatLdoub::DcmatLdoub() {}
 
 inline DcmatLdoub::DcmatLdoub(Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatLdoub::set(Ldoub *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1399,7 +1399,7 @@ public:
 inline DcmatQdoubC::DcmatQdoubC() {}
 
 inline DcmatQdoubC::DcmatQdoubC(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatQdoubC::set(const Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1487,7 +1487,7 @@ public:
 inline DcmatQdoub::DcmatQdoub() {}
 
 inline DcmatQdoub::DcmatQdoub(Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatQdoub::set(Qdoub *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1595,7 +1595,7 @@ public:
 inline DcmatFcompC::DcmatFcompC() {}
 
 inline DcmatFcompC::DcmatFcompC(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatFcompC::set(const Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1683,7 +1683,7 @@ public:
 inline DcmatFcomp::DcmatFcomp() {}
 
 inline DcmatFcomp::DcmatFcomp(Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatFcomp::set(Fcomp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1791,7 +1791,7 @@ public:
 inline DcmatCompC::DcmatCompC() {}
 
 inline DcmatCompC::DcmatCompC(const Comp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatCompC::set(const Comp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1879,7 +1879,7 @@ public:
 inline DcmatComp::DcmatComp() {}
 
 inline DcmatComp::DcmatComp(Comp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatComp::set(Comp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -1987,7 +1987,7 @@ public:
 inline DcmatLcompC::DcmatLcompC() {}
 
 inline DcmatLcompC::DcmatLcompC(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatLcompC::set(const Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -2075,7 +2075,7 @@ public:
 inline DcmatLcomp::DcmatLcomp() {}
 
 inline DcmatLcomp::DcmatLcomp(Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatLcomp::set(Lcomp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -2183,7 +2183,7 @@ public:
 inline DcmatQcompC::DcmatQcompC() {}
 
 inline DcmatQcompC::DcmatQcompC(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatQcompC::set(const Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
@@ -2271,7 +2271,7 @@ public:
 inline DcmatQcomp::DcmatQcomp() {}
 
 inline DcmatQcomp::DcmatQcomp(Qcomp *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void DcmatQcomp::set(Qcomp *p, Long_I N0, Long_I N1, Long_I lda)

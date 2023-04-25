@@ -57,7 +57,7 @@ public:
 inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *p, Long_I N0, Long_I N1, Long_I lda)
-	: m_p(p), m_N0(N0), m_N1(N1), m_N(N0*N1), m_lda(lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
 {}
 
 inline void @Class@::set(@CT@ *p, Long_I N0, Long_I N1, Long_I lda)

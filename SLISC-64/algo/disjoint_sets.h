@@ -15,7 +15,7 @@ namespace slisc {
 	// public:
 		disjoint_sets() = default;
 
-		disjoint_sets(Long N): parent(N), Nset(N)
+		disjoint_sets(Long N): Nset(N), parent(N)
 		{
 			for (Long i = 0; i < N; i++)
 				parent[i] = i;
