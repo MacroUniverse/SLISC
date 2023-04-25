@@ -403,7 +403,7 @@ endif
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -Wno-misleading-indentation -fmax-errors=5 -fopenmp
+    compiler_flag = -std=$(opt_std) -Wall -Wno-cpp -Wno-reorder -fmax-errors=5 -fopenmp
 endif
 ifeq ($(opt_compiler), clang++)
     compiler_flag = -std=$(opt_std) -Wall -Wno-overloaded-virtual -ferror-limit=5
@@ -564,12 +564,14 @@ h: clean_h
 	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), $(opt_verb))"
 
 h64:
+	$(info remake all headers - 64bit)
 	make opt_long32=false h
 	rm -rf SLISC-64
 	cp -r SLISC SLISC-64
 	find SLISC-64 -name "*.h.in" -delete
 
 h64q:
+	$(info remake all headers - 64bit & quad_math)
 	make opt_long32=false opt_quadmath=true h
 	rm -rf SLISC-64q
 	cp -r SLISC SLISC-64q

@@ -58,7 +58,7 @@ inline double ulp(Doub_I x, Ullong_I n = 1) {
 		return ldexp(1, exp2+52);
 	else if (strcmp(flag, "+0") || strcmp(flag, "-0"))
 		return numeric_limits<Doub>::denorm_min();
-	else if (strcmp(flag, "-Inf") || strcmp(flag, "+Inf") || strcmp(flag, "qNaN") || strcmp(flag, "sNaN"))
+	else // (strcmp(flag, "-Inf") || strcmp(flag, "+Inf") || strcmp(flag, "qNaN") || strcmp(flag, "sNaN"))
 		SLS_ERR("can't get ulp for: " + to_string(x));
 }
 
