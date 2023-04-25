@@ -361,17 +361,6 @@ typedef vvecLlong vvecLong;
 typedef const vvecLong &vvecLong_I;
 typedef vvecLong &vvecLong_O, &vvecLong_IO;
 
-// quiet NaN definition
-// uncomment one of the following 3 methods of defining a global NaN
-// you can test by verifying that (NaN != NaN) is true
-
-//Uint proto_nan[2]={0xffffffff, 0x7fffffff};
-//double NaN = *( double* )proto_nan;
-//Doub NaN = sqrt(-1.);
-static const Doub NaN = std::numeric_limits<Doub>::quiet_NaN();
-// inline Bool isnan(Doub s)
-// { return s != s; }
-
 inline Bool isnan(Comp s) { return s != s; }
 
 // Floating Point Exceptions for Microsoft compilers
@@ -436,18 +425,23 @@ void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4, const T5 &s5,
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
 
 // === constants ===
+static const Doub
+Eps = std::numeric_limits<Doub>::epsilon(),
+NaN = std::numeric_limits<Doub>::quiet_NaN(),
+SNaN = std::numeric_limits<Doub>::signaling_NaN(),
+Inf = numeric_limits<Doub>::infinity(),
 
-const Doub Inf = numeric_limits<double>::infinity();
-const Doub PI = 3.14159265358979323;
-const Doub E = 2.71828182845904524;
+PI = 3.14159265358979323,
+E = 2.71828182845904524;
 #ifdef SLS_USE_QUAD_MATH
-const Qdoub PIq = 3.14159265358979323846264338327950288Q;
-const Qdoub Eq = 2.71828182845904523536028747135266250Q;
+static const Qdoub
+PIq = 3.14159265358979323846264338327950288Q,
+Eq = 2.71828182845904523536028747135266250Q;
 #endif
 
 namespace c {
 	// exact
-	const Doub
+	static const Doub
 	c0 = 299792458,                   // speed of light
 	h = 6.62607015e-34,               // Plank constant
 	hbar = h/(2*PI),                  // reduced Plank constant

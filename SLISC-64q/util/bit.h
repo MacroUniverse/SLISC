@@ -44,6 +44,20 @@ inline Bool bitR(Uchar_I byte, Int_I i)
 inline Bool bitR(const void *byte, Int_I i)
 { return *(Uchar*)byte & Uchar(1) << i; }
 
+//     (for multiple bytes)
+inline Bool bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i > 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += size - 1 - i/8;
+	else
+		p += i/8;
+	return *p & Uchar(1) << (i%8);
+}
+
 // get i-th bit from the left
 inline Bool bitL(Char_I byte, Int_I i)
 { return (Uchar)byte & Uchar(128) >> i; }
@@ -53,6 +67,20 @@ inline Bool bitL(Uchar_I byte, Int_I i)
 
 inline Bool bitL(const void *byte, Int_I i)
 { return *(Uchar*)byte & Uchar(128) >> i; }
+
+//     (for multiple bytes)
+inline Bool bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i > 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += i/8;
+	else
+		p += size - 1 - i/8;
+	return *p & Uchar(128) >> (i%8);
+}
 
 // set i-th bit from the right to 1
 inline void set_bitR(void *byte, Int_I i)
