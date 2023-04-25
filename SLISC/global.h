@@ -437,6 +437,7 @@ void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4, const T5 &s5,
 
 // === constants ===
 
+const Doub Inf = numeric_limits<double>::infinity();
 const Doub PI = 3.14159265358979323;
 const Doub E = 2.71828182845904524;
 #ifdef SLS_USE_QUAD_MATH
