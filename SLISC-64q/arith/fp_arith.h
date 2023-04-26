@@ -4,6 +4,18 @@
 
 namespace slisc {
 
+// Floating Point Exceptions for Microsoft compilers
+// no exception for integer overflow
+inline void msvc_turn_on_fp_except()
+{
+#if defined(SLS_FP_EXCEPT) && defined(SLS_USE_MSVC)
+	unsigned cw; _controlfp_s(&cw, 0, 0);
+	// also: EM_INEXACT, EM_UNDERFLOW
+	cw &= ~(EM_INVALID | EM_OVERFLOW | EM_ZERODIVIDE | EM_DENORMAL);
+	unsigned cw1; _controlfp_s(&cw1, cw, MCW_EM);
+#endif
+}
+
 // break a double into different parts
 // d = man * 2^exp2 (exact)
 // sign info if included in `man`

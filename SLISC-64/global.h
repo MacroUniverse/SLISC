@@ -10,35 +10,27 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#define SLS_FP_EXCEPT // turn on floating point exception
-#define SLS_USE_UTFCPP // use utfcpp lib to convert utf8, 16 and 32
-
-#ifndef NDEBUG
-#define SLS_CHECK_BOUNDS
-#define SLS_CHECK_SHAPES
-#endif
-
-// STL
-#include <stdlib.h>
-#include <math.h>
-#include <cassert>
-#include <cmath>
-#include <climits>
-#include <limits>
-#include <cfloat>
-#include <algorithm>
+// ===== STL headers =====
+// IO, string, file
 #include <iostream>
-#include "prec/quad_math_declare.h"
-#include <complex>
-#include <vector>
+#include <cstring>
 #include <string>
 #include <iomanip>
 #include <fstream>
-#include <cstring>
-#include <cstdarg>
-#include <utility>
-#include <functional>
+
+// math
+#include <cfloat>
+#include <climits>
+#include <limits>
+#include <cmath>
+#include "prec/quad_math_declare.h" // put before <complex>
+#include <complex>
+
+// container
+#include <array>
+#include <algorithm>
 #include <tuple>
+#include <vector>
 #include <unordered_map>
 #include <map>
 #include <unordered_set>
@@ -46,9 +38,17 @@
 #include <deque>
 #include <queue>
 #include <stack>
-#include <array>
-#include <cerrno>
+
+// util
 #include <cstdlib>
+#include <cstdint>
+#include <cstdarg>
+#include <functional>
+#include <utility>
+#include <cassert>
+#include <cerrno>
+#include <thread>
+#include <mutex>
 
 // compilers
 #ifdef _MSC_VER
@@ -123,6 +123,11 @@
 	#endif
 #endif
 
+// use e.g. `#if SLS_CPP >= 11` to tell c++ version
+#ifdef __cplusplus
+	#define SLS_CPP (__cplusplus/100 - 2000)
+#endif
+
 // text styles (see also text_style() in disp.h)
 #define SLS_RED_BOLD "\033[1;31m"
 #define SLS_YELLOW_BOLD "\033[1;33m"
@@ -153,11 +158,10 @@
 	} while(0)
 #endif
 
-
 #define SLS_FAIL SLS_ERR("failed!")
 #define SLS_ASSERT(condition) if (!(condition)) SLS_FAIL
 
-// my std extension
+// my std extension for quad_math
 #include "prec/quad_math.h"
 
 #ifdef SLS_USE_MPLAPACK
@@ -363,23 +367,6 @@ typedef vvecLong &vvecLong_O, &vvecLong_IO;
 
 inline Bool isnan(Comp s) { return s != s; }
 
-// Floating Point Exceptions for Microsoft compilers
-// no exception for integer overflow
-#ifdef SLS_FP_EXCEPT
-	#ifdef SLS_USE_MSVC
-struct turn_on_floating_exceptions {
-	turn_on_floating_exceptions() {
-		unsigned cw; _controlfp_s(&cw, 0, 0);
-		// also: EM_INEXACT, EM_UNDERFLOW
-		cw &= ~(EM_INVALID | EM_OVERFLOW | EM_ZERODIVIDE | EM_DENORMAL);
-		unsigned cw1; _controlfp_s(&cw1, cw, MCW_EM);
-	}
-};
-// in case of ODR error, put this in main function;
-// turn_on_floating_exceptions yes_turn_on_floating_exceptions;turn_on_floating_exceptions yes_turn_on_floating_exceptions;
-	#endif
-#endif
-
 // error type
 class sls_err : public std::exception
 {
@@ -394,32 +381,17 @@ public:
 };
 
 // === print() like python ===
-template<class T>
-void print(const T &s) { cout << s << endl; }
+// print(a,b,...) is equivalent to `cout << a << b << ... << endl`
+// don't worry about how it works, just use it like a magic
+void print() { cout << endl; }
 
-template<class T1, class T2>
-void print(const T1 &s1, const T2 &s2) {
-	cout << s1 << ' ' << s2 << endl;
-}
-
-template<class T1, class T2, class T3>
-void print(const T1 &s1, const T2 &s2, const T3 &s3) {
-	cout << s1 << ' ' << s2 << ' ' << s3 << endl;
-}
-
-template<class T1, class T2, class T3, class T4>
-void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4) {
-	cout << s1 << ' ' << s2 << ' ' << s3 << ' ' << s4 << endl;
-}
-
-template<class T1, class T2, class T3, class T4, class T5>
-void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4, const T5 &s5) {
-	cout << s1 << ' ' << s2 << ' ' << s3 << ' ' << s4 << ' ' << s5 << endl;
-}
-
-template<class T1, class T2, class T3, class T4, class T5, class T6>
-void print(const T1 &s1, const T2 &s2, const T3 &s3, const T4 &s4, const T5 &s5, const T6 &s6) {
-	cout << s1 << ' ' << s2 << ' ' << s3 << ' ' << s4 << ' ' << s5 << ' ' << s6 << endl;
+template<typename T, typename... Args>
+void print(const T& first, const Args&... args)
+{
+	std::mutex print_mutex; // thread safety
+	std::lock_guard<std::mutex> lock(print_mutex);
+    cout << first;
+    print(args...);
 }
 
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);

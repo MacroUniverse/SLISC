@@ -88,6 +88,8 @@ endif
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
     $(info Build: Debug)
+	tmp := $(shell echo "#define SLS_CHECK_BOUNDS" >> SLISC/config.h.new)
+	tmp := $(shell echo "#define SLS_CHECK_SHAPES" >> SLISC/config.h.new)
     debug_flag = -g
 	release_flag =
     ifeq ($(opt_compiler), g++)
@@ -400,6 +402,10 @@ ifeq ($(opt_matfile), true)
 else
     $(info Matlab .mat: off)
 endif
+
+tmp := $(shell echo "#define SLS_FP_EXCEPT" >> SLISC/config.h.new)
+tmp := $(shell echo "#define SLS_USE_UTFCPP" >> SLISC/config.h.new)
+
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)

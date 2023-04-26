@@ -14,11 +14,9 @@ namespace slisc {
 // for example, shot int(1) will be 00000001 0000000 in little endian
 // there is no concept of "bit endian" since they are not addressable
 // Intel x86 and x64 architechture use little endian
-inline Bool little_endian()
-{
-	short int num = 1;
-	char *b = (char *)&num;
-	return b[0];
+inline bool little_endian() {
+    int16_t i = 1;
+    return *(char *)&i == 1;
 }
 
 // convert endianness
