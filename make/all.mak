@@ -1,7 +1,6 @@
 # use g++ with libraries
 # requires g++8.3 or higher
 # any change in *.h.in file will cause all *.cpp files to compile
-# to debug only one file, e.g. test_a.cpp, use `make test_a.o link`
 
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
@@ -20,7 +19,7 @@ opt_static = false
 opt_min = false
 # verbose output for Octave debug
 opt_verb = false
-# compile all tests as main.x or into individual test_*.x
+# compile all tests as main.x or into individual tests/*.x
 opt_main = false
 # use quad precision float (`__float128` extension of gcc)
 opt_quadmath = false
@@ -450,8 +449,8 @@ in_paths = $(shell find SLISC -maxdepth 1 -type d -printf "../%p/:" | head -c -2
 # === File Lists ===
 path_test_cpp = $(shell ls tests/*.cpp) # tests/*.cpp
 path_cpp_mak = $(addsuffix .mak, $(subst tests/, make/deps/, $(path_test_cpp)))
-test_o = $(notdir $(path_test_cpp:.cpp=.o)) # test_*.o
-test_x = $(test_o:.o=.x) # test_*.x
+path_test_o = $(path_test_cpp:.cpp=.o) # tests/*.o
+path_test_x = $(path_test_cpp:.cpp=.x) # tests/*.o
 path_header_in = $(shell ls SLISC/*/*.h.in) # SLISC/*/*.h.in
 path_gen_headers = $(path_header_in:.h.in=.h) # generated headers in SLISC/
 path_cur_headers = $(shell ls SLISC/*.h) $(shell ls SLISC/*/*.h) # current headers in SLISC/, including hand written ones
@@ -470,9 +469,51 @@ all:
 	make test64q
 	make test
 
-ifeq ($(opt_main), true)
+ifeq ($(opt_main), false)
 
     # use `make test*` without any options! will ignore.
+    test: clean_all
+		$(info remake and run all tests - default)
+		@make h
+		@make depend -j$(Ncpu)
+		@make $(path_test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		@make run_test_x
+
+    test64: clean_all
+		$(info remake and run all tests - 64bit)
+		@make h64
+		@make opt_long32=false depend -j$(Ncpu)
+		@make opt_long32=false $(path_test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		@make run_test_x
+
+    test64q: clean_all
+		$(info remake and run all tests - 64bit & quadmath)
+		make h64q
+		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
+		@make opt_long32=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		make run_test_x
+
+    run_test_x:
+		@for x in ${path_test_x}; do \
+			echo $${x}; ./$${x} < input.inp; \
+			if [ $$? -ne 0 ]; then \
+				printf "returned non-zero! \n\n"; \
+				failed=1; \
+				break; \
+			fi \
+		done; \
+		if [ -n "$$failed" ]; then \
+			false; \
+		else \
+			printf "\nall tests successful!\n"; \
+		fi
+
+else # opt_main == false
+
+    # use `make test*` without any option! options will ignore.
     test: clean_all
 		$(info remake and run all tests - default)
 		@make h
@@ -497,54 +538,12 @@ ifeq ($(opt_main), true)
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-else # opt_main == false
-
-    # use `make test*` without any options! will ignore.
-    test: clean_all
-		$(info remake and run all tests - default)
-		@make h
-		@make depend -j$(Ncpu)
-		@make $(test_x) -j$(Ncpu)
-		@printf "\n\n\n"
-		@make run_test_x
-
-    test64: clean_all
-		$(info remake and run all tests - 64bit)
-		@make h64
-		@make opt_long32=false depend -j$(Ncpu)
-		@make opt_long32=false $(test_x) -j$(Ncpu)
-		@printf "\n\n\n"
-		@make run_test_x
-
-    test64q: clean_all
-		$(info remake and run all tests - 64bit & quadmath)
-		make h64q
-		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
-		@make opt_long32=false opt_quadmath=true $(test_x) -j$(Ncpu)
-		@printf "\n\n\n"
-		make run_test_x
-
-    run_test_x:
-		@for x in ${test_x}; do \
-			echo $${x}; ./$${x} < input.inp; \
-			if [ $$? -ne 0 ]; then \
-				printf "returned non-zero! \n\n"; \
-				failed=1; \
-				break; \
-			fi \
-		done; \
-		if [ -n "$$failed" ]; then \
-			false; \
-		else \
-			printf "\nall tests successful!\n"; \
-		fi
-
 endif # opt_main
 
 
 ifeq ($(opt_main), true)
-    main.x: main.o $(test_o)
-		$(opt_compiler) $(flags) -o main.x main.o test_*.o $(libs)
+    main.x: main.o $(path_test_o)
+		$(opt_compiler) $(flags) -o main.x main.o tests/*.o $(libs)
 
     main.o: main.cpp tests/test_all.h
 		$(opt_compiler) $(flags) -c main.cpp
@@ -587,7 +586,7 @@ h64q:
 clean_all: clean clean_h clean_dep
 
 clean:
-	rm -f *.o *.x
+	rm -f *.o *.x tests/*.o tests/*.x
 
 clean_h:
 	rm -f $(path_gen_headers)
@@ -599,20 +598,20 @@ clean_dep:
 # default target
 
 ifneq ($(opt_main), false)
-    test_%.x:
+    tests/%.x:
 		$(error opt_main if off!)
 else
-    test_%.x: test_%.o
+    tests/%.x: tests/%.o
 		@printf "\n$(yellow)$@$(normal):\n"
 		$(opt_compiler) $(flags) $< -o $@ $(libs)
 endif
 
-make/deps/test_%.cpp.mak: tests/test_%.cpp
+make/deps/%.cpp.mak: tests/%.cpp
 	@echo "# this file is auto generated with Makefile and g++" > $@
 	g++ -MM $< >> $@
 	@echo "	\$$(opt_compiler) \$$(flags) -c $<" >> $@
 
-# rules for test_*.o
+# rules for tests/*.o
 -include make/deps/*.mak
 
 # header generation with octave
