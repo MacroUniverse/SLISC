@@ -383,7 +383,7 @@ public:
 // === print() like python ===
 // print(a,b,...) is equivalent to `cout << a << b << ... << endl`
 // don't worry about how it works, just use it like a magic
-void print() { cout << endl; }
+inline void print() { cout << endl; }
 
 template<typename T, typename... Args>
 void print(const T& first, const Args&... args)

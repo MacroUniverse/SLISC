@@ -226,6 +226,7 @@ SLS_QMATH_CFUNC(tanh)
 
 } // namespace std
 
+
 namespace slisc {
 
 inline __float128 sqr(const __float128 &x) { return x*x; }
@@ -268,8 +269,6 @@ struct Qdoub {
 	void operator=(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); }
 	operator double() { SLS_ERR("Qdoub not implemented!"); }
 };
-
-
 
 struct Qcomp {
 	double x[4];
