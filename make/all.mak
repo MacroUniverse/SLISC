@@ -12,8 +12,8 @@ opt_long32 = true
 opt_debug = true
 # address sanitizer (only for g++ dynamic debug build)
 opt_asan = $(opt_debug)
-# c++ standard [c++11|gnu++11]
-opt_std = c++11
+# c++ standard e.g. c++11, gnu++11
+opt_std = c++20
 # static link (not all libs supported)
 opt_static = false
 # minimum build (all below options set to false)
