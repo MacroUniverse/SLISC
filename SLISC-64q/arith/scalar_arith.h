@@ -304,17 +304,32 @@ inline Qdoub factorialq(Int_I n) {
 #endif
 
 // common api for STL and SLISC
-template <class T>
-inline Long size(const T &v) { return v.size(); }
+template <class T> inline Long size(const vector<T> &v) { return (Long)v.size(); }
 
-// return the size of an std::tuple
+template <class T> inline Long size(const set<T> &v) { return (Long)v.size(); }
+
+template <class T> inline Long size(const unordered_set<T> &v) { return (Long)v.size(); }
+
+template <class T> inline Long size(const deque<T> &v) { return (Long)v.size(); }
+
+template <class T> inline Long size(const stack<T> &v) { return (Long)v.size(); }
+
+template <class T> inline Long size(const std::basic_string<T> &v) { return (Long)v.size(); }
+
+
+template <class T, class U> inline Long size(const map<T,U> &v) { return (Long)v.size(); }
+
+template <class T, class U> inline Long size(const unordered_map<T,U> &v) { return (Long)v.size(); }
+
+
+// get the size of an std::tuple
+// see also `std::tuple_size`
 template <typename... Ts>
-constexpr Long size(const std::tuple<Ts...>&) {
-	return (Long)sizeof...(Ts);
-}
+constexpr Long size(const std::tuple<Ts...>&) { return (Long)sizeof...(Ts); }
 
+// get pointer
 template <class T>
-inline const T *p(const T &v)
+inline const T *ptr(const T &v)
 {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(!v.empty());
@@ -323,7 +338,7 @@ inline const T *p(const T &v)
 }
 
 template <class T>
-inline T *p(T &v)
+inline T *ptr(T &v)
 {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(!v.empty());

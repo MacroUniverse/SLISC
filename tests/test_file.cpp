@@ -33,12 +33,12 @@ void test_file()
 		SLS_FAIL;
 
 	// write_vec_str() and read_vec_str()
-	vecStr vstr = {u8"你好你好", u8"谢谢", u8"您吃了吗？"}, vstr_;
-	write_vec_str(vstr, u8"您吃了吗.txt");
-	read_vec_str(vstr_, u8"您吃了吗.txt");
+	vecStr vstr = {"你好你好", "谢谢", "您吃了吗？"}, vstr_;
+	write_vec_str(vstr, "您吃了吗.txt");
+	read_vec_str(vstr_, "您吃了吗.txt");
 	if (vstr != vstr_)
 		SLS_FAIL;
-	file_remove(u8"您吃了吗.txt");
+	file_remove("您吃了吗.txt");
 	
 	// multiple binary write()
 	ofstream fout; open_bin(fout, "test_bin");

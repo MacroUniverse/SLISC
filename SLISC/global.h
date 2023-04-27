@@ -375,7 +375,7 @@ private:
 public:
     explicit sls_err(Str_I msg): m_msg(msg) {}
 
-    const char* what() const noexcept override {
+    const char *what() const noexcept override {
         return m_msg.c_str();
     }
 };

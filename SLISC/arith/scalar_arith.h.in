@@ -173,13 +173,16 @@ inline Qdoub factorialq(Int_I n) {
 #endif
 
 // common api for STL and SLISC
-//% tem('size', {
-//%    'vector'; 'set'; 'unordered_set'; 'map'; 'unordered_map';
-//%    'deque'; 'stack';
-//% });
+//% tem('size', { 'vector'; 'set'; 'unordered_set'; 'deque'; 'stack'; 'std::basic_string'; });
 //%---------------------
-//% type = varargin{:};
-template <class T> inline Long size(const @type@<T> &v) { return (Long)v.size(); }
+//% Tv = varargin{:};
+template <class T> inline Long size(const @Tv@<T> &v) { return (Long)v.size(); }
+//%---------------------
+
+//% tem('size2', { 'map'; 'unordered_map'; });
+//%---------------------
+//% Tv = varargin{:};
+template <class T, class U> inline Long size(const @Tv@<T,U> &v) { return (Long)v.size(); }
 //%---------------------
 
 // get the size of an std::tuple
