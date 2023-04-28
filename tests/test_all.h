@@ -2,7 +2,14 @@
 #pragma once
 #include "../SLISC/str/unicode.h"
 
-#define SLS_TEST(name) do{ if (test_name.empty() || test_name == #name) {void name(); cout << "test_" << #name << ".cpp" << endl; test_##name();} } while(0)
+#define SLS_TEST(name) \
+	do { \
+		if (test_name.empty() || test_name == #name) { \
+			void test_##name(); \
+			cout << "test_" #name "()" << endl; \
+			test_##name(); \
+		} \
+	} while(0)
 
 #ifdef SLS_USE_MSVC
 slisc::turn_on_floating_exceptions yes_turn_on_floating_exceptions;

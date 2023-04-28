@@ -480,6 +480,7 @@ ifeq ($(opt_main), false)
 		@make $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
+		@printf "\n\n\n"
 
     test64: clean_all
 		$(info remake and run all tests - 64bit)
@@ -488,14 +489,16 @@ ifeq ($(opt_main), false)
 		@make opt_long32=false $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
+		@printf "\n\n\n"
 
     test64q: clean_all
 		$(info remake and run all tests - 64bit & quadmath)
-		make h64q
+		@make h64q
 		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
-		make run_test_x
+		@make run_test_x
+		@printf "\n\n\n"
 
     run_test_x:
 		@for x in ${path_test_x}; do \
@@ -520,6 +523,7 @@ else # opt_main == false
 		@make h
 		@make depend -j$(Ncpu)
 		@make main.x -j$(Ncpu)
+		@printf "\n\n\n"
 		./main.x < input.inp
 		@printf "\n\n\n"
 
@@ -528,14 +532,16 @@ else # opt_main == false
 		@make h64
 		@make opt_long32=false depend -j$(Ncpu)
 		@make opt_long32=false main.x -j$(Ncpu)
+		@printf "\n\n\n"
 		./main.x < input.inp
 		@printf "\n\n\n"
 
     test64q: clean_all
 		$(info remake and run all tests - 64bit & quadmath)
-		@make h64
+		@make h64q
 		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
+		@printf "\n\n\n"
 		./main.x < input.inp
 		@printf "\n\n\n"
 
