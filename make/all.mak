@@ -12,7 +12,7 @@ opt_debug := true
 # address sanitizer (only for g++ dynamic debug build)
 opt_asan := $(opt_debug)
 # c++ standard e.g. c++11, gnu++11, c++20
-opt_std := c++20
+opt_std := c++11
 # static link (not all libs supported)
 opt_static := false
 # minimum build (all below options set to false)
@@ -87,24 +87,24 @@ endif
 # === Debug / Release ===
 ifeq ($(opt_debug), true)
     $(info Build: Debug)
-	tmp := $(shell echo "#define SLS_CHECK_BOUNDS" >> SLISC/config.h.new)
-	tmp := $(shell echo "#define SLS_CHECK_SHAPES" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_CHECK_BOUNDS" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_CHECK_SHAPES" >> SLISC/config.h.new)
     debug_flag := -g
-	release_flag :=
+    release_flag :=
     ifeq ($(opt_compiler), g++)
         debug_flag := -g -ftrapv $(asan_flag) # -pedantic # show more warnings
     endif
 else
     $(info Build: Release)
-    tmp := $(shell echo "#define NDEBUG" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define NDEBUG" >> SLISC/config.h.new)
     release_flag := -O3
-	debug_flag :=
+    debug_flag :=
 endif
 
 # === main.x ===
 ifeq ($(opt_main), true)
     $(info main.x: on)
-    tmp := $(shell echo "#define SLS_TEST_ALL" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_TEST_ALL" >> SLISC/config.h.new)
 else
     $(info main.x: off)
 endif
@@ -115,7 +115,7 @@ ifeq ($(opt_asan), true)
         ifeq ($(opt_static), false)
             $(info Address Sanitizer: on)
             asan_flag := -fsanitize=address -static-libasan
-            tmp := $(shell echo "#define SLS_USE_ASAN" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define SLS_USE_ASAN" >> SLISC/config.h.new)
         else
             $(info Address Sanitizer: off)
         endif
@@ -129,7 +129,7 @@ endif
 # === 64bit index ===
 ifeq ($(opt_long32), true)
     $(info Long bits: 32)
-    tmp := $(shell echo "#define SLS_USE_INT_AS_LONG" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_INT_AS_LONG" >> SLISC/config.h.new)
 else
     $(info Long bits: 64)
 endif
@@ -143,14 +143,14 @@ lapacke_lib :=
 ifeq ($(opt_lapack), reference)
     $(info CBLAS/LAPACKE: reference)
 # === CBLAS (reference) ===
-    tmp := $(shell echo "#define SLS_USE_CBLAS" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_CBLAS" >> SLISC/config.h.new)
     ifeq ($(opt_long32), false)
         cblas_lib := -l cblas64 -l blas64 -l gfortran -l quadmath
     else
         cblas_lib := -l cblas -l blas -l gfortran -l quadmath
     endif
 # === LAPACKE (reference) ===
-    tmp := $(shell echo "#define SLS_USE_LAPACKE" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_LAPACKE" >> SLISC/config.h.new)
     ifeq ($(opt_long32), false)
         lapacke_lib := -l lapacke64 -l lapack64
     else
@@ -161,10 +161,10 @@ endif
 ifeq ($(opt_lapack), openblas)
     $(info CBLAS/LAPACKE: openblas)
 # === CBLAS (openblas) ===
-    tmp := $(shell echo "#define SLS_USE_CBLAS" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_CBLAS" >> SLISC/config.h.new)
     cblas_lib := -l openblas
 # === LAPACKE (openblas) ===
-    tmp := $(shell echo "#define SLS_USE_LAPACKE" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_LAPACKE" >> SLISC/config.h.new)
 endif
 
 # === MKL ===
@@ -185,7 +185,7 @@ ifeq ($(opt_lapack), mkl)
         # Compiler: g++
         ifeq ($(opt_compiler), g++)
             $(info Compiler: g++)
-            tmp := $(shell echo "#define SLS_USE_MKL" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define SLS_USE_MKL" >> SLISC/config.h.new)
             mkl_flag := -m64 # -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
@@ -200,7 +200,7 @@ ifeq ($(opt_lapack), mkl)
         # Compiler: icpc
         ifeq ($(opt_compiler), icpc)
             $(info Compiler: icpc)
-            tmp := $(shell echo "#define SLS_USE_MKL" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define SLS_USE_MKL" >> SLISC/config.h.new)
             mkl_flag := # -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
@@ -218,8 +218,8 @@ ifeq ($(opt_lapack), mkl)
         # Compiler: g++
         ifeq ($(opt_compiler), g++)
             $(info Compiler: g++)
-            tmp := $(shell echo "#define SLS_USE_MKL" >> SLISC/config.h.new)
-            tmp := $(shell echo "#define MKL_ILP64" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define SLS_USE_MKL" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define MKL_ILP64" >> SLISC/config.h.new)
             mkl_flag := -m64 # -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
@@ -234,8 +234,8 @@ ifeq ($(opt_lapack), mkl)
         # Compiler: icpc
         ifeq ($(opt_compiler), icpc)
             $(info Compiler: icpc)
-            tmp := $(shell echo "#define SLS_USE_MKL" >> SLISC/config.h.new)
-            tmp := $(shell echo "#define MKL_ILP64" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define SLS_USE_MKL" >> SLISC/config.h.new)
+            tmp := $(shell echo "\#define MKL_ILP64" >> SLISC/config.h.new)
             mkl_flag := # -I "${MKLROOT}/include"
             # static link
             ifeq ($(opt_static), true)
@@ -254,7 +254,7 @@ endif
 
 # === Boost ===
 ifeq ($(opt_boost), true)
-    tmp := $(shell echo "#define SLS_USE_BOOST" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_BOOST" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info Boost: dynamic)
         boost_lib := -l:libboost_system.so -l:libboost_filesystem.so
@@ -264,12 +264,12 @@ ifeq ($(opt_boost), true)
     endif
 else
     $(info Boost: off)
-	boost_lib :=
+    boost_lib :=
 endif
 
 # === GSL ===
 ifeq ($(opt_gsl), true)
-    tmp := $(shell echo "#define SLS_USE_GSL" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_GSL" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info GSL: dynamic)
         gsl_lib := -l:libgsl.so
@@ -279,13 +279,13 @@ ifeq ($(opt_gsl), true)
     endif
 else
     $(info GSL: off)
-	gsl_lib :=
+    gsl_lib :=
 endif
 
 # === Eigen ===
 ifeq ($(opt_eigen), true)
     $(info Eigen: on)
-    tmp := $(shell echo "#define SLS_USE_EIGEN" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_EIGEN" >> SLISC/config.h.new)
 else
     $(info Eigen: off)
 endif
@@ -296,15 +296,15 @@ ifeq ($(opt_quadmath), true)
     $(info Quad Math: on)
     quad_math_flag := -fext-numeric-literals
     quad_math_lib := -l quadmath
-    tmp := $(shell echo "#define SLS_USE_QUAD_MATH" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_QUAD_MATH" >> SLISC/config.h.new)
 else
     $(info Quad Math: off)
-	quad_math_flag :=
+    quad_math_flag :=
 endif
 
 # === Arb ===
 ifeq ($(opt_arb), true)
-    tmp := $(shell echo "#define SLS_USE_ARB" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_ARB" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info Arb: dynamic)
         # use -larb if compiled from source, or create soft link named flint-arb
@@ -315,12 +315,12 @@ ifeq ($(opt_arb), true)
     endif
 else
     $(info Arb: off)
-	arb_lib :=
+    arb_lib :=
 endif
 
 # === MPLAPACK ===
 ifeq ($(opt_mplapack), true)
-    tmp := $(shell echo "#define SLS_USE_MPLAPACK" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_MPLAPACK" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info MPLAPACK: dynamic)
         mplapack_lib := -l:libmplapack__Float128.so -l:libmpblas__Float128.so
@@ -330,14 +330,14 @@ ifeq ($(opt_mplapack), true)
     endif
 else
     $(info MPLAPACK: off)
-	mplapack_lib :=
+    mplapack_lib :=
 endif
 
 # === Arpack ===
 arpack_lib :=
 ifeq ($(opt_arpack), true)
     ifeq ($(opt_lapack), reference)
-        tmp := $(shell echo "#define SLS_USE_ARPACK" >> SLISC/config.h.new)
+        tmp := $(shell echo "\#define SLS_USE_ARPACK" >> SLISC/config.h.new)
         ifeq ($(opt_static), false)
             $(info Arpack: dynamic)
             ifeq ($(opt_long32), true)
@@ -363,18 +363,18 @@ endif
 # === SQLiteCpp ===
 ifeq ($(opt_sqlitecpp), true)
     opt_sqlite := false
-    tmp := $(shell echo "#define SLS_USE_SQLITECPP" >> SLISC/config.h.new)
-    tmp := $(shell echo "#define SLS_USE_SQLITE" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_SQLITECPP" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_SQLITE" >> SLISC/config.h.new)
     $(info SQLiteCpp: static)
-    sqlitecpp_lib := -l:libSQLiteCpp.a -l:libSQLiteCpp-sqlite3.a
+    sqlitecpp_lib := -l:libSQLiteCpp.a -l:libSQLiteCpp-sqlite3.a -l pthread -l dl
 else
     $(info SQLiteCpp: off)
-	sqlitecpp_lib :=
+    sqlitecpp_lib :=
 endif
 
 # === SQLite ===
 ifeq ($(opt_sqlite), true)
-    tmp := $(shell echo "#define SLS_USE_SQLITE" >> SLISC/config.h.new)
+    tmp := $(shell echo "\#define SLS_USE_SQLITE" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info SQLite: dynamic)
         sqlite_lib := -l:libsqlite3.so
@@ -384,7 +384,7 @@ ifeq ($(opt_sqlite), true)
     endif
 else
     $(info SQLite: off)
-	sqlite_lib :=
+    sqlite_lib :=
 endif
 
 # === Matlab .mat file ===
@@ -393,7 +393,7 @@ matfile_lib =
 ifeq ($(opt_matfile), true)
     ifeq ($(opt_static), false)
         $(info Using Matlab .mat (dynamic))
-        tmp := $(shell echo "#define SLS_USE_MATFILE" >> SLISC/config.h.new)
+        tmp := $(shell echo "\#define SLS_USE_MATFILE" >> SLISC/config.h.new)
         matfile_lib := -l mat -l mx
     else
         $(info Matlab .mat: off)
@@ -402,8 +402,8 @@ else
     $(info Matlab .mat: off)
 endif
 
-tmp := $(shell echo "#define SLS_FP_EXCEPT" >> SLISC/config.h.new)
-tmp := $(shell echo "#define SLS_USE_UTFCPP" >> SLISC/config.h.new)
+tmp := $(shell echo "\#define SLS_FP_EXCEPT" >> SLISC/config.h.new)
+tmp := $(shell echo "\#define SLS_USE_UTFCPP" >> SLISC/config.h.new)
 
 
 # === compiler flags ===
