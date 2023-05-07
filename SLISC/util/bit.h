@@ -1,9 +1,5 @@
 // bit operations and endian related
-
-// Notes:
-// 1. C-style conversion between char and Uchar does not change any bit.
-// 2. char(-128) = char(128) = 0x80 = 0b10000000
-// 3. negative operand for C operator >> or << are undefined!
+// Note: negative operand for C operator >> or << are undefined!
 
 #pragma once
 #include "../global.h"
@@ -25,25 +21,21 @@ inline void change_endian(void *data, Long_I elm_size, Long_I Nelm)
 	char *p = (char *)data;
 	Long half = elm_size/2;
 	for (Long i = 0; i < Nelm; ++i) {
-		for (Long j = 0; j < half; ++j) {
+		for (Long j = 0; j < half; ++j)
 			swap(p[j], p[elm_size-j]);
-		}
 		p += elm_size;
 	}
 }
 
 // get i-th bit from the right
 inline Bool bitR(Char_I byte, Int_I i)
-{ return (Uchar)byte & Uchar(1) << i; }
+{ return byte & Char(1) << i; }
 
 inline Bool bitR(Uchar_I byte, Int_I i)
 { return byte & Uchar(1) << i; }
 
-inline Bool bitR(const void *byte, Int_I i)
-{ return *(Uchar*)byte & Uchar(1) << i; }
-
 //     (for multiple bytes)
-inline Bool bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+inline Bool bitR(const void *data, Long_I i, Long_I size = 1, Bool_I auto_endian = false)
 {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(i > 0 && i < size*8);
@@ -58,16 +50,13 @@ inline Bool bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = f
 
 // get i-th bit from the left
 inline Bool bitL(Char_I byte, Int_I i)
-{ return (Uchar)byte & Uchar(128) >> i; }
+{ return bitR(byte, 8-i); }
 
 inline Bool bitL(Uchar_I byte, Int_I i)
 { return byte & Uchar(128) >> i; }
 
-inline Bool bitL(const void *byte, Int_I i)
-{ return *(Uchar*)byte & Uchar(128) >> i; }
-
 //     (for multiple bytes)
-inline Bool bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+inline Bool bitL(const void *data, Long_I i, Long_I size = 1, Bool_I auto_endian = false)
 {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(i > 0 && i < size*8);
@@ -81,21 +70,15 @@ inline Bool bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = f
 }
 
 // set i-th bit from the right to 1
-inline void set_bitR(void *byte, Int_I i)
-{ *(Uchar*)byte |= Uchar(1) << i; }
-
 inline void set_bitR(Char_IO byte, Int_I i)
-{ set_bitR(&byte, i); }
+{ byte |= Char(1) << i; }
 
 inline void set_bitR(Uchar_IO byte, Int_I i)
-{ set_bitR(&byte, i); }
+{ byte |= Uchar(1) << i; }
 
 // set i-th bit from the left to 1
-inline void set_bitL(void *byte, Int_I i)
-{ *(Uchar*)byte |= Uchar(128) >> i; }
-
 inline void set_bitL(Char_IO byte, Int_I i)
-{ set_bitL(&byte, i); }
+{ set_bitR(byte, 8-i); }
 
 inline void set_bitL(Uchar_IO byte, Int_I i)
 { set_bitL(&byte, i); }
@@ -201,39 +184,21 @@ inline char str2bit(Str_I str)
 	return byte;
 }
 
-// convert `N` digits of any base (up to 256) to integer (little endian)
-// i.e. p[0] + p[1]*base + p[2]*base^2 ...
-inline Int baseN2Int(const Uchar *p, Int_I N, Uchar_I base)
-{
-	Int n = p[0], exp = base;
-	for (Int i = 1; i < N; ++i) {
-		n += p[i] * exp;
-		exp *= base;
-	}
-	return n;
-}
-
-// convert integer to any base (little endian)
-inline void Int2baseN(Uchar *p, Int_I N, Uchar_I base, Int_I n)
-{
-	Int m = n;
-	p[0] = m % base;
-	for (Int i = 1; i < N; ++i) {
-		m /= base;
-		p[i] = m % base;
-	}
-}
-
 // ========== manipulate a range of bits ============
-inline Uchar bitsR_mask(int start, int Nbit)
+
+// Nbit '1' on the right (0 <= Nbit <= 8)
+inline Uchar bitsR_mask(int Nbit)
 { return (1 << Nbit) - 1; }
 
-inline Uchar bitsL_mask(int start, int Nbit)
+// Nbit '1' on the left
+inline Uchar bitsL_mask(int Nbit)
 { return 0xFF << (8 - Nbit); }
 
+// Nbit '1' starting from `start`
 inline Uchar bits_mask(int start, int Nbit)
 { return bitsR_mask(Nbit) << (8-start-Nbit); }
 
+// copy Nbit on the right
 inline void bitsR2bitsR(Uchar& target, Uchar source, int Nbit)
 {
     Uchar clear_mask = bitsR_mask(Nbit);
@@ -242,6 +207,7 @@ inline void bitsR2bitsR(Uchar& target, Uchar source, int Nbit)
 	target |= source;
 }
 
+// copy Nbit on the left
 inline void bitsL2bitsL(Uchar& target, Uchar source, int Nbit)
 {
 	Uchar clear_mask = bitsL_mask(Nbit);
@@ -250,11 +216,12 @@ inline void bitsL2bitsL(Uchar& target, Uchar source, int Nbit)
 	target |= source;
 }
 
+// copy Nbit from the right to the left
 inline void bitsR2bitsL(Uchar& target, const Uchar source, int Nbit)
 {
     Uchar clear_mask = 0xFF >> Nbit;
     target &= clear_mask;
-    target |= (source << (8 - n));
+    target |= (source << (8 - Nbit));
 }
 
 inline void bitsL2bitsR(Uchar& target, const Uchar source, int Nbit)
@@ -308,6 +275,29 @@ inline void bits2bitsR(Uchar& target, Uchar source, int start, int Nbit)
 // 		++target;
 // 	}
 // }
+
+// convert `N` digits of any base (up to 256) to integer (little endian)
+// i.e. p[0] + p[1]*base + p[2]*base^2 ...
+inline Int baseN2Int(const Uchar *p, Int_I N, Uchar_I base)
+{
+	Int n = p[0], exp = base;
+	for (Int i = 1; i < N; ++i) {
+		n += p[i] * exp;
+		exp *= base;
+	}
+	return n;
+}
+
+// convert integer to any base (little endian)
+inline void Int2baseN(Uchar *p, Int_I N, Uchar_I base, Int_I n)
+{
+	Int m = n;
+	p[0] = m % base;
+	for (Int i = 1; i < N; ++i) {
+		m /= base;
+		p[i] = m % base;
+	}
+}
 
 
 // =========== Character Sets ===============

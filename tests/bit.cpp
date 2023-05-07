@@ -8,11 +8,14 @@ void test_bit()
 {
 	using namespace slisc;
 	if (!little_endian())
-		SLS_WARN("this system is using big endian, is it x86 or x64 architecture?");
+		SLS_WARN("this system is using big endian, is it x86 or x86-64 architecture?");
 
 	Char byte = 0;
+	Uchar byte1 = 0;
 	for (Long i = 0; i < 8; ++i) {
-		if (bitL(&byte, i) != 0 || bitR(&byte, i) != 0)
+		if (bitL(&byte, i) != 0 || bitR(&byte, i) != 0 || bitL(byte, i) != 0 || bitR(byte, i) != 0)
+			SLS_FAIL;
+		if (bitL(&byte1, i) != 0 || bitR(&byte1, i) != 0 || bitL(byte1, i) != 0 || bitR(byte1, i) != 0)
 			SLS_FAIL;
 	}
 
