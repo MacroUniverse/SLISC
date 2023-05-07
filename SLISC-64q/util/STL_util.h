@@ -133,4 +133,10 @@ inline void erase(vector<T> &v, Long_I ind)
 	v.erase(v.begin() + ind);
 }
 
+inline Str &operator<<(Str_IO s, char c) { return s += c; }
+
+inline Str &operator<<(Str_IO s, const char *p) { return s += p; }
+
+inline Str &operator<<(Str_IO s, Str_I str) { return s += str; }
+
 } // namespace slisc

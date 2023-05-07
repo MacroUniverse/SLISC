@@ -224,6 +224,92 @@ inline void Int2baseN(Uchar *p, Int_I N, Uchar_I base, Int_I n)
 	}
 }
 
+// ========== manipulate a range of bits ============
+inline Uchar bitsR_mask(int start, int Nbit)
+{ return (1 << Nbit) - 1; }
+
+inline Uchar bitsL_mask(int start, int Nbit)
+{ return 0xFF << (8 - Nbit); }
+
+inline Uchar bits_mask(int start, int Nbit)
+{ return bitsR_mask(Nbit) << (8-start-Nbit); }
+
+inline void bitsR2bitsR(Uchar& target, Uchar source, int Nbit)
+{
+    Uchar clear_mask = bitsR_mask(Nbit);
+	source &= clear_mask;
+	target &= ~clear_mask;
+	target |= source;
+}
+
+inline void bitsL2bitsL(Uchar& target, Uchar source, int Nbit)
+{
+	Uchar clear_mask = bitsL_mask(Nbit);
+	source &= clear_mask;
+	target &= ~clear_mask;
+	target |= source;
+}
+
+inline void bitsR2bitsL(Uchar& target, const Uchar source, int Nbit)
+{
+    Uchar clear_mask = 0xFF >> Nbit;
+    target &= clear_mask;
+    target |= (source << (8 - n));
+}
+
+inline void bitsL2bitsR(Uchar& target, const Uchar source, int Nbit)
+{
+    Uchar clear_mask = 0xFF << Nbit;
+    target &= clear_mask;
+    Uchar source_bits = source >> (8 - Nbit);
+    target |= source_bits;
+}
+
+inline void bitsR2bits(Uchar& target, int start, int Nbit, const Uchar source)
+{
+    SLS_ASSERT(start > 0 && start + Nbit < 8);
+	Uchar clear_mask = bitsR_mask(Nbit);
+    Uchar source_bits = source & clear_mask;
+	Uchar left_shift = 8-start-Nbit;
+    Uchar clear_mask = ~(clear_mask << left_shift);
+    target &= clear_mask;
+    target |= (source_bits << left_shift);
+}
+
+inline void bits2bitsR(Uchar& target, Uchar source, int start, int Nbit)
+{
+	Uchar clear_mask = bits_mask(start, Nbit);
+	Uchar source = (source & clear_mask) >> (8-start-Nbit);
+	bitsR2bitsR(target, source, Nbit);
+}
+
+// inline void set_bit_range(Uchar* target, Long Nbyte, int target_start,
+//                    Uchar* source, Long Nbyte, int source_start, int Nbit, Bool auto_endian = false) {
+// 	Uchar N1, N2;
+// 	if (target_start < source_start) {
+// 		bitsR2bits(*target, target_start, 8-source_start, *source);
+// 		++source;
+// 		N2 = source_start - target_start;
+// 		bitsL2bitsR(*target, *source, N2);
+// 		N1 = 8 - N2;
+// 	}
+// 	else if (source_start < target_start) {
+// 		bits2bitsR(*target, *source, source_start, 8-target_start);
+// 		N1 = target_start - source_start;
+// 		N2 = 8 - N1;
+// 	}
+// 	else {
+// 		...
+// 	}
+// 	while (1) {
+// 		bitsR2bitsL(*target, *source, N1);
+// 		++source;
+// 		bitsL2bitsR(*target, *source, N2);
+// 		++target;
+// 	}
+// }
+
+
 // =========== Character Sets ===============
 
 // visible ASCII chars (in order)

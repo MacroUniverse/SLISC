@@ -27,9 +27,9 @@ inline void num2str(Str_O str, Char_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
 	// 0 padding on the left
-	if (min_len > 0 && (Long)str.size() < min_len) {
+	if (min_len > 0 && size(str) < min_len) {
 		Str str1;
-		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+		for (Long i = 0; i < min_len - size(str); ++i)
 			str1 += '0';
 		str = str1 + str;
 	}
@@ -58,9 +58,9 @@ inline void num2str(Str_O str, Int_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
 	// 0 padding on the left
-	if (min_len > 0 && (Long)str.size() < min_len) {
+	if (min_len > 0 && size(str) < min_len) {
 		Str str1;
-		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+		for (Long i = 0; i < min_len - size(str); ++i)
 			str1 += '0';
 		str = str1 + str;
 	}
@@ -89,9 +89,9 @@ inline void num2str(Str_O str, Llong_I s, Long_I min_len = -1)
 {
 	str = to_string(s);
 	// 0 padding on the left
-	if (min_len > 0 && (Long)str.size() < min_len) {
+	if (min_len > 0 && size(str) < min_len) {
 		Str str1;
-		for (Long i = 0; i < min_len - (Long)str.size(); ++i)
+		for (Long i = 0; i < min_len - size(str); ++i)
 			str1 += '0';
 		str = str1 + str;
 	}
@@ -583,12 +583,12 @@ inline Long trimR(Str_IO str, Str_I key = " ")
 	Long N;
 	Long ind = str.find_last_not_of(key);
 	if (ind < 0) {
-		N = str.size();
+		N = size(str);
 		str.clear();
 		return N;
 	}
 	str.erase(ind + 1);
-	N = str.size() - ind;
+	N = size(str) - ind;
 	return N;
 }
 
@@ -1127,12 +1127,12 @@ inline Long trimR(Str32_IO str, Str32_I key = U" ")
 	Long N;
 	Long ind = str.find_last_not_of(key);
 	if (ind < 0) {
-		N = str.size();
+		N = size(str);
 		str.clear();
 		return N;
 	}
 	str.erase(ind + 1);
-	N = str.size() - ind;
+	N = size(str) - ind;
 	return N;
 }
 
