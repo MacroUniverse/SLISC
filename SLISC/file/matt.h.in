@@ -31,7 +31,7 @@ public:
 	// open a file
 	void open(Str_I fname, const char *rw, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false);
 
-	Bool isopen();
+	bool isopen();
 
 	// close a file, if not called, will be called in destructor
 	void close();
@@ -279,7 +279,7 @@ inline void Matt::open(Str_I fname, const char *rw, Int_I precision, Bool_I repl
 	}
 }
 
-inline Bool Matt::isopen()
+inline bool Matt::isopen()
 {
 	return m_in.is_open() != m_out.is_open();
 }

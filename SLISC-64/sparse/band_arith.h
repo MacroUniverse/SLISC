@@ -38,7 +38,7 @@ inline DcmatCompC band(CbandComp_I a)
 // a(i,j) < tol is considered 0
 inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
 {
-	Bool found = false;
+	bool found = false;
 	// check upper diagonals
 	for (Long k = a.n1() - 1; k > 0 && !found; --k) {
 		Long i = 0;
@@ -72,7 +72,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatDoub_I a, Doub_I tol = 0)
 
 inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
 {
-	Bool found = false;
+	bool found = false;
 	// check upper diagonals
 	for (Long k = a.n1() - 1; k > 0 && !found; --k) {
 		Long i = 0;
@@ -105,7 +105,7 @@ inline void nband(Long_O Nup, Long_O Nlow, CmatComp_I a, Doub_I tol = 0)
 
 inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
 {
-	Bool found = false;
+	bool found = false;
 	// check upper diagonals
 	for (Long k = a.n1() - 1; k > 0 && !found; --k) {
 		Long i = 0;
@@ -139,7 +139,7 @@ inline void nband(Long_O Nup, Long_O Nlow, ScmatDoub_I a, Doub_I tol = 0)
 
 inline void nband(Long_O Nup, Long_O Nlow, ScmatComp_I a, Doub_I tol = 0)
 {
-	Bool found = false;
+	bool found = false;
 	// check upper diagonals
 	for (Long k = a.n1() - 1; k > 0 && !found; --k) {
 		Long i = 0;

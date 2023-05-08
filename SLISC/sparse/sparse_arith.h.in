@@ -17,13 +17,13 @@ namespace slisc {
 //%  'Qdoub' 'Qdoub' });
 //%------------------------------
 //% [Ts, Ts1] = varargin{:};
-inline Bool operator==(Cmobd@Ts@_I a, Cmobd@Ts1@_I b)
+inline bool operator==(Cmobd@Ts@_I a, Cmobd@Ts1@_I b)
 {
 //% req('v==v', {['Cmat3' Ts], ['Cmat3' Ts1]});
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
+inline bool operator!=(Cmobd@Ts@_I a, Cmobd@Ts1@_I b) { return !(a == b); }
 //%------------------------------
 
 //% tem('mul_cmat_cmat_diag', { 'Comp', 'Doub', 'Comp';
@@ -359,7 +359,7 @@ inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
 //% McooT = ['Mcoo', T];
 //% VbaseT = ['Vbase', T];
 //% VecT = ['Vec', T];
-inline Bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
+inline bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);

@@ -83,7 +83,7 @@ inline void arf_set_q(arf_t x, Qdoub_I q0)
 		SLS_ERR("something wrong!");
 // delete 2 bytes sign and exponent, then split into 2 Llong types
 	Uchar *p = (Uchar*)&q;
-	Bool negative = bitL(p+15, 0);
+	bool negative = bitL(p+15, 0);
 	unset_bitL(p+15, 0);
 	short int pw = *(short int*)(p+14) - 16383;
 	p[14] = 0; p[15] = 0;
@@ -181,52 +181,52 @@ inline std::ostream &operator<<(std::ostream &os, Bint_I x) {
 }
 
 // compare
-inline Bool operator==(Bint_I x, Bint_I y)
+inline bool operator==(Bint_I x, Bint_I y)
 { return fmpz_equal(x.m_n, y.m_n); }
 
-inline Bool operator==(Bint_I x, Llong_I y)
+inline bool operator==(Bint_I x, Llong_I y)
 { return fmpz_equal_si(x.m_n, y); }
 
-inline Bool operator==(Llong_I y, Bint_I x)
+inline bool operator==(Llong_I y, Bint_I x)
 { return fmpz_equal_si(x.m_n, y); }
 
-inline Bool operator==(Bint_I x, Str_I y)
+inline bool operator==(Bint_I x, Str_I y)
 { Bint yy(y); return x == yy; }
 
-inline Bool operator==(Str_I y, Bint_I x)
+inline bool operator==(Str_I y, Bint_I x)
 { Bint yy(y); return x == yy; }
 
-inline Bool operator!=(Bint_I x, Bint_I y)
+inline bool operator!=(Bint_I x, Bint_I y)
 { return !(x == y); }
 
-inline Bool operator!=(Bint_I x, Llong_I y)
+inline bool operator!=(Bint_I x, Llong_I y)
 { return !(x == y); }
 
-inline Bool operator!=(Llong_I y, Bint_I x)
+inline bool operator!=(Llong_I y, Bint_I x)
 { return !(x == y); }
 
-inline Bool operator!=(Bint_I x, Str_I y)
+inline bool operator!=(Bint_I x, Str_I y)
 { return !(x == y); }
 
-inline Bool operator<(Bint_I x, Bint_I y)
+inline bool operator<(Bint_I x, Bint_I y)
 { return fmpz_cmp(x.m_n, y.m_n) < 0; }
 
-inline Bool operator<(Bint_I x, Llong_I y)
+inline bool operator<(Bint_I x, Llong_I y)
 { return fmpz_cmp_si(x.m_n, y) < 0; }
 
-inline Bool operator<(Llong_I y, Bint_I x)
+inline bool operator<(Llong_I y, Bint_I x)
 { return fmpz_cmp_si(x.m_n, y) > 0; }
 
-inline Bool operator>(Bint_I x, Bint_I y)
+inline bool operator>(Bint_I x, Bint_I y)
 { return fmpz_cmp(x.m_n, y.m_n) > 0; }
 
-inline Bool operator>(Bint_I x, Llong_I y)
+inline bool operator>(Bint_I x, Llong_I y)
 { return fmpz_cmp_si(x.m_n, y) > 0; }
 
-inline Bool operator>(Llong_I y, Bint_I x)
+inline bool operator>(Llong_I y, Bint_I x)
 { return fmpz_cmp_si(x.m_n, y) < 0; }
 
-inline Bool isodd(Bint_I x)
+inline bool isodd(Bint_I x)
 { return fmpz_is_odd(x.m_n); }
 
 // arithmetic
@@ -362,10 +362,10 @@ inline std::ostream &operator<<(std::ostream &os, Breal_I x) {
 
 inline void clear(Breal_O x) { arf_clear(x.m_n); }
 
-inline Bool operator==(Breal_I x, Breal_I y)
+inline bool operator==(Breal_I x, Breal_I y)
 { return arf_equal(x.m_n, y.m_n); }
 
-inline Bool operator!=(Breal_I x, Breal_I y)
+inline bool operator!=(Breal_I x, Breal_I y)
 { return !(x == y); }
 
 inline void add(Breal_O z, Breal_I x, Breal_I y)

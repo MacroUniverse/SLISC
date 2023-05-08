@@ -172,8 +172,8 @@ struct SQLiteColumnInfo {
     Str name;      // Column name
     Str type;      // Column data type
     Str dft_val;   // Default value (as a string, empty if no default value)
-    Bool pk;       // Column is Primary Key
-    Bool notnull;  // Column is NOT NULL
+    bool pk;       // Column is Primary Key
+    bool notnull;  // Column is NOT NULL
 };
 
 // if db_old has a table and a field of the same name, type as in db_new of the table remains

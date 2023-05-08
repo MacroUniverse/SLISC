@@ -389,7 +389,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	return flag;
 }
 
-inline Bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
+inline bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
 
 inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	VecComp_IO x, CmatComp_I A, VecComp_I b,  Doub_I tol, Long_I maxit, VecComp_IO wsp_c)

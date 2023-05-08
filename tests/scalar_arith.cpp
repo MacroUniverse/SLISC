@@ -3,7 +3,7 @@
 using namespace slisc;
 
 template <class T1, class T2>
-inline Bool is_equiv(const T1 &s1, const T2 &s2)
+inline bool is_equiv(const T1 &s1, const T2 &s2)
 {
 	return s1 == s2 && sizeof(T1) == sizeof(T2);
 }

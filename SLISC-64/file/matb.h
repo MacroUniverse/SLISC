@@ -30,7 +30,7 @@ public:
 	void open(Str_I fname, Str_I rw, Bool_I replace = false);
 
 	// check if file is open
-	Bool isopen();
+	bool isopen();
 
 	// read all data into cache
 	void read_data();
@@ -207,7 +207,7 @@ inline Long Matb::data_size(Long_I i) const
 	return len;
 }
 
-inline Bool Matb::isopen()
+inline bool Matb::isopen()
 {
 	return m_in.is_open() != m_out.is_open();
 }

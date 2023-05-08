@@ -18,13 +18,13 @@ int main()
 
 	Str fname, fname_i;
 	vecStr names;
-	Bool restart;
+	bool restart;
 	while (true) {
 		restart = false;
 		file_list(names, "./");
 
 		// find a prefix*suffix-XX
-		Bool found = false;
+		bool found = false;
 		for (Long i = 0; i < size(names); ++i) {
 			if (names[i].substr(0, prefix.size()) != prefix || names[i].substr(names[i].size()-3-suffix.size(), suffix.size()) != suffix)
 				continue;

@@ -1,7 +1,7 @@
 // every program that uses SLISC should include "global.h" first
 #define SLS_MAJOR 0
 #define SLS_MINOR 2
-#define SLS_PATCH 1
+#define SLS_PATCH 3
 
 #include "config.h"
 
@@ -177,6 +177,7 @@ namespace slisc {
 
 // using std
 
+using std::u16string; using std::u32string;
 using std::complex; using std::tie;
 using std::vector; using std::string; using std::stringstream;
 using std::to_string; using std::pair; using std::tuple;
@@ -199,58 +200,103 @@ using std::sinh; using std::cosh; using std::tanh;
 
 // note that `char` might be signed or unsigned, and is not a typedef
 // e.g. `char *` is not `signed char*` nor `unsigned char*`
-typedef signed char Char; // 8 bit signed integer
+
+// characters
+typedef char16_t Char16;
+typedef const Char16 Char16_I;
+typedef Char16 &Char16_O, &Char16_IO;
+
+typedef char32_t Char32;
+typedef const Char32 Char32_I;
+typedef Char32 &Char32_O, &Char32_IO;
+
+// 8 bit signed/unsigned integer
+typedef signed char Char;
 typedef const Char Char_I;
 typedef Char &Char_O, &Char_IO;
 
-typedef unsigned char Uchar; // 8 bit unsigned integer
+typedef unsigned char Uchar;
 typedef const Uchar Uchar_I;
 typedef Uchar &Uchar_O, &Uchar_IO;
 
-typedef short Short;
-typedef const Short Short_I; // 16 bit integer
-typedef Short &Short_O, &Short_IO;
-
-typedef int Int;
-typedef const Int Int_I; // 32 bit integer
-typedef Int &Int_O, &Int_IO;
-
-typedef const unsigned int Uint_I;
-typedef unsigned int Uint;
-typedef unsigned int &Uint_O, &Uint_IO;
-
-#ifdef SLS_USE_MSVC
-typedef __int64 Llong;
-typedef unsigned __int64 Ullong;
+// 16 bit signed/unsigned integer
+#if defined(INT16_MAX)
+    typedef int16_t Short;
+	typedef uint16_t Ushort;
+#elif SHRT_MAX == 32767
+    typedef short Short;
+	typedef unsigned short Short;
+#elif INT_MAX == 32767
+    typedef int Short;
+	typedef unsigned int Ushort;
 #else
-typedef long long int Llong;
-typedef unsigned long long int Ullong;
+    #error "No suitable 2-byte integer type found."
 #endif
-typedef const Llong Llong_I; // 64 bit integer
-typedef Llong &Llong_O, &Llong_IO;
+typedef const Short Short_I;
+typedef Short &Short_O, &Short_IO;
+typedef const Ushort Ushort_I;
+typedef Ushort &Ushort_O, &Ushort_IO;
 
+// 32 bit signed/unsigned integer
+#if (INT_MAX == 2147483647)
+	typedef int Int;
+	typedef unsigned int Uint;
+#elif (LONG_MAX == 2147483647)
+	typedef long Int;
+	typedef unsigned long Uint;
+#elif defined(INT32_MAX)
+	typedef int32_t Int;
+	typedef uint32_t Uint;
+#else
+    #error "No suitable 4-byte integer type found."
+#endif
+typedef const Int Int_I;
+typedef Int &Int_O, &Int_IO;
+typedef const Uint Uint_I;
+typedef Uint &Uint_O, &Uint_IO;
+
+// 64 bit integer
+#if (LLONG_MAX == 9223372036854775807LL)
+	typedef long long Llong;
+	typedef unsigned long long Ullong;
+#elif defined(INT64_MAX)
+	typedef int64_t Llong;
+	typedef uint64_t Ullong;
+#else
+    #error "No suitable 8-byte integer type found."
+#endif
+typedef const Llong Llong_I;
+typedef Llong &Llong_O, &Llong_IO;
 typedef const Ullong Ullong_I;
 typedef Ullong &Ullong_O, &Ullong_IO;
 
+static_assert(sizeof(Llong) == 8);
+
 #ifdef SLS_USE_INT_AS_LONG
-typedef Int Long;
+	typedef Int Long;
 #else
-typedef Llong Long;
+	typedef Llong Long;
 #endif
 typedef const Long Long_I;
 typedef Long &Long_O, &Long_IO;
 
 typedef float Float;
-typedef const Float Float_I; // default floating type
+typedef const Float Float_I;
 typedef Float &Float_O, &Float_IO;
 
 typedef double Doub;
-typedef const Doub Doub_I; // default floating type
+typedef const Doub Doub_I;
 typedef Doub &Doub_O, &Doub_IO;
 
 typedef long double Ldoub;
 typedef const Ldoub &Ldoub_I;
 typedef Ldoub &Ldoub_O, &Ldoub_IO;
+
+typedef bool Bool;
+typedef const bool Bool_I;
+typedef bool &Bool_O, &Bool_IO;
+
+// === classes ===
 
 typedef complex<Float> Fcomp;
 typedef const Fcomp &Fcomp_I;
@@ -264,32 +310,20 @@ typedef complex<Ldoub> Lcomp;
 typedef const Lcomp &Lcomp_I;
 typedef Lcomp &Lcomp_O, &Lcomp_IO;
 
-typedef bool Bool;
-typedef const Bool Bool_I;
-typedef Bool &Bool_O, &Bool_IO;
-
 // string type
 typedef string Str;
 typedef const Str &Str_I;
 typedef Str &Str_O, &Str_IO;
 
-typedef char16_t Char16;
-typedef const Char16 Char16_I;
-typedef Char16 &Char16_O, &Char16_IO;
-
-typedef std::u16string Str16;
+typedef u16string Str16;
 typedef const Str16 &Str16_I;
 typedef Str16 &Str16_O, &Str16_IO;
 
-typedef char32_t Char32;
-typedef const Char32 Char32_I;
-typedef Char32 &Char32_O, &Char32_IO;
-
-typedef std::u32string Str32;
+typedef u32string Str32;
 typedef const Str32 &Str32_I;
 typedef Str32 &Str32_O, &Str32_IO;
 
-typedef vector<Bool> vecBool;
+typedef vector<bool> vecBool;
 typedef const vecBool &vecBool_I;
 typedef vecBool &vecBool_O, &vecBool_IO;
 
@@ -306,9 +340,9 @@ typedef const vecLlong &vecLlong_I;
 typedef vecLlong &vecLlong_O, &vecLlong_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
-typedef vecInt vecLong;
+	typedef vecInt vecLong;
 #else
-typedef vecLlong vecLong;
+	typedef vecLlong vecLong;
 #endif
 typedef const vecLong &vecLong_I;
 typedef vecLong &vecLong_O, &vecLong_IO;
@@ -337,7 +371,7 @@ typedef vector<Str32> vecStr32;
 typedef const vecStr32 &vecStr32_I;
 typedef vecStr32 &vecStr32_O, &vecStr32_IO;
 
-typedef vector<vector<Bool>> vvecBool;
+typedef vector<vector<bool>> vvecBool;
 typedef const vvecBool &vvecBool_I;
 typedef vvecBool &vvecBool_O, &vvecBool_IO;
 
@@ -358,14 +392,14 @@ typedef const vvecDoub &vvecDoub_I;
 typedef vvecDoub &vvecDoub_O, &vvecDoub_IO;
 
 #ifdef SLS_USE_INT_AS_LONG
-typedef vvecInt vvecLong;
+	typedef vvecInt vvecLong;
 #else
-typedef vvecLlong vvecLong;
+	typedef vvecLlong vvecLong;
 #endif
 typedef const vvecLong &vvecLong_I;
 typedef vvecLong &vvecLong_O, &vvecLong_IO;
 
-inline Bool isnan(Comp s) { return s != s; }
+inline bool isnan(Comp_I s) { return s != s; }
 
 // error type
 class sls_err : public std::exception
@@ -373,11 +407,9 @@ class sls_err : public std::exception
 private:
     Str m_msg;
 public:
-    explicit sls_err(Str_I msg): m_msg(msg) {}
-
-    const char *what() const noexcept override {
-        return m_msg.c_str();
-    }
+    explicit sls_err(Str msg): m_msg(std::move(msg)) {}
+    const char *what() const noexcept override
+	{ return m_msg.c_str(); }
 };
 
 // === print() like python ===
@@ -397,7 +429,7 @@ void print(const T& first, const Args&... args)
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
 
 // === constants ===
-static const Doub
+const Doub
 Eps = std::numeric_limits<Doub>::epsilon(),
 NaN = std::numeric_limits<Doub>::quiet_NaN(),
 SNaN = std::numeric_limits<Doub>::signaling_NaN(),
@@ -405,15 +437,16 @@ Inf = numeric_limits<Doub>::infinity(),
 
 PI = 3.14159265358979323,
 E = 2.71828182845904524;
+
 #ifdef SLS_USE_QUAD_MATH
-static const Qdoub
+const Qdoub
 PIq = 3.14159265358979323846264338327950288Q,
 Eq = 2.71828182845904523536028747135266250Q;
 #endif
 
 namespace c {
 	// exact
-	static const Doub
+	const Doub
 	c0 = 299792458,                   // speed of light
 	h = 6.62607015e-34,               // Plank constant
 	hbar = h/(2*PI),                  // reduced Plank constant

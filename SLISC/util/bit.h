@@ -18,7 +18,7 @@ inline bool little_endian() {
 // convert endianness
 inline void change_endian(void *data, Long_I elm_size, Long_I Nelm)
 {
-	char *p = (char *)data;
+	auto p = (Uchar *)data;
 	Long half = elm_size/2;
 	for (Long i = 0; i < Nelm; ++i) {
 		for (Long j = 0; j < half; ++j)
@@ -28,35 +28,50 @@ inline void change_endian(void *data, Long_I elm_size, Long_I Nelm)
 }
 
 // get i-th bit from the right
-inline Bool bitR(Char_I byte, Int_I i)
-{ return byte & Char(1) << i; }
+// (due to integral promotion, `byte` will convert to signed int first)
+inline bool bitR(Uchar byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	return byte & (1 << i);
+}
 
-inline Bool bitR(Uchar_I byte, Int_I i)
-{ return byte & Uchar(1) << i; }
+inline bool bitR(const void *byte, int i)
+{ return bitR(*(Uchar*)byte, i); }
 
-//     (for multiple bytes)
-inline Bool bitR(const void *data, Long_I i, Long_I size = 1, Bool_I auto_endian = false)
+inline bool bitR(Char byte, int i)
+{ return bitR(&byte, i); }
+
+// (for multiple bytes)
+inline bool bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
 {
 #ifdef SLS_CHECK_BOUNDS
-	SLS_ASSERT(i > 0 && i < size*8);
+	SLS_ASSERT(i >= 0 && i < size*8);
 #endif
 	auto p = (Uchar *)data;
 	if (!auto_endian || !little_endian())
 		p += size - 1 - i/8;
 	else
 		p += i/8;
-	return *p & Uchar(1) << (i%8);
+	return *p & (1 << (i % 8));
 }
 
 // get i-th bit from the left
-inline Bool bitL(Char_I byte, Int_I i)
-{ return bitR(byte, 8-i); }
+inline bool bitL(Uchar byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	return byte & (128 >> i);
+}
 
-inline Bool bitL(Uchar_I byte, Int_I i)
-{ return byte & Uchar(128) >> i; }
+inline bool bitL(const void *byte, int i)
+{ return bitL(*(Uchar*)byte, i); }
 
-//     (for multiple bytes)
-inline Bool bitL(const void *data, Long_I i, Long_I size = 1, Bool_I auto_endian = false)
+inline bool bitL(Char byte, int i)
+{ return bitL(&byte, i); }
+
+// (for multiple bytes)
+inline bool bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
 {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(i > 0 && i < size*8);
@@ -66,61 +81,91 @@ inline Bool bitL(const void *data, Long_I i, Long_I size = 1, Bool_I auto_endian
 		p += i/8;
 	else
 		p += size - 1 - i/8;
-	return *p & Uchar(128) >> (i%8);
+	return *p & (128 >> (i % 8));
 }
 
 // set i-th bit from the right to 1
-inline void set_bitR(Char_IO byte, Int_I i)
-{ byte |= Char(1) << i; }
+inline void set_bitR(Uchar_IO byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	byte |= (1 << i);
+}
 
-inline void set_bitR(Uchar_IO byte, Int_I i)
-{ byte |= Uchar(1) << i; }
+inline void set_bitR(void *byte, int i)
+{ set_bitR(*(Uchar*)byte, i); }
+
+inline void set_bitR(Char_IO byte, int i)
+{ set_bitR(&byte, i); }
 
 // set i-th bit from the left to 1
-inline void set_bitL(Char_IO byte, Int_I i)
-{ set_bitR(byte, 8-i); }
+inline void set_bitL(Uchar_IO byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	byte |= (128 >> i);
+}
 
-inline void set_bitL(Uchar_IO byte, Int_I i)
+inline void set_bitL(void *byte, int i)
+{ set_bitL(*(Uchar*)byte, i); }
+
+inline void set_bitL(Char_IO byte, int i)
 { set_bitL(&byte, i); }
 
 // set i-th bit from the right to 0
-inline void unset_bitR(void *byte, Int_I i)
-{ *(Uchar*)byte &= Uchar(254) << i; }
+inline void unset_bitR(Uchar_IO byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	byte &= ~(1 << i);
+}
 
-inline void unset_bitR(Char_IO byte, Int_I i)
-{ unset_bitR(&byte, i); }
+inline void unset_bitR(void *byte, int i)
+{ unset_bitR(*(Uchar*)byte, i); }
 
-inline void unset_bitR(Uchar_IO byte, Int_I i)
+inline void unset_bitR(Char_IO byte, int i)
 { unset_bitR(&byte, i); }
 
 // set i-th bit from the left to 0
-inline void unset_bitL(void *byte, Int_I i)
-{ *(Uchar*)byte &= Uchar(127) >> i; }
+inline void unset_bitL(Uchar_IO byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	byte &= ~(128 >> i);
+}
 
-inline void unset_bitL(Char_IO byte, Int_I i)
-{ unset_bitL(&byte, i); }
+inline void unset_bitL(void *byte, int i)
+{ unset_bitL(*(Uchar*)byte, i); }
 
-inline void unset_bitL(Uchar_IO byte, Int_I i)
+inline void unset_bitL(Char_IO byte, int i)
 { unset_bitL(&byte, i); }
 
 // flip the i-th bit from the right
-inline void toggle_bitR(void *byte, Int_I i)
-{ *(Uchar*)byte ^= Uchar(1) << i; }
+inline void toggle_bitR(Uchar_IO byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	byte ^= (1 << i);
+}
 
-inline void toggle_bitR(Char_IO byte, Int_I i)
-{ toggle_bitR(&byte, i); }
+inline void toggle_bitR(void *byte, int i)
+{ toggle_bitR(*(Uchar*)byte, i); }
 
-inline void toggle_bitR(Uchar_IO byte, Int_I i)
+inline void toggle_bitR(Char_IO byte, int i)
 { toggle_bitR(&byte, i); }
 
 // flip the i-th bit from the left
-inline void toggle_bitL(void *byte, Int_I i)
-{ *(Uchar*)byte ^= Uchar(128) >> i; }
+inline void toggle_bitL(Uchar_IO byte, int i) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < 8);
+#endif
+	byte ^= (128 >> i);
+}
 
-inline void toggle_bitL(Char_IO byte, Int_I i)
-{ toggle_bitL(&byte, i); }
+inline void toggle_bitL(void *byte, int i)
+{ toggle_bitL(*(Uchar*)byte, i); }
 
-inline void toggle_bitL(Uchar_IO byte, Int_I i)
+inline void toggle_bitL(Char_IO byte, int i)
 { toggle_bitL(&byte, i); }
 
 // convert a byte to bit string (8 char '0' or '1')
@@ -140,7 +185,7 @@ inline Str to_bitstr(Char_I byte)
 // Nbyte: bytes of data
 // add_space: add a space to every byte
 // auto_endian: flip the bytes for little endian
-inline Str to_bitstr(const void *byte, Long_I Nbyte = 1, Bool add_space = true, Bool auto_endian = false)
+inline Str to_bitstr(const void *byte, Long_I Nbyte = 1, bool add_space = true, bool auto_endian = false)
 {
 	char *p = (char *)byte;
 	Str str;
@@ -186,17 +231,29 @@ inline char str2bit(Str_I str)
 
 // ========== manipulate a range of bits ============
 
-// Nbit '1' on the right (0 <= Nbit <= 8)
-inline Uchar bitsR_mask(int Nbit)
-{ return (1 << Nbit) - 1; }
+// Nbit '1' on the right
+inline Uchar bitsR_mask(int Nbit) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(Nbit >= 0 && Nbit <= 8);
+#endif
+	return (1 << Nbit) - 1;
+}
 
 // Nbit '1' on the left
-inline Uchar bitsL_mask(int Nbit)
-{ return 0xFF << (8 - Nbit); }
+inline Uchar bitsL_mask(int Nbit) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(Nbit >= 0 && Nbit <= 8);
+#endif
+	return 0xFF << (8 - Nbit);
+}
 
 // Nbit '1' starting from `start`
-inline Uchar bits_mask(int start, int Nbit)
-{ return bitsR_mask(Nbit) << (8-start-Nbit); }
+inline Uchar bits_mask(int start, int Nbit) {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(start >= 0 && start < 8 && start + Nbit <= 8);
+#endif
+	return ((1 << Nbit) - 1) << (8-start-Nbit);
+}
 
 // copy Nbit on the right
 inline void bitsR2bitsR(Uchar& target, Uchar source, int Nbit)
@@ -217,41 +274,51 @@ inline void bitsL2bitsL(Uchar& target, Uchar source, int Nbit)
 }
 
 // copy Nbit from the right to the left
-inline void bitsR2bitsL(Uchar& target, const Uchar source, int Nbit)
+inline void bitsR2bitsL(Uchar& target, Uchar source, int Nbit)
 {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(Nbit >= 0 && Nbit <= 8);
+#endif
     Uchar clear_mask = 0xFF >> Nbit;
     target &= clear_mask;
     target |= (source << (8 - Nbit));
 }
 
-inline void bitsL2bitsR(Uchar& target, const Uchar source, int Nbit)
+inline void bitsL2bitsR(Uchar& target, Uchar source, int Nbit)
 {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(Nbit >= 0 && Nbit <= 8);
+#endif
     Uchar clear_mask = 0xFF << Nbit;
     target &= clear_mask;
-    Uchar source_bits = source >> (8 - Nbit);
-    target |= source_bits;
+    target |= (source >> (8 - Nbit));
 }
 
-inline void bitsR2bits(Uchar& target, int start, int Nbit, const Uchar source)
+inline void bitsR2bits(Uchar& target, int start, int Nbit, Uchar source)
 {
-    SLS_ASSERT(start > 0 && start + Nbit < 8);
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(start >= 0 && start < 8 && start + Nbit <= 8);
+#endif
 	Uchar clear_mask = bitsR_mask(Nbit);
-    Uchar source_bits = source & clear_mask;
-	Uchar left_shift = 8-start-Nbit;
-    Uchar clear_mask = ~(clear_mask << left_shift);
+    source &= clear_mask;
+	int left_shift = 8-start-Nbit;
+    clear_mask = ~(clear_mask << left_shift);
     target &= clear_mask;
-    target |= (source_bits << left_shift);
+    target |= (source << left_shift);
 }
 
 inline void bits2bitsR(Uchar& target, Uchar source, int start, int Nbit)
 {
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(start >= 0 && start < 8 && start + Nbit <= 8);
+#endif
 	Uchar clear_mask = bits_mask(start, Nbit);
-	Uchar source = (source & clear_mask) >> (8-start-Nbit);
+	source = (source & clear_mask) >> (8-start-Nbit);
 	bitsR2bitsR(target, source, Nbit);
 }
 
 // inline void set_bit_range(Uchar* target, Long Nbyte, int target_start,
-//                    Uchar* source, Long Nbyte, int source_start, int Nbit, Bool auto_endian = false) {
+//                    Uchar* source, Long Nbyte, int source_start, int Nbit, bool auto_endian = false) {
 // 	Uchar N1, N2;
 // 	if (target_start < source_start) {
 // 		bitsR2bits(*target, target_start, 8-source_start, *source);

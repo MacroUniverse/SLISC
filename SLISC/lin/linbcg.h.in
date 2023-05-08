@@ -243,7 +243,7 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 //% [Tx, Tmat, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
 //% Tcut = cut_type(Twsp);
 //% if is_comp(Ts)
-inline Bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
+inline bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
 //% end
 
 inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,

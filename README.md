@@ -97,7 +97,7 @@ make [options] [-j8]
 * Avoid using unsigned integer types when possible. They are not supported by the library for now. Use `size(std::vector<>)` in `arithmetic.h` instead of `vector::size()` when needed.
 * All SLISC containers types (e.g. `MatComp`, `VecDoub`) should be returned by reference as a parameter of a function.
 * Generally, function output arguments can not be any of the input arguments (this is called aliasing), unless this function is element-wise.
-* Intrinsic types are renamed inside the library. For example, `Bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
+* Intrinsic types are renamed inside the library. For example, `bool` is `bool`, `Int` is 32-bit integer, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`. `Llong` is `long long`.
 * A type with `_I` suffix is the `const` or `reference to const` version of that type, used in function parameter declarations to indicate an input argument. Similarly, `_O` means output (reference type), `_IO` means both input and output (reference type). Note that a reference to an `_O` or `_IO` types is still a reference type.
 
 ## Headers Introduction
@@ -165,7 +165,7 @@ When using something in any header file, just including that header file will be
 ## "global.h"
 
 ### Scalar Types
-`Bool` is `bool`, `Char` is `char`, `Int` is 32-bit integer, `Llong` is 64-bit integer; `Float` is `float`, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`; `Ldoub` is `long double`; `Long` `Long` is used as vector/matrix indices variables, and is `Llong` by default, define `SLS_USE_INT_AS_LONG` macro to use `Int` as `Long`.
+`bool` is `bool`, `Char` is `char`, `Int` is 32-bit integer, `Llong` is 64-bit integer; `Float` is `float`, `Doub` is `double` (64-bit); `Comp` is `std::complex<Doub>`; `Ldoub` is `long double`; `Long` `Long` is used as vector/matrix indices variables, and is `Llong` by default, define `SLS_USE_INT_AS_LONG` macro to use `Int` as `Long`.
 TODO...
 
 ### Constants
@@ -217,7 +217,7 @@ TODO.
 ### Vector/Matrix Types
 The vector/matrix classes are (each type also comes with `_I`, `_O`, and `_IO` versions) :  VecInt, VecUint, VecLlong, VecUllong, VecChar, VecUchar, VecDoub, VecComp, VecBool, MatInt, MatUint, MatLlong, MatUllong, MatChar, MatUchar, MatDoub, MatComp, MatBool, Mat3Doub, Mat3Comp.
 
-Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `p()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `Bool` by value.
+Note that `VbaseBool`, `VecBool`, `CmatBool` are based on `std::vector<bool>` which usually manipulates bits for memory optimization. `p()` is not implemented (underlying data might not be consecutive), non-const `operator[]` will return `xxx::ref` type, and const `operator[]` will return `bool` by value.
 
 ## arithmetics.h
 * includes basic arithmatics like `==`, `+=`, `*=`, `add()`, `sub()`, etc. for containers.
@@ -230,9 +230,9 @@ includes various overloaded "disp()" functions.
 * `void file_list(vecStr_O names, Str_I path)` list all the files in a folder
 * `void read(ifstream &fin, Str_O str)` reads `str.size()` characters from `ifstream`, `str` will be resized if end if file reached before finishing.
 * `void write(ofstream &fout, Str_I str)` writes str into `ofstream`
-* `Bool file_exist(Str_I fname, Bool_I case_sens = true)` will check if file exists.
+* `bool file_exist(Str_I fname, Bool_I case_sens = true)` will check if file exists.
 * `void file_remove(Str_I fname)` will remove a file
-* `Bool dir_exist(Str_I path)` will test if a directory exist
+* `bool dir_exist(Str_I path)` will test if a directory exist
 * `void mkdir(Str_I path)` will create a directory recursively
 * `void rmdir(Str_I path)` will remove a directory if it's empty
 * `void ensure_dir(Str_I dir_or_file)` will create a directory if it does not exist
@@ -255,7 +255,7 @@ includes various overloaded "disp()" functions.
 * `void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)` read a table from file, two numbers should be separated by space, skipt specific number of lines at the beginning, matrix will auto-resize, 0 to multiple spaces & new line at the end of file are allowed
 * `void last_modified(Str_O yymmddhhmmss, Str_I fname)` last modified time fo a file
 * `void set_buff(ofstream &fout, Str_IO buffer)`, set write buffer, can speed up if there are a lot of staggered short reading and writing in the same drive
-* `Bool little_endian()` test if system use little endian (less significant byte has smaller memory address)
+* `bool little_endian()` test if system use little endian (less significant byte has smaller memory address)
 * `void change_endian(Char *data, Long_I elm_size, Long_I Nelm)`, convert endianness
 
 ## time.h
@@ -273,7 +273,7 @@ Doub CPUTimer::toc()
 
 ```c++
 Int isodd(Int n) // return 1 if n is odd, return 0 otherwise
-Bool ispow2(Int n) // if n is a power of 2 or 0
+bool ispow2(Int n) // if n is a power of 2 or 0
 operator +,-,*,/ between Complex and Int
 ```
 

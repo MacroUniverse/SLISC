@@ -34,13 +34,13 @@ inline @T@ sign(@T@_I a, @T@_I b)
 //% tem('isodd', {'Char'; 'Int'; 'Uint'; 'Llong'; 'Ullong';});
 //%-------------------------------
 //% T = varargin{:};
-inline Bool isodd(@T@_I n) { return n & 1; }
+inline bool isodd(@T@_I n) { return n & 1; }
 //%------------------------
 
 //% tem('ispow2', {'Char'; 'Int'; 'Llong'});
 //%-------------------------------
 //% T = varargin{:};
-inline Bool ispow2(@T@_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(@T@_I n) { return (n&(n-1)) == 0; }
 //%-----------------
 
 //% tem('to_num', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Ldoub'; 'Qdoub'; 'Comp'; 'Lcomp'; 'Qcomp';});

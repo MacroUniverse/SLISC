@@ -16,7 +16,7 @@ struct Mat
 	Mat(): m_p(NULL) {};
 	Mat(Str_I fname, Str_I rw, Bool_I replace = false);
 	void open(Str_I fname, Str_I rw, Bool_I replace = false);
-	Bool isopen();
+	bool isopen();
 	void close();
 };
 
@@ -48,7 +48,7 @@ inline void Mat::open(Str_I fname, Str_I rw, Bool_I replace) {
 	m_p = matOpen(fname.c_str(), rw.c_str());
 }
 
-inline Bool Mat::isopen() {
+inline bool Mat::isopen() {
 	return m_p != NULL;
 }
 

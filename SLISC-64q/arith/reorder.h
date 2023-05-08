@@ -1051,7 +1051,7 @@ inline void uniq_elm(vector<T> &v)
 {
 	Long N = v.size(), n = 0;
 	for (Long i = 0; i < N; ++i) {
-		Bool repeat = false;
+		bool repeat = false;
 		for (Long j = 0; j < n; ++j) {
 			if (v[i] == v[j]) {
 				repeat = true; break;
@@ -1072,7 +1072,7 @@ inline void uniq_rows(CmatInt_O a, CmatInt_I a1)
 	a.resize(a1.n0(), a1.n1());
 	for (Long i = 0; i < a1.n0(); ++i) {
 		// check repeat
-		Bool repeat = false;
+		bool repeat = false;
 		DvecIntC s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 			if (cut1(a, j) == s1) {
@@ -1093,7 +1093,7 @@ inline void uniq_rows(CmatLlong_O a, CmatLlong_I a1)
 	a.resize(a1.n0(), a1.n1());
 	for (Long i = 0; i < a1.n0(); ++i) {
 		// check repeat
-		Bool repeat = false;
+		bool repeat = false;
 		DvecLlongC s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 			if (cut1(a, j) == s1) {
@@ -1114,7 +1114,7 @@ inline void uniq_rows(CmatLlong_O a, ScmatLlong_I a1)
 	a.resize(a1.n0(), a1.n1());
 	for (Long i = 0; i < a1.n0(); ++i) {
 		// check repeat
-		Bool repeat = false;
+		bool repeat = false;
 		DvecLlongC s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 			if (cut1(a, j) == s1) {
@@ -1135,7 +1135,7 @@ inline void uniq_rows(CmatDoub_O a, CmatDoub_I a1)
 	a.resize(a1.n0(), a1.n1());
 	for (Long i = 0; i < a1.n0(); ++i) {
 		// check repeat
-		Bool repeat = false;
+		bool repeat = false;
 		DvecDoubC s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 			if (cut1(a, j) == s1) {
@@ -1156,7 +1156,7 @@ inline void uniq_rows(CmatQdoub_O a, CmatQdoub_I a1)
 	a.resize(a1.n0(), a1.n1());
 	for (Long i = 0; i < a1.n0(); ++i) {
 		// check repeat
-		Bool repeat = false;
+		bool repeat = false;
 		DvecQdoubC s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 			if (cut1(a, j) == s1) {

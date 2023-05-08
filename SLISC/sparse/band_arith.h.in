@@ -37,7 +37,7 @@ inline @DcmatT@C band(@CbandT@_I a)
 //% Tmat = varargin{:}; Ttol = rm_comp(val_t(Tmat));
 inline void nband(Long_O Nup, Long_O Nlow, @Tmat@_I a, @Ttol@_I tol = 0)
 {
-	Bool found = false;
+	bool found = false;
 	// check upper diagonals
 	for (Long k = a.n1() - 1; k > 0 && !found; --k) {
 		Long i = 0;

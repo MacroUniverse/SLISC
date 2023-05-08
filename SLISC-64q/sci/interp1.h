@@ -289,7 +289,7 @@ inline Long Base_interp_Doub::locate(Doub_I x)
 {
 	Long ju, jm, jl;
 	if (n < 2 || mm < 2 || mm > n) throw("locate size error");
-	Bool ascnd = (xx[n - 1] >= xx[0]);
+	bool ascnd = (xx[n - 1] >= xx[0]);
 	jl = 0;
 	ju = n - 1;
 	while (ju - jl > 1) {
@@ -308,7 +308,7 @@ inline Long Base_interp_Doub::hunt(Doub_I x)
 {
 	Long jl = jsav, jm, ju, inc = 1;
 	if (n < 2 || mm < 2 || mm > n) throw("hunt size error");
-	Bool ascnd = (xx[n - 1] >= xx[0]);
+	bool ascnd = (xx[n - 1] >= xx[0]);
 	if (jl < 0 || jl > n - 1) {
 		jl = 0;
 		ju = n - 1;
@@ -598,7 +598,7 @@ inline Long Base_interp_Qdoub::locate(Qdoub_I x)
 {
 	Long ju, jm, jl;
 	if (n < 2 || mm < 2 || mm > n) throw("locate size error");
-	Bool ascnd = (xx[n - 1] >= xx[0]);
+	bool ascnd = (xx[n - 1] >= xx[0]);
 	jl = 0;
 	ju = n - 1;
 	while (ju - jl > 1) {
@@ -617,7 +617,7 @@ inline Long Base_interp_Qdoub::hunt(Qdoub_I x)
 {
 	Long jl = jsav, jm, ju, inc = 1;
 	if (n < 2 || mm < 2 || mm > n) throw("hunt size error");
-	Bool ascnd = (xx[n - 1] >= xx[0]);
+	bool ascnd = (xx[n - 1] >= xx[0]);
 	if (jl < 0 || jl > n - 1) {
 		jl = 0;
 		ju = n - 1;

@@ -147,7 +147,7 @@ inline Str utf32to16(Str32_I str32)
 }
 
 // check utf-8 string
-using utf8::is_valid; // Bool is_valid(Str_I s);
+using utf8::is_valid; // bool is_valid(Str_I s);
 
 // replace invalid codepoint
 using utf8::replace_invalid; // Str replace_invalid(Str_I s, Char32 replacement);
@@ -333,7 +333,7 @@ public:
 // ref [1]: https://www.qqxiuzi.cn/zh/hanzi-unicode-bianma.php
 // ref [2]: https://www.qqxiuzi.cn/bianma/zifuji.php
 // see also: chinese_unicode.m (Matlab code)
-inline Bool is_chinese(Str_I str, Long_I ind)
+inline bool is_chinese(Str_I str, Long_I ind)
 {
 	Char32 c = char32(str, ind);
 	// not sorted
@@ -370,7 +370,7 @@ inline Bool is_chinese(Str_I str, Long_I ind)
 
 // see if a character is an emoji
 // by GPT-4, not verified
-inline Bool is_emoji(Char32_I c) {
+inline bool is_emoji(Char32_I c) {
 	return (
 		(c >= 0x1F600 && c <= 0x1F64F) || // Emoticons
 		(c >= 0x2700 && c <= 0x27BF) || // Dingbats
@@ -410,7 +410,7 @@ inline Str u8(Char32_I c) {
 
 // recycle
 // ref: https://stackoverflow.com/questions/1366068/whats-the-complete-range-for-chinese-characters-in-unicode
-// inline Bool is_chinese(Char32_I c)
+// inline bool is_chinese(Char32_I c)
 // {
 //     // from [1]
 //     if ((c >= U'\u2E80' && c <= U'\u2FD5') || // 部首拓展（115 个）2E80-2EF3， 康熙部首（214 个）2F00-2FD5
@@ -424,7 +424,7 @@ inline Str u8(Char32_I c) {
 
 // check if is a chinese character
 // include punctuations
-inline Bool is_chinese_punc(Str_I str, Long_I ind)
+inline bool is_chinese_punc(Str_I str, Long_I ind)
 {
 	Char32 c = char32(str, ind);
 	static const Str32 s = U"，。？！、：；“”‘’（）【】…—《》￥·";

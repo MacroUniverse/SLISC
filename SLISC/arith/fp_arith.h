@@ -78,7 +78,7 @@ inline double ulp(Doub_I x, Ullong_I n = 1) {
 // sign will be kept
 inline Doub double_set_exp(Doub x, int16_t exp)
 {
-	Bool neg = (x < 0);
+	bool neg = (x < 0);
 	exp += 1023;
 	int16_t b2;
 	memcpy(&b2, (char*)&x+6, 2);

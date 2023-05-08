@@ -139,7 +139,7 @@ inline void Intvs::erase(Long_I start, Long_I count)
 }
 
 // see if an index i falls into the scopes of intv
-inline Bool is_in(Long_I i, Intvs_I intv)
+inline bool is_in(Long_I i, Intvs_I intv)
 {
 	for (Long j = 0; j < intv.size(); ++j) {
 		if (intv.L(j) <= i && i <= intv.R(j))

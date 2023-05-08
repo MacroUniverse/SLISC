@@ -552,7 +552,7 @@ typedef VecLlong VecLong;
 typedef const VecLong &VecLong_I;
 typedef VecLong &VecLong_O, &VecLong_IO;
 
-// implemented with vector<Bool>, not actually a vector of Bool
+// implemented with vector<bool>, not actually a vector of bool
 class VecBool : public VbaseBool
 {
 public:

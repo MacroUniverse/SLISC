@@ -54,22 +54,22 @@ inline Ldoub sign(Ldoub_I a, Ldoub_I b)
 
 
 
-inline Bool isodd(Char_I n) { return n & 1; }
+inline bool isodd(Char_I n) { return n & 1; }
 
-inline Bool isodd(Int_I n) { return n & 1; }
+inline bool isodd(Int_I n) { return n & 1; }
 
-inline Bool isodd(Uint_I n) { return n & 1; }
+inline bool isodd(Uint_I n) { return n & 1; }
 
-inline Bool isodd(Llong_I n) { return n & 1; }
+inline bool isodd(Llong_I n) { return n & 1; }
 
-inline Bool isodd(Ullong_I n) { return n & 1; }
+inline bool isodd(Ullong_I n) { return n & 1; }
 
 
-inline Bool ispow2(Char_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(Char_I n) { return (n&(n-1)) == 0; }
 
-inline Bool ispow2(Int_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(Int_I n) { return (n&(n-1)) == 0; }
 
-inline Bool ispow2(Llong_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(Llong_I n) { return (n&(n-1)) == 0; }
 
 
 inline Int to_num(Char_I x) { return (Int)x; }

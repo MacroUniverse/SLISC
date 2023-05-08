@@ -357,7 +357,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 			wsp[ih + i] = zero;
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -604,7 +604,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 			wsp[ih + i] = zero;
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -851,7 +851,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 			wsp[ih + i] = zero;
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -1098,7 +1098,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 			wsp[ih + i] = zero;
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -1345,7 +1345,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 			wsp[ih + i] = zero;
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -1592,7 +1592,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 			wsp[ih + i] = zero;
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -1852,7 +1852,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		}
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -2115,7 +2115,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		}
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -2378,7 +2378,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		}
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -2641,7 +2641,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		}
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -2904,7 +2904,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		}
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
@@ -3167,7 +3167,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		}
 
 		j1v = iv + n;
-		Bool break_flag = false;
+		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
 			expokit_mul(wsp + j1v, mat, wsp + j1v - n);

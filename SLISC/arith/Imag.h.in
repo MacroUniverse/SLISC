@@ -72,29 +72,29 @@ inline @Ti@  operator+(@Ti1@_I z1, @Ti2@_I z2) { return @Ti@(imag(z1) + imag(z2)
 inline @Ti@ operator-(@Ti1@_I z1, @Ti2@_I z2) { return @Ti@(imag(z1) - imag(z2)); }
 inline @T@  operator*(@Ti1@_I z1, @Ti2@_I z2) { return -imag(z1) * imag(z2); }
 inline @T@  operator/(@Ti1@_I z1, @Ti2@_I z2) { return imag(z1) / imag(z2); }
-inline Bool operator==(@Ti1@_I z1, @Ti2@_I z2) { return imag(z1) == imag(z2); }
-inline Bool operator!=(@Ti1@_I z1, @Ti2@_I z2) { return !(z1 == z2); }
+inline bool operator==(@Ti1@_I z1, @Ti2@_I z2) { return imag(z1) == imag(z2); }
+inline bool operator!=(@Ti1@_I z1, @Ti2@_I z2) { return !(z1 == z2); }
 
 inline @Tc@ operator+(@T1@_I x1, @Ti2@_I z2) { return @Tc@(x1, imag(z2)); }
 inline @Tc@ operator-(@T1@_I x1, @Ti2@_I z2) { return @Tc@(x1, -imag(z2)); }
 inline @Ti@ operator*(@T1@_I x1, @Ti2@_I z2) { return @Ti@(x1 * imag(z2)); }
 inline @Ti@ operator/(@T1@_I x1, @Ti2@_I z2) { return @Ti@(-x1 / imag(z2)); }
-inline Bool operator==(@T1@_I x1, @Ti2@_I z2) { return x1 == 0 && imag(z2) == 0; }
-inline Bool operator!=(@T1@_I x1, @Ti2@_I z2) { return !(x1 == z2); }
+inline bool operator==(@T1@_I x1, @Ti2@_I z2) { return x1 == 0 && imag(z2) == 0; }
+inline bool operator!=(@T1@_I x1, @Ti2@_I z2) { return !(x1 == z2); }
 
 inline @Tc@ operator+(@Ti1@_I z1, @T2@_I x2) { return @Tc@(x2, imag(z1)); }
 inline @Tc@ operator-(@Ti1@_I z1, @T2@_I x2) { return @Tc@(-x2, imag(z1)); }
 inline @Ti@ operator*(@Ti1@_I z1, @T2@_I x2) { return @Ti@(x2 * imag(z1)); }
 inline @Ti@ operator/(@Ti1@_I z1, @T2@_I x2) { return @Ti@(imag(z1) / x2); }
-inline Bool operator==(@Ti1@_I z1, @T2@_I x2) { return imag(z1) == 0 && x2 == 0; }
-inline Bool operator!=(@Ti1@_I z1, @T2@_I x2) { return !(z1 == x2); }
+inline bool operator==(@Ti1@_I z1, @T2@_I x2) { return imag(z1) == 0 && x2 == 0; }
+inline bool operator!=(@Ti1@_I z1, @T2@_I x2) { return !(z1 == x2); }
 
 inline @Tc@ operator+(@Tc1@_I z1, @Ti2@_I z2) { return @Tc@(real(z1), imag(z1) + imag(z2)); }
 inline @Tc@ operator-(@Tc1@_I z1, @Ti2@_I z2) { return @Tc@(real(z1), imag(z1) - imag(z2)); }
 inline @Tc@ operator*(@Tc1@_I z1, @Ti2@_I z2) { return @Tc@(-imag(z1)*imag(z2), real(z1)*imag(z2)); }
 inline @Tc@ operator/(@Tc1@_I z1, @Ti2@_I z2) { return @Tc@(imag(z1)/imag(z2), -real(z1)/imag(z2)); }
-inline Bool operator==(@Tc1@_I z1, @Ti2@_I z2) { return real(z1) == 0 && imag(z1) == imag(z2); }
-inline Bool operator!=(@Tc1@_I z1, @Ti2@_I z2) { return !(z1 == z2); }
+inline bool operator==(@Tc1@_I z1, @Ti2@_I z2) { return real(z1) == 0 && imag(z1) == imag(z2); }
+inline bool operator!=(@Tc1@_I z1, @Ti2@_I z2) { return !(z1 == z2); }
 
 inline @Tc@ operator+(@Ti1@_I z1, @Tc2@_I z2) { return @Tc@(real(z2), imag(z2) + imag(z1)); }
 inline @Tc@ operator-(@Ti1@_I z1, @Tc2@_I z2) { return @Tc@(-real(z2), imag(z1) - imag(z2)); }
@@ -103,8 +103,8 @@ inline @Tc@ operator/(@Ti1@_I z1, @Tc2@_I z2) {
 	const @T2@ &x2 = real(z2), &y2 = imag(z2);
 	return @Tc@(y2, x2) * @T@(imag(z1) / (x2*x2 + y2*y2));
 }
-inline Bool operator==(@Ti1@_I z1, @Tc2@_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
-inline Bool operator!=(@Ti1@_I z1, @Tc2@_I z2) { return !(z1 == z2); }
+inline bool operator==(@Ti1@_I z1, @Tc2@_I z2) { return real(z2) == 0 && imag(z1) == imag(z2); }
+inline bool operator!=(@Ti1@_I z1, @Tc2@_I z2) { return !(z1 == z2); }
 //%-----------------
 
 // operator-

@@ -9,47 +9,47 @@
 
 namespace slisc {
 
-inline Bool operator==(CmobdComp_I a, CmobdComp_I b)
+inline bool operator==(CmobdComp_I a, CmobdComp_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(CmobdComp_I a, CmobdComp_I b) { return !(a == b); }
+inline bool operator!=(CmobdComp_I a, CmobdComp_I b) { return !(a == b); }
 
-inline Bool operator==(CmobdQcomp_I a, CmobdQcomp_I b)
+inline bool operator==(CmobdQcomp_I a, CmobdQcomp_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(CmobdQcomp_I a, CmobdQcomp_I b) { return !(a == b); }
+inline bool operator!=(CmobdQcomp_I a, CmobdQcomp_I b) { return !(a == b); }
 
-inline Bool operator==(CmobdComp_I a, CmobdDoub_I b)
+inline bool operator==(CmobdComp_I a, CmobdDoub_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(CmobdComp_I a, CmobdDoub_I b) { return !(a == b); }
+inline bool operator!=(CmobdComp_I a, CmobdDoub_I b) { return !(a == b); }
 
-inline Bool operator==(CmobdQcomp_I a, CmobdQdoub_I b)
+inline bool operator==(CmobdQcomp_I a, CmobdQdoub_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(CmobdQcomp_I a, CmobdQdoub_I b) { return !(a == b); }
+inline bool operator!=(CmobdQcomp_I a, CmobdQdoub_I b) { return !(a == b); }
 
-inline Bool operator==(CmobdDoub_I a, CmobdDoub_I b)
+inline bool operator==(CmobdDoub_I a, CmobdDoub_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(CmobdDoub_I a, CmobdDoub_I b) { return !(a == b); }
+inline bool operator!=(CmobdDoub_I a, CmobdDoub_I b) { return !(a == b); }
 
-inline Bool operator==(CmobdQdoub_I a, CmobdQdoub_I b)
+inline bool operator==(CmobdQdoub_I a, CmobdQdoub_I b)
 {
 	return a.n0() == b.n0() && a.n1() == b.n1() && a.cmat3() == b.cmat3();
 }
 
-inline Bool operator!=(CmobdQdoub_I a, CmobdQdoub_I b) { return !(a == b); }
+inline bool operator!=(CmobdQdoub_I a, CmobdQdoub_I b) { return !(a == b); }
 
 
 inline void mul_cmat_cmat_diag(Comp *c, const Doub *a, Long_I Nr, Long_I Nc, const Comp *b)
@@ -1461,7 +1461,7 @@ inline void operator-=(McooQcomp_O coo, McooQcomp_I coo1)
 }
 
 
-inline Bool operator==(McooInt_IO coo, McooInt_IO coo1)
+inline bool operator==(McooInt_IO coo, McooInt_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);
@@ -1476,7 +1476,7 @@ inline Bool operator==(McooInt_IO coo, McooInt_IO coo1)
 	return true;
 }
 
-inline Bool operator==(McooLlong_IO coo, McooLlong_IO coo1)
+inline bool operator==(McooLlong_IO coo, McooLlong_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);
@@ -1491,7 +1491,7 @@ inline Bool operator==(McooLlong_IO coo, McooLlong_IO coo1)
 	return true;
 }
 
-inline Bool operator==(McooDoub_IO coo, McooDoub_IO coo1)
+inline bool operator==(McooDoub_IO coo, McooDoub_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);
@@ -1506,7 +1506,7 @@ inline Bool operator==(McooDoub_IO coo, McooDoub_IO coo1)
 	return true;
 }
 
-inline Bool operator==(McooQdoub_IO coo, McooQdoub_IO coo1)
+inline bool operator==(McooQdoub_IO coo, McooQdoub_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);
@@ -1521,7 +1521,7 @@ inline Bool operator==(McooQdoub_IO coo, McooQdoub_IO coo1)
 	return true;
 }
 
-inline Bool operator==(McooComp_IO coo, McooComp_IO coo1)
+inline bool operator==(McooComp_IO coo, McooComp_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);
@@ -1536,7 +1536,7 @@ inline Bool operator==(McooComp_IO coo, McooComp_IO coo1)
 	return true;
 }
 
-inline Bool operator==(McooQcomp_IO coo, McooQcomp_IO coo1)
+inline bool operator==(McooQcomp_IO coo, McooQcomp_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
 	sort_col(coo1); rm_zero(coo1);

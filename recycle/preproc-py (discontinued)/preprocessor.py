@@ -6,7 +6,7 @@ def is_basic_str(T):
     return any(strfind(T, 'basic_string')) or is_Str(T)
 
 def is_Bool(T):
-    return T == 'Bool'
+    return T == 'bool'
 
 def is_Cband(T):
     return T[:5] == 'Cband' and is_scalar(T[5:])

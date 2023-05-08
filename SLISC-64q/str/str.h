@@ -8,14 +8,14 @@ namespace slisc {
 // string utilities
 
 // see if a string match the first part of another string
-inline Bool match_head(Str_I str_short, Str_I str_long)
+inline bool match_head(Str_I str_short, Str_I str_long)
 {
 	if (str_short.size() > str_long.size())
 		return false;
 	return str_long.substr(0, str_short.size()) == str_short;
 }
 
-inline Bool match_head(Str32_I str_short, Str32_I str_long)
+inline bool match_head(Str32_I str_short, Str32_I str_long)
 {
 	if (str_short.size() > str_long.size())
 		return false;
@@ -417,7 +417,7 @@ inline void operator+=(Str32_IO str32, Str_I str)
 }
 
 // check if a character is an ascii character
-inline Bool is_ascii(Char32_I c)
+inline bool is_ascii(Char32_I c)
 {
 	if (c >= 0 && c < 128)
 		return true;
@@ -425,7 +425,7 @@ inline Bool is_ascii(Char32_I c)
 }
 
 
-inline Bool is_num(char c)
+inline bool is_num(char c)
 {
 	if (c >= '0' && c <= '9')
 		return true;
@@ -433,7 +433,7 @@ inline Bool is_num(char c)
 }
 
 // check if a character is a letter (a-z, A-Z)
-inline Bool is_letter(char c)
+inline bool is_letter(char c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return true;
@@ -441,7 +441,7 @@ inline Bool is_letter(char c)
 }
 
 // check if a character is alphanumeric (a-z, A-Z, 0-9)
-inline Bool is_alphanum(char c)
+inline bool is_alphanum(char c)
 {
 	if (is_letter(c) || is_num(c))
 		return true;
@@ -449,7 +449,7 @@ inline Bool is_alphanum(char c)
 }
 
 // check if a character is alphanumeric or an underscore
-inline Bool is_alphanum_(char c)
+inline bool is_alphanum_(char c)
 {
 	if (is_alphanum(c) || c == '_')
 		return true;
@@ -600,7 +600,7 @@ inline Long trim(Str_IO str, Str_I key = " ")
 }
 
 // check if a word is a whole word
-inline Bool is_whole_word(Str_I str, Long_I ind, Long_I count)
+inline bool is_whole_word(Str_I str, Long_I ind, Long_I count)
 {
 	// check left
 	Long ind0 = ind - 1;
@@ -795,8 +795,8 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 	ind_left.resize(0); ind_right.resize(0); ind_RmatchL.resize(0);
 	char c, c_last = ' ';
 	Long Nleft = 0, Nright = 0;
-	vector<Bool> Lmatched;
-	Bool matched;
+	vector<bool> Lmatched;
+	bool matched;
 	for (Long i = start; i <= end; ++i)
 	{
 		c = str.at(i);
@@ -943,7 +943,7 @@ inline Long str2double(Doub& num, Str_I str, Long_I start = 0)
 {
 	if (start >= size(str)) return -1;
 	Long ind = start, num1 = 0;
-	Bool neg = false;
+	bool neg = false;
 	if (str[ind] == '+') ++ind;
 	if (str[ind] == '-') { neg = true; ++ind; }
 	// ddd.ddd or .ddd
@@ -969,7 +969,7 @@ inline Doub str2double(Str_I str, Long_I start = 0)
 }
 
 
-inline Bool is_num(Char32 c)
+inline bool is_num(Char32 c)
 {
 	if (c >= U'0' && c <= U'9')
 		return true;
@@ -977,7 +977,7 @@ inline Bool is_num(Char32 c)
 }
 
 // check if a character is a letter (a-z, A-Z)
-inline Bool is_letter(Char32 c)
+inline bool is_letter(Char32 c)
 {
 	if ((c >= U'a' && c <= U'z') || (c >= U'A' && c <= U'Z'))
 		return true;
@@ -985,7 +985,7 @@ inline Bool is_letter(Char32 c)
 }
 
 // check if a character is alphanumeric (a-z, A-Z, 0-9)
-inline Bool is_alphanum(Char32 c)
+inline bool is_alphanum(Char32 c)
 {
 	if (is_letter(c) || is_num(c))
 		return true;
@@ -993,7 +993,7 @@ inline Bool is_alphanum(Char32 c)
 }
 
 // check if a character is alphanumeric or an underscore
-inline Bool is_alphanum_(Char32 c)
+inline bool is_alphanum_(Char32 c)
 {
 	if (is_alphanum(c) || c == U'_')
 		return true;
@@ -1144,7 +1144,7 @@ inline Long trim(Str32_IO str, Str32_I key = U" ")
 }
 
 // check if a word is a whole word
-inline Bool is_whole_word(Str32_I str, Long_I ind, Long_I count)
+inline bool is_whole_word(Str32_I str, Long_I ind, Long_I count)
 {
 	// check left
 	Long ind0 = ind - 1;
@@ -1339,8 +1339,8 @@ inline Long MatchBraces(vecLong_O ind_left, vecLong_O ind_right,
 	ind_left.resize(0); ind_right.resize(0); ind_RmatchL.resize(0);
 	Char32 c, c_last = ' ';
 	Long Nleft = 0, Nright = 0;
-	vector<Bool> Lmatched;
-	Bool matched;
+	vector<bool> Lmatched;
+	bool matched;
 	for (Long i = start; i <= end; ++i)
 	{
 		c = str.at(i);
@@ -1487,7 +1487,7 @@ inline Long str2double(Doub& num, Str32_I str, Long_I start = 0)
 {
 	if (start >= size(str)) return -1;
 	Long ind = start, num1 = 0;
-	Bool neg = false;
+	bool neg = false;
 	if (str[ind] == '+') ++ind;
 	if (str[ind] == '-') { neg = true; ++ind; }
 	// ddd.ddd or .ddd
@@ -1863,7 +1863,7 @@ inline void join(Str32_O str, const unordered_set<Llong> &v, Str32_I sep = U" ")
 inline Str mantissa_str(Doub x, char prec = 17)
 {
 	Str str;
-	// Bool neg = false;
+	// bool neg = false;
 	if (x < 0) x = -x; // neg = true;
 	x = double_set_exp(x, 0); // erase exponent
 	if (x < 1) {

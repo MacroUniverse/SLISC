@@ -24,7 +24,7 @@ public:
     Long Mmax() const;
     Long nf() const;
     // check if fr{L,M} exists, for any L, M
-    Bool exist(Long_I L, Long_I M) const;
+    bool exist(Long_I L, Long_I M) const;
     const Vector<T> &get(Long_I L, Long_I M) const;
     Vector<T> &get(Long_I L, Long_I M);
     const T &operator()(Long_I L, Long_I M, Long_I i) const;
@@ -84,7 +84,7 @@ Long Flm<T>::nf() const
 }
 
 template <class T>
-Bool Flm<T>::exist(Long_I L, Long_I M) const
+bool Flm<T>::exist(Long_I L, Long_I M) const
 {
 #ifdef SLS_CHECK_BOUNDS
     if (L < 0) SLS_ERR("L < 0 is illegal!");

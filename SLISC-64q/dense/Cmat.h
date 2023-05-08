@@ -1404,7 +1404,7 @@ public:
 	CmatBool &operator=(const CmatBool &rhs) = delete;
 	void operator<<(CmatBool &rhs); // move data and rhs.resize(0, 0)
 	CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
-	Bool operator()(Long_I i, Long_I j) const;
+	bool operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
@@ -1439,7 +1439,7 @@ inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
 	return (*this)[i+m_N0*j];
 }
 
-inline Bool CmatBool::operator()(Long_I i, Long_I j) const
+inline bool CmatBool::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)

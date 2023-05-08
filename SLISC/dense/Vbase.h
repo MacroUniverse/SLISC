@@ -2213,11 +2213,11 @@ public:
 	Long size() const;
 	void resize(Long_I N);
 	ref operator[](Long_I i);
-	Bool operator[](Long_I i) const;
+	bool operator[](Long_I i) const;
 	ref end();
-	Bool end() const;
+	bool end() const;
 	ref end(Long_I i); // i = 1 for the last, i = 2 for the second last...
-	Bool end(Long_I i) const;
+	bool end(Long_I i) const;
 	void operator<<(VbaseBool &rhs); // move data
 };
 
@@ -2264,7 +2264,7 @@ inline VbaseBool::ref VbaseBool::operator[](Long_I i)
 	return m_v[i];
 }
 
-inline Bool VbaseBool::operator[](Long_I i) const
+inline bool VbaseBool::operator[](Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i<0 || i>=size())
@@ -2282,7 +2282,7 @@ inline VbaseBool::ref VbaseBool::end()
 	return m_v.back();
 }
 
-inline Bool VbaseBool::end() const
+inline bool VbaseBool::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_v.empty())
@@ -2300,7 +2300,7 @@ inline VbaseBool::ref VbaseBool::end(Long_I i)
 	return m_v[size() - i];
 }
 
-inline Bool VbaseBool::end(Long_I i) const
+inline bool VbaseBool::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > size())

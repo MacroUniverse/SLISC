@@ -52,13 +52,13 @@ namespace slisc {
 //%------------------------
 //% [T1, T2] = varargin{1:2};
 //% if is_real(T1)
-inline Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator==(@T1@_I s1, @T2@_I s2) { return real(s2) == s1 && imag(s2) == 0; }
 //% elseif is_real(T2)
-inline Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == s2 && imag(s1) == 0; }
 //% else
-inline Bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
 //% end
-inline Bool operator!=(@T1@_I s1, @T2@_I s2) { return !(s1 == s2); }
+inline bool operator!=(@T1@_I s1, @T2@_I s2) { return !(s1 == s2); }
 //%------------------------
 
 // reference to real/imaginary part

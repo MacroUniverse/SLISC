@@ -4,105 +4,105 @@
 #include "../global.h"
 
 namespace slisc {
-inline Bool operator==(Char_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Char_I s1, Fcomp_I s2) { return !(s1 == s2); }
+inline bool operator==(Char_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Char_I s1, Fcomp_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Char_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Char_I s1, Comp_I s2) { return !(s1 == s2); }
+inline bool operator==(Char_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Char_I s1, Comp_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Char_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Char_I s1, Lcomp_I s2) { return !(s1 == s2); }
-
-
-inline Bool operator==(Int_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Int_I s1, Fcomp_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Int_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Int_I s1, Comp_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Int_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Int_I s1, Lcomp_I s2) { return !(s1 == s2); }
+inline bool operator==(Char_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Char_I s1, Lcomp_I s2) { return !(s1 == s2); }
 
 
-inline Bool operator==(Float_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Float_I s1, Comp_I s2) { return !(s1 == s2); }
+inline bool operator==(Int_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Int_I s1, Fcomp_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Float_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Float_I s1, Lcomp_I s2) { return !(s1 == s2); }
+inline bool operator==(Int_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Int_I s1, Comp_I s2) { return !(s1 == s2); }
 
-
-inline Bool operator==(Doub_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Doub_I s1, Fcomp_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Doub_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Doub_I s1, Lcomp_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Ldoub_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Ldoub_I s1, Fcomp_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Ldoub_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
-inline Bool operator!=(Ldoub_I s1, Comp_I s2) { return !(s1 == s2); }
+inline bool operator==(Int_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Int_I s1, Lcomp_I s2) { return !(s1 == s2); }
 
 
-inline Bool operator==(Fcomp_I s1, Char_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Fcomp_I s1, Char_I s2) { return !(s1 == s2); }
+inline bool operator==(Float_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Float_I s1, Comp_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Comp_I s1, Char_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Comp_I s1, Char_I s2) { return !(s1 == s2); }
-
-
-inline Bool operator==(Lcomp_I s1, Char_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Lcomp_I s1, Char_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Fcomp_I s1, Int_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Fcomp_I s1, Int_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Comp_I s1, Int_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Comp_I s1, Int_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Lcomp_I s1, Int_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Lcomp_I s1, Int_I s2) { return !(s1 == s2); }
+inline bool operator==(Float_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Float_I s1, Lcomp_I s2) { return !(s1 == s2); }
 
 
-inline Bool operator==(Comp_I s1, Float_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Comp_I s1, Float_I s2) { return !(s1 == s2); }
+inline bool operator==(Doub_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Doub_I s1, Fcomp_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Lcomp_I s1, Float_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Lcomp_I s1, Float_I s2) { return !(s1 == s2); }
+inline bool operator==(Doub_I s1, Lcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Doub_I s1, Lcomp_I s2) { return !(s1 == s2); }
 
+inline bool operator==(Ldoub_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Ldoub_I s1, Fcomp_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Fcomp_I s1, Doub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Fcomp_I s1, Doub_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Lcomp_I s1, Doub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Lcomp_I s1, Doub_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Fcomp_I s1, Ldoub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Fcomp_I s1, Ldoub_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Comp_I s1, Ldoub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
-inline Bool operator!=(Comp_I s1, Ldoub_I s2) { return !(s1 == s2); }
+inline bool operator==(Ldoub_I s1, Comp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
+inline bool operator!=(Ldoub_I s1, Comp_I s2) { return !(s1 == s2); }
 
 
-inline Bool operator==(Fcomp_I s1, Comp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
-inline Bool operator!=(Fcomp_I s1, Comp_I s2) { return !(s1 == s2); }
+inline bool operator==(Fcomp_I s1, Char_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Fcomp_I s1, Char_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Fcomp_I s1, Lcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
-inline Bool operator!=(Fcomp_I s1, Lcomp_I s2) { return !(s1 == s2); }
-
-
-inline Bool operator==(Comp_I s1, Fcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
-inline Bool operator!=(Comp_I s1, Fcomp_I s2) { return !(s1 == s2); }
-
-inline Bool operator==(Comp_I s1, Lcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
-inline Bool operator!=(Comp_I s1, Lcomp_I s2) { return !(s1 == s2); }
+inline bool operator==(Comp_I s1, Char_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Comp_I s1, Char_I s2) { return !(s1 == s2); }
 
 
-inline Bool operator==(Lcomp_I s1, Fcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
-inline Bool operator!=(Lcomp_I s1, Fcomp_I s2) { return !(s1 == s2); }
+inline bool operator==(Lcomp_I s1, Char_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Lcomp_I s1, Char_I s2) { return !(s1 == s2); }
 
-inline Bool operator==(Lcomp_I s1, Comp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
-inline Bool operator!=(Lcomp_I s1, Comp_I s2) { return !(s1 == s2); }
+inline bool operator==(Fcomp_I s1, Int_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Fcomp_I s1, Int_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Comp_I s1, Int_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Comp_I s1, Int_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Lcomp_I s1, Int_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Lcomp_I s1, Int_I s2) { return !(s1 == s2); }
+
+
+inline bool operator==(Comp_I s1, Float_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Comp_I s1, Float_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Lcomp_I s1, Float_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Lcomp_I s1, Float_I s2) { return !(s1 == s2); }
+
+
+inline bool operator==(Fcomp_I s1, Doub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Fcomp_I s1, Doub_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Lcomp_I s1, Doub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Lcomp_I s1, Doub_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Fcomp_I s1, Ldoub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Fcomp_I s1, Ldoub_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Comp_I s1, Ldoub_I s2) { return real(s1) == s2 && imag(s1) == 0; }
+inline bool operator!=(Comp_I s1, Ldoub_I s2) { return !(s1 == s2); }
+
+
+inline bool operator==(Fcomp_I s1, Comp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator!=(Fcomp_I s1, Comp_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Fcomp_I s1, Lcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator!=(Fcomp_I s1, Lcomp_I s2) { return !(s1 == s2); }
+
+
+inline bool operator==(Comp_I s1, Fcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator!=(Comp_I s1, Fcomp_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Comp_I s1, Lcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator!=(Comp_I s1, Lcomp_I s2) { return !(s1 == s2); }
+
+
+inline bool operator==(Lcomp_I s1, Fcomp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator!=(Lcomp_I s1, Fcomp_I s2) { return !(s1 == s2); }
+
+inline bool operator==(Lcomp_I s1, Comp_I s2) { return real(s1) == real(s2) && imag(s1) == imag(s2); }
+inline bool operator!=(Lcomp_I s1, Comp_I s2) { return !(s1 == s2); }
 
 
 

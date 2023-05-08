@@ -39,7 +39,7 @@ struct Dcit@TC@ {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -48,7 +48,7 @@ struct Dcit@TC@ {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -58,12 +58,12 @@ struct Dcit@TC@ {
 			return true;
 		}
 		@Tc@ &operator*() { return *m_p; }
-		Bool operator==(const @Ts@ *p) { return m_p == p; }
-		Bool operator!=(const @Ts@ *p) { return m_p != p; }
-		Bool operator>(const @Ts@ *p) { return m_p > p; }
-		Bool operator>=(const @Ts@ *p) { return m_p >= p; }
-		Bool operator<(const @Ts@ *p) { return m_p < p; }
-		Bool operator<=(const @Ts@ *p) { return m_p <= p; }
+		bool operator==(const @Ts@ *p) { return m_p == p; }
+		bool operator!=(const @Ts@ *p) { return m_p != p; }
+		bool operator>(const @Ts@ *p) { return m_p > p; }
+		bool operator>=(const @Ts@ *p) { return m_p >= p; }
+		bool operator<(const @Ts@ *p) { return m_p < p; }
+		bool operator<=(const @Ts@ *p) { return m_p <= p; }
 };
 //% if constness
 typedef const Dcit@TC@ &Dcit@Ts@_I;

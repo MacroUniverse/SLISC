@@ -8,7 +8,7 @@
 using namespace slisc;
 Int main(Int argc, Char *argv[])
 {
-	Bool rm = false, replace = false;
+	bool rm = false, replace = false;
 	for (Int i = 1; i <= 2; ++i) {
 		if (argc > i && strcmp(argv[i], "-d") == 0)
 			rm = true; // remove original

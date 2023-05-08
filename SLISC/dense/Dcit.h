@@ -28,7 +28,7 @@ struct DcitInt {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -37,7 +37,7 @@ struct DcitInt {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -47,12 +47,12 @@ struct DcitInt {
 			return true;
 		}
 		Int &operator*() { return *m_p; }
-		Bool operator==(const Int *p) { return m_p == p; }
-		Bool operator!=(const Int *p) { return m_p != p; }
-		Bool operator>(const Int *p) { return m_p > p; }
-		Bool operator>=(const Int *p) { return m_p >= p; }
-		Bool operator<(const Int *p) { return m_p < p; }
-		Bool operator<=(const Int *p) { return m_p <= p; }
+		bool operator==(const Int *p) { return m_p == p; }
+		bool operator!=(const Int *p) { return m_p != p; }
+		bool operator>(const Int *p) { return m_p > p; }
+		bool operator>=(const Int *p) { return m_p >= p; }
+		bool operator<(const Int *p) { return m_p < p; }
+		bool operator<=(const Int *p) { return m_p <= p; }
 };
 typedef DcitInt &DcitInt_O, &DcitInt_IO;
 
@@ -78,7 +78,7 @@ struct DcitIntC {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -87,7 +87,7 @@ struct DcitIntC {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -97,12 +97,12 @@ struct DcitIntC {
 			return true;
 		}
 		const Int &operator*() { return *m_p; }
-		Bool operator==(const Int *p) { return m_p == p; }
-		Bool operator!=(const Int *p) { return m_p != p; }
-		Bool operator>(const Int *p) { return m_p > p; }
-		Bool operator>=(const Int *p) { return m_p >= p; }
-		Bool operator<(const Int *p) { return m_p < p; }
-		Bool operator<=(const Int *p) { return m_p <= p; }
+		bool operator==(const Int *p) { return m_p == p; }
+		bool operator!=(const Int *p) { return m_p != p; }
+		bool operator>(const Int *p) { return m_p > p; }
+		bool operator>=(const Int *p) { return m_p >= p; }
+		bool operator<(const Int *p) { return m_p < p; }
+		bool operator<=(const Int *p) { return m_p <= p; }
 };
 typedef const DcitIntC &DcitInt_I;
 
@@ -128,7 +128,7 @@ struct DcitLlong {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -137,7 +137,7 @@ struct DcitLlong {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -147,12 +147,12 @@ struct DcitLlong {
 			return true;
 		}
 		Llong &operator*() { return *m_p; }
-		Bool operator==(const Llong *p) { return m_p == p; }
-		Bool operator!=(const Llong *p) { return m_p != p; }
-		Bool operator>(const Llong *p) { return m_p > p; }
-		Bool operator>=(const Llong *p) { return m_p >= p; }
-		Bool operator<(const Llong *p) { return m_p < p; }
-		Bool operator<=(const Llong *p) { return m_p <= p; }
+		bool operator==(const Llong *p) { return m_p == p; }
+		bool operator!=(const Llong *p) { return m_p != p; }
+		bool operator>(const Llong *p) { return m_p > p; }
+		bool operator>=(const Llong *p) { return m_p >= p; }
+		bool operator<(const Llong *p) { return m_p < p; }
+		bool operator<=(const Llong *p) { return m_p <= p; }
 };
 typedef DcitLlong &DcitLlong_O, &DcitLlong_IO;
 
@@ -178,7 +178,7 @@ struct DcitLlongC {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -187,7 +187,7 @@ struct DcitLlongC {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -197,12 +197,12 @@ struct DcitLlongC {
 			return true;
 		}
 		const Llong &operator*() { return *m_p; }
-		Bool operator==(const Llong *p) { return m_p == p; }
-		Bool operator!=(const Llong *p) { return m_p != p; }
-		Bool operator>(const Llong *p) { return m_p > p; }
-		Bool operator>=(const Llong *p) { return m_p >= p; }
-		Bool operator<(const Llong *p) { return m_p < p; }
-		Bool operator<=(const Llong *p) { return m_p <= p; }
+		bool operator==(const Llong *p) { return m_p == p; }
+		bool operator!=(const Llong *p) { return m_p != p; }
+		bool operator>(const Llong *p) { return m_p > p; }
+		bool operator>=(const Llong *p) { return m_p >= p; }
+		bool operator<(const Llong *p) { return m_p < p; }
+		bool operator<=(const Llong *p) { return m_p <= p; }
 };
 typedef const DcitLlongC &DcitLlong_I;
 
@@ -228,7 +228,7 @@ struct DcitDoub {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -237,7 +237,7 @@ struct DcitDoub {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -247,12 +247,12 @@ struct DcitDoub {
 			return true;
 		}
 		Doub &operator*() { return *m_p; }
-		Bool operator==(const Doub *p) { return m_p == p; }
-		Bool operator!=(const Doub *p) { return m_p != p; }
-		Bool operator>(const Doub *p) { return m_p > p; }
-		Bool operator>=(const Doub *p) { return m_p >= p; }
-		Bool operator<(const Doub *p) { return m_p < p; }
-		Bool operator<=(const Doub *p) { return m_p <= p; }
+		bool operator==(const Doub *p) { return m_p == p; }
+		bool operator!=(const Doub *p) { return m_p != p; }
+		bool operator>(const Doub *p) { return m_p > p; }
+		bool operator>=(const Doub *p) { return m_p >= p; }
+		bool operator<(const Doub *p) { return m_p < p; }
+		bool operator<=(const Doub *p) { return m_p <= p; }
 };
 typedef DcitDoub &DcitDoub_O, &DcitDoub_IO;
 
@@ -278,7 +278,7 @@ struct DcitDoubC {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -287,7 +287,7 @@ struct DcitDoubC {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -297,12 +297,12 @@ struct DcitDoubC {
 			return true;
 		}
 		const Doub &operator*() { return *m_p; }
-		Bool operator==(const Doub *p) { return m_p == p; }
-		Bool operator!=(const Doub *p) { return m_p != p; }
-		Bool operator>(const Doub *p) { return m_p > p; }
-		Bool operator>=(const Doub *p) { return m_p >= p; }
-		Bool operator<(const Doub *p) { return m_p < p; }
-		Bool operator<=(const Doub *p) { return m_p <= p; }
+		bool operator==(const Doub *p) { return m_p == p; }
+		bool operator!=(const Doub *p) { return m_p != p; }
+		bool operator>(const Doub *p) { return m_p > p; }
+		bool operator>=(const Doub *p) { return m_p >= p; }
+		bool operator<(const Doub *p) { return m_p < p; }
+		bool operator<=(const Doub *p) { return m_p <= p; }
 };
 typedef const DcitDoubC &DcitDoub_I;
 
@@ -328,7 +328,7 @@ struct DcitComp {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -337,7 +337,7 @@ struct DcitComp {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -347,12 +347,12 @@ struct DcitComp {
 			return true;
 		}
 		Comp &operator*() { return *m_p; }
-		Bool operator==(const Comp *p) { return m_p == p; }
-		Bool operator!=(const Comp *p) { return m_p != p; }
-		Bool operator>(const Comp *p) { return m_p > p; }
-		Bool operator>=(const Comp *p) { return m_p >= p; }
-		Bool operator<(const Comp *p) { return m_p < p; }
-		Bool operator<=(const Comp *p) { return m_p <= p; }
+		bool operator==(const Comp *p) { return m_p == p; }
+		bool operator!=(const Comp *p) { return m_p != p; }
+		bool operator>(const Comp *p) { return m_p > p; }
+		bool operator>=(const Comp *p) { return m_p >= p; }
+		bool operator<(const Comp *p) { return m_p < p; }
+		bool operator<=(const Comp *p) { return m_p <= p; }
 };
 typedef DcitComp &DcitComp_O, &DcitComp_IO;
 
@@ -378,7 +378,7 @@ struct DcitCompC {
 			m_end0 = m_beg0 + a.n0();
 			m_p = m_end0-1;
 		}
-		Bool ckend() {
+		bool ckend() {
 			if (m_p == m_end0) {
 				m_beg0 += m_step1;
 				if (m_beg0 >= m_end)
@@ -387,7 +387,7 @@ struct DcitCompC {
 			}
 			return true;
 		}
-		Bool ckbeg() {
+		bool ckbeg() {
 			if (m_p < m_beg0) {
 				m_end0 -= m_step1;
 				if (m_end0 < m_beg)
@@ -397,12 +397,12 @@ struct DcitCompC {
 			return true;
 		}
 		const Comp &operator*() { return *m_p; }
-		Bool operator==(const Comp *p) { return m_p == p; }
-		Bool operator!=(const Comp *p) { return m_p != p; }
-		Bool operator>(const Comp *p) { return m_p > p; }
-		Bool operator>=(const Comp *p) { return m_p >= p; }
-		Bool operator<(const Comp *p) { return m_p < p; }
-		Bool operator<=(const Comp *p) { return m_p <= p; }
+		bool operator==(const Comp *p) { return m_p == p; }
+		bool operator!=(const Comp *p) { return m_p != p; }
+		bool operator>(const Comp *p) { return m_p > p; }
+		bool operator>=(const Comp *p) { return m_p >= p; }
+		bool operator<(const Comp *p) { return m_p < p; }
+		bool operator<=(const Comp *p) { return m_p <= p; }
 };
 typedef const DcitCompC &DcitComp_I;
 

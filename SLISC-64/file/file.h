@@ -50,7 +50,7 @@ inline Str wstr2utf8(const std::wstring& wstr);
 inline std::wstring utf82wstr(Str_I str);
 
 // check if a file exist on Windws (case sensitive)
-inline Bool file_exist_case(Str_I fname)
+inline bool file_exist_case(Str_I fname)
 {
 	Long ind = max((Long)fname.rfind('/'), (Long)fname.rfind('\\'));
 	Str path, name;
@@ -73,7 +73,7 @@ inline Bool file_exist_case(Str_I fname)
 
 // check if a file exist, default is case sensitive
 // case_sens only works on Windows
-inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
+inline bool file_exist(Str_I fname, Bool_I case_sens = true) {
 #ifndef SLS_USE_MSVC
 	ifstream f(fname);
 	return f.good();
@@ -88,7 +88,7 @@ inline Bool file_exist(Str_I fname, Bool_I case_sens = true) {
 }
 
 // not case sensitive on Windows, see file_exist_case()
-inline Bool file_exist(Str32_I fname) {
+inline bool file_exist(Str32_I fname) {
 	return file_exist(u8(fname));
 }
 
@@ -106,7 +106,7 @@ inline void file_remove(Str_I fname)
 
 // check if directory exist
 // `path` must end with '/'
-inline Bool dir_exist(Str_I path)
+inline bool dir_exist(Str_I path)
 {
 #ifndef SLS_USE_MSVC
 	ofstream file(path + "/sls_test_if_dir_exist");

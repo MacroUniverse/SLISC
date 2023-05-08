@@ -58,7 +58,7 @@ inline Long search(@Ts@_I s, @Tv@_I v, Long_I start = 0)
 //% });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
-inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
+inline bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -77,7 +77,7 @@ inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;

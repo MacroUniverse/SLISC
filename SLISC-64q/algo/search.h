@@ -110,7 +110,7 @@ inline Long search(Str32_I s, vecStr32_I v, Long_I start = 0)
 // if s > v[N-1], ind = N-1;
 // else, v[ind] < s < v[ind+1];
 // algorithm: bisection
-inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
+inline bool lookup(Long_O ind, VecInt_I v, Int_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -129,7 +129,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -148,7 +148,7 @@ inline Bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
+inline bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -167,7 +167,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -186,7 +186,7 @@ inline Bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
+inline bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -205,7 +205,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -224,7 +224,7 @@ inline Bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s)
+inline bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -243,7 +243,7 @@ inline Bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -262,7 +262,7 @@ inline Bool lookup(Long_O ind, VecQdoub_I v, Qdoub_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
+inline bool lookup(Long_O ind, vecInt_I v, Int_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -281,7 +281,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -300,7 +300,7 @@ inline Bool lookup(Long_O ind, vecInt_I v, Int_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
+inline bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -319,7 +319,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -338,7 +338,7 @@ inline Bool lookup(Long_O ind, vecLlong_I v, Llong_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecStr_I v, Str_I s)
+inline bool lookup(Long_O ind, vecStr_I v, Str_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -357,7 +357,7 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecStr_I v, Str_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, vecStr_I v, Str_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -376,7 +376,7 @@ inline Bool lookup(Long_O ind, vecStr_I v, Str_I s, Long ind1, Long ind2)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s)
+inline bool lookup(Long_O ind, vecStr32_I v, Str32_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -395,7 +395,7 @@ inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s)
 	}
 }
 
-inline Bool lookup(Long_O ind, vecStr32_I v, Str32_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, vecStr32_I v, Str32_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
