@@ -27,7 +27,7 @@ inline void change_endian(void *data, Long_I elm_size, Long_I Nelm)
 	}
 }
 
-// get i-th bit from the right
+// get i-th bit of a byte from the right
 // (due to integral promotion, `byte` will convert to signed int first)
 inline bool bitR(Uchar byte, int i) {
 #ifdef SLS_CHECK_BOUNDS
@@ -42,7 +42,7 @@ inline bool bitR(const void *byte, int i)
 inline bool bitR(Char byte, int i)
 { return bitR(&byte, i); }
 
-// (for multiple bytes)
+// for multiple bytes, and consider endianess
 inline bool bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -56,7 +56,7 @@ inline bool bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = f
 	return *p & (1 << (i % 8));
 }
 
-// get i-th bit from the left
+// get i-th bit from the left of a byte
 inline bool bitL(Uchar byte, int i) {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(i >= 0 && i < 8);
@@ -70,11 +70,11 @@ inline bool bitL(const void *byte, int i)
 inline bool bitL(Char byte, int i)
 { return bitL(&byte, i); }
 
-// (for multiple bytes)
+// for multiple bytes, and consider endianess
 inline bool bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
 {
 #ifdef SLS_CHECK_BOUNDS
-	SLS_ASSERT(i > 0 && i < size*8);
+	SLS_ASSERT(i >= 0 && i < size*8);
 #endif
 	auto p = (Uchar *)data;
 	if (!auto_endian || !little_endian())
@@ -84,7 +84,7 @@ inline bool bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = f
 	return *p & (128 >> (i % 8));
 }
 
-// set i-th bit from the right to 1
+// set i-th bit from the right of a byte to 1
 inline void set_bitR(Uchar_IO byte, int i) {
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(i >= 0 && i < 8);
@@ -97,6 +97,19 @@ inline void set_bitR(void *byte, int i)
 
 inline void set_bitR(Char_IO byte, int i)
 { set_bitR(&byte, i); }
+
+inline void set_bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += size - 1 - i/8;
+	else
+		p += i/8;
+	set_bitR(p, i % 8);
+}
 
 // set i-th bit from the left to 1
 inline void set_bitL(Uchar_IO byte, int i) {
@@ -112,6 +125,19 @@ inline void set_bitL(void *byte, int i)
 inline void set_bitL(Char_IO byte, int i)
 { set_bitL(&byte, i); }
 
+inline void set_bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += i/8;
+	else
+		p += size - 1 - i/8;
+	set_bitL(p, i % 8);
+}
+
 // set i-th bit from the right to 0
 inline void unset_bitR(Uchar_IO byte, int i) {
 #ifdef SLS_CHECK_BOUNDS
@@ -125,6 +151,19 @@ inline void unset_bitR(void *byte, int i)
 
 inline void unset_bitR(Char_IO byte, int i)
 { unset_bitR(&byte, i); }
+
+inline void unset_bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += size - 1 - i/8;
+	else
+		p += i/8;
+	unset_bitR(p, i % 8);
+}
 
 // set i-th bit from the left to 0
 inline void unset_bitL(Uchar_IO byte, int i) {
@@ -140,6 +179,19 @@ inline void unset_bitL(void *byte, int i)
 inline void unset_bitL(Char_IO byte, int i)
 { unset_bitL(&byte, i); }
 
+inline void unset_bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += i/8;
+	else
+		p += size - 1 - i/8;
+	unset_bitL(p, i % 8);
+}
+
 // flip the i-th bit from the right
 inline void toggle_bitR(Uchar_IO byte, int i) {
 #ifdef SLS_CHECK_BOUNDS
@@ -154,6 +206,19 @@ inline void toggle_bitR(void *byte, int i)
 inline void toggle_bitR(Char_IO byte, int i)
 { toggle_bitR(&byte, i); }
 
+inline void toggle_bitR(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += size - 1 - i/8;
+	else
+		p += i/8;
+	toggle_bitR(p, i % 8);
+}
+
 // flip the i-th bit from the left
 inline void toggle_bitL(Uchar_IO byte, int i) {
 #ifdef SLS_CHECK_BOUNDS
@@ -167,6 +232,19 @@ inline void toggle_bitL(void *byte, int i)
 
 inline void toggle_bitL(Char_IO byte, int i)
 { toggle_bitL(&byte, i); }
+
+inline void toggle_bitL(const void *data, Long_I size, Long_I i, Bool_I auto_endian = false)
+{
+#ifdef SLS_CHECK_BOUNDS
+	SLS_ASSERT(i >= 0 && i < size*8);
+#endif
+	auto p = (Uchar *)data;
+	if (!auto_endian || !little_endian())
+		p += i/8;
+	else
+		p += size - 1 - i/8;
+	toggle_bitL(p, i % 8);
+}
 
 // convert a byte to bit string (8 char '0' or '1')
 inline Str to_bitstr(Char_I byte)

@@ -69,11 +69,11 @@ inline bool isodd(Llong_I n) { return n & 1; }
 inline bool isodd(Ullong_I n) { return n & 1; }
 
 
-inline bool ispow2(Char_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(Char_I n) { return (n & (n-1)) == 0; }
 
-inline bool ispow2(Int_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(Int_I n) { return (n & (n-1)) == 0; }
 
-inline bool ispow2(Llong_I n) { return (n&(n-1)) == 0; }
+inline bool ispow2(Llong_I n) { return (n & (n-1)) == 0; }
 
 
 inline Int to_num(Char_I x) { return (Int)x; }
@@ -100,7 +100,6 @@ template<typename T>
 constexpr int digits(const T &n) {
 	static_assert(std::is_integral<T>::value, "T must be an integral type " SLS_WHERE);
     int count = 0;
-    if (n < 0) n = -n;
     do { count++; n /= 10; } while (n != 0);
     return count;
 }
@@ -276,18 +275,44 @@ inline Qdoub mod_eu(Long_O n, Qdoub_I s, Qdoub_I d)
 template <class T>
 inline T sqr(const T &x) { return x * x; }
 
+template <class T>
+inline T cube(const T &x) { return x*x*x; }
+
+// b^n that output an integer 
+inline Int pow(Int b, Uint n) {
+    Int r = 1;
+    while (n > 0) {
+        if (n & 1) // odd
+            r *= b;
+        b *= b; n >>= 1;
+    }
+    return r;
+}
+
+
 inline Int abs2(Int_I a) { return a * a; }
+
+inline Llong abs2(Llong_I a) { return a * a; }
 
 inline Doub abs2(Doub_I a) { return a * a; }
 
 inline Doub abs2(Comp_I a) { return sqr(real(a)) + sqr(imag(a)); }
 
 
-inline Doub factorial(Int_I n) {
+inline Llong factorial_ll(int n) {
+	if (n > 20)
+		SLS_ERR("n too large!");
+	Llong ret = 1;
+	for (int i = 2; i <= n; ++i)
+		ret *= i;
+	return ret;
+}
+
+inline Doub factorial(int n) {
 	if (n > 170)
 		SLS_ERR("n too large!");
 	Doub ret = 1;
-	for (Int i = 2; i <= n; ++i)
+	for (int i = 2; i <= n; ++i)
 		ret *= i;
 	return ret;
 }
@@ -323,7 +348,7 @@ template <class T, class U> inline Long size(const unordered_map<T,U> &v) { retu
 
 
 // get the size of an std::tuple
-// see also `std::tuple_size`
+// see also `std::tuple_size()`
 template <typename... Ts>
 constexpr Long size(const std::tuple<Ts...>&) { return (Long)sizeof...(Ts); }
 
@@ -430,19 +455,6 @@ inline void primes2(vecLong_O v, Long_I Nprime)
 }
 
 inline Doub sinc(Doub_I x) { return x == 0. ? 1. : sin(x) / x; }
-
-
-// b^n that output an integer 
-inline Int pow(Int b, Uint n) {
-    Int r = 1;
-    while (n > 0) {
-        if (n & 1) {
-            r *= b;
-        }
-        b *= b; n >>= 1;
-    }
-    return r;
-}
 
 
 } // namespace slisc
