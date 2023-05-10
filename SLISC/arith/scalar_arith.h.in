@@ -144,7 +144,7 @@ template <class T>
 inline T cube(const T &x) { return x*x*x; }
 
 // b^n that output an integer 
-//% tem('pow', { 'Int', 'Llong' });
+//% tem('pow', { 'Int'; 'Llong' });
 //%---------------------
 //% T = varargin{:};
 inline @T@ pow(@T@ b, Uint n) {

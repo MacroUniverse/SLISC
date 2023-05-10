@@ -216,9 +216,9 @@ inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 		if (skipped < N)
 			throw std::out_of_range("skip_char8(): Not enough characters to skip");
 	}
-	else if (N < 0) {
+	else {
 		Long remaining = -N;
-		while (i > 0 && remaining > 0) {
+		while (i >= 0 && remaining > 0) {
 			i--;
 			if ((s[i] & 0xC0) != 0x80)
 				remaining--;

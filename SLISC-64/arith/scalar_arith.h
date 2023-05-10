@@ -244,6 +244,16 @@ inline Int pow(Int b, Uint n) {
     return r;
 }
 
+inline Llong pow(Llong b, Uint n) {
+    Llong r = 1;
+    while (n > 0) {
+        if (n & 1) // odd
+            r *= b;
+        b *= b; n >>= 1;
+    }
+    return r;
+}
+
 
 inline Int abs2(Int_I a) { return a * a; }
 

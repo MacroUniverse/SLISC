@@ -189,7 +189,9 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 	if (!append)
 		fnames.clear();
 	// save a list of all files (no folder) to temporary file
-	std::istringstream iss(exec_str(("ls -p " + path + " | grep -v /").c_str()));
+    Str path1 = path;
+    replace(path1, "\"", "\"");
+	std::istringstream iss(exec_str("ls -p \"" + path1 + "\" | grep -v /"));
 	
 	// read the temporary file
 	Str name;
@@ -275,6 +277,40 @@ inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false
 	for (Long i = 0; i < size(names); ++i)
 		folders.push_back(path + names[i]);
 }
+
+#else
+
+// list direct sub-folders, including path, ending with `/`
+inline void folder_list_full(vecStr_O folders, Str_I path, bool append = false)
+{
+    if (!append)
+        folders.clear();
+    // save a list of all files (no folder) to temporary file
+    Str tmp = "find "; tmp << path << " -maxdepth 1 -mindepth 1 -type d;";
+    std::istringstream iss(exec_str(tmp));
+
+    // read the temporary file
+    Str name;
+    while (1) {
+        getline(iss, name);
+        if (iss.eof())
+            break;
+        folders.push_back(name + '/');
+    }
+    sort(folders);
+}
+
+// get a list of direct sub-folders, not including path, ending with `/`
+inline void folder_list(vecStr_O folders, Str_I path, bool append = false)
+{
+    folder_list_full(folders, path, append);
+    for (auto &folder : folders) {
+        Long i = folder.find_last_of('/', folder.size()-2);
+        if (i >= 0)
+            folder.erase(0, i+1);
+    }
+}
+
 #endif
 
 // list all files in a directory recursively (containing relative paths)
@@ -363,7 +399,7 @@ inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I k
 inline void file_copy(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
 	if (!file_exist(fname_in))
-		SLS_ERR("file not found!");
+		SLS_ERR("file not found: " + fname_in);
 	if (file_exist(fname_out) && !replace) {
 		while (true) {
 			if (file_exist(fname_out)) {
@@ -396,7 +432,7 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 {
 	// checking
 	if (!file_exist(fname_in))
-		SLS_ERR("file not found!");
+		SLS_ERR("file not found: " + fname_in);
 	if (file_exist(fname_out) && !replace) {
 		while (true) {
 			if (file_exist(fname_out)) {
@@ -427,7 +463,7 @@ inline void file_copy(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 {
 	if (!file_exist(fname_in))
-		SLS_ERR("file not found!");
+		SLS_ERR("file not found: " + fname_in);
 	if (file_exist(fname_out) && !replace) {
 		while (true) {
 			if (file_exist(fname_out)) {
@@ -451,7 +487,7 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Bool_I replace = false)
 inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I replace = false)
 {
 	if (!file_exist(fname_in))
-		SLS_ERR("file not found!");
+		SLS_ERR("file not found: " + fname_in);
 	if (file_exist(fname_out) && !replace) {
 		while (true) {
 			if (file_exist(fname_out)) {
