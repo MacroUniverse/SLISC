@@ -1,11 +1,9 @@
 // every program that uses SLISC should include "global.h" first
-#define SLS_MAJOR 0
-#define SLS_MINOR 2
-#define SLS_PATCH 4
+
+#pragma once
 
 #include "config.h"
 
-#pragma once
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
