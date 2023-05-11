@@ -97,7 +97,7 @@ inline Qcomp to_num(Qcomp_I x) { return x; }
 
 // check number of decimal digits of an integer
 template<typename T>
-constexpr int digits(const T &n) {
+int digits(const T &n) {
 	static_assert(std::is_integral<T>::value, "T must be an integral type " SLS_WHERE);
     int count = 0;
     do { count++; n /= 10; } while (n != 0);

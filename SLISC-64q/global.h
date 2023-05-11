@@ -1,7 +1,7 @@
 // every program that uses SLISC should include "global.h" first
 #define SLS_MAJOR 0
 #define SLS_MINOR 2
-#define SLS_PATCH 3
+#define SLS_PATCH 4
 
 #include "config.h"
 
@@ -269,8 +269,6 @@ typedef const Llong Llong_I;
 typedef Llong &Llong_O, &Llong_IO;
 typedef const Ullong Ullong_I;
 typedef Ullong &Ullong_O, &Ullong_IO;
-
-static_assert(sizeof(Llong) == 8);
 
 #ifdef SLS_USE_INT_AS_LONG
 	typedef Int Long;

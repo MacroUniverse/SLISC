@@ -86,7 +86,7 @@ make [options] [-j8]
 * `-j8` option is to compile with 8 thread in parallel, you can choose other numbers to.
 * For `[options]`, first try `opt_min=true` to compile with minimum dependency. For a full list of options and default values, see `make/all.mak`. You can also directly modify the values in the file.
 * Changing options `opt_long32` and `opt_quadmath` will require header regeneration with `make h` (requires Octave). For convenience, the generated headers by `make opt_long32=false, opt_quadmath=true h` are stored in `SLISC-64q`. Use `cp SLISC-64q/*h SLISC` if you don't want to regenerate.
-* Also supports CMake and partially suport Visual Studio project file, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
+* Also supports CMake (not all options supported, recommend Makefile) and partially suport Visual Studio project file, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
 * Makefile provides multiple options, uncomment one line to enable. The future plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`).
 * To recompile just one test, use `make [options] test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * Use `./main.x < input.inp` to run all tests. Use `./main.x <test>` to run 1 test.
