@@ -137,22 +137,25 @@ inline Str path2dir(Str_I fname)
 
 inline void mkdir(Str_I path)
 {
-	Str tmp = path;
-	replace(tmp, "\"", "\\\""); // doesn't matter for utf8, multi-byte encoding all bytes > 127
+	Str path1 = path;
+	replace(path1, "\"", "\\\"");
 #ifndef SLS_USE_MSVC
-	Int ret = system(("mkdir -p \"" + tmp + "\"").c_str()); ret++;
+	exec_str("mkdir -p \"" + path1 + "\"");
 #else
 	CreateDirectory(utf82wstr(tmp).c_str(), NULL);
 #endif
-	if (!dir_exist(tmp))
-		SLS_ERR("mkdir failed: " + tmp);
+	if (!dir_exist(path1))
+		SLS_ERR("mkdir failed: " + path1);
 }
 
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
+	Str path1 = path;
+	replace(path1, "\"", "\\\"");
 #ifndef SLS_USE_MSVC
-	Int ret = system(("rmdir " + path).c_str()); ret++;
+	if (!exec_str("rmdir " + path1).empty())
+		SLS_ERR("cannot remove directory: " + path);
 #else
 	if (RemoveDirectory(utf82wstr(path).c_str()) == 0)
 		SLS_ERR("cannot remove directory: " + path);
