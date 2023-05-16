@@ -82,6 +82,64 @@ public:
 	}
 };
 
+// get current machine time (not necessarily correct)
+// [year]   tm::tm_year + 1900;
+// [month]  tm::tm_mon + 1;
+// [day]    tm::tm_mday;
+// [monday] tm::tm_wday
+// [hour]   tm::tm_hour;
+// [min]    tm::tm_min;
+// [sec]    tm::tm_sec;
+// [string] put_time(&tm_val, "%c %Z")
+// [epoch] std::time_t mktime(&tm_val);
+inline std::tm local_time()
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    return *std::localtime(&now_time_t);
+}
+
+// get UTC/GMT time (not necessarily correct)
+inline std::tm utc_time()
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    return *std::gmtime(&now_time_t);
+}
+
+// time zone in minutes (e.g. UTF+8 returns 480)
+// time zones are not always in integer numbers
+inline int time_zone()
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    std::tm local_tm = *std::localtime(&now_time_t);
+    std::tm utc_tm = *std::gmtime(&now_time_t);
+	int minutes = local_tm.tm_hour*60 + local_tm.tm_min
+				- (utc_tm.tm_hour*60 + utc_tm.tm_min);
+
+	if (local_tm.tm_year != utc_tm.tm_year) {
+		if (local_tm.tm_year < utc_tm.tm_year)
+			return minutes - 24*60;
+		else
+			return minutes + 24*60;
+	}
+	else if (local_tm.tm_mon != utc_tm.tm_mon) {
+		if (local_tm.tm_mon < utc_tm.tm_mon)
+			return minutes - 24*60;
+		else
+			return minutes + 24*60;
+	}
+	else if (local_tm.tm_mday != utc_tm.tm_mday) {
+		if (local_tm.tm_mday < utc_tm.tm_mday)
+			return minutes - 24*60;
+		else
+			return minutes + 24*60;
+	}
+	else
+		return minutes;
+}
+
 // timer for cpu time (scales with cpu cores)
 class CPUTimer
 {
