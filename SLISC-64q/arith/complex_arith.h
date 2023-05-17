@@ -128,40 +128,6 @@ inline bool operator==(Lcomp_I s1, Qcomp_I s2) { return real(s1) == real(s2) && 
 inline bool operator!=(Lcomp_I s1, Qcomp_I s2) { return !(s1 == s2); }
 
 
-// reference to real/imaginary part
-inline Float &real_r(Fcomp &c) { return *((Float*)&c); }
-inline Float &imag_r(Fcomp &c) { return *((Float*)&c + 1); }
-
-inline Float *real_p(Fcomp &c) { return (Float*)&c; }
-inline const Float *real_p(const Fcomp &c) { return (const Float*)&c; }
-inline Float *imag_p(Fcomp &c) { return (Float*)&c + 1; }
-inline const Float *imag_p(const Fcomp &c) { return (const Float*)&c + 1; }
-
-inline Doub &real_r(Comp &c) { return *((Doub*)&c); }
-inline Doub &imag_r(Comp &c) { return *((Doub*)&c + 1); }
-
-inline Doub *real_p(Comp &c) { return (Doub*)&c; }
-inline const Doub *real_p(const Comp &c) { return (const Doub*)&c; }
-inline Doub *imag_p(Comp &c) { return (Doub*)&c + 1; }
-inline const Doub *imag_p(const Comp &c) { return (const Doub*)&c + 1; }
-
-inline Ldoub &real_r(Lcomp &c) { return *((Ldoub*)&c); }
-inline Ldoub &imag_r(Lcomp &c) { return *((Ldoub*)&c + 1); }
-
-inline Ldoub *real_p(Lcomp &c) { return (Ldoub*)&c; }
-inline const Ldoub *real_p(const Lcomp &c) { return (const Ldoub*)&c; }
-inline Ldoub *imag_p(Lcomp &c) { return (Ldoub*)&c + 1; }
-inline const Ldoub *imag_p(const Lcomp &c) { return (const Ldoub*)&c + 1; }
-
-inline Qdoub &real_r(Qcomp &c) { return *((Qdoub*)&c); }
-inline Qdoub &imag_r(Qcomp &c) { return *((Qdoub*)&c + 1); }
-
-inline Qdoub *real_p(Qcomp &c) { return (Qdoub*)&c; }
-inline const Qdoub *real_p(const Qcomp &c) { return (const Qdoub*)&c; }
-inline Qdoub *imag_p(Qcomp &c) { return (Qdoub*)&c + 1; }
-inline const Qdoub *imag_p(const Qcomp &c) { return (const Qdoub*)&c + 1; }
-
-
 inline void operator+=(Comp_O z, Float_I x) { z += (Doub)x; }
 inline void operator-=(Comp_O z, Float_I x) { z -= (Doub)x; }
 inline void operator*=(Comp_O z, Float_I x) { z *= (Doub)x; }

@@ -125,15 +125,15 @@ inline void matt_read_scalar(Comp_O c, ifstream &m_in)
 {
 	if (!m_in.good())
 		SLS_ERR("unknown! ");
-	Doub &cr = real_r(c), &ci = imag_r(c);
     static Str str;
     m_in >> str;
 	if (str.empty()) SLS_ERR("unknown!");
 	Long ind = 0;
-	Long ind1 = str2Doub(cr, str, ind);
+	Doub x;
+	Long ind1 = str2Doub(x, str, ind); c.real(x);
 	if (ind1 < 0) SLS_ERR("unknown! " + str.substr(ind));
 	if (ind1 == size(str)) return;
-	Long ind2 = str2Doub(ci, str, ind1);
+	Long ind2 = str2Doub(x, str, ind1); c.imag(x);
 	if (ind2 < 0) SLS_ERR("unknown! " + str.substr(ind1));
 	if (str.at(ind2) != 'i') SLS_ERR("unknown!");
 	m_in.ignore(100, Matt::dlm);

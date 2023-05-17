@@ -61,22 +61,6 @@ inline bool operator==(@T1@_I s1, @T2@_I s2) { return real(s1) == real(s2) && im
 inline bool operator!=(@T1@_I s1, @T2@_I s2) { return !(s1 == s2); }
 //%------------------------
 
-// reference to real/imaginary part
-//% tem('real_r', {
-//%    'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
-//% });
-//%----------------------------------
-//% Tc = varargin{:};
-//% Tr = rm_comp(Tc);
-inline @Tr@ &real_r(@Tc@ &c) { return *((@Tr@*)&c); }
-inline @Tr@ &imag_r(@Tc@ &c) { return *((@Tr@*)&c + 1); }
-
-inline @Tr@ *real_p(@Tc@ &c) { return (@Tr@*)&c; }
-inline const @Tr@ *real_p(const @Tc@ &c) { return (const @Tr@*)&c; }
-inline @Tr@ *imag_p(@Tc@ &c) { return (@Tr@*)&c + 1; }
-inline const @Tr@ *imag_p(const @Tc@ &c) { return (const @Tr@*)&c + 1; }
-//%----------------------------------
-
 //% tem('+=comp', {
 //%    'Comp', 'Float';
 //%    'Lcomp', 'Float';

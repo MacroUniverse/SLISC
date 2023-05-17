@@ -266,12 +266,18 @@ inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I imag_time
 		copy(b, 0);
 		copy(cut1(b.cmat(), b.idiag()), 0.5);
 	}
-	if (!imag_time)
-		for (Long k = 0; k < a.nnz(); ++k) 
-			imag_r(b.ref(a.row(k), a.col(k))) += dt4*a[k];
-	else
-		for (Long k = 0; k < a.nnz(); ++k) 
-			real_r(b.ref(a.row(k), a.col(k))) += dt4*a[k];
+	if (!imag_time) {
+		for (Long k = 0; k < a.nnz(); ++k) {
+			auto &c = b.ref(a.row(k), a.col(k));
+			c.imag(imag(c) + dt4*a[k]);
+		}
+	}
+	else {
+		for (Long k = 0; k < a.nnz(); ++k) {
+			auto &c = b.ref(a.row(k), a.col(k));
+			c.real(real(c) + dt4*a[k]);
+		}
+	}
 }
 
 // construct Crank-Nicolson coefficient matrix from hamiltonian
@@ -293,15 +299,19 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 	if (!imag_time) {
 		for (Long l = 1; l < coeff.size(); ++l) {
 			const McooDoub &a1 = a[l]; Doub c = 0.25*dt*coeff[l];
-			for (Long k = 0; k < a1.nnz(); ++k)
-				imag_r(b.ref(a1.row(k), a1.col(k))) += c*a1[k];
+			for (Long k = 0; k < a1.nnz(); ++k) {
+				auto &com = b.ref(a1.row(k), a1.col(k));
+				com.imag(imag(com) + c*a1[k]);
+			}
 		}
 	}
 	else {
 		for (Long l = 1; l < coeff.size(); ++l) {
 			const McooDoub &a1 = a[l]; Doub c = 0.25*dt*coeff[l];
-			for (Long k = 0; k < a1.nnz(); ++k)
-				real_r(b.ref(a1.row(k), a1.col(k))) += c*a1[k];
+			for (Long k = 0; k < a1.nnz(); ++k) {
+				auto &com = b.ref(a1.row(k), a1.col(k));
+				com.real(real(com) + c*a1[k]);
+			}
 		}
 	}
 }

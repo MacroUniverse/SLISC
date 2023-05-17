@@ -11,8 +11,8 @@ void test_complex_arith()
 	c.real(3.1); c.imag(4.2);
 	if (c != Comp(3.1, 4.2))
 		SLS_FAIL;
-	real_r(c) += 1.1;
-	imag_r(c) += 2.2;
+	c.real(c.real() + 1.1);
+	c.imag(c.imag() + 2.2);
 	if (c != Comp(4.2, 6.4))
 		SLS_FAIL;
 }
