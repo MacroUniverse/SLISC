@@ -868,9 +868,9 @@ inline Long str2int(T &num, Str_I str, Long_I start = 0)
 	while (str[i] == ' ')
 		if (++i == N) return -1;
 	char c = str[i];
-    if (c == '+') {
+	if (c == '+') {
 		if (++i == N || !is_num(str[i]))
-        	return -1;
+			return -1;
 		return str2int0(num, str, i);
 	}
 	else if (is_num(c))
@@ -880,11 +880,11 @@ inline Long str2int(T &num, Str_I str, Long_I start = 0)
 		if (++i == N) return -1;
 		if (!is_num(c = str[i])) return -1;
 		num = '0' - c;
-        T min = numeric_limits<T>::min();
+		T min = numeric_limits<T>::min();
 		for (++i; i < N; ++i) {
 			c = str[i];
 			if (!is_num(c)) return i;
-            c -= '0';
+			c -= '0';
 			if (num < (min + (T)c)/10)
 				return -i; // overflow
 			num = 10 * num - c;
@@ -1412,9 +1412,9 @@ inline Long str2int(T &num, Str32_I str, Long_I start = 0)
 	while (str[i] == ' ')
 		if (++i == N) return -1;
 	Char32 c = str[i];
-    if (c == '+') {
+	if (c == '+') {
 		if (++i == N || !is_num(str[i]))
-        	return -1;
+			return -1;
 		return str2int0(num, str, i);
 	}
 	else if (is_num(c))
@@ -1424,11 +1424,11 @@ inline Long str2int(T &num, Str32_I str, Long_I start = 0)
 		if (++i == N) return -1;
 		if (!is_num(c = str[i])) return -1;
 		num = '0' - c;
-        T min = numeric_limits<T>::min();
+		T min = numeric_limits<T>::min();
 		for (++i; i < N; ++i) {
 			c = str[i];
 			if (!is_num(c)) return i;
-            c -= '0';
+			c -= '0';
 			if (num < (min + (T)c)/10)
 				return -i; // overflow
 			num = 10 * num - c;
@@ -1893,9 +1893,9 @@ inline Long str2Doub(Doub_O x, Str_I str, Long start = 0)
 		return -1;
 	const char *beg = str.c_str() + start;
 	char* end = nullptr;
-    errno = 0;
+	errno = 0;
 	x = std::strtod(beg, &end);
-    if (errno == ERANGE)
+	if (errno == ERANGE)
 		return -1;
 	start += end - beg;
 	// if there are too many digits, strtod will not process the extra ones

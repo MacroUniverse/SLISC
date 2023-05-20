@@ -57,9 +57,9 @@ inline @T@ to_num(@T@_I x) { return x; }
 template<typename T>
 int digits(const T &n) {
 	static_assert(std::is_integral<T>::value, "T must be an integral type " SLS_WHERE);
-    int count = 0;
-    do { count++; n /= 10; } while (n != 0);
-    return count;
+	int count = 0;
+	do { count++; n /= 10; } while (n != 0);
+	return count;
 }
 
 // modulus
@@ -148,13 +148,13 @@ inline T cube(const T &x) { return x*x*x; }
 //%---------------------
 //% T = varargin{:};
 inline @T@ pow(@T@ b, Uint n) {
-    @T@ r = 1;
-    while (n > 0) {
-        if (n & 1) // odd
-            r *= b;
-        b *= b; n >>= 1;
-    }
-    return r;
+	@T@ r = 1;
+	while (n > 0) {
+		if (n & 1) // odd
+			r *= b;
+		b *= b; n >>= 1;
+	}
+	return r;
 }
 //%---------------------
 

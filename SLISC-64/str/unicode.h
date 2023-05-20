@@ -252,11 +252,11 @@ class u8_iter
 {
 private:
 	Long ind;
-	Str_I s;
+	const Str &s;
 
 public:
 	// use i == -1 to point to the last character
-	u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
+	explicit u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
 		if (i == -1)
 			ind = skip_char8(str, size(str), -1);
 		if (!is_char8_start(s, ind))
@@ -264,15 +264,15 @@ public:
 	};
 
 	// set string index
-	Long operator=(Long_I i) {
+	u8_iter &operator=(Long_I i) {
 		if (!is_char8_start(s, i))
 			throw std::runtime_error("u8_iter::operator=(i): not the start of a utf-8 char!");
 		ind = i;
-		return i;
+		return *this;
 	}
 
 	// convert to string index
-	operator Long() {
+	operator Long() const {
 		return ind;
 	}
 
@@ -327,6 +327,20 @@ public:
 		ind = skip_char8(s, ind, -N);
 	}
 };
+
+// count # of u8 chars between str[start] and str[end-1]
+// end is one pass last char
+inline Long u8count(Str_I str, Long_I start = 0, Long end = -1)
+{
+	if (end < 0) end = size(str);
+	u8_iter it(str, start);
+	Long N = 0;
+	while ((Long)it < end)
+		++it, ++N;
+	if ((Long)it != end)
+		throw std::runtime_error("u8_count(): make sure `end` is the start of a u8char");
+	return N;
+}
 
 // check if is a chinese character
 // does not include punctuations

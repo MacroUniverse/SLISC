@@ -106,8 +106,8 @@ inline void matt_read_scalar(@T@_O c, ifstream &m_in)
 {
 	if (!m_in.good())
 		SLS_ERR("unknown! ");
-    static Str str;
-    m_in >> str;
+	static Str str;
+	m_in >> str;
 	if (str.empty()) SLS_ERR("unknown!");
 	Long ind = 0;
 	Doub x;

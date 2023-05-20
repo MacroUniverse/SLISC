@@ -193,6 +193,7 @@ using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
+using std::runtime_error;
 
 // Scalar types
 
@@ -219,16 +220,16 @@ typedef Uchar &Uchar_O, &Uchar_IO;
 
 // 16 bit signed/unsigned integer
 #if defined(INT16_MAX)
-    typedef int16_t Short;
+	typedef int16_t Short;
 	typedef uint16_t Ushort;
 #elif SHRT_MAX == 32767
-    typedef short Short;
+	typedef short Short;
 	typedef unsigned short Short;
 #elif INT_MAX == 32767
-    typedef int Short;
+	typedef int Short;
 	typedef unsigned int Ushort;
 #else
-    #error "No suitable 2-byte integer type found."
+	#error "No suitable 2-byte integer type found."
 #endif
 typedef const Short Short_I;
 typedef Short &Short_O, &Short_IO;
@@ -246,7 +247,7 @@ typedef Ushort &Ushort_O, &Ushort_IO;
 	typedef int32_t Int;
 	typedef uint32_t Uint;
 #else
-    #error "No suitable 4-byte integer type found."
+	#error "No suitable 4-byte integer type found."
 #endif
 typedef const Int Int_I;
 typedef Int &Int_O, &Int_IO;
@@ -261,7 +262,7 @@ typedef Uint &Uint_O, &Uint_IO;
 	typedef int64_t Llong;
 	typedef uint64_t Ullong;
 #else
-    #error "No suitable 8-byte integer type found."
+	#error "No suitable 8-byte integer type found."
 #endif
 typedef const Llong Llong_I;
 typedef Llong &Llong_O, &Llong_IO;
@@ -401,10 +402,10 @@ inline bool isnan(Comp_I s) { return s != s; }
 class sls_err : public std::exception
 {
 private:
-    Str m_msg;
+	Str m_msg;
 public:
-    explicit sls_err(Str msg): m_msg(std::move(msg)) {}
-    const char *what() const noexcept override
+	explicit sls_err(Str msg): m_msg(std::move(msg)) {}
+	const char *what() const noexcept override
 	{ return m_msg.c_str(); }
 };
 
@@ -418,8 +419,8 @@ void print(const T& first, const Args&... args)
 {
 	std::mutex print_mutex; // thread safety
 	std::lock_guard<std::mutex> lock(print_mutex);
-    cout << first;
-    print(args...);
+	cout << first;
+	print(args...);
 }
 
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);

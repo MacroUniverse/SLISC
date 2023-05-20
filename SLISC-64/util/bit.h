@@ -11,8 +11,8 @@ namespace slisc {
 // there is no concept of "bit endian" since they are not addressable
 // Intel x86 and x64 architechture use little endian
 inline bool little_endian() {
-    int16_t i = 1;
-    return *(char *)&i == 1;
+	int16_t i = 1;
+	return *(char *)&i == 1;
 }
 
 // convert endianness
@@ -336,7 +336,7 @@ inline Uchar bits_mask(int start, int Nbit) {
 // copy Nbit on the right
 inline void bitsR2bitsR(Uchar& target, Uchar source, int Nbit)
 {
-    Uchar clear_mask = bitsR_mask(Nbit);
+	Uchar clear_mask = bitsR_mask(Nbit);
 	source &= clear_mask;
 	target &= ~clear_mask;
 	target |= source;
@@ -357,9 +357,9 @@ inline void bitsR2bitsL(Uchar& target, Uchar source, int Nbit)
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(Nbit >= 0 && Nbit <= 8);
 #endif
-    Uchar clear_mask = 0xFF >> Nbit;
-    target &= clear_mask;
-    target |= (source << (8 - Nbit));
+	Uchar clear_mask = 0xFF >> Nbit;
+	target &= clear_mask;
+	target |= (source << (8 - Nbit));
 }
 
 inline void bitsL2bitsR(Uchar& target, Uchar source, int Nbit)
@@ -367,9 +367,9 @@ inline void bitsL2bitsR(Uchar& target, Uchar source, int Nbit)
 #ifdef SLS_CHECK_BOUNDS
 	SLS_ASSERT(Nbit >= 0 && Nbit <= 8);
 #endif
-    Uchar clear_mask = 0xFF << Nbit;
-    target &= clear_mask;
-    target |= (source >> (8 - Nbit));
+	Uchar clear_mask = 0xFF << Nbit;
+	target &= clear_mask;
+	target |= (source >> (8 - Nbit));
 }
 
 inline void bitsR2bits(Uchar& target, int start, int Nbit, Uchar source)
@@ -378,11 +378,11 @@ inline void bitsR2bits(Uchar& target, int start, int Nbit, Uchar source)
 	SLS_ASSERT(start >= 0 && start < 8 && start + Nbit <= 8);
 #endif
 	Uchar clear_mask = bitsR_mask(Nbit);
-    source &= clear_mask;
+	source &= clear_mask;
 	int left_shift = 8-start-Nbit;
-    clear_mask = ~(clear_mask << left_shift);
-    target &= clear_mask;
-    target |= (source << left_shift);
+	clear_mask = ~(clear_mask << left_shift);
+	target &= clear_mask;
+	target |= (source << left_shift);
 }
 
 inline void bits2bitsR(Uchar& target, Uchar source, int start, int Nbit)

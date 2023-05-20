@@ -93,9 +93,9 @@ inline Lcomp to_num(Lcomp_I x) { return x; }
 template<typename T>
 int digits(const T &n) {
 	static_assert(std::is_integral<T>::value, "T must be an integral type " SLS_WHERE);
-    int count = 0;
-    do { count++; n /= 10; } while (n != 0);
-    return count;
+	int count = 0;
+	do { count++; n /= 10; } while (n != 0);
+	return count;
 }
 
 // modulus
@@ -235,23 +235,23 @@ inline T cube(const T &x) { return x*x*x; }
 
 // b^n that output an integer 
 inline Int pow(Int b, Uint n) {
-    Int r = 1;
-    while (n > 0) {
-        if (n & 1) // odd
-            r *= b;
-        b *= b; n >>= 1;
-    }
-    return r;
+	Int r = 1;
+	while (n > 0) {
+		if (n & 1) // odd
+			r *= b;
+		b *= b; n >>= 1;
+	}
+	return r;
 }
 
 inline Llong pow(Llong b, Uint n) {
-    Llong r = 1;
-    while (n > 0) {
-        if (n & 1) // odd
-            r *= b;
-        b *= b; n >>= 1;
-    }
-    return r;
+	Llong r = 1;
+	while (n > 0) {
+		if (n & 1) // odd
+			r *= b;
+		b *= b; n >>= 1;
+	}
+	return r;
 }
 
 

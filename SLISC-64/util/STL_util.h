@@ -139,4 +139,11 @@ inline Str &operator<<(Str_IO s, const char *p) { return s += p; }
 
 inline Str &operator<<(Str_IO s, Str_I str) { return s += str; }
 
+inline Str &operator<<(Str_IO s, Int_I n) { return s += to_string(n); }
+
+inline Str &operator<<(Str_IO s, Llong_I n) { return s += to_string(n); }
+
+template <class T>
+inline Str &operator<<(Str_IO s, const T &val) { return s += to_string(val); }
+
 } // namespace slisc

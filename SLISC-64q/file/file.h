@@ -140,7 +140,8 @@ inline void mkdir(Str_I path)
 	Str path1 = path;
 	replace(path1, "\"", "\\\"");
 #ifndef SLS_USE_MSVC
-	exec_str("mkdir -p \"" + path1 + "\"");
+	if (system(("mkdir -p \"" + path1 + "\"").c_str()))
+		SLS_ERR("mkdir failed: " + path1);
 #else
 	CreateDirectory(utf82wstr(tmp).c_str(), NULL);
 #endif
@@ -192,8 +193,8 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 	if (!append)
 		fnames.clear();
 	// save a list of all files (no folder) to temporary file
-    Str path1 = path;
-    replace(path1, "\"", "\"");
+	Str path1 = path;
+	replace(path1, "\"", "\"");
 	std::istringstream iss(exec_str("ls -p \"" + path1 + "\" | grep -v /"));
 	
 	// read the temporary file
@@ -286,32 +287,32 @@ inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false
 // list direct sub-folders, including path, ending with `/`
 inline void folder_list_full(vecStr_O folders, Str_I path, bool append = false)
 {
-    if (!append)
-        folders.clear();
-    // save a list of all files (no folder) to temporary file
-    Str tmp = "find "; tmp << path << " -maxdepth 1 -mindepth 1 -type d;";
-    std::istringstream iss(exec_str(tmp));
+	if (!append)
+		folders.clear();
+	// save a list of all files (no folder) to temporary file
+	Str tmp = "find "; tmp << path << " -maxdepth 1 -mindepth 1 -type d;";
+	std::istringstream iss(exec_str(tmp));
 
-    // read the temporary file
-    Str name;
-    while (1) {
-        getline(iss, name);
-        if (iss.eof())
-            break;
-        folders.push_back(name + '/');
-    }
-    sort(folders);
+	// read the temporary file
+	Str name;
+	while (1) {
+		getline(iss, name);
+		if (iss.eof())
+			break;
+		folders.push_back(name + '/');
+	}
+	sort(folders);
 }
 
 // get a list of direct sub-folders, not including path, ending with `/`
 inline void folder_list(vecStr_O folders, Str_I path, bool append = false)
 {
-    folder_list_full(folders, path, append);
-    for (auto &folder : folders) {
-        Long i = folder.find_last_of('/', folder.size()-2);
-        if (i >= 0)
-            folder.erase(0, i+1);
-    }
+	folder_list_full(folders, path, append);
+	for (auto &folder : folders) {
+		Long i = folder.find_last_of('/', folder.size()-2);
+		if (i >= 0)
+			folder.erase(0, i+1);
+	}
 }
 
 #endif
@@ -534,6 +535,8 @@ inline void open_bin(ofstream &fout, Str_I fname)
 #else
 	fout.open(utf82wstr(fname), std::ios::out | std::ios::binary);
 #endif
+	if (!fout)
+		throw runtime_error("failed to open file: " + fname);
 }
 
 // open binary file to read
@@ -548,6 +551,8 @@ inline void open_bin(ifstream &fin, Str_I fname)
 #else
 	fin.open(utf82wstr(fname), std::ios::in | std::ios::binary);
 #endif
+	if (!fin)
+		throw runtime_error("failed to open file: " + fname);
 }
 
 // write binary file (once)
