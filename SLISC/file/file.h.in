@@ -155,7 +155,7 @@ inline void rmdir(Str_I path)
 	Str path1 = path;
 	replace(path1, "\"", "\\\"");
 #ifndef SLS_USE_MSVC
-	if (!exec_str("rmdir " + path1).empty())
+	if (!system(("rmdir '" + path1 + "'").c_str()))
 		SLS_ERR("cannot remove directory: " + path);
 #else
 	if (RemoveDirectory(utf82wstr(path).c_str()) == 0)
@@ -188,14 +188,18 @@ inline void file_rm(Str_I wildcard_name) {
 // path must end with '/'
 // result is sorted
 #ifndef SLS_USE_MSVC
+
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {    
 	if (!append)
 		fnames.clear();
 	// save a list of all files (no folder) to temporary file
-	Str path1 = path;
+	Str path1 = path, stdout;
 	replace(path1, "\"", "\"");
-	std::istringstream iss(exec_str("ls -p \"" + path1 + "\" | grep -v /"));
+	Str tmp = "ls -p \""; tmp << path1 << "\" | grep -v /";
+	if (exec_str(stdout, tmp))
+		SLS_ERR(stdout);
+	std::istringstream iss(stdout);
 	
 	// read the temporary file
 	Str name;
@@ -207,7 +211,9 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 	}
 	sort(fnames);
 }
+
 #else
+
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
 	WIN32_FIND_DATA data;
@@ -227,6 +233,7 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 	}
 	sort(fnames);
 }
+
 #endif
 
 // list all files including paths
@@ -291,7 +298,10 @@ inline void folder_list_full(vecStr_O folders, Str_I path, bool append = false)
 		folders.clear();
 	// save a list of all files (no folder) to temporary file
 	Str tmp = "find "; tmp << path << " -maxdepth 1 -mindepth 1 -type d;";
-	std::istringstream iss(exec_str(tmp));
+	Str stdout;
+	if (exec_str(stdout, tmp))
+		SLS_ERR(stdout);
+	std::istringstream iss(stdout);
 
 	// read the temporary file
 	Str name;
@@ -320,17 +330,21 @@ inline void folder_list(vecStr_O folders, Str_I path, bool append = false)
 // list all files in a directory recursively (containing relative paths)
 // result is sorted
 #ifndef SLS_USE_MSVC
+
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
 	if (!append)
 		fnames.resize(0);
 	// save a list of all files (no folder) to temporary file
-
+	Str tmp = "find ", stdout;
 #ifdef SLS_USE_MACOS
-	std::istringstream iss(exec_str(("find " + path.substr(0,path.size()-1) + " -type f").c_str()));
+	tmp << path.substr(0,path.size()-1) << " -type f";
 #else
-	std::istringstream iss(exec_str(("find " + path + " -type f").c_str()));
+	tmp << path << " -type f";
 #endif
+	if (exec_str(stdout, tmp))
+		SLS_ERR(stdout);
+	std::istringstream iss(stdout);
 	
 	// read the temporary file
 	Str name;
@@ -342,7 +356,9 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 	}
 	sort(fnames);
 }
+
 #else
+
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
 	if (!append)
@@ -354,6 +370,7 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 		file_list_r(fnames, path + folders[i], true);
 	sort(fnames);
 }
+
 #endif
 
 // choose files with a given extension from a list of files

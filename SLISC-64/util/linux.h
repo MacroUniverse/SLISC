@@ -1,9 +1,6 @@
 // linux utilities
 #pragma once
-#include "../global.h"
-#include <iostream>
-#include <string>
-#include <sstream>
+#include "../str/str.h"
 
 #if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 #include <cstdio>
@@ -14,16 +11,24 @@
 
 namespace slisc {
 
-// execute a command in shell and return the output to stdout
-inline Str exec_str(Str_I cmd) {
+// execute a command in shell and get the output to stdout
+// return exit code
+inline int exec_str(Str_O stdout0, Str_I cmd)
+{
+	stdout0.clear();
 	std::array<char, 128> buffer{};
-	Str result;
-	std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
+	std::unique_ptr<FILE, decltype(&pclose)>
+		pipe(popen((cmd + " && printf \\|$?").c_str(), "r"), pclose);
 	if (!pipe)
 		throw std::runtime_error("popen() failed!");
 	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-		result += buffer.data();
-	return result;
+		stdout0 += buffer.data();
+	size_t ind = stdout0.rfind('|');
+	if (ind == std::string::npos)
+		SLS_ERR("exec_str()");
+	int ret = str2Int(stdout0.substr(ind + 1));
+	stdout0.resize(ind);
+	return ret;
 }
 
 // get pid of all child processes
@@ -31,8 +36,10 @@ inline Str exec_str(Str_I cmd) {
 // return -1 if no child
 inline void child_pid(vector<Int> &child_pids, Int_I pid)
 {
-	Str cmd  = "pgrep -P " + to_string(pid);
-	std::istringstream iss(exec_str(cmd));
+	Str cmd  = "pgrep -P " + to_string(pid), stdout;
+	if (exec_str(stdout, cmd))
+		SLS_ERR(stdout);
+	std::istringstream iss(stdout);
 	Str pid_str;
 	child_pids.clear();
 	while (true) {

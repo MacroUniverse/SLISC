@@ -9,7 +9,9 @@ void test_linux()
 	using namespace slisc;
 	
 	// test exec_str()
-	if (exec_str("echo hello world!") != "hello world!\n")
+	Str stdout;
+	SLS_ASSERT(exec_str(stdout, "echo hello world!") == 0);
+	if (stdout != "hello world!\n")
 		SLS_FAIL;
 	
 	// test child_pid()
