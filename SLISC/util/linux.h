@@ -13,21 +13,24 @@ namespace slisc {
 
 // execute a command in shell and get the output to stdout
 // return exit code
-inline int exec_str(Str_O stdout0, Str_I cmd)
+inline int exec_str(Str_O stdout, Str_I cmd)
 {
-	stdout0.clear();
+    SLS_ASSERT(&stdout != &cmd);
+    if (cmd.empty())
+        SLS_ERR("exec_str(): cmd is empty()");
 	std::array<char, 128> buffer{};
 	std::unique_ptr<FILE, decltype(&pclose)>
-		pipe(popen((cmd + " && printf \\|$?").c_str(), "r"), pclose);
+		pipe(popen((cmd + "; printf \\|$?").c_str(), "r"), pclose);
 	if (!pipe)
 		throw std::runtime_error("popen() failed!");
+	stdout.clear();
 	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-		stdout0 += buffer.data();
-	size_t ind = stdout0.rfind('|');
+		stdout += buffer.data();
+	size_t ind = stdout.rfind('|');
 	if (ind == std::string::npos)
-		SLS_ERR("exec_str()");
-	int ret = str2Int(stdout0.substr(ind + 1));
-	stdout0.resize(ind);
+		SLS_ERR("exec_str(): cmd = \n" + cmd + "; printf \\|$?");
+	int ret = str2Int(stdout.substr(ind + 1));
+	stdout.resize(ind);
 	return ret;
 }
 
