@@ -16,8 +16,9 @@ namespace slisc {
 inline int exec_str(Str_O stdout, Str_I cmd)
 {
     SLS_ASSERT(&stdout != &cmd);
-    if (cmd.empty())
+    if (cmd.empty()) {
         SLS_ERR("exec_str(): cmd is empty()");
+	}
 	std::array<char, 128> buffer{};
 	std::unique_ptr<FILE, decltype(&pclose)>
 		pipe(popen((cmd + "; printf \\|$?").c_str(), "r"), pclose);

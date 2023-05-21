@@ -530,16 +530,14 @@ inline Limag operator-(Limag_I z) { return Limag(-z.imag()); }
 inline Qimag operator-(Qimag_I z) { return Qimag(-z.imag()); }
 #endif
 
-Doub &imag_r(Comp_IO);
-inline void operator+=(Comp_IO z1, Imag_I z2) { imag_r(z1) += imag(z2); }
-inline void operator-=(Comp_IO z1, Imag_I z2) { imag_r(z1) -= imag(z2); }
+inline void operator+=(Comp_IO z1, Imag_I z2) { z1.imag(z1.imag() + imag(z2)); }
+inline void operator-=(Comp_IO z1, Imag_I z2) { z1.imag(z1.imag() - imag(z2)); }
 inline void operator*=(Comp_IO z1, Imag_I z2) { z1 = z1 * z2; }
 inline void operator/=(Comp_IO z1, Imag_I z2) { z1 = z1 / z2; }
 
 #ifdef SLS_USE_QUAD_MATH
-Qdoub &imag_r(Qcomp_IO);
-inline void operator+=(Qcomp_IO z1, Qimag_I z2) { imag_r(z1) += imag(z2); }
-inline void operator-=(Qcomp_IO z1, Qimag_I z2) { imag_r(z1) -= imag(z2); }
+inline void operator+=(Qcomp_IO z1, Qimag_I z2) { z1.imag(z1.imag() + imag(z2)); }
+inline void operator-=(Qcomp_IO z1, Qimag_I z2) { z1.imag(z1.imag() - imag(z2)); }
 inline void operator*=(Qcomp_IO z1, Qimag_I z2) { z1 = z1 * z2; }
 inline void operator/=(Qcomp_IO z1, Qimag_I z2) { z1 = z1 / z2; }
 #endif
