@@ -15,9 +15,9 @@ namespace slisc {
 // return exit code
 inline int exec_str(Str_O stdout, Str_I cmd)
 {
-    SLS_ASSERT(&stdout != &cmd);
-    if (cmd.empty()) {
-        SLS_ERR("exec_str(): cmd is empty()");
+	SLS_ASSERT(&stdout != &cmd);
+	if (cmd.empty()) {
+		SLS_ERR("exec_str(): cmd is empty()");
 	}
 	std::array<char, 128> buffer{};
 	std::unique_ptr<FILE, decltype(&pclose)>

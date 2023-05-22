@@ -132,9 +132,9 @@ Please read the leading comments before using the class.
 // doesn't support the __cpp_exceptions feature
 #if !defined SAFE_INT_HAS_EXCEPTIONS
 	#if __cpp_exceptions >= 199711L
-	    #define SAFE_INT_HAS_EXCEPTIONS 1
+		#define SAFE_INT_HAS_EXCEPTIONS 1
 	#else
-	    #define SAFE_INT_HAS_EXCEPTIONS 0
+		#define SAFE_INT_HAS_EXCEPTIONS 0
 	#endif
 #endif
 
