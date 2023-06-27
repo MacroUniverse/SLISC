@@ -1,6 +1,6 @@
 // general parser utilities
 #pragma once
-#include "../arith/scalar_arith.h"
+#include "../str/str.h"
 #include "../str/unicode.h"
 #include "../algo/interv.h"
 
@@ -32,7 +32,7 @@ inline Long find_scope(Long_O right, Str_I key, Str_I str, Long_I start, Char op
 	Long ind0 = start, ind1;
 	Long left;
 	while (true) {
-		ind1 = str.find(/*"\\" +*/ key, ind0);
+		ind1 = find(str, key, ind0);
 		if (ind1 < 0) {
 			right = -1;
 			return -1;
@@ -91,7 +91,7 @@ inline Long find_comments(Intvs_O intv, Str_I str, Str_I key)
 	Long N{}; // number of comments found
 	intv.clear();
 	while (true) {
-		ind1 = str.find(key, ind0);
+		ind1 = find(str, key, ind0);
 		if (ind1 < 0)
 			return N;
 		if (ind1 == 0 || (ind1 > 0 && str.at(ind1 - 1) != '\\')) {
@@ -101,7 +101,7 @@ inline Long find_comments(Intvs_O intv, Str_I str, Str_I key)
 			ind0 = ind1 + 1;  continue;
 		}
 
-		ind1 = str.find('\n', ind1 + 1);
+		ind1 = find(str, '\n', ind1 + 1);
 		if (ind1 < 0) {// not found
 			intv.pushR(str.size());
 			return N;

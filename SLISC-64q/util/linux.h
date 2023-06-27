@@ -19,9 +19,16 @@ inline int exec_str(Str_O stdout, Str_I cmd)
 	if (cmd.empty()) {
 		SLS_ERR("exec_str(): cmd is empty()");
 	}
+
+	static Str cmd1;
+	cmd1 = cmd;
+	trim(cmd1, " \n");
+	if (cmd1.back() != ';') cmd1 += " ; ";
+	cmd1 += "printf \\|$?";
+
 	std::array<char, 128> buffer{};
 	std::unique_ptr<FILE, decltype(&pclose)>
-		pipe(popen((cmd + "; printf \\|$?").c_str(), "r"), pclose);
+		pipe(popen(cmd1.c_str(), "r"), pclose);
 	if (!pipe)
 		throw std::runtime_error("popen() failed!");
 	stdout.clear();
@@ -29,7 +36,7 @@ inline int exec_str(Str_O stdout, Str_I cmd)
 		stdout += buffer.data();
 	size_t ind = stdout.rfind('|');
 	if (ind == std::string::npos)
-		SLS_ERR("exec_str(): cmd = \n" + cmd + "; printf \\|$?");
+		throw std::runtime_error("exec_str(): cmd1 = \n" + cmd1);
 	int ret = str2Int(stdout.substr(ind + 1));
 	stdout.resize(ind);
 	return ret;
