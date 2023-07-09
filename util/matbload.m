@@ -4,6 +4,9 @@
 
 function varnames = matbload(fname, varargin)
 fid = fopen(fname, 'r');
+if fid < 0
+    error(['cannot open file (doesn''t exist?): ' fname]);
+end
 end_mark = 'Matb_End_of_File';
 fseek(fid, -numel(end_mark), 'eof');
 tmp = fread(fid, [1,numel(end_mark)], '*char');
@@ -57,7 +60,7 @@ for ii = 1:numvars
             data = fread(fid, matnumel, 'int32');
         elseif matclass == 3
             data = fread(fid, matnumel, 'int64');
-        elseif matclass == 21 % double
+        elseif matclass == 21
             data = fread(fid, matnumel, 'double');
         elseif matclass == 41 % complex
             data = fread(fid, matnumel*2, 'double');
@@ -72,7 +75,7 @@ for ii = 1:numvars
         if Nloaded == numel(varargin)
             break;
         end
-    else
+    else % skip this variable
         if matclass == 1 % char
             fseek(fid, matnumel, 'cof');
         elseif matclass == 2 % int32
