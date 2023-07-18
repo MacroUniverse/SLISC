@@ -190,7 +190,7 @@ inline int file_rm(Str_I wildcard_name) {
 #ifndef SLS_USE_MSVC
 
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
-{    
+{
 	if (!append)
 		fnames.clear();
 	// save a list of all files (no folder) to temporary file

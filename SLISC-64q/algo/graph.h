@@ -291,7 +291,7 @@ namespace slisc {
 		}
 	}
 
-	// find all children of dag[node] are redundant, and the alternative paths
+	// find all children of dag[node] that are redundant, and the alternative paths
 	// paths[i] is the shortest alternative path from `node` to the i-th redundant child
 	inline void dag_reduce(vector<vecLong> &paths, const vector<DGnode> &dag, Long_I node)
 	{

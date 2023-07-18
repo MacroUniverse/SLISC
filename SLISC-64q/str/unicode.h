@@ -255,10 +255,15 @@ private:
 	const Str &s;
 
 public:
-	// use i == -1 to point to the last character
+	// use i == -1,-2... to point to the last, last-1... character
 	explicit u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
-		if (i == -1)
-			ind = skip_char8(str, size(str), -1);
+		if (ind < 0)
+			ind = skip_char8(str, size(str), ind);
+		if (ind >= size(str)) {
+			if (str.empty())
+				throw std::runtime_error("cannot bind u8_iter to an empty string!");
+			throw std::runtime_error("index out of bound when creating u8_iter!");
+		}
 		if (!is_char8_start(s, ind))
 			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
 	};
@@ -333,6 +338,7 @@ public:
 inline Long u8count(Str_I str, Long_I start = 0, Long end = -1)
 {
 	if (end < 0) end = size(str);
+	if (end == 0) return 0;
 	u8_iter it(str, start);
 	Long N = 0;
 	while ((Long)it < end)

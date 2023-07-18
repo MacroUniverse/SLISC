@@ -195,9 +195,9 @@ inline void migrate_db(Str_I file_db_new, Str_I file_db_old)
 	db_old.exec(tmp);
 
 	for (auto &table : tables) {
-		table_clear(table, db_new);
 		if (!table_exist(table, db_old))
 			continue;
+		table_clear(table, db_new);
 
 		// compare cols, get the cols to copy
 		SQLite::Statement stmt_col_old(db_old, "PRAGMA table_info(" + table + ");");
