@@ -1,4 +1,5 @@
 #include "../SLISC/str/str.h"
+#include "../SLISC/str/disp.h"
 
 void test_str()
 {
@@ -75,6 +76,28 @@ void test_str()
 	ind = str2int(j, str);
 	SLS_ASSERT(ind < 0);
 	SLS_ASSERT(j == -922337203685477580LL);
+
+	// parse()
+	str = "123 2 13 4";
+	vecStr res, res0{"123", "2", "13", "4"};
+	vecLlong vl, vl0{123, 2, 13, 4};
+
+	parse(res, str);
+	SLS_ASSERT(res == res0);
+
+	parse(vl, str);
+	SLS_ASSERT(vl == vl0);
+
+	str = " 123  2 13  4 ";
+	parse(res, str);
+	SLS_ASSERT(res == res0);
+
+	parse(vl, str);
+	SLS_ASSERT(vl == vl0);
+
+	parse(res, str, " ", true);
+	res0 = {"", "123", "", "2", "13", "", "4", ""};
+	SLS_ASSERT(res == res0);
 }
 
 #ifndef SLS_TEST_ALL

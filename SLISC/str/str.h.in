@@ -951,7 +951,9 @@ inline Str num2chinese(Long num) {
 	return result;
 }
 
-// parse a container of strings from a string (elements can be empty)
+// parse a container of strings from a string (each element can be empty)
+// two contiguous separators mean there is an empty element in between
+// if `str` starts or end with a separator, then there is an empty element at the beginning or end
 // str = v[0] + sep + v[1] + sep + ... v.back()
 //% tem('parse', {
 //%   'vector'        'Str'    '" "'
@@ -970,17 +972,19 @@ inline Str num2chinese(Long num) {
 //% else
 //%     error(['parse: not implemented: ' Tv]);
 //% end
-inline void parse(@Tv@<@Ts@> &v, @Ts@_I str, @Ts@_I sep = @sep@)
+inline void parse(@Tv@<@Ts@> &v, @Ts@_I str, @Ts@_I sep = @sep@, bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.@add@(str.substr(ind0, ind1-ind0));
+		if (has_empty || ind1 > ind0)
+			v.@add@(str.substr(ind0, ind1-ind0));
 		ind0 = ind1 + 1;
 	}
-	v.@add@(str.substr(ind0));
+	if (ind0 < size(str) || has_empty)
+		v.@add@(str.substr(ind0));
 }
 
 inline void join(@Ts@_O str, const @Tv@<@Ts@> &v, @Ts@_I sep = @sep@)
@@ -1019,10 +1023,12 @@ inline void parse(@Tv@<@Ts@> &v, @Tstr@_I str, @Tstr@_I sep = @sep@)
 	while (1) {
 		Long ind1 = str.find(sep, ind0);
 		if (ind1 < 0) break;
-		v.@add@(str2Llong(str.substr(ind0, ind1-ind0)));
+		if (ind0 < ind1)
+			v.@add@(str2Llong(str.substr(ind0, ind1-ind0)));
 		ind0 = ind1 + 1;
 	}
-	v.@add@(str2Llong(str.substr(ind0)));
+	if (ind0 < size(str))
+		v.@add@(str2Llong(str.substr(ind0)));
 }
 
 inline void join(@Tstr@_O str, const @Tv@<@Ts@> &v, @Tstr@_I sep = @sep@)
