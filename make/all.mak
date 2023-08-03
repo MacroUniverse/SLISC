@@ -148,17 +148,20 @@ ifeq ($(opt_lapack), none)
     $(info CBLAS/LAPACKE: off)
 endif
 
+gfortran_so :=
 cblas_lib :=
 lapacke_lib :=
 ifeq ($(opt_lapack), reference)
 # === CBLAS (reference) ===
     tmp := $(shell echo "$(define) SLS_USE_CBLAS" >> SLISC/config.h.new)
+    # we need the system gfortran and cannot include it in SLISC-libs-* since it depends on other system libs like libc
+    gfortran_so := $(shell ldconfig -p | grep libgfortran.so | head -1 | awk '{print $$1}')
     ifeq ($(opt_long32), false)
         $(info CBLAS: ref64)
-        cblas_lib := -l cblas64 -l blas64 -l gfortran
+        cblas_lib := -l cblas64 -l blas64 -l:$(gfortran_so)
     else
         $(info CBLAS: ref32)
-        cblas_lib := -l cblas -l blas -l gfortran
+        cblas_lib := -l cblas -l blas -l:$(gfortran_so)
     endif
 # === LAPACKE (reference) ===
     tmp := $(shell echo "$(define) SLS_USE_LAPACKE" >> SLISC/config.h.new)
@@ -354,9 +357,9 @@ ifeq ($(opt_arpack), true)
         ifeq ($(opt_static), false)
             $(info Arpack: dynamic)
             ifeq ($(opt_long32), true)
-                arpack_lib := -l:libarpack.so -l:liblapack.so -l:libblas.so -l:libgfortran.so
+                arpack_lib := -l:libarpack.so -l:liblapack.so -l:libblas.so -l:$(gfortran_so)
             else
-                arpack_lib := -l:libarpack64.so -l:liblapack64.so -l:libblas64.so -l:libgfortran.so
+                arpack_lib := -l:libarpack64.so -l:liblapack64.so -l:libblas64.so -l:$(gfortran_so)
             endif
         else
             $(info Arpack: static)
