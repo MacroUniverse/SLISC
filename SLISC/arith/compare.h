@@ -148,10 +148,6 @@ inline bool shape_cmp(vecLlong_I v1, vecLlong_I v2) {return (Long)v1.size() == (
 
 inline bool shape_cmp(vecLlong_I v1, vecStr_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
-inline bool shape_cmp(vecStr_I v1, vecStr_I v2) {return (Long)v1.size() == (Long)v2.size();}
-
-inline bool shape_cmp(vecStr32_I v1, vecStr32_I v2) {return (Long)v1.size() == (Long)v2.size();}
-
 inline bool shape_cmp(VecDoub_I v1, VecComp_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
 inline bool shape_cmp(VecDoub_I v1, VecDoub_I v2) {return (Long)v1.size() == (Long)v2.size();}
@@ -304,10 +300,6 @@ inline bool shape_cmp(McooDoub_I v1, CbandComp_I v2) {return v1.n0() == v2.n0() 
 
 inline bool shape_cmp(CbandComp_I v1, CbandComp_I v2) {return v1.n0() == v2.n0() && v1.n1() == v2.n1();}
 
-inline bool shape_cmp(vecStr_I v1, VecInt_I v2) {return (Long)v1.size() == (Long)v2.size();}
-
-inline bool shape_cmp(vecStr_I v1, vecLlong_I v2) {return (Long)v1.size() == (Long)v2.size();}
-
 inline bool shape_cmp(DvecInt_I v1, DvecInt_I v2) {return (Long)v1.size() == (Long)v2.size();}
 
 inline bool shape_cmp(DvecDoub_I v1, DvecDoub_I v2) {return (Long)v1.size() == (Long)v2.size();}
@@ -380,22 +372,6 @@ inline void assert_same_shape(vecLlong_I v1, vecLlong_I v2)
 }
 
 inline void assert_same_shape(vecLlong_I v1, vecStr_I v2)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (!shape_cmp(v1, v2))
-		SLS_ERR("wrong shape!");
-#endif
-}
-
-inline void assert_same_shape(vecStr_I v1, vecStr_I v2)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (!shape_cmp(v1, v2))
-		SLS_ERR("wrong shape!");
-#endif
-}
-
-inline void assert_same_shape(vecStr32_I v1, vecStr32_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (!shape_cmp(v1, v2))
@@ -916,22 +892,6 @@ inline void assert_same_shape(McooDoub_I v1, CbandComp_I v2)
 }
 
 inline void assert_same_shape(CbandComp_I v1, CbandComp_I v2)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (!shape_cmp(v1, v2))
-		SLS_ERR("wrong shape!");
-#endif
-}
-
-inline void assert_same_shape(vecStr_I v1, VecInt_I v2)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (!shape_cmp(v1, v2))
-		SLS_ERR("wrong shape!");
-#endif
-}
-
-inline void assert_same_shape(vecStr_I v1, vecLlong_I v2)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (!shape_cmp(v1, v2))
