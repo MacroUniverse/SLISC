@@ -39,9 +39,10 @@ inline void sortd(VecDoub_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
 
 
 
-// sort elements of v
+// quicksort (mature version)
+// no recursion, use insertion sort for short array
 // same interface with std::sort, also supports sorting 2 arrays
-// adapted from Numerical Recipes 3ed
+// ref: Numerical Recipes 3ed
 template <class Tit>
 inline void sort_NR3_v(Tit v, Long_I n)
 {
@@ -50,7 +51,7 @@ inline void sort_NR3_v(Tit v, Long_I n)
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < 7) {
+		if (ir - l < 7) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 				for (i = j - 1; i >= l; i--) {
@@ -64,6 +65,7 @@ inline void sort_NR3_v(Tit v, Long_I n)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
 			if (v[ir] < v[l]) {
@@ -110,7 +112,7 @@ inline void sortd_NR3_v(Tit v, Long_I n)
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < 7) {
+		if (ir - l < 7) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 				for (i = j - 1; i >= l; i--) {
@@ -124,6 +126,7 @@ inline void sortd_NR3_v(Tit v, Long_I n)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
 			if (v[l] < v[ir]) {
@@ -170,11 +173,11 @@ inline void sort_NR3_v(Tit v, Long_I n, Tcomp comp)
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < 7) {
+		if (ir - l < 7) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 				for (i = j - 1; i >= l; i--) {
-					if (!compare(e, v[i])) break;
+					if (!comp(e, v[i])) break;
 					v[i+1] = v[i];
 				}
 				v[i+1] = e;
@@ -184,23 +187,24 @@ inline void sort_NR3_v(Tit v, Long_I n, Tcomp comp)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
-			if (compare(v[l], v[ir])) {
+			if (comp(v[ir], v[l])) {
 				swap(v[l], v[ir]);
 			}
-			if (compare(v[ir], v[l+1])) {
+			if (comp(v[ir], v[l+1])) {
 				swap(v[l+1], v[ir]);
 			}
-			if (compare(v[l+1], v[l])) {
+			if (comp(v[l+1], v[l])) {
 				swap(v[l], v[l+1]);
 			}
 			i = l+1;
 			j = ir;
 			e = v[l+1];
 			while (1) {
-				do i++; while (compare(v[i], e));
-				do j--; while (compare(e, v[j]));
+				do i++; while (comp(v[i], e));
+				do j--; while (comp(e, v[j]));
 				if (j < i) break;
 				swap(v[i], v[j]);
 			}
@@ -231,7 +235,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n)
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < 7) {
+		if (ir - l < 7) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 				e1 = v1[j];
@@ -248,6 +252,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
 			swap(v1[k], v1[l+1]);
@@ -303,7 +308,7 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < 7) {
+		if (ir - l < 7) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 				e1 = v1[j];
@@ -320,6 +325,7 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
 			swap(v1[k], v1[l+1]);
@@ -375,12 +381,12 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < 7) {
+		if (ir - l < 7) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 				e1 = v1[j];
 				for (i = j - 1; i >= l; i--) {
-					if (!compare(e, v[i])) break;
+					if (!comp(e, v[i])) break;
 					v[i+1] = v[i];
 					v1[i+1] = v1[i];
 				}
@@ -392,18 +398,19 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
 			swap(v1[k], v1[l+1]);
-			if (compare(v[l], v[ir])) {
+			if (comp(v[ir], v[l])) {
 				swap(v[l], v[ir]);
 				swap(v1[l], v1[ir]);
 			}
-			if (compare(v[ir], v[l+1])) {
+			if (comp(v[ir], v[l+1])) {
 				swap(v[l+1], v[ir]);
 				swap(v1[l+1], v1[ir]);
 			}
-			if (compare(v[l+1], v[l])) {
+			if (comp(v[l+1], v[l])) {
 				swap(v[l], v[l+1]);
 				swap(v1[l], v1[l+1]);
 			}
@@ -412,8 +419,8 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 			e = v[l+1];
 			e1 = v1[l+1];
 			while (1) {
-				do i++; while (compare(v[i], e));
-				do j--; while (compare(e, v[j]));
+				do i++; while (comp(v[i], e));
+				do j--; while (comp(e, v[j]));
 				if (j < i) break;
 				swap(v[i], v[j]);
 				swap(v1[i], v1[j]);

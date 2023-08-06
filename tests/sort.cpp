@@ -9,17 +9,21 @@ void test_sort()
 	// test sort_NR3_v() and sort_NR3_vv()
 	{
 		Long N = 100;
-		VecInt v(N), v1(N), v2(N), order(N);
+		VecLong v(N), v1(N), v2(N), v3(N), v4(N), order(N);
 		for (Long i = 0; i < N; ++i) {
 			v[i] = randInt(N);
 		}
 		linspace(order, 0, N-1);
-		copy(v1, v); copy(v2, v);
+		copy(v1, v); copy(v2, v); copy(v3, v); copy(v4, v);
 		sort_NR3_v(&v1[0], N);
+		sortd_NR3_v(&v3[0], N); flip(v3);
+		sort_NR3_v(&v4[0], N, std::greater<Long>()); flip(v4);
 		sort_vv(&v2[0], &order[0], N);
 		for (Long i = 1; i < N; ++i)
 			SLS_ASSERT(v1[i] >= v1[i-1]);
 		SLS_ASSERT(v1 == v2);
+		SLS_ASSERT(v1 == v3);
+		SLS_ASSERT(v1 == v4);
 		sort(order, v2);
 		SLS_ASSERT(v2 == v);
 	}

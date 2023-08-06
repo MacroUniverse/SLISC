@@ -30,9 +30,10 @@ inline void sortd(@T@_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
 //%------------------------
 
 
-// sort elements of v
+// quicksort (mature version)
+// no recursion, use insertion sort for short array
 // same interface with std::sort, also supports sorting 2 arrays
-// adapted from Numerical Recipes 3ed
+// ref: Numerical Recipes 3ed
 //% tem('sortNR3', {
 //%  'asc', 1; % ascending
 //%  'des', 1; % descending
@@ -71,7 +72,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 	Long istack[@NSTACK@];
 	ir = n - 1;
 	while(1) {
-		if (ir - l < @M@) {
+		if (ir - l < @M@) { // use insertion sort for short array
 			for (j = l+1; j <= ir; j++) {
 				e = v[j];
 //% if Nv == 2
@@ -83,7 +84,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% elseif strcmp(Order, 'des')
 					if (!(v[i] < e)) break;
 //% else
-					if (!compare(e, v[i])) break;
+					if (!comp(e, v[i])) break;
 //% end
 					v[i+1] = v[i];
 //% if Nv == 2
@@ -100,6 +101,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 			l = istack[jstack--];
 		}
 		else {
+			// medium of 3
 			k = (l + ir) >> 1;
 			swap(v[k], v[l+1]);
 //% if Nv == 2
@@ -110,7 +112,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% elseif strcmp(Order, 'des')
 			if (v[l] < v[ir]) {
 //% else
-			if (compare(v[l], v[ir])) {
+			if (comp(v[ir], v[l])) {
 //% end
 				swap(v[l], v[ir]);
 //% if Nv == 2
@@ -122,7 +124,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% elseif strcmp(Order, 'des')
 			if (v[l+1] < v[ir]) {
 //% else
-			if (compare(v[ir], v[l+1])) {
+			if (comp(v[ir], v[l+1])) {
 //% end
 				swap(v[l+1], v[ir]);
 //% if Nv == 2
@@ -134,7 +136,7 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% elseif strcmp(Order, 'des')
 			if (v[l] < v[l+1]) {
 //% else
-			if (compare(v[l+1], v[l])) {
+			if (comp(v[l+1], v[l])) {
 //% end
 				swap(v[l], v[l+1]);
 //% if Nv == 2
@@ -155,8 +157,8 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 				do i++; while (e < v[i]);
 				do j--; while (v[j] < e);
 //% else
-				do i++; while (compare(v[i], e));
-				do j--; while (compare(e, v[j]));
+				do i++; while (comp(v[i], e));
+				do j--; while (comp(e, v[j]));
 //% end
 				if (j < i) break;
 				swap(v[i], v[j]);
