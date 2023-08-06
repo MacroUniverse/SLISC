@@ -43,15 +43,16 @@ inline void sortd(VecDoub_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
 // same interface with std::sort, also supports sorting 2 arrays
 // adapted from Numerical Recipes 3ed
 template <class Tit>
-inline void sort_v(Tit v, Long_I n)
+inline void sort_NR3_v(Tit v, Long_I n)
 {
+	typename std::iterator_traits<Tit>::value_type e;
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < 7) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
+				e = v[j];
 				for (i = j - 1; i >= l; i--) {
 					if (!(e < v[i])) break;
 					v[i+1] = v[i];
@@ -76,7 +77,7 @@ inline void sort_v(Tit v, Long_I n)
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
+			e = v[l+1];
 			while (1) {
 				do i++; while (v[i] < e);
 				do j--; while (e < v[j]);
@@ -102,15 +103,16 @@ inline void sort_v(Tit v, Long_I n)
 }
 
 template <class Tit>
-inline void sortd_v(Tit v, Long_I n)
+inline void sortd_NR3_v(Tit v, Long_I n)
 {
+	typename std::iterator_traits<Tit>::value_type e;
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < 7) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
+				e = v[j];
 				for (i = j - 1; i >= l; i--) {
 					if (!(v[i] < e)) break;
 					v[i+1] = v[i];
@@ -130,12 +132,12 @@ inline void sortd_v(Tit v, Long_I n)
 			if (v[l+1] < v[ir]) {
 				swap(v[l+1], v[ir]);
 			}
-			if (v[ir] < v[l+1]) {
+			if (v[l] < v[l+1]) {
 				swap(v[l], v[l+1]);
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
+			e = v[l+1];
 			while (1) {
 				do i++; while (e < v[i]);
 				do j--; while (v[j] < e);
@@ -161,15 +163,16 @@ inline void sortd_v(Tit v, Long_I n)
 }
 
 template <class Tit, class Tcomp>
-inline void sortd_v(Tit v, Long_I n, Tcomp comp)
+inline void sort_NR3_v(Tit v, Long_I n, Tcomp comp)
 {
+	typename std::iterator_traits<Tit>::value_type e;
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < 7) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
+				e = v[j];
 				for (i = j - 1; i >= l; i--) {
 					if (!compare(e, v[i])) break;
 					v[i+1] = v[i];
@@ -194,7 +197,7 @@ inline void sortd_v(Tit v, Long_I n, Tcomp comp)
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
+			e = v[l+1];
 			while (1) {
 				do i++; while (compare(v[i], e));
 				do j--; while (compare(e, v[j]));
@@ -222,14 +225,16 @@ inline void sortd_v(Tit v, Long_I n, Tcomp comp)
 template <class Tit, class Tit1>
 inline void sort_vv(Tit v, Tit1 v1, Long_I n)
 {
+	typename std::iterator_traits<Tit>::value_type e;
+	typename std::iterator_traits<Tit1>::value_type e1;
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < 7) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
-				auto &e1 = v1[j];
+				e = v[j];
+				e1 = v1[j];
 				for (i = j - 1; i >= l; i--) {
 					if (!(e < v[i])) break;
 					v[i+1] = v[i];
@@ -260,8 +265,8 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n)
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
-			auto &e1 = v1[l+1];
+			e = v[l+1];
+			e1 = v1[l+1];
 			while (1) {
 				do i++; while (v[i] < e);
 				do j--; while (e < v[j]);
@@ -292,14 +297,16 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n)
 template <class Tit, class Tit1>
 inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
 {
+	typename std::iterator_traits<Tit>::value_type e;
+	typename std::iterator_traits<Tit1>::value_type e1;
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < 7) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
-				auto &e1 = v1[j];
+				e = v[j];
+				e1 = v1[j];
 				for (i = j - 1; i >= l; i--) {
 					if (!(v[i] < e)) break;
 					v[i+1] = v[i];
@@ -324,14 +331,14 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
 				swap(v[l+1], v[ir]);
 				swap(v1[l+1], v1[ir]);
 			}
-			if (v[ir] < v[l+1]) {
+			if (v[l] < v[l+1]) {
 				swap(v[l], v[l+1]);
 				swap(v1[l], v1[l+1]);
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
-			auto &e1 = v1[l+1];
+			e = v[l+1];
+			e1 = v1[l+1];
 			while (1) {
 				do i++; while (e < v[i]);
 				do j--; while (v[j] < e);
@@ -360,16 +367,18 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
 }
 
 template <class Tit, class Tit1, class Tcomp>
-inline void sortd_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
+inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 {
+	typename std::iterator_traits<Tit>::value_type e;
+	typename std::iterator_traits<Tit1>::value_type e1;
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[64];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < 7) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
-				auto &e1 = v1[j];
+				e = v[j];
+				e1 = v1[j];
 				for (i = j - 1; i >= l; i--) {
 					if (!compare(e, v[i])) break;
 					v[i+1] = v[i];
@@ -400,8 +409,8 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
-			auto &e1 = v1[l+1];
+			e = v[l+1];
+			e1 = v1[l+1];
 			while (1) {
 				do i++; while (compare(v[i], e));
 				do j--; while (compare(e, v[j]));

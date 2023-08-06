@@ -407,38 +407,6 @@ inline void reorder(vecStr32_O v, vecLlong_I order)
 		v[i] = u[i];
 }
 
-inline void reorder(vecStr_O v, VecLlong_I order)
-{
-#ifdef SLS_CHECK_SHAPES
-	if ((Long)order.size() != (Long)v.size())
-		SLS_ERR("wrong shape!");
-#endif
-	Long N = v.size();
-	static vecStr u; u.resize(N);
-	if (N > (Long)u.size())
-		u.resize(max(N, Long(2*u.size())));
-	for (Long i = 0; i < N; ++i)
-		u[i] = v[order[i]];
-	for (Long i = 0; i < N; ++i)
-		v[i] = u[i];
-}
-
-inline void reorder(vecLlong_O v, VecLlong_I order)
-{
-#ifdef SLS_CHECK_SHAPES
-	if ((Long)order.size() != (Long)v.size())
-		SLS_ERR("wrong shape!");
-#endif
-	Long N = v.size();
-	static VecLlong u; u.resize(N);
-	if (N > (Long)u.size())
-		u.resize(max(N, Long(2*u.size())));
-	for (Long i = 0; i < N; ++i)
-		u[i] = v[order[i]];
-	for (Long i = 0; i < N; ++i)
-		v[i] = u[i];
-}
-
 inline void reorder(SvecChar_O v, VecLlong_I order)
 {
 #ifdef SLS_CHECK_SHAPES

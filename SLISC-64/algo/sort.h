@@ -5,28 +5,59 @@
 
 namespace slisc {
 
-template <class T>
+// === STL extension ===
+// order of equal elements is not guaranteed to be preserved
+// if begin == end, std::sort will do nothing
+template <class T> // ascending
 inline void sort(vector<T> &v) { sort(v.begin(), v.end()); }
 
-// sort elements of arr
+template <class T> // descending
+inline void sortd(vector<T> &v) { sort(v.begin(), v.end(), std::greater<T>()); }
+
+// pointer interface
+template <class T> // ascending
+inline void sort_v(T *v, Long_I n) { std::sort(v, v+n); }
+
+template <class T> // descending
+inline void sortd_v(T *v, Long_I n) { std::sort(v, v+n, std::greater<T>()); }
+
+// sort elements of v
+inline void sort(VecChar_IO v) { if (size(v) > 1) sort_v(&v[0], size(v)); }
+inline void sortd(VecChar_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
+
+// sort elements of v
+inline void sort(VecInt_IO v) { if (size(v) > 1) sort_v(&v[0], size(v)); }
+inline void sortd(VecInt_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
+
+// sort elements of v
+inline void sort(VecLlong_IO v) { if (size(v) > 1) sort_v(&v[0], size(v)); }
+inline void sortd(VecLlong_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
+
+// sort elements of v
+inline void sort(VecDoub_IO v) { if (size(v) > 1) sort_v(&v[0], size(v)); }
+inline void sortd(VecDoub_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
+
+
+
+// sort elements of v
+// same interface with std::sort, also supports sorting 2 arrays
 // adapted from Numerical Recipes 3ed
-template <class T>
-inline void sort_v(T *arr, Long_I n)
+template <class Tit>
+inline void sort_NR3_v(Tit v, Long_I n)
 {
-	static const Int M = 7, NSTACK = 64;
+	typename std::iterator_traits<Tit>::value_type e;
 	Long i, ir, j, k, jstack = -1, l = 0;
-	T a;
-	VecLong istack(NSTACK);
+	Long istack[64];
 	ir = n - 1;
-	for (;;) {
-		if (ir - l < M) {
-			for (j = l + 1; j <= ir; j++) {
-				a = arr[j];
+	while(1) {
+		if (ir - l < 7) {
+			for (j = l+1; j <= ir; j++) {
+				e = v[j];
 				for (i = j - 1; i >= l; i--) {
-					if (arr[i] <= a) break;
-					arr[i + 1] = arr[i];
+					if (!(e < v[i])) break;
+					v[i+1] = v[i];
 				}
-				arr[i + 1] = a;
+				v[i+1] = e;
 			}
 			if (jstack < 0) break;
 			ir = istack[jstack--];
@@ -34,85 +65,59 @@ inline void sort_v(T *arr, Long_I n)
 		}
 		else {
 			k = (l + ir) >> 1;
-			swap(arr[k], arr[l + 1]);
-			if (arr[l] > arr[ir]) {
-				swap(arr[l], arr[ir]);
+			swap(v[k], v[l+1]);
+			if (v[ir] < v[l]) {
+				swap(v[l], v[ir]);
 			}
-			if (arr[l + 1] > arr[ir]) {
-				swap(arr[l + 1], arr[ir]);
+			if (v[ir] < v[l+1]) {
+				swap(v[l+1], v[ir]);
 			}
-			if (arr[l] > arr[l + 1]) {
-				swap(arr[l], arr[l + 1]);
+			if (v[l+1] < v[l]) {
+				swap(v[l], v[l+1]);
 			}
-			i = l + 1;
+			i = l+1;
 			j = ir;
-			a = arr[l + 1];
-			for (;;) {
-				do i++; while (arr[i] < a);
-				do j--; while (arr[j] > a);
+			e = v[l+1];
+			while (1) {
+				do i++; while (v[i] < e);
+				do j--; while (e < v[j]);
 				if (j < i) break;
-				swap(arr[i], arr[j]);
+				swap(v[i], v[j]);
 			}
-			arr[l + 1] = arr[j];
-			arr[j] = a;
+			v[l+1] = v[j];
+			v[j] = e;
 			jstack += 2;
-			if (jstack >= NSTACK) throw("NSTACK too small in sort.");
+			if (jstack >= 64) throw("NSTACK too small in sort.");
 			if (ir - i + 1 >= j - l) {
 				istack[jstack] = ir;
-				istack[jstack - 1] = i;
+				istack[jstack-1] = i;
 				ir = j - 1;
 			}
 			else {
 				istack[jstack] = j - 1;
-				istack[jstack - 1] = l;
+				istack[jstack-1] = l;
 				l = i;
 			}
 		}
 	}
 }
 
-// sort elements of v
-inline void sort(VecChar_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
-
-// sort elements of v
-inline void sort(VecInt_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
-
-// sort elements of v
-inline void sort(VecLlong_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
-
-// sort elements of v
-inline void sort(VecDoub_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
-
-// sort elements of v
-inline void sort(vecStr_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
-
-// sort elements of v
-inline void sort(vecStr32_IO v) { if (v.size() > 1) sort_v(&v[0], v.size()); }
-
-
-// sort v while making the same change for v1
-// adapted from Numerical Recipes 3ed
-template <class T, class T1>
-inline void sort_vv(T *v, T1 *v1, Long_I N)
+template <class Tit>
+inline void sortd_NR3_v(Tit v, Long_I n)
 {
-	const Long M = 7, NSTACK = 64;
-	Long i, ir, j, k, jstack = -1, l = 0, n = N;
-	T a;
-	T1 b;
-	VecLong istack(NSTACK);
+	typename std::iterator_traits<Tit>::value_type e;
+	Long i, ir, j, k, jstack = -1, l = 0;
+	Long istack[64];
 	ir = n - 1;
-	for (;;) {
-		if (ir - l < M) {
-			for (j = l + 1; j <= ir; j++) {
-				a = v[j];
-				b = v1[j];
+	while(1) {
+		if (ir - l < 7) {
+			for (j = l+1; j <= ir; j++) {
+				e = v[j];
 				for (i = j - 1; i >= l; i--) {
-					if (v[i] <= a) break;
-					v[i + 1] = v[i];
-					v1[i + 1] = v1[i];
+					if (!(v[i] < e)) break;
+					v[i+1] = v[i];
 				}
-				v[i + 1] = a;
-				v1[i + 1] = b;
+				v[i+1] = e;
 			}
 			if (jstack < 0) break;
 			ir = istack[jstack--];
@@ -120,45 +125,313 @@ inline void sort_vv(T *v, T1 *v1, Long_I N)
 		}
 		else {
 			k = (l + ir) >> 1;
-			swap(v[k], v[l + 1]);
-			swap(v1[k], v1[l + 1]);
-			if (v[l] > v[ir]) {
+			swap(v[k], v[l+1]);
+			if (v[l] < v[ir]) {
 				swap(v[l], v[ir]);
-				swap(v1[l], v1[ir]);
 			}
-			if (v[l + 1] > v[ir]) {
-				swap(v[l + 1], v[ir]);
-				swap(v1[l + 1], v1[ir]);
+			if (v[l+1] < v[ir]) {
+				swap(v[l+1], v[ir]);
 			}
-			if (v[l] > v[l + 1]) {
-				swap(v[l], v[l + 1]);
-				swap(v1[l], v1[l + 1]);
+			if (v[l] < v[l+1]) {
+				swap(v[l], v[l+1]);
 			}
-			i = l + 1;
+			i = l+1;
 			j = ir;
-			a = v[l + 1];
-			b = v1[l + 1];
-			for (;;) {
-				do i++; while (v[i] < a);
-				do j--; while (v[j] > a);
+			e = v[l+1];
+			while (1) {
+				do i++; while (e < v[i]);
+				do j--; while (v[j] < e);
 				if (j < i) break;
 				swap(v[i], v[j]);
-				swap(v1[i], v1[j]);
 			}
-			v[l + 1] = v[j];
-			v[j] = a;
-			v1[l + 1] = v1[j];
-			v1[j] = b;
+			v[l+1] = v[j];
+			v[j] = e;
 			jstack += 2;
-			if (jstack >= NSTACK) throw("NSTACK too small in sort2.");
+			if (jstack >= 64) throw("NSTACK too small in sort.");
 			if (ir - i + 1 >= j - l) {
 				istack[jstack] = ir;
-				istack[jstack - 1] = i;
+				istack[jstack-1] = i;
 				ir = j - 1;
 			}
 			else {
 				istack[jstack] = j - 1;
-				istack[jstack - 1] = l;
+				istack[jstack-1] = l;
+				l = i;
+			}
+		}
+	}
+}
+
+template <class Tit, class Tcomp>
+inline void sort_NR3_v(Tit v, Long_I n, Tcomp comp)
+{
+	typename std::iterator_traits<Tit>::value_type e;
+	Long i, ir, j, k, jstack = -1, l = 0;
+	Long istack[64];
+	ir = n - 1;
+	while(1) {
+		if (ir - l < 7) {
+			for (j = l+1; j <= ir; j++) {
+				e = v[j];
+				for (i = j - 1; i >= l; i--) {
+					if (!compare(e, v[i])) break;
+					v[i+1] = v[i];
+				}
+				v[i+1] = e;
+			}
+			if (jstack < 0) break;
+			ir = istack[jstack--];
+			l = istack[jstack--];
+		}
+		else {
+			k = (l + ir) >> 1;
+			swap(v[k], v[l+1]);
+			if (compare(v[l], v[ir])) {
+				swap(v[l], v[ir]);
+			}
+			if (compare(v[ir], v[l+1])) {
+				swap(v[l+1], v[ir]);
+			}
+			if (compare(v[l+1], v[l])) {
+				swap(v[l], v[l+1]);
+			}
+			i = l+1;
+			j = ir;
+			e = v[l+1];
+			while (1) {
+				do i++; while (compare(v[i], e));
+				do j--; while (compare(e, v[j]));
+				if (j < i) break;
+				swap(v[i], v[j]);
+			}
+			v[l+1] = v[j];
+			v[j] = e;
+			jstack += 2;
+			if (jstack >= 64) throw("NSTACK too small in sort.");
+			if (ir - i + 1 >= j - l) {
+				istack[jstack] = ir;
+				istack[jstack-1] = i;
+				ir = j - 1;
+			}
+			else {
+				istack[jstack] = j - 1;
+				istack[jstack-1] = l;
+				l = i;
+			}
+		}
+	}
+}
+
+template <class Tit, class Tit1>
+inline void sort_vv(Tit v, Tit1 v1, Long_I n)
+{
+	typename std::iterator_traits<Tit>::value_type e;
+	typename std::iterator_traits<Tit1>::value_type e1;
+	Long i, ir, j, k, jstack = -1, l = 0;
+	Long istack[64];
+	ir = n - 1;
+	while(1) {
+		if (ir - l < 7) {
+			for (j = l+1; j <= ir; j++) {
+				e = v[j];
+				e1 = v1[j];
+				for (i = j - 1; i >= l; i--) {
+					if (!(e < v[i])) break;
+					v[i+1] = v[i];
+					v1[i+1] = v1[i];
+				}
+				v[i+1] = e;
+				v1[i+1] = e1;
+			}
+			if (jstack < 0) break;
+			ir = istack[jstack--];
+			l = istack[jstack--];
+		}
+		else {
+			k = (l + ir) >> 1;
+			swap(v[k], v[l+1]);
+			swap(v1[k], v1[l+1]);
+			if (v[ir] < v[l]) {
+				swap(v[l], v[ir]);
+				swap(v1[l], v1[ir]);
+			}
+			if (v[ir] < v[l+1]) {
+				swap(v[l+1], v[ir]);
+				swap(v1[l+1], v1[ir]);
+			}
+			if (v[l+1] < v[l]) {
+				swap(v[l], v[l+1]);
+				swap(v1[l], v1[l+1]);
+			}
+			i = l+1;
+			j = ir;
+			e = v[l+1];
+			e1 = v1[l+1];
+			while (1) {
+				do i++; while (v[i] < e);
+				do j--; while (e < v[j]);
+				if (j < i) break;
+				swap(v[i], v[j]);
+				swap(v1[i], v1[j]);
+			}
+			v[l+1] = v[j];
+			v[j] = e;
+			v1[l+1] = v1[j];
+			v1[j] = e1;
+			jstack += 2;
+			if (jstack >= 64) throw("NSTACK too small in sort.");
+			if (ir - i + 1 >= j - l) {
+				istack[jstack] = ir;
+				istack[jstack-1] = i;
+				ir = j - 1;
+			}
+			else {
+				istack[jstack] = j - 1;
+				istack[jstack-1] = l;
+				l = i;
+			}
+		}
+	}
+}
+
+template <class Tit, class Tit1>
+inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
+{
+	typename std::iterator_traits<Tit>::value_type e;
+	typename std::iterator_traits<Tit1>::value_type e1;
+	Long i, ir, j, k, jstack = -1, l = 0;
+	Long istack[64];
+	ir = n - 1;
+	while(1) {
+		if (ir - l < 7) {
+			for (j = l+1; j <= ir; j++) {
+				e = v[j];
+				e1 = v1[j];
+				for (i = j - 1; i >= l; i--) {
+					if (!(v[i] < e)) break;
+					v[i+1] = v[i];
+					v1[i+1] = v1[i];
+				}
+				v[i+1] = e;
+				v1[i+1] = e1;
+			}
+			if (jstack < 0) break;
+			ir = istack[jstack--];
+			l = istack[jstack--];
+		}
+		else {
+			k = (l + ir) >> 1;
+			swap(v[k], v[l+1]);
+			swap(v1[k], v1[l+1]);
+			if (v[l] < v[ir]) {
+				swap(v[l], v[ir]);
+				swap(v1[l], v1[ir]);
+			}
+			if (v[l+1] < v[ir]) {
+				swap(v[l+1], v[ir]);
+				swap(v1[l+1], v1[ir]);
+			}
+			if (v[l] < v[l+1]) {
+				swap(v[l], v[l+1]);
+				swap(v1[l], v1[l+1]);
+			}
+			i = l+1;
+			j = ir;
+			e = v[l+1];
+			e1 = v1[l+1];
+			while (1) {
+				do i++; while (e < v[i]);
+				do j--; while (v[j] < e);
+				if (j < i) break;
+				swap(v[i], v[j]);
+				swap(v1[i], v1[j]);
+			}
+			v[l+1] = v[j];
+			v[j] = e;
+			v1[l+1] = v1[j];
+			v1[j] = e1;
+			jstack += 2;
+			if (jstack >= 64) throw("NSTACK too small in sort.");
+			if (ir - i + 1 >= j - l) {
+				istack[jstack] = ir;
+				istack[jstack-1] = i;
+				ir = j - 1;
+			}
+			else {
+				istack[jstack] = j - 1;
+				istack[jstack-1] = l;
+				l = i;
+			}
+		}
+	}
+}
+
+template <class Tit, class Tit1, class Tcomp>
+inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
+{
+	typename std::iterator_traits<Tit>::value_type e;
+	typename std::iterator_traits<Tit1>::value_type e1;
+	Long i, ir, j, k, jstack = -1, l = 0;
+	Long istack[64];
+	ir = n - 1;
+	while(1) {
+		if (ir - l < 7) {
+			for (j = l+1; j <= ir; j++) {
+				e = v[j];
+				e1 = v1[j];
+				for (i = j - 1; i >= l; i--) {
+					if (!compare(e, v[i])) break;
+					v[i+1] = v[i];
+					v1[i+1] = v1[i];
+				}
+				v[i+1] = e;
+				v1[i+1] = e1;
+			}
+			if (jstack < 0) break;
+			ir = istack[jstack--];
+			l = istack[jstack--];
+		}
+		else {
+			k = (l + ir) >> 1;
+			swap(v[k], v[l+1]);
+			swap(v1[k], v1[l+1]);
+			if (compare(v[l], v[ir])) {
+				swap(v[l], v[ir]);
+				swap(v1[l], v1[ir]);
+			}
+			if (compare(v[ir], v[l+1])) {
+				swap(v[l+1], v[ir]);
+				swap(v1[l+1], v1[ir]);
+			}
+			if (compare(v[l+1], v[l])) {
+				swap(v[l], v[l+1]);
+				swap(v1[l], v1[l+1]);
+			}
+			i = l+1;
+			j = ir;
+			e = v[l+1];
+			e1 = v1[l+1];
+			while (1) {
+				do i++; while (compare(v[i], e));
+				do j--; while (compare(e, v[j]));
+				if (j < i) break;
+				swap(v[i], v[j]);
+				swap(v1[i], v1[j]);
+			}
+			v[l+1] = v[j];
+			v[j] = e;
+			v1[l+1] = v1[j];
+			v1[j] = e1;
+			jstack += 2;
+			if (jstack >= 64) throw("NSTACK too small in sort.");
+			if (ir - i + 1 >= j - l) {
+				istack[jstack] = ir;
+				istack[jstack-1] = i;
+				ir = j - 1;
+			}
+			else {
+				istack[jstack] = j - 1;
+				istack[jstack-1] = l;
 				l = i;
 			}
 		}
@@ -170,103 +443,141 @@ inline void sort_vv(T *v, T1 *v1, Long_I N)
 inline void sort(VecInt_IO v, VecInt_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sort_vv(&v[0], &v1[0], size(v));
+}
+
+inline void sortd(VecInt_IO v, VecInt_IO v1)
+{
+	assert_same_shape(v, v1);
+	if (size(v) > 1)
+		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(VecInt_IO v, VecLlong_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sort_vv(&v[0], &v1[0], size(v));
+}
+
+inline void sortd(VecInt_IO v, VecLlong_IO v1)
+{
+	assert_same_shape(v, v1);
+	if (size(v) > 1)
+		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(VecLlong_IO v, VecLlong_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sort_vv(&v[0], &v1[0], size(v));
+}
+
+inline void sortd(VecLlong_IO v, VecLlong_IO v1)
+{
+	assert_same_shape(v, v1);
+	if (size(v) > 1)
+		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(VecDoub_IO v, VecLlong_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sort_vv(&v[0], &v1[0], size(v));
+}
+
+inline void sortd(VecDoub_IO v, VecLlong_IO v1)
+{
+	assert_same_shape(v, v1);
+	if (size(v) > 1)
+		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(vecLlong_IO v, vecLlong_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sort_vv(&v[0], &v1[0], size(v));
+}
+
+inline void sortd(vecLlong_IO v, vecLlong_IO v1)
+{
+	assert_same_shape(v, v1);
+	if (size(v) > 1)
+		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(vecLlong_IO v, vecStr_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sort_vv(&v[0], &v1[0], size(v));
 }
 
-inline void sort(vecStr_IO v, vecStr_IO v1)
+inline void sortd(vecLlong_IO v, vecStr_IO v1)
 {
 	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
-}
-
-inline void sort(vecStr32_IO v, vecStr32_IO v1)
-{
-	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
-}
-
-inline void sort(vecStr_IO v, VecLlong_IO v1)
-{
-	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
-}
-
-inline void sort(vecStr_IO v, vecLlong_IO v1)
-{
-	assert_same_shape(v, v1);
-	sort_vv(&v[0], &v1[0], v.size());
+	if (size(v) > 1)
+		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 
 // case insensitive sorting for string
-// result is independent of the input order
+inline bool compare_case_insens_less(Str_I a, Str_I b) {
+    return std::lexicographical_compare(
+        a.begin(), a.end(), b.begin(), b.end(),
+        [](char c1, char c2) { return std::tolower(c1) < std::tolower(c2); }
+    );
+}
+
+inline bool compare_case_insens_greater(Str_I a, Str_I b) {
+    return !compare_case_insens_less(a, b);
+}
+
 inline void sort_case_insens(vecStr_IO v)
-{
-	sort(v);
-	vecStr v_low; to_lower(v_low, v);
-	sort(v_low, v); // case insensitive sorting
+{ sort(v.begin(), v.end(), compare_case_insens_less); }
+
+inline void sortd_case_insens(vecStr_IO v)
+{ sort(v.begin(), v.end(), compare_case_insens_greater); }
+
+template <class Tit>
+inline void sort_case_insens(vecStr_IO v, Tit v1)
+{ sort(v.begin(), v1, size(v), compare_case_insens_less); }
+
+template <class Tit>
+inline void sortd_case_insens(vecStr_IO v, Tit v1)
+{ sort(v.begin(), v1, size(v), compare_case_insens_greater); }
+
+inline bool compare_case_insens_less32(Str32_I a, Str32_I b) {
+    return std::lexicographical_compare(
+        a.begin(), a.end(), b.begin(), b.end(),
+        [](char c1, char c2) { return std::tolower(c1) < std::tolower(c2); }
+    );
+}
+
+inline bool compare_case_insens_greater32(Str32_I a, Str32_I b) {
+    return !compare_case_insens_less32(a, b);
 }
 
 inline void sort_case_insens(vecStr32_IO v)
-{
-	sort(v);
-	vecStr32 v_low; to_lower(v_low, v);
-	sort(v_low, v); // case insensitive sorting
-}
+{ sort(v.begin(), v.end(), compare_case_insens_less32); }
 
-// case insensitive sorting for string
-// result is independent of the input order
-inline void sort_case_insens(vecStr_IO v, vecStr_IO v1)
-{
-	sort(v, v1);
-	vecStr v_low; to_lower(v_low, v);
-	VecLong order(v.size());
-	sort(v_low, order); // case insensitive sorting
-	reorder(v, order);
-	reorder(v1, order);
-}
+inline void sortd_case_insens(vecStr32_IO v)
+{ sort(v.begin(), v.end(), compare_case_insens_greater32); }
 
-inline void sort_case_insens(vecStr_IO v, vecLlong_IO v1)
-{
-	sort(v, v1);
-	vecStr v_low; to_lower(v_low, v);
-	VecLong order(v.size());
-	sort(v_low, order); // case insensitive sorting
-	reorder(v, order);
-	reorder(v1, order);
-}
+template <class Tit>
+inline void sort_case_insens(vecStr32_IO v, Tit v1)
+{ sort(v.begin(), v1, size(v), compare_case_insens_less32); }
+
+template <class Tit>
+inline void sortd_case_insens(vecStr32_IO v, Tit v1)
+{ sort(v.begin(), v1, size(v), compare_case_insens_greater32); }
 
 
+// === my version of quicksort ===
 // swap medium to `a`
 template <class T>
 void quicksort_3mid(T &a, T &b, T &c) {
@@ -384,7 +695,7 @@ void quicksort0(T *v, T1 *v1, Long N)
 	quicksort0(v+i, v1+i, N-i);
 }
 
-// merge sort
+// === merge sort ===
 // wsp (work space) requires length (N+1)/2
 template <class T>
 void mergesort(T *v, Long N, T *wsp)
@@ -548,7 +859,7 @@ inline Long reorder_inplace_helper(Tv &v, const To &order, Long_I i, Long_I j)
 template <class Tv, class To>
 inline void reorder_inplace(Tv &v, const To &order)
 {
-	Long N = v.size();
+	Long N = size(v);
 	for (Long i = 0; i < N; ++i) {
 		Long j = order[i];
 		if (j > i) {

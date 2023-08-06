@@ -44,13 +44,13 @@ inline void sortd(@T@_IO v) { if (size(v) > 1) sortd_v(&v[0], size(v)); }
 //% [Order, Nv] = varargin{:};
 //% if strcmp(Order, 'asc') && Nv == 1
 template <class Tit>
-inline void sort_v(Tit v, Long_I n)
+inline void sort_NR3_v(Tit v, Long_I n)
 //% elseif strcmp(Order, 'des') && Nv == 1
 template <class Tit>
-inline void sortd_v(Tit v, Long_I n)
+inline void sortd_NR3_v(Tit v, Long_I n)
 //% elseif strcmp(Order, 'usr') && Nv == 1
 template <class Tit, class Tcomp>
-inline void sortd_v(Tit v, Long_I n, Tcomp comp)
+inline void sort_NR3_v(Tit v, Long_I n, Tcomp comp)
 //% elseif strcmp(Order, 'asc') && Nv == 2
 template <class Tit, class Tit1>
 inline void sort_vv(Tit v, Tit1 v1, Long_I n)
@@ -59,19 +59,23 @@ template <class Tit, class Tit1>
 inline void sortd_vv(Tit v, Tit1 v1, Long_I n)
 //% elseif strcmp(Order, 'usr') && Nv == 2
 template <class Tit, class Tit1, class Tcomp>
-inline void sortd_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
+inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% end
 {
 //% M = 7; NSTACK = 64;
+	typename std::iterator_traits<Tit>::value_type e;
+//% if Nv == 2
+	typename std::iterator_traits<Tit1>::value_type e1;
+//% end
 	Long i, ir, j, k, jstack = -1, l = 0;
 	Long istack[@NSTACK@];
 	ir = n - 1;
 	while(1) {
 		if (ir - l < @M@) {
 			for (j = l+1; j <= ir; j++) {
-				auto &e = v[j];
+				e = v[j];
 //% if Nv == 2
-				auto &e1 = v1[j];
+				e1 = v1[j];
 //% end
 				for (i = j - 1; i >= l; i--) {
 //% if strcmp(Order, 'asc')
@@ -128,7 +132,7 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% if strcmp(Order, 'asc')
 			if (v[l+1] < v[l]) {
 //% elseif strcmp(Order, 'des')
-			if (v[ir] < v[l+1]) {
+			if (v[l] < v[l+1]) {
 //% else
 			if (compare(v[l+1], v[l])) {
 //% end
@@ -139,9 +143,9 @@ inline void sortd_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 			}
 			i = l+1;
 			j = ir;
-			auto &e = v[l+1];
+			e = v[l+1];
 //% if Nv == 2
-			auto &e1 = v1[l+1];
+			e1 = v1[l+1];
 //% end
 			while (1) {
 //% if strcmp(Order, 'asc')
