@@ -48,7 +48,7 @@ opt_matfile := false
 # --- version ---
 ver_major := 0
 ver_minor := 2
-ver_patch := 6
+ver_patch := 7
 
 # === minimum build ===
 ifeq ($(opt_min), true)
