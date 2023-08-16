@@ -136,7 +136,7 @@
 #define SLS_TO_STR(x) SLS_STRINGIFY(x)
 
 // get a string literal of file and line number
-#define SLS_WHERE "[file: " __FILE__ ", line: " SLS_TO_STR(__LINE__) "]"
+#define SLS_WHERE " [file: " __FILE__ ", line: " SLS_TO_STR(__LINE__) "]"
 
 // print a warning with file and line number
 #define SLS_WARN(str) do { \
