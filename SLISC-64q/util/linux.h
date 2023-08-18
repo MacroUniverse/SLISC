@@ -30,13 +30,13 @@ inline int exec_str(Str_O stdout, Str_I cmd)
 	std::unique_ptr<FILE, decltype(&pclose)>
 		pipe(popen(cmd1.c_str(), "r"), pclose);
 	if (!pipe)
-		throw std::runtime_error("popen() failed!");
+		throw runtime_error("popen() failed!");
 	stdout.clear();
 	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
 		stdout += buffer.data();
 	size_t ind = stdout.rfind('|');
-	if (ind == std::string::npos)
-		throw std::runtime_error("exec_str(): cmd1 = \n" + cmd1);
+	if (ind == npos)
+		throw runtime_error("exec_str(): cmd1 = \n" + cmd1);
 	int ret = str2Int(stdout.substr(ind + 1));
 	stdout.resize(ind);
 	return ret;

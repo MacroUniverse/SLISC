@@ -183,7 +183,7 @@ inline Long char8_len(Str_I s, Long_I ind) {
 	} else if ((byte >> 3) == 0x1E) {
 		char_size = 4;
 	} else {
-		throw std::runtime_error("char8_len(): Invalid UTF-8 encoding");
+		throw runtime_error("char8_len(): Invalid UTF-8 encoding");
 	}
 	if (ind + char_size > size(s))
 		throw std::out_of_range("char8_len(): Invalid UTF-8 encoding (out of range)");
@@ -261,17 +261,17 @@ public:
 			ind = skip_char8(str, size(str), ind);
 		if (ind >= size(str)) {
 			if (str.empty())
-				throw std::runtime_error("cannot bind u8_iter to an empty string!");
-			throw std::runtime_error("index out of bound when creating u8_iter!");
+				throw runtime_error("cannot bind u8_iter to an empty string!");
+			throw runtime_error("index out of bound when creating u8_iter!");
 		}
 		if (!is_char8_start(s, ind))
-			throw std::runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
+			throw runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
 	};
 
 	// set string index
 	u8_iter &operator=(Long_I i) {
 		if (!is_char8_start(s, i))
-			throw std::runtime_error("u8_iter::operator=(i): not the start of a utf-8 char!");
+			throw runtime_error("u8_iter::operator=(i): not the start of a utf-8 char!");
 		ind = i;
 		return *this;
 	}
@@ -288,7 +288,7 @@ public:
 
 	bool operator==(const u8_iter &rhs) {
 		if (s.empty() || rhs.s.empty())
-			throw std::runtime_error("u8_iter::operator=(=: out of range!");
+			throw runtime_error("u8_iter::operator=(=: out of range!");
 		return (ind == rhs.ind && &s == &rhs.s);
 	}
 
@@ -344,7 +344,7 @@ inline Long u8count(Str_I str, Long_I start = 0, Long end = -1)
 	while ((Long)it < end)
 		++it, ++N;
 	if ((Long)it != end)
-		throw std::runtime_error("u8_count(): make sure `end` is the start of a u8char");
+		throw runtime_error("u8_count(): make sure `end` is the start of a u8char");
 	return N;
 }
 
@@ -424,7 +424,7 @@ inline Str u8(Char32_I c) {
 		utf8.push_back(char(0x80 | (c & 0x3F)));
 	}
 	else
-		throw std::runtime_error("u8(Char32_I): Invalid Unicode codepoint.");
+		throw runtime_error("u8(Char32_I): Invalid Unicode codepoint.");
 	return utf8;
 }
 

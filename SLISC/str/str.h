@@ -471,37 +471,37 @@ inline Long CRLF_to_LF(Str_IO str)
 inline Long find(Str_I str, Str_I key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long find(Str_I str, const char* key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long find(Str_I str, char key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(Str_I str, Str_I key, Long pos = 0)
 {
 	size_t ind = str.rfind(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(Str_I str, const char* key, Long pos = 0)
 {
 	size_t ind = str.rfind(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(Str_I str, char key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 // Find the next appearance of one of "key"
@@ -1052,37 +1052,37 @@ inline Long CRLF_to_LF(Str32_IO str)
 inline Long find(Str32_I str, Str32_I key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long find(Str32_I str, const Char32* key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long find(Str32_I str, Char32 key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(Str32_I str, Str32_I key, Long pos = 0)
 {
 	size_t ind = str.rfind(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(Str32_I str, const Char32* key, Long pos = 0)
 {
 	size_t ind = str.rfind(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(Str32_I str, Char32 key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 // Find the next appearance of one of "key"

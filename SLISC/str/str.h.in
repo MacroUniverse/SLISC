@@ -347,37 +347,37 @@ inline Long CRLF_to_LF(@Ts@_IO str)
 inline Long find(@Ts@_I str, @Ts@_I key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long find(@Ts@_I str, const @Tc@* key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long find(@Ts@_I str, @Tc@ key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(@Ts@_I str, @Ts@_I key, Long pos = 0)
 {
 	size_t ind = str.rfind(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(@Ts@_I str, const @Tc@* key, Long pos = 0)
 {
 	size_t ind = str.rfind(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 inline Long rfind(@Ts@_I str, @Tc@ key, Long pos = 0)
 {
 	size_t ind = str.find(key, pos);
-	return ind == string::npos ? -1 : ind;
+	return ind == npos ? -1 : ind;
 }
 
 // Find the next appearance of one of "key"

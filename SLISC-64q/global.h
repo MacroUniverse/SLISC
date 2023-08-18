@@ -194,6 +194,7 @@ using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
 using std::runtime_error;
+constexpr size_t npos = std::string::npos; // `using` doesn't work
 
 // Scalar types
 
