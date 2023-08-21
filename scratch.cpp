@@ -32,12 +32,11 @@
 using namespace slisc;
 // using namespace std;
 
-
 // usage: `./scratch.x < scratch.inp`
 int main() {
     vector<int> v_num, v_num1; vector<string> v_str;
     read_input2(v_num, v_str);
-	cout << "\n\nyour input:" << endl;
+	printf("\n\nyour input:");
 	for (size_t i = 0; i < v_num.size(); ++i)
 		cout << v_num[i] << "  " << v_str[i] << endl; 
     return 0;
