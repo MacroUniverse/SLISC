@@ -143,6 +143,8 @@ inline Str &operator<<(Str_IO s, Int_I n) { return s += to_string(n); }
 
 inline Str &operator<<(Str_IO s, Llong_I n) { return s += to_string(n); }
 
+inline Str &clear(Str &s) { s.clear(); return s; }
+
 template <class T>
 inline Str &operator<<(Str_IO s, const T &val) { return s += to_string(val); }
 

@@ -129,6 +129,7 @@
 // text styles (see also text_style() in disp.h)
 #define SLS_RED_BOLD "\033[1;31m"
 #define SLS_YELLOW_BOLD "\033[1;33m"
+#define SLS_CYAN_BOLD "\033[1;36m"
 #define SLS_NO_STYLE "\033[0m"
 
 // SLS_TO_STR(x) converts a numeric macro to a string
@@ -139,21 +140,25 @@
 #define SLS_WHERE " [file: " __FILE__ ", line: " SLS_TO_STR(__LINE__) "]"
 
 // print a warning with file and line number
+#ifndef SLS_WARN
 #define SLS_WARN(str) do { \
 		std::cout << SLS_YELLOW_BOLD "Warning: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; \
 		std::cout.flush(); \
 	} while(0)
+#endif
 
 // print an error with file and line number
+#ifndef SLS_ERR
 #ifndef SLS_THROW_ERR
 	#define SLS_ERR(str) do { \
-		std::cout << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
+		std::cerr << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
 	} while(0)
 #else
 	#define SLS_ERR(str) do { \
 		std::stringstream ss; ss << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE; \
 		throw slisc::sls_err(std::move(ss.str()));
 	} while(0)
+#endif
 #endif
 
 #define SLS_FAIL SLS_ERR("failed!")

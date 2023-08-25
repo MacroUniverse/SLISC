@@ -1,8 +1,8 @@
 // === time utilities ===
 
 #pragma once
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <string>
 #include <chrono>
 #include <ctime>
 #include "../str/str.h"
