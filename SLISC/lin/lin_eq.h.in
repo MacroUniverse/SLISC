@@ -68,7 +68,6 @@ inline void inv_mat(@T@_IO A, @Twsp@_IO wsp)
 //%------------------------
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
-// ####### Not Thread Safe ######
 //% tem('lin_eq', {
 //% 'CmatDoub' 'CmatDoub';
 //% 'ScmatDoub' 'CmatDoub';
@@ -92,8 +91,8 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% end
 		SLS_ERR("wrong shape!");
 #endif
-	static @CmatTsa@ a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static @CmatTsa@ a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 //%     req('shape_cmp', {CmatTsa Ta});
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
@@ -178,7 +177,6 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 //%---------------------
 
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
-// ####### Not Thread Safe ######
 //% tem('lin_eq3', {
 //%     'VecDoub' 'CbandDoub';
 //%     'VecComp' 'CbandComp';
@@ -198,8 +196,8 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 //% end
 		SLS_ERR("wrong shape!");
 #endif
-	static @CbandTsa@ a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
-	static VecLong ipiv(a.n0());
+	thread_local static @CbandTsa@ a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+	thread_local static VecLong ipiv(a.n0());
 	if (a1.lda() < a.nup() + 2*a.nlow() + 1 || a1.n1() != a.n1())
 		a1.resize(a.nup() + 2*a.nlow() + 1, a.n1());
 //% req('copy(band,band)', {CbandTsa Ta});

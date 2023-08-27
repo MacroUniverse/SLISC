@@ -133,15 +133,14 @@ inline void inv_mat(ScmatQcomp_IO A, VecQcomp_IO wsp)
 
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
-// ####### Not Thread Safe ######
 inline void lin_eq(CmatDoub_IO x, CmatDoub_I a)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.n0())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatDoub a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -163,8 +162,8 @@ inline void lin_eq(ScmatDoub_IO x, CmatDoub_I a)
 	if (a.n0() != a.n1() || a.n1() != x.n0())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatDoub a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -186,8 +185,8 @@ inline void lin_eq(ScmatDoub_IO x, ScmatDoub_I a)
 	if (a.n0() != a.n1() || a.n1() != x.n0())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatDoub a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -209,8 +208,8 @@ inline void lin_eq(VecDoub_IO x, CmatDoub_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatDoub a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -232,8 +231,8 @@ inline void lin_eq(SvecDoub_IO x, CmatDoub_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatDoub a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -255,8 +254,8 @@ inline void lin_eq(VecComp_IO x, CmatComp_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatComp a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatComp a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -278,8 +277,8 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CmatComp a1(a.n0(), a.n1());
-	static VecLong ipiv(a.n0());
+	thread_local static CmatComp a1(a.n0(), a.n1());
+	thread_local static VecLong ipiv(a.n0());
 	if (!shape_cmp(a1, a))
 		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
@@ -427,15 +426,14 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_IO a, SvecLlong_IO ipiv)
 
 
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
-// ####### Not Thread Safe ######
 inline void lin_eq(VecDoub_IO x, CbandDoub_I a)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CbandDoub a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
-	static VecLong ipiv(a.n0());
+	thread_local static CbandDoub a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+	thread_local static VecLong ipiv(a.n0());
 	if (a1.lda() < a.nup() + 2*a.nlow() + 1 || a1.n1() != a.n1())
 		a1.resize(a.nup() + 2*a.nlow() + 1, a.n1());
 	a1.shift(a.nlow() + a.nup()); copy(a1, a);
@@ -458,8 +456,8 @@ inline void lin_eq(VecComp_IO x, CbandComp_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CbandComp a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
-	static VecLong ipiv(a.n0());
+	thread_local static CbandComp a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+	thread_local static VecLong ipiv(a.n0());
 	if (a1.lda() < a.nup() + 2*a.nlow() + 1 || a1.n1() != a.n1())
 		a1.resize(a.nup() + 2*a.nlow() + 1, a.n1());
 	a1.shift(a.nlow() + a.nup()); copy(a1, a);
@@ -482,8 +480,8 @@ inline void lin_eq(SvecComp_IO x, CbandComp_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	static CbandComp a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
-	static VecLong ipiv(a.n0());
+	thread_local static CbandComp a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
+	thread_local static VecLong ipiv(a.n0());
 	if (a1.lda() < a.nup() + 2*a.nlow() + 1 || a1.n1() != a.n1())
 		a1.resize(a.nup() + 2*a.nlow() + 1, a.n1());
 	a1.shift(a.nlow() + a.nup()); copy(a1, a);

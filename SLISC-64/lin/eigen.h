@@ -5,6 +5,7 @@
 #include "Eigen/LU"
 
 // extension for Eigen library
+// note that NumTraits<long double> and NumTraits<complex<long double>> are already defined
 #ifdef SLS_USE_QUAD_MATH
 
 namespace Eigen {
@@ -43,7 +44,7 @@ namespace Eigen {
 
 		enum {
 			IsInteger = 0,
-			IsSigned = 1,
+			IsSigned = 0,
 			IsComplex = 1,
 			RequireInitialization = 0,
 			ReadCost = 4,
