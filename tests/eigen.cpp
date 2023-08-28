@@ -56,19 +56,21 @@ void test_eigen()
 	}
 
 	// test sparse linear solver
+	// ref: https://eigen.tuxfamily.org/dox/group__TopicSparseSystems.html
 	{
 		using namespace std;
-		typedef Eigen::Triplet<double> T;
+		typedef Eigen::Triplet<double> tri_t;
 		Eigen::SparseMatrix<double> mat(3, 3);
-		vector<T> tripletList;
-		tripletList.push_back(T(0, 0, 1.));
-		tripletList.push_back(T(0, 2, 2.));
-		tripletList.push_back(T(1, 1, 3.));
-		tripletList.push_back(T(1, 2, 4.));
-		tripletList.push_back(T(2, 0, 5.));
-		tripletList.push_back(T(2, 2, 7.));
+		vector<tri_t> tripletList;
+		tripletList.push_back(tri_t(0, 0, 1.));
+		tripletList.push_back(tri_t(0, 2, 2.));
+		tripletList.push_back(tri_t(1, 1, 3.));
+		tripletList.push_back(tri_t(1, 2, 4.));
+		tripletList.push_back(tri_t(2, 0, 5.));
+		tripletList.push_back(tri_t(2, 2, 7.));
 		Eigen::VectorXd b(3); b[0] = 6.; b[1] = 7.; b[2] = 8.;
 		mat.setFromTriplets(tripletList.begin(), tripletList.end());
+        // Eigen::SimplicialCholesky<Eigen::SparseMatrix<double>> chol(mat); // Cholesky factorization
 		// Eigen::SparseLU<Eigen::SparseMatrix<double>> chol(mat);
 		// Eigen::SparseCholesky<Eigen::SparseMatrix<double>> chol(mat); // symmetric matrix only!
 		// Eigen::ConjugateGradient<Eigen::SparseMatrix<double>> chol(mat); // symmetric matrix only!
