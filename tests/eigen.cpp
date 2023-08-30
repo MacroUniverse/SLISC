@@ -101,10 +101,12 @@ void test_eigen()
 			H.coeffRef(k, k) += 1.;
 		for (Long i = 0; i < N; ++i)
 			bc[i] = randComp();
-		Eigen::ConjugateGradient<Eigen::SparseMatrix<Comp>, Eigen::Lower|Eigen::Upper> solver(H);
+		Eigen::ConjugateGradient<Eigen::SparseMatrix<Comp>, Eigen::Lower|Eigen::Upper> solver(H); // or default initialize, then solver.compute(H);
 		// solver.setTolerance(1e-10);  // set desired tolerance |Ax-bc|/|bc|， default is NumTraits<Scalar>::epsilon()
 		// solver.setMaxIterations(1000);  // set max iterations
 		xc = solver.solve(bc);
+		// for initial guess: `xc = solver.solveWithGuess(bc, x_guess);`
+		// for multiple b: `Eigen::MatrixXd X = solver.solve(B);` but will not be any faster
 
 		SLS_ASSERT(solver.info() == Eigen::Success);
 		Doub rel_err = (H*xc - bc).norm() / bc.norm();

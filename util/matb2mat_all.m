@@ -4,7 +4,7 @@ if (nargin == 0)
     delete_matb = false;
 end
 names = dir('**/*.matb');
-for ii = 1:numel(names)
+parfor ii = 1:numel(names)
     fname = [names(ii).folder '\' names(ii).name];
     disp(fname);
     matb2mat(fname, delete_matb);

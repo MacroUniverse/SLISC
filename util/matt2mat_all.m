@@ -4,7 +4,7 @@ if (nargin == 0)
     delete_matt = false;
 end
 names = dir('**/*.matt');
-for ii = 1:numel(names)
+parfor ii = 1:numel(names)
     fname = [names(ii).folder '\' names(ii).name];
     disp(fname);
     matt2mat(fname, delete_matt);

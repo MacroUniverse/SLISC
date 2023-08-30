@@ -1,5 +1,5 @@
 
-flags = -std=c++11 -Wall -Wno-reorder -Wno-misleading-indentation -static -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals -D SLS_USE_QUAD_MATH -fext-numeric-literals -D NDEBUG
+flags = -std=c++11 -Wall -Wno-reorder -Wno-misleading-indentation -static -std=c++11 -fopenmp -O3 -fmax-errors=1 -fext-numeric-literals -fext-numeric-literals -D NDEBUG
 
 bins = matt2matb matb2matt matb_q2d matbrename mattinfo matbinfo cat_files
 

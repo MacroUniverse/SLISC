@@ -3,8 +3,8 @@
 // move wrong-sized files to folder "bad_size_files"
 // move incomplete list of files to folder "not_complete"
 
-#include "../SLISC/time.h"
-#include "../SLISC/file.h"
+#include "../SLISC-64/util/time.h"
+#include "../SLISC-64/file/file.h"
 
 using namespace slisc;
 
@@ -16,7 +16,7 @@ int main()
 	Str prefix = "plot-k32", suffix = ".plot";
 	// ================
 
-	Str fname, fname_i;
+	Str fname, fname_i, tmp_str;
 	vecStr names;
 	bool restart;
 	while (true) {
@@ -42,7 +42,7 @@ int main()
 			if (!file_exist(fname_i)) {
 				cout << "not_complete: " << fname_i << endl;
 				ensure_dir("not_complete");
-				exec_str("mv " + fname + "-* -t not_complete/");
+				exec_str(tmp_str, "mv " + fname + "-* -t not_complete/");
 				restart = true;
 				break;
 			}
@@ -58,7 +58,7 @@ int main()
 				|| (i == Nfile-1 && sz < fsize1)) {
 				cout << "wrong file size: " << fname_i << endl;
 				ensure_dir("bad_size_files");
-				exec_str("mv " + fname + "-* -t bad_size_files/");
+				exec_str(tmp_str, "mv " + fname + "-* -t bad_size_files/");
 				restart = true;
 				break;
 			}
@@ -67,8 +67,8 @@ int main()
 			continue;
 		
 		cout << "catting: " + fname << endl;
-		exec_str("cat " + fname + "-* > " + fname);
+		exec_str(tmp_str, "cat " + fname + "-* > " + fname);
 		ensure_dir("recycle");
-		exec_str("mv " + fname + "-* -t recycle");
+		exec_str(tmp_str, "mv " + fname + "-* -t recycle");
 	}
 }
