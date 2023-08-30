@@ -78,6 +78,7 @@ if(opt_main)
 	set(CONFIG_H "${CONFIG_H}#define SLS_TEST_ALL\n")
 else()
 	message(STATUS "main.x: off")
+	message(FATAL_ERROR "not implemented!")
 endif()
 
 # === Address Sanitizer ===

@@ -2,6 +2,7 @@
 
 #ifdef SLS_USE_EIGEN
 #include "../SLISC/lin/eigen.h"
+#include "../SLISC/util/random.h"
 
 using namespace slisc;
 using Eigen::MatrixXd; using Eigen::MatrixXcd;
@@ -79,6 +80,35 @@ void test_eigen()
 		// cout << "mat = " << mat << endl;
 		// cout << "b = " << b << endl;
 		// cout << "x = " << x << endl;
+
+		// solve Hermitian matrix (close to unit matrix) with CG method
+		// if it's close to unit matrix, then it will almost certainly be positively defined
+		//    because the eigen values will all be close to 1.
+		Long N = 100;
+		Eigen::SparseMatrix<Comp> H(N, N);
+		Eigen::VectorXcd bc(N), xc(N);
+		for (Long k = 0; k < N/3; ++k) {
+			Long i = randLong(N); Long j;
+			do { j = randLong(N); } while (j == i);
+			Comp val = randComp();
+			H.coeffRef(i, j) = val;
+			H.coeffRef(j, i) = conj(val);
+		}
+		for (Long k = 0; k < N; ++k)
+			H.coeffRef(k, k) = randDoub();
+		H *= 0.01;
+		for (Long k = 0; k < N; ++k)
+			H.coeffRef(k, k) += 1.;
+		for (Long i = 0; i < N; ++i)
+			bc[i] = randComp();
+		Eigen::ConjugateGradient<Eigen::SparseMatrix<Comp>, Eigen::Lower|Eigen::Upper> solver(H);
+		// solver.setTolerance(1e-10);  // set desired tolerance |Ax-bc|/|bc|， default is NumTraits<Scalar>::epsilon()
+		// solver.setMaxIterations(1000);  // set max iterations
+		xc = solver.solve(bc);
+
+		SLS_ASSERT(solver.info() == Eigen::Success);
+		Doub rel_err = (H*xc - bc).norm() / bc.norm();
+		SLS_ASSERT(rel_err < 2*Eps);
 	}
 
 	// self-adjoint eigen solver
