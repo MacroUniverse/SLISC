@@ -1,7 +1,7 @@
 % save matlab variables to matt format
 % mat2matt('my_file.matt', 'name1', var1, 'name2', var2, ...)
 
-function mat2matt(matt_file, varargin)
+function mattsave(matt_file, varargin)
 sep = ' ';
 data = "";
 prec = 17;
