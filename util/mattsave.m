@@ -71,7 +71,7 @@ for i = 1 : Nvars
     data = data + sep + start_ind(i);
 end
 % write # of vars
-data = data + sep + Nvars;
+data = data + sep + Nvars + sep + sep;
     
 % write to file
 fileID = fopen(matt_file, 'w');
