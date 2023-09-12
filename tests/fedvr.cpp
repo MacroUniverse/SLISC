@@ -59,9 +59,11 @@ void test_gauss()
 // y(x) = x^2 - 1, y"(x) = 2
 void test_D2_mat()
 {
-	Int Nfe = 2, Ngs = 10;
+	Int Nfe = 3, Ngs = 6;
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	VecDoub bounds(Nfe + 1); linspace(bounds, -1., 1.);
+	VecDoub bounds(Nfe + 1);
+	// linspace(bounds, -1., 1.);
+	bounds[0] = -1; bounds[1] = -0.25; bounds[2] = 0.25; bounds[3] = 1;
 
 	// second derivative matrix
 	McooDoub D2s(Nx, Nx);
@@ -69,21 +71,28 @@ void test_D2_mat()
 	D2_matrix(D2s, x, w, u, bounds, Ngs);
 	VecDoub y(Nx);
 	VecDoub d2y(D2s.n0()); // second derivative
-
 	for (Long i = 0; i < Nx; ++i)
 		y[i] = test_fedvr_fun(x[i], 2);
+	file_remove("D2_mat_test.matb");
+	Matb matb("D2_mat_test.matb", "w");
+	save(x, "x", matb); save(y, "y", matb);
+	save(Nfe, "Nfe", matb); save(Ngs, "Ngs", matb);
 	y /= u;
 	mul(d2y, D2s, y);
 	d2y *= u;
+	save(d2y, "d2y", matb);
+	matb.close();
 	d2y -= 2;
 	SLS_ASSERT(max_abs(d2y) < 5e-13);
 }
 
 void test_D_mat()
 {
-	Int Nfe = 2, Ngs = 6;
+	Int Nfe = 3, Ngs = 6;
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	VecDoub bounds(Nfe + 1); linspace(bounds, -1., 1.);
+	VecDoub bounds(Nfe + 1);
+	// linspace(bounds, -1., 1.);
+	bounds[0] = -1; bounds[1] = -0.25; bounds[2] = 0.25; bounds[3] = 1;
 
 	// second derivative matrix
 	McooDoub Ds(Nx, Nx);

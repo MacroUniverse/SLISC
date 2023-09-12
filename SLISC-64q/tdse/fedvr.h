@@ -5,12 +5,16 @@
 #include "../spec/legendreP.h"
 
 namespace slisc {
+// ref: https://wuli.wiki/online/FEDVR.html
+// ### the FEDVR global grid does not include the first and last Gaussian points ###
+// i.e. the number of total Gaussian points is Nfe*(Ngs-1)-1
+// Ngs include both ends of an FE
 
-// calculate FEDVR global index from FE index and DVR index  
+// calculate FEDVR global index `iFEDVR` from FE index `iFE` and DVR index `iDVR`
 inline Long indFEDVR(Long_I iFE, Long_I iDVR, Long_I Ngs)
 { return (Ngs-1) * iFE + iDVR - 1; }
 
-// calculate FE index and DVR index from global FEDVR index
+// calculate FE index and DVR index from global FEDVR index `iFEDVR`
 inline Long indFE(Long_I iFEDVR, Long_I Ngs)
 { return (iFEDVR + 1) / (Ngs - 1); }
 
@@ -24,6 +28,7 @@ inline Long indDVR(Long_I iFEDVR, Long_I Ngs)
 Doub fe_min(VecDoub_I x, Long_I Ngs);
 Doub fe_max(VecDoub_I x, Long_I Ngs);
 
+// given global FEDVR grid and function value, interpolate using basis polynomials
 inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
 {
 	Long Nx = x.size();
@@ -224,6 +229,28 @@ inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 		w[16] = 0.0399706288109140661375991764101008792943;
 		w[17] = 0.006535947712418300653594771241830065359477;
 	}
+	else if (N == 20) {
+		x[10] = 0.08054593723882183797594451815955446302239;
+		x[11] = 0.2395517059229864951824013569270880719415;
+		x[12] = 0.3923531837139092993864747038158243666652;
+		x[13] = 0.5349928640318862616481359618289839830069;
+		x[14] = 0.6637764022903112898464033229711588524757;
+		x[15] = 0.7753682609520558704143175275946913433727;
+		x[16] = 0.8668779780899501413098472146162852139629;
+		x[17] = 0.9359344988126654357161815849306269299156;
+		x[18] = 0.9807437048939141719254464385842309152299;
+
+		w[10] = 0.1607432863878457490077267264490839339021;
+		w[11] = 0.1565801026474754871581698967936433723031;
+		w[12] = 0.1483615540709168258147130137339666049312;
+		w[13] = 0.1363004823587241844897807929890319817441;
+		w[14] = 0.1207092276286747250994297050023933598723;
+		w[15] = 0.1019914996994508156837812057328865208675;
+		w[16] = 0.08063176399611960314477684611372057166604;
+		w[17] = 0.05718180212756682600475362717324278250521;
+		w[18] = 0.03223712318848894149160502811729403010325;
+		w[19] = 0.005263157894736842105263157894736842105263;
+	}
 	else {
 		SLS_ERR("no data!");
 	}
@@ -231,26 +258,6 @@ inline void GaussLobatto(VecDoub_O x, VecDoub_O w)
 		x[i] = -x[N - i - 1];
 	for (Long i = 0; i < N2; ++i)
 		w[i] = w[N - i - 1];
-}
-
-inline void GaussLobatto_check(VecDoub_I x, VecDoub_I w)
-{
-	Long N = x.size();
-	Doub x_err_max = 0, w_err_max = 0;
-	for (Long i = 0; i < N; ++i) {
-		if (i > 0 && i < N-1) {
-			Doub err = legendreP_der(N-1, x[i]);
-			if (abs(err) > x_err_max) x_err_max = err;
-			if (abs(err) > 1e-12)
-				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
-		}
-		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
-		if (abs(err) > w_err_max) w_err_max = err;
-		if (abs(err) > 1e-12)
-			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
-	}
-	// cout << "x_err_max = " << x_err_max << endl;
-	// cout << "w_err_max = " << w_err_max << endl;
 }
 
 inline Doub fe_min(VecDoub_I x, Long_I Ngs)
@@ -271,7 +278,24 @@ inline Doub fe_max(VecDoub_I x, Long_I Ngs)
 	return x.end() + (x[x.size()-Ngs+2] - x[x.size()-Ngs+1]);
 }
 
-// single FEDVR basis function, with maximum 1
+// single DVR basis polynomial, range [-1,1] with maximum 1
+// return 0 if out of range
+inline Doub dvr_basis(VecDoub x, Long_I ind, Doub_I x_q)
+{
+	Long Ngs = size(x);
+	Doub x_ind = x[ind], poly = 1;
+	if (x_q < -1 || x_q > 1)
+		return 0;
+	for (Long i = 0; i < ind; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	for (Long i = ind + 1; i < Ngs; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	return poly;
+}
+
+// single FEDVR basis polynomial, with maximum 1
+// return 0 if out of range
+// x is the FEDVR global grid (without first and last gaussian point)
 inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
 {
 	Long iDVR = indDVR(ind, Ngs);
@@ -284,7 +308,7 @@ inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
 			return 1;
 		start -= Ngs - 1;
 	}
-		
+
 	Long end = start + Ngs - 1; // right boundary of FE to eval polynomial
 
 	// left FE boundary
@@ -321,39 +345,93 @@ inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
 	return poly;
 }
 
-// get derivatives of legendre interpolation polynomials t abscissas
+void GaussLobatto_check(VecDoub_I x, VecDoub_I w)
+{
+	Long N = x.size();
+	// Doub x_err_max = 0, w_err_max = 0;
+	for (Long i = 0; i < N; ++i) {
+		if (i > 0 && i < N-1) {
+			Doub err = legendreP_der(N-1, x[i]);
+			// if (abs(err) > x_err_max) x_err_max = err;
+			if (abs(err) > 1e-12)
+				SLS_ERR("i = " + to_string(i) + ", err1 = " + num2str(err));
+		}
+		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
+		// if (abs(err) > w_err_max) w_err_max = err;
+		if (abs(err) > 1e-12)
+			SLS_ERR("i = " + to_string(i) + ", err2 = " + num2str(err));
+	}
+	// cout << "x_err_max = " << x_err_max << endl;
+	// cout << "w_err_max = " << w_err_max << endl;
+}
+
+// the bases are not orthogonal
+// return [-1,1] integral of dvr_basis(i)/sqrt(w(i)) * dvr_basis(j)/sqrt(w(j)) matrix
+// x_plot, y_plot(:,i) is the curve for the i-th normalized basis [-1,1]
+inline void GaussLobatto_check_orthogonal(CmatDoub_O y_plot, VecDoub_O x, VecDoub_O w, CmatDoub_O mat, VecDoub_I x_plot)
+{
+	Long Ngs = mat.n0();
+	SLS_ASSERT(mat.n1() == Ngs);
+	SLS_ASSERT(x.size() == Ngs);
+	SLS_ASSERT(w.size() == Ngs);
+	SLS_ASSERT(y_plot.n0() == x_plot.size());
+	SLS_ASSERT(y_plot.n1() == Ngs);
+	VecDoub xx(Ngs+2), ww(Ngs+2);
+	GaussLobatto(x, w);
+	GaussLobatto(xx, ww);
+	for (Long ind1 = 0; ind1 < Ngs; ++ind1) {
+		// plot data
+		for (Long i = 0; i < x_plot.size(); ++i)
+			y_plot(i, ind1) = dvr_basis(x, ind1, x_plot[i]) / sqrt(w[ind1]);
+		// check orthogonal
+		for (Long ind2 = 0; ind2 <= ind1; ++ind2) {
+			Doub sum = 0;
+			for (Long ii = 0; ii < size(xx); ++ii)
+				sum += ww[ii] * dvr_basis(x, ind1, xx[ii]) * dvr_basis(x, ind2, xx[ii]);
+			sum *= 1/sqrt(w[ind1]*w[ind2]);
+			mat(ind1, ind2) = sum;
+			if (ind1 != ind2)
+				mat(ind2, ind1) = sum;
+		}
+	}
+}
+
+// get derivatives of lagrange interpolation polynomials at abscissas
+// x in [-1,1] are the Ngs Gaussian points
+// ref: eq_FEDVR_9
 // df is an NxN matrix
-// f'_i(x_j) = df(j,i)
-inline void legendre_interp_der(CmatDoub_O df, VecDoub_I x)
+// f'_i(x_j) = df(j,i) / sqrt{w_0i}
+inline void dvr_basis_der(CmatDoub_O df, VecDoub_I x, VecDoub_I w)
 {
 	Long i, j, k, N{ x.size() };
-	Doub t;
+	Doub sum;
 #ifdef SLS_CHECK_SHAPES
 	if (df.n0() != N || df.n1() != N)
 		SLS_ERR("wrong shape!");
 #endif
-	for (i = 0; i < N; ++i)
+	for (i = 0; i < N; ++i) {
 		for (j = 0; j < N; ++j) {
 			if (j != i) {
-				t = 1.;
+				sum = 1.;
 				for (k = 0; k < i; ++k) {
-					if (k == j) t /= x[i] - x[k];
-					else t *= (x[j] - x[k]) / (x[i] - x[k]);
+					if (k == j) sum /= x[i] - x[k];
+					else sum *= (x[j] - x[k]) / (x[i] - x[k]);
 				}
 				for (k = i + 1; k < N; ++k) {
-					if (k == j) t /= x[i] - x[k];
-					else t *= (x[j] - x[k]) / (x[i] - x[k]);
+					if (k == j) sum /= x[i] - x[k];
+					else sum *= (x[j] - x[k]) / (x[i] - x[k]);
 				}
 			}
 			else {
-				t = 0.;
+				sum = 0.;
 				for (k = 0; k < i; ++k)
-					t += 1. / (x[i] - x[k]);
+					sum += 1. / (x[i] - x[k]);
 				for (k = i + 1; k < N; ++k)
-					t += 1. / (x[i] - x[k]);
+					sum += 1. / (x[i] - x[k]);
 			}
-			df(j,i) = t;
+			df(j,i) = sum / sqrt(w[i]);
 		}
+	}
 }
 
 // generate FEDVR grid and weight
@@ -408,7 +486,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D2.n0() != Nx || D2.n0() != Nx)
+	if (D2.n0() != Nx || D2.n0() != Nx || D2.nnz() != 0)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -425,7 +503,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 		}
 	}
 
-	// calculate Kinetic matrix T
+	// calculate D2 matrix
 	D2.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
 	for (i = 0; i < Nfe; ++i) {
 		// blocks without boundary
@@ -443,7 +521,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	}
 
 	for (i = 0; i < Nfe - 1; ++i) {
-		// block right boundary
+		// block right & bottom boundary
 		n = Ngs - 1;
 		coeff = -1. / (pow(wFE[i], 1.5) * sqrt(wFE[i] + wFE[i + 1]));
 		for (m = 1; m < n; ++m) {
@@ -459,7 +537,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 		s = coeff*(block(m,n)/wFE[i] + block(0,0)/wFE[i+1]);
 		D2.push(s, mm, mm);
 
-		// block upper boundary
+		// block left & upper boundary
 		coeff = -1. / (pow(wFE[i+1], 1.5) * sqrt(wFE[i] + wFE[i+1]));
 		for (n = 1; n < Ngs - 1; ++n) {
 			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
@@ -475,7 +553,6 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 		s = coeff * block(0, Ngs - 1);
 		D2.push(s, mm, nn); D2.push(s, nn, mm);
 	}
-
 	sort_r(D2);
 }
 
@@ -496,12 +573,8 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 	// grid points, weights, base function values in [-1, 1]
 	VecDoub x0(Ngs), w0(Ngs), f0(Ngs);
 	GaussLobatto(x0, w0);
-	pow(f0, w0, -0.5);
 	CmatDoub df(Ngs, Ngs); // df(i, j) = f_j(x_i)
-	legendre_interp_der(df, x0);
-	for (Long i = 0; i < Ngs; ++i)
-		for (Long j = 0; j < Ngs; ++j)
-			df(j, i) *= f0[i];
+	dvr_basis_der(df, x0, w0);
 
 	// midpoints, widths and bounds of finite elements
 	VecDoub xFE(Nfe), wFE(Nfe);
@@ -514,8 +587,102 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 	FEDVR_grid(x, w, wFE, xFE, x0, w0);
 	pow(u, w, -0.5);
 
-	// Sparse Hamiltonian
+	// Sparse matrix
 	D2_matrix(D2, w0, wFE, df);
+}
+
+// sparse first derivative matrix for normalized FEDVR basis
+inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
+{
+	Long i, m, n, mm, nn;
+	Long Nfe = wFE.size();
+	Long Ngs = w0.size();
+#ifdef SLS_CHECK_SHAPES
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	if (D.n0() != Nx || D.n0() != Nx || D.nnz() != 0)
+		SLS_ERR("wrong shape!");
+#endif
+
+	Doub s, coeff;
+
+	// calculate D matrix
+	D.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
+
+	// blocks without boundary
+	for (i = 0; i < Nfe; ++i) {
+		for (n = 1; n < Ngs - 1; ++n) {
+			coeff = 1. / wFE[i];
+			for (m = 1; m <= n; ++m) {
+				s = coeff * sqrt(w0[m]) * df(m,n);
+				mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
+				D.push(s, mm, nn);
+				if (mm != nn)
+					D.push(-s, nn, mm);
+			}
+		}
+	}
+
+	for (i = 0; i < Nfe - 1; ++i) {
+		// block right & bottom boundary
+		n = Ngs - 1;
+		coeff = 1. / sqrt(wFE[i]*(wFE[i] + wFE[i + 1]));
+		for (m = 1; m < n; ++m) {
+			s = coeff * sqrt(w0[m]) *  df(m, n);
+			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
+			D.push(s, mm, nn); D.push(-s, nn, mm);
+		}
+
+		// block lower right corner are all 0
+
+		// block left & upper boundary
+		m = Ngs - 1;
+		coeff = sqrt(w0[0] / (wFE[i+1]*(wFE[i] + wFE[i+1])));
+		for (n = 1; n < Ngs - 1; ++n) {
+			s = coeff * df(0, n);
+			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
+			D.push(s, mm, nn); D.push(-s, nn, mm);
+		}
+	}
+
+	for (i = 0; i < Nfe - 2; ++i) {
+		// block upper right corner
+		coeff = sqrt(w0[0] / ((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
+		s = coeff * df(0, Ngs - 1);
+		mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
+		D.push(s, mm, nn); D.push(-s, nn, mm);
+	}
+	sort_r(D);
+}
+
+inline void D_matrix(McooDoub_O D, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
+{
+	Long Nfe = bounds.size() - 1; // number of finite elements
+#ifdef SLS_CHECK_SHAPES
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
+		D.n0() != Nx || D.n0() != Nx)
+		SLS_ERR("wrong shape!");
+#endif
+
+	// grid points, weights, base function values in [-1, 1]
+	VecDoub x0(Ngs), w0(Ngs), f0(Ngs);
+	GaussLobatto(x0, w0);
+	CmatDoub df(Ngs, Ngs); // df(i, j) = f'_j(x_i)
+	dvr_basis_der(df, x0, w0);
+
+	// midpoints, widths and bounds of finite elements
+	VecDoub xFE(Nfe), wFE(Nfe);
+
+	for (Long i = 0; i < Nfe; ++i) {
+		wFE[i] = 0.5*(bounds[i+1] - bounds[i]);
+		xFE[i] = 0.5*(bounds[i] + bounds[i+1]);
+	}
+
+	FEDVR_grid(x, w, wFE, xFE, x0, w0);
+	pow(u, w, -0.5);
+
+	// Sparse matrix
+	D_matrix(D, w0, wFE, df);
 }
 
 
@@ -639,6 +806,28 @@ inline void GaussLobatto(VecQdoub_O x, VecQdoub_O w)
 		w[16] = 0.0399706288109140661375991764101008792943Q;
 		w[17] = 0.006535947712418300653594771241830065359477Q;
 	}
+	else if (N == 20) {
+		x[10] = 0.08054593723882183797594451815955446302239Q;
+		x[11] = 0.2395517059229864951824013569270880719415Q;
+		x[12] = 0.3923531837139092993864747038158243666652Q;
+		x[13] = 0.5349928640318862616481359618289839830069Q;
+		x[14] = 0.6637764022903112898464033229711588524757Q;
+		x[15] = 0.7753682609520558704143175275946913433727Q;
+		x[16] = 0.8668779780899501413098472146162852139629Q;
+		x[17] = 0.9359344988126654357161815849306269299156Q;
+		x[18] = 0.9807437048939141719254464385842309152299Q;
+
+		w[10] = 0.1607432863878457490077267264490839339021Q;
+		w[11] = 0.1565801026474754871581698967936433723031Q;
+		w[12] = 0.1483615540709168258147130137339666049312Q;
+		w[13] = 0.1363004823587241844897807929890319817441Q;
+		w[14] = 0.1207092276286747250994297050023933598723Q;
+		w[15] = 0.1019914996994508156837812057328865208675Q;
+		w[16] = 0.08063176399611960314477684611372057166604Q;
+		w[17] = 0.05718180212756682600475362717324278250521Q;
+		w[18] = 0.03223712318848894149160502811729403010325Q;
+		w[19] = 0.005263157894736842105263157894736842105263Q;
+	}
 	else {
 		SLS_ERR("no data!");
 	}
@@ -646,26 +835,6 @@ inline void GaussLobatto(VecQdoub_O x, VecQdoub_O w)
 		x[i] = -x[N - i - 1];
 	for (Long i = 0; i < N2; ++i)
 		w[i] = w[N - i - 1];
-}
-
-inline void GaussLobatto_check(VecQdoub_I x, VecQdoub_I w)
-{
-	Long N = x.size();
-	Doub x_err_max = 0, w_err_max = 0;
-	for (Long i = 0; i < N; ++i) {
-		if (i > 0 && i < N-1) {
-			Doub err = legendreP_der(N-1, x[i]);
-			if (abs(err) > x_err_max) x_err_max = err;
-			if (abs(err) > 1e-31)
-				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
-		}
-		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
-		if (abs(err) > w_err_max) w_err_max = err;
-		if (abs(err) > 1e-31)
-			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
-	}
-	// cout << "x_err_max = " << x_err_max << endl;
-	// cout << "w_err_max = " << w_err_max << endl;
 }
 
 inline Qdoub fe_min(VecQdoub_I x, Long_I Ngs)
@@ -686,7 +855,24 @@ inline Qdoub fe_max(VecQdoub_I x, Long_I Ngs)
 	return x.end() + (x[x.size()-Ngs+2] - x[x.size()-Ngs+1]);
 }
 
-// single FEDVR basis function, with maximum 1
+// single DVR basis polynomial, range [-1,1] with maximum 1
+// return 0 if out of range
+inline Qdoub dvr_basis(VecQdoub x, Long_I ind, Qdoub_I x_q)
+{
+	Long Ngs = size(x);
+	Qdoub x_ind = x[ind], poly = 1;
+	if (x_q < -1 || x_q > 1)
+		return 0;
+	for (Long i = 0; i < ind; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	for (Long i = ind + 1; i < Ngs; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	return poly;
+}
+
+// single FEDVR basis polynomial, with maximum 1
+// return 0 if out of range
+// x is the FEDVR global grid (without first and last gaussian point)
 inline Qdoub fedvr_basis(VecQdoub_I x, Long_I Ngs, Long_I ind, Qdoub_I x_q)
 {
 	Long iDVR = indDVR(ind, Ngs);
@@ -699,7 +885,7 @@ inline Qdoub fedvr_basis(VecQdoub_I x, Long_I Ngs, Long_I ind, Qdoub_I x_q)
 			return 1;
 		start -= Ngs - 1;
 	}
-		
+
 	Long end = start + Ngs - 1; // right boundary of FE to eval polynomial
 
 	// left FE boundary
@@ -736,39 +922,93 @@ inline Qdoub fedvr_basis(VecQdoub_I x, Long_I Ngs, Long_I ind, Qdoub_I x_q)
 	return poly;
 }
 
-// get derivatives of legendre interpolation polynomials t abscissas
+void GaussLobatto_check(VecQdoub_I x, VecQdoub_I w)
+{
+	Long N = x.size();
+	// Qdoub x_err_max = 0, w_err_max = 0;
+	for (Long i = 0; i < N; ++i) {
+		if (i > 0 && i < N-1) {
+			Qdoub err = legendreP_der(N-1, x[i]);
+			// if (abs(err) > x_err_max) x_err_max = err;
+			if (abs(err) > 1.5e-31)
+				SLS_ERR("i = " + to_string(i) + ", err1 = " + num2str(err));
+		}
+		Qdoub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
+		// if (abs(err) > w_err_max) w_err_max = err;
+		if (abs(err) > 1.5e-31)
+			SLS_ERR("i = " + to_string(i) + ", err2 = " + num2str(err));
+	}
+	// cout << "x_err_max = " << x_err_max << endl;
+	// cout << "w_err_max = " << w_err_max << endl;
+}
+
+// the bases are not orthogonal
+// return [-1,1] integral of dvr_basis(i)/sqrt(w(i)) * dvr_basis(j)/sqrt(w(j)) matrix
+// x_plot, y_plot(:,i) is the curve for the i-th normalized basis [-1,1]
+inline void GaussLobatto_check_orthogonal(CmatQdoub_O y_plot, VecQdoub_O x, VecQdoub_O w, CmatQdoub_O mat, VecQdoub_I x_plot)
+{
+	Long Ngs = mat.n0();
+	SLS_ASSERT(mat.n1() == Ngs);
+	SLS_ASSERT(x.size() == Ngs);
+	SLS_ASSERT(w.size() == Ngs);
+	SLS_ASSERT(y_plot.n0() == x_plot.size());
+	SLS_ASSERT(y_plot.n1() == Ngs);
+	VecQdoub xx(Ngs+2), ww(Ngs+2);
+	GaussLobatto(x, w);
+	GaussLobatto(xx, ww);
+	for (Long ind1 = 0; ind1 < Ngs; ++ind1) {
+		// plot data
+		for (Long i = 0; i < x_plot.size(); ++i)
+			y_plot(i, ind1) = dvr_basis(x, ind1, x_plot[i]) / sqrt(w[ind1]);
+		// check orthogonal
+		for (Long ind2 = 0; ind2 <= ind1; ++ind2) {
+			Qdoub sum = 0;
+			for (Long ii = 0; ii < size(xx); ++ii)
+				sum += ww[ii] * dvr_basis(x, ind1, xx[ii]) * dvr_basis(x, ind2, xx[ii]);
+			sum *= 1/sqrt(w[ind1]*w[ind2]);
+			mat(ind1, ind2) = sum;
+			if (ind1 != ind2)
+				mat(ind2, ind1) = sum;
+		}
+	}
+}
+
+// get derivatives of lagrange interpolation polynomials at abscissas
+// x in [-1,1] are the Ngs Gaussian points
+// ref: eq_FEDVR_9
 // df is an NxN matrix
-// f'_i(x_j) = df(j,i)
-inline void legendre_interp_der(CmatQdoub_O df, VecQdoub_I x)
+// f'_i(x_j) = df(j,i) / sqrt{w_0i}
+inline void dvr_basis_der(CmatQdoub_O df, VecQdoub_I x, VecQdoub_I w)
 {
 	Long i, j, k, N{ x.size() };
-	Qdoub t;
+	Qdoub sum;
 #ifdef SLS_CHECK_SHAPES
 	if (df.n0() != N || df.n1() != N)
 		SLS_ERR("wrong shape!");
 #endif
-	for (i = 0; i < N; ++i)
+	for (i = 0; i < N; ++i) {
 		for (j = 0; j < N; ++j) {
 			if (j != i) {
-				t = 1.Q;
+				sum = 1.Q;
 				for (k = 0; k < i; ++k) {
-					if (k == j) t /= x[i] - x[k];
-					else t *= (x[j] - x[k]) / (x[i] - x[k]);
+					if (k == j) sum /= x[i] - x[k];
+					else sum *= (x[j] - x[k]) / (x[i] - x[k]);
 				}
 				for (k = i + 1; k < N; ++k) {
-					if (k == j) t /= x[i] - x[k];
-					else t *= (x[j] - x[k]) / (x[i] - x[k]);
+					if (k == j) sum /= x[i] - x[k];
+					else sum *= (x[j] - x[k]) / (x[i] - x[k]);
 				}
 			}
 			else {
-				t = 0.;
+				sum = 0.;
 				for (k = 0; k < i; ++k)
-					t += 1.Q / (x[i] - x[k]);
+					sum += 1.Q / (x[i] - x[k]);
 				for (k = i + 1; k < N; ++k)
-					t += 1.Q / (x[i] - x[k]);
+					sum += 1.Q / (x[i] - x[k]);
 			}
-			df(j,i) = t;
+			df(j,i) = sum / sqrt(w[i]);
 		}
+	}
 }
 
 // generate FEDVR grid and weight
@@ -823,7 +1063,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D2.n0() != Nx || D2.n0() != Nx)
+	if (D2.n0() != Nx || D2.n0() != Nx || D2.nnz() != 0)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -840,7 +1080,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 		}
 	}
 
-	// calculate Kinetic matrix T
+	// calculate D2 matrix
 	D2.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
 	for (i = 0; i < Nfe; ++i) {
 		// blocks without boundary
@@ -858,7 +1098,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 	}
 
 	for (i = 0; i < Nfe - 1; ++i) {
-		// block right boundary
+		// block right & bottom boundary
 		n = Ngs - 1;
 		coeff = -1.Q / (pow(wFE[i], 1.5Q) * sqrt(wFE[i] + wFE[i + 1]));
 		for (m = 1; m < n; ++m) {
@@ -874,7 +1114,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 		s = coeff*(block(m,n)/wFE[i] + block(0,0)/wFE[i+1]);
 		D2.push(s, mm, mm);
 
-		// block upper boundary
+		// block left & upper boundary
 		coeff = -1.Q / (pow(wFE[i+1], 1.5Q) * sqrt(wFE[i] + wFE[i+1]));
 		for (n = 1; n < Ngs - 1; ++n) {
 			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
@@ -890,7 +1130,6 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 		s = coeff * block(0, Ngs - 1);
 		D2.push(s, mm, nn); D2.push(s, nn, mm);
 	}
-
 	sort_r(D2);
 }
 
@@ -911,12 +1150,8 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_O x, VecQdoub_O w, VecQdoub_O u, 
 	// grid points, weights, base function values in [-1, 1]
 	VecQdoub x0(Ngs), w0(Ngs), f0(Ngs);
 	GaussLobatto(x0, w0);
-	pow(f0, w0, -0.5Q);
 	CmatQdoub df(Ngs, Ngs); // df(i, j) = f_j(x_i)
-	legendre_interp_der(df, x0);
-	for (Long i = 0; i < Ngs; ++i)
-		for (Long j = 0; j < Ngs; ++j)
-			df(j, i) *= f0[i];
+	dvr_basis_der(df, x0, w0);
 
 	// midpoints, widths and bounds of finite elements
 	VecQdoub xFE(Nfe), wFE(Nfe);
@@ -929,8 +1164,102 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_O x, VecQdoub_O w, VecQdoub_O u, 
 	FEDVR_grid(x, w, wFE, xFE, x0, w0);
 	pow(u, w, -0.5Q);
 
-	// Sparse Hamiltonian
+	// Sparse matrix
 	D2_matrix(D2, w0, wFE, df);
+}
+
+// sparse first derivative matrix for normalized FEDVR basis
+inline void D_matrix(McooQdoub_O D, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I df)
+{
+	Long i, m, n, mm, nn;
+	Long Nfe = wFE.size();
+	Long Ngs = w0.size();
+#ifdef SLS_CHECK_SHAPES
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	if (D.n0() != Nx || D.n0() != Nx || D.nnz() != 0)
+		SLS_ERR("wrong shape!");
+#endif
+
+	Qdoub s, coeff;
+
+	// calculate D matrix
+	D.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
+
+	// blocks without boundary
+	for (i = 0; i < Nfe; ++i) {
+		for (n = 1; n < Ngs - 1; ++n) {
+			coeff = 1.Q / wFE[i];
+			for (m = 1; m <= n; ++m) {
+				s = coeff * sqrt(w0[m]) * df(m,n);
+				mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
+				D.push(s, mm, nn);
+				if (mm != nn)
+					D.push(-s, nn, mm);
+			}
+		}
+	}
+
+	for (i = 0; i < Nfe - 1; ++i) {
+		// block right & bottom boundary
+		n = Ngs - 1;
+		coeff = 1.Q / sqrt(wFE[i]*(wFE[i] + wFE[i + 1]));
+		for (m = 1; m < n; ++m) {
+			s = coeff * sqrt(w0[m]) *  df(m, n);
+			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
+			D.push(s, mm, nn); D.push(-s, nn, mm);
+		}
+
+		// block lower right corner are all 0
+
+		// block left & upper boundary
+		m = Ngs - 1;
+		coeff = sqrt(w0[0] / (wFE[i+1]*(wFE[i] + wFE[i+1])));
+		for (n = 1; n < Ngs - 1; ++n) {
+			s = coeff * df(0, n);
+			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
+			D.push(s, mm, nn); D.push(-s, nn, mm);
+		}
+	}
+
+	for (i = 0; i < Nfe - 2; ++i) {
+		// block upper right corner
+		coeff = sqrt(w0[0] / ((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
+		s = coeff * df(0, Ngs - 1);
+		mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
+		D.push(s, mm, nn); D.push(-s, nn, mm);
+	}
+	sort_r(D);
+}
+
+inline void D_matrix(McooQdoub_O D, VecQdoub_O x, VecQdoub_O w, VecQdoub_O u, VecQdoub_I bounds, Long_I Ngs)
+{
+	Long Nfe = bounds.size() - 1; // number of finite elements
+#ifdef SLS_CHECK_SHAPES
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
+		D.n0() != Nx || D.n0() != Nx)
+		SLS_ERR("wrong shape!");
+#endif
+
+	// grid points, weights, base function values in [-1, 1]
+	VecQdoub x0(Ngs), w0(Ngs), f0(Ngs);
+	GaussLobatto(x0, w0);
+	CmatQdoub df(Ngs, Ngs); // df(i, j) = f'_j(x_i)
+	dvr_basis_der(df, x0, w0);
+
+	// midpoints, widths and bounds of finite elements
+	VecQdoub xFE(Nfe), wFE(Nfe);
+
+	for (Long i = 0; i < Nfe; ++i) {
+		wFE[i] = 0.5Q*(bounds[i+1] - bounds[i]);
+		xFE[i] = 0.5Q*(bounds[i] + bounds[i+1]);
+	}
+
+	FEDVR_grid(x, w, wFE, xFE, x0, w0);
+	pow(u, w, -0.5Q);
+
+	// Sparse matrix
+	D_matrix(D, w0, wFE, df);
 }
 
 
