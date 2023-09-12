@@ -486,7 +486,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D2.n0() != Nx || D2.n0() != Nx)
+	if (D2.n0() != Nx || D2.n0() != Nx || D2.nnz() != 0)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -599,7 +599,7 @@ inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D.n0() != Nx || D.n0() != Nx)
+	if (D.n0() != Nx || D.n0() != Nx || D.nnz() != 0)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -611,13 +611,13 @@ inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	// blocks without boundary
 	for (i = 0; i < Nfe; ++i) {
 		for (n = 1; n < Ngs - 1; ++n) {
-			coeff = 1. / sqr(wFE[i]);
+			coeff = 1. / wFE[i];
 			for (m = 1; m <= n; ++m) {
 				s = coeff * sqrt(w0[m]) * df(m,n);
 				mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
 				D.push(s, mm, nn);
 				if (mm != nn)
-					D.push(s, nn, mm);
+					D.push(-s, nn, mm);
 			}
 		}
 	}
@@ -625,35 +625,35 @@ inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	for (i = 0; i < Nfe - 1; ++i) {
 		// block right & bottom boundary
 		n = Ngs - 1;
-		coeff = 1. / (pow(wFE[i], 1.5) * sqrt(wFE[i] + wFE[i + 1]));
+		coeff = 1. / sqrt(wFE[i]*(wFE[i] + wFE[i + 1]));
 		for (m = 1; m < n; ++m) {
 			s = coeff * sqrt(w0[m]) *  df(m, n);
 			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
-			D.push(s, mm, nn); D.push(s, nn, mm);
+			D.push(s, mm, nn); D.push(-s, nn, mm);
 		}
 
 		// block lower right corner
 		m = Ngs - 1;
 		coeff = sqrt(w0[0]) / (wFE[i] + wFE[i+1]);
-		s = coeff * (df(m,n)/wFE[i] + df(0,0)/wFE[i+1]);
+		s = coeff * (df(m,n) + df(0,0));
 		mm = indFEDVR(i, m, Ngs);
 		D.push(s, mm, mm);
 
 		// block left & upper boundary
-		coeff = sqrt(w0[0]) / (pow(wFE[i+1], 1.5) * sqrt(wFE[i] + wFE[i+1]));
+		coeff = sqrt(w0[0] / (wFE[i+1]*(wFE[i] + wFE[i+1])));
 		for (n = 1; n < Ngs - 1; ++n) {
 			s = coeff * df(0, n);
 			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
-			D.push(s, mm, nn); D.push(s, nn, mm);
+			D.push(s, mm, nn); D.push(-s, nn, mm);
 		}
 	}
 
 	for (i = 0; i < Nfe - 2; ++i) {
 		// block upper right corner
-		coeff = sqrt(w0[0]) / (wFE[i+1] * sqrt((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
+		coeff = sqrt(w0[0] / ((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
 		s = coeff * df(0, Ngs - 1);
 		mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
-		D.push(s, mm, nn); D.push(s, nn, mm);
+		D.push(s, mm, nn); D.push(-s, nn, mm);
 	}
 	sort_r(D);
 }
@@ -671,7 +671,7 @@ inline void D_matrix(McooDoub_O D, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDou
 	// grid points, weights, base function values in [-1, 1]
 	VecDoub x0(Ngs), w0(Ngs), f0(Ngs);
 	GaussLobatto(x0, w0);
-	CmatDoub df(Ngs, Ngs); // df(i, j) = f_j(x_i)
+	CmatDoub df(Ngs, Ngs); // df(i, j) = f'_j(x_i)
 	dvr_basis_der(df, x0, w0);
 
 	// midpoints, widths and bounds of finite elements

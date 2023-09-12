@@ -81,7 +81,7 @@ void test_D2_mat()
 
 void test_D_mat()
 {
-	Int Nfe = 2, Ngs = 10;
+	Int Nfe = 2, Ngs = 6;
 	Long Nx = Nfe * (Ngs - 1) - 1;
 	VecDoub bounds(Nfe + 1); linspace(bounds, -1., 1.);
 
@@ -94,17 +94,24 @@ void test_D_mat()
 
 	for (Long i = 0; i < Nx; ++i)
 		y[i] = test_fedvr_fun(x[i], 2);
-	cout << "x = " << endl;
-	disp(x);
-	cout << "y = " << endl;
-	disp(y);
+	file_remove("D_mat_test.matb");
+	// Matb matb("D_mat_test.matb", "w");
+	// save(x, "x", matb); save(y, "y", matb);
 	y /= u;
 	mul(dy, Ds, y);
 	dy *= u;
-	cout << "dy = " << endl;
-	disp(dy);
-	// cout << "D = " << endl;
-	// disp(Ds);
+	// save(dy, "dy", matb);
+	CmatDoub Ds_dense(Nx, Nx); copy(Ds_dense, Ds);
+	// save(Ds_dense, "Ds", matb);
+	// save(Nfe, "Nfe", matb); save(Ngs, "Ngs", matb);
+	
+	VecDoub x0(Ngs), w0(Ngs);
+	GaussLobatto(x0, w0);
+	CmatDoub df(Ngs, Ngs); // df(i, j) = f'_j(x_i)
+	dvr_basis_der(df, x0, w0);
+	// save(df, "df", matb);
+	// matb.close();
+
 	for (Long i = 0; i < Nx; ++i)
 		dy[i] -= 2*x[i];
 	SLS_ASSERT(max_abs(dy) < 5e-13);
