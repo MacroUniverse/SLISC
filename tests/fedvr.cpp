@@ -1,6 +1,7 @@
 #include "../SLISC/lin/eig.h"
 #include "../SLISC/tdse/fedvr.h"
 #include "../SLISC/file/matb.h"
+#include "../SLISC/str/disp.h"
 
 using namespace slisc;
 
@@ -24,6 +25,7 @@ void test_gauss_lobatto()
 	#endif
 }
 
+// polynomial of order n, in [-1, 1]
 Doub test_fedvr_fun(Doub_I x, Int_I n)
 {
 	Doub y = (x + 1)*(x - 1);
@@ -47,9 +49,8 @@ void test_gauss()
 	GaussLobatto(x0, w0);
 
 	VecDoub y(Ngs);
-	for (i = 0; i < Ngs; ++i) {
+	for (i = 0; i < Ngs; ++i)
 		y[i] = test_fedvr_fun(x0[i], 2);
-	}
 	Doub res = dot(y, w0);
 	if (abs(res + 4. / 3.) > 1e-14) SLS_FAIL;
 }
@@ -67,16 +68,46 @@ void test_D2_mat()
 	VecDoub x(Nx), w(Nx), u(Nx);
 	D2_matrix(D2s, x, w, u, bounds, Ngs);
 	VecDoub y(Nx);
-	for (Long i = 0; i < Nx; ++i) {
-		y[i] = test_fedvr_fun(x[i], 2);
-	}
-	y /= u;
 	VecDoub d2y(D2s.n0()); // second derivative
+
+	for (Long i = 0; i < Nx; ++i)
+		y[i] = test_fedvr_fun(x[i], 2);
+	y /= u;
 	mul(d2y, D2s, y);
 	d2y *= u;
 	d2y -= 2;
-	if (max_abs(d2y) > 5e-13)
-		SLS_FAIL;
+	SLS_ASSERT(max_abs(d2y) < 5e-13);
+}
+
+void test_D_mat()
+{
+	Int Nfe = 2, Ngs = 10;
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	VecDoub bounds(Nfe + 1); linspace(bounds, -1., 1.);
+
+	// second derivative matrix
+	McooDoub Ds(Nx, Nx);
+	VecDoub x(Nx), w(Nx), u(Nx);
+	D_matrix(Ds, x, w, u, bounds, Ngs);
+	VecDoub y(Nx);
+	VecDoub dy(Ds.n0()); // second derivative
+
+	for (Long i = 0; i < Nx; ++i)
+		y[i] = test_fedvr_fun(x[i], 2);
+	cout << "x = " << endl;
+	disp(x);
+	cout << "y = " << endl;
+	disp(y);
+	y /= u;
+	mul(dy, Ds, y);
+	dy *= u;
+	cout << "dy = " << endl;
+	disp(dy);
+	// cout << "D = " << endl;
+	// disp(Ds);
+	for (Long i = 0; i < Nx; ++i)
+		dy[i] -= 2*x[i];
+	SLS_ASSERT(max_abs(dy) < 5e-13);
 }
 
 // bound states of infinite square well
@@ -185,6 +216,7 @@ void test_fedvr()
 	test_gauss_lobatto();
 	test_gauss();
 	test_D2_mat();
+	test_D_mat();
 #ifdef SLS_USE_LAPACKE
 	test_SHO();
 	test_inf_sqr_well();

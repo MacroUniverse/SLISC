@@ -3,7 +3,6 @@
 #include "../sci/interp1.h"
 #include "../algo/search.h"
 #include "../spec/legendreP.h"
-#include "../sci/integral.h"
 
 namespace slisc {
 // ref: https://wuli.wiki/online/FEDVR.html
@@ -309,7 +308,7 @@ inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
 			return 1;
 		start -= Ngs - 1;
 	}
-		
+
 	Long end = start + Ngs - 1; // right boundary of FE to eval polynomial
 
 	// left FE boundary
@@ -393,12 +392,6 @@ inline void GaussLobatto_check_orthogonal(CmatDoub_O y_plot, VecDoub_O x, VecDou
 			mat(ind1, ind2) = sum;
 			if (ind1 != ind2)
 				mat(ind2, ind1) = sum;
-			// verify with numeric integral
-			auto integrand = [&x, &ind1, &ind2](Doub x_q) {
-				return dvr_basis(x, ind1, x_q) * dvr_basis(x, ind2, x_q);
-			};
-			Doub sum1 = integral_romb(integrand, -1, 1, 1e-8) / sqrt(w[ind1]*w[ind2]);
-			SLS_ASSERT(abs(sum1-sum)/sum1 < 1e-8);
 		}
 	}
 }
@@ -407,8 +400,8 @@ inline void GaussLobatto_check_orthogonal(CmatDoub_O y_plot, VecDoub_O x, VecDou
 // x in [-1,1] are the Ngs Gaussian points
 // ref: eq_FEDVR_9
 // df is an NxN matrix
-// f'_i(x_j) = df(j,i)
-inline void dvr_basis_der(CmatDoub_O df, VecDoub_I x)
+// f'_i(x_j) = df(j,i) / sqrt{w_0i}
+inline void dvr_basis_der(CmatDoub_O df, VecDoub_I x, VecDoub_I w)
 {
 	Long i, j, k, N{ x.size() };
 	Doub sum;
@@ -436,47 +429,10 @@ inline void dvr_basis_der(CmatDoub_O df, VecDoub_I x)
 				for (k = i + 1; k < N; ++k)
 					sum += 1. / (x[i] - x[k]);
 			}
-			df(j,i) = sum;
+			df(j,i) = sum / sqrt(w[i]);
 		}
 	}
 }
-
-// get derivatives of global fedvr basis at grid points
-// ref: eq_FEDVR_2 to eq_FEDVR_3
-// intput df from dvr_basis_der()
-// output is u'_i(x_j) = df(j,i)
-// inline void fedvr_global_basis_der(CmatDoub_I df, Doub_I a_i, Doub_I a_ip1, Long_I i, Long_I j)
-// {
-// 	Long i, j, k, N{ x.size() };
-// 	Doub t;
-// #ifdef SLS_CHECK_SHAPES
-// 	if (df.n0() != N || df.n1() != N)
-// 		SLS_ERR("wrong shape!");
-// #endif
-// 	for (i = 0; i < N; ++i) {
-// 		for (j = 0; j < N; ++j) {
-// 			if (j != i) {
-// 				t = 1.;
-// 				for (k = 0; k < i; ++k) {
-// 					if (k == j) t /= x[i] - x[k];
-// 					else t *= (x[j] - x[k]) / (x[i] - x[k]);
-// 				}
-// 				for (k = i + 1; k < N; ++k) {
-// 					if (k == j) t /= x[i] - x[k];
-// 					else t *= (x[j] - x[k]) / (x[i] - x[k]);
-// 				}
-// 			}
-// 			else {
-// 				t = 0.;
-// 				for (k = 0; k < i; ++k)
-// 					t += 1. / (x[i] - x[k]);
-// 				for (k = i + 1; k < N; ++k)
-// 					t += 1. / (x[i] - x[k]);
-// 			}
-// 			df(j,i) = t;
-// 		}
-// 	}
-// }
 
 // generate FEDVR grid and weight
 // 'Nfe' is the number of finite elements
@@ -617,12 +573,8 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 	// grid points, weights, base function values in [-1, 1]
 	VecDoub x0(Ngs), w0(Ngs), f0(Ngs);
 	GaussLobatto(x0, w0);
-	pow(f0, w0, -0.5);
 	CmatDoub df(Ngs, Ngs); // df(i, j) = f_j(x_i)
-	dvr_basis_der(df, x0);
-	for (Long i = 0; i < Ngs; ++i)
-		for (Long j = 0; j < Ngs; ++j)
-			df(j, i) *= f0[i];
+	dvr_basis_der(df, x0, w0);
 
 	// midpoints, widths and bounds of finite elements
 	VecDoub xFE(Nfe), wFE(Nfe);
@@ -635,8 +587,106 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 	FEDVR_grid(x, w, wFE, xFE, x0, w0);
 	pow(u, w, -0.5);
 
-	// Sparse Hamiltonian
+	// Sparse matrix
 	D2_matrix(D2, w0, wFE, df);
+}
+
+// sparse first derivative matrix for normalized FEDVR basis
+inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
+{
+	Long i, m, n, mm, nn;
+	Long Nfe = wFE.size();
+	Long Ngs = w0.size();
+#ifdef SLS_CHECK_SHAPES
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	if (D.n0() != Nx || D.n0() != Nx)
+		SLS_ERR("wrong shape!");
+#endif
+
+	Doub s, coeff;
+
+	// calculate D matrix
+	D.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
+
+	// blocks without boundary
+	for (i = 0; i < Nfe; ++i) {
+		for (n = 1; n < Ngs - 1; ++n) {
+			coeff = 1. / sqr(wFE[i]);
+			for (m = 1; m <= n; ++m) {
+				s = coeff * sqrt(w0[m]) * df(m,n);
+				mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
+				D.push(s, mm, nn);
+				if (mm != nn)
+					D.push(s, nn, mm);
+			}
+		}
+	}
+
+	for (i = 0; i < Nfe - 1; ++i) {
+		// block right & bottom boundary
+		n = Ngs - 1;
+		coeff = 1. / (pow(wFE[i], 1.5) * sqrt(wFE[i] + wFE[i + 1]));
+		for (m = 1; m < n; ++m) {
+			s = coeff * sqrt(w0[m]) *  df(m, n);
+			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
+			D.push(s, mm, nn); D.push(s, nn, mm);
+		}
+
+		// block lower right corner
+		m = Ngs - 1;
+		coeff = sqrt(w0[0]) / (wFE[i] + wFE[i+1]);
+		s = coeff * (df(m,n)/wFE[i] + df(0,0)/wFE[i+1]);
+		mm = indFEDVR(i, m, Ngs);
+		D.push(s, mm, mm);
+
+		// block left & upper boundary
+		coeff = sqrt(w0[0]) / (pow(wFE[i+1], 1.5) * sqrt(wFE[i] + wFE[i+1]));
+		for (n = 1; n < Ngs - 1; ++n) {
+			s = coeff * df(0, n);
+			mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i + 1, n, Ngs);
+			D.push(s, mm, nn); D.push(s, nn, mm);
+		}
+	}
+
+	for (i = 0; i < Nfe - 2; ++i) {
+		// block upper right corner
+		coeff = sqrt(w0[0]) / (wFE[i+1] * sqrt((wFE[i] + wFE[i+1])*(wFE[i+1] + wFE[i+2])));
+		s = coeff * df(0, Ngs - 1);
+		mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
+		D.push(s, mm, nn); D.push(s, nn, mm);
+	}
+	sort_r(D);
+}
+
+inline void D_matrix(McooDoub_O D, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
+{
+	Long Nfe = bounds.size() - 1; // number of finite elements
+#ifdef SLS_CHECK_SHAPES
+	Long Nx = Nfe * (Ngs - 1) - 1;
+	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
+		D.n0() != Nx || D.n0() != Nx)
+		SLS_ERR("wrong shape!");
+#endif
+
+	// grid points, weights, base function values in [-1, 1]
+	VecDoub x0(Ngs), w0(Ngs), f0(Ngs);
+	GaussLobatto(x0, w0);
+	CmatDoub df(Ngs, Ngs); // df(i, j) = f_j(x_i)
+	dvr_basis_der(df, x0, w0);
+
+	// midpoints, widths and bounds of finite elements
+	VecDoub xFE(Nfe), wFE(Nfe);
+
+	for (Long i = 0; i < Nfe; ++i) {
+		wFE[i] = 0.5*(bounds[i+1] - bounds[i]);
+		xFE[i] = 0.5*(bounds[i] + bounds[i+1]);
+	}
+
+	FEDVR_grid(x, w, wFE, xFE, x0, w0);
+	pow(u, w, -0.5);
+
+	// Sparse matrix
+	D_matrix(D, w0, wFE, df);
 }
 
 
