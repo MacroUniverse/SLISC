@@ -1,18 +1,19 @@
 #include "../SLISC/lin/eig.h"
 #include "../SLISC/tdse/fedvr.h"
+#include "../SLISC/file/matb.h"
 
 using namespace slisc;
 
 void test_gauss_lobatto()
 {
-	for (Long N = 4; N <= 18; N += 2) {
+	for (Long N = 4; N <= 20; N += 2) {
 		// cout << "N = " << N << endl;
 		VecDoub x(N), w(N);
 		GaussLobatto(x, w);
 		GaussLobatto_check(x, w);
 	}
 	#ifdef SLS_USE_QUAD_MATH
-	for (Long N = 4; N <= 18; N += 2) {
+	for (Long N = 4; N <= 20; N += 2) {
 		{
 			// cout << "N = " << N << endl;
 			VecQdoub x(N), w(N);
@@ -191,6 +192,23 @@ void test_fedvr()
 #ifdef SLS_USE_GSL
 	test_fedvr_interp1();
 #endif
+
+	{ // plot fedvr basis and check orthogonality
+		file_remove("fedvr_orthor.matb");
+		Matb matb("fedvr_orthor.matb", "w");
+		Long Nplot = 3001;
+		VecDoub x_plot(Nplot);
+		linspace(x_plot, -1.5, 1.5);
+		for (Long Ngs = 6; Ngs <= 18; Ngs += 4) {
+			CmatDoub y_plot(Nplot, Ngs);
+			CmatDoub mat(Ngs, Ngs);
+			VecDoub x(Ngs), w(Ngs);
+			GaussLobatto_check_orthogonal(y_plot, x, w, mat, x_plot);
+			save(x_plot, "x_plot"+num2str(Ngs), matb); save(y_plot, "y_plot"+num2str(Ngs), matb);
+			save(x, "x"+num2str(Ngs), matb); save(w, "w"+num2str(Ngs), matb);
+			save(mat, "mat"+num2str(Ngs), matb);
+		}
+	}
 }
 
 #ifndef SLS_TEST_ALL

@@ -239,6 +239,28 @@ inline void GaussLobatto(Vec@Tr@_O x, Vec@Tr@_O w)
 		w[16] = 0.0399706288109140661375991764101008792943@suff@;
 		w[17] = 0.006535947712418300653594771241830065359477@suff@;
 	}
+	else if (N == 20) {
+		x[10] = 0.08054593723882183797594451815955446302239@suff@;
+		x[11] = 0.2395517059229864951824013569270880719415@suff@;
+		x[12] = 0.3923531837139092993864747038158243666652@suff@;
+		x[13] = 0.5349928640318862616481359618289839830069@suff@;
+		x[14] = 0.6637764022903112898464033229711588524757@suff@;
+		x[15] = 0.7753682609520558704143175275946913433727@suff@;
+		x[16] = 0.8668779780899501413098472146162852139629@suff@;
+		x[17] = 0.9359344988126654357161815849306269299156@suff@;
+		x[18] = 0.9807437048939141719254464385842309152299@suff@;
+
+		w[10] = 0.1607432863878457490077267264490839339021@suff@;
+		w[11] = 0.1565801026474754871581698967936433723031@suff@;
+		w[12] = 0.1483615540709168258147130137339666049312@suff@;
+		w[13] = 0.1363004823587241844897807929890319817441@suff@;
+		w[14] = 0.1207092276286747250994297050023933598723@suff@;
+		w[15] = 0.1019914996994508156837812057328865208675@suff@;
+		w[16] = 0.08063176399611960314477684611372057166604@suff@;
+		w[17] = 0.05718180212756682600475362717324278250521@suff@;
+		w[18] = 0.03223712318848894149160502811729403010325@suff@;
+		w[19] = 0.005263157894736842105263157894736842105263@suff@;
+	}
 	else {
 		SLS_ERR("no data!");
 	}
@@ -246,28 +268,6 @@ inline void GaussLobatto(Vec@Tr@_O x, Vec@Tr@_O w)
 		x[i] = -x[N - i - 1];
 	for (Long i = 0; i < N2; ++i)
 		w[i] = w[N - i - 1];
-}
-
-inline void GaussLobatto_check(Vec@Tr@_I x, Vec@Tr@_I w)
-{
-//% if is_Doub(Tr), tol = '1e-12'; end
-//% if is_Qdoub(Tr), tol = '1e-31'; end
-	Long N = x.size();
-	Doub x_err_max = 0, w_err_max = 0;
-	for (Long i = 0; i < N; ++i) {
-		if (i > 0 && i < N-1) {
-			Doub err = legendreP_der(N-1, x[i]);
-			if (abs(err) > x_err_max) x_err_max = err;
-			if (abs(err) > @tol@)
-				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
-		}
-		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
-		if (abs(err) > w_err_max) w_err_max = err;
-		if (abs(err) > @tol@)
-			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
-	}
-	// cout << "x_err_max = " << x_err_max << endl;
-	// cout << "w_err_max = " << w_err_max << endl;
 }
 
 inline @Tr@ fe_min(Vec@Tr@_I x, Long_I Ngs)
@@ -286,6 +286,21 @@ inline @Tr@ fe_max(Vec@Tr@_I x, Long_I Ngs)
 		SLS_ERR("fe_max: x.size() too small!");
 #endif
 	return x.end() + (x[x.size()-Ngs+2] - x[x.size()-Ngs+1]);
+}
+
+// single DVR basis polynomial, range [-1,1] with maximum 1
+// return 0 if out of range
+inline @Tr@ dvr_basis(Vec@Tr@ x, Long_I ind, @Tr@_I x_q)
+{
+	Long Ngs = size(x);
+	@Tr@ x_ind = x[ind], poly = 1;
+	if (x_q < -1 || x_q > 1)
+		return 0;
+	for (Long i = 0; i < ind; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	for (Long i = ind + 1; i < Ngs; ++i)
+		poly *= (x_q - x[i])/(x_ind - x[i]);
+	return poly;
 }
 
 // single FEDVR basis polynomial, with maximum 1
@@ -340,6 +355,59 @@ inline @Tr@ fedvr_basis(Vec@Tr@_I x, Long_I Ngs, Long_I ind, @Tr@_I x_q)
 	return poly;
 }
 
+void GaussLobatto_check(Vec@Tr@_I x, Vec@Tr@_I w)
+{
+//% if is_Doub(Tr), tol = '1e-12'; end
+//% if is_Qdoub(Tr), tol = '1e-31'; end
+	Long N = x.size();
+	@Tr@ x_err_max = 0, w_err_max = 0;
+	for (Long i = 0; i < N; ++i) {
+		if (i > 0 && i < N-1) {
+			@Tr@ err = legendreP_der(N-1, x[i]);
+			if (abs(err) > x_err_max) x_err_max = err;
+			if (abs(err) > @tol@)
+				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
+		}
+		@Tr@ err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
+		if (abs(err) > w_err_max) w_err_max = err;
+		if (abs(err) > @tol@)
+			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
+	}
+	// cout << "x_err_max = " << x_err_max << endl;
+	// cout << "w_err_max = " << w_err_max << endl;
+}
+
+// the bases are not orthogonal
+// return [-1,1] integral of dvr_basis(i)/sqrt(w(i)) * dvr_basis(j)/sqrt(w(j)) matrix
+// x_plot, y_plot(:,i) is the curve for the i-th normalized basis [-1,1]
+inline void GaussLobatto_check_orthogonal(Cmat@Tr@_O y_plot, Vec@Tr@_O x, Vec@Tr@_O w, Cmat@Tr@_O mat, Vec@Tr@_I x_plot)
+{
+	Long Ngs = mat.n0();
+	SLS_ASSERT(mat.n1() == Ngs);
+	SLS_ASSERT(x.size() == Ngs);
+	SLS_ASSERT(w.size() == Ngs);
+	SLS_ASSERT(y_plot.n0() == x_plot.size());
+	SLS_ASSERT(y_plot.n1() == Ngs);
+	Vec@Tr@ xx(Ngs+2), ww(Ngs+2);
+	GaussLobatto(x, w);
+	GaussLobatto(xx, ww);
+	for (Long ind1 = 0; ind1 < Ngs; ++ind1) {
+		// plot data
+		for (Long i = 0; i < x_plot.size(); ++i)
+			y_plot(i, ind1) = dvr_basis(x, ind1, x_plot[i]) / sqrt(w[ind1]);
+		// check orthogonal
+		for (Long ind2 = 0; ind2 <= ind1; ++ind2) {
+			@Tr@ sum = 0;
+			for (Long ii = 0; ii < size(xx); ++ii)
+				sum += ww[ii] * dvr_basis(x, ind1, xx[ii]) * dvr_basis(x, ind2, xx[ii]);
+			sum *= 1/sqrt(w[ind1]*w[ind2]);
+			mat(ind1, ind2) = sum;
+			if (ind1 != ind2)
+				mat(ind2, ind1) = sum;
+		}
+	}
+}
+
 // get derivatives of lagrange interpolation polynomials at abscissas
 // x in [-1,1] are the Ngs Gaussian points
 // ref: eq_FEDVR_9
@@ -382,38 +450,38 @@ inline void dvr_basis_der(Cmat@Tr@_O df, Vec@Tr@_I x)
 // ref: eq_FEDVR_2 to eq_FEDVR_3
 // intput df from dvr_basis_der()
 // output is u'_i(x_j) = df(j,i)
-inline void fedvr_global_basis_der(Cmat@Tr@_I df, @Tr@_I a_i, @Tr@_I a_ip1, Long_I i, Long_I j)
-{
-	Long i, j, k, N{ x.size() };
-	@Tr@ t;
-#ifdef SLS_CHECK_SHAPES
-	if (df.n0() != N || df.n1() != N)
-		SLS_ERR("wrong shape!");
-#endif
-	for (i = 0; i < N; ++i) {
-		for (j = 0; j < N; ++j) {
-			if (j != i) {
-				t = 1.@suff@;
-				for (k = 0; k < i; ++k) {
-					if (k == j) t /= x[i] - x[k];
-					else t *= (x[j] - x[k]) / (x[i] - x[k]);
-				}
-				for (k = i + 1; k < N; ++k) {
-					if (k == j) t /= x[i] - x[k];
-					else t *= (x[j] - x[k]) / (x[i] - x[k]);
-				}
-			}
-			else {
-				t = 0.;
-				for (k = 0; k < i; ++k)
-					t += 1.@suff@ / (x[i] - x[k]);
-				for (k = i + 1; k < N; ++k)
-					t += 1.@suff@ / (x[i] - x[k]);
-			}
-			df(j,i) = t;
-		}
-	}
-}
+// inline void fedvr_global_basis_der(Cmat@Tr@_I df, @Tr@_I a_i, @Tr@_I a_ip1, Long_I i, Long_I j)
+// {
+// 	Long i, j, k, N{ x.size() };
+// 	@Tr@ t;
+// #ifdef SLS_CHECK_SHAPES
+// 	if (df.n0() != N || df.n1() != N)
+// 		SLS_ERR("wrong shape!");
+// #endif
+// 	for (i = 0; i < N; ++i) {
+// 		for (j = 0; j < N; ++j) {
+// 			if (j != i) {
+// 				t = 1.@suff@;
+// 				for (k = 0; k < i; ++k) {
+// 					if (k == j) t /= x[i] - x[k];
+// 					else t *= (x[j] - x[k]) / (x[i] - x[k]);
+// 				}
+// 				for (k = i + 1; k < N; ++k) {
+// 					if (k == j) t /= x[i] - x[k];
+// 					else t *= (x[j] - x[k]) / (x[i] - x[k]);
+// 				}
+// 			}
+// 			else {
+// 				t = 0.;
+// 				for (k = 0; k < i; ++k)
+// 					t += 1.@suff@ / (x[i] - x[k]);
+// 				for (k = i + 1; k < N; ++k)
+// 					t += 1.@suff@ / (x[i] - x[k]);
+// 			}
+// 			df(j,i) = t;
+// 		}
+// 	}
+// }
 
 // generate FEDVR grid and weight
 // 'Nfe' is the number of finite elements
