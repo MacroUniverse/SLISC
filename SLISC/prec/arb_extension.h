@@ -112,6 +112,15 @@ inline void arb_set_q(arb_t x, Qdoub_I q)
 	arf_set_q(arb_midref(x), q);
 	mag_zero(arb_radref(x));
 }
+
+// similar to acb_set_d_d()
+inline void acb_set_q_q(acb_t z, Qdoub_I qr, Qdoub_I qc)
+{
+	arf_set_q(arb_midref(acb_realref(z)), qr);
+	arf_set_q(arb_midref(acb_imagref(z)), qc);
+	mag_zero(arb_radref(acb_realref(z)));
+	mag_zero(arb_radref(acb_imagref(z)));
+}
 #endif
 
 // c++ wrapper for fmpz_t

@@ -494,7 +494,7 @@ ifeq ($(opt_main), false)
     test: clean_all
 		$(info remake and run all tests - default)
 		@make h
-		@make depend -j$(Ncpu)
+		@make opt_min=false depend -j$(Ncpu)
 		@make $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
@@ -503,8 +503,8 @@ ifeq ($(opt_main), false)
     test64: clean_all
 		$(info remake and run all tests - 64bit)
 		@make h64
-		@make opt_long32=false depend -j$(Ncpu)
-		@make opt_long32=false $(path_test_x) -j$(Ncpu)
+		@make opt_long32=false opt_min=false depend -j$(Ncpu)
+		@make opt_long32=false opt_min=false $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
 		@printf "\n\n\n"
@@ -512,8 +512,8 @@ ifeq ($(opt_main), false)
     test64q: clean_all
 		$(info remake and run all tests - 64bit & quadmath)
 		@make h64q
-		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
-		@make opt_long32=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
+		@make opt_long32=false opt_min=false opt_quadmath=true depend -j$(Ncpu)
+		@make opt_long32=false opt_min=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
 		@printf "\n\n\n"
@@ -595,14 +595,14 @@ h: clean_h
 
 h64:
 	$(info remake all headers - 64bit)
-	make opt_long32=false h
+	make opt_min=false opt_long32=false opt_quadmath=false h
 	rm -rf SLISC-64
 	cp -r SLISC SLISC-64
 	find SLISC-64 -name "*.h.in" -delete
 
 h64q:
 	$(info remake all headers - 64bit & quad_math)
-	make opt_long32=false opt_quadmath=true h
+	make opt_min=false opt_long32=false opt_quadmath=true h
 	rm -rf SLISC-64q
 	cp -r SLISC SLISC-64q
 	find SLISC-64q -name "*.h.in" -delete

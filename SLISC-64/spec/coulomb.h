@@ -24,7 +24,7 @@ inline Doub arb_coulombF(Doub_I l, Doub_I eta, Doub_I x)
 	Doub F = 0;
 	arb_t l1, eta1, x1, F1;
 	arb_init(l1); arb_init(eta1); arb_init(x1); arb_init(F1);
-	// can use _arb_init_set_d() instead
+	// can use _arb_init_set_?() instead
 	arb_set_d(l1, l); arb_set_d(eta1, eta); arb_set_d(x1, x);
 	Int digits;
 	for (Long i = 0; i < 6; ++i) {
@@ -51,6 +51,7 @@ inline Comp acb_coulombF(Comp_I l, Comp_I eta, Comp_I x)
 	arb_init(F1_re); arb_init(F1_im);
 	acb_set_d_d(l1, l.real(), l.imag());
 	acb_set_d_d(eta1, eta.real(), eta.imag()); acb_set_d_d(x1, x.real(), x.imag());
+
 	Int digits;
 	for (Long i = 0; i < 6; ++i) {
 		acb_hypgeom_coulomb(F1, NULL, NULL, NULL, l1, eta1, x1, prec);
@@ -76,7 +77,7 @@ inline Doub arb_gamma(Doub_I x)
 	Doub res = 0;
 	arb_t x1, res1;
 	arb_init(x1); arb_init(res1);
-	// can use _arb_init_set_d() instead
+	// can use _arb_init_set_*() instead
 	arb_set_d(x1, x);
 	Int digits;
 	for (Long i = 0; i < 6; ++i) {
@@ -127,7 +128,7 @@ inline Doub arb_lngamma(Doub_I x)
 	Doub res = 0;
 	arb_t x1, res1;
 	arb_init(x1); arb_init(res1);
-	// can use _arb_init_set_d() instead
+	// can use _arb_init_set_*() instead
 	arb_set_d(x1, x);
 	Int digits;
 	for (Long i = 0; i < 6; ++i) {
@@ -155,6 +156,66 @@ inline Comp arb_lngamma(Comp_I z)
 	acb_set_d_d(z1, real(z), imag(z));
 	for (Long i = 0; i < 6; ++i) {
 		acb_lgamma(res1, z1, prec);
+		digits = acb_rel_accuracy_bits(res1)/3.321928;
+		if (digits >= 16)
+			break;
+		prec *= 2;
+	}
+	if (digits < 16)
+		SLS_ERR("arb_lngamma error too large : " + num2str(digits) + " digits");
+	acb_get_real(temp1, res1);
+	res.real(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
+	acb_get_imag(temp1, res1);
+	res.imag(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
+	acb_clear(z1); acb_clear(res1); arb_clear(temp1);
+
+	res.imag(mod_fl(res.imag(), 2*PI));
+	if (res.imag() > PI)
+		res.imag(res.imag() - 2*PI);
+	return res;
+}
+
+inline Comp arb_erf(Comp_I z)
+{
+	slong prec = 80;
+	Comp res;
+	acb_t z1, res1;
+	arb_t temp1;
+	Int digits;
+	acb_init(z1); acb_init(res1); arb_init(temp1);
+	acb_set_d_d(z1, real(z), imag(z));
+	for (Long i = 0; i < 6; ++i) {
+		acb_hypgeom_erf(res1, z1, prec);
+		digits = acb_rel_accuracy_bits(res1)/3.321928;
+		if (digits >= 16)
+			break;
+		prec *= 2;
+	}
+	if (digits < 16)
+		SLS_ERR("arb_lngamma error too large : " + num2str(digits) + " digits");
+	acb_get_real(temp1, res1);
+	res.real(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
+	acb_get_imag(temp1, res1);
+	res.imag(arf_get_d(arb_midref(temp1), ARF_RND_NEAR));
+	acb_clear(z1); acb_clear(res1); arb_clear(temp1);
+
+	res.imag(mod_fl(res.imag(), 2*PI));
+	if (res.imag() > PI)
+		res.imag(res.imag() - 2*PI);
+	return res;
+}
+
+inline Comp arb_erfi(Comp_I z)
+{
+	slong prec = 80;
+	Comp res;
+	acb_t z1, res1;
+	arb_t temp1;
+	Int digits;
+	acb_init(z1); acb_init(res1); arb_init(temp1);
+	acb_set_d_d(z1, real(z), imag(z));
+	for (Long i = 0; i < 6; ++i) {
+		acb_hypgeom_erfi(res1, z1, prec);
 		digits = acb_rel_accuracy_bits(res1)/3.321928;
 		if (digits >= 16)
 			break;

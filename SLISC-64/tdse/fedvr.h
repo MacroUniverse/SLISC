@@ -348,18 +348,18 @@ inline Doub fedvr_basis(VecDoub_I x, Long_I Ngs, Long_I ind, Doub_I x_q)
 void GaussLobatto_check(VecDoub_I x, VecDoub_I w)
 {
 	Long N = x.size();
-	Doub x_err_max = 0, w_err_max = 0;
+	// Doub x_err_max = 0, w_err_max = 0;
 	for (Long i = 0; i < N; ++i) {
 		if (i > 0 && i < N-1) {
 			Doub err = legendreP_der(N-1, x[i]);
-			if (abs(err) > x_err_max) x_err_max = err;
+			// if (abs(err) > x_err_max) x_err_max = err;
 			if (abs(err) > 1e-12)
-				SLS_ERR("i = " + to_string(i) + ", log10(x_err) = " + num2str(log10(abs(err))));
+				SLS_ERR("i = " + to_string(i) + ", err1 = " + num2str(err));
 		}
 		Doub err = w[i] - 2/(N*(N-1)*sqr(legendre_Plm(N-1, 0, x[i])));
-		if (abs(err) > w_err_max) w_err_max = err;
+		// if (abs(err) > w_err_max) w_err_max = err;
 		if (abs(err) > 1e-12)
-			SLS_ERR("i = " + to_string(i) + ", w_err = " + num2str(log10(abs(err))));
+			SLS_ERR("i = " + to_string(i) + ", err2 = " + num2str(err));
 	}
 	// cout << "x_err_max = " << x_err_max << endl;
 	// cout << "w_err_max = " << w_err_max << endl;
