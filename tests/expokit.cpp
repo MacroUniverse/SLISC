@@ -17,6 +17,7 @@ void test_expokit()
 	McooDoub A(0,0);
 	A.reserve(500);
 	A.reshape(N, N);
+	auto expo_mul = [&A](Comp *y, const Comp *x) { mul_v_coo_v(y, A.p(), A.row_p(), A.col_p(), A.n0(), A.nnz(), x); };
 
 	for (k = 0; k < 10; ++k) {
 		A.trim(0);
@@ -55,9 +56,9 @@ void test_expokit()
 
 		// expokit result
 		copy(y1, x);
-		expv(y1, A, t, Nbase, norm_inf(A));
+		expv(y1, expo_mul, t, Nbase, norm_inf(A));
 		copy(y2, x);
-		expv(y2, A, t, Nbase, norm_inf(A), 0, true);
+		expv(y2, expo_mul, t, Nbase, norm_inf(A), 0, true);
 		
 		y1 -= y0;
 		if (max_abs(y1) > 2e-11)

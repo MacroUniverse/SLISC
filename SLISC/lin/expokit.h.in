@@ -9,43 +9,14 @@ namespace slisc {
 
 // matrix / vector multiplication
 
-//% tem('expokit_mul', {
-//%     'Comp', 'McooDoub', 'Comp';
-//%     'Comp', 'McooComp', 'Comp';
-//% });
-//%---------------------------
-//% [Ty, Ta, Tx] = varargin{:};
-//% req('mul_v_coo_v', {Ty val_t(Ta) Tx});
-inline void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
-{ mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x); }
-//%---------------------
+// 'Comp', 'McooDoub', 'Comp';
+// 'Comp', 'McooComp', 'Comp';
+// inline void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
+// mul_v_coo_v(y, a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x);
 
-//% tem('expokit_mul2', {
-//%     'Comp', 'CmobdDoub', 'Comp';
-//%     'Comp', 'CmobdComp', 'Comp';
-//% });
-//%---------------------------
-//% [Ty, Ta, Tx] = varargin{:};
-//% req('mul_v_cmatobd_v', {Ty Tx val_t(Ta)});
-inline void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
-{ mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0()); }
-//%---------------------
-
-// not optimized for symmetric or Hermitian matrix
-//% tem('expokit_mul3', {
-//%     'Comp', 'CmatDoub', 'Comp';
-//%     'Comp', 'CmatComp', 'Comp';
-//%     'Doub', 'CmatDoub', 'Doub';
-//% });
-//%---------------------------
-//% [Ty, Ta, Tx] = varargin{:};
-inline void expokit_mul(@Ty@ *y, @Ta@_I a, @Tx@ *x)
-{
-	Svec@Tx@ vx(x, a.n1()); Svec@Ty@ vy(y, a.n0());
-//% req('mul_gen', {['Svec' Ty],Ta,['Svec' Tx]});
-	mul_gen(vy, a, vx);
-}
-//%---------------------
+// 'Comp', 'CmobdDoub', 'Comp';
+// 'Comp', 'CmobdComp', 'Comp';
+// mul_v_cmatobd_v(y, x, a.p(), a.n0(), a.nblk(), a.n0());
 
 // ======== translation details ============
 // variables that subtracted 1 comparing to F77 version
@@ -175,7 +146,6 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 // translate as directly as possible for now:
 // * any variable values should not change
 // * all pointer indexing (including +, -) is subtracted by 1 in place
-
 inline void ZNCHBV(Long_I m, Doub_I t, const Comp *H, Long_I ldh, Comp *y, Comp *wsp)
 {
 	SLS_ERR("the translated ZNCHBV is not complete yet, do it now!");
@@ -262,17 +232,13 @@ inline void ZNCHBV(Long_I m, Doub_I t, const Comp *H, Long_I ldh, Comp *y, Comp 
 // ======== translation details ============
 // variables that subtracted 1 comparing to F77 version
 // internal variables: i, j, ifree, ih, j1v, iv, iexph
-// `T` can be any user defined matrix class
-// expokit_mul(Comp *y, const T &mat, Comp *x) must be defined to perform matrix-vector multiplication (y = mat * x)
+// the callable `void mat_mul(Comp *y, const Comp *x)` performs matrix-vector multiplication for an N*N matrix
 
 // ======== modifications ==================
 // modified so that w is both input and output vector
-
-//% tem('ZGEXPV', {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'; 'CmatDoub'; 'CmatComp'});
-//%------------------
-//% Tm = varargin{:};
+template <class Tmul>
 inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, @Tm@_I mat, Long_I itrace, Long_O iflag)
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, Tmul &mat_mul, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
@@ -367,7 +333,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+			mat_mul(wsp + j1v, wsp + j1v - n);
 			for (i = 0; i < j + 1; ++i) {
 				cblas_zdotc_sub(n, wsp + iv + i*n, 1, wsp + j1v, 1, &hij);
 				Comp temp = -hij;
@@ -393,7 +359,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 		if (!break_flag) {
 			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+			mat_mul(wsp + j1v, wsp + j1v - n);
 			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
 		}
 
@@ -517,22 +483,18 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	wsp[8] = Comp(hump / vnorm);
 	wsp[9] = Comp(beta / vnorm);
 }
-//%------------------
 
 // ======== translation details ============
 // variables that subtracted 1 comparing to F77 version
 // internal variables: i, j, ifree, ih, j1v, iv, iexph
-// `T` can be any user defined matrix class
-// expokit_mul(Comp *y, const T &mat, Comp *x) must be defined to perform matrix-vector multiplication (y = mat * x)
+// the callable `void mat_mul(Comp *y, const Comp *x)` performs matrix-vector multiplication for an N*N matrix
 
 // ======== modifications ==================
 // modified so that w is both input and output vector
 
-//% tem('ZHEXPV', {'CmobdDoub'; 'CmobdComp'; 'McooDoub'; 'McooComp'; 'CmatDoub'; 'CmatComp';});
-//%------------------
-//% Tm = varargin{:};
+template <class Tmul>
 inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm,
-			Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, @Tm@_I mat, Long_I itrace, Long_O iflag )
+	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, Tmul &mat_mul, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
 	if (sum_abs_v(w, n) < 1e-100)
@@ -630,7 +592,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 		bool break_flag = false;
 		for (j = 0; j < m; ++j) {
 			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+			mat_mul(wsp + j1v, wsp + j1v - n);
 			if (j > 0) {
 				temp = -wsp[ih + j*mh + j - 1];
 				cblas_zaxpy(n, &temp, wsp + j1v - 2 * n, 1, wsp + j1v, 1);
@@ -660,7 +622,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 
 		if (!break_flag) {
 			nmult = nmult + 1;
-			expokit_mul(wsp + j1v, mat, wsp + j1v - n);
+			mat_mul(wsp + j1v, wsp + j1v - n);
 			avnorm = cblas_dznrm2(n, wsp + j1v, 1);
 		}
 
@@ -793,30 +755,23 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	wsp[8] = Comp(hump / vnorm);
 	wsp[9] = Comp(beta / vnorm);
 }
-//%------------------
 
 // expv()
 // this function is extremely slow when used in a loop! due to dynamic memory allocation
 // use ZGEXPV() for MatCoo<>, ZHEXPV() for MatCooH<>
 // v cannot be empty!
-
+// the callable `void mat_mul(Comp *y, const Comp *x)` performs matrix-vector multiplication for an N*N matrix
 //% tem('expv', {
-//%  'CmobdDoub', 'SvecComp';
-//%  'McooDoub', 'VecComp';
-//%  'McooComp', 'SvecComp';
-//%  'McooComp', 'VecComp';
-//%  'CmobdComp', 'SvecComp';
-//%  'CmatDoub', 'VecComp';
-//%  'CmatComp', 'VecComp';
+//%  'SvecComp';
+//%  'VecComp';
 //% });
 //%----------------------
-//% [Tm, Tv] = varargin{:};
-inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
+//% Tv = varargin{:};
+template <class Tmul>
+inline void expv(@Tv@_IO v, Tmul &mat_mul, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, SvecComp_IO wsp_c, SvecLong_IO wsp_i, Doub_I tol = 0, Bool_I her = false)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (mat.n0() != mat.n1() || mat.n1() != v.size())
-		SLS_ERR("wrong shape!");
-	if (wsp_c.size() < max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8))
+	if (wsp_c.size() < max(Long(10), v.size()*(Nkrylov + 2) + 5*sqr(Nkrylov + 2) + 8))
 		SLS_ERR("wrong shape!");
 	if (wsp_i.size() < max(Nkrylov + 2, 7))
 		SLS_ERR("wrong shape!");
@@ -825,20 +780,21 @@ inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_nor
 	if (!her)
 		ZGEXPV(v.size(), Nkrylov, t, v.p(),
 			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+			wsp_i.p(), wsp_i.size(), mat_mul, 0, iflag);
 	else
 		ZHEXPV(v.size(), Nkrylov, t, v.p(),
 			tol, mat_norm, wsp_c.p(), wsp_c.size(),
-			wsp_i.p(), wsp_i.size(), mat, 0, iflag);
+			wsp_i.p(), wsp_i.size(), mat_mul, 0, iflag);
 }
 
-inline void expv(@Tv@_IO v, @Tm@_I mat, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
+template <class Tmul>
+inline void expv(@Tv@_IO v, Tmul &mat_mul, Doub_I t, Long_I Nkrylov, Doub_I mat_norm, Doub_I tol = 0, Bool_I her = false)
 {
-	VecComp wsp_c(max(Long(10), mat.n0()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
-	VecLong wsp_i(max(Nkrylov + 2, 7));
+	thread_local static VecComp wsp_c(max(Long(10), v.size()*(Nkrylov + 2) + 5 * sqr(Nkrylov + 2) + 8));
+	thread_local static VecLong wsp_i(max(Nkrylov + 2, 7));
 	SvecComp s_wsp_c(wsp_c.p(), wsp_c.size());
 	SvecLong s_wsp_i(wsp_i.p(), wsp_i.size());
-	expv(v, mat, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
+	expv(v, mat_mul, t, Nkrylov, mat_norm, s_wsp_c, s_wsp_i, tol, her);
 }
 //%------------------
 
