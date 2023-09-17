@@ -486,7 +486,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D2.n0() != Nx || D2.n0() != Nx || D2.nnz() != 0)
+	if (D2.n0() != Nx || D2.n1() != Nx || D2.nnz() != 0)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -599,7 +599,7 @@ inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D.n0() != Nx || D.n0() != Nx || D.nnz() != 0)
+	if (D.n0() != Nx || D.n1() != Nx || D.nnz() != 0)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -660,7 +660,7 @@ inline void D_matrix(McooDoub_O D, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDou
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
 	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
-		D.n0() != Nx || D.n0() != Nx)
+		D.n0() != Nx || D.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
