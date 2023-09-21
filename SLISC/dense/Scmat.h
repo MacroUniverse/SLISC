@@ -1,5 +1,6 @@
 #pragma once
 #include "../dense/Svec.h"
+#include "../dense/Cmat.h"
 // "C" means lower level const
 
 namespace slisc {

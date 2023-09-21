@@ -259,6 +259,8 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'DvecQcomp' 'SvecQcomp'
 //% 'DvecComp', 'SvecDoub'
 //% 'DvecQcomp', 'SvecQdoub'
+//% 'DvecComp', 'DvecComp'
+//% 'DvecQcomp', 'DvecQcomp'
 //% 'CmatInt' 'CmatInt'
 //% 'CmatLlong' 'CmatLlong'
 //% 'CmatDoub' 'CmatDoub'
@@ -621,6 +623,7 @@ inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I ste
 //%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
 //%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
 //%   'DvecComp' 'SvecComp' 'Doub'
+//%   'DvecComp' 'DvecComp' 'Doub'
 //%   'DcmatComp' 'DcmatComp' 'Doub'
 //%   'DcmatQcomp' 'DcmatQcomp' 'Qdoub'
 //% });

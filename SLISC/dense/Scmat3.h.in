@@ -1,5 +1,6 @@
 #pragma once
 #include "../dense/Svec.h"
+#include "../dense/Cmat3.h"
 
 namespace slisc {
 //% tem('Scmat3', {
