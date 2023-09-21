@@ -14,32 +14,25 @@ namespace slisc {
 
 // calculate y = exp(H*dt) * x
 // x, y can be the same object
-// H is a hermitian matrix
-// return error
-// calculate v = exp(-i*H*dt) * v
-// H is a hermitian matrix
+// mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
 //% tem('exp_Hdt_v_lanc', {
-//%   'VecComp' 'CmatDoub' 'SvecDoub' 'SvecComp'
-//%   'VecQcomp' 'CmatQdoub' 'SvecQdoub' 'SvecQcomp'
-//%   'VecComp' 'CmatDoub' 'VecDoub' 'VecComp'
-//%   'VecQcomp' 'CmatQdoub' 'VecQdoub' 'VecQcomp'
-//%   'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
-//%   'SvecQcomp' 'CmobdQdoub' 'SvecQdoub' 'SvecQcomp'
-//%   'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'McooQdoub' 'SvecQdoub' 'SvecQcomp'
-//%   'DvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'CmobdQdoub' 'SvecQdoub' 'SvecQcomp'
-//%  });
+//%   'VecComp' 'SvecDoub' 'SvecComp'
+//%   'VecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'VecComp' 'VecDoub' 'VecComp'
+//%   'VecQcomp' 'VecQdoub' 'VecQcomp'
+//%   'SvecComp' 'SvecDoub' 'SvecComp'
+//%   'SvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'DvecComp' 'SvecDoub' 'SvecComp'
+//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'DvecComp' 'SvecDoub' 'SvecComp'
+//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//% });
 //%-------------------------------
-//% [Tv, Tm, Twd, Twc] = varargin{:};
+//% [Tv, Twd, Twc] = varargin{:};
 //% [Tr, Tc] = val_t(Twd, Twc);
-//% if is_Cmat(Tm) || is_Scmat(Tm)
-//%     mul_fun = 'mul_gen';
-//% else
-//%     mul_fun = 'mul';
-//% end
-inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
+template <class Tmul>
+inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -66,26 +59,26 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkryl
 //% req('add(v,v,s)', { ['Svec' Tc] Tv Tr});
 	times(v0, x, 1/beta[0]); 
 
-	@mul_fun@(vc, H, v0);
+	mul_fun(vc, v0);
 //% req('dot', { ['Svec' Tc] ['Svec' Tc] });
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
 	v1 /= beta[1];
-	@mul_fun@(vc, H, v1);
+	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
 		Long j1 = j+1, j2 = j+2;
-		@mul_fun@(v2, H, v1);
+		mul_fun(v2, v1);
 		@Tr@ a = alpha[j1], b = beta[j1];
 		for (Long i = 0; i < N; ++i)
 //% req('v+=s', { ['Svec' Tc] Tc; ['Svec' Tc] Tr});
 			v2[i] -= a * v1[i] + b * v0[i];
 		beta[j2] = norm(v2);
 		v2 /= beta[j2];
-		@mul_fun@(vc, H, v2);
+		mul_fun(vc, v2);
 		alpha[j2] = real(dot(v2, vc));
 		v0.next(); v1.next(); v2.next();
 	}
@@ -123,30 +116,27 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkryl
 
 // calculate y = exp(-i*H*dt) * x
 // x, y can be the same object
-// H is a hermitian matrix
+// mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
-//% tem('exp_miHdt_v_lanc', { 'DvecComp' 'CbandDoub' 'SvecDoub' 'SvecComp'
-//% 'DvecQcomp' 'CbandQdoub' 'SvecQdoub' 'SvecQcomp'
-//% 'DvecComp' 'CmatDoub' 'VecDoub' 'VecComp'
-//% 'DvecQcomp' 'CmatQdoub' 'VecQdoub' 'VecQcomp'
-//% 'VecComp'  'CmatDoub' 'VecDoub' 'VecComp'
-//% 'VecQcomp'  'CmatQdoub' 'VecQdoub' 'VecQcomp'
-//% 'DvecComp' 'McooDoub' 'SvecDoub' 'SvecComp'
-//% 'DvecQcomp' 'McooQdoub' 'SvecQdoub' 'SvecQcomp'
-//% 'SvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
-//% 'SvecQcomp' 'CmobdQdoub' 'SvecQdoub' 'SvecQcomp'
-//% 'DvecComp' 'CmobdDoub' 'SvecDoub' 'SvecComp'
-//% 'DvecQcomp' 'CmobdQdoub' 'SvecQdoub' 'SvecQcomp'
+//% tem('exp_miHdt_v_lanc', {
+//%   'DvecComp' 'SvecDoub' 'SvecComp'
+//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'DvecComp' 'VecDoub' 'VecComp'
+//%   'DvecQcomp' 'VecQdoub' 'VecQcomp'
+//%   'VecComp'  'VecDoub' 'VecComp'
+//%   'VecQcomp' 'VecQdoub' 'VecQcomp'
+//%   'DvecComp' 'SvecDoub' 'SvecComp'
+//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'SvecComp' 'SvecDoub' 'SvecComp'
+//%   'SvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'DvecComp' 'SvecDoub' 'SvecComp'
+//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
 //% });
 //%-------------------------------
-//% [Tv, Tm, Twd, Twc] = varargin{:};
+//% [Tv, Twd, Twc] = varargin{:};
 //% [Tr, Tc] = val_t(Twd, Twc);
-//% if is_Cmat(Tm) || is_Scmat(Tm)
-//%     mul_fun = 'mul_gen';
-//% else
-//%     mul_fun = 'mul';
-//% end
-inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
+template <class Tmul>
+inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -173,7 +163,7 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 	beta[0] = norm(x);
 //% req('add(v,v,s)', {['Svec' Tc] Tv Tr});
 	times(v0, x, 1/beta[0]);
-	@mul_fun@(vc, H, v0);
+	mul_fun(vc, v0);
 //% req('dot', {['Svec' Tc] ['Svec' Tc]});
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
@@ -181,19 +171,19 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, @Tm@_I H, @Tv@_I x, @Tr@_I dt, Long_I Nk
 //% req('norm2', { ['Svec' Tc] });
 	beta[1] = norm(v1);
 	v1 /= beta[1];
-	@mul_fun@(vc, H, v1);
+	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
 
 	for (Long j = 0; j < Nk-2; ++j) {
 		Long j1 = j+1, j2 = j+2;
-		@mul_fun@(v2, H, v1);
+		mul_fun(v2, v1);
 		@Tr@ a = alpha[j1], b = beta[j1];
 		for (Long i = 0; i < N; ++i)
 //% req('v+=s', {['Svec' Tc] Tc; ['Svec' Tc] Tr});
 		v2[i] -= a * v1[i] + b * v0[i];
 		beta[j2] = norm(v2);
 		v2 /= beta[j2];
-		@mul_fun@(vc, H, v2);
+		mul_fun(vc, v2);
 		alpha[j2] = real(dot(v2, vc));
 		v0.next(); v1.next(); v2.next();
 	}
