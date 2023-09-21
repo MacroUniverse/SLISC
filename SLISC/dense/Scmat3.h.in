@@ -28,10 +28,12 @@ namespace slisc {
 //%     CT = ['const ' T];
 //%     Base = SvbaseTC;
 //%     Class = Scmat3TC;
+//%     suffix = '_I';
 //% else
 //%     CT = T;
 //%     Base = SvbaseT;
 //%     Class = Scmat3T;
+//%     suffix = '_IO';
 //% end
 class @Class@ : public @Base@
 {
@@ -40,6 +42,7 @@ protected:
 public:
 	@Class@();
 	@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);
+	@Class@(Cmat3@T@@suffix@ a);
 
 //% if ~constness
 	operator @Scmat3TC@() const;
@@ -62,6 +65,9 @@ inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
 	: @Base@(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline @Class@::@Class@(Cmat3@T@@suffix@ a)
+	: @Base@(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 //% if ~constness
 inline @Class@::operator @Scmat3TC@() const

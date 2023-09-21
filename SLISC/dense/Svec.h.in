@@ -42,7 +42,7 @@ protected:
 public:
 	@Class@();
 	explicit @Class@(Long_I N);
-	@Class@(@CT@ *data, Long_I N); // unsafe
+	@Class@(@CT@ *data, Long_I N);
 	@CT@* p() const;
 	Long size() const;
 	@Class@ &operator=(const @Class@ &rhs) = delete;
@@ -196,27 +196,32 @@ typedef SvbaseLlongC SvbaseLongC;
 //% if constness
 //%     CT = ['const ' T];
 //%     Class = SvecTC; Base = SvbaseTC;
+//%     suffix = '_I';
 //% else
 //%     CT = T;
 //%     Class = SvecT; Base = SvbaseT;
+//%     suffix = '_IO';
 //% end
 class @Class@ : public @Base@
 {
 public:
 	@Class@() = default;
 	explicit @Class@(Long_I N);
-	@Class@(@CT@ *data, Long_I N); // unsafe
+	@Class@(@CT@ *data, Long_I N);
+	@Class@(Vec@T@@suffix@ v);
 	@Class@ &operator=(const @Class@ &rhs) = delete;
 //% if ~constness
 	operator @SvecTC@() const;
 //% end
 };
 
-inline @Class@::@Class@(Long_I N) : @Base@(N)
-{}
+inline @Class@::@Class@(Long_I N) : @Base@(N) {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N)
 	: @Base@(data, N) {}
+
+inline @Class@::@Class@(Vec@T@@suffix@ v)
+	: @Base@(v.p(), v.size()) {}
 
 //% if ~constness
 inline @Class@::operator @SvecTC@() const

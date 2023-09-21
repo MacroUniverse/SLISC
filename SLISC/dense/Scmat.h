@@ -9,7 +9,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatCharC();
-	ScmatCharC(const Char *data, Long_I N0, Long_I N1); // unsafe
+	ScmatCharC(const Char *data, Long_I N0, Long_I N1);
+	ScmatCharC(CmatChar_I a);
 
 
 	const Char &operator()(Long_I i, Long_I j) const; // double indexing
@@ -29,6 +30,9 @@ inline ScmatCharC::ScmatCharC() {}
 
 inline ScmatCharC::ScmatCharC(const Char *data, Long_I N0, Long_I N1)
 	: SvbaseCharC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatCharC::ScmatCharC(CmatChar_I a)
+	: SvbaseCharC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Char &ScmatCharC::operator()(Long_I i, Long_I j) const
@@ -87,7 +91,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatChar();
-	ScmatChar(Char *data, Long_I N0, Long_I N1); // unsafe
+	ScmatChar(Char *data, Long_I N0, Long_I N1);
+	ScmatChar(CmatChar_IO a);
 
 	operator ScmatCharC() const;
 
@@ -108,6 +113,9 @@ inline ScmatChar::ScmatChar() {}
 
 inline ScmatChar::ScmatChar(Char *data, Long_I N0, Long_I N1)
 	: SvbaseChar(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatChar::ScmatChar(CmatChar_IO a)
+	: SvbaseChar(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatChar::operator ScmatCharC() const
 {
@@ -169,7 +177,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatUcharC();
-	ScmatUcharC(const Uchar *data, Long_I N0, Long_I N1); // unsafe
+	ScmatUcharC(const Uchar *data, Long_I N0, Long_I N1);
+	ScmatUcharC(CmatUchar_I a);
 
 
 	const Uchar &operator()(Long_I i, Long_I j) const; // double indexing
@@ -189,6 +198,9 @@ inline ScmatUcharC::ScmatUcharC() {}
 
 inline ScmatUcharC::ScmatUcharC(const Uchar *data, Long_I N0, Long_I N1)
 	: SvbaseUcharC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatUcharC::ScmatUcharC(CmatUchar_I a)
+	: SvbaseUcharC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Uchar &ScmatUcharC::operator()(Long_I i, Long_I j) const
@@ -247,7 +259,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatUchar();
-	ScmatUchar(Uchar *data, Long_I N0, Long_I N1); // unsafe
+	ScmatUchar(Uchar *data, Long_I N0, Long_I N1);
+	ScmatUchar(CmatUchar_IO a);
 
 	operator ScmatUcharC() const;
 
@@ -268,6 +281,9 @@ inline ScmatUchar::ScmatUchar() {}
 
 inline ScmatUchar::ScmatUchar(Uchar *data, Long_I N0, Long_I N1)
 	: SvbaseUchar(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatUchar::ScmatUchar(CmatUchar_IO a)
+	: SvbaseUchar(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatUchar::operator ScmatUcharC() const
 {
@@ -329,7 +345,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatIntC();
-	ScmatIntC(const Int *data, Long_I N0, Long_I N1); // unsafe
+	ScmatIntC(const Int *data, Long_I N0, Long_I N1);
+	ScmatIntC(CmatInt_I a);
 
 
 	const Int &operator()(Long_I i, Long_I j) const; // double indexing
@@ -349,6 +366,9 @@ inline ScmatIntC::ScmatIntC() {}
 
 inline ScmatIntC::ScmatIntC(const Int *data, Long_I N0, Long_I N1)
 	: SvbaseIntC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatIntC::ScmatIntC(CmatInt_I a)
+	: SvbaseIntC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Int &ScmatIntC::operator()(Long_I i, Long_I j) const
@@ -407,7 +427,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatInt();
-	ScmatInt(Int *data, Long_I N0, Long_I N1); // unsafe
+	ScmatInt(Int *data, Long_I N0, Long_I N1);
+	ScmatInt(CmatInt_IO a);
 
 	operator ScmatIntC() const;
 
@@ -428,6 +449,9 @@ inline ScmatInt::ScmatInt() {}
 
 inline ScmatInt::ScmatInt(Int *data, Long_I N0, Long_I N1)
 	: SvbaseInt(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatInt::ScmatInt(CmatInt_IO a)
+	: SvbaseInt(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatInt::operator ScmatIntC() const
 {
@@ -489,7 +513,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLlongC();
-	ScmatLlongC(const Llong *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLlongC(const Llong *data, Long_I N0, Long_I N1);
+	ScmatLlongC(CmatLlong_I a);
 
 
 	const Llong &operator()(Long_I i, Long_I j) const; // double indexing
@@ -509,6 +534,9 @@ inline ScmatLlongC::ScmatLlongC() {}
 
 inline ScmatLlongC::ScmatLlongC(const Llong *data, Long_I N0, Long_I N1)
 	: SvbaseLlongC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLlongC::ScmatLlongC(CmatLlong_I a)
+	: SvbaseLlongC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Llong &ScmatLlongC::operator()(Long_I i, Long_I j) const
@@ -567,7 +595,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLlong();
-	ScmatLlong(Llong *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLlong(Llong *data, Long_I N0, Long_I N1);
+	ScmatLlong(CmatLlong_IO a);
 
 	operator ScmatLlongC() const;
 
@@ -588,6 +617,9 @@ inline ScmatLlong::ScmatLlong() {}
 
 inline ScmatLlong::ScmatLlong(Llong *data, Long_I N0, Long_I N1)
 	: SvbaseLlong(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLlong::ScmatLlong(CmatLlong_IO a)
+	: SvbaseLlong(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatLlong::operator ScmatLlongC() const
 {
@@ -649,7 +681,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatFloatC();
-	ScmatFloatC(const Float *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFloatC(const Float *data, Long_I N0, Long_I N1);
+	ScmatFloatC(CmatFloat_I a);
 
 
 	const Float &operator()(Long_I i, Long_I j) const; // double indexing
@@ -669,6 +702,9 @@ inline ScmatFloatC::ScmatFloatC() {}
 
 inline ScmatFloatC::ScmatFloatC(const Float *data, Long_I N0, Long_I N1)
 	: SvbaseFloatC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatFloatC::ScmatFloatC(CmatFloat_I a)
+	: SvbaseFloatC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Float &ScmatFloatC::operator()(Long_I i, Long_I j) const
@@ -727,7 +763,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatFloat();
-	ScmatFloat(Float *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFloat(Float *data, Long_I N0, Long_I N1);
+	ScmatFloat(CmatFloat_IO a);
 
 	operator ScmatFloatC() const;
 
@@ -748,6 +785,9 @@ inline ScmatFloat::ScmatFloat() {}
 
 inline ScmatFloat::ScmatFloat(Float *data, Long_I N0, Long_I N1)
 	: SvbaseFloat(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatFloat::ScmatFloat(CmatFloat_IO a)
+	: SvbaseFloat(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatFloat::operator ScmatFloatC() const
 {
@@ -809,7 +849,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatDoubC();
-	ScmatDoubC(const Doub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatDoubC(const Doub *data, Long_I N0, Long_I N1);
+	ScmatDoubC(CmatDoub_I a);
 
 
 	const Doub &operator()(Long_I i, Long_I j) const; // double indexing
@@ -829,6 +870,9 @@ inline ScmatDoubC::ScmatDoubC() {}
 
 inline ScmatDoubC::ScmatDoubC(const Doub *data, Long_I N0, Long_I N1)
 	: SvbaseDoubC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatDoubC::ScmatDoubC(CmatDoub_I a)
+	: SvbaseDoubC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Doub &ScmatDoubC::operator()(Long_I i, Long_I j) const
@@ -887,7 +931,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatDoub();
-	ScmatDoub(Doub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatDoub(Doub *data, Long_I N0, Long_I N1);
+	ScmatDoub(CmatDoub_IO a);
 
 	operator ScmatDoubC() const;
 
@@ -908,6 +953,9 @@ inline ScmatDoub::ScmatDoub() {}
 
 inline ScmatDoub::ScmatDoub(Doub *data, Long_I N0, Long_I N1)
 	: SvbaseDoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatDoub::ScmatDoub(CmatDoub_IO a)
+	: SvbaseDoub(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatDoub::operator ScmatDoubC() const
 {
@@ -969,7 +1017,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLdoubC();
-	ScmatLdoubC(const Ldoub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLdoubC(const Ldoub *data, Long_I N0, Long_I N1);
+	ScmatLdoubC(CmatLdoub_I a);
 
 
 	const Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
@@ -989,6 +1038,9 @@ inline ScmatLdoubC::ScmatLdoubC() {}
 
 inline ScmatLdoubC::ScmatLdoubC(const Ldoub *data, Long_I N0, Long_I N1)
 	: SvbaseLdoubC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLdoubC::ScmatLdoubC(CmatLdoub_I a)
+	: SvbaseLdoubC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Ldoub &ScmatLdoubC::operator()(Long_I i, Long_I j) const
@@ -1047,7 +1099,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLdoub();
-	ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1);
+	ScmatLdoub(CmatLdoub_IO a);
 
 	operator ScmatLdoubC() const;
 
@@ -1068,6 +1121,9 @@ inline ScmatLdoub::ScmatLdoub() {}
 
 inline ScmatLdoub::ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1)
 	: SvbaseLdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLdoub::ScmatLdoub(CmatLdoub_IO a)
+	: SvbaseLdoub(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatLdoub::operator ScmatLdoubC() const
 {
@@ -1131,7 +1187,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatFcompC();
-	ScmatFcompC(const Fcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFcompC(const Fcomp *data, Long_I N0, Long_I N1);
+	ScmatFcompC(CmatFcomp_I a);
 
 
 	const Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1151,6 +1208,9 @@ inline ScmatFcompC::ScmatFcompC() {}
 
 inline ScmatFcompC::ScmatFcompC(const Fcomp *data, Long_I N0, Long_I N1)
 	: SvbaseFcompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatFcompC::ScmatFcompC(CmatFcomp_I a)
+	: SvbaseFcompC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Fcomp &ScmatFcompC::operator()(Long_I i, Long_I j) const
@@ -1209,7 +1269,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatFcomp();
-	ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1);
+	ScmatFcomp(CmatFcomp_IO a);
 
 	operator ScmatFcompC() const;
 
@@ -1230,6 +1291,9 @@ inline ScmatFcomp::ScmatFcomp() {}
 
 inline ScmatFcomp::ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1)
 	: SvbaseFcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatFcomp::ScmatFcomp(CmatFcomp_IO a)
+	: SvbaseFcomp(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatFcomp::operator ScmatFcompC() const
 {
@@ -1291,7 +1355,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatCompC();
-	ScmatCompC(const Comp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatCompC(const Comp *data, Long_I N0, Long_I N1);
+	ScmatCompC(CmatComp_I a);
 
 
 	const Comp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1311,6 +1376,9 @@ inline ScmatCompC::ScmatCompC() {}
 
 inline ScmatCompC::ScmatCompC(const Comp *data, Long_I N0, Long_I N1)
 	: SvbaseCompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatCompC::ScmatCompC(CmatComp_I a)
+	: SvbaseCompC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Comp &ScmatCompC::operator()(Long_I i, Long_I j) const
@@ -1369,7 +1437,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatComp();
-	ScmatComp(Comp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatComp(Comp *data, Long_I N0, Long_I N1);
+	ScmatComp(CmatComp_IO a);
 
 	operator ScmatCompC() const;
 
@@ -1390,6 +1459,9 @@ inline ScmatComp::ScmatComp() {}
 
 inline ScmatComp::ScmatComp(Comp *data, Long_I N0, Long_I N1)
 	: SvbaseComp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatComp::ScmatComp(CmatComp_IO a)
+	: SvbaseComp(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatComp::operator ScmatCompC() const
 {
@@ -1451,7 +1523,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLcompC();
-	ScmatLcompC(const Lcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLcompC(const Lcomp *data, Long_I N0, Long_I N1);
+	ScmatLcompC(CmatLcomp_I a);
 
 
 	const Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1471,6 +1544,9 @@ inline ScmatLcompC::ScmatLcompC() {}
 
 inline ScmatLcompC::ScmatLcompC(const Lcomp *data, Long_I N0, Long_I N1)
 	: SvbaseLcompC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLcompC::ScmatLcompC(CmatLcomp_I a)
+	: SvbaseLcompC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Lcomp &ScmatLcompC::operator()(Long_I i, Long_I j) const
@@ -1529,7 +1605,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLcomp();
-	ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1);
+	ScmatLcomp(CmatLcomp_IO a);
 
 	operator ScmatLcompC() const;
 
@@ -1550,6 +1627,9 @@ inline ScmatLcomp::ScmatLcomp() {}
 
 inline ScmatLcomp::ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1)
 	: SvbaseLcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLcomp::ScmatLcomp(CmatLcomp_IO a)
+	: SvbaseLcomp(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatLcomp::operator ScmatLcompC() const
 {
@@ -1613,7 +1693,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatFimagC();
-	ScmatFimagC(const Fimag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFimagC(const Fimag *data, Long_I N0, Long_I N1);
+	ScmatFimagC(CmatFimag_I a);
 
 
 	const Fimag &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1633,6 +1714,9 @@ inline ScmatFimagC::ScmatFimagC() {}
 
 inline ScmatFimagC::ScmatFimagC(const Fimag *data, Long_I N0, Long_I N1)
 	: SvbaseFimagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatFimagC::ScmatFimagC(CmatFimag_I a)
+	: SvbaseFimagC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Fimag &ScmatFimagC::operator()(Long_I i, Long_I j) const
@@ -1691,7 +1775,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatFimag();
-	ScmatFimag(Fimag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatFimag(Fimag *data, Long_I N0, Long_I N1);
+	ScmatFimag(CmatFimag_IO a);
 
 	operator ScmatFimagC() const;
 
@@ -1712,6 +1797,9 @@ inline ScmatFimag::ScmatFimag() {}
 
 inline ScmatFimag::ScmatFimag(Fimag *data, Long_I N0, Long_I N1)
 	: SvbaseFimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatFimag::ScmatFimag(CmatFimag_IO a)
+	: SvbaseFimag(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatFimag::operator ScmatFimagC() const
 {
@@ -1773,7 +1861,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatImagC();
-	ScmatImagC(const Imag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatImagC(const Imag *data, Long_I N0, Long_I N1);
+	ScmatImagC(CmatImag_I a);
 
 
 	const Imag &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1793,6 +1882,9 @@ inline ScmatImagC::ScmatImagC() {}
 
 inline ScmatImagC::ScmatImagC(const Imag *data, Long_I N0, Long_I N1)
 	: SvbaseImagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatImagC::ScmatImagC(CmatImag_I a)
+	: SvbaseImagC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Imag &ScmatImagC::operator()(Long_I i, Long_I j) const
@@ -1851,7 +1943,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatImag();
-	ScmatImag(Imag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatImag(Imag *data, Long_I N0, Long_I N1);
+	ScmatImag(CmatImag_IO a);
 
 	operator ScmatImagC() const;
 
@@ -1872,6 +1965,9 @@ inline ScmatImag::ScmatImag() {}
 
 inline ScmatImag::ScmatImag(Imag *data, Long_I N0, Long_I N1)
 	: SvbaseImag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatImag::ScmatImag(CmatImag_IO a)
+	: SvbaseImag(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatImag::operator ScmatImagC() const
 {
@@ -1933,7 +2029,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLimagC();
-	ScmatLimagC(const Limag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLimagC(const Limag *data, Long_I N0, Long_I N1);
+	ScmatLimagC(CmatLimag_I a);
 
 
 	const Limag &operator()(Long_I i, Long_I j) const; // double indexing
@@ -1953,6 +2050,9 @@ inline ScmatLimagC::ScmatLimagC() {}
 
 inline ScmatLimagC::ScmatLimagC(const Limag *data, Long_I N0, Long_I N1)
 	: SvbaseLimagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLimagC::ScmatLimagC(CmatLimag_I a)
+	: SvbaseLimagC(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 
 inline const Limag &ScmatLimagC::operator()(Long_I i, Long_I j) const
@@ -2011,7 +2111,8 @@ protected:
 	Long m_N0, m_N1;
 public:
 	ScmatLimag();
-	ScmatLimag(Limag *data, Long_I N0, Long_I N1); // unsafe
+	ScmatLimag(Limag *data, Long_I N0, Long_I N1);
+	ScmatLimag(CmatLimag_IO a);
 
 	operator ScmatLimagC() const;
 
@@ -2032,6 +2133,9 @@ inline ScmatLimag::ScmatLimag() {}
 
 inline ScmatLimag::ScmatLimag(Limag *data, Long_I N0, Long_I N1)
 	: SvbaseLimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatLimag::ScmatLimag(CmatLimag_IO a)
+	: SvbaseLimag(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 inline ScmatLimag::operator ScmatLimagC() const
 {

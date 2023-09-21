@@ -14,7 +14,7 @@ protected:
 public:
 	SvbaseCharC();
 	explicit SvbaseCharC(Long_I N);
-	SvbaseCharC(const Char *data, Long_I N); // unsafe
+	SvbaseCharC(const Char *data, Long_I N);
 	const Char* p() const;
 	Long size() const;
 	SvbaseCharC &operator=(const SvbaseCharC &rhs) = delete;
@@ -133,7 +133,7 @@ protected:
 public:
 	SvbaseChar();
 	explicit SvbaseChar(Long_I N);
-	SvbaseChar(Char *data, Long_I N); // unsafe
+	SvbaseChar(Char *data, Long_I N);
 	Char* p() const;
 	Long size() const;
 	SvbaseChar &operator=(const SvbaseChar &rhs) = delete;
@@ -257,7 +257,7 @@ protected:
 public:
 	SvbaseUcharC();
 	explicit SvbaseUcharC(Long_I N);
-	SvbaseUcharC(const Uchar *data, Long_I N); // unsafe
+	SvbaseUcharC(const Uchar *data, Long_I N);
 	const Uchar* p() const;
 	Long size() const;
 	SvbaseUcharC &operator=(const SvbaseUcharC &rhs) = delete;
@@ -376,7 +376,7 @@ protected:
 public:
 	SvbaseUchar();
 	explicit SvbaseUchar(Long_I N);
-	SvbaseUchar(Uchar *data, Long_I N); // unsafe
+	SvbaseUchar(Uchar *data, Long_I N);
 	Uchar* p() const;
 	Long size() const;
 	SvbaseUchar &operator=(const SvbaseUchar &rhs) = delete;
@@ -500,7 +500,7 @@ protected:
 public:
 	SvbaseIntC();
 	explicit SvbaseIntC(Long_I N);
-	SvbaseIntC(const Int *data, Long_I N); // unsafe
+	SvbaseIntC(const Int *data, Long_I N);
 	const Int* p() const;
 	Long size() const;
 	SvbaseIntC &operator=(const SvbaseIntC &rhs) = delete;
@@ -619,7 +619,7 @@ protected:
 public:
 	SvbaseInt();
 	explicit SvbaseInt(Long_I N);
-	SvbaseInt(Int *data, Long_I N); // unsafe
+	SvbaseInt(Int *data, Long_I N);
 	Int* p() const;
 	Long size() const;
 	SvbaseInt &operator=(const SvbaseInt &rhs) = delete;
@@ -743,7 +743,7 @@ protected:
 public:
 	SvbaseLlongC();
 	explicit SvbaseLlongC(Long_I N);
-	SvbaseLlongC(const Llong *data, Long_I N); // unsafe
+	SvbaseLlongC(const Llong *data, Long_I N);
 	const Llong* p() const;
 	Long size() const;
 	SvbaseLlongC &operator=(const SvbaseLlongC &rhs) = delete;
@@ -862,7 +862,7 @@ protected:
 public:
 	SvbaseLlong();
 	explicit SvbaseLlong(Long_I N);
-	SvbaseLlong(Llong *data, Long_I N); // unsafe
+	SvbaseLlong(Llong *data, Long_I N);
 	Llong* p() const;
 	Long size() const;
 	SvbaseLlong &operator=(const SvbaseLlong &rhs) = delete;
@@ -986,7 +986,7 @@ protected:
 public:
 	SvbaseFloatC();
 	explicit SvbaseFloatC(Long_I N);
-	SvbaseFloatC(const Float *data, Long_I N); // unsafe
+	SvbaseFloatC(const Float *data, Long_I N);
 	const Float* p() const;
 	Long size() const;
 	SvbaseFloatC &operator=(const SvbaseFloatC &rhs) = delete;
@@ -1105,7 +1105,7 @@ protected:
 public:
 	SvbaseFloat();
 	explicit SvbaseFloat(Long_I N);
-	SvbaseFloat(Float *data, Long_I N); // unsafe
+	SvbaseFloat(Float *data, Long_I N);
 	Float* p() const;
 	Long size() const;
 	SvbaseFloat &operator=(const SvbaseFloat &rhs) = delete;
@@ -1229,7 +1229,7 @@ protected:
 public:
 	SvbaseDoubC();
 	explicit SvbaseDoubC(Long_I N);
-	SvbaseDoubC(const Doub *data, Long_I N); // unsafe
+	SvbaseDoubC(const Doub *data, Long_I N);
 	const Doub* p() const;
 	Long size() const;
 	SvbaseDoubC &operator=(const SvbaseDoubC &rhs) = delete;
@@ -1348,7 +1348,7 @@ protected:
 public:
 	SvbaseDoub();
 	explicit SvbaseDoub(Long_I N);
-	SvbaseDoub(Doub *data, Long_I N); // unsafe
+	SvbaseDoub(Doub *data, Long_I N);
 	Doub* p() const;
 	Long size() const;
 	SvbaseDoub &operator=(const SvbaseDoub &rhs) = delete;
@@ -1472,7 +1472,7 @@ protected:
 public:
 	SvbaseLdoubC();
 	explicit SvbaseLdoubC(Long_I N);
-	SvbaseLdoubC(const Ldoub *data, Long_I N); // unsafe
+	SvbaseLdoubC(const Ldoub *data, Long_I N);
 	const Ldoub* p() const;
 	Long size() const;
 	SvbaseLdoubC &operator=(const SvbaseLdoubC &rhs) = delete;
@@ -1591,7 +1591,7 @@ protected:
 public:
 	SvbaseLdoub();
 	explicit SvbaseLdoub(Long_I N);
-	SvbaseLdoub(Ldoub *data, Long_I N); // unsafe
+	SvbaseLdoub(Ldoub *data, Long_I N);
 	Ldoub* p() const;
 	Long size() const;
 	SvbaseLdoub &operator=(const SvbaseLdoub &rhs) = delete;
@@ -1717,7 +1717,7 @@ protected:
 public:
 	SvbaseFcompC();
 	explicit SvbaseFcompC(Long_I N);
-	SvbaseFcompC(const Fcomp *data, Long_I N); // unsafe
+	SvbaseFcompC(const Fcomp *data, Long_I N);
 	const Fcomp* p() const;
 	Long size() const;
 	SvbaseFcompC &operator=(const SvbaseFcompC &rhs) = delete;
@@ -1836,7 +1836,7 @@ protected:
 public:
 	SvbaseFcomp();
 	explicit SvbaseFcomp(Long_I N);
-	SvbaseFcomp(Fcomp *data, Long_I N); // unsafe
+	SvbaseFcomp(Fcomp *data, Long_I N);
 	Fcomp* p() const;
 	Long size() const;
 	SvbaseFcomp &operator=(const SvbaseFcomp &rhs) = delete;
@@ -1960,7 +1960,7 @@ protected:
 public:
 	SvbaseCompC();
 	explicit SvbaseCompC(Long_I N);
-	SvbaseCompC(const Comp *data, Long_I N); // unsafe
+	SvbaseCompC(const Comp *data, Long_I N);
 	const Comp* p() const;
 	Long size() const;
 	SvbaseCompC &operator=(const SvbaseCompC &rhs) = delete;
@@ -2079,7 +2079,7 @@ protected:
 public:
 	SvbaseComp();
 	explicit SvbaseComp(Long_I N);
-	SvbaseComp(Comp *data, Long_I N); // unsafe
+	SvbaseComp(Comp *data, Long_I N);
 	Comp* p() const;
 	Long size() const;
 	SvbaseComp &operator=(const SvbaseComp &rhs) = delete;
@@ -2203,7 +2203,7 @@ protected:
 public:
 	SvbaseLcompC();
 	explicit SvbaseLcompC(Long_I N);
-	SvbaseLcompC(const Lcomp *data, Long_I N); // unsafe
+	SvbaseLcompC(const Lcomp *data, Long_I N);
 	const Lcomp* p() const;
 	Long size() const;
 	SvbaseLcompC &operator=(const SvbaseLcompC &rhs) = delete;
@@ -2322,7 +2322,7 @@ protected:
 public:
 	SvbaseLcomp();
 	explicit SvbaseLcomp(Long_I N);
-	SvbaseLcomp(Lcomp *data, Long_I N); // unsafe
+	SvbaseLcomp(Lcomp *data, Long_I N);
 	Lcomp* p() const;
 	Long size() const;
 	SvbaseLcomp &operator=(const SvbaseLcomp &rhs) = delete;
@@ -2448,7 +2448,7 @@ protected:
 public:
 	SvbaseFimagC();
 	explicit SvbaseFimagC(Long_I N);
-	SvbaseFimagC(const Fimag *data, Long_I N); // unsafe
+	SvbaseFimagC(const Fimag *data, Long_I N);
 	const Fimag* p() const;
 	Long size() const;
 	SvbaseFimagC &operator=(const SvbaseFimagC &rhs) = delete;
@@ -2567,7 +2567,7 @@ protected:
 public:
 	SvbaseFimag();
 	explicit SvbaseFimag(Long_I N);
-	SvbaseFimag(Fimag *data, Long_I N); // unsafe
+	SvbaseFimag(Fimag *data, Long_I N);
 	Fimag* p() const;
 	Long size() const;
 	SvbaseFimag &operator=(const SvbaseFimag &rhs) = delete;
@@ -2691,7 +2691,7 @@ protected:
 public:
 	SvbaseImagC();
 	explicit SvbaseImagC(Long_I N);
-	SvbaseImagC(const Imag *data, Long_I N); // unsafe
+	SvbaseImagC(const Imag *data, Long_I N);
 	const Imag* p() const;
 	Long size() const;
 	SvbaseImagC &operator=(const SvbaseImagC &rhs) = delete;
@@ -2810,7 +2810,7 @@ protected:
 public:
 	SvbaseImag();
 	explicit SvbaseImag(Long_I N);
-	SvbaseImag(Imag *data, Long_I N); // unsafe
+	SvbaseImag(Imag *data, Long_I N);
 	Imag* p() const;
 	Long size() const;
 	SvbaseImag &operator=(const SvbaseImag &rhs) = delete;
@@ -2934,7 +2934,7 @@ protected:
 public:
 	SvbaseLimagC();
 	explicit SvbaseLimagC(Long_I N);
-	SvbaseLimagC(const Limag *data, Long_I N); // unsafe
+	SvbaseLimagC(const Limag *data, Long_I N);
 	const Limag* p() const;
 	Long size() const;
 	SvbaseLimagC &operator=(const SvbaseLimagC &rhs) = delete;
@@ -3053,7 +3053,7 @@ protected:
 public:
 	SvbaseLimag();
 	explicit SvbaseLimag(Long_I N);
-	SvbaseLimag(Limag *data, Long_I N); // unsafe
+	SvbaseLimag(Limag *data, Long_I N);
 	Limag* p() const;
 	Long size() const;
 	SvbaseLimag &operator=(const SvbaseLimag &rhs) = delete;
@@ -3183,15 +3183,18 @@ class SvecCharC : public SvbaseCharC
 public:
 	SvecCharC() = default;
 	explicit SvecCharC(Long_I N);
-	SvecCharC(const Char *data, Long_I N); // unsafe
+	SvecCharC(const Char *data, Long_I N);
+	SvecCharC(VecChar_I v);
 	SvecCharC &operator=(const SvecCharC &rhs) = delete;
 };
 
-inline SvecCharC::SvecCharC(Long_I N) : SvbaseCharC(N)
-{}
+inline SvecCharC::SvecCharC(Long_I N) : SvbaseCharC(N) {}
 
 inline SvecCharC::SvecCharC(const Char *data, Long_I N)
 	: SvbaseCharC(data, N) {}
+
+inline SvecCharC::SvecCharC(VecChar_I v)
+	: SvbaseCharC(v.p(), v.size()) {}
 
 
 typedef const SvecCharC &SvecChar_I;
@@ -3208,16 +3211,19 @@ class SvecChar : public SvbaseChar
 public:
 	SvecChar() = default;
 	explicit SvecChar(Long_I N);
-	SvecChar(Char *data, Long_I N); // unsafe
+	SvecChar(Char *data, Long_I N);
+	SvecChar(VecChar_IO v);
 	SvecChar &operator=(const SvecChar &rhs) = delete;
 	operator SvecCharC() const;
 };
 
-inline SvecChar::SvecChar(Long_I N) : SvbaseChar(N)
-{}
+inline SvecChar::SvecChar(Long_I N) : SvbaseChar(N) {}
 
 inline SvecChar::SvecChar(Char *data, Long_I N)
 	: SvbaseChar(data, N) {}
+
+inline SvecChar::SvecChar(VecChar_IO v)
+	: SvbaseChar(v.p(), v.size()) {}
 
 inline SvecChar::operator SvecCharC() const
 {
@@ -3236,15 +3242,18 @@ class SvecUcharC : public SvbaseUcharC
 public:
 	SvecUcharC() = default;
 	explicit SvecUcharC(Long_I N);
-	SvecUcharC(const Uchar *data, Long_I N); // unsafe
+	SvecUcharC(const Uchar *data, Long_I N);
+	SvecUcharC(VecUchar_I v);
 	SvecUcharC &operator=(const SvecUcharC &rhs) = delete;
 };
 
-inline SvecUcharC::SvecUcharC(Long_I N) : SvbaseUcharC(N)
-{}
+inline SvecUcharC::SvecUcharC(Long_I N) : SvbaseUcharC(N) {}
 
 inline SvecUcharC::SvecUcharC(const Uchar *data, Long_I N)
 	: SvbaseUcharC(data, N) {}
+
+inline SvecUcharC::SvecUcharC(VecUchar_I v)
+	: SvbaseUcharC(v.p(), v.size()) {}
 
 
 typedef const SvecUcharC &SvecUchar_I;
@@ -3261,16 +3270,19 @@ class SvecUchar : public SvbaseUchar
 public:
 	SvecUchar() = default;
 	explicit SvecUchar(Long_I N);
-	SvecUchar(Uchar *data, Long_I N); // unsafe
+	SvecUchar(Uchar *data, Long_I N);
+	SvecUchar(VecUchar_IO v);
 	SvecUchar &operator=(const SvecUchar &rhs) = delete;
 	operator SvecUcharC() const;
 };
 
-inline SvecUchar::SvecUchar(Long_I N) : SvbaseUchar(N)
-{}
+inline SvecUchar::SvecUchar(Long_I N) : SvbaseUchar(N) {}
 
 inline SvecUchar::SvecUchar(Uchar *data, Long_I N)
 	: SvbaseUchar(data, N) {}
+
+inline SvecUchar::SvecUchar(VecUchar_IO v)
+	: SvbaseUchar(v.p(), v.size()) {}
 
 inline SvecUchar::operator SvecUcharC() const
 {
@@ -3289,15 +3301,18 @@ class SvecIntC : public SvbaseIntC
 public:
 	SvecIntC() = default;
 	explicit SvecIntC(Long_I N);
-	SvecIntC(const Int *data, Long_I N); // unsafe
+	SvecIntC(const Int *data, Long_I N);
+	SvecIntC(VecInt_I v);
 	SvecIntC &operator=(const SvecIntC &rhs) = delete;
 };
 
-inline SvecIntC::SvecIntC(Long_I N) : SvbaseIntC(N)
-{}
+inline SvecIntC::SvecIntC(Long_I N) : SvbaseIntC(N) {}
 
 inline SvecIntC::SvecIntC(const Int *data, Long_I N)
 	: SvbaseIntC(data, N) {}
+
+inline SvecIntC::SvecIntC(VecInt_I v)
+	: SvbaseIntC(v.p(), v.size()) {}
 
 
 typedef const SvecIntC &SvecInt_I;
@@ -3314,16 +3329,19 @@ class SvecInt : public SvbaseInt
 public:
 	SvecInt() = default;
 	explicit SvecInt(Long_I N);
-	SvecInt(Int *data, Long_I N); // unsafe
+	SvecInt(Int *data, Long_I N);
+	SvecInt(VecInt_IO v);
 	SvecInt &operator=(const SvecInt &rhs) = delete;
 	operator SvecIntC() const;
 };
 
-inline SvecInt::SvecInt(Long_I N) : SvbaseInt(N)
-{}
+inline SvecInt::SvecInt(Long_I N) : SvbaseInt(N) {}
 
 inline SvecInt::SvecInt(Int *data, Long_I N)
 	: SvbaseInt(data, N) {}
+
+inline SvecInt::SvecInt(VecInt_IO v)
+	: SvbaseInt(v.p(), v.size()) {}
 
 inline SvecInt::operator SvecIntC() const
 {
@@ -3342,15 +3360,18 @@ class SvecLlongC : public SvbaseLlongC
 public:
 	SvecLlongC() = default;
 	explicit SvecLlongC(Long_I N);
-	SvecLlongC(const Llong *data, Long_I N); // unsafe
+	SvecLlongC(const Llong *data, Long_I N);
+	SvecLlongC(VecLlong_I v);
 	SvecLlongC &operator=(const SvecLlongC &rhs) = delete;
 };
 
-inline SvecLlongC::SvecLlongC(Long_I N) : SvbaseLlongC(N)
-{}
+inline SvecLlongC::SvecLlongC(Long_I N) : SvbaseLlongC(N) {}
 
 inline SvecLlongC::SvecLlongC(const Llong *data, Long_I N)
 	: SvbaseLlongC(data, N) {}
+
+inline SvecLlongC::SvecLlongC(VecLlong_I v)
+	: SvbaseLlongC(v.p(), v.size()) {}
 
 
 typedef const SvecLlongC &SvecLlong_I;
@@ -3367,16 +3388,19 @@ class SvecLlong : public SvbaseLlong
 public:
 	SvecLlong() = default;
 	explicit SvecLlong(Long_I N);
-	SvecLlong(Llong *data, Long_I N); // unsafe
+	SvecLlong(Llong *data, Long_I N);
+	SvecLlong(VecLlong_IO v);
 	SvecLlong &operator=(const SvecLlong &rhs) = delete;
 	operator SvecLlongC() const;
 };
 
-inline SvecLlong::SvecLlong(Long_I N) : SvbaseLlong(N)
-{}
+inline SvecLlong::SvecLlong(Long_I N) : SvbaseLlong(N) {}
 
 inline SvecLlong::SvecLlong(Llong *data, Long_I N)
 	: SvbaseLlong(data, N) {}
+
+inline SvecLlong::SvecLlong(VecLlong_IO v)
+	: SvbaseLlong(v.p(), v.size()) {}
 
 inline SvecLlong::operator SvecLlongC() const
 {
@@ -3395,15 +3419,18 @@ class SvecFloatC : public SvbaseFloatC
 public:
 	SvecFloatC() = default;
 	explicit SvecFloatC(Long_I N);
-	SvecFloatC(const Float *data, Long_I N); // unsafe
+	SvecFloatC(const Float *data, Long_I N);
+	SvecFloatC(VecFloat_I v);
 	SvecFloatC &operator=(const SvecFloatC &rhs) = delete;
 };
 
-inline SvecFloatC::SvecFloatC(Long_I N) : SvbaseFloatC(N)
-{}
+inline SvecFloatC::SvecFloatC(Long_I N) : SvbaseFloatC(N) {}
 
 inline SvecFloatC::SvecFloatC(const Float *data, Long_I N)
 	: SvbaseFloatC(data, N) {}
+
+inline SvecFloatC::SvecFloatC(VecFloat_I v)
+	: SvbaseFloatC(v.p(), v.size()) {}
 
 
 typedef const SvecFloatC &SvecFloat_I;
@@ -3420,16 +3447,19 @@ class SvecFloat : public SvbaseFloat
 public:
 	SvecFloat() = default;
 	explicit SvecFloat(Long_I N);
-	SvecFloat(Float *data, Long_I N); // unsafe
+	SvecFloat(Float *data, Long_I N);
+	SvecFloat(VecFloat_IO v);
 	SvecFloat &operator=(const SvecFloat &rhs) = delete;
 	operator SvecFloatC() const;
 };
 
-inline SvecFloat::SvecFloat(Long_I N) : SvbaseFloat(N)
-{}
+inline SvecFloat::SvecFloat(Long_I N) : SvbaseFloat(N) {}
 
 inline SvecFloat::SvecFloat(Float *data, Long_I N)
 	: SvbaseFloat(data, N) {}
+
+inline SvecFloat::SvecFloat(VecFloat_IO v)
+	: SvbaseFloat(v.p(), v.size()) {}
 
 inline SvecFloat::operator SvecFloatC() const
 {
@@ -3448,15 +3478,18 @@ class SvecDoubC : public SvbaseDoubC
 public:
 	SvecDoubC() = default;
 	explicit SvecDoubC(Long_I N);
-	SvecDoubC(const Doub *data, Long_I N); // unsafe
+	SvecDoubC(const Doub *data, Long_I N);
+	SvecDoubC(VecDoub_I v);
 	SvecDoubC &operator=(const SvecDoubC &rhs) = delete;
 };
 
-inline SvecDoubC::SvecDoubC(Long_I N) : SvbaseDoubC(N)
-{}
+inline SvecDoubC::SvecDoubC(Long_I N) : SvbaseDoubC(N) {}
 
 inline SvecDoubC::SvecDoubC(const Doub *data, Long_I N)
 	: SvbaseDoubC(data, N) {}
+
+inline SvecDoubC::SvecDoubC(VecDoub_I v)
+	: SvbaseDoubC(v.p(), v.size()) {}
 
 
 typedef const SvecDoubC &SvecDoub_I;
@@ -3473,16 +3506,19 @@ class SvecDoub : public SvbaseDoub
 public:
 	SvecDoub() = default;
 	explicit SvecDoub(Long_I N);
-	SvecDoub(Doub *data, Long_I N); // unsafe
+	SvecDoub(Doub *data, Long_I N);
+	SvecDoub(VecDoub_IO v);
 	SvecDoub &operator=(const SvecDoub &rhs) = delete;
 	operator SvecDoubC() const;
 };
 
-inline SvecDoub::SvecDoub(Long_I N) : SvbaseDoub(N)
-{}
+inline SvecDoub::SvecDoub(Long_I N) : SvbaseDoub(N) {}
 
 inline SvecDoub::SvecDoub(Doub *data, Long_I N)
 	: SvbaseDoub(data, N) {}
+
+inline SvecDoub::SvecDoub(VecDoub_IO v)
+	: SvbaseDoub(v.p(), v.size()) {}
 
 inline SvecDoub::operator SvecDoubC() const
 {
@@ -3501,15 +3537,18 @@ class SvecLdoubC : public SvbaseLdoubC
 public:
 	SvecLdoubC() = default;
 	explicit SvecLdoubC(Long_I N);
-	SvecLdoubC(const Ldoub *data, Long_I N); // unsafe
+	SvecLdoubC(const Ldoub *data, Long_I N);
+	SvecLdoubC(VecLdoub_I v);
 	SvecLdoubC &operator=(const SvecLdoubC &rhs) = delete;
 };
 
-inline SvecLdoubC::SvecLdoubC(Long_I N) : SvbaseLdoubC(N)
-{}
+inline SvecLdoubC::SvecLdoubC(Long_I N) : SvbaseLdoubC(N) {}
 
 inline SvecLdoubC::SvecLdoubC(const Ldoub *data, Long_I N)
 	: SvbaseLdoubC(data, N) {}
+
+inline SvecLdoubC::SvecLdoubC(VecLdoub_I v)
+	: SvbaseLdoubC(v.p(), v.size()) {}
 
 
 typedef const SvecLdoubC &SvecLdoub_I;
@@ -3526,16 +3565,19 @@ class SvecLdoub : public SvbaseLdoub
 public:
 	SvecLdoub() = default;
 	explicit SvecLdoub(Long_I N);
-	SvecLdoub(Ldoub *data, Long_I N); // unsafe
+	SvecLdoub(Ldoub *data, Long_I N);
+	SvecLdoub(VecLdoub_IO v);
 	SvecLdoub &operator=(const SvecLdoub &rhs) = delete;
 	operator SvecLdoubC() const;
 };
 
-inline SvecLdoub::SvecLdoub(Long_I N) : SvbaseLdoub(N)
-{}
+inline SvecLdoub::SvecLdoub(Long_I N) : SvbaseLdoub(N) {}
 
 inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I N)
 	: SvbaseLdoub(data, N) {}
+
+inline SvecLdoub::SvecLdoub(VecLdoub_IO v)
+	: SvbaseLdoub(v.p(), v.size()) {}
 
 inline SvecLdoub::operator SvecLdoubC() const
 {
@@ -3556,15 +3598,18 @@ class SvecFcompC : public SvbaseFcompC
 public:
 	SvecFcompC() = default;
 	explicit SvecFcompC(Long_I N);
-	SvecFcompC(const Fcomp *data, Long_I N); // unsafe
+	SvecFcompC(const Fcomp *data, Long_I N);
+	SvecFcompC(VecFcomp_I v);
 	SvecFcompC &operator=(const SvecFcompC &rhs) = delete;
 };
 
-inline SvecFcompC::SvecFcompC(Long_I N) : SvbaseFcompC(N)
-{}
+inline SvecFcompC::SvecFcompC(Long_I N) : SvbaseFcompC(N) {}
 
 inline SvecFcompC::SvecFcompC(const Fcomp *data, Long_I N)
 	: SvbaseFcompC(data, N) {}
+
+inline SvecFcompC::SvecFcompC(VecFcomp_I v)
+	: SvbaseFcompC(v.p(), v.size()) {}
 
 
 typedef const SvecFcompC &SvecFcomp_I;
@@ -3581,16 +3626,19 @@ class SvecFcomp : public SvbaseFcomp
 public:
 	SvecFcomp() = default;
 	explicit SvecFcomp(Long_I N);
-	SvecFcomp(Fcomp *data, Long_I N); // unsafe
+	SvecFcomp(Fcomp *data, Long_I N);
+	SvecFcomp(VecFcomp_IO v);
 	SvecFcomp &operator=(const SvecFcomp &rhs) = delete;
 	operator SvecFcompC() const;
 };
 
-inline SvecFcomp::SvecFcomp(Long_I N) : SvbaseFcomp(N)
-{}
+inline SvecFcomp::SvecFcomp(Long_I N) : SvbaseFcomp(N) {}
 
 inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I N)
 	: SvbaseFcomp(data, N) {}
+
+inline SvecFcomp::SvecFcomp(VecFcomp_IO v)
+	: SvbaseFcomp(v.p(), v.size()) {}
 
 inline SvecFcomp::operator SvecFcompC() const
 {
@@ -3609,15 +3657,18 @@ class SvecCompC : public SvbaseCompC
 public:
 	SvecCompC() = default;
 	explicit SvecCompC(Long_I N);
-	SvecCompC(const Comp *data, Long_I N); // unsafe
+	SvecCompC(const Comp *data, Long_I N);
+	SvecCompC(VecComp_I v);
 	SvecCompC &operator=(const SvecCompC &rhs) = delete;
 };
 
-inline SvecCompC::SvecCompC(Long_I N) : SvbaseCompC(N)
-{}
+inline SvecCompC::SvecCompC(Long_I N) : SvbaseCompC(N) {}
 
 inline SvecCompC::SvecCompC(const Comp *data, Long_I N)
 	: SvbaseCompC(data, N) {}
+
+inline SvecCompC::SvecCompC(VecComp_I v)
+	: SvbaseCompC(v.p(), v.size()) {}
 
 
 typedef const SvecCompC &SvecComp_I;
@@ -3634,16 +3685,19 @@ class SvecComp : public SvbaseComp
 public:
 	SvecComp() = default;
 	explicit SvecComp(Long_I N);
-	SvecComp(Comp *data, Long_I N); // unsafe
+	SvecComp(Comp *data, Long_I N);
+	SvecComp(VecComp_IO v);
 	SvecComp &operator=(const SvecComp &rhs) = delete;
 	operator SvecCompC() const;
 };
 
-inline SvecComp::SvecComp(Long_I N) : SvbaseComp(N)
-{}
+inline SvecComp::SvecComp(Long_I N) : SvbaseComp(N) {}
 
 inline SvecComp::SvecComp(Comp *data, Long_I N)
 	: SvbaseComp(data, N) {}
+
+inline SvecComp::SvecComp(VecComp_IO v)
+	: SvbaseComp(v.p(), v.size()) {}
 
 inline SvecComp::operator SvecCompC() const
 {
@@ -3662,15 +3716,18 @@ class SvecLcompC : public SvbaseLcompC
 public:
 	SvecLcompC() = default;
 	explicit SvecLcompC(Long_I N);
-	SvecLcompC(const Lcomp *data, Long_I N); // unsafe
+	SvecLcompC(const Lcomp *data, Long_I N);
+	SvecLcompC(VecLcomp_I v);
 	SvecLcompC &operator=(const SvecLcompC &rhs) = delete;
 };
 
-inline SvecLcompC::SvecLcompC(Long_I N) : SvbaseLcompC(N)
-{}
+inline SvecLcompC::SvecLcompC(Long_I N) : SvbaseLcompC(N) {}
 
 inline SvecLcompC::SvecLcompC(const Lcomp *data, Long_I N)
 	: SvbaseLcompC(data, N) {}
+
+inline SvecLcompC::SvecLcompC(VecLcomp_I v)
+	: SvbaseLcompC(v.p(), v.size()) {}
 
 
 typedef const SvecLcompC &SvecLcomp_I;
@@ -3687,16 +3744,19 @@ class SvecLcomp : public SvbaseLcomp
 public:
 	SvecLcomp() = default;
 	explicit SvecLcomp(Long_I N);
-	SvecLcomp(Lcomp *data, Long_I N); // unsafe
+	SvecLcomp(Lcomp *data, Long_I N);
+	SvecLcomp(VecLcomp_IO v);
 	SvecLcomp &operator=(const SvecLcomp &rhs) = delete;
 	operator SvecLcompC() const;
 };
 
-inline SvecLcomp::SvecLcomp(Long_I N) : SvbaseLcomp(N)
-{}
+inline SvecLcomp::SvecLcomp(Long_I N) : SvbaseLcomp(N) {}
 
 inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I N)
 	: SvbaseLcomp(data, N) {}
+
+inline SvecLcomp::SvecLcomp(VecLcomp_IO v)
+	: SvbaseLcomp(v.p(), v.size()) {}
 
 inline SvecLcomp::operator SvecLcompC() const
 {
@@ -3717,15 +3777,18 @@ class SvecFimagC : public SvbaseFimagC
 public:
 	SvecFimagC() = default;
 	explicit SvecFimagC(Long_I N);
-	SvecFimagC(const Fimag *data, Long_I N); // unsafe
+	SvecFimagC(const Fimag *data, Long_I N);
+	SvecFimagC(VecFimag_I v);
 	SvecFimagC &operator=(const SvecFimagC &rhs) = delete;
 };
 
-inline SvecFimagC::SvecFimagC(Long_I N) : SvbaseFimagC(N)
-{}
+inline SvecFimagC::SvecFimagC(Long_I N) : SvbaseFimagC(N) {}
 
 inline SvecFimagC::SvecFimagC(const Fimag *data, Long_I N)
 	: SvbaseFimagC(data, N) {}
+
+inline SvecFimagC::SvecFimagC(VecFimag_I v)
+	: SvbaseFimagC(v.p(), v.size()) {}
 
 
 typedef const SvecFimagC &SvecFimag_I;
@@ -3742,16 +3805,19 @@ class SvecFimag : public SvbaseFimag
 public:
 	SvecFimag() = default;
 	explicit SvecFimag(Long_I N);
-	SvecFimag(Fimag *data, Long_I N); // unsafe
+	SvecFimag(Fimag *data, Long_I N);
+	SvecFimag(VecFimag_IO v);
 	SvecFimag &operator=(const SvecFimag &rhs) = delete;
 	operator SvecFimagC() const;
 };
 
-inline SvecFimag::SvecFimag(Long_I N) : SvbaseFimag(N)
-{}
+inline SvecFimag::SvecFimag(Long_I N) : SvbaseFimag(N) {}
 
 inline SvecFimag::SvecFimag(Fimag *data, Long_I N)
 	: SvbaseFimag(data, N) {}
+
+inline SvecFimag::SvecFimag(VecFimag_IO v)
+	: SvbaseFimag(v.p(), v.size()) {}
 
 inline SvecFimag::operator SvecFimagC() const
 {
@@ -3770,15 +3836,18 @@ class SvecImagC : public SvbaseImagC
 public:
 	SvecImagC() = default;
 	explicit SvecImagC(Long_I N);
-	SvecImagC(const Imag *data, Long_I N); // unsafe
+	SvecImagC(const Imag *data, Long_I N);
+	SvecImagC(VecImag_I v);
 	SvecImagC &operator=(const SvecImagC &rhs) = delete;
 };
 
-inline SvecImagC::SvecImagC(Long_I N) : SvbaseImagC(N)
-{}
+inline SvecImagC::SvecImagC(Long_I N) : SvbaseImagC(N) {}
 
 inline SvecImagC::SvecImagC(const Imag *data, Long_I N)
 	: SvbaseImagC(data, N) {}
+
+inline SvecImagC::SvecImagC(VecImag_I v)
+	: SvbaseImagC(v.p(), v.size()) {}
 
 
 typedef const SvecImagC &SvecImag_I;
@@ -3795,16 +3864,19 @@ class SvecImag : public SvbaseImag
 public:
 	SvecImag() = default;
 	explicit SvecImag(Long_I N);
-	SvecImag(Imag *data, Long_I N); // unsafe
+	SvecImag(Imag *data, Long_I N);
+	SvecImag(VecImag_IO v);
 	SvecImag &operator=(const SvecImag &rhs) = delete;
 	operator SvecImagC() const;
 };
 
-inline SvecImag::SvecImag(Long_I N) : SvbaseImag(N)
-{}
+inline SvecImag::SvecImag(Long_I N) : SvbaseImag(N) {}
 
 inline SvecImag::SvecImag(Imag *data, Long_I N)
 	: SvbaseImag(data, N) {}
+
+inline SvecImag::SvecImag(VecImag_IO v)
+	: SvbaseImag(v.p(), v.size()) {}
 
 inline SvecImag::operator SvecImagC() const
 {
@@ -3823,15 +3895,18 @@ class SvecLimagC : public SvbaseLimagC
 public:
 	SvecLimagC() = default;
 	explicit SvecLimagC(Long_I N);
-	SvecLimagC(const Limag *data, Long_I N); // unsafe
+	SvecLimagC(const Limag *data, Long_I N);
+	SvecLimagC(VecLimag_I v);
 	SvecLimagC &operator=(const SvecLimagC &rhs) = delete;
 };
 
-inline SvecLimagC::SvecLimagC(Long_I N) : SvbaseLimagC(N)
-{}
+inline SvecLimagC::SvecLimagC(Long_I N) : SvbaseLimagC(N) {}
 
 inline SvecLimagC::SvecLimagC(const Limag *data, Long_I N)
 	: SvbaseLimagC(data, N) {}
+
+inline SvecLimagC::SvecLimagC(VecLimag_I v)
+	: SvbaseLimagC(v.p(), v.size()) {}
 
 
 typedef const SvecLimagC &SvecLimag_I;
@@ -3848,16 +3923,19 @@ class SvecLimag : public SvbaseLimag
 public:
 	SvecLimag() = default;
 	explicit SvecLimag(Long_I N);
-	SvecLimag(Limag *data, Long_I N); // unsafe
+	SvecLimag(Limag *data, Long_I N);
+	SvecLimag(VecLimag_IO v);
 	SvecLimag &operator=(const SvecLimag &rhs) = delete;
 	operator SvecLimagC() const;
 };
 
-inline SvecLimag::SvecLimag(Long_I N) : SvbaseLimag(N)
-{}
+inline SvecLimag::SvecLimag(Long_I N) : SvbaseLimag(N) {}
 
 inline SvecLimag::SvecLimag(Limag *data, Long_I N)
 	: SvbaseLimag(data, N) {}
+
+inline SvecLimag::SvecLimag(VecLimag_IO v)
+	: SvbaseLimag(v.p(), v.size()) {}
 
 inline SvecLimag::operator SvecLimagC() const
 {
