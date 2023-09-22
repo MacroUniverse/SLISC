@@ -3,9 +3,9 @@
 
 namespace slisc {
 
-void veccpy(Long *, const Long *, Long);
+template <class T>
+void veccpy(T *, const T *, Long_I);
 
-void veccpy(Char *, const Char *, Long);
 
 class McooChar : public VbaseChar
 {
@@ -281,7 +281,6 @@ inline void McooChar::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-void veccpy(Int *, const Int *, Long);
 
 class McooInt : public VbaseInt
 {
@@ -557,7 +556,6 @@ inline void McooInt::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-void veccpy(Llong *, const Llong *, Long);
 
 class McooLlong : public VbaseLlong
 {
@@ -833,7 +831,6 @@ inline void McooLlong::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-void veccpy(Doub *, const Doub *, Long);
 
 class McooDoub : public VbaseDoub
 {
@@ -1109,7 +1106,6 @@ inline void McooDoub::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-void veccpy(Comp *, const Comp *, Long);
 
 class McooComp : public VbaseComp
 {

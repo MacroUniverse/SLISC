@@ -19,7 +19,7 @@ public:
 	@VecT@() = default;
 	explicit @VecT@(Long_I N);
 	@VecT@(const @VecT@ &rhs); // copy constructor
-	@VecT@ &operator=(const @VecT@ &rhs) = delete;
+	@VecT@ &operator=(const @VecT@ &rhs); // copy assignment
 	void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
 };
 
@@ -30,6 +30,15 @@ inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline @VecT@ &@VecT@::operator=(const @VecT@ &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
+	return *this;
 }
 
 inline void @VecT@::operator<<(@VecT@ &rhs)

@@ -4,12 +4,15 @@
 #include "../dense/Vec.h"
 
 namespace slisc {
+
+template <class T>
+void veccpy(T *, const T *, Long_I);
+
 //% tem('Diag', {'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';});
 //%----------------------------------------
 //% T = varargin{:};
 //% DiagT = ['Diag' T];
 //% VecT = ['Vec' T];
-void veccpy(@T@ *, const @T@ *, Llong_I);
 
 class @DiagT@ : public @VecT@
 {

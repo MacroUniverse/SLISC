@@ -9,8 +9,10 @@
 
 namespace slisc {
 
+template <class T>
+void veccpy(T *, const T *, Long_I);
+
 void vecset(Int *, Int_I, Long_I, Long_I);
-void veccpy(Int *, const Int *, Long_I);
 
 class CmobdInt
 {
@@ -179,7 +181,6 @@ inline void CmobdInt::resize(Long_I blk_size, Long_I Nblk)
 }
 
 void vecset(Llong *, Llong_I, Long_I, Long_I);
-void veccpy(Llong *, const Llong *, Long_I);
 
 class CmobdLlong
 {
@@ -348,7 +349,6 @@ inline void CmobdLlong::resize(Long_I blk_size, Long_I Nblk)
 }
 
 void vecset(Doub *, Doub_I, Long_I, Long_I);
-void veccpy(Doub *, const Doub *, Long_I);
 
 class CmobdDoub
 {
@@ -517,7 +517,6 @@ inline void CmobdDoub::resize(Long_I blk_size, Long_I Nblk)
 }
 
 void vecset(Comp *, Comp_I, Long_I, Long_I);
-void veccpy(Comp *, const Comp *, Long_I);
 
 class CmobdComp
 {

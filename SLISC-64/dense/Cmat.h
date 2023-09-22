@@ -11,8 +11,8 @@ protected:
 public:
 	CmatChar(): m_N0(0), m_N1(0) {};
 	CmatChar(Long_I N0, Long_I N1);
-	CmatChar(const CmatChar &rhs);        // Copy constructor
-	CmatChar &operator=(const CmatChar &rhs) = delete;
+	CmatChar(const CmatChar &rhs); // copy constructor
+	CmatChar &operator=(const CmatChar &rhs); // copy assignment
 	void operator<<(CmatChar &rhs); // move data and rhs.resize(0, 0)
 	Char& operator()(Long_I i, Long_I j);    // double indexing
 	const Char& operator()(Long_I i, Long_I j) const;
@@ -31,6 +31,15 @@ inline CmatChar::CmatChar(const CmatChar &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatChar &CmatChar::operator=(const CmatChar &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Char)*size());
+	return *this;
 }
 
 inline void CmatChar::operator<<(CmatChar &rhs)
@@ -103,8 +112,8 @@ protected:
 public:
 	CmatUchar(): m_N0(0), m_N1(0) {};
 	CmatUchar(Long_I N0, Long_I N1);
-	CmatUchar(const CmatUchar &rhs);        // Copy constructor
-	CmatUchar &operator=(const CmatUchar &rhs) = delete;
+	CmatUchar(const CmatUchar &rhs); // copy constructor
+	CmatUchar &operator=(const CmatUchar &rhs); // copy assignment
 	void operator<<(CmatUchar &rhs); // move data and rhs.resize(0, 0)
 	Uchar& operator()(Long_I i, Long_I j);    // double indexing
 	const Uchar& operator()(Long_I i, Long_I j) const;
@@ -123,6 +132,15 @@ inline CmatUchar::CmatUchar(const CmatUchar &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatUchar &CmatUchar::operator=(const CmatUchar &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Uchar)*size());
+	return *this;
 }
 
 inline void CmatUchar::operator<<(CmatUchar &rhs)
@@ -195,8 +213,8 @@ protected:
 public:
 	CmatInt(): m_N0(0), m_N1(0) {};
 	CmatInt(Long_I N0, Long_I N1);
-	CmatInt(const CmatInt &rhs);        // Copy constructor
-	CmatInt &operator=(const CmatInt &rhs) = delete;
+	CmatInt(const CmatInt &rhs); // copy constructor
+	CmatInt &operator=(const CmatInt &rhs); // copy assignment
 	void operator<<(CmatInt &rhs); // move data and rhs.resize(0, 0)
 	Int& operator()(Long_I i, Long_I j);    // double indexing
 	const Int& operator()(Long_I i, Long_I j) const;
@@ -215,6 +233,15 @@ inline CmatInt::CmatInt(const CmatInt &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rh
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatInt &CmatInt::operator=(const CmatInt &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Int)*size());
+	return *this;
 }
 
 inline void CmatInt::operator<<(CmatInt &rhs)
@@ -287,8 +314,8 @@ protected:
 public:
 	CmatLlong(): m_N0(0), m_N1(0) {};
 	CmatLlong(Long_I N0, Long_I N1);
-	CmatLlong(const CmatLlong &rhs);        // Copy constructor
-	CmatLlong &operator=(const CmatLlong &rhs) = delete;
+	CmatLlong(const CmatLlong &rhs); // copy constructor
+	CmatLlong &operator=(const CmatLlong &rhs); // copy assignment
 	void operator<<(CmatLlong &rhs); // move data and rhs.resize(0, 0)
 	Llong& operator()(Long_I i, Long_I j);    // double indexing
 	const Llong& operator()(Long_I i, Long_I j) const;
@@ -307,6 +334,15 @@ inline CmatLlong::CmatLlong(const CmatLlong &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatLlong &CmatLlong::operator=(const CmatLlong &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Llong)*size());
+	return *this;
 }
 
 inline void CmatLlong::operator<<(CmatLlong &rhs)
@@ -379,8 +415,8 @@ protected:
 public:
 	CmatFloat(): m_N0(0), m_N1(0) {};
 	CmatFloat(Long_I N0, Long_I N1);
-	CmatFloat(const CmatFloat &rhs);        // Copy constructor
-	CmatFloat &operator=(const CmatFloat &rhs) = delete;
+	CmatFloat(const CmatFloat &rhs); // copy constructor
+	CmatFloat &operator=(const CmatFloat &rhs); // copy assignment
 	void operator<<(CmatFloat &rhs); // move data and rhs.resize(0, 0)
 	Float& operator()(Long_I i, Long_I j);    // double indexing
 	const Float& operator()(Long_I i, Long_I j) const;
@@ -399,6 +435,15 @@ inline CmatFloat::CmatFloat(const CmatFloat &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatFloat &CmatFloat::operator=(const CmatFloat &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Float)*size());
+	return *this;
 }
 
 inline void CmatFloat::operator<<(CmatFloat &rhs)
@@ -471,8 +516,8 @@ protected:
 public:
 	CmatDoub(): m_N0(0), m_N1(0) {};
 	CmatDoub(Long_I N0, Long_I N1);
-	CmatDoub(const CmatDoub &rhs);        // Copy constructor
-	CmatDoub &operator=(const CmatDoub &rhs) = delete;
+	CmatDoub(const CmatDoub &rhs); // copy constructor
+	CmatDoub &operator=(const CmatDoub &rhs); // copy assignment
 	void operator<<(CmatDoub &rhs); // move data and rhs.resize(0, 0)
 	Doub& operator()(Long_I i, Long_I j);    // double indexing
 	const Doub& operator()(Long_I i, Long_I j) const;
@@ -491,6 +536,15 @@ inline CmatDoub::CmatDoub(const CmatDoub &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatDoub &CmatDoub::operator=(const CmatDoub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Doub)*size());
+	return *this;
 }
 
 inline void CmatDoub::operator<<(CmatDoub &rhs)
@@ -563,8 +617,8 @@ protected:
 public:
 	CmatLdoub(): m_N0(0), m_N1(0) {};
 	CmatLdoub(Long_I N0, Long_I N1);
-	CmatLdoub(const CmatLdoub &rhs);        // Copy constructor
-	CmatLdoub &operator=(const CmatLdoub &rhs) = delete;
+	CmatLdoub(const CmatLdoub &rhs); // copy constructor
+	CmatLdoub &operator=(const CmatLdoub &rhs); // copy assignment
 	void operator<<(CmatLdoub &rhs); // move data and rhs.resize(0, 0)
 	Ldoub& operator()(Long_I i, Long_I j);    // double indexing
 	const Ldoub& operator()(Long_I i, Long_I j) const;
@@ -583,6 +637,15 @@ inline CmatLdoub::CmatLdoub(const CmatLdoub &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatLdoub &CmatLdoub::operator=(const CmatLdoub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Ldoub)*size());
+	return *this;
 }
 
 inline void CmatLdoub::operator<<(CmatLdoub &rhs)
@@ -656,8 +719,8 @@ protected:
 public:
 	CmatFcomp(): m_N0(0), m_N1(0) {};
 	CmatFcomp(Long_I N0, Long_I N1);
-	CmatFcomp(const CmatFcomp &rhs);        // Copy constructor
-	CmatFcomp &operator=(const CmatFcomp &rhs) = delete;
+	CmatFcomp(const CmatFcomp &rhs); // copy constructor
+	CmatFcomp &operator=(const CmatFcomp &rhs); // copy assignment
 	void operator<<(CmatFcomp &rhs); // move data and rhs.resize(0, 0)
 	Fcomp& operator()(Long_I i, Long_I j);    // double indexing
 	const Fcomp& operator()(Long_I i, Long_I j) const;
@@ -676,6 +739,15 @@ inline CmatFcomp::CmatFcomp(const CmatFcomp &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatFcomp &CmatFcomp::operator=(const CmatFcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Fcomp)*size());
+	return *this;
 }
 
 inline void CmatFcomp::operator<<(CmatFcomp &rhs)
@@ -748,8 +820,8 @@ protected:
 public:
 	CmatComp(): m_N0(0), m_N1(0) {};
 	CmatComp(Long_I N0, Long_I N1);
-	CmatComp(const CmatComp &rhs);        // Copy constructor
-	CmatComp &operator=(const CmatComp &rhs) = delete;
+	CmatComp(const CmatComp &rhs); // copy constructor
+	CmatComp &operator=(const CmatComp &rhs); // copy assignment
 	void operator<<(CmatComp &rhs); // move data and rhs.resize(0, 0)
 	Comp& operator()(Long_I i, Long_I j);    // double indexing
 	const Comp& operator()(Long_I i, Long_I j) const;
@@ -768,6 +840,15 @@ inline CmatComp::CmatComp(const CmatComp &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatComp &CmatComp::operator=(const CmatComp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Comp)*size());
+	return *this;
 }
 
 inline void CmatComp::operator<<(CmatComp &rhs)
@@ -840,8 +921,8 @@ protected:
 public:
 	CmatLcomp(): m_N0(0), m_N1(0) {};
 	CmatLcomp(Long_I N0, Long_I N1);
-	CmatLcomp(const CmatLcomp &rhs);        // Copy constructor
-	CmatLcomp &operator=(const CmatLcomp &rhs) = delete;
+	CmatLcomp(const CmatLcomp &rhs); // copy constructor
+	CmatLcomp &operator=(const CmatLcomp &rhs); // copy assignment
 	void operator<<(CmatLcomp &rhs); // move data and rhs.resize(0, 0)
 	Lcomp& operator()(Long_I i, Long_I j);    // double indexing
 	const Lcomp& operator()(Long_I i, Long_I j) const;
@@ -860,6 +941,15 @@ inline CmatLcomp::CmatLcomp(const CmatLcomp &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatLcomp &CmatLcomp::operator=(const CmatLcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Lcomp)*size());
+	return *this;
 }
 
 inline void CmatLcomp::operator<<(CmatLcomp &rhs)
@@ -933,8 +1023,8 @@ protected:
 public:
 	CmatFimag(): m_N0(0), m_N1(0) {};
 	CmatFimag(Long_I N0, Long_I N1);
-	CmatFimag(const CmatFimag &rhs);        // Copy constructor
-	CmatFimag &operator=(const CmatFimag &rhs) = delete;
+	CmatFimag(const CmatFimag &rhs); // copy constructor
+	CmatFimag &operator=(const CmatFimag &rhs); // copy assignment
 	void operator<<(CmatFimag &rhs); // move data and rhs.resize(0, 0)
 	Fimag& operator()(Long_I i, Long_I j);    // double indexing
 	const Fimag& operator()(Long_I i, Long_I j) const;
@@ -953,6 +1043,15 @@ inline CmatFimag::CmatFimag(const CmatFimag &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatFimag &CmatFimag::operator=(const CmatFimag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Fimag)*size());
+	return *this;
 }
 
 inline void CmatFimag::operator<<(CmatFimag &rhs)
@@ -1025,8 +1124,8 @@ protected:
 public:
 	CmatImag(): m_N0(0), m_N1(0) {};
 	CmatImag(Long_I N0, Long_I N1);
-	CmatImag(const CmatImag &rhs);        // Copy constructor
-	CmatImag &operator=(const CmatImag &rhs) = delete;
+	CmatImag(const CmatImag &rhs); // copy constructor
+	CmatImag &operator=(const CmatImag &rhs); // copy assignment
 	void operator<<(CmatImag &rhs); // move data and rhs.resize(0, 0)
 	Imag& operator()(Long_I i, Long_I j);    // double indexing
 	const Imag& operator()(Long_I i, Long_I j) const;
@@ -1045,6 +1144,15 @@ inline CmatImag::CmatImag(const CmatImag &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatImag &CmatImag::operator=(const CmatImag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Imag)*size());
+	return *this;
 }
 
 inline void CmatImag::operator<<(CmatImag &rhs)
@@ -1117,8 +1225,8 @@ protected:
 public:
 	CmatLimag(): m_N0(0), m_N1(0) {};
 	CmatLimag(Long_I N0, Long_I N1);
-	CmatLimag(const CmatLimag &rhs);        // Copy constructor
-	CmatLimag &operator=(const CmatLimag &rhs) = delete;
+	CmatLimag(const CmatLimag &rhs); // copy constructor
+	CmatLimag &operator=(const CmatLimag &rhs); // copy assignment
 	void operator<<(CmatLimag &rhs); // move data and rhs.resize(0, 0)
 	Limag& operator()(Long_I i, Long_I j);    // double indexing
 	const Limag& operator()(Long_I i, Long_I j) const;
@@ -1137,6 +1245,15 @@ inline CmatLimag::CmatLimag(const CmatLimag &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline CmatLimag &CmatLimag::operator=(const CmatLimag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Limag)*size());
+	return *this;
 }
 
 inline void CmatLimag::operator<<(CmatLimag &rhs)

@@ -4,7 +4,10 @@
 #include "../dense/Vec.h"
 
 namespace slisc {
-void veccpy(Int *, const Int *, Llong_I);
+
+template <class T>
+void veccpy(T *, const T *, Long_I);
+
 
 class DiagInt : public VecInt
 {
@@ -72,7 +75,6 @@ inline const DiagInt &diag(VecInt_I v)
 typedef const DiagInt &DiagInt_I;
 typedef DiagInt &DiagInt_O, &DiagInt_IO;
 
-void veccpy(Llong *, const Llong *, Llong_I);
 
 class DiagLlong : public VecLlong
 {
@@ -140,7 +142,6 @@ inline const DiagLlong &diag(VecLlong_I v)
 typedef const DiagLlong &DiagLlong_I;
 typedef DiagLlong &DiagLlong_O, &DiagLlong_IO;
 
-void veccpy(Doub *, const Doub *, Llong_I);
 
 class DiagDoub : public VecDoub
 {
@@ -208,7 +209,6 @@ inline const DiagDoub &diag(VecDoub_I v)
 typedef const DiagDoub &DiagDoub_I;
 typedef DiagDoub &DiagDoub_O, &DiagDoub_IO;
 
-void veccpy(Qdoub *, const Qdoub *, Llong_I);
 
 class DiagQdoub : public VecQdoub
 {
@@ -276,7 +276,6 @@ inline const DiagQdoub &diag(VecQdoub_I v)
 typedef const DiagQdoub &DiagQdoub_I;
 typedef DiagQdoub &DiagQdoub_O, &DiagQdoub_IO;
 
-void veccpy(Comp *, const Comp *, Llong_I);
 
 class DiagComp : public VecComp
 {
@@ -344,7 +343,6 @@ inline const DiagComp &diag(VecComp_I v)
 typedef const DiagComp &DiagComp_I;
 typedef DiagComp &DiagComp_O, &DiagComp_IO;
 
-void veccpy(Qcomp *, const Qcomp *, Llong_I);
 
 class DiagQcomp : public VecQcomp
 {

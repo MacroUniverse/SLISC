@@ -11,7 +11,8 @@ protected:
 public:
 	Cmat4Char(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Char(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Char(const Cmat4Char &rhs);   // Copy constructor
+	Cmat4Char(const Cmat4Char &rhs);   // copy constructor
+	Cmat4Char &operator=(const Cmat4Char &rhs); // copy assignment
 	void operator<<(Cmat4Char &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Char &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -32,6 +33,15 @@ inline Cmat4Char::Cmat4Char(const Cmat4Char &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Char &Cmat4Char::operator=(const Cmat4Char &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Char)*size());
+	return *this;
 }
 
 inline void Cmat4Char::operator<<(Cmat4Char &rhs)
@@ -106,7 +116,8 @@ protected:
 public:
 	Cmat4Int(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Int(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Int(const Cmat4Int &rhs);   // Copy constructor
+	Cmat4Int(const Cmat4Int &rhs);   // copy constructor
+	Cmat4Int &operator=(const Cmat4Int &rhs); // copy assignment
 	void operator<<(Cmat4Int &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Int &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -127,6 +138,15 @@ inline Cmat4Int::Cmat4Int(const Cmat4Int &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Int &Cmat4Int::operator=(const Cmat4Int &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Int)*size());
+	return *this;
 }
 
 inline void Cmat4Int::operator<<(Cmat4Int &rhs)
@@ -201,7 +221,8 @@ protected:
 public:
 	Cmat4Llong(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Llong(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Llong(const Cmat4Llong &rhs);   // Copy constructor
+	Cmat4Llong(const Cmat4Llong &rhs);   // copy constructor
+	Cmat4Llong &operator=(const Cmat4Llong &rhs); // copy assignment
 	void operator<<(Cmat4Llong &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Llong &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -222,6 +243,15 @@ inline Cmat4Llong::Cmat4Llong(const Cmat4Llong &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Llong &Cmat4Llong::operator=(const Cmat4Llong &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Llong)*size());
+	return *this;
 }
 
 inline void Cmat4Llong::operator<<(Cmat4Llong &rhs)
@@ -296,7 +326,8 @@ protected:
 public:
 	Cmat4Float(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Float(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Float(const Cmat4Float &rhs);   // Copy constructor
+	Cmat4Float(const Cmat4Float &rhs);   // copy constructor
+	Cmat4Float &operator=(const Cmat4Float &rhs); // copy assignment
 	void operator<<(Cmat4Float &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Float &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -317,6 +348,15 @@ inline Cmat4Float::Cmat4Float(const Cmat4Float &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Float &Cmat4Float::operator=(const Cmat4Float &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Float)*size());
+	return *this;
 }
 
 inline void Cmat4Float::operator<<(Cmat4Float &rhs)
@@ -391,7 +431,8 @@ protected:
 public:
 	Cmat4Doub(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Doub(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Doub(const Cmat4Doub &rhs);   // Copy constructor
+	Cmat4Doub(const Cmat4Doub &rhs);   // copy constructor
+	Cmat4Doub &operator=(const Cmat4Doub &rhs); // copy assignment
 	void operator<<(Cmat4Doub &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Doub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -412,6 +453,15 @@ inline Cmat4Doub::Cmat4Doub(const Cmat4Doub &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Doub &Cmat4Doub::operator=(const Cmat4Doub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Doub)*size());
+	return *this;
 }
 
 inline void Cmat4Doub::operator<<(Cmat4Doub &rhs)
@@ -486,7 +536,8 @@ protected:
 public:
 	Cmat4Ldoub(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Ldoub(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Ldoub(const Cmat4Ldoub &rhs);   // Copy constructor
+	Cmat4Ldoub(const Cmat4Ldoub &rhs);   // copy constructor
+	Cmat4Ldoub &operator=(const Cmat4Ldoub &rhs); // copy assignment
 	void operator<<(Cmat4Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Ldoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -507,6 +558,15 @@ inline Cmat4Ldoub::Cmat4Ldoub(const Cmat4Ldoub &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Ldoub &Cmat4Ldoub::operator=(const Cmat4Ldoub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Ldoub)*size());
+	return *this;
 }
 
 inline void Cmat4Ldoub::operator<<(Cmat4Ldoub &rhs)
@@ -581,7 +641,8 @@ protected:
 public:
 	Cmat4Qdoub(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Qdoub(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Qdoub(const Cmat4Qdoub &rhs);   // Copy constructor
+	Cmat4Qdoub(const Cmat4Qdoub &rhs);   // copy constructor
+	Cmat4Qdoub &operator=(const Cmat4Qdoub &rhs); // copy assignment
 	void operator<<(Cmat4Qdoub &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Qdoub &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -602,6 +663,15 @@ inline Cmat4Qdoub::Cmat4Qdoub(const Cmat4Qdoub &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Qdoub &Cmat4Qdoub::operator=(const Cmat4Qdoub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Qdoub)*size());
+	return *this;
 }
 
 inline void Cmat4Qdoub::operator<<(Cmat4Qdoub &rhs)
@@ -676,7 +746,8 @@ protected:
 public:
 	Cmat4Fcomp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Fcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Fcomp(const Cmat4Fcomp &rhs);   // Copy constructor
+	Cmat4Fcomp(const Cmat4Fcomp &rhs);   // copy constructor
+	Cmat4Fcomp &operator=(const Cmat4Fcomp &rhs); // copy assignment
 	void operator<<(Cmat4Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Fcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -697,6 +768,15 @@ inline Cmat4Fcomp::Cmat4Fcomp(const Cmat4Fcomp &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Fcomp &Cmat4Fcomp::operator=(const Cmat4Fcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Fcomp)*size());
+	return *this;
 }
 
 inline void Cmat4Fcomp::operator<<(Cmat4Fcomp &rhs)
@@ -771,7 +851,8 @@ protected:
 public:
 	Cmat4Comp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Comp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Comp(const Cmat4Comp &rhs);   // Copy constructor
+	Cmat4Comp(const Cmat4Comp &rhs);   // copy constructor
+	Cmat4Comp &operator=(const Cmat4Comp &rhs); // copy assignment
 	void operator<<(Cmat4Comp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Comp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -792,6 +873,15 @@ inline Cmat4Comp::Cmat4Comp(const Cmat4Comp &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Comp &Cmat4Comp::operator=(const Cmat4Comp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Comp)*size());
+	return *this;
 }
 
 inline void Cmat4Comp::operator<<(Cmat4Comp &rhs)
@@ -866,7 +956,8 @@ protected:
 public:
 	Cmat4Lcomp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Lcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Lcomp(const Cmat4Lcomp &rhs);   // Copy constructor
+	Cmat4Lcomp(const Cmat4Lcomp &rhs);   // copy constructor
+	Cmat4Lcomp &operator=(const Cmat4Lcomp &rhs); // copy assignment
 	void operator<<(Cmat4Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Lcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -887,6 +978,15 @@ inline Cmat4Lcomp::Cmat4Lcomp(const Cmat4Lcomp &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Lcomp &Cmat4Lcomp::operator=(const Cmat4Lcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Lcomp)*size());
+	return *this;
 }
 
 inline void Cmat4Lcomp::operator<<(Cmat4Lcomp &rhs)
@@ -961,7 +1061,8 @@ protected:
 public:
 	Cmat4Qcomp(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Qcomp(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Qcomp(const Cmat4Qcomp &rhs);   // Copy constructor
+	Cmat4Qcomp(const Cmat4Qcomp &rhs);   // copy constructor
+	Cmat4Qcomp &operator=(const Cmat4Qcomp &rhs); // copy assignment
 	void operator<<(Cmat4Qcomp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Qcomp &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -982,6 +1083,15 @@ inline Cmat4Qcomp::Cmat4Qcomp(const Cmat4Qcomp &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Qcomp &Cmat4Qcomp::operator=(const Cmat4Qcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Qcomp)*size());
+	return *this;
 }
 
 inline void Cmat4Qcomp::operator<<(Cmat4Qcomp &rhs)
@@ -1056,7 +1166,8 @@ protected:
 public:
 	Cmat4Fimag(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Fimag(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Fimag(const Cmat4Fimag &rhs);   // Copy constructor
+	Cmat4Fimag(const Cmat4Fimag &rhs);   // copy constructor
+	Cmat4Fimag &operator=(const Cmat4Fimag &rhs); // copy assignment
 	void operator<<(Cmat4Fimag &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Fimag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -1077,6 +1188,15 @@ inline Cmat4Fimag::Cmat4Fimag(const Cmat4Fimag &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Fimag &Cmat4Fimag::operator=(const Cmat4Fimag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Fimag)*size());
+	return *this;
 }
 
 inline void Cmat4Fimag::operator<<(Cmat4Fimag &rhs)
@@ -1151,7 +1271,8 @@ protected:
 public:
 	Cmat4Imag(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Imag(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Imag(const Cmat4Imag &rhs);   // Copy constructor
+	Cmat4Imag(const Cmat4Imag &rhs);   // copy constructor
+	Cmat4Imag &operator=(const Cmat4Imag &rhs); // copy assignment
 	void operator<<(Cmat4Imag &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Imag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -1172,6 +1293,15 @@ inline Cmat4Imag::Cmat4Imag(const Cmat4Imag &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Imag &Cmat4Imag::operator=(const Cmat4Imag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Imag)*size());
+	return *this;
 }
 
 inline void Cmat4Imag::operator<<(Cmat4Imag &rhs)
@@ -1246,7 +1376,8 @@ protected:
 public:
 	Cmat4Limag(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	Cmat4Limag(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	Cmat4Limag(const Cmat4Limag &rhs);   // Copy constructor
+	Cmat4Limag(const Cmat4Limag &rhs);   // copy constructor
+	Cmat4Limag &operator=(const Cmat4Limag &rhs); // copy assignment
 	void operator<<(Cmat4Limag &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	Limag &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
@@ -1267,6 +1398,15 @@ inline Cmat4Limag::Cmat4Limag(const Cmat4Limag &rhs): Base(rhs),
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline Cmat4Limag &Cmat4Limag::operator=(const Cmat4Limag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Limag)*size());
+	return *this;
 }
 
 inline void Cmat4Limag::operator<<(Cmat4Limag &rhs)

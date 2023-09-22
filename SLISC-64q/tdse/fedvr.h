@@ -486,7 +486,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D2.n0() != Nx || D2.n1() != Nx || D2.nnz() != 0)
+	if (D2.n0() != Nx || D2.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -504,6 +504,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	}
 
 	// calculate D2 matrix
+	D2.resize(0);
 	D2.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
 	for (i = 0; i < Nfe; ++i) {
 		// blocks without boundary
@@ -566,7 +567,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecD
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
 	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
-		D2.n0() != Nx || D2.n0() != Nx)
+		D2.n0() != Nx || D2.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -599,13 +600,14 @@ inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D.n0() != Nx || D.n1() != Nx || D.nnz() != 0)
+	if (D.n0() != Nx || D.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
 	Doub s, coeff;
 
 	// calculate D matrix
+	D.resize(0);
 	D.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
 
 	// blocks without boundary
@@ -659,8 +661,7 @@ inline void D_matrix(McooDoub_O D, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDou
 	Long Nfe = bounds.size() - 1; // number of finite elements
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
-		D.n0() != Nx || D.n1() != Nx)
+	if (x.size() != Nx || w.size() != Nx || u.size() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -1063,7 +1064,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D2.n0() != Nx || D2.n1() != Nx || D2.nnz() != 0)
+	if (D2.n0() != Nx || D2.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -1081,6 +1082,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 	}
 
 	// calculate D2 matrix
+	D2.resize(0);
 	D2.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
 	for (i = 0; i < Nfe; ++i) {
 		// blocks without boundary
@@ -1143,7 +1145,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_O x, VecQdoub_O w, VecQdoub_O u, 
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
 	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
-		D2.n0() != Nx || D2.n0() != Nx)
+		D2.n0() != Nx || D2.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
@@ -1176,13 +1178,14 @@ inline void D_matrix(McooQdoub_O D, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I d
 	Long Ngs = w0.size();
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (D.n0() != Nx || D.n1() != Nx || D.nnz() != 0)
+	if (D.n0() != Nx || D.n1() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 
 	Qdoub s, coeff;
 
 	// calculate D matrix
+	D.resize(0);
 	D.reserve(fedvr_d2_nnz(Ngs, Nfe)); // # non-zero elements
 
 	// blocks without boundary
@@ -1236,8 +1239,7 @@ inline void D_matrix(McooQdoub_O D, VecQdoub_O x, VecQdoub_O w, VecQdoub_O u, Ve
 	Long Nfe = bounds.size() - 1; // number of finite elements
 #ifdef SLS_CHECK_SHAPES
 	Long Nx = Nfe * (Ngs - 1) - 1;
-	if (x.size() != Nx || w.size() != Nx || u.size() != Nx ||
-		D.n0() != Nx || D.n1() != Nx)
+	if (x.size() != Nx || w.size() != Nx || u.size() != Nx)
 		SLS_ERR("wrong shape!");
 #endif
 

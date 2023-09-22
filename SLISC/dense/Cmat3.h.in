@@ -21,7 +21,7 @@ public:
 	@Cmat3T@(): m_N0(0), m_N1(0), m_N2(0) {};
 	@Cmat3T@(Long_I N0, Long_I N1, Long_I N2);
 	@Cmat3T@(const @Cmat3T@ &rhs); // copy constructor
-	@Cmat3T@ &operator=(const @Cmat3T@ &rhs) = delete;
+	@Cmat3T@ &operator=(const @Cmat3T@ &rhs); // copy assignment
 	void operator<<(@Cmat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	@T@ &operator()(Long_I i, Long_I j, Long_I k);
@@ -46,6 +46,15 @@ inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline @Cmat3T@ &@Cmat3T@::operator=(const @Cmat3T@ &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1(), rhs.n2());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
+	return *this;
 }
 
 inline void @Cmat3T@::resize(Long_I N0, Long_I N1, Long_I N2)

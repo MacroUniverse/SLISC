@@ -3,7 +3,8 @@
 
 namespace slisc {
 
-void veccpy(Long *, const Long *, Long);
+template <class T>
+void veccpy(T *, const T *, Long_I);
 
 //% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'; 'Qdoub'; 'Qcomp'; });
 //%----------------------------
@@ -11,7 +12,6 @@ void veccpy(Long *, const Long *, Long);
 //% McooT = ['Mcoo', T];
 //% VbaseT = ['Vbase', T];
 //% VecT = ['Vec', T];
-void veccpy(@T@ *, const @T@ *, Long);
 
 class @McooT@ : public @VbaseT@
 {

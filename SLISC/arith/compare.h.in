@@ -184,10 +184,10 @@ inline bool operator!=(VecBool_I v1, VecBool_I v2)
 { return !(v1 == v2); }
 
 //% tem('v==s', { 'VecInt'; 'VecLlong';
-//%   'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp'; 'DvecInt';
-//%   'DvecDoub'; 'DvecQdoub';
+//%  'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp'; 'DvecInt';
+//%  'DvecDoub'; 'DvecQdoub';
 //%  'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
-//%   'MatDoub'; 'Mat3Doub'; 'Cmat3Doub'; 'Cmat3Qdoub'; });
+//%  'MatDoub'; 'Mat3Doub'; 'Cmat3Doub'; 'Cmat3Qdoub'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline bool operator==(@T@_I v, @Ts@_I s)

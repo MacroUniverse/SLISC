@@ -210,7 +210,7 @@ public:
 	explicit @Class@(Long_I N);
 	@Class@(@CT@ *data, Long_I N);
 	@Class@(Vec@T@@suffix@ v);
-	@Class@ &operator=(const @Class@ &rhs) = delete;
+	@Class@ &operator=(const @Class@ &v); // shalow copy
 //% if ~constness
 	operator @SvecTC@() const;
 //% end
@@ -223,6 +223,13 @@ inline @Class@::@Class@(@CT@ *data, Long_I N)
 
 inline @Class@::@Class@(Vec@T@@suffix@ v)
 	: @Base@(v.p(), v.size()) {}
+
+inline @Class@ &@Class@::operator=(const @Class@ &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 //% if ~constness
 inline @Class@::operator @SvecTC@() const

@@ -1,6 +1,7 @@
 #pragma once
 #include "../global.h"
 #include "../arith/Imag.h"
+#include "../dense/Vec.h"
 
 // this class is not memory safe!
 // "C" means lower level const
@@ -3667,7 +3668,7 @@ public:
 	explicit SvecCharC(Long_I N);
 	SvecCharC(const Char *data, Long_I N);
 	SvecCharC(VecChar_I v);
-	SvecCharC &operator=(const SvecCharC &rhs) = delete;
+	SvecCharC &operator=(const SvecCharC &v); // shalow copy
 };
 
 inline SvecCharC::SvecCharC(Long_I N) : SvbaseCharC(N) {}
@@ -3677,6 +3678,13 @@ inline SvecCharC::SvecCharC(const Char *data, Long_I N)
 
 inline SvecCharC::SvecCharC(VecChar_I v)
 	: SvbaseCharC(v.p(), v.size()) {}
+
+inline SvecCharC &SvecCharC::operator=(const SvecCharC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecCharC &SvecChar_I;
@@ -3695,7 +3703,7 @@ public:
 	explicit SvecChar(Long_I N);
 	SvecChar(Char *data, Long_I N);
 	SvecChar(VecChar_IO v);
-	SvecChar &operator=(const SvecChar &rhs) = delete;
+	SvecChar &operator=(const SvecChar &v); // shalow copy
 	operator SvecCharC() const;
 };
 
@@ -3706,6 +3714,13 @@ inline SvecChar::SvecChar(Char *data, Long_I N)
 
 inline SvecChar::SvecChar(VecChar_IO v)
 	: SvbaseChar(v.p(), v.size()) {}
+
+inline SvecChar &SvecChar::operator=(const SvecChar &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecChar::operator SvecCharC() const
 {
@@ -3726,7 +3741,7 @@ public:
 	explicit SvecUcharC(Long_I N);
 	SvecUcharC(const Uchar *data, Long_I N);
 	SvecUcharC(VecUchar_I v);
-	SvecUcharC &operator=(const SvecUcharC &rhs) = delete;
+	SvecUcharC &operator=(const SvecUcharC &v); // shalow copy
 };
 
 inline SvecUcharC::SvecUcharC(Long_I N) : SvbaseUcharC(N) {}
@@ -3736,6 +3751,13 @@ inline SvecUcharC::SvecUcharC(const Uchar *data, Long_I N)
 
 inline SvecUcharC::SvecUcharC(VecUchar_I v)
 	: SvbaseUcharC(v.p(), v.size()) {}
+
+inline SvecUcharC &SvecUcharC::operator=(const SvecUcharC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecUcharC &SvecUchar_I;
@@ -3754,7 +3776,7 @@ public:
 	explicit SvecUchar(Long_I N);
 	SvecUchar(Uchar *data, Long_I N);
 	SvecUchar(VecUchar_IO v);
-	SvecUchar &operator=(const SvecUchar &rhs) = delete;
+	SvecUchar &operator=(const SvecUchar &v); // shalow copy
 	operator SvecUcharC() const;
 };
 
@@ -3765,6 +3787,13 @@ inline SvecUchar::SvecUchar(Uchar *data, Long_I N)
 
 inline SvecUchar::SvecUchar(VecUchar_IO v)
 	: SvbaseUchar(v.p(), v.size()) {}
+
+inline SvecUchar &SvecUchar::operator=(const SvecUchar &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecUchar::operator SvecUcharC() const
 {
@@ -3785,7 +3814,7 @@ public:
 	explicit SvecIntC(Long_I N);
 	SvecIntC(const Int *data, Long_I N);
 	SvecIntC(VecInt_I v);
-	SvecIntC &operator=(const SvecIntC &rhs) = delete;
+	SvecIntC &operator=(const SvecIntC &v); // shalow copy
 };
 
 inline SvecIntC::SvecIntC(Long_I N) : SvbaseIntC(N) {}
@@ -3795,6 +3824,13 @@ inline SvecIntC::SvecIntC(const Int *data, Long_I N)
 
 inline SvecIntC::SvecIntC(VecInt_I v)
 	: SvbaseIntC(v.p(), v.size()) {}
+
+inline SvecIntC &SvecIntC::operator=(const SvecIntC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecIntC &SvecInt_I;
@@ -3813,7 +3849,7 @@ public:
 	explicit SvecInt(Long_I N);
 	SvecInt(Int *data, Long_I N);
 	SvecInt(VecInt_IO v);
-	SvecInt &operator=(const SvecInt &rhs) = delete;
+	SvecInt &operator=(const SvecInt &v); // shalow copy
 	operator SvecIntC() const;
 };
 
@@ -3824,6 +3860,13 @@ inline SvecInt::SvecInt(Int *data, Long_I N)
 
 inline SvecInt::SvecInt(VecInt_IO v)
 	: SvbaseInt(v.p(), v.size()) {}
+
+inline SvecInt &SvecInt::operator=(const SvecInt &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecInt::operator SvecIntC() const
 {
@@ -3844,7 +3887,7 @@ public:
 	explicit SvecLlongC(Long_I N);
 	SvecLlongC(const Llong *data, Long_I N);
 	SvecLlongC(VecLlong_I v);
-	SvecLlongC &operator=(const SvecLlongC &rhs) = delete;
+	SvecLlongC &operator=(const SvecLlongC &v); // shalow copy
 };
 
 inline SvecLlongC::SvecLlongC(Long_I N) : SvbaseLlongC(N) {}
@@ -3854,6 +3897,13 @@ inline SvecLlongC::SvecLlongC(const Llong *data, Long_I N)
 
 inline SvecLlongC::SvecLlongC(VecLlong_I v)
 	: SvbaseLlongC(v.p(), v.size()) {}
+
+inline SvecLlongC &SvecLlongC::operator=(const SvecLlongC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecLlongC &SvecLlong_I;
@@ -3872,7 +3922,7 @@ public:
 	explicit SvecLlong(Long_I N);
 	SvecLlong(Llong *data, Long_I N);
 	SvecLlong(VecLlong_IO v);
-	SvecLlong &operator=(const SvecLlong &rhs) = delete;
+	SvecLlong &operator=(const SvecLlong &v); // shalow copy
 	operator SvecLlongC() const;
 };
 
@@ -3883,6 +3933,13 @@ inline SvecLlong::SvecLlong(Llong *data, Long_I N)
 
 inline SvecLlong::SvecLlong(VecLlong_IO v)
 	: SvbaseLlong(v.p(), v.size()) {}
+
+inline SvecLlong &SvecLlong::operator=(const SvecLlong &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecLlong::operator SvecLlongC() const
 {
@@ -3903,7 +3960,7 @@ public:
 	explicit SvecFloatC(Long_I N);
 	SvecFloatC(const Float *data, Long_I N);
 	SvecFloatC(VecFloat_I v);
-	SvecFloatC &operator=(const SvecFloatC &rhs) = delete;
+	SvecFloatC &operator=(const SvecFloatC &v); // shalow copy
 };
 
 inline SvecFloatC::SvecFloatC(Long_I N) : SvbaseFloatC(N) {}
@@ -3913,6 +3970,13 @@ inline SvecFloatC::SvecFloatC(const Float *data, Long_I N)
 
 inline SvecFloatC::SvecFloatC(VecFloat_I v)
 	: SvbaseFloatC(v.p(), v.size()) {}
+
+inline SvecFloatC &SvecFloatC::operator=(const SvecFloatC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecFloatC &SvecFloat_I;
@@ -3931,7 +3995,7 @@ public:
 	explicit SvecFloat(Long_I N);
 	SvecFloat(Float *data, Long_I N);
 	SvecFloat(VecFloat_IO v);
-	SvecFloat &operator=(const SvecFloat &rhs) = delete;
+	SvecFloat &operator=(const SvecFloat &v); // shalow copy
 	operator SvecFloatC() const;
 };
 
@@ -3942,6 +4006,13 @@ inline SvecFloat::SvecFloat(Float *data, Long_I N)
 
 inline SvecFloat::SvecFloat(VecFloat_IO v)
 	: SvbaseFloat(v.p(), v.size()) {}
+
+inline SvecFloat &SvecFloat::operator=(const SvecFloat &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecFloat::operator SvecFloatC() const
 {
@@ -3962,7 +4033,7 @@ public:
 	explicit SvecDoubC(Long_I N);
 	SvecDoubC(const Doub *data, Long_I N);
 	SvecDoubC(VecDoub_I v);
-	SvecDoubC &operator=(const SvecDoubC &rhs) = delete;
+	SvecDoubC &operator=(const SvecDoubC &v); // shalow copy
 };
 
 inline SvecDoubC::SvecDoubC(Long_I N) : SvbaseDoubC(N) {}
@@ -3972,6 +4043,13 @@ inline SvecDoubC::SvecDoubC(const Doub *data, Long_I N)
 
 inline SvecDoubC::SvecDoubC(VecDoub_I v)
 	: SvbaseDoubC(v.p(), v.size()) {}
+
+inline SvecDoubC &SvecDoubC::operator=(const SvecDoubC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecDoubC &SvecDoub_I;
@@ -3990,7 +4068,7 @@ public:
 	explicit SvecDoub(Long_I N);
 	SvecDoub(Doub *data, Long_I N);
 	SvecDoub(VecDoub_IO v);
-	SvecDoub &operator=(const SvecDoub &rhs) = delete;
+	SvecDoub &operator=(const SvecDoub &v); // shalow copy
 	operator SvecDoubC() const;
 };
 
@@ -4001,6 +4079,13 @@ inline SvecDoub::SvecDoub(Doub *data, Long_I N)
 
 inline SvecDoub::SvecDoub(VecDoub_IO v)
 	: SvbaseDoub(v.p(), v.size()) {}
+
+inline SvecDoub &SvecDoub::operator=(const SvecDoub &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecDoub::operator SvecDoubC() const
 {
@@ -4021,7 +4106,7 @@ public:
 	explicit SvecLdoubC(Long_I N);
 	SvecLdoubC(const Ldoub *data, Long_I N);
 	SvecLdoubC(VecLdoub_I v);
-	SvecLdoubC &operator=(const SvecLdoubC &rhs) = delete;
+	SvecLdoubC &operator=(const SvecLdoubC &v); // shalow copy
 };
 
 inline SvecLdoubC::SvecLdoubC(Long_I N) : SvbaseLdoubC(N) {}
@@ -4031,6 +4116,13 @@ inline SvecLdoubC::SvecLdoubC(const Ldoub *data, Long_I N)
 
 inline SvecLdoubC::SvecLdoubC(VecLdoub_I v)
 	: SvbaseLdoubC(v.p(), v.size()) {}
+
+inline SvecLdoubC &SvecLdoubC::operator=(const SvecLdoubC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecLdoubC &SvecLdoub_I;
@@ -4049,7 +4141,7 @@ public:
 	explicit SvecLdoub(Long_I N);
 	SvecLdoub(Ldoub *data, Long_I N);
 	SvecLdoub(VecLdoub_IO v);
-	SvecLdoub &operator=(const SvecLdoub &rhs) = delete;
+	SvecLdoub &operator=(const SvecLdoub &v); // shalow copy
 	operator SvecLdoubC() const;
 };
 
@@ -4060,6 +4152,13 @@ inline SvecLdoub::SvecLdoub(Ldoub *data, Long_I N)
 
 inline SvecLdoub::SvecLdoub(VecLdoub_IO v)
 	: SvbaseLdoub(v.p(), v.size()) {}
+
+inline SvecLdoub &SvecLdoub::operator=(const SvecLdoub &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecLdoub::operator SvecLdoubC() const
 {
@@ -4080,7 +4179,7 @@ public:
 	explicit SvecQdoubC(Long_I N);
 	SvecQdoubC(const Qdoub *data, Long_I N);
 	SvecQdoubC(VecQdoub_I v);
-	SvecQdoubC &operator=(const SvecQdoubC &rhs) = delete;
+	SvecQdoubC &operator=(const SvecQdoubC &v); // shalow copy
 };
 
 inline SvecQdoubC::SvecQdoubC(Long_I N) : SvbaseQdoubC(N) {}
@@ -4090,6 +4189,13 @@ inline SvecQdoubC::SvecQdoubC(const Qdoub *data, Long_I N)
 
 inline SvecQdoubC::SvecQdoubC(VecQdoub_I v)
 	: SvbaseQdoubC(v.p(), v.size()) {}
+
+inline SvecQdoubC &SvecQdoubC::operator=(const SvecQdoubC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecQdoubC &SvecQdoub_I;
@@ -4108,7 +4214,7 @@ public:
 	explicit SvecQdoub(Long_I N);
 	SvecQdoub(Qdoub *data, Long_I N);
 	SvecQdoub(VecQdoub_IO v);
-	SvecQdoub &operator=(const SvecQdoub &rhs) = delete;
+	SvecQdoub &operator=(const SvecQdoub &v); // shalow copy
 	operator SvecQdoubC() const;
 };
 
@@ -4119,6 +4225,13 @@ inline SvecQdoub::SvecQdoub(Qdoub *data, Long_I N)
 
 inline SvecQdoub::SvecQdoub(VecQdoub_IO v)
 	: SvbaseQdoub(v.p(), v.size()) {}
+
+inline SvecQdoub &SvecQdoub::operator=(const SvecQdoub &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecQdoub::operator SvecQdoubC() const
 {
@@ -4139,7 +4252,7 @@ public:
 	explicit SvecFcompC(Long_I N);
 	SvecFcompC(const Fcomp *data, Long_I N);
 	SvecFcompC(VecFcomp_I v);
-	SvecFcompC &operator=(const SvecFcompC &rhs) = delete;
+	SvecFcompC &operator=(const SvecFcompC &v); // shalow copy
 };
 
 inline SvecFcompC::SvecFcompC(Long_I N) : SvbaseFcompC(N) {}
@@ -4149,6 +4262,13 @@ inline SvecFcompC::SvecFcompC(const Fcomp *data, Long_I N)
 
 inline SvecFcompC::SvecFcompC(VecFcomp_I v)
 	: SvbaseFcompC(v.p(), v.size()) {}
+
+inline SvecFcompC &SvecFcompC::operator=(const SvecFcompC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecFcompC &SvecFcomp_I;
@@ -4167,7 +4287,7 @@ public:
 	explicit SvecFcomp(Long_I N);
 	SvecFcomp(Fcomp *data, Long_I N);
 	SvecFcomp(VecFcomp_IO v);
-	SvecFcomp &operator=(const SvecFcomp &rhs) = delete;
+	SvecFcomp &operator=(const SvecFcomp &v); // shalow copy
 	operator SvecFcompC() const;
 };
 
@@ -4178,6 +4298,13 @@ inline SvecFcomp::SvecFcomp(Fcomp *data, Long_I N)
 
 inline SvecFcomp::SvecFcomp(VecFcomp_IO v)
 	: SvbaseFcomp(v.p(), v.size()) {}
+
+inline SvecFcomp &SvecFcomp::operator=(const SvecFcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecFcomp::operator SvecFcompC() const
 {
@@ -4198,7 +4325,7 @@ public:
 	explicit SvecCompC(Long_I N);
 	SvecCompC(const Comp *data, Long_I N);
 	SvecCompC(VecComp_I v);
-	SvecCompC &operator=(const SvecCompC &rhs) = delete;
+	SvecCompC &operator=(const SvecCompC &v); // shalow copy
 };
 
 inline SvecCompC::SvecCompC(Long_I N) : SvbaseCompC(N) {}
@@ -4208,6 +4335,13 @@ inline SvecCompC::SvecCompC(const Comp *data, Long_I N)
 
 inline SvecCompC::SvecCompC(VecComp_I v)
 	: SvbaseCompC(v.p(), v.size()) {}
+
+inline SvecCompC &SvecCompC::operator=(const SvecCompC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecCompC &SvecComp_I;
@@ -4226,7 +4360,7 @@ public:
 	explicit SvecComp(Long_I N);
 	SvecComp(Comp *data, Long_I N);
 	SvecComp(VecComp_IO v);
-	SvecComp &operator=(const SvecComp &rhs) = delete;
+	SvecComp &operator=(const SvecComp &v); // shalow copy
 	operator SvecCompC() const;
 };
 
@@ -4237,6 +4371,13 @@ inline SvecComp::SvecComp(Comp *data, Long_I N)
 
 inline SvecComp::SvecComp(VecComp_IO v)
 	: SvbaseComp(v.p(), v.size()) {}
+
+inline SvecComp &SvecComp::operator=(const SvecComp &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecComp::operator SvecCompC() const
 {
@@ -4257,7 +4398,7 @@ public:
 	explicit SvecLcompC(Long_I N);
 	SvecLcompC(const Lcomp *data, Long_I N);
 	SvecLcompC(VecLcomp_I v);
-	SvecLcompC &operator=(const SvecLcompC &rhs) = delete;
+	SvecLcompC &operator=(const SvecLcompC &v); // shalow copy
 };
 
 inline SvecLcompC::SvecLcompC(Long_I N) : SvbaseLcompC(N) {}
@@ -4267,6 +4408,13 @@ inline SvecLcompC::SvecLcompC(const Lcomp *data, Long_I N)
 
 inline SvecLcompC::SvecLcompC(VecLcomp_I v)
 	: SvbaseLcompC(v.p(), v.size()) {}
+
+inline SvecLcompC &SvecLcompC::operator=(const SvecLcompC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecLcompC &SvecLcomp_I;
@@ -4285,7 +4433,7 @@ public:
 	explicit SvecLcomp(Long_I N);
 	SvecLcomp(Lcomp *data, Long_I N);
 	SvecLcomp(VecLcomp_IO v);
-	SvecLcomp &operator=(const SvecLcomp &rhs) = delete;
+	SvecLcomp &operator=(const SvecLcomp &v); // shalow copy
 	operator SvecLcompC() const;
 };
 
@@ -4296,6 +4444,13 @@ inline SvecLcomp::SvecLcomp(Lcomp *data, Long_I N)
 
 inline SvecLcomp::SvecLcomp(VecLcomp_IO v)
 	: SvbaseLcomp(v.p(), v.size()) {}
+
+inline SvecLcomp &SvecLcomp::operator=(const SvecLcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecLcomp::operator SvecLcompC() const
 {
@@ -4316,7 +4471,7 @@ public:
 	explicit SvecQcompC(Long_I N);
 	SvecQcompC(const Qcomp *data, Long_I N);
 	SvecQcompC(VecQcomp_I v);
-	SvecQcompC &operator=(const SvecQcompC &rhs) = delete;
+	SvecQcompC &operator=(const SvecQcompC &v); // shalow copy
 };
 
 inline SvecQcompC::SvecQcompC(Long_I N) : SvbaseQcompC(N) {}
@@ -4326,6 +4481,13 @@ inline SvecQcompC::SvecQcompC(const Qcomp *data, Long_I N)
 
 inline SvecQcompC::SvecQcompC(VecQcomp_I v)
 	: SvbaseQcompC(v.p(), v.size()) {}
+
+inline SvecQcompC &SvecQcompC::operator=(const SvecQcompC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecQcompC &SvecQcomp_I;
@@ -4344,7 +4506,7 @@ public:
 	explicit SvecQcomp(Long_I N);
 	SvecQcomp(Qcomp *data, Long_I N);
 	SvecQcomp(VecQcomp_IO v);
-	SvecQcomp &operator=(const SvecQcomp &rhs) = delete;
+	SvecQcomp &operator=(const SvecQcomp &v); // shalow copy
 	operator SvecQcompC() const;
 };
 
@@ -4355,6 +4517,13 @@ inline SvecQcomp::SvecQcomp(Qcomp *data, Long_I N)
 
 inline SvecQcomp::SvecQcomp(VecQcomp_IO v)
 	: SvbaseQcomp(v.p(), v.size()) {}
+
+inline SvecQcomp &SvecQcomp::operator=(const SvecQcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecQcomp::operator SvecQcompC() const
 {
@@ -4375,7 +4544,7 @@ public:
 	explicit SvecFimagC(Long_I N);
 	SvecFimagC(const Fimag *data, Long_I N);
 	SvecFimagC(VecFimag_I v);
-	SvecFimagC &operator=(const SvecFimagC &rhs) = delete;
+	SvecFimagC &operator=(const SvecFimagC &v); // shalow copy
 };
 
 inline SvecFimagC::SvecFimagC(Long_I N) : SvbaseFimagC(N) {}
@@ -4385,6 +4554,13 @@ inline SvecFimagC::SvecFimagC(const Fimag *data, Long_I N)
 
 inline SvecFimagC::SvecFimagC(VecFimag_I v)
 	: SvbaseFimagC(v.p(), v.size()) {}
+
+inline SvecFimagC &SvecFimagC::operator=(const SvecFimagC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecFimagC &SvecFimag_I;
@@ -4403,7 +4579,7 @@ public:
 	explicit SvecFimag(Long_I N);
 	SvecFimag(Fimag *data, Long_I N);
 	SvecFimag(VecFimag_IO v);
-	SvecFimag &operator=(const SvecFimag &rhs) = delete;
+	SvecFimag &operator=(const SvecFimag &v); // shalow copy
 	operator SvecFimagC() const;
 };
 
@@ -4414,6 +4590,13 @@ inline SvecFimag::SvecFimag(Fimag *data, Long_I N)
 
 inline SvecFimag::SvecFimag(VecFimag_IO v)
 	: SvbaseFimag(v.p(), v.size()) {}
+
+inline SvecFimag &SvecFimag::operator=(const SvecFimag &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecFimag::operator SvecFimagC() const
 {
@@ -4434,7 +4617,7 @@ public:
 	explicit SvecImagC(Long_I N);
 	SvecImagC(const Imag *data, Long_I N);
 	SvecImagC(VecImag_I v);
-	SvecImagC &operator=(const SvecImagC &rhs) = delete;
+	SvecImagC &operator=(const SvecImagC &v); // shalow copy
 };
 
 inline SvecImagC::SvecImagC(Long_I N) : SvbaseImagC(N) {}
@@ -4444,6 +4627,13 @@ inline SvecImagC::SvecImagC(const Imag *data, Long_I N)
 
 inline SvecImagC::SvecImagC(VecImag_I v)
 	: SvbaseImagC(v.p(), v.size()) {}
+
+inline SvecImagC &SvecImagC::operator=(const SvecImagC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecImagC &SvecImag_I;
@@ -4462,7 +4652,7 @@ public:
 	explicit SvecImag(Long_I N);
 	SvecImag(Imag *data, Long_I N);
 	SvecImag(VecImag_IO v);
-	SvecImag &operator=(const SvecImag &rhs) = delete;
+	SvecImag &operator=(const SvecImag &v); // shalow copy
 	operator SvecImagC() const;
 };
 
@@ -4473,6 +4663,13 @@ inline SvecImag::SvecImag(Imag *data, Long_I N)
 
 inline SvecImag::SvecImag(VecImag_IO v)
 	: SvbaseImag(v.p(), v.size()) {}
+
+inline SvecImag &SvecImag::operator=(const SvecImag &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecImag::operator SvecImagC() const
 {
@@ -4493,7 +4690,7 @@ public:
 	explicit SvecLimagC(Long_I N);
 	SvecLimagC(const Limag *data, Long_I N);
 	SvecLimagC(VecLimag_I v);
-	SvecLimagC &operator=(const SvecLimagC &rhs) = delete;
+	SvecLimagC &operator=(const SvecLimagC &v); // shalow copy
 };
 
 inline SvecLimagC::SvecLimagC(Long_I N) : SvbaseLimagC(N) {}
@@ -4503,6 +4700,13 @@ inline SvecLimagC::SvecLimagC(const Limag *data, Long_I N)
 
 inline SvecLimagC::SvecLimagC(VecLimag_I v)
 	: SvbaseLimagC(v.p(), v.size()) {}
+
+inline SvecLimagC &SvecLimagC::operator=(const SvecLimagC &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 
 typedef const SvecLimagC &SvecLimag_I;
@@ -4521,7 +4725,7 @@ public:
 	explicit SvecLimag(Long_I N);
 	SvecLimag(Limag *data, Long_I N);
 	SvecLimag(VecLimag_IO v);
-	SvecLimag &operator=(const SvecLimag &rhs) = delete;
+	SvecLimag &operator=(const SvecLimag &v); // shalow copy
 	operator SvecLimagC() const;
 };
 
@@ -4532,6 +4736,13 @@ inline SvecLimag::SvecLimag(Limag *data, Long_I N)
 
 inline SvecLimag::SvecLimag(VecLimag_IO v)
 	: SvbaseLimag(v.p(), v.size()) {}
+
+inline SvecLimag &SvecLimag::operator=(const SvecLimag &rhs)
+{
+	if (this == &rhs) return *this;
+	m_p = rhs.m_p; m_N = rhs.m_N;
+	return *this;
+}
 
 inline SvecLimag::operator SvecLimagC() const
 {

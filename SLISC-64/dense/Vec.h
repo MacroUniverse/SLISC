@@ -10,7 +10,7 @@ public:
 	VecChar() = default;
 	explicit VecChar(Long_I N);
 	VecChar(const VecChar &rhs); // copy constructor
-	VecChar &operator=(const VecChar &rhs) = delete;
+	VecChar &operator=(const VecChar &rhs); // copy assignment
 	void operator<<(VecChar &rhs); // move data and rhs.resize(0)
 };
 
@@ -21,6 +21,15 @@ inline VecChar::VecChar(const VecChar &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecChar &VecChar::operator=(const VecChar &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Char)*size());
+	return *this;
 }
 
 inline void VecChar::operator<<(VecChar &rhs)
@@ -46,7 +55,7 @@ public:
 	VecUchar() = default;
 	explicit VecUchar(Long_I N);
 	VecUchar(const VecUchar &rhs); // copy constructor
-	VecUchar &operator=(const VecUchar &rhs) = delete;
+	VecUchar &operator=(const VecUchar &rhs); // copy assignment
 	void operator<<(VecUchar &rhs); // move data and rhs.resize(0)
 };
 
@@ -57,6 +66,15 @@ inline VecUchar::VecUchar(const VecUchar &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecUchar &VecUchar::operator=(const VecUchar &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Uchar)*size());
+	return *this;
 }
 
 inline void VecUchar::operator<<(VecUchar &rhs)
@@ -82,7 +100,7 @@ public:
 	VecInt() = default;
 	explicit VecInt(Long_I N);
 	VecInt(const VecInt &rhs); // copy constructor
-	VecInt &operator=(const VecInt &rhs) = delete;
+	VecInt &operator=(const VecInt &rhs); // copy assignment
 	void operator<<(VecInt &rhs); // move data and rhs.resize(0)
 };
 
@@ -93,6 +111,15 @@ inline VecInt::VecInt(const VecInt &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecInt &VecInt::operator=(const VecInt &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Int)*size());
+	return *this;
 }
 
 inline void VecInt::operator<<(VecInt &rhs)
@@ -118,7 +145,7 @@ public:
 	VecLlong() = default;
 	explicit VecLlong(Long_I N);
 	VecLlong(const VecLlong &rhs); // copy constructor
-	VecLlong &operator=(const VecLlong &rhs) = delete;
+	VecLlong &operator=(const VecLlong &rhs); // copy assignment
 	void operator<<(VecLlong &rhs); // move data and rhs.resize(0)
 };
 
@@ -129,6 +156,15 @@ inline VecLlong::VecLlong(const VecLlong &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecLlong &VecLlong::operator=(const VecLlong &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Llong)*size());
+	return *this;
 }
 
 inline void VecLlong::operator<<(VecLlong &rhs)
@@ -154,7 +190,7 @@ public:
 	VecFloat() = default;
 	explicit VecFloat(Long_I N);
 	VecFloat(const VecFloat &rhs); // copy constructor
-	VecFloat &operator=(const VecFloat &rhs) = delete;
+	VecFloat &operator=(const VecFloat &rhs); // copy assignment
 	void operator<<(VecFloat &rhs); // move data and rhs.resize(0)
 };
 
@@ -165,6 +201,15 @@ inline VecFloat::VecFloat(const VecFloat &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecFloat &VecFloat::operator=(const VecFloat &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Float)*size());
+	return *this;
 }
 
 inline void VecFloat::operator<<(VecFloat &rhs)
@@ -190,7 +235,7 @@ public:
 	VecDoub() = default;
 	explicit VecDoub(Long_I N);
 	VecDoub(const VecDoub &rhs); // copy constructor
-	VecDoub &operator=(const VecDoub &rhs) = delete;
+	VecDoub &operator=(const VecDoub &rhs); // copy assignment
 	void operator<<(VecDoub &rhs); // move data and rhs.resize(0)
 };
 
@@ -201,6 +246,15 @@ inline VecDoub::VecDoub(const VecDoub &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecDoub &VecDoub::operator=(const VecDoub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Doub)*size());
+	return *this;
 }
 
 inline void VecDoub::operator<<(VecDoub &rhs)
@@ -226,7 +280,7 @@ public:
 	VecLdoub() = default;
 	explicit VecLdoub(Long_I N);
 	VecLdoub(const VecLdoub &rhs); // copy constructor
-	VecLdoub &operator=(const VecLdoub &rhs) = delete;
+	VecLdoub &operator=(const VecLdoub &rhs); // copy assignment
 	void operator<<(VecLdoub &rhs); // move data and rhs.resize(0)
 };
 
@@ -237,6 +291,15 @@ inline VecLdoub::VecLdoub(const VecLdoub &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecLdoub &VecLdoub::operator=(const VecLdoub &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Ldoub)*size());
+	return *this;
 }
 
 inline void VecLdoub::operator<<(VecLdoub &rhs)
@@ -263,7 +326,7 @@ public:
 	VecFcomp() = default;
 	explicit VecFcomp(Long_I N);
 	VecFcomp(const VecFcomp &rhs); // copy constructor
-	VecFcomp &operator=(const VecFcomp &rhs) = delete;
+	VecFcomp &operator=(const VecFcomp &rhs); // copy assignment
 	void operator<<(VecFcomp &rhs); // move data and rhs.resize(0)
 };
 
@@ -274,6 +337,15 @@ inline VecFcomp::VecFcomp(const VecFcomp &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecFcomp &VecFcomp::operator=(const VecFcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Fcomp)*size());
+	return *this;
 }
 
 inline void VecFcomp::operator<<(VecFcomp &rhs)
@@ -299,7 +371,7 @@ public:
 	VecComp() = default;
 	explicit VecComp(Long_I N);
 	VecComp(const VecComp &rhs); // copy constructor
-	VecComp &operator=(const VecComp &rhs) = delete;
+	VecComp &operator=(const VecComp &rhs); // copy assignment
 	void operator<<(VecComp &rhs); // move data and rhs.resize(0)
 };
 
@@ -310,6 +382,15 @@ inline VecComp::VecComp(const VecComp &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecComp &VecComp::operator=(const VecComp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Comp)*size());
+	return *this;
 }
 
 inline void VecComp::operator<<(VecComp &rhs)
@@ -335,7 +416,7 @@ public:
 	VecLcomp() = default;
 	explicit VecLcomp(Long_I N);
 	VecLcomp(const VecLcomp &rhs); // copy constructor
-	VecLcomp &operator=(const VecLcomp &rhs) = delete;
+	VecLcomp &operator=(const VecLcomp &rhs); // copy assignment
 	void operator<<(VecLcomp &rhs); // move data and rhs.resize(0)
 };
 
@@ -346,6 +427,15 @@ inline VecLcomp::VecLcomp(const VecLcomp &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecLcomp &VecLcomp::operator=(const VecLcomp &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Lcomp)*size());
+	return *this;
 }
 
 inline void VecLcomp::operator<<(VecLcomp &rhs)
@@ -372,7 +462,7 @@ public:
 	VecFimag() = default;
 	explicit VecFimag(Long_I N);
 	VecFimag(const VecFimag &rhs); // copy constructor
-	VecFimag &operator=(const VecFimag &rhs) = delete;
+	VecFimag &operator=(const VecFimag &rhs); // copy assignment
 	void operator<<(VecFimag &rhs); // move data and rhs.resize(0)
 };
 
@@ -383,6 +473,15 @@ inline VecFimag::VecFimag(const VecFimag &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecFimag &VecFimag::operator=(const VecFimag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Fimag)*size());
+	return *this;
 }
 
 inline void VecFimag::operator<<(VecFimag &rhs)
@@ -408,7 +507,7 @@ public:
 	VecImag() = default;
 	explicit VecImag(Long_I N);
 	VecImag(const VecImag &rhs); // copy constructor
-	VecImag &operator=(const VecImag &rhs) = delete;
+	VecImag &operator=(const VecImag &rhs); // copy assignment
 	void operator<<(VecImag &rhs); // move data and rhs.resize(0)
 };
 
@@ -419,6 +518,15 @@ inline VecImag::VecImag(const VecImag &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecImag &VecImag::operator=(const VecImag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Imag)*size());
+	return *this;
 }
 
 inline void VecImag::operator<<(VecImag &rhs)
@@ -444,7 +552,7 @@ public:
 	VecLimag() = default;
 	explicit VecLimag(Long_I N);
 	VecLimag(const VecLimag &rhs); // copy constructor
-	VecLimag &operator=(const VecLimag &rhs) = delete;
+	VecLimag &operator=(const VecLimag &rhs); // copy assignment
 	void operator<<(VecLimag &rhs); // move data and rhs.resize(0)
 };
 
@@ -455,6 +563,15 @@ inline VecLimag::VecLimag(const VecLimag &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
+}
+
+inline VecLimag &VecLimag::operator=(const VecLimag &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(Limag)*size());
+	return *this;
 }
 
 inline void VecLimag::operator<<(VecLimag &rhs)

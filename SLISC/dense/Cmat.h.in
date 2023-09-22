@@ -20,8 +20,8 @@ protected:
 public:
 	@CmatT@(): m_N0(0), m_N1(0) {};
 	@CmatT@(Long_I N0, Long_I N1);
-	@CmatT@(const @CmatT@ &rhs);        // Copy constructor
-	@CmatT@ &operator=(const @CmatT@ &rhs) = delete;
+	@CmatT@(const @CmatT@ &rhs); // copy constructor
+	@CmatT@ &operator=(const @CmatT@ &rhs); // copy assignment
 	void operator<<(@CmatT@ &rhs); // move data and rhs.resize(0, 0)
 	@T@& operator()(Long_I i, Long_I j);    // double indexing
 	const @T@& operator()(Long_I i, Long_I j) const;
@@ -40,6 +40,15 @@ inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rh
 #endif
 	for (Long i = 0; i < m_N; ++i)
 		m_p[i] = rhs.m_p[i];
+}
+
+inline @CmatT@ &@CmatT@::operator=(const @CmatT@ &rhs)
+{
+	if (this == &rhs) return *this;
+	resize(rhs.n0(), rhs.n1());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
+	return *this;
 }
 
 inline void @CmatT@::operator<<(@CmatT@ &rhs)
