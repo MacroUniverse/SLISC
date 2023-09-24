@@ -56,6 +56,10 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 //% req('norm2', {Tv});
 	beta[0] = norm(x);
+#ifndef NDEBUG
+	if (beta[0] == 0)
+		SLS_ERR("exp_Hdt_v_lanc(): input x is 0!");
+#endif
 //% req('add(v,v,s)', { ['Svec' Tc] Tv Tr});
 	times(v0, x, 1/beta[0]); 
 
@@ -65,6 +69,10 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
+#ifndef NDEBUG
+	if (beta[1] == 0)
+		SLS_ERR("exp_Hdt_v_lanc(): input H*x is 0!");
+#endif
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -77,6 +85,10 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 //% req('v+=s', { ['Svec' Tc] Tc; ['Svec' Tc] Tr});
 			v2[i] -= a * v1[i] + b * v0[i];
 		beta[j2] = norm(v2);
+#ifndef NDEBUG
+		if (beta[j2] == 0)
+			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is 0!");
+#endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
 		alpha[j2] = real(dot(v2, vc));
@@ -149,18 +161,22 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 #endif
 
 	@Tr@ *pd = wsp_d.p();
-	Svec@Tr@ alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
-	Svec@Tr@ beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
+	Svec@Tr@ alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
+	Svec@Tr@ beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	Scmat@Tr@ eigV(pd, Nk, Nk); // eigen vectors
 	
 	@Tc@ *pc = wsp_c.p();
 	Svec@Tc@ vc(pc, N); pc += vc.size(); // temp vec
 	Svec@Tc@ vc1(pc, Nk); pc += vc1.size(); // temp vec
-	Scmat@Tc@ bases(pc, N, Nk); // Krylov bases
+	Scmat@Tc@ bases(pc, N, Nk); // orthonormal Krylov bases eq_Lanc_7
 //% req('cut0', { ['Scmat' Tc] });
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 //% req('norm2', {Tv});
 	beta[0] = norm(x);
+#ifndef NDEBUG
+	if (beta[0] == 0)
+		SLS_ERR("exp_miHdt_v_lanc(): input x is 0!");
+#endif
 //% req('add(v,v,s)', {['Svec' Tc] Tv Tr});
 	times(v0, x, 1/beta[0]);
 	mul_fun(vc, v0);
@@ -170,6 +186,10 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 		v1[i] = vc[i] - alpha[0] * v0[i];
 //% req('norm2', { ['Svec' Tc] });
 	beta[1] = norm(v1);
+#ifndef NDEBUG
+	if (beta[1] == 0)
+		SLS_ERR("exp_miHdt_v_lanc(): H*x is 0!");
+#endif
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -182,6 +202,10 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 //% req('v+=s', {['Svec' Tc] Tc; ['Svec' Tc] Tr});
 		v2[i] -= a * v1[i] + b * v0[i];
 		beta[j2] = norm(v2);
+#ifndef NDEBUG
+		if (beta[j2] == 0)
+			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is 0!");
+#endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
 		alpha[j2] = real(dot(v2, vc));
@@ -193,7 +217,8 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 	lapack_int info =
 	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
-	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
+	if (info != 0)
+		SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 //% elseif is_Qdoub(Tr)
 #ifdef SLS_USE_MPLAPACK
 	SLS_WARN("not optimized!");
@@ -201,7 +226,8 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 	mplapackint info;
 	// alpha is now eigen values
 	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
-	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
+	if (info != 0)
+		SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
 #else
 	SLS_ERR("MPLAPACK is turned off!");
 #endif

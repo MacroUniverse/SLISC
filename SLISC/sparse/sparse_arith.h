@@ -492,7 +492,8 @@ inline void mul(CmatComp_O y, DiagComp_I a, ScmatDoub_I x)
 
 
 
-inline void sort_r(McooChar_IO a)
+// similar to sort_col, for row major
+inline void sort_row(McooChar_IO a)
 {
 	Long Nnz = a.nnz();
 	VecLong inds(Nnz), order(Nnz);
@@ -509,7 +510,7 @@ inline void sort_r(McooChar_IO a)
 	reorder(sli1, order);
 }
 
-inline void sort_r(McooInt_IO a)
+inline void sort_row(McooInt_IO a)
 {
 	Long Nnz = a.nnz();
 	VecLong inds(Nnz), order(Nnz);
@@ -526,7 +527,7 @@ inline void sort_r(McooInt_IO a)
 	reorder(sli1, order);
 }
 
-inline void sort_r(McooLlong_IO a)
+inline void sort_row(McooLlong_IO a)
 {
 	Long Nnz = a.nnz();
 	VecLong inds(Nnz), order(Nnz);
@@ -543,7 +544,7 @@ inline void sort_r(McooLlong_IO a)
 	reorder(sli1, order);
 }
 
-inline void sort_r(McooDoub_IO a)
+inline void sort_row(McooDoub_IO a)
 {
 	Long Nnz = a.nnz();
 	VecLong inds(Nnz), order(Nnz);
@@ -561,7 +562,7 @@ inline void sort_r(McooDoub_IO a)
 }
 
 
-inline void sort_r(McooComp_IO a)
+inline void sort_row(McooComp_IO a)
 {
 	Long Nnz = a.nnz();
 	VecLong inds(Nnz), order(Nnz);

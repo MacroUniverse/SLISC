@@ -238,13 +238,14 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 }
 //%------------------------
 
-//% tem('sort_r', {'Char'; 'Int'; 'Llong';
+// similar to sort_col, for row major
+//% tem('sort_row', {'Char'; 'Int'; 'Llong';
 //%          'Doub'; 'Qdoub'; 'Comp'; 'Qcomp'});
 //%------------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo' T];
 //% SvecT = ['Svec' T];
-inline void sort_r(@McooT@_IO a)
+inline void sort_row(@McooT@_IO a)
 {
 	Long Nnz = a.nnz();
 	VecLong inds(Nnz), order(Nnz);

@@ -566,7 +566,7 @@ inline void D2_matrix(Mcoo@Tr@_O D2, Vec@Tr@_I w0, Vec@Tr@_I wFE, Cmat@Tr@_I df)
 		s = coeff * block(0, Ngs - 1);
 		D2.push(s, mm, nn); D2.push(s, nn, mm);
 	}
-	sort_r(D2);
+	sort_row(D2);
 }
 
 // bounds: FE boundaries, size = Nfe + 1
@@ -665,7 +665,7 @@ inline void D_matrix(Mcoo@Tr@_O D, Vec@Tr@_I w0, Vec@Tr@_I wFE, Cmat@Tr@_I df)
 		mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
 		D.push(s, mm, nn); D.push(-s, nn, mm);
 	}
-	sort_r(D);
+	sort_row(D);
 }
 
 inline void D_matrix(Mcoo@Tr@_O D, Vec@Tr@_O x, Vec@Tr@_O w, Vec@Tr@_O u, Vec@Tr@_I bounds, Long_I Ngs)

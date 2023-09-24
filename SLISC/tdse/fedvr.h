@@ -554,7 +554,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 		s = coeff * block(0, Ngs - 1);
 		D2.push(s, mm, nn); D2.push(s, nn, mm);
 	}
-	sort_r(D2);
+	sort_row(D2);
 }
 
 // bounds: FE boundaries, size = Nfe + 1
@@ -653,7 +653,7 @@ inline void D_matrix(McooDoub_O D, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 		mm = indFEDVR(i, Ngs-1, Ngs); nn = indFEDVR(i + 1, Ngs-1, Ngs);
 		D.push(s, mm, nn); D.push(-s, nn, mm);
 	}
-	sort_r(D);
+	sort_row(D);
 }
 
 inline void D_matrix(McooDoub_O D, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
