@@ -39,10 +39,10 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 	ScmatComp bases(pc, N, Nk); // Krylov bases
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]); 
 
 	mul_fun(vc, v0);
@@ -50,10 +50,13 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(eigval*dt));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -67,7 +70,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -114,10 +117,10 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 	ScmatComp bases(pc, N, Nk); // Krylov bases
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]); 
 
 	mul_fun(vc, v0);
@@ -125,10 +128,13 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(eigval*dt));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -142,7 +148,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -189,10 +195,10 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt,
 	ScmatComp bases(pc, N, Nk); // Krylov bases
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]); 
 
 	mul_fun(vc, v0);
@@ -200,10 +206,13 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt,
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(eigval*dt));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -217,7 +226,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt,
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -264,10 +273,10 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 	ScmatComp bases(pc, N, Nk); // Krylov bases
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]); 
 
 	mul_fun(vc, v0);
@@ -275,10 +284,13 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_Hdt_v_lanc(): input H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(eigval*dt));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -292,7 +304,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -345,20 +357,23 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 	ScmatComp bases(pc, N, Nk); // orthonormal Krylov bases eq_Lanc_7
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]);
 	mul_fun(vc, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(-i*eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(Comp(0, -eigval*dt)));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -372,7 +387,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -418,20 +433,23 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 	ScmatComp bases(pc, N, Nk); // orthonormal Krylov bases eq_Lanc_7
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]);
 	mul_fun(vc, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(-i*eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(Comp(0, -eigval*dt)));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -445,7 +463,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -491,20 +509,23 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, Tmul &mul_fun, VecComp_I x, Doub_I dt
 	ScmatComp bases(pc, N, Nk); // orthonormal Krylov bases eq_Lanc_7
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]);
 	mul_fun(vc, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(-i*eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(Comp(0, -eigval*dt)));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -518,7 +539,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, Tmul &mul_fun, VecComp_I x, Doub_I dt
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);
@@ -564,20 +585,23 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I 
 	ScmatComp bases(pc, N, Nk); // orthonormal Krylov bases eq_Lanc_7
 	SvecComp v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 	beta[0] = norm(x);
-#ifndef NDEBUG
-	if (beta[0] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): input x is 0!");
-#endif
+	if (beta[0] == 0) {
+		if (y.p() == x.p()) copy(y, 0);
+		return 0;
+	}
 	times(v0, x, 1/beta[0]);
 	mul_fun(vc, v0);
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
 	beta[1] = norm(v1);
-#ifndef NDEBUG
-	if (beta[1] == 0)
-		SLS_ERR("exp_miHdt_v_lanc(): H*x is 0!");
-#endif
+	if (beta[1] == 0) { // H*x is an exact eigen state of x
+		// do y = exp(-i*eigval*dt)*x
+		Long ind;
+		max_abs(ind, vc);
+		Doub eigval = real(vc[ind] / v0[ind]);
+		times(y, x, exp(Comp(0, -eigval*dt)));
+	}
 	v1 /= beta[1];
 	mul_fun(vc, v1);
 	alpha[1] = real(dot(v1, vc));
@@ -591,7 +615,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I 
 		beta[j2] = norm(v2);
 #ifndef NDEBUG
 		if (beta[j2] == 0)
-			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is 0!");
+			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 		v2 /= beta[j2];
 		mul_fun(vc, v2);

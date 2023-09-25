@@ -183,6 +183,23 @@ inline @Tr@ max_abs_v(const @T@ *v, Long_I N)
 	return s;
 }
 
+inline @Tr@ max_abs_v(Long_O ind, const @T@ *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N <= 0) SLS_ERR("illegal length!");
+#endif
+	@Tr@ s = abs(v[0]), val;
+	ind = 0;
+	for (Long i = 1; i < N; ++i) {
+		val = abs(v[i]);
+		if (s < val) {
+			s = val;
+			ind = i;
+		}
+	}
+	return s;
+}
+
 inline @Tr@ max_abs_v(const @T@ *v, Long_I N, Long_I step)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -251,6 +268,7 @@ inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1
 //% req('max_abs_v', { Ts });
 //% if is_dense(T)
 inline @Tr@ max_abs(@T@_I v) { return max_abs_v(v.p(), v.size()); }
+inline @Tr@ max_abs(Long_O ind, @T@_I v) { return max_abs_v(ind, v.p(), v.size()); }
 //% elseif is_Dvec(T)
 inline @Tr@ max_abs(@T@_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 //% elseif is_Dcmat(T)
