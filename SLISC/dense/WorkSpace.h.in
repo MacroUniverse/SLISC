@@ -1,0 +1,84 @@
+#pragma once
+// workspace
+
+#include "Scmat.h"
+#include "Scmat3.h"
+
+namespace slisc {
+
+class WorkSpace : protected VecUchar {
+
+private:
+	Long m_used; // start of free space
+	const Long m_align; // each allocation must start at a memory address at the multiple of m_align
+
+	// modify m_used so that `m_p + m_used` is aligned
+	// will not check bound
+	void do_align() {
+		Long rem = (size_t(m_p) + m_used) % m_align;
+		if (rem)
+			m_used += m_align - rem;
+	}
+
+public:
+	// allocate all space ever needed, won't allow resize
+	WorkSpace(Long_I Nbyte, Long_I align = 64) : VecUchar(Nbyte), m_used(0), m_align(align) {}
+	
+	Long used() const { return m_used; }
+
+	Long align() const { return m_align; }
+
+	using VecUchar::size;
+	using VecUchar::p;
+
+	// ======= allocate WorkSpace for different containers =========
+
+//% tem('WorkSpace1', {
+//%     'Char'; 'Int'; 'Llong'; 'Long';
+//%     'Float'; 'Doub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Qcomp'; });
+//%----------------------------------------------------------
+//% T = varargin{:};
+	@T@ *p@T@(Long_I N) {
+		do_align();
+		Long Nb = N*sizeof(@T@);
+		if (Nb > size() - m_used)
+			SLS_ERR("WorkSpace: out of space!");
+		Long start = m_used;
+		m_used += Nb;
+		return (@T@ *)(m_p+start);
+	}
+
+	slisc::Svec@T@ Svec@T@(Long_I N) {
+		do_align();
+		Long Nb = N*sizeof(@T@);
+		if (Nb > size() - m_used)
+			SLS_ERR("WorkSpace: out of space!");
+		Long start = m_used;
+		m_used += Nb;
+		return slisc::Svec@T@((@T@ *)(m_p+start), N);
+	}
+
+	slisc::Scmat@T@ Scmat@T@(Long_I N1, Long_I N2) {
+		do_align();
+		Long Nb = N1*N2*sizeof(@T@);
+		if (Nb > size() - m_used)
+			SLS_ERR("WorkSpace: out of space!");
+		Long start = m_used;
+		m_used += Nb;
+		return slisc::Scmat@T@((@T@ *)(m_p+start), N1, N2);
+	}
+
+	slisc::Scmat3@T@ Scmat3@T@(Long_I N1, Long_I N2, Long_I N3) {
+		do_align();
+		Long Nb = N1*N2*N3*sizeof(@T@);
+		if (Nb > size() - m_used)
+			SLS_ERR("WorkSpace: out of space!");
+		Long start = m_used;
+		m_used += Nb;
+		return slisc::Scmat3@T@((@T@ *)(m_p+start), N1, N2, N3);
+	}
+//%----------------------------------------------------------
+};
+
+}; // namespace slisc

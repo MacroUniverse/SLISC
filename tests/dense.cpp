@@ -3,6 +3,7 @@
 #include "../SLISC/arith/copy.h"
 #include "../SLISC/arith/reorder.h"
 #include "../SLISC/util/random.h"
+#include "../SLISC/dense/WorkSpace.h"
 // #include "../SLISC/str/disp.h"
 
 void test_dense()
@@ -202,8 +203,25 @@ void test_dense()
 	if (c3d(0, 0, 1) != 7 || c3d(0, 0, 2) != 13)
 		SLS_FAIL;
 
-	// operator()
-	// TODO:
+	
+	// test WorkSpace
+	{
+		WorkSpace wsp(1024);
+		SLS_ASSERT(wsp.size() == 1024);
+		SLS_ASSERT((size_t)wsp.p() > 0);
+		SLS_ASSERT(wsp.align() == 64);
+		SLS_ASSERT(wsp.used() == 0);
+
+		auto svd = wsp.SvecDoub(5);
+		SLS_ASSERT(svd.size() == 5);
+		SLS_ASSERT((size_t)svd.p() > (size_t)wsp.p());
+		SLS_ASSERT(wsp.used() > svd.size()*(Long)sizeof(Doub));
+
+		auto scmc = wsp.ScmatComp(2,2);
+		SLS_ASSERT(scmc.size() == 4);
+		SLS_ASSERT((size_t)scmc.p() > (size_t)svd.p());
+		SLS_ASSERT(wsp.used() > svd.size()*(Long)sizeof(Doub) + scmc.size()*(Long)sizeof(Comp));
+	}
 }
 
 #ifndef SLS_TEST_ALL
