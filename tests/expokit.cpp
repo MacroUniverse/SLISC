@@ -1,4 +1,4 @@
-#include "../SLISC/lin/expokit.h"
+#include "../SLISC/tdse/expokit.h"
 #include "../SLISC/lin/mat_fun.h"
 #include "../SLISC/sparse/sparse_arith.h"
 // #include "../SLISC/str/disp.h"

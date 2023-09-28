@@ -6,6 +6,11 @@
 
 namespace slisc {
 
+inline Long expokit_expv_Nwsp(Long_I N, Long_I Nkry) {
+	return sizeof(Comp)*(max(Long(10), N*(Nkry + 2) + 5*sqr(Nkry + 2) + 8)) +
+		sizeof(Long)*(max(Nkry + 2, 7)) + (SLS_WSP_ALIGN-1);
+}
+
 // expv()
 // this function is extremely slow when used in a loop! due to dynamic memory allocation
 // use ZGEXPV() for MatCoo<>, ZHEXPV() for MatCooH<>
