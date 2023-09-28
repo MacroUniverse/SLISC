@@ -32,26 +32,26 @@ void test_lanczos()
 		// test expHdt_v_lanc(), exp_miHdt_v_lanc();
 		{
 			VecComp x(3), y(3), y0(3), x6(6);
-			VecDoub wsp_d(20);
-			VecComp wsp_c(20);
+			VecUchar wsp_mem(sizeof(Doub)*20 + sizeof(Comp)*20 + 256);
+			WorkSpace wsp(wsp_mem);
 			for (Long i = 0; i < 5; ++i) {
 				rand(x);
 				mul(y0, expH, x);
-				exp_Hdt_v_lanc(y, mul_fun, x, 1, 3, wsp_d, wsp_c);
+				exp_Hdt_v_lanc(y, mul_fun, x, 1, 3, wsp);
 				y -= y0;
 				if (max_abs(y) > 1e-8)
 					SLS_FAIL;
 
 				mul(y0, exp_miH, x);
 				copy(y, x);
-				exp_miHdt_v_lanc(y, mul_fun, y, 1, 3, wsp_d, wsp_c); // for dense y
+				exp_miHdt_v_lanc(y, mul_fun, y, 1, 3, wsp); // for dense y
 				y -= y0;
 				if (max_abs(y) > 1e-4)
 					SLS_FAIL;
 
 				DvecComp y1(x6.p(), 3, 2);
 				copy(y1, x);
-				exp_miHdt_v_lanc(y1, mul_fun, y1, 1, 3, wsp_d, wsp_c); // for Dvec y1
+				exp_miHdt_v_lanc(y1, mul_fun, y1, 1, 3, wsp); // for Dvec y1
 				y1 -= y0;
 				if (max_abs(y1) > 1e-4)
 					SLS_FAIL;

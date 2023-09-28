@@ -40,13 +40,6 @@ inline void VecChar::operator<<(VecChar &rhs)
 typedef const VecChar &VecChar_I;
 typedef VecChar &VecChar_O, &VecChar_IO;
 
-// common api for STL and SLISC
-inline Long size(VecChar_I v) { return v.size(); }
-
-inline const Char *p(VecChar_I v) { return v.p(); }
-
-inline Char *p(VecChar &v) { return v.p(); }
-
 
 class VecUchar : public VbaseUchar
 {
@@ -84,13 +77,6 @@ inline void VecUchar::operator<<(VecUchar &rhs)
 
 typedef const VecUchar &VecUchar_I;
 typedef VecUchar &VecUchar_O, &VecUchar_IO;
-
-// common api for STL and SLISC
-inline Long size(VecUchar_I v) { return v.size(); }
-
-inline const Uchar *p(VecUchar_I v) { return v.p(); }
-
-inline Uchar *p(VecUchar &v) { return v.p(); }
 
 
 class VecInt : public VbaseInt
@@ -130,13 +116,6 @@ inline void VecInt::operator<<(VecInt &rhs)
 typedef const VecInt &VecInt_I;
 typedef VecInt &VecInt_O, &VecInt_IO;
 
-// common api for STL and SLISC
-inline Long size(VecInt_I v) { return v.size(); }
-
-inline const Int *p(VecInt_I v) { return v.p(); }
-
-inline Int *p(VecInt &v) { return v.p(); }
-
 
 class VecLlong : public VbaseLlong
 {
@@ -174,13 +153,6 @@ inline void VecLlong::operator<<(VecLlong &rhs)
 
 typedef const VecLlong &VecLlong_I;
 typedef VecLlong &VecLlong_O, &VecLlong_IO;
-
-// common api for STL and SLISC
-inline Long size(VecLlong_I v) { return v.size(); }
-
-inline const Llong *p(VecLlong_I v) { return v.p(); }
-
-inline Llong *p(VecLlong &v) { return v.p(); }
 
 
 class VecFloat : public VbaseFloat
@@ -220,13 +192,6 @@ inline void VecFloat::operator<<(VecFloat &rhs)
 typedef const VecFloat &VecFloat_I;
 typedef VecFloat &VecFloat_O, &VecFloat_IO;
 
-// common api for STL and SLISC
-inline Long size(VecFloat_I v) { return v.size(); }
-
-inline const Float *p(VecFloat_I v) { return v.p(); }
-
-inline Float *p(VecFloat &v) { return v.p(); }
-
 
 class VecDoub : public VbaseDoub
 {
@@ -264,13 +229,6 @@ inline void VecDoub::operator<<(VecDoub &rhs)
 
 typedef const VecDoub &VecDoub_I;
 typedef VecDoub &VecDoub_O, &VecDoub_IO;
-
-// common api for STL and SLISC
-inline Long size(VecDoub_I v) { return v.size(); }
-
-inline const Doub *p(VecDoub_I v) { return v.p(); }
-
-inline Doub *p(VecDoub &v) { return v.p(); }
 
 
 class VecLdoub : public VbaseLdoub
@@ -310,13 +268,6 @@ inline void VecLdoub::operator<<(VecLdoub &rhs)
 typedef const VecLdoub &VecLdoub_I;
 typedef VecLdoub &VecLdoub_O, &VecLdoub_IO;
 
-// common api for STL and SLISC
-inline Long size(VecLdoub_I v) { return v.size(); }
-
-inline const Ldoub *p(VecLdoub_I v) { return v.p(); }
-
-inline Ldoub *p(VecLdoub &v) { return v.p(); }
-
 
 class VecQdoub : public VbaseQdoub
 {
@@ -354,13 +305,6 @@ inline void VecQdoub::operator<<(VecQdoub &rhs)
 
 typedef const VecQdoub &VecQdoub_I;
 typedef VecQdoub &VecQdoub_O, &VecQdoub_IO;
-
-// common api for STL and SLISC
-inline Long size(VecQdoub_I v) { return v.size(); }
-
-inline const Qdoub *p(VecQdoub_I v) { return v.p(); }
-
-inline Qdoub *p(VecQdoub &v) { return v.p(); }
 
 
 class VecFcomp : public VbaseFcomp
@@ -400,13 +344,6 @@ inline void VecFcomp::operator<<(VecFcomp &rhs)
 typedef const VecFcomp &VecFcomp_I;
 typedef VecFcomp &VecFcomp_O, &VecFcomp_IO;
 
-// common api for STL and SLISC
-inline Long size(VecFcomp_I v) { return v.size(); }
-
-inline const Fcomp *p(VecFcomp_I v) { return v.p(); }
-
-inline Fcomp *p(VecFcomp &v) { return v.p(); }
-
 
 class VecComp : public VbaseComp
 {
@@ -444,13 +381,6 @@ inline void VecComp::operator<<(VecComp &rhs)
 
 typedef const VecComp &VecComp_I;
 typedef VecComp &VecComp_O, &VecComp_IO;
-
-// common api for STL and SLISC
-inline Long size(VecComp_I v) { return v.size(); }
-
-inline const Comp *p(VecComp_I v) { return v.p(); }
-
-inline Comp *p(VecComp &v) { return v.p(); }
 
 
 class VecLcomp : public VbaseLcomp
@@ -490,13 +420,6 @@ inline void VecLcomp::operator<<(VecLcomp &rhs)
 typedef const VecLcomp &VecLcomp_I;
 typedef VecLcomp &VecLcomp_O, &VecLcomp_IO;
 
-// common api for STL and SLISC
-inline Long size(VecLcomp_I v) { return v.size(); }
-
-inline const Lcomp *p(VecLcomp_I v) { return v.p(); }
-
-inline Lcomp *p(VecLcomp &v) { return v.p(); }
-
 
 class VecQcomp : public VbaseQcomp
 {
@@ -534,13 +457,6 @@ inline void VecQcomp::operator<<(VecQcomp &rhs)
 
 typedef const VecQcomp &VecQcomp_I;
 typedef VecQcomp &VecQcomp_O, &VecQcomp_IO;
-
-// common api for STL and SLISC
-inline Long size(VecQcomp_I v) { return v.size(); }
-
-inline const Qcomp *p(VecQcomp_I v) { return v.p(); }
-
-inline Qcomp *p(VecQcomp &v) { return v.p(); }
 
 
 class VecFimag : public VbaseFimag
@@ -580,13 +496,6 @@ inline void VecFimag::operator<<(VecFimag &rhs)
 typedef const VecFimag &VecFimag_I;
 typedef VecFimag &VecFimag_O, &VecFimag_IO;
 
-// common api for STL and SLISC
-inline Long size(VecFimag_I v) { return v.size(); }
-
-inline const Fimag *p(VecFimag_I v) { return v.p(); }
-
-inline Fimag *p(VecFimag &v) { return v.p(); }
-
 
 class VecImag : public VbaseImag
 {
@@ -625,13 +534,6 @@ inline void VecImag::operator<<(VecImag &rhs)
 typedef const VecImag &VecImag_I;
 typedef VecImag &VecImag_O, &VecImag_IO;
 
-// common api for STL and SLISC
-inline Long size(VecImag_I v) { return v.size(); }
-
-inline const Imag *p(VecImag_I v) { return v.p(); }
-
-inline Imag *p(VecImag &v) { return v.p(); }
-
 
 class VecLimag : public VbaseLimag
 {
@@ -669,13 +571,6 @@ inline void VecLimag::operator<<(VecLimag &rhs)
 
 typedef const VecLimag &VecLimag_I;
 typedef VecLimag &VecLimag_O, &VecLimag_IO;
-
-// common api for STL and SLISC
-inline Long size(VecLimag_I v) { return v.size(); }
-
-inline const Limag *p(VecLimag_I v) { return v.p(); }
-
-inline Limag *p(VecLimag &v) { return v.p(); }
 
 
 

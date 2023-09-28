@@ -35,6 +35,8 @@ void test_coulomb()
 			}
 		}
 	}
+#else
+	printf("---------- GSL disabled! ----------\n");
 #endif
 #ifdef SLS_USE_ARB
 	Doub val = 4.5882301380287637784e-286;
@@ -78,6 +80,8 @@ void test_coulomb()
 	SLS_ASSERT(err2 <= 1e-33Q);
 #endif
 	flint_cleanup();
+#else
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

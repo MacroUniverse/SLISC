@@ -1,15 +1,17 @@
 #include "../SLISC/lin/expokit.h"
 #include "../SLISC/lin/mat_fun.h"
+#include "../SLISC/sparse/sparse_arith.h"
 // #include "../SLISC/str/disp.h"
 
 void test_expokit()
 {
 #ifdef SLS_USE_CBLAS
 	using namespace slisc;
+	using slisc::expv;
 
 	// === params ===========
 	Long N = 40; // matrix size
-	Int Nbase = 20; // # of krylov basis
+	Long Nbase = 20; // # of krylov basis
 	Doub t = 1; // time
 	// ======================
 
@@ -67,6 +69,8 @@ void test_expokit()
 		if (max_abs(y2) > 2e-11)
 			SLS_FAIL;
 	}
+#else
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

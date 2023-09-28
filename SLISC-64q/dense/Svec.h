@@ -126,6 +126,11 @@ inline void SvbaseCharC::set(const SvbaseCharC &sli)
 
 inline SvbaseCharC::~SvbaseCharC() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseCharC &v) { return v.size(); }
+
+inline const Char *ptr(const SvbaseCharC &v) { return v.p(); }
+
 class SvbaseChar
 {
 protected:
@@ -250,6 +255,11 @@ inline void SvbaseChar::set(const SvbaseChar &sli)
 
 inline SvbaseChar::~SvbaseChar() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseChar &v) { return v.size(); }
+
+inline Char *ptr(SvbaseChar &v) { return v.p(); }
+
 class SvbaseUcharC
 {
 protected:
@@ -368,6 +378,11 @@ inline void SvbaseUcharC::set(const SvbaseUcharC &sli)
 }
 
 inline SvbaseUcharC::~SvbaseUcharC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseUcharC &v) { return v.size(); }
+
+inline const Uchar *ptr(const SvbaseUcharC &v) { return v.p(); }
 
 class SvbaseUchar
 {
@@ -493,6 +508,11 @@ inline void SvbaseUchar::set(const SvbaseUchar &sli)
 
 inline SvbaseUchar::~SvbaseUchar() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseUchar &v) { return v.size(); }
+
+inline Uchar *ptr(SvbaseUchar &v) { return v.p(); }
+
 class SvbaseIntC
 {
 protected:
@@ -611,6 +631,11 @@ inline void SvbaseIntC::set(const SvbaseIntC &sli)
 }
 
 inline SvbaseIntC::~SvbaseIntC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseIntC &v) { return v.size(); }
+
+inline const Int *ptr(const SvbaseIntC &v) { return v.p(); }
 
 class SvbaseInt
 {
@@ -736,6 +761,11 @@ inline void SvbaseInt::set(const SvbaseInt &sli)
 
 inline SvbaseInt::~SvbaseInt() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseInt &v) { return v.size(); }
+
+inline Int *ptr(SvbaseInt &v) { return v.p(); }
+
 class SvbaseLlongC
 {
 protected:
@@ -854,6 +884,11 @@ inline void SvbaseLlongC::set(const SvbaseLlongC &sli)
 }
 
 inline SvbaseLlongC::~SvbaseLlongC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseLlongC &v) { return v.size(); }
+
+inline const Llong *ptr(const SvbaseLlongC &v) { return v.p(); }
 
 class SvbaseLlong
 {
@@ -979,6 +1014,11 @@ inline void SvbaseLlong::set(const SvbaseLlong &sli)
 
 inline SvbaseLlong::~SvbaseLlong() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseLlong &v) { return v.size(); }
+
+inline Llong *ptr(SvbaseLlong &v) { return v.p(); }
+
 class SvbaseFloatC
 {
 protected:
@@ -1097,6 +1137,11 @@ inline void SvbaseFloatC::set(const SvbaseFloatC &sli)
 }
 
 inline SvbaseFloatC::~SvbaseFloatC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseFloatC &v) { return v.size(); }
+
+inline const Float *ptr(const SvbaseFloatC &v) { return v.p(); }
 
 class SvbaseFloat
 {
@@ -1222,6 +1267,11 @@ inline void SvbaseFloat::set(const SvbaseFloat &sli)
 
 inline SvbaseFloat::~SvbaseFloat() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseFloat &v) { return v.size(); }
+
+inline Float *ptr(SvbaseFloat &v) { return v.p(); }
+
 class SvbaseDoubC
 {
 protected:
@@ -1340,6 +1390,11 @@ inline void SvbaseDoubC::set(const SvbaseDoubC &sli)
 }
 
 inline SvbaseDoubC::~SvbaseDoubC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseDoubC &v) { return v.size(); }
+
+inline const Doub *ptr(const SvbaseDoubC &v) { return v.p(); }
 
 class SvbaseDoub
 {
@@ -1465,6 +1520,11 @@ inline void SvbaseDoub::set(const SvbaseDoub &sli)
 
 inline SvbaseDoub::~SvbaseDoub() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseDoub &v) { return v.size(); }
+
+inline Doub *ptr(SvbaseDoub &v) { return v.p(); }
+
 class SvbaseLdoubC
 {
 protected:
@@ -1583,6 +1643,11 @@ inline void SvbaseLdoubC::set(const SvbaseLdoubC &sli)
 }
 
 inline SvbaseLdoubC::~SvbaseLdoubC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseLdoubC &v) { return v.size(); }
+
+inline const Ldoub *ptr(const SvbaseLdoubC &v) { return v.p(); }
 
 class SvbaseLdoub
 {
@@ -1708,6 +1773,11 @@ inline void SvbaseLdoub::set(const SvbaseLdoub &sli)
 
 inline SvbaseLdoub::~SvbaseLdoub() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseLdoub &v) { return v.size(); }
+
+inline Ldoub *ptr(SvbaseLdoub &v) { return v.p(); }
+
 class SvbaseQdoubC
 {
 protected:
@@ -1826,6 +1896,11 @@ inline void SvbaseQdoubC::set(const SvbaseQdoubC &sli)
 }
 
 inline SvbaseQdoubC::~SvbaseQdoubC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseQdoubC &v) { return v.size(); }
+
+inline const Qdoub *ptr(const SvbaseQdoubC &v) { return v.p(); }
 
 class SvbaseQdoub
 {
@@ -1951,6 +2026,11 @@ inline void SvbaseQdoub::set(const SvbaseQdoub &sli)
 
 inline SvbaseQdoub::~SvbaseQdoub() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseQdoub &v) { return v.size(); }
+
+inline Qdoub *ptr(SvbaseQdoub &v) { return v.p(); }
+
 class SvbaseFcompC
 {
 protected:
@@ -2069,6 +2149,11 @@ inline void SvbaseFcompC::set(const SvbaseFcompC &sli)
 }
 
 inline SvbaseFcompC::~SvbaseFcompC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseFcompC &v) { return v.size(); }
+
+inline const Fcomp *ptr(const SvbaseFcompC &v) { return v.p(); }
 
 class SvbaseFcomp
 {
@@ -2194,6 +2279,11 @@ inline void SvbaseFcomp::set(const SvbaseFcomp &sli)
 
 inline SvbaseFcomp::~SvbaseFcomp() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseFcomp &v) { return v.size(); }
+
+inline Fcomp *ptr(SvbaseFcomp &v) { return v.p(); }
+
 class SvbaseCompC
 {
 protected:
@@ -2312,6 +2402,11 @@ inline void SvbaseCompC::set(const SvbaseCompC &sli)
 }
 
 inline SvbaseCompC::~SvbaseCompC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseCompC &v) { return v.size(); }
+
+inline const Comp *ptr(const SvbaseCompC &v) { return v.p(); }
 
 class SvbaseComp
 {
@@ -2437,6 +2532,11 @@ inline void SvbaseComp::set(const SvbaseComp &sli)
 
 inline SvbaseComp::~SvbaseComp() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseComp &v) { return v.size(); }
+
+inline Comp *ptr(SvbaseComp &v) { return v.p(); }
+
 class SvbaseLcompC
 {
 protected:
@@ -2555,6 +2655,11 @@ inline void SvbaseLcompC::set(const SvbaseLcompC &sli)
 }
 
 inline SvbaseLcompC::~SvbaseLcompC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseLcompC &v) { return v.size(); }
+
+inline const Lcomp *ptr(const SvbaseLcompC &v) { return v.p(); }
 
 class SvbaseLcomp
 {
@@ -2680,6 +2785,11 @@ inline void SvbaseLcomp::set(const SvbaseLcomp &sli)
 
 inline SvbaseLcomp::~SvbaseLcomp() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseLcomp &v) { return v.size(); }
+
+inline Lcomp *ptr(SvbaseLcomp &v) { return v.p(); }
+
 class SvbaseQcompC
 {
 protected:
@@ -2798,6 +2908,11 @@ inline void SvbaseQcompC::set(const SvbaseQcompC &sli)
 }
 
 inline SvbaseQcompC::~SvbaseQcompC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseQcompC &v) { return v.size(); }
+
+inline const Qcomp *ptr(const SvbaseQcompC &v) { return v.p(); }
 
 class SvbaseQcomp
 {
@@ -2923,6 +3038,11 @@ inline void SvbaseQcomp::set(const SvbaseQcomp &sli)
 
 inline SvbaseQcomp::~SvbaseQcomp() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseQcomp &v) { return v.size(); }
+
+inline Qcomp *ptr(SvbaseQcomp &v) { return v.p(); }
+
 class SvbaseFimagC
 {
 protected:
@@ -3041,6 +3161,11 @@ inline void SvbaseFimagC::set(const SvbaseFimagC &sli)
 }
 
 inline SvbaseFimagC::~SvbaseFimagC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseFimagC &v) { return v.size(); }
+
+inline const Fimag *ptr(const SvbaseFimagC &v) { return v.p(); }
 
 class SvbaseFimag
 {
@@ -3166,6 +3291,11 @@ inline void SvbaseFimag::set(const SvbaseFimag &sli)
 
 inline SvbaseFimag::~SvbaseFimag() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseFimag &v) { return v.size(); }
+
+inline Fimag *ptr(SvbaseFimag &v) { return v.p(); }
+
 class SvbaseImagC
 {
 protected:
@@ -3284,6 +3414,11 @@ inline void SvbaseImagC::set(const SvbaseImagC &sli)
 }
 
 inline SvbaseImagC::~SvbaseImagC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseImagC &v) { return v.size(); }
+
+inline const Imag *ptr(const SvbaseImagC &v) { return v.p(); }
 
 class SvbaseImag
 {
@@ -3409,6 +3544,11 @@ inline void SvbaseImag::set(const SvbaseImag &sli)
 
 inline SvbaseImag::~SvbaseImag() {}
 
+// common api for STL and SLISC
+inline Long size(const SvbaseImag &v) { return v.size(); }
+
+inline Imag *ptr(SvbaseImag &v) { return v.p(); }
+
 class SvbaseLimagC
 {
 protected:
@@ -3527,6 +3667,11 @@ inline void SvbaseLimagC::set(const SvbaseLimagC &sli)
 }
 
 inline SvbaseLimagC::~SvbaseLimagC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseLimagC &v) { return v.size(); }
+
+inline const Limag *ptr(const SvbaseLimagC &v) { return v.p(); }
 
 class SvbaseLimag
 {
@@ -3651,6 +3796,11 @@ inline void SvbaseLimag::set(const SvbaseLimag &sli)
 }
 
 inline SvbaseLimag::~SvbaseLimag() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseLimag &v) { return v.size(); }
+
+inline Limag *ptr(SvbaseLimag &v) { return v.p(); }
 
 
 #ifdef SLS_USE_INT_AS_LONG

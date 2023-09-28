@@ -19,6 +19,8 @@ void test_hydrogen()
 		SLS_FAIL;
 	if (abs(dot(rR1, rR2)*dr) > 1e-8)
 		SLS_FAIL;
+#else
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

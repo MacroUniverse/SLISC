@@ -49,13 +49,6 @@ inline void @VecT@::operator<<(@VecT@ &rhs)
 typedef const @VecT@ &@VecT@_I;
 typedef @VecT@ &@VecT@_O, &@VecT@_IO;
 
-// common api for STL and SLISC
-inline Long size(@VecT@_I v) { return v.size(); }
-
-inline const @T@ *p(@VecT@_I v) { return v.p(); }
-
-inline @T@ *p(@VecT@ &v) { return v.p(); }
-
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG

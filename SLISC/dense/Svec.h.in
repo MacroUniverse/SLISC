@@ -163,6 +163,15 @@ inline void @Class@::set(const @Class@ &sli)
 }
 
 inline @Class@::~@Class@() {}
+
+// common api for STL and SLISC
+inline Long size(const @Class@ &v) { return v.size(); }
+
+//% if constness
+inline const @T@ *ptr(const @Class@ &v) { return v.p(); }
+//% else
+inline @T@ *ptr(@Class@ &v) { return v.p(); }
+//% end
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG

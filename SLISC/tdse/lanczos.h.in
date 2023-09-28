@@ -9,6 +9,7 @@
 #include "../sparse/sparse_arith.h"
 #include "../sparse/band_arith.h"
 #include "../lin/mul.h"
+#include "../dense/WorkSpace.h"
 
 namespace slisc {
 
@@ -17,41 +18,28 @@ namespace slisc {
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
 //% tem('exp_Hdt_v_lanc', {
-//%   'VecComp' 'SvecDoub' 'SvecComp'
-//%   'VecQcomp' 'SvecQdoub' 'SvecQcomp'
-//%   'VecComp' 'VecDoub' 'VecComp'
-//%   'VecQcomp' 'VecQdoub' 'VecQcomp'
-//%   'SvecComp' 'SvecDoub' 'SvecComp'
-//%   'SvecQcomp' 'SvecQdoub' 'SvecQcomp'
-//%   'DvecComp' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
-//%   'DvecComp' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'VecComp'; 'VecQcomp';
+//%   'SvecComp'; 'SvecQcomp';
+//%   'DvecComp'; 'DvecQcomp';
 //% });
 //%-------------------------------
-//% [Tv, Twd, Twc] = varargin{:};
-//% [Tr, Tc] = val_t(Twd, Twc);
+//% Tv = varargin{:};
+//% Tc = val_t(Tv);
+//% Tr = rm_comp(Tc);
 template <class Tmul>
-inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
+inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
-	if (Nk > N)
-		SLS_ERR("Nk > N !");
-	if (wsp_d.size() < Nk*Nk + 2*Nk)
-		SLS_ERR("wsp_d too short!");
-	if (wsp_c.size() < N*Nk + N)
-		SLS_ERR("wsp_c too short!");
+	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+	wsp.reset();
+	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i>
+	auto beta = wsp.Svec@Tr@(Nk); // beta[i] = norm(bar v_i)
+	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
+	auto vc = wsp.Svec@Tc@(N); // temp vec
+	auto bases = wsp.Scmat@Tc@(N, Nk); // Krylov bases
 
-	@Tr@ *pd = wsp_d.p();
-	Svec@Tr@ alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i>
-	Svec@Tr@ beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i)
-	Scmat@Tr@ eigV(pd, Nk, Nk); // eigen vectors
-	
-	@Tc@ *pc = wsp_c.p();
-	Svec@Tc@ vc(pc, N); pc += vc.size(); // temp vec
-	Scmat@Tc@ bases(pc, N, Nk); // Krylov bases
 //% req('cut0', { ['Scmat' Tc] });
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 //% req('norm2', {Tv});
@@ -102,15 +90,13 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 
 //% if is_Doub(Tr)
 	lapack_int info =
-	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
+		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p()+1, eigV.p(), Nk);
 	// alpha is now eigen values
 	if (info != 0) SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 //% elseif is_Qdoub(Tr)
 #ifdef SLS_USE_MPLAPACK
-	SLS_WARN("not optimized!");
-	VecQdoub wsp(Nk);
 	mplapackint info;
-	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
+	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.pQdoub(Nk), info);
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
 #else
 	SLS_ERR("MPLAPACK is turned off!");
@@ -134,44 +120,32 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
 //% tem('exp_miHdt_v_lanc', {
-//%   'DvecComp' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
-//%   'DvecComp' 'VecDoub' 'VecComp'
-//%   'DvecQcomp' 'VecQdoub' 'VecQcomp'
-//%   'VecComp'  'VecDoub' 'VecComp'
-//%   'VecQcomp' 'VecQdoub' 'VecQcomp'
-//%   'DvecComp' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
-//%   'SvecComp' 'SvecDoub' 'SvecComp'
-//%   'SvecQcomp' 'SvecQdoub' 'SvecQcomp'
-//%   'DvecComp' 'SvecDoub' 'SvecComp'
-//%   'DvecQcomp' 'SvecQdoub' 'SvecQcomp'
+//%   'DvecComp'; 'DvecQcomp'; 'DvecComp';
+//%   'DvecQcomp'; 'VecComp'; 'VecQcomp';
+//%   'DvecComp'; 'DvecQcomp'; 'SvecComp';
+//%   'SvecQcomp'; 'DvecComp'; 'DvecQcomp';
 //% });
 //%-------------------------------
-//% [Tv, Twd, Twc] = varargin{:};
-//% [Tr, Tc] = val_t(Twd, Twc);
+//% Tv = varargin{:};
+//% Tc = val_t(Tv);
+//% Tr = rm_comp(Tc);
 template <class Tmul>
-inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, @Twd@_IO wsp_d, @Twc@_IO wsp_c)
+inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N)
 		SLS_ERR("Nk > N !");
-	if (wsp_d.size() < Nk*Nk + 2*Nk)
-		SLS_ERR("wsp_d too short!");
-	if (wsp_c.size() < N*Nk + N + Nk)
-		SLS_ERR("wsp_c too short!");
 #endif
 
-	@Tr@ *pd = wsp_d.p();
-	Svec@Tr@ alpha(pd, Nk); pd += alpha.size(); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
-	Svec@Tr@ beta(pd, Nk); pd += beta.size(); // beta[i] = norm(bar v_i) // eq_Lanc_13
-	Scmat@Tr@ eigV(pd, Nk, Nk); // eigen vectors
+	wsp.reset();
+	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
+	auto beta = wsp.Svec@Tr@(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
+	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
 	
-	@Tc@ *pc = wsp_c.p();
-	Svec@Tc@ vc(pc, N); pc += vc.size(); // temp vec
-	Svec@Tc@ vc1(pc, Nk); pc += vc1.size(); // temp vec
-	Scmat@Tc@ bases(pc, N, Nk); // orthonormal Krylov bases eq_Lanc_7
+	auto vc = wsp.Svec@Tc@(N); // temp vec
+	auto vc1 = wsp.Svec@Tc@(Nk); // temp vec
+	auto bases = wsp.Scmat@Tc@(N, Nk); // orthonormal Krylov bases eq_Lanc_7
 //% req('cut0', { ['Scmat' Tc] });
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
 //% req('norm2', {Tv});
@@ -227,11 +201,9 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 		SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
 //% elseif is_Qdoub(Tr)
 #ifdef SLS_USE_MPLAPACK
-	SLS_WARN("not optimized!");
-	VecQdoub wsp(Nk);
 	mplapackint info;
 	// alpha is now eigen values
-	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.p(), info);
+	Rstev("V", Nk, alpha.p(), beta.p()+1, eigV.p(), Nk, wsp.pQdoub(Nk), info);
 	if (info != 0)
 		SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
 #else

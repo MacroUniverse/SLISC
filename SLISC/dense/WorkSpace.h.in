@@ -1,40 +1,77 @@
 #pragma once
 // workspace
+// each allocation must start at a memory address at the multiple of SLS_WSP_ALIGN, for possible SIMD optimization
 
 #include "Scmat.h"
 #include "Scmat3.h"
+#ifndef SLS_WSP_ALIGN
+#define SLS_WSP_ALIGN 64
+#endif
 
 namespace slisc {
 
-class WorkSpace : protected VecUchar {
+class WorkSpace : protected SvecUchar {
 
 private:
 	Long m_used; // start of free space
-	const Long m_align; // each allocation must start at a memory address at the multiple of m_align
 
 	// modify m_used so that `m_p + m_used` is aligned
 	// will not check bound
 	void do_align() {
-		Long rem = (size_t(m_p) + m_used) % m_align;
+		Long rem = (size_t(m_p) + m_used) % SLS_WSP_ALIGN;
 		if (rem)
-			m_used += m_align - rem;
+			m_used += SLS_WSP_ALIGN - rem;
 	}
 
 public:
+	using SvecUchar::size;
+	using SvecUchar::p;
+
+	WorkSpace() {};
+
 	// allocate all space ever needed, won't allow resize
-	WorkSpace(Long_I Nbyte, Long_I align = 64) : VecUchar(Nbyte), m_used(0), m_align(align) {}
+	WorkSpace(void *ptr, Long_I Nbyte) :
+		SvecUchar((Uchar*)ptr, Nbyte), m_used(0) {}
+
+	// initialize from STL and SLISC containers (continuous memory)
+	template <class Tv>
+	WorkSpace(Tv &v) : WorkSpace(ptr(v), (Long)v.size()) {}
+
+	WorkSpace &operator=(const WorkSpace &rhs) {
+		m_p = rhs.m_p; m_N = rhs.m_N;
+		m_used = rhs.m_used;
+		return *this;
+	}
 	
 	Long used() const { return m_used; }
 
-	Long align() const { return m_align; }
+	constexpr Long align() const { return SLS_WSP_ALIGN; }
 
-	using VecUchar::size;
-	using VecUchar::p;
+	void set(void *ptr, Long_I Nbyte) {
+		SvecUchar::set((Uchar*)ptr, Nbyte);
+	};
+
+	template <class Tv>
+	void set(Tv &v) { set(v.p(), v.size()); }
+
+	// get a sub WorkSpace
+	WorkSpace get(Long_I Nbyte) {
+#ifdef SLS_CHECK_BOUNDS
+		if (Nbyte > size() - m_used)
+			SLS_ERR("WorkSpace: out of space!");
+#endif
+		Long start = m_used;
+		m_used += Nbyte;
+		return WorkSpace(m_p+start, Nbyte);
+	}
+
+	// danger! make sure no one is using the workspace!
+	void reset() { m_used = 0; }
 
 	// ======= allocate WorkSpace for different containers =========
 
 //% tem('WorkSpace1', {
-//%     'Char'; 'Int'; 'Llong'; 'Long';
+//%     'Char'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Qcomp'; });
 //%----------------------------------------------------------
@@ -42,8 +79,10 @@ public:
 	@T@ *p@T@(Long_I N) {
 		do_align();
 		Long Nb = N*sizeof(@T@);
+#ifdef SLS_CHECK_BOUNDS
 		if (Nb > size() - m_used)
 			SLS_ERR("WorkSpace: out of space!");
+#endif
 		Long start = m_used;
 		m_used += Nb;
 		return (@T@ *)(m_p+start);
@@ -52,8 +91,10 @@ public:
 	slisc::Svec@T@ Svec@T@(Long_I N) {
 		do_align();
 		Long Nb = N*sizeof(@T@);
+#ifdef SLS_CHECK_BOUNDS
 		if (Nb > size() - m_used)
 			SLS_ERR("WorkSpace: out of space!");
+#endif
 		Long start = m_used;
 		m_used += Nb;
 		return slisc::Svec@T@((@T@ *)(m_p+start), N);
@@ -62,8 +103,10 @@ public:
 	slisc::Scmat@T@ Scmat@T@(Long_I N1, Long_I N2) {
 		do_align();
 		Long Nb = N1*N2*sizeof(@T@);
+#ifdef SLS_CHECK_BOUNDS
 		if (Nb > size() - m_used)
 			SLS_ERR("WorkSpace: out of space!");
+#endif
 		Long start = m_used;
 		m_used += Nb;
 		return slisc::Scmat@T@((@T@ *)(m_p+start), N1, N2);
@@ -72,13 +115,26 @@ public:
 	slisc::Scmat3@T@ Scmat3@T@(Long_I N1, Long_I N2, Long_I N3) {
 		do_align();
 		Long Nb = N1*N2*N3*sizeof(@T@);
+#ifdef SLS_CHECK_BOUNDS
 		if (Nb > size() - m_used)
 			SLS_ERR("WorkSpace: out of space!");
+#endif
 		Long start = m_used;
 		m_used += Nb;
 		return slisc::Scmat3@T@((@T@ *)(m_p+start), N1, N2, N3);
 	}
+
+//% if is_Long(T)
+	Long *pLong(Long_I N) {	return p@T@(N); }
+
+	slisc::SvecLong SvecLong(Long_I N) { return Svec@T@(N); }
+
+	slisc::ScmatLong ScmatLong(Long_I N1, Long_I N2) { return Scmat@T@(N1, N2); }
+
+	slisc::Scmat3Long Scmat3Long(Long_I N1, Long_I N2, Long_I N3) { return Scmat3@T@(N1, N2, N3); }
+//% endif
 //%----------------------------------------------------------
 };
 
 }; // namespace slisc
+

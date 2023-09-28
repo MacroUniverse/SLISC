@@ -180,6 +180,13 @@ inline @VbaseT@::~@VbaseT@()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const @VbaseT@ &v) { return v.size(); }
+
+inline const @T@ *ptr(const @VbaseT@ &v) { return v.p(); }
+
+inline @T@ *ptr(@VbaseT@ &v) { return v.p(); }
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -298,4 +305,8 @@ inline bool VbaseBool::end(Long_I i) const
 #endif
 	return m_v[size() - i];
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseBool &v) { return v.size(); }
+
 } // namespace slisc

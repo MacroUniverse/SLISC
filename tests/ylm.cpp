@@ -15,6 +15,8 @@ void test_ylm()
 	ret = yl1l2LM(1, 2, 3, 1, 1.1, 2.2, 1.2, 2.3);
 	if (abs(ret - Comp(-0.01344167979466, 0.016624624728563)) > 1e-8)
 		SLS_ERR("failed");
+#else
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

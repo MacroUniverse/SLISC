@@ -63,10 +63,8 @@ void test_linux()
 #endif
 	}
 
-
-
 #else
-	std::cout << "---------- disabled! ----------" << std::endl;
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

@@ -173,6 +173,13 @@ inline VbaseChar::~VbaseChar()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseChar &v) { return v.size(); }
+
+inline const Char *ptr(const VbaseChar &v) { return v.p(); }
+
+inline Char *ptr(VbaseChar &v) { return v.p(); }
+
 class VbaseUchar
 {
 protected:
@@ -340,6 +347,13 @@ inline VbaseUchar::~VbaseUchar()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseUchar &v) { return v.size(); }
+
+inline const Uchar *ptr(const VbaseUchar &v) { return v.p(); }
+
+inline Uchar *ptr(VbaseUchar &v) { return v.p(); }
 
 class VbaseInt
 {
@@ -509,6 +523,13 @@ inline VbaseInt::~VbaseInt()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseInt &v) { return v.size(); }
+
+inline const Int *ptr(const VbaseInt &v) { return v.p(); }
+
+inline Int *ptr(VbaseInt &v) { return v.p(); }
+
 class VbaseLlong
 {
 protected:
@@ -676,6 +697,13 @@ inline VbaseLlong::~VbaseLlong()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseLlong &v) { return v.size(); }
+
+inline const Llong *ptr(const VbaseLlong &v) { return v.p(); }
+
+inline Llong *ptr(VbaseLlong &v) { return v.p(); }
 
 class VbaseFloat
 {
@@ -845,6 +873,13 @@ inline VbaseFloat::~VbaseFloat()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseFloat &v) { return v.size(); }
+
+inline const Float *ptr(const VbaseFloat &v) { return v.p(); }
+
+inline Float *ptr(VbaseFloat &v) { return v.p(); }
+
 class VbaseDoub
 {
 protected:
@@ -1012,6 +1047,13 @@ inline VbaseDoub::~VbaseDoub()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseDoub &v) { return v.size(); }
+
+inline const Doub *ptr(const VbaseDoub &v) { return v.p(); }
+
+inline Doub *ptr(VbaseDoub &v) { return v.p(); }
 
 class VbaseLdoub
 {
@@ -1181,6 +1223,13 @@ inline VbaseLdoub::~VbaseLdoub()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseLdoub &v) { return v.size(); }
+
+inline const Ldoub *ptr(const VbaseLdoub &v) { return v.p(); }
+
+inline Ldoub *ptr(VbaseLdoub &v) { return v.p(); }
+
 class VbaseQdoub
 {
 protected:
@@ -1348,6 +1397,13 @@ inline VbaseQdoub::~VbaseQdoub()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseQdoub &v) { return v.size(); }
+
+inline const Qdoub *ptr(const VbaseQdoub &v) { return v.p(); }
+
+inline Qdoub *ptr(VbaseQdoub &v) { return v.p(); }
 
 class VbaseFcomp
 {
@@ -1517,6 +1573,13 @@ inline VbaseFcomp::~VbaseFcomp()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseFcomp &v) { return v.size(); }
+
+inline const Fcomp *ptr(const VbaseFcomp &v) { return v.p(); }
+
+inline Fcomp *ptr(VbaseFcomp &v) { return v.p(); }
+
 class VbaseComp
 {
 protected:
@@ -1684,6 +1747,13 @@ inline VbaseComp::~VbaseComp()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseComp &v) { return v.size(); }
+
+inline const Comp *ptr(const VbaseComp &v) { return v.p(); }
+
+inline Comp *ptr(VbaseComp &v) { return v.p(); }
 
 class VbaseLcomp
 {
@@ -1853,6 +1923,13 @@ inline VbaseLcomp::~VbaseLcomp()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseLcomp &v) { return v.size(); }
+
+inline const Lcomp *ptr(const VbaseLcomp &v) { return v.p(); }
+
+inline Lcomp *ptr(VbaseLcomp &v) { return v.p(); }
+
 class VbaseQcomp
 {
 protected:
@@ -2020,6 +2097,13 @@ inline VbaseQcomp::~VbaseQcomp()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseQcomp &v) { return v.size(); }
+
+inline const Qcomp *ptr(const VbaseQcomp &v) { return v.p(); }
+
+inline Qcomp *ptr(VbaseQcomp &v) { return v.p(); }
 
 class VbaseFimag
 {
@@ -2189,6 +2273,13 @@ inline VbaseFimag::~VbaseFimag()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseFimag &v) { return v.size(); }
+
+inline const Fimag *ptr(const VbaseFimag &v) { return v.p(); }
+
+inline Fimag *ptr(VbaseFimag &v) { return v.p(); }
+
 class VbaseImag
 {
 protected:
@@ -2356,6 +2447,13 @@ inline VbaseImag::~VbaseImag()
 	if (m_N != 0)
 		delete[] m_p;
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseImag &v) { return v.size(); }
+
+inline const Imag *ptr(const VbaseImag &v) { return v.p(); }
+
+inline Imag *ptr(VbaseImag &v) { return v.p(); }
 
 class VbaseLimag
 {
@@ -2525,6 +2623,13 @@ inline VbaseLimag::~VbaseLimag()
 		delete[] m_p;
 }
 
+// common api for STL and SLISC
+inline Long size(const VbaseLimag &v) { return v.size(); }
+
+inline const Limag *ptr(const VbaseLimag &v) { return v.p(); }
+
+inline Limag *ptr(VbaseLimag &v) { return v.p(); }
+
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef VbaseInt VbaseLong;
@@ -2642,4 +2747,8 @@ inline bool VbaseBool::end(Long_I i) const
 #endif
 	return m_v[size() - i];
 }
+
+// common api for STL and SLISC
+inline Long size(const VbaseBool &v) { return v.size(); }
+
 } // namespace slisc

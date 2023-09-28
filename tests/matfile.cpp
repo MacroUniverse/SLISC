@@ -319,7 +319,7 @@ void test_matfile()
 	//     mat.close();
 	// }
 #else
-	cout << "---------- disabled! ----------" << endl;
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

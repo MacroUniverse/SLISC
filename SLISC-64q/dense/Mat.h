@@ -1083,4 +1083,13 @@ inline void MatLimag::resize(Long_I N0, Long_I N1)
 typedef const MatLimag &MatLimag_I;
 typedef MatLimag &MatLimag_O, &MatLimag_IO;
 
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef MatInt MatLong;
+#else
+typedef MatLlong MatLong;
+#endif
+typedef const MatLong &MatLong_I;
+typedef MatLong &MatLong_O, &MatLong_IO;
+
 } // namespace slisc

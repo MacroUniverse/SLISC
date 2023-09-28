@@ -12,13 +12,6 @@ namespace slisc {
 //% T = varargin{:};
 //% Mat3T = ['Mat3' T];
 //% VbaseT = ['Vbase' T];
-//% if is_Long(T)
-#ifdef SLS_USE_INT_AS_LONG
-typedef Mat3Int Mat3Long;
-#else
-typedef Mat3Llong Mat3Long;
-#endif
-//% else
 class @Mat3T@ : public @VbaseT@
 {
 protected:
@@ -87,9 +80,16 @@ inline Long @Mat3T@::n2() const
 {
 	return m_N2;
 }
-//% end
 
 typedef const @Mat3T@ &@Mat3T@_I;
 typedef @Mat3T@ &@Mat3T@_O, &@Mat3T@_IO;
 //%----------------------
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef Mat3Int Mat3Long;
+#else
+typedef Mat3Llong Mat3Long;
+#endif
+typedef const Mat3Long &Mat3Long_I;
+typedef Mat3Long &Mat3Long_O, &Mat3Long_IO;
 } // namespace slisc

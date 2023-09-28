@@ -48,7 +48,7 @@ opt_matfile := false
 # --- version ---
 ver_major := 0
 ver_minor := 2
-ver_patch := 8
+ver_patch := 9
 
 # === minimum build ===
 ifeq ($(opt_min), true)
@@ -484,6 +484,7 @@ Ncpu := $(shell getconf _NPROCESSORS_ONLN)
 
 # remake all and test all
 all:
+	make test32
 	make test64
 	make test64q
 	make test
@@ -500,6 +501,15 @@ ifeq ($(opt_main), false)
 		@make run_test_x
 		@printf "\n\n\n"
 
+    test32: clean_all
+		$(info remake and run all tests - 32bit)
+		@make h
+		@make opt_long32=true opt_min=false depend -j$(Ncpu)
+		@make opt_long32=true opt_min=false $(path_test_x) -j$(Ncpu)
+		@printf "\n\n\n"
+		@make run_test_x
+		@printf "\n\n\n"
+	
     test64: clean_all
 		$(info remake and run all tests - 64bit)
 		@make h64
@@ -541,6 +551,15 @@ else # opt_main == false
 		@make h
 		@make depend -j$(Ncpu)
 		@make main.x -j$(Ncpu)
+		@printf "\n\n\n"
+		./main.x < input.inp
+		@printf "\n\n\n"
+
+    test32: clean_all
+		$(info remake and run all tests - 64bit)
+		@make h
+		@make opt_long32=true depend -j$(Ncpu)
+		@make opt_long32=true main.x -j$(Ncpu)
 		@printf "\n\n\n"
 		./main.x < input.inp
 		@printf "\n\n\n"

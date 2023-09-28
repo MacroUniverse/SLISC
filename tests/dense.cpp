@@ -4,6 +4,7 @@
 #include "../SLISC/arith/reorder.h"
 #include "../SLISC/util/random.h"
 #include "../SLISC/dense/WorkSpace.h"
+#include "../SLISC/dense/Vec.h"
 // #include "../SLISC/str/disp.h"
 
 void test_dense()
@@ -206,7 +207,8 @@ void test_dense()
 	
 	// test WorkSpace
 	{
-		WorkSpace wsp(1024);
+		VecUchar wsp_mem(1024);
+		WorkSpace wsp(wsp_mem);
 		SLS_ASSERT(wsp.size() == 1024);
 		SLS_ASSERT((size_t)wsp.p() > 0);
 		SLS_ASSERT(wsp.align() == 64);

@@ -867,4 +867,12 @@ inline Long Mat3Limag::n2() const
 typedef const Mat3Limag &Mat3Limag_I;
 typedef Mat3Limag &Mat3Limag_O, &Mat3Limag_IO;
 
+
+#ifdef SLS_USE_INT_AS_LONG
+typedef Mat3Int Mat3Long;
+#else
+typedef Mat3Llong Mat3Long;
+#endif
+typedef const Mat3Long &Mat3Long_I;
+typedef Mat3Long &Mat3Long_O, &Mat3Long_IO;
 } // namespace slisc

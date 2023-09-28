@@ -112,7 +112,7 @@ void test_lin_eq()
 		}
 	}
 #else
-	std::cout << "---------- MPLAPACK disabled! ----------" << std::endl;
+	printf("---------- MPLAPACK disabled! ----------\n");
 #endif
 }
 
