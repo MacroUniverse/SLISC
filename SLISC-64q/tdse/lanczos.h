@@ -17,6 +17,7 @@ namespace slisc {
 // x, y can be the same object
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
+// required workspace: sizeof(Doub)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -24,7 +25,6 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.SvecDoub(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -87,6 +87,7 @@ inline Doub exp_Hdt_v_lanc(VecComp_O y, Tmul &mul_fun, VecComp_I x, Doub_I dt, L
 	return err;
 }
 
+// required workspace: sizeof(Qdoub)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline Qdoub exp_Hdt_v_lanc(VecQcomp_O y, Tmul &mul_fun, VecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -94,7 +95,6 @@ inline Qdoub exp_Hdt_v_lanc(VecQcomp_O y, Tmul &mul_fun, VecQcomp_I x, Qdoub_I d
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.SvecQdoub(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -160,6 +160,7 @@ inline Qdoub exp_Hdt_v_lanc(VecQcomp_O y, Tmul &mul_fun, VecQcomp_I x, Qdoub_I d
 	return err;
 }
 
+// required workspace: sizeof(Doub)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -167,7 +168,6 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt,
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.SvecDoub(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -230,6 +230,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt,
 	return err;
 }
 
+// required workspace: sizeof(Qdoub)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline Qdoub exp_Hdt_v_lanc(SvecQcomp_O y, Tmul &mul_fun, SvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -237,7 +238,6 @@ inline Qdoub exp_Hdt_v_lanc(SvecQcomp_O y, Tmul &mul_fun, SvecQcomp_I x, Qdoub_I
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.SvecQdoub(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -303,6 +303,7 @@ inline Qdoub exp_Hdt_v_lanc(SvecQcomp_O y, Tmul &mul_fun, SvecQcomp_I x, Qdoub_I
 	return err;
 }
 
+// required workspace: sizeof(Doub)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -310,7 +311,6 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.SvecDoub(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -373,6 +373,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 	return err;
 }
 
+// required workspace: sizeof(Qdoub)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -380,7 +381,6 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.SvecQdoub(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -451,6 +451,7 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 // x, y can be the same object
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
+// required workspace: sizeof(Doub)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -460,7 +461,6 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -521,6 +521,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 	return err;
 }
 
+// required workspace: sizeof(Qdoub)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -530,7 +531,6 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, Tmul &mul_fun, DvecQcomp_I x, Qdou
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -595,6 +595,7 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, Tmul &mul_fun, DvecQcomp_I x, Qdou
 	return err;
 }
 
+// required workspace: sizeof(Doub)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline Doub exp_miHdt_v_lanc(VecComp_IO y, Tmul &mul_fun, VecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -604,7 +605,6 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, Tmul &mul_fun, VecComp_I x, Doub_I dt
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -665,6 +665,7 @@ inline Doub exp_miHdt_v_lanc(VecComp_IO y, Tmul &mul_fun, VecComp_I x, Doub_I dt
 	return err;
 }
 
+// required workspace: sizeof(Qdoub)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline Qdoub exp_miHdt_v_lanc(VecQcomp_IO y, Tmul &mul_fun, VecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -674,7 +675,6 @@ inline Qdoub exp_miHdt_v_lanc(VecQcomp_IO y, Tmul &mul_fun, VecQcomp_I x, Qdoub_
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -739,6 +739,7 @@ inline Qdoub exp_miHdt_v_lanc(VecQcomp_IO y, Tmul &mul_fun, VecQcomp_I x, Qdoub_
 	return err;
 }
 
+// required workspace: sizeof(Doub)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -748,7 +749,6 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I 
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -809,6 +809,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I 
 	return err;
 }
 
+// required workspace: sizeof(Qdoub)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline Qdoub exp_miHdt_v_lanc(SvecQcomp_IO y, Tmul &mul_fun, SvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -818,7 +819,6 @@ inline Qdoub exp_miHdt_v_lanc(SvecQcomp_IO y, Tmul &mul_fun, SvecQcomp_I x, Qdou
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors

@@ -26,6 +26,7 @@ namespace slisc {
 //% Tv = varargin{:};
 //% Tc = val_t(Tv);
 //% Tr = rm_comp(Tc);
+// required workspace: sizeof(@Tr@)*(Nk*(2*N+Nk+2)+2*N)+4*align
 template <class Tmul>
 inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -33,7 +34,6 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	wsp.reset();
 	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i>
 	auto beta = wsp.Svec@Tr@(Nk); // beta[i] = norm(bar v_i)
 	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
@@ -129,6 +129,7 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 //% Tv = varargin{:};
 //% Tc = val_t(Tv);
 //% Tr = rm_comp(Tc);
+// required workspace: sizeof(@Tr@)*(Nk*(2*N+Nk+2)+2*(N+Nk))+5*align
 template <class Tmul>
 inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
@@ -138,7 +139,6 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 		SLS_ERR("Nk > N !");
 #endif
 
-	wsp.reset();
 	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.Svec@Tr@(Nk); // beta[i] = norm(bar v_i) // eq_Lanc_13
 	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
