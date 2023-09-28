@@ -52,34 +52,25 @@ inline void mul_cmat_diag_cmat(@T@ *c, const @T1@ *a, const @T2@ *b, Long_I Nr, 
 }
 //%------------------------
 
-//% tem('mul_v_coo_v', {
-//%     'Comp', 'Doub', 'Comp';
-//%     'Comp', 'Comp', 'Comp';
-//%     'Qcomp', 'Qdoub', 'Qcomp';
-//%     'Qcomp', 'Qcomp', 'Qcomp';
-//% });
-//%-------------------------------
-//% [Ty,T,Tx] = varargin{:};
-//% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
-//%     error('illegal types!');
-//% end
-inline void mul_v_coo_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
+template <class Ty, class Ta, class Tx>
+inline void mul_v_coo_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
 {
-//% req('vecset', {Ty});
 	vecset(y, 0, N1);
 	for (Long k = 0; k < Nnz; ++k)
 		y[i[k]] += a_ij[k] * x[j[k]];
 }
 
-inline void mul_v_coo_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x, Long_I x_step)
+template <class Ty, class Ta, class Tx>
+inline void mul_v_coo_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x, Long_I x_step)
 {
-//% req('vecset', {Ty});
 	vecset(y, 0, N1);
 	for (Long k = 0; k < Nnz; ++k)
 		y[i[k]] += a_ij[k] * x[x_step*j[k]];
 }
 
-inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const @Tx@ *x)
+// assuming only one of the two redundant elements are stored
+template <class Ty, class Ta, class Tx>
+inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
 {
 	vecset(y, 0, N1);
 	for (Long k = 0; k < Nnz; ++k) {
@@ -88,15 +79,10 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 			y[r] += a_ij[k] * x[c];
 		else {
 			y[r] += a_ij[k] * x[c];
-//% if is_comp(T)
-			y[c] += conj(a_ij[k]) * x[r];
-//% else
-			y[c] += a_ij[k] * x[r];
-//% end
+			y[c] += slisc::conj(a_ij[k]) * x[r];
 		}
 	}
 }
-//%------------------------
 
 template <class Ty, class Tx, class Ta>
 inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
@@ -197,6 +183,7 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 //%    'SvecDoub', 'CmobdDoub', 'SvecDoub';
 //%    'SvecQdoub', 'CmobdQdoub', 'SvecQdoub';
 //%    'SvecComp', 'CmobdDoub', 'SvecComp';
+//%    'SvecComp', 'CmobdImag', 'SvecComp';
 //%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
 //% });
 //%------------------------------
@@ -246,7 +233,6 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 	if (a.n1() != x.size() || a.n0() != y.size())
 		SLS_ERR("illegal shape!");
 #endif
-//% req('mul_v_coo_v', {Ts Ts1 Ts2});
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcoo(T1) && is_Dvec(T2)

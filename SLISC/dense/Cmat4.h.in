@@ -7,7 +7,7 @@ namespace slisc {
 //%     'Char'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
-//%     'Fimag'; 'Imag'; 'Limag';});
+//%     'Fimag'; 'Imag'; 'Limag'; 'Qimag';});
 //%----------------------------------------
 //% T = varargin{:};
 //% Cmat4T = ['Cmat4' T];

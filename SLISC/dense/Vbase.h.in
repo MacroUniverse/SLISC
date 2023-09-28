@@ -9,7 +9,7 @@ namespace slisc {
 //%     'Char'; 'Uchar'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
-//%     'Fimag'; 'Imag'; 'Limag';});
+//%     'Fimag'; 'Imag'; 'Limag'; 'Qimag';});
 //%----------------------------------------------
 //% T = varargin{:};
 //% VbaseT = ['Vbase' T];

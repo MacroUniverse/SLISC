@@ -13,7 +13,8 @@ template <class T>
 void veccpy(T *, const T *, Long_I);
 
 //% tem('Cmobd', {'Int'; 'Llong';
-//%   'Doub'; 'Comp'; 'Qdoub'; 'Qcomp';});
+//%   'Doub'; 'Comp'; 'Qdoub'; 'Qcomp';
+//%   'Imag'; 'Qimag'; });
 //%-----------------
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
@@ -59,7 +60,7 @@ inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
-		vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+		vecset(m_data.p() + step - 1, @T@(0), Nblk - 1, step);
 }
 
 inline const @T@ &@CmobdT@::operator[](Long_I i) const
@@ -146,7 +147,7 @@ inline void @CmobdT@::set(@Cmat3T@_I a3)
 	veccpy(m_data.p(), a3.p(), a3.size());
 	// set the first overlapped element to 0
 	Long step = sqr(nblk0());
-	vecset(m_data.p() + step - 1, 0, nblk() - 1, step);
+	vecset(m_data.p() + step - 1, @T@(0), nblk() - 1, step);
 }
 
 inline Long @CmobdT@::nblk0() const
@@ -165,7 +166,7 @@ inline @T@ @CmobdT@::operator()(Long_I i1, Long_I i2) const
 	if (ind0 >= 0)
 		return m_data[ind0];
 	else
-		return 0;
+		return @T@(0);
 }
 
 inline @T@& @CmobdT@::ref(Long_I i, Long_I j)
@@ -184,7 +185,7 @@ inline void @CmobdT@::resize(Long_I blk_size, Long_I Nblk)
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0
 	Long step = sqr(nblk0());
-	vecset(m_data.p() + step - 1, 0, Nblk - 1, step);
+	vecset(m_data.p() + step - 1, @T@(0), Nblk - 1, step);
 }
 //%----------------------
 } // namespace slisc

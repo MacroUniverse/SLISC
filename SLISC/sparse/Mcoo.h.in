@@ -6,7 +6,9 @@ namespace slisc {
 template <class T>
 void veccpy(T *, const T *, Long_I);
 
-//% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp'; 'Qdoub'; 'Qcomp'; });
+//% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub';
+//%    'Comp'; 'Qdoub'; 'Qcomp';
+//%    'Imag'; 'Qimag'; });
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -118,7 +120,7 @@ inline @T@ @McooT@::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return @T@(0);
 	return m_p[n];
 }
 

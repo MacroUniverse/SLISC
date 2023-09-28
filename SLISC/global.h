@@ -418,16 +418,24 @@ public:
 // === print() like python ===
 // print(a,b,...) is equivalent to `cout << a << b << ... << endl`
 // don't worry about how it works, just use it like a magic
-inline void print() { cout << endl; }
+inline void print_imp() { cout << endl; }
+
+template<typename T, typename... Args>
+void print_imp(const T& first, const Args&... args) {
+	cout << first; print_imp(args...);
+}
+
+std::mutex print_mutex; // for thread safety
 
 template<typename T, typename... Args>
 void print(const T& first, const Args&... args)
 {
-	std::mutex print_mutex; // thread safety
 	std::lock_guard<std::mutex> lock(print_mutex);
 	cout << first;
-	print(args...);
+	print_imp(args...);
 }
+
+inline void flush() { cout.flush(); }
 
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
 

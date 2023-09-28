@@ -158,7 +158,7 @@ inline @T@ pow(@T@ b, Uint n) {
 }
 //%---------------------
 
-//% tem('abs2', {'Int'; 'Llong'; 'Doub'; 'Comp'; });
+//% tem('abs2', {'Int'; 'Llong'; 'Doub'; 'Comp';});
 //%-------------------------------
 //% T = varargin{:};
 //% if is_real(T)
@@ -168,6 +168,12 @@ inline @T@ abs2(@T@_I a) { return a * a; }
 inline @Tr@ abs2(@T@_I a) { return sqr(real(a)) + sqr(imag(a)); }
 //% end
 //%------------------------
+
+//% tem('conj1', {'Float'; 'Doub'; 'Ldoub'; 'Qdoub'});
+//%-------------------------------
+//% Tr = varargin{:};
+inline @Tr@ conj(@Tr@_I r) { return r; }
+//%-------------------------------
 
 inline Llong factorial_ll(int n) {
 	if (n > 20)

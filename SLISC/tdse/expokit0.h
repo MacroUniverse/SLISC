@@ -232,8 +232,11 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, Tmul &mat_mul, Long_I itrace, Long_O iflag)
 {
 #ifndef NDEBUG
-	for (Long i = 0; i < n; ++i)
-		if (w[i] != 0) SLS_ERR("zero vector is not allowed!");
+	{
+		Long i = 0; for (; i < n; ++i) if (w[i] != 0) break;
+		if (i == n)
+			SLS_ERR("zero vector is not allowed!");
+	}
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;
@@ -488,8 +491,11 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	Comp *wsp, Long_I lwsp, Long *iwsp, Long_I liwsp, Tmul &mat_mul, Long_I itrace, Long_O iflag )
 {
 #ifndef NDEBUG
-	for (Long i = 0; i < n; ++i)
-		if (w[i] != 0) SLS_ERR("zero vector is not allowed!");
+	{
+		Long i = 0; for (; i < n; ++i) if (w[i] != 0) break;
+		if (i == n)
+			SLS_ERR("zero vector is not allowed!");
+	}
 #endif
 	const Long mxstep = 500, mxreject = 0, ideg = 6;
 	Doub delta = 1.2, gamma = 0.9;

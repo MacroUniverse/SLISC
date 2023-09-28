@@ -124,6 +124,8 @@ inline DvecCharC::~DvecCharC() {}
 
 typedef const DvecCharC &DvecChar_I;
 
+inline Long size(const DvecCharC &v) { return v.size(); }
+
 class DvecChar
 {
 protected:
@@ -251,6 +253,8 @@ inline DvecChar::~DvecChar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecChar &DvecChar_O, &DvecChar_IO;
 
+inline Long size(const DvecChar &v) { return v.size(); }
+
 class DvecUcharC
 {
 protected:
@@ -371,6 +375,8 @@ inline DvecUcharC::~DvecUcharC() {}
 
 
 typedef const DvecUcharC &DvecUchar_I;
+
+inline Long size(const DvecUcharC &v) { return v.size(); }
 
 class DvecUchar
 {
@@ -499,6 +505,8 @@ inline DvecUchar::~DvecUchar() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecUchar &DvecUchar_O, &DvecUchar_IO;
 
+inline Long size(const DvecUchar &v) { return v.size(); }
+
 class DvecIntC
 {
 protected:
@@ -619,6 +627,8 @@ inline DvecIntC::~DvecIntC() {}
 
 
 typedef const DvecIntC &DvecInt_I;
+
+inline Long size(const DvecIntC &v) { return v.size(); }
 
 class DvecInt
 {
@@ -747,6 +757,8 @@ inline DvecInt::~DvecInt() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecInt &DvecInt_O, &DvecInt_IO;
 
+inline Long size(const DvecInt &v) { return v.size(); }
+
 class DvecLlongC
 {
 protected:
@@ -867,6 +879,8 @@ inline DvecLlongC::~DvecLlongC() {}
 
 
 typedef const DvecLlongC &DvecLlong_I;
+
+inline Long size(const DvecLlongC &v) { return v.size(); }
 
 class DvecLlong
 {
@@ -995,6 +1009,8 @@ inline DvecLlong::~DvecLlong() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLlong &DvecLlong_O, &DvecLlong_IO;
 
+inline Long size(const DvecLlong &v) { return v.size(); }
+
 class DvecFloatC
 {
 protected:
@@ -1115,6 +1131,8 @@ inline DvecFloatC::~DvecFloatC() {}
 
 
 typedef const DvecFloatC &DvecFloat_I;
+
+inline Long size(const DvecFloatC &v) { return v.size(); }
 
 class DvecFloat
 {
@@ -1243,6 +1261,8 @@ inline DvecFloat::~DvecFloat() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecFloat &DvecFloat_O, &DvecFloat_IO;
 
+inline Long size(const DvecFloat &v) { return v.size(); }
+
 class DvecDoubC
 {
 protected:
@@ -1363,6 +1383,8 @@ inline DvecDoubC::~DvecDoubC() {}
 
 
 typedef const DvecDoubC &DvecDoub_I;
+
+inline Long size(const DvecDoubC &v) { return v.size(); }
 
 class DvecDoub
 {
@@ -1491,6 +1513,8 @@ inline DvecDoub::~DvecDoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecDoub &DvecDoub_O, &DvecDoub_IO;
 
+inline Long size(const DvecDoub &v) { return v.size(); }
+
 class DvecLdoubC
 {
 protected:
@@ -1611,6 +1635,8 @@ inline DvecLdoubC::~DvecLdoubC() {}
 
 
 typedef const DvecLdoubC &DvecLdoub_I;
+
+inline Long size(const DvecLdoubC &v) { return v.size(); }
 
 class DvecLdoub
 {
@@ -1739,6 +1765,8 @@ inline DvecLdoub::~DvecLdoub() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLdoub &DvecLdoub_O, &DvecLdoub_IO;
 
+inline Long size(const DvecLdoub &v) { return v.size(); }
+
 
 
 class DvecFcompC
@@ -1861,6 +1889,8 @@ inline DvecFcompC::~DvecFcompC() {}
 
 
 typedef const DvecFcompC &DvecFcomp_I;
+
+inline Long size(const DvecFcompC &v) { return v.size(); }
 
 class DvecFcomp
 {
@@ -1989,6 +2019,8 @@ inline DvecFcomp::~DvecFcomp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecFcomp &DvecFcomp_O, &DvecFcomp_IO;
 
+inline Long size(const DvecFcomp &v) { return v.size(); }
+
 class DvecCompC
 {
 protected:
@@ -2109,6 +2141,8 @@ inline DvecCompC::~DvecCompC() {}
 
 
 typedef const DvecCompC &DvecComp_I;
+
+inline Long size(const DvecCompC &v) { return v.size(); }
 
 class DvecComp
 {
@@ -2237,6 +2271,8 @@ inline DvecComp::~DvecComp() {}
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecComp &DvecComp_O, &DvecComp_IO;
 
+inline Long size(const DvecComp &v) { return v.size(); }
+
 class DvecLcompC
 {
 protected:
@@ -2357,6 +2393,8 @@ inline DvecLcompC::~DvecLcompC() {}
 
 
 typedef const DvecLcompC &DvecLcomp_I;
+
+inline Long size(const DvecLcompC &v) { return v.size(); }
 
 class DvecLcomp
 {
@@ -2484,6 +2522,8 @@ inline DvecLcomp::~DvecLcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const DvecLcomp &DvecLcomp_O, &DvecLcomp_IO;
+
+inline Long size(const DvecLcomp &v) { return v.size(); }
 
 
 

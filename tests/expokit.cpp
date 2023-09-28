@@ -60,13 +60,13 @@ void test_expokit()
 
 		// expokit result
 		copy(y1, x);
-		expv(y1, expo_mul, t, Nbase, norm_inf(A));
-		copy(y2, x);
-		expv(y2, expo_mul, t, Nbase, norm_inf(A), 0, true);
-		
+		expv(y1, expo_mul, t, Nbase, norm_inf(A));		
 		y1 -= y0;
 		if (max_abs(y1) > 2e-11)
 			SLS_FAIL;
+		
+		copy(y2, x);
+		expv(y2, expo_mul, t, Nbase, norm_inf(A), 0, true);
 		y2 -= y0;
 		if (max_abs(y2) > 2e-11)
 			SLS_FAIL;

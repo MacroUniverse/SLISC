@@ -9,7 +9,7 @@
 namespace slisc {
 // === pointer interface ===
 
-//% tem('vecset', { 'Doub'; 'Qdoub' });
+//% tem('vecset', { 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp'; 'Imag'; 'Qimag'; });
 //%-----------------------
 //% T = varargin{:};
 inline void vecset(@T@ *v, @T@_I val, Long_I n)
