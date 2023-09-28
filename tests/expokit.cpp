@@ -19,7 +19,9 @@ void test_expokit()
 	McooDoub A(0,0);
 	A.reserve(500);
 	A.reshape(N, N);
-	auto expo_mul = [&A](Comp *y, const Comp *x) { mul_v_coo_v(y, A.p(), A.row_p(), A.col_p(), A.n0(), A.nnz(), x); };
+	auto expo_mul = [&A](Comp *y, const Comp *x) {
+		mul_v_coo_v(y, A.p(), A.row_p(), A.col_p(), A.n0(), A.nnz(), x);
+	};
 
 	for (k = 0; k < 10; ++k) {
 		A.trim(0);

@@ -98,27 +98,16 @@ inline void mul_v_cooh_v(@Ty@ *y, const @T@ *a_ij, const Long *i, const Long *j,
 }
 //%------------------------
 
-//% tem('mul_v_cmatobd_v', {
-//%     'Comp', 'Doub', 'Comp';
-//%     'Comp', 'Comp', 'Comp';
-//%     'Qcomp', 'Qdoub', 'Qcomp';
-//%     'Qcomp', 'Qcomp', 'Qcomp';
-//% });
-//%-------------------------------
-//% [Ty,T,Tx] = varargin{:};
-//% if ~is_promo(Ty, T) || ~is_promo(Ty, Tx)
-//%     error('illegal types!');
-//% end
-inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_size, Long_I Nblk, Long_I N)
+template <class Ty, class Tx, class Ta>
+inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
-//% req('vecset', {Ty});
 	vecset(y, 0, N);
 	Long step = blk_size - 1, step2 = blk_size - 2;
 	a += blk_size + 1; // move to first element
 
 	// first block
 	for (Long j = 0; j < step; ++j) {
-		const @Tx@ &s = x[j];
+		const Tx &s = x[j];
 		for (Long i = 0; i < step; ++i) {
 			y[i] += (*a) * s;
 			++a;
@@ -130,7 +119,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 	// middle blocks
 	for (Long blk = 1; blk < Nblk - 1; ++blk) {
 		for (Long j = 0; j < blk_size; ++j) {
-			@Tx@ s = x[j];
+			Tx s = x[j];
 			for (Long i = 0; i < blk_size; ++i) {
 				y[i] += (*a) * s;
 				++a;
@@ -141,7 +130,7 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 	
 	// last block
 	for (Long j = 0; j < step; ++j) {
-		@Tx@ s = x[j];
+		Tx s = x[j];
 		for (Long i = 0; i < step; ++i) {
 			y[i] += (*a) * s;
 			++a;
@@ -149,7 +138,55 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 		++a;
 	}
 }
-//%-----------------------
+
+template <class Ty, class Tx, class Ta, class Talpha, class Tbeta>
+inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N,
+	Long_I step_y, Long_I step_x, const Talpha &alpha, const Tbeta &beta)
+{
+	Long step = blk_size - 1, step2 = blk_size - 2;
+	Long xstep = step*step_x, ystep = step*step_y;
+	Long xstep2 = step2*step_x, ystep2 = step2*step_y;
+	Long xblk_size = blk_size*step_x, yblk_size = blk_size*step_y;
+	a += blk_size + 1; // move to first element
+
+	if (beta == 0)
+		vecset(y, 0, N, step_y);
+	else
+		times_eq_vs(y, beta, N, step_y);
+
+	// first block
+	for (Long j = 0; j < xstep; j+=step_x) {
+		const Tx &s = x[j];
+		for (Long i = 0; i < ystep; i+=step_y) {
+			y[i] += (*a*alpha) * s;
+			++a;
+		}
+		++a;
+	}
+	x += xstep2; y += ystep2; --a;
+
+	// middle blocks
+	for (Long blk = 1; blk < Nblk - 1; ++blk) {
+		for (Long j = 0; j < xblk_size; j+=step_x) {
+			Tx s = x[j];
+			for (Long i = 0; i < yblk_size; i+=step_y) {
+				y[i] += (*a*alpha) * s;
+				++a;
+			}
+		}
+		x += xstep; y += ystep;
+	}
+	
+	// last block
+	for (Long j = 0; j < xstep; j+=step_x) {
+		Tx s = x[j];
+		for (Long i = 0; i < ystep; i+=step_y) {
+			y[i] += (*a*alpha) * s;
+			++a;
+		}
+		++a;
+	}
+}
 
 //% tem('mul(v,obd,v)', {
 //%    'VecComp', 'CmobdDoub', 'VecComp';
@@ -164,8 +201,6 @@ inline void mul_v_cmatobd_v(@Ty@ *y, const @Tx@ *x, const @T@ *a, Long_I blk_siz
 //% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
-//% [Ts, Ts1, Ts2] = val_t(Ty, Ta, Tx);
-//% req('mul_v_cmatobd_v', {Ts, Ts1, Ts2});
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -173,6 +208,22 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
 		SLS_ERR("wrong shape!");
 #endif
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+}
+//%------------------------------
+
+//% tem('mul(v,obd,v,a,b)', {
+//%    'DvecInt', 'CmobdInt', 'DvecInt'
+//% });
+//%------------------------------
+//% [Ty, Ta, Tx] = varargin{:};
+template <class Talpha, class Tbeta>
+inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x, const Talpha &alpha, const Tbeta &beta)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
 //%------------------------------
 

@@ -171,7 +171,8 @@ inline void mul_v_cooh_v(Doub *y, const Doub *a_ij, const Long *i, const Long *j
 }
 
 
-inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_size, Long_I Nblk, Long_I N)
+template <class Ty, class Tx, class Ta>
+inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
 	vecset(y, 0, N);
 	Long step = blk_size - 1, step2 = blk_size - 2;
@@ -179,7 +180,7 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_si
 
 	// first block
 	for (Long j = 0; j < step; ++j) {
-		const Comp &s = x[j];
+		const Tx &s = x[j];
 		for (Long i = 0; i < step; ++i) {
 			y[i] += (*a) * s;
 			++a;
@@ -191,7 +192,7 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_si
 	// middle blocks
 	for (Long blk = 1; blk < Nblk - 1; ++blk) {
 		for (Long j = 0; j < blk_size; ++j) {
-			Comp s = x[j];
+			Tx s = x[j];
 			for (Long i = 0; i < blk_size; ++i) {
 				y[i] += (*a) * s;
 				++a;
@@ -202,7 +203,7 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_si
 	
 	// last block
 	for (Long j = 0; j < step; ++j) {
-		Comp s = x[j];
+		Tx s = x[j];
 		for (Long i = 0; i < step; ++i) {
 			y[i] += (*a) * s;
 			++a;
@@ -211,128 +212,54 @@ inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Doub *a, Long_I blk_si
 	}
 }
 
-inline void mul_v_cmatobd_v(Comp *y, const Comp *x, const Comp *a, Long_I blk_size, Long_I Nblk, Long_I N)
+template <class Ty, class Tx, class Ta, class Talpha, class Tbeta>
+inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N,
+	Long_I step_y, Long_I step_x, const Talpha &alpha, const Tbeta &beta)
 {
-	vecset(y, 0, N);
 	Long step = blk_size - 1, step2 = blk_size - 2;
+	Long xstep = step*step_x, ystep = step*step_y;
+	Long xstep2 = step2*step_x, ystep2 = step2*step_y;
+	Long xblk_size = blk_size*step_x, yblk_size = blk_size*step_y;
 	a += blk_size + 1; // move to first element
 
+	if (beta == 0)
+		vecset(y, 0, N, step_y);
+	else
+		times_eq_vs(y, beta, N, step_y);
+
 	// first block
-	for (Long j = 0; j < step; ++j) {
-		const Comp &s = x[j];
-		for (Long i = 0; i < step; ++i) {
-			y[i] += (*a) * s;
+	for (Long j = 0; j < xstep; j+=step_x) {
+		const Tx &s = x[j];
+		for (Long i = 0; i < ystep; i+=step_y) {
+			y[i] += (*a*alpha) * s;
 			++a;
 		}
 		++a;
 	}
-	x += step2; y += step2; --a;
+	x += xstep2; y += ystep2; --a;
 
 	// middle blocks
 	for (Long blk = 1; blk < Nblk - 1; ++blk) {
-		for (Long j = 0; j < blk_size; ++j) {
-			Comp s = x[j];
-			for (Long i = 0; i < blk_size; ++i) {
-				y[i] += (*a) * s;
+		for (Long j = 0; j < xblk_size; j+=step_x) {
+			Tx s = x[j];
+			for (Long i = 0; i < yblk_size; i+=step_y) {
+				y[i] += (*a*alpha) * s;
 				++a;
 			}
 		}
-		x += step; y += step;
+		x += xstep; y += ystep;
 	}
 	
 	// last block
-	for (Long j = 0; j < step; ++j) {
-		Comp s = x[j];
-		for (Long i = 0; i < step; ++i) {
-			y[i] += (*a) * s;
+	for (Long j = 0; j < xstep; j+=step_x) {
+		Tx s = x[j];
+		for (Long i = 0; i < ystep; i+=step_y) {
+			y[i] += (*a*alpha) * s;
 			++a;
 		}
 		++a;
 	}
 }
-
-
-
-inline void mul_v_cmatobd_v(Int *y, const Int *x, const Int *a, Long_I blk_size, Long_I Nblk, Long_I N)
-{
-	vecset(y, 0, N);
-	Long step = blk_size - 1, step2 = blk_size - 2;
-	a += blk_size + 1; // move to first element
-
-	// first block
-	for (Long j = 0; j < step; ++j) {
-		const Int &s = x[j];
-		for (Long i = 0; i < step; ++i) {
-			y[i] += (*a) * s;
-			++a;
-		}
-		++a;
-	}
-	x += step2; y += step2; --a;
-
-	// middle blocks
-	for (Long blk = 1; blk < Nblk - 1; ++blk) {
-		for (Long j = 0; j < blk_size; ++j) {
-			Int s = x[j];
-			for (Long i = 0; i < blk_size; ++i) {
-				y[i] += (*a) * s;
-				++a;
-			}
-		}
-		x += step; y += step;
-	}
-	
-	// last block
-	for (Long j = 0; j < step; ++j) {
-		Int s = x[j];
-		for (Long i = 0; i < step; ++i) {
-			y[i] += (*a) * s;
-			++a;
-		}
-		++a;
-	}
-}
-
-inline void mul_v_cmatobd_v(Doub *y, const Doub *x, const Doub *a, Long_I blk_size, Long_I Nblk, Long_I N)
-{
-	vecset(y, 0, N);
-	Long step = blk_size - 1, step2 = blk_size - 2;
-	a += blk_size + 1; // move to first element
-
-	// first block
-	for (Long j = 0; j < step; ++j) {
-		const Doub &s = x[j];
-		for (Long i = 0; i < step; ++i) {
-			y[i] += (*a) * s;
-			++a;
-		}
-		++a;
-	}
-	x += step2; y += step2; --a;
-
-	// middle blocks
-	for (Long blk = 1; blk < Nblk - 1; ++blk) {
-		for (Long j = 0; j < blk_size; ++j) {
-			Doub s = x[j];
-			for (Long i = 0; i < blk_size; ++i) {
-				y[i] += (*a) * s;
-				++a;
-			}
-		}
-		x += step; y += step;
-	}
-	
-	// last block
-	for (Long j = 0; j < step; ++j) {
-		Doub s = x[j];
-		for (Long i = 0; i < step; ++i) {
-			y[i] += (*a) * s;
-			++a;
-		}
-		++a;
-	}
-}
-
 
 inline void mul(VecComp_O y, CmobdDoub_I a, VecComp_I x)
 {
@@ -382,6 +309,17 @@ inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+
+
+template <class Talpha, class Tbeta>
+inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, const Tbeta &beta)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
+}
 
 
 inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)

@@ -33,10 +33,21 @@ void test_Cmobd()
 		CmobdInt a2(3, 4); copy(a2, a1);
 
 		VecInt x(7), y(7); linspace(x, 1, 7);
+		vecInt y1{21, 48, 51, 90, 81, 76, 47};
 		mul(y, a2, x);
-		if (y[0] != 21 || y[1] != 48 || y[2] != 51 || y[3] != 90 ||
-			y[4] != 81 || y[5] != 76 || y[6] != 47)
-			SLS_FAIL;
+		for (Long i = 0; i < 7; ++i)
+			SLS_ASSERT(y[i] == y1[i]);
+
+		// test mul(y, a, x, step_y, step_x, alpha, beta)
+		VecInt x2(14), y2(21);
+		DvecInt xs(x2.p(), 7, 2), ys(y2.p(), 7, 3);
+		for (Long i = 0; i < 7; ++i) {
+			xs[i] = x[i];
+			ys[i] = i;
+		}
+		mul(ys, a2, xs, -5, 3);
+		for (Long i = 0; i < 7; ++i)
+			SLS_ASSERT(ys[i] == -5*y1[i] + 3*i);
 	}
 	
 	// qref() and find() for diagonal elements

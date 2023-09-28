@@ -163,6 +163,8 @@ typedef const @Class@ &@DvecT@_I;
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@DvecT@_O, &@DvecT@_IO;
 //% end
+
+inline Long size(const @Class@ &v) { return v.size(); }
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG
