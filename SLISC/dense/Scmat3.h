@@ -3,7 +3,7 @@
 #include "../dense/Cmat3.h"
 
 namespace slisc {
-class Scmat3CharC : public SvbaseCharC
+class Scmat3CharC : public SvecCharC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -29,10 +29,10 @@ public:
 inline Scmat3CharC::Scmat3CharC() {}
 
 inline Scmat3CharC::Scmat3CharC(const Char *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseCharC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecCharC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3CharC::Scmat3CharC(Cmat3Char_I a)
-	: SvbaseCharC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecCharC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Char &Scmat3CharC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -70,13 +70,13 @@ inline void Scmat3CharC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3CharC::set(const Char *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseCharC::set(data, N0*N1*N2);
+	SvecCharC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3CharC::set(const Scmat3CharC &sli)
 {
-	SvbaseCharC::set(sli);
+	SvecCharC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -90,7 +90,7 @@ inline Long size(Scmat3Char_I v) { return v.size(); }
 inline const Char *p(Scmat3Char_I v) { return v.p(); }
 
 
-class Scmat3Char : public SvbaseChar
+class Scmat3Char : public SvecChar
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -117,10 +117,10 @@ public:
 inline Scmat3Char::Scmat3Char() {}
 
 inline Scmat3Char::Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseChar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecChar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Char::Scmat3Char(Cmat3Char_IO a)
-	: SvbaseChar(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecChar(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Char::operator Scmat3CharC() const
 {
@@ -162,13 +162,13 @@ inline void Scmat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Char::set(Char *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseChar::set(data, N0*N1*N2);
+	SvecChar::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Char::set(const Scmat3Char &sli)
 {
-	SvbaseChar::set(sli);
+	SvecChar::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -181,7 +181,7 @@ typedef const Scmat3Char &Scmat3Char_O, &Scmat3Char_IO;
 inline Char *p(Scmat3Char &v) { return v.p(); }
 
 
-class Scmat3IntC : public SvbaseIntC
+class Scmat3IntC : public SvecIntC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -207,10 +207,10 @@ public:
 inline Scmat3IntC::Scmat3IntC() {}
 
 inline Scmat3IntC::Scmat3IntC(const Int *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseIntC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecIntC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3IntC::Scmat3IntC(Cmat3Int_I a)
-	: SvbaseIntC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecIntC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Int &Scmat3IntC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -248,13 +248,13 @@ inline void Scmat3IntC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3IntC::set(const Int *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseIntC::set(data, N0*N1*N2);
+	SvecIntC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3IntC::set(const Scmat3IntC &sli)
 {
-	SvbaseIntC::set(sli);
+	SvecIntC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -268,7 +268,7 @@ inline Long size(Scmat3Int_I v) { return v.size(); }
 inline const Int *p(Scmat3Int_I v) { return v.p(); }
 
 
-class Scmat3Int : public SvbaseInt
+class Scmat3Int : public SvecInt
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -295,10 +295,10 @@ public:
 inline Scmat3Int::Scmat3Int() {}
 
 inline Scmat3Int::Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseInt(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecInt(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Int::Scmat3Int(Cmat3Int_IO a)
-	: SvbaseInt(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecInt(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Int::operator Scmat3IntC() const
 {
@@ -340,13 +340,13 @@ inline void Scmat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Int::set(Int *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseInt::set(data, N0*N1*N2);
+	SvecInt::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Int::set(const Scmat3Int &sli)
 {
-	SvbaseInt::set(sli);
+	SvecInt::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -359,7 +359,7 @@ typedef const Scmat3Int &Scmat3Int_O, &Scmat3Int_IO;
 inline Int *p(Scmat3Int &v) { return v.p(); }
 
 
-class Scmat3LlongC : public SvbaseLlongC
+class Scmat3LlongC : public SvecLlongC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -385,10 +385,10 @@ public:
 inline Scmat3LlongC::Scmat3LlongC() {}
 
 inline Scmat3LlongC::Scmat3LlongC(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLlongC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLlongC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3LlongC::Scmat3LlongC(Cmat3Llong_I a)
-	: SvbaseLlongC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLlongC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Llong &Scmat3LlongC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -426,13 +426,13 @@ inline void Scmat3LlongC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3LlongC::set(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLlongC::set(data, N0*N1*N2);
+	SvecLlongC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3LlongC::set(const Scmat3LlongC &sli)
 {
-	SvbaseLlongC::set(sli);
+	SvecLlongC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -446,7 +446,7 @@ inline Long size(Scmat3Llong_I v) { return v.size(); }
 inline const Llong *p(Scmat3Llong_I v) { return v.p(); }
 
 
-class Scmat3Llong : public SvbaseLlong
+class Scmat3Llong : public SvecLlong
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -473,10 +473,10 @@ public:
 inline Scmat3Llong::Scmat3Llong() {}
 
 inline Scmat3Llong::Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLlong(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLlong(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Llong::Scmat3Llong(Cmat3Llong_IO a)
-	: SvbaseLlong(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLlong(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Llong::operator Scmat3LlongC() const
 {
@@ -518,13 +518,13 @@ inline void Scmat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Llong::set(Llong *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLlong::set(data, N0*N1*N2);
+	SvecLlong::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Llong::set(const Scmat3Llong &sli)
 {
-	SvbaseLlong::set(sli);
+	SvecLlong::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -537,7 +537,7 @@ typedef const Scmat3Llong &Scmat3Llong_O, &Scmat3Llong_IO;
 inline Llong *p(Scmat3Llong &v) { return v.p(); }
 
 
-class Scmat3FloatC : public SvbaseFloatC
+class Scmat3FloatC : public SvecFloatC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -563,10 +563,10 @@ public:
 inline Scmat3FloatC::Scmat3FloatC() {}
 
 inline Scmat3FloatC::Scmat3FloatC(const Float *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFloatC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecFloatC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3FloatC::Scmat3FloatC(Cmat3Float_I a)
-	: SvbaseFloatC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecFloatC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Float &Scmat3FloatC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -604,13 +604,13 @@ inline void Scmat3FloatC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3FloatC::set(const Float *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseFloatC::set(data, N0*N1*N2);
+	SvecFloatC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3FloatC::set(const Scmat3FloatC &sli)
 {
-	SvbaseFloatC::set(sli);
+	SvecFloatC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -624,7 +624,7 @@ inline Long size(Scmat3Float_I v) { return v.size(); }
 inline const Float *p(Scmat3Float_I v) { return v.p(); }
 
 
-class Scmat3Float : public SvbaseFloat
+class Scmat3Float : public SvecFloat
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -651,10 +651,10 @@ public:
 inline Scmat3Float::Scmat3Float() {}
 
 inline Scmat3Float::Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFloat(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecFloat(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Float::Scmat3Float(Cmat3Float_IO a)
-	: SvbaseFloat(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecFloat(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Float::operator Scmat3FloatC() const
 {
@@ -696,13 +696,13 @@ inline void Scmat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Float::set(Float *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseFloat::set(data, N0*N1*N2);
+	SvecFloat::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Float::set(const Scmat3Float &sli)
 {
-	SvbaseFloat::set(sli);
+	SvecFloat::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -715,7 +715,7 @@ typedef const Scmat3Float &Scmat3Float_O, &Scmat3Float_IO;
 inline Float *p(Scmat3Float &v) { return v.p(); }
 
 
-class Scmat3DoubC : public SvbaseDoubC
+class Scmat3DoubC : public SvecDoubC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -741,10 +741,10 @@ public:
 inline Scmat3DoubC::Scmat3DoubC() {}
 
 inline Scmat3DoubC::Scmat3DoubC(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseDoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecDoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3DoubC::Scmat3DoubC(Cmat3Doub_I a)
-	: SvbaseDoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecDoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Doub &Scmat3DoubC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -782,13 +782,13 @@ inline void Scmat3DoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3DoubC::set(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseDoubC::set(data, N0*N1*N2);
+	SvecDoubC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3DoubC::set(const Scmat3DoubC &sli)
 {
-	SvbaseDoubC::set(sli);
+	SvecDoubC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -802,7 +802,7 @@ inline Long size(Scmat3Doub_I v) { return v.size(); }
 inline const Doub *p(Scmat3Doub_I v) { return v.p(); }
 
 
-class Scmat3Doub : public SvbaseDoub
+class Scmat3Doub : public SvecDoub
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -829,10 +829,10 @@ public:
 inline Scmat3Doub::Scmat3Doub() {}
 
 inline Scmat3Doub::Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseDoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecDoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Doub::Scmat3Doub(Cmat3Doub_IO a)
-	: SvbaseDoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecDoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Doub::operator Scmat3DoubC() const
 {
@@ -874,13 +874,13 @@ inline void Scmat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Doub::set(Doub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseDoub::set(data, N0*N1*N2);
+	SvecDoub::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Doub::set(const Scmat3Doub &sli)
 {
-	SvbaseDoub::set(sli);
+	SvecDoub::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -895,7 +895,7 @@ inline Doub *p(Scmat3Doub &v) { return v.p(); }
 
 
 
-class Scmat3LdoubC : public SvbaseLdoubC
+class Scmat3LdoubC : public SvecLdoubC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -921,10 +921,10 @@ public:
 inline Scmat3LdoubC::Scmat3LdoubC() {}
 
 inline Scmat3LdoubC::Scmat3LdoubC(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3LdoubC::Scmat3LdoubC(Cmat3Ldoub_I a)
-	: SvbaseLdoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLdoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Ldoub &Scmat3LdoubC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -962,13 +962,13 @@ inline void Scmat3LdoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3LdoubC::set(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLdoubC::set(data, N0*N1*N2);
+	SvecLdoubC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3LdoubC::set(const Scmat3LdoubC &sli)
 {
-	SvbaseLdoubC::set(sli);
+	SvecLdoubC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -982,7 +982,7 @@ inline Long size(Scmat3Ldoub_I v) { return v.size(); }
 inline const Ldoub *p(Scmat3Ldoub_I v) { return v.p(); }
 
 
-class Scmat3Ldoub : public SvbaseLdoub
+class Scmat3Ldoub : public SvecLdoub
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1009,10 +1009,10 @@ public:
 inline Scmat3Ldoub::Scmat3Ldoub() {}
 
 inline Scmat3Ldoub::Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Ldoub::Scmat3Ldoub(Cmat3Ldoub_IO a)
-	: SvbaseLdoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLdoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Ldoub::operator Scmat3LdoubC() const
 {
@@ -1054,13 +1054,13 @@ inline void Scmat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Ldoub::set(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLdoub::set(data, N0*N1*N2);
+	SvecLdoub::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Ldoub::set(const Scmat3Ldoub &sli)
 {
-	SvbaseLdoub::set(sli);
+	SvecLdoub::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1073,7 +1073,7 @@ typedef const Scmat3Ldoub &Scmat3Ldoub_O, &Scmat3Ldoub_IO;
 inline Ldoub *p(Scmat3Ldoub &v) { return v.p(); }
 
 
-class Scmat3FcompC : public SvbaseFcompC
+class Scmat3FcompC : public SvecFcompC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1099,10 +1099,10 @@ public:
 inline Scmat3FcompC::Scmat3FcompC() {}
 
 inline Scmat3FcompC::Scmat3FcompC(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecFcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3FcompC::Scmat3FcompC(Cmat3Fcomp_I a)
-	: SvbaseFcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecFcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Fcomp &Scmat3FcompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1140,13 +1140,13 @@ inline void Scmat3FcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3FcompC::set(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseFcompC::set(data, N0*N1*N2);
+	SvecFcompC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3FcompC::set(const Scmat3FcompC &sli)
 {
-	SvbaseFcompC::set(sli);
+	SvecFcompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1160,7 +1160,7 @@ inline Long size(Scmat3Fcomp_I v) { return v.size(); }
 inline const Fcomp *p(Scmat3Fcomp_I v) { return v.p(); }
 
 
-class Scmat3Fcomp : public SvbaseFcomp
+class Scmat3Fcomp : public SvecFcomp
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1187,10 +1187,10 @@ public:
 inline Scmat3Fcomp::Scmat3Fcomp() {}
 
 inline Scmat3Fcomp::Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecFcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Fcomp::Scmat3Fcomp(Cmat3Fcomp_IO a)
-	: SvbaseFcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecFcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Fcomp::operator Scmat3FcompC() const
 {
@@ -1232,13 +1232,13 @@ inline void Scmat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Fcomp::set(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseFcomp::set(data, N0*N1*N2);
+	SvecFcomp::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Fcomp::set(const Scmat3Fcomp &sli)
 {
-	SvbaseFcomp::set(sli);
+	SvecFcomp::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1251,7 +1251,7 @@ typedef const Scmat3Fcomp &Scmat3Fcomp_O, &Scmat3Fcomp_IO;
 inline Fcomp *p(Scmat3Fcomp &v) { return v.p(); }
 
 
-class Scmat3CompC : public SvbaseCompC
+class Scmat3CompC : public SvecCompC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1277,10 +1277,10 @@ public:
 inline Scmat3CompC::Scmat3CompC() {}
 
 inline Scmat3CompC::Scmat3CompC(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseCompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecCompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3CompC::Scmat3CompC(Cmat3Comp_I a)
-	: SvbaseCompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecCompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Comp &Scmat3CompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1318,13 +1318,13 @@ inline void Scmat3CompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3CompC::set(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseCompC::set(data, N0*N1*N2);
+	SvecCompC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3CompC::set(const Scmat3CompC &sli)
 {
-	SvbaseCompC::set(sli);
+	SvecCompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1338,7 +1338,7 @@ inline Long size(Scmat3Comp_I v) { return v.size(); }
 inline const Comp *p(Scmat3Comp_I v) { return v.p(); }
 
 
-class Scmat3Comp : public SvbaseComp
+class Scmat3Comp : public SvecComp
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1365,10 +1365,10 @@ public:
 inline Scmat3Comp::Scmat3Comp() {}
 
 inline Scmat3Comp::Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseComp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecComp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Comp::Scmat3Comp(Cmat3Comp_IO a)
-	: SvbaseComp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecComp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Comp::operator Scmat3CompC() const
 {
@@ -1410,13 +1410,13 @@ inline void Scmat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Comp::set(Comp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseComp::set(data, N0*N1*N2);
+	SvecComp::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Comp::set(const Scmat3Comp &sli)
 {
-	SvbaseComp::set(sli);
+	SvecComp::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1429,7 +1429,7 @@ typedef const Scmat3Comp &Scmat3Comp_O, &Scmat3Comp_IO;
 inline Comp *p(Scmat3Comp &v) { return v.p(); }
 
 
-class Scmat3LcompC : public SvbaseLcompC
+class Scmat3LcompC : public SvecLcompC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1455,10 +1455,10 @@ public:
 inline Scmat3LcompC::Scmat3LcompC() {}
 
 inline Scmat3LcompC::Scmat3LcompC(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3LcompC::Scmat3LcompC(Cmat3Lcomp_I a)
-	: SvbaseLcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Lcomp &Scmat3LcompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1496,13 +1496,13 @@ inline void Scmat3LcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3LcompC::set(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLcompC::set(data, N0*N1*N2);
+	SvecLcompC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3LcompC::set(const Scmat3LcompC &sli)
 {
-	SvbaseLcompC::set(sli);
+	SvecLcompC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1516,7 +1516,7 @@ inline Long size(Scmat3Lcomp_I v) { return v.size(); }
 inline const Lcomp *p(Scmat3Lcomp_I v) { return v.p(); }
 
 
-class Scmat3Lcomp : public SvbaseLcomp
+class Scmat3Lcomp : public SvecLcomp
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1543,10 +1543,10 @@ public:
 inline Scmat3Lcomp::Scmat3Lcomp() {}
 
 inline Scmat3Lcomp::Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Lcomp::Scmat3Lcomp(Cmat3Lcomp_IO a)
-	: SvbaseLcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Lcomp::operator Scmat3LcompC() const
 {
@@ -1588,13 +1588,13 @@ inline void Scmat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Lcomp::set(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLcomp::set(data, N0*N1*N2);
+	SvecLcomp::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Lcomp::set(const Scmat3Lcomp &sli)
 {
-	SvbaseLcomp::set(sli);
+	SvecLcomp::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1609,7 +1609,7 @@ inline Lcomp *p(Scmat3Lcomp &v) { return v.p(); }
 
 
 
-class Scmat3FimagC : public SvbaseFimagC
+class Scmat3FimagC : public SvecFimagC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1635,10 +1635,10 @@ public:
 inline Scmat3FimagC::Scmat3FimagC() {}
 
 inline Scmat3FimagC::Scmat3FimagC(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecFimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3FimagC::Scmat3FimagC(Cmat3Fimag_I a)
-	: SvbaseFimagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecFimagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Fimag &Scmat3FimagC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1676,13 +1676,13 @@ inline void Scmat3FimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3FimagC::set(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseFimagC::set(data, N0*N1*N2);
+	SvecFimagC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3FimagC::set(const Scmat3FimagC &sli)
 {
-	SvbaseFimagC::set(sli);
+	SvecFimagC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1696,7 +1696,7 @@ inline Long size(Scmat3Fimag_I v) { return v.size(); }
 inline const Fimag *p(Scmat3Fimag_I v) { return v.p(); }
 
 
-class Scmat3Fimag : public SvbaseFimag
+class Scmat3Fimag : public SvecFimag
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1723,10 +1723,10 @@ public:
 inline Scmat3Fimag::Scmat3Fimag() {}
 
 inline Scmat3Fimag::Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecFimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Fimag::Scmat3Fimag(Cmat3Fimag_IO a)
-	: SvbaseFimag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecFimag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Fimag::operator Scmat3FimagC() const
 {
@@ -1768,13 +1768,13 @@ inline void Scmat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Fimag::set(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseFimag::set(data, N0*N1*N2);
+	SvecFimag::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Fimag::set(const Scmat3Fimag &sli)
 {
-	SvbaseFimag::set(sli);
+	SvecFimag::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1787,7 +1787,7 @@ typedef const Scmat3Fimag &Scmat3Fimag_O, &Scmat3Fimag_IO;
 inline Fimag *p(Scmat3Fimag &v) { return v.p(); }
 
 
-class Scmat3ImagC : public SvbaseImagC
+class Scmat3ImagC : public SvecImagC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1813,10 +1813,10 @@ public:
 inline Scmat3ImagC::Scmat3ImagC() {}
 
 inline Scmat3ImagC::Scmat3ImagC(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseImagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecImagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3ImagC::Scmat3ImagC(Cmat3Imag_I a)
-	: SvbaseImagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecImagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Imag &Scmat3ImagC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1854,13 +1854,13 @@ inline void Scmat3ImagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3ImagC::set(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseImagC::set(data, N0*N1*N2);
+	SvecImagC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3ImagC::set(const Scmat3ImagC &sli)
 {
-	SvbaseImagC::set(sli);
+	SvecImagC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1874,7 +1874,7 @@ inline Long size(Scmat3Imag_I v) { return v.size(); }
 inline const Imag *p(Scmat3Imag_I v) { return v.p(); }
 
 
-class Scmat3Imag : public SvbaseImag
+class Scmat3Imag : public SvecImag
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1901,10 +1901,10 @@ public:
 inline Scmat3Imag::Scmat3Imag() {}
 
 inline Scmat3Imag::Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseImag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecImag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Imag::Scmat3Imag(Cmat3Imag_IO a)
-	: SvbaseImag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecImag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Imag::operator Scmat3ImagC() const
 {
@@ -1946,13 +1946,13 @@ inline void Scmat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Imag::set(Imag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseImag::set(data, N0*N1*N2);
+	SvecImag::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Imag::set(const Scmat3Imag &sli)
 {
-	SvbaseImag::set(sli);
+	SvecImag::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -1965,7 +1965,7 @@ typedef const Scmat3Imag &Scmat3Imag_O, &Scmat3Imag_IO;
 inline Imag *p(Scmat3Imag &v) { return v.p(); }
 
 
-class Scmat3LimagC : public SvbaseLimagC
+class Scmat3LimagC : public SvecLimagC
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -1991,10 +1991,10 @@ public:
 inline Scmat3LimagC::Scmat3LimagC() {}
 
 inline Scmat3LimagC::Scmat3LimagC(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3LimagC::Scmat3LimagC(Cmat3Limag_I a)
-	: SvbaseLimagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLimagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Limag &Scmat3LimagC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -2032,13 +2032,13 @@ inline void Scmat3LimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3LimagC::set(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLimagC::set(data, N0*N1*N2);
+	SvecLimagC::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3LimagC::set(const Scmat3LimagC &sli)
 {
-	SvbaseLimagC::set(sli);
+	SvecLimagC::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
@@ -2052,7 +2052,7 @@ inline Long size(Scmat3Limag_I v) { return v.size(); }
 inline const Limag *p(Scmat3Limag_I v) { return v.p(); }
 
 
-class Scmat3Limag : public SvbaseLimag
+class Scmat3Limag : public SvecLimag
 {
 protected:
 	Long m_N0, m_N1, m_N2;
@@ -2079,10 +2079,10 @@ public:
 inline Scmat3Limag::Scmat3Limag() {}
 
 inline Scmat3Limag::Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvecLimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 inline Scmat3Limag::Scmat3Limag(Cmat3Limag_IO a)
-	: SvbaseLimag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
+	: SvecLimag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Limag::operator Scmat3LimagC() const
 {
@@ -2124,13 +2124,13 @@ inline void Scmat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)
 
 inline void Scmat3Limag::set(Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
-	SvbaseLimag::set(data, N0*N1*N2);
+	SvecLimag::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline void Scmat3Limag::set(const Scmat3Limag &sli)
 {
-	SvbaseLimag::set(sli);
+	SvecLimag::set(sli);
 	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
