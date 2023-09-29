@@ -12,14 +12,16 @@ public:
 	CmatChar(): m_N0(0), m_N1(0) {};
 	CmatChar(Long_I N0, Long_I N1);
 	CmatChar(const CmatChar &rhs); // copy constructor
+	CmatChar(CmatChar &&rhs); // move constructor
 	CmatChar &operator=(const CmatChar &rhs); // copy assignment
-	void operator<<(CmatChar &rhs); // move data and rhs.resize(0, 0)
-	Char& operator()(Long_I i, Long_I j);    // double indexing
+	CmatChar &operator=(CmatChar &&rhs); // move assignment
+	Char& operator()(Long_I i, Long_I j); // double indexing
 	const Char& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatChar::CmatChar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -29,24 +31,23 @@ inline CmatChar::CmatChar(const CmatChar &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatChar::CmatChar(CmatChar &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatChar &CmatChar::operator=(const CmatChar &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Char)*size());
 	return *this;
 }
 
-inline void CmatChar::operator<<(CmatChar &rhs)
+inline CmatChar &CmatChar::operator=(CmatChar &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Char &CmatChar::operator()(Long_I i, Long_I j)
@@ -62,9 +63,11 @@ inline Char &CmatChar::operator()(Long_I i, Long_I j)
 inline const Char &CmatChar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatChar index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatChar index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -83,12 +86,30 @@ inline void CmatChar::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatChar::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatChar resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatChar::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatChar reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatChar reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -113,14 +134,16 @@ public:
 	CmatUchar(): m_N0(0), m_N1(0) {};
 	CmatUchar(Long_I N0, Long_I N1);
 	CmatUchar(const CmatUchar &rhs); // copy constructor
+	CmatUchar(CmatUchar &&rhs); // move constructor
 	CmatUchar &operator=(const CmatUchar &rhs); // copy assignment
-	void operator<<(CmatUchar &rhs); // move data and rhs.resize(0, 0)
-	Uchar& operator()(Long_I i, Long_I j);    // double indexing
+	CmatUchar &operator=(CmatUchar &&rhs); // move assignment
+	Uchar& operator()(Long_I i, Long_I j); // double indexing
 	const Uchar& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatUchar::CmatUchar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -130,24 +153,23 @@ inline CmatUchar::CmatUchar(const CmatUchar &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatUchar::CmatUchar(CmatUchar &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatUchar &CmatUchar::operator=(const CmatUchar &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Uchar)*size());
 	return *this;
 }
 
-inline void CmatUchar::operator<<(CmatUchar &rhs)
+inline CmatUchar &CmatUchar::operator=(CmatUchar &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Uchar &CmatUchar::operator()(Long_I i, Long_I j)
@@ -163,9 +185,11 @@ inline Uchar &CmatUchar::operator()(Long_I i, Long_I j)
 inline const Uchar &CmatUchar::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatUchar index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatUchar index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -184,12 +208,30 @@ inline void CmatUchar::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatUchar::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatUchar resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatUchar::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatUchar reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatUchar reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -214,14 +256,16 @@ public:
 	CmatInt(): m_N0(0), m_N1(0) {};
 	CmatInt(Long_I N0, Long_I N1);
 	CmatInt(const CmatInt &rhs); // copy constructor
+	CmatInt(CmatInt &&rhs); // move constructor
 	CmatInt &operator=(const CmatInt &rhs); // copy assignment
-	void operator<<(CmatInt &rhs); // move data and rhs.resize(0, 0)
-	Int& operator()(Long_I i, Long_I j);    // double indexing
+	CmatInt &operator=(CmatInt &&rhs); // move assignment
+	Int& operator()(Long_I i, Long_I j); // double indexing
 	const Int& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatInt::CmatInt(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -231,24 +275,23 @@ inline CmatInt::CmatInt(const CmatInt &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rh
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatInt::CmatInt(CmatInt &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatInt &CmatInt::operator=(const CmatInt &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Int)*size());
 	return *this;
 }
 
-inline void CmatInt::operator<<(CmatInt &rhs)
+inline CmatInt &CmatInt::operator=(CmatInt &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Int &CmatInt::operator()(Long_I i, Long_I j)
@@ -264,9 +307,11 @@ inline Int &CmatInt::operator()(Long_I i, Long_I j)
 inline const Int &CmatInt::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatInt index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatInt index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -285,12 +330,30 @@ inline void CmatInt::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatInt::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatInt resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatInt::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatInt reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatInt reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -315,14 +378,16 @@ public:
 	CmatLlong(): m_N0(0), m_N1(0) {};
 	CmatLlong(Long_I N0, Long_I N1);
 	CmatLlong(const CmatLlong &rhs); // copy constructor
+	CmatLlong(CmatLlong &&rhs); // move constructor
 	CmatLlong &operator=(const CmatLlong &rhs); // copy assignment
-	void operator<<(CmatLlong &rhs); // move data and rhs.resize(0, 0)
-	Llong& operator()(Long_I i, Long_I j);    // double indexing
+	CmatLlong &operator=(CmatLlong &&rhs); // move assignment
+	Llong& operator()(Long_I i, Long_I j); // double indexing
 	const Llong& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatLlong::CmatLlong(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -332,24 +397,23 @@ inline CmatLlong::CmatLlong(const CmatLlong &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatLlong::CmatLlong(CmatLlong &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatLlong &CmatLlong::operator=(const CmatLlong &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Llong)*size());
 	return *this;
 }
 
-inline void CmatLlong::operator<<(CmatLlong &rhs)
+inline CmatLlong &CmatLlong::operator=(CmatLlong &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Llong &CmatLlong::operator()(Long_I i, Long_I j)
@@ -365,9 +429,11 @@ inline Llong &CmatLlong::operator()(Long_I i, Long_I j)
 inline const Llong &CmatLlong::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatLlong index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatLlong index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -386,12 +452,30 @@ inline void CmatLlong::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatLlong::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatLlong resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatLlong::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatLlong reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatLlong reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -416,14 +500,16 @@ public:
 	CmatFloat(): m_N0(0), m_N1(0) {};
 	CmatFloat(Long_I N0, Long_I N1);
 	CmatFloat(const CmatFloat &rhs); // copy constructor
+	CmatFloat(CmatFloat &&rhs); // move constructor
 	CmatFloat &operator=(const CmatFloat &rhs); // copy assignment
-	void operator<<(CmatFloat &rhs); // move data and rhs.resize(0, 0)
-	Float& operator()(Long_I i, Long_I j);    // double indexing
+	CmatFloat &operator=(CmatFloat &&rhs); // move assignment
+	Float& operator()(Long_I i, Long_I j); // double indexing
 	const Float& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatFloat::CmatFloat(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -433,24 +519,23 @@ inline CmatFloat::CmatFloat(const CmatFloat &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatFloat::CmatFloat(CmatFloat &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatFloat &CmatFloat::operator=(const CmatFloat &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Float)*size());
 	return *this;
 }
 
-inline void CmatFloat::operator<<(CmatFloat &rhs)
+inline CmatFloat &CmatFloat::operator=(CmatFloat &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Float &CmatFloat::operator()(Long_I i, Long_I j)
@@ -466,9 +551,11 @@ inline Float &CmatFloat::operator()(Long_I i, Long_I j)
 inline const Float &CmatFloat::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatFloat index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatFloat index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -487,12 +574,30 @@ inline void CmatFloat::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatFloat::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatFloat resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatFloat::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatFloat reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatFloat reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -517,14 +622,16 @@ public:
 	CmatDoub(): m_N0(0), m_N1(0) {};
 	CmatDoub(Long_I N0, Long_I N1);
 	CmatDoub(const CmatDoub &rhs); // copy constructor
+	CmatDoub(CmatDoub &&rhs); // move constructor
 	CmatDoub &operator=(const CmatDoub &rhs); // copy assignment
-	void operator<<(CmatDoub &rhs); // move data and rhs.resize(0, 0)
-	Doub& operator()(Long_I i, Long_I j);    // double indexing
+	CmatDoub &operator=(CmatDoub &&rhs); // move assignment
+	Doub& operator()(Long_I i, Long_I j); // double indexing
 	const Doub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatDoub::CmatDoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -534,24 +641,23 @@ inline CmatDoub::CmatDoub(const CmatDoub &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatDoub::CmatDoub(CmatDoub &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatDoub &CmatDoub::operator=(const CmatDoub &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Doub)*size());
 	return *this;
 }
 
-inline void CmatDoub::operator<<(CmatDoub &rhs)
+inline CmatDoub &CmatDoub::operator=(CmatDoub &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Doub &CmatDoub::operator()(Long_I i, Long_I j)
@@ -567,9 +673,11 @@ inline Doub &CmatDoub::operator()(Long_I i, Long_I j)
 inline const Doub &CmatDoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatDoub index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatDoub index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -588,12 +696,30 @@ inline void CmatDoub::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatDoub::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatDoub resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatDoub::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatDoub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatDoub reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -618,14 +744,16 @@ public:
 	CmatLdoub(): m_N0(0), m_N1(0) {};
 	CmatLdoub(Long_I N0, Long_I N1);
 	CmatLdoub(const CmatLdoub &rhs); // copy constructor
+	CmatLdoub(CmatLdoub &&rhs); // move constructor
 	CmatLdoub &operator=(const CmatLdoub &rhs); // copy assignment
-	void operator<<(CmatLdoub &rhs); // move data and rhs.resize(0, 0)
-	Ldoub& operator()(Long_I i, Long_I j);    // double indexing
+	CmatLdoub &operator=(CmatLdoub &&rhs); // move assignment
+	Ldoub& operator()(Long_I i, Long_I j); // double indexing
 	const Ldoub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatLdoub::CmatLdoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -635,24 +763,23 @@ inline CmatLdoub::CmatLdoub(const CmatLdoub &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatLdoub::CmatLdoub(CmatLdoub &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatLdoub &CmatLdoub::operator=(const CmatLdoub &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Ldoub)*size());
 	return *this;
 }
 
-inline void CmatLdoub::operator<<(CmatLdoub &rhs)
+inline CmatLdoub &CmatLdoub::operator=(CmatLdoub &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Ldoub &CmatLdoub::operator()(Long_I i, Long_I j)
@@ -668,9 +795,11 @@ inline Ldoub &CmatLdoub::operator()(Long_I i, Long_I j)
 inline const Ldoub &CmatLdoub::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatLdoub index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatLdoub index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -689,12 +818,30 @@ inline void CmatLdoub::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatLdoub::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatLdoub resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatLdoub::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatLdoub reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatLdoub reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -720,14 +867,16 @@ public:
 	CmatFcomp(): m_N0(0), m_N1(0) {};
 	CmatFcomp(Long_I N0, Long_I N1);
 	CmatFcomp(const CmatFcomp &rhs); // copy constructor
+	CmatFcomp(CmatFcomp &&rhs); // move constructor
 	CmatFcomp &operator=(const CmatFcomp &rhs); // copy assignment
-	void operator<<(CmatFcomp &rhs); // move data and rhs.resize(0, 0)
-	Fcomp& operator()(Long_I i, Long_I j);    // double indexing
+	CmatFcomp &operator=(CmatFcomp &&rhs); // move assignment
+	Fcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Fcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatFcomp::CmatFcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -737,24 +886,23 @@ inline CmatFcomp::CmatFcomp(const CmatFcomp &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatFcomp::CmatFcomp(CmatFcomp &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatFcomp &CmatFcomp::operator=(const CmatFcomp &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Fcomp)*size());
 	return *this;
 }
 
-inline void CmatFcomp::operator<<(CmatFcomp &rhs)
+inline CmatFcomp &CmatFcomp::operator=(CmatFcomp &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Fcomp &CmatFcomp::operator()(Long_I i, Long_I j)
@@ -770,9 +918,11 @@ inline Fcomp &CmatFcomp::operator()(Long_I i, Long_I j)
 inline const Fcomp &CmatFcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatFcomp index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatFcomp index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -791,12 +941,30 @@ inline void CmatFcomp::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatFcomp::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatFcomp resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatFcomp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatFcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatFcomp reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -821,14 +989,16 @@ public:
 	CmatComp(): m_N0(0), m_N1(0) {};
 	CmatComp(Long_I N0, Long_I N1);
 	CmatComp(const CmatComp &rhs); // copy constructor
+	CmatComp(CmatComp &&rhs); // move constructor
 	CmatComp &operator=(const CmatComp &rhs); // copy assignment
-	void operator<<(CmatComp &rhs); // move data and rhs.resize(0, 0)
-	Comp& operator()(Long_I i, Long_I j);    // double indexing
+	CmatComp &operator=(CmatComp &&rhs); // move assignment
+	Comp& operator()(Long_I i, Long_I j); // double indexing
 	const Comp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatComp::CmatComp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -838,24 +1008,23 @@ inline CmatComp::CmatComp(const CmatComp &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatComp::CmatComp(CmatComp &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatComp &CmatComp::operator=(const CmatComp &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Comp)*size());
 	return *this;
 }
 
-inline void CmatComp::operator<<(CmatComp &rhs)
+inline CmatComp &CmatComp::operator=(CmatComp &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Comp &CmatComp::operator()(Long_I i, Long_I j)
@@ -871,9 +1040,11 @@ inline Comp &CmatComp::operator()(Long_I i, Long_I j)
 inline const Comp &CmatComp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatComp index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatComp index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -892,12 +1063,30 @@ inline void CmatComp::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatComp::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatComp resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatComp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatComp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatComp reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -922,14 +1111,16 @@ public:
 	CmatLcomp(): m_N0(0), m_N1(0) {};
 	CmatLcomp(Long_I N0, Long_I N1);
 	CmatLcomp(const CmatLcomp &rhs); // copy constructor
+	CmatLcomp(CmatLcomp &&rhs); // move constructor
 	CmatLcomp &operator=(const CmatLcomp &rhs); // copy assignment
-	void operator<<(CmatLcomp &rhs); // move data and rhs.resize(0, 0)
-	Lcomp& operator()(Long_I i, Long_I j);    // double indexing
+	CmatLcomp &operator=(CmatLcomp &&rhs); // move assignment
+	Lcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Lcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatLcomp::CmatLcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -939,24 +1130,23 @@ inline CmatLcomp::CmatLcomp(const CmatLcomp &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatLcomp::CmatLcomp(CmatLcomp &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatLcomp &CmatLcomp::operator=(const CmatLcomp &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Lcomp)*size());
 	return *this;
 }
 
-inline void CmatLcomp::operator<<(CmatLcomp &rhs)
+inline CmatLcomp &CmatLcomp::operator=(CmatLcomp &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Lcomp &CmatLcomp::operator()(Long_I i, Long_I j)
@@ -972,9 +1162,11 @@ inline Lcomp &CmatLcomp::operator()(Long_I i, Long_I j)
 inline const Lcomp &CmatLcomp::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatLcomp index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatLcomp index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -993,12 +1185,30 @@ inline void CmatLcomp::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatLcomp::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatLcomp resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatLcomp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatLcomp reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatLcomp reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1024,14 +1234,16 @@ public:
 	CmatFimag(): m_N0(0), m_N1(0) {};
 	CmatFimag(Long_I N0, Long_I N1);
 	CmatFimag(const CmatFimag &rhs); // copy constructor
+	CmatFimag(CmatFimag &&rhs); // move constructor
 	CmatFimag &operator=(const CmatFimag &rhs); // copy assignment
-	void operator<<(CmatFimag &rhs); // move data and rhs.resize(0, 0)
-	Fimag& operator()(Long_I i, Long_I j);    // double indexing
+	CmatFimag &operator=(CmatFimag &&rhs); // move assignment
+	Fimag& operator()(Long_I i, Long_I j); // double indexing
 	const Fimag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatFimag::CmatFimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1041,24 +1253,23 @@ inline CmatFimag::CmatFimag(const CmatFimag &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatFimag::CmatFimag(CmatFimag &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatFimag &CmatFimag::operator=(const CmatFimag &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Fimag)*size());
 	return *this;
 }
 
-inline void CmatFimag::operator<<(CmatFimag &rhs)
+inline CmatFimag &CmatFimag::operator=(CmatFimag &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Fimag &CmatFimag::operator()(Long_I i, Long_I j)
@@ -1074,9 +1285,11 @@ inline Fimag &CmatFimag::operator()(Long_I i, Long_I j)
 inline const Fimag &CmatFimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatFimag index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatFimag index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -1095,12 +1308,30 @@ inline void CmatFimag::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatFimag::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatFimag resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatFimag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatFimag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatFimag reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1125,14 +1356,16 @@ public:
 	CmatImag(): m_N0(0), m_N1(0) {};
 	CmatImag(Long_I N0, Long_I N1);
 	CmatImag(const CmatImag &rhs); // copy constructor
+	CmatImag(CmatImag &&rhs); // move constructor
 	CmatImag &operator=(const CmatImag &rhs); // copy assignment
-	void operator<<(CmatImag &rhs); // move data and rhs.resize(0, 0)
-	Imag& operator()(Long_I i, Long_I j);    // double indexing
+	CmatImag &operator=(CmatImag &&rhs); // move assignment
+	Imag& operator()(Long_I i, Long_I j); // double indexing
 	const Imag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatImag::CmatImag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1142,24 +1375,23 @@ inline CmatImag::CmatImag(const CmatImag &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatImag::CmatImag(CmatImag &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatImag &CmatImag::operator=(const CmatImag &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Imag)*size());
 	return *this;
 }
 
-inline void CmatImag::operator<<(CmatImag &rhs)
+inline CmatImag &CmatImag::operator=(CmatImag &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Imag &CmatImag::operator()(Long_I i, Long_I j)
@@ -1175,9 +1407,11 @@ inline Imag &CmatImag::operator()(Long_I i, Long_I j)
 inline const Imag &CmatImag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatImag index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatImag index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -1196,12 +1430,30 @@ inline void CmatImag::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatImag::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatImag resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatImag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatImag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatImag reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1226,14 +1478,16 @@ public:
 	CmatLimag(): m_N0(0), m_N1(0) {};
 	CmatLimag(Long_I N0, Long_I N1);
 	CmatLimag(const CmatLimag &rhs); // copy constructor
+	CmatLimag(CmatLimag &&rhs); // move constructor
 	CmatLimag &operator=(const CmatLimag &rhs); // copy assignment
-	void operator<<(CmatLimag &rhs); // move data and rhs.resize(0, 0)
-	Limag& operator()(Long_I i, Long_I j);    // double indexing
+	CmatLimag &operator=(CmatLimag &&rhs); // move assignment
+	Limag& operator()(Long_I i, Long_I j); // double indexing
 	const Limag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-	void reshape(Long_I N0, Long_I N1); // reshape (total elm # must be the same)
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
 };
 
 inline CmatLimag::CmatLimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1243,24 +1497,23 @@ inline CmatLimag::CmatLimag(const CmatLimag &rhs) : Base(rhs), m_N0(rhs.m_N0), m
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-	for (Long i = 0; i < m_N; ++i)
-		m_p[i] = rhs.m_p[i];
 }
+
+inline CmatLimag::CmatLimag(CmatLimag &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatLimag &CmatLimag::operator=(const CmatLimag &rhs)
 {
-	if (this == &rhs) return *this;
+	Base::operator=(rhs);
 	resize(rhs.n0(), rhs.n1());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(Limag)*size());
 	return *this;
 }
 
-inline void CmatLimag::operator<<(CmatLimag &rhs)
+inline CmatLimag &CmatLimag::operator=(CmatLimag &&rhs)
 {
+	Base::operator=(move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
+	return *this;
 }
 
 inline Limag &CmatLimag::operator()(Long_I i, Long_I j)
@@ -1276,9 +1529,11 @@ inline Limag &CmatLimag::operator()(Long_I i, Long_I j)
 inline const Limag &CmatLimag::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatLimag index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatLimag index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i+m_N0*j];
 }
@@ -1297,12 +1552,30 @@ inline void CmatLimag::resize(Long_I N0, Long_I N1)
 	}
 }
 
+inline void CmatLimag::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatLimag resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
 inline void CmatLimag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0 * N1 != m_N)
-		SLS_ERR("CmatLimag reshaping from ("+num2str(m_N0)+", "+num2str(m_N1)
-			+") to ("+num2str(N0)+", "+num2str(N1)+"), element number not the same!");
+	if (N0*N1 < m_N) {
+		stringstream ss;
+		ss  << "CmatLimag reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
 	m_N0 = N0; m_N1 = N1;
 }
@@ -1316,6 +1589,7 @@ inline Long size(CmatLimag_I v) { return v.size(); }
 inline const Limag *p(CmatLimag_I v) { return v.p(); }
 
 inline Limag *p(CmatLimag &v) { return v.p(); }
+
 
 
 
@@ -1335,9 +1609,9 @@ protected:
 public:
 	CmatBool(): m_N0(0), m_N1(0) {};
 	CmatBool(Long_I N0, Long_I N1);
-	CmatBool(const CmatBool &rhs);        // Copy constructor
+	CmatBool(const CmatBool &rhs); // copy constructor
+	CmatBool(CmatBool &&rhs); // move constructor
 	CmatBool &operator=(const CmatBool &rhs) = delete;
-	void operator<<(CmatBool &rhs); // move data and rhs.resize(0, 0)
 	CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
 	bool operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1357,12 +1631,8 @@ inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs.size()), m_N0(rhs.m_N0
 		(*this)[i] = rhs[i];
 }
 
-inline void CmatBool::operator<<(CmatBool &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
-}
+inline CmatBool::CmatBool(CmatBool &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
 {

@@ -34,7 +34,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -57,7 +57,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
 //%     req('cut', {Tv}); req('copy(v,v)', {Tsli,Tsli});
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -80,7 +80,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
 //%     req('cut', {Tv}); req('copy(v,v)', {Tsli,Tsli});
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
-			v << v1;
+			v = move(v1);
 		}
 	}
 }

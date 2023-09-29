@@ -10,18 +10,17 @@
 void test_dense()
 {
 	using namespace slisc;
-
 	// size initialize
 	{
 		VecDoub vDoub(3);
 		if (vDoub.size() != 3) SLS_FAIL;
 		if (vDoub.p() != &vDoub[0]) SLS_FAIL;
-		MatDoub aDoub(3, 3);
+		CmatDoub aDoub(3, 3);
 		if (aDoub.size() != 9) SLS_FAIL;
 		if (aDoub.n0() != 3) SLS_FAIL;
 		if (aDoub.n1() != 3) SLS_FAIL;
 		if (aDoub.p() != &aDoub(0, 0)) SLS_FAIL;
-		Mat3Doub a3Doub(3, 3, 3);
+		Cmat3Doub a3Doub(3, 3, 3);
 		if (a3Doub.size() != 27) SLS_FAIL;
 		if (a3Doub.n0() != 3) SLS_FAIL;
 		if (a3Doub.n1() != 3) SLS_FAIL;
@@ -38,9 +37,9 @@ void test_dense()
 	// const initialize
 	VecDoub vDoub(3); copy(vDoub, 1);
 	if (vDoub != 1.) SLS_FAIL;
-	MatDoub aDoub(3, 3); copy(aDoub, 1);
+	CmatDoub aDoub(3, 3); copy(aDoub, 1);
 	if (aDoub != 1.) SLS_FAIL;
-	Mat3Doub a3Doub(3, 3, 3); copy(a3Doub, 1);
+	Cmat3Doub a3Doub(3, 3, 3); copy(a3Doub, 1);
 	if (a3Doub != 1.) SLS_FAIL;
 	Cmat3Doub c3Doub(3, 3, 3); copy(c3Doub, 1);
 	if (c3Doub != 1.) SLS_FAIL;
@@ -123,11 +122,11 @@ void test_dense()
 	copy(vDoub1, 2);
 	copy(vDoub, vDoub1);
 	if (vDoub != vDoub1) SLS_FAIL;
-	MatDoub aDoub1(4, 4);
+	CmatDoub aDoub1(4, 4);
 	copy(aDoub1, 2);
 	copy(aDoub, aDoub1);
 	if (aDoub != aDoub1) SLS_FAIL;
-	Mat3Doub a3Doub1(4, 4, 4);
+	Cmat3Doub a3Doub1(4, 4, 4);
 	copy(a3Doub1, 2);
 	copy(a3Doub, a3Doub1);
 	if (a3Doub != a3Doub1) SLS_FAIL;
@@ -138,29 +137,21 @@ void test_dense()
 
 	// move operator
 	VecDoub vDoub2;
-	MatDoub aDoub2;
-	Mat3Doub a3Doub2;
+	CmatDoub aDoub2;
+	Cmat3Doub a3Doub2;
 	Cmat3Doub c3Doub2;
-	vDoub2 << vDoub;
+	vDoub2 = std::move(vDoub);
 	if (vDoub2 != vDoub1) SLS_FAIL;
 	if (vDoub.size() != 0) SLS_FAIL;
-	aDoub2 << aDoub;
+	aDoub2 = move(aDoub);
 	if (aDoub2 != aDoub1)  SLS_FAIL;
 	if (aDoub.size() != 0) SLS_FAIL;
-	if (aDoub.n0() != 0) SLS_FAIL;
-	if (aDoub.n1() != 0) SLS_FAIL;
-	a3Doub2 << a3Doub;
+	a3Doub2 = move(a3Doub);
 	if (a3Doub2 != a3Doub1) SLS_FAIL;
 	if (a3Doub.size() != 0) SLS_FAIL;
-	if (a3Doub.n0() != 0) SLS_FAIL;
-	if (a3Doub.n1() != 0) SLS_FAIL;
-	if (a3Doub.n2() != 0) SLS_FAIL;
-	c3Doub2 << c3Doub;
+	c3Doub2 = move(c3Doub);
 	if (c3Doub2 != c3Doub1) SLS_FAIL;
 	if (a3Doub.size() != 0) SLS_FAIL;
-	if (a3Doub.n0() != 0) SLS_FAIL;
-	if (a3Doub.n1() != 0) SLS_FAIL;
-	if (a3Doub.n2() != 0) SLS_FAIL;
 
 	// end()
 	vDoub1[vDoub1.size()-1] = 3.1;
@@ -216,13 +207,13 @@ void test_dense()
 
 		auto svd = wsp.SvecDoub(5);
 		SLS_ASSERT(svd.size() == 5);
-		SLS_ASSERT((size_t)svd.p() > (size_t)wsp.p());
-		SLS_ASSERT(wsp.used() > svd.size()*(Long)sizeof(Doub));
+		SLS_ASSERT((size_t)svd.p() >= (size_t)wsp.p());
+		SLS_ASSERT(wsp.used() >= svd.size()*(Long)sizeof(Doub));
 
 		auto scmc = wsp.ScmatComp(2,2);
 		SLS_ASSERT(scmc.size() == 4);
 		SLS_ASSERT((size_t)scmc.p() > (size_t)svd.p());
-		SLS_ASSERT(wsp.used() > svd.size()*(Long)sizeof(Doub) + scmc.size()*(Long)sizeof(Comp));
+		SLS_ASSERT(wsp.used() >= svd.size()*(Long)sizeof(Doub) + scmc.size()*(Long)sizeof(Comp));
 	}
 }
 

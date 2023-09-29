@@ -20,9 +20,13 @@ protected:
 	Long m_N; // number of elements
 public:
 	// constructors
-	@VbaseT@();
+	@VbaseT@(); // default constructor
 	explicit @VbaseT@(Long_I N);
 	@VbaseT@(const @VbaseT@ &rhs); // copy constructor
+	@VbaseT@(@VbaseT@&&); // move constructor
+
+	@VbaseT@ &operator=(const @VbaseT@ &); // copy asignment
+	@VbaseT@ &operator=(@VbaseT@ &&); // move asignment
 
 	// get properties
 	@T@* p(); // get pointer
@@ -35,7 +39,6 @@ public:
 	const @T@& end() const;
 	@T@& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
 	const @T@& end(Long_I i) const;
-	void operator<<(@VbaseT@ &rhs); // move data
 	~@VbaseT@();
 };
 
@@ -55,7 +58,6 @@ inline @VbaseT@::@VbaseT@(Long_I N)
 		m_p = nullptr;
 }
 
-// copy constructor
 inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
@@ -68,6 +70,41 @@ inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 	}
 	else
 		m_p = nullptr;
+}
+
+inline @VbaseT@::@VbaseT@(@VbaseT@ &&rhs)
+{
+#ifndef NDEBUG
+	if (this == &rhs)
+		SLS_ERR("self move is forbidden!");
+#endif
+	if (m_N != 0)
+		delete[] m_p;
+	m_N = rhs.m_N; rhs.m_N = 0;
+	m_p = rhs.m_p;
+}
+
+inline @VbaseT@ &@VbaseT@::operator=(const @VbaseT@ &rhs)
+{
+#ifndef NDEBUG
+	if (this == &rhs) SLS_ERR("self copy assignment forbidden!");
+#endif
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
+	return *this;
+}
+
+inline @VbaseT@ &@VbaseT@::operator=(@VbaseT@ &&rhs)
+{
+#ifndef NDEBUG
+	if (this == &rhs) SLS_ERR("self move assignment is forbidden!");
+#endif
+	if (m_N != 0)
+		delete[] m_p;
+	m_N = rhs.m_N; rhs.m_N = 0;
+	m_p = rhs.m_p;
+	return *this;
 }
 
 inline @T@ * @VbaseT@::p()
@@ -109,16 +146,6 @@ inline void @VbaseT@::resize(Long_I N)
 			}
 		}
 	}
-}
-
-inline void @VbaseT@::operator<<(@VbaseT@ &rhs)
-{
-	if (this == &rhs)
-		SLS_ERR("self move is forbidden!");
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
 }
 
 inline @T@ &@VbaseT@::operator[](Long_I i)
@@ -195,62 +222,45 @@ typedef VbaseInt VbaseLong;
 typedef VbaseLlong VbaseLong;
 #endif
 
-class VbaseBool
+class VbaseBool : vector<bool>
 {
-protected:
-	std::vector<bool> m_v;
 public:
-	typedef std::vector<bool>::reference ref;
+	typedef vector<bool> Base;
+	typedef Base::reference ref;
 	// constructors
 	VbaseBool() = default;
 	explicit VbaseBool(Long_I N);
 	VbaseBool(const VbaseBool &rhs); // copy constructor
+	// move constructor is inherited
+	using Base::operator=;
 
 	// get properties
 	Long size() const;
-	void resize(Long_I N);
+	using Base::resize;
 	ref operator[](Long_I i);
 	bool operator[](Long_I i) const;
 	ref end();
 	bool end() const;
 	ref end(Long_I i); // i = 1 for the last, i = 2 for the second last...
 	bool end(Long_I i) const;
-	void operator<<(VbaseBool &rhs); // move data
 };
 
-inline VbaseBool::VbaseBool(Long_I N)
+inline VbaseBool::VbaseBool(Long_I N) : Base(N)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (N < 0)
 		SLS_ERR("size less than 0!");
 #endif
-	if (N > 0)
-		m_v.resize(N);
 }
 
-inline VbaseBool::VbaseBool(const VbaseBool &rhs): m_v(rhs.m_v)
+inline VbaseBool::VbaseBool(const VbaseBool &rhs): Base(rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
 }
 
-inline Long VbaseBool::size() const
-{
-	return m_v.size();
-}
-
-inline void VbaseBool::resize(Long_I N)
-{
-	m_v.resize(N);
-}
-
-inline void VbaseBool::operator<<(VbaseBool &rhs)
-{
-	if (this == &rhs)
-		SLS_ERR("self move is forbidden!");
-	m_v.swap(rhs.m_v);
-}
+inline Long VbaseBool::size() const { return Base::size(); }
 
 inline VbaseBool::ref VbaseBool::operator[](Long_I i)
 {
@@ -258,7 +268,7 @@ inline VbaseBool::ref VbaseBool::operator[](Long_I i)
 	if (i<0 || i>=size())
 		SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
-	return m_v[i];
+	return Base::operator[](i);
 }
 
 inline bool VbaseBool::operator[](Long_I i) const
@@ -267,25 +277,25 @@ inline bool VbaseBool::operator[](Long_I i) const
 	if (i<0 || i>=size())
 		SLS_ERR("VbaseBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
 #endif
-	return m_v[i];
+	return Base::operator[](i);
 }
 
 inline VbaseBool::ref VbaseBool::end()
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (m_v.empty())
+	if (Base::empty())
 		SLS_ERR("tring to use end() on empty vector!");
 #endif
-	return m_v.back();
+	return Base::back();
 }
 
 inline bool VbaseBool::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (m_v.empty())
+	if (Base::empty())
 		SLS_ERR("tring to use end() on empty vector!");
 #endif
-	return m_v.back();
+	return Base::back();
 }
 
 inline VbaseBool::ref VbaseBool::end(Long_I i)
@@ -294,7 +304,7 @@ inline VbaseBool::ref VbaseBool::end(Long_I i)
 	if (i <= 0 || i > size())
 		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
-	return m_v[size() - i];
+	return (*this)[size() - i];
 }
 
 inline bool VbaseBool::end(Long_I i) const
@@ -303,7 +313,7 @@ inline bool VbaseBool::end(Long_I i) const
 	if (i <= 0 || i > size())
 		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
 #endif
-	return m_v[size() - i];
+	return (*this)[size() - i];
 }
 
 // common api for STL and SLISC

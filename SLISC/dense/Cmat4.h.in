@@ -21,9 +21,11 @@ public:
 	@Cmat4T@(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
 	@Cmat4T@(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	@Cmat4T@(const @Cmat4T@ &rhs);   // copy constructor
+	@Cmat4T@(@Cmat4T@ &&rhs);   // move constructor
 	@Cmat4T@ &operator=(const @Cmat4T@ &rhs); // copy assignment
-	void operator<<(@Cmat4T@ &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
+	inline void resize(Long_I N);
+	inline void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	@T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
 	const @T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
 	Long n0() const;
@@ -44,20 +46,15 @@ inline @Cmat4T@::@Cmat4T@(const @Cmat4T@ &rhs): Base(rhs),
 #endif
 }
 
+inline @Cmat4T@::@Cmat4T@(@Cmat4T@ &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2), m_N3(rhs.m_N3) {}
+
 inline @Cmat4T@ &@Cmat4T@::operator=(const @Cmat4T@ &rhs)
 {
-	if (this == &rhs) return *this;
-	resize(rhs.n0(), rhs.n1(), rhs.n2(), rhs.n3());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
+	Base::operator=(rhs);
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
+	m_N2 = rhs.m_N2; m_N3 = rhs.m_N3;
 	return *this;
-}
-
-inline void @Cmat4T@::operator<<(@Cmat4T@ &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
 }
 
 inline void @Cmat4T@::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
@@ -66,6 +63,35 @@ inline void @Cmat4T@::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 		Base::resize(N0*N1*N2*N3);
 		m_N0 = N0; m_N1 = N1; m_N2 = N2; m_N3 = N3;
 	}
+}
+
+inline void @Cmat4T@::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1*m_N2*m_N3) {
+		stringstream ss;
+		ss  << "@Cmat4T@ resizing from (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ',' << m_N3 << ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
+inline void @Cmat4T@::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2*N2 < m_N) {
+		stringstream ss;
+		ss  << "@Cmat4T@ reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ',' << m_N3 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ',' << m_N3 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	m_N0 = N0; m_N1 = N1;
+	m_N2 = N2; m_N3 = N3;
 }
 
 inline @T@ &@Cmat4T@::operator()(Long_I i, Long_I j, Long_I k, Long_I l)

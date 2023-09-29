@@ -32,7 +32,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(@McooT@ &rhs); // move data and rhs.resize(0)
+	@McooT@ &operator=(@McooT@ &&rhs); // move assignment operator
 	void push(@T@_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(@T@_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -124,12 +124,13 @@ inline @T@ @McooT@::operator()(Long_I i, Long_I j) const
 	return m_p[n];
 }
 
-inline void @McooT@::operator<<(@McooT@ &rhs)
+inline @McooT@ &@McooT@::operator=(@McooT@ &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void @McooT@::push(@T@_I s, Long_I i, Long_I j)
@@ -280,8 +281,9 @@ inline void @McooT@::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void @McooT@::reshape(Long_I N0, Long_I N1)

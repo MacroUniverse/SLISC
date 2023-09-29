@@ -8,7 +8,7 @@ for type = varargin
     else
         continue;
     end
-    if is_Qdoub(Ts) || is_Qcomp(Ts)
+    if is_Qdoub(Ts) || is_Qcomp(Ts) || is_Qimag(Ts)
         ret = true; return;
     end
 end

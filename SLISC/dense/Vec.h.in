@@ -19,8 +19,9 @@ public:
 	@VecT@() = default;
 	explicit @VecT@(Long_I N);
 	@VecT@(const @VecT@ &rhs); // copy constructor
-	@VecT@ &operator=(const @VecT@ &rhs); // copy assignment
-	void operator<<(@VecT@ &rhs); // move data and rhs.resize(0)
+	@VecT@(@VecT@ &&rhs); // move constructor
+	@VecT@ &operator=(const @VecT@ &); // copy asignment
+	@VecT@ &operator=(@VecT@ &&); // move asignment
 };
 
 inline @VecT@::@VecT@(Long_I N) : Base(N) {}
@@ -32,23 +33,25 @@ inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(rhs)
 #endif
 }
 
-inline @VecT@ &@VecT@::operator=(const @VecT@ &rhs)
+inline @VecT@::@VecT@(@VecT@ &&rhs) : Base(move(rhs))
 {
-	if (this == &rhs) return *this;
-	resize(rhs.size());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
-	return *this;
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+	SLS_ERR("move constructor forbidden!");
+#endif
 }
 
-inline void @VecT@::operator<<(@VecT@ &rhs)
-{
-	Base::operator<<(rhs);
-}
+inline @VecT@ &@VecT@::operator=(const @VecT@ &rhs) {
+	Base::operator=(rhs);
+	return *this;
+};
+
+inline @VecT@ &@VecT@::operator=(@VecT@ &&rhs) {
+	Base::operator=(move(rhs));
+	return *this;
+};
 
 typedef const @VecT@ &@VecT@_I;
 typedef @VecT@ &@VecT@_O, &@VecT@_IO;
-
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -69,8 +72,8 @@ public:
 	VecBool() = default;
 	explicit VecBool(Long_I N);
 	VecBool(const VecBool &rhs); // copy constructor
-	VecBool &operator=(const VecBool &rhs) = delete;
-	void operator<<(VecBool &rhs); // move data and rhs.resize(0)
+	// move constructor is inherited
+	using Base::operator=;
 };
 
 inline VecBool::VecBool(Long_I N) : Base(N) {}
@@ -80,11 +83,6 @@ inline VecBool::VecBool(const VecBool &rhs) : Base(rhs)
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
 #endif
-}
-
-inline void VecBool::operator<<(VecBool &rhs)
-{
-	Base::operator<<(rhs);
 }
 
 typedef const VecBool &VecBool_I;

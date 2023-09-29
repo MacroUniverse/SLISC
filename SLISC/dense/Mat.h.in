@@ -22,8 +22,8 @@ public:
 	@MatT@(): m_N0(0), m_N1(0) {};
 	@MatT@(Long_I N0, Long_I N1);
 	@MatT@(const @MatT@ &rhs);        // Copy constructor
-	@MatT@ &operator=(const @MatT@ &rhs) = delete;
-	void operator<<(@MatT@ &rhs); // move data and rhs.resize(0, 0)
+	@MatT@ &operator=(const @MatT@ &rhs);
+	@MatT@ &operator=(@MatT@ &&rhs);
 	@T@& operator()(Long_I i, Long_I j); // double indexing
 	const @T@& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -36,13 +36,6 @@ inline @MatT@::@MatT@(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
 inline @MatT@::@MatT@(const @MatT@ &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void @MatT@::operator<<(@MatT@ &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline @T@& @MatT@::operator()(Long_I i, Long_I j)

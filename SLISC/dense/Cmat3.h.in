@@ -21,9 +21,12 @@ public:
 	@Cmat3T@(): m_N0(0), m_N1(0), m_N2(0) {};
 	@Cmat3T@(Long_I N0, Long_I N1, Long_I N2);
 	@Cmat3T@(const @Cmat3T@ &rhs); // copy constructor
+	@Cmat3T@(@Cmat3T@ &&rhs); // move constructor
 	@Cmat3T@ &operator=(const @Cmat3T@ &rhs); // copy assignment
-	void operator<<(@Cmat3T@ &rhs); // move data and rhs.resize(0, 0, 0)
-	void resize(Long_I N0, Long_I N1, Long_I N2);
+	@Cmat3T@ &operator=(@Cmat3T@ &&rhs); // move assignment
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	@T@ &operator()(Long_I i, Long_I j, Long_I k);
 	const @T@ &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
@@ -33,14 +36,6 @@ public:
 
 inline @Cmat3T@::@Cmat3T@(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
-inline void @Cmat3T@::operator<<(@Cmat3T@ &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
-
-// copy constructor
 inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
@@ -48,12 +43,20 @@ inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(
 #endif
 }
 
+inline @Cmat3T@::@Cmat3T@(@Cmat3T@ &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+
 inline @Cmat3T@ &@Cmat3T@::operator=(const @Cmat3T@ &rhs)
 {
-	if (this == &rhs) return *this;
-	resize(rhs.n0(), rhs.n1(), rhs.n2());
-	if (m_N > 0)
-		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
+	Base::operator=(rhs);
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	return *this;
+}
+
+inline @Cmat3T@ &@Cmat3T@::operator=(@Cmat3T@ &&rhs)
+{
+	Base::operator=(move(rhs));
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
 	return *this;
 }
 
@@ -63,6 +66,34 @@ inline void @Cmat3T@::resize(Long_I N0, Long_I N1, Long_I N2)
 		Base::resize(N0*N1*N2);
 		m_N0 = N0; m_N1 = N1; m_N2 = N2;
 	}
+}
+
+inline void @Cmat3T@::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1*m_N2) {
+		stringstream ss;
+		ss  << "@Cmat3T@ resizing from (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
+inline void @Cmat3T@::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 < m_N) {
+		stringstream ss;
+		ss  << "@Cmat3T@ reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
 inline @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)

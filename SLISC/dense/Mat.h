@@ -13,8 +13,8 @@ public:
 	MatChar(): m_N0(0), m_N1(0) {};
 	MatChar(Long_I N0, Long_I N1);
 	MatChar(const MatChar &rhs);        // Copy constructor
-	MatChar &operator=(const MatChar &rhs) = delete;
-	void operator<<(MatChar &rhs); // move data and rhs.resize(0, 0)
+	MatChar &operator=(const MatChar &rhs);
+	MatChar &operator=(MatChar &&rhs);
 	Char& operator()(Long_I i, Long_I j); // double indexing
 	const Char& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -27,13 +27,6 @@ inline MatChar::MatChar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) 
 inline MatChar::MatChar(const MatChar &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatChar::operator<<(MatChar &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Char& MatChar::operator()(Long_I i, Long_I j)
@@ -85,8 +78,8 @@ public:
 	MatUchar(): m_N0(0), m_N1(0) {};
 	MatUchar(Long_I N0, Long_I N1);
 	MatUchar(const MatUchar &rhs);        // Copy constructor
-	MatUchar &operator=(const MatUchar &rhs) = delete;
-	void operator<<(MatUchar &rhs); // move data and rhs.resize(0, 0)
+	MatUchar &operator=(const MatUchar &rhs);
+	MatUchar &operator=(MatUchar &&rhs);
 	Uchar& operator()(Long_I i, Long_I j); // double indexing
 	const Uchar& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -99,13 +92,6 @@ inline MatUchar::MatUchar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatUchar::MatUchar(const MatUchar &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatUchar::operator<<(MatUchar &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Uchar& MatUchar::operator()(Long_I i, Long_I j)
@@ -157,8 +143,8 @@ public:
 	MatInt(): m_N0(0), m_N1(0) {};
 	MatInt(Long_I N0, Long_I N1);
 	MatInt(const MatInt &rhs);        // Copy constructor
-	MatInt &operator=(const MatInt &rhs) = delete;
-	void operator<<(MatInt &rhs); // move data and rhs.resize(0, 0)
+	MatInt &operator=(const MatInt &rhs);
+	MatInt &operator=(MatInt &&rhs);
 	Int& operator()(Long_I i, Long_I j); // double indexing
 	const Int& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -171,13 +157,6 @@ inline MatInt::MatInt(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
 inline MatInt::MatInt(const MatInt &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatInt::operator<<(MatInt &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Int& MatInt::operator()(Long_I i, Long_I j)
@@ -229,8 +208,8 @@ public:
 	MatLlong(): m_N0(0), m_N1(0) {};
 	MatLlong(Long_I N0, Long_I N1);
 	MatLlong(const MatLlong &rhs);        // Copy constructor
-	MatLlong &operator=(const MatLlong &rhs) = delete;
-	void operator<<(MatLlong &rhs); // move data and rhs.resize(0, 0)
+	MatLlong &operator=(const MatLlong &rhs);
+	MatLlong &operator=(MatLlong &&rhs);
 	Llong& operator()(Long_I i, Long_I j); // double indexing
 	const Llong& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -243,13 +222,6 @@ inline MatLlong::MatLlong(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatLlong::MatLlong(const MatLlong &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatLlong::operator<<(MatLlong &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Llong& MatLlong::operator()(Long_I i, Long_I j)
@@ -301,8 +273,8 @@ public:
 	MatFloat(): m_N0(0), m_N1(0) {};
 	MatFloat(Long_I N0, Long_I N1);
 	MatFloat(const MatFloat &rhs);        // Copy constructor
-	MatFloat &operator=(const MatFloat &rhs) = delete;
-	void operator<<(MatFloat &rhs); // move data and rhs.resize(0, 0)
+	MatFloat &operator=(const MatFloat &rhs);
+	MatFloat &operator=(MatFloat &&rhs);
 	Float& operator()(Long_I i, Long_I j); // double indexing
 	const Float& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -315,13 +287,6 @@ inline MatFloat::MatFloat(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatFloat::MatFloat(const MatFloat &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatFloat::operator<<(MatFloat &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Float& MatFloat::operator()(Long_I i, Long_I j)
@@ -373,8 +338,8 @@ public:
 	MatDoub(): m_N0(0), m_N1(0) {};
 	MatDoub(Long_I N0, Long_I N1);
 	MatDoub(const MatDoub &rhs);        // Copy constructor
-	MatDoub &operator=(const MatDoub &rhs) = delete;
-	void operator<<(MatDoub &rhs); // move data and rhs.resize(0, 0)
+	MatDoub &operator=(const MatDoub &rhs);
+	MatDoub &operator=(MatDoub &&rhs);
 	Doub& operator()(Long_I i, Long_I j); // double indexing
 	const Doub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -387,13 +352,6 @@ inline MatDoub::MatDoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) 
 inline MatDoub::MatDoub(const MatDoub &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatDoub::operator<<(MatDoub &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Doub& MatDoub::operator()(Long_I i, Long_I j)
@@ -445,8 +403,8 @@ public:
 	MatLdoub(): m_N0(0), m_N1(0) {};
 	MatLdoub(Long_I N0, Long_I N1);
 	MatLdoub(const MatLdoub &rhs);        // Copy constructor
-	MatLdoub &operator=(const MatLdoub &rhs) = delete;
-	void operator<<(MatLdoub &rhs); // move data and rhs.resize(0, 0)
+	MatLdoub &operator=(const MatLdoub &rhs);
+	MatLdoub &operator=(MatLdoub &&rhs);
 	Ldoub& operator()(Long_I i, Long_I j); // double indexing
 	const Ldoub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -459,13 +417,6 @@ inline MatLdoub::MatLdoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatLdoub::MatLdoub(const MatLdoub &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatLdoub::operator<<(MatLdoub &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Ldoub& MatLdoub::operator()(Long_I i, Long_I j)
@@ -518,8 +469,8 @@ public:
 	MatFcomp(): m_N0(0), m_N1(0) {};
 	MatFcomp(Long_I N0, Long_I N1);
 	MatFcomp(const MatFcomp &rhs);        // Copy constructor
-	MatFcomp &operator=(const MatFcomp &rhs) = delete;
-	void operator<<(MatFcomp &rhs); // move data and rhs.resize(0, 0)
+	MatFcomp &operator=(const MatFcomp &rhs);
+	MatFcomp &operator=(MatFcomp &&rhs);
 	Fcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Fcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -532,13 +483,6 @@ inline MatFcomp::MatFcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatFcomp::MatFcomp(const MatFcomp &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatFcomp::operator<<(MatFcomp &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Fcomp& MatFcomp::operator()(Long_I i, Long_I j)
@@ -590,8 +534,8 @@ public:
 	MatComp(): m_N0(0), m_N1(0) {};
 	MatComp(Long_I N0, Long_I N1);
 	MatComp(const MatComp &rhs);        // Copy constructor
-	MatComp &operator=(const MatComp &rhs) = delete;
-	void operator<<(MatComp &rhs); // move data and rhs.resize(0, 0)
+	MatComp &operator=(const MatComp &rhs);
+	MatComp &operator=(MatComp &&rhs);
 	Comp& operator()(Long_I i, Long_I j); // double indexing
 	const Comp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -604,13 +548,6 @@ inline MatComp::MatComp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) 
 inline MatComp::MatComp(const MatComp &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatComp::operator<<(MatComp &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Comp& MatComp::operator()(Long_I i, Long_I j)
@@ -662,8 +599,8 @@ public:
 	MatLcomp(): m_N0(0), m_N1(0) {};
 	MatLcomp(Long_I N0, Long_I N1);
 	MatLcomp(const MatLcomp &rhs);        // Copy constructor
-	MatLcomp &operator=(const MatLcomp &rhs) = delete;
-	void operator<<(MatLcomp &rhs); // move data and rhs.resize(0, 0)
+	MatLcomp &operator=(const MatLcomp &rhs);
+	MatLcomp &operator=(MatLcomp &&rhs);
 	Lcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Lcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -676,13 +613,6 @@ inline MatLcomp::MatLcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatLcomp::MatLcomp(const MatLcomp &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatLcomp::operator<<(MatLcomp &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Lcomp& MatLcomp::operator()(Long_I i, Long_I j)
@@ -735,8 +665,8 @@ public:
 	MatFimag(): m_N0(0), m_N1(0) {};
 	MatFimag(Long_I N0, Long_I N1);
 	MatFimag(const MatFimag &rhs);        // Copy constructor
-	MatFimag &operator=(const MatFimag &rhs) = delete;
-	void operator<<(MatFimag &rhs); // move data and rhs.resize(0, 0)
+	MatFimag &operator=(const MatFimag &rhs);
+	MatFimag &operator=(MatFimag &&rhs);
 	Fimag& operator()(Long_I i, Long_I j); // double indexing
 	const Fimag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -749,13 +679,6 @@ inline MatFimag::MatFimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatFimag::MatFimag(const MatFimag &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatFimag::operator<<(MatFimag &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Fimag& MatFimag::operator()(Long_I i, Long_I j)
@@ -807,8 +730,8 @@ public:
 	MatImag(): m_N0(0), m_N1(0) {};
 	MatImag(Long_I N0, Long_I N1);
 	MatImag(const MatImag &rhs);        // Copy constructor
-	MatImag &operator=(const MatImag &rhs) = delete;
-	void operator<<(MatImag &rhs); // move data and rhs.resize(0, 0)
+	MatImag &operator=(const MatImag &rhs);
+	MatImag &operator=(MatImag &&rhs);
 	Imag& operator()(Long_I i, Long_I j); // double indexing
 	const Imag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -821,13 +744,6 @@ inline MatImag::MatImag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) 
 inline MatImag::MatImag(const MatImag &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatImag::operator<<(MatImag &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Imag& MatImag::operator()(Long_I i, Long_I j)
@@ -879,8 +795,8 @@ public:
 	MatLimag(): m_N0(0), m_N1(0) {};
 	MatLimag(Long_I N0, Long_I N1);
 	MatLimag(const MatLimag &rhs);        // Copy constructor
-	MatLimag &operator=(const MatLimag &rhs) = delete;
-	void operator<<(MatLimag &rhs); // move data and rhs.resize(0, 0)
+	MatLimag &operator=(const MatLimag &rhs);
+	MatLimag &operator=(MatLimag &&rhs);
 	Limag& operator()(Long_I i, Long_I j); // double indexing
 	const Limag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -893,13 +809,6 @@ inline MatLimag::MatLimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1
 inline MatLimag::MatLimag(const MatLimag &rhs) : Base(0)
 {
 	SLS_ERR("Copy constructor or move constructor is forbidden, use reference argument for function input or output, and use \"=\" to copy!");
-}
-
-inline void MatLimag::operator<<(MatLimag &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
-	rhs.m_N0 = rhs.m_N1 = 0;
-	Base::operator<<(rhs);
 }
 
 inline Limag& MatLimag::operator()(Long_I i, Long_I j)

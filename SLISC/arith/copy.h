@@ -22,6 +22,32 @@ inline void vecset(Doub *v, Doub_I val, Long_I n, Long_I step)
 }
 
 
+inline void vecset(Comp *v, Comp_I val, Long_I n)
+{
+	for (Comp *p = v; p < v + n; ++p)
+		*p = val;
+}
+
+inline void vecset(Comp *v, Comp_I val, Long_I n, Long_I step)
+{
+	for (Comp *p = v; p < v + n*step; p += step)
+		*p = val;
+}
+
+
+inline void vecset(Imag *v, Imag_I val, Long_I n)
+{
+	for (Imag *p = v; p < v + n; ++p)
+		*p = val;
+}
+
+inline void vecset(Imag *v, Imag_I val, Long_I n, Long_I step)
+{
+	for (Imag *p = v; p < v + n*step; p += step)
+		*p = val;
+}
+
+
 inline void vecset(Bool *v, Bool_I val, Long_I n)
 {
 	for (Bool *p = v; p < v + n; ++p)
@@ -67,18 +93,6 @@ inline void vecset(Char *v, Char_I val, Long_I n)
 inline void vecset(Char *v, Char_I val, Long_I n, Long_I step)
 {
 	for (Char *p = v; p < v + n*step; p += step)
-		*p = val;
-}
-
-inline void vecset(Comp *v, Comp_I val, Long_I n)
-{
-	for (Comp *p = v; p < v + n; ++p)
-		*p = val;
-}
-
-inline void vecset(Comp *v, Comp_I val, Long_I n, Long_I step)
-{
-	for (Comp *p = v; p < v + n*step; p += step)
 		*p = val;
 }
 
