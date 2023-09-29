@@ -169,6 +169,13 @@ public:
 		return slisc::Scmat3Int((Int *)(m_p+start), N1, N2, N3);
 	}
 
+	Long *pLong(Long_I N) {	return pInt(N); }
+
+	slisc::SvecLong SvecLong(Long_I N) { return SvecInt(N); }
+
+	slisc::ScmatLong ScmatLong(Long_I N1, Long_I N2) { return ScmatInt(N1, N2); }
+
+	slisc::Scmat3Long Scmat3Long(Long_I N1, Long_I N2, Long_I N3) { return Scmat3Int(N1, N2, N3); }
 
 	Llong *pLlong(Long_I N) {
 		do_align();
@@ -218,13 +225,6 @@ public:
 		return slisc::Scmat3Llong((Llong *)(m_p+start), N1, N2, N3);
 	}
 
-	Long *pLong(Long_I N) {	return pLlong(N); }
-
-	slisc::SvecLong SvecLong(Long_I N) { return SvecLlong(N); }
-
-	slisc::ScmatLong ScmatLong(Long_I N1, Long_I N2) { return ScmatLlong(N1, N2); }
-
-	slisc::Scmat3Long Scmat3Long(Long_I N1, Long_I N2, Long_I N3) { return Scmat3Llong(N1, N2, N3); }
 
 	Float *pFloat(Long_I N) {
 		do_align();
