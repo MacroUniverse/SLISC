@@ -309,6 +309,15 @@ inline Doub abs2(Doub_I a) { return a * a; }
 inline Doub abs2(Comp_I a) { return sqr(real(a)) + sqr(imag(a)); }
 
 
+inline Float conj(Float_I r) { return r; }
+
+inline Doub conj(Doub_I r) { return r; }
+
+inline Ldoub conj(Ldoub_I r) { return r; }
+
+inline Qdoub conj(Qdoub_I r) { return r; }
+
+
 inline Llong factorial_ll(int n) {
 	if (n > 20)
 		SLS_ERR("n too large!");

@@ -24,7 +24,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooChar &rhs); // move data and rhs.resize(0)
+	McooChar &operator=(McooChar &&rhs); // move assignment operator
 	void push(Char_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Char_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -112,16 +112,17 @@ inline Char McooChar::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Char(0);
 	return m_p[n];
 }
 
-inline void McooChar::operator<<(McooChar &rhs)
+inline McooChar &McooChar::operator=(McooChar &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooChar::push(Char_I s, Long_I i, Long_I j)
@@ -272,8 +273,9 @@ inline void McooChar::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooChar::reshape(Long_I N0, Long_I N1)
@@ -299,7 +301,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooInt &rhs); // move data and rhs.resize(0)
+	McooInt &operator=(McooInt &&rhs); // move assignment operator
 	void push(Int_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Int_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -387,16 +389,17 @@ inline Int McooInt::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Int(0);
 	return m_p[n];
 }
 
-inline void McooInt::operator<<(McooInt &rhs)
+inline McooInt &McooInt::operator=(McooInt &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooInt::push(Int_I s, Long_I i, Long_I j)
@@ -547,8 +550,9 @@ inline void McooInt::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooInt::reshape(Long_I N0, Long_I N1)
@@ -574,7 +578,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooLlong &rhs); // move data and rhs.resize(0)
+	McooLlong &operator=(McooLlong &&rhs); // move assignment operator
 	void push(Llong_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Llong_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -662,16 +666,17 @@ inline Llong McooLlong::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Llong(0);
 	return m_p[n];
 }
 
-inline void McooLlong::operator<<(McooLlong &rhs)
+inline McooLlong &McooLlong::operator=(McooLlong &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooLlong::push(Llong_I s, Long_I i, Long_I j)
@@ -822,8 +827,9 @@ inline void McooLlong::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooLlong::reshape(Long_I N0, Long_I N1)
@@ -849,7 +855,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooDoub &rhs); // move data and rhs.resize(0)
+	McooDoub &operator=(McooDoub &&rhs); // move assignment operator
 	void push(Doub_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Doub_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -937,16 +943,17 @@ inline Doub McooDoub::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Doub(0);
 	return m_p[n];
 }
 
-inline void McooDoub::operator<<(McooDoub &rhs)
+inline McooDoub &McooDoub::operator=(McooDoub &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooDoub::push(Doub_I s, Long_I i, Long_I j)
@@ -1097,8 +1104,9 @@ inline void McooDoub::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooDoub::reshape(Long_I N0, Long_I N1)
@@ -1124,7 +1132,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooComp &rhs); // move data and rhs.resize(0)
+	McooComp &operator=(McooComp &&rhs); // move assignment operator
 	void push(Comp_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Comp_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -1212,16 +1220,17 @@ inline Comp McooComp::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Comp(0);
 	return m_p[n];
 }
 
-inline void McooComp::operator<<(McooComp &rhs)
+inline McooComp &McooComp::operator=(McooComp &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooComp::push(Comp_I s, Long_I i, Long_I j)
@@ -1372,8 +1381,9 @@ inline void McooComp::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooComp::reshape(Long_I N0, Long_I N1)
@@ -1399,7 +1409,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooQdoub &rhs); // move data and rhs.resize(0)
+	McooQdoub &operator=(McooQdoub &&rhs); // move assignment operator
 	void push(Qdoub_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Qdoub_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -1487,16 +1497,17 @@ inline Qdoub McooQdoub::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Qdoub(0);
 	return m_p[n];
 }
 
-inline void McooQdoub::operator<<(McooQdoub &rhs)
+inline McooQdoub &McooQdoub::operator=(McooQdoub &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooQdoub::push(Qdoub_I s, Long_I i, Long_I j)
@@ -1647,8 +1658,9 @@ inline void McooQdoub::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooQdoub::reshape(Long_I N0, Long_I N1)
@@ -1674,7 +1686,7 @@ public:
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	void operator<<(McooQcomp &rhs); // move data and rhs.resize(0)
+	McooQcomp &operator=(McooQcomp &&rhs); // move assignment operator
 	void push(Qcomp_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Qcomp_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -1762,16 +1774,17 @@ inline Qcomp McooQcomp::operator()(Long_I i, Long_I j) const
 #endif
 	Long n = find(i, j);
 	if (n < 0)
-		return 0; // never return a (const) reference to a temporary
+		return Qcomp(0);
 	return m_p[n];
 }
 
-inline void McooQcomp::operator<<(McooQcomp &rhs)
+inline McooQcomp &McooQcomp::operator=(McooQcomp &&rhs)
 {
-	Base::operator<<(rhs);
-	m_row << rhs.m_row; m_col << rhs.m_col;
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
 }
 
 inline void McooQcomp::push(Qcomp_I s, Long_I i, Long_I j)
@@ -1922,11 +1935,566 @@ inline void McooQcomp::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator<<(data);
-	m_row << row; m_col << col;
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooQcomp::reshape(Long_I N0, Long_I N1)
+{
+	m_N0 = N0; m_N1 = N1;
+}
+
+
+class McooImag : public VbaseImag
+{
+private:
+	typedef VbaseImag Base;
+	using Base::m_p;
+	using Base::m_N;
+	Long m_N0, m_N1, m_Nnz;
+	VecLong m_row, m_col;
+public:
+	using Base::p;
+	McooImag(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooImag(Long_I N0, Long_I N1);
+	McooImag(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
+	Long *row_p();
+	const Long *row_p() const;
+	Long *col_p();
+	const Long *col_p() const;
+	McooImag &operator=(McooImag &&rhs); // move assignment operator
+	void push(Imag_I s, Long_I i, Long_I j); // add one nonzero element
+	void set(Imag_I s, Long_I i, Long_I j); // change existing element or push new element
+	Long n0() const;
+	Long n1() const;
+	Long size() const; // return m_N0 * m_N1
+	Long nnz() const; // return number of non-zero elements
+	Long capacity() const;
+	// get single index using double index, return -1 if not found
+	Long find(Long_I i, Long_I j) const;
+	// reference to an element (element must exist)
+	Imag &ref(Long_I i, Long_I j);
+	// double indexing (element need not exist)
+	Imag operator()(Long_I i, Long_I j) const;
+	Imag &operator[](Long_I ind); // return element
+	Imag operator[](Long_I ind) const;
+	const Long &row(Long_I ind) const; // row index
+	Long &row(Long_I ind);
+	const Long &col(Long_I ind) const; // column index
+	Long &col(Long_I ind);
+	void trim(Long_I Nnz); // decrease m_Nnz to Nnz
+	void resize(Long_I N); // set m_Nz
+	void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+	void reserve_cpy(Long_I N); // reserve and conserve data
+	void reshape(Long_I N0, Long_I N1); // change matrix shape
+};
+
+typedef const McooImag &McooImag_I;
+typedef McooImag &McooImag_O, &McooImag_IO;
+
+inline McooImag::McooImag(Long_I N0, Long_I N1)
+	: Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
+{
+	m_N = 0;
+}
+
+inline McooImag::McooImag(Long_I N0, Long_I N1, Long_I Ncap) :
+	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline Long * McooImag::row_p()
+{
+	return m_row.p();
+}
+
+inline const Long *McooImag::row_p() const
+{
+	return m_row.p();
+}
+
+inline Long * McooImag::col_p()
+{
+	return m_col.p();
+}
+
+inline const Long *McooImag::col_p() const
+{
+	return m_col.p();
+}
+
+inline Long McooImag::find(Long_I i, Long_I j) const
+{
+	for (Long n = 0; n < m_Nnz; ++n) {
+		if (row(n) == i && col(n) == j)
+			return n;
+	}
+	return -1;
+}
+
+inline Imag& McooImag::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("McooImag::operator()(i,j): index out of bounds!");
+#endif
+	Long n = find(i, j);
+	if (n < 0)
+		SLS_ERR("McooImag::operator()(i,j): element does not exist!");
+	return m_p[n];
+}
+
+inline Imag McooImag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("McooImag::operator()(i,j): index out of bounds!");
+#endif
+	Long n = find(i, j);
+	if (n < 0)
+		return Imag(0);
+	return m_p[n];
+}
+
+inline McooImag &McooImag::operator=(McooImag &&rhs)
+{
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
+	m_Nnz = rhs.m_Nnz;
+	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
+}
+
+inline void McooImag::push(Imag_I s, Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
+		SLS_ERR("McooImag::push(): index out of bounds!");
+#endif
+#ifdef SLS_CHECK_COO_REPEAT
+	Long n;
+	for (n = 0; n < m_Nnz; ++n) {
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooImag::push(s,i,j): element already exists!");
+	}
+#endif
+	if (m_Nnz == m_N)
+		SLS_ERR("McooImag::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
+	++m_Nnz;
+}
+
+inline void McooImag::set(Imag_I s, Long_I i, Long_I j)
+{
+	Long n;
+	// change
+	for (n = 0; n < m_Nnz; ++n) {
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
+	}
+	// push
+	if (m_Nnz == m_N)
+		SLS_ERR("McooImag::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
+	++m_Nnz;
+}
+
+inline Long McooImag::n0() const
+{
+	return m_N0;
+}
+
+inline Long McooImag::n1() const
+{
+	return m_N1;
+}
+
+inline Long McooImag::size() const
+{
+	return m_N0 * m_N1;
+}
+
+inline Long McooImag::nnz() const
+{
+	return m_Nnz;
+}
+
+inline Long McooImag::capacity() const
+{
+	return Base::size();
+}
+
+inline Imag &McooImag::operator[](Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooImag::operator(): subscript out of bounds!");
+#endif
+	return m_p[ind];
+}
+
+inline Imag McooImag::operator[](Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooImag::operator() const: subscript out of bounds!");
+#endif
+	return m_p[ind];
+}
+
+inline const Long &McooImag::row(Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooImag::row() subscript out of bounds");
+#endif
+	return m_row[ind];
+}
+
+inline Long &McooImag::row(Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooImag::row() subscript out of bounds");
+#endif
+	return m_row[ind];
+}
+
+inline const Long &McooImag::col(Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind < 0 || ind >= m_Nnz)
+		SLS_ERR("McooImag::col() subscript out of bounds");
+#endif
+	return m_col[ind];
+}
+
+inline Long &McooImag::col(Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind < 0 || ind >= m_Nnz)
+		SLS_ERR("McooImag::col() subscript out of bounds");
+#endif
+	return m_col[ind];
+}
+
+inline void McooImag::trim(Long_I Nnz)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (Nnz < 0)
+		SLS_ERR("McooImag::trim() negative input!");
+#endif
+	if (Nnz < m_Nnz) m_Nnz = Nnz;
+	else if (Nnz > m_Nnz) SLS_ERR("McooImag::trim(): Nnz > m_Nnz!");
+}
+
+inline void McooImag::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N > m_N)
+		SLS_ERR("not enough capacity!");
+#endif
+	m_Nnz = N;
+}
+
+inline void McooImag::reserve(Long_I N)
+{
+	Base::resize(N);
+	m_row.resize(N);
+	m_col.resize(N);
+	m_Nnz = 0;
+}
+
+inline void McooImag::reserve_cpy(Long_I N)
+{
+	VecImag data(N);
+	VecLong row(N), col(N);
+	veccpy(data.p(), m_p, m_Nnz);
+	veccpy(row.p(), m_row.p(), m_Nnz);
+	veccpy(col.p(), m_col.p(), m_Nnz);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
+}
+
+inline void McooImag::reshape(Long_I N0, Long_I N1)
+{
+	m_N0 = N0; m_N1 = N1;
+}
+
+
+class McooQimag : public VbaseQimag
+{
+private:
+	typedef VbaseQimag Base;
+	using Base::m_p;
+	using Base::m_N;
+	Long m_N0, m_N1, m_Nnz;
+	VecLong m_row, m_col;
+public:
+	using Base::p;
+	McooQimag(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooQimag(Long_I N0, Long_I N1);
+	McooQimag(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
+	Long *row_p();
+	const Long *row_p() const;
+	Long *col_p();
+	const Long *col_p() const;
+	McooQimag &operator=(McooQimag &&rhs); // move assignment operator
+	void push(Qimag_I s, Long_I i, Long_I j); // add one nonzero element
+	void set(Qimag_I s, Long_I i, Long_I j); // change existing element or push new element
+	Long n0() const;
+	Long n1() const;
+	Long size() const; // return m_N0 * m_N1
+	Long nnz() const; // return number of non-zero elements
+	Long capacity() const;
+	// get single index using double index, return -1 if not found
+	Long find(Long_I i, Long_I j) const;
+	// reference to an element (element must exist)
+	Qimag &ref(Long_I i, Long_I j);
+	// double indexing (element need not exist)
+	Qimag operator()(Long_I i, Long_I j) const;
+	Qimag &operator[](Long_I ind); // return element
+	Qimag operator[](Long_I ind) const;
+	const Long &row(Long_I ind) const; // row index
+	Long &row(Long_I ind);
+	const Long &col(Long_I ind) const; // column index
+	Long &col(Long_I ind);
+	void trim(Long_I Nnz); // decrease m_Nnz to Nnz
+	void resize(Long_I N); // set m_Nz
+	void reserve(Long_I N); // reallocate memory, data will be lost m_Nz = 0
+	void reserve_cpy(Long_I N); // reserve and conserve data
+	void reshape(Long_I N0, Long_I N1); // change matrix shape
+};
+
+typedef const McooQimag &McooQimag_I;
+typedef McooQimag &McooQimag_O, &McooQimag_IO;
+
+inline McooQimag::McooQimag(Long_I N0, Long_I N1)
+	: Base(0), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(0), m_col(0)
+{
+	m_N = 0;
+}
+
+inline McooQimag::McooQimag(Long_I N0, Long_I N1, Long_I Ncap) :
+	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline Long * McooQimag::row_p()
+{
+	return m_row.p();
+}
+
+inline const Long *McooQimag::row_p() const
+{
+	return m_row.p();
+}
+
+inline Long * McooQimag::col_p()
+{
+	return m_col.p();
+}
+
+inline const Long *McooQimag::col_p() const
+{
+	return m_col.p();
+}
+
+inline Long McooQimag::find(Long_I i, Long_I j) const
+{
+	for (Long n = 0; n < m_Nnz; ++n) {
+		if (row(n) == i && col(n) == j)
+			return n;
+	}
+	return -1;
+}
+
+inline Qimag& McooQimag::ref(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("McooQimag::operator()(i,j): index out of bounds!");
+#endif
+	Long n = find(i, j);
+	if (n < 0)
+		SLS_ERR("McooQimag::operator()(i,j): element does not exist!");
+	return m_p[n];
+}
+
+inline Qimag McooQimag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("McooQimag::operator()(i,j): index out of bounds!");
+#endif
+	Long n = find(i, j);
+	if (n < 0)
+		return Qimag(0);
+	return m_p[n];
+}
+
+inline McooQimag &McooQimag::operator=(McooQimag &&rhs)
+{
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
+	m_Nnz = rhs.m_Nnz;
+	rhs.m_Nnz = 0; rhs.m_N = 0;
+	return *this;
+}
+
+inline void McooQimag::push(Qimag_I s, Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i<0 || i>=m_N0 || j<0 || j>=m_N1)
+		SLS_ERR("McooQimag::push(): index out of bounds!");
+#endif
+#ifdef SLS_CHECK_COO_REPEAT
+	Long n;
+	for (n = 0; n < m_Nnz; ++n) {
+		if (row(n) == i && col(n) == j)
+			SLS_ERR("McooQimag::push(s,i,j): element already exists!");
+	}
+#endif
+	if (m_Nnz == m_N)
+		SLS_ERR("McooQimag::push(): out of capacity, please reserve! m_N = " + to_string(m_N));
+	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
+	++m_Nnz;
+}
+
+inline void McooQimag::set(Qimag_I s, Long_I i, Long_I j)
+{
+	Long n;
+	// change
+	for (n = 0; n < m_Nnz; ++n) {
+		if (row(n) == i && col(n) == j) {
+			m_p[n] = s; m_row[n] = i; m_col[n] = j; return;
+		}
+	}
+	// push
+	if (m_Nnz == m_N)
+		SLS_ERR("McooQimag::set(): out of capacity, please reserve! m_N = " + to_string(m_N));
+	m_p[m_Nnz] = s; m_row[m_Nnz] = i; m_col[m_Nnz] = j;
+	++m_Nnz;
+}
+
+inline Long McooQimag::n0() const
+{
+	return m_N0;
+}
+
+inline Long McooQimag::n1() const
+{
+	return m_N1;
+}
+
+inline Long McooQimag::size() const
+{
+	return m_N0 * m_N1;
+}
+
+inline Long McooQimag::nnz() const
+{
+	return m_Nnz;
+}
+
+inline Long McooQimag::capacity() const
+{
+	return Base::size();
+}
+
+inline Qimag &McooQimag::operator[](Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooQimag::operator(): subscript out of bounds!");
+#endif
+	return m_p[ind];
+}
+
+inline Qimag McooQimag::operator[](Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooQimag::operator() const: subscript out of bounds!");
+#endif
+	return m_p[ind];
+}
+
+inline const Long &McooQimag::row(Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooQimag::row() subscript out of bounds");
+#endif
+	return m_row[ind];
+}
+
+inline Long &McooQimag::row(Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind<0 || ind>=m_Nnz)
+		SLS_ERR("McooQimag::row() subscript out of bounds");
+#endif
+	return m_row[ind];
+}
+
+inline const Long &McooQimag::col(Long_I ind) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind < 0 || ind >= m_Nnz)
+		SLS_ERR("McooQimag::col() subscript out of bounds");
+#endif
+	return m_col[ind];
+}
+
+inline Long &McooQimag::col(Long_I ind)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (ind < 0 || ind >= m_Nnz)
+		SLS_ERR("McooQimag::col() subscript out of bounds");
+#endif
+	return m_col[ind];
+}
+
+inline void McooQimag::trim(Long_I Nnz)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (Nnz < 0)
+		SLS_ERR("McooQimag::trim() negative input!");
+#endif
+	if (Nnz < m_Nnz) m_Nnz = Nnz;
+	else if (Nnz > m_Nnz) SLS_ERR("McooQimag::trim(): Nnz > m_Nnz!");
+}
+
+inline void McooQimag::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N > m_N)
+		SLS_ERR("not enough capacity!");
+#endif
+	m_Nnz = N;
+}
+
+inline void McooQimag::reserve(Long_I N)
+{
+	Base::resize(N);
+	m_row.resize(N);
+	m_col.resize(N);
+	m_Nnz = 0;
+}
+
+inline void McooQimag::reserve_cpy(Long_I N)
+{
+	VecQimag data(N);
+	VecLong row(N), col(N);
+	veccpy(data.p(), m_p, m_Nnz);
+	veccpy(row.p(), m_row.p(), m_Nnz);
+	veccpy(col.p(), m_col.p(), m_Nnz);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
+}
+
+inline void McooQimag::reshape(Long_I N0, Long_I N1)
 {
 	m_N0 = N0; m_N1 = N1;
 }

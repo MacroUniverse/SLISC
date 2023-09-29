@@ -13,13 +13,9 @@
 
 namespace slisc {
 
-// bytes of workspace
+// bytes of workspace required
 inline Long exp_Hdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
 	return sizeof(Doub)*((2*N+Nk)*(Nk+1)+Nk)+4*(SLS_WSP_ALIGN-1);
-}
-
-inline Long exp_miHdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
-	return sizeof(Doub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*(SLS_WSP_ALIGN-1);
 }
 
 // calculate y = exp(H*dt) * x
@@ -239,6 +235,11 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 }
 
 
+
+// bytes of workspace required
+inline Long exp_miHdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
+	return sizeof(Doub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*(SLS_WSP_ALIGN-1);
+}
 
 // calculate y = exp(-i*H*dt) * x
 // x, y can be the same object

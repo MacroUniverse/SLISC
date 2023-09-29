@@ -423,20 +423,16 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 // [4] scalar underflow/overflow
 // all returns other than [0] will not have other outputs
 //% tem('bicgstab_matlab_optim', {
-//%    'VecDoub' 'CmatDoub' 'VecDoub' 'VecDoub';
-//%    'VecComp' 'CmatComp' 'VecComp' 'VecComp';
-//%    'SvecComp' 'CNmatComp' 'SvecComp' 'SvecComp';
+//%    'VecDoub' 'VecDoub' 'VecDoub';
+//%    'VecComp' 'VecComp' 'VecComp';
+//%    'SvecComp' 'SvecComp' 'SvecComp';
 //% });
 //%------------------------------
-//% [Tx, Tmat, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
+//% [Tx, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
 //% Tcut = cut_type(Twsp);
-//% if strcmp(Tmat, 'CNmatComp')
-class CNmatComp;
-inline void mul(@Tcut@_O, @Tmat@ &, @Tcut@_I);
-
-//% end
+template <class Tmul>
 inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
-	@Tx@_IO x, @Tmat@ &A, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
+	@Tx@_IO x, Tmul &mul_fun, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
 {
 	@Tr@ eps = 2.2e-16;
 	Long m = b.size(); Int flag;
@@ -452,7 +448,7 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 	@Tcut@ p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
 		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
 //% req('add(v,v,v)', {Tcut, Tb, Tcut});
-	mul(r, A, x); sub(r, b, r);
+	mul_fun(r, x); sub(r, b, r);
 	@Tcut@ rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const @Tr@ tolb = tol * n2b;        // Relative tolerance
@@ -481,7 +477,7 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 			for (Long i = 0; i < m; ++i)
 				p[i] = r[i] + beta * (p[i] - omega * v[i]);
 		}
-		mul(v, A, p);
+		mul_fun(v, p);
 		@Ts@ rtv = dot(rt, v);
 		if (rtv == 0 || isinf(rtv)) {
 			flag = 4; break;
@@ -505,7 +501,7 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 		
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(s, A, xhalf);
+			mul_fun(s, xhalf);
 			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
@@ -526,7 +522,7 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 		if (stag >= maxstagsteps) {
 			flag = 3; break;
 		}
-		mul(t, A, s);
+		mul_fun(t, s);
 		@Tr@ tt = norm2(t);
 		if (tt == 0 || isinf(tt)) {
 			flag = 4; break;
@@ -549,7 +545,7 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 
 		// check convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(r, A, x);
+			mul_fun(r, x);
 			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {

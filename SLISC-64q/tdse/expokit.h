@@ -6,13 +6,13 @@
 
 namespace slisc {
 
-inline Long expokit_expv_Nwsp(Long_I N, Long_I Nkry) {
+// workspace requirement
+inline Long expokit_expv_Comp_Nwsp(Long_I N, Long_I Nkry) {
 	return sizeof(Comp)*(max(Long(10), N*(Nkry + 2) + 5*sqr(Nkry + 2) + 8)) +
 		sizeof(Long)*(max(Nkry + 2, 7)) + (SLS_WSP_ALIGN-1);
 }
 
-// expv()
-// this function is extremely slow when used in a loop! due to dynamic memory allocation
+// calculates v *= exp(mat*t)
 // use ZGEXPV() for MatCoo<>, ZHEXPV() for MatCooH<>
 // v cannot be empty!
 // the callable `void mat_mul(Comp *y, const Comp *x)` performs matrix-vector multiplication for an N*N matrix

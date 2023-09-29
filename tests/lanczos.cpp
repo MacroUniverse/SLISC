@@ -31,12 +31,16 @@ void test_lanczos()
 
 		// test expHdt_v_lanc(), exp_miHdt_v_lanc();
 		{
-			VecComp x(3), y(3), y0(3), x6(6);
-			VecUchar wsp_mem(sizeof(Doub)*20 + sizeof(Comp)*20 + 256);
+			Doub dt = 1;
+			Long N = 3, Nk = 3;
+			VecComp x(N), y(N), y0(N), x6(2*N);
+			VecUchar wsp_mem(max(exp_Hdt_v_lanc_Comp_Nwsp(N, Nk),
+				exp_miHdt_v_lanc_Comp_Nwsp(N, Nk)));
 			WorkSpace wsp(wsp_mem);
 			for (Long i = 0; i < 5; ++i) {
 				rand(x);
 				mul(y0, expH, x);
+				wsp.reset();
 				exp_Hdt_v_lanc(y, mul_fun, x, 1, 3, wsp);
 				y -= y0;
 				if (max_abs(y) > 1e-8)
@@ -44,14 +48,16 @@ void test_lanczos()
 
 				mul(y0, exp_miH, x);
 				copy(y, x);
-				exp_miHdt_v_lanc(y, mul_fun, y, 1, 3, wsp); // for dense y
+				wsp.reset();
+				exp_miHdt_v_lanc(y, mul_fun, y, dt, Nk, wsp); // for dense y
 				y -= y0;
 				if (max_abs(y) > 1e-4)
 					SLS_FAIL;
 
 				DvecComp y1(x6.p(), 3, 2);
 				copy(y1, x);
-				exp_miHdt_v_lanc(y1, mul_fun, y1, 1, 3, wsp); // for Dvec y1
+				wsp.reset();
+				exp_miHdt_v_lanc(y1, mul_fun, y1, dt, Nk, wsp); // for Dvec y1
 				y1 -= y0;
 				if (max_abs(y1) > 1e-4)
 					SLS_FAIL;

@@ -3802,6 +3802,259 @@ inline Long size(const SvbaseLimag &v) { return v.size(); }
 
 inline Limag *ptr(SvbaseLimag &v) { return v.p(); }
 
+class SvbaseQimagC
+{
+protected:
+	const Qimag *m_p;
+	Long m_N;
+public:
+	SvbaseQimagC();
+	explicit SvbaseQimagC(Long_I N);
+	SvbaseQimagC(const Qimag *data, Long_I N);
+	const Qimag* p() const;
+	Long size() const;
+	SvbaseQimagC &operator=(const SvbaseQimagC &rhs) = delete;
+	const Qimag &operator[](Long_I i) const;
+	const Qimag &end() const;
+	const Qimag &end(Long_I i) const;
+	void set(const SvbaseQimagC &sli);
+	void next(); // m_p += m_N
+	
+	// === unsafe operations (unsafe) ===
+	void set(const Qimag *data);
+	void set(Long_I N);
+	void set(const Qimag *data, Long_I N);
+	void last(); // m_p -= m_N
+	void shift(Long_I N); // m_p += N
+
+	~SvbaseQimagC();
+};
+
+inline SvbaseQimagC::SvbaseQimagC() {}
+
+inline SvbaseQimagC::SvbaseQimagC(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	m_p = nullptr;
+#endif
+}
+
+inline SvbaseQimagC::SvbaseQimagC(const Qimag *data, Long_I N)
+	: m_p(data), m_N(N) {}
+
+inline const Qimag * SvbaseQimagC::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline Long SvbaseQimagC::size() const
+{
+	return m_N;
+}
+
+inline const Qimag &SvbaseQimagC::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+		SLS_ERR("Vbase subscript out of bounds");
+#endif
+	return m_p[i];
+}
+
+inline const Qimag &SvbaseQimagC::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline const Qimag &SvbaseQimagC::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("index out of bound");
+#endif
+	return m_p[m_N - i];
+}
+
+
+inline void SvbaseQimagC::set(const Qimag *data, Long_I N)
+{
+	m_p = data; m_N = N;
+}
+
+inline void SvbaseQimagC::set(const Qimag *data)
+{
+	m_p = data;
+}
+
+inline void SvbaseQimagC::set(Long_I N)
+{
+	m_N = N;
+}
+
+inline void SvbaseQimagC::next()
+{
+	m_p += m_N;
+}
+
+inline void SvbaseQimagC::last()
+{
+	m_p -= m_N;
+}
+
+inline void SvbaseQimagC::shift(Long_I N)
+{
+	m_p += N;
+}
+
+inline void SvbaseQimagC::set(const SvbaseQimagC &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseQimagC::~SvbaseQimagC() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseQimagC &v) { return v.size(); }
+
+inline const Qimag *ptr(const SvbaseQimagC &v) { return v.p(); }
+
+class SvbaseQimag
+{
+protected:
+	Qimag *m_p;
+	Long m_N;
+public:
+	SvbaseQimag();
+	explicit SvbaseQimag(Long_I N);
+	SvbaseQimag(Qimag *data, Long_I N);
+	Qimag* p() const;
+	Long size() const;
+	SvbaseQimag &operator=(const SvbaseQimag &rhs) = delete;
+	Qimag &operator[](Long_I i) const;
+	Qimag &end() const;
+	Qimag &end(Long_I i) const;
+	operator SvbaseQimagC() const;
+	void set(const SvbaseQimag &sli);
+	void next(); // m_p += m_N
+	
+	// === unsafe operations (unsafe) ===
+	void set(Qimag *data);
+	void set(Long_I N);
+	void set(Qimag *data, Long_I N);
+	void last(); // m_p -= m_N
+	void shift(Long_I N); // m_p += N
+
+	~SvbaseQimag();
+};
+
+inline SvbaseQimag::SvbaseQimag() {}
+
+inline SvbaseQimag::SvbaseQimag(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	m_p = nullptr;
+#endif
+}
+
+inline SvbaseQimag::SvbaseQimag(Qimag *data, Long_I N)
+	: m_p(data), m_N(N) {}
+
+inline Qimag * SvbaseQimag::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline Long SvbaseQimag::size() const
+{
+	return m_N;
+}
+
+inline Qimag &SvbaseQimag::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+		SLS_ERR("Vbase subscript out of bounds");
+#endif
+	return m_p[i];
+}
+
+inline Qimag &SvbaseQimag::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline Qimag &SvbaseQimag::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("index out of bound");
+#endif
+	return m_p[m_N - i];
+}
+
+inline SvbaseQimag::operator SvbaseQimagC() const
+{
+	return *((SvbaseQimagC *)this);
+}
+
+inline void SvbaseQimag::set(Qimag *data, Long_I N)
+{
+	m_p = data; m_N = N;
+}
+
+inline void SvbaseQimag::set(Qimag *data)
+{
+	m_p = data;
+}
+
+inline void SvbaseQimag::set(Long_I N)
+{
+	m_N = N;
+}
+
+inline void SvbaseQimag::next()
+{
+	m_p += m_N;
+}
+
+inline void SvbaseQimag::last()
+{
+	m_p -= m_N;
+}
+
+inline void SvbaseQimag::shift(Long_I N)
+{
+	m_p += N;
+}
+
+inline void SvbaseQimag::set(const SvbaseQimag &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N;
+}
+
+inline SvbaseQimag::~SvbaseQimag() {}
+
+// common api for STL and SLISC
+inline Long size(const SvbaseQimag &v) { return v.size(); }
+
+inline Qimag *ptr(SvbaseQimag &v) { return v.p(); }
+
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvbaseInt SvbaseLong;

@@ -12,7 +12,6 @@ public:
 	Mat3Char(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Char(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Char &operator=(const Mat3Char &rhs) = delete;
-	void operator<<(Mat3Char &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Char &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Char &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -23,13 +22,6 @@ public:
 
 inline Mat3Char::Mat3Char(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Char::operator<<(Mat3Char &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Char::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -84,7 +76,6 @@ public:
 	Mat3Int(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Int(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Int &operator=(const Mat3Int &rhs) = delete;
-	void operator<<(Mat3Int &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Int &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Int &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -95,13 +86,6 @@ public:
 
 inline Mat3Int::Mat3Int(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Int::operator<<(Mat3Int &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Int::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -156,7 +140,6 @@ public:
 	Mat3Llong(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Llong(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Llong &operator=(const Mat3Llong &rhs) = delete;
-	void operator<<(Mat3Llong &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Llong &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -167,13 +150,6 @@ public:
 
 inline Mat3Llong::Mat3Llong(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Llong::operator<<(Mat3Llong &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Llong::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -228,7 +204,6 @@ public:
 	Mat3Float(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Float(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Float &operator=(const Mat3Float &rhs) = delete;
-	void operator<<(Mat3Float &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Float &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Float &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -239,13 +214,6 @@ public:
 
 inline Mat3Float::Mat3Float(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Float::operator<<(Mat3Float &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Float::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -300,7 +268,6 @@ public:
 	Mat3Doub(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Doub(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Doub &operator=(const Mat3Doub &rhs) = delete;
-	void operator<<(Mat3Doub &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Doub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -311,13 +278,6 @@ public:
 
 inline Mat3Doub::Mat3Doub(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Doub::operator<<(Mat3Doub &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Doub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -372,7 +332,6 @@ public:
 	Mat3Ldoub(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Ldoub(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Ldoub &operator=(const Mat3Ldoub &rhs) = delete;
-	void operator<<(Mat3Ldoub &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Ldoub &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -383,13 +342,6 @@ public:
 
 inline Mat3Ldoub::Mat3Ldoub(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Ldoub::operator<<(Mat3Ldoub &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Ldoub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -444,7 +396,6 @@ public:
 	Mat3Fcomp(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Fcomp(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Fcomp &operator=(const Mat3Fcomp &rhs) = delete;
-	void operator<<(Mat3Fcomp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Fcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -455,13 +406,6 @@ public:
 
 inline Mat3Fcomp::Mat3Fcomp(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Fcomp::operator<<(Mat3Fcomp &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Fcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -516,7 +460,6 @@ public:
 	Mat3Comp(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Comp(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Comp &operator=(const Mat3Comp &rhs) = delete;
-	void operator<<(Mat3Comp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Comp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -527,13 +470,6 @@ public:
 
 inline Mat3Comp::Mat3Comp(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Comp::operator<<(Mat3Comp &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Comp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -588,7 +524,6 @@ public:
 	Mat3Lcomp(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Lcomp(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Lcomp &operator=(const Mat3Lcomp &rhs) = delete;
-	void operator<<(Mat3Lcomp &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Lcomp &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -599,13 +534,6 @@ public:
 
 inline Mat3Lcomp::Mat3Lcomp(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Lcomp::operator<<(Mat3Lcomp &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Lcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -660,7 +588,6 @@ public:
 	Mat3Fimag(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Fimag(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Fimag &operator=(const Mat3Fimag &rhs) = delete;
-	void operator<<(Mat3Fimag &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Fimag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -671,13 +598,6 @@ public:
 
 inline Mat3Fimag::Mat3Fimag(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Fimag::operator<<(Mat3Fimag &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Fimag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -732,7 +652,6 @@ public:
 	Mat3Imag(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Imag(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Imag &operator=(const Mat3Imag &rhs) = delete;
-	void operator<<(Mat3Imag &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Imag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -743,13 +662,6 @@ public:
 
 inline Mat3Imag::Mat3Imag(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Imag::operator<<(Mat3Imag &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Imag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
@@ -804,7 +716,6 @@ public:
 	Mat3Limag(): m_N0(0), m_N1(0), m_N2(0) {};
 	Mat3Limag(Long_I N0, Long_I N1, Long_I N2);
 	Mat3Limag &operator=(const Mat3Limag &rhs) = delete;
-	void operator<<(Mat3Limag &rhs); // move data and rhs.resize(0, 0, 0)
 	void resize(Long_I N0, Long_I N1, Long_I N2);
 	Limag &operator()(Long_I i, Long_I j, Long_I k);    //subscripting: pointer to row i
 	const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -815,13 +726,6 @@ public:
 
 inline Mat3Limag::Mat3Limag(Long_I N0, Long_I N1, Long_I N2) :
 	Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline void Mat3Limag::operator<<(Mat3Limag &rhs)
-{
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
-	rhs.m_N0 = rhs.m_N1 = rhs.m_N2 = 0;
-	Base::operator<<(rhs);
-}
 
 inline void Mat3Limag::resize(Long_I N0, Long_I N1, Long_I N2)
 {

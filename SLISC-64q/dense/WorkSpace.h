@@ -45,6 +45,8 @@ public:
 	
 	Long used() const { return m_used; }
 
+	Long free() const { return m_N-m_used; }
+
 	constexpr Long align() const { return SLS_WSP_ALIGN; }
 
 	void set(void *ptr, Long_I Nbyte) {

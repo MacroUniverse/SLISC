@@ -140,7 +140,7 @@ void test_dense()
 	CmatDoub aDoub2;
 	Cmat3Doub a3Doub2;
 	Cmat3Doub c3Doub2;
-	vDoub2 = std::move(vDoub);
+	vDoub2 = move(vDoub);
 	if (vDoub2 != vDoub1) SLS_FAIL;
 	if (vDoub.size() != 0) SLS_FAIL;
 	aDoub2 = move(aDoub);

@@ -3301,6 +3301,8 @@ inline Long size(const SvbaseLimag &v) { return v.size(); }
 inline Limag *ptr(SvbaseLimag &v) { return v.p(); }
 
 
+
+
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvbaseInt SvbaseLong;
 typedef SvbaseIntC SvbaseLongC;

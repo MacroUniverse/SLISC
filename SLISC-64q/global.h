@@ -198,7 +198,7 @@ using std::sqrt; using std::sin; using std::cos; using std::tan;
 using std::exp; using std::log; using std::log10;
 using std::expm1; using std::log1p; using std::hypot;
 using std::sinh; using std::cosh; using std::tanh;
-using std::runtime_error;
+using std::runtime_error; using std::move;
 constexpr size_t npos = std::string::npos; // `using` doesn't work
 
 // Scalar types
@@ -418,16 +418,24 @@ public:
 // === print() like python ===
 // print(a,b,...) is equivalent to `cout << a << b << ... << endl`
 // don't worry about how it works, just use it like a magic
-inline void print() { cout << endl; }
+inline void print_imp() { cout << endl; }
+
+template<typename T, typename... Args>
+void print_imp(const T& first, const Args&... args) {
+	cout << first; print_imp(args...);
+}
+
+std::mutex print_mutex; // for thread safety
 
 template<typename T, typename... Args>
 void print(const T& first, const Args&... args)
 {
-	std::mutex print_mutex; // thread safety
 	std::lock_guard<std::mutex> lock(print_mutex);
 	cout << first;
-	print(args...);
+	print_imp(args...);
 }
+
+inline void flush() { cout.flush(); }
 
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
 

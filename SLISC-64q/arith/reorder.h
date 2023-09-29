@@ -23,7 +23,7 @@ inline void resize_cpy(VecInt_IO v, Long_I N, Int_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -45,7 +45,7 @@ inline void resize_cpy(VecLlong_IO v, Long_I N, Llong_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -67,7 +67,7 @@ inline void resize_cpy(VecDoub_IO v, Long_I N, Doub_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -89,7 +89,7 @@ inline void resize_cpy(VecQdoub_IO v, Long_I N, Qdoub_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -111,7 +111,7 @@ inline void resize_cpy(VecComp_IO v, Long_I N, Comp_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -133,7 +133,7 @@ inline void resize_cpy(VecQcomp_IO v, Long_I N, Qcomp_I val = 0)
 			}
 			else // N < Nold
 				veccpy(v1.p(), v.p(), N);
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -153,7 +153,7 @@ inline void resize_cpy(CmatInt_IO v, Long_I N0, Long_I N1, Int_I val = 0)
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -173,7 +173,7 @@ inline void resize_cpy(CmatLlong_IO v, Long_I N0, Long_I N1, Llong_I val = 0)
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -193,7 +193,7 @@ inline void resize_cpy(CmatDoub_IO v, Long_I N0, Long_I N1, Doub_I val = 0)
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -213,7 +213,7 @@ inline void resize_cpy(CmatQdoub_IO v, Long_I N0, Long_I N1, Qdoub_I val = 0)
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -233,7 +233,7 @@ inline void resize_cpy(CmatComp_IO v, Long_I N0, Long_I N1, Comp_I val = 0)
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
-			v << v1;
+			v = std::move(v1);
 		}
 	}
 }
@@ -253,7 +253,7 @@ inline void resize_cpy(Cmat3Doub_IO v, Long_I N0, Long_I N1, Long_I N2, Doub_I v
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
-			v << v1;
+			v = move(v1);
 		}
 	}
 }
@@ -273,7 +273,7 @@ inline void resize_cpy(Cmat3Qdoub_IO v, Long_I N0, Long_I N1, Long_I N2, Qdoub_I
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
-			v << v1;
+			v = move(v1);
 		}
 	}
 }
@@ -293,7 +293,7 @@ inline void resize_cpy(Cmat3Comp_IO v, Long_I N0, Long_I N1, Long_I N2, Comp_I v
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
-			v << v1;
+			v = move(v1);
 		}
 	}
 }
@@ -313,7 +313,7 @@ inline void resize_cpy(Cmat3Qcomp_IO v, Long_I N0, Long_I N1, Long_I N2, Qcomp_I
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
-			v << v1;
+			v = move(v1);
 		}
 	}
 }

@@ -84,21 +84,25 @@ inline void mul_cmat_diag_cmat(Comp *c, const Comp *a, const Doub *b, Long_I Nr,
 }
 
 
-inline void mul_v_coo_v(Comp *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
+template <class Ty, class Ta, class Tx>
+inline void mul_v_coo_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
 {
 	vecset(y, 0, N1);
 	for (Long k = 0; k < Nnz; ++k)
 		y[i[k]] += a_ij[k] * x[j[k]];
 }
 
-inline void mul_v_coo_v(Comp *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x, Long_I x_step)
+template <class Ty, class Ta, class Tx>
+inline void mul_v_coo_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x, Long_I x_step)
 {
 	vecset(y, 0, N1);
 	for (Long k = 0; k < Nnz; ++k)
 		y[i[k]] += a_ij[k] * x[x_step*j[k]];
 }
 
-inline void mul_v_cooh_v(Comp *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
+// assuming only one of the two redundant elements are stored
+template <class Ty, class Ta, class Tx>
+inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
 {
 	vecset(y, 0, N1);
 	for (Long k = 0; k < Nnz; ++k) {
@@ -107,69 +111,10 @@ inline void mul_v_cooh_v(Comp *y, const Doub *a_ij, const Long *i, const Long *j
 			y[r] += a_ij[k] * x[c];
 		else {
 			y[r] += a_ij[k] * x[c];
-			y[c] += a_ij[k] * x[r];
+			y[c] += slisc::conj(a_ij[k]) * x[r];
 		}
 	}
 }
-
-inline void mul_v_coo_v(Comp *y, const Comp *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
-{
-	vecset(y, 0, N1);
-	for (Long k = 0; k < Nnz; ++k)
-		y[i[k]] += a_ij[k] * x[j[k]];
-}
-
-inline void mul_v_coo_v(Comp *y, const Comp *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x, Long_I x_step)
-{
-	vecset(y, 0, N1);
-	for (Long k = 0; k < Nnz; ++k)
-		y[i[k]] += a_ij[k] * x[x_step*j[k]];
-}
-
-inline void mul_v_cooh_v(Comp *y, const Comp *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Comp *x)
-{
-	vecset(y, 0, N1);
-	for (Long k = 0; k < Nnz; ++k) {
-		Long r = i[k], c = j[k];
-		if (r == c)
-			y[r] += a_ij[k] * x[c];
-		else {
-			y[r] += a_ij[k] * x[c];
-			y[c] += conj(a_ij[k]) * x[r];
-		}
-	}
-}
-
-
-
-inline void mul_v_coo_v(Doub *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Doub *x)
-{
-	vecset(y, 0, N1);
-	for (Long k = 0; k < Nnz; ++k)
-		y[i[k]] += a_ij[k] * x[j[k]];
-}
-
-inline void mul_v_coo_v(Doub *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Doub *x, Long_I x_step)
-{
-	vecset(y, 0, N1);
-	for (Long k = 0; k < Nnz; ++k)
-		y[i[k]] += a_ij[k] * x[x_step*j[k]];
-}
-
-inline void mul_v_cooh_v(Doub *y, const Doub *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Doub *x)
-{
-	vecset(y, 0, N1);
-	for (Long k = 0; k < Nnz; ++k) {
-		Long r = i[k], c = j[k];
-		if (r == c)
-			y[r] += a_ij[k] * x[c];
-		else {
-			y[r] += a_ij[k] * x[c];
-			y[c] += a_ij[k] * x[r];
-		}
-	}
-}
-
 
 template <class Ty, class Tx, class Ta>
 inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
@@ -301,6 +246,15 @@ inline void mul(SvecDoub_O y, CmobdDoub_I a, SvecDoub_I x)
 
 
 inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+}
+
+inline void mul(SvecComp_O y, CmobdImag_I a, SvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
@@ -564,7 +518,7 @@ inline void sort_col(McooChar_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooChar new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo << new_coo;
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooChar_IO coo, Char_I thresh = 0)
@@ -624,7 +578,7 @@ inline void sort_col(McooInt_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooInt new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo << new_coo;
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooInt_IO coo, Int_I thresh = 0)
@@ -684,7 +638,7 @@ inline void sort_col(McooLlong_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooLlong new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo << new_coo;
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooLlong_IO coo, Llong_I thresh = 0)
@@ -744,7 +698,7 @@ inline void sort_col(McooDoub_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooDoub new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo << new_coo;
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooDoub_IO coo, Doub_I thresh = 0)
@@ -805,7 +759,7 @@ inline void sort_col(McooComp_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooComp new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo << new_coo;
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooComp_IO coo, Doub_I thresh = 0)
