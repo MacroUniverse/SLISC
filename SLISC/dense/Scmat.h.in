@@ -44,7 +44,8 @@ public:
 	@Class@(@CT@ *data, Long_I N0, Long_I N1);
 
 //% if ~constness
-	operator @ScmatTC@() const;
+	operator const @ScmatTC@ &() const;
+	operator @ScmatTC@ &();
 //% end
 
 	@CT@ &operator()(Long_I i, Long_I j) const; // double indexing
@@ -65,9 +66,14 @@ inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1)
 	: @Base@(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
 //% if ~constness
-inline @Class@::operator @ScmatTC@() const
+inline @Class@::operator const @ScmatTC@ &() const
 {
-	return *((@ScmatTC@ *)this);
+	return reinterpret_cast<const @ScmatTC@ &>(*this);
+}
+
+inline @Class@::operator @ScmatTC@ &()
+{
+	return reinterpret_cast<@ScmatTC@ &>(*this);
 }
 //% end
 
@@ -109,17 +115,9 @@ inline @Class@::~@Class@() {}
 
 //% if constness
 typedef const @Class@ &@ScmatT@_I;
-
-// common api for STL and SLISC
-inline Long size(@ScmatT@_I v) { return v.size(); }
-
-inline const @T@ *p(@ScmatT@_I v) { return v.p(); }
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@ScmatT@_O, &@ScmatT@_IO;
-
-// common api for STL and SLISC
-inline @T@ *p(@ScmatT@ &v) { return v.p(); }
 //% end
 
 //%------------------------

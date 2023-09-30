@@ -131,13 +131,6 @@ inline CmatChar::operator const ScmatChar&() {
 typedef const CmatChar &CmatChar_I;
 typedef CmatChar &CmatChar_O, &CmatChar_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatChar_I v) { return v.size(); }
-
-inline const Char *p(CmatChar_I v) { return v.p(); }
-
-inline Char *p(CmatChar &v) { return v.p(); }
-
 
 class CmatUchar : public VecUchar
 {
@@ -265,13 +258,6 @@ inline CmatUchar::operator const ScmatUchar&() {
 
 typedef const CmatUchar &CmatUchar_I;
 typedef CmatUchar &CmatUchar_O, &CmatUchar_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatUchar_I v) { return v.size(); }
-
-inline const Uchar *p(CmatUchar_I v) { return v.p(); }
-
-inline Uchar *p(CmatUchar &v) { return v.p(); }
 
 
 class CmatInt : public VecInt
@@ -401,13 +387,6 @@ inline CmatInt::operator const ScmatInt&() {
 typedef const CmatInt &CmatInt_I;
 typedef CmatInt &CmatInt_O, &CmatInt_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatInt_I v) { return v.size(); }
-
-inline const Int *p(CmatInt_I v) { return v.p(); }
-
-inline Int *p(CmatInt &v) { return v.p(); }
-
 
 class CmatLlong : public VecLlong
 {
@@ -535,13 +514,6 @@ inline CmatLlong::operator const ScmatLlong&() {
 
 typedef const CmatLlong &CmatLlong_I;
 typedef CmatLlong &CmatLlong_O, &CmatLlong_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatLlong_I v) { return v.size(); }
-
-inline const Llong *p(CmatLlong_I v) { return v.p(); }
-
-inline Llong *p(CmatLlong &v) { return v.p(); }
 
 
 class CmatFloat : public VecFloat
@@ -671,13 +643,6 @@ inline CmatFloat::operator const ScmatFloat&() {
 typedef const CmatFloat &CmatFloat_I;
 typedef CmatFloat &CmatFloat_O, &CmatFloat_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatFloat_I v) { return v.size(); }
-
-inline const Float *p(CmatFloat_I v) { return v.p(); }
-
-inline Float *p(CmatFloat &v) { return v.p(); }
-
 
 class CmatDoub : public VecDoub
 {
@@ -805,13 +770,6 @@ inline CmatDoub::operator const ScmatDoub&() {
 
 typedef const CmatDoub &CmatDoub_I;
 typedef CmatDoub &CmatDoub_O, &CmatDoub_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatDoub_I v) { return v.size(); }
-
-inline const Doub *p(CmatDoub_I v) { return v.p(); }
-
-inline Doub *p(CmatDoub &v) { return v.p(); }
 
 
 class CmatLdoub : public VecLdoub
@@ -941,13 +899,6 @@ inline CmatLdoub::operator const ScmatLdoub&() {
 typedef const CmatLdoub &CmatLdoub_I;
 typedef CmatLdoub &CmatLdoub_O, &CmatLdoub_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatLdoub_I v) { return v.size(); }
-
-inline const Ldoub *p(CmatLdoub_I v) { return v.p(); }
-
-inline Ldoub *p(CmatLdoub &v) { return v.p(); }
-
 
 class CmatQdoub : public VecQdoub
 {
@@ -1075,13 +1026,6 @@ inline CmatQdoub::operator const ScmatQdoub&() {
 
 typedef const CmatQdoub &CmatQdoub_I;
 typedef CmatQdoub &CmatQdoub_O, &CmatQdoub_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatQdoub_I v) { return v.size(); }
-
-inline const Qdoub *p(CmatQdoub_I v) { return v.p(); }
-
-inline Qdoub *p(CmatQdoub &v) { return v.p(); }
 
 
 class CmatFcomp : public VecFcomp
@@ -1211,13 +1155,6 @@ inline CmatFcomp::operator const ScmatFcomp&() {
 typedef const CmatFcomp &CmatFcomp_I;
 typedef CmatFcomp &CmatFcomp_O, &CmatFcomp_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatFcomp_I v) { return v.size(); }
-
-inline const Fcomp *p(CmatFcomp_I v) { return v.p(); }
-
-inline Fcomp *p(CmatFcomp &v) { return v.p(); }
-
 
 class CmatComp : public VecComp
 {
@@ -1345,13 +1282,6 @@ inline CmatComp::operator const ScmatComp&() {
 
 typedef const CmatComp &CmatComp_I;
 typedef CmatComp &CmatComp_O, &CmatComp_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatComp_I v) { return v.size(); }
-
-inline const Comp *p(CmatComp_I v) { return v.p(); }
-
-inline Comp *p(CmatComp &v) { return v.p(); }
 
 
 class CmatLcomp : public VecLcomp
@@ -1481,13 +1411,6 @@ inline CmatLcomp::operator const ScmatLcomp&() {
 typedef const CmatLcomp &CmatLcomp_I;
 typedef CmatLcomp &CmatLcomp_O, &CmatLcomp_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatLcomp_I v) { return v.size(); }
-
-inline const Lcomp *p(CmatLcomp_I v) { return v.p(); }
-
-inline Lcomp *p(CmatLcomp &v) { return v.p(); }
-
 
 class CmatQcomp : public VecQcomp
 {
@@ -1615,13 +1538,6 @@ inline CmatQcomp::operator const ScmatQcomp&() {
 
 typedef const CmatQcomp &CmatQcomp_I;
 typedef CmatQcomp &CmatQcomp_O, &CmatQcomp_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatQcomp_I v) { return v.size(); }
-
-inline const Qcomp *p(CmatQcomp_I v) { return v.p(); }
-
-inline Qcomp *p(CmatQcomp &v) { return v.p(); }
 
 
 class CmatFimag : public VecFimag
@@ -1751,13 +1667,6 @@ inline CmatFimag::operator const ScmatFimag&() {
 typedef const CmatFimag &CmatFimag_I;
 typedef CmatFimag &CmatFimag_O, &CmatFimag_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatFimag_I v) { return v.size(); }
-
-inline const Fimag *p(CmatFimag_I v) { return v.p(); }
-
-inline Fimag *p(CmatFimag &v) { return v.p(); }
-
 
 class CmatImag : public VecImag
 {
@@ -1885,13 +1794,6 @@ inline CmatImag::operator const ScmatImag&() {
 
 typedef const CmatImag &CmatImag_I;
 typedef CmatImag &CmatImag_O, &CmatImag_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatImag_I v) { return v.size(); }
-
-inline const Imag *p(CmatImag_I v) { return v.p(); }
-
-inline Imag *p(CmatImag &v) { return v.p(); }
 
 
 class CmatLimag : public VecLimag
@@ -2021,13 +1923,6 @@ inline CmatLimag::operator const ScmatLimag&() {
 typedef const CmatLimag &CmatLimag_I;
 typedef CmatLimag &CmatLimag_O, &CmatLimag_IO;
 
-// common api for STL and SLISC
-inline Long size(CmatLimag_I v) { return v.size(); }
-
-inline const Limag *p(CmatLimag_I v) { return v.p(); }
-
-inline Limag *p(CmatLimag &v) { return v.p(); }
-
 
 class CmatQimag : public VecQimag
 {
@@ -2155,13 +2050,6 @@ inline CmatQimag::operator const ScmatQimag&() {
 
 typedef const CmatQimag &CmatQimag_I;
 typedef CmatQimag &CmatQimag_O, &CmatQimag_IO;
-
-// common api for STL and SLISC
-inline Long size(CmatQimag_I v) { return v.size(); }
-
-inline const Qimag *p(CmatQimag_I v) { return v.p(); }
-
-inline Qimag *p(CmatQimag &v) { return v.p(); }
 
 
 

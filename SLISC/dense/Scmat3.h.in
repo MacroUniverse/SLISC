@@ -43,7 +43,8 @@ public:
 	@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);
 
 //% if ~constness
-	operator @Scmat3TC@() const;
+	operator const @Scmat3TC@ &() const;
+	operator @Scmat3TC@ &();
 //% end
 
 	@CT@ &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -64,9 +65,14 @@ inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
 	: @Base@(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
 
 //% if ~constness
-inline @Class@::operator @Scmat3TC@() const
+inline @Class@::operator const @Scmat3TC@ &() const
 {
-	return *((@Scmat3TC@ *)this);
+	return reinterpret_cast<const @Scmat3TC@ &>(*this);
+}
+
+inline @Class@::operator @Scmat3TC@ &()
+{
+	return reinterpret_cast<@Scmat3TC@ &>(*this);
 }
 //% end
 
@@ -113,17 +119,9 @@ inline @Class@::~@Class@() {}
 
 //% if constness
 typedef const @Class@ &@Scmat3T@_I;
-
-// common api for STL and SLISC
-inline Long size(@Scmat3T@_I v) { return v.size(); }
-
-inline const @T@ *p(@Scmat3T@_I v) { return v.p(); }
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@Scmat3T@_O, &@Scmat3T@_IO;
-
-// common api for STL and SLISC
-inline @T@ *p(@Scmat3T@ &v) { return v.p(); }
 //% end
 
 //%------------------------

@@ -55,7 +55,8 @@ public:
 	@CT@ &end(Long_I i) const;
 
 //% if ~constness
-	operator @SvecTC@() const;
+	operator const @SvecTC@ &() const;
+	operator @SvecTC@ &();
 //% end
 
 	void next(); // m_p += m_N
@@ -125,8 +126,14 @@ inline @CT@ &@Class@::end(Long_I i) const
 }
 
 //% if ~constness
-inline @Class@::operator @SvecTC@() const {
-	return *((@SvecTC@ *)this);
+inline @Class@::operator const @SvecTC@ &() const
+{
+	return reinterpret_cast<const @SvecTC@ &>(*this);
+}
+
+inline @Class@::operator @SvecTC@ &()
+{
+	return reinterpret_cast<@SvecTC@ &>(*this);
 }
 //% end
 
@@ -162,14 +169,14 @@ typedef const @Class@ &@SvecT@_I;
 // common api for STL and SLISC
 inline Long size(@SvecT@_I v) { return v.size(); }
 
-inline const @T@ *p(@SvecT@_I v) { return v.p(); }
+inline const @T@ *cptr(@SvecT@_I v) { return v.p(); }
 
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
 
 // common api for STL and SLISC
-inline @T@ *p(@SvecT@ &v) { return v.p(); }
+inline @T@ *ptr(const @SvecT@ &v) { return v.p(); }
 //% end
 //%------------------------
 

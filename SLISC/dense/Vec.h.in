@@ -220,14 +220,6 @@ inline @VecT@::~@VecT@()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const @VecT@ &v) { return v.size(); }
-
-inline const @T@ *ptr(const @VecT@ &v) { return v.p(); }
-
-inline @T@ *ptr(@VecT@ &v) { return v.p(); }
-
-
 typedef const @VecT@ &@VecT@_I;
 typedef @VecT@ &@VecT@_O, &@VecT@_IO;
 

@@ -68,11 +68,6 @@ inline ScmatCharC::~ScmatCharC() {}
 
 typedef const ScmatCharC &ScmatChar_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatChar_I v) { return v.size(); }
-
-inline const Char *p(ScmatChar_I v) { return v.p(); }
-
 
 class ScmatChar : public SvecChar
 {
@@ -82,7 +77,8 @@ public:
 	ScmatChar();
 	ScmatChar(Char *data, Long_I N0, Long_I N1);
 
-	operator ScmatCharC() const;
+	operator const ScmatCharC &() const;
+	operator ScmatCharC &();
 
 	Char &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -101,9 +97,14 @@ inline ScmatChar::ScmatChar() {}
 inline ScmatChar::ScmatChar(Char *data, Long_I N0, Long_I N1)
 	: SvecChar(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatChar::operator ScmatCharC() const
+inline ScmatChar::operator const ScmatCharC &() const
 {
-	return *((ScmatCharC *)this);
+	return reinterpret_cast<const ScmatCharC &>(*this);
+}
+
+inline ScmatChar::operator ScmatCharC &()
+{
+	return reinterpret_cast<ScmatCharC &>(*this);
 }
 
 inline Char &ScmatChar::operator()(Long_I i, Long_I j) const
@@ -144,9 +145,6 @@ inline ScmatChar::~ScmatChar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatChar &ScmatChar_O, &ScmatChar_IO;
-
-// common api for STL and SLISC
-inline Char *p(ScmatChar &v) { return v.p(); }
 
 
 class ScmatUcharC : public SvecUcharC
@@ -214,11 +212,6 @@ inline ScmatUcharC::~ScmatUcharC() {}
 
 typedef const ScmatUcharC &ScmatUchar_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatUchar_I v) { return v.size(); }
-
-inline const Uchar *p(ScmatUchar_I v) { return v.p(); }
-
 
 class ScmatUchar : public SvecUchar
 {
@@ -228,7 +221,8 @@ public:
 	ScmatUchar();
 	ScmatUchar(Uchar *data, Long_I N0, Long_I N1);
 
-	operator ScmatUcharC() const;
+	operator const ScmatUcharC &() const;
+	operator ScmatUcharC &();
 
 	Uchar &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -247,9 +241,14 @@ inline ScmatUchar::ScmatUchar() {}
 inline ScmatUchar::ScmatUchar(Uchar *data, Long_I N0, Long_I N1)
 	: SvecUchar(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatUchar::operator ScmatUcharC() const
+inline ScmatUchar::operator const ScmatUcharC &() const
 {
-	return *((ScmatUcharC *)this);
+	return reinterpret_cast<const ScmatUcharC &>(*this);
+}
+
+inline ScmatUchar::operator ScmatUcharC &()
+{
+	return reinterpret_cast<ScmatUcharC &>(*this);
 }
 
 inline Uchar &ScmatUchar::operator()(Long_I i, Long_I j) const
@@ -290,9 +289,6 @@ inline ScmatUchar::~ScmatUchar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatUchar &ScmatUchar_O, &ScmatUchar_IO;
-
-// common api for STL and SLISC
-inline Uchar *p(ScmatUchar &v) { return v.p(); }
 
 
 class ScmatIntC : public SvecIntC
@@ -360,11 +356,6 @@ inline ScmatIntC::~ScmatIntC() {}
 
 typedef const ScmatIntC &ScmatInt_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatInt_I v) { return v.size(); }
-
-inline const Int *p(ScmatInt_I v) { return v.p(); }
-
 
 class ScmatInt : public SvecInt
 {
@@ -374,7 +365,8 @@ public:
 	ScmatInt();
 	ScmatInt(Int *data, Long_I N0, Long_I N1);
 
-	operator ScmatIntC() const;
+	operator const ScmatIntC &() const;
+	operator ScmatIntC &();
 
 	Int &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -393,9 +385,14 @@ inline ScmatInt::ScmatInt() {}
 inline ScmatInt::ScmatInt(Int *data, Long_I N0, Long_I N1)
 	: SvecInt(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatInt::operator ScmatIntC() const
+inline ScmatInt::operator const ScmatIntC &() const
 {
-	return *((ScmatIntC *)this);
+	return reinterpret_cast<const ScmatIntC &>(*this);
+}
+
+inline ScmatInt::operator ScmatIntC &()
+{
+	return reinterpret_cast<ScmatIntC &>(*this);
 }
 
 inline Int &ScmatInt::operator()(Long_I i, Long_I j) const
@@ -436,9 +433,6 @@ inline ScmatInt::~ScmatInt() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatInt &ScmatInt_O, &ScmatInt_IO;
-
-// common api for STL and SLISC
-inline Int *p(ScmatInt &v) { return v.p(); }
 
 
 class ScmatLlongC : public SvecLlongC
@@ -506,11 +500,6 @@ inline ScmatLlongC::~ScmatLlongC() {}
 
 typedef const ScmatLlongC &ScmatLlong_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatLlong_I v) { return v.size(); }
-
-inline const Llong *p(ScmatLlong_I v) { return v.p(); }
-
 
 class ScmatLlong : public SvecLlong
 {
@@ -520,7 +509,8 @@ public:
 	ScmatLlong();
 	ScmatLlong(Llong *data, Long_I N0, Long_I N1);
 
-	operator ScmatLlongC() const;
+	operator const ScmatLlongC &() const;
+	operator ScmatLlongC &();
 
 	Llong &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -539,9 +529,14 @@ inline ScmatLlong::ScmatLlong() {}
 inline ScmatLlong::ScmatLlong(Llong *data, Long_I N0, Long_I N1)
 	: SvecLlong(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLlong::operator ScmatLlongC() const
+inline ScmatLlong::operator const ScmatLlongC &() const
 {
-	return *((ScmatLlongC *)this);
+	return reinterpret_cast<const ScmatLlongC &>(*this);
+}
+
+inline ScmatLlong::operator ScmatLlongC &()
+{
+	return reinterpret_cast<ScmatLlongC &>(*this);
 }
 
 inline Llong &ScmatLlong::operator()(Long_I i, Long_I j) const
@@ -582,9 +577,6 @@ inline ScmatLlong::~ScmatLlong() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLlong &ScmatLlong_O, &ScmatLlong_IO;
-
-// common api for STL and SLISC
-inline Llong *p(ScmatLlong &v) { return v.p(); }
 
 
 class ScmatFloatC : public SvecFloatC
@@ -652,11 +644,6 @@ inline ScmatFloatC::~ScmatFloatC() {}
 
 typedef const ScmatFloatC &ScmatFloat_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatFloat_I v) { return v.size(); }
-
-inline const Float *p(ScmatFloat_I v) { return v.p(); }
-
 
 class ScmatFloat : public SvecFloat
 {
@@ -666,7 +653,8 @@ public:
 	ScmatFloat();
 	ScmatFloat(Float *data, Long_I N0, Long_I N1);
 
-	operator ScmatFloatC() const;
+	operator const ScmatFloatC &() const;
+	operator ScmatFloatC &();
 
 	Float &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -685,9 +673,14 @@ inline ScmatFloat::ScmatFloat() {}
 inline ScmatFloat::ScmatFloat(Float *data, Long_I N0, Long_I N1)
 	: SvecFloat(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatFloat::operator ScmatFloatC() const
+inline ScmatFloat::operator const ScmatFloatC &() const
 {
-	return *((ScmatFloatC *)this);
+	return reinterpret_cast<const ScmatFloatC &>(*this);
+}
+
+inline ScmatFloat::operator ScmatFloatC &()
+{
+	return reinterpret_cast<ScmatFloatC &>(*this);
 }
 
 inline Float &ScmatFloat::operator()(Long_I i, Long_I j) const
@@ -728,9 +721,6 @@ inline ScmatFloat::~ScmatFloat() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFloat &ScmatFloat_O, &ScmatFloat_IO;
-
-// common api for STL and SLISC
-inline Float *p(ScmatFloat &v) { return v.p(); }
 
 
 class ScmatDoubC : public SvecDoubC
@@ -798,11 +788,6 @@ inline ScmatDoubC::~ScmatDoubC() {}
 
 typedef const ScmatDoubC &ScmatDoub_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatDoub_I v) { return v.size(); }
-
-inline const Doub *p(ScmatDoub_I v) { return v.p(); }
-
 
 class ScmatDoub : public SvecDoub
 {
@@ -812,7 +797,8 @@ public:
 	ScmatDoub();
 	ScmatDoub(Doub *data, Long_I N0, Long_I N1);
 
-	operator ScmatDoubC() const;
+	operator const ScmatDoubC &() const;
+	operator ScmatDoubC &();
 
 	Doub &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -831,9 +817,14 @@ inline ScmatDoub::ScmatDoub() {}
 inline ScmatDoub::ScmatDoub(Doub *data, Long_I N0, Long_I N1)
 	: SvecDoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatDoub::operator ScmatDoubC() const
+inline ScmatDoub::operator const ScmatDoubC &() const
 {
-	return *((ScmatDoubC *)this);
+	return reinterpret_cast<const ScmatDoubC &>(*this);
+}
+
+inline ScmatDoub::operator ScmatDoubC &()
+{
+	return reinterpret_cast<ScmatDoubC &>(*this);
 }
 
 inline Doub &ScmatDoub::operator()(Long_I i, Long_I j) const
@@ -874,9 +865,6 @@ inline ScmatDoub::~ScmatDoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatDoub &ScmatDoub_O, &ScmatDoub_IO;
-
-// common api for STL and SLISC
-inline Doub *p(ScmatDoub &v) { return v.p(); }
 
 
 class ScmatLdoubC : public SvecLdoubC
@@ -944,11 +932,6 @@ inline ScmatLdoubC::~ScmatLdoubC() {}
 
 typedef const ScmatLdoubC &ScmatLdoub_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatLdoub_I v) { return v.size(); }
-
-inline const Ldoub *p(ScmatLdoub_I v) { return v.p(); }
-
 
 class ScmatLdoub : public SvecLdoub
 {
@@ -958,7 +941,8 @@ public:
 	ScmatLdoub();
 	ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1);
 
-	operator ScmatLdoubC() const;
+	operator const ScmatLdoubC &() const;
+	operator ScmatLdoubC &();
 
 	Ldoub &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -977,9 +961,14 @@ inline ScmatLdoub::ScmatLdoub() {}
 inline ScmatLdoub::ScmatLdoub(Ldoub *data, Long_I N0, Long_I N1)
 	: SvecLdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLdoub::operator ScmatLdoubC() const
+inline ScmatLdoub::operator const ScmatLdoubC &() const
 {
-	return *((ScmatLdoubC *)this);
+	return reinterpret_cast<const ScmatLdoubC &>(*this);
+}
+
+inline ScmatLdoub::operator ScmatLdoubC &()
+{
+	return reinterpret_cast<ScmatLdoubC &>(*this);
 }
 
 inline Ldoub &ScmatLdoub::operator()(Long_I i, Long_I j) const
@@ -1020,9 +1009,6 @@ inline ScmatLdoub::~ScmatLdoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLdoub &ScmatLdoub_O, &ScmatLdoub_IO;
-
-// common api for STL and SLISC
-inline Ldoub *p(ScmatLdoub &v) { return v.p(); }
 
 
 class ScmatQdoubC : public SvecQdoubC
@@ -1090,11 +1076,6 @@ inline ScmatQdoubC::~ScmatQdoubC() {}
 
 typedef const ScmatQdoubC &ScmatQdoub_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatQdoub_I v) { return v.size(); }
-
-inline const Qdoub *p(ScmatQdoub_I v) { return v.p(); }
-
 
 class ScmatQdoub : public SvecQdoub
 {
@@ -1104,7 +1085,8 @@ public:
 	ScmatQdoub();
 	ScmatQdoub(Qdoub *data, Long_I N0, Long_I N1);
 
-	operator ScmatQdoubC() const;
+	operator const ScmatQdoubC &() const;
+	operator ScmatQdoubC &();
 
 	Qdoub &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1123,9 +1105,14 @@ inline ScmatQdoub::ScmatQdoub() {}
 inline ScmatQdoub::ScmatQdoub(Qdoub *data, Long_I N0, Long_I N1)
 	: SvecQdoub(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatQdoub::operator ScmatQdoubC() const
+inline ScmatQdoub::operator const ScmatQdoubC &() const
 {
-	return *((ScmatQdoubC *)this);
+	return reinterpret_cast<const ScmatQdoubC &>(*this);
+}
+
+inline ScmatQdoub::operator ScmatQdoubC &()
+{
+	return reinterpret_cast<ScmatQdoubC &>(*this);
 }
 
 inline Qdoub &ScmatQdoub::operator()(Long_I i, Long_I j) const
@@ -1166,9 +1153,6 @@ inline ScmatQdoub::~ScmatQdoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatQdoub &ScmatQdoub_O, &ScmatQdoub_IO;
-
-// common api for STL and SLISC
-inline Qdoub *p(ScmatQdoub &v) { return v.p(); }
 
 
 class ScmatFcompC : public SvecFcompC
@@ -1236,11 +1220,6 @@ inline ScmatFcompC::~ScmatFcompC() {}
 
 typedef const ScmatFcompC &ScmatFcomp_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatFcomp_I v) { return v.size(); }
-
-inline const Fcomp *p(ScmatFcomp_I v) { return v.p(); }
-
 
 class ScmatFcomp : public SvecFcomp
 {
@@ -1250,7 +1229,8 @@ public:
 	ScmatFcomp();
 	ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1);
 
-	operator ScmatFcompC() const;
+	operator const ScmatFcompC &() const;
+	operator ScmatFcompC &();
 
 	Fcomp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1269,9 +1249,14 @@ inline ScmatFcomp::ScmatFcomp() {}
 inline ScmatFcomp::ScmatFcomp(Fcomp *data, Long_I N0, Long_I N1)
 	: SvecFcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatFcomp::operator ScmatFcompC() const
+inline ScmatFcomp::operator const ScmatFcompC &() const
 {
-	return *((ScmatFcompC *)this);
+	return reinterpret_cast<const ScmatFcompC &>(*this);
+}
+
+inline ScmatFcomp::operator ScmatFcompC &()
+{
+	return reinterpret_cast<ScmatFcompC &>(*this);
 }
 
 inline Fcomp &ScmatFcomp::operator()(Long_I i, Long_I j) const
@@ -1312,9 +1297,6 @@ inline ScmatFcomp::~ScmatFcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFcomp &ScmatFcomp_O, &ScmatFcomp_IO;
-
-// common api for STL and SLISC
-inline Fcomp *p(ScmatFcomp &v) { return v.p(); }
 
 
 class ScmatCompC : public SvecCompC
@@ -1382,11 +1364,6 @@ inline ScmatCompC::~ScmatCompC() {}
 
 typedef const ScmatCompC &ScmatComp_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatComp_I v) { return v.size(); }
-
-inline const Comp *p(ScmatComp_I v) { return v.p(); }
-
 
 class ScmatComp : public SvecComp
 {
@@ -1396,7 +1373,8 @@ public:
 	ScmatComp();
 	ScmatComp(Comp *data, Long_I N0, Long_I N1);
 
-	operator ScmatCompC() const;
+	operator const ScmatCompC &() const;
+	operator ScmatCompC &();
 
 	Comp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1415,9 +1393,14 @@ inline ScmatComp::ScmatComp() {}
 inline ScmatComp::ScmatComp(Comp *data, Long_I N0, Long_I N1)
 	: SvecComp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatComp::operator ScmatCompC() const
+inline ScmatComp::operator const ScmatCompC &() const
 {
-	return *((ScmatCompC *)this);
+	return reinterpret_cast<const ScmatCompC &>(*this);
+}
+
+inline ScmatComp::operator ScmatCompC &()
+{
+	return reinterpret_cast<ScmatCompC &>(*this);
 }
 
 inline Comp &ScmatComp::operator()(Long_I i, Long_I j) const
@@ -1458,9 +1441,6 @@ inline ScmatComp::~ScmatComp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatComp &ScmatComp_O, &ScmatComp_IO;
-
-// common api for STL and SLISC
-inline Comp *p(ScmatComp &v) { return v.p(); }
 
 
 class ScmatLcompC : public SvecLcompC
@@ -1528,11 +1508,6 @@ inline ScmatLcompC::~ScmatLcompC() {}
 
 typedef const ScmatLcompC &ScmatLcomp_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatLcomp_I v) { return v.size(); }
-
-inline const Lcomp *p(ScmatLcomp_I v) { return v.p(); }
-
 
 class ScmatLcomp : public SvecLcomp
 {
@@ -1542,7 +1517,8 @@ public:
 	ScmatLcomp();
 	ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1);
 
-	operator ScmatLcompC() const;
+	operator const ScmatLcompC &() const;
+	operator ScmatLcompC &();
 
 	Lcomp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1561,9 +1537,14 @@ inline ScmatLcomp::ScmatLcomp() {}
 inline ScmatLcomp::ScmatLcomp(Lcomp *data, Long_I N0, Long_I N1)
 	: SvecLcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLcomp::operator ScmatLcompC() const
+inline ScmatLcomp::operator const ScmatLcompC &() const
 {
-	return *((ScmatLcompC *)this);
+	return reinterpret_cast<const ScmatLcompC &>(*this);
+}
+
+inline ScmatLcomp::operator ScmatLcompC &()
+{
+	return reinterpret_cast<ScmatLcompC &>(*this);
 }
 
 inline Lcomp &ScmatLcomp::operator()(Long_I i, Long_I j) const
@@ -1604,9 +1585,6 @@ inline ScmatLcomp::~ScmatLcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLcomp &ScmatLcomp_O, &ScmatLcomp_IO;
-
-// common api for STL and SLISC
-inline Lcomp *p(ScmatLcomp &v) { return v.p(); }
 
 
 class ScmatQcompC : public SvecQcompC
@@ -1674,11 +1652,6 @@ inline ScmatQcompC::~ScmatQcompC() {}
 
 typedef const ScmatQcompC &ScmatQcomp_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatQcomp_I v) { return v.size(); }
-
-inline const Qcomp *p(ScmatQcomp_I v) { return v.p(); }
-
 
 class ScmatQcomp : public SvecQcomp
 {
@@ -1688,7 +1661,8 @@ public:
 	ScmatQcomp();
 	ScmatQcomp(Qcomp *data, Long_I N0, Long_I N1);
 
-	operator ScmatQcompC() const;
+	operator const ScmatQcompC &() const;
+	operator ScmatQcompC &();
 
 	Qcomp &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1707,9 +1681,14 @@ inline ScmatQcomp::ScmatQcomp() {}
 inline ScmatQcomp::ScmatQcomp(Qcomp *data, Long_I N0, Long_I N1)
 	: SvecQcomp(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatQcomp::operator ScmatQcompC() const
+inline ScmatQcomp::operator const ScmatQcompC &() const
 {
-	return *((ScmatQcompC *)this);
+	return reinterpret_cast<const ScmatQcompC &>(*this);
+}
+
+inline ScmatQcomp::operator ScmatQcompC &()
+{
+	return reinterpret_cast<ScmatQcompC &>(*this);
 }
 
 inline Qcomp &ScmatQcomp::operator()(Long_I i, Long_I j) const
@@ -1750,9 +1729,6 @@ inline ScmatQcomp::~ScmatQcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatQcomp &ScmatQcomp_O, &ScmatQcomp_IO;
-
-// common api for STL and SLISC
-inline Qcomp *p(ScmatQcomp &v) { return v.p(); }
 
 
 class ScmatFimagC : public SvecFimagC
@@ -1820,11 +1796,6 @@ inline ScmatFimagC::~ScmatFimagC() {}
 
 typedef const ScmatFimagC &ScmatFimag_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatFimag_I v) { return v.size(); }
-
-inline const Fimag *p(ScmatFimag_I v) { return v.p(); }
-
 
 class ScmatFimag : public SvecFimag
 {
@@ -1834,7 +1805,8 @@ public:
 	ScmatFimag();
 	ScmatFimag(Fimag *data, Long_I N0, Long_I N1);
 
-	operator ScmatFimagC() const;
+	operator const ScmatFimagC &() const;
+	operator ScmatFimagC &();
 
 	Fimag &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1853,9 +1825,14 @@ inline ScmatFimag::ScmatFimag() {}
 inline ScmatFimag::ScmatFimag(Fimag *data, Long_I N0, Long_I N1)
 	: SvecFimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatFimag::operator ScmatFimagC() const
+inline ScmatFimag::operator const ScmatFimagC &() const
 {
-	return *((ScmatFimagC *)this);
+	return reinterpret_cast<const ScmatFimagC &>(*this);
+}
+
+inline ScmatFimag::operator ScmatFimagC &()
+{
+	return reinterpret_cast<ScmatFimagC &>(*this);
 }
 
 inline Fimag &ScmatFimag::operator()(Long_I i, Long_I j) const
@@ -1896,9 +1873,6 @@ inline ScmatFimag::~ScmatFimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatFimag &ScmatFimag_O, &ScmatFimag_IO;
-
-// common api for STL and SLISC
-inline Fimag *p(ScmatFimag &v) { return v.p(); }
 
 
 class ScmatImagC : public SvecImagC
@@ -1966,11 +1940,6 @@ inline ScmatImagC::~ScmatImagC() {}
 
 typedef const ScmatImagC &ScmatImag_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatImag_I v) { return v.size(); }
-
-inline const Imag *p(ScmatImag_I v) { return v.p(); }
-
 
 class ScmatImag : public SvecImag
 {
@@ -1980,7 +1949,8 @@ public:
 	ScmatImag();
 	ScmatImag(Imag *data, Long_I N0, Long_I N1);
 
-	operator ScmatImagC() const;
+	operator const ScmatImagC &() const;
+	operator ScmatImagC &();
 
 	Imag &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -1999,9 +1969,14 @@ inline ScmatImag::ScmatImag() {}
 inline ScmatImag::ScmatImag(Imag *data, Long_I N0, Long_I N1)
 	: SvecImag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatImag::operator ScmatImagC() const
+inline ScmatImag::operator const ScmatImagC &() const
 {
-	return *((ScmatImagC *)this);
+	return reinterpret_cast<const ScmatImagC &>(*this);
+}
+
+inline ScmatImag::operator ScmatImagC &()
+{
+	return reinterpret_cast<ScmatImagC &>(*this);
 }
 
 inline Imag &ScmatImag::operator()(Long_I i, Long_I j) const
@@ -2042,9 +2017,6 @@ inline ScmatImag::~ScmatImag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatImag &ScmatImag_O, &ScmatImag_IO;
-
-// common api for STL and SLISC
-inline Imag *p(ScmatImag &v) { return v.p(); }
 
 
 class ScmatLimagC : public SvecLimagC
@@ -2112,11 +2084,6 @@ inline ScmatLimagC::~ScmatLimagC() {}
 
 typedef const ScmatLimagC &ScmatLimag_I;
 
-// common api for STL and SLISC
-inline Long size(ScmatLimag_I v) { return v.size(); }
-
-inline const Limag *p(ScmatLimag_I v) { return v.p(); }
-
 
 class ScmatLimag : public SvecLimag
 {
@@ -2126,7 +2093,8 @@ public:
 	ScmatLimag();
 	ScmatLimag(Limag *data, Long_I N0, Long_I N1);
 
-	operator ScmatLimagC() const;
+	operator const ScmatLimagC &() const;
+	operator ScmatLimagC &();
 
 	Limag &operator()(Long_I i, Long_I j) const; // double indexing
 	Long n0() const;
@@ -2145,9 +2113,14 @@ inline ScmatLimag::ScmatLimag() {}
 inline ScmatLimag::ScmatLimag(Limag *data, Long_I N0, Long_I N1)
 	: SvecLimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
 
-inline ScmatLimag::operator ScmatLimagC() const
+inline ScmatLimag::operator const ScmatLimagC &() const
 {
-	return *((ScmatLimagC *)this);
+	return reinterpret_cast<const ScmatLimagC &>(*this);
+}
+
+inline ScmatLimag::operator ScmatLimagC &()
+{
+	return reinterpret_cast<ScmatLimagC &>(*this);
 }
 
 inline Limag &ScmatLimag::operator()(Long_I i, Long_I j) const
@@ -2188,9 +2161,6 @@ inline ScmatLimag::~ScmatLimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const ScmatLimag &ScmatLimag_O, &ScmatLimag_IO;
-
-// common api for STL and SLISC
-inline Limag *p(ScmatLimag &v) { return v.p(); }
 
 
 

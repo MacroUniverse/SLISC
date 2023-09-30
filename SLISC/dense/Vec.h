@@ -212,14 +212,6 @@ inline VecChar::~VecChar()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecChar &v) { return v.size(); }
-
-inline const Char *ptr(const VecChar &v) { return v.p(); }
-
-inline Char *ptr(VecChar &v) { return v.p(); }
-
-
 typedef const VecChar &VecChar_I;
 typedef VecChar &VecChar_O, &VecChar_IO;
 
@@ -429,14 +421,6 @@ inline VecUchar::~VecUchar()
 	if (m_N != 0)
 		delete[] m_p;
 }
-
-// common api for STL and SLISC
-inline Long size(const VecUchar &v) { return v.size(); }
-
-inline const Uchar *ptr(const VecUchar &v) { return v.p(); }
-
-inline Uchar *ptr(VecUchar &v) { return v.p(); }
-
 
 typedef const VecUchar &VecUchar_I;
 typedef VecUchar &VecUchar_O, &VecUchar_IO;
@@ -648,14 +632,6 @@ inline VecInt::~VecInt()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecInt &v) { return v.size(); }
-
-inline const Int *ptr(const VecInt &v) { return v.p(); }
-
-inline Int *ptr(VecInt &v) { return v.p(); }
-
-
 typedef const VecInt &VecInt_I;
 typedef VecInt &VecInt_O, &VecInt_IO;
 
@@ -865,14 +841,6 @@ inline VecLlong::~VecLlong()
 	if (m_N != 0)
 		delete[] m_p;
 }
-
-// common api for STL and SLISC
-inline Long size(const VecLlong &v) { return v.size(); }
-
-inline const Llong *ptr(const VecLlong &v) { return v.p(); }
-
-inline Llong *ptr(VecLlong &v) { return v.p(); }
-
 
 typedef const VecLlong &VecLlong_I;
 typedef VecLlong &VecLlong_O, &VecLlong_IO;
@@ -1084,14 +1052,6 @@ inline VecFloat::~VecFloat()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecFloat &v) { return v.size(); }
-
-inline const Float *ptr(const VecFloat &v) { return v.p(); }
-
-inline Float *ptr(VecFloat &v) { return v.p(); }
-
-
 typedef const VecFloat &VecFloat_I;
 typedef VecFloat &VecFloat_O, &VecFloat_IO;
 
@@ -1302,14 +1262,6 @@ inline VecDoub::~VecDoub()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecDoub &v) { return v.size(); }
-
-inline const Doub *ptr(const VecDoub &v) { return v.p(); }
-
-inline Doub *ptr(VecDoub &v) { return v.p(); }
-
-
 typedef const VecDoub &VecDoub_I;
 typedef VecDoub &VecDoub_O, &VecDoub_IO;
 
@@ -1519,14 +1471,6 @@ inline VecLdoub::~VecLdoub()
 	if (m_N != 0)
 		delete[] m_p;
 }
-
-// common api for STL and SLISC
-inline Long size(const VecLdoub &v) { return v.size(); }
-
-inline const Ldoub *ptr(const VecLdoub &v) { return v.p(); }
-
-inline Ldoub *ptr(VecLdoub &v) { return v.p(); }
-
 
 typedef const VecLdoub &VecLdoub_I;
 typedef VecLdoub &VecLdoub_O, &VecLdoub_IO;
@@ -1739,14 +1683,6 @@ inline VecFcomp::~VecFcomp()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecFcomp &v) { return v.size(); }
-
-inline const Fcomp *ptr(const VecFcomp &v) { return v.p(); }
-
-inline Fcomp *ptr(VecFcomp &v) { return v.p(); }
-
-
 typedef const VecFcomp &VecFcomp_I;
 typedef VecFcomp &VecFcomp_O, &VecFcomp_IO;
 
@@ -1957,14 +1893,6 @@ inline VecComp::~VecComp()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecComp &v) { return v.size(); }
-
-inline const Comp *ptr(const VecComp &v) { return v.p(); }
-
-inline Comp *ptr(VecComp &v) { return v.p(); }
-
-
 typedef const VecComp &VecComp_I;
 typedef VecComp &VecComp_O, &VecComp_IO;
 
@@ -2174,14 +2102,6 @@ inline VecLcomp::~VecLcomp()
 	if (m_N != 0)
 		delete[] m_p;
 }
-
-// common api for STL and SLISC
-inline Long size(const VecLcomp &v) { return v.size(); }
-
-inline const Lcomp *ptr(const VecLcomp &v) { return v.p(); }
-
-inline Lcomp *ptr(VecLcomp &v) { return v.p(); }
-
 
 typedef const VecLcomp &VecLcomp_I;
 typedef VecLcomp &VecLcomp_O, &VecLcomp_IO;
@@ -2394,14 +2314,6 @@ inline VecFimag::~VecFimag()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecFimag &v) { return v.size(); }
-
-inline const Fimag *ptr(const VecFimag &v) { return v.p(); }
-
-inline Fimag *ptr(VecFimag &v) { return v.p(); }
-
-
 typedef const VecFimag &VecFimag_I;
 typedef VecFimag &VecFimag_O, &VecFimag_IO;
 
@@ -2612,14 +2524,6 @@ inline VecImag::~VecImag()
 		delete[] m_p;
 }
 
-// common api for STL and SLISC
-inline Long size(const VecImag &v) { return v.size(); }
-
-inline const Imag *ptr(const VecImag &v) { return v.p(); }
-
-inline Imag *ptr(VecImag &v) { return v.p(); }
-
-
 typedef const VecImag &VecImag_I;
 typedef VecImag &VecImag_O, &VecImag_IO;
 
@@ -2829,14 +2733,6 @@ inline VecLimag::~VecLimag()
 	if (m_N != 0)
 		delete[] m_p;
 }
-
-// common api for STL and SLISC
-inline Long size(const VecLimag &v) { return v.size(); }
-
-inline const Limag *ptr(const VecLimag &v) { return v.p(); }
-
-inline Limag *ptr(VecLimag &v) { return v.p(); }
-
 
 typedef const VecLimag &VecLimag_I;
 typedef VecLimag &VecLimag_O, &VecLimag_IO;

@@ -140,13 +140,6 @@ inline @CmatT@::operator const Scmat@T@&() {
 typedef const @CmatT@ &@CmatT@_I;
 typedef @CmatT@ &@CmatT@_O, &@CmatT@_IO;
 
-// common api for STL and SLISC
-inline Long size(@CmatT@_I v) { return v.size(); }
-
-inline const @T@ *p(@CmatT@_I v) { return v.p(); }
-
-inline @T@ *p(@CmatT@ &v) { return v.p(); }
-
 //%----------------------------------------
 
 #ifdef SLS_USE_INT_AS_LONG

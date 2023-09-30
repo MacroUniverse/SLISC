@@ -123,7 +123,7 @@ typedef const SvecCharC &SvecChar_I;
 // common api for STL and SLISC
 inline Long size(SvecChar_I v) { return v.size(); }
 
-inline const Char *p(SvecChar_I v) { return v.p(); }
+inline const Char *cptr(SvecChar_I v) { return v.p(); }
 
 
 class SvecChar
@@ -145,7 +145,8 @@ public:
 	Char &end() const;
 	Char &end(Long_I i) const;
 
-	operator SvecCharC() const;
+	operator const SvecCharC &() const;
+	operator SvecCharC &();
 
 	void next(); // m_p += m_N
 	
@@ -212,8 +213,14 @@ inline Char &SvecChar::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecChar::operator SvecCharC() const {
-	return *((SvecCharC *)this);
+inline SvecChar::operator const SvecCharC &() const
+{
+	return reinterpret_cast<const SvecCharC &>(*this);
+}
+
+inline SvecChar::operator SvecCharC &()
+{
+	return reinterpret_cast<SvecCharC &>(*this);
 }
 
 inline void SvecChar::set(Char *data) {
@@ -246,7 +253,7 @@ inline SvecChar::~SvecChar() {}
 typedef const SvecChar &SvecChar_O, &SvecChar_IO;
 
 // common api for STL and SLISC
-inline Char *p(SvecChar &v) { return v.p(); }
+inline Char *ptr(const SvecChar &v) { return v.p(); }
 
 class SvecUcharC
 {
@@ -365,7 +372,7 @@ typedef const SvecUcharC &SvecUchar_I;
 // common api for STL and SLISC
 inline Long size(SvecUchar_I v) { return v.size(); }
 
-inline const Uchar *p(SvecUchar_I v) { return v.p(); }
+inline const Uchar *cptr(SvecUchar_I v) { return v.p(); }
 
 
 class SvecUchar
@@ -387,7 +394,8 @@ public:
 	Uchar &end() const;
 	Uchar &end(Long_I i) const;
 
-	operator SvecUcharC() const;
+	operator const SvecUcharC &() const;
+	operator SvecUcharC &();
 
 	void next(); // m_p += m_N
 	
@@ -454,8 +462,14 @@ inline Uchar &SvecUchar::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecUchar::operator SvecUcharC() const {
-	return *((SvecUcharC *)this);
+inline SvecUchar::operator const SvecUcharC &() const
+{
+	return reinterpret_cast<const SvecUcharC &>(*this);
+}
+
+inline SvecUchar::operator SvecUcharC &()
+{
+	return reinterpret_cast<SvecUcharC &>(*this);
 }
 
 inline void SvecUchar::set(Uchar *data) {
@@ -488,7 +502,7 @@ inline SvecUchar::~SvecUchar() {}
 typedef const SvecUchar &SvecUchar_O, &SvecUchar_IO;
 
 // common api for STL and SLISC
-inline Uchar *p(SvecUchar &v) { return v.p(); }
+inline Uchar *ptr(const SvecUchar &v) { return v.p(); }
 
 class SvecIntC
 {
@@ -607,7 +621,7 @@ typedef const SvecIntC &SvecInt_I;
 // common api for STL and SLISC
 inline Long size(SvecInt_I v) { return v.size(); }
 
-inline const Int *p(SvecInt_I v) { return v.p(); }
+inline const Int *cptr(SvecInt_I v) { return v.p(); }
 
 
 class SvecInt
@@ -629,7 +643,8 @@ public:
 	Int &end() const;
 	Int &end(Long_I i) const;
 
-	operator SvecIntC() const;
+	operator const SvecIntC &() const;
+	operator SvecIntC &();
 
 	void next(); // m_p += m_N
 	
@@ -696,8 +711,14 @@ inline Int &SvecInt::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecInt::operator SvecIntC() const {
-	return *((SvecIntC *)this);
+inline SvecInt::operator const SvecIntC &() const
+{
+	return reinterpret_cast<const SvecIntC &>(*this);
+}
+
+inline SvecInt::operator SvecIntC &()
+{
+	return reinterpret_cast<SvecIntC &>(*this);
 }
 
 inline void SvecInt::set(Int *data) {
@@ -730,7 +751,7 @@ inline SvecInt::~SvecInt() {}
 typedef const SvecInt &SvecInt_O, &SvecInt_IO;
 
 // common api for STL and SLISC
-inline Int *p(SvecInt &v) { return v.p(); }
+inline Int *ptr(const SvecInt &v) { return v.p(); }
 
 class SvecLlongC
 {
@@ -849,7 +870,7 @@ typedef const SvecLlongC &SvecLlong_I;
 // common api for STL and SLISC
 inline Long size(SvecLlong_I v) { return v.size(); }
 
-inline const Llong *p(SvecLlong_I v) { return v.p(); }
+inline const Llong *cptr(SvecLlong_I v) { return v.p(); }
 
 
 class SvecLlong
@@ -871,7 +892,8 @@ public:
 	Llong &end() const;
 	Llong &end(Long_I i) const;
 
-	operator SvecLlongC() const;
+	operator const SvecLlongC &() const;
+	operator SvecLlongC &();
 
 	void next(); // m_p += m_N
 	
@@ -938,8 +960,14 @@ inline Llong &SvecLlong::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecLlong::operator SvecLlongC() const {
-	return *((SvecLlongC *)this);
+inline SvecLlong::operator const SvecLlongC &() const
+{
+	return reinterpret_cast<const SvecLlongC &>(*this);
+}
+
+inline SvecLlong::operator SvecLlongC &()
+{
+	return reinterpret_cast<SvecLlongC &>(*this);
 }
 
 inline void SvecLlong::set(Llong *data) {
@@ -972,7 +1000,7 @@ inline SvecLlong::~SvecLlong() {}
 typedef const SvecLlong &SvecLlong_O, &SvecLlong_IO;
 
 // common api for STL and SLISC
-inline Llong *p(SvecLlong &v) { return v.p(); }
+inline Llong *ptr(const SvecLlong &v) { return v.p(); }
 
 class SvecFloatC
 {
@@ -1091,7 +1119,7 @@ typedef const SvecFloatC &SvecFloat_I;
 // common api for STL and SLISC
 inline Long size(SvecFloat_I v) { return v.size(); }
 
-inline const Float *p(SvecFloat_I v) { return v.p(); }
+inline const Float *cptr(SvecFloat_I v) { return v.p(); }
 
 
 class SvecFloat
@@ -1113,7 +1141,8 @@ public:
 	Float &end() const;
 	Float &end(Long_I i) const;
 
-	operator SvecFloatC() const;
+	operator const SvecFloatC &() const;
+	operator SvecFloatC &();
 
 	void next(); // m_p += m_N
 	
@@ -1180,8 +1209,14 @@ inline Float &SvecFloat::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecFloat::operator SvecFloatC() const {
-	return *((SvecFloatC *)this);
+inline SvecFloat::operator const SvecFloatC &() const
+{
+	return reinterpret_cast<const SvecFloatC &>(*this);
+}
+
+inline SvecFloat::operator SvecFloatC &()
+{
+	return reinterpret_cast<SvecFloatC &>(*this);
 }
 
 inline void SvecFloat::set(Float *data) {
@@ -1214,7 +1249,7 @@ inline SvecFloat::~SvecFloat() {}
 typedef const SvecFloat &SvecFloat_O, &SvecFloat_IO;
 
 // common api for STL and SLISC
-inline Float *p(SvecFloat &v) { return v.p(); }
+inline Float *ptr(const SvecFloat &v) { return v.p(); }
 
 class SvecDoubC
 {
@@ -1333,7 +1368,7 @@ typedef const SvecDoubC &SvecDoub_I;
 // common api for STL and SLISC
 inline Long size(SvecDoub_I v) { return v.size(); }
 
-inline const Doub *p(SvecDoub_I v) { return v.p(); }
+inline const Doub *cptr(SvecDoub_I v) { return v.p(); }
 
 
 class SvecDoub
@@ -1355,7 +1390,8 @@ public:
 	Doub &end() const;
 	Doub &end(Long_I i) const;
 
-	operator SvecDoubC() const;
+	operator const SvecDoubC &() const;
+	operator SvecDoubC &();
 
 	void next(); // m_p += m_N
 	
@@ -1422,8 +1458,14 @@ inline Doub &SvecDoub::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecDoub::operator SvecDoubC() const {
-	return *((SvecDoubC *)this);
+inline SvecDoub::operator const SvecDoubC &() const
+{
+	return reinterpret_cast<const SvecDoubC &>(*this);
+}
+
+inline SvecDoub::operator SvecDoubC &()
+{
+	return reinterpret_cast<SvecDoubC &>(*this);
 }
 
 inline void SvecDoub::set(Doub *data) {
@@ -1456,7 +1498,7 @@ inline SvecDoub::~SvecDoub() {}
 typedef const SvecDoub &SvecDoub_O, &SvecDoub_IO;
 
 // common api for STL and SLISC
-inline Doub *p(SvecDoub &v) { return v.p(); }
+inline Doub *ptr(const SvecDoub &v) { return v.p(); }
 
 class SvecLdoubC
 {
@@ -1575,7 +1617,7 @@ typedef const SvecLdoubC &SvecLdoub_I;
 // common api for STL and SLISC
 inline Long size(SvecLdoub_I v) { return v.size(); }
 
-inline const Ldoub *p(SvecLdoub_I v) { return v.p(); }
+inline const Ldoub *cptr(SvecLdoub_I v) { return v.p(); }
 
 
 class SvecLdoub
@@ -1597,7 +1639,8 @@ public:
 	Ldoub &end() const;
 	Ldoub &end(Long_I i) const;
 
-	operator SvecLdoubC() const;
+	operator const SvecLdoubC &() const;
+	operator SvecLdoubC &();
 
 	void next(); // m_p += m_N
 	
@@ -1664,8 +1707,14 @@ inline Ldoub &SvecLdoub::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecLdoub::operator SvecLdoubC() const {
-	return *((SvecLdoubC *)this);
+inline SvecLdoub::operator const SvecLdoubC &() const
+{
+	return reinterpret_cast<const SvecLdoubC &>(*this);
+}
+
+inline SvecLdoub::operator SvecLdoubC &()
+{
+	return reinterpret_cast<SvecLdoubC &>(*this);
 }
 
 inline void SvecLdoub::set(Ldoub *data) {
@@ -1698,7 +1747,7 @@ inline SvecLdoub::~SvecLdoub() {}
 typedef const SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
 
 // common api for STL and SLISC
-inline Ldoub *p(SvecLdoub &v) { return v.p(); }
+inline Ldoub *ptr(const SvecLdoub &v) { return v.p(); }
 
 class SvecQdoubC
 {
@@ -1817,7 +1866,7 @@ typedef const SvecQdoubC &SvecQdoub_I;
 // common api for STL and SLISC
 inline Long size(SvecQdoub_I v) { return v.size(); }
 
-inline const Qdoub *p(SvecQdoub_I v) { return v.p(); }
+inline const Qdoub *cptr(SvecQdoub_I v) { return v.p(); }
 
 
 class SvecQdoub
@@ -1839,7 +1888,8 @@ public:
 	Qdoub &end() const;
 	Qdoub &end(Long_I i) const;
 
-	operator SvecQdoubC() const;
+	operator const SvecQdoubC &() const;
+	operator SvecQdoubC &();
 
 	void next(); // m_p += m_N
 	
@@ -1906,8 +1956,14 @@ inline Qdoub &SvecQdoub::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecQdoub::operator SvecQdoubC() const {
-	return *((SvecQdoubC *)this);
+inline SvecQdoub::operator const SvecQdoubC &() const
+{
+	return reinterpret_cast<const SvecQdoubC &>(*this);
+}
+
+inline SvecQdoub::operator SvecQdoubC &()
+{
+	return reinterpret_cast<SvecQdoubC &>(*this);
 }
 
 inline void SvecQdoub::set(Qdoub *data) {
@@ -1940,7 +1996,7 @@ inline SvecQdoub::~SvecQdoub() {}
 typedef const SvecQdoub &SvecQdoub_O, &SvecQdoub_IO;
 
 // common api for STL and SLISC
-inline Qdoub *p(SvecQdoub &v) { return v.p(); }
+inline Qdoub *ptr(const SvecQdoub &v) { return v.p(); }
 
 class SvecFcompC
 {
@@ -2059,7 +2115,7 @@ typedef const SvecFcompC &SvecFcomp_I;
 // common api for STL and SLISC
 inline Long size(SvecFcomp_I v) { return v.size(); }
 
-inline const Fcomp *p(SvecFcomp_I v) { return v.p(); }
+inline const Fcomp *cptr(SvecFcomp_I v) { return v.p(); }
 
 
 class SvecFcomp
@@ -2081,7 +2137,8 @@ public:
 	Fcomp &end() const;
 	Fcomp &end(Long_I i) const;
 
-	operator SvecFcompC() const;
+	operator const SvecFcompC &() const;
+	operator SvecFcompC &();
 
 	void next(); // m_p += m_N
 	
@@ -2148,8 +2205,14 @@ inline Fcomp &SvecFcomp::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecFcomp::operator SvecFcompC() const {
-	return *((SvecFcompC *)this);
+inline SvecFcomp::operator const SvecFcompC &() const
+{
+	return reinterpret_cast<const SvecFcompC &>(*this);
+}
+
+inline SvecFcomp::operator SvecFcompC &()
+{
+	return reinterpret_cast<SvecFcompC &>(*this);
 }
 
 inline void SvecFcomp::set(Fcomp *data) {
@@ -2182,7 +2245,7 @@ inline SvecFcomp::~SvecFcomp() {}
 typedef const SvecFcomp &SvecFcomp_O, &SvecFcomp_IO;
 
 // common api for STL and SLISC
-inline Fcomp *p(SvecFcomp &v) { return v.p(); }
+inline Fcomp *ptr(const SvecFcomp &v) { return v.p(); }
 
 class SvecCompC
 {
@@ -2301,7 +2364,7 @@ typedef const SvecCompC &SvecComp_I;
 // common api for STL and SLISC
 inline Long size(SvecComp_I v) { return v.size(); }
 
-inline const Comp *p(SvecComp_I v) { return v.p(); }
+inline const Comp *cptr(SvecComp_I v) { return v.p(); }
 
 
 class SvecComp
@@ -2323,7 +2386,8 @@ public:
 	Comp &end() const;
 	Comp &end(Long_I i) const;
 
-	operator SvecCompC() const;
+	operator const SvecCompC &() const;
+	operator SvecCompC &();
 
 	void next(); // m_p += m_N
 	
@@ -2390,8 +2454,14 @@ inline Comp &SvecComp::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecComp::operator SvecCompC() const {
-	return *((SvecCompC *)this);
+inline SvecComp::operator const SvecCompC &() const
+{
+	return reinterpret_cast<const SvecCompC &>(*this);
+}
+
+inline SvecComp::operator SvecCompC &()
+{
+	return reinterpret_cast<SvecCompC &>(*this);
 }
 
 inline void SvecComp::set(Comp *data) {
@@ -2424,7 +2494,7 @@ inline SvecComp::~SvecComp() {}
 typedef const SvecComp &SvecComp_O, &SvecComp_IO;
 
 // common api for STL and SLISC
-inline Comp *p(SvecComp &v) { return v.p(); }
+inline Comp *ptr(const SvecComp &v) { return v.p(); }
 
 class SvecLcompC
 {
@@ -2543,7 +2613,7 @@ typedef const SvecLcompC &SvecLcomp_I;
 // common api for STL and SLISC
 inline Long size(SvecLcomp_I v) { return v.size(); }
 
-inline const Lcomp *p(SvecLcomp_I v) { return v.p(); }
+inline const Lcomp *cptr(SvecLcomp_I v) { return v.p(); }
 
 
 class SvecLcomp
@@ -2565,7 +2635,8 @@ public:
 	Lcomp &end() const;
 	Lcomp &end(Long_I i) const;
 
-	operator SvecLcompC() const;
+	operator const SvecLcompC &() const;
+	operator SvecLcompC &();
 
 	void next(); // m_p += m_N
 	
@@ -2632,8 +2703,14 @@ inline Lcomp &SvecLcomp::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecLcomp::operator SvecLcompC() const {
-	return *((SvecLcompC *)this);
+inline SvecLcomp::operator const SvecLcompC &() const
+{
+	return reinterpret_cast<const SvecLcompC &>(*this);
+}
+
+inline SvecLcomp::operator SvecLcompC &()
+{
+	return reinterpret_cast<SvecLcompC &>(*this);
 }
 
 inline void SvecLcomp::set(Lcomp *data) {
@@ -2666,7 +2743,7 @@ inline SvecLcomp::~SvecLcomp() {}
 typedef const SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
 
 // common api for STL and SLISC
-inline Lcomp *p(SvecLcomp &v) { return v.p(); }
+inline Lcomp *ptr(const SvecLcomp &v) { return v.p(); }
 
 class SvecQcompC
 {
@@ -2785,7 +2862,7 @@ typedef const SvecQcompC &SvecQcomp_I;
 // common api for STL and SLISC
 inline Long size(SvecQcomp_I v) { return v.size(); }
 
-inline const Qcomp *p(SvecQcomp_I v) { return v.p(); }
+inline const Qcomp *cptr(SvecQcomp_I v) { return v.p(); }
 
 
 class SvecQcomp
@@ -2807,7 +2884,8 @@ public:
 	Qcomp &end() const;
 	Qcomp &end(Long_I i) const;
 
-	operator SvecQcompC() const;
+	operator const SvecQcompC &() const;
+	operator SvecQcompC &();
 
 	void next(); // m_p += m_N
 	
@@ -2874,8 +2952,14 @@ inline Qcomp &SvecQcomp::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecQcomp::operator SvecQcompC() const {
-	return *((SvecQcompC *)this);
+inline SvecQcomp::operator const SvecQcompC &() const
+{
+	return reinterpret_cast<const SvecQcompC &>(*this);
+}
+
+inline SvecQcomp::operator SvecQcompC &()
+{
+	return reinterpret_cast<SvecQcompC &>(*this);
 }
 
 inline void SvecQcomp::set(Qcomp *data) {
@@ -2908,7 +2992,7 @@ inline SvecQcomp::~SvecQcomp() {}
 typedef const SvecQcomp &SvecQcomp_O, &SvecQcomp_IO;
 
 // common api for STL and SLISC
-inline Qcomp *p(SvecQcomp &v) { return v.p(); }
+inline Qcomp *ptr(const SvecQcomp &v) { return v.p(); }
 
 class SvecFimagC
 {
@@ -3027,7 +3111,7 @@ typedef const SvecFimagC &SvecFimag_I;
 // common api for STL and SLISC
 inline Long size(SvecFimag_I v) { return v.size(); }
 
-inline const Fimag *p(SvecFimag_I v) { return v.p(); }
+inline const Fimag *cptr(SvecFimag_I v) { return v.p(); }
 
 
 class SvecFimag
@@ -3049,7 +3133,8 @@ public:
 	Fimag &end() const;
 	Fimag &end(Long_I i) const;
 
-	operator SvecFimagC() const;
+	operator const SvecFimagC &() const;
+	operator SvecFimagC &();
 
 	void next(); // m_p += m_N
 	
@@ -3116,8 +3201,14 @@ inline Fimag &SvecFimag::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecFimag::operator SvecFimagC() const {
-	return *((SvecFimagC *)this);
+inline SvecFimag::operator const SvecFimagC &() const
+{
+	return reinterpret_cast<const SvecFimagC &>(*this);
+}
+
+inline SvecFimag::operator SvecFimagC &()
+{
+	return reinterpret_cast<SvecFimagC &>(*this);
 }
 
 inline void SvecFimag::set(Fimag *data) {
@@ -3150,7 +3241,7 @@ inline SvecFimag::~SvecFimag() {}
 typedef const SvecFimag &SvecFimag_O, &SvecFimag_IO;
 
 // common api for STL and SLISC
-inline Fimag *p(SvecFimag &v) { return v.p(); }
+inline Fimag *ptr(const SvecFimag &v) { return v.p(); }
 
 class SvecImagC
 {
@@ -3269,7 +3360,7 @@ typedef const SvecImagC &SvecImag_I;
 // common api for STL and SLISC
 inline Long size(SvecImag_I v) { return v.size(); }
 
-inline const Imag *p(SvecImag_I v) { return v.p(); }
+inline const Imag *cptr(SvecImag_I v) { return v.p(); }
 
 
 class SvecImag
@@ -3291,7 +3382,8 @@ public:
 	Imag &end() const;
 	Imag &end(Long_I i) const;
 
-	operator SvecImagC() const;
+	operator const SvecImagC &() const;
+	operator SvecImagC &();
 
 	void next(); // m_p += m_N
 	
@@ -3358,8 +3450,14 @@ inline Imag &SvecImag::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecImag::operator SvecImagC() const {
-	return *((SvecImagC *)this);
+inline SvecImag::operator const SvecImagC &() const
+{
+	return reinterpret_cast<const SvecImagC &>(*this);
+}
+
+inline SvecImag::operator SvecImagC &()
+{
+	return reinterpret_cast<SvecImagC &>(*this);
 }
 
 inline void SvecImag::set(Imag *data) {
@@ -3392,7 +3490,7 @@ inline SvecImag::~SvecImag() {}
 typedef const SvecImag &SvecImag_O, &SvecImag_IO;
 
 // common api for STL and SLISC
-inline Imag *p(SvecImag &v) { return v.p(); }
+inline Imag *ptr(const SvecImag &v) { return v.p(); }
 
 class SvecLimagC
 {
@@ -3511,7 +3609,7 @@ typedef const SvecLimagC &SvecLimag_I;
 // common api for STL and SLISC
 inline Long size(SvecLimag_I v) { return v.size(); }
 
-inline const Limag *p(SvecLimag_I v) { return v.p(); }
+inline const Limag *cptr(SvecLimag_I v) { return v.p(); }
 
 
 class SvecLimag
@@ -3533,7 +3631,8 @@ public:
 	Limag &end() const;
 	Limag &end(Long_I i) const;
 
-	operator SvecLimagC() const;
+	operator const SvecLimagC &() const;
+	operator SvecLimagC &();
 
 	void next(); // m_p += m_N
 	
@@ -3600,8 +3699,14 @@ inline Limag &SvecLimag::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecLimag::operator SvecLimagC() const {
-	return *((SvecLimagC *)this);
+inline SvecLimag::operator const SvecLimagC &() const
+{
+	return reinterpret_cast<const SvecLimagC &>(*this);
+}
+
+inline SvecLimag::operator SvecLimagC &()
+{
+	return reinterpret_cast<SvecLimagC &>(*this);
 }
 
 inline void SvecLimag::set(Limag *data) {
@@ -3634,7 +3739,7 @@ inline SvecLimag::~SvecLimag() {}
 typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
 
 // common api for STL and SLISC
-inline Limag *p(SvecLimag &v) { return v.p(); }
+inline Limag *ptr(const SvecLimag &v) { return v.p(); }
 
 class SvecQimagC
 {
@@ -3753,7 +3858,7 @@ typedef const SvecQimagC &SvecQimag_I;
 // common api for STL and SLISC
 inline Long size(SvecQimag_I v) { return v.size(); }
 
-inline const Qimag *p(SvecQimag_I v) { return v.p(); }
+inline const Qimag *cptr(SvecQimag_I v) { return v.p(); }
 
 
 class SvecQimag
@@ -3775,7 +3880,8 @@ public:
 	Qimag &end() const;
 	Qimag &end(Long_I i) const;
 
-	operator SvecQimagC() const;
+	operator const SvecQimagC &() const;
+	operator SvecQimagC &();
 
 	void next(); // m_p += m_N
 	
@@ -3842,8 +3948,14 @@ inline Qimag &SvecQimag::end(Long_I i) const
 	return m_p[m_N - i];
 }
 
-inline SvecQimag::operator SvecQimagC() const {
-	return *((SvecQimagC *)this);
+inline SvecQimag::operator const SvecQimagC &() const
+{
+	return reinterpret_cast<const SvecQimagC &>(*this);
+}
+
+inline SvecQimag::operator SvecQimagC &()
+{
+	return reinterpret_cast<SvecQimagC &>(*this);
 }
 
 inline void SvecQimag::set(Qimag *data) {
@@ -3876,7 +3988,7 @@ inline SvecQimag::~SvecQimag() {}
 typedef const SvecQimag &SvecQimag_O, &SvecQimag_IO;
 
 // common api for STL and SLISC
-inline Qimag *p(SvecQimag &v) { return v.p(); }
+inline Qimag *ptr(const SvecQimag &v) { return v.p(); }
 
 
 #ifdef SLS_USE_INT_AS_LONG
