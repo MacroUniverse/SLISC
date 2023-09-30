@@ -1,6 +1,7 @@
 // Cmat container
 #pragma once
 #include "../dense/Vec.h"
+#include "Scmat.h"
 
 namespace slisc {
 //% tem('Cmat', {
@@ -31,6 +32,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const Svec@T@C&;
+	using Base::operator const Svec@T@&;
+	operator const Scmat@T@C&() const;
+	operator const Scmat@T@&();
 };
 
 inline @CmatT@::@CmatT@(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -121,6 +127,14 @@ inline void @CmatT@::reshape(Long_I N0, Long_I N1)
 	}
 #endif
 	m_N0 = N0; m_N1 = N1;
+}
+
+inline @CmatT@::operator const Scmat@T@C&() const {
+	return reinterpret_cast<const Scmat@T@C&>(*this);
+}
+
+inline @CmatT@::operator const Scmat@T@&() {
+	return reinterpret_cast<const Scmat@T@&>(*this);
 }
 
 typedef const @CmatT@ &@CmatT@_I;

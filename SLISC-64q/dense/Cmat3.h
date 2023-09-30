@@ -1,6 +1,7 @@
 // Cmat container
 #pragma once
 #include "../dense/Vec.h"
+#include "Scmat3.h"
 
 namespace slisc {
 class Cmat3Char : public VecChar
@@ -23,6 +24,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecCharC&;
+	using Base::operator const SvecChar&;
+	operator const Scmat3CharC&() const;
+	operator const Scmat3Char&();
 };
 
 inline Cmat3Char::Cmat3Char(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -119,6 +125,14 @@ inline Long Cmat3Char::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Char::operator const Scmat3CharC&() const {
+	return reinterpret_cast<const Scmat3CharC&>(*this);
+}
+
+inline Cmat3Char::operator const Scmat3Char&() {
+	return reinterpret_cast<const Scmat3Char&>(*this);
+}
+
 typedef const Cmat3Char &Cmat3Char_I;
 typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
@@ -150,6 +164,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecUcharC&;
+	using Base::operator const SvecUchar&;
+	operator const Scmat3UcharC&() const;
+	operator const Scmat3Uchar&();
 };
 
 inline Cmat3Uchar::Cmat3Uchar(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -246,6 +265,14 @@ inline Long Cmat3Uchar::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Uchar::operator const Scmat3UcharC&() const {
+	return reinterpret_cast<const Scmat3UcharC&>(*this);
+}
+
+inline Cmat3Uchar::operator const Scmat3Uchar&() {
+	return reinterpret_cast<const Scmat3Uchar&>(*this);
+}
+
 typedef const Cmat3Uchar &Cmat3Uchar_I;
 typedef Cmat3Uchar &Cmat3Uchar_O, &Cmat3Uchar_IO;
 
@@ -277,6 +304,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecIntC&;
+	using Base::operator const SvecInt&;
+	operator const Scmat3IntC&() const;
+	operator const Scmat3Int&();
 };
 
 inline Cmat3Int::Cmat3Int(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -373,6 +405,14 @@ inline Long Cmat3Int::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Int::operator const Scmat3IntC&() const {
+	return reinterpret_cast<const Scmat3IntC&>(*this);
+}
+
+inline Cmat3Int::operator const Scmat3Int&() {
+	return reinterpret_cast<const Scmat3Int&>(*this);
+}
+
 typedef const Cmat3Int &Cmat3Int_I;
 typedef Cmat3Int &Cmat3Int_O, &Cmat3Int_IO;
 
@@ -404,6 +444,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecLlongC&;
+	using Base::operator const SvecLlong&;
+	operator const Scmat3LlongC&() const;
+	operator const Scmat3Llong&();
 };
 
 inline Cmat3Llong::Cmat3Llong(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -500,6 +545,14 @@ inline Long Cmat3Llong::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Llong::operator const Scmat3LlongC&() const {
+	return reinterpret_cast<const Scmat3LlongC&>(*this);
+}
+
+inline Cmat3Llong::operator const Scmat3Llong&() {
+	return reinterpret_cast<const Scmat3Llong&>(*this);
+}
+
 typedef const Cmat3Llong &Cmat3Llong_I;
 typedef Cmat3Llong &Cmat3Llong_O, &Cmat3Llong_IO;
 
@@ -531,6 +584,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecFloatC&;
+	using Base::operator const SvecFloat&;
+	operator const Scmat3FloatC&() const;
+	operator const Scmat3Float&();
 };
 
 inline Cmat3Float::Cmat3Float(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -627,6 +685,14 @@ inline Long Cmat3Float::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Float::operator const Scmat3FloatC&() const {
+	return reinterpret_cast<const Scmat3FloatC&>(*this);
+}
+
+inline Cmat3Float::operator const Scmat3Float&() {
+	return reinterpret_cast<const Scmat3Float&>(*this);
+}
+
 typedef const Cmat3Float &Cmat3Float_I;
 typedef Cmat3Float &Cmat3Float_O, &Cmat3Float_IO;
 
@@ -658,6 +724,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecDoubC&;
+	using Base::operator const SvecDoub&;
+	operator const Scmat3DoubC&() const;
+	operator const Scmat3Doub&();
 };
 
 inline Cmat3Doub::Cmat3Doub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -754,6 +825,14 @@ inline Long Cmat3Doub::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Doub::operator const Scmat3DoubC&() const {
+	return reinterpret_cast<const Scmat3DoubC&>(*this);
+}
+
+inline Cmat3Doub::operator const Scmat3Doub&() {
+	return reinterpret_cast<const Scmat3Doub&>(*this);
+}
+
 typedef const Cmat3Doub &Cmat3Doub_I;
 typedef Cmat3Doub &Cmat3Doub_O, &Cmat3Doub_IO;
 
@@ -785,6 +864,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecLdoubC&;
+	using Base::operator const SvecLdoub&;
+	operator const Scmat3LdoubC&() const;
+	operator const Scmat3Ldoub&();
 };
 
 inline Cmat3Ldoub::Cmat3Ldoub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -881,6 +965,14 @@ inline Long Cmat3Ldoub::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Ldoub::operator const Scmat3LdoubC&() const {
+	return reinterpret_cast<const Scmat3LdoubC&>(*this);
+}
+
+inline Cmat3Ldoub::operator const Scmat3Ldoub&() {
+	return reinterpret_cast<const Scmat3Ldoub&>(*this);
+}
+
 typedef const Cmat3Ldoub &Cmat3Ldoub_I;
 typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
 
@@ -912,6 +1004,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecQdoubC&;
+	using Base::operator const SvecQdoub&;
+	operator const Scmat3QdoubC&() const;
+	operator const Scmat3Qdoub&();
 };
 
 inline Cmat3Qdoub::Cmat3Qdoub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1008,6 +1105,14 @@ inline Long Cmat3Qdoub::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Qdoub::operator const Scmat3QdoubC&() const {
+	return reinterpret_cast<const Scmat3QdoubC&>(*this);
+}
+
+inline Cmat3Qdoub::operator const Scmat3Qdoub&() {
+	return reinterpret_cast<const Scmat3Qdoub&>(*this);
+}
+
 typedef const Cmat3Qdoub &Cmat3Qdoub_I;
 typedef Cmat3Qdoub &Cmat3Qdoub_O, &Cmat3Qdoub_IO;
 
@@ -1039,6 +1144,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecFcompC&;
+	using Base::operator const SvecFcomp&;
+	operator const Scmat3FcompC&() const;
+	operator const Scmat3Fcomp&();
 };
 
 inline Cmat3Fcomp::Cmat3Fcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1135,6 +1245,14 @@ inline Long Cmat3Fcomp::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Fcomp::operator const Scmat3FcompC&() const {
+	return reinterpret_cast<const Scmat3FcompC&>(*this);
+}
+
+inline Cmat3Fcomp::operator const Scmat3Fcomp&() {
+	return reinterpret_cast<const Scmat3Fcomp&>(*this);
+}
+
 typedef const Cmat3Fcomp &Cmat3Fcomp_I;
 typedef Cmat3Fcomp &Cmat3Fcomp_O, &Cmat3Fcomp_IO;
 
@@ -1166,6 +1284,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecCompC&;
+	using Base::operator const SvecComp&;
+	operator const Scmat3CompC&() const;
+	operator const Scmat3Comp&();
 };
 
 inline Cmat3Comp::Cmat3Comp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1262,6 +1385,14 @@ inline Long Cmat3Comp::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Comp::operator const Scmat3CompC&() const {
+	return reinterpret_cast<const Scmat3CompC&>(*this);
+}
+
+inline Cmat3Comp::operator const Scmat3Comp&() {
+	return reinterpret_cast<const Scmat3Comp&>(*this);
+}
+
 typedef const Cmat3Comp &Cmat3Comp_I;
 typedef Cmat3Comp &Cmat3Comp_O, &Cmat3Comp_IO;
 
@@ -1293,6 +1424,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecLcompC&;
+	using Base::operator const SvecLcomp&;
+	operator const Scmat3LcompC&() const;
+	operator const Scmat3Lcomp&();
 };
 
 inline Cmat3Lcomp::Cmat3Lcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1389,6 +1525,14 @@ inline Long Cmat3Lcomp::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Lcomp::operator const Scmat3LcompC&() const {
+	return reinterpret_cast<const Scmat3LcompC&>(*this);
+}
+
+inline Cmat3Lcomp::operator const Scmat3Lcomp&() {
+	return reinterpret_cast<const Scmat3Lcomp&>(*this);
+}
+
 typedef const Cmat3Lcomp &Cmat3Lcomp_I;
 typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
 
@@ -1420,6 +1564,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecQcompC&;
+	using Base::operator const SvecQcomp&;
+	operator const Scmat3QcompC&() const;
+	operator const Scmat3Qcomp&();
 };
 
 inline Cmat3Qcomp::Cmat3Qcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1516,6 +1665,14 @@ inline Long Cmat3Qcomp::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Qcomp::operator const Scmat3QcompC&() const {
+	return reinterpret_cast<const Scmat3QcompC&>(*this);
+}
+
+inline Cmat3Qcomp::operator const Scmat3Qcomp&() {
+	return reinterpret_cast<const Scmat3Qcomp&>(*this);
+}
+
 typedef const Cmat3Qcomp &Cmat3Qcomp_I;
 typedef Cmat3Qcomp &Cmat3Qcomp_O, &Cmat3Qcomp_IO;
 
@@ -1547,6 +1704,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecFimagC&;
+	using Base::operator const SvecFimag&;
+	operator const Scmat3FimagC&() const;
+	operator const Scmat3Fimag&();
 };
 
 inline Cmat3Fimag::Cmat3Fimag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1643,6 +1805,14 @@ inline Long Cmat3Fimag::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Fimag::operator const Scmat3FimagC&() const {
+	return reinterpret_cast<const Scmat3FimagC&>(*this);
+}
+
+inline Cmat3Fimag::operator const Scmat3Fimag&() {
+	return reinterpret_cast<const Scmat3Fimag&>(*this);
+}
+
 typedef const Cmat3Fimag &Cmat3Fimag_I;
 typedef Cmat3Fimag &Cmat3Fimag_O, &Cmat3Fimag_IO;
 
@@ -1674,6 +1844,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecImagC&;
+	using Base::operator const SvecImag&;
+	operator const Scmat3ImagC&() const;
+	operator const Scmat3Imag&();
 };
 
 inline Cmat3Imag::Cmat3Imag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1770,6 +1945,14 @@ inline Long Cmat3Imag::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Imag::operator const Scmat3ImagC&() const {
+	return reinterpret_cast<const Scmat3ImagC&>(*this);
+}
+
+inline Cmat3Imag::operator const Scmat3Imag&() {
+	return reinterpret_cast<const Scmat3Imag&>(*this);
+}
+
 typedef const Cmat3Imag &Cmat3Imag_I;
 typedef Cmat3Imag &Cmat3Imag_O, &Cmat3Imag_IO;
 
@@ -1801,6 +1984,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecLimagC&;
+	using Base::operator const SvecLimag&;
+	operator const Scmat3LimagC&() const;
+	operator const Scmat3Limag&();
 };
 
 inline Cmat3Limag::Cmat3Limag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -1897,6 +2085,14 @@ inline Long Cmat3Limag::n2() const {
 	return m_N2;
 }
 
+inline Cmat3Limag::operator const Scmat3LimagC&() const {
+	return reinterpret_cast<const Scmat3LimagC&>(*this);
+}
+
+inline Cmat3Limag::operator const Scmat3Limag&() {
+	return reinterpret_cast<const Scmat3Limag&>(*this);
+}
+
 typedef const Cmat3Limag &Cmat3Limag_I;
 typedef Cmat3Limag &Cmat3Limag_O, &Cmat3Limag_IO;
 
@@ -1928,6 +2124,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const SvecQimagC&;
+	using Base::operator const SvecQimag&;
+	operator const Scmat3QimagC&() const;
+	operator const Scmat3Qimag&();
 };
 
 inline Cmat3Qimag::Cmat3Qimag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -2022,6 +2223,14 @@ inline Long Cmat3Qimag::n1() const {
 
 inline Long Cmat3Qimag::n2() const {
 	return m_N2;
+}
+
+inline Cmat3Qimag::operator const Scmat3QimagC&() const {
+	return reinterpret_cast<const Scmat3QimagC&>(*this);
+}
+
+inline Cmat3Qimag::operator const Scmat3Qimag&() {
+	return reinterpret_cast<const Scmat3Qimag&>(*this);
 }
 
 typedef const Cmat3Qimag &Cmat3Qimag_I;

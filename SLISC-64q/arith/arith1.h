@@ -497,38 +497,6 @@ inline Llong min(vecLlong_I v) { return min_v(v.data(), v.size()); }
 
 inline Llong min(Long_O ind, vecLlong_I v) { return min_v(ind, v.data(), v.size()); }
 
-inline Int max(VecInt_I v) { return max_v(v.p(), v.size()); }
-
-inline Int max(Long_O ind, VecInt_I v) { return max_v(ind, v.p(), v.size()); }
-
-inline Int min(VecInt_I v) { return min_v(v.p(), v.size()); }
-
-inline Int min(Long_O ind, VecInt_I v) { return min_v(ind, v.p(), v.size()); }
-
-inline Llong max(VecLlong_I v) { return max_v(v.p(), v.size()); }
-
-inline Llong max(Long_O ind, VecLlong_I v) { return max_v(ind, v.p(), v.size()); }
-
-inline Llong min(VecLlong_I v) { return min_v(v.p(), v.size()); }
-
-inline Llong min(Long_O ind, VecLlong_I v) { return min_v(ind, v.p(), v.size()); }
-
-inline Doub max(VecDoub_I v) { return max_v(v.p(), v.size()); }
-
-inline Doub max(Long_O ind, VecDoub_I v) { return max_v(ind, v.p(), v.size()); }
-
-inline Doub min(VecDoub_I v) { return min_v(v.p(), v.size()); }
-
-inline Doub min(Long_O ind, VecDoub_I v) { return min_v(ind, v.p(), v.size()); }
-
-inline Qdoub max(VecQdoub_I v) { return max_v(v.p(), v.size()); }
-
-inline Qdoub max(Long_O ind, VecQdoub_I v) { return max_v(ind, v.p(), v.size()); }
-
-inline Qdoub min(VecQdoub_I v) { return min_v(v.p(), v.size()); }
-
-inline Qdoub min(Long_O ind, VecQdoub_I v) { return min_v(ind, v.p(), v.size()); }
-
 inline Int max(SvecInt_I v) { return max_v(v.p(), v.size()); }
 
 inline Int max(Long_O ind, SvecInt_I v) { return max_v(ind, v.p(), v.size()); }
@@ -636,6 +604,30 @@ inline Qdoub max2(Long_O i, Long_O j, DcmatQdoub_I v) { return max_dcmat(i, j, v
 inline Qdoub min(DcmatQdoub_I v) { return min_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 
 inline Qdoub min2(Long_O i, Long_O j, DcmatQdoub_I v) { return min_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
+
+inline Doub max(VecDoub_I v) { return max_v(v.p(), v.size()); }
+
+inline Doub max(Long_O ind, VecDoub_I v) { return max_v(ind, v.p(), v.size()); }
+
+inline Doub min(VecDoub_I v) { return min_v(v.p(), v.size()); }
+
+inline Doub min(Long_O ind, VecDoub_I v) { return min_v(ind, v.p(), v.size()); }
+
+inline Qdoub max(VecQdoub_I v) { return max_v(v.p(), v.size()); }
+
+inline Qdoub max(Long_O ind, VecQdoub_I v) { return max_v(ind, v.p(), v.size()); }
+
+inline Qdoub min(VecQdoub_I v) { return min_v(v.p(), v.size()); }
+
+inline Qdoub min(Long_O ind, VecQdoub_I v) { return min_v(ind, v.p(), v.size()); }
+
+inline Int max(VecInt_I v) { return max_v(v.p(), v.size()); }
+
+inline Int max(Long_O ind, VecInt_I v) { return max_v(ind, v.p(), v.size()); }
+
+inline Int min(VecInt_I v) { return min_v(v.p(), v.size()); }
+
+inline Int min(Long_O ind, VecInt_I v) { return min_v(ind, v.p(), v.size()); }
 
 
 
@@ -821,6 +813,92 @@ inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qdoub *v, Long_I N0, Long_I
 	return s;
 }
 
+inline Int max_abs_v(const Int *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N <= 0) SLS_ERR("illegal length!");
+#endif
+	Int s = abs(v[0]), val;
+	for (Long i = 1; i < N; ++i) {
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
+	}
+	return s;
+}
+
+inline Int max_abs_v(Long_O ind, const Int *v, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N <= 0) SLS_ERR("illegal length!");
+#endif
+	Int s = abs(v[0]), val;
+	ind = 0;
+	for (Long i = 1; i < N; ++i) {
+		val = abs(v[i]);
+		if (s < val) {
+			s = val;
+			ind = i;
+		}
+	}
+	return s;
+}
+
+inline Int max_abs_v(const Int *v, Long_I N, Long_I step)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N <= 0) SLS_ERR("illegal length!");
+#endif
+	Int s = abs(v[0]), val;
+	for (Long i = step; i < N*step; i += step) {
+		val = abs(v[i]);
+		if (s < val)
+			s = val;
+	}
+	return s;
+}
+
+inline Int max_abs_dcmat(const Int *v, Long_I N0, Long_I N1, Long_I step1)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+#endif
+	const Int *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	Int s = abs(*v); ++v;
+	while (1) {
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Int &t = abs(*v);
+		if (s < t) s = abs(t);
+		++v;
+	}
+	return s;
+}
+
+inline Int max_abs_dcmat(Long_O i, Long_O j, const Int *v, Long_I N0, Long_I N1, Long_I step1)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
+#endif
+	const Int *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
+	Int s = abs(*v); ++v;
+	while (1) {
+		if (v == end0) {
+			beg0 += step1;
+			if (beg0 >= end) break;
+			v = beg0; end0 += step1;
+		}
+		const Int &t = abs(*v);
+		if (s < t) s = abs(t), p = v;
+		++v;
+	}
+	i = (p - beg) % N0; j = (p - beg) / step1;
+	return s;
+}
+
 inline Doub max_abs_v(const Comp *v, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -993,116 +1071,21 @@ inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qcomp *v, Long_I N0, Long_I
 	return s;
 }
 
-inline Int max_abs_v(const Int *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N <= 0) SLS_ERR("illegal length!");
-#endif
-	Int s = abs(v[0]), val;
-	for (Long i = 1; i < N; ++i) {
-		val = abs(v[i]);
-		if (s < val)
-			s = val;
-	}
-	return s;
-}
 
-inline Int max_abs_v(Long_O ind, const Int *v, Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N <= 0) SLS_ERR("illegal length!");
-#endif
-	Int s = abs(v[0]), val;
-	ind = 0;
-	for (Long i = 1; i < N; ++i) {
-		val = abs(v[i]);
-		if (s < val) {
-			s = val;
-			ind = i;
-		}
-	}
-	return s;
-}
+inline Doub max_abs(SvecDoub_I v) { return max_abs_v(v.p(), v.size()); }
+inline Doub max_abs(Long_O ind, SvecDoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
-inline Int max_abs_v(const Int *v, Long_I N, Long_I step)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N <= 0) SLS_ERR("illegal length!");
-#endif
-	Int s = abs(v[0]), val;
-	for (Long i = step; i < N*step; i += step) {
-		val = abs(v[i]);
-		if (s < val)
-			s = val;
-	}
-	return s;
-}
+inline Qdoub max_abs(SvecQdoub_I v) { return max_abs_v(v.p(), v.size()); }
+inline Qdoub max_abs(Long_O ind, SvecQdoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
-inline Int max_abs_dcmat(const Int *v, Long_I N0, Long_I N1, Long_I step1)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
-#endif
-	const Int *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
-	Int s = abs(*v); ++v;
-	while (1) {
-		if (v == end0) {
-			beg0 += step1;
-			if (beg0 >= end) break;
-			v = beg0; end0 += step1;
-		}
-		const Int &t = abs(*v);
-		if (s < t) s = abs(t);
-		++v;
-	}
-	return s;
-}
-
-inline Int max_abs_dcmat(Long_O i, Long_O j, const Int *v, Long_I N0, Long_I N1, Long_I step1)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N0 <= 0 || N1 <= 0 || step1 < N1) SLS_ERR("illegal length!");
-#endif
-	const Int *p = v, *beg = v, *end = v + N1*step1, *beg0 = v, *end0 = v + N0;
-	Int s = abs(*v); ++v;
-	while (1) {
-		if (v == end0) {
-			beg0 += step1;
-			if (beg0 >= end) break;
-			v = beg0; end0 += step1;
-		}
-		const Int &t = abs(*v);
-		if (s < t) s = abs(t), p = v;
-		++v;
-	}
-	i = (p - beg) % N0; j = (p - beg) / step1;
-	return s;
-}
-
-
-inline Doub max_abs(VecDoub_I v) { return max_abs_v(v.p(), v.size()); }
-inline Doub max_abs(Long_O ind, VecDoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Qdoub max_abs(VecQdoub_I v) { return max_abs_v(v.p(), v.size()); }
-inline Qdoub max_abs(Long_O ind, VecQdoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Doub max_abs(VecComp_I v) { return max_abs_v(v.p(), v.size()); }
-inline Doub max_abs(Long_O ind, VecComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Qdoub max_abs(VecQcomp_I v) { return max_abs_v(v.p(), v.size()); }
-inline Qdoub max_abs(Long_O ind, VecQcomp_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Int max_abs(VecInt_I v) { return max_abs_v(v.p(), v.size()); }
-inline Int max_abs(Long_O ind, VecInt_I v) { return max_abs_v(ind, v.p(), v.size()); }
+inline Int max_abs(SvecInt_I v) { return max_abs_v(v.p(), v.size()); }
+inline Int max_abs(Long_O ind, SvecInt_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
 inline Doub max_abs(SvecComp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Doub max_abs(Long_O ind, SvecComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
 inline Qdoub max_abs(SvecQcomp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Qdoub max_abs(Long_O ind, SvecQcomp_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Qdoub max_abs(SvecQdoub_I v) { return max_abs_v(v.p(), v.size()); }
-inline Qdoub max_abs(Long_O ind, SvecQdoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
 inline Doub max_abs(DvecDoub_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 
@@ -1111,18 +1094,6 @@ inline Qdoub max_abs(DvecQdoub_I v) { return max_abs_v(v.p(), v.size(), v.step()
 inline Doub max_abs(DvecComp_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 
 inline Qdoub max_abs(DvecQcomp_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
-
-inline Doub max_abs(CmatDoub_I v) { return max_abs_v(v.p(), v.size()); }
-inline Doub max_abs(Long_O ind, CmatDoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Qdoub max_abs(CmatQdoub_I v) { return max_abs_v(v.p(), v.size()); }
-inline Qdoub max_abs(Long_O ind, CmatQdoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Doub max_abs(CmatComp_I v) { return max_abs_v(v.p(), v.size()); }
-inline Doub max_abs(Long_O ind, CmatComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
-
-inline Qdoub max_abs(CmatQcomp_I v) { return max_abs_v(v.p(), v.size()); }
-inline Qdoub max_abs(Long_O ind, CmatQcomp_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
 inline Doub max_abs(MatComp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Doub max_abs(Long_O ind, MatComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
@@ -1209,24 +1180,6 @@ inline Qdoub sum_abs_v(const Qcomp *v, Long_I N)
 
 
 // sum of absolute values
-inline Llong sum_abs(VecInt_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Llong sum_abs(VecLlong_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Doub sum_abs(VecDoub_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Qdoub sum_abs(VecQdoub_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Doub sum_abs(VecComp_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Qdoub sum_abs(VecQcomp_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
 inline Llong sum_abs(SvecInt_I v)
 { return sum_abs_v(v.p(), v.size()); }
 
@@ -1243,42 +1196,6 @@ inline Doub sum_abs(SvecComp_I v)
 { return sum_abs_v(v.p(), v.size()); }
 
 inline Qdoub sum_abs(SvecQcomp_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Llong sum_abs(CmatInt_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Llong sum_abs(CmatLlong_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Doub sum_abs(CmatDoub_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Qdoub sum_abs(CmatQdoub_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Doub sum_abs(CmatComp_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Qdoub sum_abs(CmatQcomp_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Llong sum_abs(ScmatInt_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Llong sum_abs(ScmatLlong_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Doub sum_abs(ScmatDoub_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Qdoub sum_abs(ScmatQdoub_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Doub sum_abs(ScmatComp_I v)
-{ return sum_abs_v(v.p(), v.size()); }
-
-inline Qdoub sum_abs(ScmatQcomp_I v)
 { return sum_abs_v(v.p(), v.size()); }
 
 
@@ -1444,49 +1361,13 @@ inline Qdoub sum(vecQdoub_I v) { return sum_v(v.data(), v.size()); }
 
 inline Qdoub prod(vecQdoub_I v) { return prod_v(v.data(), v.size()); }
 
-inline Llong sum(VecInt_I v) { return sum_v(v.p(), v.size()); }
+inline Llong sum(SvecInt_I v) { return sum_v(v.p(), v.size()); }
 
-inline Llong prod(VecInt_I v) { return prod_v(v.p(), v.size()); }
+inline Llong prod(SvecInt_I v) { return prod_v(v.p(), v.size()); }
 
-inline Llong sum(VecLlong_I v) { return sum_v(v.p(), v.size()); }
+inline Llong sum(SvecLlong_I v) { return sum_v(v.p(), v.size()); }
 
-inline Llong prod(VecLlong_I v) { return prod_v(v.p(), v.size()); }
-
-inline Doub sum(VecDoub_I v) { return sum_v(v.p(), v.size()); }
-
-inline Doub prod(VecDoub_I v) { return prod_v(v.p(), v.size()); }
-
-inline Qdoub sum(VecQdoub_I v) { return sum_v(v.p(), v.size()); }
-
-inline Qdoub prod(VecQdoub_I v) { return prod_v(v.p(), v.size()); }
-
-inline Comp sum(VecComp_I v) { return sum_v(v.p(), v.size()); }
-
-inline Comp prod(VecComp_I v) { return prod_v(v.p(), v.size()); }
-
-inline Qcomp sum(VecQcomp_I v) { return sum_v(v.p(), v.size()); }
-
-inline Qcomp prod(VecQcomp_I v) { return prod_v(v.p(), v.size()); }
-
-inline Doub sum(CmatDoub_I v) { return sum_v(v.p(), v.size()); }
-
-inline Doub prod(CmatDoub_I v) { return prod_v(v.p(), v.size()); }
-
-inline Qdoub sum(CmatQdoub_I v) { return sum_v(v.p(), v.size()); }
-
-inline Qdoub prod(CmatQdoub_I v) { return prod_v(v.p(), v.size()); }
-
-inline Comp sum(CmatComp_I v) { return sum_v(v.p(), v.size()); }
-
-inline Comp prod(CmatComp_I v) { return prod_v(v.p(), v.size()); }
-
-inline Qcomp sum(CmatQcomp_I v) { return sum_v(v.p(), v.size()); }
-
-inline Qcomp prod(CmatQcomp_I v) { return prod_v(v.p(), v.size()); }
-
-inline Comp sum(MatComp_I v) { return sum_v(v.p(), v.size()); }
-
-inline Comp prod(MatComp_I v) { return prod_v(v.p(), v.size()); }
+inline Llong prod(SvecLlong_I v) { return prod_v(v.p(), v.size()); }
 
 inline Doub sum(SvecDoub_I v) { return sum_v(v.p(), v.size()); }
 
@@ -1496,114 +1377,18 @@ inline Qdoub sum(SvecQdoub_I v) { return sum_v(v.p(), v.size()); }
 
 inline Qdoub prod(SvecQdoub_I v) { return prod_v(v.p(), v.size()); }
 
+inline Comp sum(SvecComp_I v) { return sum_v(v.p(), v.size()); }
 
-inline Doub norm2(VecDoub_I v)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
+inline Comp prod(SvecComp_I v) { return prod_v(v.p(), v.size()); }
 
-inline Doub norm2_dif(VecDoub_I v, VecDoub_I v1)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Doub norm(VecDoub_I v)
-{
-	return sqrt(norm2(v));
-}
+inline Qcomp sum(SvecQcomp_I v) { return sum_v(v.p(), v.size()); }
 
-inline Doub norm_dif(VecDoub_I v, VecDoub_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
+inline Qcomp prod(SvecQcomp_I v) { return prod_v(v.p(), v.size()); }
 
-inline Qdoub norm2(VecQdoub_I v)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
+inline Comp sum(MatComp_I v) { return sum_v(v.p(), v.size()); }
 
-inline Qdoub norm2_dif(VecQdoub_I v, VecQdoub_I v1)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Qdoub norm(VecQdoub_I v)
-{
-	return sqrt(norm2(v));
-}
+inline Comp prod(MatComp_I v) { return prod_v(v.p(), v.size()); }
 
-inline Qdoub norm_dif(VecQdoub_I v, VecQdoub_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Doub norm2(VecComp_I v)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Doub norm2_dif(VecComp_I v, VecComp_I v1)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Doub norm(VecComp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Doub norm_dif(VecComp_I v, VecComp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Qdoub norm2(VecQcomp_I v)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Qdoub norm2_dif(VecQcomp_I v, VecQcomp_I v1)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Qdoub norm(VecQcomp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Qdoub norm_dif(VecQcomp_I v, VecQcomp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
 
 inline Doub norm2(SvecDoub_I v)
 {
@@ -1821,114 +1606,6 @@ inline Qdoub norm_dif(DvecQcomp_I v, DvecQcomp_I v1)
 	return sqrt(norm2_dif(v, v1));
 }
 
-inline Doub norm2(CmatDoub_I v)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Doub norm2_dif(CmatDoub_I v, CmatDoub_I v1)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Doub norm(CmatDoub_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Doub norm_dif(CmatDoub_I v, CmatDoub_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Qdoub norm2(CmatQdoub_I v)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Qdoub norm2_dif(CmatQdoub_I v, CmatQdoub_I v1)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Qdoub norm(CmatQdoub_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Qdoub norm_dif(CmatQdoub_I v, CmatQdoub_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Doub norm2(CmatComp_I v)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Doub norm2_dif(CmatComp_I v, CmatComp_I v1)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Doub norm(CmatComp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Doub norm_dif(CmatComp_I v, CmatComp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Qdoub norm2(CmatQcomp_I v)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Qdoub norm2_dif(CmatQcomp_I v, CmatQcomp_I v1)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Qdoub norm(CmatQcomp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Qdoub norm_dif(CmatQcomp_I v, CmatQcomp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
 inline Doub norm2(MatDoub_I v)
 {
 	Long N = v.size();
@@ -1979,60 +1656,6 @@ inline Doub norm(MatComp_I v)
 }
 
 inline Doub norm_dif(MatComp_I v, MatComp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Doub norm2(ScmatComp_I v)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Doub norm2_dif(ScmatComp_I v, ScmatComp_I v1)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Doub norm(ScmatComp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Doub norm_dif(ScmatComp_I v, ScmatComp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Qdoub norm2(ScmatQcomp_I v)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Qdoub norm2_dif(ScmatQcomp_I v, ScmatQcomp_I v1)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Qdoub norm(ScmatQcomp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Qdoub norm_dif(ScmatQcomp_I v, ScmatQcomp_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }
@@ -2161,7 +1784,7 @@ inline Doub norm_dif(Mat3Comp_I v, Mat3Comp_I v1)
 	return sqrt(norm2_dif(v, v1));
 }
 
-inline Doub norm2(Cmat3Comp_I v)
+inline Doub norm2(VecComp_I v)
 {
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
@@ -2170,7 +1793,7 @@ inline Doub norm2(Cmat3Comp_I v)
 	return s2;
 }
 
-inline Doub norm2_dif(Cmat3Comp_I v, Cmat3Comp_I v1)
+inline Doub norm2_dif(VecComp_I v, VecComp_I v1)
 {
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
@@ -2178,17 +1801,17 @@ inline Doub norm2_dif(Cmat3Comp_I v, Cmat3Comp_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
-inline Doub norm(Cmat3Comp_I v)
+inline Doub norm(VecComp_I v)
 {
 	return sqrt(norm2(v));
 }
 
-inline Doub norm_dif(Cmat3Comp_I v, Cmat3Comp_I v1)
+inline Doub norm_dif(VecComp_I v, VecComp_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }
 
-inline Qdoub norm2(Cmat3Qcomp_I v)
+inline Qdoub norm2(VecQcomp_I v)
 {
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0]);
@@ -2197,7 +1820,7 @@ inline Qdoub norm2(Cmat3Qcomp_I v)
 	return s2;
 }
 
-inline Qdoub norm2_dif(Cmat3Qcomp_I v, Cmat3Qcomp_I v1)
+inline Qdoub norm2_dif(VecQcomp_I v, VecQcomp_I v1)
 {
 	Long N = v.size();
 	Qdoub s2 = abs2(v[0] - v1[0]);
@@ -2205,12 +1828,12 @@ inline Qdoub norm2_dif(Cmat3Qcomp_I v, Cmat3Qcomp_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
-inline Qdoub norm(Cmat3Qcomp_I v)
+inline Qdoub norm(VecQcomp_I v)
 {
 	return sqrt(norm2(v));
 }
 
-inline Qdoub norm_dif(Cmat3Qcomp_I v, Cmat3Qcomp_I v1)
+inline Qdoub norm_dif(VecQcomp_I v, VecQcomp_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }

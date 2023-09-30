@@ -1,6 +1,5 @@
 #pragma once
 #include "../dense/Svec.h"
-#include "../dense/Cmat3.h"
 
 namespace slisc {
 class Scmat3CharC : public SvecCharC
@@ -10,7 +9,6 @@ protected:
 public:
 	Scmat3CharC();
 	Scmat3CharC(const Char *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3CharC(Cmat3Char_I a);
 
 
 	const Char &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -29,9 +27,6 @@ inline Scmat3CharC::Scmat3CharC() {}
 
 inline Scmat3CharC::Scmat3CharC(const Char *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecCharC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3CharC::Scmat3CharC(Cmat3Char_I a)
-	: SvecCharC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Char &Scmat3CharC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -90,7 +85,6 @@ protected:
 public:
 	Scmat3Char();
 	Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Char(Cmat3Char_IO a);
 
 	operator Scmat3CharC() const;
 
@@ -110,9 +104,6 @@ inline Scmat3Char::Scmat3Char() {}
 
 inline Scmat3Char::Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecChar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Char::Scmat3Char(Cmat3Char_IO a)
-	: SvecChar(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Char::operator Scmat3CharC() const
 {
@@ -167,6 +158,162 @@ typedef const Scmat3Char &Scmat3Char_O, &Scmat3Char_IO;
 inline Char *p(Scmat3Char &v) { return v.p(); }
 
 
+class Scmat3UcharC : public SvecUcharC
+{
+protected:
+	Long m_N0, m_N1, m_N2;
+public:
+	Scmat3UcharC();
+	Scmat3UcharC(const Uchar *data, Long_I N0, Long_I N1, Long_I N2);
+
+
+	const Uchar &operator()(Long_I i, Long_I j, Long_I k) const;
+
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	// resize() is a bad idea, don't try to create it!
+	void reshape(Long_I N0, Long_I N1, Long_I N2);
+	void set(const Uchar *data, Long_I N0, Long_I N1, Long_I N2);
+	~Scmat3UcharC();
+};
+
+inline Scmat3UcharC::Scmat3UcharC() {}
+
+inline Scmat3UcharC::Scmat3UcharC(const Uchar *data, Long_I N0, Long_I N1, Long_I N2)
+	: SvecUcharC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+
+inline const Uchar &Scmat3UcharC::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Scmat3UcharC::n0() const
+{
+	return m_N0;
+}
+
+inline Long Scmat3UcharC::n1() const
+{
+	return m_N1;
+}
+
+inline Long Scmat3UcharC::n2() const
+{
+	return m_N2;
+}
+
+inline void Scmat3UcharC::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N)
+		SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3UcharC::set(const Uchar *data, Long_I N0, Long_I N1, Long_I N2)
+{
+	SvecUcharC::set(data, N0*N1*N2);
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline Scmat3UcharC::~Scmat3UcharC() {}
+
+typedef const Scmat3UcharC &Scmat3Uchar_I;
+
+// common api for STL and SLISC
+inline Long size(Scmat3Uchar_I v) { return v.size(); }
+
+inline const Uchar *p(Scmat3Uchar_I v) { return v.p(); }
+
+
+class Scmat3Uchar : public SvecUchar
+{
+protected:
+	Long m_N0, m_N1, m_N2;
+public:
+	Scmat3Uchar();
+	Scmat3Uchar(Uchar *data, Long_I N0, Long_I N1, Long_I N2);
+
+	operator Scmat3UcharC() const;
+
+	Uchar &operator()(Long_I i, Long_I j, Long_I k) const;
+
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	// resize() is a bad idea, don't try to create it!
+	void reshape(Long_I N0, Long_I N1, Long_I N2);
+	void set(Uchar *data, Long_I N0, Long_I N1, Long_I N2);
+	~Scmat3Uchar();
+};
+
+inline Scmat3Uchar::Scmat3Uchar() {}
+
+inline Scmat3Uchar::Scmat3Uchar(Uchar *data, Long_I N0, Long_I N1, Long_I N2)
+	: SvecUchar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline Scmat3Uchar::operator Scmat3UcharC() const
+{
+	return *((Scmat3UcharC *)this);
+}
+
+inline Uchar &Scmat3Uchar::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Scmat3Uchar::n0() const
+{
+	return m_N0;
+}
+
+inline Long Scmat3Uchar::n1() const
+{
+	return m_N1;
+}
+
+inline Long Scmat3Uchar::n2() const
+{
+	return m_N2;
+}
+
+inline void Scmat3Uchar::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N)
+		SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline void Scmat3Uchar::set(Uchar *data, Long_I N0, Long_I N1, Long_I N2)
+{
+	SvecUchar::set(data, N0*N1*N2);
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline Scmat3Uchar::~Scmat3Uchar() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const Scmat3Uchar &Scmat3Uchar_O, &Scmat3Uchar_IO;
+
+// common api for STL and SLISC
+inline Uchar *p(Scmat3Uchar &v) { return v.p(); }
+
+
 class Scmat3IntC : public SvecIntC
 {
 protected:
@@ -174,7 +321,6 @@ protected:
 public:
 	Scmat3IntC();
 	Scmat3IntC(const Int *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3IntC(Cmat3Int_I a);
 
 
 	const Int &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -193,9 +339,6 @@ inline Scmat3IntC::Scmat3IntC() {}
 
 inline Scmat3IntC::Scmat3IntC(const Int *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecIntC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3IntC::Scmat3IntC(Cmat3Int_I a)
-	: SvecIntC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Int &Scmat3IntC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -254,7 +397,6 @@ protected:
 public:
 	Scmat3Int();
 	Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Int(Cmat3Int_IO a);
 
 	operator Scmat3IntC() const;
 
@@ -274,9 +416,6 @@ inline Scmat3Int::Scmat3Int() {}
 
 inline Scmat3Int::Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecInt(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Int::Scmat3Int(Cmat3Int_IO a)
-	: SvecInt(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Int::operator Scmat3IntC() const
 {
@@ -338,7 +477,6 @@ protected:
 public:
 	Scmat3LlongC();
 	Scmat3LlongC(const Llong *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3LlongC(Cmat3Llong_I a);
 
 
 	const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -357,9 +495,6 @@ inline Scmat3LlongC::Scmat3LlongC() {}
 
 inline Scmat3LlongC::Scmat3LlongC(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLlongC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3LlongC::Scmat3LlongC(Cmat3Llong_I a)
-	: SvecLlongC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Llong &Scmat3LlongC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -418,7 +553,6 @@ protected:
 public:
 	Scmat3Llong();
 	Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Llong(Cmat3Llong_IO a);
 
 	operator Scmat3LlongC() const;
 
@@ -438,9 +572,6 @@ inline Scmat3Llong::Scmat3Llong() {}
 
 inline Scmat3Llong::Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLlong(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Llong::Scmat3Llong(Cmat3Llong_IO a)
-	: SvecLlong(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Llong::operator Scmat3LlongC() const
 {
@@ -502,7 +633,6 @@ protected:
 public:
 	Scmat3FloatC();
 	Scmat3FloatC(const Float *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3FloatC(Cmat3Float_I a);
 
 
 	const Float &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -521,9 +651,6 @@ inline Scmat3FloatC::Scmat3FloatC() {}
 
 inline Scmat3FloatC::Scmat3FloatC(const Float *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecFloatC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3FloatC::Scmat3FloatC(Cmat3Float_I a)
-	: SvecFloatC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Float &Scmat3FloatC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -582,7 +709,6 @@ protected:
 public:
 	Scmat3Float();
 	Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Float(Cmat3Float_IO a);
 
 	operator Scmat3FloatC() const;
 
@@ -602,9 +728,6 @@ inline Scmat3Float::Scmat3Float() {}
 
 inline Scmat3Float::Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecFloat(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Float::Scmat3Float(Cmat3Float_IO a)
-	: SvecFloat(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Float::operator Scmat3FloatC() const
 {
@@ -666,7 +789,6 @@ protected:
 public:
 	Scmat3DoubC();
 	Scmat3DoubC(const Doub *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3DoubC(Cmat3Doub_I a);
 
 
 	const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -685,9 +807,6 @@ inline Scmat3DoubC::Scmat3DoubC() {}
 
 inline Scmat3DoubC::Scmat3DoubC(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecDoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3DoubC::Scmat3DoubC(Cmat3Doub_I a)
-	: SvecDoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Doub &Scmat3DoubC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -746,7 +865,6 @@ protected:
 public:
 	Scmat3Doub();
 	Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Doub(Cmat3Doub_IO a);
 
 	operator Scmat3DoubC() const;
 
@@ -766,9 +884,6 @@ inline Scmat3Doub::Scmat3Doub() {}
 
 inline Scmat3Doub::Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecDoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Doub::Scmat3Doub(Cmat3Doub_IO a)
-	: SvecDoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Doub::operator Scmat3DoubC() const
 {
@@ -830,7 +945,6 @@ protected:
 public:
 	Scmat3QdoubC();
 	Scmat3QdoubC(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3QdoubC(Cmat3Qdoub_I a);
 
 
 	const Qdoub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -849,9 +963,6 @@ inline Scmat3QdoubC::Scmat3QdoubC() {}
 
 inline Scmat3QdoubC::Scmat3QdoubC(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecQdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3QdoubC::Scmat3QdoubC(Cmat3Qdoub_I a)
-	: SvecQdoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Qdoub &Scmat3QdoubC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -910,7 +1021,6 @@ protected:
 public:
 	Scmat3Qdoub();
 	Scmat3Qdoub(Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Qdoub(Cmat3Qdoub_IO a);
 
 	operator Scmat3QdoubC() const;
 
@@ -930,9 +1040,6 @@ inline Scmat3Qdoub::Scmat3Qdoub() {}
 
 inline Scmat3Qdoub::Scmat3Qdoub(Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecQdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Qdoub::Scmat3Qdoub(Cmat3Qdoub_IO a)
-	: SvecQdoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Qdoub::operator Scmat3QdoubC() const
 {
@@ -994,7 +1101,6 @@ protected:
 public:
 	Scmat3LdoubC();
 	Scmat3LdoubC(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3LdoubC(Cmat3Ldoub_I a);
 
 
 	const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1013,9 +1119,6 @@ inline Scmat3LdoubC::Scmat3LdoubC() {}
 
 inline Scmat3LdoubC::Scmat3LdoubC(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3LdoubC::Scmat3LdoubC(Cmat3Ldoub_I a)
-	: SvecLdoubC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Ldoub &Scmat3LdoubC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1074,7 +1177,6 @@ protected:
 public:
 	Scmat3Ldoub();
 	Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Ldoub(Cmat3Ldoub_IO a);
 
 	operator Scmat3LdoubC() const;
 
@@ -1094,9 +1196,6 @@ inline Scmat3Ldoub::Scmat3Ldoub() {}
 
 inline Scmat3Ldoub::Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Ldoub::Scmat3Ldoub(Cmat3Ldoub_IO a)
-	: SvecLdoub(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Ldoub::operator Scmat3LdoubC() const
 {
@@ -1158,7 +1257,6 @@ protected:
 public:
 	Scmat3FcompC();
 	Scmat3FcompC(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3FcompC(Cmat3Fcomp_I a);
 
 
 	const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1177,9 +1275,6 @@ inline Scmat3FcompC::Scmat3FcompC() {}
 
 inline Scmat3FcompC::Scmat3FcompC(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecFcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3FcompC::Scmat3FcompC(Cmat3Fcomp_I a)
-	: SvecFcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Fcomp &Scmat3FcompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1238,7 +1333,6 @@ protected:
 public:
 	Scmat3Fcomp();
 	Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Fcomp(Cmat3Fcomp_IO a);
 
 	operator Scmat3FcompC() const;
 
@@ -1258,9 +1352,6 @@ inline Scmat3Fcomp::Scmat3Fcomp() {}
 
 inline Scmat3Fcomp::Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecFcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Fcomp::Scmat3Fcomp(Cmat3Fcomp_IO a)
-	: SvecFcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Fcomp::operator Scmat3FcompC() const
 {
@@ -1322,7 +1413,6 @@ protected:
 public:
 	Scmat3CompC();
 	Scmat3CompC(const Comp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3CompC(Cmat3Comp_I a);
 
 
 	const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1341,9 +1431,6 @@ inline Scmat3CompC::Scmat3CompC() {}
 
 inline Scmat3CompC::Scmat3CompC(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecCompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3CompC::Scmat3CompC(Cmat3Comp_I a)
-	: SvecCompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Comp &Scmat3CompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1402,7 +1489,6 @@ protected:
 public:
 	Scmat3Comp();
 	Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Comp(Cmat3Comp_IO a);
 
 	operator Scmat3CompC() const;
 
@@ -1422,9 +1508,6 @@ inline Scmat3Comp::Scmat3Comp() {}
 
 inline Scmat3Comp::Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecComp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Comp::Scmat3Comp(Cmat3Comp_IO a)
-	: SvecComp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Comp::operator Scmat3CompC() const
 {
@@ -1486,7 +1569,6 @@ protected:
 public:
 	Scmat3LcompC();
 	Scmat3LcompC(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3LcompC(Cmat3Lcomp_I a);
 
 
 	const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1505,9 +1587,6 @@ inline Scmat3LcompC::Scmat3LcompC() {}
 
 inline Scmat3LcompC::Scmat3LcompC(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3LcompC::Scmat3LcompC(Cmat3Lcomp_I a)
-	: SvecLcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Lcomp &Scmat3LcompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1566,7 +1645,6 @@ protected:
 public:
 	Scmat3Lcomp();
 	Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Lcomp(Cmat3Lcomp_IO a);
 
 	operator Scmat3LcompC() const;
 
@@ -1586,9 +1664,6 @@ inline Scmat3Lcomp::Scmat3Lcomp() {}
 
 inline Scmat3Lcomp::Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Lcomp::Scmat3Lcomp(Cmat3Lcomp_IO a)
-	: SvecLcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Lcomp::operator Scmat3LcompC() const
 {
@@ -1650,7 +1725,6 @@ protected:
 public:
 	Scmat3QcompC();
 	Scmat3QcompC(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3QcompC(Cmat3Qcomp_I a);
 
 
 	const Qcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1669,9 +1743,6 @@ inline Scmat3QcompC::Scmat3QcompC() {}
 
 inline Scmat3QcompC::Scmat3QcompC(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecQcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3QcompC::Scmat3QcompC(Cmat3Qcomp_I a)
-	: SvecQcompC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Qcomp &Scmat3QcompC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1730,7 +1801,6 @@ protected:
 public:
 	Scmat3Qcomp();
 	Scmat3Qcomp(Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Qcomp(Cmat3Qcomp_IO a);
 
 	operator Scmat3QcompC() const;
 
@@ -1750,9 +1820,6 @@ inline Scmat3Qcomp::Scmat3Qcomp() {}
 
 inline Scmat3Qcomp::Scmat3Qcomp(Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecQcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Qcomp::Scmat3Qcomp(Cmat3Qcomp_IO a)
-	: SvecQcomp(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Qcomp::operator Scmat3QcompC() const
 {
@@ -1814,7 +1881,6 @@ protected:
 public:
 	Scmat3FimagC();
 	Scmat3FimagC(const Fimag *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3FimagC(Cmat3Fimag_I a);
 
 
 	const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1833,9 +1899,6 @@ inline Scmat3FimagC::Scmat3FimagC() {}
 
 inline Scmat3FimagC::Scmat3FimagC(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecFimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3FimagC::Scmat3FimagC(Cmat3Fimag_I a)
-	: SvecFimagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Fimag &Scmat3FimagC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -1894,7 +1957,6 @@ protected:
 public:
 	Scmat3Fimag();
 	Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Fimag(Cmat3Fimag_IO a);
 
 	operator Scmat3FimagC() const;
 
@@ -1914,9 +1976,6 @@ inline Scmat3Fimag::Scmat3Fimag() {}
 
 inline Scmat3Fimag::Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecFimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Fimag::Scmat3Fimag(Cmat3Fimag_IO a)
-	: SvecFimag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Fimag::operator Scmat3FimagC() const
 {
@@ -1978,7 +2037,6 @@ protected:
 public:
 	Scmat3ImagC();
 	Scmat3ImagC(const Imag *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3ImagC(Cmat3Imag_I a);
 
 
 	const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1997,9 +2055,6 @@ inline Scmat3ImagC::Scmat3ImagC() {}
 
 inline Scmat3ImagC::Scmat3ImagC(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecImagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3ImagC::Scmat3ImagC(Cmat3Imag_I a)
-	: SvecImagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Imag &Scmat3ImagC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -2058,7 +2113,6 @@ protected:
 public:
 	Scmat3Imag();
 	Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Imag(Cmat3Imag_IO a);
 
 	operator Scmat3ImagC() const;
 
@@ -2078,9 +2132,6 @@ inline Scmat3Imag::Scmat3Imag() {}
 
 inline Scmat3Imag::Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecImag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Imag::Scmat3Imag(Cmat3Imag_IO a)
-	: SvecImag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Imag::operator Scmat3ImagC() const
 {
@@ -2142,7 +2193,6 @@ protected:
 public:
 	Scmat3LimagC();
 	Scmat3LimagC(const Limag *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3LimagC(Cmat3Limag_I a);
 
 
 	const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -2161,9 +2211,6 @@ inline Scmat3LimagC::Scmat3LimagC() {}
 
 inline Scmat3LimagC::Scmat3LimagC(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3LimagC::Scmat3LimagC(Cmat3Limag_I a)
-	: SvecLimagC(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 
 inline const Limag &Scmat3LimagC::operator()(Long_I i, Long_I j, Long_I k) const
@@ -2222,7 +2269,6 @@ protected:
 public:
 	Scmat3Limag();
 	Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2);
-	Scmat3Limag(Cmat3Limag_IO a);
 
 	operator Scmat3LimagC() const;
 
@@ -2242,9 +2288,6 @@ inline Scmat3Limag::Scmat3Limag() {}
 
 inline Scmat3Limag::Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2)
 	: SvecLimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
-
-inline Scmat3Limag::Scmat3Limag(Cmat3Limag_IO a)
-	: SvecLimag(a.p(), a.n0()*a.n1()*a.n2()), m_N0(a.n0()), m_N1(a.n1()), m_N2(a.n2()) {}
 
 inline Scmat3Limag::operator Scmat3LimagC() const
 {

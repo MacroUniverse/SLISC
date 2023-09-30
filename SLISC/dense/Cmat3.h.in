@@ -1,6 +1,7 @@
 // Cmat container
 #pragma once
 #include "../dense/Vec.h"
+#include "Scmat3.h"
 
 namespace slisc {
 //% tem('Cmat3', {
@@ -32,6 +33,11 @@ public:
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+
+	using Base::operator const Svec@T@C&;
+	using Base::operator const Svec@T@&;
+	operator const Scmat3@T@C&() const;
+	operator const Scmat3@T@&();
 };
 
 inline @Cmat3T@::@Cmat3T@(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
@@ -126,6 +132,14 @@ inline Long @Cmat3T@::n1() const {
 
 inline Long @Cmat3T@::n2() const {
 	return m_N2;
+}
+
+inline @Cmat3T@::operator const Scmat3@T@C&() const {
+	return reinterpret_cast<const Scmat3@T@C&>(*this);
+}
+
+inline @Cmat3T@::operator const Scmat3@T@&() {
+	return reinterpret_cast<const Scmat3@T@&>(*this);
 }
 
 typedef const @Cmat3T@ &@Cmat3T@_I;

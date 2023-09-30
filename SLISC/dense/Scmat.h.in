@@ -1,6 +1,5 @@
 #pragma once
 #include "../dense/Svec.h"
-#include "../dense/Cmat.h"
 // "C" means lower level const
 
 namespace slisc {
@@ -31,12 +30,10 @@ namespace slisc {
 //%     CT = ['const ' T];
 //%     Base = SvecTC;
 //%     Class = ScmatTC;
-//%     suffix = '_I';
 //% else
 //%     CT = T;
 //%     Base = SvecT;
 //%     Class = ScmatT;
-//%     suffix = '_IO';
 //% end
 class @Class@ : public @Base@
 {
@@ -45,7 +42,6 @@ protected:
 public:
 	@Class@();
 	@Class@(@CT@ *data, Long_I N0, Long_I N1);
-	@Class@(Cmat@T@@suffix@ a);
 
 //% if ~constness
 	operator @ScmatTC@() const;
@@ -67,9 +63,6 @@ inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1)
 	: @Base@(data, N0*N1), m_N0(N0), m_N1(N1) {}
-
-inline @Class@::@Class@(Cmat@T@@suffix@ a)
-	: @Base@(a.p(), a.n0()*a.n1()), m_N0(a.n0()), m_N1(a.n1()) {}
 
 //% if ~constness
 inline @Class@::operator @ScmatTC@() const

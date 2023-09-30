@@ -1,6 +1,7 @@
 // Cmat container
 #pragma once
 #include "../dense/Vec.h"
+#include "Scmat.h"
 
 namespace slisc {
 class CmatChar : public VecChar
@@ -22,6 +23,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecCharC&;
+	using Base::operator const SvecChar&;
+	operator const ScmatCharC&() const;
+	operator const ScmatChar&();
 };
 
 inline CmatChar::CmatChar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -114,6 +120,14 @@ inline void CmatChar::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatChar::operator const ScmatCharC&() const {
+	return reinterpret_cast<const ScmatCharC&>(*this);
+}
+
+inline CmatChar::operator const ScmatChar&() {
+	return reinterpret_cast<const ScmatChar&>(*this);
+}
+
 typedef const CmatChar &CmatChar_I;
 typedef CmatChar &CmatChar_O, &CmatChar_IO;
 
@@ -144,6 +158,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecUcharC&;
+	using Base::operator const SvecUchar&;
+	operator const ScmatUcharC&() const;
+	operator const ScmatUchar&();
 };
 
 inline CmatUchar::CmatUchar(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -236,6 +255,14 @@ inline void CmatUchar::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatUchar::operator const ScmatUcharC&() const {
+	return reinterpret_cast<const ScmatUcharC&>(*this);
+}
+
+inline CmatUchar::operator const ScmatUchar&() {
+	return reinterpret_cast<const ScmatUchar&>(*this);
+}
+
 typedef const CmatUchar &CmatUchar_I;
 typedef CmatUchar &CmatUchar_O, &CmatUchar_IO;
 
@@ -266,6 +293,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecIntC&;
+	using Base::operator const SvecInt&;
+	operator const ScmatIntC&() const;
+	operator const ScmatInt&();
 };
 
 inline CmatInt::CmatInt(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -358,6 +390,14 @@ inline void CmatInt::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatInt::operator const ScmatIntC&() const {
+	return reinterpret_cast<const ScmatIntC&>(*this);
+}
+
+inline CmatInt::operator const ScmatInt&() {
+	return reinterpret_cast<const ScmatInt&>(*this);
+}
+
 typedef const CmatInt &CmatInt_I;
 typedef CmatInt &CmatInt_O, &CmatInt_IO;
 
@@ -388,6 +428,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecLlongC&;
+	using Base::operator const SvecLlong&;
+	operator const ScmatLlongC&() const;
+	operator const ScmatLlong&();
 };
 
 inline CmatLlong::CmatLlong(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -480,6 +525,14 @@ inline void CmatLlong::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatLlong::operator const ScmatLlongC&() const {
+	return reinterpret_cast<const ScmatLlongC&>(*this);
+}
+
+inline CmatLlong::operator const ScmatLlong&() {
+	return reinterpret_cast<const ScmatLlong&>(*this);
+}
+
 typedef const CmatLlong &CmatLlong_I;
 typedef CmatLlong &CmatLlong_O, &CmatLlong_IO;
 
@@ -510,6 +563,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecFloatC&;
+	using Base::operator const SvecFloat&;
+	operator const ScmatFloatC&() const;
+	operator const ScmatFloat&();
 };
 
 inline CmatFloat::CmatFloat(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -602,6 +660,14 @@ inline void CmatFloat::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatFloat::operator const ScmatFloatC&() const {
+	return reinterpret_cast<const ScmatFloatC&>(*this);
+}
+
+inline CmatFloat::operator const ScmatFloat&() {
+	return reinterpret_cast<const ScmatFloat&>(*this);
+}
+
 typedef const CmatFloat &CmatFloat_I;
 typedef CmatFloat &CmatFloat_O, &CmatFloat_IO;
 
@@ -632,6 +698,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecDoubC&;
+	using Base::operator const SvecDoub&;
+	operator const ScmatDoubC&() const;
+	operator const ScmatDoub&();
 };
 
 inline CmatDoub::CmatDoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -724,6 +795,14 @@ inline void CmatDoub::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatDoub::operator const ScmatDoubC&() const {
+	return reinterpret_cast<const ScmatDoubC&>(*this);
+}
+
+inline CmatDoub::operator const ScmatDoub&() {
+	return reinterpret_cast<const ScmatDoub&>(*this);
+}
+
 typedef const CmatDoub &CmatDoub_I;
 typedef CmatDoub &CmatDoub_O, &CmatDoub_IO;
 
@@ -754,6 +833,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecLdoubC&;
+	using Base::operator const SvecLdoub&;
+	operator const ScmatLdoubC&() const;
+	operator const ScmatLdoub&();
 };
 
 inline CmatLdoub::CmatLdoub(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -846,6 +930,14 @@ inline void CmatLdoub::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatLdoub::operator const ScmatLdoubC&() const {
+	return reinterpret_cast<const ScmatLdoubC&>(*this);
+}
+
+inline CmatLdoub::operator const ScmatLdoub&() {
+	return reinterpret_cast<const ScmatLdoub&>(*this);
+}
+
 typedef const CmatLdoub &CmatLdoub_I;
 typedef CmatLdoub &CmatLdoub_O, &CmatLdoub_IO;
 
@@ -877,6 +969,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecFcompC&;
+	using Base::operator const SvecFcomp&;
+	operator const ScmatFcompC&() const;
+	operator const ScmatFcomp&();
 };
 
 inline CmatFcomp::CmatFcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -969,6 +1066,14 @@ inline void CmatFcomp::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatFcomp::operator const ScmatFcompC&() const {
+	return reinterpret_cast<const ScmatFcompC&>(*this);
+}
+
+inline CmatFcomp::operator const ScmatFcomp&() {
+	return reinterpret_cast<const ScmatFcomp&>(*this);
+}
+
 typedef const CmatFcomp &CmatFcomp_I;
 typedef CmatFcomp &CmatFcomp_O, &CmatFcomp_IO;
 
@@ -999,6 +1104,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecCompC&;
+	using Base::operator const SvecComp&;
+	operator const ScmatCompC&() const;
+	operator const ScmatComp&();
 };
 
 inline CmatComp::CmatComp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1091,6 +1201,14 @@ inline void CmatComp::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatComp::operator const ScmatCompC&() const {
+	return reinterpret_cast<const ScmatCompC&>(*this);
+}
+
+inline CmatComp::operator const ScmatComp&() {
+	return reinterpret_cast<const ScmatComp&>(*this);
+}
+
 typedef const CmatComp &CmatComp_I;
 typedef CmatComp &CmatComp_O, &CmatComp_IO;
 
@@ -1121,6 +1239,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecLcompC&;
+	using Base::operator const SvecLcomp&;
+	operator const ScmatLcompC&() const;
+	operator const ScmatLcomp&();
 };
 
 inline CmatLcomp::CmatLcomp(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1213,6 +1336,14 @@ inline void CmatLcomp::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatLcomp::operator const ScmatLcompC&() const {
+	return reinterpret_cast<const ScmatLcompC&>(*this);
+}
+
+inline CmatLcomp::operator const ScmatLcomp&() {
+	return reinterpret_cast<const ScmatLcomp&>(*this);
+}
+
 typedef const CmatLcomp &CmatLcomp_I;
 typedef CmatLcomp &CmatLcomp_O, &CmatLcomp_IO;
 
@@ -1244,6 +1375,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecFimagC&;
+	using Base::operator const SvecFimag&;
+	operator const ScmatFimagC&() const;
+	operator const ScmatFimag&();
 };
 
 inline CmatFimag::CmatFimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1336,6 +1472,14 @@ inline void CmatFimag::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatFimag::operator const ScmatFimagC&() const {
+	return reinterpret_cast<const ScmatFimagC&>(*this);
+}
+
+inline CmatFimag::operator const ScmatFimag&() {
+	return reinterpret_cast<const ScmatFimag&>(*this);
+}
+
 typedef const CmatFimag &CmatFimag_I;
 typedef CmatFimag &CmatFimag_O, &CmatFimag_IO;
 
@@ -1366,6 +1510,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecImagC&;
+	using Base::operator const SvecImag&;
+	operator const ScmatImagC&() const;
+	operator const ScmatImag&();
 };
 
 inline CmatImag::CmatImag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1458,6 +1607,14 @@ inline void CmatImag::reshape(Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
+inline CmatImag::operator const ScmatImagC&() const {
+	return reinterpret_cast<const ScmatImagC&>(*this);
+}
+
+inline CmatImag::operator const ScmatImag&() {
+	return reinterpret_cast<const ScmatImag&>(*this);
+}
+
 typedef const CmatImag &CmatImag_I;
 typedef CmatImag &CmatImag_O, &CmatImag_IO;
 
@@ -1488,6 +1645,11 @@ public:
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
 	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+
+	using Base::operator const SvecLimagC&;
+	using Base::operator const SvecLimag&;
+	operator const ScmatLimagC&() const;
+	operator const ScmatLimag&();
 };
 
 inline CmatLimag::CmatLimag(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
@@ -1578,6 +1740,14 @@ inline void CmatLimag::reshape(Long_I N0, Long_I N1)
 	}
 #endif
 	m_N0 = N0; m_N1 = N1;
+}
+
+inline CmatLimag::operator const ScmatLimagC&() const {
+	return reinterpret_cast<const ScmatLimagC&>(*this);
+}
+
+inline CmatLimag::operator const ScmatLimag&() {
+	return reinterpret_cast<const ScmatLimag&>(*this);
 }
 
 typedef const CmatLimag &CmatLimag_I;

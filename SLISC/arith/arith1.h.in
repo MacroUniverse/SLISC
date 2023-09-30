@@ -83,7 +83,6 @@ inline @T@ @fun@_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, L
 
 //% tem('max', {
 //%  'vecInt'; 'vecLlong';
-//%  'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub';
 //%  'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub';
 //%  'vvecInt'; 'vvecLlong';
 //%  'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub'; });
@@ -256,11 +255,11 @@ inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1
 }
 //%-------------------------
 
-//% tem('max_abs', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp'; 'VecInt';
-//%   'VecQdoub'; 'VecQcomp'; 'SvecComp'; 'SvecQcomp';
+//% tem('max_abs', { 'SvecDoub'; 'SvecQdoub'; 'SvecInt';
+//%   'SvecComp'; 'SvecQcomp';
 //%   'SvecQdoub'; 'SvecQcomp';
 //%   'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
-//%   'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp'; 'MatComp';
+//%   'MatComp';
 //%   'DcmatDoub'; 'DcmatQdoub'; 'DcmatComp'; 'DcmatQcomp'; });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -304,11 +303,9 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 //%---------------------------
 
 // sum of absolute values
-//% tem('sum_abs', {'VecInt'; 'VecLlong';
-//%     'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//% tem('sum_abs', {
 //%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
-//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
-//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp'; });
+//% });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% if is_integral(Ts)
@@ -375,9 +372,9 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 //%------------------------
 
 //% tem('sum', { 'vecInt'; 'vecLlong';
-//%     'vecDoub'; 'vecQdoub'; 'VecInt'; 'VecLlong';
-//%   'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
-//%   'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp'; 'MatComp'; });
+//%     'vecDoub'; 'vecQdoub'; 'SvecInt'; 'SvecLlong';
+//%   'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%   'MatComp'; });
 //%----------------
 //% T = varargin{:}; Ts = val_t(T);
 //% if is_integral(Ts)
@@ -397,13 +394,12 @@ inline @Tret@ prod(@T@_I v) { return prod_v(v.p(), v.size()); }
 //% end
 //%-----------------
 
-//% tem('norm2', { 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//% tem('norm2', {
 //% 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
 //% 'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
-//% 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
 //% 'MatDoub'; 'MatComp';
-//% 'ScmatComp'; 'ScmatQcomp'; 'DcmatComp'; 'DcmatQcomp';
-//% 'Mat3Doub'; 'Mat3Comp'; 'Cmat3Comp'; 'Cmat3Qcomp'; });
+//% 'DcmatComp'; 'DcmatQcomp';
+//% 'Mat3Doub'; 'Mat3Comp'; });
 //%-------------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
