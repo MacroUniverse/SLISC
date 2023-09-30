@@ -84,29 +84,15 @@ inline void div_eq_vs(@T@ *v, @Ts@_I s, Long_I N, Long_I step)
 //%   'vecComp' 'Doub';
 //%   'vecQcomp' 'Qdoub';
 //%   'vecComp' 'Comp';
-//%   'VecInt' 'Int';
-//%   'VecLlong' 'Llong';
-//%   'VecDoub' 'Doub';
-//%   'VecQdoub' 'Qdoub';
-//%   'VecComp' 'Doub';
-//%   'VecQcomp' 'Qdoub';
-//%   'VecComp' 'Comp';
 //%   'SvecInt' 'Int';
 //%   'SvecLlong' 'Llong';
 //%   'SvecDoub' 'Doub';
 //%   'SvecQdoub' 'Qdoub';
 //%   'SvecComp' 'Doub';
-//%   'SvecQcomp' 'Qdoub';
 //%   'SvecComp' 'Comp';
+//%   'SvecQcomp' 'Qdoub';
 //%   'DvecComp' 'Doub';
 //%   'DvecQcomp' 'Qdoub';
-//%   'CmatInt' 'Int';
-//%   'CmatLlong' 'Llong';
-//%   'CmatDoub' 'Doub';
-//%   'CmatQdoub' 'Qdoub';
-//%   'CmatComp' 'Doub';
-//%   'CmatQcomp' 'Qdoub';
-//%   'CmatComp' 'Comp';
 //%   'DcmatDoub' 'Doub'
 //%   'DcmatQdoub' 'Qdoub'
 //%   'DcmatComp' 'Doub'
@@ -228,47 +214,23 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'vecLlong' 'vecLlong';
 //% 'vecDoub' 'vecDoub';
 //% 'vecQdoub' 'vecQdoub';
-//% 'VecInt' 'VecInt';
-//% 'VecLlong' 'VecLlong';
-//% 'VecDoub' 'VecDoub';
-//% 'VecQdoub' 'VecQdoub';
-//% 'VecDoub' 'SvecDoub';
-//% 'VecQdoub' 'SvecQdoub';
-//% 'VecComp' 'VecDoub';
-//% 'VecQcomp' 'VecQdoub';
-//% 'VecComp' 'VecComp';
-//% 'VecQcomp' 'VecQcomp';
-//% 'VecComp' 'SvecComp';
-//% 'VecQcomp' 'SvecQcomp';
-//% 'VecQdoub' 'VecQdoub'
-//% 'VecQdoub' 'SvecQdoub'
-//% 'VecQcomp' 'VecQcomp'
-//% 'SvecDoub' 'VecDoub'
-//% 'SvecQdoub' 'VecQdoub'
-//% 'SvecDoub' 'SvecDoub'
-//% 'SvecQdoub' 'SvecQdoub'
-//% 'SvecComp' 'VecDoub'
-//% 'SvecQcomp' 'VecQdoub'
-//% 'SvecComp' 'SvecComp'
-//% 'SvecQcomp' 'SvecQcomp'
+//% 'SvecInt' 'SvecInt';
+//% 'SvecLlong' 'SvecLlong';
+//% 'SvecDoub' 'SvecDoub';
+//% 'SvecQdoub' 'SvecQdoub';
+//% 'SvecComp' 'SvecDoub';
+//% 'SvecComp' 'SvecComp';
+//% 'SvecQcomp' 'SvecQdoub';
 //% 'DvecDoub' 'SvecDoub'
 //% 'DvecQdoub' 'SvecQdoub'
-//% 'DvecComp' 'VecComp'
-//% 'DvecQcomp' 'VecQcomp'
+//% 'DvecComp' 'SvecComp'
+//% 'DvecQcomp' 'SvecQcomp'
 //% 'DvecComp' 'SvecComp'
 //% 'DvecQcomp' 'SvecQcomp'
 //% 'DvecComp', 'SvecDoub'
 //% 'DvecQcomp', 'SvecQdoub'
 //% 'DvecComp', 'DvecComp'
 //% 'DvecQcomp', 'DvecQcomp'
-//% 'CmatInt' 'CmatInt'
-//% 'CmatLlong' 'CmatLlong'
-//% 'CmatDoub' 'CmatDoub'
-//% 'CmatQdoub' 'CmatQdoub'
-//% 'CmatComp' 'CmatDoub'
-//% 'CmatQcomp' 'CmatQdoub'
-//% 'CmatComp' 'CmatComp'
-//% 'CmatQcomp' 'CmatQcomp'
 //% 'MatDoub' 'MatDoub'
 //% 'MatComp' 'MatComp'
 //% 'ScmatComp' 'ScmatDoub'
@@ -277,8 +239,6 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'ScmatQcomp' 'ScmatQcomp'
 //% 'DcmatComp' 'DcmatDoub'
 //% 'DcmatQcomp' 'DcmatQdoub'
-//% 'Cmat3Comp' 'Cmat3Comp'
-//% 'Cmat3Qcomp' 'Cmat3Qcomp'
 //% 'Mat3Doub' 'Mat3Doub'
 //% 'Mat3Comp' 'Mat3Comp'
 //% });
@@ -601,25 +561,23 @@ inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I ste
 //% tem('add(v,v,s)', {
 //%   'vecInt' 'vecInt' 'Int'
 //%   'vecLlong' 'vecLlong' 'Llong'
-//%   'VecInt' 'VecInt' 'Int'
-//%   'VecLlong' 'VecLlong' 'Llong'
-//%   'VecDoub' 'VecDoub' 'Doub'
-//%   'VecQdoub' 'VecQdoub' 'Qdoub'
-//%   'VecComp' 'SvecDoub' 'Doub'
-//%   'VecQcomp' 'SvecQdoub' 'Qdoub'
-//%   'VecQcomp' 'SvecQdoub' 'Qdoub'
-//%   'VecComp' 'SvecDoub' 'Imag'
-//%   'VecQcomp' 'SvecQdoub' 'Qimag'
-//%   'VecComp' 'VecComp' 'Doub'
-//%   'VecQcomp' 'VecQcomp' 'Qdoub'
-//%   'VecComp' 'VecComp' 'Comp'
-//%   'VecQcomp' 'VecQcomp' 'Qcomp'
-//%   'VecQcomp' 'VecQcomp' 'Qcomp'
+//%   'SvecInt' 'SvecInt' 'Int'
+//%   'SvecLlong' 'SvecLlong' 'Llong'
 //%   'SvecDoub' 'SvecDoub' 'Doub'
+//%   'SvecQdoub' 'SvecQdoub' 'Qdoub'
+//%   'SvecComp' 'SvecDoub' 'Doub'
+//%   'SvecComp' 'SvecDoub' 'Imag'
 //%   'SvecComp' 'SvecComp' 'Doub'
-//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
-//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
 //%   'SvecComp' 'SvecComp' 'Comp'
+//%   'SvecQcomp' 'SvecQdoub' 'Qdoub'
+//%   'SvecQcomp' 'SvecQdoub' 'Qdoub'
+//%   'SvecQcomp' 'SvecQdoub' 'Qimag'
+//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
+//%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
+//%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
+//%   'SvecDoub' 'SvecDoub' 'Doub'
+//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
+//%   'SvecQcomp' 'SvecQcomp' 'Qdoub'
 //%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
 //%   'SvecQcomp' 'SvecQcomp' 'Qcomp'
 //%   'DvecComp' 'SvecComp' 'Doub'
@@ -807,18 +765,12 @@ inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 //% tem('add(v,v,v)', {
 //%   'vecInt' 'vecInt' 'vecInt'
 //%   'vecLlong' 'vecLlong' 'vecLlong'
-//%   'VecInt' 'VecInt' 'VecInt'
-//%   'VecLlong' 'VecLlong' 'VecLlong'
-//%   'VecDoub' 'VecDoub' 'VecDoub'
-//%   'VecQdoub' 'VecQdoub' 'VecQdoub'
-//%   'VecComp' 'VecComp' 'VecComp'
-//%   'VecQcomp' 'VecQcomp' 'VecQcomp'
+//%   'SvecInt' 'SvecInt' 'SvecInt'
+//%   'SvecLlong' 'SvecLlong' 'SvecLlong'
 //%   'SvecDoub' 'SvecDoub' 'SvecDoub'
 //%   'SvecQdoub' 'SvecQdoub' 'SvecQdoub'
 //%   'SvecComp' 'SvecComp' 'SvecComp'
 //%   'SvecQcomp' 'SvecQcomp' 'SvecQcomp'
-//%   'SvecComp' 'VecComp' 'SvecComp'
-//%   'SvecQcomp' 'VecQcomp' 'SvecQcomp'
 //%   'DvecComp', 'SvecComp', 'DvecComp'
 //%   'DvecQcomp', 'SvecQcomp', 'DvecQcomp'
 //%   'CmatInt' 'CmatInt' 'CmatInt'
@@ -917,15 +869,13 @@ inline void neg_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%--------------------------
 
 //% tem('neg(v,v)', {
-//%     'VecLlong', 'VecLlong';
-//%     'VecDoub', 'VecDoub';
-//%     'VecQdoub', 'VecQdoub';
-//%     'VecComp', 'VecDoub';
-//%     'VecQcomp', 'VecQdoub';
-//%     'VecComp', 'VecComp';
-//%     'VecQcomp', 'VecQcomp';
-//%     'ScmatDoub', 'CmatDoub';
-//%     'ScmatQdoub', 'CmatQdoub';
+//%     'SvecLlong', 'SvecLlong';
+//%     'SvecDoub', 'SvecDoub';
+//%     'SvecQdoub', 'SvecQdoub';
+//%     'SvecComp', 'SvecDoub';
+//%     'SvecComp', 'SvecComp';
+//%     'SvecQcomp', 'SvecQdoub';
+//%     'SvecQcomp', 'SvecQcomp';
 //% });
 //%----------------------------------------------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
