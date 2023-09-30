@@ -4,6 +4,16 @@
 void test_Mcoo()
 {
 	using namespace slisc;
+	// vector<McooDoub> vmcoo;
+	// vmcoo.resize(5);
+	{
+		McooDoub a(3, 3, 4);
+		a.push(2, 1, 2);
+		McooDoub b(move(a));
+		SLS_ASSERT(a.nnz() == 0);
+	}
+
+
 	McooDoub a(3, 3, 4);
 	a.push(2, 1, 2);
 	if (a(1, 2) != 2)

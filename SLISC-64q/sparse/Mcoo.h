@@ -1,5 +1,6 @@
 #pragma once
 #include "../dense/Vec.h"
+// will be simpler to just use vector<tuple<Long,Long,T>>
 
 namespace slisc {
 
@@ -18,13 +19,16 @@ private:
 public:
 	using Base::p;
 	McooChar(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooChar(const McooChar &rhs) = default; // copy constructor
+	McooChar(McooChar &&rhs); // move constructor
 	McooChar(Long_I N0, Long_I N1);
 	McooChar(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooChar &operator=(McooChar &&rhs); // move assignment operator
+	McooChar &operator=(const McooChar &rhs) = default; // copy assignment
+	McooChar &operator=(McooChar &&rhs); // move assignment
 	void push(Char_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Char_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -62,6 +66,13 @@ inline McooChar::McooChar(Long_I N0, Long_I N1)
 
 inline McooChar::McooChar(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooChar::McooChar(McooChar &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooChar::row_p()
 {
@@ -295,13 +306,16 @@ private:
 public:
 	using Base::p;
 	McooInt(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooInt(const McooInt &rhs) = default; // copy constructor
+	McooInt(McooInt &&rhs); // move constructor
 	McooInt(Long_I N0, Long_I N1);
 	McooInt(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooInt &operator=(McooInt &&rhs); // move assignment operator
+	McooInt &operator=(const McooInt &rhs) = default; // copy assignment
+	McooInt &operator=(McooInt &&rhs); // move assignment
 	void push(Int_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Int_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -339,6 +353,13 @@ inline McooInt::McooInt(Long_I N0, Long_I N1)
 
 inline McooInt::McooInt(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooInt::McooInt(McooInt &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooInt::row_p()
 {
@@ -572,13 +593,16 @@ private:
 public:
 	using Base::p;
 	McooLlong(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooLlong(const McooLlong &rhs) = default; // copy constructor
+	McooLlong(McooLlong &&rhs); // move constructor
 	McooLlong(Long_I N0, Long_I N1);
 	McooLlong(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooLlong &operator=(McooLlong &&rhs); // move assignment operator
+	McooLlong &operator=(const McooLlong &rhs) = default; // copy assignment
+	McooLlong &operator=(McooLlong &&rhs); // move assignment
 	void push(Llong_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Llong_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -616,6 +640,13 @@ inline McooLlong::McooLlong(Long_I N0, Long_I N1)
 
 inline McooLlong::McooLlong(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooLlong::McooLlong(McooLlong &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooLlong::row_p()
 {
@@ -849,13 +880,16 @@ private:
 public:
 	using Base::p;
 	McooDoub(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooDoub(const McooDoub &rhs) = default; // copy constructor
+	McooDoub(McooDoub &&rhs); // move constructor
 	McooDoub(Long_I N0, Long_I N1);
 	McooDoub(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooDoub &operator=(McooDoub &&rhs); // move assignment operator
+	McooDoub &operator=(const McooDoub &rhs) = default; // copy assignment
+	McooDoub &operator=(McooDoub &&rhs); // move assignment
 	void push(Doub_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Doub_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -893,6 +927,13 @@ inline McooDoub::McooDoub(Long_I N0, Long_I N1)
 
 inline McooDoub::McooDoub(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooDoub::McooDoub(McooDoub &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooDoub::row_p()
 {
@@ -1126,13 +1167,16 @@ private:
 public:
 	using Base::p;
 	McooComp(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooComp(const McooComp &rhs) = default; // copy constructor
+	McooComp(McooComp &&rhs); // move constructor
 	McooComp(Long_I N0, Long_I N1);
 	McooComp(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooComp &operator=(McooComp &&rhs); // move assignment operator
+	McooComp &operator=(const McooComp &rhs) = default; // copy assignment
+	McooComp &operator=(McooComp &&rhs); // move assignment
 	void push(Comp_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Comp_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -1170,6 +1214,13 @@ inline McooComp::McooComp(Long_I N0, Long_I N1)
 
 inline McooComp::McooComp(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooComp::McooComp(McooComp &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooComp::row_p()
 {
@@ -1403,13 +1454,16 @@ private:
 public:
 	using Base::p;
 	McooQdoub(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooQdoub(const McooQdoub &rhs) = default; // copy constructor
+	McooQdoub(McooQdoub &&rhs); // move constructor
 	McooQdoub(Long_I N0, Long_I N1);
 	McooQdoub(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooQdoub &operator=(McooQdoub &&rhs); // move assignment operator
+	McooQdoub &operator=(const McooQdoub &rhs) = default; // copy assignment
+	McooQdoub &operator=(McooQdoub &&rhs); // move assignment
 	void push(Qdoub_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Qdoub_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -1447,6 +1501,13 @@ inline McooQdoub::McooQdoub(Long_I N0, Long_I N1)
 
 inline McooQdoub::McooQdoub(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooQdoub::McooQdoub(McooQdoub &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooQdoub::row_p()
 {
@@ -1680,13 +1741,16 @@ private:
 public:
 	using Base::p;
 	McooQcomp(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooQcomp(const McooQcomp &rhs) = default; // copy constructor
+	McooQcomp(McooQcomp &&rhs); // move constructor
 	McooQcomp(Long_I N0, Long_I N1);
 	McooQcomp(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooQcomp &operator=(McooQcomp &&rhs); // move assignment operator
+	McooQcomp &operator=(const McooQcomp &rhs) = default; // copy assignment
+	McooQcomp &operator=(McooQcomp &&rhs); // move assignment
 	void push(Qcomp_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Qcomp_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -1724,6 +1788,13 @@ inline McooQcomp::McooQcomp(Long_I N0, Long_I N1)
 
 inline McooQcomp::McooQcomp(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooQcomp::McooQcomp(McooQcomp &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooQcomp::row_p()
 {
@@ -1957,13 +2028,16 @@ private:
 public:
 	using Base::p;
 	McooImag(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooImag(const McooImag &rhs) = default; // copy constructor
+	McooImag(McooImag &&rhs); // move constructor
 	McooImag(Long_I N0, Long_I N1);
 	McooImag(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooImag &operator=(McooImag &&rhs); // move assignment operator
+	McooImag &operator=(const McooImag &rhs) = default; // copy assignment
+	McooImag &operator=(McooImag &&rhs); // move assignment
 	void push(Imag_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Imag_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -2001,6 +2075,13 @@ inline McooImag::McooImag(Long_I N0, Long_I N1)
 
 inline McooImag::McooImag(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooImag::McooImag(McooImag &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooImag::row_p()
 {
@@ -2234,13 +2315,16 @@ private:
 public:
 	using Base::p;
 	McooQimag(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	McooQimag(const McooQimag &rhs) = default; // copy constructor
+	McooQimag(McooQimag &&rhs); // move constructor
 	McooQimag(Long_I N0, Long_I N1);
 	McooQimag(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	McooQimag &operator=(McooQimag &&rhs); // move assignment operator
+	McooQimag &operator=(const McooQimag &rhs) = default; // copy assignment
+	McooQimag &operator=(McooQimag &&rhs); // move assignment
 	void push(Qimag_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(Qimag_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -2278,6 +2362,13 @@ inline McooQimag::McooQimag(Long_I N0, Long_I N1)
 
 inline McooQimag::McooQimag(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline McooQimag::McooQimag(McooQimag &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * McooQimag::row_p()
 {

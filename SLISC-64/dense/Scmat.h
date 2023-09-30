@@ -1880,6 +1880,8 @@ typedef const ScmatLimag &ScmatLimag_O, &ScmatLimag_IO;
 
 
 
+
+
 #ifdef SLS_USE_INT_AS_LONG
 typedef ScmatInt ScmatLong;
 typedef ScmatIntC ScmatLongC;

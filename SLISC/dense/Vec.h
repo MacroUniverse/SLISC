@@ -69,15 +69,13 @@ inline VecChar::VecChar(const VecChar &rhs)
 }
 
 inline VecChar::VecChar(VecChar &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecChar &VecChar::operator=(const VecChar &rhs)
@@ -279,15 +277,13 @@ inline VecUchar::VecUchar(const VecUchar &rhs)
 }
 
 inline VecUchar::VecUchar(VecUchar &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecUchar &VecUchar::operator=(const VecUchar &rhs)
@@ -489,15 +485,13 @@ inline VecInt::VecInt(const VecInt &rhs)
 }
 
 inline VecInt::VecInt(VecInt &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecInt &VecInt::operator=(const VecInt &rhs)
@@ -699,15 +693,13 @@ inline VecLlong::VecLlong(const VecLlong &rhs)
 }
 
 inline VecLlong::VecLlong(VecLlong &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecLlong &VecLlong::operator=(const VecLlong &rhs)
@@ -909,15 +901,13 @@ inline VecFloat::VecFloat(const VecFloat &rhs)
 }
 
 inline VecFloat::VecFloat(VecFloat &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecFloat &VecFloat::operator=(const VecFloat &rhs)
@@ -1119,15 +1109,13 @@ inline VecDoub::VecDoub(const VecDoub &rhs)
 }
 
 inline VecDoub::VecDoub(VecDoub &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecDoub &VecDoub::operator=(const VecDoub &rhs)
@@ -1329,15 +1317,13 @@ inline VecLdoub::VecLdoub(const VecLdoub &rhs)
 }
 
 inline VecLdoub::VecLdoub(VecLdoub &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecLdoub &VecLdoub::operator=(const VecLdoub &rhs)
@@ -1540,15 +1526,13 @@ inline VecFcomp::VecFcomp(const VecFcomp &rhs)
 }
 
 inline VecFcomp::VecFcomp(VecFcomp &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecFcomp &VecFcomp::operator=(const VecFcomp &rhs)
@@ -1750,15 +1734,13 @@ inline VecComp::VecComp(const VecComp &rhs)
 }
 
 inline VecComp::VecComp(VecComp &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecComp &VecComp::operator=(const VecComp &rhs)
@@ -1960,15 +1942,13 @@ inline VecLcomp::VecLcomp(const VecLcomp &rhs)
 }
 
 inline VecLcomp::VecLcomp(VecLcomp &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecLcomp &VecLcomp::operator=(const VecLcomp &rhs)
@@ -2171,15 +2151,13 @@ inline VecFimag::VecFimag(const VecFimag &rhs)
 }
 
 inline VecFimag::VecFimag(VecFimag &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecFimag &VecFimag::operator=(const VecFimag &rhs)
@@ -2381,15 +2359,13 @@ inline VecImag::VecImag(const VecImag &rhs)
 }
 
 inline VecImag::VecImag(VecImag &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecImag &VecImag::operator=(const VecImag &rhs)
@@ -2591,15 +2567,13 @@ inline VecLimag::VecLimag(const VecLimag &rhs)
 }
 
 inline VecLimag::VecLimag(VecLimag &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline VecLimag &VecLimag::operator=(const VecLimag &rhs)

@@ -77,15 +77,13 @@ inline @VecT@::@VecT@(const @VecT@ &rhs)
 }
 
 inline @VecT@::@VecT@(@VecT@ &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
 		SLS_ERR("self move is forbidden!");
 #endif
-	if (m_N != 0)
-		delete[] m_p;
-	m_N = rhs.m_N; rhs.m_N = 0;
-	m_p = rhs.m_p;
+	rhs.m_N = 0;
 }
 
 inline @VecT@ &@VecT@::operator=(const @VecT@ &rhs)

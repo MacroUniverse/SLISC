@@ -2163,6 +2163,150 @@ inline ScmatLimag::~ScmatLimag() {}
 typedef const ScmatLimag &ScmatLimag_O, &ScmatLimag_IO;
 
 
+class ScmatQimagC : public SvecQimagC
+{
+protected:
+	Long m_N0, m_N1;
+public:
+	ScmatQimagC();
+	ScmatQimagC(const Qimag *data, Long_I N0, Long_I N1);
+
+
+	const Qimag &operator()(Long_I i, Long_I j) const; // double indexing
+	Long n0() const;
+	Long n1() const;
+
+	// resize() is a bad idea, don't try to create it!
+
+	// There is no upper bound checking of N, use with care
+	void reshape(Long_I N0, Long_I N1);
+	void set(const Qimag *data, Long_I N0, Long_I N1);
+	~ScmatQimagC();
+};
+
+inline ScmatQimagC::ScmatQimagC() {}
+
+inline ScmatQimagC::ScmatQimagC(const Qimag *data, Long_I N0, Long_I N1)
+	: SvecQimagC(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+
+inline const Qimag &ScmatQimagC::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatQimagC::n0() const
+{
+	return m_N0;
+}
+
+inline Long ScmatQimagC::n1() const
+{
+	return m_N1;
+}
+
+inline void ScmatQimagC::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1 != m_N)
+		SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQimagC::set(const Qimag *data, Long_I N0, Long_I N1)
+{
+	SvecQimagC::set(data, N0*N1);
+	m_N0 = N0; m_N1 = N1;
+}
+
+inline ScmatQimagC::~ScmatQimagC() {}
+
+typedef const ScmatQimagC &ScmatQimag_I;
+
+
+class ScmatQimag : public SvecQimag
+{
+protected:
+	Long m_N0, m_N1;
+public:
+	ScmatQimag();
+	ScmatQimag(Qimag *data, Long_I N0, Long_I N1);
+
+	operator const ScmatQimagC &() const;
+	operator ScmatQimagC &();
+
+	Qimag &operator()(Long_I i, Long_I j) const; // double indexing
+	Long n0() const;
+	Long n1() const;
+
+	// resize() is a bad idea, don't try to create it!
+
+	// There is no upper bound checking of N, use with care
+	void reshape(Long_I N0, Long_I N1);
+	void set(Qimag *data, Long_I N0, Long_I N1);
+	~ScmatQimag();
+};
+
+inline ScmatQimag::ScmatQimag() {}
+
+inline ScmatQimag::ScmatQimag(Qimag *data, Long_I N0, Long_I N1)
+	: SvecQimag(data, N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline ScmatQimag::operator const ScmatQimagC &() const
+{
+	return reinterpret_cast<const ScmatQimagC &>(*this);
+}
+
+inline ScmatQimag::operator ScmatQimagC &()
+{
+	return reinterpret_cast<ScmatQimagC &>(*this);
+}
+
+inline Qimag &ScmatQimag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_N0 * j];
+}
+
+inline Long ScmatQimag::n0() const
+{
+	return m_N0;
+}
+
+inline Long ScmatQimag::n1() const
+{
+	return m_N1;
+}
+
+inline void ScmatQimag::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1 != m_N)
+		SLS_ERR("illegal reshape!");
+#endif
+	m_N0 = N0; m_N1 = N1;
+}
+
+inline void ScmatQimag::set(Qimag *data, Long_I N0, Long_I N1)
+{
+	SvecQimag::set(data, N0*N1);
+	m_N0 = N0; m_N1 = N1;
+}
+
+inline ScmatQimag::~ScmatQimag() {}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const ScmatQimag &ScmatQimag_O, &ScmatQimag_IO;
+
+
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef ScmatInt ScmatLong;

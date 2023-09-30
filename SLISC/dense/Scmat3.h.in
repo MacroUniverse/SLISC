@@ -18,6 +18,7 @@ namespace slisc {
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;
+//%     'Qimag', true;  'Qimag', false;
 //% });
 //%------------------------
 //% [T, constness] = varargin{:};

@@ -1,5 +1,6 @@
 #pragma once
 #include "../dense/Vec.h"
+// will be simpler to just use vector<tuple<Long,Long,T>>
 
 namespace slisc {
 
@@ -26,13 +27,16 @@ private:
 public:
 	using Base::p;
 	@McooT@(): m_N0(0), m_N1(0), m_Nnz(0) {};
+	@McooT@(const @McooT@ &rhs) = default; // copy constructor
+	@McooT@(@McooT@ &&rhs); // move constructor
 	@McooT@(Long_I N0, Long_I N1);
 	@McooT@(Long_I N0, Long_I N1, Long_I Ncap); // reserve Ncap elements
 	Long *row_p();
 	const Long *row_p() const;
 	Long *col_p();
 	const Long *col_p() const;
-	@McooT@ &operator=(@McooT@ &&rhs); // move assignment operator
+	@McooT@ &operator=(const @McooT@ &rhs) = default; // copy assignment
+	@McooT@ &operator=(@McooT@ &&rhs); // move assignment
 	void push(@T@_I s, Long_I i, Long_I j); // add one nonzero element
 	void set(@T@_I s, Long_I i, Long_I j); // change existing element or push new element
 	Long n0() const;
@@ -70,6 +74,13 @@ inline @McooT@::@McooT@(Long_I N0, Long_I N1)
 
 inline @McooT@::@McooT@(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
+
+inline @McooT@::@McooT@(@McooT@ &&rhs) :
+	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+{
+	rhs.m_Nnz = 0;
+}
 
 inline Long * @McooT@::row_p()
 {

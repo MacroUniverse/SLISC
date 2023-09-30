@@ -1965,6 +1965,204 @@ typedef const DcmatLcomp &DcmatLcomp_O, &DcmatLcomp_IO;
 
 
 
+class DcmatImagC
+{
+protected:
+	const Imag *m_p;
+	Long m_N;
+	Long m_N0, m_N1;
+	Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+	DcmatImagC();
+	DcmatImagC(const Imag *p, Long_I N0, Long_I N1, Long_I lda);
+	void set(const Imag *p, Long_I N0, Long_I N1, Long_I lda);
+	void set(const DcmatImagC &sli);
+
+
+	const Imag& operator[](Long_I i) const;
+	const Imag& operator()(Long_I i, Long_I j) const;
+	Long n0() const;
+	Long n1() const;
+	Long lda() const;
+	Long size() const;
+	const Imag *p() const;
+};
+
+inline DcmatImagC::DcmatImagC() {}
+
+inline DcmatImagC::DcmatImagC(const Imag *p, Long_I N0, Long_I N1, Long_I lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
+{}
+
+inline void DcmatImagC::set(const Imag *p, Long_I N0, Long_I N1, Long_I lda)
+{
+	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatImagC::set(const DcmatImagC &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+
+inline const Imag &DcmatImagC::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline const Imag &DcmatImagC::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_lda * j];
+}
+
+inline Long DcmatImagC::n0() const
+{
+	return m_N0;
+}
+
+inline Long DcmatImagC::n1() const
+{
+	return m_N1;
+}
+
+inline Long DcmatImagC::lda() const
+{
+	return m_lda;
+}
+
+inline Long DcmatImagC::size() const
+{
+	return m_N;
+}
+
+inline const Imag * DcmatImagC::p() const
+{
+	return m_p;
+}
+
+typedef const DcmatImagC &DcmatImag_I;
+
+class DcmatImag
+{
+protected:
+	Imag *m_p;
+	Long m_N;
+	Long m_N0, m_N1;
+	Long m_lda; // leading dimension (here is m_N0 of host matrix)
+public:
+	DcmatImag();
+	DcmatImag(Imag *p, Long_I N0, Long_I N1, Long_I lda);
+	void set(Imag *p, Long_I N0, Long_I N1, Long_I lda);
+	void set(const DcmatImag &sli);
+
+	operator DcmatImagC() const;
+	Imag& operator[](Long_I i);
+	Imag& operator()(Long_I i, Long_I j);
+
+	Imag& operator[](Long_I i) const;
+	Imag& operator()(Long_I i, Long_I j) const;
+	Long n0() const;
+	Long n1() const;
+	Long lda() const;
+	Long size() const;
+	Imag *p() const;
+};
+
+inline DcmatImag::DcmatImag() {}
+
+inline DcmatImag::DcmatImag(Imag *p, Long_I N0, Long_I N1, Long_I lda)
+	: m_p(p), m_N(N0*N1), m_N0(N0), m_N1(N1), m_lda(lda)
+{}
+
+inline void DcmatImag::set(Imag *p, Long_I N0, Long_I N1, Long_I lda)
+{
+	m_p = p; m_N0 = N0; m_N1 = N1; m_N = N0 * N1; m_lda = lda;
+}
+
+inline void DcmatImag::set(const DcmatImag &sli)
+{
+	m_p = sli.m_p; m_N = sli.m_N; m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_lda = sli.m_lda;
+}
+
+inline DcmatImag::operator DcmatImagC() const
+{
+	return *((DcmatImagC *)this);
+}
+
+inline Imag &DcmatImag::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Imag &DcmatImag::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_lda * j];
+}
+
+inline Imag &DcmatImag::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i%m_N0 + (i/m_N0)*m_lda];
+}
+
+inline Imag &DcmatImag::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("Matrix subscript out of bounds");
+#endif
+	return m_p[i + m_lda * j];
+}
+
+inline Long DcmatImag::n0() const
+{
+	return m_N0;
+}
+
+inline Long DcmatImag::n1() const
+{
+	return m_N1;
+}
+
+inline Long DcmatImag::lda() const
+{
+	return m_lda;
+}
+
+inline Long DcmatImag::size() const
+{
+	return m_N;
+}
+
+inline Imag * DcmatImag::p() const
+{
+	return m_p;
+}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const DcmatImag &DcmatImag_O, &DcmatImag_IO;
+
+
+
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef DcmatInt DcmatLong;

@@ -2009,6 +2009,8 @@ typedef const Scmat3Limag &Scmat3Limag_O, &Scmat3Limag_IO;
 
 
 
+
+
 #ifdef SLS_USE_INT_AS_LONG
 typedef Scmat3Int Scmat3Long;
 typedef Scmat3IntC Scmat3LongC;
