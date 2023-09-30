@@ -1,12 +1,12 @@
 // Cmat container
 #pragma once
-#include "../dense/Vbase.h"
+#include "../dense/Vec.h"
 
 namespace slisc {
-class CmatChar : public VbaseChar
+class CmatChar : public VecChar
 {
 protected:
-	typedef VbaseChar Base;
+	typedef VecChar Base;
 	Long m_N0, m_N1;
 public:
 	CmatChar(): m_N0(0), m_N1(0) {};
@@ -125,10 +125,10 @@ inline const Char *p(CmatChar_I v) { return v.p(); }
 inline Char *p(CmatChar &v) { return v.p(); }
 
 
-class CmatUchar : public VbaseUchar
+class CmatUchar : public VecUchar
 {
 protected:
-	typedef VbaseUchar Base;
+	typedef VecUchar Base;
 	Long m_N0, m_N1;
 public:
 	CmatUchar(): m_N0(0), m_N1(0) {};
@@ -247,10 +247,10 @@ inline const Uchar *p(CmatUchar_I v) { return v.p(); }
 inline Uchar *p(CmatUchar &v) { return v.p(); }
 
 
-class CmatInt : public VbaseInt
+class CmatInt : public VecInt
 {
 protected:
-	typedef VbaseInt Base;
+	typedef VecInt Base;
 	Long m_N0, m_N1;
 public:
 	CmatInt(): m_N0(0), m_N1(0) {};
@@ -369,10 +369,10 @@ inline const Int *p(CmatInt_I v) { return v.p(); }
 inline Int *p(CmatInt &v) { return v.p(); }
 
 
-class CmatLlong : public VbaseLlong
+class CmatLlong : public VecLlong
 {
 protected:
-	typedef VbaseLlong Base;
+	typedef VecLlong Base;
 	Long m_N0, m_N1;
 public:
 	CmatLlong(): m_N0(0), m_N1(0) {};
@@ -491,10 +491,10 @@ inline const Llong *p(CmatLlong_I v) { return v.p(); }
 inline Llong *p(CmatLlong &v) { return v.p(); }
 
 
-class CmatFloat : public VbaseFloat
+class CmatFloat : public VecFloat
 {
 protected:
-	typedef VbaseFloat Base;
+	typedef VecFloat Base;
 	Long m_N0, m_N1;
 public:
 	CmatFloat(): m_N0(0), m_N1(0) {};
@@ -613,10 +613,10 @@ inline const Float *p(CmatFloat_I v) { return v.p(); }
 inline Float *p(CmatFloat &v) { return v.p(); }
 
 
-class CmatDoub : public VbaseDoub
+class CmatDoub : public VecDoub
 {
 protected:
-	typedef VbaseDoub Base;
+	typedef VecDoub Base;
 	Long m_N0, m_N1;
 public:
 	CmatDoub(): m_N0(0), m_N1(0) {};
@@ -735,10 +735,10 @@ inline const Doub *p(CmatDoub_I v) { return v.p(); }
 inline Doub *p(CmatDoub &v) { return v.p(); }
 
 
-class CmatLdoub : public VbaseLdoub
+class CmatLdoub : public VecLdoub
 {
 protected:
-	typedef VbaseLdoub Base;
+	typedef VecLdoub Base;
 	Long m_N0, m_N1;
 public:
 	CmatLdoub(): m_N0(0), m_N1(0) {};
@@ -857,10 +857,10 @@ inline const Ldoub *p(CmatLdoub_I v) { return v.p(); }
 inline Ldoub *p(CmatLdoub &v) { return v.p(); }
 
 
-class CmatQdoub : public VbaseQdoub
+class CmatQdoub : public VecQdoub
 {
 protected:
-	typedef VbaseQdoub Base;
+	typedef VecQdoub Base;
 	Long m_N0, m_N1;
 public:
 	CmatQdoub(): m_N0(0), m_N1(0) {};
@@ -979,10 +979,10 @@ inline const Qdoub *p(CmatQdoub_I v) { return v.p(); }
 inline Qdoub *p(CmatQdoub &v) { return v.p(); }
 
 
-class CmatFcomp : public VbaseFcomp
+class CmatFcomp : public VecFcomp
 {
 protected:
-	typedef VbaseFcomp Base;
+	typedef VecFcomp Base;
 	Long m_N0, m_N1;
 public:
 	CmatFcomp(): m_N0(0), m_N1(0) {};
@@ -1101,10 +1101,10 @@ inline const Fcomp *p(CmatFcomp_I v) { return v.p(); }
 inline Fcomp *p(CmatFcomp &v) { return v.p(); }
 
 
-class CmatComp : public VbaseComp
+class CmatComp : public VecComp
 {
 protected:
-	typedef VbaseComp Base;
+	typedef VecComp Base;
 	Long m_N0, m_N1;
 public:
 	CmatComp(): m_N0(0), m_N1(0) {};
@@ -1223,10 +1223,10 @@ inline const Comp *p(CmatComp_I v) { return v.p(); }
 inline Comp *p(CmatComp &v) { return v.p(); }
 
 
-class CmatLcomp : public VbaseLcomp
+class CmatLcomp : public VecLcomp
 {
 protected:
-	typedef VbaseLcomp Base;
+	typedef VecLcomp Base;
 	Long m_N0, m_N1;
 public:
 	CmatLcomp(): m_N0(0), m_N1(0) {};
@@ -1345,10 +1345,10 @@ inline const Lcomp *p(CmatLcomp_I v) { return v.p(); }
 inline Lcomp *p(CmatLcomp &v) { return v.p(); }
 
 
-class CmatQcomp : public VbaseQcomp
+class CmatQcomp : public VecQcomp
 {
 protected:
-	typedef VbaseQcomp Base;
+	typedef VecQcomp Base;
 	Long m_N0, m_N1;
 public:
 	CmatQcomp(): m_N0(0), m_N1(0) {};
@@ -1467,10 +1467,10 @@ inline const Qcomp *p(CmatQcomp_I v) { return v.p(); }
 inline Qcomp *p(CmatQcomp &v) { return v.p(); }
 
 
-class CmatFimag : public VbaseFimag
+class CmatFimag : public VecFimag
 {
 protected:
-	typedef VbaseFimag Base;
+	typedef VecFimag Base;
 	Long m_N0, m_N1;
 public:
 	CmatFimag(): m_N0(0), m_N1(0) {};
@@ -1589,10 +1589,10 @@ inline const Fimag *p(CmatFimag_I v) { return v.p(); }
 inline Fimag *p(CmatFimag &v) { return v.p(); }
 
 
-class CmatImag : public VbaseImag
+class CmatImag : public VecImag
 {
 protected:
-	typedef VbaseImag Base;
+	typedef VecImag Base;
 	Long m_N0, m_N1;
 public:
 	CmatImag(): m_N0(0), m_N1(0) {};
@@ -1711,10 +1711,10 @@ inline const Imag *p(CmatImag_I v) { return v.p(); }
 inline Imag *p(CmatImag &v) { return v.p(); }
 
 
-class CmatLimag : public VbaseLimag
+class CmatLimag : public VecLimag
 {
 protected:
-	typedef VbaseLimag Base;
+	typedef VecLimag Base;
 	Long m_N0, m_N1;
 public:
 	CmatLimag(): m_N0(0), m_N1(0) {};
@@ -1833,10 +1833,10 @@ inline const Limag *p(CmatLimag_I v) { return v.p(); }
 inline Limag *p(CmatLimag &v) { return v.p(); }
 
 
-class CmatQimag : public VbaseQimag
+class CmatQimag : public VecQimag
 {
 protected:
-	typedef VbaseQimag Base;
+	typedef VecQimag Base;
 	Long m_N0, m_N1;
 public:
 	CmatQimag(): m_N0(0), m_N1(0) {};
@@ -1964,10 +1964,10 @@ typedef CmatLlong CmatLong;
 typedef const CmatLong &CmatLong_I;
 typedef CmatLong &CmatLong_O, &CmatLong_IO;
 
-class CmatBool : public VbaseBool
+class CmatBool : public VecBool
 {
 protected:
-	typedef VbaseBool Base;
+	typedef VecBool Base;
 	Long m_N0, m_N1;
 public:
 	CmatBool(): m_N0(0), m_N1(0) {};

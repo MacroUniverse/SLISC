@@ -22,7 +22,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Char *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3CharC &sli);
 	~Scmat3CharC();
 };
 
@@ -74,12 +73,6 @@ inline void Scmat3CharC::set(const Char *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3CharC::set(const Scmat3CharC &sli)
-{
-	SvecCharC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3CharC::~Scmat3CharC() {}
 
 typedef const Scmat3CharC &Scmat3Char_I;
@@ -110,7 +103,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Char *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Char &sli);
 	~Scmat3Char();
 };
 
@@ -166,12 +158,6 @@ inline void Scmat3Char::set(Char *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Char::set(const Scmat3Char &sli)
-{
-	SvecChar::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Char::~Scmat3Char() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -200,7 +186,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Int *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3IntC &sli);
 	~Scmat3IntC();
 };
 
@@ -252,12 +237,6 @@ inline void Scmat3IntC::set(const Int *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3IntC::set(const Scmat3IntC &sli)
-{
-	SvecIntC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3IntC::~Scmat3IntC() {}
 
 typedef const Scmat3IntC &Scmat3Int_I;
@@ -288,7 +267,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Int *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Int &sli);
 	~Scmat3Int();
 };
 
@@ -344,12 +322,6 @@ inline void Scmat3Int::set(Int *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Int::set(const Scmat3Int &sli)
-{
-	SvecInt::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Int::~Scmat3Int() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -378,7 +350,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Llong *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3LlongC &sli);
 	~Scmat3LlongC();
 };
 
@@ -430,12 +401,6 @@ inline void Scmat3LlongC::set(const Llong *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3LlongC::set(const Scmat3LlongC &sli)
-{
-	SvecLlongC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3LlongC::~Scmat3LlongC() {}
 
 typedef const Scmat3LlongC &Scmat3Llong_I;
@@ -466,7 +431,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Llong *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Llong &sli);
 	~Scmat3Llong();
 };
 
@@ -522,12 +486,6 @@ inline void Scmat3Llong::set(Llong *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Llong::set(const Scmat3Llong &sli)
-{
-	SvecLlong::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Llong::~Scmat3Llong() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -556,7 +514,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Float *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3FloatC &sli);
 	~Scmat3FloatC();
 };
 
@@ -608,12 +565,6 @@ inline void Scmat3FloatC::set(const Float *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3FloatC::set(const Scmat3FloatC &sli)
-{
-	SvecFloatC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3FloatC::~Scmat3FloatC() {}
 
 typedef const Scmat3FloatC &Scmat3Float_I;
@@ -644,7 +595,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Float *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Float &sli);
 	~Scmat3Float();
 };
 
@@ -700,12 +650,6 @@ inline void Scmat3Float::set(Float *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Float::set(const Scmat3Float &sli)
-{
-	SvecFloat::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Float::~Scmat3Float() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -734,7 +678,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Doub *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3DoubC &sli);
 	~Scmat3DoubC();
 };
 
@@ -786,12 +729,6 @@ inline void Scmat3DoubC::set(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3DoubC::set(const Scmat3DoubC &sli)
-{
-	SvecDoubC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3DoubC::~Scmat3DoubC() {}
 
 typedef const Scmat3DoubC &Scmat3Doub_I;
@@ -822,7 +759,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Doub *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Doub &sli);
 	~Scmat3Doub();
 };
 
@@ -878,12 +814,6 @@ inline void Scmat3Doub::set(Doub *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Doub::set(const Scmat3Doub &sli)
-{
-	SvecDoub::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Doub::~Scmat3Doub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -914,7 +844,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3LdoubC &sli);
 	~Scmat3LdoubC();
 };
 
@@ -966,12 +895,6 @@ inline void Scmat3LdoubC::set(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3LdoubC::set(const Scmat3LdoubC &sli)
-{
-	SvecLdoubC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3LdoubC::~Scmat3LdoubC() {}
 
 typedef const Scmat3LdoubC &Scmat3Ldoub_I;
@@ -1002,7 +925,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Ldoub &sli);
 	~Scmat3Ldoub();
 };
 
@@ -1058,12 +980,6 @@ inline void Scmat3Ldoub::set(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Ldoub::set(const Scmat3Ldoub &sli)
-{
-	SvecLdoub::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Ldoub::~Scmat3Ldoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1092,7 +1008,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3FcompC &sli);
 	~Scmat3FcompC();
 };
 
@@ -1144,12 +1059,6 @@ inline void Scmat3FcompC::set(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3FcompC::set(const Scmat3FcompC &sli)
-{
-	SvecFcompC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3FcompC::~Scmat3FcompC() {}
 
 typedef const Scmat3FcompC &Scmat3Fcomp_I;
@@ -1180,7 +1089,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Fcomp &sli);
 	~Scmat3Fcomp();
 };
 
@@ -1236,12 +1144,6 @@ inline void Scmat3Fcomp::set(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Fcomp::set(const Scmat3Fcomp &sli)
-{
-	SvecFcomp::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Fcomp::~Scmat3Fcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1270,7 +1172,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Comp *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3CompC &sli);
 	~Scmat3CompC();
 };
 
@@ -1322,12 +1223,6 @@ inline void Scmat3CompC::set(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3CompC::set(const Scmat3CompC &sli)
-{
-	SvecCompC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3CompC::~Scmat3CompC() {}
 
 typedef const Scmat3CompC &Scmat3Comp_I;
@@ -1358,7 +1253,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Comp *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Comp &sli);
 	~Scmat3Comp();
 };
 
@@ -1414,12 +1308,6 @@ inline void Scmat3Comp::set(Comp *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Comp::set(const Scmat3Comp &sli)
-{
-	SvecComp::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Comp::~Scmat3Comp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1448,7 +1336,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3LcompC &sli);
 	~Scmat3LcompC();
 };
 
@@ -1500,12 +1387,6 @@ inline void Scmat3LcompC::set(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3LcompC::set(const Scmat3LcompC &sli)
-{
-	SvecLcompC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3LcompC::~Scmat3LcompC() {}
 
 typedef const Scmat3LcompC &Scmat3Lcomp_I;
@@ -1536,7 +1417,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Lcomp &sli);
 	~Scmat3Lcomp();
 };
 
@@ -1592,12 +1472,6 @@ inline void Scmat3Lcomp::set(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Lcomp::set(const Scmat3Lcomp &sli)
-{
-	SvecLcomp::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Lcomp::~Scmat3Lcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1628,7 +1502,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Fimag *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3FimagC &sli);
 	~Scmat3FimagC();
 };
 
@@ -1680,12 +1553,6 @@ inline void Scmat3FimagC::set(const Fimag *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3FimagC::set(const Scmat3FimagC &sli)
-{
-	SvecFimagC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3FimagC::~Scmat3FimagC() {}
 
 typedef const Scmat3FimagC &Scmat3Fimag_I;
@@ -1716,7 +1583,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Fimag *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Fimag &sli);
 	~Scmat3Fimag();
 };
 
@@ -1772,12 +1638,6 @@ inline void Scmat3Fimag::set(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Fimag::set(const Scmat3Fimag &sli)
-{
-	SvecFimag::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Fimag::~Scmat3Fimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1806,7 +1666,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Imag *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3ImagC &sli);
 	~Scmat3ImagC();
 };
 
@@ -1858,12 +1717,6 @@ inline void Scmat3ImagC::set(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3ImagC::set(const Scmat3ImagC &sli)
-{
-	SvecImagC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3ImagC::~Scmat3ImagC() {}
 
 typedef const Scmat3ImagC &Scmat3Imag_I;
@@ -1894,7 +1747,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Imag *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Imag &sli);
 	~Scmat3Imag();
 };
 
@@ -1950,12 +1802,6 @@ inline void Scmat3Imag::set(Imag *data, Long_I N0, Long_I N1, Long_I N2)
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3Imag::set(const Scmat3Imag &sli)
-{
-	SvecImag::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3Imag::~Scmat3Imag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1984,7 +1830,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(const Limag *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3LimagC &sli);
 	~Scmat3LimagC();
 };
 
@@ -2036,12 +1881,6 @@ inline void Scmat3LimagC::set(const Limag *data, Long_I N0, Long_I N1, Long_I N2
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
 }
 
-inline void Scmat3LimagC::set(const Scmat3LimagC &sli)
-{
-	SvecLimagC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
-}
-
 inline Scmat3LimagC::~Scmat3LimagC() {}
 
 typedef const Scmat3LimagC &Scmat3Limag_I;
@@ -2072,7 +1911,6 @@ public:
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(Limag *data, Long_I N0, Long_I N1, Long_I N2);
-	void set(const Scmat3Limag &sli);
 	~Scmat3Limag();
 };
 
@@ -2126,12 +1964,6 @@ inline void Scmat3Limag::set(Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvecLimag::set(data, N0*N1*N2);
 	m_N0 = N0; m_N1 = N1; m_N2 = N2;
-}
-
-inline void Scmat3Limag::set(const Scmat3Limag &sli)
-{
-	SvecLimag::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1; m_N2 = sli.m_N2;
 }
 
 inline Scmat3Limag::~Scmat3Limag() {}

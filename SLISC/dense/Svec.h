@@ -1,7 +1,6 @@
 #pragma once
 #include "../global.h"
 #include "../arith/Imag.h"
-#include "../dense/Vec.h"
 
 // this class is not memory safe!
 // "C" means lower level const
@@ -23,8 +22,8 @@ public:
 	const Char* p() const;
 	Long size() const;
 	const Char &operator[](Long_I i) const;
-	const Char &back() const;
-	const Char &back(Long_I i) const;
+	const Char &end() const;
+	const Char &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -74,16 +73,16 @@ inline const Char &SvecCharC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Char &SvecCharC::back() const
+inline const Char &SvecCharC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Char &SvecCharC::back(Long_I i) const
+inline const Char &SvecCharC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -117,16 +116,15 @@ inline void SvecCharC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecCharC::set(const SvecCharC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecCharC::~SvecCharC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecCharC &v) { return v.size(); }
+typedef const SvecCharC &SvecChar_I;
 
-inline const Char *ptr(const SvecCharC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecChar_I v) { return v.size(); }
+
+inline const Char *p(SvecChar_I v) { return v.p(); }
+
 
 class SvecChar
 {
@@ -144,8 +142,8 @@ public:
 	Char* p() const;
 	Long size() const;
 	Char &operator[](Long_I i) const;
-	Char &back() const;
-	Char &back(Long_I i) const;
+	Char &end() const;
+	Char &end(Long_I i) const;
 
 	operator SvecCharC() const;
 
@@ -196,16 +194,16 @@ inline Char &SvecChar::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Char &SvecChar::back() const
+inline Char &SvecChar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Char &SvecChar::back(Long_I i) const
+inline Char &SvecChar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -242,16 +240,13 @@ inline void SvecChar::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecChar::set(const SvecChar &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecChar::~SvecChar() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecChar &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecChar &SvecChar_O, &SvecChar_IO;
 
-inline Char *ptr(SvecChar &v) { return v.p(); }
+// common api for STL and SLISC
+inline Char *p(SvecChar &v) { return v.p(); }
 
 class SvecUcharC
 {
@@ -269,8 +264,8 @@ public:
 	const Uchar* p() const;
 	Long size() const;
 	const Uchar &operator[](Long_I i) const;
-	const Uchar &back() const;
-	const Uchar &back(Long_I i) const;
+	const Uchar &end() const;
+	const Uchar &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -320,16 +315,16 @@ inline const Uchar &SvecUcharC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Uchar &SvecUcharC::back() const
+inline const Uchar &SvecUcharC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Uchar &SvecUcharC::back(Long_I i) const
+inline const Uchar &SvecUcharC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -363,16 +358,15 @@ inline void SvecUcharC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecUcharC::set(const SvecUcharC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecUcharC::~SvecUcharC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecUcharC &v) { return v.size(); }
+typedef const SvecUcharC &SvecUchar_I;
 
-inline const Uchar *ptr(const SvecUcharC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecUchar_I v) { return v.size(); }
+
+inline const Uchar *p(SvecUchar_I v) { return v.p(); }
+
 
 class SvecUchar
 {
@@ -390,8 +384,8 @@ public:
 	Uchar* p() const;
 	Long size() const;
 	Uchar &operator[](Long_I i) const;
-	Uchar &back() const;
-	Uchar &back(Long_I i) const;
+	Uchar &end() const;
+	Uchar &end(Long_I i) const;
 
 	operator SvecUcharC() const;
 
@@ -442,16 +436,16 @@ inline Uchar &SvecUchar::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Uchar &SvecUchar::back() const
+inline Uchar &SvecUchar::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Uchar &SvecUchar::back(Long_I i) const
+inline Uchar &SvecUchar::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -488,16 +482,13 @@ inline void SvecUchar::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecUchar::set(const SvecUchar &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecUchar::~SvecUchar() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecUchar &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecUchar &SvecUchar_O, &SvecUchar_IO;
 
-inline Uchar *ptr(SvecUchar &v) { return v.p(); }
+// common api for STL and SLISC
+inline Uchar *p(SvecUchar &v) { return v.p(); }
 
 class SvecIntC
 {
@@ -515,8 +506,8 @@ public:
 	const Int* p() const;
 	Long size() const;
 	const Int &operator[](Long_I i) const;
-	const Int &back() const;
-	const Int &back(Long_I i) const;
+	const Int &end() const;
+	const Int &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -566,16 +557,16 @@ inline const Int &SvecIntC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Int &SvecIntC::back() const
+inline const Int &SvecIntC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Int &SvecIntC::back(Long_I i) const
+inline const Int &SvecIntC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -609,16 +600,15 @@ inline void SvecIntC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecIntC::set(const SvecIntC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecIntC::~SvecIntC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecIntC &v) { return v.size(); }
+typedef const SvecIntC &SvecInt_I;
 
-inline const Int *ptr(const SvecIntC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecInt_I v) { return v.size(); }
+
+inline const Int *p(SvecInt_I v) { return v.p(); }
+
 
 class SvecInt
 {
@@ -636,8 +626,8 @@ public:
 	Int* p() const;
 	Long size() const;
 	Int &operator[](Long_I i) const;
-	Int &back() const;
-	Int &back(Long_I i) const;
+	Int &end() const;
+	Int &end(Long_I i) const;
 
 	operator SvecIntC() const;
 
@@ -688,16 +678,16 @@ inline Int &SvecInt::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Int &SvecInt::back() const
+inline Int &SvecInt::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Int &SvecInt::back(Long_I i) const
+inline Int &SvecInt::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -734,16 +724,13 @@ inline void SvecInt::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecInt::set(const SvecInt &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecInt::~SvecInt() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecInt &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecInt &SvecInt_O, &SvecInt_IO;
 
-inline Int *ptr(SvecInt &v) { return v.p(); }
+// common api for STL and SLISC
+inline Int *p(SvecInt &v) { return v.p(); }
 
 class SvecLlongC
 {
@@ -761,8 +748,8 @@ public:
 	const Llong* p() const;
 	Long size() const;
 	const Llong &operator[](Long_I i) const;
-	const Llong &back() const;
-	const Llong &back(Long_I i) const;
+	const Llong &end() const;
+	const Llong &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -812,16 +799,16 @@ inline const Llong &SvecLlongC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Llong &SvecLlongC::back() const
+inline const Llong &SvecLlongC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Llong &SvecLlongC::back(Long_I i) const
+inline const Llong &SvecLlongC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -855,16 +842,15 @@ inline void SvecLlongC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLlongC::set(const SvecLlongC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLlongC::~SvecLlongC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLlongC &v) { return v.size(); }
+typedef const SvecLlongC &SvecLlong_I;
 
-inline const Llong *ptr(const SvecLlongC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecLlong_I v) { return v.size(); }
+
+inline const Llong *p(SvecLlong_I v) { return v.p(); }
+
 
 class SvecLlong
 {
@@ -882,8 +868,8 @@ public:
 	Llong* p() const;
 	Long size() const;
 	Llong &operator[](Long_I i) const;
-	Llong &back() const;
-	Llong &back(Long_I i) const;
+	Llong &end() const;
+	Llong &end(Long_I i) const;
 
 	operator SvecLlongC() const;
 
@@ -934,16 +920,16 @@ inline Llong &SvecLlong::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Llong &SvecLlong::back() const
+inline Llong &SvecLlong::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Llong &SvecLlong::back(Long_I i) const
+inline Llong &SvecLlong::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -980,16 +966,13 @@ inline void SvecLlong::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLlong::set(const SvecLlong &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLlong::~SvecLlong() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLlong &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLlong &SvecLlong_O, &SvecLlong_IO;
 
-inline Llong *ptr(SvecLlong &v) { return v.p(); }
+// common api for STL and SLISC
+inline Llong *p(SvecLlong &v) { return v.p(); }
 
 class SvecFloatC
 {
@@ -1007,8 +990,8 @@ public:
 	const Float* p() const;
 	Long size() const;
 	const Float &operator[](Long_I i) const;
-	const Float &back() const;
-	const Float &back(Long_I i) const;
+	const Float &end() const;
+	const Float &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -1058,16 +1041,16 @@ inline const Float &SvecFloatC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Float &SvecFloatC::back() const
+inline const Float &SvecFloatC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Float &SvecFloatC::back(Long_I i) const
+inline const Float &SvecFloatC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1101,16 +1084,15 @@ inline void SvecFloatC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecFloatC::set(const SvecFloatC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecFloatC::~SvecFloatC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecFloatC &v) { return v.size(); }
+typedef const SvecFloatC &SvecFloat_I;
 
-inline const Float *ptr(const SvecFloatC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecFloat_I v) { return v.size(); }
+
+inline const Float *p(SvecFloat_I v) { return v.p(); }
+
 
 class SvecFloat
 {
@@ -1128,8 +1110,8 @@ public:
 	Float* p() const;
 	Long size() const;
 	Float &operator[](Long_I i) const;
-	Float &back() const;
-	Float &back(Long_I i) const;
+	Float &end() const;
+	Float &end(Long_I i) const;
 
 	operator SvecFloatC() const;
 
@@ -1180,16 +1162,16 @@ inline Float &SvecFloat::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Float &SvecFloat::back() const
+inline Float &SvecFloat::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Float &SvecFloat::back(Long_I i) const
+inline Float &SvecFloat::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1226,16 +1208,13 @@ inline void SvecFloat::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecFloat::set(const SvecFloat &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecFloat::~SvecFloat() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecFloat &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecFloat &SvecFloat_O, &SvecFloat_IO;
 
-inline Float *ptr(SvecFloat &v) { return v.p(); }
+// common api for STL and SLISC
+inline Float *p(SvecFloat &v) { return v.p(); }
 
 class SvecDoubC
 {
@@ -1253,8 +1232,8 @@ public:
 	const Doub* p() const;
 	Long size() const;
 	const Doub &operator[](Long_I i) const;
-	const Doub &back() const;
-	const Doub &back(Long_I i) const;
+	const Doub &end() const;
+	const Doub &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -1304,16 +1283,16 @@ inline const Doub &SvecDoubC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Doub &SvecDoubC::back() const
+inline const Doub &SvecDoubC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Doub &SvecDoubC::back(Long_I i) const
+inline const Doub &SvecDoubC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1347,16 +1326,15 @@ inline void SvecDoubC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecDoubC::set(const SvecDoubC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecDoubC::~SvecDoubC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecDoubC &v) { return v.size(); }
+typedef const SvecDoubC &SvecDoub_I;
 
-inline const Doub *ptr(const SvecDoubC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecDoub_I v) { return v.size(); }
+
+inline const Doub *p(SvecDoub_I v) { return v.p(); }
+
 
 class SvecDoub
 {
@@ -1374,8 +1352,8 @@ public:
 	Doub* p() const;
 	Long size() const;
 	Doub &operator[](Long_I i) const;
-	Doub &back() const;
-	Doub &back(Long_I i) const;
+	Doub &end() const;
+	Doub &end(Long_I i) const;
 
 	operator SvecDoubC() const;
 
@@ -1426,16 +1404,16 @@ inline Doub &SvecDoub::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Doub &SvecDoub::back() const
+inline Doub &SvecDoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Doub &SvecDoub::back(Long_I i) const
+inline Doub &SvecDoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1472,16 +1450,13 @@ inline void SvecDoub::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecDoub::set(const SvecDoub &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecDoub::~SvecDoub() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecDoub &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecDoub &SvecDoub_O, &SvecDoub_IO;
 
-inline Doub *ptr(SvecDoub &v) { return v.p(); }
+// common api for STL and SLISC
+inline Doub *p(SvecDoub &v) { return v.p(); }
 
 class SvecLdoubC
 {
@@ -1499,8 +1474,8 @@ public:
 	const Ldoub* p() const;
 	Long size() const;
 	const Ldoub &operator[](Long_I i) const;
-	const Ldoub &back() const;
-	const Ldoub &back(Long_I i) const;
+	const Ldoub &end() const;
+	const Ldoub &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -1550,16 +1525,16 @@ inline const Ldoub &SvecLdoubC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Ldoub &SvecLdoubC::back() const
+inline const Ldoub &SvecLdoubC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Ldoub &SvecLdoubC::back(Long_I i) const
+inline const Ldoub &SvecLdoubC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1593,16 +1568,15 @@ inline void SvecLdoubC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLdoubC::set(const SvecLdoubC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLdoubC::~SvecLdoubC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLdoubC &v) { return v.size(); }
+typedef const SvecLdoubC &SvecLdoub_I;
 
-inline const Ldoub *ptr(const SvecLdoubC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecLdoub_I v) { return v.size(); }
+
+inline const Ldoub *p(SvecLdoub_I v) { return v.p(); }
+
 
 class SvecLdoub
 {
@@ -1620,8 +1594,8 @@ public:
 	Ldoub* p() const;
 	Long size() const;
 	Ldoub &operator[](Long_I i) const;
-	Ldoub &back() const;
-	Ldoub &back(Long_I i) const;
+	Ldoub &end() const;
+	Ldoub &end(Long_I i) const;
 
 	operator SvecLdoubC() const;
 
@@ -1672,16 +1646,16 @@ inline Ldoub &SvecLdoub::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Ldoub &SvecLdoub::back() const
+inline Ldoub &SvecLdoub::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Ldoub &SvecLdoub::back(Long_I i) const
+inline Ldoub &SvecLdoub::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1718,16 +1692,13 @@ inline void SvecLdoub::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLdoub::set(const SvecLdoub &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLdoub::~SvecLdoub() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLdoub &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLdoub &SvecLdoub_O, &SvecLdoub_IO;
 
-inline Ldoub *ptr(SvecLdoub &v) { return v.p(); }
+// common api for STL and SLISC
+inline Ldoub *p(SvecLdoub &v) { return v.p(); }
 
 
 
@@ -1747,8 +1718,8 @@ public:
 	const Fcomp* p() const;
 	Long size() const;
 	const Fcomp &operator[](Long_I i) const;
-	const Fcomp &back() const;
-	const Fcomp &back(Long_I i) const;
+	const Fcomp &end() const;
+	const Fcomp &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -1798,16 +1769,16 @@ inline const Fcomp &SvecFcompC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Fcomp &SvecFcompC::back() const
+inline const Fcomp &SvecFcompC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Fcomp &SvecFcompC::back(Long_I i) const
+inline const Fcomp &SvecFcompC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1841,16 +1812,15 @@ inline void SvecFcompC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecFcompC::set(const SvecFcompC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecFcompC::~SvecFcompC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecFcompC &v) { return v.size(); }
+typedef const SvecFcompC &SvecFcomp_I;
 
-inline const Fcomp *ptr(const SvecFcompC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecFcomp_I v) { return v.size(); }
+
+inline const Fcomp *p(SvecFcomp_I v) { return v.p(); }
+
 
 class SvecFcomp
 {
@@ -1868,8 +1838,8 @@ public:
 	Fcomp* p() const;
 	Long size() const;
 	Fcomp &operator[](Long_I i) const;
-	Fcomp &back() const;
-	Fcomp &back(Long_I i) const;
+	Fcomp &end() const;
+	Fcomp &end(Long_I i) const;
 
 	operator SvecFcompC() const;
 
@@ -1920,16 +1890,16 @@ inline Fcomp &SvecFcomp::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Fcomp &SvecFcomp::back() const
+inline Fcomp &SvecFcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Fcomp &SvecFcomp::back(Long_I i) const
+inline Fcomp &SvecFcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -1966,16 +1936,13 @@ inline void SvecFcomp::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecFcomp::set(const SvecFcomp &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecFcomp::~SvecFcomp() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecFcomp &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecFcomp &SvecFcomp_O, &SvecFcomp_IO;
 
-inline Fcomp *ptr(SvecFcomp &v) { return v.p(); }
+// common api for STL and SLISC
+inline Fcomp *p(SvecFcomp &v) { return v.p(); }
 
 class SvecCompC
 {
@@ -1993,8 +1960,8 @@ public:
 	const Comp* p() const;
 	Long size() const;
 	const Comp &operator[](Long_I i) const;
-	const Comp &back() const;
-	const Comp &back(Long_I i) const;
+	const Comp &end() const;
+	const Comp &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -2044,16 +2011,16 @@ inline const Comp &SvecCompC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Comp &SvecCompC::back() const
+inline const Comp &SvecCompC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Comp &SvecCompC::back(Long_I i) const
+inline const Comp &SvecCompC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2087,16 +2054,15 @@ inline void SvecCompC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecCompC::set(const SvecCompC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecCompC::~SvecCompC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecCompC &v) { return v.size(); }
+typedef const SvecCompC &SvecComp_I;
 
-inline const Comp *ptr(const SvecCompC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecComp_I v) { return v.size(); }
+
+inline const Comp *p(SvecComp_I v) { return v.p(); }
+
 
 class SvecComp
 {
@@ -2114,8 +2080,8 @@ public:
 	Comp* p() const;
 	Long size() const;
 	Comp &operator[](Long_I i) const;
-	Comp &back() const;
-	Comp &back(Long_I i) const;
+	Comp &end() const;
+	Comp &end(Long_I i) const;
 
 	operator SvecCompC() const;
 
@@ -2166,16 +2132,16 @@ inline Comp &SvecComp::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Comp &SvecComp::back() const
+inline Comp &SvecComp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Comp &SvecComp::back(Long_I i) const
+inline Comp &SvecComp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2212,16 +2178,13 @@ inline void SvecComp::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecComp::set(const SvecComp &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecComp::~SvecComp() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecComp &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecComp &SvecComp_O, &SvecComp_IO;
 
-inline Comp *ptr(SvecComp &v) { return v.p(); }
+// common api for STL and SLISC
+inline Comp *p(SvecComp &v) { return v.p(); }
 
 class SvecLcompC
 {
@@ -2239,8 +2202,8 @@ public:
 	const Lcomp* p() const;
 	Long size() const;
 	const Lcomp &operator[](Long_I i) const;
-	const Lcomp &back() const;
-	const Lcomp &back(Long_I i) const;
+	const Lcomp &end() const;
+	const Lcomp &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -2290,16 +2253,16 @@ inline const Lcomp &SvecLcompC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Lcomp &SvecLcompC::back() const
+inline const Lcomp &SvecLcompC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Lcomp &SvecLcompC::back(Long_I i) const
+inline const Lcomp &SvecLcompC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2333,16 +2296,15 @@ inline void SvecLcompC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLcompC::set(const SvecLcompC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLcompC::~SvecLcompC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLcompC &v) { return v.size(); }
+typedef const SvecLcompC &SvecLcomp_I;
 
-inline const Lcomp *ptr(const SvecLcompC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecLcomp_I v) { return v.size(); }
+
+inline const Lcomp *p(SvecLcomp_I v) { return v.p(); }
+
 
 class SvecLcomp
 {
@@ -2360,8 +2322,8 @@ public:
 	Lcomp* p() const;
 	Long size() const;
 	Lcomp &operator[](Long_I i) const;
-	Lcomp &back() const;
-	Lcomp &back(Long_I i) const;
+	Lcomp &end() const;
+	Lcomp &end(Long_I i) const;
 
 	operator SvecLcompC() const;
 
@@ -2412,16 +2374,16 @@ inline Lcomp &SvecLcomp::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Lcomp &SvecLcomp::back() const
+inline Lcomp &SvecLcomp::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Lcomp &SvecLcomp::back(Long_I i) const
+inline Lcomp &SvecLcomp::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2458,16 +2420,13 @@ inline void SvecLcomp::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLcomp::set(const SvecLcomp &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLcomp::~SvecLcomp() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLcomp &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLcomp &SvecLcomp_O, &SvecLcomp_IO;
 
-inline Lcomp *ptr(SvecLcomp &v) { return v.p(); }
+// common api for STL and SLISC
+inline Lcomp *p(SvecLcomp &v) { return v.p(); }
 
 
 
@@ -2487,8 +2446,8 @@ public:
 	const Fimag* p() const;
 	Long size() const;
 	const Fimag &operator[](Long_I i) const;
-	const Fimag &back() const;
-	const Fimag &back(Long_I i) const;
+	const Fimag &end() const;
+	const Fimag &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -2538,16 +2497,16 @@ inline const Fimag &SvecFimagC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Fimag &SvecFimagC::back() const
+inline const Fimag &SvecFimagC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Fimag &SvecFimagC::back(Long_I i) const
+inline const Fimag &SvecFimagC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2581,16 +2540,15 @@ inline void SvecFimagC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecFimagC::set(const SvecFimagC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecFimagC::~SvecFimagC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecFimagC &v) { return v.size(); }
+typedef const SvecFimagC &SvecFimag_I;
 
-inline const Fimag *ptr(const SvecFimagC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecFimag_I v) { return v.size(); }
+
+inline const Fimag *p(SvecFimag_I v) { return v.p(); }
+
 
 class SvecFimag
 {
@@ -2608,8 +2566,8 @@ public:
 	Fimag* p() const;
 	Long size() const;
 	Fimag &operator[](Long_I i) const;
-	Fimag &back() const;
-	Fimag &back(Long_I i) const;
+	Fimag &end() const;
+	Fimag &end(Long_I i) const;
 
 	operator SvecFimagC() const;
 
@@ -2660,16 +2618,16 @@ inline Fimag &SvecFimag::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Fimag &SvecFimag::back() const
+inline Fimag &SvecFimag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Fimag &SvecFimag::back(Long_I i) const
+inline Fimag &SvecFimag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2706,16 +2664,13 @@ inline void SvecFimag::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecFimag::set(const SvecFimag &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecFimag::~SvecFimag() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecFimag &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecFimag &SvecFimag_O, &SvecFimag_IO;
 
-inline Fimag *ptr(SvecFimag &v) { return v.p(); }
+// common api for STL and SLISC
+inline Fimag *p(SvecFimag &v) { return v.p(); }
 
 class SvecImagC
 {
@@ -2733,8 +2688,8 @@ public:
 	const Imag* p() const;
 	Long size() const;
 	const Imag &operator[](Long_I i) const;
-	const Imag &back() const;
-	const Imag &back(Long_I i) const;
+	const Imag &end() const;
+	const Imag &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -2784,16 +2739,16 @@ inline const Imag &SvecImagC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Imag &SvecImagC::back() const
+inline const Imag &SvecImagC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Imag &SvecImagC::back(Long_I i) const
+inline const Imag &SvecImagC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2827,16 +2782,15 @@ inline void SvecImagC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecImagC::set(const SvecImagC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecImagC::~SvecImagC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecImagC &v) { return v.size(); }
+typedef const SvecImagC &SvecImag_I;
 
-inline const Imag *ptr(const SvecImagC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecImag_I v) { return v.size(); }
+
+inline const Imag *p(SvecImag_I v) { return v.p(); }
+
 
 class SvecImag
 {
@@ -2854,8 +2808,8 @@ public:
 	Imag* p() const;
 	Long size() const;
 	Imag &operator[](Long_I i) const;
-	Imag &back() const;
-	Imag &back(Long_I i) const;
+	Imag &end() const;
+	Imag &end(Long_I i) const;
 
 	operator SvecImagC() const;
 
@@ -2906,16 +2860,16 @@ inline Imag &SvecImag::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Imag &SvecImag::back() const
+inline Imag &SvecImag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Imag &SvecImag::back(Long_I i) const
+inline Imag &SvecImag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -2952,16 +2906,13 @@ inline void SvecImag::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecImag::set(const SvecImag &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecImag::~SvecImag() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecImag &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecImag &SvecImag_O, &SvecImag_IO;
 
-inline Imag *ptr(SvecImag &v) { return v.p(); }
+// common api for STL and SLISC
+inline Imag *p(SvecImag &v) { return v.p(); }
 
 class SvecLimagC
 {
@@ -2979,8 +2930,8 @@ public:
 	const Limag* p() const;
 	Long size() const;
 	const Limag &operator[](Long_I i) const;
-	const Limag &back() const;
-	const Limag &back(Long_I i) const;
+	const Limag &end() const;
+	const Limag &end(Long_I i) const;
 
 
 	void next(); // m_p += m_N
@@ -3030,16 +2981,16 @@ inline const Limag &SvecLimagC::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline const Limag &SvecLimagC::back() const
+inline const Limag &SvecLimagC::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline const Limag &SvecLimagC::back(Long_I i) const
+inline const Limag &SvecLimagC::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -3073,16 +3024,15 @@ inline void SvecLimagC::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLimagC::set(const SvecLimagC &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLimagC::~SvecLimagC() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLimagC &v) { return v.size(); }
+typedef const SvecLimagC &SvecLimag_I;
 
-inline const Limag *ptr(const SvecLimagC &v) { return v.p(); }
+// common api for STL and SLISC
+inline Long size(SvecLimag_I v) { return v.size(); }
+
+inline const Limag *p(SvecLimag_I v) { return v.p(); }
+
 
 class SvecLimag
 {
@@ -3100,8 +3050,8 @@ public:
 	Limag* p() const;
 	Long size() const;
 	Limag &operator[](Long_I i) const;
-	Limag &back() const;
-	Limag &back(Long_I i) const;
+	Limag &end() const;
+	Limag &end(Long_I i) const;
 
 	operator SvecLimagC() const;
 
@@ -3152,16 +3102,16 @@ inline Limag &SvecLimag::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline Limag &SvecLimag::back() const
+inline Limag &SvecLimag::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline Limag &SvecLimag::back(Long_I i) const
+inline Limag &SvecLimag::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -3198,16 +3148,13 @@ inline void SvecLimag::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void SvecLimag::set(const SvecLimag &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline SvecLimag::~SvecLimag() {}
 
-// common api for STL and SLISC
-inline Long size(const SvecLimag &v) { return v.size(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
 
-inline Limag *ptr(SvecLimag &v) { return v.p(); }
+// common api for STL and SLISC
+inline Limag *p(SvecLimag &v) { return v.p(); }
 
 
 

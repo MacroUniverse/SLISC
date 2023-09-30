@@ -310,7 +310,7 @@ inline void sort_row(@McooT@_IO a)
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VbaseT = ['Vbase', T];
+//% VecT = ['Vec', T];
 //% VecT = ['Vec', T];
 inline Long sort_col_dry(VecLong_O dest, @McooT@_I coo)
 {
@@ -378,7 +378,6 @@ inline void rm_zero(@McooT@_IO coo, @Tr@_I thresh = 0)
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VbaseT = ['Vbase', T];
 //% VecT = ['Vec', T];
 inline void operator+=(@McooT@_O coo, @McooT@_I coo1)
 {
@@ -409,7 +408,7 @@ inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VbaseT = ['Vbase', T];
+//% VecT = ['Vec', T];
 //% VecT = ['Vec', T];
 inline bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
 {

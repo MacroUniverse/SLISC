@@ -1,6 +1,6 @@
 // row-major matrix container
 #pragma once
-#include "../dense/Vbase.h"
+#include "../dense/Vec.h"
 
 namespace slisc {
 //% tem('Mat', {
@@ -10,12 +10,12 @@ namespace slisc {
 //%     'Fimag'; 'Imag'; 'Limag';});
 //%------------------------------------
 //% T = varargin{:};
-//% VbaseT = ['Vbase' T];
+//% VecT = ['Vec' T];
 //% MatT = ['Mat' T];
-class @MatT@ : public @VbaseT@
+class @MatT@ : public @VecT@
 {
 protected:
-	typedef @VbaseT@ Base;
+	typedef @VecT@ Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;

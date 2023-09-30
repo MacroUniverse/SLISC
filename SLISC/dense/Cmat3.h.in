@@ -1,6 +1,6 @@
 // Cmat container
 #pragma once
-#include "../dense/Vbase.h"
+#include "../dense/Vec.h"
 
 namespace slisc {
 //% tem('Cmat3', {
@@ -11,11 +11,11 @@ namespace slisc {
 //%----------------------------------------
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
-//% VbaseT = ['Vbase' T];
-class @Cmat3T@ : public @VbaseT@
+//% VecT = ['Vec' T];
+class @Cmat3T@ : public @VecT@
 {
 protected:
-	typedef @VbaseT@ Base;
+	typedef @VecT@ Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	@Cmat3T@(): m_N0(0), m_N1(0), m_N2(0) {};

@@ -1,6 +1,9 @@
-// vector container
+// basic vector
 #pragma once
-#include "../dense/Vbase.h"
+#include "../global.h"
+#include "../arith/Imag.h"
+#include "../str/str.h"
+#include "Svec.h"
 
 namespace slisc {
 //% tem('Vec', {
@@ -8,51 +11,227 @@ namespace slisc {
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag'; 'Qimag';});
-//%----------------------------------------------------------
+//%----------------------------------------------
 //% T = varargin{:};
 //% VecT = ['Vec' T];
-//% VbaseT = ['Vbase' T];
-class @VecT@ : public @VbaseT@
+class @VecT@
 {
+protected:
+	@T@ *m_p; // pointer to the first element
+	Long m_N; // number of elements
 public:
-	typedef @VbaseT@ Base;
-	@VecT@() = default;
+	// constructors
+	@VecT@(); // default constructor
 	explicit @VecT@(Long_I N);
 	@VecT@(const @VecT@ &rhs); // copy constructor
-	@VecT@(@VecT@ &&rhs); // move constructor
+	@VecT@(@VecT@&&); // move constructor
+
 	@VecT@ &operator=(const @VecT@ &); // copy asignment
 	@VecT@ &operator=(@VecT@ &&); // move asignment
+
+	// get properties
+	@T@* p(); // get pointer
+	const @T@* p() const;
+	Long size() const;
+	void resize(Long_I N);
+	@T@ &operator[](Long_I i);
+	const @T@ &operator[](Long_I i) const;
+	@T@& end();
+	const @T@& end() const;
+	@T@& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+	const @T@& end(Long_I i) const;
+	operator const Svec@T@C&() const; // convert to Svec@T@
+	operator const Svec@T@&();
+
+	~@VecT@();
 };
 
-inline @VecT@::@VecT@(Long_I N) : Base(N) {}
+// m_p doesn't need to be initialized, but g++ will complain
+inline @VecT@::@VecT@() : m_p(nullptr), m_N(0) {}
 
-inline @VecT@::@VecT@(const @VecT@ &rhs) : Base(rhs)
+inline @VecT@::@VecT@(Long_I N)
 {
-#ifdef SLS_NO_CPY_CONSTRUCTOR
-	SLS_ERR("copy constructor forbidden!");
+#ifdef SLS_CHECK_SHAPES
+	if (N < 0)
+		SLS_ERR("size less than 0!");
 #endif
+	m_N = N;
+	if (N > 0)
+		m_p = new @T@[N];
+	else
+		m_p = nullptr;
 }
 
-inline @VecT@::@VecT@(@VecT@ &&rhs) : Base(move(rhs))
+inline @VecT@::@VecT@(const @VecT@ &rhs)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
-	SLS_ERR("move constructor forbidden!");
+	SLS_ERR("Copy constructor or move constructor is forbidden!");
 #endif
+	m_N = rhs.m_N;
+	if (m_N > 0) {
+		m_p = new @T@[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(@T@));
+	}
+	else
+		m_p = nullptr;
 }
 
-inline @VecT@ &@VecT@::operator=(const @VecT@ &rhs) {
-	Base::operator=(rhs);
-	return *this;
-};
+inline @VecT@::@VecT@(@VecT@ &&rhs)
+{
+#ifndef NDEBUG
+	if (this == &rhs)
+		SLS_ERR("self move is forbidden!");
+#endif
+	if (m_N != 0)
+		delete[] m_p;
+	m_N = rhs.m_N; rhs.m_N = 0;
+	m_p = rhs.m_p;
+}
 
-inline @VecT@ &@VecT@::operator=(@VecT@ &&rhs) {
-	Base::operator=(move(rhs));
+inline @VecT@ &@VecT@::operator=(const @VecT@ &rhs)
+{
+#ifndef NDEBUG
+	if (this == &rhs) SLS_ERR("self copy assignment forbidden!");
+#endif
+	resize(rhs.size());
+	if (m_N > 0)
+		memcpy(m_p, rhs.p(), sizeof(@T@)*size());
 	return *this;
-};
+}
+
+inline @VecT@ &@VecT@::operator=(@VecT@ &&rhs)
+{
+#ifndef NDEBUG
+	if (this == &rhs) SLS_ERR("self move assignment is forbidden!");
+#endif
+	if (m_N != 0)
+		delete[] m_p;
+	m_N = rhs.m_N; rhs.m_N = 0;
+	m_p = rhs.m_p;
+	return *this;
+}
+
+inline @T@ * @VecT@::p()
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline const @T@ * @VecT@::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline Long @VecT@::size() const
+{
+	return m_N;
+}
+
+inline void @VecT@::resize(Long_I N)
+{
+	if (N != m_N) {
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new @T@[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new @T@[N];
+			}
+		}
+	}
+}
+
+inline @T@ &@VecT@::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+	SLS_ERR("@VecT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+	return m_p[i];
+}
+
+inline const @T@ &@VecT@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i<0 || i>=m_N)
+		SLS_ERR("@VecT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+	return m_p[i];
+}
+
+inline @T@ &@VecT@::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline const @T@ &@VecT@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline @T@ &@VecT@::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+	return m_p[m_N - i];
+}
+
+inline const @T@ &@VecT@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+	return m_p[m_N - i];
+}
+
+inline @VecT@::operator const Svec@T@C&() const {
+	return reinterpret_cast<const Svec@T@C&>(*this);
+}
+
+inline @VecT@::operator const Svec@T@&() {
+	return reinterpret_cast<const Svec@T@&>(*this);
+}
+
+inline @VecT@::~@VecT@()
+{
+	if (m_N != 0)
+		delete[] m_p;
+}
+
+// common api for STL and SLISC
+inline Long size(const @VecT@ &v) { return v.size(); }
+
+inline const @T@ *ptr(const @VecT@ &v) { return v.p(); }
+
+inline @T@ *ptr(@VecT@ &v) { return v.p(); }
+
 
 typedef const @VecT@ &@VecT@_I;
 typedef @VecT@ &@VecT@_O, &@VecT@_IO;
-//%------------------------
+
+//%----------------------------------------
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef VecInt VecLong;
@@ -62,33 +241,105 @@ typedef VecLlong VecLong;
 typedef const VecLong &VecLong_I;
 typedef VecLong &VecLong_O, &VecLong_IO;
 
-// implemented with vector<bool>, not actually a vector of bool
-class VecBool : public VbaseBool
+
+class VecBool : vector<bool>
 {
 public:
-	typedef VbaseBool Base;
-	using Base::ref; // bit reference
-
+	typedef vector<bool> Base;
+	typedef Base::reference ref;
+	// constructors
 	VecBool() = default;
 	explicit VecBool(Long_I N);
 	VecBool(const VecBool &rhs); // copy constructor
 	// move constructor is inherited
 	using Base::operator=;
+
+	// get properties
+	Long size() const;
+	using Base::resize;
+	ref operator[](Long_I i);
+	bool operator[](Long_I i) const;
+	ref end();
+	bool end() const;
+	ref end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+	bool end(Long_I i) const;
 };
 
-inline VecBool::VecBool(Long_I N) : Base(N) {}
-
-inline VecBool::VecBool(const VecBool &rhs) : Base(rhs)
+inline VecBool::VecBool(Long_I N) : Base(N)
 {
-#ifdef SLS_NO_CPY_CONSTRUCTOR
-	SLS_ERR("copy constructor forbidden!");
+#ifdef SLS_CHECK_SHAPES
+	if (N < 0)
+		SLS_ERR("size less than 0!");
 #endif
 }
 
-typedef const VecBool &VecBool_I;
-typedef VecBool &VecBool_O, &VecBool_IO;
+inline VecBool::VecBool(const VecBool &rhs): Base(rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+	SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+}
+
+inline Long VecBool::size() const { return Base::size(); }
+
+inline VecBool::ref VecBool::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i<0 || i>=size())
+		SLS_ERR("VecBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+#endif
+	return Base::operator[](i);
+}
+
+inline bool VecBool::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i<0 || i>=size())
+		SLS_ERR("VecBool index (" + num2str(i) + ") out of bounds: size = " + num2str(size()));
+#endif
+	return Base::operator[](i);
+}
+
+inline VecBool::ref VecBool::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (Base::empty())
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return Base::back();
+}
+
+inline bool VecBool::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (Base::empty())
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return Base::back();
+}
+
+inline VecBool::ref VecBool::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > size())
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+#endif
+	return (*this)[size() - i];
+}
+
+inline bool VecBool::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > size())
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(size()));
+#endif
+	return (*this)[size() - i];
+}
 
 // common api for STL and SLISC
-inline Long size(VecBool_I v) { return v.size(); }
+inline Long size(const VecBool &v) { return v.size(); }
+
+typedef const VecBool &VecBool_I;
+typedef VecBool &VecBool_O, &VecBool_IO;
 
 } // namespace slisc

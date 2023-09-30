@@ -1,12 +1,12 @@
 // row-major matrix container
 #pragma once
-#include "../dense/Vbase.h"
+#include "../dense/Vec.h"
 
 namespace slisc {
-class MatChar : public VbaseChar
+class MatChar : public VecChar
 {
 protected:
-	typedef VbaseChar Base;
+	typedef VecChar Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -68,10 +68,10 @@ inline void MatChar::resize(Long_I N0, Long_I N1)
 typedef const MatChar &MatChar_I;
 typedef MatChar &MatChar_O, &MatChar_IO;
 
-class MatUchar : public VbaseUchar
+class MatUchar : public VecUchar
 {
 protected:
-	typedef VbaseUchar Base;
+	typedef VecUchar Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -133,10 +133,10 @@ inline void MatUchar::resize(Long_I N0, Long_I N1)
 typedef const MatUchar &MatUchar_I;
 typedef MatUchar &MatUchar_O, &MatUchar_IO;
 
-class MatInt : public VbaseInt
+class MatInt : public VecInt
 {
 protected:
-	typedef VbaseInt Base;
+	typedef VecInt Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -198,10 +198,10 @@ inline void MatInt::resize(Long_I N0, Long_I N1)
 typedef const MatInt &MatInt_I;
 typedef MatInt &MatInt_O, &MatInt_IO;
 
-class MatLlong : public VbaseLlong
+class MatLlong : public VecLlong
 {
 protected:
-	typedef VbaseLlong Base;
+	typedef VecLlong Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -263,10 +263,10 @@ inline void MatLlong::resize(Long_I N0, Long_I N1)
 typedef const MatLlong &MatLlong_I;
 typedef MatLlong &MatLlong_O, &MatLlong_IO;
 
-class MatFloat : public VbaseFloat
+class MatFloat : public VecFloat
 {
 protected:
-	typedef VbaseFloat Base;
+	typedef VecFloat Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -328,10 +328,10 @@ inline void MatFloat::resize(Long_I N0, Long_I N1)
 typedef const MatFloat &MatFloat_I;
 typedef MatFloat &MatFloat_O, &MatFloat_IO;
 
-class MatDoub : public VbaseDoub
+class MatDoub : public VecDoub
 {
 protected:
-	typedef VbaseDoub Base;
+	typedef VecDoub Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -393,10 +393,10 @@ inline void MatDoub::resize(Long_I N0, Long_I N1)
 typedef const MatDoub &MatDoub_I;
 typedef MatDoub &MatDoub_O, &MatDoub_IO;
 
-class MatLdoub : public VbaseLdoub
+class MatLdoub : public VecLdoub
 {
 protected:
-	typedef VbaseLdoub Base;
+	typedef VecLdoub Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -459,10 +459,10 @@ typedef const MatLdoub &MatLdoub_I;
 typedef MatLdoub &MatLdoub_O, &MatLdoub_IO;
 
 
-class MatFcomp : public VbaseFcomp
+class MatFcomp : public VecFcomp
 {
 protected:
-	typedef VbaseFcomp Base;
+	typedef VecFcomp Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -524,10 +524,10 @@ inline void MatFcomp::resize(Long_I N0, Long_I N1)
 typedef const MatFcomp &MatFcomp_I;
 typedef MatFcomp &MatFcomp_O, &MatFcomp_IO;
 
-class MatComp : public VbaseComp
+class MatComp : public VecComp
 {
 protected:
-	typedef VbaseComp Base;
+	typedef VecComp Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -589,10 +589,10 @@ inline void MatComp::resize(Long_I N0, Long_I N1)
 typedef const MatComp &MatComp_I;
 typedef MatComp &MatComp_O, &MatComp_IO;
 
-class MatLcomp : public VbaseLcomp
+class MatLcomp : public VecLcomp
 {
 protected:
-	typedef VbaseLcomp Base;
+	typedef VecLcomp Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -655,10 +655,10 @@ typedef const MatLcomp &MatLcomp_I;
 typedef MatLcomp &MatLcomp_O, &MatLcomp_IO;
 
 
-class MatFimag : public VbaseFimag
+class MatFimag : public VecFimag
 {
 protected:
-	typedef VbaseFimag Base;
+	typedef VecFimag Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -720,10 +720,10 @@ inline void MatFimag::resize(Long_I N0, Long_I N1)
 typedef const MatFimag &MatFimag_I;
 typedef MatFimag &MatFimag_O, &MatFimag_IO;
 
-class MatImag : public VbaseImag
+class MatImag : public VecImag
 {
 protected:
-	typedef VbaseImag Base;
+	typedef VecImag Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -785,10 +785,10 @@ inline void MatImag::resize(Long_I N0, Long_I N1)
 typedef const MatImag &MatImag_I;
 typedef MatImag &MatImag_O, &MatImag_IO;
 
-class MatLimag : public VbaseLimag
+class MatLimag : public VecLimag
 {
 protected:
-	typedef VbaseLimag Base;
+	typedef VecLimag Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;

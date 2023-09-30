@@ -22,7 +22,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatCharC &sli);
 	void set(const Char *data, Long_I N0, Long_I N1);
 	~ScmatCharC();
 };
@@ -70,12 +69,6 @@ inline void ScmatCharC::set(const Char *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatCharC::set(const ScmatCharC &sli)
-{
-	SvecCharC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatCharC::~ScmatCharC() {}
 
 typedef const ScmatCharC &ScmatChar_I;
@@ -105,7 +98,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatChar &sli);
 	void set(Char *data, Long_I N0, Long_I N1);
 	~ScmatChar();
 };
@@ -157,12 +149,6 @@ inline void ScmatChar::set(Char *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatChar::set(const ScmatChar &sli)
-{
-	SvecChar::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatChar::~ScmatChar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -190,7 +176,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatUcharC &sli);
 	void set(const Uchar *data, Long_I N0, Long_I N1);
 	~ScmatUcharC();
 };
@@ -238,12 +223,6 @@ inline void ScmatUcharC::set(const Uchar *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatUcharC::set(const ScmatUcharC &sli)
-{
-	SvecUcharC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatUcharC::~ScmatUcharC() {}
 
 typedef const ScmatUcharC &ScmatUchar_I;
@@ -273,7 +252,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatUchar &sli);
 	void set(Uchar *data, Long_I N0, Long_I N1);
 	~ScmatUchar();
 };
@@ -325,12 +303,6 @@ inline void ScmatUchar::set(Uchar *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatUchar::set(const ScmatUchar &sli)
-{
-	SvecUchar::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatUchar::~ScmatUchar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -358,7 +330,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatIntC &sli);
 	void set(const Int *data, Long_I N0, Long_I N1);
 	~ScmatIntC();
 };
@@ -406,12 +377,6 @@ inline void ScmatIntC::set(const Int *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatIntC::set(const ScmatIntC &sli)
-{
-	SvecIntC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatIntC::~ScmatIntC() {}
 
 typedef const ScmatIntC &ScmatInt_I;
@@ -441,7 +406,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatInt &sli);
 	void set(Int *data, Long_I N0, Long_I N1);
 	~ScmatInt();
 };
@@ -493,12 +457,6 @@ inline void ScmatInt::set(Int *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatInt::set(const ScmatInt &sli)
-{
-	SvecInt::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatInt::~ScmatInt() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -526,7 +484,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLlongC &sli);
 	void set(const Llong *data, Long_I N0, Long_I N1);
 	~ScmatLlongC();
 };
@@ -574,12 +531,6 @@ inline void ScmatLlongC::set(const Llong *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLlongC::set(const ScmatLlongC &sli)
-{
-	SvecLlongC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLlongC::~ScmatLlongC() {}
 
 typedef const ScmatLlongC &ScmatLlong_I;
@@ -609,7 +560,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLlong &sli);
 	void set(Llong *data, Long_I N0, Long_I N1);
 	~ScmatLlong();
 };
@@ -661,12 +611,6 @@ inline void ScmatLlong::set(Llong *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLlong::set(const ScmatLlong &sli)
-{
-	SvecLlong::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLlong::~ScmatLlong() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -694,7 +638,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFloatC &sli);
 	void set(const Float *data, Long_I N0, Long_I N1);
 	~ScmatFloatC();
 };
@@ -742,12 +685,6 @@ inline void ScmatFloatC::set(const Float *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFloatC::set(const ScmatFloatC &sli)
-{
-	SvecFloatC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatFloatC::~ScmatFloatC() {}
 
 typedef const ScmatFloatC &ScmatFloat_I;
@@ -777,7 +714,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFloat &sli);
 	void set(Float *data, Long_I N0, Long_I N1);
 	~ScmatFloat();
 };
@@ -829,12 +765,6 @@ inline void ScmatFloat::set(Float *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFloat::set(const ScmatFloat &sli)
-{
-	SvecFloat::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatFloat::~ScmatFloat() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -862,7 +792,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatDoubC &sli);
 	void set(const Doub *data, Long_I N0, Long_I N1);
 	~ScmatDoubC();
 };
@@ -910,12 +839,6 @@ inline void ScmatDoubC::set(const Doub *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatDoubC::set(const ScmatDoubC &sli)
-{
-	SvecDoubC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatDoubC::~ScmatDoubC() {}
 
 typedef const ScmatDoubC &ScmatDoub_I;
@@ -945,7 +868,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatDoub &sli);
 	void set(Doub *data, Long_I N0, Long_I N1);
 	~ScmatDoub();
 };
@@ -997,12 +919,6 @@ inline void ScmatDoub::set(Doub *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatDoub::set(const ScmatDoub &sli)
-{
-	SvecDoub::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatDoub::~ScmatDoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1030,7 +946,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLdoubC &sli);
 	void set(const Ldoub *data, Long_I N0, Long_I N1);
 	~ScmatLdoubC();
 };
@@ -1078,12 +993,6 @@ inline void ScmatLdoubC::set(const Ldoub *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLdoubC::set(const ScmatLdoubC &sli)
-{
-	SvecLdoubC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLdoubC::~ScmatLdoubC() {}
 
 typedef const ScmatLdoubC &ScmatLdoub_I;
@@ -1113,7 +1022,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLdoub &sli);
 	void set(Ldoub *data, Long_I N0, Long_I N1);
 	~ScmatLdoub();
 };
@@ -1165,12 +1073,6 @@ inline void ScmatLdoub::set(Ldoub *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLdoub::set(const ScmatLdoub &sli)
-{
-	SvecLdoub::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLdoub::~ScmatLdoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1200,7 +1102,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFcompC &sli);
 	void set(const Fcomp *data, Long_I N0, Long_I N1);
 	~ScmatFcompC();
 };
@@ -1248,12 +1149,6 @@ inline void ScmatFcompC::set(const Fcomp *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFcompC::set(const ScmatFcompC &sli)
-{
-	SvecFcompC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatFcompC::~ScmatFcompC() {}
 
 typedef const ScmatFcompC &ScmatFcomp_I;
@@ -1283,7 +1178,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFcomp &sli);
 	void set(Fcomp *data, Long_I N0, Long_I N1);
 	~ScmatFcomp();
 };
@@ -1335,12 +1229,6 @@ inline void ScmatFcomp::set(Fcomp *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFcomp::set(const ScmatFcomp &sli)
-{
-	SvecFcomp::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatFcomp::~ScmatFcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1368,7 +1256,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatCompC &sli);
 	void set(const Comp *data, Long_I N0, Long_I N1);
 	~ScmatCompC();
 };
@@ -1416,12 +1303,6 @@ inline void ScmatCompC::set(const Comp *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatCompC::set(const ScmatCompC &sli)
-{
-	SvecCompC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatCompC::~ScmatCompC() {}
 
 typedef const ScmatCompC &ScmatComp_I;
@@ -1451,7 +1332,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatComp &sli);
 	void set(Comp *data, Long_I N0, Long_I N1);
 	~ScmatComp();
 };
@@ -1503,12 +1383,6 @@ inline void ScmatComp::set(Comp *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatComp::set(const ScmatComp &sli)
-{
-	SvecComp::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatComp::~ScmatComp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1536,7 +1410,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLcompC &sli);
 	void set(const Lcomp *data, Long_I N0, Long_I N1);
 	~ScmatLcompC();
 };
@@ -1584,12 +1457,6 @@ inline void ScmatLcompC::set(const Lcomp *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLcompC::set(const ScmatLcompC &sli)
-{
-	SvecLcompC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLcompC::~ScmatLcompC() {}
 
 typedef const ScmatLcompC &ScmatLcomp_I;
@@ -1619,7 +1486,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLcomp &sli);
 	void set(Lcomp *data, Long_I N0, Long_I N1);
 	~ScmatLcomp();
 };
@@ -1671,12 +1537,6 @@ inline void ScmatLcomp::set(Lcomp *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLcomp::set(const ScmatLcomp &sli)
-{
-	SvecLcomp::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLcomp::~ScmatLcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1706,7 +1566,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFimagC &sli);
 	void set(const Fimag *data, Long_I N0, Long_I N1);
 	~ScmatFimagC();
 };
@@ -1754,12 +1613,6 @@ inline void ScmatFimagC::set(const Fimag *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFimagC::set(const ScmatFimagC &sli)
-{
-	SvecFimagC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatFimagC::~ScmatFimagC() {}
 
 typedef const ScmatFimagC &ScmatFimag_I;
@@ -1789,7 +1642,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatFimag &sli);
 	void set(Fimag *data, Long_I N0, Long_I N1);
 	~ScmatFimag();
 };
@@ -1841,12 +1693,6 @@ inline void ScmatFimag::set(Fimag *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatFimag::set(const ScmatFimag &sli)
-{
-	SvecFimag::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatFimag::~ScmatFimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -1874,7 +1720,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatImagC &sli);
 	void set(const Imag *data, Long_I N0, Long_I N1);
 	~ScmatImagC();
 };
@@ -1922,12 +1767,6 @@ inline void ScmatImagC::set(const Imag *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatImagC::set(const ScmatImagC &sli)
-{
-	SvecImagC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatImagC::~ScmatImagC() {}
 
 typedef const ScmatImagC &ScmatImag_I;
@@ -1957,7 +1796,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatImag &sli);
 	void set(Imag *data, Long_I N0, Long_I N1);
 	~ScmatImag();
 };
@@ -2009,12 +1847,6 @@ inline void ScmatImag::set(Imag *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatImag::set(const ScmatImag &sli)
-{
-	SvecImag::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatImag::~ScmatImag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
@@ -2042,7 +1874,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLimagC &sli);
 	void set(const Limag *data, Long_I N0, Long_I N1);
 	~ScmatLimagC();
 };
@@ -2090,12 +1921,6 @@ inline void ScmatLimagC::set(const Limag *data, Long_I N0, Long_I N1)
 	m_N0 = N0; m_N1 = N1;
 }
 
-inline void ScmatLimagC::set(const ScmatLimagC &sli)
-{
-	SvecLimagC::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
-}
-
 inline ScmatLimagC::~ScmatLimagC() {}
 
 typedef const ScmatLimagC &ScmatLimag_I;
@@ -2125,7 +1950,6 @@ public:
 
 	// There is no upper bound checking of N, use with care
 	void reshape(Long_I N0, Long_I N1);
-	void set(const ScmatLimag &sli);
 	void set(Limag *data, Long_I N0, Long_I N1);
 	~ScmatLimag();
 };
@@ -2175,12 +1999,6 @@ inline void ScmatLimag::set(Limag *data, Long_I N0, Long_I N1)
 {
 	SvecLimag::set(data, N0*N1);
 	m_N0 = N0; m_N1 = N1;
-}
-
-inline void ScmatLimag::set(const ScmatLimag &sli)
-{
-	SvecLimag::set(sli);
-	m_N0 = sli.m_N0; m_N1 = sli.m_N1;
 }
 
 inline ScmatLimag::~ScmatLimag() {}

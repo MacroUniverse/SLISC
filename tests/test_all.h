@@ -84,7 +84,6 @@ void test_all(const std::string &test_name)
 	SLS_TEST(Svec);
 	SLS_TEST(time);
 	SLS_TEST(unicode);
-	SLS_TEST(Vbase);
 	SLS_TEST(Vec);
 	SLS_TEST(ylm);
 	SLS_TEST(disp);

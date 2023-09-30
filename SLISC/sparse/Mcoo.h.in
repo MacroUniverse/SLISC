@@ -12,13 +12,13 @@ void veccpy(T *, const T *, Long_I);
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VbaseT = ['Vbase', T];
+//% VecT = ['Vec', T];
 //% VecT = ['Vec', T];
 
-class @McooT@ : public @VbaseT@
+class @McooT@ : public @VecT@
 {
 private:
-	typedef @VbaseT@ Base;
+	typedef @VecT@ Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;

@@ -1,7 +1,6 @@
 #pragma once
 #include "../global.h"
 #include "../arith/Imag.h"
-#include "../dense/Vec.h"
 
 // this class is not memory safe!
 // "C" means lower level const
@@ -52,8 +51,8 @@ public:
 	@CT@* p() const;
 	Long size() const;
 	@CT@ &operator[](Long_I i) const;
-	@CT@ &back() const;
-	@CT@ &back(Long_I i) const;
+	@CT@ &end() const;
+	@CT@ &end(Long_I i) const;
 
 //% if ~constness
 	operator @SvecTC@() const;
@@ -107,16 +106,16 @@ inline @CT@ &@Class@::operator[](Long_I i) const
 	return m_p[i];
 }
 
-inline @CT@ &@Class@::back() const
+inline @CT@ &@Class@::end() const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (m_N == 0)
-		SLS_ERR("tring to use back() on empty vector!");
+		SLS_ERR("tring to use end() on empty vector!");
 #endif
 	return m_p[m_N - 1];
 }
 
-inline @CT@ &@Class@::back(Long_I i) const
+inline @CT@ &@Class@::end(Long_I i) const
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i <= 0 || i > m_N)
@@ -155,19 +154,22 @@ inline void @Class@::shift(Long_I N) {
 	m_p += N;
 }
 
-inline void @Class@::set(const @Class@ &sli) {
-	m_p = sli.m_p; m_N = sli.m_N;
-}
-
 inline @Class@::~@Class@() {}
 
-// common api for STL and SLISC
-inline Long size(const @Class@ &v) { return v.size(); }
-
 //% if constness
-inline const @T@ *ptr(const @Class@ &v) { return v.p(); }
+typedef const @Class@ &@SvecT@_I;
+
+// common api for STL and SLISC
+inline Long size(@SvecT@_I v) { return v.size(); }
+
+inline const @T@ *p(@SvecT@_I v) { return v.p(); }
+
 //% else
-inline @T@ *ptr(@Class@ &v) { return v.p(); }
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
+
+// common api for STL and SLISC
+inline @T@ *p(@SvecT@ &v) { return v.p(); }
 //% end
 //%------------------------
 

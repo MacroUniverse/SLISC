@@ -7,10 +7,10 @@ template <class T>
 void veccpy(T *, const T *, Long_I);
 
 
-class McooChar : public VbaseChar
+class McooChar : public VecChar
 {
 private:
-	typedef VbaseChar Base;
+	typedef VecChar Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -284,10 +284,10 @@ inline void McooChar::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooInt : public VbaseInt
+class McooInt : public VecInt
 {
 private:
-	typedef VbaseInt Base;
+	typedef VecInt Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -561,10 +561,10 @@ inline void McooInt::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooLlong : public VbaseLlong
+class McooLlong : public VecLlong
 {
 private:
-	typedef VbaseLlong Base;
+	typedef VecLlong Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -838,10 +838,10 @@ inline void McooLlong::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooDoub : public VbaseDoub
+class McooDoub : public VecDoub
 {
 private:
-	typedef VbaseDoub Base;
+	typedef VecDoub Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1115,10 +1115,10 @@ inline void McooDoub::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooComp : public VbaseComp
+class McooComp : public VecComp
 {
 private:
-	typedef VbaseComp Base;
+	typedef VecComp Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1392,10 +1392,10 @@ inline void McooComp::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooQdoub : public VbaseQdoub
+class McooQdoub : public VecQdoub
 {
 private:
-	typedef VbaseQdoub Base;
+	typedef VecQdoub Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1669,10 +1669,10 @@ inline void McooQdoub::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooQcomp : public VbaseQcomp
+class McooQcomp : public VecQcomp
 {
 private:
-	typedef VbaseQcomp Base;
+	typedef VecQcomp Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1946,10 +1946,10 @@ inline void McooQcomp::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooImag : public VbaseImag
+class McooImag : public VecImag
 {
 private:
-	typedef VbaseImag Base;
+	typedef VecImag Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -2223,10 +2223,10 @@ inline void McooImag::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooQimag : public VbaseQimag
+class McooQimag : public VecQimag
 {
 private:
-	typedef VbaseQimag Base;
+	typedef VecQimag Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
