@@ -2,6 +2,7 @@
 #include "../global.h"
 #ifdef SLS_USE_CBLAS
 #include "../dense/WorkSpace.h"
+#include "../dense/Vec.h"
 #include "expokit0.h"
 
 namespace slisc {

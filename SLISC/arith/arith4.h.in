@@ -221,6 +221,7 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'SvecComp' 'SvecDoub';
 //% 'SvecComp' 'SvecComp';
 //% 'SvecQcomp' 'SvecQdoub';
+//% 'SvecQcomp' 'SvecQcomp';
 //% 'DvecDoub' 'SvecDoub'
 //% 'DvecQdoub' 'SvecQdoub'
 //% 'DvecComp' 'SvecComp'
@@ -233,10 +234,6 @@ inline void div_eq_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% 'DvecQcomp', 'DvecQcomp'
 //% 'MatDoub' 'MatDoub'
 //% 'MatComp' 'MatComp'
-//% 'ScmatComp' 'ScmatDoub'
-//% 'ScmatQcomp' 'ScmatQdoub'
-//% 'ScmatComp' 'ScmatComp'
-//% 'ScmatQcomp' 'ScmatQcomp'
 //% 'DcmatComp' 'DcmatDoub'
 //% 'DcmatQcomp' 'DcmatQdoub'
 //% 'Mat3Doub' 'Mat3Doub'
@@ -773,12 +770,6 @@ inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 //%   'SvecQcomp' 'SvecQcomp' 'SvecQcomp'
 //%   'DvecComp', 'SvecComp', 'DvecComp'
 //%   'DvecQcomp', 'SvecQcomp', 'DvecQcomp'
-//%   'CmatInt' 'CmatInt' 'CmatInt'
-//%   'CmatLlong' 'CmatLlong' 'CmatLlong'
-//%   'CmatDoub' 'CmatDoub' 'CmatDoub'
-//%   'CmatQdoub' 'CmatQdoub' 'CmatQdoub'
-//%   'CmatComp' 'CmatComp' 'CmatComp'
-//%   'CmatQcomp' 'CmatQcomp' 'CmatQcomp'
 //% });
 //%------------------------------
 //% [T, T1, T2] = varargin{:};

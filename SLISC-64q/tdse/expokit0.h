@@ -1,5 +1,5 @@
 #pragma once
-#include "../global.h"
+#include "../arith/scalar_arith.h"
 
 #ifdef SLS_USE_CBLAS
 // translation of expokit from Fortran to c++
@@ -27,7 +27,7 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 	if (ldh < m) iflag = -1;
 	if (lwsp < 4 * mm + ideg + 1) iflag = -2;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGPADM): iflag = " + num2str(iflag));
+		SLS_ERR("bad sizes (in input of ZGPADM): iflag = " + to_string(iflag));
 
 	icoef = 0;
 	ih2 = icoef + ideg + 1;
@@ -111,7 +111,7 @@ inline void ZGPADM(Long_I ideg, Long_I m, Doub_I t, const Comp *H, Long_I ldh, C
 	iflag = LAPACKE_zgesv(LAPACK_COL_MAJOR, m, m, (double _Complex*)(wsp + iq), m, ipiv,
 		(double _Complex*)(wsp + ip), m);
 	if (iflag != 0)
-		SLS_ERR("Problem in ZGESV (within ZGPADM): iflag = " + num2str(iflag));
+		SLS_ERR("Problem in ZGESV (within ZGPADM): iflag = " + to_string(iflag));
 	cblas_zdscal(mm, 2., wsp + ip, 1);
 	for (j = 0; j < m; ++j)
 		wsp[ip + j*(m + 1)] = wsp[ip + j*(m + 1)] + one;
@@ -260,7 +260,7 @@ inline void ZGEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	if (m >= n || m <= 0)
 		iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + num2str(iflag));
+		SLS_ERR("bad sizes (in input of ZGEXPV): iflag = " + to_string(iflag));
 
 	k1 = 2;
 	mh = m + 2;
@@ -519,7 +519,7 @@ inline void ZHEXPV(Long_I n, Long_I m, Doub_I t, Comp *w, Doub tol, Doub_I anorm
 	if (m >= n || m <= 0)
 		iflag = -3;
 	if (iflag != 0)
-		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + num2str(iflag));
+		SLS_ERR("bad sizes (in input of DHEXPV): iflag = " + to_string(iflag));
 
 	k1 = 2;
 	mh = m + 2;

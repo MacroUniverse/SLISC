@@ -119,7 +119,6 @@ void test_sqlitecpp()
     // test SQLiteCpp
     // https://github.com/SRombauts/SQLiteCpp
 #ifdef SLS_USE_SQLITECPP
-    cout << "(testing SQLiteCpp)" << endl;
     try {
         SQLite::Database db("test_sqlite_bind.db");
         SQLite::Statement query(db, "SELECT * FROM names WHERE age > ?");
