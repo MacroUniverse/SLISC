@@ -100,7 +100,7 @@ inline void fftshift(@T@_IO v)
 }
 //%----------------
 
-//% tem('fftshift2', {'MatDoub'; 'MatComp'; 'CmatDoub'; 'CmatComp';});
+//% tem('fftshift2', { 'ScmatDoub'; 'ScmatComp';});
 //%----------------
 //% T = varargin{:};
 //% Tcut0 = cut0_type(T);

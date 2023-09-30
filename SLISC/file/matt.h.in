@@ -78,7 +78,7 @@ inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 	else
 		m_out << real(s) << '+' << imag(s) << "i ";
 //% else
-//%     error('not implemented!');
+//%     error('matt.h.in: not implemented (1)!');
 //% end
 }
 //%------------------------
@@ -322,11 +322,10 @@ inline Matt::~Matt()
 //%     'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
 //%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecComp';
 //%     'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
-//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//%     'Cmat4Doub'; 'Cmat4Comp';
 //%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';
+//%     'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp';
+//%     'Scmat4Doub'; 'Scmat4Comp';
 //% });
 //%---------------------
 //% T = varargin{:};
@@ -408,7 +407,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 		for (Long i = 0; i < N1; ++i)
 			matt_write_scalar(a(i, j), fout);
 }
-//% elseif is_Cmat3(T) || is_Mat3(T)
+//% elseif is_Scmat3(T) || is_Mat3(T)
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 {
 	if (matt.search(varname) >= 0)
@@ -435,7 +434,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 			for (i = 0; i < N1; ++i)
 				matt_write_scalar(a(i, j, k), fout);
 }
-//% elseif is_Cmat4(T)
+//% elseif is_Scmat4(T)
 inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 {
 	if (matt.search(varname) >= 0)
@@ -465,7 +464,7 @@ inline void save(@T@_I a, Str_I varname, Matt_IO matt)
 }
 //% else
 //%     disp(T);
-//%     error('not implemented!');
+//%     error('matt.h.in: not implemented (2)!');
 //% end
 
 //% % save one var to one file (replace old file)
@@ -487,16 +486,16 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 //% tem('load_matt', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
-//%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
-//%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
-//%         'Cmat4Doub'; 'Cmat4Comp';
+//%         'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
+//%         'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp';
+//%         'Scmat4Doub'; 'Scmat4Comp';
 //% });
 //%---------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
 //% numTs = num2str(type_num(Ts));
 //% if ~(is_Char(Ts) || is_Int(Ts) || is_Llong(Ts) || is_Doub(Ts) || is_Comp(Ts))
-//%     error('not implemented!');
+//%     error('matt.h.in: not implemented (3)!');
 //% end
 //% if is_scalar(T)
 inline void load(@T@_O s, Str_I varname, Matt_IO matt)
@@ -534,7 +533,7 @@ inline void load(@T@_O v, Str_I varname, Matt_IO matt)
 	for (Long i = 0; i < n; ++i)
 		matt_read_scalar(v[i], fin);
 }
-//% elseif is_Mat(T) || is_Cmat(T)
+//% elseif is_Mat(T) || is_Scmat(T)
 inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
@@ -555,7 +554,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 		for (i = 0; i < m; ++i)
 			matt_read_scalar(a(i, j), fin);
 }
-//% elseif is_Mat3(T) || is_Cmat3(T)
+//% elseif is_Mat3(T) || is_Scmat3(T)
 inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
@@ -578,7 +577,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 			for (i = 0; i < m; ++i)
 				matt_read_scalar(a(i, j, k), fin);
 }
-//% elseif is_Cmat4(T)
+//% elseif is_Scmat4(T)
 inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
@@ -603,7 +602,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 					matt_read_scalar(a(i, j, k, l), fin);
 }
 //% else
-//%     disp(T); error('not implemented!');
+//%     disp(T); error('matt.h.in: not implemented (4)!');
 //% end
 
 //% % read one var from one file

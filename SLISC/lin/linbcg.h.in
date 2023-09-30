@@ -10,7 +10,7 @@
 namespace slisc {
 
 //% tem('Linbcg', {
-//%    'VecDoub'; 'VecQdoub';
+//%    'SvecDoub'; 'SvecQdoub';
 //% });
 //%------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
@@ -123,7 +123,7 @@ inline @Ts@ Linbcg@Ts@::snrm(@Tv@_I sx, const Int itol)
 
 // BiCG with symmetric matrix and no precondition (only tested for real matrix)
 //% tem('lin_eq_bcg_sym', {
-//%    'VecDoub' 'CmatDoub' 'SvecDoub';
+//%    'SvecDoub' 'ScmatDoub' 'SvecDoub';
 //% });
 //%------------------------------
 //% [Tv, Tmat, Tv_wsp] = varargin{:}; Ts = val_t(Tv); Tr = rm_comp(Ts);
@@ -236,8 +236,8 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 // return: [0] Success [1] maxit iterations reached [3] stagnated after two consecutive iterations were the same
 // [4] scalar underflow/overflow
 //% tem('bicgstab_matlab', {
-//%    'VecDoub' 'CmatDoub' 'VecDoub' 'VecDoub';
-//%    'VecComp' 'CmatComp' 'VecComp' 'VecComp';
+//%    'SvecDoub' 'ScmatDoub' 'SvecDoub' 'SvecDoub';
+//%    'SvecComp' 'ScmatComp' 'SvecComp' 'SvecComp';
 //% });
 //%------------------------------
 //% [Tx, Tmat, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
@@ -423,8 +423,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 // [4] scalar underflow/overflow
 // all returns other than [0] will not have other outputs
 //% tem('bicgstab_matlab_optim', {
-//%    'VecDoub' 'VecDoub' 'VecDoub';
-//%    'VecComp' 'VecComp' 'VecComp';
+//%    'SvecDoub' 'SvecDoub' 'SvecDoub';
 //%    'SvecComp' 'SvecComp' 'SvecComp';
 //% });
 //%------------------------------

@@ -806,7 +806,7 @@ inline void write(ofstream &fout, Str32_I str)
 // skipt specific number of lines at the beginning
 // matrix will auto-resize
 // spaces & new line at the end of file are allowed
-inline void read(CmatInt_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(ScmatInt_O mat, Str_I file, Long_I skip_lines = 0)
 {
 	ifstream input(file);
 	if (!input.good())
@@ -842,7 +842,7 @@ inline void read(CmatInt_O mat, Str_I file, Long_I skip_lines = 0)
 	}
 }
 
-inline void read(CmatLlong_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(ScmatLlong_O mat, Str_I file, Long_I skip_lines = 0)
 {
 	ifstream input(file);
 	if (!input.good())
@@ -878,7 +878,7 @@ inline void read(CmatLlong_O mat, Str_I file, Long_I skip_lines = 0)
 	}
 }
 
-inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(ScmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 {
 	ifstream input(file);
 	if (!input.good())
@@ -914,7 +914,7 @@ inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
 	}
 }
 
-inline void read(CmatQdoub_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(ScmatQdoub_O mat, Str_I file, Long_I skip_lines = 0)
 {
 	ifstream input(file);
 	if (!input.good())

@@ -16,17 +16,17 @@ inline void exp_mat_sym(CmatDoub_O out, CmatDoub_I a, Doub_I s)
 	Long N = a.n0();
 	thread_local static VecDoub eigVal(N);
 	thread_local static CmatDoub eigVec(N, N);
-//% req('eig_sym', {'VecDoub' 'CmatDoub' 'CmatDoub'});
+//% req('eig_sym', {'SvecDoub' 'ScmatDoub' 'ScmatDoub'});
 	eig_sym(eigVal, eigVec, a);
 	eigVal *= s;
 for (Long i = 0; i < N; ++i)
 		eigVal[i] = exp(eigVal[i]);
 	CmatDoub temp(N, N);
-//% req('mul(m,m,diag)', {'CmatDoub' 'CmatDoub' 'DiagDoub'});
+//% req('mul(m,m,diag)', {'ScmatDoub' 'ScmatDoub' 'DiagDoub'});
 	mul(temp, eigVec, diag(eigVal));
 	trans(eigVec);
 	// TODO: using cBLAS multiplication can save the transpose
-//% req('mul_gen(m,m,m)', {'CmatDoub' 'CmatDoub' 'CmatDoub'});
+//% req('mul_gen(m,m,m)', {'ScmatDoub' 'ScmatDoub' 'ScmatDoub'});
 	mul_gen(out, temp, eigVec);
 }
 
@@ -40,18 +40,17 @@ inline void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
 	thread_local static VecDoub eigVal(N);
 	thread_local static VecComp eigValComp(N);
 	thread_local static CmatDoub eigVec(N, N);
-//% req('eig_sym', {'VecDoub' 'CmatDoub' 'CmatDoub'});
+//% req('eig_sym', {'SvecDoub' 'ScmatDoub' 'ScmatDoub'});
 	eig_sym(eigVal, eigVec, a);
-//% req('add(v,v,s)', {'VecComp' 'VecDoub' 'Comp'});
 	times(eigValComp, eigVal, s);
 	for (Long i = 0; i < N; ++i)
 		eigValComp[i] = exp(eigValComp[i]);
 	thread_local static CmatComp temp(N, N);
-//% req('mul(m,m,diag)', {'CmatComp' 'CmatDoub' 'DiagComp'});
+//% req('mul(m,m,diag)', {'ScmatComp' 'ScmatDoub' 'DiagComp'});
 	mul(temp, eigVec, diag(eigValComp));
 	trans(eigVec);
 	// TODO: using cBLAS multiplication can save the transpose
-//% req('mul_gen(m,m,m)', {'CmatComp' 'CmatComp' 'CmatDoub'});
+//% req('mul_gen(m,m,m)', {'ScmatComp' 'ScmatComp' 'ScmatDoub'});
 	mul_gen(out, temp, eigVec);
 }
 

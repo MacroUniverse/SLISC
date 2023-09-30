@@ -19,7 +19,6 @@ inline Long expokit_expv_Comp_Nwsp(Long_I N, Long_I Nkry) {
 // the callable `void mat_mul(Comp *y, const Comp *x)` performs matrix-vector multiplication for an N*N matrix
 //% tem('expv', {
 //%  'SvecComp';
-//%  'VecComp';
 //% });
 //%----------------------
 //% Tv = varargin{:};

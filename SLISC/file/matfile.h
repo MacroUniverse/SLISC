@@ -345,7 +345,7 @@ inline void save(DvecComp_I v, Str_I varname, Mat mat)
 }
 
 
-inline void save(CmatChar_I a, Str_I varname, Mat mat)
+inline void save(ScmatChar_I a, Str_I varname, Mat mat)
 {
 	Long i, j, m, n;
 	mxArray *pa;
@@ -359,7 +359,7 @@ inline void save(CmatChar_I a, Str_I varname, Mat mat)
 	mxDestroyArray(pa);
 }
 
-inline void save(CmatUchar_I a, Str_I varname, Mat mat)
+inline void save(ScmatUchar_I a, Str_I varname, Mat mat)
 {
 	Long i, j, m, n;
 	mxArray *pa;
@@ -369,66 +369,6 @@ inline void save(CmatUchar_I a, Str_I varname, Mat mat)
 		for (i = 0; i < m; ++i)
 			for (j = 0; j < n; ++j)
 				ppa[i + m * j] = a(i,j);
-	matPutVariable(mat.m_p, varname.c_str(), pa);
-	mxDestroyArray(pa);
-}
-
-inline void save(CmatInt_I a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa;
-	m = a.n0(); n = a.n1();
-	pa = mxCreateUninitNumericMatrix(m, n, mxINT32_CLASS, mxREAL);
-	Int *ppa = (Int*)mxGetPr(pa);
-		for (i = 0; i < m; ++i)
-			for (j = 0; j < n; ++j)
-				ppa[i + m * j] = a(i,j);
-	matPutVariable(mat.m_p, varname.c_str(), pa);
-	mxDestroyArray(pa);
-}
-
-inline void save(CmatLlong_I a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa;
-	m = a.n0(); n = a.n1();
-	pa = mxCreateUninitNumericMatrix(m, n, mxINT64_CLASS, mxREAL);
-	Llong *ppa = (Llong*)mxGetPr(pa);
-		for (i = 0; i < m; ++i)
-			for (j = 0; j < n; ++j)
-				ppa[i + m * j] = a(i,j);
-	matPutVariable(mat.m_p, varname.c_str(), pa);
-	mxDestroyArray(pa);
-}
-
-inline void save(CmatDoub_I a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa;
-	m = a.n0(); n = a.n1();
-	pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL);
-	Doub *ppa = (Doub*)mxGetPr(pa);
-		for (i = 0; i < m; ++i)
-			for (j = 0; j < n; ++j)
-				ppa[i + m * j] = a(i,j);
-	matPutVariable(mat.m_p, varname.c_str(), pa);
-	mxDestroyArray(pa);
-}
-
-inline void save(CmatComp_I a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa;
-	m = a.n0(); n = a.n1();
-	pa = mxCreateUninitNumericMatrix(m, n, mxDOUBLE_CLASS, mxCOMPLEX);
-	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
-	for (i = 0; i < m; ++i) {
-		for (j = 0; j < n; ++j) {
-			Long ind = i + m * j; const Comp &c = a(i,j);
-			ppar[ind] = real(c);
-			ppai[ind] = imag(c);
-		}
-	}
 	matPutVariable(mat.m_p, varname.c_str(), pa);
 	mxDestroyArray(pa);
 }
@@ -554,7 +494,7 @@ inline void save(DcmatComp_I a, Str_I varname, Mat mat)
 }
 
 
-inline void save(Cmat3Llong_I a, Str_I varname, Mat mat)
+inline void save(Scmat3Llong_I a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa;
@@ -570,7 +510,7 @@ inline void save(Cmat3Llong_I a, Str_I varname, Mat mat)
 	mxDestroyArray(pa);
 }
 
-inline void save(Cmat3Doub_I a, Str_I varname, Mat mat)
+inline void save(Scmat3Doub_I a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa;
@@ -586,7 +526,7 @@ inline void save(Cmat3Doub_I a, Str_I varname, Mat mat)
 	mxDestroyArray(pa);
 }
 
-inline void save(Cmat3Comp_I a, Str_I varname, Mat mat)
+inline void save(Scmat3Comp_I a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa;
@@ -958,7 +898,7 @@ inline void load(DvecComp_O v, Str_I varname, Mat mat)
 }
 
 
-inline void load(CmatChar_O a, Str_I varname, Mat mat)
+inline void load(ScmatChar_O a, Str_I varname, Mat mat)
 {
 	Long i, j, m, n;
 	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
@@ -966,7 +906,7 @@ inline void load(CmatChar_O a, Str_I varname, Mat mat)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
-	a.resize(m, n);
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
 	Char *ppa = (Char *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
@@ -974,7 +914,7 @@ inline void load(CmatChar_O a, Str_I varname, Mat mat)
 	mxDestroyArray(pa);
 }
 
-inline void load(CmatUchar_O a, Str_I varname, Mat mat)
+inline void load(ScmatUchar_O a, Str_I varname, Mat mat)
 {
 	Long i, j, m, n;
 	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
@@ -982,82 +922,11 @@ inline void load(CmatUchar_O a, Str_I varname, Mat mat)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1];
-	a.resize(m, n);
+	if (a.n0() != m || a.n1() != n) SLS_ERR("wrong size!");
 	Uchar *ppa = (Uchar *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
 			a(i,j) = ppa[m*j + i];
-	mxDestroyArray(pa);
-}
-
-inline void load(CmatInt_O a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
-	if (!mxIsInt32(pa))
-		SLS_ERR("'matfile: load(): wrong type!");
-	const mwSize *sz = mxGetDimensions(pa);
-	m = sz[0]; n = sz[1];
-	a.resize(m, n);
-	Int *ppa = (Int *)mxGetPr(pa);
-	for (i = 0; i < m; ++i)
-		for (j = 0; j < n; ++j)
-			a(i,j) = ppa[m*j + i];
-	mxDestroyArray(pa);
-}
-
-inline void load(CmatLlong_O a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
-	if (!mxIsInt64(pa))
-		SLS_ERR("'matfile: load(): wrong type!");
-	const mwSize *sz = mxGetDimensions(pa);
-	m = sz[0]; n = sz[1];
-	a.resize(m, n);
-	Llong *ppa = (Llong *)mxGetPr(pa);
-	for (i = 0; i < m; ++i)
-		for (j = 0; j < n; ++j)
-			a(i,j) = ppa[m*j + i];
-	mxDestroyArray(pa);
-}
-
-inline void load(CmatDoub_O a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
-	if (!mxIsDouble(pa) || mxIsComplex(pa))
-		SLS_ERR("'matfile: load(): wrong type!");
-	const mwSize *sz = mxGetDimensions(pa);
-	m = sz[0]; n = sz[1];
-	a.resize(m, n);
-	Doub *ppa = (Doub *)mxGetPr(pa);
-	for (i = 0; i < m; ++i)
-		for (j = 0; j < n; ++j)
-			a(i,j) = ppa[m*j + i];
-	mxDestroyArray(pa);
-}
-
-inline void load(CmatComp_O a, Str_I varname, Mat mat)
-{
-	Long i, j, m, n;
-	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
-	if (!mxIsDouble(pa))
-		SLS_ERR("'matfile: load(): wrong type!");
-	const mwSize *sz = mxGetDimensions(pa);
-	m = sz[0]; n = sz[1];
-	a.resize(m, n);
-	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
-	if (ppai)
-		for (i = 0; i < m; ++i)
-			for (j = 0; j < n; ++j){
-				Long ind = i + m * j;
-				a(i,j) = Comp(ppar[ind], ppai[ind]);
-			}
-	else
-		for (i = 0; i < m; ++i)
-			for (j = 0; j < n; ++j)
-				a(i,j) = ppar[i + m*j];
 	mxDestroyArray(pa);
 }
 
@@ -1204,7 +1073,7 @@ inline void load(DcmatComp_O a, Str_I varname, Mat mat)
 }
 
 
-inline void load(Cmat3Llong_O a, Str_I varname, Mat mat)
+inline void load(Scmat3Llong_O a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
@@ -1212,7 +1081,7 @@ inline void load(Cmat3Llong_O a, Str_I varname, Mat mat)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1]; q = sz[2]; mn = m*n;
-	a.resize(m, n, q);
+	if (a.n0() != m || a.n1() != n || a.n3() != q) SLS_ERR("wrong size!");
 	Llong *ppa = (Llong *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
@@ -1221,7 +1090,7 @@ inline void load(Cmat3Llong_O a, Str_I varname, Mat mat)
 	mxDestroyArray(pa);
 }
 
-inline void load(Cmat3Doub_O a, Str_I varname, Mat mat)
+inline void load(Scmat3Doub_O a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
@@ -1229,7 +1098,7 @@ inline void load(Cmat3Doub_O a, Str_I varname, Mat mat)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1]; q = sz[2]; mn = m*n;
-	a.resize(m, n, q);
+	if (a.n0() != m || a.n1() != n || a.n3() != q) SLS_ERR("wrong size!");
 	Doub *ppa = (Doub *)mxGetPr(pa);
 	for (i = 0; i < m; ++i)
 		for (j = 0; j < n; ++j)
@@ -1238,7 +1107,7 @@ inline void load(Cmat3Doub_O a, Str_I varname, Mat mat)
 	mxDestroyArray(pa);
 }
 
-inline void load(Cmat3Comp_O a, Str_I varname, Mat mat)
+inline void load(Scmat3Comp_O a, Str_I varname, Mat mat)
 {
 	Long i, j, k, m, n, q, mn;
 	mxArray *pa = matGetVariable(mat.m_p, varname.c_str());
@@ -1246,7 +1115,7 @@ inline void load(Cmat3Comp_O a, Str_I varname, Mat mat)
 		SLS_ERR("'matfile: load(): wrong type!");
 	const mwSize *sz = mxGetDimensions(pa);
 	m = sz[0]; n = sz[1]; q = sz[2]; mn = m*n;
-	a.resize(m, n, q);
+	if (a.n0() != m || a.n1() != n || a.n3() != q) SLS_ERR("wrong size!");
 	Doub *ppar = mxGetPr(pa), *ppai = mxGetPi(pa);
 	if (ppai)
 		for (i = 0; i < m; ++i)

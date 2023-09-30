@@ -6,9 +6,9 @@ namespace slisc {
 #ifdef SLS_USE_LAPACKE
 // only upper triangle is needed
 // eigen value in ascending order
-//% tem('eig_sym', { 'SvecDoub' 'ScmatDoub' 'CmatDoub'
+//% tem('eig_sym', {
 //% 'SvecDoub' 'ScmatDoub' 'ScmatDoub'
-//%  'VecDoub' 'CmatDoub' 'CmatDoub' });
+//% });
 //%--------------------------------
 //% [Tv, Tm, Tm2] = varargin{:};
 //% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);
@@ -47,12 +47,12 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
-//% req('shape_cmp', {'CmatComp','CmatComp'});
+//% req('shape_cmp', {'ScmatComp','ScmatComp'});
 	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 #endif
-//% req('copy(v,v)', {'CmatComp','CmatComp'});
+//% req('copy(v,v)', {'ScmatComp','ScmatComp'});
 	copy(eigVec, A);
 	Long N = A.n1();
 	eigVal.resize(N);
@@ -66,9 +66,7 @@ inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 #ifdef SLS_USE_MPLAPACK
 // same as eig_sym(), for quad precision, needs workspace
 //% tem('eig_sym_Q', {
-//% 'SvecQdoub' 'ScmatQdoub' 'CmatQdoub' 'VecQdoub'
-//% 'SvecQdoub' 'ScmatQdoub' 'ScmatQdoub' 'VecQdoub'
-//%  'VecQdoub' 'CmatQdoub' 'CmatQdoub' 'VecQdoub' });
+//%  'SvecQdoub' 'ScmatQdoub' 'ScmatQdoub' 'SvecQdoub' });
 //%--------------------------------
 //% [Tv, Tm, Tm2, Twsp] = varargin{:};
 //% [Tsv,Tsm,Tsm2] = val_t(Tv,Tm,Tm2);

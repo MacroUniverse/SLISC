@@ -159,7 +159,7 @@ inline void conj_vv(Comp *v, const Comp *v1, Long_I N)
 inline void conj(SvecComp_IO v)
 { conj_v(v.p(), v.size()); }
 
-inline void conj(CmatComp_IO v)
+inline void conj(ScmatComp_IO v)
 { conj_v(v.p(), v.size()); }
 
 inline void conj(MatComp_IO v)

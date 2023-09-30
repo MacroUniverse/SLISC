@@ -175,11 +175,11 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 }
 
 //% tem('mul(v,obd,v)', {
-//%    'VecComp', 'CmobdDoub', 'VecComp';
-//%    'VecQcomp', 'CmobdQdoub', 'VecQcomp';
-//%    'VecComp', 'CmobdDoub', 'SvecComp';
-//%    'VecQcomp', 'CmobdQdoub', 'SvecQcomp';
-//%    'VecInt', 'CmobdInt', 'VecInt'
+//%    'SvecComp', 'CmobdDoub', 'SvecComp';
+//%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
+//%    'SvecComp', 'CmobdDoub', 'SvecComp';
+//%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
+//%    'SvecInt', 'CmobdInt', 'SvecInt'
 //%    'SvecDoub', 'CmobdDoub', 'SvecDoub';
 //%    'SvecQdoub', 'CmobdQdoub', 'SvecQdoub';
 //%    'SvecComp', 'CmobdDoub', 'SvecComp';
@@ -218,13 +218,13 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x, const Talpha &alpha, const Tbeta &
 //% 'SvecQcomp', 'McooQdoub', 'SvecQcomp';
 //% 'SvecDoub' 'McooDoub' 'SvecDoub'
 //% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
-//% 'VecDoub' 'McooDoub' 'VecDoub'
-//% 'VecQdoub' 'McooQdoub' 'VecQdoub'
-//% 'VecDoub' 'McooDoub' 'SvecDoub'
-//% 'VecQdoub' 'McooQdoub' 'SvecQdoub'
-//% 'VecComp' 'McooDoub' 'SvecComp'
+//% 'SvecDoub' 'McooDoub' 'SvecDoub'
+//% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
+//% 'SvecDoub' 'McooDoub' 'SvecDoub'
+//% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
+//% 'SvecComp' 'McooDoub' 'SvecComp'
 //% 'SvecComp' 'McooDoub' 'DvecComp'
-//% 'VecQcomp' 'McooQdoub' 'SvecQcomp' });
+//% 'SvecQcomp' 'McooQdoub' 'SvecQcomp' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
@@ -291,11 +291,11 @@ inline void sort_row(@McooT@_IO a)
 		inds[i] = a.n1() * a.row(i) + a.col(i);
 	sort(inds, order);
 	@SvecT@ sli(a.p(), Nnz);
-//% req('reorder', {SvecT, 'VecLlong'; SvecT, 'VecInt'});
+//% req('reorder', {SvecT, 'SvecLlong'; SvecT, 'SvecInt'});
 	reorder(sli, order);
 	SvecLong sli1;
 	sli1.set(a.row_p(), Nnz);
-//% req('reorder', {'SvecLlong', 'VecLlong'; 'SvecInt', 'VecInt'});
+//% req('reorder', {'SvecLlong', 'SvecLlong'; 'SvecInt', 'SvecInt'});
 	reorder(sli1, order);
 	sli1.set(a.col_p());
 	reorder(sli1, order);
@@ -310,8 +310,6 @@ inline void sort_row(@McooT@_IO a)
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VecT = ['Vec', T];
-//% VecT = ['Vec', T];
 inline Long sort_col_dry(VecLong_O dest, @McooT@_I coo)
 {
 	Long N = coo.nnz();
@@ -353,7 +351,7 @@ inline void sort_col(@McooT@_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	@McooT@ new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = std::move(new_coo);
+	coo = move(new_coo);
 }
 
 //% Tr = rm_comp(T);
@@ -378,7 +376,6 @@ inline void rm_zero(@McooT@_IO coo, @Tr@_I thresh = 0)
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VecT = ['Vec', T];
 inline void operator+=(@McooT@_O coo, @McooT@_I coo1)
 {
 	Long Nnz = coo.nnz();
@@ -408,8 +405,6 @@ inline void operator-=(@McooT@_O coo, @McooT@_I coo1)
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
-//% VecT = ['Vec', T];
-//% VecT = ['Vec', T];
 inline bool operator==(@McooT@_IO coo, @McooT@_IO coo1)
 {
 	sort_col(coo); rm_zero(coo);
@@ -458,7 +453,6 @@ inline void operator*=(@T@_IO v, @Ts@_I s)
 //%----------------------------
 //% [T1, T2, Ts] = varargin{:};
 //% [Ts1, Ts2] = val_t(T1, T2);
-//% req('add(v,v,s)', {['Cmat3' Ts1], ['Cmat3' Ts2], Ts});
 inline void times(@T1@_O v1, @T2@_I v2, @Ts@_I s)
 { times(v1.cmat3(), v2.cmat3(), s); }
 //%------------------------
@@ -502,8 +496,9 @@ inline @Tr@ norm_inf(@T@_I A)
 inline @Tr@ norm_inf(@T@_I A)
 {
 	Long N0 = A.nblk0(), N1 = N0 - 1, Nblk = A.nblk();
-//% req('copy(v,s)', {VecTr});
-	@VecTr@ abs_sum(A.n1()); copy(abs_sum, 0);
+//% req('copy(v,s)', {['Svec' Tr]});
+	thread_local static @VecTr@ abs_sum(A.n1());
+	copy(abs_sum, 0);
 	Long k = 0;
 	@SvecTsC@ sli(A.p() + N0 + 1, N1);
 	// first block
@@ -528,7 +523,7 @@ inline @Tr@ norm_inf(@T@_I A)
 		abs_sum[k] += sum_abs(sli);
 		++k; sli.shift(N0);
 	}
-//% req('max', {VecTr});
+//% req('max', {['Svec' Tr]});
 	return max(abs_sum);
 }
 //%---------------------
@@ -546,7 +541,7 @@ inline @Tr@ norm_inf(@T@_I A)
 	for (Long i = 0; i < A.nnz(); ++i) {
 		abs_sum[A.col(i)] += abs(A[i]);
 	}
-//% req('max', {VecTr});
+//% req('max', {['Svec' Tr]});
 	return max(abs_sum);
 }
 //%---------------------

@@ -621,14 +621,6 @@ inline Qdoub min(VecQdoub_I v) { return min_v(v.p(), v.size()); }
 
 inline Qdoub min(Long_O ind, VecQdoub_I v) { return min_v(ind, v.p(), v.size()); }
 
-inline Int max(VecInt_I v) { return max_v(v.p(), v.size()); }
-
-inline Int max(Long_O ind, VecInt_I v) { return max_v(ind, v.p(), v.size()); }
-
-inline Int min(VecInt_I v) { return min_v(v.p(), v.size()); }
-
-inline Int min(Long_O ind, VecInt_I v) { return min_v(ind, v.p(), v.size()); }
-
 
 
 template <class T>
@@ -1780,60 +1772,6 @@ inline Doub norm(Mat3Comp_I v)
 }
 
 inline Doub norm_dif(Mat3Comp_I v, Mat3Comp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Doub norm2(VecComp_I v)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Doub norm2_dif(VecComp_I v, VecComp_I v1)
-{
-	Long N = v.size();
-	Doub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Doub norm(VecComp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Doub norm_dif(VecComp_I v, VecComp_I v1)
-{
-	return sqrt(norm2_dif(v, v1));
-}
-
-inline Qdoub norm2(VecQcomp_I v)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i]);
-	return s2;
-}
-
-inline Qdoub norm2_dif(VecQcomp_I v, VecQcomp_I v1)
-{
-	Long N = v.size();
-	Qdoub s2 = abs2(v[0] - v1[0]);
-	for (Long i = 1; i < N; ++i)
-		s2 += abs2(v[i] - v1[i]);
-	return s2;
-}
-inline Qdoub norm(VecQcomp_I v)
-{
-	return sqrt(norm2(v));
-}
-
-inline Qdoub norm_dif(VecQcomp_I v, VecQcomp_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }

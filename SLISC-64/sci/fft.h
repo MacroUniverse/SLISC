@@ -137,57 +137,7 @@ inline void fftshift(DvecComp_IO v)
 }
 
 
-inline void fftshift(MatDoub_IO a, Int_I dim = 1)
-{
-	Long N1 = a.n0(), N2 = a.n1();
-	if (dim == 1) {
-		if (isodd(N1))
-			SLS_ERR("fftshift only supports even rows!");
-		Long halfn = N1 / 2;
-		for (Long j = 0; j < N2; ++j) {
-			DvecDoub sli = cut0(a, j);
-			for (Long i = 0; i < halfn; ++i)
-				swap(sli[i], sli[i + halfn]);
-		}
-	}
-	else if (dim == 2) {
-		if (isodd(N2))
-			SLS_ERR("fftshift only supports even rows!");
-		Long halfn = N2 / 2;
-		for (Long i = 0; i < N1; ++i) {
-			SvecDoub sli = cut1(a, i);
-			for (Long i = 0; i < halfn; ++i)
-				swap(sli[i], sli[i + halfn]);
-		}
-	}
-}
-
-inline void fftshift(MatComp_IO a, Int_I dim = 1)
-{
-	Long N1 = a.n0(), N2 = a.n1();
-	if (dim == 1) {
-		if (isodd(N1))
-			SLS_ERR("fftshift only supports even rows!");
-		Long halfn = N1 / 2;
-		for (Long j = 0; j < N2; ++j) {
-			DvecComp sli = cut0(a, j);
-			for (Long i = 0; i < halfn; ++i)
-				swap(sli[i], sli[i + halfn]);
-		}
-	}
-	else if (dim == 2) {
-		if (isodd(N2))
-			SLS_ERR("fftshift only supports even rows!");
-		Long halfn = N2 / 2;
-		for (Long i = 0; i < N1; ++i) {
-			SvecComp sli = cut1(a, i);
-			for (Long i = 0; i < halfn; ++i)
-				swap(sli[i], sli[i + halfn]);
-		}
-	}
-}
-
-inline void fftshift(CmatDoub_IO a, Int_I dim = 1)
+inline void fftshift(ScmatDoub_IO a, Int_I dim = 1)
 {
 	Long N1 = a.n0(), N2 = a.n1();
 	if (dim == 1) {
@@ -212,7 +162,7 @@ inline void fftshift(CmatDoub_IO a, Int_I dim = 1)
 	}
 }
 
-inline void fftshift(CmatComp_IO a, Int_I dim = 1)
+inline void fftshift(ScmatComp_IO a, Int_I dim = 1)
 {
 	Long N1 = a.n0(), N2 = a.n1();
 	if (dim == 1) {

@@ -5,8 +5,8 @@
 #ifdef SLS_USE_LAPACKE
 namespace slisc {
 // invert matrix
-//% tem('inv_mat', { 'CmatDoub'; 'ScmatDoub';
-//%     'CmatComp'; 'ScmatComp'; });
+//% tem('inv_mat', { 'ScmatDoub'; 'ScmatDoub';
+//%     'ScmatComp'; 'ScmatComp'; });
 //%---------------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
@@ -35,10 +35,10 @@ inline void inv_mat(@T@_IO A)
 //%------------------------
 
 // invert matrix
-//% tem('inv_mat_Q', { 'CmatQdoub' 'VecQdoub';
-//%   'ScmatQdoub' 'VecQdoub';
-//%   'CmatQcomp' 'VecQcomp';
-//%   'ScmatQcomp' 'VecQcomp'; });
+//% tem('inv_mat_Q', { 'ScmatQdoub' 'SvecQdoub';
+//%   'ScmatQdoub' 'SvecQdoub';
+//%   'ScmatQcomp' 'SvecQcomp';
+//%   'ScmatQcomp' 'SvecQcomp'; });
 //%---------------------------------
 //% [T, Twsp] = varargin{:};
 //% Ts = val_t(T);
@@ -69,18 +69,14 @@ inline void inv_mat(@T@_IO A, @Twsp@_IO wsp)
 
 // solution to linear system with general coefficient matrix A and multiple right-hand sides.
 //% tem('lin_eq', {
-//% 'CmatDoub' 'CmatDoub';
-//% 'ScmatDoub' 'CmatDoub';
 //% 'ScmatDoub' 'ScmatDoub';
-//% 'VecDoub' 'CmatDoub';
-//% 'SvecDoub' 'CmatDoub';
-//% 'VecComp' 'CmatComp';
+//% 'SvecDoub' 'ScmatDoub';
 //% 'SvecComp' 'ScmatComp';
 //% });
 //%---------------------
 //% [Tx, Ta] = varargin{:};
 //% Tsx = val_t(Tx); Tsa = val_t(Ta);
-//% CmatTsa = ['Cmat' Tsa];
+//% CmatTsa = ['Scmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -128,18 +124,14 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 // A will be changed to LU matrix
 // ipiv: integer work space of size a.n0()
 //% tem('lin_eq2', {
-//% 'CmatDoub' 'CmatDoub' 'SvecLong';
-//% 'ScmatDoub' 'CmatDoub' 'SvecLong';
 //% 'ScmatDoub' 'ScmatDoub' 'SvecLong';
-//% 'VecDoub' 'CmatDoub' 'SvecLong';
-//% 'SvecDoub' 'CmatDoub' 'SvecLong';
-//% 'VecComp' 'CmatComp' 'SvecLong';
+//% 'SvecDoub' 'ScmatDoub' 'SvecLong';
 //% 'SvecComp' 'ScmatComp' 'SvecLong';
 //% });
 //%---------------------
 //% [Tx, Ta, Ti] = varargin{:};
 //% Tsx = val_t(Tx); Tsa = val_t(Ta);
-//% CmatTsa = ['Cmat' Tsa];
+//% CmatTsa = ['Scmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -178,8 +170,8 @@ inline void lin_eq(@Tx@_IO x, @Ta@_IO a, @Ti@_IO ipiv)
 
 // solution to linear system with band coefficient matrix A and multiple right-hand sides.
 //% tem('lin_eq3', {
-//%     'VecDoub' 'CbandDoub';
-//%     'VecComp' 'CbandComp';
+//%     'SvecDoub' 'CbandDoub';
+//%     'SvecComp' 'CbandComp';
 //%     'SvecComp' 'CbandComp';
 //% });
 //%---------------------
@@ -236,10 +228,10 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 // @Ta@ a1(a.n0(), a.n1(), a.nup(), a.nlow(), a.nup() + 2*a.nlow() + 1, a.nlow() + a.nup());
 // copy(a1, a);
 //% tem('lin_eq4', {
-//%     'VecDoub' 'CbandDoub' 'VecLong';
-//%     'VecComp' 'CbandComp' 'VecLong';
+//%     'SvecDoub' 'CbandDoub' 'SvecLong';
 //%     'SvecComp' 'CbandComp' 'SvecLong';
-//%     'VecQcomp' 'CbandQcomp' 'VecLong';
+//%     'SvecComp' 'CbandComp' 'SvecLong';
+//%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
 //%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
 //%     'SvecQcomp' 'CbandQcomp' 'SvecLong';
 //%     'ScmatComp' 'CbandComp' 'SvecLong';

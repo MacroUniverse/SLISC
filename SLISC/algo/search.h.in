@@ -24,9 +24,9 @@ inline Long search(const T &s, const vector<T> &v, Long_I start = 0)
 // see if elm == vec[i], return i
 // return -1 if not found
 //% tem('search', {
-//%     'Int', 'VecInt';
+//%     'Int', 'SvecInt';
 //%     'Int', 'vecInt';
-//%     'Llong', 'VecLlong';
+//%     'Llong', 'SvecLlong';
 //%     'Llong', 'vecLlong';
 //%     'Char', 'Str';
 //%     'Char32', 'Str32';
@@ -53,7 +53,7 @@ inline Long search(@Ts@_I s, @Tv@_I v, Long_I start = 0)
 // else, v[ind] < s < v[ind+1];
 // algorithm: bisection
 //% tem('lookup', {
-//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecQdoub';
+//%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecQdoub';
 //%     'vecInt'; 'vecLlong'; 'vecStr'; 'vecStr32';
 //% });
 //%--------------------------
@@ -131,13 +131,11 @@ inline Long find_repeat(Long_O j, const T &v, Long_I start = 0)
 // starting from the row `start`
 // return the row index, return -1 if not found
 //% tem('search_row', {
-//%   %  'VecInt', 'MatInt';
-//%   %  'VecLlong', 'MatLlong';
-//%     'VecInt', 'CmatInt';
-//%     'VecLlong', 'CmatLlong';
-//%     'DvecLlong', 'CmatLlong';
-//%     'VecDoub', 'CmatDoub';
-//%     'VecQdoub', 'CmatQdoub';
+//%     'SvecInt', 'ScmatInt';
+//%     'SvecLlong', 'ScmatLlong';
+//%     'SvecDoub', 'ScmatDoub';
+//%     'SvecQdoub', 'ScmatQdoub';
+//%     'DvecLlong', 'ScmatLlong';
 //% });
 //%--------------------------
 //% [Tv, Tmat] = varargin{:};

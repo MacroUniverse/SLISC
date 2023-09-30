@@ -10,9 +10,9 @@ elseif is_dense_mat(T) || is_sparse_mat(T) ||...
     ret =2;
 elseif is_dense_mat3(T) || is_Jcmat3(T)
     ret =3;
-elseif is_Cmat4(T) || is_Jcmat4(T)
+elseif is_dense_mat4(T) || is_Jcmat4(T)
     ret =4;
 else
-    error("ndim.m: unknown!");
+    error(["ndim.m: unknown! T = " T]);
 end
 end

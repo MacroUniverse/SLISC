@@ -137,8 +137,8 @@ inline @T@ @McooT@::operator()(Long_I i, Long_I j) const
 
 inline @McooT@ &@McooT@::operator=(@McooT@ &&rhs)
 {
-	Base::operator=(std::move(rhs));
-	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
+	Base::operator=(move(rhs));
+	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -292,9 +292,9 @@ inline void @McooT@::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(std::move(data));
-	m_row = std::move(row);
-	m_col = std::move(col);
+	Base::operator=(move(data));
+	m_row = move(row);
+	m_col = move(col);
 }
 
 inline void @McooT@::reshape(Long_I N0, Long_I N1)

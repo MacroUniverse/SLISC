@@ -1075,340 +1075,6 @@ inline void save_matt(MatComp_I s, Str_I varname, Str_I matt_file, Int_I precisi
 	matt.close();
 }
 
-inline void save(CmatInt_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long N1 = a.n0(), N2 = a.n1();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (Long i = 0; i < n; ++i)
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	// write data type info
-	fout << 2 << Matt::dlm;
-	// write dimension info
-	fout << 2 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm;
-	// write matrix data
-	for (Long j = 0; j < N2; ++j)
-		for (Long i = 0; i < N1; ++i)
-			matt_write_scalar(a(i, j), fout);
-}
-
-inline void save_matt(CmatInt_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(CmatLlong_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long N1 = a.n0(), N2 = a.n1();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (Long i = 0; i < n; ++i)
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	// write data type info
-	fout << 3 << Matt::dlm;
-	// write dimension info
-	fout << 2 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm;
-	// write matrix data
-	for (Long j = 0; j < N2; ++j)
-		for (Long i = 0; i < N1; ++i)
-			matt_write_scalar(a(i, j), fout);
-}
-
-inline void save_matt(CmatLlong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(CmatDoub_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long N1 = a.n0(), N2 = a.n1();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (Long i = 0; i < n; ++i)
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	// write data type info
-	fout << 21 << Matt::dlm;
-	// write dimension info
-	fout << 2 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm;
-	// write matrix data
-	for (Long j = 0; j < N2; ++j)
-		for (Long i = 0; i < N1; ++i)
-			matt_write_scalar(a(i, j), fout);
-}
-
-inline void save_matt(CmatDoub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(CmatComp_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long N1 = a.n0(), N2 = a.n1();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (Long i = 0; i < n; ++i)
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	// write data type info
-	fout << 41 << Matt::dlm;
-	// write dimension info
-	fout << 2 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm;
-	// write matrix data
-	for (Long j = 0; j < N2; ++j)
-		for (Long i = 0; i < N1; ++i)
-			matt_write_scalar(a(i, j), fout);
-}
-
-inline void save_matt(CmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(Cmat3Int_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (i = 0; i < n; ++i) {
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	}
-	// write data type info
-	fout << 2 << Matt::dlm;
-	// write dimension info
-	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
-	// write matrix data
-	for (k = 0; k < N3; ++k)
-		for (j = 0; j < N2; ++j)
-			for (i = 0; i < N1; ++i)
-				matt_write_scalar(a(i, j, k), fout);
-}
-
-inline void save_matt(Cmat3Int_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(Cmat3Llong_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (i = 0; i < n; ++i) {
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	}
-	// write data type info
-	fout << 3 << Matt::dlm;
-	// write dimension info
-	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
-	// write matrix data
-	for (k = 0; k < N3; ++k)
-		for (j = 0; j < N2; ++j)
-			for (i = 0; i < N1; ++i)
-				matt_write_scalar(a(i, j, k), fout);
-}
-
-inline void save_matt(Cmat3Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(Cmat3Doub_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (i = 0; i < n; ++i) {
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	}
-	// write data type info
-	fout << 21 << Matt::dlm;
-	// write dimension info
-	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
-	// write matrix data
-	for (k = 0; k < N3; ++k)
-		for (j = 0; j < N2; ++j)
-			for (i = 0; i < N1; ++i)
-				matt_write_scalar(a(i, j, k), fout);
-}
-
-inline void save_matt(Cmat3Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(Cmat3Comp_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (i = 0; i < n; ++i) {
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	}
-	// write data type info
-	fout << 41 << Matt::dlm;
-	// write dimension info
-	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
-	// write matrix data
-	for (k = 0; k < N3; ++k)
-		for (j = 0; j < N2; ++j)
-			for (i = 0; i < N1; ++i)
-				matt_write_scalar(a(i, j, k), fout);
-}
-
-inline void save_matt(Cmat3Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(Cmat4Doub_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (i = 0; i < n; ++i) {
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	}
-	// write data type info
-	fout << 21 << Matt::dlm;
-	// write dimension info
-	fout << 4 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm << N4 << Matt::dlm;
-	// write matrix data
-	for (l = 0; l < N4; ++l)
-		for (k = 0; k < N3; ++k)
-			for (j = 0; j < N2; ++j)
-				for (i = 0; i < N1; ++i)
-					matt_write_scalar(a(i, j, k, l), fout);
-}
-
-inline void save_matt(Cmat4Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
-inline void save(Cmat4Comp_I a, Str_I varname, Matt_IO matt)
-{
-	if (matt.search(varname) >= 0)
-		SLS_ERR("variable already exist: " + varname);
-	Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
-	ofstream &fout = matt.m_out;
-	if (!fout.is_open())
-		SLS_ERR("matt file not open!");
-	matt.m_name.push_back(varname);
-	matt.m_ind.push_back(fout.tellp());
-	// write variable name info
-	Long n = varname.size();
-	fout << n << Matt::dlm;
-	for (i = 0; i < n; ++i) {
-		fout << to_num(varname.at(i)) << Matt::dlm;
-	}
-	// write data type info
-	fout << 41 << Matt::dlm;
-	// write dimension info
-	fout << 4 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm << N4 << Matt::dlm;
-	// write matrix data
-	for (l = 0; l < N4; ++l)
-		for (k = 0; k < N3; ++k)
-			for (j = 0; j < N2; ++j)
-				for (i = 0; i < N1; ++i)
-					matt_write_scalar(a(i, j, k, l), fout);
-}
-
-inline void save_matt(Cmat4Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
-{
-	Matt matt(matt_file, "w", precision, replace);
-	save(s, varname, matt);
-	matt.close();
-}
-
 inline void save(ScmatInt_I a, Str_I varname, Matt_IO matt)
 {
 	if (matt.search(varname) >= 0)
@@ -1659,6 +1325,212 @@ inline void save(DcmatComp_I a, Str_I varname, Matt_IO matt)
 }
 
 inline void save_matt(DcmatComp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
+{
+	Matt matt(matt_file, "w", precision, replace);
+	save(s, varname, matt);
+	matt.close();
+}
+
+inline void save(Scmat3Int_I a, Str_I varname, Matt_IO matt)
+{
+	if (matt.search(varname) >= 0)
+		SLS_ERR("variable already exist: " + varname);
+	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
+	ofstream &fout = matt.m_out;
+	if (!fout.is_open())
+		SLS_ERR("matt file not open!");
+	matt.m_name.push_back(varname);
+	matt.m_ind.push_back(fout.tellp());
+	// write variable name info
+	Long n = varname.size();
+	fout << n << Matt::dlm;
+	for (i = 0; i < n; ++i) {
+		fout << to_num(varname.at(i)) << Matt::dlm;
+	}
+	// write data type info
+	fout << 2 << Matt::dlm;
+	// write dimension info
+	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
+	// write matrix data
+	for (k = 0; k < N3; ++k)
+		for (j = 0; j < N2; ++j)
+			for (i = 0; i < N1; ++i)
+				matt_write_scalar(a(i, j, k), fout);
+}
+
+inline void save_matt(Scmat3Int_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
+{
+	Matt matt(matt_file, "w", precision, replace);
+	save(s, varname, matt);
+	matt.close();
+}
+
+inline void save(Scmat3Llong_I a, Str_I varname, Matt_IO matt)
+{
+	if (matt.search(varname) >= 0)
+		SLS_ERR("variable already exist: " + varname);
+	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
+	ofstream &fout = matt.m_out;
+	if (!fout.is_open())
+		SLS_ERR("matt file not open!");
+	matt.m_name.push_back(varname);
+	matt.m_ind.push_back(fout.tellp());
+	// write variable name info
+	Long n = varname.size();
+	fout << n << Matt::dlm;
+	for (i = 0; i < n; ++i) {
+		fout << to_num(varname.at(i)) << Matt::dlm;
+	}
+	// write data type info
+	fout << 3 << Matt::dlm;
+	// write dimension info
+	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
+	// write matrix data
+	for (k = 0; k < N3; ++k)
+		for (j = 0; j < N2; ++j)
+			for (i = 0; i < N1; ++i)
+				matt_write_scalar(a(i, j, k), fout);
+}
+
+inline void save_matt(Scmat3Llong_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
+{
+	Matt matt(matt_file, "w", precision, replace);
+	save(s, varname, matt);
+	matt.close();
+}
+
+inline void save(Scmat3Doub_I a, Str_I varname, Matt_IO matt)
+{
+	if (matt.search(varname) >= 0)
+		SLS_ERR("variable already exist: " + varname);
+	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
+	ofstream &fout = matt.m_out;
+	if (!fout.is_open())
+		SLS_ERR("matt file not open!");
+	matt.m_name.push_back(varname);
+	matt.m_ind.push_back(fout.tellp());
+	// write variable name info
+	Long n = varname.size();
+	fout << n << Matt::dlm;
+	for (i = 0; i < n; ++i) {
+		fout << to_num(varname.at(i)) << Matt::dlm;
+	}
+	// write data type info
+	fout << 21 << Matt::dlm;
+	// write dimension info
+	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
+	// write matrix data
+	for (k = 0; k < N3; ++k)
+		for (j = 0; j < N2; ++j)
+			for (i = 0; i < N1; ++i)
+				matt_write_scalar(a(i, j, k), fout);
+}
+
+inline void save_matt(Scmat3Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
+{
+	Matt matt(matt_file, "w", precision, replace);
+	save(s, varname, matt);
+	matt.close();
+}
+
+inline void save(Scmat3Comp_I a, Str_I varname, Matt_IO matt)
+{
+	if (matt.search(varname) >= 0)
+		SLS_ERR("variable already exist: " + varname);
+	Long i, j, k, N1 = a.n0(), N2 = a.n1(), N3 = a.n2();
+	ofstream &fout = matt.m_out;
+	if (!fout.is_open())
+		SLS_ERR("matt file not open!");
+	matt.m_name.push_back(varname);
+	matt.m_ind.push_back(fout.tellp());
+	// write variable name info
+	Long n = varname.size();
+	fout << n << Matt::dlm;
+	for (i = 0; i < n; ++i) {
+		fout << to_num(varname.at(i)) << Matt::dlm;
+	}
+	// write data type info
+	fout << 41 << Matt::dlm;
+	// write dimension info
+	fout << 3 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm;
+	// write matrix data
+	for (k = 0; k < N3; ++k)
+		for (j = 0; j < N2; ++j)
+			for (i = 0; i < N1; ++i)
+				matt_write_scalar(a(i, j, k), fout);
+}
+
+inline void save_matt(Scmat3Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
+{
+	Matt matt(matt_file, "w", precision, replace);
+	save(s, varname, matt);
+	matt.close();
+}
+
+inline void save(Scmat4Doub_I a, Str_I varname, Matt_IO matt)
+{
+	if (matt.search(varname) >= 0)
+		SLS_ERR("variable already exist: " + varname);
+	Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
+	ofstream &fout = matt.m_out;
+	if (!fout.is_open())
+		SLS_ERR("matt file not open!");
+	matt.m_name.push_back(varname);
+	matt.m_ind.push_back(fout.tellp());
+	// write variable name info
+	Long n = varname.size();
+	fout << n << Matt::dlm;
+	for (i = 0; i < n; ++i) {
+		fout << to_num(varname.at(i)) << Matt::dlm;
+	}
+	// write data type info
+	fout << 21 << Matt::dlm;
+	// write dimension info
+	fout << 4 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm << N4 << Matt::dlm;
+	// write matrix data
+	for (l = 0; l < N4; ++l)
+		for (k = 0; k < N3; ++k)
+			for (j = 0; j < N2; ++j)
+				for (i = 0; i < N1; ++i)
+					matt_write_scalar(a(i, j, k, l), fout);
+}
+
+inline void save_matt(Scmat4Doub_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
+{
+	Matt matt(matt_file, "w", precision, replace);
+	save(s, varname, matt);
+	matt.close();
+}
+
+inline void save(Scmat4Comp_I a, Str_I varname, Matt_IO matt)
+{
+	if (matt.search(varname) >= 0)
+		SLS_ERR("variable already exist: " + varname);
+	Long i, j, k, l, N1 = a.n0(), N2 = a.n1(), N3 = a.n2(), N4 = a.n3();
+	ofstream &fout = matt.m_out;
+	if (!fout.is_open())
+		SLS_ERR("matt file not open!");
+	matt.m_name.push_back(varname);
+	matt.m_ind.push_back(fout.tellp());
+	// write variable name info
+	Long n = varname.size();
+	fout << n << Matt::dlm;
+	for (i = 0; i < n; ++i) {
+		fout << to_num(varname.at(i)) << Matt::dlm;
+	}
+	// write data type info
+	fout << 41 << Matt::dlm;
+	// write dimension info
+	fout << 4 << Matt::dlm << N1 << Matt::dlm << N2 << Matt::dlm << N3 << Matt::dlm << N4 << Matt::dlm;
+	// write matrix data
+	for (l = 0; l < N4; ++l)
+		for (k = 0; k < N3; ++k)
+			for (j = 0; j < N2; ++j)
+				for (i = 0; i < N1; ++i)
+					matt_write_scalar(a(i, j, k, l), fout);
+}
+
+inline void save_matt(Scmat4Comp_I s, Str_I varname, Str_I matt_file, Int_I precision = SLS_MATT_DEFAULT_PREC, Bool_I replace = false)
 {
 	Matt matt(matt_file, "w", precision, replace);
 	save(s, varname, matt);
@@ -2035,7 +1907,7 @@ inline void load_matt(MatComp_O var, Str_I varname, Str_I matt_file)
 	matt.close();
 }
 
-inline void load(CmatInt_O a, Str_I varname, Matt_IO matt)
+inline void load(ScmatInt_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -2056,14 +1928,14 @@ inline void load(CmatInt_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(CmatInt_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(ScmatInt_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(CmatLlong_O a, Str_I varname, Matt_IO matt)
+inline void load(ScmatLlong_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -2084,14 +1956,14 @@ inline void load(CmatLlong_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(CmatLlong_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(ScmatLlong_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(CmatDoub_O a, Str_I varname, Matt_IO matt)
+inline void load(ScmatDoub_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -2112,14 +1984,14 @@ inline void load(CmatDoub_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(CmatDoub_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(ScmatDoub_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(CmatComp_O a, Str_I varname, Matt_IO matt)
+inline void load(ScmatComp_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -2140,14 +2012,14 @@ inline void load(CmatComp_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(CmatComp_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(ScmatComp_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
+inline void load(Scmat3Int_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2170,14 +2042,14 @@ inline void load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Cmat3Int_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Scmat3Int_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
+inline void load(Scmat3Llong_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2200,14 +2072,14 @@ inline void load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Cmat3Llong_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Scmat3Llong_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
+inline void load(Scmat3Doub_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2230,14 +2102,14 @@ inline void load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Cmat3Doub_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Scmat3Doub_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
+inline void load(Scmat3Comp_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2260,14 +2132,14 @@ inline void load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Cmat3Comp_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Scmat3Comp_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
+inline void load(Scmat4Doub_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
 	ifstream &fin = matt.m_in;
@@ -2291,14 +2163,14 @@ inline void load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
 					matt_read_scalar(a(i, j, k, l), fin);
 }
 
-inline void load_matt(Cmat4Doub_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Scmat4Doub_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
+inline void load(Scmat4Comp_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
 	ifstream &fin = matt.m_in;
@@ -2322,7 +2194,7 @@ inline void load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
 					matt_read_scalar(a(i, j, k, l), fin);
 }
 
-inline void load_matt(Cmat4Comp_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Scmat4Comp_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);

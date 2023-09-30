@@ -23,7 +23,7 @@ inline Long search(const T &s, const vector<T> &v, Long_I start = 0)
 
 // see if elm == vec[i], return i
 // return -1 if not found
-inline Long search(Int_I s, VecInt_I v, Long_I start = 0)
+inline Long search(Int_I s, SvecInt_I v, Long_I start = 0)
 {
 	Long N = v.size();
 	for (Long i = start; i < N; ++i) {
@@ -43,7 +43,7 @@ inline Long search(Int_I s, vecInt_I v, Long_I start = 0)
 	return -1;
 }
 
-inline Long search(Llong_I s, VecLlong_I v, Long_I start = 0)
+inline Long search(Llong_I s, SvecLlong_I v, Long_I start = 0)
 {
 	Long N = v.size();
 	for (Long i = start; i < N; ++i) {
@@ -110,7 +110,7 @@ inline Long search(Str32_I s, vecStr32_I v, Long_I start = 0)
 // if s > v[N-1], ind = N-1;
 // else, v[ind] < s < v[ind+1];
 // algorithm: bisection
-inline bool lookup(Long_O ind, VecInt_I v, Int_I s)
+inline bool lookup(Long_O ind, SvecInt_I v, Int_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -129,7 +129,7 @@ inline bool lookup(Long_O ind, VecInt_I v, Int_I s)
 	}
 }
 
-inline bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, SvecInt_I v, Int_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -148,7 +148,7 @@ inline bool lookup(Long_O ind, VecInt_I v, Int_I s, Long ind1, Long ind2)
 	}
 }
 
-inline bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
+inline bool lookup(Long_O ind, SvecLlong_I v, Llong_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -167,7 +167,7 @@ inline bool lookup(Long_O ind, VecLlong_I v, Llong_I s)
 	}
 }
 
-inline bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, SvecLlong_I v, Llong_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -186,7 +186,7 @@ inline bool lookup(Long_O ind, VecLlong_I v, Llong_I s, Long ind1, Long ind2)
 	}
 }
 
-inline bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
+inline bool lookup(Long_O ind, SvecDoub_I v, Doub_I s)
 {
 	Long N = v.size(), ind1 = 0, ind2 = N - 1;
 #ifdef SLS_CHECK_SHAPES
@@ -205,7 +205,7 @@ inline bool lookup(Long_O ind, VecDoub_I v, Doub_I s)
 	}
 }
 
-inline bool lookup(Long_O ind, VecDoub_I v, Doub_I s, Long ind1, Long ind2)
+inline bool lookup(Long_O ind, SvecDoub_I v, Doub_I s, Long ind1, Long ind2)
 {
 #ifdef SLS_CHECK_SHAPES
 	Long N = ind2 - ind1 + 1;
@@ -411,7 +411,7 @@ inline Long find_repeat(Long_O j, const T &v, Long_I start = 0)
 // search a row from a matrix
 // starting from the row `start`
 // return the row index, return -1 if not found
-inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
+inline Long search_row(SvecInt_I v, ScmatInt_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (v.size() != a.n1())
@@ -424,7 +424,7 @@ inline Long search_row(VecInt_I v, CmatInt_I a, Long_I start = 0)
 	return -1;
 }
 
-inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
+inline Long search_row(SvecLlong_I v, ScmatLlong_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (v.size() != a.n1())
@@ -437,7 +437,7 @@ inline Long search_row(VecLlong_I v, CmatLlong_I a, Long_I start = 0)
 	return -1;
 }
 
-inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
+inline Long search_row(SvecDoub_I v, ScmatDoub_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (v.size() != a.n1())
@@ -450,7 +450,8 @@ inline Long search_row(DvecLlong_I v, CmatLlong_I a, Long_I start = 0)
 	return -1;
 }
 
-inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
+
+inline Long search_row(DvecLlong_I v, ScmatLlong_I a, Long_I start = 0)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (v.size() != a.n1())
@@ -462,7 +463,6 @@ inline Long search_row(VecDoub_I v, CmatDoub_I a, Long_I start = 0)
 	}
 	return -1;
 }
-
 
 
 // see if `match_head(s, v[i])`, return i

@@ -563,6 +563,7 @@ inline void div_vvv(@T@ *v, const @T1@ *v1, const @T2@ *v2, Long_I N, Long_I ste
 //%   'SvecDoub' 'SvecDoub' 'Doub'
 //%   'SvecQdoub' 'SvecQdoub' 'Qdoub'
 //%   'SvecComp' 'SvecDoub' 'Doub'
+//%   'SvecComp' 'SvecDoub' 'Comp'
 //%   'SvecComp' 'SvecDoub' 'Imag'
 //%   'SvecComp' 'SvecComp' 'Doub'
 //%   'SvecComp' 'SvecComp' 'Comp'

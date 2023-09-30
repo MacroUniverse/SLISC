@@ -12,10 +12,10 @@
 #include "../dense/Jcmat3.h"
 
 namespace slisc {
-//% tem('cut', { 'VecInt'; 'VecDoub'; 'VecQdoub';
-//%  'VecComp'; 'VecQcomp';
-//%  'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
-//%  'ScmatDoub'; 'ScmatQdoub'; });
+//% tem('cut', { 'SvecInt'; 'SvecDoub'; 'SvecQdoub';
+//%  'SvecComp'; 'SvecQcomp';
+//%  'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% T = val_t(Tv);
@@ -62,7 +62,7 @@ inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 			start2 < 0 || start2 + N2 > v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-//%     if is_Cmat(Tv) || is_Scmat(Tv)
+//%     if is_Scmat(Tv)
 	@Tsli@ sli(&v(start1, start2), N1, N2, v.n0());
 //%     elseif is_Dcmat(Tv)
 	@Tsli@ sli(&v(start1, start2), N1, N2, v.lda());
@@ -81,7 +81,7 @@ inline @Tsli@C cut(@Tv@_I v,
 			start2 < 0 || start2 + N2 > v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-//%     if is_Cmat(Tv) || is_Scmat(Tv)
+//%     if is_Scmat(Tv)
 	@Tsli@C sli(&v(start1, start2), N1, N2, v.n0());
 //%     elseif is_Dcmat(Tv)
 	@Tsli@C sli(&v(start1, start2), N1, N2, v.lda());
@@ -91,7 +91,7 @@ inline @Tsli@C cut(@Tv@_I v,
 //%     end
 	return sli;
 }
-//%     if is_Cmat(Tv)
+//%     if is_Scmat(Tv)
 //%         ScmatT = ['Scmat' T];
 inline @ScmatT@ cut(@Tv@_IO v, Long_I start2, Long_I N2)
 {
@@ -114,7 +114,7 @@ inline @ScmatT@C cut(@Tv@_I v, Long_I start2, Long_I N2)
 }
 //%     end
 //% elseif ndim(Tv) == 3
-//%     if is_Cmat3(Tv)
+//%     if is_Scmat3(Tv)
 inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -141,20 +141,18 @@ inline @Tsli@C cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2,
 //% end
 //%------------------------
 
-//% tem('cut0', { 'MatInt'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
-//%   'Cmat3Qdoub'; 'Cmat3Qcomp';
-//%   'CmatComp'; 'CmatQcomp'; 'ScmatInt'; 'ScmatLlong';
+//% tem('cut0', { 'MatInt'; 'ScmatInt'; 'ScmatLlong';
 //%   'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
 //%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub';
 //%   'DcmatComp'; 'DcmatQcomp';
-//%   'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub';
-//%   'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%   'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub';
+//%   'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp';
 //%    });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
 //% T = val_t(Tv);
-//% if is_Cmat(Tv) || is_Scmat(Tv)
+//% if is_Scmat(Tv)
 inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -214,7 +212,7 @@ inline @Tsli@C cut0(@Tv@_I v, Long_I j)
 	@Tsli@C sli(&v(0, j), v.n0(), v.n1());
 	return sli;
 }
-//% elseif is_Cmat3(Tv) || is_Scmat3(Tv)
+//% elseif is_Scmat3(Tv)
 inline @Tsli@ cut0(@Tv@_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -241,15 +239,15 @@ inline @Tsli@C cut0(@Tv@_I v, Long_I j, Long_I k)
 //%------------------------
 
 //% tem('cut0-2', {
-//%    'ScmatInt'; 'ScmatLlong'; 'CmatDoub'; 'CmatQdoub';
-//%    'CmatComp'; 'CmatQcomp';
-//%    'ScmatDoub'; 'ScmatQdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
-//%    'ScmatComp'; 'ScmatQcomp'; });
+//%    'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub';
+//%    'ScmatComp'; 'ScmatQcomp';
+//%    'Scmat3Comp'; 'Scmat3Qcomp';
+//% });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut0_type(Tv);
 //% T = val_t(Tv);
-//% if is_Cmat(Tv) || is_Scmat(Tv)
+//% if is_Scmat(Tv)
 inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -269,7 +267,7 @@ inline @Tsli@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
 	@Tsli@C sli(&v(i, j), N1);
 	return sli;
 }
-//% elseif is_Cmat3(Tv)
+//% elseif is_Scmat3(Tv)
 inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -295,14 +293,14 @@ inline @Tsli@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1', { 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//% tem('cut1', { 'ScmatDoub'; 'ScmatQdoub';
 //%     'ScmatComp'; 'ScmatQcomp';
-//%     'MatInt'; 'CmatLlong'; 'Cmat3Comp'; 'Cmat3Qcomp'; });
+//%     'MatInt'; 'ScmatLlong'; 'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut1_type(Tv);
 //% T = val_t(Tv);
-//% if is_Cmat(Tv) || is_Scmat(Tv)
+//% if is_Scmat(Tv)
 inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -363,7 +361,7 @@ inline @Tsli@C cut1(@Tv@_I v, Long_I i)
 	@Tsli@C sli(&v(i, 0), v.n1());
 	return sli;
 }
-//% elseif is_Cmat3(Tv)
+//% elseif is_Scmat3(Tv)
 inline @Tsli@ cut1(@Tv@_IO v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -388,11 +386,11 @@ inline @Tsli@C cut1(@Tv@_I v, Long_I i, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1-2', { 'CmatLlong'; 'CmatComp'; 'CmatQcomp'; });
+//% tem('cut1-2', { 'ScmatLlong'; 'ScmatComp'; 'ScmatQcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
-//% if is_Cmat(T)
+//% if is_Scmat(T)
 //%     Tsli = ['Dvec' val_t(T)];
 inline @Tsli@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2)
 {
@@ -413,7 +411,7 @@ inline @Tsli@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2)
 	@Tsli@C sli(&v(i, j), N2, v.n0());
 	return sli;
 }
-//% elseif is_Cmat3(T)
+//% elseif is_Scmat3(T)
 //%     Tsli = ['Dvec' val_t(T)];
 inline @Tsli@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
@@ -440,13 +438,13 @@ inline @Tsli@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut2', { 'Cmat3Doub'; 'Cmat3Qdoub';
-//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
+//% tem('cut2', { 'Scmat3Doub'; 'Scmat3Qdoub';
+//%     'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut2_type(Tv);
 //% T = val_t(Tv);
-//% if is_Cmat3(Tv)
+//% if is_Scmat3(Tv)
 inline @Tsli@ cut2(@Tv@_IO v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -469,15 +467,14 @@ inline @Tsli@C cut2(@Tv@_I v, Long_I i, Long_I j)
 //% end
 //%-----------------------
 
-//% tem('cut01', { 'Cmat3Comp'; 'Cmat3Qcomp'; 'Cmat3Int';
-//%  'Cmat3Doub'; 'Cmat3Qdoub';
-//%  'Cmat3Comp'; 'Cmat3Qcomp'; 'Scmat3Comp'; 'Scmat3Qcomp';
-//%  'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Qdoub'; });
+//% tem('cut01', { 'Scmat3Comp'; 'Scmat3Qcomp'; 'Scmat3Int';
+//%  'Scmat3Doub'; 'Scmat3Qdoub';
+//%  'Scmat4Int'; 'Scmat4Doub'; 'Scmat4Qdoub'; });
 //%----------------------------
 //% Tv = varargin{:};
 //% Tsli = cut01_type(Tv);
 //% T = val_t(Tv);
-//% if is_Cmat3(Tv) || is_Scmat3(Tv)
+//% if is_Scmat3(Tv)
 inline @Tsli@ cut01(@Tv@_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -497,7 +494,7 @@ inline @Tsli@C cut01(@Tv@_I v, Long_I k)
 	@Tsli@C sli(&v(0, 0, k), v.n0(), v.n1());
 	return sli;
 }
-//% elseif is_Cmat4(Tv)
+//% elseif is_Scmat4(Tv)
 inline @Tsli@ cut01(@Tv@_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -523,13 +520,13 @@ inline @Tsli@C cut01(@Tv@_I v, Long_I k, Long_I l)
 //% end
 //%------------------------
 
-//% tem('cut01-2', { 'Cmat3Doub'; 'Cmat3Qdoub';
-//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
+//% tem('cut01-2', { 'Scmat3Doub'; 'Scmat3Qdoub';
+//%     'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Scmat' val_t(T)];
 //% Ts = val_t(T);
-//% if is_Cmat3(T)
+//% if is_Scmat3(T)
 inline @Tsli@ cut01(@T@_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -555,13 +552,13 @@ inline @Tsli@C cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut01-3', { 'Cmat3Doub'; 'Cmat3Qdoub';
-//%     'Cmat3Comp'; 'Cmat3Qcomp'; });
+//% tem('cut01-3', { 'Scmat3Doub'; 'Scmat3Qdoub';
+//%     'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Tsli = ['Dcmat' val_t(T)];
 //% Ts = val_t(T);
-//% if is_Cmat3(T)
+//% if is_Scmat3(T)
 inline @Tsli@ cut01(@T@_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
 	@Tsli@ sli(&v(i, j, k), N1, N2, v.n0());

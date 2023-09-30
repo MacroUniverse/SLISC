@@ -7,15 +7,14 @@ namespace slisc {
 
 // matrix-vector multiplication, not optimized
 //% tem('mul(v,m,v)', {
-//% 'VecInt' 'CmatInt' 'VecInt'
-//% 'SvecDoub' 'CmatDoub' 'VecDoub'
-//% 'VecComp' 'CmatComp' 'VecComp'
+//% 'SvecInt' 'ScmatInt' 'SvecInt'
+//% 'SvecDoub' 'ScmatDoub' 'SvecDoub'
+//% 'SvecComp' 'ScmatComp' 'SvecComp'
 //% 'SvecComp' 'ScmatComp' 'SvecDoub'
-//% 'SvecComp' 'CmatComp' 'VecComp'
-//% 'SvecComp' 'CmatDoub' 'SvecComp'
+//% 'SvecComp' 'ScmatDoub' 'SvecComp'
 //% 'DvecComp' 'ScmatDoub' 'DvecComp';
-//% 'VecComp' 'MatComp' 'VecDoub'
-//% 'VecQdoub' 'CmatQdoub' 'VecQdoub' });
+//% 'SvecComp' 'MatComp' 'SvecDoub'
+//% 'SvecQdoub' 'ScmatQdoub' 'SvecQdoub' });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% [Ts,Ts1,Ts2] = val_t(T,T1,T2);
@@ -89,7 +88,7 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 }
 //%-------------------------
 
-//% tem('mul(v,v,m)', { 'VecComp', 'VecDoub', 'MatComp' });
+//% tem('mul(v,v,m)', { 'SvecComp', 'SvecDoub', 'MatComp' });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% [Ts,Ts1,Ts2] = val_t(T,T1,T2);
@@ -116,9 +115,9 @@ inline void mul(@T@_O y, @T1@_I x, @T2@_I a)
 //%-----------------------------
 
 //% tem('mul(m,m,m)', {
-//% 'CmatComp' 'CmatComp' 'MatComp'
-//% 'CmatComp', 'CmatComp', 'CmatComp'
-//% 'CmatComp', 'CmatComp', 'CmatDoub' });
+//% 'ScmatComp' 'ScmatComp' 'MatComp'
+//% 'ScmatComp', 'ScmatComp', 'ScmatComp'
+//% 'ScmatComp', 'ScmatComp', 'ScmatDoub' });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% if ndim(T) == 2 && ndim(T1) == 2 && ndim(T2) == 2
@@ -144,29 +143,25 @@ inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
 //%-------------------------
 
 // matrix-vector multiplication
-//% tem('mul_gen', { 'VecDoub', 'CmatDoub', 'SvecDoub';
-//%   'VecQdoub', 'CmatQdoub', 'SvecQdoub';
-//%   'VecComp' 'CmatDoub' 'VecComp'
-//%   'VecQcomp' 'CmatQdoub' 'VecQcomp'
-//%   'VecComp' 'ScmatDoub' 'VecComp'
-//%   'VecQcomp' 'ScmatQdoub' 'VecQcomp'
-//%   'VecDoub', 'CmatDoub', 'VecDoub'
-//%   'VecQdoub', 'CmatQdoub', 'VecQdoub'
-//%   'SvecQcomp' 'CmatQdoub' 'SvecQcomp'
-//%   'SvecComp' 'ScmatDoub' 'DvecComp'
-//%   'SvecQcomp' 'ScmatQdoub' 'DvecQcomp'
-//%   'SvecComp' 'ScmatComp' 'DvecComp'
-//%   'SvecQcomp' 'ScmatQcomp' 'DvecQcomp'
+//% tem('mul_gen', { 'SvecDoub', 'ScmatDoub', 'SvecDoub';
+//%   'SvecQdoub', 'ScmatQdoub', 'SvecQdoub';
+//%   'SvecComp' 'ScmatDoub' 'SvecComp'
 //%   'SvecComp' 'ScmatComp' 'SvecComp'
-//%   'SvecQcomp' 'ScmatQcomp' 'SvecQcomp'
+//%   'SvecComp' 'ScmatDoub' 'DvecComp'
+//%   'SvecComp' 'ScmatComp' 'DvecComp'
 //%   'SvecComp' 'DcmatDoub' 'SvecComp'
+//%   'SvecQcomp' 'ScmatQdoub' 'SvecQcomp'
+//%   'SvecQcomp' 'ScmatQdoub' 'DvecQcomp'
+//%   'SvecQcomp' 'ScmatQcomp' 'SvecQcomp'
+//%   'SvecQcomp' 'ScmatQcomp' 'DvecQcomp'
 //%   'SvecQcomp' 'DcmatQdoub' 'SvecQcomp'
+//%   'SvecDoub', 'ScmatDoub', 'SvecDoub'
 //%   'DvecComp' 'ScmatDoub' 'SvecComp'
 //%   'DvecQcomp' 'ScmatQdoub' 'SvecQcomp'
 //%   'DvecComp' 'ScmatComp' 'SvecComp'
 //%   'DvecQcomp' 'ScmatQcomp' 'SvecQcomp'
-//%   'DvecComp' 'CmatDoub' 'DvecComp'
-//%   'DvecQcomp' 'CmatQdoub' 'DvecQcomp' });
+//%   'DvecComp' 'ScmatDoub' 'DvecComp'
+//%   'DvecQcomp' 'ScmatQdoub' 'DvecQcomp' });
 //%------------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);
@@ -240,12 +235,10 @@ inline void mul_gen(@Ty@_O y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I bet
 }
 //%-------------------------
 
-//% tem('mul_sym', { 'VecComp', 'CmatDoub', 'VecComp'
-//%    'VecQcomp', 'CmatQdoub', 'VecQcomp'
-//%     'VecDoub', 'CmatDoub', 'VecDoub'
-//%     'VecQdoub', 'CmatQdoub', 'VecQdoub'
-//%     'VecDoub', 'CmatDoub', 'SvecDoub'
-//%     'VecQdoub', 'CmatQdoub', 'SvecQdoub'
+//% tem('mul_sym', { 'SvecComp', 'ScmatDoub', 'SvecComp'
+//%    'SvecQcomp', 'ScmatQdoub', 'SvecQcomp'
+//%     'SvecDoub', 'ScmatDoub', 'SvecDoub'
+//%     'SvecQdoub', 'ScmatQdoub', 'SvecQdoub'
 //% });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -311,7 +304,7 @@ inline void mul_sym(@Ty@_IO &y, @Ta@_I a, @Tx@_I x, @Tsa@_I alpha = 1, @Tsa@_I b
 }
 //%--------------------------------
 
-//% tem('mul_gen(m,m,m)', { 'ScmatComp', 'ScmatDoub', 'CmatComp' });
+//% tem('mul_gen(m,m,m)', { 'ScmatComp', 'ScmatDoub', 'ScmatComp' });
 //%--------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
 //% Tsy = val_t(Ty); Tsa = val_t(Ta); Tsx = val_t(Tx);

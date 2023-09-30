@@ -31,7 +31,7 @@ inline @DcmatT@C band(@CbandT@_I a)
 // detect band width of dense matrix
 // a(i,j) < tol is considered 0
 //% tem('nband', {
-//%     'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp';
+//%     'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp';
 //% });
 //%----------------
 //% Tmat = varargin{:}; Ttol = rm_comp(val_t(Tmat));
@@ -94,7 +94,7 @@ inline void copy_real(Cband@Tc@_O b, @Tr@_I s)
 {
 	Long N0 = b.n0(), N1 = b.n1();
 	for (Long j = 0; j < N1; ++j) {
-//% req('cut0', { ['Cmat' Tc] });
+//% req('cut0', { ['Scmat' Tc] });
 		Svec@Tc@ cut_b = cut0(b.cmat(), j);
 		Long k = b.idiag() - j;
 		Long i_beg = max(Long(0), j - b.nup()), i_end = min(N0, j + b.nlow() + 1);
@@ -120,7 +120,7 @@ inline void copy_imag(Cband@Tc@_O b, Scmat@Tr@_I a)
 	assert_same_shape(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	for (Long j = 0; j < N1; ++j) {
-//% req('cut0', { ['Cmat' Tc]; ['Scmat' Tr]; });
+//% req('cut0', { ['Scmat' Tc]; ['Scmat' Tr]; });
 		Svec@Tc@ cut_b = cut0(b.cmat(), j);
 		Svec@Tr@C cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
@@ -139,7 +139,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Scmat@Tr@_I a, @Tr@_I dt, Bool_I imag_tim
 	Long N0 = a.n0(), N1 = a.n1();
 	@Tr@ dt4 = 0.25*dt;
 	for (Long j = 0; j < N1; ++j) {
-//% req('cut0', { ['Cmat' Tc]; ['Scmat' Tr]; });
+//% req('cut0', { ['Scmat' Tc]; ['Scmat' Tr]; });
 		Svec@Tc@ cut_b = cut0(b.cmat(), j);
 		Svec@Tr@C cut_a = cut0(a, j);
 		Long k = b.idiag() - j;
@@ -173,7 +173,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Mcoo@Tr@_I a, @Tr@_I dt, Bool_I imag_time
 	if (!append) {
 //% req('copy(band,s)', {['Cband' Tc]});
 		copy(b, 0);
-//% req('cut1', {['Cmat' Tc]}); req('copy(v,s)', {['Dvec' Tc]});
+//% req('cut1', {['Scmat' Tc]}); req('copy(v,s)', {['Dvec' Tc]});
 		copy(cut1(b.cmat(), b.idiag()), 0.5);
 	}
 	if (!imag_time) {
@@ -206,7 +206,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Svec@Tr@_I coeff, const vector<Mcoo@Tr@> 
 	if (!append) {
 //% req('copy(band,s)', {['Cband' Tc]});
 		copy(b, 0);
-//% req('cut1', {['Cmat' Tc]}); req('copy(v,s)', {['Dvec' Tc]});
+//% req('cut1', {['Scmat' Tc]}); req('copy(v,s)', {['Dvec' Tc]});
 		copy(cut1(b.cmat(), b.idiag()), 0.5);
 	}
 	if (!imag_time) {

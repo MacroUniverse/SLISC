@@ -6,13 +6,12 @@ namespace slisc {
 const Int def_disp_prec = 8;
 //% tem('disp', {
 //%     'vecInt'; 'vecLlong'; 'vecDoub'; 'vecQdoub'; 'vecComp'; 'vecQcomp';
-//%     'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
 //%     'MatLlong'; 'MatDoub'; 'MatComp';
-//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatLdoub'; 'CmatQdoub';
-//%     'CmatComp'; 'CmatLcomp'; 'CmatQcomp';
-//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Ldoub'; 'Cmat3Qdoub';
-//%     'Cmat3Comp'; 'Cmat3Lcomp'; 'Cmat3Qcomp';
-//%     'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatLdoub'; 'ScmatQdoub';
+//%     'ScmatComp'; 'ScmatLcomp'; 'ScmatQcomp';
+//%     'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Ldoub'; 'Scmat3Qdoub';
+//%     'Scmat3Comp'; 'Scmat3Lcomp'; 'Scmat3Qcomp';
 //%     'DvecLlong'; 'DvecDoub'; 'DvecComp';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub'; 'DcmatLdoub'; 'DcmatQdoub';
 //%     'DcmatComp'; 'DcmatLcomp'; 'DcmatQcomp';

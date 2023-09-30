@@ -44,8 +44,8 @@ inline bool equals_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 
 //% tem('shape_cmp', {
 //% 'vecInt', 'vecInt';  
-//% 'CmatDoub', 'CmatDoub';
-//% 'CmatQdoub', 'CmatQdoub';
+//% 'ScmatDoub', 'ScmatDoub';
+//% 'ScmatQdoub', 'ScmatQdoub';
 //% 'Mat3Doub', 'Mat3Comp'; });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
@@ -68,7 +68,7 @@ inline bool shape_cmp(@T1@_I v1, @T2@_I v2) {return v1.n0() == v2.n0() && v1.n1(
 
 //% tem('assert_same_shape', {
 //%    'vecInt', 'vecInt'
-//%    'CmatComp', 'CmatInt' });
+//%    'ScmatComp', 'ScmatInt' });
 //%--------------------------------
 //% [T1, T2] = varargin{:};
 //% [Ts1,Ts2] = val_t(T1,T2);
@@ -82,7 +82,7 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2)
 }
 //%--------------------------------
 
-//% tem('assert_same_shape3', { 'CmatComp', 'CmatInt', 'CmatDoub' });
+//% tem('assert_same_shape3', { 'ScmatComp', 'ScmatInt', 'ScmatDoub' });
 //%--------------------------------
 //% [T1, T2, T3] = varargin{:};
 //% [Ts1,Ts2,Ts3] = val_t(T1,T2,T3);
@@ -92,41 +92,41 @@ inline void assert_same_shape(@T1@_I v1, @T2@_I v2, @T3@_I v3)
 //%--------------------------------
 
 //% tem('v==v', {
-//%   'VecChar', 'VecChar';
-//%   'VecUchar', 'VecUchar';
-//%   'VecInt', 'VecInt';
-//%   'VecLlong', 'VecLlong';
-//%   'VecDoub', 'VecDoub';
-//%   'VecQdoub', 'VecQdoub';
-//%   'VecDoub', 'VecComp';
-//%   'VecQdoub', 'VecQcomp';
-//%   'VecComp', 'VecComp';
-//%   'VecQcomp', 'VecQcomp';
+//%   'SvecChar', 'SvecChar';
+//%   'SvecUchar', 'SvecUchar';
+//%   'SvecInt', 'SvecInt';
+//%   'SvecLlong', 'SvecLlong';
+//%   'SvecDoub', 'SvecDoub';
+//%   'SvecQdoub', 'SvecQdoub';
+//%   'SvecDoub', 'SvecComp';
+//%   'SvecQdoub', 'SvecQcomp';
+//%   'SvecComp', 'SvecComp';
+//%   'SvecQcomp', 'SvecQcomp';
 //%   'MatLlong', 'MatLlong';
 //%   'MatDoub' 'MatDoub'
-//%   'MatDoub' 'CmatDoub'
+//%   'MatDoub' 'ScmatDoub'
 //%   'MatInt' 'MatInt'
 //%   'MatDoub' 'MatDoub'
 //%   'MatComp', 'MatComp';
-//%   'CmatInt' 'CmatInt'
-//%   'CmatLlong' 'CmatLlong'
-//%   'CmatDoub', 'CmatDoub';
-//%   'CmatQdoub', 'CmatQdoub';
-//%   'CmatDoub', 'MatDoub';
-//%   'CmatComp', 'MatComp';
-//%   'CmatComp', 'CmatComp';
-//%   'CmatQcomp', 'CmatQcomp';
-//%   'Cmat3Llong' 'Cmat3Llong'
-//%   'Cmat3Doub' 'Cmat3Doub'
-//%   'Cmat3Qdoub' 'Cmat3Qdoub'
-//%   'Cmat3Comp' 'Cmat3Comp'
-//%   'Cmat3Qcomp' 'Cmat3Qcomp'
+//%   'ScmatInt' 'ScmatInt'
+//%   'ScmatLlong' 'ScmatLlong'
+//%   'ScmatDoub', 'ScmatDoub';
+//%   'ScmatQdoub', 'ScmatQdoub';
+//%   'ScmatDoub', 'MatDoub';
+//%   'ScmatComp', 'MatComp';
+//%   'ScmatComp', 'ScmatComp';
+//%   'ScmatQcomp', 'ScmatQcomp';
+//%   'Scmat3Llong' 'Scmat3Llong'
+//%   'Scmat3Doub' 'Scmat3Doub'
+//%   'Scmat3Qdoub' 'Scmat3Qdoub'
+//%   'Scmat3Comp' 'Scmat3Comp'
+//%   'Scmat3Qcomp' 'Scmat3Qcomp'
 //%   'Mat3Doub' 'Mat3Doub'
 //%   'Mat3Comp' 'Mat3Comp'
-//%   'DcmatDoub' 'CmatDoub'
-//%   'DcmatQdoub' 'CmatQdoub'
-//%   'Jcmat3Doub' 'Cmat3Doub'
-//%   'Jcmat3Qdoub' 'Cmat3Qdoub'
+//%   'DcmatDoub' 'ScmatDoub'
+//%   'DcmatQdoub' 'ScmatQdoub'
+//%   'Jcmat3Doub' 'Scmat3Doub'
+//%   'Jcmat3Qdoub' 'Scmat3Qdoub'
 //% });
 //%--------------------------
 //% [T1, T2] = varargin{:};
@@ -183,11 +183,11 @@ inline bool operator==(VecBool_I v1, VecBool_I v2)
 inline bool operator!=(VecBool_I v1, VecBool_I v2)
 { return !(v1 == v2); }
 
-//% tem('v==s', { 'VecInt'; 'VecLlong';
-//%  'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp'; 'DvecInt';
+//% tem('v==s', { 'SvecInt'; 'SvecLlong';
+//%  'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp'; 'DvecInt';
 //%  'DvecDoub'; 'DvecQdoub';
-//%  'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
-//%  'MatDoub'; 'Mat3Doub'; 'Cmat3Doub'; 'Cmat3Qdoub'; });
+//%  'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
+//%  'MatDoub'; 'Mat3Doub'; 'Scmat3Doub'; 'Scmat3Qdoub'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline bool operator==(@T@_I v, @Ts@_I s)

@@ -49,7 +49,7 @@ inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rh
 }
 
 inline @CmatT@::@CmatT@(@CmatT@ &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
+	: Base(move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline @CmatT@ &@CmatT@::operator=(const @CmatT@ &rhs)
 {
@@ -181,7 +181,7 @@ inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs.size()), m_N0(rhs.m_N0
 }
 
 inline CmatBool::CmatBool(CmatBool &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
+	: Base(move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
 {

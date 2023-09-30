@@ -131,7 +131,7 @@ inline void save(@T@_I v, Str_I varname, Mat mat)
 //%---------------------
 
 //% tem('matsave(m2)', {
-//%    'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%    'ScmatChar'; 'ScmatUchar';
 //%    'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //%    'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp';});
 //%---------------------
@@ -175,7 +175,7 @@ inline void save(@T@_I a, Str_I varname, Mat mat)
 //%---------------------
 
 //% tem('matsave(m3)', {
-//%   'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; });
+//%   'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void save(@T@_I a, Str_I varname, Mat mat)
@@ -297,7 +297,7 @@ inline void load(@T@_O v, Str_I varname, Mat mat)
 }
 //%---------------------
 
-//% tem('matload(a2)', {'CmatChar'; 'CmatUchar'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//% tem('matload(a2)', {'ScmatChar'; 'ScmatUchar';
 //%   'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
 //%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatComp'; });
 //%---------------------
@@ -349,7 +349,7 @@ inline void load(@T@_O a, Str_I varname, Mat mat)
 }
 //%---------------------
 
-//% tem('matload(a3)', {'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'});
+//% tem('matload(a3)', {'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp'});
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void load(@T@_O a, Str_I varname, Mat mat)

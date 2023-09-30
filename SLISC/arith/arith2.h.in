@@ -23,7 +23,7 @@ inline void mod_vvs(@T@ *v, const @T1@ *v1, @T1@_I s, Long_I N)
 //%-------------------------
 
 //% tem('mod(v,v,s)', { 'SvecInt' 'SvecInt'
-//% 'SvecLlong', 'SvecLlong' });
+//% 'SvecLlong' 'SvecLlong' });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% [Ts,Ts1] = val_t(T,T1);
