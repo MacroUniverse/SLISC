@@ -71,7 +71,8 @@ void test_Mcoo()
 		SLS_ASSERT(a2 == a1);
 
 		a1 -= b1;
-		sort_col(a); sort_col(b); a.reserve_cpy(40);
+		sort_col(a); sort_col(b);
+		a.reserve_cpy(40);
 		a -= b; copy(a2, a);
 		SLS_ASSERT(a2 == a1);
 	}

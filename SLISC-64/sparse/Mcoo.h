@@ -279,7 +279,7 @@ inline void McooChar::reserve(Long_I N)
 
 inline void McooChar::reserve_cpy(Long_I N)
 {
-	thread_local static VecChar data(N);
+	VecChar data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -566,7 +566,7 @@ inline void McooInt::reserve(Long_I N)
 
 inline void McooInt::reserve_cpy(Long_I N)
 {
-	thread_local static VecInt data(N);
+	VecInt data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -853,7 +853,7 @@ inline void McooLlong::reserve(Long_I N)
 
 inline void McooLlong::reserve_cpy(Long_I N)
 {
-	thread_local static VecLlong data(N);
+	VecLlong data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -1140,7 +1140,7 @@ inline void McooDoub::reserve(Long_I N)
 
 inline void McooDoub::reserve_cpy(Long_I N)
 {
-	thread_local static VecDoub data(N);
+	VecDoub data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -1427,7 +1427,7 @@ inline void McooComp::reserve(Long_I N)
 
 inline void McooComp::reserve_cpy(Long_I N)
 {
-	thread_local static VecComp data(N);
+	VecComp data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -1716,7 +1716,7 @@ inline void McooImag::reserve(Long_I N)
 
 inline void McooImag::reserve_cpy(Long_I N)
 {
-	thread_local static VecImag data(N);
+	VecImag data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
