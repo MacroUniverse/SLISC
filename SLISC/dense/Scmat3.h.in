@@ -40,7 +40,7 @@ class @Class@ : public @Base@
 {
 protected:
 	typedef @Base@ Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	@Class@();
 	@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);
@@ -68,7 +68,7 @@ public:
 inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
-	: @Base@(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: @Base@(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 //% if ~constness
 inline @Class@::operator const @Scmat3TC@ &() const
@@ -85,8 +85,10 @@ inline @Class@::operator @Scmat3TC@ &()
 inline @CT@ &@Class@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "@Scmat3T@ index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -103,22 +105,27 @@ inline Long @Class@::n1() const
 
 inline Long @Class@::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void @Class@::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "@Scmat3T@ reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void @Class@::set(@CT@ *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	@Base@::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline @Class@::~@Class@() {}

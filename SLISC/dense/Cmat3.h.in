@@ -17,9 +17,9 @@ class @Cmat3T@ : private @VbaseT@
 {
 protected:
 	typedef @VbaseT@ Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	@Cmat3T@(): m_N0(0), m_N1(0), m_N2(0) {};
+	@Cmat3T@(): m_N0(0), m_N1(0) {};
 	@Cmat3T@(Long_I N0, Long_I N1, Long_I N2);
 	@Cmat3T@(const @Cmat3T@ &rhs); // copy constructor
 	@Cmat3T@(@Cmat3T@ &&rhs); // move constructor
@@ -29,21 +29,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	@T@ &operator()(Long_I i, Long_I j, Long_I k);
 	const @T@ &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3@T@C&() const;
 	operator const Scmat3@T@&();
 };
 
-inline @Cmat3T@::@Cmat3T@(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline @Cmat3T@::@Cmat3T@(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -51,27 +51,27 @@ inline @Cmat3T@::@Cmat3T@(const @Cmat3T@ &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(
 }
 
 inline @Cmat3T@::@Cmat3T@(@Cmat3T@ &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline @Cmat3T@ &@Cmat3T@::operator=(const @Cmat3T@ &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline @Cmat3T@ &@Cmat3T@::operator=(@Cmat3T@ &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void @Cmat3T@::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -81,20 +81,21 @@ inline void @Cmat3T@::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "@Cmat3T@ reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("@Cmat3T@ index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "@Cmat3T@ index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -102,9 +103,10 @@ inline @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k)
 inline const @T@ &@Cmat3T@::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("@Cmat3T@ index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "@Cmat3T@ index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -118,7 +120,7 @@ inline Long @Cmat3T@::n1() const {
 }
 
 inline Long @Cmat3T@::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline @Cmat3T@::operator const Scmat3@T@C&() const {

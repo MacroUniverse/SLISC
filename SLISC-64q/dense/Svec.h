@@ -454,6 +454,34 @@ inline SvecLimag::operator SvecLimagC() const
 typedef const SvecLimag &SvecLimag_O, &SvecLimag_IO;
 
 
+class SvecQimagC : public SvbaseQimagC
+{
+public:
+	using SvbaseQimagC::SvbaseQimagC;
+	explicit SvecQimagC(Long_I N);
+};
+
+
+typedef const SvecQimagC &SvecQimag_I;
+
+
+class SvecQimag : public SvbaseQimag
+{
+public:
+	using SvbaseQimag::SvbaseQimag;
+	explicit SvecQimag(Long_I N);
+	operator SvecQimagC() const;
+};
+
+inline SvecQimag::operator SvecQimagC() const
+{
+	return *((SvecQimagC *)this);
+}
+
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecQimag &SvecQimag_O, &SvecQimag_IO;
+
+
 
 #ifdef SLS_USE_INT_AS_LONG
 typedef SvecInt SvecLong;

@@ -1,5 +1,6 @@
 #pragma once
 #include "../dense/Svec.h"
+#include "../str/str.h"
 // "C" means lower level const
 
 namespace slisc {
@@ -40,7 +41,7 @@ namespace slisc {
 class @Class@ : public @Base@
 {
 protected:
-	Long m_N0, m_N1;
+	Long m_N0;
 public:
 	@Class@();
 	@Class@(@CT@ *data, Long_I N0, Long_I N1);
@@ -65,7 +66,7 @@ public:
 inline @Class@::@Class@() {}
 
 inline @Class@::@Class@(@CT@ *data, Long_I N0, Long_I N1)
-	: @Base@(data, N0*N1), m_N0(N0), m_N1(N1) {}
+	: @Base@(data, N0*N1), m_N0(N0) {}
 
 //% if ~constness
 inline @Class@::operator const @ScmatTC@ &() const
@@ -82,8 +83,10 @@ inline @Class@::operator @ScmatTC@ &()
 inline @CT@ &@Class@::operator()(Long_I i, Long_I j) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= n1()) {
+		stringstream ss; ss << "@ScmatT@ index (" << i << ',' << j << ") out of bounds: shape = (" << m_N0 << ',' << n1() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0 * j];
 }
@@ -95,22 +98,27 @@ inline Long @Class@::n0() const
 
 inline Long @Class@::n1() const
 {
-	return m_N1;
+	return m_N/m_N0;;
 }
 
 inline void @Class@::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1 != m_N) {
+		stringstream ss;
+		ss  << "@ScmatT@ reshaping from (" << m_N0 << ", " << n1()
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< N1 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1;
+	m_N0 = N0;
 }
 
 inline void @Class@::set(@CT@ *data, Long_I N0, Long_I N1)
 {
 	@Base@::set(data, N0*N1);
-	m_N0 = N0; m_N1 = N1;
+	m_N0 = N0;
 }
 
 inline @Class@::~@Class@() {}

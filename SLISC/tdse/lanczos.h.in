@@ -88,7 +88,7 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 		alpha[j2] = real(dot(v2, vc));
 		v0.next(); v1.next(); v2.next();
 	}
-//% req('sum', { ['Svec' Tr] });
+//% req('sum', { ['Svbase' Tr] });
 	@Tr@ err = prod(beta);
 
 //% if is_Doub(Tr)
@@ -199,7 +199,7 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 		alpha[j2] = real(dot(v2, vc));
 		v0.next(); v1.next(); v2.next();
 	}
-//% req('sum', { ['Svec' Tr] });
+//% req('sum', { ['Svbase' Tr] });
 	@Tr@ err = prod(beta);
 //% if is_Doub(Tr)
 	lapack_int info =

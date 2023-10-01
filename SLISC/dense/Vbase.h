@@ -1,6 +1,5 @@
 // basic vector
 #pragma once
-#include "../global.h"
 #include "../arith/Imag.h"
 #include "../str/str.h"
 #include "Svec.h"

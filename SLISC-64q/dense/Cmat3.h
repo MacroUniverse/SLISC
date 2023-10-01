@@ -8,9 +8,9 @@ class Cmat3Bool : private VbaseBool
 {
 protected:
 	typedef VbaseBool Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Bool(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Bool(): m_N0(0), m_N1(0) {};
 	Cmat3Bool(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Bool(const Cmat3Bool &rhs); // copy constructor
 	Cmat3Bool(Cmat3Bool &&rhs); // move constructor
@@ -20,21 +20,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Bool &operator()(Long_I i, Long_I j, Long_I k);
 	const Bool &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3BoolC&() const;
 	operator const Scmat3Bool&();
 };
 
-inline Cmat3Bool::Cmat3Bool(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Bool::Cmat3Bool(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Bool::Cmat3Bool(const Cmat3Bool &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Bool::Cmat3Bool(const Cmat3Bool &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -42,27 +42,27 @@ inline Cmat3Bool::Cmat3Bool(const Cmat3Bool &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 }
 
 inline Cmat3Bool::Cmat3Bool(Cmat3Bool &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Bool &Cmat3Bool::operator=(const Cmat3Bool &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Bool &Cmat3Bool::operator=(Cmat3Bool &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Bool::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -72,20 +72,21 @@ inline void Cmat3Bool::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Bool reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Bool index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Bool index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -93,9 +94,10 @@ inline Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k)
 inline const Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Bool index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Bool index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -109,7 +111,7 @@ inline Long Cmat3Bool::n1() const {
 }
 
 inline Long Cmat3Bool::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Bool::operator const Scmat3BoolC&() const {
@@ -128,9 +130,9 @@ class Cmat3Char : private VbaseChar
 {
 protected:
 	typedef VbaseChar Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Char(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Char(): m_N0(0), m_N1(0) {};
 	Cmat3Char(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Char(const Cmat3Char &rhs); // copy constructor
 	Cmat3Char(Cmat3Char &&rhs); // move constructor
@@ -140,21 +142,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Char &operator()(Long_I i, Long_I j, Long_I k);
 	const Char &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3CharC&() const;
 	operator const Scmat3Char&();
 };
 
-inline Cmat3Char::Cmat3Char(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Char::Cmat3Char(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Char::Cmat3Char(const Cmat3Char &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Char::Cmat3Char(const Cmat3Char &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -162,27 +164,27 @@ inline Cmat3Char::Cmat3Char(const Cmat3Char &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 }
 
 inline Cmat3Char::Cmat3Char(Cmat3Char &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Char &Cmat3Char::operator=(const Cmat3Char &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Char &Cmat3Char::operator=(Cmat3Char &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Char::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -192,20 +194,21 @@ inline void Cmat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Char reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Char index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Char index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -213,9 +216,10 @@ inline Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k)
 inline const Char &Cmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Char index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Char index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -229,7 +233,7 @@ inline Long Cmat3Char::n1() const {
 }
 
 inline Long Cmat3Char::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Char::operator const Scmat3CharC&() const {
@@ -248,9 +252,9 @@ class Cmat3Uchar : private VbaseUchar
 {
 protected:
 	typedef VbaseUchar Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Uchar(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Uchar(): m_N0(0), m_N1(0) {};
 	Cmat3Uchar(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Uchar(const Cmat3Uchar &rhs); // copy constructor
 	Cmat3Uchar(Cmat3Uchar &&rhs); // move constructor
@@ -260,21 +264,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Uchar &operator()(Long_I i, Long_I j, Long_I k);
 	const Uchar &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3UcharC&() const;
 	operator const Scmat3Uchar&();
 };
 
-inline Cmat3Uchar::Cmat3Uchar(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Uchar::Cmat3Uchar(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Uchar::Cmat3Uchar(const Cmat3Uchar &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Uchar::Cmat3Uchar(const Cmat3Uchar &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -282,27 +286,27 @@ inline Cmat3Uchar::Cmat3Uchar(const Cmat3Uchar &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Uchar::Cmat3Uchar(Cmat3Uchar &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Uchar &Cmat3Uchar::operator=(const Cmat3Uchar &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Uchar &Cmat3Uchar::operator=(Cmat3Uchar &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Uchar::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -312,20 +316,21 @@ inline void Cmat3Uchar::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Uchar reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Uchar index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -333,9 +338,10 @@ inline Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k)
 inline const Uchar &Cmat3Uchar::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Uchar index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Uchar index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -349,7 +355,7 @@ inline Long Cmat3Uchar::n1() const {
 }
 
 inline Long Cmat3Uchar::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Uchar::operator const Scmat3UcharC&() const {
@@ -368,9 +374,9 @@ class Cmat3Int : private VbaseInt
 {
 protected:
 	typedef VbaseInt Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Int(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Int(): m_N0(0), m_N1(0) {};
 	Cmat3Int(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Int(const Cmat3Int &rhs); // copy constructor
 	Cmat3Int(Cmat3Int &&rhs); // move constructor
@@ -380,21 +386,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Int &operator()(Long_I i, Long_I j, Long_I k);
 	const Int &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3IntC&() const;
 	operator const Scmat3Int&();
 };
 
-inline Cmat3Int::Cmat3Int(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Int::Cmat3Int(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Int::Cmat3Int(const Cmat3Int &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Int::Cmat3Int(const Cmat3Int &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -402,27 +408,27 @@ inline Cmat3Int::Cmat3Int(const Cmat3Int &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(
 }
 
 inline Cmat3Int::Cmat3Int(Cmat3Int &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Int &Cmat3Int::operator=(const Cmat3Int &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Int &Cmat3Int::operator=(Cmat3Int &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Int::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -432,20 +438,21 @@ inline void Cmat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Int reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Int index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Int index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -453,9 +460,10 @@ inline Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k)
 inline const Int &Cmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Int index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Int index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -469,7 +477,7 @@ inline Long Cmat3Int::n1() const {
 }
 
 inline Long Cmat3Int::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Int::operator const Scmat3IntC&() const {
@@ -488,9 +496,9 @@ class Cmat3Llong : private VbaseLlong
 {
 protected:
 	typedef VbaseLlong Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Llong(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Llong(): m_N0(0), m_N1(0) {};
 	Cmat3Llong(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Llong(const Cmat3Llong &rhs); // copy constructor
 	Cmat3Llong(Cmat3Llong &&rhs); // move constructor
@@ -500,21 +508,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Llong &operator()(Long_I i, Long_I j, Long_I k);
 	const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3LlongC&() const;
 	operator const Scmat3Llong&();
 };
 
-inline Cmat3Llong::Cmat3Llong(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Llong::Cmat3Llong(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Llong::Cmat3Llong(const Cmat3Llong &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Llong::Cmat3Llong(const Cmat3Llong &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -522,27 +530,27 @@ inline Cmat3Llong::Cmat3Llong(const Cmat3Llong &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Llong::Cmat3Llong(Cmat3Llong &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Llong &Cmat3Llong::operator=(const Cmat3Llong &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Llong &Cmat3Llong::operator=(Cmat3Llong &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Llong::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -552,20 +560,21 @@ inline void Cmat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Llong reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Llong index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Llong index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -573,9 +582,10 @@ inline Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k)
 inline const Llong &Cmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Llong index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Llong index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -589,7 +599,7 @@ inline Long Cmat3Llong::n1() const {
 }
 
 inline Long Cmat3Llong::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Llong::operator const Scmat3LlongC&() const {
@@ -608,9 +618,9 @@ class Cmat3Float : private VbaseFloat
 {
 protected:
 	typedef VbaseFloat Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Float(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Float(): m_N0(0), m_N1(0) {};
 	Cmat3Float(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Float(const Cmat3Float &rhs); // copy constructor
 	Cmat3Float(Cmat3Float &&rhs); // move constructor
@@ -620,21 +630,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Float &operator()(Long_I i, Long_I j, Long_I k);
 	const Float &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3FloatC&() const;
 	operator const Scmat3Float&();
 };
 
-inline Cmat3Float::Cmat3Float(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Float::Cmat3Float(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Float::Cmat3Float(const Cmat3Float &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Float::Cmat3Float(const Cmat3Float &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -642,27 +652,27 @@ inline Cmat3Float::Cmat3Float(const Cmat3Float &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Float::Cmat3Float(Cmat3Float &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Float &Cmat3Float::operator=(const Cmat3Float &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Float &Cmat3Float::operator=(Cmat3Float &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Float::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -672,20 +682,21 @@ inline void Cmat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Float reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Float index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Float index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -693,9 +704,10 @@ inline Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k)
 inline const Float &Cmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Float index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Float index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -709,7 +721,7 @@ inline Long Cmat3Float::n1() const {
 }
 
 inline Long Cmat3Float::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Float::operator const Scmat3FloatC&() const {
@@ -728,9 +740,9 @@ class Cmat3Doub : private VbaseDoub
 {
 protected:
 	typedef VbaseDoub Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Doub(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Doub(): m_N0(0), m_N1(0) {};
 	Cmat3Doub(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Doub(const Cmat3Doub &rhs); // copy constructor
 	Cmat3Doub(Cmat3Doub &&rhs); // move constructor
@@ -740,21 +752,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Doub &operator()(Long_I i, Long_I j, Long_I k);
 	const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3DoubC&() const;
 	operator const Scmat3Doub&();
 };
 
-inline Cmat3Doub::Cmat3Doub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Doub::Cmat3Doub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Doub::Cmat3Doub(const Cmat3Doub &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Doub::Cmat3Doub(const Cmat3Doub &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -762,27 +774,27 @@ inline Cmat3Doub::Cmat3Doub(const Cmat3Doub &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 }
 
 inline Cmat3Doub::Cmat3Doub(Cmat3Doub &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Doub &Cmat3Doub::operator=(const Cmat3Doub &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Doub &Cmat3Doub::operator=(Cmat3Doub &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Doub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -792,20 +804,21 @@ inline void Cmat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Doub reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Doub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Doub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -813,9 +826,10 @@ inline Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k)
 inline const Doub &Cmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Doub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Doub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -829,7 +843,7 @@ inline Long Cmat3Doub::n1() const {
 }
 
 inline Long Cmat3Doub::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Doub::operator const Scmat3DoubC&() const {
@@ -848,9 +862,9 @@ class Cmat3Ldoub : private VbaseLdoub
 {
 protected:
 	typedef VbaseLdoub Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Ldoub(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Ldoub(): m_N0(0), m_N1(0) {};
 	Cmat3Ldoub(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Ldoub(const Cmat3Ldoub &rhs); // copy constructor
 	Cmat3Ldoub(Cmat3Ldoub &&rhs); // move constructor
@@ -860,21 +874,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Ldoub &operator()(Long_I i, Long_I j, Long_I k);
 	const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3LdoubC&() const;
 	operator const Scmat3Ldoub&();
 };
 
-inline Cmat3Ldoub::Cmat3Ldoub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Ldoub::Cmat3Ldoub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Ldoub::Cmat3Ldoub(const Cmat3Ldoub &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Ldoub::Cmat3Ldoub(const Cmat3Ldoub &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -882,27 +896,27 @@ inline Cmat3Ldoub::Cmat3Ldoub(const Cmat3Ldoub &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Ldoub::Cmat3Ldoub(Cmat3Ldoub &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Ldoub &Cmat3Ldoub::operator=(const Cmat3Ldoub &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Ldoub &Cmat3Ldoub::operator=(Cmat3Ldoub &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Ldoub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -912,20 +926,21 @@ inline void Cmat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Ldoub reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Ldoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Ldoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -933,9 +948,10 @@ inline Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k)
 inline const Ldoub &Cmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Ldoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Ldoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -949,7 +965,7 @@ inline Long Cmat3Ldoub::n1() const {
 }
 
 inline Long Cmat3Ldoub::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Ldoub::operator const Scmat3LdoubC&() const {
@@ -968,9 +984,9 @@ class Cmat3Qdoub : private VbaseQdoub
 {
 protected:
 	typedef VbaseQdoub Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Qdoub(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Qdoub(): m_N0(0), m_N1(0) {};
 	Cmat3Qdoub(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Qdoub(const Cmat3Qdoub &rhs); // copy constructor
 	Cmat3Qdoub(Cmat3Qdoub &&rhs); // move constructor
@@ -980,21 +996,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Qdoub &operator()(Long_I i, Long_I j, Long_I k);
 	const Qdoub &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3QdoubC&() const;
 	operator const Scmat3Qdoub&();
 };
 
-inline Cmat3Qdoub::Cmat3Qdoub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Qdoub::Cmat3Qdoub(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Qdoub::Cmat3Qdoub(const Cmat3Qdoub &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Qdoub::Cmat3Qdoub(const Cmat3Qdoub &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1002,27 +1018,27 @@ inline Cmat3Qdoub::Cmat3Qdoub(const Cmat3Qdoub &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Qdoub::Cmat3Qdoub(Cmat3Qdoub &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Qdoub &Cmat3Qdoub::operator=(const Cmat3Qdoub &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Qdoub &Cmat3Qdoub::operator=(Cmat3Qdoub &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Qdoub::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1032,20 +1048,21 @@ inline void Cmat3Qdoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Qdoub reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Qdoub &Cmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Qdoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Qdoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1053,9 +1070,10 @@ inline Qdoub &Cmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k)
 inline const Qdoub &Cmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Qdoub index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Qdoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1069,7 +1087,7 @@ inline Long Cmat3Qdoub::n1() const {
 }
 
 inline Long Cmat3Qdoub::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Qdoub::operator const Scmat3QdoubC&() const {
@@ -1088,9 +1106,9 @@ class Cmat3Fcomp : private VbaseFcomp
 {
 protected:
 	typedef VbaseFcomp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Fcomp(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Fcomp(): m_N0(0), m_N1(0) {};
 	Cmat3Fcomp(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Fcomp(const Cmat3Fcomp &rhs); // copy constructor
 	Cmat3Fcomp(Cmat3Fcomp &&rhs); // move constructor
@@ -1100,21 +1118,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Fcomp &operator()(Long_I i, Long_I j, Long_I k);
 	const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3FcompC&() const;
 	operator const Scmat3Fcomp&();
 };
 
-inline Cmat3Fcomp::Cmat3Fcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Fcomp::Cmat3Fcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Fcomp::Cmat3Fcomp(const Cmat3Fcomp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Fcomp::Cmat3Fcomp(const Cmat3Fcomp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1122,27 +1140,27 @@ inline Cmat3Fcomp::Cmat3Fcomp(const Cmat3Fcomp &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Fcomp::Cmat3Fcomp(Cmat3Fcomp &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Fcomp &Cmat3Fcomp::operator=(const Cmat3Fcomp &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Fcomp &Cmat3Fcomp::operator=(Cmat3Fcomp &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Fcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1152,20 +1170,21 @@ inline void Cmat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Fcomp reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Fcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Fcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1173,9 +1192,10 @@ inline Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k)
 inline const Fcomp &Cmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Fcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Fcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1189,7 +1209,7 @@ inline Long Cmat3Fcomp::n1() const {
 }
 
 inline Long Cmat3Fcomp::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Fcomp::operator const Scmat3FcompC&() const {
@@ -1208,9 +1228,9 @@ class Cmat3Comp : private VbaseComp
 {
 protected:
 	typedef VbaseComp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Comp(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Comp(): m_N0(0), m_N1(0) {};
 	Cmat3Comp(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Comp(const Cmat3Comp &rhs); // copy constructor
 	Cmat3Comp(Cmat3Comp &&rhs); // move constructor
@@ -1220,21 +1240,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Comp &operator()(Long_I i, Long_I j, Long_I k);
 	const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3CompC&() const;
 	operator const Scmat3Comp&();
 };
 
-inline Cmat3Comp::Cmat3Comp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Comp::Cmat3Comp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Comp::Cmat3Comp(const Cmat3Comp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Comp::Cmat3Comp(const Cmat3Comp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1242,27 +1262,27 @@ inline Cmat3Comp::Cmat3Comp(const Cmat3Comp &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 }
 
 inline Cmat3Comp::Cmat3Comp(Cmat3Comp &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Comp &Cmat3Comp::operator=(const Cmat3Comp &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Comp &Cmat3Comp::operator=(Cmat3Comp &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Comp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1272,20 +1292,21 @@ inline void Cmat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Comp reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Comp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Comp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1293,9 +1314,10 @@ inline Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k)
 inline const Comp &Cmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Comp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Comp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1309,7 +1331,7 @@ inline Long Cmat3Comp::n1() const {
 }
 
 inline Long Cmat3Comp::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Comp::operator const Scmat3CompC&() const {
@@ -1328,9 +1350,9 @@ class Cmat3Lcomp : private VbaseLcomp
 {
 protected:
 	typedef VbaseLcomp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Lcomp(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Lcomp(): m_N0(0), m_N1(0) {};
 	Cmat3Lcomp(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Lcomp(const Cmat3Lcomp &rhs); // copy constructor
 	Cmat3Lcomp(Cmat3Lcomp &&rhs); // move constructor
@@ -1340,21 +1362,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Lcomp &operator()(Long_I i, Long_I j, Long_I k);
 	const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3LcompC&() const;
 	operator const Scmat3Lcomp&();
 };
 
-inline Cmat3Lcomp::Cmat3Lcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Lcomp::Cmat3Lcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Lcomp::Cmat3Lcomp(const Cmat3Lcomp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Lcomp::Cmat3Lcomp(const Cmat3Lcomp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1362,27 +1384,27 @@ inline Cmat3Lcomp::Cmat3Lcomp(const Cmat3Lcomp &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Lcomp::Cmat3Lcomp(Cmat3Lcomp &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Lcomp &Cmat3Lcomp::operator=(const Cmat3Lcomp &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Lcomp &Cmat3Lcomp::operator=(Cmat3Lcomp &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Lcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1392,20 +1414,21 @@ inline void Cmat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Lcomp reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Lcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Lcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1413,9 +1436,10 @@ inline Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k)
 inline const Lcomp &Cmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Lcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Lcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1429,7 +1453,7 @@ inline Long Cmat3Lcomp::n1() const {
 }
 
 inline Long Cmat3Lcomp::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Lcomp::operator const Scmat3LcompC&() const {
@@ -1448,9 +1472,9 @@ class Cmat3Qcomp : private VbaseQcomp
 {
 protected:
 	typedef VbaseQcomp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Qcomp(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Qcomp(): m_N0(0), m_N1(0) {};
 	Cmat3Qcomp(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Qcomp(const Cmat3Qcomp &rhs); // copy constructor
 	Cmat3Qcomp(Cmat3Qcomp &&rhs); // move constructor
@@ -1460,21 +1484,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Qcomp &operator()(Long_I i, Long_I j, Long_I k);
 	const Qcomp &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3QcompC&() const;
 	operator const Scmat3Qcomp&();
 };
 
-inline Cmat3Qcomp::Cmat3Qcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Qcomp::Cmat3Qcomp(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Qcomp::Cmat3Qcomp(const Cmat3Qcomp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Qcomp::Cmat3Qcomp(const Cmat3Qcomp &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1482,27 +1506,27 @@ inline Cmat3Qcomp::Cmat3Qcomp(const Cmat3Qcomp &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Qcomp::Cmat3Qcomp(Cmat3Qcomp &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Qcomp &Cmat3Qcomp::operator=(const Cmat3Qcomp &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Qcomp &Cmat3Qcomp::operator=(Cmat3Qcomp &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Qcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1512,20 +1536,21 @@ inline void Cmat3Qcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Qcomp reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Qcomp &Cmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Qcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Qcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1533,9 +1558,10 @@ inline Qcomp &Cmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k)
 inline const Qcomp &Cmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Qcomp index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Qcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1549,7 +1575,7 @@ inline Long Cmat3Qcomp::n1() const {
 }
 
 inline Long Cmat3Qcomp::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Qcomp::operator const Scmat3QcompC&() const {
@@ -1568,9 +1594,9 @@ class Cmat3Fimag : private VbaseFimag
 {
 protected:
 	typedef VbaseFimag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Fimag(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Fimag(): m_N0(0), m_N1(0) {};
 	Cmat3Fimag(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Fimag(const Cmat3Fimag &rhs); // copy constructor
 	Cmat3Fimag(Cmat3Fimag &&rhs); // move constructor
@@ -1580,21 +1606,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Fimag &operator()(Long_I i, Long_I j, Long_I k);
 	const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3FimagC&() const;
 	operator const Scmat3Fimag&();
 };
 
-inline Cmat3Fimag::Cmat3Fimag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Fimag::Cmat3Fimag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Fimag::Cmat3Fimag(const Cmat3Fimag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Fimag::Cmat3Fimag(const Cmat3Fimag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1602,27 +1628,27 @@ inline Cmat3Fimag::Cmat3Fimag(const Cmat3Fimag &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Fimag::Cmat3Fimag(Cmat3Fimag &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Fimag &Cmat3Fimag::operator=(const Cmat3Fimag &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Fimag &Cmat3Fimag::operator=(Cmat3Fimag &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Fimag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1632,20 +1658,21 @@ inline void Cmat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Fimag reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Fimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Fimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1653,9 +1680,10 @@ inline Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k)
 inline const Fimag &Cmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Fimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Fimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1669,7 +1697,7 @@ inline Long Cmat3Fimag::n1() const {
 }
 
 inline Long Cmat3Fimag::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Fimag::operator const Scmat3FimagC&() const {
@@ -1688,9 +1716,9 @@ class Cmat3Imag : private VbaseImag
 {
 protected:
 	typedef VbaseImag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Imag(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Imag(): m_N0(0), m_N1(0) {};
 	Cmat3Imag(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Imag(const Cmat3Imag &rhs); // copy constructor
 	Cmat3Imag(Cmat3Imag &&rhs); // move constructor
@@ -1700,21 +1728,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Imag &operator()(Long_I i, Long_I j, Long_I k);
 	const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3ImagC&() const;
 	operator const Scmat3Imag&();
 };
 
-inline Cmat3Imag::Cmat3Imag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Imag::Cmat3Imag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Imag::Cmat3Imag(const Cmat3Imag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Imag::Cmat3Imag(const Cmat3Imag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1722,27 +1750,27 @@ inline Cmat3Imag::Cmat3Imag(const Cmat3Imag &rhs): Base(rhs), m_N0(rhs.m_N0), m_
 }
 
 inline Cmat3Imag::Cmat3Imag(Cmat3Imag &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Imag &Cmat3Imag::operator=(const Cmat3Imag &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Imag &Cmat3Imag::operator=(Cmat3Imag &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Imag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1752,20 +1780,21 @@ inline void Cmat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Imag reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Imag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Imag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1773,9 +1802,10 @@ inline Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k)
 inline const Imag &Cmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Imag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Imag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1789,7 +1819,7 @@ inline Long Cmat3Imag::n1() const {
 }
 
 inline Long Cmat3Imag::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Imag::operator const Scmat3ImagC&() const {
@@ -1808,9 +1838,9 @@ class Cmat3Limag : private VbaseLimag
 {
 protected:
 	typedef VbaseLimag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Limag(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Limag(): m_N0(0), m_N1(0) {};
 	Cmat3Limag(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Limag(const Cmat3Limag &rhs); // copy constructor
 	Cmat3Limag(Cmat3Limag &&rhs); // move constructor
@@ -1820,21 +1850,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Limag &operator()(Long_I i, Long_I j, Long_I k);
 	const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3LimagC&() const;
 	operator const Scmat3Limag&();
 };
 
-inline Cmat3Limag::Cmat3Limag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Limag::Cmat3Limag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Limag::Cmat3Limag(const Cmat3Limag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Limag::Cmat3Limag(const Cmat3Limag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1842,27 +1872,27 @@ inline Cmat3Limag::Cmat3Limag(const Cmat3Limag &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Limag::Cmat3Limag(Cmat3Limag &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Limag &Cmat3Limag::operator=(const Cmat3Limag &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Limag &Cmat3Limag::operator=(Cmat3Limag &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Limag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1872,20 +1902,21 @@ inline void Cmat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Limag reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Limag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Limag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1893,9 +1924,10 @@ inline Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k)
 inline const Limag &Cmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Limag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Limag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1909,7 +1941,7 @@ inline Long Cmat3Limag::n1() const {
 }
 
 inline Long Cmat3Limag::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Limag::operator const Scmat3LimagC&() const {
@@ -1928,9 +1960,9 @@ class Cmat3Qimag : private VbaseQimag
 {
 protected:
 	typedef VbaseQimag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
-	Cmat3Qimag(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Qimag(): m_N0(0), m_N1(0) {};
 	Cmat3Qimag(Long_I N0, Long_I N1, Long_I N2);
 	Cmat3Qimag(const Cmat3Qimag &rhs); // copy constructor
 	Cmat3Qimag(Cmat3Qimag &&rhs); // move constructor
@@ -1940,21 +1972,21 @@ public:
 	using Base::size;
 	using Base::operator[];
 	using Base::end;
-	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Qimag &operator()(Long_I i, Long_I j, Long_I k);
 	const Qimag &operator()(Long_I i, Long_I j, Long_I k) const;
 	Long n0() const;
 	Long n1() const;
 	Long n2() const;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 
 	operator const Scmat3QimagC&() const;
 	operator const Scmat3Qimag&();
 };
 
-inline Cmat3Qimag::Cmat3Qimag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+inline Cmat3Qimag::Cmat3Qimag(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
-inline Cmat3Qimag::Cmat3Qimag(const Cmat3Qimag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+inline Cmat3Qimag::Cmat3Qimag(const Cmat3Qimag &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
 {
 #ifdef SLS_NO_CPY_CONSTRUCTOR
 	SLS_ERR("copy constructor forbidden!");
@@ -1962,27 +1994,27 @@ inline Cmat3Qimag::Cmat3Qimag(const Cmat3Qimag &rhs): Base(rhs), m_N0(rhs.m_N0),
 }
 
 inline Cmat3Qimag::Cmat3Qimag(Cmat3Qimag &&rhs)
-	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
 
 inline Cmat3Qimag &Cmat3Qimag::operator=(const Cmat3Qimag &rhs)
 {
 	Base::operator=(rhs);
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline Cmat3Qimag &Cmat3Qimag::operator=(Cmat3Qimag &&rhs)
 {
 	Base::operator=(move(rhs));
-	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }
 
 inline void Cmat3Qimag::resize(Long_I N0, Long_I N1, Long_I N2)
 {
-	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+	if (N0 != m_N0 || N1 != m_N1 || N2 != n2()) {
 		Base::resize(N0*N1*N2);
-		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+		m_N0 = N0; m_N1 = N1;
 	}
 }
 
@@ -1992,20 +2024,21 @@ inline void Cmat3Qimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Qimag reshaping from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << "), element number not the same!";
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
 		SLS_ERR(ss.str());
 	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Qimag &Cmat3Qimag::operator()(Long_I i, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Qimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Qimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2013,9 +2046,10 @@ inline Qimag &Cmat3Qimag::operator()(Long_I i, Long_I j, Long_I k)
 inline const Qimag &Cmat3Qimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Cmat3Qimag index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Cmat3Qimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2029,7 +2063,7 @@ inline Long Cmat3Qimag::n1() const {
 }
 
 inline Long Cmat3Qimag::n2() const {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Qimag::operator const Scmat3QimagC&() const {

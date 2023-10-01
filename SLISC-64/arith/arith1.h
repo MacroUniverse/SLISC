@@ -1011,10 +1011,6 @@ inline Comp sum(MatComp_I v) { return sum_v(v.p(), v.size()); }
 
 inline Comp prod(MatComp_I v) { return prod_v(v.p(), v.size()); }
 
-inline Doub sum(SvecDoub_I v) { return sum_v(v.p(), v.size()); }
-
-inline Doub prod(SvecDoub_I v) { return prod_v(v.p(), v.size()); }
-
 
 inline Doub norm2(SvbaseDoub_I v)
 {

@@ -6,7 +6,7 @@ class Scmat3BoolC : public SvbaseBoolC
 {
 protected:
 	typedef SvbaseBoolC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3BoolC();
 	Scmat3BoolC(const Bool *data, Long_I N0, Long_I N1, Long_I N2);
@@ -30,14 +30,16 @@ public:
 inline Scmat3BoolC::Scmat3BoolC() {}
 
 inline Scmat3BoolC::Scmat3BoolC(const Bool *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseBoolC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseBoolC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Bool &Scmat3BoolC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Bool index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -54,22 +56,27 @@ inline Long Scmat3BoolC::n1() const
 
 inline Long Scmat3BoolC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3BoolC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Bool reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3BoolC::set(const Bool *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseBoolC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3BoolC::~Scmat3BoolC() {}
@@ -81,7 +88,7 @@ class Scmat3Bool : public SvbaseBool
 {
 protected:
 	typedef SvbaseBool Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Bool();
 	Scmat3Bool(Bool *data, Long_I N0, Long_I N1, Long_I N2);
@@ -107,7 +114,7 @@ public:
 inline Scmat3Bool::Scmat3Bool() {}
 
 inline Scmat3Bool::Scmat3Bool(Bool *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseBool(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseBool(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Bool::operator const Scmat3BoolC &() const
 {
@@ -122,8 +129,10 @@ inline Scmat3Bool::operator Scmat3BoolC &()
 inline Bool &Scmat3Bool::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Bool index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -140,22 +149,27 @@ inline Long Scmat3Bool::n1() const
 
 inline Long Scmat3Bool::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Bool::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Bool reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Bool::set(Bool *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseBool::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Bool::~Scmat3Bool() {}
@@ -168,7 +182,7 @@ class Scmat3CharC : public SvbaseCharC
 {
 protected:
 	typedef SvbaseCharC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3CharC();
 	Scmat3CharC(const Char *data, Long_I N0, Long_I N1, Long_I N2);
@@ -192,14 +206,16 @@ public:
 inline Scmat3CharC::Scmat3CharC() {}
 
 inline Scmat3CharC::Scmat3CharC(const Char *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseCharC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseCharC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Char &Scmat3CharC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Char index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -216,22 +232,27 @@ inline Long Scmat3CharC::n1() const
 
 inline Long Scmat3CharC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3CharC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Char reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3CharC::set(const Char *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseCharC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3CharC::~Scmat3CharC() {}
@@ -243,7 +264,7 @@ class Scmat3Char : public SvbaseChar
 {
 protected:
 	typedef SvbaseChar Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Char();
 	Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2);
@@ -269,7 +290,7 @@ public:
 inline Scmat3Char::Scmat3Char() {}
 
 inline Scmat3Char::Scmat3Char(Char *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseChar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseChar(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Char::operator const Scmat3CharC &() const
 {
@@ -284,8 +305,10 @@ inline Scmat3Char::operator Scmat3CharC &()
 inline Char &Scmat3Char::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Char index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -302,22 +325,27 @@ inline Long Scmat3Char::n1() const
 
 inline Long Scmat3Char::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Char reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Char::set(Char *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseChar::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Char::~Scmat3Char() {}
@@ -330,7 +358,7 @@ class Scmat3UcharC : public SvbaseUcharC
 {
 protected:
 	typedef SvbaseUcharC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3UcharC();
 	Scmat3UcharC(const Uchar *data, Long_I N0, Long_I N1, Long_I N2);
@@ -354,14 +382,16 @@ public:
 inline Scmat3UcharC::Scmat3UcharC() {}
 
 inline Scmat3UcharC::Scmat3UcharC(const Uchar *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseUcharC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseUcharC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Uchar &Scmat3UcharC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Uchar index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -378,22 +408,27 @@ inline Long Scmat3UcharC::n1() const
 
 inline Long Scmat3UcharC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3UcharC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Uchar reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3UcharC::set(const Uchar *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseUcharC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3UcharC::~Scmat3UcharC() {}
@@ -405,7 +440,7 @@ class Scmat3Uchar : public SvbaseUchar
 {
 protected:
 	typedef SvbaseUchar Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Uchar();
 	Scmat3Uchar(Uchar *data, Long_I N0, Long_I N1, Long_I N2);
@@ -431,7 +466,7 @@ public:
 inline Scmat3Uchar::Scmat3Uchar() {}
 
 inline Scmat3Uchar::Scmat3Uchar(Uchar *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseUchar(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseUchar(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Uchar::operator const Scmat3UcharC &() const
 {
@@ -446,8 +481,10 @@ inline Scmat3Uchar::operator Scmat3UcharC &()
 inline Uchar &Scmat3Uchar::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Uchar index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -464,22 +501,27 @@ inline Long Scmat3Uchar::n1() const
 
 inline Long Scmat3Uchar::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Uchar::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Uchar reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Uchar::set(Uchar *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseUchar::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Uchar::~Scmat3Uchar() {}
@@ -492,7 +534,7 @@ class Scmat3IntC : public SvbaseIntC
 {
 protected:
 	typedef SvbaseIntC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3IntC();
 	Scmat3IntC(const Int *data, Long_I N0, Long_I N1, Long_I N2);
@@ -516,14 +558,16 @@ public:
 inline Scmat3IntC::Scmat3IntC() {}
 
 inline Scmat3IntC::Scmat3IntC(const Int *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseIntC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseIntC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Int &Scmat3IntC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Int index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -540,22 +584,27 @@ inline Long Scmat3IntC::n1() const
 
 inline Long Scmat3IntC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3IntC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Int reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3IntC::set(const Int *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseIntC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3IntC::~Scmat3IntC() {}
@@ -567,7 +616,7 @@ class Scmat3Int : public SvbaseInt
 {
 protected:
 	typedef SvbaseInt Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Int();
 	Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2);
@@ -593,7 +642,7 @@ public:
 inline Scmat3Int::Scmat3Int() {}
 
 inline Scmat3Int::Scmat3Int(Int *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseInt(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseInt(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Int::operator const Scmat3IntC &() const
 {
@@ -608,8 +657,10 @@ inline Scmat3Int::operator Scmat3IntC &()
 inline Int &Scmat3Int::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Int index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -626,22 +677,27 @@ inline Long Scmat3Int::n1() const
 
 inline Long Scmat3Int::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Int reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Int::set(Int *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseInt::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Int::~Scmat3Int() {}
@@ -654,7 +710,7 @@ class Scmat3LlongC : public SvbaseLlongC
 {
 protected:
 	typedef SvbaseLlongC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3LlongC();
 	Scmat3LlongC(const Llong *data, Long_I N0, Long_I N1, Long_I N2);
@@ -678,14 +734,16 @@ public:
 inline Scmat3LlongC::Scmat3LlongC() {}
 
 inline Scmat3LlongC::Scmat3LlongC(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLlongC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLlongC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Llong &Scmat3LlongC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Llong index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -702,22 +760,27 @@ inline Long Scmat3LlongC::n1() const
 
 inline Long Scmat3LlongC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LlongC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Llong reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3LlongC::set(const Llong *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLlongC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3LlongC::~Scmat3LlongC() {}
@@ -729,7 +792,7 @@ class Scmat3Llong : public SvbaseLlong
 {
 protected:
 	typedef SvbaseLlong Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Llong();
 	Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2);
@@ -755,7 +818,7 @@ public:
 inline Scmat3Llong::Scmat3Llong() {}
 
 inline Scmat3Llong::Scmat3Llong(Llong *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLlong(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLlong(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Llong::operator const Scmat3LlongC &() const
 {
@@ -770,8 +833,10 @@ inline Scmat3Llong::operator Scmat3LlongC &()
 inline Llong &Scmat3Llong::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Llong index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -788,22 +853,27 @@ inline Long Scmat3Llong::n1() const
 
 inline Long Scmat3Llong::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Llong reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Llong::set(Llong *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLlong::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Llong::~Scmat3Llong() {}
@@ -816,7 +886,7 @@ class Scmat3FloatC : public SvbaseFloatC
 {
 protected:
 	typedef SvbaseFloatC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3FloatC();
 	Scmat3FloatC(const Float *data, Long_I N0, Long_I N1, Long_I N2);
@@ -840,14 +910,16 @@ public:
 inline Scmat3FloatC::Scmat3FloatC() {}
 
 inline Scmat3FloatC::Scmat3FloatC(const Float *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFloatC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseFloatC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Float &Scmat3FloatC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Float index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -864,22 +936,27 @@ inline Long Scmat3FloatC::n1() const
 
 inline Long Scmat3FloatC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3FloatC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Float reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3FloatC::set(const Float *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseFloatC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3FloatC::~Scmat3FloatC() {}
@@ -891,7 +968,7 @@ class Scmat3Float : public SvbaseFloat
 {
 protected:
 	typedef SvbaseFloat Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Float();
 	Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2);
@@ -917,7 +994,7 @@ public:
 inline Scmat3Float::Scmat3Float() {}
 
 inline Scmat3Float::Scmat3Float(Float *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFloat(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseFloat(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Float::operator const Scmat3FloatC &() const
 {
@@ -932,8 +1009,10 @@ inline Scmat3Float::operator Scmat3FloatC &()
 inline Float &Scmat3Float::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Float index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -950,22 +1029,27 @@ inline Long Scmat3Float::n1() const
 
 inline Long Scmat3Float::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Float reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Float::set(Float *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseFloat::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Float::~Scmat3Float() {}
@@ -978,7 +1062,7 @@ class Scmat3DoubC : public SvbaseDoubC
 {
 protected:
 	typedef SvbaseDoubC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3DoubC();
 	Scmat3DoubC(const Doub *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1002,14 +1086,16 @@ public:
 inline Scmat3DoubC::Scmat3DoubC() {}
 
 inline Scmat3DoubC::Scmat3DoubC(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseDoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseDoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Doub &Scmat3DoubC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Doub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1026,22 +1112,27 @@ inline Long Scmat3DoubC::n1() const
 
 inline Long Scmat3DoubC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3DoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Doub reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3DoubC::set(const Doub *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseDoubC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3DoubC::~Scmat3DoubC() {}
@@ -1053,7 +1144,7 @@ class Scmat3Doub : public SvbaseDoub
 {
 protected:
 	typedef SvbaseDoub Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Doub();
 	Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1079,7 +1170,7 @@ public:
 inline Scmat3Doub::Scmat3Doub() {}
 
 inline Scmat3Doub::Scmat3Doub(Doub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseDoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseDoub(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Doub::operator const Scmat3DoubC &() const
 {
@@ -1094,8 +1185,10 @@ inline Scmat3Doub::operator Scmat3DoubC &()
 inline Doub &Scmat3Doub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Doub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1112,22 +1205,27 @@ inline Long Scmat3Doub::n1() const
 
 inline Long Scmat3Doub::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Doub reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Doub::set(Doub *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseDoub::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Doub::~Scmat3Doub() {}
@@ -1140,7 +1238,7 @@ class Scmat3QdoubC : public SvbaseQdoubC
 {
 protected:
 	typedef SvbaseQdoubC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3QdoubC();
 	Scmat3QdoubC(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1164,14 +1262,16 @@ public:
 inline Scmat3QdoubC::Scmat3QdoubC() {}
 
 inline Scmat3QdoubC::Scmat3QdoubC(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseQdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseQdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Qdoub &Scmat3QdoubC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Qdoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1188,22 +1288,27 @@ inline Long Scmat3QdoubC::n1() const
 
 inline Long Scmat3QdoubC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3QdoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Qdoub reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3QdoubC::set(const Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseQdoubC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3QdoubC::~Scmat3QdoubC() {}
@@ -1215,7 +1320,7 @@ class Scmat3Qdoub : public SvbaseQdoub
 {
 protected:
 	typedef SvbaseQdoub Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Qdoub();
 	Scmat3Qdoub(Qdoub *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1241,7 +1346,7 @@ public:
 inline Scmat3Qdoub::Scmat3Qdoub() {}
 
 inline Scmat3Qdoub::Scmat3Qdoub(Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseQdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseQdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Qdoub::operator const Scmat3QdoubC &() const
 {
@@ -1256,8 +1361,10 @@ inline Scmat3Qdoub::operator Scmat3QdoubC &()
 inline Qdoub &Scmat3Qdoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Qdoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1274,22 +1381,27 @@ inline Long Scmat3Qdoub::n1() const
 
 inline Long Scmat3Qdoub::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Qdoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Qdoub reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Qdoub::set(Qdoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseQdoub::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Qdoub::~Scmat3Qdoub() {}
@@ -1302,7 +1414,7 @@ class Scmat3LdoubC : public SvbaseLdoubC
 {
 protected:
 	typedef SvbaseLdoubC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3LdoubC();
 	Scmat3LdoubC(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1326,14 +1438,16 @@ public:
 inline Scmat3LdoubC::Scmat3LdoubC() {}
 
 inline Scmat3LdoubC::Scmat3LdoubC(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLdoubC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Ldoub &Scmat3LdoubC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Ldoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1350,22 +1464,27 @@ inline Long Scmat3LdoubC::n1() const
 
 inline Long Scmat3LdoubC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LdoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Ldoub reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3LdoubC::set(const Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLdoubC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3LdoubC::~Scmat3LdoubC() {}
@@ -1377,7 +1496,7 @@ class Scmat3Ldoub : public SvbaseLdoub
 {
 protected:
 	typedef SvbaseLdoub Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Ldoub();
 	Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1403,7 +1522,7 @@ public:
 inline Scmat3Ldoub::Scmat3Ldoub() {}
 
 inline Scmat3Ldoub::Scmat3Ldoub(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLdoub(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Ldoub::operator const Scmat3LdoubC &() const
 {
@@ -1418,8 +1537,10 @@ inline Scmat3Ldoub::operator Scmat3LdoubC &()
 inline Ldoub &Scmat3Ldoub::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Ldoub index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1436,22 +1557,27 @@ inline Long Scmat3Ldoub::n1() const
 
 inline Long Scmat3Ldoub::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Ldoub reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Ldoub::set(Ldoub *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLdoub::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Ldoub::~Scmat3Ldoub() {}
@@ -1464,7 +1590,7 @@ class Scmat3FcompC : public SvbaseFcompC
 {
 protected:
 	typedef SvbaseFcompC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3FcompC();
 	Scmat3FcompC(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1488,14 +1614,16 @@ public:
 inline Scmat3FcompC::Scmat3FcompC() {}
 
 inline Scmat3FcompC::Scmat3FcompC(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseFcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Fcomp &Scmat3FcompC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Fcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1512,22 +1640,27 @@ inline Long Scmat3FcompC::n1() const
 
 inline Long Scmat3FcompC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3FcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Fcomp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3FcompC::set(const Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseFcompC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3FcompC::~Scmat3FcompC() {}
@@ -1539,7 +1672,7 @@ class Scmat3Fcomp : public SvbaseFcomp
 {
 protected:
 	typedef SvbaseFcomp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Fcomp();
 	Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1565,7 +1698,7 @@ public:
 inline Scmat3Fcomp::Scmat3Fcomp() {}
 
 inline Scmat3Fcomp::Scmat3Fcomp(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseFcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Fcomp::operator const Scmat3FcompC &() const
 {
@@ -1580,8 +1713,10 @@ inline Scmat3Fcomp::operator Scmat3FcompC &()
 inline Fcomp &Scmat3Fcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Fcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1598,22 +1733,27 @@ inline Long Scmat3Fcomp::n1() const
 
 inline Long Scmat3Fcomp::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Fcomp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Fcomp::set(Fcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseFcomp::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Fcomp::~Scmat3Fcomp() {}
@@ -1626,7 +1766,7 @@ class Scmat3CompC : public SvbaseCompC
 {
 protected:
 	typedef SvbaseCompC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3CompC();
 	Scmat3CompC(const Comp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1650,14 +1790,16 @@ public:
 inline Scmat3CompC::Scmat3CompC() {}
 
 inline Scmat3CompC::Scmat3CompC(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseCompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseCompC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Comp &Scmat3CompC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Comp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1674,22 +1816,27 @@ inline Long Scmat3CompC::n1() const
 
 inline Long Scmat3CompC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3CompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Comp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3CompC::set(const Comp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseCompC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3CompC::~Scmat3CompC() {}
@@ -1701,7 +1848,7 @@ class Scmat3Comp : public SvbaseComp
 {
 protected:
 	typedef SvbaseComp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Comp();
 	Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1727,7 +1874,7 @@ public:
 inline Scmat3Comp::Scmat3Comp() {}
 
 inline Scmat3Comp::Scmat3Comp(Comp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseComp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseComp(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Comp::operator const Scmat3CompC &() const
 {
@@ -1742,8 +1889,10 @@ inline Scmat3Comp::operator Scmat3CompC &()
 inline Comp &Scmat3Comp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Comp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1760,22 +1909,27 @@ inline Long Scmat3Comp::n1() const
 
 inline Long Scmat3Comp::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Comp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Comp::set(Comp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseComp::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Comp::~Scmat3Comp() {}
@@ -1788,7 +1942,7 @@ class Scmat3LcompC : public SvbaseLcompC
 {
 protected:
 	typedef SvbaseLcompC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3LcompC();
 	Scmat3LcompC(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1812,14 +1966,16 @@ public:
 inline Scmat3LcompC::Scmat3LcompC() {}
 
 inline Scmat3LcompC::Scmat3LcompC(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Lcomp &Scmat3LcompC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Lcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1836,22 +1992,27 @@ inline Long Scmat3LcompC::n1() const
 
 inline Long Scmat3LcompC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Lcomp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3LcompC::set(const Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLcompC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3LcompC::~Scmat3LcompC() {}
@@ -1863,7 +2024,7 @@ class Scmat3Lcomp : public SvbaseLcomp
 {
 protected:
 	typedef SvbaseLcomp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Lcomp();
 	Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1889,7 +2050,7 @@ public:
 inline Scmat3Lcomp::Scmat3Lcomp() {}
 
 inline Scmat3Lcomp::Scmat3Lcomp(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Lcomp::operator const Scmat3LcompC &() const
 {
@@ -1904,8 +2065,10 @@ inline Scmat3Lcomp::operator Scmat3LcompC &()
 inline Lcomp &Scmat3Lcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Lcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1922,22 +2085,27 @@ inline Long Scmat3Lcomp::n1() const
 
 inline Long Scmat3Lcomp::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Lcomp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Lcomp::set(Lcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLcomp::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Lcomp::~Scmat3Lcomp() {}
@@ -1950,7 +2118,7 @@ class Scmat3QcompC : public SvbaseQcompC
 {
 protected:
 	typedef SvbaseQcompC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3QcompC();
 	Scmat3QcompC(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -1974,14 +2142,16 @@ public:
 inline Scmat3QcompC::Scmat3QcompC() {}
 
 inline Scmat3QcompC::Scmat3QcompC(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseQcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseQcompC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Qcomp &Scmat3QcompC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Qcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -1998,22 +2168,27 @@ inline Long Scmat3QcompC::n1() const
 
 inline Long Scmat3QcompC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3QcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Qcomp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3QcompC::set(const Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseQcompC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3QcompC::~Scmat3QcompC() {}
@@ -2025,7 +2200,7 @@ class Scmat3Qcomp : public SvbaseQcomp
 {
 protected:
 	typedef SvbaseQcomp Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Qcomp();
 	Scmat3Qcomp(Qcomp *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2051,7 +2226,7 @@ public:
 inline Scmat3Qcomp::Scmat3Qcomp() {}
 
 inline Scmat3Qcomp::Scmat3Qcomp(Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseQcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseQcomp(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Qcomp::operator const Scmat3QcompC &() const
 {
@@ -2066,8 +2241,10 @@ inline Scmat3Qcomp::operator Scmat3QcompC &()
 inline Qcomp &Scmat3Qcomp::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Qcomp index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2084,22 +2261,27 @@ inline Long Scmat3Qcomp::n1() const
 
 inline Long Scmat3Qcomp::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Qcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Qcomp reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Qcomp::set(Qcomp *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseQcomp::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Qcomp::~Scmat3Qcomp() {}
@@ -2112,7 +2294,7 @@ class Scmat3FimagC : public SvbaseFimagC
 {
 protected:
 	typedef SvbaseFimagC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3FimagC();
 	Scmat3FimagC(const Fimag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2136,14 +2318,16 @@ public:
 inline Scmat3FimagC::Scmat3FimagC() {}
 
 inline Scmat3FimagC::Scmat3FimagC(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseFimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Fimag &Scmat3FimagC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Fimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2160,22 +2344,27 @@ inline Long Scmat3FimagC::n1() const
 
 inline Long Scmat3FimagC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3FimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Fimag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3FimagC::set(const Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseFimagC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3FimagC::~Scmat3FimagC() {}
@@ -2187,7 +2376,7 @@ class Scmat3Fimag : public SvbaseFimag
 {
 protected:
 	typedef SvbaseFimag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Fimag();
 	Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2213,7 +2402,7 @@ public:
 inline Scmat3Fimag::Scmat3Fimag() {}
 
 inline Scmat3Fimag::Scmat3Fimag(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseFimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseFimag(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Fimag::operator const Scmat3FimagC &() const
 {
@@ -2228,8 +2417,10 @@ inline Scmat3Fimag::operator Scmat3FimagC &()
 inline Fimag &Scmat3Fimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Fimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2246,22 +2437,27 @@ inline Long Scmat3Fimag::n1() const
 
 inline Long Scmat3Fimag::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Fimag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Fimag::set(Fimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseFimag::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Fimag::~Scmat3Fimag() {}
@@ -2274,7 +2470,7 @@ class Scmat3ImagC : public SvbaseImagC
 {
 protected:
 	typedef SvbaseImagC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3ImagC();
 	Scmat3ImagC(const Imag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2298,14 +2494,16 @@ public:
 inline Scmat3ImagC::Scmat3ImagC() {}
 
 inline Scmat3ImagC::Scmat3ImagC(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseImagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseImagC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Imag &Scmat3ImagC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Imag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2322,22 +2520,27 @@ inline Long Scmat3ImagC::n1() const
 
 inline Long Scmat3ImagC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3ImagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Imag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3ImagC::set(const Imag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseImagC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3ImagC::~Scmat3ImagC() {}
@@ -2349,7 +2552,7 @@ class Scmat3Imag : public SvbaseImag
 {
 protected:
 	typedef SvbaseImag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Imag();
 	Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2375,7 +2578,7 @@ public:
 inline Scmat3Imag::Scmat3Imag() {}
 
 inline Scmat3Imag::Scmat3Imag(Imag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseImag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseImag(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Imag::operator const Scmat3ImagC &() const
 {
@@ -2390,8 +2593,10 @@ inline Scmat3Imag::operator Scmat3ImagC &()
 inline Imag &Scmat3Imag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Imag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2408,22 +2613,27 @@ inline Long Scmat3Imag::n1() const
 
 inline Long Scmat3Imag::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Imag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Imag::set(Imag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseImag::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Imag::~Scmat3Imag() {}
@@ -2436,7 +2646,7 @@ class Scmat3LimagC : public SvbaseLimagC
 {
 protected:
 	typedef SvbaseLimagC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3LimagC();
 	Scmat3LimagC(const Limag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2460,14 +2670,16 @@ public:
 inline Scmat3LimagC::Scmat3LimagC() {}
 
 inline Scmat3LimagC::Scmat3LimagC(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Limag &Scmat3LimagC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Limag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2484,22 +2696,27 @@ inline Long Scmat3LimagC::n1() const
 
 inline Long Scmat3LimagC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Limag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3LimagC::set(const Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLimagC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3LimagC::~Scmat3LimagC() {}
@@ -2511,7 +2728,7 @@ class Scmat3Limag : public SvbaseLimag
 {
 protected:
 	typedef SvbaseLimag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Limag();
 	Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2537,7 +2754,7 @@ public:
 inline Scmat3Limag::Scmat3Limag() {}
 
 inline Scmat3Limag::Scmat3Limag(Limag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseLimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseLimag(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Limag::operator const Scmat3LimagC &() const
 {
@@ -2552,8 +2769,10 @@ inline Scmat3Limag::operator Scmat3LimagC &()
 inline Limag &Scmat3Limag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Limag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2570,22 +2789,27 @@ inline Long Scmat3Limag::n1() const
 
 inline Long Scmat3Limag::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Limag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Limag::set(Limag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseLimag::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Limag::~Scmat3Limag() {}
@@ -2598,7 +2822,7 @@ class Scmat3QimagC : public SvbaseQimagC
 {
 protected:
 	typedef SvbaseQimagC Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3QimagC();
 	Scmat3QimagC(const Qimag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2622,14 +2846,16 @@ public:
 inline Scmat3QimagC::Scmat3QimagC() {}
 
 inline Scmat3QimagC::Scmat3QimagC(const Qimag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseQimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseQimagC(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 
 inline const Qimag &Scmat3QimagC::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Qimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2646,22 +2872,27 @@ inline Long Scmat3QimagC::n1() const
 
 inline Long Scmat3QimagC::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3QimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Qimag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3QimagC::set(const Qimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseQimagC::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3QimagC::~Scmat3QimagC() {}
@@ -2673,7 +2904,7 @@ class Scmat3Qimag : public SvbaseQimag
 {
 protected:
 	typedef SvbaseQimag Base;
-	Long m_N0, m_N1, m_N2;
+	Long m_N0, m_N1;
 public:
 	Scmat3Qimag();
 	Scmat3Qimag(Qimag *data, Long_I N0, Long_I N1, Long_I N2);
@@ -2699,7 +2930,7 @@ public:
 inline Scmat3Qimag::Scmat3Qimag() {}
 
 inline Scmat3Qimag::Scmat3Qimag(Qimag *data, Long_I N0, Long_I N1, Long_I N2)
-	: SvbaseQimag(data, N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+	: SvbaseQimag(data, N0*N1*N2), m_N0(N0), m_N1(N1) {}
 
 inline Scmat3Qimag::operator const Scmat3QimagC &() const
 {
@@ -2714,8 +2945,10 @@ inline Scmat3Qimag::operator Scmat3QimagC &()
 inline Qimag &Scmat3Qimag::operator()(Long_I i, Long_I j, Long_I k) const
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
-		SLS_ERR("Matrix subscript out of bounds");
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= n2()) {
+		stringstream ss; ss << "Scmat3Qimag index (" << i << ',' << j << ',' << k << ") out of bounds: shape = (" << m_N0 << ',' << m_N1 << ',' << n2() << ')';
+		SLS_ERR(ss.str());
+	}
 #endif
 	return m_p[i + m_N0*j + m_N0*m_N1*k];
 }
@@ -2732,22 +2965,27 @@ inline Long Scmat3Qimag::n1() const
 
 inline Long Scmat3Qimag::n2() const
 {
-	return m_N2;
+	return m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Qimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 != m_N)
-		SLS_ERR("illegal reshape!");
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Scmat3Qimag reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << n2() << ") , with " << m_N << "allocated elements, to (" << N0 << ',' << N1
+			<< ',' << N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
 #endif
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline void Scmat3Qimag::set(Qimag *data, Long_I N0, Long_I N1, Long_I N2)
 {
 	SvbaseQimag::set(data, N0*N1*N2);
-	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	m_N0 = N0; m_N1 = N1;
 }
 
 inline Scmat3Qimag::~Scmat3Qimag() {}
