@@ -10,7 +10,6 @@
 #include "../sparse/Cband.h"
 #include "../sparse/Mcoo.h"
 #include "../sparse/Cmobd.h"
-#include "../dense/Svec.h"
 #include "../dense/Dvec.h"
 #include "../dense/Scmat.h"
 #include "../dense/Scmat3.h"
@@ -194,8 +193,6 @@ void assert_same_shape4(const T1 &v1, const T2 &v2, const T3 &v3) {
 #endif
 }
 
-
-
 inline bool operator==(SvecChar_I v1, SvecChar_I v2)
 {
 	return shape_cmp1(v1, v2) &&
@@ -259,123 +256,6 @@ inline bool operator==(SvecComp_I v1, SvecComp_I v2)
 }
 
 inline bool operator!=(SvecComp_I v1, SvecComp_I v2)
-{ return !(v1 == v2); }
-
-
-inline bool operator==(MatLlong_I v1, MatLlong_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(MatLlong_I v1, MatLlong_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(MatDoub_I v1, MatDoub_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(MatDoub_I v1, MatDoub_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(MatDoub_I v1, ScmatDoub_I v2)
-{
-	if (!shape_cmp2(v1, v2))
-		return false;
-	for (Long i = 0; i < v1.n0(); ++i)
-		for (Long j = 0; j < v1.n1(); ++j)
-			if (v1(i, j) != v2(i, j))
-				return false;
-	return true;
-}
-
-inline bool operator!=(MatDoub_I v1, ScmatDoub_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(MatInt_I v1, MatInt_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(MatInt_I v1, MatInt_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(MatComp_I v1, MatComp_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(MatComp_I v1, MatComp_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(CmatInt_I v1, ScmatInt_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(CmatInt_I v1, ScmatInt_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(CmatLlong_I v1, ScmatLlong_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(CmatLlong_I v1, ScmatLlong_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(CmatDoub_I v1, ScmatDoub_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(CmatDoub_I v1, ScmatDoub_I v2)
-{ return !(v1 == v2); }
-
-
-inline bool operator==(CmatComp_I v1, ScmatComp_I v2)
-{
-	return shape_cmp2(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(CmatComp_I v1, ScmatComp_I v2)
-{ return !(v1 == v2); }
-
-
-inline bool operator==(Cmat3Llong_I v1, Scmat3Llong_I v2)
-{
-	return shape_cmp3(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(Cmat3Llong_I v1, Scmat3Llong_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(Cmat3Doub_I v1, Scmat3Doub_I v2)
-{
-	return shape_cmp3(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(Cmat3Doub_I v1, Scmat3Doub_I v2)
-{ return !(v1 == v2); }
-
-
-inline bool operator==(Cmat3Comp_I v1, Scmat3Comp_I v2)
-{
-	return shape_cmp3(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(Cmat3Comp_I v1, Scmat3Comp_I v2)
 { return !(v1 == v2); }
 
 
@@ -445,52 +325,6 @@ inline bool operator==(Scmat3Comp_I v1, Scmat3Comp_I v2)
 inline bool operator!=(Scmat3Comp_I v1, Scmat3Comp_I v2)
 { return !(v1 == v2); }
 
-
-inline bool operator==(ScmatDoub_I v1, MatDoub_I v2)
-{
-	if (!shape_cmp2(v1, v2))
-		return false;
-	for (Long i = 0; i < v1.n0(); ++i)
-		for (Long j = 0; j < v1.n1(); ++j)
-			if (v1(i, j) != v2(i, j))
-				return false;
-	return true;
-}
-
-inline bool operator!=(ScmatDoub_I v1, MatDoub_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(ScmatComp_I v1, MatComp_I v2)
-{
-	if (!shape_cmp2(v1, v2))
-		return false;
-	for (Long i = 0; i < v1.n0(); ++i)
-		for (Long j = 0; j < v1.n1(); ++j)
-			if (v1(i, j) != v2(i, j))
-				return false;
-	return true;
-}
-
-inline bool operator!=(ScmatComp_I v1, MatComp_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(Mat3Doub_I v1, Mat3Doub_I v2)
-{
-	return shape_cmp3(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(Mat3Doub_I v1, Mat3Doub_I v2)
-{ return !(v1 == v2); }
-
-inline bool operator==(Mat3Comp_I v1, Mat3Comp_I v2)
-{
-	return shape_cmp3(v1, v2) &&
-		equals_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline bool operator!=(Mat3Comp_I v1, Mat3Comp_I v2)
-{ return !(v1 == v2); }
 
 inline bool operator==(DcmatDoub_I v1, ScmatDoub_I v2)
 {
@@ -646,29 +480,29 @@ inline bool operator==(VecBool_I v1, VecBool_I v2)
 inline bool operator!=(VecBool_I v1, VecBool_I v2)
 { return !(v1 == v2); }
 
-inline bool operator==(SvecInt_I v, Int_I s)
+inline bool operator==(SvbaseInt_I v, Int_I s)
 { return equals_vs(v.p(), s, v.size()); }
 
-inline bool operator!=(SvecInt_I v, Int_I s)
+inline bool operator!=(SvbaseInt_I v, Int_I s)
 { return !(v == s); }
 
-inline bool operator==(SvecLlong_I v, Llong_I s)
+inline bool operator==(SvbaseLlong_I v, Llong_I s)
 { return equals_vs(v.p(), s, v.size()); }
 
-inline bool operator!=(SvecLlong_I v, Llong_I s)
+inline bool operator!=(SvbaseLlong_I v, Llong_I s)
 { return !(v == s); }
 
-inline bool operator==(SvecDoub_I v, Doub_I s)
+inline bool operator==(SvbaseDoub_I v, Doub_I s)
 { return equals_vs(v.p(), s, v.size()); }
 
-inline bool operator!=(SvecDoub_I v, Doub_I s)
+inline bool operator!=(SvbaseDoub_I v, Doub_I s)
 { return !(v == s); }
 
 
-inline bool operator==(SvecComp_I v, Comp_I s)
+inline bool operator==(SvbaseComp_I v, Comp_I s)
 { return equals_vs(v.p(), s, v.size()); }
 
-inline bool operator!=(SvecComp_I v, Comp_I s)
+inline bool operator!=(SvbaseComp_I v, Comp_I s)
 { return !(v == s); }
 
 

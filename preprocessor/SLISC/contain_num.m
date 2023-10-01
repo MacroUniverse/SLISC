@@ -16,20 +16,28 @@ elseif (is_Mcooh(T)), ret = 33;
 elseif (is_Cmobd(T)), ret = 34;
 elseif (is_Cband(T)), ret = 35;
 
-elseif (is_Svec(T)), ret = 40;
-elseif (is_Dvec(T)), ret = 41;
-elseif (is_Smat(T)), ret = 42;
-elseif (is_Scmat(T)), ret = 43;
-elseif (is_Dmat(T)), ret = 44;
-elseif (is_Dcmat(T)), ret = 45;
-elseif (is_Jcmat(T)), ret = 46;
-elseif (is_Jcmat3(T)), ret = 47;
-elseif (is_SvecC(T)), ret = 48;
-elseif (is_ScmatC(T)), ret = 49;
-elseif (is_Scmat3(T)), ret = 50;
-elseif (is_Scmat3C(T)), ret = 51;
-elseif (is_Scmat4(T)), ret = 52;
-elseif (is_Scmat4C(T)), ret = 53;
+elseif (is_Svbase(T)), ret = 40;
+elseif (is_SvbaseC(T)), ret = 41;
+elseif (is_Svec(T)), ret = 42;
+elseif (is_SvecC(T)), ret = 43;
+elseif (is_Dvec(T)), ret = 44;
+% elseif (is_DvecC(T)), ret = 45;
+
+elseif (is_Scmat(T)), ret = 60;
+elseif (is_ScmatC(T)), ret = 61;
+elseif (is_Dcmat(T)), ret = 62;
+% elseif (is_DcmatC(T)), ret = 63;
+elseif (is_Jcmat(T)), ret = 64;
+% elseif (is_JcmatC(T)), ret = 65;
+
+elseif (is_Scmat3(T)), ret = 70;
+elseif (is_Scmat3C(T)), ret = 71;
+elseif (is_Jcmat3(T)), ret = 72;
+% elseif (is_Jcmat3C(T)), ret = 73;
+
+elseif (is_Scmat4(T)), ret = 80;
+elseif (is_Scmat4C(T)), ret = 81;
+
 elseif (is_vec(T)), ret = 100;
 else, ret = -1;
 end

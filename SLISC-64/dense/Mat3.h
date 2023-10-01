@@ -3,10 +3,10 @@
 #include "../dense/Vec.h"
 
 namespace slisc {
-class Mat3Char : public VecChar
+class Mat3Char : public VbaseChar
 {
 protected:
-	typedef VecChar Base;
+	typedef VbaseChar Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Char(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -67,10 +67,10 @@ inline Long Mat3Char::n2() const
 typedef const Mat3Char &Mat3Char_I;
 typedef Mat3Char &Mat3Char_O, &Mat3Char_IO;
 
-class Mat3Int : public VecInt
+class Mat3Int : public VbaseInt
 {
 protected:
-	typedef VecInt Base;
+	typedef VbaseInt Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Int(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -131,10 +131,10 @@ inline Long Mat3Int::n2() const
 typedef const Mat3Int &Mat3Int_I;
 typedef Mat3Int &Mat3Int_O, &Mat3Int_IO;
 
-class Mat3Llong : public VecLlong
+class Mat3Llong : public VbaseLlong
 {
 protected:
-	typedef VecLlong Base;
+	typedef VbaseLlong Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Llong(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -195,10 +195,10 @@ inline Long Mat3Llong::n2() const
 typedef const Mat3Llong &Mat3Llong_I;
 typedef Mat3Llong &Mat3Llong_O, &Mat3Llong_IO;
 
-class Mat3Float : public VecFloat
+class Mat3Float : public VbaseFloat
 {
 protected:
-	typedef VecFloat Base;
+	typedef VbaseFloat Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Float(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -259,10 +259,10 @@ inline Long Mat3Float::n2() const
 typedef const Mat3Float &Mat3Float_I;
 typedef Mat3Float &Mat3Float_O, &Mat3Float_IO;
 
-class Mat3Doub : public VecDoub
+class Mat3Doub : public VbaseDoub
 {
 protected:
-	typedef VecDoub Base;
+	typedef VbaseDoub Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Doub(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -323,10 +323,10 @@ inline Long Mat3Doub::n2() const
 typedef const Mat3Doub &Mat3Doub_I;
 typedef Mat3Doub &Mat3Doub_O, &Mat3Doub_IO;
 
-class Mat3Ldoub : public VecLdoub
+class Mat3Ldoub : public VbaseLdoub
 {
 protected:
-	typedef VecLdoub Base;
+	typedef VbaseLdoub Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Ldoub(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -387,10 +387,10 @@ inline Long Mat3Ldoub::n2() const
 typedef const Mat3Ldoub &Mat3Ldoub_I;
 typedef Mat3Ldoub &Mat3Ldoub_O, &Mat3Ldoub_IO;
 
-class Mat3Fcomp : public VecFcomp
+class Mat3Fcomp : public VbaseFcomp
 {
 protected:
-	typedef VecFcomp Base;
+	typedef VbaseFcomp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Fcomp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -451,10 +451,10 @@ inline Long Mat3Fcomp::n2() const
 typedef const Mat3Fcomp &Mat3Fcomp_I;
 typedef Mat3Fcomp &Mat3Fcomp_O, &Mat3Fcomp_IO;
 
-class Mat3Comp : public VecComp
+class Mat3Comp : public VbaseComp
 {
 protected:
-	typedef VecComp Base;
+	typedef VbaseComp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Comp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -515,10 +515,10 @@ inline Long Mat3Comp::n2() const
 typedef const Mat3Comp &Mat3Comp_I;
 typedef Mat3Comp &Mat3Comp_O, &Mat3Comp_IO;
 
-class Mat3Lcomp : public VecLcomp
+class Mat3Lcomp : public VbaseLcomp
 {
 protected:
-	typedef VecLcomp Base;
+	typedef VbaseLcomp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Lcomp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -579,10 +579,10 @@ inline Long Mat3Lcomp::n2() const
 typedef const Mat3Lcomp &Mat3Lcomp_I;
 typedef Mat3Lcomp &Mat3Lcomp_O, &Mat3Lcomp_IO;
 
-class Mat3Fimag : public VecFimag
+class Mat3Fimag : public VbaseFimag
 {
 protected:
-	typedef VecFimag Base;
+	typedef VbaseFimag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Fimag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -643,10 +643,10 @@ inline Long Mat3Fimag::n2() const
 typedef const Mat3Fimag &Mat3Fimag_I;
 typedef Mat3Fimag &Mat3Fimag_O, &Mat3Fimag_IO;
 
-class Mat3Imag : public VecImag
+class Mat3Imag : public VbaseImag
 {
 protected:
-	typedef VecImag Base;
+	typedef VbaseImag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Imag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -707,10 +707,10 @@ inline Long Mat3Imag::n2() const
 typedef const Mat3Imag &Mat3Imag_I;
 typedef Mat3Imag &Mat3Imag_O, &Mat3Imag_IO;
 
-class Mat3Limag : public VecLimag
+class Mat3Limag : public VbaseLimag
 {
 protected:
-	typedef VecLimag Base;
+	typedef VbaseLimag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Mat3Limag(): m_N0(0), m_N1(0), m_N2(0) {};

@@ -359,6 +359,30 @@ inline void copy(DcmatComp_O v, Comp_I s)
 // inline void copy(@T@_O v, ...)
 
 // copy initializer list to containers
+inline void copy(SvecInt_O v, const std::initializer_list<Int> &v1)
+{
+	const Int *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+inline void copy(SvecLlong_O v, const std::initializer_list<Llong> &v1)
+{
+	const Llong *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
 inline void copy(SvecDoub_O v, const std::initializer_list<Doub> &v1)
 {
 	const Doub *p1 = v1.begin();
@@ -373,6 +397,106 @@ inline void copy(SvecDoub_O v, const std::initializer_list<Doub> &v1)
 
 
 inline void copy(SvecComp_O v, const std::initializer_list<Comp> &v1)
+{
+	const Comp *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+
+inline void copy(ScmatInt_O v, const std::initializer_list<Int> &v1)
+{
+	const Int *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+inline void copy(ScmatLlong_O v, const std::initializer_list<Llong> &v1)
+{
+	const Llong *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+inline void copy(ScmatDoub_O v, const std::initializer_list<Doub> &v1)
+{
+	const Doub *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+
+inline void copy(ScmatComp_O v, const std::initializer_list<Comp> &v1)
+{
+	const Comp *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+
+inline void copy(Scmat3Int_O v, const std::initializer_list<Int> &v1)
+{
+	const Int *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+inline void copy(Scmat3Llong_O v, const std::initializer_list<Llong> &v1)
+{
+	const Llong *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+inline void copy(Scmat3Doub_O v, const std::initializer_list<Doub> &v1)
+{
+	const Doub *p1 = v1.begin();
+	Long N = v1.size();
+#ifdef SLS_CHECK_SHAPES
+	if (v.size() != N)
+		SLS_ERR("wrong shape!");
+#endif
+	for (Long i = 0; i < N; ++i)
+		v[i] = p1[i];
+}
+
+
+inline void copy(Scmat3Comp_O v, const std::initializer_list<Comp> &v1)
 {
 	const Comp *p1 = v1.begin();
 	Long N = v1.size();
@@ -455,6 +579,89 @@ inline void copy(DvecComp_O v, SvecComp_I v1)
 	veccpy(v.p(), v.step(), v1.p(), v1.size());
 }
 
+
+inline void copy(ScmatInt_O v, ScmatInt_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(ScmatLlong_O v, ScmatLlong_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(ScmatDoub_O v, ScmatDoub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+
+inline void copy(ScmatComp_O v, ScmatComp_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(ScmatComp_O v, ScmatDoub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+
+
+inline void copy(Scmat3Int_O v, Scmat3Int_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Scmat3Llong_O v, Scmat3Llong_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Scmat3Doub_O v, Scmat3Doub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+
+inline void copy(Scmat3Comp_O v, Scmat3Comp_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(Scmat3Comp_O v, Scmat3Doub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+
+
+inline void copy(MatDoub_O v, ScmatDoub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape2(v, v1);
+	matcpy_diff_major(v.p(), v1.p(), v.n1(), v.n0());
+}
 
 inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
 {

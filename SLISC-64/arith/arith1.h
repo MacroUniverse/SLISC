@@ -381,29 +381,29 @@ inline Llong min(vecLlong_I v) { return min_v(v.data(), v.size()); }
 
 inline Llong min(Long_O ind, vecLlong_I v) { return min_v(ind, v.data(), v.size()); }
 
-inline Int max(SvecInt_I v) { return max_v(v.p(), v.size()); }
+inline Int max(SvbaseInt_I v) { return max_v(v.p(), v.size()); }
 
-inline Int max(Long_O ind, SvecInt_I v) { return max_v(ind, v.p(), v.size()); }
+inline Int max(Long_O ind, SvbaseInt_I v) { return max_v(ind, v.p(), v.size()); }
 
-inline Int min(SvecInt_I v) { return min_v(v.p(), v.size()); }
+inline Int min(SvbaseInt_I v) { return min_v(v.p(), v.size()); }
 
-inline Int min(Long_O ind, SvecInt_I v) { return min_v(ind, v.p(), v.size()); }
+inline Int min(Long_O ind, SvbaseInt_I v) { return min_v(ind, v.p(), v.size()); }
 
-inline Llong max(SvecLlong_I v) { return max_v(v.p(), v.size()); }
+inline Llong max(SvbaseLlong_I v) { return max_v(v.p(), v.size()); }
 
-inline Llong max(Long_O ind, SvecLlong_I v) { return max_v(ind, v.p(), v.size()); }
+inline Llong max(Long_O ind, SvbaseLlong_I v) { return max_v(ind, v.p(), v.size()); }
 
-inline Llong min(SvecLlong_I v) { return min_v(v.p(), v.size()); }
+inline Llong min(SvbaseLlong_I v) { return min_v(v.p(), v.size()); }
 
-inline Llong min(Long_O ind, SvecLlong_I v) { return min_v(ind, v.p(), v.size()); }
+inline Llong min(Long_O ind, SvbaseLlong_I v) { return min_v(ind, v.p(), v.size()); }
 
-inline Doub max(SvecDoub_I v) { return max_v(v.p(), v.size()); }
+inline Doub max(SvbaseDoub_I v) { return max_v(v.p(), v.size()); }
 
-inline Doub max(Long_O ind, SvecDoub_I v) { return max_v(ind, v.p(), v.size()); }
+inline Doub max(Long_O ind, SvbaseDoub_I v) { return max_v(ind, v.p(), v.size()); }
 
-inline Doub min(SvecDoub_I v) { return min_v(v.p(), v.size()); }
+inline Doub min(SvbaseDoub_I v) { return min_v(v.p(), v.size()); }
 
-inline Doub min(Long_O ind, SvecDoub_I v) { return min_v(ind, v.p(), v.size()); }
+inline Doub min(Long_O ind, SvbaseDoub_I v) { return min_v(ind, v.p(), v.size()); }
 
 
 inline Int max(vvecInt_I v) {
@@ -482,6 +482,22 @@ inline Doub max(Long_O ind, VecDoub_I v) { return max_v(ind, v.p(), v.size()); }
 inline Doub min(VecDoub_I v) { return min_v(v.p(), v.size()); }
 
 inline Doub min(Long_O ind, VecDoub_I v) { return min_v(ind, v.p(), v.size()); }
+
+inline Int max(SvecInt_I v) { return max_v(v.p(), v.size()); }
+
+inline Int max(Long_O ind, SvecInt_I v) { return max_v(ind, v.p(), v.size()); }
+
+inline Int min(SvecInt_I v) { return min_v(v.p(), v.size()); }
+
+inline Int min(Long_O ind, SvecInt_I v) { return min_v(ind, v.p(), v.size()); }
+
+inline Doub max(SvecDoub_I v) { return max_v(v.p(), v.size()); }
+
+inline Doub max(Long_O ind, SvecDoub_I v) { return max_v(ind, v.p(), v.size()); }
+
+inline Doub min(SvecDoub_I v) { return min_v(v.p(), v.size()); }
+
+inline Doub min(Long_O ind, SvecDoub_I v) { return min_v(ind, v.p(), v.size()); }
 
 
 
@@ -755,15 +771,15 @@ inline Doub max_abs_dcmat(Long_O i, Long_O j, const Comp *v, Long_I N0, Long_I N
 }
 
 
-inline Doub max_abs(SvecDoub_I v) { return max_abs_v(v.p(), v.size()); }
-inline Doub max_abs(Long_O ind, SvecDoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
+inline Doub max_abs(SvbaseDoub_I v) { return max_abs_v(v.p(), v.size()); }
+inline Doub max_abs(Long_O ind, SvbaseDoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
 
-inline Int max_abs(SvecInt_I v) { return max_abs_v(v.p(), v.size()); }
-inline Int max_abs(Long_O ind, SvecInt_I v) { return max_abs_v(ind, v.p(), v.size()); }
+inline Int max_abs(SvbaseInt_I v) { return max_abs_v(v.p(), v.size()); }
+inline Int max_abs(Long_O ind, SvbaseInt_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
-inline Doub max_abs(SvecComp_I v) { return max_abs_v(v.p(), v.size()); }
-inline Doub max_abs(Long_O ind, SvecComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
+inline Doub max_abs(SvbaseComp_I v) { return max_abs_v(v.p(), v.size()); }
+inline Doub max_abs(Long_O ind, SvbaseComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
 
 inline Doub max_abs(DvecDoub_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
@@ -833,19 +849,28 @@ inline Doub sum_abs_v(const Comp *v, Long_I N)
 
 
 // sum of absolute values
-inline Llong sum_abs(SvecInt_I v)
+inline Llong sum_abs(SvbaseInt_I v)
 { return sum_abs_v(v.p(), v.size()); }
 
-inline Llong sum_abs(SvecLlong_I v)
+inline Llong sum_abs(SvbaseLlong_I v)
+{ return sum_abs_v(v.p(), v.size()); }
+
+inline Doub sum_abs(SvbaseDoub_I v)
+{ return sum_abs_v(v.p(), v.size()); }
+
+
+inline Doub sum_abs(SvbaseComp_I v)
+{ return sum_abs_v(v.p(), v.size()); }
+
+
+inline Llong sum_abs(SvecInt_I v)
 { return sum_abs_v(v.p(), v.size()); }
 
 inline Doub sum_abs(SvecDoub_I v)
 { return sum_abs_v(v.p(), v.size()); }
 
-
 inline Doub sum_abs(SvecComp_I v)
 { return sum_abs_v(v.p(), v.size()); }
-
 
 
 inline Long sum_abs(VecBool_I v)
@@ -964,30 +989,34 @@ inline Doub sum(vecDoub_I v) { return sum_v(v.data(), v.size()); }
 inline Doub prod(vecDoub_I v) { return prod_v(v.data(), v.size()); }
 
 
-inline Llong sum(SvecInt_I v) { return sum_v(v.p(), v.size()); }
+inline Llong sum(SvbaseInt_I v) { return sum_v(v.p(), v.size()); }
 
-inline Llong prod(SvecInt_I v) { return prod_v(v.p(), v.size()); }
+inline Llong prod(SvbaseInt_I v) { return prod_v(v.p(), v.size()); }
 
-inline Llong sum(SvecLlong_I v) { return sum_v(v.p(), v.size()); }
+inline Llong sum(SvbaseLlong_I v) { return sum_v(v.p(), v.size()); }
 
-inline Llong prod(SvecLlong_I v) { return prod_v(v.p(), v.size()); }
+inline Llong prod(SvbaseLlong_I v) { return prod_v(v.p(), v.size()); }
 
-inline Doub sum(SvecDoub_I v) { return sum_v(v.p(), v.size()); }
+inline Doub sum(SvbaseDoub_I v) { return sum_v(v.p(), v.size()); }
 
-inline Doub prod(SvecDoub_I v) { return prod_v(v.p(), v.size()); }
+inline Doub prod(SvbaseDoub_I v) { return prod_v(v.p(), v.size()); }
 
 
-inline Comp sum(SvecComp_I v) { return sum_v(v.p(), v.size()); }
+inline Comp sum(SvbaseComp_I v) { return sum_v(v.p(), v.size()); }
 
-inline Comp prod(SvecComp_I v) { return prod_v(v.p(), v.size()); }
+inline Comp prod(SvbaseComp_I v) { return prod_v(v.p(), v.size()); }
 
 
 inline Comp sum(MatComp_I v) { return sum_v(v.p(), v.size()); }
 
 inline Comp prod(MatComp_I v) { return prod_v(v.p(), v.size()); }
 
+inline Doub sum(SvecDoub_I v) { return sum_v(v.p(), v.size()); }
 
-inline Doub norm2(SvecDoub_I v)
+inline Doub prod(SvecDoub_I v) { return prod_v(v.p(), v.size()); }
+
+
+inline Doub norm2(SvbaseDoub_I v)
 {
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
@@ -996,7 +1025,7 @@ inline Doub norm2(SvecDoub_I v)
 	return s2;
 }
 
-inline Doub norm2_dif(SvecDoub_I v, SvecDoub_I v1)
+inline Doub norm2_dif(SvbaseDoub_I v, SvbaseDoub_I v1)
 {
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
@@ -1004,18 +1033,18 @@ inline Doub norm2_dif(SvecDoub_I v, SvecDoub_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
-inline Doub norm(SvecDoub_I v)
+inline Doub norm(SvbaseDoub_I v)
 {
 	return sqrt(norm2(v));
 }
 
-inline Doub norm_dif(SvecDoub_I v, SvecDoub_I v1)
+inline Doub norm_dif(SvbaseDoub_I v, SvbaseDoub_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }
 
 
-inline Doub norm2(SvecComp_I v)
+inline Doub norm2(SvbaseComp_I v)
 {
 	Long N = v.size();
 	Doub s2 = abs2(v[0]);
@@ -1024,7 +1053,7 @@ inline Doub norm2(SvecComp_I v)
 	return s2;
 }
 
-inline Doub norm2_dif(SvecComp_I v, SvecComp_I v1)
+inline Doub norm2_dif(SvbaseComp_I v, SvbaseComp_I v1)
 {
 	Long N = v.size();
 	Doub s2 = abs2(v[0] - v1[0]);
@@ -1032,12 +1061,12 @@ inline Doub norm2_dif(SvecComp_I v, SvecComp_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
-inline Doub norm(SvecComp_I v)
+inline Doub norm(SvbaseComp_I v)
 {
 	return sqrt(norm2(v));
 }
 
-inline Doub norm_dif(SvecComp_I v, SvecComp_I v1)
+inline Doub norm_dif(SvbaseComp_I v, SvbaseComp_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }

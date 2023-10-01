@@ -1,0 +1,209 @@
+// basic vector
+#pragma once
+#include "../global.h"
+#include "../arith/Imag.h"
+#include "../str/str.h"
+#include "Svec.h"
+
+namespace slisc {
+//% tem('Vbase', {
+//%     'Bool'; 'Char'; 'Uchar'; 'Int'; 'Llong';
+//%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
+//%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
+//%     'Fimag'; 'Imag'; 'Limag'; 'Qimag';});
+//%----------------------------------------------
+//% T = varargin{:};
+//% VbaseT = ['Vbase' T];
+class @VbaseT@
+{
+protected:
+	@T@ *m_p; // pointer to the first element
+	Long m_N; // number of elements
+public:
+	// constructors
+	@VbaseT@(); // default constructor
+	explicit @VbaseT@(Long_I N);
+	@VbaseT@(const @VbaseT@ &rhs); // copy constructor
+	@VbaseT@(@VbaseT@&&); // move constructor
+
+	@VbaseT@ &operator=(const @VbaseT@ &); // copy asignment
+	@VbaseT@ &operator=(@VbaseT@ &&); // move asignment
+
+	// get properties
+	@T@* p(); // get pointer
+	const @T@* p() const;
+	Long size() const;
+	void resize(Long_I N);
+	@T@ &operator[](Long_I i);
+	const @T@ &operator[](Long_I i) const;
+	@T@& end();
+	const @T@& end() const;
+	@T@& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
+	const @T@& end(Long_I i) const;
+
+	~@VbaseT@();
+};
+
+// m_p doesn't need to be initialized, but g++ will complain
+inline @VbaseT@::@VbaseT@() : m_p(nullptr), m_N(0) {}
+
+inline @VbaseT@::@VbaseT@(Long_I N)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N < 0)
+		SLS_ERR("size less than 0!");
+#endif
+	m_N = N;
+	if (N > 0)
+		m_p = new @T@[N];
+	else
+		m_p = nullptr;
+}
+
+inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+	SLS_ERR("Copy constructor or move constructor is forbidden!");
+#endif
+	m_N = rhs.m_N;
+	if (m_N > 0) {
+		m_p = new @T@[m_N];
+		memcpy(m_p, rhs.p(), m_N*sizeof(@T@));
+	}
+	else
+		m_p = nullptr;
+}
+
+inline @VbaseT@::@VbaseT@(@VbaseT@ &&rhs)
+	: m_N(rhs.m_N), m_p(rhs.m_p)
+{
+#ifndef NDEBUG
+	if (this == &rhs)
+		SLS_ERR("self move is forbidden!");
+#endif
+	rhs.m_N = 0;
+}
+
+inline @VbaseT@ &@VbaseT@::operator=(const @VbaseT@ &rhs)
+{
+	resize(rhs.m_N);
+	if (m_N > 0)
+		memcpy(m_p, rhs.m_p, sizeof(@T@)*m_N);
+	return *this;
+}
+
+inline @VbaseT@ &@VbaseT@::operator=(@VbaseT@ &&rhs)
+{
+	if (m_N > 0) delete [] m_p;
+	m_p = rhs.m_p;
+	m_N = rhs.m_N; rhs.m_N = 0;
+	return *this;
+}
+
+inline @T@ * @VbaseT@::p()
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline const @T@ * @VbaseT@::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline Long @VbaseT@::size() const
+{
+	return m_N;
+}
+
+inline void @VbaseT@::resize(Long_I N)
+{
+	if (N != m_N) {
+		if (m_N == 0) { // N != 0
+			m_N = N; m_p = new @T@[N];
+		}
+		else { // m_N != 0
+			delete[] m_p;
+			if (N == 0)
+				m_N = 0;
+			else {
+				m_N = N;
+				m_p = new @T@[N];
+			}
+		}
+	}
+}
+
+inline @T@ &@VbaseT@::operator[](Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+if (i<0 || i>=m_N)
+	SLS_ERR("@VbaseT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+	return m_p[i];
+}
+
+inline const @T@ &@VbaseT@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i<0 || i>=m_N)
+		SLS_ERR("@VbaseT@ index (" + num2str(i) + ") out of bounds: size = " + num2str(m_N));
+#endif
+	return m_p[i];
+}
+
+inline @T@ &@VbaseT@::end()
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline const @T@ &@VbaseT@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline @T@ &@VbaseT@::end(Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+	return m_p[m_N - i];
+}
+
+inline const @T@ &@VbaseT@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("end(i) index (i = " + num2str(i) + ") out of bound: size = " + num2str(m_N));
+#endif
+	return m_p[m_N - i];
+}
+
+inline @VbaseT@::~@VbaseT@()
+{
+	if (m_N != 0)
+		delete[] m_p;
+}
+
+typedef const @VbaseT@ &@VbaseT@_I;
+typedef @VbaseT@ &@VbaseT@_O, &@VbaseT@_IO;
+
+//%----------------------------------------
+
+} // namespace slisc

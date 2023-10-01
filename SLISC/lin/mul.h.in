@@ -88,7 +88,10 @@ inline void mul(@T@_IO y, @T1@_I a, @T2@_I x, @Ts1@_I alpha, @Ts@_I beta)
 }
 //%-------------------------
 
-//% tem('mul(v,v,m)', { 'SvecComp', 'SvecDoub', 'MatComp' });
+//% tem('mul(v,v,m)', {
+//%    'SvecComp', 'SvecDoub', 'MatComp'
+//%    'SvecComp', 'SvecDoub', 'CmatComp'
+//% });
 //%-------------------------------
 //% [T,T1,T2] = varargin{:};
 //% [Ts,Ts1,Ts2] = val_t(T,T1,T2);

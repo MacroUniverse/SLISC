@@ -1,7 +1,7 @@
 function ret = is_Scmat3C(T)
-if ~ischar(T) || numel(T) < 5
+if ~ischar(T) || numel(T) < 6
     ret = false;
 else
-    ret = numel(regexp(T, 'Scmat3.*C?', 'once')) > 0;
+    ret = strcmp(T(1:6), 'Scmat3') && T(end) == 'C';
 end
 end

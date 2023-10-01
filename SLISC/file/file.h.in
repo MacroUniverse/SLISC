@@ -736,7 +736,7 @@ inline void write(ofstream &fout, Str32_I str)
 // skipt specific number of lines at the beginning
 // matrix will auto-resize
 // spaces & new line at the end of file are allowed
-//% tem('read', {'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; });
+//% tem('read', {'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; });
 //%--------------------
 //% T = varargin{:};
 //% Ts = val_t(T);

@@ -10,7 +10,6 @@
 #include "../sparse/Cband.h"
 #include "../sparse/Mcoo.h"
 #include "../sparse/Cmobd.h"
-#include "../dense/Svec.h"
 #include "../dense/Dvec.h"
 #include "../dense/Scmat.h"
 #include "../dense/Scmat3.h"
@@ -111,8 +110,6 @@ void assert_same_shape4(const T1 &v1, const T2 &v2, const T3 &v3) {
 #endif
 }
 
-
-
 //% tem('v==v', {
 //%   'SvecChar', 'SvecChar';
 //%   'SvecUchar', 'SvecUchar';
@@ -124,23 +121,6 @@ void assert_same_shape4(const T1 &v1, const T2 &v2, const T3 &v3) {
 //%   'SvecQdoub', 'SvecQcomp';
 //%   'SvecComp', 'SvecComp';
 //%   'SvecQcomp', 'SvecQcomp';
-//%   'MatLlong', 'MatLlong';
-//%   'MatDoub' 'MatDoub'
-//%   'MatDoub' 'ScmatDoub'
-//%   'MatInt' 'MatInt'
-//%   'MatDoub' 'MatDoub'
-//%   'MatComp', 'MatComp';
-//%   'CmatInt' 'ScmatInt'
-//%   'CmatLlong' 'ScmatLlong'
-//%   'CmatDoub', 'ScmatDoub';
-//%   'CmatQdoub', 'ScmatQdoub';
-//%   'CmatComp', 'ScmatComp';
-//%   'CmatQcomp', 'ScmatQcomp';
-//%   'Cmat3Llong' 'Scmat3Llong'
-//%   'Cmat3Doub' 'Scmat3Doub'
-//%   'Cmat3Qdoub' 'Scmat3Qdoub'
-//%   'Cmat3Comp' 'Scmat3Comp'
-//%   'Cmat3Qcomp' 'Scmat3Qcomp'
 //%   'ScmatInt' 'ScmatInt'
 //%   'ScmatLlong' 'ScmatLlong'
 //%   'ScmatDoub', 'ScmatDoub';
@@ -152,10 +132,6 @@ void assert_same_shape4(const T1 &v1, const T2 &v2, const T3 &v3) {
 //%   'Scmat3Qdoub' 'Scmat3Qdoub'
 //%   'Scmat3Comp' 'Scmat3Comp'
 //%   'Scmat3Qcomp' 'Scmat3Qcomp'
-//%   'ScmatDoub', 'MatDoub';
-//%   'ScmatComp', 'MatComp';
-//%   'Mat3Doub' 'Mat3Doub'
-//%   'Mat3Comp' 'Mat3Comp'
 //%   'DcmatDoub' 'ScmatDoub'
 //%   'DcmatQdoub' 'ScmatQdoub'
 //%   'Jcmat3Doub' 'Scmat3Doub'
@@ -219,8 +195,8 @@ inline bool operator==(VecBool_I v1, VecBool_I v2)
 inline bool operator!=(VecBool_I v1, VecBool_I v2)
 { return !(v1 == v2); }
 
-//% tem('v==s', { 'SvecInt'; 'SvecLlong';
-//%  'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp'; 'DvecInt';
+//% tem('v==s', { 'SvbaseInt'; 'SvbaseLlong';
+//%  'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseComp'; 'SvbaseQcomp'; 'DvecInt';
 //%  'DvecDoub'; 'DvecQdoub'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);

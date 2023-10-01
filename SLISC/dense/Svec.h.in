@@ -1,14 +1,15 @@
 #pragma once
-#include "../global.h"
-#include "../arith/Imag.h"
+#include "../dense/Svbase.h"
 
 // this class is not memory safe!
 // "C" means lower level const
 
 namespace slisc {
+
 //% tem('Svec', {
+//%     'Bool', true;   'Bool', false;
 //%     'Char', true;   'Char', false;
-//%     'Uchar', true;   'Uchar', false;
+//%     'Uchar', true;  'Uchar', false;
 //%     'Int', true;    'Int', false;
 //%     'Llong', true;  'Llong', false;
 //%     'Float', true;  'Float', false;
@@ -22,162 +23,44 @@ namespace slisc {
 //%     'Fimag', true;  'Fimag', false;
 //%     'Imag', true;   'Imag', false;
 //%     'Limag', true;  'Limag', false;
-//%     'Qimag', true;  'Qimag', false;
 //% });
 //%------------------------
 //% [T, constness] = varargin{:};
-//% SvecT = ['Svec' T];
-//% SvecTC = [SvecT 'C'];
+//% SvecT = ['Svec' T]; SvbaseT = ['Svbase' T];
+//% SvecTC = [SvecT 'C']; SvbaseTC = [SvbaseT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Class = SvecTC;
+//%     Class = SvecTC; Base = SvbaseTC;
+//%     suffix = '_I';
 //% else
 //%     CT = T;
-//%     Class = SvecT;
+//%     Class = SvecT; Base = SvbaseT;
+//%     suffix = '_IO';
 //% end
-class @Class@
+class @Class@ : public @Base@
 {
-protected:
-	@CT@ *m_p;
-	Long m_N;
 public:
-	@Class@();
+	using @Base@::@Base@;
 	explicit @Class@(Long_I N);
-	@Class@(@CT@ *data, Long_I N);
-	@Class@(const @Class@ &v) = default; // copy constructor (shalow)
-
-	@Class@ &operator=(const @Class@ &v) = default; // copy assignment (shalow)
-
-	@CT@* p() const;
-	Long size() const;
-	@CT@ &operator[](Long_I i) const;
-	@CT@ &end() const;
-	@CT@ &end(Long_I i) const;
-
 //% if ~constness
-	operator const @SvecTC@ &() const;
-	operator @SvecTC@ &();
+	operator @SvecTC@() const;
 //% end
-
-	void next(); // m_p += m_N
-	
-	// === unsafe operations (unsafe) ===
-	void set(@CT@ *data);
-//% % resize() is a bad name, don't try to use it!
-	void set(Long_I N);
-	void set(@CT@ *data, Long_I N);
-	void last(); // m_p -= m_N
-	void shift(Long_I N); // m_p += N
-
-	~@Class@();
 };
 
-inline @Class@::@Class@() {}
-
-inline @Class@::@Class@(Long_I N) : m_N(N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	m_p = nullptr;
-#endif
-}
-
-inline @Class@::@Class@(@CT@ *data, Long_I N)
-	: m_p(data), m_N(N) {}
-
-inline @CT@ * @Class@::p() const
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (m_N == 0)
-		SLS_ERR("using p() for empty container!");
-#endif
-	return m_p;
-}
-
-inline Long @Class@::size() const
-{
-	return m_N;
-}
-
-inline @CT@ &@Class@::operator[](Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N)
-		SLS_ERR("Vbase subscript out of bounds");
-#endif
-	return m_p[i];
-}
-
-inline @CT@ &@Class@::end() const
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (m_N == 0)
-		SLS_ERR("tring to use end() on empty vector!");
-#endif
-	return m_p[m_N - 1];
-}
-
-inline @CT@ &@Class@::end(Long_I i) const
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (i <= 0 || i > m_N)
-		SLS_ERR("index out of bound");
-#endif
-	return m_p[m_N - i];
-}
-
 //% if ~constness
-inline @Class@::operator const @SvecTC@ &() const
+inline @Class@::operator @SvecTC@() const
 {
-	return reinterpret_cast<const @SvecTC@ &>(*this);
-}
-
-inline @Class@::operator @SvecTC@ &()
-{
-	return reinterpret_cast<@SvecTC@ &>(*this);
+	return *((@SvecTC@ *)this);
 }
 //% end
-
-inline void @Class@::set(@CT@ *data) {
-	m_p = data;
-}
-
-inline void @Class@::set(Long_I N) {
-	m_N = N;
-}
-
-inline void @Class@::set(@CT@ *data, Long_I N) {
-	m_p = data; m_N = N;
-}
-
-inline void @Class@::next() {
-	m_p += m_N;
-}
-
-inline void @Class@::last() {
-	m_p -= m_N;
-}
-
-inline void @Class@::shift(Long_I N) {
-	m_p += N;
-}
-
-inline @Class@::~@Class@() {}
 
 //% if constness
 typedef const @Class@ &@SvecT@_I;
-
-// common api for STL and SLISC
-inline Long size(@SvecT@_I v) { return v.size(); }
-
-inline const @T@ *cptr(@SvecT@_I v) { return v.p(); }
-
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@SvecT@_O, &@SvecT@_IO;
-
-// common api for STL and SLISC
-inline @T@ *ptr(const @SvecT@ &v) { return v.p(); }
 //% end
+
 //%------------------------
 
 #ifdef SLS_USE_INT_AS_LONG
@@ -187,5 +70,8 @@ typedef SvecIntC SvecLongC;
 typedef SvecLlong SvecLong;
 typedef SvecLlongC SvecLongC;
 #endif
+typedef const SvecLongC &SvecLong_I;
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const SvecLong &SvecLong_O, &SvecLong_IO;
 
 } // namespace slisc

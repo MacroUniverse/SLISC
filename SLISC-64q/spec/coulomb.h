@@ -476,7 +476,7 @@ inline Doub coulombF(Int_I l, Doub_I k, Doub_I r, Doub_I Z = -1.)
 // cut the non-zero band
 inline void coulombF(VecDoub_O F, Int_I l, Doub_I k, VecDoub_I r, Doub_I Z = -1.)
 {
-	assert_same_shape(F, r);
+	assert_same_shape1(F, r);
 	Comp F1, dF1;
 	Doub eta = Z / k;
 	for (Long i = 0; i < r.size(); ++i) {
@@ -491,7 +491,7 @@ inline void coulombF(VecDoub_O F, Int_I l, Doub_I k, VecDoub_I r, Doub_I Z = -1.
 
 inline void coulombF(VecDoub_O F, Int_I l, Doub_I k, SvecDoub_I r, Doub_I Z = -1.)
 {
-	assert_same_shape(F, r);
+	assert_same_shape1(F, r);
 	Comp F1, dF1;
 	Doub eta = Z / k;
 	for (Long i = 0; i < r.size(); ++i) {
@@ -506,7 +506,7 @@ inline void coulombF(VecDoub_O F, Int_I l, Doub_I k, SvecDoub_I r, Doub_I Z = -1
 
 inline void coulombF(SvecDoub_O F, Int_I l, Doub_I k, VecDoub_I r, Doub_I Z = -1.)
 {
-	assert_same_shape(F, r);
+	assert_same_shape1(F, r);
 	Comp F1, dF1;
 	Doub eta = Z / k;
 	for (Long i = 0; i < r.size(); ++i) {
@@ -521,7 +521,7 @@ inline void coulombF(SvecDoub_O F, Int_I l, Doub_I k, VecDoub_I r, Doub_I Z = -1
 
 inline void coulombF(SvecDoub_O F, Int_I l, Doub_I k, SvecDoub_I r, Doub_I Z = -1.)
 {
-	assert_same_shape(F, r);
+	assert_same_shape1(F, r);
 	Comp F1, dF1;
 	Doub eta = Z / k;
 	for (Long i = 0; i < r.size(); ++i) {

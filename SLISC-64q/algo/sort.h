@@ -449,84 +449,84 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 // sort v while making the same change for v1
 inline void sort(VecInt_IO v, VecInt_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(VecInt_IO v, VecInt_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(VecInt_IO v, VecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(VecInt_IO v, VecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(VecLlong_IO v, VecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(VecLlong_IO v, VecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(VecDoub_IO v, VecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(VecDoub_IO v, VecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(vecLlong_IO v, vecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(vecLlong_IO v, vecLlong_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sort(vecLlong_IO v, vecStr_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(vecLlong_IO v, vecStr_IO v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }

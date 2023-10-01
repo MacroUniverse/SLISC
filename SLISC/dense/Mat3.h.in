@@ -11,11 +11,11 @@ namespace slisc {
 //%----------------------------------------
 //% T = varargin{:};
 //% Mat3T = ['Mat3' T];
-//% VecT = ['Vec' T];
-class @Mat3T@ : public @VecT@
+//% VbaseT = ['Vbase' T];
+class @Mat3T@ : public @VbaseT@
 {
 protected:
-	typedef @VecT@ Base;
+	typedef @VbaseT@ Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	@Mat3T@(): m_N0(0), m_N1(0), m_N2(0) {};

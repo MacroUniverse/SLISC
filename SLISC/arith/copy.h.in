@@ -157,7 +157,11 @@ inline void copy(@T@_O v, @Ts@_I s)
 // inline void copy(@T@_O v, ...)
 
 // copy initializer list to containers
-//% tem('copy(v,ini)', { 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp'; });
+//% tem('copy(v,ini)', {
+//%    'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%    'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
+//%    'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp';
+//%    });
 //%------------------------------
 //% T = varargin{:}; Ts = val_t(T);
 inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)
@@ -191,6 +195,23 @@ inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)
 //%   'DvecComp' 'SvecComp'
 //%   'DvecQcomp' 'SvecQcomp'
 //%   'DvecQcomp' 'SvecQcomp'
+//%   'ScmatInt', 'ScmatInt';
+//%   'ScmatLlong', 'ScmatLlong';
+//%   'ScmatDoub', 'ScmatDoub';
+//%   'ScmatQdoub', 'ScmatQdoub';
+//%   'ScmatComp', 'ScmatComp';
+//%   'ScmatComp', 'ScmatDoub';
+//%   'ScmatQcomp', 'ScmatQcomp';
+//%   'ScmatQcomp', 'ScmatQdoub';
+//%   'Scmat3Int', 'Scmat3Int';
+//%   'Scmat3Llong', 'Scmat3Llong';
+//%   'Scmat3Doub', 'Scmat3Doub';
+//%   'Scmat3Qdoub', 'Scmat3Qdoub';
+//%   'Scmat3Comp', 'Scmat3Comp';
+//%   'Scmat3Comp', 'Scmat3Doub';
+//%   'Scmat3Qcomp', 'Scmat3Qcomp';
+//%   'Scmat3Qcomp', 'Scmat3Qdoub';
+//%   'MatDoub', 'ScmatDoub';
 //% });
 //%---------------------------
 //% [T, T1] = varargin{:};

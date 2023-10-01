@@ -8,10 +8,10 @@ template <class T>
 void veccpy(T *, const T *, Long_I);
 
 
-class McooChar : public VecChar
+class McooChar : public VbaseChar
 {
 private:
-	typedef VecChar Base;
+	typedef VbaseChar Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -279,7 +279,7 @@ inline void McooChar::reserve(Long_I N)
 
 inline void McooChar::reserve_cpy(Long_I N)
 {
-	VecChar data(N);
+	thread_local static VecChar data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -295,10 +295,10 @@ inline void McooChar::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooInt : public VecInt
+class McooInt : public VbaseInt
 {
 private:
-	typedef VecInt Base;
+	typedef VbaseInt Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -566,7 +566,7 @@ inline void McooInt::reserve(Long_I N)
 
 inline void McooInt::reserve_cpy(Long_I N)
 {
-	VecInt data(N);
+	thread_local static VecInt data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -582,10 +582,10 @@ inline void McooInt::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooLlong : public VecLlong
+class McooLlong : public VbaseLlong
 {
 private:
-	typedef VecLlong Base;
+	typedef VbaseLlong Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -853,7 +853,7 @@ inline void McooLlong::reserve(Long_I N)
 
 inline void McooLlong::reserve_cpy(Long_I N)
 {
-	VecLlong data(N);
+	thread_local static VecLlong data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -869,10 +869,10 @@ inline void McooLlong::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooDoub : public VecDoub
+class McooDoub : public VbaseDoub
 {
 private:
-	typedef VecDoub Base;
+	typedef VbaseDoub Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1140,7 +1140,7 @@ inline void McooDoub::reserve(Long_I N)
 
 inline void McooDoub::reserve_cpy(Long_I N)
 {
-	VecDoub data(N);
+	thread_local static VecDoub data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -1156,10 +1156,10 @@ inline void McooDoub::reshape(Long_I N0, Long_I N1)
 }
 
 
-class McooComp : public VecComp
+class McooComp : public VbaseComp
 {
 private:
-	typedef VecComp Base;
+	typedef VbaseComp Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1427,7 +1427,7 @@ inline void McooComp::reserve(Long_I N)
 
 inline void McooComp::reserve_cpy(Long_I N)
 {
-	VecComp data(N);
+	thread_local static VecComp data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
@@ -1445,10 +1445,10 @@ inline void McooComp::reshape(Long_I N0, Long_I N1)
 
 
 
-class McooImag : public VecImag
+class McooImag : public VbaseImag
 {
 private:
-	typedef VecImag Base;
+	typedef VbaseImag Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -1716,7 +1716,7 @@ inline void McooImag::reserve(Long_I N)
 
 inline void McooImag::reserve_cpy(Long_I N)
 {
-	VecImag data(N);
+	thread_local static VecImag data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);

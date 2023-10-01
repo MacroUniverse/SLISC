@@ -46,7 +46,7 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 
 //% req('cut0', { ['Scmat' Tc] });
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
-//% req('norm2', {Tv});
+//% req('norm2', {base_t(Tv)});
 	beta[0] = norm(x);
 	if (beta[0] == 0) {
 		if (y.p() == x.p()) copy(y, 0);
@@ -55,7 +55,7 @@ inline @Tr@ exp_Hdt_v_lanc(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I 
 	times(v0, x, 1/beta[0]); 
 
 	mul_fun(vc, v0);
-//% req('dot', { ['Svec' Tc] ['Svec' Tc] });
+//% req('dot', { ['Svbase' Tc] ['Svbase' Tc] });
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
@@ -156,7 +156,7 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 	auto bases = wsp.Scmat@Tc@(N, Nk); // orthonormal Krylov bases eq_Lanc_7
 //% req('cut0', { ['Scmat' Tc] });
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
-//% req('norm2', {Tv});
+//% req('norm2', {base_t(Tv)});
 	beta[0] = norm(x);
 	if (beta[0] == 0) {
 		if (y.p() == x.p()) copy(y, 0);
@@ -165,11 +165,11 @@ inline @Tr@ exp_miHdt_v_lanc(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long
 //% req('add(v,v,s)', {['Svec' Tc] Tv Tr});
 	times(v0, x, 1/beta[0]);
 	mul_fun(vc, v0);
-//% req('dot', {['Svec' Tc] ['Svec' Tc]});
+//% req('dot', {['Svbase' Tc] ['Svbase' Tc]});
 	alpha[0] = real(dot(v0, vc));
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
-//% req('norm2', { ['Svec' Tc] });
+//% req('norm2', { ['Svbase' Tc] });
 	beta[1] = norm(v1);
 	if (beta[1] == 0) { // H*x is an exact eigen state of x
 		// do y = exp(-i*eigval*dt)*x

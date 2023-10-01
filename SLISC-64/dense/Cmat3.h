@@ -4,10 +4,130 @@
 #include "Scmat3.h"
 
 namespace slisc {
-class Cmat3Char : public VecChar
+class Cmat3Bool : private VbaseBool
 {
 protected:
-	typedef VecChar Base;
+	typedef VbaseBool Base;
+	Long m_N0, m_N1, m_N2;
+public:
+	Cmat3Bool(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Bool(Long_I N0, Long_I N1, Long_I N2);
+	Cmat3Bool(const Cmat3Bool &rhs); // copy constructor
+	Cmat3Bool(Cmat3Bool &&rhs); // move constructor
+	Cmat3Bool &operator=(const Cmat3Bool &rhs); // copy assignment
+	Cmat3Bool &operator=(Cmat3Bool &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
+	Bool &operator()(Long_I i, Long_I j, Long_I k);
+	const Bool &operator()(Long_I i, Long_I j, Long_I k) const;
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	operator const Scmat3BoolC&() const;
+	operator const Scmat3Bool&();
+};
+
+inline Cmat3Bool::Cmat3Bool(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline Cmat3Bool::Cmat3Bool(const Cmat3Bool &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+	SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline Cmat3Bool::Cmat3Bool(Cmat3Bool &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+
+inline Cmat3Bool &Cmat3Bool::operator=(const Cmat3Bool &rhs)
+{
+	Base::operator=(rhs);
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	return *this;
+}
+
+inline Cmat3Bool &Cmat3Bool::operator=(Cmat3Bool &&rhs)
+{
+	Base::operator=(move(rhs));
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	return *this;
+}
+
+inline void Cmat3Bool::resize(Long_I N0, Long_I N1, Long_I N2)
+{
+	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	}
+}
+
+inline void Cmat3Bool::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Cmat3Bool reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+		SLS_ERR("Cmat3Bool index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline const Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+		SLS_ERR("Cmat3Bool index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Cmat3Bool::n0() const {
+	return m_N0;
+}
+
+inline Long Cmat3Bool::n1() const {
+	return m_N1;
+}
+
+inline Long Cmat3Bool::n2() const {
+	return m_N2;
+}
+
+inline Cmat3Bool::operator const Scmat3BoolC&() const {
+	return reinterpret_cast<const Scmat3BoolC&>(*this);
+}
+
+inline Cmat3Bool::operator const Scmat3Bool&() {
+	return reinterpret_cast<const Scmat3Bool&>(*this);
+}
+
+typedef const Cmat3Bool &Cmat3Bool_I;
+typedef Cmat3Bool &Cmat3Bool_O, &Cmat3Bool_IO;
+
+
+class Cmat3Char : private VbaseChar
+{
+protected:
+	typedef VbaseChar Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Char(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -16,8 +136,11 @@ public:
 	Cmat3Char(Cmat3Char &&rhs); // move constructor
 	Cmat3Char &operator=(const Cmat3Char &rhs); // copy assignment
 	Cmat3Char &operator=(Cmat3Char &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Char &operator()(Long_I i, Long_I j, Long_I k);
 	const Char &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -25,8 +148,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecCharC&;
-	using Base::operator const SvecChar&;
 	operator const Scmat3CharC&() const;
 	operator const Scmat3Char&();
 };
@@ -65,24 +186,10 @@ inline void Cmat3Char::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Char::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Char resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Char reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -137,10 +244,10 @@ typedef const Cmat3Char &Cmat3Char_I;
 typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
 
-class Cmat3Uchar : public VecUchar
+class Cmat3Uchar : private VbaseUchar
 {
 protected:
-	typedef VecUchar Base;
+	typedef VbaseUchar Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Uchar(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -149,8 +256,11 @@ public:
 	Cmat3Uchar(Cmat3Uchar &&rhs); // move constructor
 	Cmat3Uchar &operator=(const Cmat3Uchar &rhs); // copy assignment
 	Cmat3Uchar &operator=(Cmat3Uchar &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Uchar &operator()(Long_I i, Long_I j, Long_I k);
 	const Uchar &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -158,8 +268,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecUcharC&;
-	using Base::operator const SvecUchar&;
 	operator const Scmat3UcharC&() const;
 	operator const Scmat3Uchar&();
 };
@@ -198,24 +306,10 @@ inline void Cmat3Uchar::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Uchar::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Uchar resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Uchar::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Uchar reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -270,10 +364,10 @@ typedef const Cmat3Uchar &Cmat3Uchar_I;
 typedef Cmat3Uchar &Cmat3Uchar_O, &Cmat3Uchar_IO;
 
 
-class Cmat3Int : public VecInt
+class Cmat3Int : private VbaseInt
 {
 protected:
-	typedef VecInt Base;
+	typedef VbaseInt Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Int(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -282,8 +376,11 @@ public:
 	Cmat3Int(Cmat3Int &&rhs); // move constructor
 	Cmat3Int &operator=(const Cmat3Int &rhs); // copy assignment
 	Cmat3Int &operator=(Cmat3Int &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Int &operator()(Long_I i, Long_I j, Long_I k);
 	const Int &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -291,8 +388,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecIntC&;
-	using Base::operator const SvecInt&;
 	operator const Scmat3IntC&() const;
 	operator const Scmat3Int&();
 };
@@ -331,24 +426,10 @@ inline void Cmat3Int::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Int::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Int resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Int reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -403,10 +484,10 @@ typedef const Cmat3Int &Cmat3Int_I;
 typedef Cmat3Int &Cmat3Int_O, &Cmat3Int_IO;
 
 
-class Cmat3Llong : public VecLlong
+class Cmat3Llong : private VbaseLlong
 {
 protected:
-	typedef VecLlong Base;
+	typedef VbaseLlong Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Llong(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -415,8 +496,11 @@ public:
 	Cmat3Llong(Cmat3Llong &&rhs); // move constructor
 	Cmat3Llong &operator=(const Cmat3Llong &rhs); // copy assignment
 	Cmat3Llong &operator=(Cmat3Llong &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Llong &operator()(Long_I i, Long_I j, Long_I k);
 	const Llong &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -424,8 +508,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecLlongC&;
-	using Base::operator const SvecLlong&;
 	operator const Scmat3LlongC&() const;
 	operator const Scmat3Llong&();
 };
@@ -464,24 +546,10 @@ inline void Cmat3Llong::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Llong::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Llong resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Llong reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -536,10 +604,10 @@ typedef const Cmat3Llong &Cmat3Llong_I;
 typedef Cmat3Llong &Cmat3Llong_O, &Cmat3Llong_IO;
 
 
-class Cmat3Float : public VecFloat
+class Cmat3Float : private VbaseFloat
 {
 protected:
-	typedef VecFloat Base;
+	typedef VbaseFloat Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Float(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -548,8 +616,11 @@ public:
 	Cmat3Float(Cmat3Float &&rhs); // move constructor
 	Cmat3Float &operator=(const Cmat3Float &rhs); // copy assignment
 	Cmat3Float &operator=(Cmat3Float &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Float &operator()(Long_I i, Long_I j, Long_I k);
 	const Float &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -557,8 +628,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecFloatC&;
-	using Base::operator const SvecFloat&;
 	operator const Scmat3FloatC&() const;
 	operator const Scmat3Float&();
 };
@@ -597,24 +666,10 @@ inline void Cmat3Float::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Float::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Float resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Float reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -669,10 +724,10 @@ typedef const Cmat3Float &Cmat3Float_I;
 typedef Cmat3Float &Cmat3Float_O, &Cmat3Float_IO;
 
 
-class Cmat3Doub : public VecDoub
+class Cmat3Doub : private VbaseDoub
 {
 protected:
-	typedef VecDoub Base;
+	typedef VbaseDoub Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Doub(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -681,8 +736,11 @@ public:
 	Cmat3Doub(Cmat3Doub &&rhs); // move constructor
 	Cmat3Doub &operator=(const Cmat3Doub &rhs); // copy assignment
 	Cmat3Doub &operator=(Cmat3Doub &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Doub &operator()(Long_I i, Long_I j, Long_I k);
 	const Doub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -690,8 +748,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecDoubC&;
-	using Base::operator const SvecDoub&;
 	operator const Scmat3DoubC&() const;
 	operator const Scmat3Doub&();
 };
@@ -730,24 +786,10 @@ inline void Cmat3Doub::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Doub::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Doub resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Doub reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -802,10 +844,10 @@ typedef const Cmat3Doub &Cmat3Doub_I;
 typedef Cmat3Doub &Cmat3Doub_O, &Cmat3Doub_IO;
 
 
-class Cmat3Ldoub : public VecLdoub
+class Cmat3Ldoub : private VbaseLdoub
 {
 protected:
-	typedef VecLdoub Base;
+	typedef VbaseLdoub Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Ldoub(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -814,8 +856,11 @@ public:
 	Cmat3Ldoub(Cmat3Ldoub &&rhs); // move constructor
 	Cmat3Ldoub &operator=(const Cmat3Ldoub &rhs); // copy assignment
 	Cmat3Ldoub &operator=(Cmat3Ldoub &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Ldoub &operator()(Long_I i, Long_I j, Long_I k);
 	const Ldoub &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -823,8 +868,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecLdoubC&;
-	using Base::operator const SvecLdoub&;
 	operator const Scmat3LdoubC&() const;
 	operator const Scmat3Ldoub&();
 };
@@ -863,24 +906,10 @@ inline void Cmat3Ldoub::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Ldoub::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Ldoub resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Ldoub reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -936,10 +965,10 @@ typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
 
 
 
-class Cmat3Fcomp : public VecFcomp
+class Cmat3Fcomp : private VbaseFcomp
 {
 protected:
-	typedef VecFcomp Base;
+	typedef VbaseFcomp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Fcomp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -948,8 +977,11 @@ public:
 	Cmat3Fcomp(Cmat3Fcomp &&rhs); // move constructor
 	Cmat3Fcomp &operator=(const Cmat3Fcomp &rhs); // copy assignment
 	Cmat3Fcomp &operator=(Cmat3Fcomp &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Fcomp &operator()(Long_I i, Long_I j, Long_I k);
 	const Fcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -957,8 +989,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecFcompC&;
-	using Base::operator const SvecFcomp&;
 	operator const Scmat3FcompC&() const;
 	operator const Scmat3Fcomp&();
 };
@@ -997,24 +1027,10 @@ inline void Cmat3Fcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Fcomp::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Fcomp resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Fcomp reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -1069,10 +1085,10 @@ typedef const Cmat3Fcomp &Cmat3Fcomp_I;
 typedef Cmat3Fcomp &Cmat3Fcomp_O, &Cmat3Fcomp_IO;
 
 
-class Cmat3Comp : public VecComp
+class Cmat3Comp : private VbaseComp
 {
 protected:
-	typedef VecComp Base;
+	typedef VbaseComp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Comp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1081,8 +1097,11 @@ public:
 	Cmat3Comp(Cmat3Comp &&rhs); // move constructor
 	Cmat3Comp &operator=(const Cmat3Comp &rhs); // copy assignment
 	Cmat3Comp &operator=(Cmat3Comp &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Comp &operator()(Long_I i, Long_I j, Long_I k);
 	const Comp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1090,8 +1109,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecCompC&;
-	using Base::operator const SvecComp&;
 	operator const Scmat3CompC&() const;
 	operator const Scmat3Comp&();
 };
@@ -1130,24 +1147,10 @@ inline void Cmat3Comp::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Comp::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Comp resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Comp reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -1202,10 +1205,10 @@ typedef const Cmat3Comp &Cmat3Comp_I;
 typedef Cmat3Comp &Cmat3Comp_O, &Cmat3Comp_IO;
 
 
-class Cmat3Lcomp : public VecLcomp
+class Cmat3Lcomp : private VbaseLcomp
 {
 protected:
-	typedef VecLcomp Base;
+	typedef VbaseLcomp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Lcomp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1214,8 +1217,11 @@ public:
 	Cmat3Lcomp(Cmat3Lcomp &&rhs); // move constructor
 	Cmat3Lcomp &operator=(const Cmat3Lcomp &rhs); // copy assignment
 	Cmat3Lcomp &operator=(Cmat3Lcomp &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Lcomp &operator()(Long_I i, Long_I j, Long_I k);
 	const Lcomp &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1223,8 +1229,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecLcompC&;
-	using Base::operator const SvecLcomp&;
 	operator const Scmat3LcompC&() const;
 	operator const Scmat3Lcomp&();
 };
@@ -1263,24 +1267,10 @@ inline void Cmat3Lcomp::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Lcomp::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Lcomp resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Lcomp reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -1336,10 +1326,10 @@ typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
 
 
 
-class Cmat3Fimag : public VecFimag
+class Cmat3Fimag : private VbaseFimag
 {
 protected:
-	typedef VecFimag Base;
+	typedef VbaseFimag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Fimag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1348,8 +1338,11 @@ public:
 	Cmat3Fimag(Cmat3Fimag &&rhs); // move constructor
 	Cmat3Fimag &operator=(const Cmat3Fimag &rhs); // copy assignment
 	Cmat3Fimag &operator=(Cmat3Fimag &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Fimag &operator()(Long_I i, Long_I j, Long_I k);
 	const Fimag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1357,8 +1350,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecFimagC&;
-	using Base::operator const SvecFimag&;
 	operator const Scmat3FimagC&() const;
 	operator const Scmat3Fimag&();
 };
@@ -1397,24 +1388,10 @@ inline void Cmat3Fimag::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Fimag::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Fimag resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Fimag reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -1469,10 +1446,10 @@ typedef const Cmat3Fimag &Cmat3Fimag_I;
 typedef Cmat3Fimag &Cmat3Fimag_O, &Cmat3Fimag_IO;
 
 
-class Cmat3Imag : public VecImag
+class Cmat3Imag : private VbaseImag
 {
 protected:
-	typedef VecImag Base;
+	typedef VbaseImag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Imag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1481,8 +1458,11 @@ public:
 	Cmat3Imag(Cmat3Imag &&rhs); // move constructor
 	Cmat3Imag &operator=(const Cmat3Imag &rhs); // copy assignment
 	Cmat3Imag &operator=(Cmat3Imag &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Imag &operator()(Long_I i, Long_I j, Long_I k);
 	const Imag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1490,8 +1470,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecImagC&;
-	using Base::operator const SvecImag&;
 	operator const Scmat3ImagC&() const;
 	operator const Scmat3Imag&();
 };
@@ -1530,24 +1508,10 @@ inline void Cmat3Imag::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Imag::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Imag resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Imag reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -1602,10 +1566,10 @@ typedef const Cmat3Imag &Cmat3Imag_I;
 typedef Cmat3Imag &Cmat3Imag_O, &Cmat3Imag_IO;
 
 
-class Cmat3Limag : public VecLimag
+class Cmat3Limag : private VbaseLimag
 {
 protected:
-	typedef VecLimag Base;
+	typedef VbaseLimag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Limag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1614,8 +1578,11 @@ public:
 	Cmat3Limag(Cmat3Limag &&rhs); // move constructor
 	Cmat3Limag &operator=(const Cmat3Limag &rhs); // copy assignment
 	Cmat3Limag &operator=(Cmat3Limag &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Limag &operator()(Long_I i, Long_I j, Long_I k);
 	const Limag &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -1623,8 +1590,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const SvecLimagC&;
-	using Base::operator const SvecLimag&;
 	operator const Scmat3LimagC&() const;
 	operator const Scmat3Limag&();
 };
@@ -1663,24 +1628,10 @@ inline void Cmat3Limag::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void Cmat3Limag::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "Cmat3Limag resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void Cmat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "Cmat3Limag reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1

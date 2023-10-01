@@ -5,18 +5,18 @@
 
 namespace slisc {
 //% tem('Cmat', {
-//%     'Char'; 'Uchar'; 'Int'; 'Llong';
+//%     'Bool'; 'Char'; 'Uchar'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag'; 'Qimag';});
 //%----------------------------------------
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
-//% VecT = ['Vec' T];
-class @CmatT@ : protected @VecT@
+//% VbaseT = ['Vbase' T];
+class @CmatT@ : protected @VbaseT@
 {
 protected:
-	typedef @VecT@ Base;
+	typedef @VbaseT@ Base;
 	Long m_N0, m_N1;
 public:
 	@CmatT@(): m_N0(0), m_N1(0) {};
@@ -28,6 +28,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	@T@& operator()(Long_I i, Long_I j); // double indexing
 	const @T@& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -150,75 +151,5 @@ typedef CmatLlong CmatLong;
 #endif
 typedef const CmatLong &CmatLong_I;
 typedef CmatLong &CmatLong_O, &CmatLong_IO;
-
-class CmatBool : public VecBool
-{
-protected:
-	typedef VecBool Base;
-	Long m_N0, m_N1;
-public:
-	CmatBool(): m_N0(0), m_N1(0) {};
-	CmatBool(Long_I N0, Long_I N1);
-	CmatBool(const CmatBool &rhs); // copy constructor
-	CmatBool(CmatBool &&rhs); // move constructor
-	CmatBool &operator=(const CmatBool &rhs) = delete;
-	CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
-	bool operator()(Long_I i, Long_I j) const;
-	Long n0() const;
-	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-};
-
-inline CmatBool::CmatBool(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
-
-inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs.size()), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
-{
-#ifdef SLS_NO_CPY_CONSTRUCTOR
-	SLS_ERR("copy constructor forbidden!");
-#endif
-	Long N = size();
-	for (Long i = 0; i < N; ++i)
-		(*this)[i] = rhs[i];
-}
-
-inline CmatBool::CmatBool(CmatBool &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
-
-inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
-#endif
-	return (*this)[i+m_N0*j];
-}
-
-inline bool CmatBool::operator()(Long_I i, Long_I j) const
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
-#endif
-	return (*this)[i+m_N0*j];
-}
-
-inline Long CmatBool::n0() const
-{ return m_N0; }
-
-inline Long CmatBool::n1() const
-{ return m_N1; }
-
-inline void CmatBool::resize(Long_I N0, Long_I N1)
-{
-	if (N0 != m_N0 || N1 != m_N1) {
-		Base::resize(N0*N1);
-		m_N0 = N0; m_N1 = N1;
-	}
-}
-
-typedef const CmatBool &CmatBool_I;
-typedef CmatBool &CmatBool_O, &CmatBool_IO;
 
 } // namespace slisc

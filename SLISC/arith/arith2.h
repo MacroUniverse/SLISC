@@ -26,13 +26,13 @@ inline void mod_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
 }
 
 
-inline void mod(SvecInt_O v, SvecInt_I v1, Int_I s)
+inline void mod(SvbaseInt_O v, SvbaseInt_I v1, Int_I s)
 {
 	assert_same_shape1(v, v1);
 	mod_vvs(v.p(), v1.p(), s, v.size());
 }
 
-inline void mod(SvecLlong_O v, SvecLlong_I v1, Llong_I s)
+inline void mod(SvbaseLlong_O v, SvbaseLlong_I v1, Llong_I s)
 {
 	assert_same_shape1(v, v1);
 	mod_vvs(v.p(), v1.p(), s, v.size());
@@ -67,20 +67,20 @@ inline void imag_vv(Doub *v, const Comp *v1, Long_I N)
 
 
 
-inline void real(SvecComp_IO v)
+inline void real(SvbaseComp_IO v)
 { real_v(v.p(), v.size()); }
 
-inline void imag(SvecComp_IO v)
+inline void imag(SvbaseComp_IO v)
 { imag_v(v.p(), v.size()); }
 
 
-inline void real(SvecDoub_O v, SvecComp_I v1)
+inline void real(SvbaseDoub_O v, SvbaseComp_I v1)
 {
 	assert_same_shape1(v, v1);
 	real_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void imag(SvecDoub_O v, SvecComp_I v1)
+inline void imag(SvbaseDoub_O v, SvbaseComp_I v1)
 {
 	assert_same_shape1(v, v1);
 	imag_vv(v.p(), v1.p(), v1.size());
@@ -116,23 +116,23 @@ inline void abs_vv(Doub *v, const Doub *v1, Long_I N)
 }
 
 
-inline void abs(SvecDoub_IO v)
+inline void abs(SvbaseDoub_IO v)
 { abs_v(v.p(), v.size()); }
 
 
-inline void abs(SvecComp_IO v)
+inline void abs(SvbaseComp_IO v)
 { abs_v(v.p(), v.size()); }
 
 
 
-inline void abs(SvecDoub_O v, SvecDoub_I v1)
+inline void abs(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
 	assert_same_shape1(v, v1);
 	abs_vv(v.p(), v1.p(), v1.size());
 }
 
 
-inline void abs(SvecDoub_O v, SvecComp_I v1)
+inline void abs(SvbaseDoub_O v, SvbaseComp_I v1)
 {
 	assert_same_shape1(v, v1);
 	abs_vv(v.p(), v1.p(), v1.size());
@@ -156,7 +156,7 @@ inline void conj_vv(Comp *v, const Comp *v1, Long_I N)
 }
 
 
-inline void conj(SvecComp_IO v)
+inline void conj(SvbaseComp_IO v)
 { conj_v(v.p(), v.size()); }
 
 inline void conj(ScmatComp_IO v)
@@ -172,7 +172,7 @@ inline void conj(DcmatComp_IO v)
 }
 
 
-inline void conj(SvecComp_O v, SvecComp_I v1)
+inline void conj(SvbaseComp_O v, SvbaseComp_I v1)
 {
 	assert_same_shape1(v, v1);
 	conj_vv(v.p(), v1.p(), v.size());
@@ -219,17 +219,17 @@ inline void linspace(vecDoub_O v, Doub_I first, Doub_I last)
 { linspace_vss(v.data(), first, last, v.size()); }
 
 
-inline void linspace(SvecInt_O v, Int_I first, Int_I last)
+inline void linspace(SvbaseInt_O v, Int_I first, Int_I last)
 { linspace_vss(v.p(), first, last, v.size()); }
 
-inline void linspace(SvecLlong_O v, Llong_I first, Llong_I last)
+inline void linspace(SvbaseLlong_O v, Llong_I first, Llong_I last)
 { linspace_vss(v.p(), first, last, v.size()); }
 
-inline void linspace(SvecDoub_O v, Doub_I first, Doub_I last)
+inline void linspace(SvbaseDoub_O v, Doub_I first, Doub_I last)
 { linspace_vss(v.p(), first, last, v.size()); }
 
 
-inline void linspace(SvecComp_O v, Comp_I first, Comp_I last)
+inline void linspace(SvbaseComp_O v, Comp_I first, Comp_I last)
 { linspace_vss(v.p(), first, last, v.size()); }
 
 
@@ -258,7 +258,7 @@ inline void pow_vs(Comp *v, Int_I s, Long_I N)
 }
 
 
-inline void pow(SvecComp_IO v, Int_I s)
+inline void pow(SvbaseComp_IO v, Int_I s)
 { pow_vs(v.p(), s, v.size()); }
 
 
@@ -294,35 +294,35 @@ inline void pow_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
 }
 
 
-inline void pow(SvecDoub_O v, SvecDoub_I v1, Int_I s)
+inline void pow(SvbaseDoub_O v, SvbaseDoub_I v1, Int_I s)
 {
 	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
-inline void pow(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+inline void pow(SvbaseDoub_O v, SvbaseDoub_I v1, Doub_I s)
 {
 	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
-inline void pow(SvecComp_O v, SvecDoub_I v1, Comp_I s)
+inline void pow(SvbaseComp_O v, SvbaseDoub_I v1, Comp_I s)
 {
 	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
-inline void pow(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void pow(SvbaseComp_O v, SvbaseComp_I v1, Doub_I s)
 {
 	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
-inline void pow(SvecComp_O v, SvecComp_I v1, Comp_I s)
+inline void pow(SvbaseComp_O v, SvbaseComp_I v1, Comp_I s)
 {
 	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
@@ -380,27 +380,13 @@ inline Comp dot_vv(const Comp *v1, const Comp *v2, Long_I N)
 }
 
 
-inline Doub dot(SvecDoub_I v1, SvecDoub_I v2)
+inline Doub dot(SvbaseDoub_I v1, SvbaseDoub_I v2)
 {
 	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
-inline Comp dot(SvecDoub_I v1, SvecComp_I v2)
-{
-	assert_same_shape1(v1, v2);
-	return dot_vv(v1.p(), v2.p(), v2.size());
-}
-
-
-
-inline Comp dot(SvecComp_I v1, SvecDoub_I v2)
-{
-	assert_same_shape1(v1, v2);
-	return dot_vv(v1.p(), v2.p(), v2.size());
-}
-
-inline Comp dot(SvecComp_I v1, SvecComp_I v2)
+inline Comp dot(SvbaseDoub_I v1, SvbaseComp_I v2)
 {
 	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
@@ -408,7 +394,21 @@ inline Comp dot(SvecComp_I v1, SvecComp_I v2)
 
 
 
-inline Comp dot(DvecComp_I v1, SvecDoub_I v2)
+inline Comp dot(SvbaseComp_I v1, SvbaseDoub_I v2)
+{
+	assert_same_shape1(v1, v2);
+	return dot_vv(v1.p(), v2.p(), v2.size());
+}
+
+inline Comp dot(SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v1, v2);
+	return dot_vv(v1.p(), v2.p(), v2.size());
+}
+
+
+
+inline Comp dot(DvecComp_I v1, SvbaseDoub_I v2)
 {
 	assert_same_shape1(v1, v2);
 	Comp sum = 0;
@@ -451,19 +451,19 @@ inline void cumsum_vv(Llong *v, const Llong *v1, Long_I N)
 }
 
 
-inline void cumsum(SvecInt_O v, SvecInt_I v1)
+inline void cumsum(SvbaseInt_O v, SvbaseInt_I v1)
 {
 	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void cumsum(SvecLlong_O v, SvecLlong_I v1)
+inline void cumsum(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
 	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void cumsum(SvecDoub_O v, SvecDoub_I v1)
+inline void cumsum(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
 	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());

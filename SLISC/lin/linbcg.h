@@ -23,7 +23,7 @@ inline void LinbcgDoub::solve(SvecDoub_I b, SvecDoub_IO x, const Int itol, const
 	Doub ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
 	const Doub EPS=1.0e-14;
 	Int j,n=b.size();
-	SvecDoub p(n),pp(n),r(n),rr(n),z(n),zz(n);
+	thread_local static VecDoub p(n),pp(n),r(n),rr(n),z(n),zz(n);
 	iter=0;
 	atimes(x,r,0);
 	for (j=0;j<n;j++) {

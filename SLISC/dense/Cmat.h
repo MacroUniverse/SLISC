@@ -4,10 +4,140 @@
 #include "Scmat.h"
 
 namespace slisc {
-class CmatChar : protected VecChar
+class CmatBool : protected VbaseBool
 {
 protected:
-	typedef VecChar Base;
+	typedef VbaseBool Base;
+	Long m_N0, m_N1;
+public:
+	CmatBool(): m_N0(0), m_N1(0) {};
+	CmatBool(Long_I N0, Long_I N1);
+	CmatBool(const CmatBool &rhs); // copy constructor
+	CmatBool(CmatBool &&rhs); // move constructor
+	CmatBool &operator=(const CmatBool &rhs); // copy assignment
+	CmatBool &operator=(CmatBool &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
+	Bool& operator()(Long_I i, Long_I j); // double indexing
+	const Bool& operator()(Long_I i, Long_I j) const;
+	Long n0() const;
+	Long n1() const;
+	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
+	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
+
+	operator const ScmatBoolC&() const;
+	operator const ScmatBool&();
+};
+
+inline CmatBool::CmatBool(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
+
+inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+	SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline CmatBool::CmatBool(CmatBool &&rhs)
+	: Base(move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
+
+inline CmatBool &CmatBool::operator=(const CmatBool &rhs)
+{
+	Base::operator=(rhs);
+	resize(rhs.n0(), rhs.n1());
+	return *this;
+}
+
+inline CmatBool &CmatBool::operator=(CmatBool &&rhs)
+{
+	Base::operator=(move(rhs));
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
+	return *this;
+}
+
+inline Bool &CmatBool::operator()(Long_I i, Long_I j)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
+		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
+#endif
+	return m_p[i+m_N0*j];
+}
+
+inline const Bool &CmatBool::operator()(Long_I i, Long_I j) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1) {
+		stringstream ss; ss << "CmatBool index (" << i << ", " << j
+			<< ") out of bounds: shape = (" << m_N0 << ", " << m_N1 << ')';
+		SLS_ERR(ss.str());
+	}
+#endif
+	return m_p[i+m_N0*j];
+}
+
+inline Long CmatBool::n0() const
+{ return m_N0; }
+
+inline Long CmatBool::n1() const
+{ return m_N1; }
+
+inline void CmatBool::resize(Long_I N0, Long_I N1)
+{
+	if (N0 != m_N0 || N1 != m_N1) {
+		Base::resize(N0*N1);
+		m_N0 = N0; m_N1 = N1;
+	}
+}
+
+inline void CmatBool::resize(Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (N < m_N0*m_N1) {
+		stringstream ss;
+		ss  << "CmatBool resizing from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to "
+			<< N << " elements is illegal!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	Base::resize(N);
+}
+
+inline void CmatBool::reshape(Long_I N0, Long_I N1)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1 != m_N) {
+		stringstream ss;
+		ss  << "CmatBool reshaping from (" << m_N0 << ", " << m_N1
+			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
+			<< num2str(N1) << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	m_N0 = N0; m_N1 = N1;
+}
+
+inline CmatBool::operator const ScmatBoolC&() const {
+	return reinterpret_cast<const ScmatBoolC&>(*this);
+}
+
+inline CmatBool::operator const ScmatBool&() {
+	return reinterpret_cast<const ScmatBool&>(*this);
+}
+
+typedef const CmatBool &CmatBool_I;
+typedef CmatBool &CmatBool_O, &CmatBool_IO;
+
+
+class CmatChar : protected VbaseChar
+{
+protected:
+	typedef VbaseChar Base;
 	Long m_N0, m_N1;
 public:
 	CmatChar(): m_N0(0), m_N1(0) {};
@@ -19,6 +149,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Char& operator()(Long_I i, Long_I j); // double indexing
 	const Char& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -133,10 +264,10 @@ typedef const CmatChar &CmatChar_I;
 typedef CmatChar &CmatChar_O, &CmatChar_IO;
 
 
-class CmatUchar : protected VecUchar
+class CmatUchar : protected VbaseUchar
 {
 protected:
-	typedef VecUchar Base;
+	typedef VbaseUchar Base;
 	Long m_N0, m_N1;
 public:
 	CmatUchar(): m_N0(0), m_N1(0) {};
@@ -148,6 +279,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Uchar& operator()(Long_I i, Long_I j); // double indexing
 	const Uchar& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -262,10 +394,10 @@ typedef const CmatUchar &CmatUchar_I;
 typedef CmatUchar &CmatUchar_O, &CmatUchar_IO;
 
 
-class CmatInt : protected VecInt
+class CmatInt : protected VbaseInt
 {
 protected:
-	typedef VecInt Base;
+	typedef VbaseInt Base;
 	Long m_N0, m_N1;
 public:
 	CmatInt(): m_N0(0), m_N1(0) {};
@@ -277,6 +409,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Int& operator()(Long_I i, Long_I j); // double indexing
 	const Int& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -391,10 +524,10 @@ typedef const CmatInt &CmatInt_I;
 typedef CmatInt &CmatInt_O, &CmatInt_IO;
 
 
-class CmatLlong : protected VecLlong
+class CmatLlong : protected VbaseLlong
 {
 protected:
-	typedef VecLlong Base;
+	typedef VbaseLlong Base;
 	Long m_N0, m_N1;
 public:
 	CmatLlong(): m_N0(0), m_N1(0) {};
@@ -406,6 +539,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Llong& operator()(Long_I i, Long_I j); // double indexing
 	const Llong& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -520,10 +654,10 @@ typedef const CmatLlong &CmatLlong_I;
 typedef CmatLlong &CmatLlong_O, &CmatLlong_IO;
 
 
-class CmatFloat : protected VecFloat
+class CmatFloat : protected VbaseFloat
 {
 protected:
-	typedef VecFloat Base;
+	typedef VbaseFloat Base;
 	Long m_N0, m_N1;
 public:
 	CmatFloat(): m_N0(0), m_N1(0) {};
@@ -535,6 +669,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Float& operator()(Long_I i, Long_I j); // double indexing
 	const Float& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -649,10 +784,10 @@ typedef const CmatFloat &CmatFloat_I;
 typedef CmatFloat &CmatFloat_O, &CmatFloat_IO;
 
 
-class CmatDoub : protected VecDoub
+class CmatDoub : protected VbaseDoub
 {
 protected:
-	typedef VecDoub Base;
+	typedef VbaseDoub Base;
 	Long m_N0, m_N1;
 public:
 	CmatDoub(): m_N0(0), m_N1(0) {};
@@ -664,6 +799,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Doub& operator()(Long_I i, Long_I j); // double indexing
 	const Doub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -778,10 +914,10 @@ typedef const CmatDoub &CmatDoub_I;
 typedef CmatDoub &CmatDoub_O, &CmatDoub_IO;
 
 
-class CmatLdoub : protected VecLdoub
+class CmatLdoub : protected VbaseLdoub
 {
 protected:
-	typedef VecLdoub Base;
+	typedef VbaseLdoub Base;
 	Long m_N0, m_N1;
 public:
 	CmatLdoub(): m_N0(0), m_N1(0) {};
@@ -793,6 +929,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Ldoub& operator()(Long_I i, Long_I j); // double indexing
 	const Ldoub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -908,10 +1045,10 @@ typedef CmatLdoub &CmatLdoub_O, &CmatLdoub_IO;
 
 
 
-class CmatFcomp : protected VecFcomp
+class CmatFcomp : protected VbaseFcomp
 {
 protected:
-	typedef VecFcomp Base;
+	typedef VbaseFcomp Base;
 	Long m_N0, m_N1;
 public:
 	CmatFcomp(): m_N0(0), m_N1(0) {};
@@ -923,6 +1060,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Fcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Fcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1037,10 +1175,10 @@ typedef const CmatFcomp &CmatFcomp_I;
 typedef CmatFcomp &CmatFcomp_O, &CmatFcomp_IO;
 
 
-class CmatComp : protected VecComp
+class CmatComp : protected VbaseComp
 {
 protected:
-	typedef VecComp Base;
+	typedef VbaseComp Base;
 	Long m_N0, m_N1;
 public:
 	CmatComp(): m_N0(0), m_N1(0) {};
@@ -1052,6 +1190,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Comp& operator()(Long_I i, Long_I j); // double indexing
 	const Comp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1166,10 +1305,10 @@ typedef const CmatComp &CmatComp_I;
 typedef CmatComp &CmatComp_O, &CmatComp_IO;
 
 
-class CmatLcomp : protected VecLcomp
+class CmatLcomp : protected VbaseLcomp
 {
 protected:
-	typedef VecLcomp Base;
+	typedef VbaseLcomp Base;
 	Long m_N0, m_N1;
 public:
 	CmatLcomp(): m_N0(0), m_N1(0) {};
@@ -1181,6 +1320,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Lcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Lcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1296,10 +1436,10 @@ typedef CmatLcomp &CmatLcomp_O, &CmatLcomp_IO;
 
 
 
-class CmatFimag : protected VecFimag
+class CmatFimag : protected VbaseFimag
 {
 protected:
-	typedef VecFimag Base;
+	typedef VbaseFimag Base;
 	Long m_N0, m_N1;
 public:
 	CmatFimag(): m_N0(0), m_N1(0) {};
@@ -1311,6 +1451,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Fimag& operator()(Long_I i, Long_I j); // double indexing
 	const Fimag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1425,10 +1566,10 @@ typedef const CmatFimag &CmatFimag_I;
 typedef CmatFimag &CmatFimag_O, &CmatFimag_IO;
 
 
-class CmatImag : protected VecImag
+class CmatImag : protected VbaseImag
 {
 protected:
-	typedef VecImag Base;
+	typedef VbaseImag Base;
 	Long m_N0, m_N1;
 public:
 	CmatImag(): m_N0(0), m_N1(0) {};
@@ -1440,6 +1581,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Imag& operator()(Long_I i, Long_I j); // double indexing
 	const Imag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1554,10 +1696,10 @@ typedef const CmatImag &CmatImag_I;
 typedef CmatImag &CmatImag_O, &CmatImag_IO;
 
 
-class CmatLimag : protected VecLimag
+class CmatLimag : protected VbaseLimag
 {
 protected:
-	typedef VecLimag Base;
+	typedef VbaseLimag Base;
 	Long m_N0, m_N1;
 public:
 	CmatLimag(): m_N0(0), m_N1(0) {};
@@ -1569,6 +1711,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	Limag& operator()(Long_I i, Long_I j); // double indexing
 	const Limag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
@@ -1692,75 +1835,5 @@ typedef CmatLlong CmatLong;
 #endif
 typedef const CmatLong &CmatLong_I;
 typedef CmatLong &CmatLong_O, &CmatLong_IO;
-
-class CmatBool : public VecBool
-{
-protected:
-	typedef VecBool Base;
-	Long m_N0, m_N1;
-public:
-	CmatBool(): m_N0(0), m_N1(0) {};
-	CmatBool(Long_I N0, Long_I N1);
-	CmatBool(const CmatBool &rhs); // copy constructor
-	CmatBool(CmatBool &&rhs); // move constructor
-	CmatBool &operator=(const CmatBool &rhs) = delete;
-	CmatBool::ref operator()(Long_I i, Long_I j);    // double indexing
-	bool operator()(Long_I i, Long_I j) const;
-	Long n0() const;
-	Long n1() const;
-	void resize(Long_I N0, Long_I N1); // resize (contents not preserved)
-};
-
-inline CmatBool::CmatBool(Long_I N0, Long_I N1) : Base(N0*N1), m_N0(N0), m_N1(N1) {}
-
-inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs.size()), m_N0(rhs.m_N0), m_N1(rhs.m_N1)
-{
-#ifdef SLS_NO_CPY_CONSTRUCTOR
-	SLS_ERR("copy constructor forbidden!");
-#endif
-	Long N = size();
-	for (Long i = 0; i < N; ++i)
-		(*this)[i] = rhs[i];
-}
-
-inline CmatBool::CmatBool(CmatBool &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1) {}
-
-inline CmatBool::ref CmatBool::operator()(Long_I i, Long_I j)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
-#endif
-	return (*this)[i+m_N0*j];
-}
-
-inline bool CmatBool::operator()(Long_I i, Long_I j) const
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1)
-		SLS_ERR("CmatBool index ("+num2str(i)+", "+num2str(j)
-			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+")");
-#endif
-	return (*this)[i+m_N0*j];
-}
-
-inline Long CmatBool::n0() const
-{ return m_N0; }
-
-inline Long CmatBool::n1() const
-{ return m_N1; }
-
-inline void CmatBool::resize(Long_I N0, Long_I N1)
-{
-	if (N0 != m_N0 || N1 != m_N1) {
-		Base::resize(N0*N1);
-		m_N0 = N0; m_N1 = N1;
-	}
-}
-
-typedef const CmatBool &CmatBool_I;
-typedef CmatBool &CmatBool_O, &CmatBool_IO;
 
 } // namespace slisc

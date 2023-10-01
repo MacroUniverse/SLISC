@@ -28,7 +28,7 @@ inline void Linbcg@Ts@::solve(@Tv@_I b, @Tv@_IO x, const Int itol, const @Ts@ to
 	@Ts@ ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
 	const @Ts@ EPS=1.0e-14;
 	Int j,n=b.size();
-	@Tv@ p(n),pp(n),r(n),rr(n),z(n),zz(n);
+	thread_local static Vec@Ts@ p(n),pp(n),r(n),rr(n),z(n),zz(n);
 	iter=0;
 	atimes(x,r,0);
 	for (j=0;j<n;j++) {
@@ -280,7 +280,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 
 	for (ii = 0; ii < maxit; ++ii) {
 		@Ts@ rho1 = rho;
-//% req('dot', {Tcut Tcut});
+//% req('dot', {base_t(Tcut) base_t(Tcut)});
 		rho = dot(rt, r);
 		if (rho == 0. || isinf(rho)) {
 			flag = 4; break;
@@ -460,7 +460,7 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 
 	for (ii = 0; ii < maxit; ++ii) {
 		@Ts@ rho1 = rho;
-//% req('dot', {Tcut Tcut});
+//% req('dot', {base_t(Tcut) base_t(Tcut)});
 		rho = dot(rt, r);
 		if (rho == 0. || isinf(rho)) {
 			flag = 4; break;

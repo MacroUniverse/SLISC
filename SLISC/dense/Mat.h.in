@@ -10,12 +10,12 @@ namespace slisc {
 //%     'Fimag'; 'Imag'; 'Limag';});
 //%------------------------------------
 //% T = varargin{:};
-//% VecT = ['Vec' T];
+//% VbaseT = ['Vbase' T];
 //% MatT = ['Mat' T];
-class @MatT@ : public @VecT@
+class @MatT@ : public @VbaseT@
 {
 protected:
-	typedef @VecT@ Base;
+	typedef @VbaseT@ Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;

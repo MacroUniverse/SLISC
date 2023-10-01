@@ -77,10 +77,8 @@ inline void lin_eq(ScmatDoub_IO x, ScmatDoub_I a)
 	if (a.n0() != a.n1() || a.n1() != x.n0())
 		SLS_ERR("wrong shape!");
 #endif
-	thread_local static ScmatDoub a1(a.n0(), a.n1());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
 	thread_local static VecLong ipiv(a.n0());
-	if (!shape_cmp(a1, a))
-		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
 	if (a.n0() > ipiv.size())
 		ipiv.resize(a.n0());
@@ -100,10 +98,8 @@ inline void lin_eq(SvecDoub_IO x, ScmatDoub_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	thread_local static ScmatDoub a1(a.n0(), a.n1());
+	thread_local static CmatDoub a1(a.n0(), a.n1());
 	thread_local static VecLong ipiv(a.n0());
-	if (!shape_cmp(a1, a))
-		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
 	if (a.n0() > ipiv.size())
 		ipiv.resize(a.n0());
@@ -123,10 +119,8 @@ inline void lin_eq(SvecComp_IO x, ScmatComp_I a)
 	if (a.n0() != a.n1() || a.n1() != x.size())
 		SLS_ERR("wrong shape!");
 #endif
-	thread_local static ScmatComp a1(a.n0(), a.n1());
+	thread_local static CmatComp a1(a.n0(), a.n1());
 	thread_local static VecLong ipiv(a.n0());
-	if (!shape_cmp(a1, a))
-		a1.resize(a.n0(), a.n1());
 	copy(a1, a);
 	if (a.n0() > ipiv.size())
 		ipiv.resize(a.n0());

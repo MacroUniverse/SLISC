@@ -8,10 +8,10 @@ using namespace slisc;
 // and matrix-vector multiplication in atimes()
 class LinbcgDoub2: public LinbcgDoub
 {
-	void asolve(VecDoub_I b, VecDoub_O x, const Int itrnsp) {
+	void asolve(SvecDoub_I b, SvecDoub_O x, const Int itrnsp) {
 		copy(x, b);
 	}
-	void atimes(VecDoub_I x, VecDoub_O r, const Int itrnsp) {
+	void atimes(SvecDoub_I x, SvecDoub_O r, const Int itrnsp) {
 		CmatDoub a(3,3), at(3,3); copy(a, {1., 0., 5., 0., 3., 0., 2., 4., 6.});
 		trans(at, a);
 		if (!itrnsp)
@@ -24,10 +24,10 @@ class LinbcgDoub2: public LinbcgDoub
 #ifdef SLS_USE_QUAD_MATH
 class LinbcgQdoub2: public LinbcgQdoub
 {
-	void asolve(VecQdoub_I b, VecQdoub_O x, const Int itrnsp) {
+	void asolve(SvecQdoub_I b, SvecQdoub_O x, const Int itrnsp) {
 		copy(x, b);
 	}
-	void atimes(VecQdoub_I x, VecQdoub_O r, const Int itrnsp) {
+	void atimes(SvecQdoub_I x, SvecQdoub_O r, const Int itrnsp) {
 		CmatQdoub a(3,3), at(3,3); copy(a, {1.Q, 0.Q, 5.Q, 0.Q, 3.Q, 0.Q, 2.Q, 4.Q, 6.Q});
 		trans(at, a);
 		if (!itrnsp)

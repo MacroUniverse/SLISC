@@ -107,7 +107,7 @@ inline void resize_cpy(CmatInt_IO v, Long_I N0, Long_I N1, Int_I val = 0)
 		else if (N == 0)
 			v.resize(0, 0);
 		else {
-			CmatInt v1(N0, N1); copy(v1, val);
+			CmatInt v1(N0, N1); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
@@ -127,7 +127,7 @@ inline void resize_cpy(CmatLlong_IO v, Long_I N0, Long_I N1, Llong_I val = 0)
 		else if (N == 0)
 			v.resize(0, 0);
 		else {
-			CmatLlong v1(N0, N1); copy(v1, val);
+			CmatLlong v1(N0, N1); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
@@ -147,7 +147,7 @@ inline void resize_cpy(CmatDoub_IO v, Long_I N0, Long_I N1, Doub_I val = 0)
 		else if (N == 0)
 			v.resize(0, 0);
 		else {
-			CmatDoub v1(N0, N1); copy(v1, val);
+			CmatDoub v1(N0, N1); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
@@ -168,7 +168,7 @@ inline void resize_cpy(CmatComp_IO v, Long_I N0, Long_I N1, Comp_I val = 0)
 		else if (N == 0)
 			v.resize(0, 0);
 		else {
-			CmatComp v1(N0, N1); copy(v1, val);
+			CmatComp v1(N0, N1); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
@@ -183,12 +183,12 @@ inline void resize_cpy(Cmat3Doub_IO v, Long_I N0, Long_I N1, Long_I N2, Doub_I v
 	Long N = N0 * N1 * N2;
 	if (N0 != N10 || N1 != N20 || N2 != N30) {
 		if (Nold == 0) {
-			v.resize(N0, N1, N2); copy(v, val);
+			v.resize(N0, N1, N2); copy(v, val); // not efficient
 		}
 		else if (N == 0)
 			v.resize(0, 0, 0);
 		else {
-			Cmat3Doub v1(N0, N1, N2); copy(v1, val);
+			Cmat3Doub v1(N0, N1, N2); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
@@ -204,12 +204,12 @@ inline void resize_cpy(Cmat3Comp_IO v, Long_I N0, Long_I N1, Long_I N2, Comp_I v
 	Long N = N0 * N1 * N2;
 	if (N0 != N10 || N1 != N20 || N2 != N30) {
 		if (Nold == 0) {
-			v.resize(N0, N1, N2); copy(v, val);
+			v.resize(N0, N1, N2); copy(v, val); // not efficient
 		}
 		else if (N == 0)
 			v.resize(0, 0, 0);
 		else {
-			Cmat3Comp v1(N0, N1, N2); copy(v1, val);
+			Cmat3Comp v1(N0, N1, N2); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
@@ -297,13 +297,13 @@ inline void flip(vecStr_IO v)
 
 inline void flip(SvecInt_O v, SvecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	flip_vv(v.p(), v1.p(), v1.size());
 }
 
 inline void flip(SvecDoub_O v, SvecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	flip_vv(v.p(), v1.p(), v1.size());
 }
 

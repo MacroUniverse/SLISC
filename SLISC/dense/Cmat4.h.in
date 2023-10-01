@@ -5,18 +5,18 @@
 
 namespace slisc {
 //% tem('Cmat4', {
-//%     'Char'; 'Int'; 'Llong';
+//%     'Bool'; 'Char'; 'Int'; 'Llong';
 //%     'Float'; 'Doub'; 'Ldoub'; 'Qdoub';
 //%     'Fcomp'; 'Comp'; 'Lcomp'; 'Qcomp';
 //%     'Fimag'; 'Imag'; 'Limag'; 'Qimag';});
 //%----------------------------------------
 //% T = varargin{:};
 //% Cmat4T = ['Cmat4' T];
-//% VecT = ['Vec' T];
-class @Cmat4T@ : protected @VecT@
+//% VbaseT = ['Vbase' T];
+class @Cmat4T@ : protected @VbaseT@
 {
 protected:
-	typedef @VecT@ Base;
+	typedef @VbaseT@ Base;
 	Long m_N0, m_N1, m_N2, m_N3;
 public:
 	@Cmat4T@(): m_N0(0), m_N1(0), m_N2(0), m_N3(0) {};
@@ -27,6 +27,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	inline void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	@T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l);

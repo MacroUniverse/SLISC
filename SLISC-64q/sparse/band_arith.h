@@ -196,7 +196,7 @@ inline void copy_diag_real(CbandComp_O b, Doub_I s)
 // copy double dense matrix to imag part of band matrix
 inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 {
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	for (Long j = 0; j < N1; ++j) {
 		SvecComp cut_b = cut0(b.cmat(), j);
@@ -212,7 +212,7 @@ inline void copy_imag(CbandComp_O b, ScmatDoub_I a)
 // b = 1/2 + I*dt*a/4
 inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_time)
 {
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	Doub dt4 = 0.25*dt;
 	for (Long j = 0; j < N1; ++j) {
@@ -243,7 +243,7 @@ inline void cn_band_mat(CbandComp_O b, ScmatDoub_I a, Doub_I dt, Bool_I imag_tim
 // B = 1/2 + I*dt*A/4
 inline void cn_band_mat(CbandComp_O b, McooDoub_I a, Doub_I dt, Bool_I imag_time, Bool_I append = false)
 {
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Doub dt4 = 0.25*dt;
 	if (!append) {
 		copy(b, 0);
@@ -271,7 +271,7 @@ inline void cn_band_mat(CbandComp_O b, SvecDoub_I coeff, const vector<McooDoub> 
 {
 #ifdef SLS_CHECK_SHAPES
 	for (Long l = 0; l < (Long)a.size(); ++l)
-		assert_same_shape(a[l], b);
+		assert_same_shape2(a[l], b);
 	if (coeff.size() != (Long)a.size())
 		SLS_ERR("wrong shape!");
 #endif
@@ -340,7 +340,7 @@ inline void copy_diag_real(CbandQcomp_O b, Qdoub_I s)
 // copy double dense matrix to imag part of band matrix
 inline void copy_imag(CbandQcomp_O b, ScmatQdoub_I a)
 {
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	for (Long j = 0; j < N1; ++j) {
 		SvecQcomp cut_b = cut0(b.cmat(), j);
@@ -356,7 +356,7 @@ inline void copy_imag(CbandQcomp_O b, ScmatQdoub_I a)
 // b = 1/2 + I*dt*a/4
 inline void cn_band_mat(CbandQcomp_O b, ScmatQdoub_I a, Qdoub_I dt, Bool_I imag_time)
 {
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	Qdoub dt4 = 0.25*dt;
 	for (Long j = 0; j < N1; ++j) {
@@ -387,7 +387,7 @@ inline void cn_band_mat(CbandQcomp_O b, ScmatQdoub_I a, Qdoub_I dt, Bool_I imag_
 // B = 1/2 + I*dt*A/4
 inline void cn_band_mat(CbandQcomp_O b, McooQdoub_I a, Qdoub_I dt, Bool_I imag_time, Bool_I append = false)
 {
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Qdoub dt4 = 0.25*dt;
 	if (!append) {
 		copy(b, 0);
@@ -415,7 +415,7 @@ inline void cn_band_mat(CbandQcomp_O b, SvecQdoub_I coeff, const vector<McooQdou
 {
 #ifdef SLS_CHECK_SHAPES
 	for (Long l = 0; l < (Long)a.size(); ++l)
-		assert_same_shape(a[l], b);
+		assert_same_shape2(a[l], b);
 	if (coeff.size() != (Long)a.size())
 		SLS_ERR("wrong shape!");
 #endif
@@ -446,13 +446,13 @@ inline void cn_band_mat(CbandQcomp_O b, SvecQdoub_I coeff, const vector<McooQdou
 
 inline void times(CbandComp_O v, CbandComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	times(band(v), band(v1), s);
 }
 
 inline void times(CbandQcomp_O v, CbandQcomp_I v1, Qdoub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	times(band(v), band(v1), s);
 }
 

@@ -1,0 +1,184 @@
+#pragma once
+#include "../global.h"
+#include "../arith/Imag.h"
+
+// this class is not memory safe!
+// "C" means lower level const
+
+namespace slisc {
+//% tem('Svbase', {
+//%     'Bool', true;   'Bool', false;
+//%     'Char', true;   'Char', false;
+//%     'Uchar', true;   'Uchar', false;
+//%     'Int', true;    'Int', false;
+//%     'Llong', true;  'Llong', false;
+//%     'Float', true;  'Float', false;
+//%     'Doub', true;   'Doub', false;
+//%     'Ldoub', true;  'Ldoub', false;
+//%     'Qdoub', true;  'Qdoub', false;
+//%     'Fcomp', true;  'Fcomp', false;
+//%     'Comp', true;   'Comp', false;
+//%     'Lcomp', true;  'Lcomp', false;
+//%     'Qcomp', true;  'Qcomp', false;
+//%     'Fimag', true;  'Fimag', false;
+//%     'Imag', true;   'Imag', false;
+//%     'Limag', true;  'Limag', false;
+//%     'Qimag', true;  'Qimag', false;
+//% });
+//%------------------------
+//% [T, constness] = varargin{:};
+//% SvbaseT = ['Svbase' T];
+//% SvbaseTC = [SvbaseT 'C'];
+//% if constness
+//%     CT = ['const ' T];
+//%     Class = SvbaseTC;
+//% else
+//%     CT = T;
+//%     Class = SvbaseT;
+//% end
+class @Class@
+{
+protected:
+	@CT@ *m_p;
+	Long m_N;
+public:
+	@Class@();
+	explicit @Class@(Long_I N);
+	@Class@(@CT@ *data, Long_I N);
+	@Class@(const @Class@ &v) = default; // copy constructor (shalow)
+
+	@Class@ &operator=(const @Class@ &v) = default; // copy assignment (shalow)
+
+	@CT@* p() const;
+	Long size() const;
+	@CT@ &operator[](Long_I i) const;
+	@CT@ &end() const;
+	@CT@ &end(Long_I i) const;
+
+//% if ~constness
+	operator const @SvbaseTC@ &() const;
+	operator @SvbaseTC@ &();
+//% end
+
+	void next(); // m_p += m_N
+	
+	// === unsafe operations (unsafe) ===
+	void set(@CT@ *data);
+//% % resize() is a bad name, don't try to use it!
+	void set(Long_I N);
+	void set(@CT@ *data, Long_I N);
+	void last(); // m_p -= m_N
+	void shift(Long_I N); // m_p += N
+
+	~@Class@();
+};
+
+inline @Class@::@Class@() {}
+
+inline @Class@::@Class@(Long_I N) : m_N(N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	m_p = nullptr;
+#endif
+}
+
+inline @Class@::@Class@(@CT@ *data, Long_I N)
+	: m_p(data), m_N(N) {}
+
+inline @CT@ * @Class@::p() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("using p() for empty container!");
+#endif
+	return m_p;
+}
+
+inline Long @Class@::size() const
+{
+	return m_N;
+}
+
+inline @CT@ &@Class@::operator[](Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N)
+		SLS_ERR("Vbase subscript out of bounds");
+#endif
+	return m_p[i];
+}
+
+inline @CT@ &@Class@::end() const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (m_N == 0)
+		SLS_ERR("tring to use end() on empty vector!");
+#endif
+	return m_p[m_N - 1];
+}
+
+inline @CT@ &@Class@::end(Long_I i) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i <= 0 || i > m_N)
+		SLS_ERR("index out of bound");
+#endif
+	return m_p[m_N - i];
+}
+
+//% if ~constness
+inline @Class@::operator const @SvbaseTC@ &() const
+{
+	return reinterpret_cast<const @SvbaseTC@ &>(*this);
+}
+
+inline @Class@::operator @SvbaseTC@ &()
+{
+	return reinterpret_cast<@SvbaseTC@ &>(*this);
+}
+//% end
+
+inline void @Class@::set(@CT@ *data) {
+	m_p = data;
+}
+
+inline void @Class@::set(Long_I N) {
+	m_N = N;
+}
+
+inline void @Class@::set(@CT@ *data, Long_I N) {
+	m_p = data; m_N = N;
+}
+
+inline void @Class@::next() {
+	m_p += m_N;
+}
+
+inline void @Class@::last() {
+	m_p -= m_N;
+}
+
+inline void @Class@::shift(Long_I N) {
+	m_p += N;
+}
+
+inline @Class@::~@Class@() {}
+
+//% if constness
+typedef const @Class@ &@SvbaseT@_I;
+
+// common api for STL and SLISC
+inline Long size(@SvbaseT@_I v) { return v.size(); }
+
+inline const @T@ *cptr(@SvbaseT@_I v) { return v.p(); }
+
+//% else
+// use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
+typedef const @Class@ &@SvbaseT@_O, &@SvbaseT@_IO;
+
+// common api for STL and SLISC
+inline @T@ *ptr(const @SvbaseT@ &v) { return v.p(); }
+//% end
+//%------------------------
+
+} // namespace slisc

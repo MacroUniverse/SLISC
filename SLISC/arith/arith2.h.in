@@ -22,12 +22,12 @@ inline void mod_vvs(@T@ *v, const @T1@ *v1, @T1@_I s, Long_I N)
 }
 //%-------------------------
 
-//% tem('mod(v,v,s)', { 'SvecInt' 'SvecInt'
-//% 'SvecLlong' 'SvecLlong' });
+//% tem('mod(v,v,s)', { 'SvbaseInt' 'SvbaseInt'
+//% 'SvbaseLlong' 'SvbaseLlong' });
 //%--------------------------
 //% [T, T1] = varargin{:};
 //% [Ts,Ts1] = val_t(T,T1);
-//% if ~(is_dense(T) && is_dense(T1) && is_same_major(T, T1) && is_promo(Ts, Ts1))
+//% if ~(is_dense(T) && is_dense(T1) && is_promo(Ts, Ts1))
 //%     error('error types!');
 //% end
 //% req('mod_vvs', {Ts,Ts1});
@@ -71,7 +71,7 @@ inline void imag_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%---------------------
 
-//% tem('real', { 'SvecComp' });
+//% tem('real', { 'SvbaseComp' });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('real_v', {Ts});
@@ -82,7 +82,7 @@ inline void imag(@T@_IO v)
 { imag_v(v.p(), v.size()); }
 //%---------------------
 
-//% tem('real(v,v)', { 'SvecDoub', 'SvecComp'; 'SvecQdoub', 'SvecQcomp' });
+//% tem('real(v,v)', { 'SvbaseDoub', 'SvbaseComp'; 'SvbaseQdoub', 'SvbaseQcomp' });
 //%---------------------
 //% [T, T1] = varargin{:};
 //% [Ts, Ts1] = val_t(T, T1);
@@ -120,8 +120,8 @@ inline void abs_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%---------------------
 
-//% tem('abs', { 'SvecDoub'; 'SvecQdoub';
-//%   'SvecComp'; 'SvecQcomp'; });
+//% tem('abs', { 'SvbaseDoub'; 'SvbaseQdoub';
+//%   'SvbaseComp'; 'SvbaseQcomp'; });
 //%---------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% req('abs_v', {Ts});
@@ -130,10 +130,10 @@ inline void abs(@T@_IO v)
 //%---------------------
 
 //% tem('abs(v,v)', {
-//% 'SvecDoub' 'SvecDoub'
-//% 'SvecQdoub' 'SvecQdoub'
-//% 'SvecDoub', 'SvecComp'
-//% 'SvecQdoub', 'SvecQcomp' });
+//% 'SvbaseDoub' 'SvbaseDoub'
+//% 'SvbaseQdoub' 'SvbaseQdoub'
+//% 'SvbaseDoub', 'SvbaseComp'
+//% 'SvbaseQdoub', 'SvbaseQcomp' });
 //%---------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void abs(@T@_O v, @T1@_I v1)
@@ -170,7 +170,7 @@ inline void conj_vv(@T@ *v, const @T1@ *v1, Long_I N)
 }
 //%-------------------------------
 
-//% tem('conj', { 'SvecComp'; });
+//% tem('conj', { 'SvbaseComp'; });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
 //% if ~(is_comp(Ts))
@@ -188,7 +188,7 @@ inline void conj(@T@_IO v)
 //% end
 //%----------------------------
 
-//% tem('conj(v,v)', { 'SvecComp', 'SvecComp' });
+//% tem('conj(v,v)', { 'SvbaseComp', 'SvbaseComp' });
 //%--------------------------
 //% [T, T1] = varargin{:};
 inline void conj(@T@_O v, @T1@_I v1)
@@ -217,7 +217,7 @@ inline void linspace_vss(@T@ *v, @T@_I first, @T@_I last, Long N)
 
 //% tem('linspace', {
 //% 'vecInt'; 'vecLlong'; 'vecDoub'; 'vecQdoub';
-//% 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//% 'SvbaseInt'; 'SvbaseLlong'; 'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseComp'; 'SvbaseQcomp';
 //% 'MatInt'; 'MatComp';
 //% 'Cmat4Int';
 //% });
@@ -247,7 +247,7 @@ inline void pow_vs(@T@ *v, @Ts@_I s, Long_I N)
 }
 //%-------------------------
 
-//% tem('pow(v,s)', { 'SvecComp', 'Int' });
+//% tem('pow(v,s)', { 'SvbaseComp', 'Int' });
 //%---------------------
 //% [T, Ts] = varargin{:}; Tvs = val_t(T);
 //% req('pow_vs', {Tvs, Ts});
@@ -266,16 +266,16 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 //%-------------------------
 
 //% tem('pow(v,v,s)', {
-//% 'SvecDoub', 'SvecDoub', 'Int'
-//% 'SvecQdoub', 'SvecQdoub', 'Int'
-//% 'SvecDoub' 'SvecDoub' 'Doub'
-//% 'SvecQdoub' 'SvecQdoub' 'Qdoub'
-//% 'SvecComp' 'SvecDoub' 'Comp'
-//% 'SvecQcomp' 'SvecQdoub' 'Qcomp'
-//% 'SvecComp' 'SvecComp' 'Doub'
-//% 'SvecQcomp' 'SvecQcomp' 'Qdoub'
-//% 'SvecComp' 'SvecComp' 'Comp'
-//% 'SvecQcomp' 'SvecQcomp' 'Qcomp'
+//% 'SvbaseDoub', 'SvbaseDoub', 'Int'
+//% 'SvbaseQdoub', 'SvbaseQdoub', 'Int'
+//% 'SvbaseDoub' 'SvbaseDoub' 'Doub'
+//% 'SvbaseQdoub' 'SvbaseQdoub' 'Qdoub'
+//% 'SvbaseComp' 'SvbaseDoub' 'Comp'
+//% 'SvbaseQcomp' 'SvbaseQdoub' 'Qcomp'
+//% 'SvbaseComp' 'SvbaseComp' 'Doub'
+//% 'SvbaseQcomp' 'SvbaseQcomp' 'Qdoub'
+//% 'SvbaseComp' 'SvbaseComp' 'Comp'
+//% 'SvbaseQcomp' 'SvbaseQcomp' 'Qcomp'
 //% });
 //%---------------------
 //% [T, T1, Ts] = varargin{:};
@@ -314,16 +314,16 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%-------------------------
 
 //% tem('dot', {
-//%   'SvecDoub' 'SvecDoub'
-//%   'SvecDoub' 'SvecComp'
-//%   'SvecQdoub' 'SvecQdoub'
-//%   'SvecQdoub' 'SvecQcomp'
-//%   'SvecComp' 'SvecDoub'
-//%   'SvecComp' 'SvecComp'
-//%   'SvecQcomp' 'SvecQdoub'
-//%   'SvecQcomp' 'SvecQcomp'
-//%   'DvecComp' 'SvecDoub'
-//%   'DvecQcomp' 'SvecQdoub' });
+//%   'SvbaseDoub' 'SvbaseDoub'
+//%   'SvbaseDoub' 'SvbaseComp'
+//%   'SvbaseQdoub' 'SvbaseQdoub'
+//%   'SvbaseQdoub' 'SvbaseQcomp'
+//%   'SvbaseComp' 'SvbaseDoub'
+//%   'SvbaseComp' 'SvbaseComp'
+//%   'SvbaseQcomp' 'SvbaseQdoub'
+//%   'SvbaseQcomp' 'SvbaseQcomp'
+//%   'DvecComp' 'SvbaseDoub'
+//%   'DvecQcomp' 'SvbaseQdoub' });
 //%---------------------
 //% [T1, T2] = varargin{:};
 //% [Ts1,Ts2] = val_t(T1,T2);
@@ -376,10 +376,10 @@ inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //%-------------------------
 
 //% tem('cumsum', {
-//% 'SvecInt' 'SvecInt'
-//% 'SvecLlong' 'SvecLlong'
-//% 'SvecDoub' 'SvecDoub'
-//% 'SvecQdoub' 'SvecQdoub' });
+//% 'SvbaseInt' 'SvbaseInt'
+//% 'SvbaseLlong' 'SvbaseLlong'
+//% 'SvbaseDoub' 'SvbaseDoub'
+//% 'SvbaseQdoub' 'SvbaseQdoub' });
 //%---------------------
 //% [T, T1] = varargin{:};
 //% req('cumsum_vv', {val_t(T), val_t(T1)});

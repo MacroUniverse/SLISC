@@ -14,12 +14,12 @@ void veccpy(T *, const T *, Long_I);
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
 //% VecT = ['Vec', T];
-//% VecT = ['Vec', T];
+//% VbaseT = ['Vbase', T];
 
-class @McooT@ : public @VecT@
+class @McooT@ : public @VbaseT@
 {
 private:
-	typedef @VecT@ Base;
+	typedef @VbaseT@ Base;
 	using Base::m_p;
 	using Base::m_N;
 	Long m_N0, m_N1, m_Nnz;
@@ -287,7 +287,7 @@ inline void @McooT@::reserve(Long_I N)
 
 inline void @McooT@::reserve_cpy(Long_I N)
 {
-	@VecT@ data(N);
+	thread_local static @VecT@ data(N);
 	VecLong row(N), col(N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);

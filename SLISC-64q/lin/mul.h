@@ -1172,6 +1172,20 @@ inline void mul(SvecComp_O y, SvecDoub_I x, MatComp_I a)
 	}
 }
 
+inline void mul(SvecComp_O y, SvecDoub_I x, CmatComp_I a)
+{
+	Long Nr_a = a.n0(), Nc_a = a.n1();
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n0() || y.size() != Nc_a)
+		SLS_ERR("illegal shape!");
+#endif
+	vecset(y.p(), 0, Nc_a);
+	for (Long j = 0; j < Nc_a; ++j) {
+		for (Long i = 0; i < Nr_a; ++i)
+			y[j] += x[i] * a(i, j);
+	}
+}
+
 
 inline void mul(ScmatComp_O y, ScmatComp_I a, MatComp_I x)
 {

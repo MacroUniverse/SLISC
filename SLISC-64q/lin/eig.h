@@ -9,7 +9,7 @@ namespace slisc {
 inline void eig_sym(SvecDoub_O eigVal, ScmatDoub_O eigVec, ScmatDoub_I A)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	if (A.n0() != A.n1() || !shape_cmp2(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 #endif
@@ -27,7 +27,7 @@ inline void eig_sym(SvecDoub_O eigVal, ScmatDoub_O eigVec, ScmatDoub_I A)
 inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	if (A.n0() != A.n1() || !shape_cmp2(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 #endif
@@ -47,7 +47,7 @@ inline void eig_sym(SvecQdoub_O eigVal, ScmatQdoub_O eigVec, ScmatQdoub_I A, Sve
 {
 	Long N = A.n1();
 #ifdef SLS_CHECK_SHAPES
-	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	if (A.n0() != A.n1() || !shape_cmp2(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 	if (wsp_qd.size() != 3*N) // this is gessed, Rsyev will show have error is not enough.

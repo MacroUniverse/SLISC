@@ -70,15 +70,15 @@ void test_matb()
 #endif
 
 	// matrices
-	MatInt AI(2, 3); copy(AI, 0);
+	CmatInt AI(2, 3); copy(AI, 0);
 	AI(0, 0) = 1; AI(0, 1) = 3; AI(0, 2) = 5; AI(1, 2) = 11;
 	save(AI, "AI", matb);
 
-	MatDoub A(2, 3); copy(A, 0);
+	CmatDoub A(2, 3); copy(A, 0);
 	A(0, 0) = 1; A(0, 1) = 3; A(0, 2) = 5; A(1, 2) = 11;
 	save(A, "A", matb);
 
-	MatComp C(3, 3);
+	CmatComp C(3, 3);
 	for (Long i = 0; i < 9; ++i)
 		C[i] = 1 + Comp(i,i);
 	save(C, "C", matb);
@@ -104,12 +104,12 @@ void test_matb()
 #endif
 
 	// 3d arrays
-	Mat3Doub A3(2, 2, 2);
+	Cmat3Doub A3(2, 2, 2);
 	for (Long i = 0; i < 8; ++i)
 		A3[i] = 1. + (Doub)i;
 	save(A3, "A3", matb);
 
-	Mat3Comp C3(2, 2, 2);
+	Cmat3Comp C3(2, 2, 2);
 	for (Long i = 0; i < 8; ++i)
 		C3[i] = Comp(1. + (Doub)i, (Doub)i);
 	save(C3, "C3", matb);
@@ -213,15 +213,15 @@ void test_matb()
 	// matrices
 	// TODO: Char
 
-	MatInt r_AI(0,0);
+	CmatInt r_AI(0,0);
 	load(r_AI, "AI", matb);
 	if (r_AI != AI) SLS_FAIL;
 
-	MatDoub r_A(0,0);
+	CmatDoub r_A(0,0);
 	load(r_A, "A", matb);
 	if (r_A != A) SLS_FAIL;
 
-	MatComp r_C(0,0);
+	CmatComp r_C(0,0);
 	load(r_C, "C", matb);
 	if (r_C != C) SLS_FAIL;
 
@@ -244,11 +244,11 @@ void test_matb()
 #endif
 
 	// 3D arrays
-	Mat3Doub r_A3;
+	Cmat3Doub r_A3;
 	load(r_A3, "A3", matb);
 	SLS_ASSERT(r_A3 == A3);
 
-	Mat3Comp r_C3;
+	Cmat3Comp r_C3;
 	load(r_C3, "C3", matb);
 	r_C3 -= C3;
 	SLS_ASSERT(norm(r_C3) == 0);
@@ -309,24 +309,24 @@ void test_matb()
 		// matrices
 		// TODO: Char
 
-		MatInt r_AI(0,0);
+		CmatInt r_AI(0,0);
 		load(r_AI, "AI", matt);
 		if (r_AI != AI) SLS_FAIL;
 
-		MatDoub r_A(0,0);
+		CmatDoub r_A(0,0);
 		load(r_A, "A", matt);
 		if (r_A != A) SLS_FAIL;
 
-		MatComp r_C(0,0);
+		CmatComp r_C(0,0);
 		load(r_C, "C", matt);
 		if (r_C != C) SLS_FAIL;
 
 		// 3D arrays
-		// Mat3Doub r_A3(0,0,0);
+		// Cmat3Doub r_A3(0,0,0);
 		// load(r_A3, "A3", matt);
 		// if (r_A3 != A3) SLS_FAIL;
 
-		// Mat3Comp r_C3(0,0,0);
+		// Cmat3Comp r_C3(0,0,0);
 		// load(r_C3, "C3", matt);
 		// if (r_C3 != C3) SLS_FAIL;
 
@@ -374,24 +374,24 @@ void test_matb()
 		// matrices
 		// TODO: Char
 
-		MatInt r_AI(0,0);
+		CmatInt r_AI(0,0);
 		load(r_AI, "AI", matb);
 		if (r_AI != AI) SLS_FAIL;
 
-		MatDoub r_A(0,0);
+		CmatDoub r_A(0,0);
 		load(r_A, "A", matb);
 		if (r_A != A) SLS_FAIL;
 
-		MatComp r_C(0,0);
+		CmatComp r_C(0,0);
 		load(r_C, "C", matb);
 		if (r_C != C) SLS_FAIL;
 
 		// 3D arrays
-		// Mat3Doub r_A3(0,0,0);
+		// Cmat3Doub r_A3(0,0,0);
 		// load(r_A3, "A3", matb);
 		// if (r_A3 != A3) SLS_FAIL;
 
-		// Mat3Comp r_C3(0,0,0);
+		// Cmat3Comp r_C3(0,0,0);
 		// load(r_C3, "C3", matb);
 		// if (r_C3 != C3) SLS_FAIL;
 
@@ -480,15 +480,15 @@ void test_matb()
 		// matrices
 		// TODO: Char
 
-		MatInt r_AI(0,0);
+		CmatInt r_AI(0,0);
 		load(r_AI, "AI", matb);
 		if (r_AI != AI) SLS_FAIL;
 
-		MatDoub r_A(0,0);
+		CmatDoub r_A(0,0);
 		load(r_A, "A", matb);
 		if (r_A != A) SLS_FAIL;
 
-		MatComp r_C(0,0);
+		CmatComp r_C(0,0);
 		load(r_C, "C", matb);
 		r_C -= C;
 		if (norm(r_C) != 0) SLS_FAIL;
@@ -518,11 +518,11 @@ void test_matb()
 	#endif
 
 		// 3D arrays
-		Mat3Doub r_A3;
+		Cmat3Doub r_A3;
 		load(r_A3, "A3", matb);
 		SLS_ASSERT(r_A3 == A3);
 
-		Mat3Comp r_C3;
+		Cmat3Comp r_C3;
 		load(r_C3, "C3", matb);
 		SLS_ASSERT(r_C3 == C3);
 

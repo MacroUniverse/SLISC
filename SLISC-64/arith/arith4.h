@@ -330,65 +330,65 @@ inline void operator*=(vecComp_IO v, Comp_I s)
 inline void operator/=(vecComp_IO v, Comp_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
-inline void operator+=(SvecInt_IO v, Int_I s)
+inline void operator+=(SvbaseInt_IO v, Int_I s)
 { add_eq_vs(&v[0], s, v.size()); }
 
-inline void operator-=(SvecInt_IO v, Int_I s)
+inline void operator-=(SvbaseInt_IO v, Int_I s)
 { sub_eq_vs(&v[0], s, v.size()); }
 
-inline void operator*=(SvecInt_IO v, Int_I s)
+inline void operator*=(SvbaseInt_IO v, Int_I s)
 { times_eq_vs(&v[0], s, v.size()); }
 
-inline void operator/=(SvecInt_IO v, Int_I s)
+inline void operator/=(SvbaseInt_IO v, Int_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
-inline void operator+=(SvecLlong_IO v, Llong_I s)
+inline void operator+=(SvbaseLlong_IO v, Llong_I s)
 { add_eq_vs(&v[0], s, v.size()); }
 
-inline void operator-=(SvecLlong_IO v, Llong_I s)
+inline void operator-=(SvbaseLlong_IO v, Llong_I s)
 { sub_eq_vs(&v[0], s, v.size()); }
 
-inline void operator*=(SvecLlong_IO v, Llong_I s)
+inline void operator*=(SvbaseLlong_IO v, Llong_I s)
 { times_eq_vs(&v[0], s, v.size()); }
 
-inline void operator/=(SvecLlong_IO v, Llong_I s)
+inline void operator/=(SvbaseLlong_IO v, Llong_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
-inline void operator+=(SvecDoub_IO v, Doub_I s)
+inline void operator+=(SvbaseDoub_IO v, Doub_I s)
 { add_eq_vs(&v[0], s, v.size()); }
 
-inline void operator-=(SvecDoub_IO v, Doub_I s)
+inline void operator-=(SvbaseDoub_IO v, Doub_I s)
 { sub_eq_vs(&v[0], s, v.size()); }
 
-inline void operator*=(SvecDoub_IO v, Doub_I s)
+inline void operator*=(SvbaseDoub_IO v, Doub_I s)
 { times_eq_vs(&v[0], s, v.size()); }
 
-inline void operator/=(SvecDoub_IO v, Doub_I s)
+inline void operator/=(SvbaseDoub_IO v, Doub_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
 
-inline void operator+=(SvecComp_IO v, Doub_I s)
+inline void operator+=(SvbaseComp_IO v, Doub_I s)
 { add_eq_vs(&v[0], s, v.size()); }
 
-inline void operator-=(SvecComp_IO v, Doub_I s)
+inline void operator-=(SvbaseComp_IO v, Doub_I s)
 { sub_eq_vs(&v[0], s, v.size()); }
 
-inline void operator*=(SvecComp_IO v, Doub_I s)
+inline void operator*=(SvbaseComp_IO v, Doub_I s)
 { times_eq_vs(&v[0], s, v.size()); }
 
-inline void operator/=(SvecComp_IO v, Doub_I s)
+inline void operator/=(SvbaseComp_IO v, Doub_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
-inline void operator+=(SvecComp_IO v, Comp_I s)
+inline void operator+=(SvbaseComp_IO v, Comp_I s)
 { add_eq_vs(&v[0], s, v.size()); }
 
-inline void operator-=(SvecComp_IO v, Comp_I s)
+inline void operator-=(SvbaseComp_IO v, Comp_I s)
 { sub_eq_vs(&v[0], s, v.size()); }
 
-inline void operator*=(SvecComp_IO v, Comp_I s)
+inline void operator*=(SvbaseComp_IO v, Comp_I s)
 { times_eq_vs(&v[0], s, v.size()); }
 
-inline void operator/=(SvecComp_IO v, Comp_I s)
+inline void operator/=(SvbaseComp_IO v, Comp_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
 
@@ -552,6 +552,30 @@ inline void operator*=(Cmat3Comp_IO v, Comp_I s)
 inline void operator/=(Cmat3Comp_IO v, Comp_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
+inline void operator+=(SvecComp_IO v, Comp_I s)
+{ add_eq_vs(&v[0], s, v.size()); }
+
+inline void operator-=(SvecComp_IO v, Comp_I s)
+{ sub_eq_vs(&v[0], s, v.size()); }
+
+inline void operator*=(SvecComp_IO v, Comp_I s)
+{ times_eq_vs(&v[0], s, v.size()); }
+
+inline void operator/=(SvecComp_IO v, Comp_I s)
+{ div_eq_vs(&v[0], s, v.size()); }
+
+inline void operator+=(SvecComp_IO v, Doub_I s)
+{ add_eq_vs(&v[0], s, v.size()); }
+
+inline void operator-=(SvecComp_IO v, Doub_I s)
+{ sub_eq_vs(&v[0], s, v.size()); }
+
+inline void operator*=(SvecComp_IO v, Doub_I s)
+{ times_eq_vs(&v[0], s, v.size()); }
+
+inline void operator/=(SvecComp_IO v, Doub_I s)
+{ div_eq_vs(&v[0], s, v.size()); }
+
 
 inline void add_eq_vv(Int *v, const Int *v1, Long_I N)
 {
@@ -700,282 +724,282 @@ inline void div_eq_vv(Comp *v, const Imag *v1, Long_I N)
 
 inline void operator+=(vecInt_O v, vecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(vecInt_O v, vecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(vecInt_O v, vecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(vecInt_O v, vecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator+=(vecLlong_O v, vecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(vecLlong_O v, vecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(vecLlong_O v, vecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(vecLlong_O v, vecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator+=(vecDoub_O v, vecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(vecDoub_O v, vecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(vecDoub_O v, vecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(vecDoub_O v, vecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 
-inline void operator+=(SvecInt_O v, SvecInt_I v1)
+inline void operator+=(SvbaseInt_O v, SvbaseInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecInt_O v, SvecInt_I v1)
+inline void operator-=(SvbaseInt_O v, SvbaseInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecInt_O v, SvecInt_I v1)
+inline void operator*=(SvbaseInt_O v, SvbaseInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecInt_O v, SvecInt_I v1)
+inline void operator/=(SvbaseInt_O v, SvbaseInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecLlong_O v, SvecLlong_I v1)
+inline void operator+=(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecLlong_O v, SvecLlong_I v1)
+inline void operator-=(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecLlong_O v, SvecLlong_I v1)
+inline void operator*=(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecLlong_O v, SvecLlong_I v1)
+inline void operator/=(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecDoub_O v, SvecDoub_I v1)
+inline void operator+=(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecDoub_O v, SvecDoub_I v1)
+inline void operator-=(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecDoub_O v, SvecDoub_I v1)
+inline void operator*=(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecDoub_O v, SvecDoub_I v1)
+inline void operator/=(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 
-inline void operator+=(SvecComp_O v, SvecDoub_I v1)
+inline void operator+=(SvbaseComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecComp_O v, SvecDoub_I v1)
+inline void operator-=(SvbaseComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecComp_O v, SvecDoub_I v1)
+inline void operator*=(SvbaseComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecComp_O v, SvecDoub_I v1)
+inline void operator/=(SvbaseComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator+=(SvecComp_O v, SvecComp_I v1)
+inline void operator+=(SvbaseComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator-=(SvecComp_O v, SvecComp_I v1)
+inline void operator-=(SvbaseComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator*=(SvecComp_O v, SvecComp_I v1)
+inline void operator*=(SvbaseComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
-inline void operator/=(SvecComp_O v, SvecComp_I v1)
+inline void operator/=(SvbaseComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 
 
-inline void operator+=(DvecDoub_O v, SvecDoub_I v1)
+inline void operator+=(DvecDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] += v1[i];
 }
 
-inline void operator-=(DvecDoub_O v, SvecDoub_I v1)
+inline void operator-=(DvecDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] -= v1[i];
 }
 
-inline void operator*=(DvecDoub_O v, SvecDoub_I v1)
+inline void operator*=(DvecDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] *= v1[i];
 }
 
-inline void operator/=(DvecDoub_O v, SvecDoub_I v1)
+inline void operator/=(DvecDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] /= v1[i];
 }
 
 
-inline void operator+=(DvecComp_O v, SvecComp_I v1)
+inline void operator+=(DvecComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] += v1[i];
 }
 
-inline void operator-=(DvecComp_O v, SvecComp_I v1)
+inline void operator-=(DvecComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] -= v1[i];
 }
 
-inline void operator*=(DvecComp_O v, SvecComp_I v1)
+inline void operator*=(DvecComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] *= v1[i];
 }
 
-inline void operator/=(DvecComp_O v, SvecComp_I v1)
+inline void operator/=(DvecComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] /= v1[i];
 }
 
 
-inline void operator+=(DvecComp_O v, SvecDoub_I v1)
+inline void operator+=(DvecComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] += v1[i];
 }
 
-inline void operator-=(DvecComp_O v, SvecDoub_I v1)
+inline void operator-=(DvecComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] -= v1[i];
 }
 
-inline void operator*=(DvecComp_O v, SvecDoub_I v1)
+inline void operator*=(DvecComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] *= v1[i];
 }
 
-inline void operator/=(DvecComp_O v, SvecDoub_I v1)
+inline void operator/=(DvecComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] /= v1[i];
 }
@@ -983,28 +1007,28 @@ inline void operator/=(DvecComp_O v, SvecDoub_I v1)
 
 inline void operator+=(DvecComp_O v, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] += v1[i];
 }
 
 inline void operator-=(DvecComp_O v, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] -= v1[i];
 }
 
 inline void operator*=(DvecComp_O v, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] *= v1[i];
 }
 
 inline void operator/=(DvecComp_O v, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	for (Long i = 0; i < v.size(); ++i)
 		v[i] /= v1[i];
 }
@@ -1012,55 +1036,55 @@ inline void operator/=(DvecComp_O v, DvecComp_I v1)
 
 inline void operator+=(MatDoub_O v, MatDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(MatDoub_O v, MatDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(MatDoub_O v, MatDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(MatDoub_O v, MatDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator+=(MatComp_O v, MatComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(MatComp_O v, MatComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(MatComp_O v, MatComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(MatComp_O v, MatComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator+=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
 		for (Long i = 0; i < v.n0(); ++i)
 			v(i, j) += v1(i, j);
@@ -1068,7 +1092,7 @@ inline void operator+=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 
 inline void operator-=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
 		for (Long i = 0; i < v.n0(); ++i)
 			v(i, j) -= v1(i, j);
@@ -1076,7 +1100,7 @@ inline void operator-=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 
 inline void operator*=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
 		for (Long i = 0; i < v.n0(); ++i)
 			v(i, j) *= v1(i, j);
@@ -1084,7 +1108,7 @@ inline void operator*=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 
 inline void operator/=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	for (Long j = 0; j < v.n1(); ++j)
 		for (Long i = 0; i < v.n0(); ++i)
 			v(i, j) /= v1(i, j);
@@ -1093,49 +1117,49 @@ inline void operator/=(DcmatComp_O v, DcmatDoub_I v1) // slow!
 
 inline void operator+=(Mat3Doub_O v, Mat3Doub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(Mat3Doub_O v, Mat3Doub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(Mat3Doub_O v, Mat3Doub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(Mat3Doub_O v, Mat3Doub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator+=(Mat3Comp_O v, Mat3Comp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator-=(Mat3Comp_O v, Mat3Comp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator*=(Mat3Comp_O v, Mat3Comp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_eq_vv(&v[0], &v1[0], v1.size());
 }
 
 inline void operator/=(Mat3Comp_O v, Mat3Comp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
 }
 
@@ -1526,60 +1550,6 @@ inline void div_vvs(Comp *v, const Doub *v1, Imag_I s, Long_I N, Long_I step, Lo
 	times_vvs(v, v1, inv_s, N, step, step1);
 }
 
-
-inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
-{
-	for (Long i = 0; i < N; ++i)
-		v[i] = v1[i] + s;
-}
-
-inline void add_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
-{
-	for (Long i = 0; i < N; ++i) {
-		*v = *v1 + s;
-		v += step1; v1 += step2;
-	}
-}
-
-inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
-{
-	for (Long i = 0; i < N; ++i)
-		v[i] = v1[i] - s;
-}
-
-inline void sub_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
-{
-	for (Long i = 0; i < N; ++i) {
-		*v = *v1 - s;
-		v += step1; v1 += step2;
-	}
-}
-
-inline void times_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
-{
-	for (Long i = 0; i < N; ++i)
-		v[i] = v1[i] * s;
-}
-
-inline void times_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step1, Long_I step2)
-{
-	for (Long i = 0; i < N; ++i) {
-		*v = *v1 * s;
-		v += step1; v1 += step2;
-	}
-}
-
-inline void div_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N)
-{
-	Doub inv_s = 1./s;
-	times_vvs(v, v1, inv_s, N);
-}
-
-inline void div_vvs(Comp *v, const Doub *v1, Doub_I s, Long_I N, Long_I step, Long_I step1)
-{
-	Doub inv_s = 1./s;
-	times_vvs(v, v1, inv_s, N, step, step1);
-}
 
 
 inline void sub_vsv(Int *v, const Int &s, const Int *v1, Long_I N)
@@ -2212,7 +2182,7 @@ inline void div_vvv(Comp *v, const Doub *v1, const Imag *v2, Long_I N, Long_I st
 
 inline void add(vecInt_O v, vecInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
@@ -2221,19 +2191,19 @@ inline void add(vecInt_O v, Int_I s, vecInt_I v1)
 
 inline void sub(vecInt_O v, vecInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void sub(vecInt_O v, Int_I s, vecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 inline void times(vecInt_O v, vecInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
@@ -2242,19 +2212,19 @@ inline void times(vecInt_O v, Int_I s, vecInt_I v1)
 
 inline void div(vecInt_O v, vecInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void div(vecInt_O v, Int_I s, vecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 inline void add(vecLlong_O v, vecLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
@@ -2263,19 +2233,19 @@ inline void add(vecLlong_O v, Llong_I s, vecLlong_I v1)
 
 inline void sub(vecLlong_O v, vecLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void sub(vecLlong_O v, Llong_I s, vecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 inline void times(vecLlong_O v, vecLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
@@ -2284,350 +2254,350 @@ inline void times(vecLlong_O v, Llong_I s, vecLlong_I v1)
 
 inline void div(vecLlong_O v, vecLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
 inline void div(vecLlong_O v, Llong_I s, vecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecInt_O v, SvecInt_I v1, Int_I s)
+inline void add(SvbaseInt_O v, SvbaseInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecInt_O v, Int_I s, SvecInt_I v1)
+inline void add(SvbaseInt_O v, Int_I s, SvbaseInt_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecInt_O v, SvecInt_I v1, Int_I s)
+inline void sub(SvbaseInt_O v, SvbaseInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecInt_O v, Int_I s, SvecInt_I v1)
+inline void sub(SvbaseInt_O v, Int_I s, SvbaseInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecInt_O v, SvecInt_I v1, Int_I s)
+inline void times(SvbaseInt_O v, SvbaseInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecInt_O v, Int_I s, SvecInt_I v1)
+inline void times(SvbaseInt_O v, Int_I s, SvbaseInt_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecInt_O v, SvecInt_I v1, Int_I s)
+inline void div(SvbaseInt_O v, SvbaseInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecInt_O v, Int_I s, SvecInt_I v1)
+inline void div(SvbaseInt_O v, Int_I s, SvbaseInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecLlong_O v, SvecLlong_I v1, Llong_I s)
+inline void add(SvbaseLlong_O v, SvbaseLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecLlong_O v, Llong_I s, SvecLlong_I v1)
+inline void add(SvbaseLlong_O v, Llong_I s, SvbaseLlong_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecLlong_O v, SvecLlong_I v1, Llong_I s)
+inline void sub(SvbaseLlong_O v, SvbaseLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecLlong_O v, Llong_I s, SvecLlong_I v1)
+inline void sub(SvbaseLlong_O v, Llong_I s, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecLlong_O v, SvecLlong_I v1, Llong_I s)
+inline void times(SvbaseLlong_O v, SvbaseLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecLlong_O v, Llong_I s, SvecLlong_I v1)
+inline void times(SvbaseLlong_O v, Llong_I s, SvbaseLlong_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecLlong_O v, SvecLlong_I v1, Llong_I s)
+inline void div(SvbaseLlong_O v, SvbaseLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecLlong_O v, Llong_I s, SvecLlong_I v1)
+inline void div(SvbaseLlong_O v, Llong_I s, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+inline void add(SvbaseDoub_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+inline void add(SvbaseDoub_O v, Doub_I s, SvbaseDoub_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+inline void sub(SvbaseDoub_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+inline void sub(SvbaseDoub_O v, Doub_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+inline void times(SvbaseDoub_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+inline void times(SvbaseDoub_O v, Doub_I s, SvbaseDoub_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
+inline void div(SvbaseDoub_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecDoub_O v, Doub_I s, SvecDoub_I v1)
+inline void div(SvbaseDoub_O v, Doub_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 
-inline void add(SvecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void add(SvbaseComp_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecComp_O v, Doub_I s, SvecDoub_I v1)
+inline void add(SvbaseComp_O v, Doub_I s, SvbaseDoub_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void sub(SvbaseComp_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecComp_O v, Doub_I s, SvecDoub_I v1)
+inline void sub(SvbaseComp_O v, Doub_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void times(SvbaseComp_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecComp_O v, Doub_I s, SvecDoub_I v1)
+inline void times(SvbaseComp_O v, Doub_I s, SvbaseDoub_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecComp_O v, SvecDoub_I v1, Doub_I s)
+inline void div(SvbaseComp_O v, SvbaseDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecComp_O v, Doub_I s, SvecDoub_I v1)
+inline void div(SvbaseComp_O v, Doub_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecComp_O v, SvecDoub_I v1, Comp_I s)
+inline void add(SvbaseComp_O v, SvbaseDoub_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecComp_O v, Comp_I s, SvecDoub_I v1)
+inline void add(SvbaseComp_O v, Comp_I s, SvbaseDoub_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecComp_O v, SvecDoub_I v1, Comp_I s)
+inline void sub(SvbaseComp_O v, SvbaseDoub_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecComp_O v, Comp_I s, SvecDoub_I v1)
+inline void sub(SvbaseComp_O v, Comp_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecComp_O v, SvecDoub_I v1, Comp_I s)
+inline void times(SvbaseComp_O v, SvbaseDoub_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecComp_O v, Comp_I s, SvecDoub_I v1)
+inline void times(SvbaseComp_O v, Comp_I s, SvbaseDoub_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecComp_O v, SvecDoub_I v1, Comp_I s)
+inline void div(SvbaseComp_O v, SvbaseDoub_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecComp_O v, Comp_I s, SvecDoub_I v1)
+inline void div(SvbaseComp_O v, Comp_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void add(SvbaseComp_O v, SvbaseDoub_I v1, Imag_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecComp_O v, Imag_I s, SvecDoub_I v1)
+inline void add(SvbaseComp_O v, Imag_I s, SvbaseDoub_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void sub(SvbaseComp_O v, SvbaseDoub_I v1, Imag_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecComp_O v, Imag_I s, SvecDoub_I v1)
+inline void sub(SvbaseComp_O v, Imag_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void times(SvbaseComp_O v, SvbaseDoub_I v1, Imag_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecComp_O v, Imag_I s, SvecDoub_I v1)
+inline void times(SvbaseComp_O v, Imag_I s, SvbaseDoub_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecComp_O v, SvecDoub_I v1, Imag_I s)
+inline void div(SvbaseComp_O v, SvbaseDoub_I v1, Imag_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecComp_O v, Imag_I s, SvecDoub_I v1)
+inline void div(SvbaseComp_O v, Imag_I s, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void add(SvbaseComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void add(SvbaseComp_O v, Doub_I s, SvbaseComp_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void sub(SvbaseComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void sub(SvbaseComp_O v, Doub_I s, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void times(SvbaseComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void times(SvbaseComp_O v, Doub_I s, SvbaseComp_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void div(SvbaseComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void div(SvbaseComp_O v, Doub_I s, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void add(SvecComp_O v, SvecComp_I v1, Comp_I s)
+inline void add(SvbaseComp_O v, SvbaseComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void add(SvecComp_O v, Comp_I s, SvecComp_I v1)
+inline void add(SvbaseComp_O v, Comp_I s, SvbaseComp_I v1)
 { add(v, v1, s); }
 
-inline void sub(SvecComp_O v, SvecComp_I v1, Comp_I s)
+inline void sub(SvbaseComp_O v, SvbaseComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void sub(SvecComp_O v, Comp_I s, SvecComp_I v1)
+inline void sub(SvbaseComp_O v, Comp_I s, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size());
 }
 
-inline void times(SvecComp_O v, SvecComp_I v1, Comp_I s)
+inline void times(SvbaseComp_O v, SvbaseComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void times(SvecComp_O v, Comp_I s, SvecComp_I v1)
+inline void times(SvbaseComp_O v, Comp_I s, SvbaseComp_I v1)
 { times(v, v1, s); }
 
-inline void div(SvecComp_O v, SvecComp_I v1, Comp_I s)
+inline void div(SvbaseComp_O v, SvbaseComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size());
 }
 
-inline void div(SvecComp_O v, Comp_I s, SvecComp_I v1)
+inline void div(SvbaseComp_O v, Comp_I s, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
@@ -2635,51 +2605,51 @@ inline void div(SvecComp_O v, Comp_I s, SvecComp_I v1)
 
 
 
-inline void add(DvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void add(DvecComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size(), v.step(), 1);
 }
 
-inline void add(DvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void add(DvecComp_O v, Doub_I s, SvbaseComp_I v1)
 { add(v, v1, s); }
 
-inline void sub(DvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void sub(DvecComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size(), v.step(), 1);
 }
 
-inline void sub(DvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void sub(DvecComp_O v, Doub_I s, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size(), v.step(), 1);
 }
 
-inline void times(DvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void times(DvecComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size(), v.step(), 1);
 }
 
-inline void times(DvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void times(DvecComp_O v, Doub_I s, SvbaseComp_I v1)
 { times(v, v1, s); }
 
-inline void div(DvecComp_O v, SvecComp_I v1, Doub_I s)
+inline void div(DvecComp_O v, SvbaseComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size(), v.step(), 1);
 }
 
-inline void div(DvecComp_O v, Doub_I s, SvecComp_I v1)
+inline void div(DvecComp_O v, Doub_I s, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size(), v.step(), 1);
 }
 
 inline void add(DvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
@@ -2688,19 +2658,19 @@ inline void add(DvecComp_O v, Doub_I s, DvecComp_I v1)
 
 inline void sub(DvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
 inline void sub(DvecComp_O v, Doub_I s, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size(), v.step(), v1.step());
 }
 
 inline void times(DvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
@@ -2709,20 +2679,20 @@ inline void times(DvecComp_O v, Doub_I s, DvecComp_I v1)
 
 inline void div(DvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
 inline void div(DvecComp_O v, Doub_I s, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size(), v.step(), v1.step());
 }
 
 
 inline void add(DvecComp_O v, DvecComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
@@ -2731,19 +2701,19 @@ inline void add(DvecComp_O v, Comp_I s, DvecComp_I v1)
 
 inline void sub(DvecComp_O v, DvecComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
 inline void sub(DvecComp_O v, Comp_I s, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size(), v.step(), v1.step());
 }
 
 inline void times(DvecComp_O v, DvecComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
@@ -2752,20 +2722,20 @@ inline void times(DvecComp_O v, Comp_I s, DvecComp_I v1)
 
 inline void div(DvecComp_O v, DvecComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size(), v.step(), v1.step());
 }
 
 inline void div(DvecComp_O v, Comp_I s, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size(), v.step(), v1.step());
 }
 
 
 inline void add(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
 		add_vvs(p, p1, s, v.n0());
@@ -2778,7 +2748,7 @@ inline void add(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 
 inline void sub(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
 		sub_vvs(p, p1, s, v.n0());
@@ -2788,7 +2758,7 @@ inline void sub(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 
 inline void sub(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
 		sub_vsv(p, s, p1, v.n0());
@@ -2798,7 +2768,7 @@ inline void sub(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 
 inline void times(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
 		times_vvs(p, p1, s, v.n0());
@@ -2811,7 +2781,7 @@ inline void times(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 
 inline void div(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
 		div_vvs(p, p1, s, v.n0());
@@ -2821,7 +2791,7 @@ inline void div(DcmatComp_O v, DcmatComp_I v1, Doub_I s)
 
 inline void div(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	Comp *p = v.p(); const Comp *p1 = v1.p();
 	for (Long j = 0; j < v.n1(); ++j) {
 		div_vsv(p, s, p1, v.n0());
@@ -2832,7 +2802,7 @@ inline void div(DcmatComp_O v, Doub_I s, DcmatComp_I v1)
 
 inline void add(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	add_vvs(&v[0], &v1[0], s, v1.size(), 1, v1.step());
 }
 
@@ -2841,19 +2811,19 @@ inline void add(SvecComp_O v, Doub_I s, DvecComp_I v1)
 
 inline void sub(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vvs(&v[0], &v1[0], s, v1.size(), 1, v1.step());
 }
 
 inline void sub(SvecComp_O v, Doub_I s, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	sub_vsv(&v[0], s, &v1[0], v1.size(), 1, v1.step());
 }
 
 inline void times(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	times_vvs(&v[0], &v1[0], s, v1.size(), 1, v1.step());
 }
 
@@ -2862,187 +2832,277 @@ inline void times(SvecComp_O v, Doub_I s, DvecComp_I v1)
 
 inline void div(SvecComp_O v, DvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vvs(&v[0], &v1[0], s, v1.size(), 1, v1.step());
 }
 
 inline void div(SvecComp_O v, Doub_I s, DvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size(), 1, v1.step());
+}
+
+inline void add(SvecComp_O v, SvecComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	add_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void add(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{ add(v, v1, s); }
+
+inline void sub(SvecComp_O v, SvecComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	sub_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void sub(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{
+	assert_same_shape1(v, v1);
+	sub_vsv(&v[0], s, &v1[0], v1.size());
+}
+
+inline void times(SvecComp_O v, SvecComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	times_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void times(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{ times(v, v1, s); }
+
+inline void div(SvecComp_O v, SvecComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	div_vvs(&v[0], &v1[0], s, v1.size());
+}
+
+inline void div(SvecComp_O v, Doub_I s, SvecComp_I v1)
+{
+	assert_same_shape1(v, v1);
+	div_vsv(&v[0], s, &v1[0], v1.size());
 }
 
 
 inline void add(vecInt_O v, vecInt_I v1, vecInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void sub(vecInt_O v, vecInt_I v1, vecInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void times(vecInt_O v, vecInt_I v1, vecInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void div(vecInt_O v, vecInt_I v1, vecInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void add(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void sub(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void times(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void div(vecLlong_O v, vecLlong_I v1, vecLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void add(SvecInt_O v, SvecInt_I v1, SvecInt_I v2)
+inline void add(SvbaseInt_O v, SvbaseInt_I v1, SvbaseInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void sub(SvecInt_O v, SvecInt_I v1, SvecInt_I v2)
+inline void sub(SvbaseInt_O v, SvbaseInt_I v1, SvbaseInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void times(SvecInt_O v, SvecInt_I v1, SvecInt_I v2)
+inline void times(SvbaseInt_O v, SvbaseInt_I v1, SvbaseInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void div(SvecInt_O v, SvecInt_I v1, SvecInt_I v2)
+inline void div(SvbaseInt_O v, SvbaseInt_I v1, SvbaseInt_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void add(SvecLlong_O v, SvecLlong_I v1, SvecLlong_I v2)
+inline void add(SvbaseLlong_O v, SvbaseLlong_I v1, SvbaseLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void sub(SvecLlong_O v, SvecLlong_I v1, SvecLlong_I v2)
+inline void sub(SvbaseLlong_O v, SvbaseLlong_I v1, SvbaseLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void times(SvecLlong_O v, SvecLlong_I v1, SvecLlong_I v2)
+inline void times(SvbaseLlong_O v, SvbaseLlong_I v1, SvbaseLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-inline void div(SvecLlong_O v, SvecLlong_I v1, SvecLlong_I v2)
+inline void div(SvbaseLlong_O v, SvbaseLlong_I v1, SvbaseLlong_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
+
+inline void add(SvbaseDoub_O v, SvbaseDoub_I v1, SvbaseDoub_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	add_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void sub(SvbaseDoub_O v, SvbaseDoub_I v1, SvbaseDoub_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void times(SvbaseDoub_O v, SvbaseDoub_I v1, SvbaseDoub_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	times_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void div(SvbaseDoub_O v, SvbaseDoub_I v1, SvbaseDoub_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	div_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+
+inline void add(SvbaseComp_O v, SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	add_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void sub(SvbaseComp_O v, SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void times(SvbaseComp_O v, SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	times_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+inline void div(SvbaseComp_O v, SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	div_vvv(&v[0], &v1[0], &v2[0], v.size());
+}
+
+
+inline void add(DvecComp_O v, SvbaseComp_I v1, DvecComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	add_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
+}
+
+inline void sub(DvecComp_O v, SvbaseComp_I v1, DvecComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	sub_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
+}
+
+inline void times(DvecComp_O v, SvbaseComp_I v1, DvecComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	sub_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
+}
+
+inline void div(DvecComp_O v, SvbaseComp_I v1, DvecComp_I v2)
+{
+	assert_same_shape1(v, v1, v2);
+	div_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
+}
+
 
 inline void add(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void sub(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void times(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void div(SvecDoub_O v, SvecDoub_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
-
 inline void add(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	add_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void sub(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	sub_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void times(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	times_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
 
 inline void div(SvecComp_O v, SvecComp_I v1, SvecComp_I v2)
 {
-	assert_same_shape(v, v1, v2);
+	assert_same_shape1(v, v1, v2);
 	div_vvv(&v[0], &v1[0], &v2[0], v.size());
 }
-
-
-inline void add(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
-{
-	assert_same_shape(v, v1, v2);
-	add_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
-}
-
-inline void sub(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
-{
-	assert_same_shape(v, v1, v2);
-	sub_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
-}
-
-inline void times(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
-{
-	assert_same_shape(v, v1, v2);
-	sub_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
-}
-
-inline void div(DvecComp_O v, SvecComp_I v1, DvecComp_I v2)
-{
-	assert_same_shape(v, v1, v2);
-	div_vvv(v.p(), v1.p(), v2.p(), v.size(), v.step(), 1, v2.step());
-}
-
 
 
 inline void neg_vv(Doub *v, const Doub *v1, Long_I N)
@@ -3072,28 +3132,28 @@ inline void neg_vv(Comp *v, const Comp *v1, Long_I N)
 }
 
 
-inline void neg(SvecLlong_O v, SvecLlong_I v1)
+inline void neg(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	neg_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void neg(SvecDoub_O v, SvecDoub_I v1)
+inline void neg(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	neg_vv(v.p(), v1.p(), v1.size());
 }
 
 
-inline void neg(SvecComp_O v, SvecDoub_I v1)
+inline void neg(SvbaseComp_O v, SvbaseDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	neg_vv(v.p(), v1.p(), v1.size());
 }
 
-inline void neg(SvecComp_O v, SvecComp_I v1)
+inline void neg(SvbaseComp_O v, SvbaseComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	neg_vv(v.p(), v1.p(), v1.size());
 }
 

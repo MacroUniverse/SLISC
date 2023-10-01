@@ -83,7 +83,7 @@ inline @T@ @fun@_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1, L
 
 //% tem('max', {
 //%  'vecInt'; 'vecLlong';
-//%  'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub';
+//%  'SvbaseInt'; 'SvbaseLlong'; 'SvbaseDoub'; 'SvbaseQdoub';
 //%  'vvecInt'; 'vvecLlong';
 //%  'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub'; });
 //%--------------------------
@@ -255,9 +255,9 @@ inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1
 }
 //%-------------------------
 
-//% tem('max_abs', { 'SvecDoub'; 'SvecQdoub'; 'SvecInt';
-//%   'SvecComp'; 'SvecQcomp';
-//%   'SvecQdoub'; 'SvecQcomp';
+//% tem('max_abs', { 'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseInt';
+//%   'SvbaseComp'; 'SvbaseQcomp';
+//%   'SvbaseQdoub'; 'SvbaseQcomp';
 //%   'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
 //%   'MatComp';
 //%   'DcmatDoub'; 'DcmatQdoub'; 'DcmatComp'; 'DcmatQcomp'; });
@@ -304,7 +304,7 @@ inline @Tr@ sum_abs_v(const @T@ *v, Long_I N)
 
 // sum of absolute values
 //% tem('sum_abs', {
-//%     'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%     'SvbaseInt'; 'SvbaseLlong'; 'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseComp'; 'SvbaseQcomp';
 //% });
 //%--------------------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -372,8 +372,8 @@ inline @Tret@ prod_v(const @T@ *v, Long_I N)
 //%------------------------
 
 //% tem('sum', { 'vecInt'; 'vecLlong';
-//%     'vecDoub'; 'vecQdoub'; 'SvecInt'; 'SvecLlong';
-//%   'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%     'vecDoub'; 'vecQdoub'; 'SvbaseInt'; 'SvbaseLlong';
+//%   'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseComp'; 'SvbaseQcomp';
 //%   'MatComp'; });
 //%----------------
 //% T = varargin{:}; Ts = val_t(T);
@@ -395,7 +395,7 @@ inline @Tret@ prod(@T@_I v) { return prod_v(v.p(), v.size()); }
 //%-----------------
 
 //% tem('norm2', {
-//% 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//% 'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseComp'; 'SvbaseQcomp';
 //% 'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
 //% 'MatDoub'; 'MatComp';
 //% 'DcmatComp'; 'DcmatQcomp';

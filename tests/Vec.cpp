@@ -41,6 +41,16 @@ void test_Vec()
 		if (v1 != v)
 			SLS_FAIL;
 	}
+
+	{
+		VecInt a(3); a[0] = 1; a[1] = 2; a[2] = 3;
+		VecInt b(move(a));
+		SLS_ASSERT(a.size() == 0);
+		VecInt c;
+		c = b;
+		c = move(b);
+		SLS_ASSERT(b.size() == 0);
+	}
 }
 
 #ifndef SLS_TEST_ALL

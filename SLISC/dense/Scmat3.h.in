@@ -3,6 +3,7 @@
 
 namespace slisc {
 //% tem('Scmat3', {
+//%     'Bool', true;   'Bool', false;
 //%     'Char', true;   'Char', false;
 //%     'Uchar', true;  'Uchar', false;
 //%     'Int', true;    'Int', false;
@@ -22,22 +23,23 @@ namespace slisc {
 //% });
 //%------------------------
 //% [T, constness] = varargin{:};
-//% SvecT = ['Svec' T];
-//% SvecTC = [SvecT 'C'];
+//% SvbaseT = ['Svbase' T];
+//% SvbaseTC = [SvbaseT 'C'];
 //% Scmat3T = ['Scmat3' T];
 //% Scmat3TC = [Scmat3T 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Base = SvecTC;
+//%     Base = SvbaseTC;
 //%     Class = Scmat3TC;
 //% else
 //%     CT = T;
-//%     Base = SvecT;
+//%     Base = SvbaseT;
 //%     Class = Scmat3T;
 //% end
 class @Class@ : public @Base@
 {
 protected:
+	typedef @Base@ Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	@Class@();
@@ -54,6 +56,9 @@ public:
 	Long n1() const;
 	Long n2() const;
 
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	// resize() is a bad idea, don't try to create it!
 	void reshape(Long_I N0, Long_I N1, Long_I N2);
 	void set(@CT@ *data, Long_I N0, Long_I N1, Long_I N2);

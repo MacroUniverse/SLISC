@@ -4,10 +4,130 @@
 #include "Scmat3.h"
 
 namespace slisc {
-class Cmat3Char : protected VecChar
+class Cmat3Bool : private VbaseBool
 {
 protected:
-	typedef VecChar Base;
+	typedef VbaseBool Base;
+	Long m_N0, m_N1, m_N2;
+public:
+	Cmat3Bool(): m_N0(0), m_N1(0), m_N2(0) {};
+	Cmat3Bool(Long_I N0, Long_I N1, Long_I N2);
+	Cmat3Bool(const Cmat3Bool &rhs); // copy constructor
+	Cmat3Bool(Cmat3Bool &&rhs); // move constructor
+	Cmat3Bool &operator=(const Cmat3Bool &rhs); // copy assignment
+	Cmat3Bool &operator=(Cmat3Bool &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
+	using Base::end;
+	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
+	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
+	Bool &operator()(Long_I i, Long_I j, Long_I k);
+	const Bool &operator()(Long_I i, Long_I j, Long_I k) const;
+	Long n0() const;
+	Long n1() const;
+	Long n2() const;
+
+	operator const Scmat3BoolC&() const;
+	operator const Scmat3Bool&();
+};
+
+inline Cmat3Bool::Cmat3Bool(Long_I N0, Long_I N1, Long_I N2) : Base(N0*N1*N2), m_N0(N0), m_N1(N1), m_N2(N2) {}
+
+inline Cmat3Bool::Cmat3Bool(const Cmat3Bool &rhs): Base(rhs), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2)
+{
+#ifdef SLS_NO_CPY_CONSTRUCTOR
+	SLS_ERR("copy constructor forbidden!");
+#endif
+}
+
+inline Cmat3Bool::Cmat3Bool(Cmat3Bool &&rhs)
+	: Base(std::move(rhs)), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_N2(rhs.m_N2) {}
+
+inline Cmat3Bool &Cmat3Bool::operator=(const Cmat3Bool &rhs)
+{
+	Base::operator=(rhs);
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	return *this;
+}
+
+inline Cmat3Bool &Cmat3Bool::operator=(Cmat3Bool &&rhs)
+{
+	Base::operator=(move(rhs));
+	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1; m_N2 = rhs.m_N2;
+	return *this;
+}
+
+inline void Cmat3Bool::resize(Long_I N0, Long_I N1, Long_I N2)
+{
+	if (N0 != m_N0 || N1 != m_N1 || N2 != m_N2) {
+		Base::resize(N0*N1*N2);
+		m_N0 = N0; m_N1 = N1; m_N2 = N2;
+	}
+}
+
+inline void Cmat3Bool::reshape(Long_I N0, Long_I N1, Long_I N2)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (N0*N1*N2 != m_N) {
+		stringstream ss;
+		ss  << "Cmat3Bool reshaping from (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
+			<< ',' << m_N2 << "), element number not the same!";
+		SLS_ERR(ss.str());
+	}
+#endif
+	m_N0 = N0; m_N1 = N1; m_N2 = N2;
+}
+
+inline Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+		SLS_ERR("Cmat3Bool index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline const Bool &Cmat3Bool::operator()(Long_I i, Long_I j, Long_I k) const
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= m_N0 || j < 0 || j >= m_N1 || k < 0 || k >= m_N2)
+		SLS_ERR("Cmat3Bool index ("+num2str(i)+", "+num2str(j)+", "+num2str(k)
+			+") out of bounds: shape = ("+num2str(m_N0)+", "+num2str(m_N1)+", "+num2str(m_N2)+")");
+#endif
+	return m_p[i + m_N0*j + m_N0*m_N1*k];
+}
+
+inline Long Cmat3Bool::n0() const {
+	return m_N0;
+}
+
+inline Long Cmat3Bool::n1() const {
+	return m_N1;
+}
+
+inline Long Cmat3Bool::n2() const {
+	return m_N2;
+}
+
+inline Cmat3Bool::operator const Scmat3BoolC&() const {
+	return reinterpret_cast<const Scmat3BoolC&>(*this);
+}
+
+inline Cmat3Bool::operator const Scmat3Bool&() {
+	return reinterpret_cast<const Scmat3Bool&>(*this);
+}
+
+typedef const Cmat3Bool &Cmat3Bool_I;
+typedef Cmat3Bool &Cmat3Bool_O, &Cmat3Bool_IO;
+
+
+class Cmat3Char : private VbaseChar
+{
+protected:
+	typedef VbaseChar Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Char(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -19,6 +139,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Char &operator()(Long_I i, Long_I j, Long_I k);
@@ -123,10 +244,10 @@ typedef const Cmat3Char &Cmat3Char_I;
 typedef Cmat3Char &Cmat3Char_O, &Cmat3Char_IO;
 
 
-class Cmat3Uchar : protected VecUchar
+class Cmat3Uchar : private VbaseUchar
 {
 protected:
-	typedef VecUchar Base;
+	typedef VbaseUchar Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Uchar(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -138,6 +259,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Uchar &operator()(Long_I i, Long_I j, Long_I k);
@@ -242,10 +364,10 @@ typedef const Cmat3Uchar &Cmat3Uchar_I;
 typedef Cmat3Uchar &Cmat3Uchar_O, &Cmat3Uchar_IO;
 
 
-class Cmat3Int : protected VecInt
+class Cmat3Int : private VbaseInt
 {
 protected:
-	typedef VecInt Base;
+	typedef VbaseInt Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Int(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -257,6 +379,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Int &operator()(Long_I i, Long_I j, Long_I k);
@@ -361,10 +484,10 @@ typedef const Cmat3Int &Cmat3Int_I;
 typedef Cmat3Int &Cmat3Int_O, &Cmat3Int_IO;
 
 
-class Cmat3Llong : protected VecLlong
+class Cmat3Llong : private VbaseLlong
 {
 protected:
-	typedef VecLlong Base;
+	typedef VbaseLlong Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Llong(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -376,6 +499,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Llong &operator()(Long_I i, Long_I j, Long_I k);
@@ -480,10 +604,10 @@ typedef const Cmat3Llong &Cmat3Llong_I;
 typedef Cmat3Llong &Cmat3Llong_O, &Cmat3Llong_IO;
 
 
-class Cmat3Float : protected VecFloat
+class Cmat3Float : private VbaseFloat
 {
 protected:
-	typedef VecFloat Base;
+	typedef VbaseFloat Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Float(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -495,6 +619,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Float &operator()(Long_I i, Long_I j, Long_I k);
@@ -599,10 +724,10 @@ typedef const Cmat3Float &Cmat3Float_I;
 typedef Cmat3Float &Cmat3Float_O, &Cmat3Float_IO;
 
 
-class Cmat3Doub : protected VecDoub
+class Cmat3Doub : private VbaseDoub
 {
 protected:
-	typedef VecDoub Base;
+	typedef VbaseDoub Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Doub(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -614,6 +739,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Doub &operator()(Long_I i, Long_I j, Long_I k);
@@ -718,10 +844,10 @@ typedef const Cmat3Doub &Cmat3Doub_I;
 typedef Cmat3Doub &Cmat3Doub_O, &Cmat3Doub_IO;
 
 
-class Cmat3Ldoub : protected VecLdoub
+class Cmat3Ldoub : private VbaseLdoub
 {
 protected:
-	typedef VecLdoub Base;
+	typedef VbaseLdoub Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Ldoub(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -733,6 +859,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Ldoub &operator()(Long_I i, Long_I j, Long_I k);
@@ -838,10 +965,10 @@ typedef Cmat3Ldoub &Cmat3Ldoub_O, &Cmat3Ldoub_IO;
 
 
 
-class Cmat3Fcomp : protected VecFcomp
+class Cmat3Fcomp : private VbaseFcomp
 {
 protected:
-	typedef VecFcomp Base;
+	typedef VbaseFcomp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Fcomp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -853,6 +980,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Fcomp &operator()(Long_I i, Long_I j, Long_I k);
@@ -957,10 +1085,10 @@ typedef const Cmat3Fcomp &Cmat3Fcomp_I;
 typedef Cmat3Fcomp &Cmat3Fcomp_O, &Cmat3Fcomp_IO;
 
 
-class Cmat3Comp : protected VecComp
+class Cmat3Comp : private VbaseComp
 {
 protected:
-	typedef VecComp Base;
+	typedef VbaseComp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Comp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -972,6 +1100,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Comp &operator()(Long_I i, Long_I j, Long_I k);
@@ -1076,10 +1205,10 @@ typedef const Cmat3Comp &Cmat3Comp_I;
 typedef Cmat3Comp &Cmat3Comp_O, &Cmat3Comp_IO;
 
 
-class Cmat3Lcomp : protected VecLcomp
+class Cmat3Lcomp : private VbaseLcomp
 {
 protected:
-	typedef VecLcomp Base;
+	typedef VbaseLcomp Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Lcomp(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1091,6 +1220,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Lcomp &operator()(Long_I i, Long_I j, Long_I k);
@@ -1196,10 +1326,10 @@ typedef Cmat3Lcomp &Cmat3Lcomp_O, &Cmat3Lcomp_IO;
 
 
 
-class Cmat3Fimag : protected VecFimag
+class Cmat3Fimag : private VbaseFimag
 {
 protected:
-	typedef VecFimag Base;
+	typedef VbaseFimag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Fimag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1211,6 +1341,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Fimag &operator()(Long_I i, Long_I j, Long_I k);
@@ -1315,10 +1446,10 @@ typedef const Cmat3Fimag &Cmat3Fimag_I;
 typedef Cmat3Fimag &Cmat3Fimag_O, &Cmat3Fimag_IO;
 
 
-class Cmat3Imag : protected VecImag
+class Cmat3Imag : private VbaseImag
 {
 protected:
-	typedef VecImag Base;
+	typedef VbaseImag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Imag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1330,6 +1461,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Imag &operator()(Long_I i, Long_I j, Long_I k);
@@ -1434,10 +1566,10 @@ typedef const Cmat3Imag &Cmat3Imag_I;
 typedef Cmat3Imag &Cmat3Imag_O, &Cmat3Imag_IO;
 
 
-class Cmat3Limag : protected VecLimag
+class Cmat3Limag : private VbaseLimag
 {
 protected:
-	typedef VecLimag Base;
+	typedef VbaseLimag Base;
 	Long m_N0, m_N1, m_N2;
 public:
 	Cmat3Limag(): m_N0(0), m_N1(0), m_N2(0) {};
@@ -1449,6 +1581,7 @@ public:
 	using Base::p;
 	using Base::size;
 	using Base::operator[];
+	using Base::end;
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	Limag &operator()(Long_I i, Long_I j, Long_I k);

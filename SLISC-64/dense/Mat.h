@@ -3,10 +3,10 @@
 #include "../dense/Vec.h"
 
 namespace slisc {
-class MatChar : public VecChar
+class MatChar : public VbaseChar
 {
 protected:
-	typedef VecChar Base;
+	typedef VbaseChar Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -68,10 +68,10 @@ inline void MatChar::resize(Long_I N0, Long_I N1)
 typedef const MatChar &MatChar_I;
 typedef MatChar &MatChar_O, &MatChar_IO;
 
-class MatUchar : public VecUchar
+class MatUchar : public VbaseUchar
 {
 protected:
-	typedef VecUchar Base;
+	typedef VbaseUchar Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -133,10 +133,10 @@ inline void MatUchar::resize(Long_I N0, Long_I N1)
 typedef const MatUchar &MatUchar_I;
 typedef MatUchar &MatUchar_O, &MatUchar_IO;
 
-class MatInt : public VecInt
+class MatInt : public VbaseInt
 {
 protected:
-	typedef VecInt Base;
+	typedef VbaseInt Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -198,10 +198,10 @@ inline void MatInt::resize(Long_I N0, Long_I N1)
 typedef const MatInt &MatInt_I;
 typedef MatInt &MatInt_O, &MatInt_IO;
 
-class MatLlong : public VecLlong
+class MatLlong : public VbaseLlong
 {
 protected:
-	typedef VecLlong Base;
+	typedef VbaseLlong Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -263,10 +263,10 @@ inline void MatLlong::resize(Long_I N0, Long_I N1)
 typedef const MatLlong &MatLlong_I;
 typedef MatLlong &MatLlong_O, &MatLlong_IO;
 
-class MatFloat : public VecFloat
+class MatFloat : public VbaseFloat
 {
 protected:
-	typedef VecFloat Base;
+	typedef VbaseFloat Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -328,10 +328,10 @@ inline void MatFloat::resize(Long_I N0, Long_I N1)
 typedef const MatFloat &MatFloat_I;
 typedef MatFloat &MatFloat_O, &MatFloat_IO;
 
-class MatDoub : public VecDoub
+class MatDoub : public VbaseDoub
 {
 protected:
-	typedef VecDoub Base;
+	typedef VbaseDoub Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -393,10 +393,10 @@ inline void MatDoub::resize(Long_I N0, Long_I N1)
 typedef const MatDoub &MatDoub_I;
 typedef MatDoub &MatDoub_O, &MatDoub_IO;
 
-class MatLdoub : public VecLdoub
+class MatLdoub : public VbaseLdoub
 {
 protected:
-	typedef VecLdoub Base;
+	typedef VbaseLdoub Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -459,10 +459,10 @@ typedef const MatLdoub &MatLdoub_I;
 typedef MatLdoub &MatLdoub_O, &MatLdoub_IO;
 
 
-class MatFcomp : public VecFcomp
+class MatFcomp : public VbaseFcomp
 {
 protected:
-	typedef VecFcomp Base;
+	typedef VbaseFcomp Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -524,10 +524,10 @@ inline void MatFcomp::resize(Long_I N0, Long_I N1)
 typedef const MatFcomp &MatFcomp_I;
 typedef MatFcomp &MatFcomp_O, &MatFcomp_IO;
 
-class MatComp : public VecComp
+class MatComp : public VbaseComp
 {
 protected:
-	typedef VecComp Base;
+	typedef VbaseComp Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -589,10 +589,10 @@ inline void MatComp::resize(Long_I N0, Long_I N1)
 typedef const MatComp &MatComp_I;
 typedef MatComp &MatComp_O, &MatComp_IO;
 
-class MatLcomp : public VecLcomp
+class MatLcomp : public VbaseLcomp
 {
 protected:
-	typedef VecLcomp Base;
+	typedef VbaseLcomp Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -655,10 +655,10 @@ typedef const MatLcomp &MatLcomp_I;
 typedef MatLcomp &MatLcomp_O, &MatLcomp_IO;
 
 
-class MatFimag : public VecFimag
+class MatFimag : public VbaseFimag
 {
 protected:
-	typedef VecFimag Base;
+	typedef VbaseFimag Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -720,10 +720,10 @@ inline void MatFimag::resize(Long_I N0, Long_I N1)
 typedef const MatFimag &MatFimag_I;
 typedef MatFimag &MatFimag_O, &MatFimag_IO;
 
-class MatImag : public VecImag
+class MatImag : public VbaseImag
 {
 protected:
-	typedef VecImag Base;
+	typedef VbaseImag Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;
@@ -785,10 +785,10 @@ inline void MatImag::resize(Long_I N0, Long_I N1)
 typedef const MatImag &MatImag_I;
 typedef MatImag &MatImag_O, &MatImag_IO;
 
-class MatLimag : public VecLimag
+class MatLimag : public VbaseLimag
 {
 protected:
-	typedef VecLimag Base;
+	typedef VbaseLimag Base;
 	Long m_N0, m_N1;
 public:
 	using Base::p;

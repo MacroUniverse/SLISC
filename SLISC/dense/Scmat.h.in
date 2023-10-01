@@ -4,6 +4,7 @@
 
 namespace slisc {
 //% tem('Scmat', {
+//%     'Bool', true;   'Bool', false;
 //%     'Char', true;   'Char', false;
 //%     'Uchar', true;   'Uchar', false;
 //%     'Int', true;    'Int', false;
@@ -23,17 +24,17 @@ namespace slisc {
 //% });
 //%------------------------
 //% [T, constness] = varargin{:};
-//% SvecT = ['Svec' T];
-//% SvecTC = [SvecT 'C'];
+//% SvbaseT = ['Svbase' T];
+//% SvbaseTC = [SvbaseT 'C'];
 //% ScmatT = ['Scmat' T];
 //% ScmatTC = [ScmatT 'C'];
 //% if constness
 //%     CT = ['const ' T];
-//%     Base = SvecTC;
+//%     Base = SvbaseTC;
 //%     Class = ScmatTC;
 //% else
 //%     CT = T;
-//%     Base = SvecT;
+//%     Base = SvbaseT;
 //%     Class = ScmatT;
 //% end
 class @Class@ : public @Base@
