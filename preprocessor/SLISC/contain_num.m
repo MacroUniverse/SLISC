@@ -28,6 +28,8 @@ elseif (is_SvecC(T)), ret = 48;
 elseif (is_ScmatC(T)), ret = 49;
 elseif (is_Scmat3(T)), ret = 50;
 elseif (is_Scmat3C(T)), ret = 51;
+elseif (is_Scmat4(T)), ret = 52;
+elseif (is_Scmat4C(T)), ret = 53;
 elseif (is_vec(T)), ret = 100;
 else, ret = -1;
 end

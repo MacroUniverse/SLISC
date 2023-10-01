@@ -407,11 +407,11 @@ inline void save(Str_I str, Str_I varname, Matb_IO matb)
 // return 0 if successful, -1 if variable not found
 //% tem('load', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Qdoub'; 'Comp'; 'Qcomp';
 //%    'vecDoub'; 'vecQdoub'; 'vecComp'; 'vecQcomp';
-//%    'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%    'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
 //%    'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp'; 'Mat3Doub'; 'Mat3Comp';
-//%    'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
-//%    'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp';
-//%    'Scmat4Doub'; 'Scmat4Qdoub'; 'Scmat4Comp'; 'Scmat4Qcomp';
+//%    'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%    'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%    'Cmat4Doub'; 'Cmat4Qdoub'; 'Cmat4Comp'; 'Cmat4Qcomp';
 //% });
 //%---------------------
 //% T = varargin{:};
@@ -436,7 +436,7 @@ inline void load(@T@_O s, Str_I varname, Matb_IO matb)
 
 	read(fin, s);
 }
-//% elseif is_Svec(T) || is_vec(T)
+//% elseif is_Vec(T) || is_vec(T)
 inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 {
 	ifstream &fin = matb.m_in;
@@ -455,7 +455,7 @@ inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 	for (Long i = 0; i < n; ++i)
 		read(fin, v[i]);
 }
-//% elseif is_Mat(T) || is_Scmat(T)
+//% elseif is_Mat(T) || is_Cmat(T)
 inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, m, n;
@@ -476,7 +476,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 		for (i = 0; i < m; ++i)
 			read(fin, a(i, j));
 }
-//% elseif is_Mat3(T) || is_Scmat3(T)
+//% elseif is_Mat3(T) || is_Cmat3(T)
 inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, k, m, n, q;
@@ -499,7 +499,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 			for (i = 0; i < m; ++i)
 				read(fin, a(i, j, k));
 }
-//% elseif is_Scmat4(T)
+//% elseif is_Cmat4(T)
 inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
@@ -579,10 +579,10 @@ inline Long matb2matt(Str_I matb_name, Bool_I replace = false)
 
 // containers
 //% tem('matb2matt2', {
-//%     'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
-//%     'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp';
-//%     'Scmat4Doub'; 'Scmat4Comp';
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
 //% });
 //%----------------------
 //% T = varargin{:};
@@ -642,10 +642,10 @@ inline Long matt2matb(Str_I matt_name, Bool_I replace = false)
 
 // containers
 //% tem('matt2matb2', {
-//%     'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecComp';
-//%     'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
-//%     'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp';
-//%     'Scmat4Doub'; 'Scmat4Comp';
+//%     'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
+//%     'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%     'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%     'Cmat4Doub'; 'Cmat4Comp';
 //% });
 //%----------------------
 //% T = varargin{:};
@@ -720,9 +720,9 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 		}
 
 // containers
-//% tem('matb_q2d2', {'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub';
-//%   'SvecComp'; 'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
-//%   'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp'; 'Scmat4Doub'; 'Scmat4Comp';});
+//% tem('matb_q2d2', {'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub';
+//%   'VecComp'; 'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%   'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp'; 'Cmat4Doub'; 'Cmat4Comp';});
 //%----------------------
 //% T = varargin{:};
 //% Ndim = num2str(ndim(T));
@@ -737,10 +737,10 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 
 // quad precision containers
 //% tem('matb_q2d3', {
-//%     'SvecQdoub' 'SvecDoub'; 'ScmatQdoub' 'ScmatDoub';
-//%     'Scmat3Qdoub' 'Scmat3Doub'; 'Scmat4Qdoub' 'Scmat4Doub';
-//%     'SvecQcomp' 'SvecComp'; 'ScmatQcomp' 'ScmatComp';
-//%     'Scmat3Qcomp' 'Scmat3Comp'; 'Scmat4Qcomp' 'Scmat4Comp';
+//%     'VecQdoub' 'VecDoub'; 'CmatQdoub' 'CmatDoub';
+//%     'Cmat3Qdoub' 'Cmat3Doub'; 'Cmat4Qdoub' 'Cmat4Doub';
+//%     'VecQcomp' 'VecComp'; 'CmatQcomp' 'CmatComp';
+//%     'Cmat3Qcomp' 'Cmat3Comp'; 'Cmat4Qcomp' 'Cmat4Comp';
 //% });
 //%----------------------
 //% [T, T1] = varargin{:};

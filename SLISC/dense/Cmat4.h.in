@@ -1,6 +1,7 @@
 // Cmat container
 #pragma once
 #include "../dense/Vec.h"
+#include "Scmat4.h"
 
 namespace slisc {
 //% tem('Cmat4', {
@@ -12,7 +13,7 @@ namespace slisc {
 //% T = varargin{:};
 //% Cmat4T = ['Cmat4' T];
 //% VecT = ['Vec' T];
-class @Cmat4T@ : public @VecT@
+class @Cmat4T@ : protected @VecT@
 {
 protected:
 	typedef @VecT@ Base;
@@ -23,8 +24,10 @@ public:
 	@Cmat4T@(const @Cmat4T@ &rhs);   // copy constructor
 	@Cmat4T@(@Cmat4T@ &&rhs);   // move constructor
 	@Cmat4T@ &operator=(const @Cmat4T@ &rhs); // copy assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	void resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
-	inline void resize(Long_I N);
 	inline void reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3);
 	@T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l);
 	const @T@ &operator()(Long_I i, Long_I j, Long_I k, Long_I l) const;
@@ -32,6 +35,9 @@ public:
 	Long n1() const;
 	Long n2() const;
 	Long n3() const;
+
+	operator const Scmat4@T@C&() const;
+	operator const Scmat4@T@&();
 };
 
 inline @Cmat4T@::@Cmat4T@(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
@@ -65,24 +71,10 @@ inline void @Cmat4T@::resize(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 	}
 }
 
-inline void @Cmat4T@::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2*m_N3) {
-		stringstream ss;
-		ss  << "@Cmat4T@ resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ',' << m_N3 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void @Cmat4T@::reshape(Long_I N0, Long_I N1, Long_I N2, Long_I N3)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2*N2 < m_N) {
+	if (N0*N1*N2*N2 != m_N) {
 		stringstream ss;
 		ss  << "@Cmat4T@ reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ',' << m_N3 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
@@ -130,6 +122,14 @@ inline Long @Cmat4T@::n2() const {
 
 inline Long @Cmat4T@::n3() const {
 	return m_N3;
+}
+
+inline @Cmat4T@::operator const Scmat4@T@C&() const {
+	return reinterpret_cast<const Scmat4@T@C&>(*this);
+}
+
+inline @Cmat4T@::operator const Scmat4@T@&() {
+	return reinterpret_cast<const Scmat4@T@&>(*this);
 }
 
 typedef const @Cmat4T@ &@Cmat4T@_I;

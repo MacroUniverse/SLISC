@@ -33,8 +33,7 @@ inline void mod_vvs(@T@ *v, const @T1@ *v1, @T1@_I s, Long_I N)
 //% req('mod_vvs', {Ts,Ts1});
 inline void mod(@T@_O v, @T1@_I v1, @Ts1@_I s)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	mod_vvs(v.p(), v1.p(), s, v.size());
 }
 //%-------------------------
@@ -90,14 +89,13 @@ inline void imag(@T@_IO v)
 //% req('real_vv', {Ts, Ts1});
 inline void real(@T@_O v, @T1@_I v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	real_vv(v.p(), v1.p(), v1.size());
 }
 
 inline void imag(@T@_O v, @T1@_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	imag_vv(v.p(), v1.p(), v1.size());
 }
 //%--------------------
@@ -140,8 +138,7 @@ inline void abs(@T@_IO v)
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void abs(@T@_O v, @T1@_I v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 //% req('abs_vv', {Ts Ts1});
 	abs_vv(v.p(), v1.p(), v1.size());
 }
@@ -196,8 +193,7 @@ inline void conj(@T@_IO v)
 //% [T, T1] = varargin{:};
 inline void conj(@T@_O v, @T1@_I v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	conj_vv(v.p(), v1.p(), v.size());
 }
 //%----------------------------
@@ -286,8 +282,7 @@ inline void pow_vvs(@T@ *v, const @T1@ *v1, @Ts@_I s, Long_I N)
 //% [Tsv,Ts1] = val_t(T,T1,Ts);
 inline void pow(@T@_O v, @T1@_I v1, @Ts@_I s)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 //% req('pow_vvs', {Tsv Ts1 Ts});
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
@@ -328,32 +323,32 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%   'SvecQcomp' 'SvecQdoub'
 //%   'SvecQcomp' 'SvecQcomp'
 //%   'DvecComp' 'SvecDoub'
-//%   'DvecQcomp' 'SvecQdoub'
-//%   'Scmat3Comp', 'Jcmat3Comp'
-//%   'Scmat3Qcomp', 'Jcmat3Qcomp' });
+//%   'DvecQcomp' 'SvecQdoub' });
 //%---------------------
 //% [T1, T2] = varargin{:};
 //% [Ts1,Ts2] = val_t(T1,T2);
 //% T = promo_type(Ts1, Ts2);
 inline @T@ dot(@T1@_I v1, @T2@_I v2)
 {
-//% req('assert_same_shape', {T1, T2});
-	assert_same_shape(v1, v2);
 //% if is_dense(T1) && is_dense(T2)
 //%     req('dot_vv', {Ts1,Ts2});
+	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
 //% elseif ndim(T1) == 1
+	assert_same_shape1(v1, v2);
 	@T@ sum = 0;
 	for (Long i = 0; i < v1.size(); ++i)
 		sum += conj(v1[i]) * v2[i];
 	return sum;
 //% elseif ndim(T1) == 2
+	assert_same_shape2(v1, v2);
 	@T@ sum = 0;
 	for (Long i = 0; i < v1.n0(); ++i)
 		for (Long j = 0; j < v1.n1(); ++j)
 				sum += conj(v1(i,j)) * v2(i,j);
 	return sum;
 //% elseif ndim(T1) == 3
+	assert_same_shape3(v1, v2);
 	@T@ sum = 0;
 	for (Long i = 0; i < v1.n0(); ++i)
 		for (Long j = 0; j < v1.n1(); ++j)
@@ -390,8 +385,7 @@ inline void cumsum_vv(@T@ *v, const @T1@ *v1, Long_I N)
 //% req('cumsum_vv', {val_t(T), val_t(T1)});
 inline void cumsum(@T@_O v, @T1@_I v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());
 }
 //%-------------------------

@@ -4,7 +4,7 @@
 #include "Scmat.h"
 
 namespace slisc {
-class CmatChar : public VecChar
+class CmatChar : protected VecChar
 {
 protected:
 	typedef VecChar Base;
@@ -16,16 +16,17 @@ public:
 	CmatChar(CmatChar &&rhs); // move constructor
 	CmatChar &operator=(const CmatChar &rhs); // copy assignment
 	CmatChar &operator=(CmatChar &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Char& operator()(Long_I i, Long_I j); // double indexing
 	const Char& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecCharC&;
-	using Base::operator const SvecChar&;
 	operator const ScmatCharC&() const;
 	operator const ScmatChar&();
 };
@@ -109,7 +110,7 @@ inline void CmatChar::resize(Long_I N)
 inline void CmatChar::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatChar reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -132,7 +133,7 @@ typedef const CmatChar &CmatChar_I;
 typedef CmatChar &CmatChar_O, &CmatChar_IO;
 
 
-class CmatUchar : public VecUchar
+class CmatUchar : protected VecUchar
 {
 protected:
 	typedef VecUchar Base;
@@ -144,16 +145,17 @@ public:
 	CmatUchar(CmatUchar &&rhs); // move constructor
 	CmatUchar &operator=(const CmatUchar &rhs); // copy assignment
 	CmatUchar &operator=(CmatUchar &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Uchar& operator()(Long_I i, Long_I j); // double indexing
 	const Uchar& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecUcharC&;
-	using Base::operator const SvecUchar&;
 	operator const ScmatUcharC&() const;
 	operator const ScmatUchar&();
 };
@@ -237,7 +239,7 @@ inline void CmatUchar::resize(Long_I N)
 inline void CmatUchar::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatUchar reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -260,7 +262,7 @@ typedef const CmatUchar &CmatUchar_I;
 typedef CmatUchar &CmatUchar_O, &CmatUchar_IO;
 
 
-class CmatInt : public VecInt
+class CmatInt : protected VecInt
 {
 protected:
 	typedef VecInt Base;
@@ -272,16 +274,17 @@ public:
 	CmatInt(CmatInt &&rhs); // move constructor
 	CmatInt &operator=(const CmatInt &rhs); // copy assignment
 	CmatInt &operator=(CmatInt &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Int& operator()(Long_I i, Long_I j); // double indexing
 	const Int& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecIntC&;
-	using Base::operator const SvecInt&;
 	operator const ScmatIntC&() const;
 	operator const ScmatInt&();
 };
@@ -365,7 +368,7 @@ inline void CmatInt::resize(Long_I N)
 inline void CmatInt::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatInt reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -388,7 +391,7 @@ typedef const CmatInt &CmatInt_I;
 typedef CmatInt &CmatInt_O, &CmatInt_IO;
 
 
-class CmatLlong : public VecLlong
+class CmatLlong : protected VecLlong
 {
 protected:
 	typedef VecLlong Base;
@@ -400,16 +403,17 @@ public:
 	CmatLlong(CmatLlong &&rhs); // move constructor
 	CmatLlong &operator=(const CmatLlong &rhs); // copy assignment
 	CmatLlong &operator=(CmatLlong &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Llong& operator()(Long_I i, Long_I j); // double indexing
 	const Llong& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecLlongC&;
-	using Base::operator const SvecLlong&;
 	operator const ScmatLlongC&() const;
 	operator const ScmatLlong&();
 };
@@ -493,7 +497,7 @@ inline void CmatLlong::resize(Long_I N)
 inline void CmatLlong::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatLlong reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -516,7 +520,7 @@ typedef const CmatLlong &CmatLlong_I;
 typedef CmatLlong &CmatLlong_O, &CmatLlong_IO;
 
 
-class CmatFloat : public VecFloat
+class CmatFloat : protected VecFloat
 {
 protected:
 	typedef VecFloat Base;
@@ -528,16 +532,17 @@ public:
 	CmatFloat(CmatFloat &&rhs); // move constructor
 	CmatFloat &operator=(const CmatFloat &rhs); // copy assignment
 	CmatFloat &operator=(CmatFloat &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Float& operator()(Long_I i, Long_I j); // double indexing
 	const Float& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecFloatC&;
-	using Base::operator const SvecFloat&;
 	operator const ScmatFloatC&() const;
 	operator const ScmatFloat&();
 };
@@ -621,7 +626,7 @@ inline void CmatFloat::resize(Long_I N)
 inline void CmatFloat::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatFloat reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -644,7 +649,7 @@ typedef const CmatFloat &CmatFloat_I;
 typedef CmatFloat &CmatFloat_O, &CmatFloat_IO;
 
 
-class CmatDoub : public VecDoub
+class CmatDoub : protected VecDoub
 {
 protected:
 	typedef VecDoub Base;
@@ -656,16 +661,17 @@ public:
 	CmatDoub(CmatDoub &&rhs); // move constructor
 	CmatDoub &operator=(const CmatDoub &rhs); // copy assignment
 	CmatDoub &operator=(CmatDoub &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Doub& operator()(Long_I i, Long_I j); // double indexing
 	const Doub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecDoubC&;
-	using Base::operator const SvecDoub&;
 	operator const ScmatDoubC&() const;
 	operator const ScmatDoub&();
 };
@@ -749,7 +755,7 @@ inline void CmatDoub::resize(Long_I N)
 inline void CmatDoub::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatDoub reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -772,7 +778,7 @@ typedef const CmatDoub &CmatDoub_I;
 typedef CmatDoub &CmatDoub_O, &CmatDoub_IO;
 
 
-class CmatLdoub : public VecLdoub
+class CmatLdoub : protected VecLdoub
 {
 protected:
 	typedef VecLdoub Base;
@@ -784,16 +790,17 @@ public:
 	CmatLdoub(CmatLdoub &&rhs); // move constructor
 	CmatLdoub &operator=(const CmatLdoub &rhs); // copy assignment
 	CmatLdoub &operator=(CmatLdoub &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Ldoub& operator()(Long_I i, Long_I j); // double indexing
 	const Ldoub& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecLdoubC&;
-	using Base::operator const SvecLdoub&;
 	operator const ScmatLdoubC&() const;
 	operator const ScmatLdoub&();
 };
@@ -877,7 +884,7 @@ inline void CmatLdoub::resize(Long_I N)
 inline void CmatLdoub::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatLdoub reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -901,7 +908,7 @@ typedef CmatLdoub &CmatLdoub_O, &CmatLdoub_IO;
 
 
 
-class CmatFcomp : public VecFcomp
+class CmatFcomp : protected VecFcomp
 {
 protected:
 	typedef VecFcomp Base;
@@ -913,16 +920,17 @@ public:
 	CmatFcomp(CmatFcomp &&rhs); // move constructor
 	CmatFcomp &operator=(const CmatFcomp &rhs); // copy assignment
 	CmatFcomp &operator=(CmatFcomp &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Fcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Fcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecFcompC&;
-	using Base::operator const SvecFcomp&;
 	operator const ScmatFcompC&() const;
 	operator const ScmatFcomp&();
 };
@@ -1006,7 +1014,7 @@ inline void CmatFcomp::resize(Long_I N)
 inline void CmatFcomp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatFcomp reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -1029,7 +1037,7 @@ typedef const CmatFcomp &CmatFcomp_I;
 typedef CmatFcomp &CmatFcomp_O, &CmatFcomp_IO;
 
 
-class CmatComp : public VecComp
+class CmatComp : protected VecComp
 {
 protected:
 	typedef VecComp Base;
@@ -1041,16 +1049,17 @@ public:
 	CmatComp(CmatComp &&rhs); // move constructor
 	CmatComp &operator=(const CmatComp &rhs); // copy assignment
 	CmatComp &operator=(CmatComp &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Comp& operator()(Long_I i, Long_I j); // double indexing
 	const Comp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecCompC&;
-	using Base::operator const SvecComp&;
 	operator const ScmatCompC&() const;
 	operator const ScmatComp&();
 };
@@ -1134,7 +1143,7 @@ inline void CmatComp::resize(Long_I N)
 inline void CmatComp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatComp reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -1157,7 +1166,7 @@ typedef const CmatComp &CmatComp_I;
 typedef CmatComp &CmatComp_O, &CmatComp_IO;
 
 
-class CmatLcomp : public VecLcomp
+class CmatLcomp : protected VecLcomp
 {
 protected:
 	typedef VecLcomp Base;
@@ -1169,16 +1178,17 @@ public:
 	CmatLcomp(CmatLcomp &&rhs); // move constructor
 	CmatLcomp &operator=(const CmatLcomp &rhs); // copy assignment
 	CmatLcomp &operator=(CmatLcomp &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Lcomp& operator()(Long_I i, Long_I j); // double indexing
 	const Lcomp& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecLcompC&;
-	using Base::operator const SvecLcomp&;
 	operator const ScmatLcompC&() const;
 	operator const ScmatLcomp&();
 };
@@ -1262,7 +1272,7 @@ inline void CmatLcomp::resize(Long_I N)
 inline void CmatLcomp::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatLcomp reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -1286,7 +1296,7 @@ typedef CmatLcomp &CmatLcomp_O, &CmatLcomp_IO;
 
 
 
-class CmatFimag : public VecFimag
+class CmatFimag : protected VecFimag
 {
 protected:
 	typedef VecFimag Base;
@@ -1298,16 +1308,17 @@ public:
 	CmatFimag(CmatFimag &&rhs); // move constructor
 	CmatFimag &operator=(const CmatFimag &rhs); // copy assignment
 	CmatFimag &operator=(CmatFimag &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Fimag& operator()(Long_I i, Long_I j); // double indexing
 	const Fimag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecFimagC&;
-	using Base::operator const SvecFimag&;
 	operator const ScmatFimagC&() const;
 	operator const ScmatFimag&();
 };
@@ -1391,7 +1402,7 @@ inline void CmatFimag::resize(Long_I N)
 inline void CmatFimag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatFimag reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -1414,7 +1425,7 @@ typedef const CmatFimag &CmatFimag_I;
 typedef CmatFimag &CmatFimag_O, &CmatFimag_IO;
 
 
-class CmatImag : public VecImag
+class CmatImag : protected VecImag
 {
 protected:
 	typedef VecImag Base;
@@ -1426,16 +1437,17 @@ public:
 	CmatImag(CmatImag &&rhs); // move constructor
 	CmatImag &operator=(const CmatImag &rhs); // copy assignment
 	CmatImag &operator=(CmatImag &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Imag& operator()(Long_I i, Long_I j); // double indexing
 	const Imag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecImagC&;
-	using Base::operator const SvecImag&;
 	operator const ScmatImagC&() const;
 	operator const ScmatImag&();
 };
@@ -1519,7 +1531,7 @@ inline void CmatImag::resize(Long_I N)
 inline void CmatImag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatImag reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "
@@ -1542,7 +1554,7 @@ typedef const CmatImag &CmatImag_I;
 typedef CmatImag &CmatImag_O, &CmatImag_IO;
 
 
-class CmatLimag : public VecLimag
+class CmatLimag : protected VecLimag
 {
 protected:
 	typedef VecLimag Base;
@@ -1554,16 +1566,17 @@ public:
 	CmatLimag(CmatLimag &&rhs); // move constructor
 	CmatLimag &operator=(const CmatLimag &rhs); // copy assignment
 	CmatLimag &operator=(CmatLimag &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	Limag& operator()(Long_I i, Long_I j); // double indexing
 	const Limag& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const SvecLimagC&;
-	using Base::operator const SvecLimag&;
 	operator const ScmatLimagC&() const;
 	operator const ScmatLimag&();
 };
@@ -1647,7 +1660,7 @@ inline void CmatLimag::resize(Long_I N)
 inline void CmatLimag::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "CmatLimag reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "

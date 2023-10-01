@@ -201,16 +201,14 @@ inline void sort_vv(Tit v, Tit1 v1, Long_I n, Tcomp comp)
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
 inline void sort(@T@_IO v, @T1@_IO v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sort_vv(&v[0], &v1[0], size(v));
 }
 
 inline void sortd(@T@_IO v, @T1@_IO v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	if (size(v) > 1)
 		sortd_vv(&v[0], &v1[0], size(v));
 }

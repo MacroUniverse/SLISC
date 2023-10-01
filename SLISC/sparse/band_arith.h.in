@@ -116,8 +116,7 @@ inline void copy_diag_real(Cband@Tc@_O b, @Tr@_I s)
 // copy double dense matrix to imag part of band matrix
 inline void copy_imag(Cband@Tc@_O b, Scmat@Tr@_I a)
 {
-//% req('assert_same_shape', {['Cband' Tc] ['Scmat' Tr]});
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	for (Long j = 0; j < N1; ++j) {
 //% req('cut0', { ['Scmat' Tc]; ['Scmat' Tr]; });
@@ -134,8 +133,7 @@ inline void copy_imag(Cband@Tc@_O b, Scmat@Tr@_I a)
 // b = 1/2 + I*dt*a/4
 inline void cn_band_mat(Cband@Tc@_O b, Scmat@Tr@_I a, @Tr@_I dt, Bool_I imag_time)
 {
-//% req('assert_same_shape', {['Scmat' Tr] ['Cband' Tc]});
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	Long N0 = a.n0(), N1 = a.n1();
 	@Tr@ dt4 = 0.25*dt;
 	for (Long j = 0; j < N1; ++j) {
@@ -167,8 +165,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Scmat@Tr@_I a, @Tr@_I dt, Bool_I imag_tim
 // B = 1/2 + I*dt*A/4
 inline void cn_band_mat(Cband@Tc@_O b, Mcoo@Tr@_I a, @Tr@_I dt, Bool_I imag_time, Bool_I append = false)
 {
-//% req('assert_same_shape', {['Mcoo' Tr] ['Cband' Tc]});
-	assert_same_shape(a, b);
+	assert_same_shape2(a, b);
 	@Tr@ dt4 = 0.25*dt;
 	if (!append) {
 //% req('copy(band,s)', {['Cband' Tc]});
@@ -198,8 +195,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Svec@Tr@_I coeff, const vector<Mcoo@Tr@> 
 {
 #ifdef SLS_CHECK_SHAPES
 	for (Long l = 0; l < (Long)a.size(); ++l)
-//% req('assert_same_shape', {['Mcoo' Tr], ['Cband' Tc]});
-		assert_same_shape(a[l], b);
+		assert_same_shape2(a[l], b);
 	if (coeff.size() != (Long)a.size())
 		SLS_ERR("wrong shape!");
 #endif
@@ -238,8 +234,7 @@ inline void cn_band_mat(Cband@Tc@_O b, Svec@Tr@_I coeff, const vector<Mcoo@Tr@> 
 //% [Tv, Tv1, Ts] = varargin{:};
 inline void times(@Tv@_O v, @Tv1@_I v1, @Ts@_I s)
 {
-//% req('assert_same_shape', {Tv, Tv1});
-	assert_same_shape(v, v1);
+	assert_same_shape2(v, v1);
 	times(band(v), band(v1), s);
 }
 //%------------------------

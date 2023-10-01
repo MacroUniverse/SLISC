@@ -17,13 +17,6 @@ void test_copy()
 	if (v1[0] != 3 || v1[1] != 2 || v1[2] != 1)
 		SLS_FAIL;
 
-	CmatDoub a(3, 4);
-	MatDoub a1(3, 4);
-	linspace(a, 0, 12);
-	copy(a1, a);
-	if (a1 != a)
-		SLS_FAIL;
-	
 	// copy/compare from initializer list
 	{
 		VecDoub v(3);
@@ -35,7 +28,7 @@ void test_copy()
 		if (a[0] != 1 || a[1] != 2 || a[2] != 3 || a[3] != 4 || a[4] != 5 || a[5] != 6)
 			SLS_FAIL;
 		ScmatDoub sa = cut(a, 0, 2);
-		copy(sa, {7, 8, 9, 0});
+		copy(sa, {7., 8., 9., 0.});
 		if (sa[0] != 7 || sa[1] != 8 || sa[2] != 9 || sa[3] != 0)
 			SLS_FAIL;
 		CmatComp ac(2, 2);

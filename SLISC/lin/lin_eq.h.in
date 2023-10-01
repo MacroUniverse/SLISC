@@ -76,7 +76,7 @@ inline void inv_mat(@T@_IO A, @Twsp@_IO wsp)
 //%---------------------
 //% [Tx, Ta] = varargin{:};
 //% Tsx = val_t(Tx); Tsa = val_t(Ta);
-//% CmatTsa = ['Scmat' Tsa];
+//% CmatTsa = ['Cmat' Tsa];
 inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -89,10 +89,7 @@ inline void lin_eq(@Tx@_IO x, @Ta@_I a)
 #endif
 	thread_local static @CmatTsa@ a1(a.n0(), a.n1());
 	thread_local static VecLong ipiv(a.n0());
-//%     req('shape_cmp', {CmatTsa Ta});
-	if (!shape_cmp(a1, a))
-		a1.resize(a.n0(), a.n1());
-//% req('copy(v,v)', {CmatTsa Ta});
+//% req('copy(v,v)', {['Svec' Tsa] ['Svec' Tsa]});
 	copy(a1, a);
 	if (a.n0() > ipiv.size())
 		ipiv.resize(a.n0());

@@ -1,10 +1,11 @@
 % see if input types has anything to do with quadmath.h
 function ret = has_quad(varargin)
-for type = varargin
-    if is_contain(type{1})
-        Ts = val_t(type{1});
-    elseif is_scalar(type{1})
-        Ts = type{1};
+for Tc = varargin
+    T = Tc{1};
+    if is_contain(T)
+        Ts = val_t(T);
+    elseif is_scalar(T)
+        Ts = T;
     else
         continue;
     end

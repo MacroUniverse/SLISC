@@ -102,7 +102,7 @@ void test_arithmetic()
 
 	// test shape_cmp
 	{
-		SLS_ASSERT(shape_cmp(Mat3Doub(7, 3, 5), Mat3Comp(7, 3, 5)));
+		SLS_ASSERT(shape_cmp3(Mat3Doub(7, 3, 5), Mat3Comp(7, 3, 5)));
 	}
 
 	// copy from column major matrix to vector

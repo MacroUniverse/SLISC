@@ -8,72 +8,75 @@
 #include "../dense/Dvec.h"
 #include "../dense/Scmat.h"
 #include "../dense/Scmat3.h"
+#include "../dense/Scmat4.h"
 #include "../dense/Dcmat.h"
 #include "../dense/Jcmat3.h"
 
 namespace slisc {
-//% tem('cut', { 'SvecInt'; 'SvecDoub'; 'SvecQdoub';
-//%  'SvecComp'; 'SvecQcomp';
-//%  'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
+//% tem('cut', {
+//%  'VecInt'; 'VecDoub'; 'VecQdoub'; 'VecComp'; 'VecQcomp';
+//%  'SvecInt'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//%  'CmatInt'; 'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%  'ScmatInt'; 'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
 //% });
 //%----------------------------
 //% Tv = varargin{:};
 //% T = val_t(Tv);
-//% Tsli = cut_type(Tv);
+//% Tcut = cut_type(Tv);
 //% if ndim(Tv) == 1
-inline @Tsli@ cut(@Tv@_IO v, Long_I start, Long_I N)
+inline @Tcut@ cut(@Tv@_IO v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start + N > v.size())
 		SLS_ERR("index out of bound!");
 #endif
 //%     if is_dense_vec(Tv)
-	@Tsli@ sli(&v[start], N);
+	@Tcut@ sv(&v[start], N);
 //%     elseif is_Dvec(Tv)
-	@Tsli@ sli(&v[start], N, v.step());
+	@Tcut@ sv(&v[start], N, v.step());
 //%     else
 //%         disp(Tv);
 //%         error('not implemented (1)!');
 //%     end
-	return sli;
+	return sv;
 }
 
-inline @Tsli@C cut(@Tv@_I v, Long_I start, Long_I N)
+inline @Tcut@C cut(@Tv@_I v, Long_I start, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start < 0 || start + N > v.size())
 		SLS_ERR("index out of bound!");
 #endif
 //%     if is_dense_vec(Tv)
-	@Tsli@C sli(&v[start], N);
+	@Tcut@C sv(&v[start], N);
 //%     elseif is_Dvec(Tv)
-	@Tsli@C sli(&v[start], N, v.step());
+	@Tcut@C sv(&v[start], N, v.step());
 //%     else
 //%         disp(Tv);
 //%         error('not implemented (2)!');
 //%     end
-	return sli;
+	return sv;
 }
 //% elseif ndim(Tv) == 2
-inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2)
+inline @Tcut@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() ||
 			start2 < 0 || start2 + N2 > v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-//%     if is_Scmat(Tv)
-	@Tsli@ sli(&v(start1, start2), N1, N2, v.n0());
+//%     if is_Scmat(Tv) || is_Cmat(Tv)
+	@Tcut@ sv(&v(start1, start2), N1, N2, v.n0());
 //%     elseif is_Dcmat(Tv)
-	@Tsli@ sli(&v(start1, start2), N1, N2, v.lda());
+	@Tcut@ sv(&v(start1, start2), N1, N2, v.lda());
 //%     else
 //%         disp('Tv = '); disp(Tv);
 //%         error('not implemented (3)!');
 //%     end
-	return sli;
+	return sv;
 }
 
-inline @Tsli@C cut(@Tv@_I v,
+inline @Tcut@C cut(@Tv@_I v,
 	Long_I start1, Long_I N1, Long_I start2, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -81,17 +84,17 @@ inline @Tsli@C cut(@Tv@_I v,
 			start2 < 0 || start2 + N2 > v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-//%     if is_Scmat(Tv)
-	@Tsli@C sli(&v(start1, start2), N1, N2, v.n0());
+//%     if is_Scmat(Tv) || is_Cmat(Tv)
+	@Tcut@C sv(&v(start1, start2), N1, N2, v.n0());
 //%     elseif is_Dcmat(Tv)
-	@Tsli@C sli(&v(start1, start2), N1, N2, v.lda());
+	@Tcut@C sv(&v(start1, start2), N1, N2, v.lda());
 //%     else
 //%         disp(Tv);
 //%         error('not implemented (4)!');
 //%     end
-	return sli;
+	return sv;
 }
-//%     if is_Scmat(Tv)
+//%     if is_Scmat(Tv) || is_Cmat(Tv)
 //%         ScmatT = ['Scmat' T];
 inline @ScmatT@ cut(@Tv@_IO v, Long_I start2, Long_I N2)
 {
@@ -99,8 +102,8 @@ inline @ScmatT@ cut(@Tv@_IO v, Long_I start2, Long_I N2)
 	if (start2 < 0 || start2 + N2 > v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@ScmatT@ sli(&v(0, start2), v.n0(), N2);
-	return sli;
+	@ScmatT@ sv(&v(0, start2), v.n0(), N2);
+	return sv;
 }
 
 inline @ScmatT@C cut(@Tv@_I v, Long_I start2, Long_I N2)
@@ -109,30 +112,30 @@ inline @ScmatT@C cut(@Tv@_I v, Long_I start2, Long_I N2)
 	if (start2 < 0 || start2 + N2 > v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@ScmatT@C sli(&v(0, start2), v.n0(), N2);
-	return sli;
+	@ScmatT@C sv(&v(0, start2), v.n0(), N2);
+	return sv;
 }
 //%     end
 //% elseif ndim(Tv) == 3
-//%     if is_Scmat3(Tv)
-inline @Tsli@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+//%     if is_Scmat3(Tv) || is_Cmat3(Tv)
+inline @Tcut@ cut(@Tv@_IO v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
-	return sli;
+	@Tcut@ sv(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
+	return sv;
 }
 
-inline @Tsli@C cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
+inline @Tcut@C cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2, Long_I start3, Long_I N3)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (start1 < 0 || start1 + N1 > v.n0() || start2 < 0 || start2 + N2 > v.n1() || start3 < 0 || start3 + N3 > v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
-	return sli;
+	@Tcut@C sv(&v(start1, start2, start3), N1, N2, N3, 1, v.n0(), v.n0()*v.n1());
+	return sv;
 }
 //%     end
 //% else
@@ -141,96 +144,101 @@ inline @Tsli@C cut(@Tv@_I v, Long_I start1, Long_I N1, Long_I start2, Long_I N2,
 //% end
 //%------------------------
 
-//% tem('cut0', { 'MatInt'; 'ScmatInt'; 'ScmatLlong';
+//% tem('cut0', { 'MatInt';
+//%   'CmatInt'; 'CmatLlong';
+//%   'CmatDoub'; 'CmatQdoub'; 'CmatComp'; 'CmatQcomp';
+//%   'ScmatInt'; 'ScmatLlong';
 //%   'ScmatDoub'; 'ScmatQdoub'; 'ScmatComp'; 'ScmatQcomp';
 //%   'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub';
 //%   'DcmatComp'; 'DcmatQcomp';
+//%   'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub';
+//%   'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
 //%   'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub';
 //%   'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp';
 //%    });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut0_type(Tv);
+//% Tcut = cut0_type(Tv);
 //% T = val_t(Tv);
-//% if is_Scmat(Tv)
-inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
+//% if is_Scmat(Tv) || is_Cmat(Tv)
+inline @Tcut@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, j), v.n0());
-	return sli;
+	@Tcut@ sv(&v(0, j), v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut0(@Tv@_I v, Long_I j)
+inline @Tcut@C cut0(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, j), v.n0());
-	return sli;
+	@Tcut@C sv(&v(0, j), v.n0());
+	return sv;
 }
 //% elseif is_Dcmat(Tv)
-inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
+inline @Tcut@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, j), v.n0());
-	return sli;
+	@Tcut@ sv(&v(0, j), v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut0(@Tv@_I v, Long_I j)
+inline @Tcut@C cut0(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, j), v.n0());
-	return sli;
+	@Tcut@C sv(&v(0, j), v.n0());
+	return sv;
 }
 //% elseif is_Mat(Tv)
-inline @Tsli@ cut0(@Tv@_IO v, Long_I j)
+inline @Tcut@ cut0(@Tv@_IO v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, j), v.n0(), v.n1());
-	return sli;
+	@Tcut@ sv(&v(0, j), v.n0(), v.n1());
+	return sv;
 }
 
-inline @Tsli@C cut0(@Tv@_I v, Long_I j)
+inline @Tcut@C cut0(@Tv@_I v, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, j), v.n0(), v.n1());
-	return sli;
+	@Tcut@C sv(&v(0, j), v.n0(), v.n1());
+	return sv;
 }
-//% elseif is_Scmat3(Tv)
-inline @Tsli@ cut0(@Tv@_IO v, Long_I j, Long_I k)
+//% elseif is_Scmat3(Tv) || is_Cmat3(Tv)
+inline @Tcut@ cut0(@Tv@_IO v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, j, k), v.n0());
-	return sli;
+	@Tcut@ sv(&v(0, j, k), v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut0(@Tv@_I v, Long_I j, Long_I k)
+inline @Tcut@C cut0(@Tv@_I v, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, j, k), v.n0());
-	return sli;
+	@Tcut@C sv(&v(0, j, k), v.n0());
+	return sv;
 }
 //% else
 //%     disp(Tv);
@@ -239,53 +247,56 @@ inline @Tsli@C cut0(@Tv@_I v, Long_I j, Long_I k)
 //%------------------------
 
 //% tem('cut0-2', {
+//%    'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatQdoub';
+//%    'CmatComp'; 'CmatQcomp';
+//%    'Cmat3Comp'; 'Cmat3Qcomp';
 //%    'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub';
 //%    'ScmatComp'; 'ScmatQcomp';
 //%    'Scmat3Comp'; 'Scmat3Qcomp';
 //% });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut0_type(Tv);
+//% Tcut = cut0_type(Tv);
 //% T = val_t(Tv);
-//% if is_Scmat(Tv)
-inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
+//% if is_Scmat(Tv) || is_Cmat(Tv)
+inline @Tcut@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, j), N1);
-	return sli;
+	@Tcut@ sv(&v(i, j), N1);
+	return sv;
 }
 
-inline @Tsli@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
+inline @Tcut@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, j), N1);
-	return sli;
+	@Tcut@C sv(&v(i, j), N1);
+	return sv;
 }
-//% elseif is_Scmat3(Tv)
-inline @Tsli@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
+//% elseif is_Scmat3(Tv) || is_Cmat3(Tv)
+inline @Tcut@ cut0(@Tv@_IO v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, j, k), N1);
-	return sli;
+	@Tcut@ sv(&v(i, j, k), N1);
+	return sv;
 }
 
-inline @Tsli@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
+inline @Tcut@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i + N1 > v.n0() || j < 0 || j >= v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, j, k), N1);
-	return sli;
+	@Tcut@C sv(&v(i, j, k), N1);
+	return sv;
 }
 //% else
 //%     disp(Tv);
@@ -293,144 +304,150 @@ inline @Tsli@C cut0(@Tv@_I v, Long_I i, Long_I N1, Long_I j, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut1', { 'ScmatDoub'; 'ScmatQdoub';
+//% tem('cut1', { 'CmatDoub'; 'CmatQdoub';
+//%     'CmatComp'; 'CmatQcomp';
+//%     'CmatLlong'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%     'ScmatDoub'; 'ScmatQdoub';
 //%     'ScmatComp'; 'ScmatQcomp';
-//%     'MatInt'; 'ScmatLlong'; 'Scmat3Comp'; 'Scmat3Qcomp'; });
+//%     'ScmatLlong'; 'Scmat3Comp'; 'Scmat3Qcomp';
+//%     'MatInt'; });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut1_type(Tv);
+//% Tcut = cut1_type(Tv);
 //% T = val_t(Tv);
-//% if is_Scmat(Tv)
-inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
+//% if is_Scmat(Tv) || is_Cmat(Tv)
+inline @Tcut@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, 0), v.n1(), v.n0());
-	return sli;
+	@Tcut@ sv(&v(i, 0), v.n1(), v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut1(@Tv@_I v, Long_I i)
+inline @Tcut@C cut1(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, 0), v.n1(), v.n0());
-	return sli;
+	@Tcut@C sv(&v(i, 0), v.n1(), v.n0());
+	return sv;
 }
 //% elseif is_Dcmat(Tv)
-inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
+inline @Tcut@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, 0), v.n1(), v.lda());
-	return sli;
+	@Tcut@ sv(&v(i, 0), v.n1(), v.lda());
+	return sv;
 }
 
-inline @Tsli@C cut1(@Tv@_I v, Long_I i)
+inline @Tcut@C cut1(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, 0), v.n1(), v.lda());
-	return sli;
+	@Tcut@C sv(&v(i, 0), v.n1(), v.lda());
+	return sv;
 }
 
 //% elseif is_Mat(Tv)
-inline @Tsli@ cut1(@Tv@_IO v, Long_I i)
+inline @Tcut@ cut1(@Tv@_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, 0), v.n1());
-	return sli;
+	@Tcut@ sv(&v(i, 0), v.n1());
+	return sv;
 }
 
-inline @Tsli@C cut1(@Tv@_I v, Long_I i)
+inline @Tcut@C cut1(@Tv@_I v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, 0), v.n1());
-	return sli;
+	@Tcut@C sv(&v(i, 0), v.n1());
+	return sv;
 }
-//% elseif is_Scmat3(Tv)
-inline @Tsli@ cut1(@Tv@_IO v, Long_I i, Long_I k)
+//% elseif is_Scmat3(Tv) || is_Cmat3(Tv)
+inline @Tcut@ cut1(@Tv@_IO v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, 0, k), v.n1(), v.n0());
-	return sli;
+	@Tcut@ sv(&v(i, 0, k), v.n1(), v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut1(@Tv@_I v, Long_I i, Long_I k)
+inline @Tcut@C cut1(@Tv@_I v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, 0, k), v.n1(), v.n0());
-	return sli;
+	@Tcut@C sv(&v(i, 0, k), v.n1(), v.n0());
+	return sv;
 }
 //% else
 //%     error('not implemented (8)!');
 //% end
 //%------------------------
 
-//% tem('cut1-2', { 'ScmatLlong'; 'ScmatComp'; 'ScmatQcomp'; });
+//% tem('cut1-2', { 
+//% 'CmatLlong'; 'CmatComp'; 'CmatQcomp';
+//% 'ScmatLlong'; 'ScmatComp'; 'ScmatQcomp'; });
 //%----------------------------
 //% T = varargin{:};
 //% Ts = val_t(T);
-//% if is_Scmat(T)
-//%     Tsli = ['Dvec' val_t(T)];
-inline @Tsli@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2)
+//% if is_Scmat(T) || is_Cmat(T)
+//%     Tcut = ['Dvec' val_t(T)];
+inline @Tcut@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
 		SLS_ERR("out of bound!");
 #endif
-	@Tsli@ sli(&v(i, j), N2, v.n0());
-	return sli;
+	@Tcut@ sv(&v(i, j), N2, v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2)
+inline @Tcut@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1())
 		SLS_ERR("out of bound!");
 #endif
-	@Tsli@C sli(&v(i, j), N2, v.n0());
-	return sli;
+	@Tcut@C sv(&v(i, j), N2, v.n0());
+	return sv;
 }
-//% elseif is_Scmat3(T)
-//%     Tsli = ['Dvec' val_t(T)];
-inline @Tsli@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
+//% elseif is_Scmat3(T) || is_Cmat3(T)
+//%     Tcut = ['Dvec' val_t(T)];
+inline @Tcut@ cut1(@T@_IO v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("out of bound!");
 #endif
-	@Tsli@ sli(&v(i, j, k), N2, v.n0());
-	return sli;
+	@Tcut@ sv(&v(i, j, k), N2, v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
+inline @Tcut@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("out of bound!");
 #endif
-	@Tsli@C sli(&v(i, j, k), N2, v.n0());
-	return sli;
+	@Tcut@C sv(&v(i, j, k), N2, v.n0());
+	return sv;
 }
 //% else
 //%     disp(T);
@@ -438,81 +455,86 @@ inline @Tsli@C cut1(@T@_I v, Long_I i, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut2', { 'Scmat3Doub'; 'Scmat3Qdoub';
-//%     'Scmat3Comp'; 'Scmat3Qcomp'; });
+//% tem('cut2', {
+//% 'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//% 'Scmat3Doub'; 'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut2_type(Tv);
+//% Tcut = cut2_type(Tv);
 //% T = val_t(Tv);
-//% if is_Scmat3(Tv)
-inline @Tsli@ cut2(@Tv@_IO v, Long_I i, Long_I j)
+//% if is_Scmat3(Tv) || is_Cmat3(Tv)
+inline @Tcut@ cut2(@Tv@_IO v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(i, j, 0), v.n2(), v.n0()*v.n1());
-	return sli;
+	@Tcut@ sv(&v(i, j, 0), v.n2(), v.n0()*v.n1());
+	return sv;
 }
 
-inline @Tsli@C cut2(@Tv@_I v, Long_I i, Long_I j)
+inline @Tcut@C cut2(@Tv@_I v, Long_I i, Long_I j)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (i < 0 || i >= v.n0() || j < 0 || j >= v.n1())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(i, j, 0), v.n2(), v.n0()*v.n1());
-	return sli;
+	@Tcut@C sv(&v(i, j, 0), v.n2(), v.n0()*v.n1());
+	return sv;
 }
 //% end
 //%-----------------------
 
-//% tem('cut01', { 'Scmat3Comp'; 'Scmat3Qcomp'; 'Scmat3Int';
-//%  'Scmat3Doub'; 'Scmat3Qdoub';
+//% tem('cut01', {
+//%  'Cmat3Doub'; 'Cmat3Comp';
+//%  'Cmat3Int'; 'Cmat3Qdoub'; 'Cmat3Qcomp'; 
+//%  'Cmat4Int'; 'Cmat4Doub'; 'Cmat4Qdoub';
+//%  'Scmat3Doub'; 'Scmat3Comp';
+//%  'Scmat3Int'; 'Scmat3Qdoub'; 'Scmat3Qcomp'; 
 //%  'Scmat4Int'; 'Scmat4Doub'; 'Scmat4Qdoub'; });
 //%----------------------------
 //% Tv = varargin{:};
-//% Tsli = cut01_type(Tv);
+//% Tcut = cut01_type(Tv);
 //% T = val_t(Tv);
-//% if is_Scmat3(Tv)
-inline @Tsli@ cut01(@Tv@_IO v, Long_I k)
+//% if is_Scmat3(Tv) || is_Cmat3(Tv)
+inline @Tcut@ cut01(@Tv@_IO v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, 0, k), v.n0(), v.n1());
-	return sli;
+	@Tcut@ sv(&v(0, 0, k), v.n0(), v.n1());
+	return sv;
 }
 
-inline @Tsli@C cut01(@Tv@_I v, Long_I k)
+inline @Tcut@C cut01(@Tv@_I v, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, 0, k), v.n0(), v.n1());
-	return sli;
+	@Tcut@C sv(&v(0, 0, k), v.n0(), v.n1());
+	return sv;
 }
-//% elseif is_Scmat4(Tv)
-inline @Tsli@ cut01(@Tv@_IO v, Long_I k, Long_I l)
+//% elseif is_Scmat4(Tv) || is_Cmat4(Tv)
+inline @Tcut@ cut01(@Tv@_IO v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, 0, k, l), v.n0(), v.n1());
-	return sli;
+	@Tcut@ sv(&v(0, 0, k, l), v.n0(), v.n1());
+	return sv;
 }
 
-inline @Tsli@C cut01(@Tv@_I v, Long_I k, Long_I l)
+inline @Tcut@C cut01(@Tv@_I v, Long_I k, Long_I l)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (k < 0 || k >= v.n2() || l < 0 || l >= v.n3())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, 0, k, l), v.n0(), v.n1());
-	return sli;
+	@Tcut@C sv(&v(0, 0, k, l), v.n0(), v.n1());
+	return sv;
 }
 //% else
 //%     disp(Tv);
@@ -520,31 +542,32 @@ inline @Tsli@C cut01(@Tv@_I v, Long_I k, Long_I l)
 //% end
 //%------------------------
 
-//% tem('cut01-2', { 'Scmat3Doub'; 'Scmat3Qdoub';
-//%     'Scmat3Comp'; 'Scmat3Qcomp'; });
+//% tem('cut01-2', {
+//%   'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%   'Scmat3Doub'; 'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
-//% Tsli = ['Scmat' val_t(T)];
+//% Tcut = ['Scmat' val_t(T)];
 //% Ts = val_t(T);
-//% if is_Scmat3(T)
-inline @Tsli@ cut01(@T@_IO v, Long_I j, Long_I N2, Long_I k)
+//% if is_Scmat3(T) || is_Cmat3(T)
+inline @Tcut@ cut01(@T@_IO v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@ sli(&v(0, j, k), v.n0(), N2);
-	return sli;
+	@Tcut@ sv(&v(0, j, k), v.n0(), N2);
+	return sv;
 }
 
-inline @Tsli@C cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
+inline @Tcut@C cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
 	if (j < 0 || j + N2 > v.n1() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	@Tsli@C sli(&v(0, j, k), v.n0(), N2);
-	return sli;
+	@Tcut@C sv(&v(0, j, k), v.n0(), N2);
+	return sv;
 }
 //% else
 //%     disp(Tv);
@@ -552,23 +575,24 @@ inline @Tsli@C cut01(@T@_I v, Long_I j, Long_I N2, Long_I k)
 //% end
 //%------------------------
 
-//% tem('cut01-3', { 'Scmat3Doub'; 'Scmat3Qdoub';
-//%     'Scmat3Comp'; 'Scmat3Qcomp'; });
+//% tem('cut01-3', {
+//%  'Cmat3Doub'; 'Cmat3Qdoub'; 'Cmat3Comp'; 'Cmat3Qcomp';
+//%  'Scmat3Doub'; 'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp'; });
 //%----------------------------
 //% T = varargin{:};
-//% Tsli = ['Dcmat' val_t(T)];
+//% Tcut = ['Dcmat' val_t(T)];
 //% Ts = val_t(T);
-//% if is_Scmat3(T)
-inline @Tsli@ cut01(@T@_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+//% if is_Scmat3(T) || is_Cmat3(T)
+inline @Tcut@ cut01(@T@_IO v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
-	@Tsli@ sli(&v(i, j, k), N1, N2, v.n0());
-	return sli;
+	@Tcut@ sv(&v(i, j, k), N1, N2, v.n0());
+	return sv;
 }
 
-inline @Tsli@C cut01(@T@_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
+inline @Tcut@C cut01(@T@_I v, Long_I i, Long_I N1, Long_I j, Long_I N2, Long_I k)
 {
-	@Tsli@C sli(&v(i, j, k), N1, N2, v.n0());
-	return sli;
+	@Tcut@C sv(&v(i, j, k), N1, N2, v.n0());
+	return sv;
 }
 //% else
 //%     disp(T);

@@ -48,7 +48,6 @@ inline Comp fedvr_interp1(VecDoub_I x, VecComp_I y, Long_I Ngs, Doub_I x_q)
 		if (x_q <= xmin)
 			return 0;
 		x1[0] = xmin;
-//% req('copy(v,v)', {'SvecDoub' 'SvecDoub'; 'SvecComp' 'SvecComp'});
 		copy(cut(x1, 1, Ngs-1), cut(x, 0, Ngs-1));
 		y1[0] = 0;
 		copy(cut(y1, 1, Ngs-1), cut(y, 0, Ngs-1));

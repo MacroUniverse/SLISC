@@ -8,7 +8,7 @@ void test_compare()
 	copy(v1, v);
 	if (!equals_vv(v.p(), v1.p(), N))
 		SLS_FAIL;
-	if (!shape_cmp(v, v1))
+	if (!shape_cmp1(v, v1))
 		SLS_FAIL;
 }
 

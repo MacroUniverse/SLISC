@@ -16,12 +16,11 @@ namespace slisc {
 inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 {
 #ifdef SLS_CHECK_SHAPES
-//% req('shape_cmp', {Tm,Tm2});
-	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	if (A.n0() != A.n1() || !shape_cmp2(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 #endif
-//% req('copy(v,v)', {Tm,Tm2});
+//% req('copy(v,v)', {['Svec' Tsm] ['Svec' Tsm2]});
 	copy(eigVec, A);
 	Long N = A.n1();
 	Long ret;
@@ -47,12 +46,10 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A)
 inline void eig_her(VecDoub_O eigVal, CmatComp_O eigVec, CmatComp_I A)
 {
 #ifdef SLS_CHECK_BOUNDS
-//% req('shape_cmp', {'ScmatComp','ScmatComp'});
-	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	if (A.n0() != A.n1() || !shape_cmp2(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 #endif
-//% req('copy(v,v)', {'ScmatComp','ScmatComp'});
 	copy(eigVec, A);
 	Long N = A.n1();
 	eigVal.resize(N);
@@ -75,8 +72,7 @@ inline void eig_sym(@Tv@_O eigVal, @Tm@_O eigVec, @Tm2@_I A, @Twsp@_IO wsp_qd)
 {
 	Long N = A.n1();
 #ifdef SLS_CHECK_SHAPES
-//% req('shape_cmp', {Tm,Tm2});
-	if (A.n0() != A.n1() || !shape_cmp(eigVec, A)
+	if (A.n0() != A.n1() || !shape_cmp2(eigVec, A)
 		|| eigVal.size() != eigVec.n0())
 		SLS_ERR("wrong shape!");
 	if (wsp_qd.size() != 3*N) // this is gessed, Rsyev will show have error is not enough.

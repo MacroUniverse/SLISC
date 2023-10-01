@@ -1907,7 +1907,7 @@ inline void load_matt(MatComp_O var, Str_I varname, Str_I matt_file)
 	matt.close();
 }
 
-inline void load(ScmatInt_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatInt_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -1928,14 +1928,14 @@ inline void load(ScmatInt_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(ScmatInt_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(CmatInt_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(ScmatLlong_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatLlong_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -1956,14 +1956,14 @@ inline void load(ScmatLlong_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(ScmatLlong_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(CmatLlong_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(ScmatDoub_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatDoub_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -1984,14 +1984,14 @@ inline void load(ScmatDoub_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(ScmatDoub_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(CmatDoub_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(ScmatComp_O a, Str_I varname, Matt_IO matt)
+inline void load(CmatComp_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
 	ifstream &fin = matt.m_in;
@@ -2012,14 +2012,14 @@ inline void load(ScmatComp_O a, Str_I varname, Matt_IO matt)
 			matt_read_scalar(a(i, j), fin);
 }
 
-inline void load_matt(ScmatComp_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(CmatComp_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Scmat3Int_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Int_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2042,14 +2042,14 @@ inline void load(Scmat3Int_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Scmat3Int_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Cmat3Int_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Scmat3Llong_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Llong_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2072,14 +2072,14 @@ inline void load(Scmat3Llong_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Scmat3Llong_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Cmat3Llong_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Scmat3Doub_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Doub_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2102,14 +2102,14 @@ inline void load(Scmat3Doub_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Scmat3Doub_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Cmat3Doub_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Scmat3Comp_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat3Comp_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
 	ifstream &fin = matt.m_in;
@@ -2132,14 +2132,14 @@ inline void load(Scmat3Comp_O a, Str_I varname, Matt_IO matt)
 				matt_read_scalar(a(i, j, k), fin);
 }
 
-inline void load_matt(Scmat3Comp_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Cmat3Comp_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Scmat4Doub_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat4Doub_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
 	ifstream &fin = matt.m_in;
@@ -2163,14 +2163,14 @@ inline void load(Scmat4Doub_O a, Str_I varname, Matt_IO matt)
 					matt_read_scalar(a(i, j, k, l), fin);
 }
 
-inline void load_matt(Scmat4Doub_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Cmat4Doub_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);
 	matt.close();
 }
 
-inline void load(Scmat4Comp_O a, Str_I varname, Matt_IO matt)
+inline void load(Cmat4Comp_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, l, N1, N2, N3, N4;
 	ifstream &fin = matt.m_in;
@@ -2194,7 +2194,7 @@ inline void load(Scmat4Comp_O a, Str_I varname, Matt_IO matt)
 					matt_read_scalar(a(i, j, k, l), fin);
 }
 
-inline void load_matt(Scmat4Comp_O var, Str_I varname, Str_I matt_file)
+inline void load_matt(Cmat4Comp_O var, Str_I varname, Str_I matt_file)
 {
 	Matt matt(matt_file, "r");
 	load(var, varname, matt);

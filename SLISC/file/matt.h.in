@@ -486,9 +486,9 @@ inline void save(Str_I str, Str_I varname, Matt_IO matt)
 //% tem('load_matt', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Comp';
 //%         'VecChar'; 'VecInt'; 'VecLlong'; 'VecDoub'; 'VecComp';
 //%         'MatInt'; 'MatLlong'; 'MatDoub'; 'MatComp';
-//%         'ScmatInt'; 'ScmatLlong'; 'ScmatDoub'; 'ScmatComp';
-//%         'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Comp';
-//%         'Scmat4Doub'; 'Scmat4Comp';
+//%         'CmatInt'; 'CmatLlong'; 'CmatDoub'; 'CmatComp';
+//%         'Cmat3Int'; 'Cmat3Llong'; 'Cmat3Doub'; 'Cmat3Comp';
+//%         'Cmat4Doub'; 'Cmat4Comp';
 //% });
 //%---------------------
 //% T = varargin{:};
@@ -533,7 +533,7 @@ inline void load(@T@_O v, Str_I varname, Matt_IO matt)
 	for (Long i = 0; i < n; ++i)
 		matt_read_scalar(v[i], fin);
 }
-//% elseif is_Mat(T) || is_Scmat(T)
+//% elseif is_Mat(T) || is_Cmat(T)
 inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, m, n;
@@ -554,7 +554,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 		for (i = 0; i < m; ++i)
 			matt_read_scalar(a(i, j), fin);
 }
-//% elseif is_Mat3(T) || is_Scmat3(T)
+//% elseif is_Mat3(T) || is_Cmat3(T)
 inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, m, n, q;
@@ -577,7 +577,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 			for (i = 0; i < m; ++i)
 				matt_read_scalar(a(i, j, k), fin);
 }
-//% elseif is_Scmat4(T)
+//% elseif is_Cmat4(T)
 inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 {
 	Long i, j, k, l, N1, N2, N3, N4;

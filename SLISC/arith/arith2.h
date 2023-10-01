@@ -28,13 +28,13 @@ inline void mod_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
 
 inline void mod(SvecInt_O v, SvecInt_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	mod_vvs(v.p(), v1.p(), s, v.size());
 }
 
 inline void mod(SvecLlong_O v, SvecLlong_I v1, Llong_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	mod_vvs(v.p(), v1.p(), s, v.size());
 }
 
@@ -76,13 +76,13 @@ inline void imag(SvecComp_IO v)
 
 inline void real(SvecDoub_O v, SvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	real_vv(v.p(), v1.p(), v1.size());
 }
 
 inline void imag(SvecDoub_O v, SvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	imag_vv(v.p(), v1.p(), v1.size());
 }
 
@@ -127,14 +127,14 @@ inline void abs(SvecComp_IO v)
 
 inline void abs(SvecDoub_O v, SvecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	abs_vv(v.p(), v1.p(), v1.size());
 }
 
 
 inline void abs(SvecDoub_O v, SvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	abs_vv(v.p(), v1.p(), v1.size());
 }
 
@@ -174,7 +174,7 @@ inline void conj(DcmatComp_IO v)
 
 inline void conj(SvecComp_O v, SvecComp_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	conj_vv(v.p(), v1.p(), v.size());
 }
 
@@ -296,35 +296,35 @@ inline void pow_vvs(Comp *v, const Comp *v1, Comp_I s, Long_I N)
 
 inline void pow(SvecDoub_O v, SvecDoub_I v1, Int_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
 inline void pow(SvecDoub_O v, SvecDoub_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
 inline void pow(SvecComp_O v, SvecDoub_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
 inline void pow(SvecComp_O v, SvecComp_I v1, Doub_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
 
 inline void pow(SvecComp_O v, SvecComp_I v1, Comp_I s)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	pow_vvs(v.p(), v1.p(), s, v1.size());
 }
 
@@ -382,13 +382,13 @@ inline Comp dot_vv(const Comp *v1, const Comp *v2, Long_I N)
 
 inline Doub dot(SvecDoub_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v1, v2);
+	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
 inline Comp dot(SvecDoub_I v1, SvecComp_I v2)
 {
-	assert_same_shape(v1, v2);
+	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
@@ -396,13 +396,13 @@ inline Comp dot(SvecDoub_I v1, SvecComp_I v2)
 
 inline Comp dot(SvecComp_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v1, v2);
+	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
 inline Comp dot(SvecComp_I v1, SvecComp_I v2)
 {
-	assert_same_shape(v1, v2);
+	assert_same_shape1(v1, v2);
 	return dot_vv(v1.p(), v2.p(), v2.size());
 }
 
@@ -410,22 +410,10 @@ inline Comp dot(SvecComp_I v1, SvecComp_I v2)
 
 inline Comp dot(DvecComp_I v1, SvecDoub_I v2)
 {
-	assert_same_shape(v1, v2);
+	assert_same_shape1(v1, v2);
 	Comp sum = 0;
 	for (Long i = 0; i < v1.size(); ++i)
 		sum += conj(v1[i]) * v2[i];
-	return sum;
-}
-
-
-inline Comp dot(Scmat3Comp_I v1, Jcmat3Comp_I v2)
-{
-	assert_same_shape(v1, v2);
-	Comp sum = 0;
-	for (Long i = 0; i < v1.n0(); ++i)
-		for (Long j = 0; j < v1.n1(); ++j)
-			for (Long k = 0; k < v1.n2(); ++k)
-				sum += conj(v1(i,j,k)) * v2(i,j,k);
 	return sum;
 }
 
@@ -465,19 +453,19 @@ inline void cumsum_vv(Llong *v, const Llong *v1, Long_I N)
 
 inline void cumsum(SvecInt_O v, SvecInt_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());
 }
 
 inline void cumsum(SvecLlong_O v, SvecLlong_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());
 }
 
 inline void cumsum(SvecDoub_O v, SvecDoub_I v1)
 {
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 	cumsum_vv(v.p(), v1.p(), v1.size());
 }
 

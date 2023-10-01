@@ -13,7 +13,7 @@ namespace slisc {
 //% T = varargin{:};
 //% CmatT = ['Cmat' T];
 //% VecT = ['Vec' T];
-class @CmatT@ : public @VecT@
+class @CmatT@ : protected @VecT@
 {
 protected:
 	typedef @VecT@ Base;
@@ -25,16 +25,17 @@ public:
 	@CmatT@(@CmatT@ &&rhs); // move constructor
 	@CmatT@ &operator=(const @CmatT@ &rhs); // copy assignment
 	@CmatT@ &operator=(@CmatT@ &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	@T@& operator()(Long_I i, Long_I j); // double indexing
 	const @T@& operator()(Long_I i, Long_I j) const;
 	Long n0() const;
 	Long n1() const;
 	void resize(Long_I N0, Long_I N1); // resize (values not preserved)
 	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2)
-	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 <= m_N)
+	void reshape(Long_I N0, Long_I N1); // reshape (N0*N1 == m_N)
 
-	using Base::operator const Svec@T@C&;
-	using Base::operator const Svec@T@&;
 	operator const Scmat@T@C&() const;
 	operator const Scmat@T@&();
 };
@@ -118,7 +119,7 @@ inline void @CmatT@::resize(Long_I N)
 inline void @CmatT@::reshape(Long_I N0, Long_I N1)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1 < m_N) {
+	if (N0*N1 != m_N) {
 		stringstream ss;
 		ss  << "@CmatT@ reshaping from (" << m_N0 << ", " << m_N1
 			<< ") , with " << m_N << "allocated elements, to (" << N0 << ", "

@@ -40,7 +40,8 @@ public:
 	const @T@& end() const;
 	@T@& end(Long_I i); // i = 1 for the last, i = 2 for the second last...
 	const @T@& end(Long_I i) const;
-	operator const Svec@T@C&() const; // convert to Svec@T@
+
+	operator const Svec@T@C&() const;
 	operator const Svec@T@&();
 
 	~@VecT@();

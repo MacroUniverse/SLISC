@@ -260,7 +260,6 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 		relres = iter = 0;
 		return flag;
 	}
-//% req('copy(v,v)', {Tcut Tx; Tcut Tcut});
 	@Tcut@ xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
 	@Tcut@ p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
 		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);

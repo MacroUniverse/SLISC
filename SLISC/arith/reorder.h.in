@@ -52,9 +52,11 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
 		else if (N == 0)
 			v.resize(0, 0);
 		else {
-			@Tv@ v1(N0, N1); copy(v1, val);
+			@Tv@ v1(N0, N1); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20);
-//%     req('cut', {[cut_dense_type(Tv)]}); req('copy(v,v)', {Tsli,Tsli});
+//%     req('cut', {Tv});
+//%     Tcut = cut_type(Tv);;
+//%     req('copy(v,v)', {Tcut Tcut})
 			copy(cut(v1, 0, N1min, 0, N2min),
 				cut(v, 0, N1min, 0, N2min));
 			v = move(v1);
@@ -62,7 +64,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
 	}
 }
 //% elseif is_Cmat3(Tv) || is_Mat3(Tv)
-//%     Tsli = cut_type(Tv);
+//%     Tcut = cut_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0)
 {
 	Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), Nold = N0*N1;
@@ -70,14 +72,15 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
 	if (N0 != N10 || N1 != N20 || N2 != N30) {
 		if (Nold == 0) {
 //% req('copy(v,s)', {Tv});
-			v.resize(N0, N1, N2); copy(v, val);
+			v.resize(N0, N1, N2); copy(v, val); // not efficient
 		}
 		else if (N == 0)
 			v.resize(0, 0, 0);
 		else {
-			@Tv@ v1(N0, N1, N2); copy(v1, val);
+			@Tv@ v1(N0, N1, N2); copy(v1, val); // not efficient
 			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
-//%     req('cut', {[cut_dense_type(Tv)]}); req('copy(v,v)', {Tsli,Tsli});
+//%     req('cut', {Tv});
+//%     req('copy(v,v)', {Tcut Tcut})
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),
 				cut(v, 0, N1min, 0, N2min, 0, N3min));
 			v = move(v1);
@@ -131,8 +134,7 @@ inline void flip(@Tv@_IO v)
 //% if is_dense(T) && is_dense(T1)
 inline void flip(@T@_O v, @T1@_I v1)
 {
-//% req('assert_same_shape', {T, T1});
-	assert_same_shape(v, v1);
+	assert_same_shape1(v, v1);
 //% req('flip_vv', {Ts,Ts1});
 	flip_vv(v.p(), v1.p(), v1.size());
 }
@@ -284,7 +286,7 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
 	for (Long i = 0; i < a1.n0(); ++i) {
 		// check repeat
 		bool repeat = false;
-//% req('cut1', {cut_dense_type(T); cut_dense_type(T1)});
+//% req('cut1', {T; T1});
 		@Tcut1@C s1 = cut1(a1, i);
 		for (Long j = 0; j < k; ++j) {
 //% req('v==v', {Tcut,Tcut1});
@@ -294,7 +296,7 @@ inline void uniq_rows(@T@_O a, @T1@_I a1)
 		}
 		if (repeat)
 			continue;
-//% req('copy(v,v)', {Tcut,Tcut1});
+//% req('copy(v,v)', {Tcut, Tcut1});
 		copy(cut1(a, k), s1);
 		++k;
 	}

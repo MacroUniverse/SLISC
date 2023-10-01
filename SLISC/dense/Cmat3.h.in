@@ -13,7 +13,7 @@ namespace slisc {
 //% T = varargin{:};
 //% Cmat3T = ['Cmat3' T];
 //% VecT = ['Vec' T];
-class @Cmat3T@ : public @VecT@
+class @Cmat3T@ : protected @VecT@
 {
 protected:
 	typedef @VecT@ Base;
@@ -25,8 +25,10 @@ public:
 	@Cmat3T@(@Cmat3T@ &&rhs); // move constructor
 	@Cmat3T@ &operator=(const @Cmat3T@ &rhs); // copy assignment
 	@Cmat3T@ &operator=(@Cmat3T@ &&rhs); // move assignment
+	using Base::p;
+	using Base::size;
+	using Base::operator[];
 	void resize(Long_I N0, Long_I N1, Long_I N2);  // resize (values not preserved)
-	void resize(Long_I N); // resize memory only (values not preserved, N > N1*N2*N3)
 	void reshape(Long_I N0, Long_I N1, Long_I N2); // reshape (N0*N1 <= m_N)
 	@T@ &operator()(Long_I i, Long_I j, Long_I k);
 	const @T@ &operator()(Long_I i, Long_I j, Long_I k) const;
@@ -34,8 +36,6 @@ public:
 	Long n1() const;
 	Long n2() const;
 
-	using Base::operator const Svec@T@C&;
-	using Base::operator const Svec@T@&;
 	operator const Scmat3@T@C&() const;
 	operator const Scmat3@T@&();
 };
@@ -74,24 +74,10 @@ inline void @Cmat3T@::resize(Long_I N0, Long_I N1, Long_I N2)
 	}
 }
 
-inline void @Cmat3T@::resize(Long_I N)
-{
-#ifdef SLS_CHECK_BOUNDS
-	if (N < m_N0*m_N1*m_N2) {
-		stringstream ss;
-		ss  << "@Cmat3T@ resizing from (" << m_N0 << ',' << m_N1
-			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to "
-			<< N << " elements is illegal!";
-		SLS_ERR(ss.str());
-	}
-#endif
-	Base::resize(N);
-}
-
 inline void @Cmat3T@::reshape(Long_I N0, Long_I N1, Long_I N2)
 {
 #ifdef SLS_CHECK_SHAPES
-	if (N0*N1*N2 < m_N) {
+	if (N0*N1*N2 != m_N) {
 		stringstream ss;
 		ss  << "@Cmat3T@ reshaping from (" << m_N0 << ',' << m_N1
 			<< ',' << m_N2 << ") , with " << m_N << "allocated elements, to (" << m_N0 << ',' << m_N1
