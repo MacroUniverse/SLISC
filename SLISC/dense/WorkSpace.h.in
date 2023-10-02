@@ -37,17 +37,13 @@ public:
 	template <class Tv>
 	WorkSpace(Tv &v) : WorkSpace(ptr(v), (Long)v.size()) {}
 
-	WorkSpace &operator=(const WorkSpace &rhs) {
-		m_p = rhs.m_p; m_N = rhs.m_N;
-		m_used = rhs.m_used;
-		return *this;
-	}
+	WorkSpace &operator=(const WorkSpace &rhs) = delete;
 	
 	Long used() const { return m_used; }
 
 	Long free() const { return m_N-m_used; }
 
-	constexpr Long align() const { return SLS_WSP_ALIGN; }
+	static constexpr Long align() { return SLS_WSP_ALIGN; }
 
 	void set(void *ptr, Long_I Nbyte) {
 		SvecUchar::set((Uchar*)ptr, Nbyte);
