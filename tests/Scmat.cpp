@@ -3,11 +3,11 @@
 
 using namespace slisc;
 
-int my_fun(SvecDoub_I ) { return 1; }
+static int my_fun(SvecDoub_I ) { return 1; }
 
-int my_fun(ScmatDoub_I ) { return 2; }
+static int my_fun(ScmatDoub_I ) { return 2; }
 
-int my_fun(const SvbaseDoub &) { return 3; }
+static int my_fun(const SvbaseDoub &) { return 3; }
 
 void test_Scmat()
 {

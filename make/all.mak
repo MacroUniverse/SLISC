@@ -6,7 +6,7 @@
 # compiler [g++|clang++|icpc|icpx]
 opt_compiler := g++
 # use Octave for code generation
-opt_octave := true
+# opt_octave := true # not implemented
 # define Long (array index type) as 32 or 64 bit integer
 opt_long32 := true
 # debug mode
@@ -149,20 +149,17 @@ ifeq ($(opt_lapack), none)
     $(info CBLAS/LAPACKE: off)
 endif
 
-gfortran_so :=
 cblas_lib :=
 lapacke_lib :=
 ifeq ($(opt_lapack), reference)
 # === CBLAS (reference) ===
     tmp := $(shell echo "$(define) SLS_USE_CBLAS" >> SLISC/config.h.new)
-    # we need the system gfortran and cannot include it in SLISC-libs-* since it depends on other system libs like libc
-    gfortran_so := $(shell ldconfig -p | grep libgfortran.so | head -1 | awk '{print $$1}')
     ifeq ($(opt_long32), false)
         $(info CBLAS: ref64)
-        cblas_lib := -l cblas64 -l blas64 -l:$(gfortran_so)
+        cblas_lib := -l cblas64 -l blas64 -l gfortran
     else
         $(info CBLAS: ref32)
-        cblas_lib := -l cblas -l blas -l:$(gfortran_so)
+        cblas_lib := -l cblas -l blas -l gfortran
     endif
 # === LAPACKE (reference) ===
     tmp := $(shell echo "$(define) SLS_USE_LAPACKE" >> SLISC/config.h.new)
@@ -355,6 +352,8 @@ arpack_lib :=
 ifeq ($(opt_arpack), true)
     ifeq ($(opt_lapack), reference)
         tmp := $(shell echo "$(define) SLS_USE_ARPACK" >> SLISC/config.h.new)
+        # we need the system gfortran and cannot include it in SLISC-libs-* since it depends on other system libs like libc
+        gfortran_so := $(shell ldconfig -p | grep libgfortran.so | head -1 | awk '{print $$1}')
         ifeq ($(opt_static), false)
             $(info Arpack: dynamic)
             ifeq ($(opt_long32), true)
@@ -441,7 +440,7 @@ $(info $(tmp));
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag := -std=$(opt_std) -Wall -Wno-reorder -fmax-errors=5 -fopenmp # -ffast-math (includin -fno-math-errno, -funsafe-math-optimizations, -fno-signed-zeros, -fno-trapping-math, -ffinite-math-only)
+    compiler_flag := -std=$(opt_std) -Wall -Wno-reorder -fmax-errors=5 -Wno-unused-function -fopenmp # -ffast-math (including -fno-math-errno, -funsafe-math-optimizations, -fno-signed-zeros, -fno-trapping-math, -ffinite-math-only)
 endif
 
 ifeq ($(opt_compiler), clang++)

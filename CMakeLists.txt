@@ -5,9 +5,16 @@ project(SLISC)
 set(opt_compiler "g++" CACHE STRING "")
 set(opt_octave ON CACHE BOOL "use Octave for code generation")
 set(opt_long32 ON CACHE BOOL "use 32bit integer or 64bit integer for index type (Long)")
-set(opt_debug ON CACHE BOOL "debug mode")
+# use `CMAKE_BUILD_TYPE` [Debug|Release] instead of `opt_debug`
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build." FORCE)
+endif()
 set(opt_min ON CACHE BOOL "minimum build, disable all 3rd party libraries")
-set(opt_asan ON CACHE BOOL "address sanitizer")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	set(opt_asan ON CACHE BOOL "address sanitizer")
+else()
+	set(opt_asan OFF CACHE BOOL "address sanitizer")
+endif()
 set(opt_std "11" CACHE STRING "c++ standard")
 set(opt_static OFF CACHE BOOL "static compilation")
 set(opt_verb OFF CACHE BOOL "verbose output for Octave debug")
@@ -27,9 +34,6 @@ set(opt_matfile OFF CACHE BOOL "enable Matlab .mat file (deprecated)")
 
 message(STATUS "------------------------")
 
-set(test_var abc123;def123;ghi123)
-message(FATAL_ERROR "${test_var}")
-
 # --- version ---
 set(ver_major 0)
 set(ver_minor 3)
@@ -48,13 +52,7 @@ if(opt_min)
 	set(opt_sqlite OFF)
 	set(opt_sqlitecpp OFF)
 	set(opt_matfile OFF)
-	set(opt_asan OFF)
 endif()
-
-# === compiler ====
-find_program(tmp ${opt_compiler})
-set(CMAKE_CXX_COMPILER ${tmp})
-message(STATUS "compiler: ${CMAKE_CXX_COMPILER}")
 
 if(opt_compiler STREQUAL "g++")
 	set(opt_quadmath OFF)
@@ -75,27 +73,30 @@ set(CONFIG_H "${CONFIG_H}#define SLS_PATCH ${ver_patch}\n")
 
 # === Address Sanitizer ===
 if(opt_asan)
-	message(STATUS "asan: on")
-	set(CONFIG_H "${CONFIG_H}#define SLS_USE_ASAN\n")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
-	set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize=address -static-libasan")
+	if(opt_compiler STREQUAL "g++")
+		message(STATUS "asan: on")
+		set(CONFIG_H "${CONFIG_H}#define SLS_USE_ASAN\n")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer -fsanitize=address")
+		set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fno-omit-frame-pointer -fsanitize=address -static-libasan")
+	else()
+		message(STATUS "asan: off")
+	endif()
 else()
 	message(STATUS "asan: off")
 endif()
 
 # === Debug/Release ===
-if(opt_debug)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(STATUS "Build: debug")
 	set(CONFIG_H "${CONFIG_H}#define SLS_CHECK_BOUNDS\n")
 	set(CONFIG_H "${CONFIG_H}#define SLS_CHECK_SHAPES\n")
-	add_compile_options(-g)
     if(opt_compiler STREQUAL "g++")
-		add_compile_options(-g -ftrapv) # -pedantic # show more warnings
+		set(CMAKE_CXX_FLAGS_DEBUG, "${CMAKE_CXX_FLAGS_DEBUG} -ftrapv") # -pedantic (show more warnings)
     endif()
 else()
 	message(STATUS "Build: release")
 	set(CONFIG_H "${CONFIG_H}#define NDEBUG\n")
-	add_compile_options(-O3)
+	set(CMAKE_CXX_FLAGS_RELEASE, "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 endif()
 
 # === main.x ===
@@ -115,9 +116,14 @@ else()
 	message(STATUS "Long bits: 64")
 endif()
 
+if($(opt_lapack) STREQUAL "none")
+	message(STATUS "CBLAS/LAPACKE: off")
+endif()
+
 if(opt_lapack STREQUAL "reference")
-	# === CBLAS ===
+# === CBLAS (reference) ===
 	set(CONFIG_H "${CONFIG_H}#define SLS_USE_CBLAS\n")
+
 	if(NOT opt_long32)
 		message(STATUS "CBLAS: ref64")
 		set(cblas_lib cblas64 blas64 gfortran)
@@ -125,8 +131,7 @@ if(opt_lapack STREQUAL "reference")
 		message(STATUS "CBLAS: ref32")
 		set(cblas_lib cblas blas gfortran)
 	endif()
-
-	# === LAPACKE ===
+# === LAPACKE (reference) ===
 	set(CONFIG_H "${CONFIG_H}#define SLS_USE_LAPACKE\n")
 	if(NOT opt_long32)
 		message(STATUS "LAPACKE: ref64")
@@ -135,11 +140,10 @@ if(opt_lapack STREQUAL "reference")
 		message(STATUS "LAPACKE: ref32")
 		set(lapacke_lib lapacke lapack)
 	endif()
-
-elseif(opt_lapack STREQUAL "mkl")
-	message(FATAL_ERROR "not implemented!")
 elseif(opt_lapack STREQUAL "openblas")
-	message(FATAL_ERROR "not implemented!")
+	message(FATAL_ERROR "not implemented with cmake, use Makefile.")
+elseif(opt_lapack STREQUAL "mkl")
+	message(FATAL_ERROR "not implemented with cmake, use Makefile.")
 else()
 	message(STATUS "LAPACKE: off")
 	message(STATUS "CBLAS: off")
@@ -219,7 +223,7 @@ if(opt_sqlitecpp)
 	message(STATUS "sqlitecpp: on")
 	set(CONFIG_H "${CONFIG_H}#define SLS_USE_SQLITECPP\n")
 	set(CONFIG_H "${CONFIG_H}#define SLS_USE_SQLITE\n")
-	set(sqlitecpp_lib SQLiteCpp sqlite3)
+	set(sqlitecpp_lib SQLiteCpp SQLiteCpp-sqlite3)
 else()
 	message(STATUS "sqlitecpp: off")
 endif()
@@ -261,12 +265,20 @@ else()
 endif()
 
 # === compiler flags ===
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD ${opt_std})
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+find_program(tmp ${opt_compiler})
+set(CMAKE_CXX_COMPILER ${tmp})
+message(STATUS "compiler: ${CMAKE_CXX_COMPILER}")
 
 if(opt_compiler STREQUAL "g++")
-	add_compile_options(-std=${opt_std} -Wall -Wno-reorder -Wno-cpp -Wno-misleading-indentation -fopenmp -fmax-errors=2)
+	add_compile_options(-Wall -Wno-reorder -Wno-unused-function -fmax-errors=5 -fopenmp)
 elseif(opt_compiler STREQUAL "clang++")
-	add_compile_options(-std=${opt_std} -Wall -Wno-reorder -Wno-overloaded-virtual -ferror-limit=5)
+	add_compile_options(-std=${opt_std} -Wall -Wno-reorder -Wno-overloaded-virtual -ferror-limit=5 -fopenmp)
+else()
+	message(FATAL_ERROR "not implemented!")
 endif()
 
 # get all .cpp and .h files
@@ -278,11 +290,8 @@ if (HEADERS_IN)
 	list(REMOVE_ITEM HEADERS ${HEADERS2})
 endif()
 
-# message(STATUS "HEADERS = ${HEADERS}")
-# message(STATUS "HEADERS2 = ${HEADERS2}")
-
-add_executable(main ${SOURCES} ${HEADERS} ${HEADERS2})
-set_target_properties(main PROPERTIES OUTPUT_NAME main.x)
+add_executable(main.x ${SOURCES} ${HEADERS} ${HEADERS2})
+set_target_properties(main.x PROPERTIES OUTPUT_NAME main.x)
 
 # scratch code
 add_executable(scratch "scratch.cpp")
@@ -324,7 +333,7 @@ endif()
 
 # link
 # (order is important)
-target_link_libraries(main ${static_flag} ${arpack_lib} ${mplapack_lib} ${gsl_lib} ${mkl_lib} ${lapacke_lib} ${cblas_lib} ${arb_lib} ${boost_lib} ${matfile_lib} ${sqlite_lib} ${sqlitecpp_lib} ${quad_math_lib})
+target_link_libraries(main.x ${static_flag} ${arpack_lib} ${mplapack_lib} ${gsl_lib} ${mkl_lib} ${lapacke_lib} ${cblas_lib} ${arb_lib} ${boost_lib} ${matfile_lib} ${sqlite_lib} ${sqlitecpp_lib} ${quad_math_lib})
 
 # clean_h
 add_custom_target(clean_h
