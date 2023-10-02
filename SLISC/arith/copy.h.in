@@ -111,7 +111,7 @@ inline void matcpy_diff_major(T *a2, const T1 *a1, Long_I N2, Long_I lda2, Long_
 //% tem('copy(v,s)', {
 //% 'vecBool'; 'vecInt'; 'vecLlong';
 //% 'vvecBool'; 'vvecInt'; 'vvecLlong';
-//% 'SvecChar'; 'SvecInt'; 'SvecLlong'; 'SvecDoub'; 'SvecQdoub'; 'SvecComp'; 'SvecQcomp';
+//% 'SvbaseChar'; 'SvbaseInt'; 'SvbaseLlong'; 'SvbaseDoub'; 'SvbaseQdoub'; 'SvbaseComp'; 'SvbaseQcomp';
 //% 'DvecInt'; 'DvecLlong'; 'DvecDoub'; 'DvecQdoub'; 'DvecComp'; 'DvecQcomp';
 //% 'Mat3Doub'; });
 //%-------------------------------------

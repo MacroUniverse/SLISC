@@ -210,28 +210,28 @@ inline void copy(vvecLlong_O v, Llong_I s)
 	for (auto &v1 : v) v1.assign(v1.size(), s);
 }
 
-inline void copy(SvecChar_O v, Char_I s)
+inline void copy(SvbaseChar_O v, Char_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
 
-inline void copy(SvecInt_O v, Int_I s)
+inline void copy(SvbaseInt_O v, Int_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
 
-inline void copy(SvecLlong_O v, Llong_I s)
+inline void copy(SvbaseLlong_O v, Llong_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
 
-inline void copy(SvecDoub_O v, Doub_I s)
+inline void copy(SvbaseDoub_O v, Doub_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
 
 
-inline void copy(SvecComp_O v, Comp_I s)
+inline void copy(SvbaseComp_O v, Comp_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
@@ -342,6 +342,21 @@ inline void copy(Cmat3Doub_O v, Doub_I s)
 }
 
 inline void copy(Cmat3Comp_O v, Comp_I s)
+{
+	if (v.size() > 0) vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecDoub_O v, Doub_I s)
+{
+	if (v.size() > 0) vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecComp_O v, Comp_I s)
+{
+	if (v.size() > 0) vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecInt_O v, Int_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }

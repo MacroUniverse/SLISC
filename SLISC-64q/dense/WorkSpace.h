@@ -37,7 +37,11 @@ public:
 	template <class Tv>
 	WorkSpace(Tv &v) : WorkSpace(ptr(v), (Long)v.size()) {}
 
-	WorkSpace &operator=(const WorkSpace &rhs) = delete;
+	WorkSpace(const WorkSpace &) = delete; // copy constructor
+	WorkSpace(WorkSpace &&) = default; // move constructor
+
+	WorkSpace &operator=(const WorkSpace &rhs) = delete; // copy assignment
+	WorkSpace &operator=(WorkSpace &&rhs) = default; // move assignment
 	
 	Long used() const { return m_used; }
 

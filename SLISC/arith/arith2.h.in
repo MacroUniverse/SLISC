@@ -323,7 +323,9 @@ inline @T@ dot_vv(const @T1@ *v1, const @T2@ *v2, Long_I N)
 //%   'SvbaseQcomp' 'SvbaseQdoub'
 //%   'SvbaseQcomp' 'SvbaseQcomp'
 //%   'DvecComp' 'SvbaseDoub'
-//%   'DvecQcomp' 'SvbaseQdoub' });
+//%   'DvecQcomp' 'SvbaseQdoub'
+//%   'Scmat3Comp' 'Jcmat3Comp'
+//% });
 //%---------------------
 //% [T1, T2] = varargin{:};
 //% [Ts1,Ts2] = val_t(T1,T2);

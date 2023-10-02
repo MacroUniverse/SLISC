@@ -175,16 +175,13 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 }
 
 //% tem('mul(v,obd,v)', {
-//%    'SvecComp', 'CmobdDoub', 'SvecComp';
-//%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
-//%    'SvecComp', 'CmobdDoub', 'SvecComp';
-//%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
-//%    'SvecInt', 'CmobdInt', 'SvecInt'
-//%    'SvecDoub', 'CmobdDoub', 'SvecDoub';
-//%    'SvecQdoub', 'CmobdQdoub', 'SvecQdoub';
-//%    'SvecComp', 'CmobdDoub', 'SvecComp';
-//%    'SvecComp', 'CmobdImag', 'SvecComp';
-//%    'SvecQcomp', 'CmobdQdoub', 'SvecQcomp';
+//%    'SvbaseInt', 'CmobdInt', 'SvbaseInt'
+//%    'SvbaseDoub', 'CmobdDoub', 'SvbaseDoub';
+//%    'SvbaseQdoub', 'CmobdQdoub', 'SvbaseQdoub';
+//%    'SvbaseComp', 'CmobdDoub', 'SvbaseComp';
+//%    'SvbaseComp', 'CmobdComp', 'SvbaseComp';
+//%    'SvbaseComp', 'CmobdImag', 'SvbaseComp';
+//%    'SvbaseQcomp', 'CmobdQdoub', 'SvbaseQcomp';
 //% });
 //%------------------------------
 //% [Ty, Ta, Tx] = varargin{:};
@@ -214,17 +211,18 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x, const Talpha &alpha, const Tbeta &
 }
 //%------------------------------
 
-//% tem('mul(v,coo,v)', { 'SvecComp', 'McooDoub', 'SvecComp';
-//% 'SvecQcomp', 'McooQdoub', 'SvecQcomp';
-//% 'SvecDoub' 'McooDoub' 'SvecDoub'
-//% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
-//% 'SvecDoub' 'McooDoub' 'SvecDoub'
-//% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
-//% 'SvecDoub' 'McooDoub' 'SvecDoub'
-//% 'SvecQdoub' 'McooQdoub' 'SvecQdoub'
-//% 'SvecComp' 'McooDoub' 'SvecComp'
-//% 'SvecComp' 'McooDoub' 'DvecComp'
-//% 'SvecQcomp' 'McooQdoub' 'SvecQcomp' });
+//% tem('mul(v,coo,v)', {
+//% 'SvbaseComp', 'McooDoub', 'SvbaseComp';
+//% 'SvbaseQcomp', 'McooQdoub', 'SvbaseQcomp';
+//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub'
+//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub'
+//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub'
+//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub'
+//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub'
+//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub'
+//% 'SvbaseComp' 'McooDoub' 'SvbaseComp'
+//% 'SvbaseComp' 'McooDoub' 'DvecComp'
+//% 'SvbaseQcomp' 'McooQdoub' 'SvbaseQcomp' });
 //%------------------------------
 //% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
 inline void mul(@T@_O y, @T1@_I a, @T2@_I x)

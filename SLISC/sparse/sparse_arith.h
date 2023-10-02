@@ -206,7 +206,16 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 	}
 }
 
-inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
+inline void mul(SvbaseInt_O y, CmobdInt_I a, SvbaseInt_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+}
+
+inline void mul(SvbaseDoub_O y, CmobdDoub_I a, SvbaseDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
@@ -216,7 +225,7 @@ inline void mul(SvecComp_O y, CmobdDoub_I a, SvecComp_I x)
 }
 
 
-inline void mul(SvecInt_O y, CmobdInt_I a, SvecInt_I x)
+inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
@@ -225,7 +234,7 @@ inline void mul(SvecInt_O y, CmobdInt_I a, SvecInt_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
-inline void mul(SvecDoub_O y, CmobdDoub_I a, SvecDoub_I x)
+inline void mul(SvbaseComp_O y, CmobdComp_I a, SvbaseComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
@@ -234,8 +243,7 @@ inline void mul(SvecDoub_O y, CmobdDoub_I a, SvecDoub_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
-
-inline void mul(SvecComp_O y, CmobdImag_I a, SvecComp_I x)
+inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
@@ -243,6 +251,7 @@ inline void mul(SvecComp_O y, CmobdImag_I a, SvecComp_I x)
 #endif
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
+
 
 
 template <class Talpha, class Tbeta>
@@ -256,7 +265,7 @@ inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, con
 }
 
 
-inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
+inline void mul(SvbaseComp_O y, McooDoub_I a, SvbaseComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.size() || a.n0() != y.size())
@@ -266,7 +275,7 @@ inline void mul(SvecComp_O y, McooDoub_I a, SvecComp_I x)
 }
 
 
-inline void mul(SvecDoub_O y, McooDoub_I a, SvecDoub_I x)
+inline void mul(SvbaseDoub_O y, McooDoub_I a, SvbaseDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.size() || a.n0() != y.size())
@@ -276,7 +285,7 @@ inline void mul(SvecDoub_O y, McooDoub_I a, SvecDoub_I x)
 }
 
 
-inline void mul(SvecComp_O y, McooDoub_I a, DvecComp_I x)
+inline void mul(SvbaseComp_O y, McooDoub_I a, DvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.size() || a.n0() != y.size())
