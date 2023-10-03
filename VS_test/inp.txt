@@ -1,4 +1,0 @@
-1 abc 1
-2 bcd 2
-3 cde 3
-4 def 4
