@@ -179,38 +179,21 @@ inline void copy(@T@_O v, const std::initializer_list<@Ts@> &v1)
 
 // container to container
 //% tem('copy(v,v)', {
-//%   'SvecInt', 'SvecInt';
-//%   'SvecInt', 'DvecInt';
-//%   'SvecLlong', 'SvecLlong';
-//%   'SvecDoub', 'SvecDoub';
-//%   'SvecDoub', 'DvecDoub';
-//%   'SvecQdoub', 'SvecQdoub';
-//%   'SvecQdoub', 'DvecQdoub';
-//%   'SvecComp', 'SvecComp';
-//%   'SvecComp', 'DvecComp';
-//%   'SvecComp', 'SvecDoub';
-//%   'SvecQcomp', 'SvecQcomp';
-//%   'SvecQcomp', 'SvecQdoub';
-//%   'SvecQcomp', 'DvecQcomp';
-//%   'DvecComp' 'SvecComp'
-//%   'DvecQcomp' 'SvecQcomp'
-//%   'DvecQcomp' 'SvecQcomp'
-//%   'ScmatInt', 'ScmatInt';
-//%   'ScmatLlong', 'ScmatLlong';
-//%   'ScmatDoub', 'ScmatDoub';
-//%   'ScmatQdoub', 'ScmatQdoub';
-//%   'ScmatComp', 'ScmatComp';
-//%   'ScmatComp', 'ScmatDoub';
-//%   'ScmatQcomp', 'ScmatQcomp';
-//%   'ScmatQcomp', 'ScmatQdoub';
-//%   'Scmat3Int', 'Scmat3Int';
-//%   'Scmat3Llong', 'Scmat3Llong';
-//%   'Scmat3Doub', 'Scmat3Doub';
-//%   'Scmat3Qdoub', 'Scmat3Qdoub';
-//%   'Scmat3Comp', 'Scmat3Comp';
-//%   'Scmat3Comp', 'Scmat3Doub';
-//%   'Scmat3Qcomp', 'Scmat3Qcomp';
-//%   'Scmat3Qcomp', 'Scmat3Qdoub';
+//%   'SvbaseInt', 'SvbaseInt';
+//%   'SvbaseInt', 'DvecInt';
+//%   'SvbaseLlong', 'SvbaseLlong';
+//%   'SvbaseDoub', 'SvbaseDoub';
+//%   'SvbaseDoub', 'DvecDoub';
+//%   'SvbaseQdoub', 'SvbaseQdoub';
+//%   'SvbaseQdoub', 'DvecQdoub';
+//%   'SvbaseComp', 'SvbaseComp';
+//%   'SvbaseComp', 'DvecComp';
+//%   'SvbaseComp', 'SvbaseDoub';
+//%   'SvbaseQcomp', 'SvbaseQcomp';
+//%   'SvbaseQcomp', 'SvbaseQdoub';
+//%   'SvbaseQcomp', 'DvecQcomp';
+//%   'DvecComp' 'SvbaseComp'
+//%   'DvecQcomp' 'SvbaseQcomp'
 //%   'MatDoub', 'ScmatDoub';
 //% });
 //%---------------------------
@@ -375,7 +358,6 @@ inline void copy(@Tmat@_O lhs, @McooTs@_I rhs)
 //% 'CmobdQcomp' 'CmobdQdoub' });
 //%-----------------------
 //% [T, T1] = varargin{:}; [Ts,Ts1] = val_t(T,T1);
-//% req('copy(v,v)', {['Svec' Ts], ['Svec' Ts1]});
 inline void copy(@T@_O lhs, @T1@_I rhs)
 { copy(lhs.cmat3(), rhs.cmat3()); }
 //%-------------------

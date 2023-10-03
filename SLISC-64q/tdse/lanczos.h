@@ -24,7 +24,7 @@ inline Long exp_Hdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
 // return error
 // required workspace: sizeof(Doub)*((2*N+Nk)*(Nk+1)+Nk)+4*align
 template <class Tmul>
-inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -94,7 +94,7 @@ inline Doub exp_Hdt_v_lanc(SvecComp_O y, Tmul &mul_fun, SvecComp_I x, Doub_I dt,
 
 // required workspace: sizeof(Qdoub)*((2*N+Nk)*(Nk+1)+Nk)+4*align
 template <class Tmul>
-inline Qdoub exp_Hdt_v_lanc(SvecQcomp_O y, Tmul &mul_fun, SvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_Hdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -320,7 +320,7 @@ inline Long exp_miHdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
 // return error
 // required workspace: sizeof(Doub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*align
 template <class Tmul>
-inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_miHdt_v_lanc(SvbaseComp_IO y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -390,7 +390,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I 
 
 // required workspace: sizeof(Qdoub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*align
 template <class Tmul>
-inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_miHdt_v_lanc(SvbaseQcomp_IO y, Tmul &mul_fun, SvbaseQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -464,7 +464,7 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, Tmul &mul_fun, DvecQcomp_I x, Qdou
 
 // required workspace: sizeof(Doub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*align
 template <class Tmul>
-inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_miHdt_v_lanc(DvecComp_IO y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
@@ -534,7 +534,7 @@ inline Doub exp_miHdt_v_lanc(SvecComp_IO y, Tmul &mul_fun, SvecComp_I x, Doub_I 
 
 // required workspace: sizeof(Qdoub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*align
 template <class Tmul>
-inline Qdoub exp_miHdt_v_lanc(SvecQcomp_IO y, Tmul &mul_fun, SvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_miHdt_v_lanc(DvecQcomp_IO y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES

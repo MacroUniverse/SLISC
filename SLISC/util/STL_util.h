@@ -16,6 +16,11 @@ struct cmp_second {
 	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) { return s1.second < s2.second; }
 };
 
+struct cmp_second_inv {
+    template<class T11, class T12, class T21, class T22>
+    bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) { return s1.second < s2.second; }
+};
+
 // combine different hash
 // from boost library
 template<class T>

@@ -475,6 +475,26 @@ inline Jcmat3CompC cut(Cmat3Comp_I v, Long_I start0, Long_I N0, Long_I start1, L
 	return sv;
 }
 
+inline SvecDoub cut(SvbaseDoub_IO v, Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start < 0 || start + N > v.size())
+		SLS_ERR("index out of bound!");
+#endif
+	SvecDoub sv(&v[start], N);
+	return sv;
+}
+
+inline SvecDoubC cut(SvbaseDoub_I v, Long_I start, Long_I N)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (start < 0 || start + N > v.size())
+		SLS_ERR("index out of bound!");
+#endif
+	SvecDoubC sv(&v[start], N);
+	return sv;
+}
+
 
 inline DvecInt cut0(MatInt_IO v, Long_I j)
 {
@@ -1197,6 +1217,26 @@ inline DvecCompC cut1(Cmat3Comp_I v, Long_I i, Long_I k)
 }
 
 
+inline DvecLlong cut1(ScmatLlong_IO v, Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= v.n0())
+		SLS_ERR("index out of bound!");
+#endif
+	DvecLlong sv(&v(i, 0), v.n1(), v.n0());
+	return sv;
+}
+
+inline DvecLlongC cut1(ScmatLlong_I v, Long_I i)
+{
+#ifdef SLS_CHECK_BOUNDS
+	if (i < 0 || i >= v.n0())
+		SLS_ERR("index out of bound!");
+#endif
+	DvecLlongC sv(&v(i, 0), v.n1(), v.n0());
+	return sv;
+}
+
 inline DvecDoub cut1(ScmatDoub_IO v, Long_I i)
 {
 #ifdef SLS_CHECK_BOUNDS
@@ -1239,25 +1279,26 @@ inline DvecCompC cut1(ScmatComp_I v, Long_I i)
 }
 
 
-inline DvecLlong cut1(ScmatLlong_IO v, Long_I i)
+inline DvecDoub cut1(Scmat3Doub_IO v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= v.n0())
+	if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	DvecLlong sv(&v(i, 0), v.n1(), v.n0());
+	DvecDoub sv(&v(i, 0, k), v.n1(), v.n0());
 	return sv;
 }
 
-inline DvecLlongC cut1(ScmatLlong_I v, Long_I i)
+inline DvecDoubC cut1(Scmat3Doub_I v, Long_I i, Long_I k)
 {
 #ifdef SLS_CHECK_BOUNDS
-	if (i < 0 || i >= v.n0())
+	if (i < 0 || i >= v.n0() || k < 0 || k >= v.n2())
 		SLS_ERR("index out of bound!");
 #endif
-	DvecLlongC sv(&v(i, 0), v.n1(), v.n0());
+	DvecDoubC sv(&v(i, 0, k), v.n1(), v.n0());
 	return sv;
 }
+
 
 inline DvecComp cut1(Scmat3Comp_IO v, Long_I i, Long_I k)
 {

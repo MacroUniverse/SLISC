@@ -307,9 +307,10 @@ inline @Tcut@C cut0(@Tv@_I v, Long_I i, Long_I N0, Long_I j, Long_I k)
 //% tem('cut1', { 'CmatDoub'; 'CmatQdoub';
 //%     'CmatComp'; 'CmatQcomp';
 //%     'CmatLlong'; 'Cmat3Comp'; 'Cmat3Qcomp';
-//%     'ScmatDoub'; 'ScmatQdoub';
+//%     'ScmatLlong'; 'ScmatDoub'; 'ScmatQdoub';
 //%     'ScmatComp'; 'ScmatQcomp';
-//%     'ScmatLlong'; 'Scmat3Comp'; 'Scmat3Qcomp';
+//%     'Scmat3Doub'; 'Scmat3Qdoub';
+//%     'Scmat3Comp'; 'Scmat3Qcomp';
 //%     'MatInt'; });
 //%----------------------------
 //% Tv = varargin{:};

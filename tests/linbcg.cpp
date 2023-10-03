@@ -8,16 +8,16 @@ using namespace slisc;
 // and matrix-vector multiplication in atimes()
 class LinbcgDoub2: public LinbcgDoub
 {
-	void asolve(SvecDoub_I b, SvecDoub_O x, const Int itrnsp) {
+	void asolve(SvbaseDoub_I b, SvbaseDoub_O x, const Int itrnsp) {
 		copy(x, b);
 	}
-	void atimes(SvecDoub_I x, SvecDoub_O r, const Int itrnsp) {
+	void atimes(SvbaseDoub_I x, SvbaseDoub_O r, const Int itrnsp) {
 		CmatDoub a(3,3), at(3,3); copy(a, {1., 0., 5., 0., 3., 0., 2., 4., 6.});
 		trans(at, a);
 		if (!itrnsp)
-			mul(r, a, x);
+			mul((SvecDoub_O)r, a, (SvecDoub_I)x);
 		else
-			mul(r, at, x);
+			mul((SvecDoub_O)r, at, (SvecDoub_I)x);
 	}
 };
 
@@ -60,12 +60,14 @@ void test_linbcg()
 
 	{
 		CmatDoub a(3,3); copy(a, {1., 0., 5., 0., 3., 0., 2., 4., 6.});
-		VecDoub x(3), x1(3), b(3); VecDoub wsp_d(3*8);
+		VecDoub x(3), x1(3), b(3);
+		VecUchar wsp_mem(bicgstab_matlab_optim_Nwsp<Doub>(3));
+		WorkSpace wsp(wsp_mem);
 		copy(b, {6., 7., 8.}); copy(x, 0);
 		copy(x1, {-5., -5., 5.5});
 		Doub relres; Long iter;
-		auto mul_fun = [&a](SvecDoub &y, SvecDoub_I x) { mul(y, a, x); };
-		if (bicgstab_matlab_optim(relres, iter, x, mul_fun, b,  1e-15, 30, wsp_d) != 0) SLS_FAIL;
+		auto mul_fun = [&a](SvbaseDoub_O y, SvbaseDoub_I x) { mul((SvecDoub_O)y, a, (SvecDoub_I)x); };
+		if (bicgstab_matlab_optim(relres, iter, x, mul_fun, b,  1e-15, 30, wsp) != 0) SLS_FAIL;
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
@@ -78,11 +80,13 @@ void test_linbcg()
 
 	{
 		CmatComp a(3,3); copy(a, {Comp(1,1), Comp(0,0), Comp(5,2), Comp(0,0), Comp(3.,-1), Comp(0,0), Comp(2,-3), Comp(4,5), Comp(6,-1)});
-		VecComp x(3), b1(3), b(3); VecComp wsp_c(3*8);
+		VecComp x(3), b1(3), b(3);
+		VecUchar wsp_mem(bicgstab_matlab_optim_Nwsp<Comp>(3));
+		WorkSpace wsp(wsp_mem);
 		copy(b, {Comp(6,3), Comp(7,-3), Comp(8,-1)}); copy(x, 0);
 		Doub relres; Long iter;
-		auto mul_fun = [&a](SvecComp &y, SvecComp_I x) { mul(y, a, x); };
-		if (bicgstab_matlab_optim(relres, iter, x, mul_fun, b,  1e-15, 30, wsp_c) != 0) SLS_FAIL;
+		auto mul_fun = [&a](SvbaseComp_O y, SvbaseComp_I x) { mul((SvecComp_O)y, a, (SvecComp_I)x); };
+		if (bicgstab_matlab_optim(relres, iter, x, mul_fun, b,  1e-15, 30, wsp) != 0) SLS_FAIL;
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
@@ -121,7 +125,8 @@ void test_linbcg()
 		copy(b, {6., 7., 8.}); copy(x, 0);
 		Doub err, tol = 1e-8; Int iter, itmax = 100, itol = 4;
 		VecDoub wsp(3*6); SvecDoub swsp = cut(wsp, 0, 3*6);
-		lin_eq_bcg_sym(iter, err, x, a, b, itol, tol, itmax, swsp);
+		auto mul_fun = [&a](SvbaseDoub_O y, SvbaseDoub_I x) { mul((SvecDoub_O)y, a, (SvecDoub_I)x); };
+		lin_eq_bcg_sym(iter, err, x, mul_fun, b, itol, tol, itmax, swsp);
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);

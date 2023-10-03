@@ -4,13 +4,15 @@
 #include "../arith/arith1.h"
 #include "../arith/arith2.h"
 #include "../arith/arith4.h"
+#include "../arith/copy.h"
 #include "../dense/cut.h"
 #include "../lin/mul.h"
 
 namespace slisc {
 
+// from Numerical Recipes
 //% tem('Linbcg', {
-//%    'SvecDoub'; 'SvecQdoub';
+//%    'SvbaseDoub'; 'SvbaseDoub';
 //% });
 //%------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);
@@ -123,7 +125,7 @@ inline @Ts@ Linbcg@Ts@::snrm(@Tv@_I sx, const Int itol)
 
 // BiCG with symmetric matrix and no precondition (only tested for real matrix)
 //% tem('lin_eq_bcg_sym', {
-//%    'SvecDoub' 'ScmatDoub' 'SvecDoub';
+//%    'SvbaseDoub' 'ScmatDoub' 'SvbaseDoub';
 //% });
 //%------------------------------
 //% [Tv, Tmat, Tv_wsp] = varargin{:}; Ts = val_t(Tv); Tr = rm_comp(Ts);
@@ -146,7 +148,8 @@ inline @Tr@ snrm(const @Ts@ *sx, Int n, const Int itol)
 }
 
 //% req('cut', {Tv_wsp});
-inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I b, Int_I itol, @Ts@_I tol, Int_I itmax,  @Tv_wsp@_IO wsp)
+template <class Tmul>
+inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, Tmul &mul_fun, @Tv@_I b, Int_I itol, @Ts@_I tol, Int_I itmax,  @Tv_wsp@_IO wsp)
 {
 	@Tr@ xnrm, dxnrm, bnrm, znrm=NaN, zm1nrm;
 	@Ts@ ak, akden, bk, bkden=1., bknum;
@@ -160,7 +163,7 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 	Svec@Ts@ p = cut(wsp, 0, n), pp = cut(wsp, n, n), r = cut(wsp, 2*n, n);
 	Svec@Ts@ rr = cut(wsp, 3*n, n), z = cut(wsp, 4*n, n), zz = cut(wsp, 5*n, n);
 	iter=0;
-	mul(r, A, x);
+	mul_fun(r, x);
 	for (j=0;j<n;j++) {
 		r[j]=b[j]-r[j];
 		rr[j]=r[j];
@@ -194,10 +197,10 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 			}
 		}
 		bkden=bknum;
-		mul(z, A, p);
+        mul_fun(z, p);
 		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
-		mul(zz, A, pp);
+        mul_fun(zz, pp);
 		for (j=0;j<n;j++) {
 			x[j] += ak*p[j];
 			r[j] -= ak*z[j];
@@ -236,22 +239,24 @@ inline void lin_eq_bcg_sym(Int_O iter, @Tr@_O err, @Tv@_IO x, @Tmat@_I A, @Tv@_I
 // return: [0] Success [1] maxit iterations reached [3] stagnated after two consecutive iterations were the same
 // [4] scalar underflow/overflow
 //% tem('bicgstab_matlab', {
-//%    'SvecDoub' 'ScmatDoub' 'SvecDoub' 'SvecDoub';
-//%    'SvecComp' 'ScmatComp' 'SvecComp' 'SvecComp';
+//%    'SvbaseDoub' 'SvbaseDoub';
+//%    'SvbaseComp' 'SvbaseComp';
 //% });
 //%------------------------------
-//% [Tx, Tmat, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
-//% Tcut = cut_type(Twsp);
+//% [Tx, Tb] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
 //% if is_comp(Ts)
 inline bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
 //% end
 
+template <class Tmul>
 inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
-	@Tx@_IO x, @Tmat@_I A, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
+	@Tx@_IO x, Tmul &mul_fun, @Tb@_I b,  Doub_I tol, Long_I maxit, WorkSpace &wsp)
 {
 	@Tr@ eps = 2.2e-16;
 	Long m = b.size(); Int flag;
+#ifdef SLS_CHECK_SHAPES
 	if (wsp_c.size() < 8*m) SLS_ERR("illegal size!");
+#endif
 	const @Tr@ n2b = norm(b);
 	if (n2b == 0) {
 //% req('copy(v,s)', {Tx});
@@ -260,12 +265,11 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 		relres = iter = 0;
 		return flag;
 	}
-	@Tcut@ xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
-	@Tcut@ p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
-		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);
-//% req('add(v,v,v)', {Tcut, Tb, Tcut});
-	mul(r, A, x); sub(r, b, r);
-	@Tcut@ rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
+	auto xmin = wsp.Svec@Ts@(m); copy(xmin, x);  // Iterate which has minimal residual so far
+	auto p = wsp.Svec@Ts@(m), v = wsp.Svec@Ts@(m), xhalf= wsp.Svec@Ts@(m),
+		s = wsp.Svec@Ts@(m), t = wsp.Svec@Ts@(m),	r = wsp.Svec@Ts@(m);
+    mul_fun(r, x); sub(r, b, r);
+	auto rt = wsp.Svec@Ts@(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
 	const @Tr@ tolb = tol * n2b;        // Relative tolerance
@@ -280,7 +284,6 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 
 	for (ii = 0; ii < maxit; ++ii) {
 		@Ts@ rho1 = rho;
-//% req('dot', {base_t(Tcut) base_t(Tcut)});
 		rho = dot(rt, r);
 		if (rho == 0. || isinf(rho)) {
 			flag = 4; break;
@@ -295,7 +298,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 			for (Long i = 0; i < m; ++i)
 				p[i] = r[i] + beta * (p[i] - omega * v[i]);
 		}
-		mul(v, A, p);
+		mul_fun(v, p);
 		@Ts@ rtv = dot(rt, v);
 		if (rtv == 0 || isinf(rtv)) {
 			flag = 4; break;
@@ -319,7 +322,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 		
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(s, A, xhalf);
+			mul_fun(s, xhalf);
 			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
@@ -348,7 +351,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 			copy(xmin, xhalf);
 			imin = ii+1. - 0.5;
 		}
-		mul(t, A, s);
+		mul_fun(t, s);
 		@Tr@ tt = norm2(t);
 		if (tt == 0 || isinf(tt)) {
 			flag = 4; break;
@@ -371,7 +374,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(r, A, x);
+			mul_fun(r, x);
 			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
@@ -401,7 +404,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 	if (flag == 0)
 		relres = normr_act / n2b;
 	else {
-		mul(r, A, xmin);
+		mul_fun(r, xmin);
 		sub(r, b, r);
 		if (norm(r) <= normr_act) {
 			copy(x, xmin);
@@ -422,19 +425,21 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 // [4] scalar underflow/overflow
 // all returns other than [0] will not have other outputs
 //% tem('bicgstab_matlab_optim', {
-//%    'SvecDoub' 'SvecDoub' 'SvecDoub';
-//%    'SvecComp' 'SvecComp' 'SvecComp';
+//%    'SvbaseDoub' 'SvbaseDoub';
+//%    'SvbaseComp' 'SvbaseComp';
 //% });
 //%------------------------------
-//% [Tx, Tb, Twsp] = varargin{:}; Ts = val_t(Tx); Tr = rm_comp(Ts);
-//% Tcut = cut_type(Twsp);
+//% [Tx, Tb] = varargin{:};
+//% Ts = val_t(Tx); Tr = rm_comp(Ts);
 template <class Tmul>
 inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
-	@Tx@_IO x, Tmul &mul_fun, @Tb@_I b,  Doub_I tol, Long_I maxit, @Twsp@_IO wsp_c)
+	@Tx@_IO x, Tmul &mul_fun, @Tb@_I b,  Doub_I tol, Long_I maxit, WorkSpace &wsp)
 {
 	@Tr@ eps = 2.2e-16;
 	Long m = b.size(); Int flag;
-	if (wsp_c.size() < 7*m) SLS_ERR("illegal size!");
+#ifdef SLS_CHECK_SHAPES
+	if (wsp.size() < sizeof(@Ts@)*7*m) SLS_ERR("illegal size!");
+#endif
 	const @Tr@ n2b = norm(b);
 	if (n2b == 0) {
 //% req('copy(v,s)', {Tx});
@@ -442,12 +447,10 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 		relres = iter = 0;
 		return 0;
 	}
-//% req('copy(v,v)', {Tcut Tx; Tcut Tcut});
-	@Tcut@ p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
-		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
-//% req('add(v,v,v)', {Tcut, Tb, Tcut});
+	auto p = wsp.Svec@Ts@(m), v = wsp.Svec@Ts@(m), xhalf= wsp.Svec@Ts@(m),
+		s = wsp.Svec@Ts@(m), t = wsp.Svec@Ts@(m),	r = wsp.Svec@Ts@(m);
 	mul_fun(r, x); sub(r, b, r);
-	@Tcut@ rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
+	auto rt = wsp.Svec@Ts@(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const @Tr@ tolb = tol * n2b;        // Relative tolerance
 	@Tr@ normr = norm(r), normr_act = normr;  // Norm of residual
@@ -460,7 +463,6 @@ inline Int bicgstab_matlab_optim(@Tr@_O relres, Long_O iter,
 
 	for (ii = 0; ii < maxit; ++ii) {
 		@Ts@ rho1 = rho;
-//% req('dot', {base_t(Tcut) base_t(Tcut)});
 		rho = dot(rt, r);
 		if (rho == 0. || isinf(rho)) {
 			flag = 4; break;

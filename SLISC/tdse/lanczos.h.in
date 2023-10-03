@@ -23,7 +23,7 @@ inline Long exp_Hdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
 //% tem('exp_Hdt_v_lanc', {
-//%   'SvecComp'; 'SvecQcomp';
+//%   'SvbaseComp'; 'SvbaseQcomp';
 //%   'DvecComp'; 'DvecQcomp';
 //% });
 //%-------------------------------
@@ -128,10 +128,8 @@ inline Long exp_miHdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // return error
 //% tem('exp_miHdt_v_lanc', {
-//%   'DvecComp'; 'DvecQcomp'; 'DvecComp';
-//%   'DvecQcomp'; 'SvecComp'; 'SvecQcomp';
-//%   'DvecComp'; 'DvecQcomp'; 'SvecComp';
-//%   'SvecQcomp'; 'DvecComp'; 'DvecQcomp';
+//%   'SvbaseComp'; 'SvbaseQcomp';
+//%   'DvecComp'; 'DvecQcomp';
 //% });
 //%-------------------------------
 //% Tv = varargin{:};

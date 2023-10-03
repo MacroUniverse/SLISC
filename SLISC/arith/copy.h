@@ -346,17 +346,12 @@ inline void copy(Cmat3Comp_O v, Comp_I s)
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
 
-inline void copy(SvecDoub_O v, Doub_I s)
-{
-	if (v.size() > 0) vecset(v.p(), s, v.size());
-}
-
-inline void copy(SvecComp_O v, Comp_I s)
-{
-	if (v.size() > 0) vecset(v.p(), s, v.size());
-}
-
 inline void copy(SvecInt_O v, Int_I s)
+{
+	if (v.size() > 0) vecset(v.p(), s, v.size());
+}
+
+inline void copy(SvecDoub_O v, Doub_I s)
 {
 	if (v.size() > 0) vecset(v.p(), s, v.size());
 }
@@ -526,35 +521,35 @@ inline void copy(Scmat3Comp_O v, const std::initializer_list<Comp> &v1)
 
 
 // container to container
-inline void copy(SvecInt_O v, SvecInt_I v1)
+inline void copy(SvbaseInt_O v, SvbaseInt_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v1.p(), v.size());
 }
 
-inline void copy(SvecInt_O v, DvecInt_I v1)
+inline void copy(SvbaseInt_O v, DvecInt_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
 
-inline void copy(SvecLlong_O v, SvecLlong_I v1)
+inline void copy(SvbaseLlong_O v, SvbaseLlong_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v1.p(), v.size());
 }
 
-inline void copy(SvecDoub_O v, SvecDoub_I v1)
+inline void copy(SvbaseDoub_O v, SvbaseDoub_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v1.p(), v.size());
 }
 
-inline void copy(SvecDoub_O v, DvecDoub_I v1)
+inline void copy(SvbaseDoub_O v, DvecDoub_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
@@ -563,21 +558,21 @@ inline void copy(SvecDoub_O v, DvecDoub_I v1)
 
 
 
-inline void copy(SvecComp_O v, SvecComp_I v1)
+inline void copy(SvbaseComp_O v, SvbaseComp_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v1.p(), v.size());
 }
 
-inline void copy(SvecComp_O v, DvecComp_I v1)
+inline void copy(SvbaseComp_O v, DvecComp_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v1.p(), v1.step(), v1.size());
 }
 
-inline void copy(SvecComp_O v, SvecDoub_I v1)
+inline void copy(SvbaseComp_O v, SvbaseDoub_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
@@ -587,88 +582,12 @@ inline void copy(SvecComp_O v, SvecDoub_I v1)
 
 
 
-inline void copy(DvecComp_O v, SvecComp_I v1)
+inline void copy(DvecComp_O v, SvbaseComp_I v1)
 {
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v.step(), v1.p(), v1.size());
 }
-
-
-inline void copy(ScmatInt_O v, ScmatInt_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(ScmatLlong_O v, ScmatLlong_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(ScmatDoub_O v, ScmatDoub_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-
-inline void copy(ScmatComp_O v, ScmatComp_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(ScmatComp_O v, ScmatDoub_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-
-
-inline void copy(Scmat3Int_O v, Scmat3Int_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(Scmat3Llong_O v, Scmat3Llong_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(Scmat3Doub_O v, Scmat3Doub_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-
-inline void copy(Scmat3Comp_O v, Scmat3Comp_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
-inline void copy(Scmat3Comp_O v, Scmat3Doub_I v1)
-{
-	if (!v.size()) return;
-	assert_same_shape1(v, v1);
-	veccpy(v.p(), v1.p(), v.size());
-}
-
 
 
 inline void copy(MatDoub_O v, ScmatDoub_I v1)
@@ -749,6 +668,20 @@ inline void copy(DvecDoub_O v, DvecDoub_I v1)
 	if (!v.size()) return;
 	assert_same_shape1(v, v1);
 	veccpy(v.p(), v.step(), v1.p(), v1.step(), v.size());
+}
+
+inline void copy(SvecDoub_O v, SvecDoub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
+}
+
+inline void copy(SvecComp_O v, SvecComp_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape1(v, v1);
+	veccpy(v.p(), v1.p(), v.size());
 }
 
 

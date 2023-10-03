@@ -4,20 +4,22 @@
 #include "../arith/arith1.h"
 #include "../arith/arith2.h"
 #include "../arith/arith4.h"
+#include "../arith/copy.h"
 #include "../dense/cut.h"
 #include "../lin/mul.h"
 
 namespace slisc {
 
+// from Numerical Recipes
 struct LinbcgDoub {
-	virtual void asolve(SvecDoub_I b, SvecDoub_O x, const Int itrnsp) = 0;
-	virtual void atimes(SvecDoub_I x, SvecDoub_O r, const Int itrnsp) = 0;
-	void solve(SvecDoub_I b, SvecDoub_IO x, const Int itol, const Doub tol,
+	virtual void asolve(SvbaseDoub_I b, SvbaseDoub_O x, const Int itrnsp) = 0;
+	virtual void atimes(SvbaseDoub_I x, SvbaseDoub_O r, const Int itrnsp) = 0;
+	void solve(SvbaseDoub_I b, SvbaseDoub_IO x, const Int itol, const Doub tol,
 		const Int itmax, Int &iter, Doub &err);
-	Doub snrm(SvecDoub_I sx, const Int itol);
+	Doub snrm(SvbaseDoub_I sx, const Int itol);
 };
 
-inline void LinbcgDoub::solve(SvecDoub_I b, SvecDoub_IO x, const Int itol, const Doub tol,
+inline void LinbcgDoub::solve(SvbaseDoub_I b, SvbaseDoub_IO x, const Int itol, const Doub tol,
 	const Int itmax, Int &iter, Doub &err)
 {
 	Doub ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
@@ -98,116 +100,10 @@ inline void LinbcgDoub::solve(SvecDoub_I b, SvecDoub_IO x, const Int itol, const
 	}
 }
 
-inline Doub LinbcgDoub::snrm(SvecDoub_I sx, const Int itol)
+inline Doub LinbcgDoub::snrm(SvbaseDoub_I sx, const Int itol)
 {
 	Int i,isamax,n=sx.size();
 	Doub ans;
-	if (itol <= 3) {
-		ans = 0.0;
-		for (i=0;i<n;i++) ans += sqr(sx[i]);
-		return sqrt(ans);
-	} else {
-		isamax=0;
-		for (i=0;i<n;i++) {
-			if (abs(sx[i]) > abs(sx[isamax])) isamax=i;
-		}
-		return abs(sx[isamax]);
-	}
-}
-
-struct LinbcgQdoub {
-	virtual void asolve(SvecQdoub_I b, SvecQdoub_O x, const Int itrnsp) = 0;
-	virtual void atimes(SvecQdoub_I x, SvecQdoub_O r, const Int itrnsp) = 0;
-	void solve(SvecQdoub_I b, SvecQdoub_IO x, const Int itol, const Qdoub tol,
-		const Int itmax, Int &iter, Qdoub &err);
-	Qdoub snrm(SvecQdoub_I sx, const Int itol);
-};
-
-inline void LinbcgQdoub::solve(SvecQdoub_I b, SvecQdoub_IO x, const Int itol, const Qdoub tol,
-	const Int itmax, Int &iter, Qdoub &err)
-{
-	Qdoub ak,akden,bk,bkden=1.0,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm=NaN;
-	const Qdoub EPS=1.0e-14;
-	Int j,n=b.size();
-	thread_local static VecQdoub p(n),pp(n),r(n),rr(n),z(n),zz(n);
-	iter=0;
-	atimes(x,r,0);
-	for (j=0;j<n;j++) {
-		r[j]=b[j]-r[j];
-		rr[j]=r[j];
-	}
-	//atimes(r,rr,0);
-	if (itol == 1) {
-		bnrm=snrm(b,itol);
-		asolve(r,z,0);
-	}
-	else if (itol == 2) {
-		asolve(b,z,0);
-		bnrm=snrm(z,itol);
-		asolve(r,z,0);
-	}
-	else if (itol == 3 || itol == 4) {
-		asolve(b,z,0);
-		bnrm=snrm(z,itol);
-		asolve(r,z,0);
-		znrm=snrm(z,itol);
-	} else throw("illegal itol in linbcg");
-	while (iter < itmax) {
-		++iter;
-		asolve(rr,zz,1);
-		for (bknum=0.0,j=0;j<n;j++) bknum += z[j]*rr[j];
-		if (iter == 1) {
-			for (j=0;j<n;j++) {
-				p[j]=z[j];
-				pp[j]=zz[j];
-			}
-		} else {
-			bk=bknum/bkden;
-			for (j=0;j<n;j++) {
-				p[j]=bk*p[j]+z[j];
-				pp[j]=bk*pp[j]+zz[j];
-			}
-		}
-		bkden=bknum;
-		atimes(p,z,0);
-		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
-		ak=bknum/akden;
-		atimes(pp,zz,1);
-		for (j=0;j<n;j++) {
-			x[j] += ak*p[j];
-			r[j] -= ak*z[j];
-			rr[j] -= ak*zz[j];
-		}
-		asolve(r,z,0);
-		if (itol == 1)
-			err=snrm(r,itol)/bnrm;
-		else if (itol == 2)
-			err=snrm(z,itol)/bnrm;
-		else if (itol == 3 || itol == 4) {
-			zm1nrm=znrm;
-			znrm=snrm(z,itol);
-			if (abs(zm1nrm-znrm) > EPS*znrm) {
-				dxnrm=abs(ak)*snrm(p,itol);
-				err=znrm/abs(zm1nrm-znrm)*dxnrm;
-			} else {
-				err=znrm/bnrm;
-				continue;
-			}
-			xnrm=snrm(x,itol);
-			if (err <= 0.5*xnrm) err /= xnrm;
-			else {
-				err=znrm/bnrm;
-				continue;
-			}
-		}
-		if (err <= tol) break;
-	}
-}
-
-inline Qdoub LinbcgQdoub::snrm(SvecQdoub_I sx, const Int itol)
-{
-	Int i,isamax,n=sx.size();
-	Qdoub ans;
 	if (itol <= 3) {
 		ans = 0.0;
 		for (i=0;i<n;i++) ans += sqr(sx[i]);
@@ -241,7 +137,8 @@ inline Doub snrm(const Doub *sx, Int n, const Int itol)
 	}
 }
 
-inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvecDoub_IO x, ScmatDoub_I A, SvecDoub_I b, Int_I itol, Doub_I tol, Int_I itmax,  SvecDoub_IO wsp)
+template <class Tmul>
+inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvbaseDoub_IO x, Tmul &mul_fun, SvbaseDoub_I b, Int_I itol, Doub_I tol, Int_I itmax,  SvbaseDoub_IO wsp)
 {
 	Doub xnrm, dxnrm, bnrm, znrm=NaN, zm1nrm;
 	Doub ak, akden, bk, bkden=1., bknum;
@@ -251,7 +148,7 @@ inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvecDoub_IO x, ScmatDoub_I A,
 	SvecDoub p = cut(wsp, 0, n), pp = cut(wsp, n, n), r = cut(wsp, 2*n, n);
 	SvecDoub rr = cut(wsp, 3*n, n), z = cut(wsp, 4*n, n), zz = cut(wsp, 5*n, n);
 	iter=0;
-	mul(r, A, x);
+	mul_fun(r, x);
 	for (j=0;j<n;j++) {
 		r[j]=b[j]-r[j];
 		rr[j]=r[j];
@@ -285,10 +182,10 @@ inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvecDoub_IO x, ScmatDoub_I A,
 			}
 		}
 		bkden=bknum;
-		mul(z, A, p);
+        mul_fun(z, p);
 		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
-		mul(zz, A, pp);
+        mul_fun(zz, pp);
 		for (j=0;j<n;j++) {
 			x[j] += ak*p[j];
 			r[j] -= ak*z[j];
@@ -327,12 +224,15 @@ inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvecDoub_IO x, ScmatDoub_I A,
 // return: [0] Success [1] maxit iterations reached [3] stagnated after two consecutive iterations were the same
 // [4] scalar underflow/overflow
 
+template <class Tmul>
 inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
-	SvecDoub_IO x, ScmatDoub_I A, SvecDoub_I b,  Doub_I tol, Long_I maxit, SvecDoub_IO wsp_c)
+	SvbaseDoub_IO x, Tmul &mul_fun, SvbaseDoub_I b,  Doub_I tol, Long_I maxit, WorkSpace &wsp)
 {
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
+#ifdef SLS_CHECK_SHAPES
 	if (wsp_c.size() < 8*m) SLS_ERR("illegal size!");
+#endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
 		copy(x, 0);
@@ -340,11 +240,11 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		relres = iter = 0;
 		return flag;
 	}
-	SvecDoub xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
-	SvecDoub p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
-		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);
-	mul(r, A, x); sub(r, b, r);
-	SvecDoub rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
+	auto xmin = wsp.SvecDoub(m); copy(xmin, x);  // Iterate which has minimal residual so far
+	auto p = wsp.SvecDoub(m), v = wsp.SvecDoub(m), xhalf= wsp.SvecDoub(m),
+		s = wsp.SvecDoub(m), t = wsp.SvecDoub(m),	r = wsp.SvecDoub(m);
+    mul_fun(r, x); sub(r, b, r);
+	auto rt = wsp.SvecDoub(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
 	const Doub tolb = tol * n2b;        // Relative tolerance
@@ -373,7 +273,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 			for (Long i = 0; i < m; ++i)
 				p[i] = r[i] + beta * (p[i] - omega * v[i]);
 		}
-		mul(v, A, p);
+		mul_fun(v, p);
 		Doub rtv = dot(rt, v);
 		if (rtv == 0 || isinf(rtv)) {
 			flag = 4; break;
@@ -397,7 +297,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(s, A, xhalf);
+			mul_fun(s, xhalf);
 			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
@@ -426,7 +326,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 			copy(xmin, xhalf);
 			imin = ii+1. - 0.5;
 		}
-		mul(t, A, s);
+		mul_fun(t, s);
 		Doub tt = norm2(t);
 		if (tt == 0 || isinf(tt)) {
 			flag = 4; break;
@@ -449,7 +349,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(r, A, x);
+			mul_fun(r, x);
 			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
@@ -479,7 +379,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	if (flag == 0)
 		relres = normr_act / n2b;
 	else {
-		mul(r, A, xmin);
+		mul_fun(r, xmin);
 		sub(r, b, r);
 		if (norm(r) <= normr_act) {
 			copy(x, xmin);
@@ -496,12 +396,15 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 
 inline bool isinf(Comp_I x) { return isinf(x.real()) || isinf(x.imag()); }
 
+template <class Tmul>
 inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
-	SvecComp_IO x, ScmatComp_I A, SvecComp_I b,  Doub_I tol, Long_I maxit, SvecComp_IO wsp_c)
+	SvbaseComp_IO x, Tmul &mul_fun, SvbaseComp_I b,  Doub_I tol, Long_I maxit, WorkSpace &wsp)
 {
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
+#ifdef SLS_CHECK_SHAPES
 	if (wsp_c.size() < 8*m) SLS_ERR("illegal size!");
+#endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
 		copy(x, 0);
@@ -509,11 +412,11 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		relres = iter = 0;
 		return flag;
 	}
-	SvecComp xmin = cut(wsp_c, 0, m); copy(xmin, x);  // Iterate which has minimal residual so far
-	SvecComp p = cut(wsp_c, m, m), v = cut(wsp_c, 2*m, m), xhalf= cut(wsp_c, 3*m, m),
-		s = cut(wsp_c, 4*m, m), t = cut(wsp_c, 5*m, m),	r = cut(wsp_c, 6*m, m);
-	mul(r, A, x); sub(r, b, r);
-	SvecComp rt = cut(wsp_c, 7*m, m); copy(rt, r);    // Shadow residual
+	auto xmin = wsp.SvecComp(m); copy(xmin, x);  // Iterate which has minimal residual so far
+	auto p = wsp.SvecComp(m), v = wsp.SvecComp(m), xhalf= wsp.SvecComp(m),
+		s = wsp.SvecComp(m), t = wsp.SvecComp(m),	r = wsp.SvecComp(m);
+    mul_fun(r, x); sub(r, b, r);
+	auto rt = wsp.SvecComp(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
 	const Doub tolb = tol * n2b;        // Relative tolerance
@@ -542,7 +445,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 			for (Long i = 0; i < m; ++i)
 				p[i] = r[i] + beta * (p[i] - omega * v[i]);
 		}
-		mul(v, A, p);
+		mul_fun(v, p);
 		Comp rtv = dot(rt, v);
 		if (rtv == 0 || isinf(rtv)) {
 			flag = 4; break;
@@ -566,7 +469,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 		
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(s, A, xhalf);
+			mul_fun(s, xhalf);
 			sub(s, b, s);
 			normr_act = norm(s);
 			if (normr_act <= tolb) {
@@ -595,7 +498,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 			copy(xmin, xhalf);
 			imin = ii+1. - 0.5;
 		}
-		mul(t, A, s);
+		mul_fun(t, s);
 		Doub tt = norm2(t);
 		if (tt == 0 || isinf(tt)) {
 			flag = 4; break;
@@ -618,7 +521,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 
 		// check for convergence
 		if (normr <= tolb || stag >= maxstagsteps || moresteps) {
-			mul(r, A, x);
+			mul_fun(r, x);
 			sub(r, b, r);
 			normr_act = norm(r);
 			if (normr_act <= tolb) {
@@ -648,7 +551,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	if (flag == 0)
 		relres = normr_act / n2b;
 	else {
-		mul(r, A, xmin);
+		mul_fun(r, xmin);
 		sub(r, b, r);
 		if (norm(r) <= normr_act) {
 			copy(x, xmin);
@@ -670,21 +573,23 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 // all returns other than [0] will not have other outputs
 template <class Tmul>
 inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
-	SvecDoub_IO x, Tmul &mul_fun, SvecDoub_I b,  Doub_I tol, Long_I maxit, SvecDoub_IO wsp_c)
+	SvbaseDoub_IO x, Tmul &mul_fun, SvbaseDoub_I b,  Doub_I tol, Long_I maxit, WorkSpace &wsp)
 {
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
-	if (wsp_c.size() < 7*m) SLS_ERR("illegal size!");
+#ifdef SLS_CHECK_SHAPES
+	if (wsp.size() < sizeof(Doub)*7*m) SLS_ERR("illegal size!");
+#endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
 		copy(x, 0);
 		relres = iter = 0;
 		return 0;
 	}
-	SvecDoub p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
-		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
+	auto p = wsp.SvecDoub(m), v = wsp.SvecDoub(m), xhalf= wsp.SvecDoub(m),
+		s = wsp.SvecDoub(m), t = wsp.SvecDoub(m),	r = wsp.SvecDoub(m);
 	mul_fun(r, x); sub(r, b, r);
-	SvecDoub rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
+	auto rt = wsp.SvecDoub(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const Doub tolb = tol * n2b;        // Relative tolerance
 	Doub normr = norm(r), normr_act = normr;  // Norm of residual
@@ -808,21 +713,23 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 
 template <class Tmul>
 inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
-	SvecComp_IO x, Tmul &mul_fun, SvecComp_I b,  Doub_I tol, Long_I maxit, SvecComp_IO wsp_c)
+	SvbaseComp_IO x, Tmul &mul_fun, SvbaseComp_I b,  Doub_I tol, Long_I maxit, WorkSpace &wsp)
 {
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
-	if (wsp_c.size() < 7*m) SLS_ERR("illegal size!");
+#ifdef SLS_CHECK_SHAPES
+	if (wsp.size() < sizeof(Comp)*7*m) SLS_ERR("illegal size!");
+#endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
 		copy(x, 0);
 		relres = iter = 0;
 		return 0;
 	}
-	SvecComp p = cut(wsp_c, 0, m), v = cut(wsp_c, m, m), xhalf= cut(wsp_c, 2*m, m),
-		s = cut(wsp_c, 3*m, m), t = cut(wsp_c, 4*m, m),	r = cut(wsp_c, 5*m, m);
+	auto p = wsp.SvecComp(m), v = wsp.SvecComp(m), xhalf= wsp.SvecComp(m),
+		s = wsp.SvecComp(m), t = wsp.SvecComp(m),	r = wsp.SvecComp(m);
 	mul_fun(r, x); sub(r, b, r);
-	SvecComp rt = cut(wsp_c, 6*m, m); copy(rt, r);    // Shadow residual
+	auto rt = wsp.SvecComp(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	const Doub tolb = tol * n2b;        // Relative tolerance
 	Doub normr = norm(r), normr_act = normr;  // Norm of residual

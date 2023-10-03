@@ -425,7 +425,7 @@ void print_imp(const T& first, const Args&... args) {
 	cout << first; print_imp(args...);
 }
 
-static std::mutex print_mutex; // for thread safety
+std::mutex print_mutex; // for thread safety
 
 template<typename T, typename... Args>
 void print(const T& first, const Args&... args)

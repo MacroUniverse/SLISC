@@ -37,17 +37,20 @@ protected:
 public:
 	@Class@();
 	@Class@(@CT@ *p, Long_I N, Long_I step);
+	@Class@(const @Class@ &v) = default; // copy constructor (shalow)
+	@Class@ &operator=(const @Class@ &v) = default; // copy assignment (shalow)
+
 	@CT@* p() const;
+	Long size() const;
+	Long step() const;
 	@CT@ &operator[](Long_I i) const;
 	@CT@ &end() const;
 	@CT@ &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 //% if ~constness
 	operator @DvecTC@() const;
 //% end
-	@Class@ &operator=(const @Class@ &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(@CT@ *p);

@@ -12,14 +12,17 @@ protected:
 public:
 	DvecCharC();
 	DvecCharC(const Char *p, Long_I N, Long_I step);
+	DvecCharC(const DvecCharC &v) = default; // copy constructor (shalow)
+	DvecCharC &operator=(const DvecCharC &v) = default; // copy assignment (shalow)
+
 	const Char* p() const;
+	Long size() const;
+	Long step() const;
 	const Char &operator[](Long_I i) const;
 	const Char &end() const;
 	const Char &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecCharC &operator=(const DvecCharC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Char *p);
@@ -135,15 +138,18 @@ protected:
 public:
 	DvecChar();
 	DvecChar(Char *p, Long_I N, Long_I step);
+	DvecChar(const DvecChar &v) = default; // copy constructor (shalow)
+	DvecChar &operator=(const DvecChar &v) = default; // copy assignment (shalow)
+
 	Char* p() const;
+	Long size() const;
+	Long step() const;
 	Char &operator[](Long_I i) const;
 	Char &end() const;
 	Char &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecCharC() const;
-	DvecChar &operator=(const DvecChar &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Char *p);
@@ -264,14 +270,17 @@ protected:
 public:
 	DvecUcharC();
 	DvecUcharC(const Uchar *p, Long_I N, Long_I step);
+	DvecUcharC(const DvecUcharC &v) = default; // copy constructor (shalow)
+	DvecUcharC &operator=(const DvecUcharC &v) = default; // copy assignment (shalow)
+
 	const Uchar* p() const;
+	Long size() const;
+	Long step() const;
 	const Uchar &operator[](Long_I i) const;
 	const Uchar &end() const;
 	const Uchar &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecUcharC &operator=(const DvecUcharC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Uchar *p);
@@ -387,15 +396,18 @@ protected:
 public:
 	DvecUchar();
 	DvecUchar(Uchar *p, Long_I N, Long_I step);
+	DvecUchar(const DvecUchar &v) = default; // copy constructor (shalow)
+	DvecUchar &operator=(const DvecUchar &v) = default; // copy assignment (shalow)
+
 	Uchar* p() const;
+	Long size() const;
+	Long step() const;
 	Uchar &operator[](Long_I i) const;
 	Uchar &end() const;
 	Uchar &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecUcharC() const;
-	DvecUchar &operator=(const DvecUchar &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Uchar *p);
@@ -516,14 +528,17 @@ protected:
 public:
 	DvecIntC();
 	DvecIntC(const Int *p, Long_I N, Long_I step);
+	DvecIntC(const DvecIntC &v) = default; // copy constructor (shalow)
+	DvecIntC &operator=(const DvecIntC &v) = default; // copy assignment (shalow)
+
 	const Int* p() const;
+	Long size() const;
+	Long step() const;
 	const Int &operator[](Long_I i) const;
 	const Int &end() const;
 	const Int &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecIntC &operator=(const DvecIntC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Int *p);
@@ -639,15 +654,18 @@ protected:
 public:
 	DvecInt();
 	DvecInt(Int *p, Long_I N, Long_I step);
+	DvecInt(const DvecInt &v) = default; // copy constructor (shalow)
+	DvecInt &operator=(const DvecInt &v) = default; // copy assignment (shalow)
+
 	Int* p() const;
+	Long size() const;
+	Long step() const;
 	Int &operator[](Long_I i) const;
 	Int &end() const;
 	Int &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecIntC() const;
-	DvecInt &operator=(const DvecInt &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Int *p);
@@ -768,14 +786,17 @@ protected:
 public:
 	DvecLlongC();
 	DvecLlongC(const Llong *p, Long_I N, Long_I step);
+	DvecLlongC(const DvecLlongC &v) = default; // copy constructor (shalow)
+	DvecLlongC &operator=(const DvecLlongC &v) = default; // copy assignment (shalow)
+
 	const Llong* p() const;
+	Long size() const;
+	Long step() const;
 	const Llong &operator[](Long_I i) const;
 	const Llong &end() const;
 	const Llong &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecLlongC &operator=(const DvecLlongC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Llong *p);
@@ -891,15 +912,18 @@ protected:
 public:
 	DvecLlong();
 	DvecLlong(Llong *p, Long_I N, Long_I step);
+	DvecLlong(const DvecLlong &v) = default; // copy constructor (shalow)
+	DvecLlong &operator=(const DvecLlong &v) = default; // copy assignment (shalow)
+
 	Llong* p() const;
+	Long size() const;
+	Long step() const;
 	Llong &operator[](Long_I i) const;
 	Llong &end() const;
 	Llong &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecLlongC() const;
-	DvecLlong &operator=(const DvecLlong &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Llong *p);
@@ -1020,14 +1044,17 @@ protected:
 public:
 	DvecFloatC();
 	DvecFloatC(const Float *p, Long_I N, Long_I step);
+	DvecFloatC(const DvecFloatC &v) = default; // copy constructor (shalow)
+	DvecFloatC &operator=(const DvecFloatC &v) = default; // copy assignment (shalow)
+
 	const Float* p() const;
+	Long size() const;
+	Long step() const;
 	const Float &operator[](Long_I i) const;
 	const Float &end() const;
 	const Float &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecFloatC &operator=(const DvecFloatC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Float *p);
@@ -1143,15 +1170,18 @@ protected:
 public:
 	DvecFloat();
 	DvecFloat(Float *p, Long_I N, Long_I step);
+	DvecFloat(const DvecFloat &v) = default; // copy constructor (shalow)
+	DvecFloat &operator=(const DvecFloat &v) = default; // copy assignment (shalow)
+
 	Float* p() const;
+	Long size() const;
+	Long step() const;
 	Float &operator[](Long_I i) const;
 	Float &end() const;
 	Float &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecFloatC() const;
-	DvecFloat &operator=(const DvecFloat &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Float *p);
@@ -1272,14 +1302,17 @@ protected:
 public:
 	DvecDoubC();
 	DvecDoubC(const Doub *p, Long_I N, Long_I step);
+	DvecDoubC(const DvecDoubC &v) = default; // copy constructor (shalow)
+	DvecDoubC &operator=(const DvecDoubC &v) = default; // copy assignment (shalow)
+
 	const Doub* p() const;
+	Long size() const;
+	Long step() const;
 	const Doub &operator[](Long_I i) const;
 	const Doub &end() const;
 	const Doub &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecDoubC &operator=(const DvecDoubC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Doub *p);
@@ -1395,15 +1428,18 @@ protected:
 public:
 	DvecDoub();
 	DvecDoub(Doub *p, Long_I N, Long_I step);
+	DvecDoub(const DvecDoub &v) = default; // copy constructor (shalow)
+	DvecDoub &operator=(const DvecDoub &v) = default; // copy assignment (shalow)
+
 	Doub* p() const;
+	Long size() const;
+	Long step() const;
 	Doub &operator[](Long_I i) const;
 	Doub &end() const;
 	Doub &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecDoubC() const;
-	DvecDoub &operator=(const DvecDoub &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Doub *p);
@@ -1524,14 +1560,17 @@ protected:
 public:
 	DvecLdoubC();
 	DvecLdoubC(const Ldoub *p, Long_I N, Long_I step);
+	DvecLdoubC(const DvecLdoubC &v) = default; // copy constructor (shalow)
+	DvecLdoubC &operator=(const DvecLdoubC &v) = default; // copy assignment (shalow)
+
 	const Ldoub* p() const;
+	Long size() const;
+	Long step() const;
 	const Ldoub &operator[](Long_I i) const;
 	const Ldoub &end() const;
 	const Ldoub &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecLdoubC &operator=(const DvecLdoubC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Ldoub *p);
@@ -1647,15 +1686,18 @@ protected:
 public:
 	DvecLdoub();
 	DvecLdoub(Ldoub *p, Long_I N, Long_I step);
+	DvecLdoub(const DvecLdoub &v) = default; // copy constructor (shalow)
+	DvecLdoub &operator=(const DvecLdoub &v) = default; // copy assignment (shalow)
+
 	Ldoub* p() const;
+	Long size() const;
+	Long step() const;
 	Ldoub &operator[](Long_I i) const;
 	Ldoub &end() const;
 	Ldoub &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecLdoubC() const;
-	DvecLdoub &operator=(const DvecLdoub &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Ldoub *p);
@@ -1776,14 +1818,17 @@ protected:
 public:
 	DvecQdoubC();
 	DvecQdoubC(const Qdoub *p, Long_I N, Long_I step);
+	DvecQdoubC(const DvecQdoubC &v) = default; // copy constructor (shalow)
+	DvecQdoubC &operator=(const DvecQdoubC &v) = default; // copy assignment (shalow)
+
 	const Qdoub* p() const;
+	Long size() const;
+	Long step() const;
 	const Qdoub &operator[](Long_I i) const;
 	const Qdoub &end() const;
 	const Qdoub &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecQdoubC &operator=(const DvecQdoubC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Qdoub *p);
@@ -1899,15 +1944,18 @@ protected:
 public:
 	DvecQdoub();
 	DvecQdoub(Qdoub *p, Long_I N, Long_I step);
+	DvecQdoub(const DvecQdoub &v) = default; // copy constructor (shalow)
+	DvecQdoub &operator=(const DvecQdoub &v) = default; // copy assignment (shalow)
+
 	Qdoub* p() const;
+	Long size() const;
+	Long step() const;
 	Qdoub &operator[](Long_I i) const;
 	Qdoub &end() const;
 	Qdoub &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecQdoubC() const;
-	DvecQdoub &operator=(const DvecQdoub &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Qdoub *p);
@@ -2028,14 +2076,17 @@ protected:
 public:
 	DvecFcompC();
 	DvecFcompC(const Fcomp *p, Long_I N, Long_I step);
+	DvecFcompC(const DvecFcompC &v) = default; // copy constructor (shalow)
+	DvecFcompC &operator=(const DvecFcompC &v) = default; // copy assignment (shalow)
+
 	const Fcomp* p() const;
+	Long size() const;
+	Long step() const;
 	const Fcomp &operator[](Long_I i) const;
 	const Fcomp &end() const;
 	const Fcomp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecFcompC &operator=(const DvecFcompC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Fcomp *p);
@@ -2151,15 +2202,18 @@ protected:
 public:
 	DvecFcomp();
 	DvecFcomp(Fcomp *p, Long_I N, Long_I step);
+	DvecFcomp(const DvecFcomp &v) = default; // copy constructor (shalow)
+	DvecFcomp &operator=(const DvecFcomp &v) = default; // copy assignment (shalow)
+
 	Fcomp* p() const;
+	Long size() const;
+	Long step() const;
 	Fcomp &operator[](Long_I i) const;
 	Fcomp &end() const;
 	Fcomp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecFcompC() const;
-	DvecFcomp &operator=(const DvecFcomp &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Fcomp *p);
@@ -2280,14 +2334,17 @@ protected:
 public:
 	DvecCompC();
 	DvecCompC(const Comp *p, Long_I N, Long_I step);
+	DvecCompC(const DvecCompC &v) = default; // copy constructor (shalow)
+	DvecCompC &operator=(const DvecCompC &v) = default; // copy assignment (shalow)
+
 	const Comp* p() const;
+	Long size() const;
+	Long step() const;
 	const Comp &operator[](Long_I i) const;
 	const Comp &end() const;
 	const Comp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecCompC &operator=(const DvecCompC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Comp *p);
@@ -2403,15 +2460,18 @@ protected:
 public:
 	DvecComp();
 	DvecComp(Comp *p, Long_I N, Long_I step);
+	DvecComp(const DvecComp &v) = default; // copy constructor (shalow)
+	DvecComp &operator=(const DvecComp &v) = default; // copy assignment (shalow)
+
 	Comp* p() const;
+	Long size() const;
+	Long step() const;
 	Comp &operator[](Long_I i) const;
 	Comp &end() const;
 	Comp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecCompC() const;
-	DvecComp &operator=(const DvecComp &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Comp *p);
@@ -2532,14 +2592,17 @@ protected:
 public:
 	DvecLcompC();
 	DvecLcompC(const Lcomp *p, Long_I N, Long_I step);
+	DvecLcompC(const DvecLcompC &v) = default; // copy constructor (shalow)
+	DvecLcompC &operator=(const DvecLcompC &v) = default; // copy assignment (shalow)
+
 	const Lcomp* p() const;
+	Long size() const;
+	Long step() const;
 	const Lcomp &operator[](Long_I i) const;
 	const Lcomp &end() const;
 	const Lcomp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecLcompC &operator=(const DvecLcompC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Lcomp *p);
@@ -2655,15 +2718,18 @@ protected:
 public:
 	DvecLcomp();
 	DvecLcomp(Lcomp *p, Long_I N, Long_I step);
+	DvecLcomp(const DvecLcomp &v) = default; // copy constructor (shalow)
+	DvecLcomp &operator=(const DvecLcomp &v) = default; // copy assignment (shalow)
+
 	Lcomp* p() const;
+	Long size() const;
+	Long step() const;
 	Lcomp &operator[](Long_I i) const;
 	Lcomp &end() const;
 	Lcomp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecLcompC() const;
-	DvecLcomp &operator=(const DvecLcomp &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Lcomp *p);
@@ -2784,14 +2850,17 @@ protected:
 public:
 	DvecQcompC();
 	DvecQcompC(const Qcomp *p, Long_I N, Long_I step);
+	DvecQcompC(const DvecQcompC &v) = default; // copy constructor (shalow)
+	DvecQcompC &operator=(const DvecQcompC &v) = default; // copy assignment (shalow)
+
 	const Qcomp* p() const;
+	Long size() const;
+	Long step() const;
 	const Qcomp &operator[](Long_I i) const;
 	const Qcomp &end() const;
 	const Qcomp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
-	DvecQcompC &operator=(const DvecQcompC &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(const Qcomp *p);
@@ -2907,15 +2976,18 @@ protected:
 public:
 	DvecQcomp();
 	DvecQcomp(Qcomp *p, Long_I N, Long_I step);
+	DvecQcomp(const DvecQcomp &v) = default; // copy constructor (shalow)
+	DvecQcomp &operator=(const DvecQcomp &v) = default; // copy assignment (shalow)
+
 	Qcomp* p() const;
+	Long size() const;
+	Long step() const;
 	Qcomp &operator[](Long_I i) const;
 	Qcomp &end() const;
 	Qcomp &end(Long_I i) const;
-	Long size() const;
-	Long step() const;
 
 	operator DvecQcompC() const;
-	DvecQcomp &operator=(const DvecQcomp &) = delete;
+
 	// === other member functions ===
 	// There is no bound checking, use with care
 	void set(Qcomp *p);
