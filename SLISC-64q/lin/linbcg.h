@@ -6,6 +6,7 @@
 #include "../arith/arith4.h"
 #include "../arith/copy.h"
 #include "../dense/cut.h"
+#include "../dense/WorkSpace.h"
 #include "../lin/mul.h"
 
 namespace slisc {
@@ -182,10 +183,10 @@ inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvbaseDoub_IO x, Tmul &mul_fu
 			}
 		}
 		bkden=bknum;
-        mul_fun(z, p);
+		mul_fun(z, p);
 		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
-        mul_fun(zz, pp);
+		mul_fun(zz, pp);
 		for (j=0;j<n;j++) {
 			x[j] += ak*p[j];
 			r[j] -= ak*z[j];
@@ -218,6 +219,11 @@ inline void lin_eq_bcg_sym(Int_O iter, Doub_O err, SvbaseDoub_IO x, Tmul &mul_fu
 }
 
 
+template <class Ts>
+inline Long bicgstab_matlab_Nwsp(Long Nx) {
+	return (Long)(sizeof(Ts))*8*Nx + (SLS_WSP_ALIGN-1)*7;
+}
+
 // modified from Matlab function bicgsta() with no preconditioner
 // ref https://ww2.mathworks.cn/help/matlab/ref/bicgstab.html?lang=en
 // algo ref https://en.wikipedia.org/wiki/Biconjugate_gradient_stabilized_method
@@ -231,7 +237,8 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
 #ifdef SLS_CHECK_SHAPES
-	if (wsp_c.size() < 8*m) SLS_ERR("illegal size!");
+	if (wsp.free() < bicgstab_matlab_Nwsp<Doub>(m))
+		SLS_ERR("wsp too small!");
 #endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
@@ -403,7 +410,8 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
 #ifdef SLS_CHECK_SHAPES
-	if (wsp_c.size() < 8*m) SLS_ERR("illegal size!");
+	if (wsp.free() < bicgstab_matlab_Nwsp<Comp>(m))
+		SLS_ERR("wsp too small!");
 #endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
@@ -567,6 +575,11 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 }
 
 
+template <class Ts>
+inline Long bicgstab_matlab_optim_Nwsp(Long Nx) {
+	return (Long)(sizeof(Ts))*7*Nx + (SLS_WSP_ALIGN-1)*6;
+}
+
 // optimized bicgstab_matlab (less memory)
 // return: [0] Success [1] maxit iterations reached [3] stagnated after two consecutive iterations were the same
 // [4] scalar underflow/overflow
@@ -578,7 +591,8 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
 #ifdef SLS_CHECK_SHAPES
-	if (wsp.size() < sizeof(Doub)*7*m) SLS_ERR("illegal size!");
+	if (wsp.free() < bicgstab_matlab_optim_Nwsp<Doub>(m))
+		SLS_ERR("illegal size!");
 #endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
@@ -718,7 +732,8 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	Doub eps = 2.2e-16;
 	Long m = b.size(); Int flag;
 #ifdef SLS_CHECK_SHAPES
-	if (wsp.size() < sizeof(Comp)*7*m) SLS_ERR("illegal size!");
+	if (wsp.free() < bicgstab_matlab_optim_Nwsp<Comp>(m))
+		SLS_ERR("illegal size!");
 #endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
