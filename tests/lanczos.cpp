@@ -34,8 +34,8 @@ void test_lanczos()
 			Doub dt = 1;
 			Long N = 3, Nk = 3;
 			VecComp x(N), y(N), y0(N), x6(2*N);
-			VecUchar wsp_mem(max(exp_Hdt_v_lanc_Comp_Nwsp(N, Nk),
-				exp_miHdt_v_lanc_Comp_Nwsp(N, Nk)));
+			VecUchar wsp_mem(max(exp_Hdt_v_lanc_Nwsp<Comp>(N, Nk),
+				exp_miHdt_v_lanc_Nwsp<Comp>(N, Nk)));
 			WorkSpace wsp(wsp_mem);
 			for (Long i = 0; i < 5; ++i) {
 				rand(x);
