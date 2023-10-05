@@ -56,7 +56,7 @@ inline Long Scmat3BoolC::n1() const
 
 inline Long Scmat3BoolC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3BoolC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -149,7 +149,7 @@ inline Long Scmat3Bool::n1() const
 
 inline Long Scmat3Bool::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Bool::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -232,7 +232,7 @@ inline Long Scmat3CharC::n1() const
 
 inline Long Scmat3CharC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3CharC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -325,7 +325,7 @@ inline Long Scmat3Char::n1() const
 
 inline Long Scmat3Char::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Char::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -408,7 +408,7 @@ inline Long Scmat3UcharC::n1() const
 
 inline Long Scmat3UcharC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3UcharC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -501,7 +501,7 @@ inline Long Scmat3Uchar::n1() const
 
 inline Long Scmat3Uchar::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Uchar::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -584,7 +584,7 @@ inline Long Scmat3IntC::n1() const
 
 inline Long Scmat3IntC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3IntC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -677,7 +677,7 @@ inline Long Scmat3Int::n1() const
 
 inline Long Scmat3Int::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Int::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -760,7 +760,7 @@ inline Long Scmat3LlongC::n1() const
 
 inline Long Scmat3LlongC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LlongC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -853,7 +853,7 @@ inline Long Scmat3Llong::n1() const
 
 inline Long Scmat3Llong::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Llong::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -936,7 +936,7 @@ inline Long Scmat3FloatC::n1() const
 
 inline Long Scmat3FloatC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3FloatC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1029,7 +1029,7 @@ inline Long Scmat3Float::n1() const
 
 inline Long Scmat3Float::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Float::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1112,7 +1112,7 @@ inline Long Scmat3DoubC::n1() const
 
 inline Long Scmat3DoubC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3DoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1205,7 +1205,7 @@ inline Long Scmat3Doub::n1() const
 
 inline Long Scmat3Doub::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Doub::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1290,7 +1290,7 @@ inline Long Scmat3LdoubC::n1() const
 
 inline Long Scmat3LdoubC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LdoubC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1383,7 +1383,7 @@ inline Long Scmat3Ldoub::n1() const
 
 inline Long Scmat3Ldoub::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Ldoub::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1466,7 +1466,7 @@ inline Long Scmat3FcompC::n1() const
 
 inline Long Scmat3FcompC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3FcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1559,7 +1559,7 @@ inline Long Scmat3Fcomp::n1() const
 
 inline Long Scmat3Fcomp::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Fcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1642,7 +1642,7 @@ inline Long Scmat3CompC::n1() const
 
 inline Long Scmat3CompC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3CompC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1735,7 +1735,7 @@ inline Long Scmat3Comp::n1() const
 
 inline Long Scmat3Comp::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Comp::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1818,7 +1818,7 @@ inline Long Scmat3LcompC::n1() const
 
 inline Long Scmat3LcompC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LcompC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1911,7 +1911,7 @@ inline Long Scmat3Lcomp::n1() const
 
 inline Long Scmat3Lcomp::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Lcomp::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -1996,7 +1996,7 @@ inline Long Scmat3FimagC::n1() const
 
 inline Long Scmat3FimagC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3FimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -2089,7 +2089,7 @@ inline Long Scmat3Fimag::n1() const
 
 inline Long Scmat3Fimag::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Fimag::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -2172,7 +2172,7 @@ inline Long Scmat3ImagC::n1() const
 
 inline Long Scmat3ImagC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3ImagC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -2265,7 +2265,7 @@ inline Long Scmat3Imag::n1() const
 
 inline Long Scmat3Imag::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Imag::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -2348,7 +2348,7 @@ inline Long Scmat3LimagC::n1() const
 
 inline Long Scmat3LimagC::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3LimagC::reshape(Long_I N0, Long_I N1, Long_I N2)
@@ -2441,7 +2441,7 @@ inline Long Scmat3Limag::n1() const
 
 inline Long Scmat3Limag::n2() const
 {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline void Scmat3Limag::reshape(Long_I N0, Long_I N1, Long_I N2)

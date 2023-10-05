@@ -119,6 +119,7 @@ inline Doub LinbcgDoub::snrm(SvbaseDoub_I sx, const Int itol)
 }
 
 
+
 // BiCG with symmetric matrix and no precondition (only tested for real matrix)
 // 2-norm or inf-norm of vector sx
 inline Doub snrm(const Doub *sx, Int n, const Int itol)

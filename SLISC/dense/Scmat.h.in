@@ -98,7 +98,7 @@ inline Long @Class@::n0() const
 
 inline Long @Class@::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void @Class@::reshape(Long_I N0, Long_I N1)

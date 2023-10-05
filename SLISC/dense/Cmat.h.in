@@ -93,7 +93,7 @@ inline Long @CmatT@::n0() const
 { return m_N0; }
 
 inline Long @CmatT@::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void @CmatT@::resize(Long_I N0, Long_I N1)
 {

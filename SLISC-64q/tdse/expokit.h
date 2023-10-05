@@ -8,8 +8,9 @@
 namespace slisc {
 
 // workspace requirement
-inline Long expokit_expv_Comp_Nwsp(Long_I N, Long_I Nkry) {
-	return sizeof(Comp)*(max(Long(10), N*(Nkry + 2) + 5*sqr(Nkry + 2) + 8)) +
+template <class Ts>
+inline Long expokit_expv_Nwsp(Long_I N, Long_I Nkry) {
+	return sizeof(Ts)*(max(Long(10), N*(Nkry + 2) + 5*sqr(Nkry + 2) + 8)) +
 		sizeof(Long)*(max(Nkry + 2, 7)) + (SLS_WSP_ALIGN-1);
 }
 

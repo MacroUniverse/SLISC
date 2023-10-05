@@ -258,6 +258,8 @@ typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 } // namespace slisc
 
 #else // SLS_USE_QUAD_MATH
+#error "SLS_USE_QUAD_MATH is off!"
+
 // TODO: maybe use DD library in here
 struct Qdoub {
 	double x[2];

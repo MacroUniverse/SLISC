@@ -111,7 +111,7 @@ inline Long Cmat3Bool::n1() const {
 }
 
 inline Long Cmat3Bool::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Bool::operator const Scmat3BoolC&() const {
@@ -233,7 +233,7 @@ inline Long Cmat3Char::n1() const {
 }
 
 inline Long Cmat3Char::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Char::operator const Scmat3CharC&() const {
@@ -355,7 +355,7 @@ inline Long Cmat3Uchar::n1() const {
 }
 
 inline Long Cmat3Uchar::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Uchar::operator const Scmat3UcharC&() const {
@@ -477,7 +477,7 @@ inline Long Cmat3Int::n1() const {
 }
 
 inline Long Cmat3Int::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Int::operator const Scmat3IntC&() const {
@@ -599,7 +599,7 @@ inline Long Cmat3Llong::n1() const {
 }
 
 inline Long Cmat3Llong::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Llong::operator const Scmat3LlongC&() const {
@@ -721,7 +721,7 @@ inline Long Cmat3Float::n1() const {
 }
 
 inline Long Cmat3Float::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Float::operator const Scmat3FloatC&() const {
@@ -843,7 +843,7 @@ inline Long Cmat3Doub::n1() const {
 }
 
 inline Long Cmat3Doub::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Doub::operator const Scmat3DoubC&() const {
@@ -965,7 +965,7 @@ inline Long Cmat3Ldoub::n1() const {
 }
 
 inline Long Cmat3Ldoub::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Ldoub::operator const Scmat3LdoubC&() const {
@@ -1088,7 +1088,7 @@ inline Long Cmat3Fcomp::n1() const {
 }
 
 inline Long Cmat3Fcomp::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Fcomp::operator const Scmat3FcompC&() const {
@@ -1210,7 +1210,7 @@ inline Long Cmat3Comp::n1() const {
 }
 
 inline Long Cmat3Comp::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Comp::operator const Scmat3CompC&() const {
@@ -1332,7 +1332,7 @@ inline Long Cmat3Lcomp::n1() const {
 }
 
 inline Long Cmat3Lcomp::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Lcomp::operator const Scmat3LcompC&() const {
@@ -1455,7 +1455,7 @@ inline Long Cmat3Fimag::n1() const {
 }
 
 inline Long Cmat3Fimag::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Fimag::operator const Scmat3FimagC&() const {
@@ -1577,7 +1577,7 @@ inline Long Cmat3Imag::n1() const {
 }
 
 inline Long Cmat3Imag::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Imag::operator const Scmat3ImagC&() const {
@@ -1699,7 +1699,7 @@ inline Long Cmat3Limag::n1() const {
 }
 
 inline Long Cmat3Limag::n2() const {
-	return m_N/(m_N0*m_N1);
+	return m_N == 0 ? 0 : m_N/(m_N0*m_N1);
 }
 
 inline Cmat3Limag::operator const Scmat3LimagC&() const {

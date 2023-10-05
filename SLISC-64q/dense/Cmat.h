@@ -84,7 +84,7 @@ inline Long CmatBool::n0() const
 { return m_N0; }
 
 inline Long CmatBool::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatBool::resize(Long_I N0, Long_I N1)
 {
@@ -200,7 +200,7 @@ inline Long CmatChar::n0() const
 { return m_N0; }
 
 inline Long CmatChar::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatChar::resize(Long_I N0, Long_I N1)
 {
@@ -316,7 +316,7 @@ inline Long CmatUchar::n0() const
 { return m_N0; }
 
 inline Long CmatUchar::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatUchar::resize(Long_I N0, Long_I N1)
 {
@@ -432,7 +432,7 @@ inline Long CmatInt::n0() const
 { return m_N0; }
 
 inline Long CmatInt::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatInt::resize(Long_I N0, Long_I N1)
 {
@@ -548,7 +548,7 @@ inline Long CmatLlong::n0() const
 { return m_N0; }
 
 inline Long CmatLlong::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatLlong::resize(Long_I N0, Long_I N1)
 {
@@ -664,7 +664,7 @@ inline Long CmatFloat::n0() const
 { return m_N0; }
 
 inline Long CmatFloat::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatFloat::resize(Long_I N0, Long_I N1)
 {
@@ -780,7 +780,7 @@ inline Long CmatDoub::n0() const
 { return m_N0; }
 
 inline Long CmatDoub::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatDoub::resize(Long_I N0, Long_I N1)
 {
@@ -896,7 +896,7 @@ inline Long CmatLdoub::n0() const
 { return m_N0; }
 
 inline Long CmatLdoub::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatLdoub::resize(Long_I N0, Long_I N1)
 {
@@ -1012,7 +1012,7 @@ inline Long CmatQdoub::n0() const
 { return m_N0; }
 
 inline Long CmatQdoub::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatQdoub::resize(Long_I N0, Long_I N1)
 {
@@ -1128,7 +1128,7 @@ inline Long CmatFcomp::n0() const
 { return m_N0; }
 
 inline Long CmatFcomp::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatFcomp::resize(Long_I N0, Long_I N1)
 {
@@ -1244,7 +1244,7 @@ inline Long CmatComp::n0() const
 { return m_N0; }
 
 inline Long CmatComp::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatComp::resize(Long_I N0, Long_I N1)
 {
@@ -1360,7 +1360,7 @@ inline Long CmatLcomp::n0() const
 { return m_N0; }
 
 inline Long CmatLcomp::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatLcomp::resize(Long_I N0, Long_I N1)
 {
@@ -1476,7 +1476,7 @@ inline Long CmatQcomp::n0() const
 { return m_N0; }
 
 inline Long CmatQcomp::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatQcomp::resize(Long_I N0, Long_I N1)
 {
@@ -1592,7 +1592,7 @@ inline Long CmatFimag::n0() const
 { return m_N0; }
 
 inline Long CmatFimag::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatFimag::resize(Long_I N0, Long_I N1)
 {
@@ -1708,7 +1708,7 @@ inline Long CmatImag::n0() const
 { return m_N0; }
 
 inline Long CmatImag::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatImag::resize(Long_I N0, Long_I N1)
 {
@@ -1824,7 +1824,7 @@ inline Long CmatLimag::n0() const
 { return m_N0; }
 
 inline Long CmatLimag::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatLimag::resize(Long_I N0, Long_I N1)
 {
@@ -1940,7 +1940,7 @@ inline Long CmatQimag::n0() const
 { return m_N0; }
 
 inline Long CmatQimag::n1() const
-{ return m_N/m_N0; }
+{ return m_N0 == 0 ? 0 : m_N/m_N0; }
 
 inline void CmatQimag::resize(Long_I N0, Long_I N1)
 {

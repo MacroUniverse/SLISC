@@ -14,8 +14,9 @@
 namespace slisc {
 
 // bytes of workspace required
-inline Long exp_Hdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
-	return sizeof(Doub)*((2*N+Nk)*(Nk+1)+Nk)+4*(SLS_WSP_ALIGN-1);
+template <class Ts>
+inline Long exp_Hdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
+	return sizeof(Ts)*((2*N+Nk)*(Nk+1)+Nk)+4*(SLS_WSP_ALIGN-1);
 }
 
 // calculate y = exp(H*dt) * x
@@ -310,8 +311,9 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 
 
 // bytes of workspace required
-inline Long exp_miHdt_v_lanc_Comp_Nwsp(Long_I N, Long_I Nk) {
-	return sizeof(Doub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*(SLS_WSP_ALIGN-1);
+template <class Ts>
+inline Long exp_miHdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
+	return sizeof(Ts)*((2*N+Nk)*(Nk+1)+3*Nk)+5*(SLS_WSP_ALIGN-1);
 }
 
 // calculate y = exp(-i*H*dt) * x

@@ -13,7 +13,7 @@ namespace slisc {
 
 // from Numerical Recipes
 //% tem('Linbcg', {
-//%    'SvbaseDoub'; 'SvbaseDoub';
+//%    'SvbaseDoub'; 'SvbaseQdoub';
 //% });
 //%------------------------------
 //% Tv = varargin{:}; Ts = val_t(Tv);

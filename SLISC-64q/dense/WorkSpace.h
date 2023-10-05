@@ -1,9 +1,12 @@
 #pragma once
-// workspace
-// each allocation must start at a memory address at the multiple of SLS_WSP_ALIGN, for possible SIMD optimization
+// a unified workspace class
 
+#include "Svec.h"
 #include "Scmat.h"
 #include "Scmat3.h"
+
+// each allocation must start at a memory address
+//   at the multiple of SLS_WSP_ALIGN, for possible SIMD optimization
 #ifndef SLS_WSP_ALIGN
 #define SLS_WSP_ALIGN 64
 #endif
@@ -68,7 +71,7 @@ public:
 	}
 
 	// danger! make sure no one is using the workspace!
-	void reset() { m_used = 0; }
+	WorkSpace &reset() { m_used = 0; return *this; }
 
 	// ======= allocate WorkSpace for different containers =========
 

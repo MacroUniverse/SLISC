@@ -49,7 +49,7 @@ inline Long ScmatBoolC::n0() const
 
 inline Long ScmatBoolC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatBoolC::reshape(Long_I N0, Long_I N1)
@@ -133,7 +133,7 @@ inline Long ScmatBool::n0() const
 
 inline Long ScmatBool::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatBool::reshape(Long_I N0, Long_I N1)
@@ -207,7 +207,7 @@ inline Long ScmatCharC::n0() const
 
 inline Long ScmatCharC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatCharC::reshape(Long_I N0, Long_I N1)
@@ -291,7 +291,7 @@ inline Long ScmatChar::n0() const
 
 inline Long ScmatChar::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatChar::reshape(Long_I N0, Long_I N1)
@@ -365,7 +365,7 @@ inline Long ScmatUcharC::n0() const
 
 inline Long ScmatUcharC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatUcharC::reshape(Long_I N0, Long_I N1)
@@ -449,7 +449,7 @@ inline Long ScmatUchar::n0() const
 
 inline Long ScmatUchar::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatUchar::reshape(Long_I N0, Long_I N1)
@@ -523,7 +523,7 @@ inline Long ScmatIntC::n0() const
 
 inline Long ScmatIntC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatIntC::reshape(Long_I N0, Long_I N1)
@@ -607,7 +607,7 @@ inline Long ScmatInt::n0() const
 
 inline Long ScmatInt::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatInt::reshape(Long_I N0, Long_I N1)
@@ -681,7 +681,7 @@ inline Long ScmatLlongC::n0() const
 
 inline Long ScmatLlongC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLlongC::reshape(Long_I N0, Long_I N1)
@@ -765,7 +765,7 @@ inline Long ScmatLlong::n0() const
 
 inline Long ScmatLlong::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLlong::reshape(Long_I N0, Long_I N1)
@@ -839,7 +839,7 @@ inline Long ScmatFloatC::n0() const
 
 inline Long ScmatFloatC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatFloatC::reshape(Long_I N0, Long_I N1)
@@ -923,7 +923,7 @@ inline Long ScmatFloat::n0() const
 
 inline Long ScmatFloat::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatFloat::reshape(Long_I N0, Long_I N1)
@@ -997,7 +997,7 @@ inline Long ScmatDoubC::n0() const
 
 inline Long ScmatDoubC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatDoubC::reshape(Long_I N0, Long_I N1)
@@ -1081,7 +1081,7 @@ inline Long ScmatDoub::n0() const
 
 inline Long ScmatDoub::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatDoub::reshape(Long_I N0, Long_I N1)
@@ -1155,7 +1155,7 @@ inline Long ScmatLdoubC::n0() const
 
 inline Long ScmatLdoubC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLdoubC::reshape(Long_I N0, Long_I N1)
@@ -1239,7 +1239,7 @@ inline Long ScmatLdoub::n0() const
 
 inline Long ScmatLdoub::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLdoub::reshape(Long_I N0, Long_I N1)
@@ -1315,7 +1315,7 @@ inline Long ScmatFcompC::n0() const
 
 inline Long ScmatFcompC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatFcompC::reshape(Long_I N0, Long_I N1)
@@ -1399,7 +1399,7 @@ inline Long ScmatFcomp::n0() const
 
 inline Long ScmatFcomp::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatFcomp::reshape(Long_I N0, Long_I N1)
@@ -1473,7 +1473,7 @@ inline Long ScmatCompC::n0() const
 
 inline Long ScmatCompC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatCompC::reshape(Long_I N0, Long_I N1)
@@ -1557,7 +1557,7 @@ inline Long ScmatComp::n0() const
 
 inline Long ScmatComp::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatComp::reshape(Long_I N0, Long_I N1)
@@ -1631,7 +1631,7 @@ inline Long ScmatLcompC::n0() const
 
 inline Long ScmatLcompC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLcompC::reshape(Long_I N0, Long_I N1)
@@ -1715,7 +1715,7 @@ inline Long ScmatLcomp::n0() const
 
 inline Long ScmatLcomp::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLcomp::reshape(Long_I N0, Long_I N1)
@@ -1791,7 +1791,7 @@ inline Long ScmatFimagC::n0() const
 
 inline Long ScmatFimagC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatFimagC::reshape(Long_I N0, Long_I N1)
@@ -1875,7 +1875,7 @@ inline Long ScmatFimag::n0() const
 
 inline Long ScmatFimag::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatFimag::reshape(Long_I N0, Long_I N1)
@@ -1949,7 +1949,7 @@ inline Long ScmatImagC::n0() const
 
 inline Long ScmatImagC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatImagC::reshape(Long_I N0, Long_I N1)
@@ -2033,7 +2033,7 @@ inline Long ScmatImag::n0() const
 
 inline Long ScmatImag::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatImag::reshape(Long_I N0, Long_I N1)
@@ -2107,7 +2107,7 @@ inline Long ScmatLimagC::n0() const
 
 inline Long ScmatLimagC::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLimagC::reshape(Long_I N0, Long_I N1)
@@ -2191,7 +2191,7 @@ inline Long ScmatLimag::n0() const
 
 inline Long ScmatLimag::n1() const
 {
-	return m_N/m_N0;;
+	return m_N0 == 0 ? 0 : m_N/m_N0;
 }
 
 inline void ScmatLimag::reshape(Long_I N0, Long_I N1)

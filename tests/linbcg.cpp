@@ -24,16 +24,16 @@ class LinbcgDoub2: public LinbcgDoub
 #ifdef SLS_USE_QUAD_MATH
 class LinbcgQdoub2: public LinbcgQdoub
 {
-	void asolve(SvecQdoub_I b, SvecQdoub_O x, const Int itrnsp) {
+	void asolve(SvbaseQdoub_I b, SvbaseQdoub_O x, const Int itrnsp) {
 		copy(x, b);
 	}
-	void atimes(SvecQdoub_I x, SvecQdoub_O r, const Int itrnsp) {
+	void atimes(SvbaseQdoub_I x, SvbaseQdoub_O r, const Int itrnsp) {
 		CmatQdoub a(3,3), at(3,3); copy(a, {1.Q, 0.Q, 5.Q, 0.Q, 3.Q, 0.Q, 2.Q, 4.Q, 6.Q});
 		trans(at, a);
 		if (!itrnsp)
-			mul(r, a, x);
+			mul((SvecQdoub_O)r, a, (SvecQdoub_I)x);
 		else
-			mul(r, at, x);
+			mul((SvecQdoub_O)r, at, (SvecQdoub_I)x);
 	}
 };
 #endif
