@@ -116,6 +116,8 @@ inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Lo
 	}
 }
 
+// TODO: we can optimize this by using BLAS/Eigen matrix-vector multiplication for each block
+// or, just use Eigen sparse matrix
 template <class Ty, class Tx, class Ta>
 inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
