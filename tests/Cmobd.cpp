@@ -1,5 +1,5 @@
 #include "../SLISC/sparse/sparse_arith.h"
-// #include "../SLISC/str/disp.h"
+#include "../SLISC/str/disp.h"
 
 void test_Cmobd()
 {
@@ -88,6 +88,19 @@ void test_Cmobd()
 	{
 		if (norm_inf(a) != 120)
 			SLS_FAIL;
+	}
+
+	// copy from and to Cmat
+	{
+		CmobdDoub a(3, 4), a1(3, 4);
+		CmatDoub b(a.n0(), a.n1());
+		auto &m_data = a.cmat3();
+		for (Long i = 0; i < m_data.size(); ++i)
+			m_data[i] = randDoub()-0.5;
+		copy(b, a); copy(a1, b);
+		for (Long i = 0; i < a.n0(); ++i)
+			for (Long j = 0; j < a.n1(); ++j)
+				SLS_ASSERT(a(i, j) == a1(i, j));
 	}
 }
 
