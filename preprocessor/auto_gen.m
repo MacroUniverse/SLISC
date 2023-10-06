@@ -191,8 +191,12 @@ for i = 1:numel(changed_file)
 end
 
 %% write output files
+has_err = false;
+
 for i = 1:numel(changed_file)
-    if VERBOSE, disp(['writing (' num2str(i) '): ' changed_file{i}(1:end-3)]); end
+    h_in_file = changed_file{i};
+    h_file = h_in_file(1:end-3);
+    if VERBOSE, disp(['writing (' num2str(i) '): ' h_file]); end
     str = out_strs{i};
     ind = 1;
     while true
@@ -212,8 +216,19 @@ for i = 1:numel(changed_file)
         str = [str(1:ind1-1), temp(1:end-1), str(ind2+1:end)];
         ind = ind1;
     end
-    filewrite(changed_file{i}(1:end-3), str);
+    if exist(h_file, 'file') && dir(h_in_file).datenum < dir(h_file).datenum
+        disp([char(10) '==> Error <==']);
+        warning([h_in_file ' is older than ' h_file ...
+            ', won''t overwrite. Please move the change to .in file. ' ...
+            ' to bypass, remove the generated h file or use `make clean_h`.']);
+        has_err = true;
+        continue;
+    end
+    filewrite(h_file, str);
+    system(['touch ' h_in_file]); % make the .in file newer
 end
+
+if (has_err), error('failed!'); end
 
 % rmpath(paths{:});
 save('../tem_db.mat', 'tem_db');

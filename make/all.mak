@@ -492,7 +492,7 @@ all:
 ifeq ($(opt_main), false)
 
     # use `make test*` without any options! will ignore.
-    test: clean_all
+    test: clean clean_dep
 		$(info remake and run all tests - default)
 		@make h
 		@make opt_min=false depend -j$(Ncpu)
@@ -501,7 +501,7 @@ ifeq ($(opt_main), false)
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test32: clean_all
+    test32: clean clean_dep
 		$(info remake and run all tests - 32bit)
 		@make h
 		@make opt_long32=true opt_min=false depend -j$(Ncpu)
@@ -510,7 +510,7 @@ ifeq ($(opt_main), false)
 		@make run_test_x
 		@printf "\n\n\n"
 	
-    test64: clean_all
+    test64: clean clean_dep
 		$(info remake and run all tests - 64bit)
 		@make h64
 		@make opt_long32=false opt_min=false depend -j$(Ncpu)
@@ -519,7 +519,7 @@ ifeq ($(opt_main), false)
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test64q: clean_all
+    test64q: clean clean_dep
 		$(info remake and run all tests - 64bit & quadmath)
 		@make h64q
 		@make opt_long32=false opt_min=false opt_quadmath=true depend -j$(Ncpu)
@@ -546,7 +546,7 @@ ifeq ($(opt_main), false)
 else # opt_main == false
 
     # use `make test*` without any option! options will ignore.
-    test: clean_all
+    test: clean clean_dep
 		$(info remake and run all tests - default)
 		@make h
 		@make depend -j$(Ncpu)
@@ -555,7 +555,7 @@ else # opt_main == false
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test32: clean_all
+    test32: clean clean_dep
 		$(info remake and run all tests - 64bit)
 		@make h
 		@make opt_long32=true depend -j$(Ncpu)
@@ -564,7 +564,7 @@ else # opt_main == false
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test64: clean_all
+    test64: clean clean_dep
 		$(info remake and run all tests - 64bit)
 		@make h64
 		@make opt_long32=false depend -j$(Ncpu)
@@ -573,7 +573,7 @@ else # opt_main == false
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test64q: clean_all
+    test64q: clean clean_dep
 		$(info remake and run all tests - 64bit & quadmath)
 		@make h64q
 		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
@@ -608,7 +608,7 @@ h_all:
 	make h64q
 	make h
 
-h: clean_h
+h:
 	$(info remake all headers)
 	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), $(opt_verb))"
 
