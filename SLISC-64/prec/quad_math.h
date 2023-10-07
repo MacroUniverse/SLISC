@@ -259,6 +259,7 @@ typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 
 #endif // SLS_USE_QUAD_MATH
 
+// #else
 // // TODO: maybe use DD library in here
 // struct Qdoub {
 // 	double x[2];
@@ -307,3 +308,4 @@ typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 // inline bool operator<=(Qdoub_I x, Qdoub_I y) { return false; }
 // inline bool operator==(Qdoub_I x, Qdoub_I y) { return false; }
 // inline bool operator!=(Qdoub_I x, Qdoub_I y) { return false; }
+// #endif

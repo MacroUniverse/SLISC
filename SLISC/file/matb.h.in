@@ -333,6 +333,8 @@ inline void save_matb(@T@_I s, Str_I varname, Str_I matb_file, Bool_I replace = 
 //%     'ScmatComp'; 'ScmatQcomp'; 'MatChar'; 'MatInt';
 //%     'MatLlong'; 'MatDoub'; 'MatComp'; 'ScmatInt';
 //%     'DcmatInt'; 'DcmatLlong'; 'DcmatDoub'; 'DcmatQdoub'; 'DcmatComp'; 'DcmatQcomp';
+//%     'CmobdDoub'; 'CmobdQdoub'; 'CmobdComp'; 'CmobdQcomp'; % not optimized
+//%     'McooDoub'; 'McooQdoub'; 'McooComp'; 'McooQcomp'; % not optimized
 //%     'Scmat3Int'; 'Scmat3Llong'; 'Scmat3Doub'; 'Scmat3Qdoub'; 'Scmat3Comp'; 'Scmat3Qcomp';
 //%     'Mat3Int'; 'Mat3Llong'; 'Mat3Doub'; 'Mat3Comp';
 //%     'Scmat4Doub'; 'Scmat4Qdoub'; 'Scmat4Comp'; 'Scmat4Qcomp';

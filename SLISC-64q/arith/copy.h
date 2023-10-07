@@ -1181,12 +1181,58 @@ inline void copy(ScmatDoub_O lhs, CmobdDoub_I rhs)
 			lhs(i, j) = rhs(i, j);
 }
 
+inline void copy(CmobdDoub_O lhs, ScmatDoub_I rhs)
+{
+	assert_same_shape2(lhs, rhs);
+	auto &cmat3 = lhs.cmat3();
+	Long start, sz = lhs.nblk0()-1, i, j, iblk;
+	// first block
+	for (i = 0; i < sz-1; ++i)
+		for (j = 0; j < sz; ++j)
+			cmat3(i+1, j+1, 0) = rhs(i, j);
+	for (j = 0; j < sz-1; ++j)
+		cmat3(i+1, j+1, 0) = rhs(i, j);
+	// other blocks
+	for (iblk = 1; iblk < lhs.nblk(); ++iblk) {
+		tie(start, sz) = lhs.blk_range(iblk);
+		for (i = 0; i < sz-1; ++i)
+			for (j = 0; j < sz; ++j)
+				cmat3(i, j, iblk) = rhs(start+i, start+j);
+		for (j = 0; j < sz-1; ++j)
+			cmat3(i, j, iblk) = rhs(start+i, start+j);
+	}
+	cmat3(i, j, iblk-1) = rhs(start+i, start+j);
+}
+
 inline void copy(ScmatQdoub_O lhs, CmobdQdoub_I rhs)
 {
 	assert_same_shape2(lhs, rhs);
 	for (Long j = 0; j < lhs.n1(); ++j)
 		for (Long i = 0; i < lhs.n0(); ++i)
 			lhs(i, j) = rhs(i, j);
+}
+
+inline void copy(CmobdQdoub_O lhs, ScmatQdoub_I rhs)
+{
+	assert_same_shape2(lhs, rhs);
+	auto &cmat3 = lhs.cmat3();
+	Long start, sz = lhs.nblk0()-1, i, j, iblk;
+	// first block
+	for (i = 0; i < sz-1; ++i)
+		for (j = 0; j < sz; ++j)
+			cmat3(i+1, j+1, 0) = rhs(i, j);
+	for (j = 0; j < sz-1; ++j)
+		cmat3(i+1, j+1, 0) = rhs(i, j);
+	// other blocks
+	for (iblk = 1; iblk < lhs.nblk(); ++iblk) {
+		tie(start, sz) = lhs.blk_range(iblk);
+		for (i = 0; i < sz-1; ++i)
+			for (j = 0; j < sz; ++j)
+				cmat3(i, j, iblk) = rhs(start+i, start+j);
+		for (j = 0; j < sz-1; ++j)
+			cmat3(i, j, iblk) = rhs(start+i, start+j);
+	}
+	cmat3(i, j, iblk-1) = rhs(start+i, start+j);
 }
 
 

@@ -257,50 +257,50 @@ typedef const vecQcomp &vecQcomp_I;
 typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 } // namespace slisc
 
-#else // SLS_USE_QUAD_MATH
-#error "SLS_USE_QUAD_MATH is off!"
+#endif // SLS_USE_QUAD_MATH
 
-// TODO: maybe use DD library in here
-struct Qdoub {
-	double x[2];
-	Qdoub() { SLS_ERR("Qdoub not implemented!"); }
-	Qdoub(const int &q) { SLS_ERR("Qdoub not implemented!"); }
-	Qdoub(const long long &q) { SLS_ERR("Qdoub not implemented!"); }
-	Qdoub(const double &q) { SLS_ERR("Qdoub not implemented!"); }
-	Qdoub(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); } // copy constructor
-	void operator=(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); }
-	operator double() { SLS_ERR("Qdoub not implemented!"); }
-};
+// #else
+// // TODO: maybe use DD library in here
+// struct Qdoub {
+// 	double x[2];
+// 	Qdoub() { SLS_ERR("Qdoub not implemented!"); }
+// 	Qdoub(const int &q) { SLS_ERR("Qdoub not implemented!"); }
+// 	Qdoub(const long long &q) { SLS_ERR("Qdoub not implemented!"); }
+// 	Qdoub(const double &q) { SLS_ERR("Qdoub not implemented!"); }
+// 	Qdoub(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); } // copy constructor
+// 	void operator=(const Qdoub &q) { SLS_ERR("Qdoub not implemented!"); }
+// 	operator double() { SLS_ERR("Qdoub not implemented!"); }
+// };
 
-struct Qcomp {
-	double x[4];
-	Qcomp() { SLS_ERR("Qcomp not implemented!"); }
-	Qcomp(const int &q) { SLS_ERR("Qcomp not implemented!"); }
-	Qcomp(const long long &q) { SLS_ERR("Qcomp not implemented!"); }
-	Qcomp(const double &q) { SLS_ERR("Qcomp not implemented!"); }
-	Qcomp(const Qcomp &q) { SLS_ERR("Qcomp not implemented!"); } // copy constructor
-	void operator=(const Qcomp &q) { SLS_ERR("Qcomp not implemented!"); }
-	operator double() { SLS_ERR("Qcomp not implemented!"); }
-};
+// struct Qcomp {
+// 	double x[4];
+// 	Qcomp() { SLS_ERR("Qcomp not implemented!"); }
+// 	Qcomp(const int &q) { SLS_ERR("Qcomp not implemented!"); }
+// 	Qcomp(const long long &q) { SLS_ERR("Qcomp not implemented!"); }
+// 	Qcomp(const double &q) { SLS_ERR("Qcomp not implemented!"); }
+// 	Qcomp(const Qcomp &q) { SLS_ERR("Qcomp not implemented!"); } // copy constructor
+// 	void operator=(const Qcomp &q) { SLS_ERR("Qcomp not implemented!"); }
+// 	operator double() { SLS_ERR("Qcomp not implemented!"); }
+// };
 
-typedef const Qdoub &Qdoub_I;
-typedef Qdoub &Qdoub_O, &Qdoub_IO;
+// typedef const Qdoub &Qdoub_I;
+// typedef Qdoub &Qdoub_O, &Qdoub_IO;
 
-namespace std {
-	inline double sqr(Qdoub_I x) { return 0; }
-}
+// namespace std {
+// 	inline double sqr(Qdoub_I x) { return 0; }
+// }
 
-// another definition
-typedef const Qcomp &Qcomp_I;
-typedef Qcomp &Qcomp_O, &Qcomp_IO;
+// // another definition
+// typedef const Qcomp &Qcomp_I;
+// typedef Qcomp &Qcomp_O, &Qcomp_IO;
 
-typedef std::vector<Qdoub> vecQdoub;
-typedef const vecQdoub &vecQdoub_I;
-typedef vecQdoub &vecQdoub_O, &vecQdoub_IO;
+// typedef std::vector<Qdoub> vecQdoub;
+// typedef const vecQdoub &vecQdoub_I;
+// typedef vecQdoub &vecQdoub_O, &vecQdoub_IO;
 
-typedef std::vector<Qcomp> vecQcomp;
-typedef const vecQcomp &vecQcomp_I;
-typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
+// typedef std::vector<Qcomp> vecQcomp;
+// typedef const vecQcomp &vecQcomp_I;
+// typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 
 // inline bool operator>(Qdoub_I x, Qdoub_I y) { return false; }
 // inline bool operator>=(Qdoub_I x, Qdoub_I y) { return false; }
@@ -308,5 +308,4 @@ typedef vecQcomp &vecQcomp_O, &vecQcomp_IO;
 // inline bool operator<=(Qdoub_I x, Qdoub_I y) { return false; }
 // inline bool operator==(Qdoub_I x, Qdoub_I y) { return false; }
 // inline bool operator!=(Qdoub_I x, Qdoub_I y) { return false; }
-
-#endif // SLS_USE_QUAD_MATH
+// #endif

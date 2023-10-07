@@ -593,7 +593,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	Long m = b.size(); Int flag;
 #ifdef SLS_CHECK_SHAPES
 	if (wsp.free() < bicgstab_matlab_optim_Nwsp<Doub>(m))
-		SLS_ERR("illegal size!");
+		SLS_ERR("Workspace too small!");
 #endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {
@@ -734,7 +734,7 @@ inline Int bicgstab_matlab_optim(Doub_O relres, Long_O iter,
 	Long m = b.size(); Int flag;
 #ifdef SLS_CHECK_SHAPES
 	if (wsp.free() < bicgstab_matlab_optim_Nwsp<Comp>(m))
-		SLS_ERR("illegal size!");
+		SLS_ERR("Workspace too small!");
 #endif
 	const Doub n2b = norm(b);
 	if (n2b == 0) {

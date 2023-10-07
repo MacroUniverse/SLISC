@@ -2,6 +2,7 @@
 // such as the kinetic matrix for 1D FEDVR grid
 // first block and last block has one less element in each dimension
 // currently, first overlapping element must be zero (e.g. matrix-vector multiplication will depend on this)
+// the out-of-bound elements in m_data have undefined values
 
 #pragma once
 #include "../arith/scalar_arith.h"
@@ -31,6 +32,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Int &cmat3() const;
 	Cmat3Int &cmat3();
 	void set(Cmat3Int_I a3); // set data from Cmat3
@@ -124,6 +126,19 @@ inline Long CmobdInt::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdInt::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Int& CmobdInt::cmat3() const
 {
 	return m_data;
@@ -199,6 +214,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Llong &cmat3() const;
 	Cmat3Llong &cmat3();
 	void set(Cmat3Llong_I a3); // set data from Cmat3
@@ -292,6 +308,19 @@ inline Long CmobdLlong::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdLlong::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Llong& CmobdLlong::cmat3() const
 {
 	return m_data;
@@ -367,6 +396,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Doub &cmat3() const;
 	Cmat3Doub &cmat3();
 	void set(Cmat3Doub_I a3); // set data from Cmat3
@@ -460,6 +490,19 @@ inline Long CmobdDoub::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdDoub::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Doub& CmobdDoub::cmat3() const
 {
 	return m_data;
@@ -535,6 +578,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Comp &cmat3() const;
 	Cmat3Comp &cmat3();
 	void set(Cmat3Comp_I a3); // set data from Cmat3
@@ -628,6 +672,19 @@ inline Long CmobdComp::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdComp::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Comp& CmobdComp::cmat3() const
 {
 	return m_data;
@@ -703,6 +760,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Qdoub &cmat3() const;
 	Cmat3Qdoub &cmat3();
 	void set(Cmat3Qdoub_I a3); // set data from Cmat3
@@ -796,6 +854,19 @@ inline Long CmobdQdoub::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdQdoub::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Qdoub& CmobdQdoub::cmat3() const
 {
 	return m_data;
@@ -871,6 +942,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Qcomp &cmat3() const;
 	Cmat3Qcomp &cmat3();
 	void set(Cmat3Qcomp_I a3); // set data from Cmat3
@@ -964,6 +1036,19 @@ inline Long CmobdQcomp::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdQcomp::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Qcomp& CmobdQcomp::cmat3() const
 {
 	return m_data;
@@ -1039,6 +1124,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Imag &cmat3() const;
 	Cmat3Imag &cmat3();
 	void set(Cmat3Imag_I a3); // set data from Cmat3
@@ -1132,6 +1218,19 @@ inline Long CmobdImag::nnz() const
 	return (N*N - 1)*Nblk - 4 * N + 3;
 }
 
+inline pair<Long,Long> CmobdImag::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
+}
+
 inline const Cmat3Imag& CmobdImag::cmat3() const
 {
 	return m_data;
@@ -1207,6 +1306,7 @@ public:
 	Long n1() const;
 	Long size() const;
 	Long nnz() const;
+	pair<Long,Long> blk_range(Long_I iblk) const; // the range of row/col index for each block
 	const Cmat3Qimag &cmat3() const;
 	Cmat3Qimag &cmat3();
 	void set(Cmat3Qimag_I a3); // set data from Cmat3
@@ -1298,6 +1398,19 @@ inline Long CmobdQimag::nnz() const
 {
 	Long N = nblk0(), Nblk = nblk();
 	return (N*N - 1)*Nblk - 4 * N + 3;
+}
+
+inline pair<Long,Long> CmobdQimag::blk_range(Long_I iblk) const
+{
+	Long start, size;
+	if (iblk == 0) {
+		start = 0; size = nblk0()-1;
+	}
+	else {
+		start = (nblk0()-1)*iblk-1;
+		size = (iblk == nblk()-1 ? nblk0()-1 : nblk0());
+	}
+	return {start, size};
 }
 
 inline const Cmat3Qimag& CmobdQimag::cmat3() const

@@ -116,6 +116,8 @@ inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Lo
 	}
 }
 
+// TODO: we can optimize this by using BLAS/Eigen matrix-vector multiplication for each block
+// or, just use Eigen sparse matrix
 template <class Ty, class Tx, class Ta>
 inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
@@ -254,6 +256,16 @@ inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x)
 
 
 
+inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
+					y.step(), x.step(), 1, 0);
+}
+
 template <class Talpha, class Tbeta>
 inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, const Tbeta &beta)
 {
@@ -261,7 +273,29 @@ inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, con
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
+					y.step(), x.step(), alpha, beta);
+}
+
+inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
+					y.step(), x.step(), 1, 0);
+}
+
+template <class Talpha, class Tbeta>
+inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x, const Talpha &alpha, const Tbeta &beta)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
+					y.step(), x.step(), alpha, beta);
 }
 
 
