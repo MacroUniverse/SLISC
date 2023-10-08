@@ -68,6 +68,23 @@ inline void mul_v_coo_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Lon
 		y[i[k]] += a_ij[k] * x[x_step*j[k]];
 }
 
+template <class Ty, class Ta, class Tx>
+inline void mul_v_coo_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
+							  Long_I y_step, Long_I x_step)
+{
+	vecset(y, 0, N1, y_step);
+	for (Long k = 0; k < Nnz; ++k)
+		y[y_step*i[k]] += a_ij[k] * x[x_step*j[k]];
+}
+
+template <class Ty, class Ta, class Tx>
+inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
+							  Long_I y_step, Long_I x_step)
+{
+	for (Long k = 0; k < Nnz; ++k)
+		y[y_step*i[k]] += a_ij[k] * x[x_step*j[k]];
+}
+
 // assuming only one of the two redundant elements are stored
 template <class Ty, class Ta, class Tx>
 inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
@@ -226,31 +243,38 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x, const Talpha &alpha, const Tbeta &
 //%------------------------------
 
 //% tem('mul(v,coo,v)', {
-//% 'SvbaseComp', 'McooDoub', 'SvbaseComp';
-//% 'SvbaseQcomp', 'McooQdoub', 'SvbaseQcomp';
-//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub'
-//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub'
-//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub'
-//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub'
-//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub'
-//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub'
-//% 'SvbaseComp' 'McooDoub' 'SvbaseComp'
-//% 'SvbaseComp' 'McooDoub' 'DvecComp'
-//% 'SvbaseQcomp' 'McooQdoub' 'SvbaseQcomp' });
+//% 'SvbaseComp' 'McooDoub' 'SvbaseComp' 0
+//% 'SvbaseComp' 'McooDoub' 'DvecComp' 0
+//% 'SvbaseQcomp' 'McooQdoub' 'SvbaseQcomp' 0
+//% 'SvbaseDoub' 'McooDoub' 'SvbaseDoub' 0
+//% 'SvbaseQdoub' 'McooQdoub' 'SvbaseQdoub' 0
+//% 'DvecDoub' 'McooDoub' 'SvbaseDoub' 1
+//% 'DvecDoub' 'McooDoub' 'DvecDoub' 0
+//% 'DvecDoub' 'McooDoub' 'DvecDoub' 1
+//% 'DvecComp' 'McooDoub' 'SvbaseComp' 0
+//% 'DvecComp' 'McooDoub' 'SvbaseComp' 1
+//% 'DvecComp' 'McooDoub' 'DvecComp' 0
+//% 'DvecComp' 'McooDoub' 'DvecComp' 1
+//% });
 //%------------------------------
-//% [T, T1, T2] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
-inline void mul(@T@_O y, @T1@_I a, @T2@_I x)
+//% [T, T1, T2, add_eq] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
+//% if add_eq, suf = '_beta1'; else, suf = ''; end;
+inline void mul@suf@(@T@_O y, @T1@_I a, @T2@_I x)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (a.n1() != x.size() || a.n0() != y.size())
 		SLS_ERR("illegal shape!");
 #endif
 //% if is_dense_vec(T) && is_Mcoo(T1) && is_dense_vec(T2)
-	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
-//% elseif is_dense_vec(T) && is_Mcoo(T1) && is_Dvec(T2)
-	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), x.step());
+	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
-	mul_v_cooh_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+	mul_v_cooh_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
+//% elseif is_dense_vec(T) && is_Mcoo(T1) && is_Dvec(T2)
+	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), x.step());
+//% elseif is_Dvec(T) && is_Mcoo(T1) && is_dense_vec(T2)
+	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), 1);
+//% elseif is_Dvec(T) && is_Mcoo(T1) && is_Dvec(T2)
+	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step());
 //% else
 //%     error('not implemented!');
 //% end
