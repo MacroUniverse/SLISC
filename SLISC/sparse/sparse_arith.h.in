@@ -85,6 +85,14 @@ inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *
 		y[y_step*i[k]] += a_ij[k] * x[x_step*j[k]];
 }
 
+template <class Ty, class Ta, class Tx, class Talpha>
+inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
+							  Long_I y_step, Long_I x_step, const Talpha &alpha)
+{
+	for (Long k = 0; k < Nnz; ++k)
+		y[y_step*i[k]] += alpha * a_ij[k] * x[x_step*j[k]];
+}
+
 // assuming only one of the two redundant elements are stored
 template <class Ty, class Ta, class Tx>
 inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
@@ -194,52 +202,47 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 }
 
 //% tem('mul(v,obd,v)', {
-//%    'SvbaseInt', 'CmobdInt', 'SvbaseInt'
-//%    'SvbaseDoub', 'CmobdDoub', 'SvbaseDoub';
-//%    'SvbaseQdoub', 'CmobdQdoub', 'SvbaseQdoub';
-//%    'SvbaseComp', 'CmobdDoub', 'SvbaseComp';
-//%    'SvbaseComp', 'CmobdComp', 'SvbaseComp';
-//%    'SvbaseComp', 'CmobdImag', 'SvbaseComp';
-//%    'SvbaseQcomp', 'CmobdQdoub', 'SvbaseQcomp';
+//%    'SvbaseInt' 'CmobdInt' 'SvbaseInt' 0
+//%    'SvbaseDoub' 'CmobdDoub' 'SvbaseDoub' 0
+//%    'SvbaseDoub' 'CmobdDoub' 'SvbaseDoub' 1
+//%    'SvbaseQdoub' 'CmobdQdoub' 'SvbaseQdoub' 0
+//%    'SvbaseComp' 'CmobdDoub' 'SvbaseComp' 0
+//%    'SvbaseComp' 'CmobdDoub' 'SvbaseComp' 1
+//%    'SvbaseComp' 'CmobdComp' 'SvbaseComp' 0
+//%    'SvbaseComp' 'CmobdComp' 'SvbaseComp' 1
+//%    'SvbaseComp' 'CmobdImag' 'SvbaseComp' 0
+//%    'SvbaseComp' 'CmobdImag' 'SvbaseComp' 1
+//%    'SvbaseQcomp' 'CmobdQdoub' 'SvbaseQcomp' 0
+//%    'DvecInt', 'CmobdInt', 'DvecInt' 1
+//%    'DvecDoub', 'CmobdDoub', 'DvecDoub' 1
+//%    'DvecComp', 'CmobdDoub', 'DvecComp' 1
 //% });
 //%------------------------------
-//% [Ty, Ta, Tx] = varargin{:};
-inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (y.size() != a.n0() || x.size() != a.n1())
-		SLS_ERR("wrong shape!");
-#endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
-}
-//%------------------------------
-
-//% tem('mul(v,obd,v,a,b)', {
-//%    'DvecInt', 'CmobdInt', 'DvecInt'
-//%    'DvecComp', 'CmobdDoub', 'DvecComp'
-//% });
-//%------------------------------
-//% [Ty, Ta, Tx] = varargin{:};
-inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (y.size() != a.n0() || x.size() != a.n1())
-		SLS_ERR("wrong shape!");
-#endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
-					y.step(), x.step(), 1, 0);
-}
-
+//% [Ty, Ta, Tx, has_alpha_beta] = varargin{:};
+//% if has_alpha_beta
 template <class Talpha, class Tbeta>
 inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x, const Talpha &alpha, const Tbeta &beta)
+//% else
+inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x)
+//% end
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
-					y.step(), x.step(), alpha, beta);
+//% if has_alpha_beta
+//%     if is_dense_vec(Ty), step_y = '1'; else, step_y = 'y.step()'; end
+//%     if is_dense_vec(Tx), step_x = '1'; else, step_x = 'x.step()'; end
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), @step_y@, @step_x@, alpha, beta);
+//% else
+//%     if is_Dvec(Ty) || is_Dvec(Tx), error('mul(v,obd,v): already implemented!'); end
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+//% end
 }
+
+//% if is_Dvec(Ty) || is_Dvec(Tx)
+inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x) { return mul(y, a, x, 1, 0); }
+//% end
 //%------------------------------
 
 //% tem('mul(v,coo,v)', {
@@ -279,6 +282,18 @@ inline void mul@suf@(@T@_O y, @T1@_I a, @T2@_I x)
 //%     error('not implemented!');
 //% end
 }
+
+//% if add_eq && is_Dvec(T) && is_Mcoo(T1) && is_Dvec(T2)
+template <class Talpha>
+inline void mul_beta1(@T@_O y, @T1@_I a, @T2@_I x, const Talpha &alpha)
+{
+#ifdef SLS_CHECK_SHAPES
+if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step(), alpha);
+}
+//% end
 //%------------------------
 
 //% tem('mul(m,m,diag)', {

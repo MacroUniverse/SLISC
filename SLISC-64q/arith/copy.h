@@ -1183,9 +1183,12 @@ inline void copy(ScmatDoub_O lhs, CmobdDoub_I rhs)
 
 inline void copy(CmobdDoub_O lhs, ScmatDoub_I rhs)
 {
+#ifdef SLS_CHECK_SHAPES
+	SLS_ASSERT(lhs.nblk() > 1);
+#endif
 	assert_same_shape2(lhs, rhs);
 	auto &cmat3 = lhs.cmat3();
-	Long start, sz = lhs.nblk0()-1, i, j, iblk;
+	Long start = 0, sz = lhs.nblk0()-1, i, j, iblk;
 	// first block
 	for (i = 0; i < sz-1; ++i)
 		for (j = 0; j < sz; ++j)
@@ -1214,9 +1217,12 @@ inline void copy(ScmatQdoub_O lhs, CmobdQdoub_I rhs)
 
 inline void copy(CmobdQdoub_O lhs, ScmatQdoub_I rhs)
 {
+#ifdef SLS_CHECK_SHAPES
+	SLS_ASSERT(lhs.nblk() > 1);
+#endif
 	assert_same_shape2(lhs, rhs);
 	auto &cmat3 = lhs.cmat3();
-	Long start, sz = lhs.nblk0()-1, i, j, iblk;
+	Long start = 0, sz = lhs.nblk0()-1, i, j, iblk;
 	// first block
 	for (i = 0; i < sz-1; ++i)
 		for (j = 0; j < sz; ++j)

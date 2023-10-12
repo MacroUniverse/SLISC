@@ -628,9 +628,9 @@ inline void D_matrix(Mcoo@Tr@_O D, Vec@Tr@_I w0, Vec@Tr@_I wFE, Cmat@Tr@_I df)
 			for (m = 1; m <= n; ++m) {
 				s = coeff * sqrt(w0[m]) * df(m,n);
 				mm = indFEDVR(i, m, Ngs); nn = indFEDVR(i, n, Ngs);
-				D.push(s, mm, nn);
-				if (mm != nn)
-					D.push(-s, nn, mm);
+				if (mm != nn) {
+					D.push(s, mm, nn); D.push(-s, nn, mm);
+				}
 			}
 		}
 	}

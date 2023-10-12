@@ -62,11 +62,12 @@ inline void cos2_pulse_A(VecDoub_O y, Doub_I A, Doub_I full_width, Doub_I w, Dou
 		SLS_ERR("wrong shape!");
 #endif
 	Doub b = PI / full_width;
+	Doub C = -2*b*b*A/(w*(4*b*b-w*w)) * cos(PI*w/(2*b));
 	for (Long i = 0; i < size(t); ++i) {
 		Doub tt = t[i] - t_mid;
 		if (abs(tt) < 0.5*full_width) {
 			y[i] = -0.25 * A * (-2*cos(w*tt)/w
-				-cos((2*b + w)*tt)/(2*b + w) + cos((2*b - w)*tt)/(2*b - w));
+				-cos((2*b + w)*tt)/(2*b + w) + cos((2*b - w)*tt)/(2*b - w)) + C;
 		}
 		else
 			y[i] = 0;

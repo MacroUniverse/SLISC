@@ -117,6 +117,14 @@ inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *
 		y[y_step*i[k]] += a_ij[k] * x[x_step*j[k]];
 }
 
+template <class Ty, class Ta, class Tx, class Talpha>
+inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
+							  Long_I y_step, Long_I x_step, const Talpha &alpha)
+{
+	for (Long k = 0; k < Nnz; ++k)
+		y[y_step*i[k]] += alpha * a_ij[k] * x[x_step*j[k]];
+}
+
 // assuming only one of the two redundant elements are stored
 template <class Ty, class Ta, class Tx>
 inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x)
@@ -234,6 +242,7 @@ inline void mul(SvbaseInt_O y, CmobdInt_I a, SvbaseInt_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+
 inline void mul(SvbaseDoub_O y, CmobdDoub_I a, SvbaseDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -242,6 +251,18 @@ inline void mul(SvbaseDoub_O y, CmobdDoub_I a, SvbaseDoub_I x)
 #endif
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
+
+
+template <class Talpha, class Tbeta>
+inline void mul(SvbaseDoub_O y, CmobdDoub_I a, SvbaseDoub_I x, const Talpha &alpha, const Tbeta &beta)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+}
+
 
 
 inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x)
@@ -253,6 +274,18 @@ inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x)
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
+
+template <class Talpha, class Tbeta>
+inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x, const Talpha &alpha, const Tbeta &beta)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+}
+
+
 inline void mul(SvbaseComp_O y, CmobdComp_I a, SvbaseComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -261,6 +294,18 @@ inline void mul(SvbaseComp_O y, CmobdComp_I a, SvbaseComp_I x)
 #endif
 	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
+
+
+template <class Talpha, class Tbeta>
+inline void mul(SvbaseComp_O y, CmobdComp_I a, SvbaseComp_I x, const Talpha &alpha, const Tbeta &beta)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (y.size() != a.n0() || x.size() != a.n1())
+		SLS_ERR("wrong shape!");
+#endif
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+}
+
 
 inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x)
 {
@@ -272,16 +317,17 @@ inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x)
 }
 
 
-
-inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x)
+template <class Talpha, class Tbeta>
+inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x, const Talpha &alpha, const Tbeta &beta)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
-					y.step(), x.step(), 1, 0);
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
 }
+
+
 
 template <class Talpha, class Tbeta>
 inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, const Tbeta &beta)
@@ -290,19 +336,22 @@ inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, con
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
-					y.step(), x.step(), alpha, beta);
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
 
-inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x)
+inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x) { return mul(y, a, x, 1, 0); }
+
+template <class Talpha, class Tbeta>
+inline void mul(DvecDoub_O y, CmobdDoub_I a, DvecDoub_I x, const Talpha &alpha, const Tbeta &beta)
 {
 #ifdef SLS_CHECK_SHAPES
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
-					y.step(), x.step(), 1, 0);
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
+
+inline void mul(DvecDoub_O y, CmobdDoub_I a, DvecDoub_I x) { return mul(y, a, x, 1, 0); }
 
 template <class Talpha, class Tbeta>
 inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x, const Talpha &alpha, const Tbeta &beta)
@@ -311,9 +360,10 @@ inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x, const Talpha &alpha, 
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(),
-					y.step(), x.step(), alpha, beta);
+	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
+
+inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x) { return mul(y, a, x, 1, 0); }
 
 
 inline void mul(SvbaseComp_O y, McooDoub_I a, SvbaseComp_I x)
@@ -325,6 +375,7 @@ inline void mul(SvbaseComp_O y, McooDoub_I a, SvbaseComp_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 }
 
+
 inline void mul(SvbaseComp_O y, McooDoub_I a, DvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -333,6 +384,7 @@ inline void mul(SvbaseComp_O y, McooDoub_I a, DvecComp_I x)
 #endif
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), x.step());
 }
+
 
 
 inline void mul(SvbaseDoub_O y, McooDoub_I a, SvbaseDoub_I x)
@@ -345,6 +397,7 @@ inline void mul(SvbaseDoub_O y, McooDoub_I a, SvbaseDoub_I x)
 }
 
 
+
 inline void mul_beta1(DvecDoub_O y, McooDoub_I a, SvbaseDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -353,6 +406,7 @@ inline void mul_beta1(DvecDoub_O y, McooDoub_I a, SvbaseDoub_I x)
 #endif
 	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), 1);
 }
+
 
 inline void mul(DvecDoub_O y, McooDoub_I a, DvecDoub_I x)
 {
@@ -363,6 +417,7 @@ inline void mul(DvecDoub_O y, McooDoub_I a, DvecDoub_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step());
 }
 
+
 inline void mul_beta1(DvecDoub_O y, McooDoub_I a, DvecDoub_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -370,6 +425,16 @@ inline void mul_beta1(DvecDoub_O y, McooDoub_I a, DvecDoub_I x)
 		SLS_ERR("illegal shape!");
 #endif
 	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step());
+}
+
+template <class Talpha>
+inline void mul_beta1(DvecDoub_O y, McooDoub_I a, DvecDoub_I x, const Talpha &alpha)
+{
+#ifdef SLS_CHECK_SHAPES
+if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step(), alpha);
 }
 
 inline void mul(DvecComp_O y, McooDoub_I a, SvbaseComp_I x)
@@ -381,6 +446,7 @@ inline void mul(DvecComp_O y, McooDoub_I a, SvbaseComp_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), 1);
 }
 
+
 inline void mul_beta1(DvecComp_O y, McooDoub_I a, SvbaseComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -389,6 +455,7 @@ inline void mul_beta1(DvecComp_O y, McooDoub_I a, SvbaseComp_I x)
 #endif
 	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), 1);
 }
+
 
 inline void mul(DvecComp_O y, McooDoub_I a, DvecComp_I x)
 {
@@ -399,6 +466,7 @@ inline void mul(DvecComp_O y, McooDoub_I a, DvecComp_I x)
 	mul_v_coo_v(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step());
 }
 
+
 inline void mul_beta1(DvecComp_O y, McooDoub_I a, DvecComp_I x)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -406,6 +474,16 @@ inline void mul_beta1(DvecComp_O y, McooDoub_I a, DvecComp_I x)
 		SLS_ERR("illegal shape!");
 #endif
 	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step());
+}
+
+template <class Talpha>
+inline void mul_beta1(DvecComp_O y, McooDoub_I a, DvecComp_I x, const Talpha &alpha)
+{
+#ifdef SLS_CHECK_SHAPES
+if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step(), alpha);
 }
 
 
