@@ -119,6 +119,14 @@ inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *
 
 template <class Ty, class Ta, class Tx, class Talpha>
 inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
+							  Long_I x_step, const Talpha &alpha)
+{
+	for (Long k = 0; k < Nnz; ++k)
+		y[i[k]] += alpha * a_ij[k] * x[x_step*j[k]];
+}
+
+template <class Ty, class Ta, class Tx, class Talpha>
+inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
 							  Long_I y_step, Long_I x_step, const Talpha &alpha)
 {
 	for (Long k = 0; k < Nnz; ++k)
@@ -484,6 +492,24 @@ if (a.n1() != x.size() || a.n0() != y.size())
 		SLS_ERR("illegal shape!");
 #endif
 	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step(), alpha);
+}
+
+inline void mul_beta1(SvbaseComp_O y, McooDoub_I a, DvecComp_I x)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+}
+
+template <class Talpha>
+inline void mul_beta1(SvbaseComp_O y, McooDoub_I a, DvecComp_I x, const Talpha &alpha)
+{
+#ifdef SLS_CHECK_SHAPES
+if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), x.step(), alpha);
 }
 
 

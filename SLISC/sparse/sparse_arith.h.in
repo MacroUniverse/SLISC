@@ -87,6 +87,14 @@ inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *
 
 template <class Ty, class Ta, class Tx, class Talpha>
 inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
+							  Long_I x_step, const Talpha &alpha)
+{
+	for (Long k = 0; k < Nnz; ++k)
+		y[i[k]] += alpha * a_ij[k] * x[x_step*j[k]];
+}
+
+template <class Ty, class Ta, class Tx, class Talpha>
+inline void mul_v_coo_v_beta1(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Long_I N1, Long_I Nnz, const Tx *x,
 							  Long_I y_step, Long_I x_step, const Talpha &alpha)
 {
 	for (Long k = 0; k < Nnz; ++k)
@@ -258,6 +266,7 @@ inline void mul(@Ty@_O y, @Ta@_I a, @Tx@_I x) { return mul(y, a, x, 1, 0); }
 //% 'DvecComp' 'McooDoub' 'SvbaseComp' 1
 //% 'DvecComp' 'McooDoub' 'DvecComp' 0
 //% 'DvecComp' 'McooDoub' 'DvecComp' 1
+//% 'SvbaseComp' 'McooDoub' 'DvecComp' 1
 //% });
 //%------------------------------
 //% [T, T1, T2, add_eq] = varargin{:}; [Ts,Ts1,Ts2] = val_t(T,T1,T2);
@@ -272,14 +281,12 @@ inline void mul@suf@(@T@_O y, @T1@_I a, @T2@_I x)
 	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
 //% elseif is_dense_vec(T) && is_Mcooh(T1) && is_dense_vec(T2)
 	mul_v_cooh_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p());
-//% elseif is_dense_vec(T) && is_Mcoo(T1) && is_Dvec(T2)
+//% elseif is_dense_vec(T) && is_Mcoo(T1) && is_Dvec(T2) && ~add_eq
 	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), x.step());
 //% elseif is_Dvec(T) && is_Mcoo(T1) && is_dense_vec(T2)
 	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), 1);
 //% elseif is_Dvec(T) && is_Mcoo(T1) && is_Dvec(T2)
 	mul_v_coo_v@suf@(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step());
-//% else
-//%     error('not implemented!');
 //% end
 }
 
@@ -292,6 +299,16 @@ if (a.n1() != x.size() || a.n0() != y.size())
 		SLS_ERR("illegal shape!");
 #endif
 	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), y.step(), x.step(), alpha);
+}
+//% elseif add_eq && is_dense_vec(T) && is_Mcoo(T1) && is_Dvec(T2)
+template <class Talpha>
+inline void mul_beta1(@T@_O y, @T1@_I a, @T2@_I x, const Talpha &alpha)
+{
+#ifdef SLS_CHECK_SHAPES
+if (a.n1() != x.size() || a.n0() != y.size())
+		SLS_ERR("illegal shape!");
+#endif
+	mul_v_coo_v_beta1(y.p(), a.p(), a.row_p(), a.col_p(), a.n0(), a.nnz(), x.p(), x.step(), alpha);
 }
 //% end
 //%------------------------
