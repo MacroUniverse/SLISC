@@ -222,7 +222,7 @@ inline Long combine(Intvs_O intv, Intvs_I intv1, Intvs_I intv2)
 				end[i + 1] = end[i]; ++i;
 			}
 			else {
-				throw Str32(U"error! range overlap!");
+				throw runtime_error("error! range overlap!");
 			}
 		}
 		else if (end[i] == start[i + 1] - 1)
@@ -256,10 +256,10 @@ inline void exclude(Intvs_IO intv, Intvs_I intv1)
 			if (is_in(intv.R(i), intv1))
 				intv.erase(i), --i; // erase is not very efficient
 			else
-				throw Str32(U"intv[" + num2str32(i) + U"] partial overlap on the left!");
+				throw runtime_error("intv[" + to_string(i) + "] partial overlap on the left!");
 		}
 		else if (is_in(intv.R(i), intv1))
-			throw Str32(U"intv[" + num2str32(i) + U"] partial overlap on the right!");
+			throw runtime_error("intv[" + to_string(i) + "] partial overlap on the right!");
 	}
 }
 

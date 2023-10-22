@@ -16,7 +16,7 @@ inline Long skip_scope(Str_I str, Long_I ind, Long_I N = 1, Char32_I type = '{')
 	for (Long i = 0; i < N; ++i) {
 		ind0 = expect(str, "{", ind0);
 		if (ind0 < 0)
-			throw Str("skip_scope(): failed!");
+			throw runtime_error("skip_scope(): failed!");
 		ind0 = pair_brace(str, ind0 - 1) + 1;
 	}
 	return ind0;

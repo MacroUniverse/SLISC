@@ -247,7 +247,7 @@ inline Char32 char32(Str_I str, Long_I ind)
 	return u32(c)[0];
 }
 
-// an iterator for utf-8
+// a const iterator for utf-8
 class u8_iter
 {
 private:
@@ -255,16 +255,10 @@ private:
 	const Str &s;
 
 public:
-	// use i == -1,-2... to point to the last, last-1... character
+	// use i == s.size() for 1 pass the last pos
+	// use any of i < 0 or i > s.size() for an invalid iterator
 	explicit u8_iter(Str_I str, Long_I i = 0): ind(i), s(str) {
-		if (ind < 0)
-			ind = skip_char8(str, size(str), ind);
-		if (ind >= size(str)) {
-			if (str.empty())
-				throw runtime_error("cannot bind u8_iter to an empty string!");
-			throw runtime_error("index out of bound when creating u8_iter!");
-		}
-		if (!is_char8_start(s, ind))
+		if (ind >= 0 && i < size(s) && !is_char8_start(s, i))
 			throw runtime_error("u8_iter(str, i): not the start of a utf-8 char!");
 	};
 

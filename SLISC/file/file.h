@@ -93,14 +93,16 @@ inline bool file_exist(Str32_I fname) {
 }
 
 // remove a file with error handling
+// if file doesn't exist, do nothing
+// if file exist after delete, throw
 inline void file_remove(Str_I fname)
 {
 #ifndef SLS_USE_MSVC
 	if (remove(fname.c_str()) && file_exist(fname))
-		throw Str("failed to remove, file being used? (" + fname + ")");
+		throw runtime_error("failed to remove, file being used? (" + fname + ")");
 #else
 	if (file_exist(fname) && DeleteFile(utf82wstr(fname).c_str()) == 0)
-		throw Str("failed to remove, file being used? (" + fname + ")");
+		throw runtime_error("failed to remove, file being used? (" + fname + ")");
 #endif
 }
 
@@ -537,7 +539,7 @@ inline void file_move(Str_I fname_out, Str_I fname_in, Str_IO buffer, Bool_I rep
 inline Long file_size(Str_I fname)
 {
 	if (!file_exist(fname))
-		return -1;
+		throw runtime_error("file_size(): file not exist: " + fname);
 #ifndef SLS_USE_MSVC
 	ifstream fin(fname, ifstream::ate | ifstream::binary);
 #else
@@ -600,7 +602,7 @@ inline Long read(void *data, Long_I Nbyte, Str_I fname)
 // write Str to file
 inline void write(Str_I str, Str_I fname)
 {
-	write(str.c_str(), str.size(), fname);
+	write(str.c_str(), size(str), fname);
 }
 
 // write UTF-32 Str32 into a UTF-8 file
@@ -639,7 +641,7 @@ inline void write_vec_str(vecStr32_I vec_str, Str32_I fname)
 inline void read(Str_O str, Str_I fname)
 {
 	str.resize(file_size(fname));
-	read(&str[0], str.size(), fname);
+	read(&str[0], size(str), fname);
 }
 
 // read a UTF-8 file into UTF-32 Str32
