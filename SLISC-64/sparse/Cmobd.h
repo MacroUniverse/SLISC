@@ -49,7 +49,7 @@ typedef CmobdInt &CmobdInt_O, &CmobdInt_IO;
 inline CmobdInt::CmobdInt() : CmobdInt(0, 0) {}
 
 inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
-	: m_data(blk_size, blk_size, Nblk), m_N0((blk_size - 1) * Nblk - 1)
+	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
@@ -231,7 +231,7 @@ typedef CmobdLlong &CmobdLlong_O, &CmobdLlong_IO;
 inline CmobdLlong::CmobdLlong() : CmobdLlong(0, 0) {}
 
 inline CmobdLlong::CmobdLlong(Long_I blk_size, Long_I Nblk)
-	: m_data(blk_size, blk_size, Nblk), m_N0((blk_size - 1) * Nblk - 1)
+	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
@@ -413,7 +413,7 @@ typedef CmobdDoub &CmobdDoub_O, &CmobdDoub_IO;
 inline CmobdDoub::CmobdDoub() : CmobdDoub(0, 0) {}
 
 inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
-	: m_data(blk_size, blk_size, Nblk), m_N0((blk_size - 1) * Nblk - 1)
+	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
@@ -595,7 +595,7 @@ typedef CmobdComp &CmobdComp_O, &CmobdComp_IO;
 inline CmobdComp::CmobdComp() : CmobdComp(0, 0) {}
 
 inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
-	: m_data(blk_size, blk_size, Nblk), m_N0((blk_size - 1) * Nblk - 1)
+	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
@@ -779,7 +779,7 @@ typedef CmobdImag &CmobdImag_O, &CmobdImag_IO;
 inline CmobdImag::CmobdImag() : CmobdImag(0, 0) {}
 
 inline CmobdImag::CmobdImag(Long_I blk_size, Long_I Nblk)
-	: m_data(blk_size, blk_size, Nblk), m_N0((blk_size - 1) * Nblk - 1)
+	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
