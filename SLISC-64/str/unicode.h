@@ -206,7 +206,7 @@ inline Long skip_char8(Str_I s, Long_I ind, Long_I N)
 	if (N == 0)
 		return ind;
 	else if (N > 0) {
-		Long utf8_len = s.size();
+		Long utf8_len = size(s);
 		Long skipped = 0;
 		while (i < utf8_len && skipped < N) {
 			Long char_size = char8_len(s, i);
