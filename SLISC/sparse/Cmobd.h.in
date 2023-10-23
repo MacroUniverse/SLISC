@@ -59,6 +59,10 @@ inline @CmobdT@::@CmobdT@() : @CmobdT@(0, 0) {}
 inline @CmobdT@::@CmobdT@(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
