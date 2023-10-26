@@ -3,9 +3,10 @@
 #include "../SLISC/lin/mul.h"
 // #include "../SLISC/str/disp.h"
 
+using namespace slisc;
+
 void test_eig()
 {
-	using namespace slisc;
 #ifdef SLS_USE_LAPACKE
 	// test eig_sym(CmatDoub)
 	{
@@ -67,6 +68,8 @@ void test_eig()
 			}
 		}
 	}
+#else
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

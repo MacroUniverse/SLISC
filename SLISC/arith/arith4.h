@@ -1148,6 +1148,8 @@ inline void times_eq_par(SvbaseComp_O v, Doub_I s)
 		v[i] *= s;
 }
 
+
+
 inline void add_vvs(Int *v, const Int *v1, Int_I s, Long_I N)
 {
 	for (Long i = 0; i < N; ++i)

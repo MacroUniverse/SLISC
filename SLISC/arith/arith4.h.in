@@ -332,13 +332,20 @@ inline void operator/=(@T@_O v, @T1@_I v1) // slow!
 //% end
 //%-------------------------
 
-inline void times_eq_par(SvbaseComp_O v, Doub_I s)
+//% tem('times_eq_par', {
+//%  'SvbaseComp' 'Doub'
+//%  'SvbaseQcomp' 'Qdoub'
+//% });
+//%------------------------------
+//% [Tv, Ts] = varargin{:};
+inline void times_eq_par(@Tv@_O v, @Ts@_I s)
 {
 	Long N = v.size();
 #pragma omp parallel for
 	for (Long i = 0; i < N; ++i)
 		v[i] *= s;
 }
+//%---------------------------
 
 //% tem('add_vvs', {
 //%  'Int' 'Int' 'Int'

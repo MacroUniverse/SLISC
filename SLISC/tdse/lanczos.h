@@ -22,7 +22,8 @@ inline Long exp_Hdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
 // calculate y = exp(H*dt) * x
 // x, y can be the same object
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
-// return error
+// return error as product of all beta
+// exp_Hdt_v_lanc_par() is the parallel version, but will not call `mul_fun` in parallel region
 // required workspace: sizeof(Doub)*((2*N+Nk)*(Nk+1)+Nk)+4*align
 template <class Tmul>
 inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
@@ -323,7 +324,8 @@ inline Long exp_miHdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
 // calculate y = exp(-i*H*dt) * x
 // x, y can be the same object
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
-// return error
+// return error as product of all beta
+// exp_Hdt_v_lanc_par() is the parallel version, but will not call `mul_fun` in parallel region
 // required workspace: sizeof(Doub)*((2*N+Nk)*(Nk+1)+3*Nk)+5*align
 template <class Tmul>
 inline Doub exp_miHdt_v_lanc(SvbaseComp_IO y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)

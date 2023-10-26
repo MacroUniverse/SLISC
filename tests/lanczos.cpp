@@ -1,10 +1,11 @@
 #include "../SLISC/tdse/lanczos.h"
 // #include "../SLISC/str/disp.h"
 
+using namespace slisc;
+
 void test_lanczos()
 {
 #ifdef SLS_USE_LAPACKE
-	using namespace slisc;
 	{
 		CmatDoub H(3, 3); // symmetric matrix
 		H(0, 0) = H(1, 1) = H(2, 2) = 1.;
@@ -31,7 +32,6 @@ void test_lanczos()
 
 		// test expHdt_v_lanc(), exp_miHdt_v_lanc();
 		{
-			cout << "it is running..." << endl;
 			Doub dt = 1;
 			Long N = 3, Nk = 3;
 			VecComp x(N), y(N), y0(N), x6(2*N);
@@ -56,6 +56,7 @@ void test_lanczos()
 				y -= y0;
 				if (max_abs(y) > 1e-4)
 					SLS_FAIL;
+				copy(y, x);
 				exp_miHdt_v_lanc_par(y, mul_fun, y, dt, Nk, wsp.reset()); // for dense y
 				y -= y0;
 				if (max_abs(y) > 1e-4)
@@ -67,6 +68,7 @@ void test_lanczos()
 				y1 -= y0;
 				if (max_abs(y1) > 1e-4)
 					SLS_FAIL;
+				copy(y1, x);
 				exp_miHdt_v_lanc_par(y1, mul_fun, y1, dt, Nk, wsp.reset()); // for Dvec y1
 				y1 -= y0;
 				if (max_abs(y1) > 1e-4)
@@ -74,6 +76,8 @@ void test_lanczos()
 			}
 		}
 	}
+#else
+	cout << "---------- disabled! ----------" << endl;
 #endif
 }
 

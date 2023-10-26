@@ -1029,6 +1029,21 @@ inline Doub norm2_dif(SvbaseDoub_I v, SvbaseDoub_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
+
+inline Doub norm2_par(SvbaseDoub_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(SvbaseDoub_I v)
+{
+	return sqrt(norm2_par(v));
+}
 inline Doub norm(SvbaseDoub_I v)
 {
 	return sqrt(norm2(v));
@@ -1056,6 +1071,21 @@ inline Doub norm2_dif(SvbaseComp_I v, SvbaseComp_I v1)
 	for (Long i = 1; i < N; ++i)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
+}
+
+inline Doub norm2_par(SvbaseComp_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(SvbaseComp_I v)
+{
+	return sqrt(norm2_par(v));
 }
 inline Doub norm(SvbaseComp_I v)
 {
@@ -1085,6 +1115,21 @@ inline Doub norm2_dif(DvecDoub_I v, DvecDoub_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
+
+inline Doub norm2_par(DvecDoub_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(DvecDoub_I v)
+{
+	return sqrt(norm2_par(v));
+}
 inline Doub norm(DvecDoub_I v)
 {
 	return sqrt(norm2(v));
@@ -1112,6 +1157,21 @@ inline Doub norm2_dif(DvecComp_I v, DvecComp_I v1)
 	for (Long i = 1; i < N; ++i)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
+}
+
+inline Doub norm2_par(DvecComp_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(DvecComp_I v)
+{
+	return sqrt(norm2_par(v));
 }
 inline Doub norm(DvecComp_I v)
 {
@@ -1141,6 +1201,21 @@ inline Doub norm2_dif(MatDoub_I v, MatDoub_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
+
+inline Doub norm2_par(MatDoub_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(MatDoub_I v)
+{
+	return sqrt(norm2_par(v));
+}
 inline Doub norm(MatDoub_I v)
 {
 	return sqrt(norm2(v));
@@ -1167,6 +1242,21 @@ inline Doub norm2_dif(MatComp_I v, MatComp_I v1)
 	for (Long i = 1; i < N; ++i)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
+}
+
+inline Doub norm2_par(MatComp_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(MatComp_I v)
+{
+	return sqrt(norm2_par(v));
 }
 inline Doub norm(MatComp_I v)
 {
@@ -1231,6 +1321,21 @@ inline Doub norm2_dif(Mat3Doub_I v, Mat3Doub_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
+
+inline Doub norm2_par(Mat3Doub_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(Mat3Doub_I v)
+{
+	return sqrt(norm2_par(v));
+}
 inline Doub norm(Mat3Doub_I v)
 {
 	return sqrt(norm2(v));
@@ -1258,6 +1363,21 @@ inline Doub norm2_dif(Mat3Comp_I v, Mat3Comp_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
+
+inline Doub norm2_par(Mat3Comp_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline Doub norm_par(Mat3Comp_I v)
+{
+	return sqrt(norm2_par(v));
+}
 inline Doub norm(Mat3Comp_I v)
 {
 	return sqrt(norm2(v));
@@ -1267,5 +1387,6 @@ inline Doub norm_dif(Mat3Comp_I v, Mat3Comp_I v1)
 {
 	return sqrt(norm2_dif(v, v1));
 }
+
 
 } // namespace slisc

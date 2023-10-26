@@ -873,54 +873,6 @@ inline void operator*=(Cmat3Qcomp_IO v, Qcomp_I s)
 inline void operator/=(Cmat3Qcomp_IO v, Qcomp_I s)
 { div_eq_vs(&v[0], s, v.size()); }
 
-inline void operator+=(SvecComp_IO v, Comp_I s)
-{ add_eq_vs(&v[0], s, v.size()); }
-
-inline void operator-=(SvecComp_IO v, Comp_I s)
-{ sub_eq_vs(&v[0], s, v.size()); }
-
-inline void operator*=(SvecComp_IO v, Comp_I s)
-{ times_eq_vs(&v[0], s, v.size()); }
-
-inline void operator/=(SvecComp_IO v, Comp_I s)
-{ div_eq_vs(&v[0], s, v.size()); }
-
-inline void operator+=(SvecComp_IO v, Doub_I s)
-{ add_eq_vs(&v[0], s, v.size()); }
-
-inline void operator-=(SvecComp_IO v, Doub_I s)
-{ sub_eq_vs(&v[0], s, v.size()); }
-
-inline void operator*=(SvecComp_IO v, Doub_I s)
-{ times_eq_vs(&v[0], s, v.size()); }
-
-inline void operator/=(SvecComp_IO v, Doub_I s)
-{ div_eq_vs(&v[0], s, v.size()); }
-
-inline void operator+=(SvecQcomp_IO v, Qcomp_I s)
-{ add_eq_vs(&v[0], s, v.size()); }
-
-inline void operator-=(SvecQcomp_IO v, Qcomp_I s)
-{ sub_eq_vs(&v[0], s, v.size()); }
-
-inline void operator*=(SvecQcomp_IO v, Qcomp_I s)
-{ times_eq_vs(&v[0], s, v.size()); }
-
-inline void operator/=(SvecQcomp_IO v, Qcomp_I s)
-{ div_eq_vs(&v[0], s, v.size()); }
-
-inline void operator+=(SvecQcomp_IO v, Qdoub_I s)
-{ add_eq_vs(&v[0], s, v.size()); }
-
-inline void operator-=(SvecQcomp_IO v, Qdoub_I s)
-{ sub_eq_vs(&v[0], s, v.size()); }
-
-inline void operator*=(SvecQcomp_IO v, Qdoub_I s)
-{ times_eq_vs(&v[0], s, v.size()); }
-
-inline void operator/=(SvecQcomp_IO v, Qdoub_I s)
-{ div_eq_vs(&v[0], s, v.size()); }
-
 
 inline void add_eq_vv(Int *v, const Int *v1, Long_I N)
 {
@@ -1809,6 +1761,23 @@ inline void operator/=(Mat3Comp_O v, Mat3Comp_I v1)
 {
 	assert_same_shape1(v, v1);
 	div_eq_vv(&v[0], &v1[0], v1.size());
+}
+
+
+inline void times_eq_par(SvbaseComp_O v, Doub_I s)
+{
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] *= s;
+}
+
+inline void times_eq_par(SvbaseQcomp_O v, Qdoub_I s)
+{
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] *= s;
 }
 
 
@@ -4669,6 +4638,52 @@ inline void div(SvecQcomp_O v, Qdoub_I s, DvecQcomp_I v1)
 {
 	assert_same_shape1(v, v1);
 	div_vsv(&v[0], s, &v1[0], v1.size(), 1, v1.step());
+}
+
+
+inline void times_par(SvbaseComp_O v, SvbaseComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] = v1[i] * s;
+}
+
+inline void times_par(SvbaseComp_O v, SvbaseComp_I v1, Comp_I s)
+{
+	assert_same_shape1(v, v1);
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] = v1[i] * s;
+}
+
+inline void times_par(SvbaseComp_O v, DvecComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] = v1[i] * s;
+}
+
+inline void times_par(DvecComp_O v, DvecComp_I v1, Doub_I s)
+{
+	assert_same_shape1(v, v1);
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] = v1[i] * s;
+}
+
+inline void times_par(DvecComp_O v, DvecComp_I v1, Comp_I s)
+{
+	assert_same_shape1(v, v1);
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] = v1[i] * s;
 }
 
 

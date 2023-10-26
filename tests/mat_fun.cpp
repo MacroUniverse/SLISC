@@ -27,6 +27,8 @@ void test_mat_fun()
 			if (max_abs(out) > 5e-13) SLS_FAIL;
 		}
 	}
+#else
+	printf("---------- disabled! ----------\n");
 #endif
 }
 

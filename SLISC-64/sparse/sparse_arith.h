@@ -661,10 +661,11 @@ inline void sort_row(McooComp_IO a)
 
 
 
-// sort_col_dry() sorts elements to column major and combine repeated elements
+// sort_col_dry(): sort elements to column major and combine repeated elements
 // the i-th element should be moved (or +=) to desk[i]-th element
 // reorder() does the actual sorting given output from sort_col_dry()
-// sort_col() in-place sorting
+// return max(dest)+1, i.e. the nnz of the sorted coo
+// sort_col(): in-place sorting
 inline Long sort_col_dry(VecLong_O dest, McooChar_I coo)
 {
 	Long N = coo.nnz();

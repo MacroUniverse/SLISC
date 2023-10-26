@@ -51,6 +51,10 @@ inline CmobdInt::CmobdInt() : CmobdInt(0, 0) {}
 inline CmobdInt::CmobdInt(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -233,6 +237,10 @@ inline CmobdLlong::CmobdLlong() : CmobdLlong(0, 0) {}
 inline CmobdLlong::CmobdLlong(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -415,6 +423,10 @@ inline CmobdDoub::CmobdDoub() : CmobdDoub(0, 0) {}
 inline CmobdDoub::CmobdDoub(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -597,6 +609,10 @@ inline CmobdComp::CmobdComp() : CmobdComp(0, 0) {}
 inline CmobdComp::CmobdComp(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -779,6 +795,10 @@ inline CmobdQdoub::CmobdQdoub() : CmobdQdoub(0, 0) {}
 inline CmobdQdoub::CmobdQdoub(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -961,6 +981,10 @@ inline CmobdQcomp::CmobdQcomp() : CmobdQcomp(0, 0) {}
 inline CmobdQcomp::CmobdQcomp(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -1143,6 +1167,10 @@ inline CmobdImag::CmobdImag() : CmobdImag(0, 0) {}
 inline CmobdImag::CmobdImag(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)
@@ -1325,6 +1353,10 @@ inline CmobdQimag::CmobdQimag() : CmobdQimag(0, 0) {}
 inline CmobdQimag::CmobdQimag(Long_I blk_size, Long_I Nblk)
 	: m_data(blk_size, blk_size, Nblk), m_N0(max(0, (blk_size-1)*Nblk-1))
 {
+#ifdef SLS_CHECK_SHAPES
+	if (blk_size < 0 || Nblk < 0)
+		SLS_ERR("blk_size < 0 or Nblk < 0!");
+#endif
 	Long step = sqr(nblk0());
 	// set the first overlapped element to 0
 	if (m_data.size() > 0)

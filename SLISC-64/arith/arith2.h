@@ -430,6 +430,31 @@ inline Comp dot(Scmat3Comp_I v1, Jcmat3Comp_I v2)
 }
 
 
+inline Doub dot_real(SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v1, v2);
+	Doub sum = 0; Long N = v1.size();
+	for (Long i = 0; i < N; ++i) {
+		auto &c1 = v1[i], &c2 = v2[i];
+		sum += c1.real()*c2.real() + c1.imag()*c2.imag();
+	}
+	return sum;
+}
+
+inline Doub dot_real_par(SvbaseComp_I v1, SvbaseComp_I v2)
+{
+	assert_same_shape1(v1, v2);
+	Doub sum = 0; Long N = v1.size();
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i) {
+		auto &c1 = v1[i], &c2 = v2[i];
+		sum += c1.real()*c2.real() + c1.imag()*c2.imag();
+	}
+	return sum;
+}
+
+
+
 inline void cumsum_vv(Doub *v, const Doub *v1, Long_I N)
 {
 #ifdef SLS_CHECK_BOUNDS
