@@ -422,6 +422,21 @@ inline @Tr@ norm2_dif(@T@_I v, @T@_I v1)
 		s2 += abs2(v[i] - v1[i]);
 	return s2;
 }
+
+inline @Tr@ norm2_par(@T@_I v)
+{
+	Long N = v.size();
+	Doub sum = 0;
+#pragma omp parallel for reduction(+:sum)
+	for (Long i = 0; i < N; ++i)
+		sum += abs2(v[i]);
+	return sum;
+}
+
+inline @Tr@ norm_par(@T@_I v)
+{
+	return sqrt(norm2_par(v));
+}
 //% elseif is_Dcmat(T)
 inline @Tr@ norm2(@T@_I a)
 {
@@ -461,4 +476,5 @@ inline @Tr@ norm_dif(@T@_I v, @T@_I v1)
 	return sqrt(norm2_dif(v, v1));
 }
 //%-------------------------
+
 } // namespace slisc

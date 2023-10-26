@@ -332,6 +332,14 @@ inline void operator/=(@T@_O v, @T1@_I v1) // slow!
 //% end
 //%-------------------------
 
+inline void times_eq_par(SvbaseComp_O v, Doub_I s)
+{
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] *= s;
+}
+
 //% tem('add_vvs', {
 //%  'Int' 'Int' 'Int'
 //%  'Llong' 'Llong' 'Llong'
@@ -751,6 +759,25 @@ inline void div(@T@_O v, @Ts2@_I s, @T1@_I v1)
 	}
 }
 //% end
+//%-------------------------
+
+//% tem('times_par(v,v,s)', {
+//%   'SvbaseComp' 'SvbaseComp' 'Doub'
+//%   'SvbaseComp' 'SvbaseComp' 'Comp'
+//%   'SvbaseComp' 'DvecComp' 'Doub'
+//%   'DvecComp' 'DvecComp' 'Doub'
+//%   'DvecComp' 'DvecComp' 'Comp'
+//% });
+//%------------------------------
+//% [T, T1, Ts] = varargin{:};
+inline void times_par(@T@_O v, @T1@_I v1, @Ts@_I s)
+{
+	assert_same_shape1(v, v1);
+	Long N = v.size();
+#pragma omp parallel for
+	for (Long i = 0; i < N; ++i)
+		v[i] = v1[i] * s;
+}
 //%-------------------------
 
 //% tem('add(v,v,v)', {

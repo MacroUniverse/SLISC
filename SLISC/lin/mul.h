@@ -874,21 +874,6 @@ inline void mul_gen(SvecComp_O y, ScmatDoub_I a, SvecComp_I x, Doub_I alpha = 1,
 }
 
 // y = alpha*A*x + beta*y
-inline void mul_gen(SvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
-{
-#ifdef SLS_CHECK_SHAPES
-	if (x.size() != a.n1() || y.size() != a.n0())
-		SLS_ERR("wrong shape!");
-#endif
-#ifdef SLS_USE_CBLAS
-	cblas_zgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), &alpha, a.p(),
-		a.n0(), x.p(), 1, &beta, y.p(), 1);
-#else
-	mul(y, a, x, alpha, beta);
-#endif
-}
-
-// y = alpha*A*x + beta*y
 inline void mul_gen(SvecComp_O y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1, Doub_I beta = 0)
 {
 #ifdef SLS_CHECK_SHAPES
@@ -902,6 +887,21 @@ inline void mul_gen(SvecComp_O y, ScmatDoub_I a, DvecComp_I x, Doub_I alpha = 1,
 	// do imag part
 	cblas_dgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), alpha, a.p(),
 		a.n0(), (Doub*)x.p()+1, 2*x.step(), beta, (Doub*)y.p()+1, 2*1);
+#else
+	mul(y, a, x, alpha, beta);
+#endif
+}
+
+// y = alpha*A*x + beta*y
+inline void mul_gen(SvecComp_O y, ScmatComp_I a, SvecComp_I x, Comp_I alpha = 1, Comp_I beta = 0)
+{
+#ifdef SLS_CHECK_SHAPES
+	if (x.size() != a.n1() || y.size() != a.n0())
+		SLS_ERR("wrong shape!");
+#endif
+#ifdef SLS_USE_CBLAS
+	cblas_zgemv(CblasColMajor, CblasNoTrans, a.n0(), a.n1(), &alpha, a.p(),
+		a.n0(), x.p(), 1, &beta, y.p(), 1);
 #else
 	mul(y, a, x, alpha, beta);
 #endif
