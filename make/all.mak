@@ -43,6 +43,8 @@ opt_arpack := true
 opt_sqlite := false
 # use SQLiteCpp
 opt_sqlitecpp := true
+# use HDF(5)
+opt_hdf := true
 # read and write Matlab .mat file
 opt_matfile := false
 #==========================
@@ -388,6 +390,16 @@ else
     sqlitecpp_lib :=
 endif
 
+# === HDF5 ===
+ifeq ($(opt_hdf), true)
+    tmp := $(shell echo "$(define) SLS_USE_HDF" >> SLISC/config.h.new)
+    $(info HDF5: on)
+    hdf_lib := -lhdf5_cpp -lhdf5
+else
+    $(info HDF5: off)
+    hdf_lib :=
+endif
+
 # === SQLite ===
 ifeq ($(opt_sqlite), true)
     tmp := $(shell echo "$(define) SLS_USE_SQLITE" >> SLISC/config.h.new)
@@ -460,7 +472,7 @@ $(info  )$(info  )$(info  )$(info  )
 all_flags := $(compiler_flag) $(debug_flag) $(release_flag) $(mkl_flag) $(quad_math_flag)
 
 # all libs
-libs := $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(sqlitecpp_lib) $(quad_math_lib)
+libs := $(static_flag) $(arpack_lib) $(mplapack_lib) $(gsl_lib) $(mkl_lib) $(lapacke_lib) $(cblas_lib) $(arb_lib) $(boost_lib) $(matfile_lib) $(sqlite_lib) $(sqlitecpp_lib) $(hdf_lib) $(quad_math_lib)
 
 # subfolders of SLISC, including SLISC, e.g. "SLISC/:SLISC/prec/:...:SLISC/lin/"
 in_paths := $(shell find SLISC -maxdepth 1 -type d -printf "../%p/:" | head -c -2)/

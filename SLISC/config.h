@@ -6,5 +6,6 @@
 #define SLS_CHECK_BOUNDS
 #define SLS_CHECK_SHAPES
 #define SLS_USE_INT_AS_LONG
+#define SLS_USE_HDF
 #define SLS_FP_EXCEPT
 #define SLS_USE_UTFCPP
