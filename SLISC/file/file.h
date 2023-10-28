@@ -981,5 +981,39 @@ inline void set_buff(ofstream &fout, Str_IO buffer)
 	fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
 }
 
+// for an object `fcout`, `fcout << obj` will write to both ofstream and cout
+// if file already exist, `dlm` will be written to the file first
+struct fcout_t
+{
+	ofstream fout;
+	fcout_t() = default;
+	fcout_t(Str_I log_file, Str_I dlm = "\n\n===================\n\n") { init(log_file, dlm); }
+
+	void init(Str_I log_file, Str_I dlm = "\n\n===================\n\n") {
+		bool exist = file_exist(log_file) && file_size(log_file) > 0;
+		fout.open(log_file, std::ios_base::app);
+		if (!fout)
+			SLS_ERR("File could not be opened for writing!");
+		if (exist)
+			fout << dlm << endl;
+	}
+
+	template <class T>
+	fcout_t &operator<<(const T &obj)
+	{
+		cout << obj; fout << obj;
+		return *this;
+	}
+
+	fcout_t &operator<<(std::ostream& (*manip)(std::ostream&)) {
+		manip(fout); manip(cout);
+		return *this;
+	}
+
+	void precision(std::streamsize n) {
+		cout.precision(n); fout.precision(n);
+	}
+};
+
 } // namespace slisc
 #endif

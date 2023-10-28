@@ -56,13 +56,13 @@ inline void exp_mat_sym(CmatComp_O out, CmatDoub_I a, Comp_I s)
 template <class Tmul, class Tv, class Ts>
 inline void exp_taylor(Tv &u, Tmul mul_eq_fun, const Ts &s, int n, const Tv &v)
 {
-    u = v;
-    while (n > 0) {
-        u *= s/n;
-        mul_eq_fun(u);
-        u += v;
-        --n;
-    }
+	u = v;
+	while (n > 0) {
+		u *= s/n;
+		mul_eq_fun(u);
+		u += v;
+		--n;
+	}
 }
 
 } // namespace slisc
