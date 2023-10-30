@@ -49,4 +49,18 @@ inline void cin_ignore_line()
 inline void cin_LF()
 { cin_ignore_line(); cout << endl; }
 
+inline void fin_comment(ifstream &fin)
+{
+	string str;
+	fin >> str;
+	if (str.size() > 0 && str.substr(0, 2) != "//")
+		SLS_ERR("each line must only be followed by a comment starting with //");
+}
+
+inline void fin_ignore_line(ifstream &fin)
+{ fin.ignore(numeric_limits<std::streamsize>::max(), '\n'); }
+
+inline void fin_LF(ifstream &fin)
+{ fin_ignore_line(fin); cout << endl; }
+
 } // namespace slisc

@@ -65,6 +65,15 @@ inline void child_pid(vector<Int> &child_pids, Int_I pid)
 // works on computer cluster
 // run time about 5e-5s
 #ifndef SLS_USE_MACOS
+// get the current hostname (machine name)
+inline Str host_name()
+{
+    char name[1024];
+    if (gethostname(name, 1024) != 0)
+    	SLS_ERR("host_name() failed!");
+    return name;
+}
+
 inline Long ram_usage() {
 	FILE* file = fopen("/proc/self/status", "r");
 	char line[128];

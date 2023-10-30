@@ -66,6 +66,7 @@ ifeq ($(opt_min), true)
     opt_arpack := false
     opt_sqlite := false
     opt_sqlitecpp := false
+    opt_hdf := false
     opt_matfile := false
 endif
 

@@ -275,7 +275,7 @@ inline Int bicgstab_matlab(@Tr@_O relres, Long_O iter,
 	auto xmin = wsp.Svec@Ts@(m); copy(xmin, x);  // Iterate which has minimal residual so far
 	auto p = wsp.Svec@Ts@(m), v = wsp.Svec@Ts@(m), xhalf= wsp.Svec@Ts@(m),
 		s = wsp.Svec@Ts@(m), t = wsp.Svec@Ts@(m),	r = wsp.Svec@Ts@(m);
-    mul_fun(r, x); sub(r, b, r);
+	mul_fun(r, x); sub(r, b, r);
 	auto rt = wsp.Svec@Ts@(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
