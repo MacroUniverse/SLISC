@@ -12,14 +12,15 @@ fseek(fid, -numel(end_mark), 'eof');
 tmp = fread(fid, [1,numel(end_mark)], '*char');
 if ~strcmp(end_mark, tmp)
     warning(['matb file corrupted Matb_End_of_File not found: ' fname]);
-    varnames = [];
+    if nargout > 0, varnames = {}; end
+    fclose(fid);
     return;
     % error(['file corrupted: ' fname]);
 end
 fseek(fid, -numel(end_mark)-8, 'eof');
 numvars = fread(fid, 1, 'int64');
 fseek(fid, 0, 'bof');
-varnames = {};
+if nargout > 0, varnames = {}; end
 Nloaded = 0;
 for ii = 1:numvars
     Nname = fread(fid, 1, 'int64');
@@ -91,7 +92,7 @@ for ii = 1:numvars
         end
         if feof(fid), error('wrong number of elements!'); end
     end
-    varnames = [varnames, {varname}];
+    if nargout > 0, varnames = [varnames, {varname}]; end
 end
 fclose(fid);
 end
