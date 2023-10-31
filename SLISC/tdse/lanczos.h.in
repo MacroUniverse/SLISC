@@ -13,41 +13,57 @@
 namespace slisc {
 
 // bytes of workspace required
-template <class Ts>
+template <class Treal>
 inline Long exp_Hdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
-	return sizeof(Ts)*((2*N+Nk)*(Nk+1)+Nk)+4*(SLS_WSP_ALIGN-1);
+	return sizeof(Treal)*((2*N+Nk)*(Nk+1)+Nk)+4*(SLS_WSP_ALIGN-1);
 }
 
-// calculate y = exp(H*dt) * x
+template <class Treal>
+inline Long exp_miHdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
+	return sizeof(Treal)*((2*N+Nk)*(Nk+1)+3*Nk)+5*(SLS_WSP_ALIGN-1);
+}
+
+// calculate y = exp(H*dt) * x or y = exp(-i*H*dt) * x
 // ref: https://wuli.wiki/online/Lanc.html
 // x, y can be the same object
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // to save time, only beta inside the tridiag matrix is calculated, return error estimation as the product of (Nkrylov-1) beta. Which is actually the error if only (Nkrylov-1) bases are used.
 // exp_Hdt_v_lanc_par() is the parallel version, but will not call `mul_fun` in parallel region
 //% tem('exp_Hdt_v_lanc', {
-//%   'SvbaseComp' 0; 'SvbaseComp' 1;
-//%   'SvbaseQcomp' 0;
-//%   'DvecComp' 0; 'DvecComp' 1;
-//%   'DvecQcomp' 0;
+//%   'SvbaseComp' 0 0;
+//%   'SvbaseComp' 1 0;
+//%   'SvbaseQcomp' 0 0;
+//%   'DvecComp' 0 0;
+//%   'DvecComp' 1 0;
+//%   'DvecQcomp' 0 0;
+//%   'SvbaseComp' 0 1;
+//%   'SvbaseComp' 1 1;
+//%   'SvbaseQcomp' 0 1;
+//%   'DvecComp' 0 1;
+//%   'DvecComp' 1 1;
+//%   'DvecQcomp' 0 1;
 //% });
 //%-------------------------------
-//% [Tv omp] = varargin{:};
+//% [Tv omp minus_i] = varargin{:};
 //% Tc = val_t(Tv);
 //% Tr = rm_comp(Tc);
 //% if omp, suffix='_par'; else suffix=''; end;
-// required workspace: sizeof(@Tr@)*((2*N+Nk)*(Nk+1)+Nk)+4*align
+//% if minus_i, mi = 'mi'; else mi = ''; end;
 template <class Tmul>
-inline @Tr@ exp_Hdt_v_lanc@suffix@(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline @Tr@ exp_@mi@Hdt_v_lanc@suffix@(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
 {
 	Long N = x.size(), Nk = Nkrylov;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i>
+	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.Svec@Tr@(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
 	auto vc = wsp.Svec@Tc@(N); // temp vec
-	auto bases = wsp.Scmat@Tc@(N, Nk); // Krylov bases
+//% if minus_i
+	auto vc1 = wsp.Svec@Tc@(Nk); // temp vec
+//% end
+	auto bases = wsp.Scmat@Tc@(N, Nk); // orthonormal Krylov bases eq_Lanc_7
 
 //% req('cut0', { ['Scmat' Tc] });
 	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
@@ -57,6 +73,7 @@ inline @Tr@ exp_Hdt_v_lanc@suffix@(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt,
 		if (y.p() == x.p()) copy(y, 0);
 		return 0;
 	}
+//% req('add(v,v,s)', {['Svec' Tc] Tv Tr});
 	times@suffix@(v0, x, 1/norm_x);
 
 	mul_fun(vc, v0);
@@ -66,13 +83,17 @@ inline @Tr@ exp_Hdt_v_lanc@suffix@(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt,
 //% end
 	for (Long i = 0; i < N; ++i)
 		v1[i] = vc[i] - alpha[0] * v0[i];
+//% req('norm2', { ['Svbase' Tc] });
 	beta[0] = norm@suffix@(v1);
 	if (beta[0] == 0) { // H*x is an exact eigen state of x
-		// do y = exp(eigval*dt)*x
 		Long ind;
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
-		times@suffix@(y, x, exp(eigval*dt));
+//% if minus_i
+		times@suffix@(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+//% else
+		times@suffix@(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+//% end
 		return 0;
 	}
 //% if omp
@@ -95,7 +116,7 @@ inline @Tr@ exp_Hdt_v_lanc@suffix@(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt,
 		beta[j1] = norm@suffix@(v2);
 #ifndef NDEBUG
 		if (beta[j1] == 0)
-			SLS_ERR("exp_Hdt_v_lanc(): input H^" + num2str(j2) + "*x is linearly dependent!");
+			SLS_ERR("exp_@mi@Hdt_v_lanc(): H^" + num2str(j2) + "*x is linearly dependent!");
 #endif
 //% if omp
 		times_eq@suffix@(v2, 1./beta[j1]);
@@ -121,151 +142,37 @@ inline @Tr@ exp_Hdt_v_lanc@suffix@(@Tv@_O y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt,
 #ifdef SLS_USE_MPLAPACK
 	mplapackint info;
 	Rstev("V", Nk, alpha.p(), beta.p(), eigV.p(), Nk, wsp.pQdoub(Nk), info);
+	// alpha is now eigen values
 	if (info != 0) SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
 #else
 	SLS_ERR("MPLAPACK is turned off!");
 #endif
 //% end
-	
-	for (Long i = 0; i < Nk; ++i)
-		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * norm_x;
-	// alpha, beta are just work spaces now
-//% req('mul_gen', { ['Svec' Tr] ['Scmat' Tr] ['Svec' Tr]});
-	mul_gen(beta, eigV, alpha);
-//% req('mul(v,m,v)', {Tv ['Scmat' Tc] ['Svec' Tr]});
-	mul(y, bases, beta);
 
-	return err;
-}
-//%-------------------------------
-
-// bytes of workspace required
-template <class Ts>
-inline Long exp_miHdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
-	return sizeof(Ts)*((2*N+Nk)*(Nk+1)+3*Nk)+5*(SLS_WSP_ALIGN-1);
-}
-
-// calculate y = exp(-i*H*dt) * x
-// x, y can be the same object
-// mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
-// to save time, only beta inside the tridiag matrix is calculated, return error estimation as the product of (Nkrylov-1) beta. Which is actually the error for (Nkrylov-1) basis.
-// exp_Hdt_v_lanc_par() is the parallel version, but will not call `mul_fun` in parallel region
-//% tem('exp_miHdt_v_lanc', {
-//%   'SvbaseComp' 0; 'SvbaseComp' 1;
-//%   'SvbaseQcomp' 0;
-//%   'DvecComp' 0; 'DvecComp' 1;
-//%   'DvecQcomp' 0;
-//% });
-//%-------------------------------
-//% [Tv omp] = varargin{:};
-//% Tc = val_t(Tv);
-//% Tr = rm_comp(Tc);
-//% if omp, suffix='_par'; else suffix=''; end;
-// required workspace: sizeof(@Tr@)*((2*N+Nk)*(Nk+1)+3*Nk)+5*align
-template <class Tmul>
-inline @Tr@ exp_miHdt_v_lanc@suffix@(@Tv@_IO y, Tmul &mul_fun, @Tv@_I x, @Tr@_I dt, Long_I Nkrylov, WorkSpace &wsp)
-{
-	Long N = x.size(), Nk = Nkrylov;
-#ifdef SLS_CHECK_SHAPES
-	if (Nk > N)
-		SLS_ERR("Nk > N !");
-#endif
-
-	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
-	auto beta = wsp.Svec@Tr@(Nk);  // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
-	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
-	
-	auto vc = wsp.Svec@Tc@(N); // temp vec
-	auto vc1 = wsp.Svec@Tc@(Nk); // temp vec
-	auto bases = wsp.Scmat@Tc@(N, Nk); // orthonormal Krylov bases eq_Lanc_7
-//% req('cut0', { ['Scmat' Tc] });
-	Svec@Tc@ v0 = cut0(bases, 0), v1 = cut0(bases, 1), v2 = cut0(bases, 2);
-//% req('norm2', {base_t(Tv)});
-	@Tr@ norm_x = norm@suffix@(x);
-	if (norm_x == 0) {
-		if (y.p() == x.p()) copy(y, 0);
-		return 0;
-	}
-//% req('add(v,v,s)', {['Svec' Tc] Tv Tr});
-	times@suffix@(v0, x, 1/norm_x);
-	mul_fun(vc, v0);
-	alpha[0] = dot_real@suffix@(v0, vc);
-	for (Long i = 0; i < N; ++i)
-		v1[i] = vc[i] - alpha[0] * v0[i];
-//% req('norm2', { ['Svbase' Tc] });
-	beta[0] = norm(v1);
-	if (beta[0] == 0) { // H*x is an exact eigen state of x
-		// do y = exp(-i*eigval*dt)*x
-		Long ind;
-		max_abs(ind, vc);
-		Doub eigval = real(vc[ind] / v0[ind]);
-		times@suffix@(y, x, exp(Comp(0, -eigval*dt)));
-		return 0;
-	}
-//% if omp
-	times_eq@suffix@(v1, 1./beta[0]);
-//% else
-	v1 /= beta[0];
-//% end
-	mul_fun(vc, v1);
-	alpha[1] = dot_real@suffix@(v1, vc);
-
-	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
-		mul_fun(v2, v1);
-		@Tr@ a = alpha[j1], b = beta[j];
-//% if omp
-#pragma omp parallel for
-//% end
-		for (Long i = 0; i < N; ++i)
-			v2[i] -= a * v1[i] + b * v0[i];
-		beta[j1] = norm@suffix@(v2);
-#ifndef NDEBUG
-		if (beta[j1] == 0)
-			SLS_ERR("exp_miHdt_v_lanc(): H^" + num2str(j2) + "*x is linearly dependent!");
-#endif
-//% if omp
-		times_eq@suffix@(v2, 1./beta[j1]);
-//% else
-		v2 /= beta[j1];
-//% end
-		mul_fun(vc, v2);
-		alpha[j2] = dot_real@suffix@(v2, vc);
-		v0.next(); v1.next(); v2.next();
-	}
-// error estimation if only Nk-1 basis is used
-//% req('sum', { ['Svbase' Tr] });
-	@Tr@ err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
-
-//% if is_Doub(Tr)
-	lapack_int info =
-	LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
-	// alpha is now eigen values
-	if (info != 0)
-		SLS_ERR("something wrong with LAPACKE_dstev: return = " + num2str(info));
-//% elseif is_Qdoub(Tr)
-#ifdef SLS_USE_MPLAPACK
-	mplapackint info;
-	// alpha is now eigen values
-	Rstev("V", Nk, alpha.p(), beta.p(), eigV.p(), Nk, wsp.pQdoub(Nk), info);
-	if (info != 0)
-		SLS_ERR("something wrong with Rstev: return = " + num2str((Long)info));
-#else
-	SLS_ERR("MPLAPACK is turned off!");
-#endif
-//% end
-//% req('cut', { ['Svec' Tc] });
+//% if minus_i
 	Svec@Tc@ vc2 = cut(vc, 0, Nk);
+//% end
 	for (Long i = 0; i < Nk; ++i)
+//% if minus_i
 		vc2[i] = exp(@Tc@(0,-1) * (alpha[i] * dt)) * eigV[i*Nk] * norm_x;
-//% req('mul_gen', { ['Svec' Tc] ['Scmat' Tr] ['Svec' Tc]; Tv ['Scmat' Tc] ['Svec' Tc]});
+//% else
+		alpha[i] = exp(alpha[i] * dt) * eigV[i*Nk] * norm_x;
+//% end
+	// alpha, beta are just work spaces now
+//% if minus_i
+//%     req('mul_gen', { ['Svec' Tc] ['Scmat' Tr] ['Svec' Tc]; Tv ['Scmat' Tc] ['Svec' Tc]});
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
+//% else
+//%     req('mul_gen', { ['Svec' Tr] ['Scmat' Tr] ['Svec' Tr]});
+	mul_gen(beta, eigV, alpha);
+//%     req('mul(v,m,v)', {Tv ['Scmat' Tc] ['Svec' Tr]});
+	mul(y, bases, beta);
+//% end
+
 	return err;
 }
-//%-----------------------
+//%-------------------------------
 
 } // namespace slisc
 
