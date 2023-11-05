@@ -42,18 +42,18 @@ inline void resize_cpy(@Tv@_IO v, Long_I N, @T@_I val = 0)
 //%     Tsli = cut_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
 {
-	Long N10 = v.n0(), N20 = v.n1(), Nold = N0*N1;
+	Long N0_old = v.n0(), N1_old = v.n1(), N_old = N0_old*N1_old;
 	Long N = N0 * N1;
-	if (N0 != N10 || N1 != N20) {
-		if (Nold == 0) {
+	if (N0 != N0_old || N1 != N1_old) {
 //%     req('copy(v,s)', {Tv});
+		if (N_old == 0) {
 			v.resize(N0, N1); copy(v, val);
 		}
 		else if (N == 0)
 			v.resize(0, 0);
 		else {
 			@Tv@ v1(N0, N1); copy(v1, val); // not efficient
-			Long N1min = min(N0, N10), N2min = min(N1, N20);
+			Long N1min = min(N0, N0_old), N2min = min(N1, N1_old);
 //%     req('cut', {Tv});
 //%     Tcut = cut_type(Tv);;
 //%     req('copy(v,v)', {Tcut Tcut})
@@ -67,10 +67,10 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, @T@_I val = 0)
 //%     Tcut = cut_type(Tv);
 inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0)
 {
-	Long N10 = v.n0(), N20 = v.n1(), N30 = v.n2(), Nold = N0*N1;
+	Long N0_old = v.n0(), N1_old = v.n1(), N2_old = v.n2(), N_old = N0_old*N1_old*N2_old;
 	Long N = N0 * N1 * N2;
-	if (N0 != N10 || N1 != N20 || N2 != N30) {
-		if (Nold == 0) {
+	if (N0 != N0_old || N1 != N1_old || N2 != N2_old) {
+		if (N_old == 0) {
 //% req('copy(v,s)', {Tv});
 			v.resize(N0, N1, N2); copy(v, val); // not efficient
 		}
@@ -78,7 +78,7 @@ inline void resize_cpy(@Tv@_IO v, Long_I N0, Long_I N1, Long_I N2, @T@_I val = 0
 			v.resize(0, 0, 0);
 		else {
 			@Tv@ v1(N0, N1, N2); copy(v1, val); // not efficient
-			Long N1min = min(N0, N10), N2min = min(N1, N20), N3min = min(N2, N30);
+			Long N1min = min(N0, N0_old), N2min = min(N1, N1_old), N3min = min(N2, N2_old);
 //%     req('cut', {Tv});
 //%     req('copy(v,v)', {Tcut Tcut})
 			copy(cut(v1, 0, N1min, 0, N2min, 0, N3min),

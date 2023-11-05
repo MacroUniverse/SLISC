@@ -191,7 +191,7 @@ inline Long get_line(Str32_O line, Str32_I str, Long_I start = 0)
 // return -1 if `\n` not found
 inline Long skip_line(Str_I str, Long_I start = 0)
 {
-	Long ind = str.find(U'\n', start);
+	Long ind = str.find('\n', start);
 	if (ind < 0 || ind == Long(str.size()) - 1)
 		return -1;
 	return ind + 1;
@@ -203,6 +203,14 @@ inline Long skip_line(Str32_I str, Long_I start = 0)
 	if (ind < 0 || ind == Long(str.size()) - 1)
 		return -1;
 	return ind + 1;
+}
+
+inline std::istream &skip_line(std::istream& stream, Long_I n = 1)
+{
+	for (Long i = 0; i < n; ++i)
+		if (!stream.ignore(numeric_limits<std::streamsize>::max(), '\n'))
+			SLS_ERR("skip_line() error line # = " + to_string(i));
+	return stream;
 }
 
 // convert string to lower case

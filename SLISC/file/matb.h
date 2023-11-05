@@ -282,8 +282,10 @@ inline Matb::~Matb()
 {
 	if (isopen())
 		close();
-	else if (m_in.is_open() && m_out.is_open())
-		SLS_ERR("unknown!");
+	else if (m_in.is_open() && m_out.is_open()) {
+		// cannot throw inside destructor!
+		printf("unknown!" SLS_WHERE "\n"); exit(1);
+	}
 }
 
 // save() functions

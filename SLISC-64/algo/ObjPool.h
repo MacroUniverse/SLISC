@@ -1,7 +1,7 @@
 template <class T>
 class ObjPool {
 private:
-    vector<unique_ptr<T>> pool;
+	vector<unique_ptr<T>> pool;
 
 public:
 	ObjPool(Long_I n) { alloc(n); }
@@ -15,21 +15,21 @@ public:
 	void alloc(Long n) {
 		pool.reserve((size_t)n);
 		while (n--)
-            pool.emplace_back(make_unique<T>());
+			pool.emplace_back(make_unique<T>());
 	}
 
-    unique_ptr<T> get() {
-        if (pool.empty()) {
-            return make_unique<T>();
-        }
+	unique_ptr<T> get() {
+		if (pool.empty()) {
+			return make_unique<T>();
+		}
 		else {
-            unique_ptr<T> obj = move(pool.back());
-            pool.pop_back();
-            return obj;
-        }
-    }
+			unique_ptr<T> obj = move(pool.back());
+			pool.pop_back();
+			return obj;
+		}
+	}
 
-    void put(unique_ptr<T> &obj) {
-        pool.push_back(move(obj));
-    }
+	void put(unique_ptr<T> &obj) {
+		pool.push_back(move(obj));
+	}
 };

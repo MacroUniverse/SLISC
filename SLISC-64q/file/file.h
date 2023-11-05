@@ -808,153 +808,137 @@ inline void write(ofstream &fout, Str32_I str)
 // skipt specific number of lines at the beginning
 // matrix will auto-resize
 // spaces & new line at the end of file are allowed
-inline void read(CmatInt_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(CmatInt_O mat, Str_I& filename, Long_I skip_lines = 0, Long max_rows = -1)
 {
-	ifstream input(file);
-	if (!input.good())
-		SLS_ERR(file + " does not exist!");
-	for (Long i = 0; i < skip_lines; ++i)
-		input.ignore(1000000, '\n');
-	// detect the number of columns
+	ifstream file(filename);
+	if (!file)
+		throw runtime_error("Could not open file: " + filename);
+	if (!skip_line(file, skip_lines)) {
+		mat.resize(0, 0); return;
+	}
+
 	Str line;
-	getline(input, line);
-	std::istringstream iss(line);
+	Long N1 = 0;
 	vector<Int> v;
-	Doub num;
-	while (iss >> num)
-		v.push_back(num);
-	Long N2 = v.size();
-	while (true) {
-		num = NaN;
-		input >> num;
-		if (std::isnan(num))
+	Long N0 = 0;
+	for (; N0 != max_rows && getline(file, line) && !line.empty(); ++N0) {
+		stringstream iss(line);
+		Doub num;
+		Long col = 0;
+		for (; iss >> num; ++col)
+			v.push_back(num);
+		if (col == 0)
 			break;
-		v.push_back(num);
-		if (input.eof())
-			break;
+		if (N1 == 0)
+			N1 = col;
+		else if (col != N1)
+			throw runtime_error("Mismatched number of columns in the matrix.");
 	}
-	if (v.size() % N2 != 0)
-		SLS_ERR(file + ": each row might not have equal number of columns!");
-	Long N1 = v.size() / N2;
-	mat.resize(N1, N2);
-	for (Long i = 0; i < N1; ++i) {
-		for (Long j = 0; j < N2; ++j) {
-			mat(i, j) = v[N2*i + j];
-		}
-	}
+	mat.resize(N0, N1);
+	for (Long i = 0; i < N0; ++i)
+		for (Long j = 0; j < N1; ++j)
+			mat(i, j) = v[N1*i + j];
 }
 
-inline void read(CmatLlong_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(CmatLlong_O mat, Str_I& filename, Long_I skip_lines = 0, Long max_rows = -1)
 {
-	ifstream input(file);
-	if (!input.good())
-		SLS_ERR(file + " does not exist!");
-	for (Long i = 0; i < skip_lines; ++i)
-		input.ignore(1000000, '\n');
-	// detect the number of columns
+	ifstream file(filename);
+	if (!file)
+		throw runtime_error("Could not open file: " + filename);
+	if (!skip_line(file, skip_lines)) {
+		mat.resize(0, 0); return;
+	}
+
 	Str line;
-	getline(input, line);
-	std::istringstream iss(line);
+	Long N1 = 0;
 	vector<Llong> v;
-	Doub num;
-	while (iss >> num)
-		v.push_back(num);
-	Long N2 = v.size();
-	while (true) {
-		num = NaN;
-		input >> num;
-		if (std::isnan(num))
+	Long N0 = 0;
+	for (; N0 != max_rows && getline(file, line) && !line.empty(); ++N0) {
+		stringstream iss(line);
+		Doub num;
+		Long col = 0;
+		for (; iss >> num; ++col)
+			v.push_back(num);
+		if (col == 0)
 			break;
-		v.push_back(num);
-		if (input.eof())
-			break;
+		if (N1 == 0)
+			N1 = col;
+		else if (col != N1)
+			throw runtime_error("Mismatched number of columns in the matrix.");
 	}
-	if (v.size() % N2 != 0)
-		SLS_ERR(file + ": each row might not have equal number of columns!");
-	Long N1 = v.size() / N2;
-	mat.resize(N1, N2);
-	for (Long i = 0; i < N1; ++i) {
-		for (Long j = 0; j < N2; ++j) {
-			mat(i, j) = v[N2*i + j];
-		}
-	}
+	mat.resize(N0, N1);
+	for (Long i = 0; i < N0; ++i)
+		for (Long j = 0; j < N1; ++j)
+			mat(i, j) = v[N1*i + j];
 }
 
-inline void read(CmatDoub_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(CmatDoub_O mat, Str_I& filename, Long_I skip_lines = 0, Long max_rows = -1)
 {
-	ifstream input(file);
-	if (!input.good())
-		SLS_ERR(file + " does not exist!");
-	for (Long i = 0; i < skip_lines; ++i)
-		input.ignore(1000000, '\n');
-	// detect the number of columns
+	ifstream file(filename);
+	if (!file)
+		throw runtime_error("Could not open file: " + filename);
+	if (!skip_line(file, skip_lines)) {
+		mat.resize(0, 0); return;
+	}
+
 	Str line;
-	getline(input, line);
-	std::istringstream iss(line);
+	Long N1 = 0;
 	vector<Doub> v;
-	Doub num;
-	while (iss >> num)
-		v.push_back(num);
-	Long N2 = v.size();
-	while (true) {
-		num = NaN;
-		input >> num;
-		if (std::isnan(num))
+	Long N0 = 0;
+	for (; N0 != max_rows && getline(file, line) && !line.empty(); ++N0) {
+		stringstream iss(line);
+		Doub num;
+		Long col = 0;
+		for (; iss >> num; ++col)
+			v.push_back(num);
+		if (col == 0)
 			break;
-		v.push_back(num);
-		if (input.eof())
-			break;
+		if (N1 == 0)
+			N1 = col;
+		else if (col != N1)
+			throw runtime_error("Mismatched number of columns in the matrix.");
 	}
-	if (v.size() % N2 != 0)
-		SLS_ERR(file + ": each row might not have equal number of columns!");
-	Long N1 = v.size() / N2;
-	mat.resize(N1, N2);
-	for (Long i = 0; i < N1; ++i) {
-		for (Long j = 0; j < N2; ++j) {
-			mat(i, j) = v[N2*i + j];
-		}
-	}
+	mat.resize(N0, N1);
+	for (Long i = 0; i < N0; ++i)
+		for (Long j = 0; j < N1; ++j)
+			mat(i, j) = v[N1*i + j];
 }
 
-inline void read(CmatQdoub_O mat, Str_I file, Long_I skip_lines = 0)
+inline void read(CmatQdoub_O mat, Str_I& filename, Long_I skip_lines = 0, Long max_rows = -1)
 {
-	ifstream input(file);
-	if (!input.good())
-		SLS_ERR(file + " does not exist!");
-	for (Long i = 0; i < skip_lines; ++i)
-		input.ignore(1000000, '\n');
-	// detect the number of columns
-	Str line;
-	getline(input, line);
-	std::istringstream iss(line);
-	vector<Qdoub> v;
-	Doub num;
 	static bool warned = false;
 	if (!warned) {
 		SLS_WARN("reading Doub instead of Qdoub! >> operator does not support.");
 		warned = true;
 	}
-	while (iss >> num)
-		v.push_back(num);
-	Long N2 = v.size();
-	while (true) {
-		num = NaN;
-		input >> num;
-		if (std::isnan(num))
-			break;
-		v.push_back(num);
-		if (input.eof())
-			break;
+	ifstream file(filename);
+	if (!file)
+		throw runtime_error("Could not open file: " + filename);
+	if (!skip_line(file, skip_lines)) {
+		mat.resize(0, 0); return;
 	}
-	if (v.size() % N2 != 0)
-		SLS_ERR(file + ": each row might not have equal number of columns!");
-	Long N1 = v.size() / N2;
-	mat.resize(N1, N2);
-	for (Long i = 0; i < N1; ++i) {
-		for (Long j = 0; j < N2; ++j) {
-			mat(i, j) = v[N2*i + j];
-		}
+
+	Str line;
+	Long N1 = 0;
+	vector<Qdoub> v;
+	Long N0 = 0;
+	for (; N0 != max_rows && getline(file, line) && !line.empty(); ++N0) {
+		stringstream iss(line);
+		Doub num;
+		Long col = 0;
+		for (; iss >> num; ++col)
+			v.push_back(num);
+		if (col == 0)
+			break;
+		if (N1 == 0)
+			N1 = col;
+		else if (col != N1)
+			throw runtime_error("Mismatched number of columns in the matrix.");
 	}
+	mat.resize(N0, N1);
+	for (Long i = 0; i < N0; ++i)
+		for (Long j = 0; j < N1; ++j)
+			mat(i, j) = v[N1*i + j];
 }
 
 
@@ -963,55 +947,41 @@ inline void read(CmatQdoub_O mat, Str_I file, Long_I skip_lines = 0)
 // skipt specific number of lines at the beginning
 // vector will auto-resize
 // spaces & new line at the end of file are allowed
-inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0)
+inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0, Long_I max_size = -1)
 {
 	ifstream input(file);
 	if (!input.good())
-		SLS_ERR(file + " does not exist!");
-	for (Long i = 0; i < skip_lines; ++i)
-		input.ignore(1000000, '\n');
-	// detect the number of columns
+		SLS_ERR("file doesn't exist: " + file);
+	skip_line(input, skip_lines);
 	vector<Doub> v0;
 	Doub num;
-	while (true) {
-		num = NaN;
-		input >> num;
-		if (isnan(num))
-			break;
+	while (input >> num && size(v0) != max_size)
 		v0.push_back(num);
-		if (input.eof())
-			break;
-	}
 	v.resize(v0.size());
 	for (Long i = 0; i < size(v0); ++i)
 		v[i] = v0[i];
 }
 
-#ifdef SLS_USE_QUAD_MATH
-inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0)
+inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0, Long_I max_size = -1)
 {
+	static bool warned = false;
+	if (!warned) {
+		SLS_WARN("reading Doub instead of Qdoub! >> operator does not support.");
+		warned = true;
+	}
 	ifstream input(file);
 	if (!input.good())
-		SLS_ERR(file + " does not exist!");
-	for (Long i = 0; i < skip_lines; ++i)
-		input.ignore(1000000, '\n');
-	// detect the number of columns
+		SLS_ERR("file doesn't exist: " + file);
+	skip_line(input, skip_lines);
 	vector<Qdoub> v0;
-	Doub num;
-	while (true) {
-		num = NaN;
-		input >> num;
-		if (isnan(num))
-			break;
+	Qdoub num;
+	while (input >> num && size(v0) != max_size)
 		v0.push_back(num);
-		if (input.eof())
-			break;
-	}
 	v.resize(v0.size());
 	for (Long i = 0; i < size(v0); ++i)
 		v[i] = v0[i];
 }
-#endif
+
 
 // get time-stamp of a file
 #ifndef SLS_USE_MSVC
@@ -1038,6 +1008,40 @@ inline void set_buff(ofstream &fout, Str_IO buffer)
 {
 	fout.rdbuf()->pubsetbuf(&buffer[0], buffer.size());
 }
+
+// for an object `fcout`, `fcout << obj` will write to both ofstream and cout
+// if file already exist, `dlm` will be written to the file first
+struct fcout_t
+{
+	ofstream fout;
+	fcout_t() = default;
+	fcout_t(Str_I log_file, Str_I dlm = "\n\n===================\n\n") { init(log_file, dlm); }
+
+	void init(Str_I log_file, Str_I dlm = "\n\n===================\n\n") {
+		bool exist = file_exist(log_file) && file_size(log_file) > 0;
+		fout.open(log_file, std::ios_base::app);
+		if (!fout)
+			SLS_ERR("File could not be opened for writing!");
+		if (exist)
+			fout << dlm << endl;
+	}
+
+	template <class T>
+	fcout_t &operator<<(const T &obj)
+	{
+		cout << obj; fout << obj;
+		return *this;
+	}
+
+	fcout_t &operator<<(std::ostream& (*manip)(std::ostream&)) {
+		manip(fout); manip(cout);
+		return *this;
+	}
+
+	void precision(std::streamsize n) {
+		cout.precision(n); fout.precision(n);
+	}
+};
 
 } // namespace slisc
 #endif

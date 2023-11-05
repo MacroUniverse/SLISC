@@ -3,6 +3,7 @@
 * Matlab/Octave is used for code generation (see `## Code generation`)
 * For the original project using template see [SLISCt](https://github.com/MacroUniverse/SLISCt)
 * For a Chinese introduction, see [here](https://wuli.wiki/online/SLISC.html)
+* As of 2023/11/2, there are about 68500 lines of hand written code (not including 3rd party and code generation).
 
 ## Introduction
 

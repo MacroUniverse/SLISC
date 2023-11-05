@@ -356,7 +356,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	auto xmin = wsp.SvecDoub(m); copy(xmin, x);  // Iterate which has minimal residual so far
 	auto p = wsp.SvecDoub(m), v = wsp.SvecDoub(m), xhalf= wsp.SvecDoub(m),
 		s = wsp.SvecDoub(m), t = wsp.SvecDoub(m),	r = wsp.SvecDoub(m);
-    mul_fun(r, x); sub(r, b, r);
+	mul_fun(r, x); sub(r, b, r);
 	auto rt = wsp.SvecDoub(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed
@@ -529,7 +529,7 @@ inline Int bicgstab_matlab(Doub_O relres, Long_O iter,
 	auto xmin = wsp.SvecComp(m); copy(xmin, x);  // Iterate which has minimal residual so far
 	auto p = wsp.SvecComp(m), v = wsp.SvecComp(m), xhalf= wsp.SvecComp(m),
 		s = wsp.SvecComp(m), t = wsp.SvecComp(m),	r = wsp.SvecComp(m);
-    mul_fun(r, x); sub(r, b, r);
+	mul_fun(r, x); sub(r, b, r);
 	auto rt = wsp.SvecComp(m); copy(rt, r);    // Shadow residual
 	flag = 1;
 	Long imin = 0;                      // Iteration at which xmin was computed

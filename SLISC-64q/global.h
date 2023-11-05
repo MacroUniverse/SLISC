@@ -13,6 +13,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <sstream>
 #include <iomanip>
 #include <fstream>
 
@@ -148,15 +149,27 @@
 #endif
 
 // print an error with file and line number
+namespace slisc {
+	// error type
+	class sls_err : public std::exception
+	{
+	private:
+		std::string m_msg;
+	public:
+		explicit sls_err(std::string msg): m_msg(std::move(msg)) {}
+		const char *what() const noexcept override
+		{ return m_msg.c_str(); }
+	};
+}
+
 #ifndef SLS_ERR
 #ifndef SLS_THROW_ERR
 	#define SLS_ERR(str) do { \
-		std::cerr << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
+		std::cerr << SLS_RED_BOLD "Error: " << std::string(str) << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
 	} while(0)
 #else
 	#define SLS_ERR(str) do { \
-		std::stringstream ss; ss << SLS_RED_BOLD "Error: " << str << SLS_NO_STYLE " " SLS_WHERE; \
-		throw slisc::sls_err(std::move(ss.str()));
+		throw slisc::sls_err(SLS_RED_BOLD "Error: " + std::string(str) + SLS_NO_STYLE " " SLS_WHERE); \
 	} while(0)
 #endif
 #endif
@@ -403,17 +416,6 @@ typedef const vvecLong &vvecLong_I;
 typedef vvecLong &vvecLong_O, &vvecLong_IO;
 
 inline bool isnan(Comp_I s) { return s != s; }
-
-// error type
-class sls_err : public std::exception
-{
-private:
-	Str m_msg;
-public:
-	explicit sls_err(Str msg): m_msg(std::move(msg)) {}
-	const char *what() const noexcept override
-	{ return m_msg.c_str(); }
-};
 
 // === print() like python ===
 // print(a,b,...) is equivalent to `cout << a << b << ... << endl`

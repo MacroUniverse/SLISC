@@ -177,11 +177,11 @@ inline time_t str2time_t(Str_I str)
 	return mktime(&t);
 }
 
-inline void time_t2yyyymmddhhmm(Str_O str, time_t time)
+inline void time_t2yyyymmddhhmm(Str_O str, time_t time, Str_I format = "%Y%m%d%H%M")
 {
 	std::tm *ptm = localtime(&time);
 	stringstream ss;
-	ss << std::put_time(ptm, "%Y%m%d%H%M");
+	ss << std::put_time(ptm, format.c_str());
 	str = std::move(ss.str());
 }
 
