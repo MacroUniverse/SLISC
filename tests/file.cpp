@@ -191,6 +191,9 @@ void test_file()
 #else
 	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
+
+	SLS_ASSERT(file_same("tests/test_file/test1.json", "tests/test_file/../test_file/test1.json"));
+	SLS_ASSERT(!file_same("tests/test_file/test1.json", "tests/test_file/test1-bk.json"));
 }
 
 #ifndef SLS_TEST_ALL

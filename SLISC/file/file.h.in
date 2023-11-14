@@ -43,6 +43,26 @@ inline void cd(Str_I path)
 {
 	chdir(path.c_str());
 }
+
+// get innode of a file
+inline Ullong file_innode(Str file)
+{
+	replace(file, "\"", "\\\"");
+	Str stdout;
+	Str cmd = "ls -i \"" + file + "\"";
+	if (exec_str(stdout, cmd))
+		SLS_ERR("file_innode: exec_str() error! cmd: " + cmd);
+	stringstream ss(stdout);
+	Ullong ret;
+	ss >> ret;
+	return ret;
+}
+
+// if is the same file
+inline bool file_same(Str_I file1, Str_I file2)
+{
+	return file_innode(file1) == file_innode(file2);
+}
 #endif
 
 #ifdef SLS_USE_MSVC
@@ -871,6 +891,11 @@ struct fcout_t
 
 	void precision(std::streamsize n) {
 		cout.precision(n); fout.precision(n);
+	}
+
+	fcout_t &flush() {
+	    cout.flush(); fout.flush();
+	    return *this;
 	}
 };
 

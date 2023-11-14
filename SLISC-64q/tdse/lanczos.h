@@ -29,13 +29,15 @@ inline Long exp_miHdt_v_lanc_Nwsp(Long_I N, Long_I Nk) {
 // mul_fun(y, x) performs y = H*x, where H is a hermitian matrix
 // to save time, only beta inside the tridiag matrix is calculated, return error estimation as the product of (Nkrylov-1) beta. Which is actually the error if only (Nkrylov-1) bases are used.
 // exp_Hdt_v_lanc_par() is the parallel version, but will not call `mul_fun` in parallel region
+// when `err_max` is positive, iteration will be terminated if `error < err_max` and a smaller Nk will be used
 template <class Tmul>
-inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_Hdt_v_lanc(Long_O Nk_used, SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -46,6 +48,7 @@ inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I
 	Doub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -60,14 +63,16 @@ inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -80,12 +85,16 @@ inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -97,17 +106,18 @@ inline Doub exp_Hdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_Hdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_Hdt_v_lanc_par(Long_O Nk_used, SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -118,6 +128,7 @@ inline Doub exp_Hdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Do
 	Doub norm_x = norm_par(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times_par(v0, x, 1/norm_x);
@@ -133,14 +144,16 @@ inline Doub exp_Hdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Do
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times_par(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	times_eq_par(v1, 1./beta[0]);
 	mul_fun(vc, v1);
 	alpha[1] = dot_real_par(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 #pragma omp parallel for
@@ -154,12 +167,16 @@ inline Doub exp_Hdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Do
 		times_eq_par(v2, 1./beta[j1]);
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real_par(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -171,17 +188,18 @@ inline Doub exp_Hdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Do
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Qdoub exp_Hdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_Hdt_v_lanc(Long_O Nk_used, SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp, Qdoub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -192,6 +210,7 @@ inline Qdoub exp_Hdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdo
 	Qdoub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -206,14 +225,16 @@ inline Qdoub exp_Hdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdo
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Qdoub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Qdoub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -226,12 +247,16 @@ inline Qdoub exp_Hdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdo
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Qdoub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Qdoub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 #ifdef SLS_USE_MPLAPACK
 	mplapackint info;
@@ -247,17 +272,18 @@ inline Qdoub exp_Hdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdo
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_Hdt_v_lanc(Long_O Nk_used, DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -268,6 +294,7 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 	Doub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -282,14 +309,16 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -302,12 +331,16 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -319,17 +352,18 @@ inline Doub exp_Hdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt,
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_Hdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_Hdt_v_lanc_par(Long_O Nk_used, DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -340,6 +374,7 @@ inline Doub exp_Hdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I
 	Doub norm_x = norm_par(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times_par(v0, x, 1/norm_x);
@@ -355,14 +390,16 @@ inline Doub exp_Hdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times_par(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	times_eq_par(v1, 1./beta[0]);
 	mul_fun(vc, v1);
 	alpha[1] = dot_real_par(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 #pragma omp parallel for
@@ -376,12 +413,16 @@ inline Doub exp_Hdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I
 		times_eq_par(v2, 1./beta[j1]);
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real_par(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -393,17 +434,18 @@ inline Doub exp_Hdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_Hdt_v_lanc(Long_O Nk_used, DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp, Qdoub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -414,6 +456,7 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 	Qdoub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -428,14 +471,16 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Qdoub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Qdoub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -448,12 +493,16 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Qdoub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Qdoub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 #ifdef SLS_USE_MPLAPACK
 	mplapackint info;
@@ -469,17 +518,18 @@ inline Qdoub exp_Hdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I
 	// alpha, beta are just work spaces now
 	mul_gen(beta, eigV, alpha);
 	mul(y, bases, beta);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_miHdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_miHdt_v_lanc(Long_O Nk_used, SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -491,6 +541,7 @@ inline Doub exp_miHdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub
 	Doub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -505,14 +556,16 @@ inline Doub exp_miHdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -525,12 +578,17 @@ inline Doub exp_miHdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    vc1.set(vc1.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -543,17 +601,18 @@ inline Doub exp_miHdt_v_lanc(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub
 	// alpha, beta are just work spaces now
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_miHdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_miHdt_v_lanc_par(Long_O Nk_used, SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -565,6 +624,7 @@ inline Doub exp_miHdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, 
 	Doub norm_x = norm_par(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times_par(v0, x, 1/norm_x);
@@ -580,14 +640,16 @@ inline Doub exp_miHdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, 
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times_par(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	times_eq_par(v1, 1./beta[0]);
 	mul_fun(vc, v1);
 	alpha[1] = dot_real_par(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 #pragma omp parallel for
@@ -601,12 +663,17 @@ inline Doub exp_miHdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, 
 		times_eq_par(v2, 1./beta[j1]);
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real_par(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    vc1.set(vc1.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -619,17 +686,18 @@ inline Doub exp_miHdt_v_lanc_par(SvbaseComp_O y, Tmul &mul_fun, SvbaseComp_I x, 
 	// alpha, beta are just work spaces now
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Qdoub exp_miHdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_miHdt_v_lanc(Long_O Nk_used, SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp, Qdoub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -641,6 +709,7 @@ inline Qdoub exp_miHdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Q
 	Qdoub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -655,14 +724,16 @@ inline Qdoub exp_miHdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Q
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Qdoub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Qdoub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -675,12 +746,17 @@ inline Qdoub exp_miHdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Q
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Qdoub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    vc1.set(vc1.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Qdoub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 #ifdef SLS_USE_MPLAPACK
 	mplapackint info;
@@ -697,17 +773,18 @@ inline Qdoub exp_miHdt_v_lanc(SvbaseQcomp_O y, Tmul &mul_fun, SvbaseQcomp_I x, Q
 	// alpha, beta are just work spaces now
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_miHdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_miHdt_v_lanc(Long_O Nk_used, DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -719,6 +796,7 @@ inline Doub exp_miHdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I d
 	Doub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -733,14 +811,16 @@ inline Doub exp_miHdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I d
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -753,12 +833,17 @@ inline Doub exp_miHdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I d
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    vc1.set(vc1.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -771,17 +856,18 @@ inline Doub exp_miHdt_v_lanc(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I d
 	// alpha, beta are just work spaces now
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Doub exp_miHdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Doub exp_miHdt_v_lanc_par(Long_O Nk_used, DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub_I dt, Long_I Nkrylov, WorkSpace &wsp, Doub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecDoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecDoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatDoub(Nk, Nk); // eigen vectors
@@ -793,6 +879,7 @@ inline Doub exp_miHdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub
 	Doub norm_x = norm_par(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times_par(v0, x, 1/norm_x);
@@ -808,14 +895,16 @@ inline Doub exp_miHdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times_par(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Doub err = dt*beta[0];
 	times_eq_par(v1, 1./beta[0]);
 	mul_fun(vc, v1);
 	alpha[1] = dot_real_par(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Doub a = alpha[j1], b = beta[j];
 #pragma omp parallel for
@@ -829,12 +918,17 @@ inline Doub exp_miHdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub
 		times_eq_par(v2, 1./beta[j1]);
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real_par(v2, vc);
+		Doub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    vc1.set(vc1.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Doub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 	lapack_int info =
 		LAPACKE_dstev(LAPACK_COL_MAJOR, 'V', Nk, alpha.p(), beta.p(), eigV.p(), Nk);
@@ -847,17 +941,18 @@ inline Doub exp_miHdt_v_lanc_par(DvecComp_O y, Tmul &mul_fun, DvecComp_I x, Doub
 	// alpha, beta are just work spaces now
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 template <class Tmul>
-inline Qdoub exp_miHdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp)
+inline Qdoub exp_miHdt_v_lanc(Long_O Nk_used, DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub_I dt, Long_I Nkrylov, WorkSpace &wsp, Qdoub_I err_max=0)
 {
-	Long N = x.size(), Nk = Nkrylov;
+	Long N = x.size(), Nk = Nkrylov, Nk_min = 6;
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
+    // error estimation if only Nk-1 basis is used
 	auto alpha = wsp.SvecQdoub(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.SvecQdoub(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.ScmatQdoub(Nk, Nk); // eigen vectors
@@ -869,6 +964,7 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub
 	Qdoub norm_x = norm(x);
 	if (norm_x == 0) {
 		if (y.p() == x.p()) copy(y, 0);
+		Nk_used = 0;
 		return 0;
 	}
 	times(v0, x, 1/norm_x);
@@ -883,14 +979,16 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub
 		max_abs(ind, vc);
 		Doub eigval = real(vc[ind] / v0[ind]);
 		times(y, x, exp(Comp(0, -eigval*dt))); // y[i] = exp(-i*eigval[i]*dt)*x[i]
+        Nk_used = 1;
 		return 0;
 	}
+	Qdoub err = dt*beta[0];
 	v1 /= beta[0];
 	mul_fun(vc, v1);
 	alpha[1] = dot_real(v1, vc);
 
 	for (Long j = 0; j < Nk-2; ++j) {
-		Long j1 = j+1, j2 = j+2;
+		Long j1 = j+1, j2 = j+2, j3 = j+3;
 		mul_fun(v2, v1);
 		Qdoub a = alpha[j1], b = beta[j];
 		for (Long i = 0; i < N; ++i)
@@ -903,12 +1001,17 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub
 		v2 /= beta[j1];
 		mul_fun(vc, v2);
 		alpha[j2] = dot_real(v2, vc);
+		Qdoub fact = (dt*beta[j1]/j2);
+		err *= fact;
+		if (j3 >= Nk_min && err < err_max) {
+		    Nk = j3;
+		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+		    vc1.set(vc1.p(), Nk);
+		    eigV.set(eigV.p(), Nk, Nk);
+		    break;
+		}
 		v0.next(); v1.next(); v2.next();
 	}
-	// error estimation if only Nk-1 basis is used
-	Qdoub err = 1;
-	for (Long k = 1; k < Nk; ++k)
-		err *= (dt*beta[k-1]/k);
 
 #ifdef SLS_USE_MPLAPACK
 	mplapackint info;
@@ -925,8 +1028,8 @@ inline Qdoub exp_miHdt_v_lanc(DvecQcomp_O y, Tmul &mul_fun, DvecQcomp_I x, Qdoub
 	// alpha, beta are just work spaces now
 	mul_gen(vc1, eigV, vc2);
 	mul_gen(y, bases, vc1);
-
-	return err;
+    Nk_used = Nk;
+	return abs(err);
 }
 
 
