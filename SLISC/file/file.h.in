@@ -4,7 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <sys/types.h> // for time_stamp
-#include <sys/stat.h> // for time_stamp
+#include <sys/stat.h> // for time_stamp, stat()
 #include "../util/time.h"
 #include "../util/linux.h"
 #include "../arith/arith1.h"
@@ -42,26 +42,6 @@ inline Str pwd()
 inline void cd(Str_I path)
 {
 	chdir(path.c_str());
-}
-
-// get innode of a file
-inline Ullong file_innode(Str file)
-{
-	replace(file, "\"", "\\\"");
-	Str stdout;
-	Str cmd = "ls -i \"" + file + "\"";
-	if (exec_str(stdout, cmd))
-		SLS_ERR("file_innode: exec_str() error! cmd: " + cmd);
-	stringstream ss(stdout);
-	Ullong ret;
-	ss >> ret;
-	return ret;
-}
-
-// if is the same file
-inline bool file_same(Str_I file1, Str_I file2)
-{
-	return file_innode(file1) == file_innode(file2);
 }
 #endif
 
@@ -125,6 +105,25 @@ inline void file_remove(Str_I fname)
 		throw runtime_error("failed to remove, file being used? (" + fname + ")");
 #endif
 }
+
+#ifdef SLS_USE_LINUX
+// get innode of a file
+inline Ullong file_innode(Str_I file)
+{
+    struct stat stat1;
+	if (!file_exist(file))
+		SLS_ERR("file_innode: file not exist: " + file);
+    if (stat(file.c_str(), &stat1) != 0)
+        SLS_ERR("Error getting file status");
+    return stat1.st_ino;
+}
+
+// if is the same file
+inline bool file_same(Str_I file1, Str_I file2)
+{
+	return file_innode(file1) == file_innode(file2);
+}
+#endif
 
 // check if directory exist
 // `path` must end with '/'
