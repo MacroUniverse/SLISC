@@ -41,35 +41,36 @@ void test_lanczos()
 			for (Long i = 0; i < 3; ++i) {
 				rand(x);
 				mul(y0, expH, x);
-				exp_Hdt_v_lanc(y, mul_fun, x, 1, 3, wsp.reset());
+				Long Nk_used;
+				exp_Hdt_v_lanc(Nk_used, y, mul_fun, x, 1, 3, wsp.reset());
 				y -= y0;
 				if (max_abs(y) > 1e-8)
 					SLS_FAIL;
-				exp_Hdt_v_lanc_par(y, mul_fun, x, 1, 3, wsp.reset());
+				exp_Hdt_v_lanc_par(Nk_used, y, mul_fun, x, 1, 3, wsp.reset());
 				y -= y0;
 				if (max_abs(y) > 1e-8)
 					SLS_FAIL;
 
 				mul(y0, exp_miH, x);
 				copy(y, x);
-				exp_miHdt_v_lanc(y, mul_fun, y, dt, Nk, wsp.reset()); // for dense y
+				exp_miHdt_v_lanc(Nk_used, y, mul_fun, y, dt, Nk, wsp.reset()); // for dense y
 				y -= y0;
 				if (max_abs(y) > 1e-4)
 					SLS_FAIL;
 				copy(y, x);
-				exp_miHdt_v_lanc_par(y, mul_fun, y, dt, Nk, wsp.reset()); // for dense y
+				exp_miHdt_v_lanc_par(Nk_used, y, mul_fun, y, dt, Nk, wsp.reset()); // for dense y
 				y -= y0;
 				if (max_abs(y) > 1e-4)
 					SLS_FAIL;
 
 				DvecComp y1(x6.p(), 3, 2);
 				copy(y1, x);
-				exp_miHdt_v_lanc(y1, mul_fun, y1, dt, Nk, wsp.reset()); // for Dvec y1
+				exp_miHdt_v_lanc(Nk_used, y1, mul_fun, y1, dt, Nk, wsp.reset()); // for Dvec y1
 				y1 -= y0;
 				if (max_abs(y1) > 1e-4)
 					SLS_FAIL;
 				copy(y1, x);
-				exp_miHdt_v_lanc_par(y1, mul_fun, y1, dt, Nk, wsp.reset()); // for Dvec y1
+				exp_miHdt_v_lanc_par(Nk_used, y1, mul_fun, y1, dt, Nk, wsp.reset()); // for Dvec y1
 				y1 -= y0;
 				if (max_abs(y1) > 1e-4)
 					SLS_FAIL;

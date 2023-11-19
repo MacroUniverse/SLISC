@@ -2,6 +2,7 @@
 // always use Llong when reading and writing index
 
 #pragma once
+#ifdef SLS_USE_HDF
 #include <H5Cpp.h>
 #include "../arith/scalar_arith.h"
 #include "../file/file.h"
@@ -37,3 +38,5 @@ inline void save(ScmatDoub_I a, Str_I name, H5File &file)
 }
 
 } // namespace slisc
+#endif
+
