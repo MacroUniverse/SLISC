@@ -37,7 +37,7 @@ message(STATUS "------------------------")
 # --- version ---
 set(ver_major 0)
 set(ver_minor 3)
-set(ver_patch 1)
+set(ver_patch 3)
 
 # === minimum build ===
 if(opt_min)

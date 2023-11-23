@@ -61,16 +61,16 @@ inline void matt_write_scalar(@T@_I s, ofstream &m_out)
 //% if is_real(T)
 //%     if is_Doub(T)
 	if (isinf(s))
-		throw Str("infinity is not supported in matt file!");
+		throw sls_err("infinity is not supported in matt file!");
 	if (isnan(s))
-		throw Str("NaN is not supported in matt file!");
+		throw sls_err("NaN is not supported in matt file!");
 //%     end
 	m_out << to_num(s) << Matt::dlm;
 //% elseif is_comp(T)
 	if (isinf(real(s)) || isinf(imag(s)))
-		throw Str("infinity is not supported in matt file!");
+		throw sls_err("infinity is not supported in matt file!");
 	if (isnan(real(s)) || isnan(imag(s)))
-		throw Str("NaN is not supported in matt file!");
+		throw sls_err("NaN is not supported in matt file!");
 	if (imag(s) == 0)
 		m_out << real(s) << Matt::dlm;
 	else if (imag(s) < 0)
@@ -506,7 +506,7 @@ inline void load(@T@_O s, Str_I varname, Matt_IO matt)
 	ifstream &fin = matt.m_in;
 	i = matt.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matt.data_pos(i));
 
 	if (@numTs@ < matt.m_type[i])
@@ -522,7 +522,7 @@ inline void load(@T@_O v, Str_I varname, Matt_IO matt)
 	ifstream &fin = matt.m_in;
 	Long i = matt.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matt.data_pos(i));
 
 	if (@numTs@ < matt.m_type[i])
@@ -542,7 +542,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 	ifstream &fin = matt.m_in;
 	i = matt.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matt.data_pos(i));
 
 	if (@numTs@ < matt.m_type[i])
@@ -563,7 +563,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 	ifstream &fin = matt.m_in;
 	i = matt.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matt.data_pos(i));
 
 	if (@numTs@ < matt.m_type[i])
@@ -586,7 +586,7 @@ inline void load(@T@_O a, Str_I varname, Matt_IO matt)
 	ifstream &fin = matt.m_in;
 	i = matt.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matt.data_pos(i));
 
 	if (@numTs@ < matt.m_type[i])

@@ -5,24 +5,39 @@
 #include <string>
 #include <chrono>
 #include <ctime>
+#include <thread>
 #include "../str/str.h"
 
 namespace slisc {
 
 using std::time_t;
+inline int is_daylight_saving();
+
+// ================ time to string ======================
+
+// convert time_t integer to time string
+// e.g. 20230102.030405
+// ref: https://en.cppreference.com/w/cpp/io/manip/put_time
+inline Str time_t2str(time_t time, Str_I format = "%Y%m%d.%H%M%S")
+{
+	std::tm *ptm = localtime(&time);
+	stringstream ss;
+	ss << std::put_time(ptm, format.c_str());
+	return ss.str();
+}
+
+// current system time
+// e.g. 20230102.030405
+// ref: https://en.cppreference.com/w/cpp/io/manip/put_time
+inline Str time_str(Str_I format = "%Y%m%d.%H%M%S")
+{
+    return time_t2str(std::time(nullptr), format);
+}
 
 // get current system time "hh:mm:ss"
 inline Str hhmmss()
 {
-	auto p = std::chrono::system_clock::now();
-	time_t t = std::chrono::system_clock::to_time_t(p);
-#ifdef SLS_USE_MSVC
-	Str str; str.resize(50);
-	ctime_s(&str[0], str.size(), &t);
-#else
-	Str str = std::ctime(&t);
-#endif
-	return str.substr(str.find(':')-2, 8);
+	return time_str("%H:%M:%S");
 }
 
 // convert seconds to "hh:mm:ss" format
@@ -66,23 +81,34 @@ inline Str hhhmmss(Long sec)
 	return ret;
 }
 
-// timer for natural time
-class Timer
-{
-private:
-	std::chrono::steady_clock::time_point start;
-public:
-	void tic() // start timer
-	{ start = std::chrono::steady_clock::now(); }
+// ================ string to time ======================
 
-	double toc() // time elapsed
-	{
-		auto stop = std::chrono::steady_clock::now();
-		auto t = std::chrono::duration_cast<std::chrono::duration<double>>
-			(stop - start);
-		return t.count();
+// convert a string to std::tm
+inline std::tm str2tm(Str_I str)
+{
+	Long N = size(str);
+	std::tm t = {};
+	std::istringstream ss(str);
+	if (N == 12)
+		ss >> std::get_time(&t, "%Y%m%d%H%M");
+	else if (N == 14)
+		ss >> std::get_time(&t, "%Y%m%d%H%M%S");
+	else
+		throw std::runtime_error("str2time(): wrong size(str): " + to_string(N));
+	if (ss.fail()) {
+		throw std::runtime_error(SLS_WHERE);
 	}
-};
+	t.tm_isdst = is_daylight_saving();
+	return t;
+}
+
+inline time_t str2time_t(Str_I str)
+{
+	std::tm t = str2tm(str);
+	return mktime(&t);
+}
+
+// =============== get time =====================
 
 // get current machine time (not necessarily correct)
 // ref: https://en.cppreference.com/w/cpp/chrono/c/tm
@@ -152,38 +178,25 @@ inline int is_daylight_saving()
 	return ret;
 }
 
-// convert a string to std::tm
-inline std::tm str2tm(Str_I str)
+// ================= Timer =====================
+
+// timer for natural time
+class Timer
 {
-	Long N = size(str);
-	std::tm t = {};
-	std::istringstream ss(str);
-	if (N == 12)
-		ss >> std::get_time(&t, "%Y%m%d%H%M");
-	else if (N == 14)
-		ss >> std::get_time(&t, "%Y%m%d%H%M%S");
-	else
-		throw std::runtime_error("str2time(): wrong size(str): " + to_string(N));
-	if (ss.fail()) {
-		throw std::runtime_error(SLS_WHERE);
+private:
+	std::chrono::steady_clock::time_point start;
+public:
+	void tic() // start timer
+	{ start = std::chrono::steady_clock::now(); }
+
+	double toc() // time elapsed
+	{
+		auto stop = std::chrono::steady_clock::now();
+		auto t = std::chrono::duration_cast<std::chrono::duration<double>>
+			(stop - start);
+		return t.count();
 	}
-	t.tm_isdst = is_daylight_saving();
-	return t;
-}
-
-inline time_t str2time_t(Str_I str)
-{
-	std::tm t = str2tm(str);
-	return mktime(&t);
-}
-
-inline void time_t2yyyymmddhhmm(Str_O str, time_t time, Str_I format = "%Y%m%d%H%M")
-{
-	std::tm *ptm = localtime(&time);
-	stringstream ss;
-	ss << std::put_time(ptm, format.c_str());
-	str = std::move(ss.str());
-}
+};
 
 // timer for cpu time (scales with cpu cores)
 class CPUTimer
@@ -200,8 +213,15 @@ public:
 inline void pause()
 { printf("\nPress return to continue.\n"); getchar(); }
 
-// pause a certain time
+// pause a certain time (cpu will be occupied)
 inline void pause(double t)
 { Timer time; time.tic(); while (time.toc() < t); }
+
+// pause and free the cpu (current thread only)
+// usually ~0.001s accuracy
+inline void sleep(double t)
+{
+    std::this_thread::sleep_for(std::chrono::duration<double>(t));
+}
 
 } // namespace slisc

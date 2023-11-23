@@ -156,6 +156,7 @@ namespace slisc {
 	private:
 		std::string m_msg;
 	public:
+		explicit sls_err() {}
 		explicit sls_err(std::string msg): m_msg(std::move(msg)) {}
 		const char *what() const noexcept override
 		{ return m_msg.c_str(); }
