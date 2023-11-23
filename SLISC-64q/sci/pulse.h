@@ -20,6 +20,7 @@ inline void gaussian_pulse(VecDoub_O y, Doub_I A, Doub_I FWHMI, Doub_I w, Doub_I
 }
 
 // vector potential of gaussian_pulse()
+// gaussian pulse is exp(-t^2/4*sigma^2)
 // ref: eq_GausPk_3
 inline void gaussian_pulse_A(VecDoub_O y, Doub_I A, Doub_I FWHMI, Doub_I w, Doub_I t_mid, VecDoub_I t)
 {
@@ -34,6 +35,11 @@ inline void gaussian_pulse_A(VecDoub_O y, Doub_I A, Doub_I FWHMI, Doub_I w, Doub
 		y[i] = coeff * real(arb_erf(Comp(w, 2*a*tt)/(2*sqrt_a)));
 	}
 }
+
+// gaussian pulse is exp(-t^2/4*sigma^2)
+inline Doub gaussian_FWHMI_to_sigma(Doub_I FWHMI) { return FWHMI/(2*sqrt(2*log(2))); }
+
+inline Doub gaussian_sigma_to_FWHMI(Doub_I sigma) { return sigma*(2*sqrt(2*log(2))); }
 
 // A * sin(w*(t-t_mid))) * sqr(cos(b*(t-t_mid))))
 // ref: eq_GausPk_5
@@ -73,5 +79,9 @@ inline void cos2_pulse_A(VecDoub_O y, Doub_I A, Doub_I full_width, Doub_I w, Dou
 			y[i] = 0;
 	}
 }
+
+inline Doub cos2_FWHMI_to_full_width(Doub_I FWHMI) { return FWHMI/(2/PI*std::acos(pow(2.,-0.25))); }
+
+inline Doub cos2_full_width_to_FWHMI(Doub_I full_width) { return full_width*(2/PI*std::acos(pow(2.,-0.25))); }
 
 } // namespace slisc

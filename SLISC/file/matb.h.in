@@ -57,7 +57,7 @@ public:
 typedef const Matb &Matb_I;
 typedef Matb &Matb_O, &Matb_IO;
 
-struct Matb_file_not_complete {};
+struct Matb_file_not_complete : sls_err {};
 
 // read the last Llong
 // pointer will be moved to the beginning of the last Llong
@@ -292,7 +292,7 @@ inline Matb::~Matb()
 
 // save() for scalar
 //% tem('save', {'Char'; 'Int'; 'Llong'; 'Doub'; 'Qdoub';
-//%    'Comp'; 'Qcomp'; });
+//%   'Comp'; 'Qcomp'; });
 //%--------------------
 //% T = varargin{:};
 inline void save(@T@_I s, Str_I varname, Matb_IO matb)
@@ -430,7 +430,7 @@ inline void load(@T@_O s, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	Long i = matb.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
@@ -446,7 +446,7 @@ inline void load(@T@_O v, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	Long i = matb.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
@@ -466,7 +466,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	i = matb.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
@@ -487,7 +487,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	i = matb.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])
@@ -510,7 +510,7 @@ inline void load(@T@_O a, Str_I varname, Matb_IO matb)
 	ifstream &fin = matb.m_in;
 	i = matb.search(varname);
 	if (i < 0)
-		throw Str("variable not found!");
+		throw sls_err("variable not found!");
 	fin.seekg(matb.data_pos(i));
 
 	if (@numTs@ != matb.m_type[i])

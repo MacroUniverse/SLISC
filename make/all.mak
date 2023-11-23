@@ -44,7 +44,7 @@ opt_sqlite := false
 # use SQLiteCpp
 opt_sqlitecpp := true
 # use HDF(5)
-opt_hdf := true
+opt_hdf := false
 # read and write Matlab .mat file
 opt_matfile := false
 #==========================
@@ -569,7 +569,7 @@ else # opt_main == false
 		@printf "\n\n\n"
 
     test32: clean clean_dep
-		$(info remake and run all tests - 64bit)
+		$(info remake and run all tests - 32bit)
 		@make h
 		@make opt_long32=true depend -j$(Ncpu)
 		@make opt_long32=true main.x -j$(Ncpu)

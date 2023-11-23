@@ -1,5 +1,6 @@
 #include "../SLISC/file/hdf.h"
 #include "../SLISC/str/disp.h"
+#include "../SLISC/arith/arith2.h"
 
 using namespace slisc;
 
