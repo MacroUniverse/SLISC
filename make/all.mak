@@ -44,7 +44,7 @@ opt_sqlite := false
 # use SQLiteCpp
 opt_sqlitecpp := true
 # use HDF(5)
-opt_hdf := false
+opt_hdf := true
 # read and write Matlab .mat file
 opt_matfile := false
 #==========================
@@ -502,11 +502,9 @@ all:
 	make test64q
 	make test
 
-ifeq ($(opt_main), false)
-
-    # use `make test*` without any options! will ignore.
+ifeq ($(opt_main), false) # one executable for each test
     test: clean clean_dep
-		$(info remake and run all tests - default)
+		$(info remake and run all tests - default options)
 		@make h
 		@make opt_min=false depend -j$(Ncpu)
 		@make $(path_test_x) -j$(Ncpu)
@@ -556,7 +554,7 @@ ifeq ($(opt_main), false)
 			printf "\nall tests successful!\n"; \
 		fi
 
-else # opt_main == false
+else # opt_main == false  # link all tests to main.x
 
     # use `make test*` without any option! options will ignore.
     test: clean clean_dep

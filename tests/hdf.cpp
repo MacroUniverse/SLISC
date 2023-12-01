@@ -7,12 +7,17 @@ using namespace slisc;
 void test_hdf()
 {
 #ifdef SLS_USE_HDF
-	CmatDoub a(3,2);
-	linspace(a, 1, 6);
-	disp(a);
+	CmatDoub a;
+	CmatDoub b(3, 2);
+	linspace(b, 1, 6);
+	Cmat3Doub c(2,3,4);
+	linspace(c, 1, 24);
 
-	H5File file("test.h5", H5F_ACC_TRUNC);
-	save(a, "a", file);
+	H5File hdf("test.h5", H5F_ACC_TRUNC);
+	save(a, "a", hdf);
+	save(b, "b", hdf);
+	save(c, "c", hdf);
+	hdf.close();
 #else
     printf("---------- disabled! ----------\n");
 #endif
