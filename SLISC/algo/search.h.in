@@ -97,6 +97,44 @@ inline bool lookup(Long_O ind, @T@_I v, @Ts@_I s, Long ind1, Long ind2)
 }
 //%------------------------
 
+// determin overlap region of 1D r grid
+// the overlapping region must have the same values (within machine err)
+// return the # of overlap values (including 0)
+// x1[ind1:ind1+N-1] == x2[ind2:ind2+N-1]
+// TODO: slow, should use bisection
+inline Long grid_overlap(Long_O ind1, Long_O ind2, VecDoub_I x1, VecDoub_I x2)
+{
+	Doub tol = max(max(-x1[0], x1.end()),
+					max(-x2[0], x2.end()))*1e-14;
+	ind1 = ind2 = 0;
+	// no overlap
+	if (x2[0]-x1.end() > tol || x1[0]-x2.end() > tol)
+		return 0;
+	// determine ind1, ind2
+	if (abs(x1[0] - x2[0]) < tol)
+		;
+	else if (x1[0] < x2[0]) {
+		for (Long i = 1; i < x1.size(); ++i)
+			if (abs(x1[i]-x2[0]) < r_tol)
+				ind1 = i;
+		if (ind1 == 0)
+			SLS_ERR("grid_overlap(): grids incompatible (1)");
+	}
+	else { // x2[0] < x1[0]
+		for (Long i = 0; i < x2.size(); ++i)
+			if (abs(x2[i]-x1[0]) < r_tol)
+				ind2 = i;
+		if (ind2 == 0)
+			SLS_ERR("grid_overlap(): grids incompatible (2)");
+	}
+	// # of overlapped grid
+	Long N = min(x1.size()-ind1, x2.size()-ind2);
+	for (Long i = 0; i < N; ++i)
+		if (abs(x1[ind1+i]-x2[ind2+i]) > tol)
+			SLS_ERR("grid_overlap(): grids incompatible (3)");
+	return N;
+}
+
 // check if v[i] == v[j] for any i and j > i
 // return i >= start
 // return -1 if no reapeat
