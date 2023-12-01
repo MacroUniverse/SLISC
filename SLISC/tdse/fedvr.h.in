@@ -452,7 +452,7 @@ inline void dvr_basis_der(Cmat@Tr@_O df, Vec@Tr@_I x, Vec@Tr@_I w)
 // 'x0','w0' are grid points and weights in [-1,1]
 // 'x','w' are the global grid points and weights
 // 'xFE','wFE' are middle point and half width of each FE
-inline void FEDVR_grid(Vec@Tr@_O x, Vec@Tr@_O w, Vec@Tr@_I wFE, Vec@Tr@_I xFE, Vec@Tr@_I x0, Vec@Tr@_I w0)
+inline void FEDVR_grid(Svbase@Tr@_O x, Svbase@Tr@_O w, Svbase@Tr@_I wFE, Svbase@Tr@_I xFE, Svbase@Tr@_I x0, Svbase@Tr@_I w0)
 {
 	Long i, j, k = 0;
 	Long Ngs = x0.size();
@@ -572,7 +572,7 @@ inline void D2_matrix(Mcoo@Tr@_O D2, Vec@Tr@_I w0, Vec@Tr@_I wFE, Cmat@Tr@_I df)
 // Ngs: grid points per finite element (including boundaries)
 // `x`, `w` are the global grid points and weights
 // `u` is the maximum value of each basis
-inline void D2_matrix(Mcoo@Tr@_O D2, Vec@Tr@_O x, Vec@Tr@_O w, Vec@Tr@_O u, Vec@Tr@_I bounds, Long_I Ngs)
+inline void D2_matrix(Mcoo@Tr@_O D2, Svbase@Tr@_O x, Svbase@Tr@_O w, Svbase@Tr@_O u, Svbase@Tr@_I bounds, Long_I Ngs)
 {
 	Long Nfe = bounds.size() - 1; // number of finite elements
 #ifdef SLS_CHECK_SHAPES

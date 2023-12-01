@@ -441,7 +441,7 @@ inline void dvr_basis_der(CmatDoub_O df, VecDoub_I x, VecDoub_I w)
 // 'x0','w0' are grid points and weights in [-1,1]
 // 'x','w' are the global grid points and weights
 // 'xFE','wFE' are middle point and half width of each FE
-inline void FEDVR_grid(VecDoub_O x, VecDoub_O w, VecDoub_I wFE, VecDoub_I xFE, VecDoub_I x0, VecDoub_I w0)
+inline void FEDVR_grid(SvbaseDoub_O x, SvbaseDoub_O w, SvbaseDoub_I wFE, SvbaseDoub_I xFE, SvbaseDoub_I x0, SvbaseDoub_I w0)
 {
 	Long i, j, k = 0;
 	Long Ngs = x0.size();
@@ -561,7 +561,7 @@ inline void D2_matrix(McooDoub_O D2, VecDoub_I w0, VecDoub_I wFE, CmatDoub_I df)
 // Ngs: grid points per finite element (including boundaries)
 // `x`, `w` are the global grid points and weights
 // `u` is the maximum value of each basis
-inline void D2_matrix(McooDoub_O D2, VecDoub_O x, VecDoub_O w, VecDoub_O u, VecDoub_I bounds, Long_I Ngs)
+inline void D2_matrix(McooDoub_O D2, SvbaseDoub_O x, SvbaseDoub_O w, SvbaseDoub_O u, SvbaseDoub_I bounds, Long_I Ngs)
 {
 	Long Nfe = bounds.size() - 1; // number of finite elements
 #ifdef SLS_CHECK_SHAPES
@@ -1019,7 +1019,7 @@ inline void dvr_basis_der(CmatQdoub_O df, VecQdoub_I x, VecQdoub_I w)
 // 'x0','w0' are grid points and weights in [-1,1]
 // 'x','w' are the global grid points and weights
 // 'xFE','wFE' are middle point and half width of each FE
-inline void FEDVR_grid(VecQdoub_O x, VecQdoub_O w, VecQdoub_I wFE, VecQdoub_I xFE, VecQdoub_I x0, VecQdoub_I w0)
+inline void FEDVR_grid(SvbaseQdoub_O x, SvbaseQdoub_O w, SvbaseQdoub_I wFE, SvbaseQdoub_I xFE, SvbaseQdoub_I x0, SvbaseQdoub_I w0)
 {
 	Long i, j, k = 0;
 	Long Ngs = x0.size();
@@ -1139,7 +1139,7 @@ inline void D2_matrix(McooQdoub_O D2, VecQdoub_I w0, VecQdoub_I wFE, CmatQdoub_I
 // Ngs: grid points per finite element (including boundaries)
 // `x`, `w` are the global grid points and weights
 // `u` is the maximum value of each basis
-inline void D2_matrix(McooQdoub_O D2, VecQdoub_O x, VecQdoub_O w, VecQdoub_O u, VecQdoub_I bounds, Long_I Ngs)
+inline void D2_matrix(McooQdoub_O D2, SvbaseQdoub_O x, SvbaseQdoub_O w, SvbaseQdoub_O u, SvbaseQdoub_I bounds, Long_I Ngs)
 {
 	Long Nfe = bounds.size() - 1; // number of finite elements
 #ifdef SLS_CHECK_SHAPES

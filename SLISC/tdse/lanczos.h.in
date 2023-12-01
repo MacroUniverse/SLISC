@@ -57,7 +57,7 @@ inline @Tr@ exp_@mi@Hdt_v_lanc@suffix@(Long_O Nk_used, @Tv@_O y, Tmul &mul_fun, 
 #ifdef SLS_CHECK_SHAPES
 	if (Nk > N) SLS_ERR("Nk > N !");
 #endif
-    // error estimation if only Nk-1 basis is used
+	// error estimation if only Nk-1 basis is used
 	auto alpha = wsp.Svec@Tr@(Nk); // alpha[i] = <v_i|H|v_i> // eq_Lanc_31
 	auto beta = wsp.Svec@Tr@(Nk); // beta[0] is actually beta_1 in eq_Lanc_2 (the first beta in tridiag matrix), last elem is only used as workspace.
 	auto eigV = wsp.Scmat@Tr@(Nk, Nk); // eigen vectors
@@ -97,7 +97,7 @@ inline @Tr@ exp_@mi@Hdt_v_lanc@suffix@(Long_O Nk_used, @Tv@_O y, Tmul &mul_fun, 
 //% else
 		times@suffix@(y, x, exp(eigval*dt)); // y[i] = exp(eigval[i]*dt)*x[i]
 //% end
-        Nk_used = 1;
+		Nk_used = 1;
 		return 0;
 	}
 	@Tr@ err = dt*beta[0];
@@ -133,13 +133,14 @@ inline @Tr@ exp_@mi@Hdt_v_lanc@suffix@(Long_O Nk_used, @Tv@_O y, Tmul &mul_fun, 
 		@Tr@ fact = (dt*beta[j1]/j2);
 		err *= fact;
 		if (j3 >= Nk_min && err < err_max) {
-		    Nk = j3;
-		    alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
+			Nk = j3;
+			alpha.set(alpha.p(), Nk); beta.set(beta.p(), Nk);
 //% if minus_i
-		    vc1.set(vc1.p(), Nk);
+			vc1.set(vc1.p(), Nk);
 //% endif
-		    eigV.set(eigV.p(), Nk, Nk);
-		    break;
+			eigV.set(eigV.p(), Nk, Nk);
+			bases.set(bases.p(), N, Nk);
+			break;
 		}
 		v0.next(); v1.next(); v2.next();
 	}
@@ -180,7 +181,7 @@ inline @Tr@ exp_@mi@Hdt_v_lanc@suffix@(Long_O Nk_used, @Tv@_O y, Tmul &mul_fun, 
 //%     req('mul(v,m,v)', {Tv ['Scmat' Tc] ['Svec' Tr]});
 	mul(y, bases, beta);
 //% end
-    Nk_used = Nk;
+	Nk_used = Nk;
 	return abs(err);
 }
 //%-------------------------------

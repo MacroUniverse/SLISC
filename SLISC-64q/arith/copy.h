@@ -802,6 +802,13 @@ inline void copy(MatDoub_O v, ScmatDoub_I v1)
 	matcpy_diff_major(v.p(), v1.p(), v.n1(), v.n0());
 }
 
+inline void copy(ScmatDoub_O v, DcmatDoub_I v1)
+{
+	if (!v.size()) return;
+	assert_same_shape2(v, v1);
+	matcpy(v.p(), v.n0(), v1.p(), v1.lda(), v.n0(), v.n1());
+}
+
 inline void copy(DcmatDoub_O v, DcmatDoub_I v1)
 {
 	if (!v.size()) return;

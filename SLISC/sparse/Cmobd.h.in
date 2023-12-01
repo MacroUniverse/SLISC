@@ -200,6 +200,8 @@ inline @T@& @CmobdT@::ref(Long_I i, Long_I j)
 
 inline void @CmobdT@::resize(Long_I blk_size, Long_I Nblk)
 {
+	if (blk_size == nblk0() && Nblk == nblk())
+		return;
 	m_data.resize(blk_size, blk_size, Nblk);
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0

@@ -269,18 +269,26 @@ inline void McooChar::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooChar::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooChar::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecChar data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -556,18 +564,26 @@ inline void McooInt::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooInt::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooInt::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecInt data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -843,18 +859,26 @@ inline void McooLlong::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooLlong::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooLlong::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecLlong data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -1130,18 +1154,26 @@ inline void McooDoub::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooDoub::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooDoub::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecDoub data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -1417,18 +1449,26 @@ inline void McooComp::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooComp::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooComp::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecComp data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -1704,18 +1744,26 @@ inline void McooQdoub::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooQdoub::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooQdoub::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecQdoub data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -1991,18 +2039,26 @@ inline void McooQcomp::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooQcomp::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooQcomp::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecQcomp data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -2278,18 +2334,26 @@ inline void McooImag::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooImag::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooImag::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecImag data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
@@ -2565,18 +2629,26 @@ inline void McooQimag::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void McooQimag::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void McooQimag::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	VecQimag data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);

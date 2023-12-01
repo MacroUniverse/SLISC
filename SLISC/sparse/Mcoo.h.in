@@ -8,8 +8,8 @@ template <class T>
 void veccpy(T *, const T *, Long_I);
 
 //% tem('Mcoo', {'Char'; 'Int'; 'Llong'; 'Doub';
-//%    'Comp'; 'Qdoub'; 'Qcomp';
-//%    'Imag'; 'Qimag'; });
+//%  'Comp'; 'Qdoub'; 'Qcomp';
+//%  'Imag'; 'Qimag'; });
 //%----------------------------
 //% T = varargin{:};
 //% McooT = ['Mcoo', T];
@@ -277,18 +277,26 @@ inline void @McooT@::resize(Long_I N)
 	m_Nnz = N;
 }
 
+// will preserve values only if capacity not changed
 inline void @McooT@::reserve(Long_I N)
 {
+	if (N == capacity())
+		return;
 	Base::resize(N);
 	m_row.resize(N);
 	m_col.resize(N);
 	m_Nnz = 0;
 }
 
+// values will be conserved
+// m_Nnz = min(m_Nnz, N);
 inline void @McooT@::reserve_cpy(Long_I N)
 {
+	if (N == capacity())
+		return;
 	@VecT@ data(N);
 	VecLong row(N), col(N);
+	m_Nnz = min(m_Nnz, N);
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);

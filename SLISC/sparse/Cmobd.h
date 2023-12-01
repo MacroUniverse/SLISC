@@ -192,6 +192,8 @@ inline Int& CmobdInt::ref(Long_I i, Long_I j)
 
 inline void CmobdInt::resize(Long_I blk_size, Long_I Nblk)
 {
+	if (blk_size == nblk0() && Nblk == nblk())
+		return;
 	m_data.resize(blk_size, blk_size, Nblk);
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0
@@ -378,6 +380,8 @@ inline Llong& CmobdLlong::ref(Long_I i, Long_I j)
 
 inline void CmobdLlong::resize(Long_I blk_size, Long_I Nblk)
 {
+	if (blk_size == nblk0() && Nblk == nblk())
+		return;
 	m_data.resize(blk_size, blk_size, Nblk);
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0
@@ -564,6 +568,8 @@ inline Doub& CmobdDoub::ref(Long_I i, Long_I j)
 
 inline void CmobdDoub::resize(Long_I blk_size, Long_I Nblk)
 {
+	if (blk_size == nblk0() && Nblk == nblk())
+		return;
 	m_data.resize(blk_size, blk_size, Nblk);
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0
@@ -750,6 +756,8 @@ inline Comp& CmobdComp::ref(Long_I i, Long_I j)
 
 inline void CmobdComp::resize(Long_I blk_size, Long_I Nblk)
 {
+	if (blk_size == nblk0() && Nblk == nblk())
+		return;
 	m_data.resize(blk_size, blk_size, Nblk);
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0
@@ -938,6 +946,8 @@ inline Imag& CmobdImag::ref(Long_I i, Long_I j)
 
 inline void CmobdImag::resize(Long_I blk_size, Long_I Nblk)
 {
+	if (blk_size == nblk0() && Nblk == nblk())
+		return;
 	m_data.resize(blk_size, blk_size, Nblk);
 	m_N0 = (blk_size - 1) * Nblk - 1;
 	// set the first overlapped element to 0
