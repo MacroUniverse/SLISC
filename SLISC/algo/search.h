@@ -396,14 +396,14 @@ inline Long grid_overlap(Long_O ind1, Long_O ind2, VecDoub_I x1, VecDoub_I x2)
 		;
 	else if (x1[0] < x2[0]) {
 		for (Long i = 1; i < x1.size(); ++i)
-			if (abs(x1[i]-x2[0]) < r_tol)
+			if (abs(x1[i]-x2[0]) < tol)
 				ind1 = i;
 		if (ind1 == 0)
 			SLS_ERR("grid_overlap(): grids incompatible (1)");
 	}
 	else { // x2[0] < x1[0]
 		for (Long i = 0; i < x2.size(); ++i)
-			if (abs(x2[i]-x1[0]) < r_tol)
+			if (abs(x2[i]-x1[0]) < tol)
 				ind2 = i;
 		if (ind2 == 0)
 			SLS_ERR("grid_overlap(): grids incompatible (2)");

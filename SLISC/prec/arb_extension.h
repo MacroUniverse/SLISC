@@ -2,6 +2,9 @@
 // c++ wrapper for fmpz_t, arf_t, and arb_t
 
 #pragma once
+#include "../global.h"
+
+#ifdef SLS_USE_ARB
 #include "../util/bit.h"
 #include "../str/str.h"
 #include "arf.h"
@@ -569,3 +572,6 @@ typedef Acomp &Acomp_O, &Acomp_IO;
 inline void clear(Acomp_O x) { acb_clear(x.m_n); }
 
 } // namespace slisc
+
+#endif
+

@@ -506,7 +506,6 @@ ifeq ($(opt_main), false) # one executable for each test
     test: clean clean_dep
 		$(info remake and run all tests - default options)
 		@make h
-		@make opt_min=false depend -j$(Ncpu)
 		@make $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
