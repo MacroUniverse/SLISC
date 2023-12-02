@@ -16,6 +16,7 @@ void test_hdf()
 	H5File hdf("test.h5", H5F_ACC_TRUNC);
 	save(a, "a", hdf);
 	save(b, "b", hdf);
+	save_sparse(b, "b_sparse", hdf);
 	save(c, "c", hdf);
 	hdf.close();
 #else
