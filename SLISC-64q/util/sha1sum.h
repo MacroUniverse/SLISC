@@ -255,6 +255,7 @@ namespace slisc {
 			return sha1sum_f(file);
 
 		// read segments from the file
+		all_segments.clear();
 		for (Long i = 0; i < numSegments; ++i) {
 			fin.seekg(i * step);
 			fin.read(&segment[0], segmentSize);
