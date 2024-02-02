@@ -15,8 +15,8 @@
 	#endif
 #endif
 
-namespace slisc
-{
+namespace slisc {
+
 namespace internal
 {
 	// Algorithm from Numerical Recipes 3ed
@@ -160,4 +160,22 @@ inline typename T::iterator rand_iter(T &s)
 	return iter_ind(s, randLong(s.size()));
 }
 
+// generate 4 digit random hex string
+inline Str rand_hex4() {
+    // Create a random device and use it to generate a random seed
+    std::random_device dev;
+    std::mt19937 rng(dev());
+
+    // Create a distribution range from 0x1000 to 0xFFFF
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0x1000,0xFFFF);
+
+    // Generate a random number in the specified range
+    unsigned int random_number = dist(rng);
+
+    // Output the number as a 4-digit hex number
+    stringstream ss;
+    ss << std::hex << std::setfill('0') << std::setw(4) << random_number;
+    return ss.str();
 }
+
+} // namespace slisc
