@@ -41,8 +41,11 @@ namespace slisc {
 class @Class@ : public @Base@
 {
 public:
-	using @Base@::@Base@;
-	explicit @Class@(Long_I N);
+	@Class@() = default;
+	explicit @Class@(Long_I N) : @Base@(N) {};
+	@Class@(@CT@ *data, Long_I N) : @Base@(data, N) {};
+	@Class@(const @Class@ &v) = default; // copy constructor (shalow)
+	
 //% if ~constness
 	operator @SvecTC@() const;
 //% end
