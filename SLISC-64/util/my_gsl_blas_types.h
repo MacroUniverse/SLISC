@@ -1,4 +1,5 @@
-// this is a modified version of gsl_blas_types.h to prevent conflict with MKL headers
+// this is a modified version of gsl_blas_types.h to prevent error due to `typedef enum`
+// ref: https://wuli.wiki/online/CNote.html
 
 #ifndef __MY_GSL_BLAS_TYPES_H__
 #define __MY_GSL_BLAS_TYPES_H__
@@ -19,10 +20,10 @@ __BEGIN_DECLS
 
 typedef  CBLAS_INDEX  CBLAS_INDEX_t;
 typedef  CBLAS_ORDER       CBLAS_ORDER_t;
-typedef  enum CBLAS_TRANSPOSE   CBLAS_TRANSPOSE_t;
-typedef  enum CBLAS_UPLO        CBLAS_UPLO_t;
-typedef  enum CBLAS_DIAG        CBLAS_DIAG_t;
-typedef  enum CBLAS_SIDE        CBLAS_SIDE_t;
+typedef  CBLAS_TRANSPOSE   CBLAS_TRANSPOSE_t;
+typedef  CBLAS_UPLO        CBLAS_UPLO_t;
+typedef  CBLAS_DIAG        CBLAS_DIAG_t;
+typedef  CBLAS_SIDE        CBLAS_SIDE_t;
 
 /* typedef  gsl_complex  COMPLEX; */
 

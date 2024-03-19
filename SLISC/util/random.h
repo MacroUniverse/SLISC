@@ -15,8 +15,8 @@
 	#endif
 #endif
 
-namespace slisc
-{
+namespace slisc {
+
 namespace internal
 {
 	// Algorithm from Numerical Recipes 3ed
@@ -309,4 +309,11 @@ inline typename T::iterator rand_iter(T &s)
 	return iter_ind(s, randLong(s.size()));
 }
 
+// generate 6 digit random hex string
+inline Str rand_hex6() {
+    stringstream ss;
+    ss << std::hex << std::setfill('0') << std::setw(6) << randInt(16777216);
+    return ss.str();
 }
+
+} // namespace slisc

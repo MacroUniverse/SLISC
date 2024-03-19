@@ -1,6 +1,5 @@
 // interval algorithms
-// an interval is represented by two numbers e.g. Long interv[2]
-// interv[0] is the left bound and interv[1] is the right bound
+// an interval is represented by two numbers
 // an interval can represent, e.g. a sub vector of a vector,
 // elements at the bounds are included.
 
@@ -74,7 +73,7 @@ inline void Intvs::push_back(Long_I i)
 inline void Intvs::check_pair() const
 {
 	if (isodd((Long)Base::size()))
-		SLS_ERR("side is odd!");
+		SLS_ERR("size is odd!");
 }
 
 inline Long Intvs::size() const

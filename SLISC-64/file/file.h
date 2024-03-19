@@ -198,6 +198,19 @@ inline void ensure_dir(Str_I dir_or_file)
 		SLS_ERR("cannot create directory: " + dir);
 }
 
+// get canonical path (i.e. absolute path with no symlink)
+inline Str real_path(Str_I path)
+{
+	char *cstr = realpath(path.c_str(), nullptr);
+    if (cstr) {
+        Str str(cstr);
+        free(cstr);
+		return str;
+    }
+	else
+        throw sls_err();
+}
+
 #ifndef SLS_USE_MSVC
 // remove a file
 inline int file_rm(Str_I wildcard_name) {

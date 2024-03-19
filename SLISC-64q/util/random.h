@@ -15,8 +15,8 @@
 	#endif
 #endif
 
-namespace slisc
-{
+namespace slisc {
+
 namespace internal
 {
 	// Algorithm from Numerical Recipes 3ed
@@ -177,12 +177,6 @@ inline void rand(VecDoub_O v)
 		v[i] = randDoub();
 }
 
-inline void rand(VecQdoub_O v)
-{
-	Long i, N = v.size();
-	for (i = 0; i < N; ++i)
-		v[i] = randQdoub();
-}
 
 inline void rand(VecComp_O v)
 {
@@ -191,12 +185,6 @@ inline void rand(VecComp_O v)
 		v[i] = randComp();
 }
 
-inline void rand(VecQcomp_O v)
-{
-	Long i, N = v.size();
-	for (i = 0; i < N; ++i)
-		v[i] = randQcomp();
-}
 
 inline void rand(SvecLlong_O v)
 {
@@ -254,12 +242,6 @@ inline void rand(CmatDoub_O v)
 		v[i] = randDoub();
 }
 
-inline void rand(CmatQdoub_O v)
-{
-	Long i, N = v.size();
-	for (i = 0; i < N; ++i)
-		v[i] = randQdoub();
-}
 
 inline void rand(CmatComp_O v)
 {
@@ -268,12 +250,6 @@ inline void rand(CmatComp_O v)
 		v[i] = randComp();
 }
 
-inline void rand(CmatQcomp_O v)
-{
-	Long i, N = v.size();
-	for (i = 0; i < N; ++i)
-		v[i] = randQcomp();
-}
 
 inline void rand(Str_O v)
 {
@@ -333,4 +309,11 @@ inline typename T::iterator rand_iter(T &s)
 	return iter_ind(s, randLong(s.size()));
 }
 
+// generate 6 digit random hex string
+inline Str rand_hex6() {
+    stringstream ss;
+    ss << std::hex << std::setfill('0') << std::setw(6) << randInt(16777216);
+    return ss.str();
 }
+
+} // namespace slisc
