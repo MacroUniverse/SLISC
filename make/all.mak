@@ -52,7 +52,7 @@ opt_matfile := false
 # --- version ---
 ver_major := 0
 ver_minor := 3
-ver_patch := 3
+ver_patch := 4
 
 # === minimum build ===
 ifeq ($(opt_min), true)
@@ -505,6 +505,7 @@ all:
 ifeq ($(opt_main), false) # one executable for each test
     test: clean clean_dep
 		$(info remake and run all tests - default options)
+		@make depend
 		@make h
 		@make $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
@@ -513,6 +514,7 @@ ifeq ($(opt_main), false) # one executable for each test
 
     test32: clean clean_dep
 		$(info remake and run all tests - 32bit)
+		@make depend
 		@make h
 		@make opt_long32=true opt_min=false depend -j$(Ncpu)
 		@make opt_long32=true opt_min=false $(path_test_x) -j$(Ncpu)
@@ -522,6 +524,7 @@ ifeq ($(opt_main), false) # one executable for each test
 	
     test64: clean clean_dep
 		$(info remake and run all tests - 64bit)
+		@make depend
 		@make h64
 		@make opt_long32=false opt_min=false depend -j$(Ncpu)
 		@make opt_long32=false opt_min=false $(path_test_x) -j$(Ncpu)
@@ -531,6 +534,7 @@ ifeq ($(opt_main), false) # one executable for each test
 
     test64q: clean clean_dep
 		$(info remake and run all tests - 64bit & quadmath)
+		@make depend
 		@make h64q
 		@make opt_long32=false opt_min=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_min=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
@@ -558,6 +562,7 @@ else # opt_main == false  # link all tests to main.x
     # use `make test*` without any option! options will ignore.
     test: clean clean_dep
 		$(info remake and run all tests - default)
+		@make depend
 		@make h
 		@make depend -j$(Ncpu)
 		@make main.x -j$(Ncpu)
@@ -567,6 +572,7 @@ else # opt_main == false  # link all tests to main.x
 
     test32: clean clean_dep
 		$(info remake and run all tests - 32bit)
+		@make depend
 		@make h
 		@make opt_long32=true depend -j$(Ncpu)
 		@make opt_long32=true main.x -j$(Ncpu)
@@ -576,6 +582,7 @@ else # opt_main == false  # link all tests to main.x
 
     test64: clean clean_dep
 		$(info remake and run all tests - 64bit)
+		@make depend
 		@make h64
 		@make opt_long32=false depend -j$(Ncpu)
 		@make opt_long32=false main.x -j$(Ncpu)
@@ -585,13 +592,13 @@ else # opt_main == false  # link all tests to main.x
 
     test64q: clean clean_dep
 		$(info remake and run all tests - 64bit & quadmath)
+		@make depend
 		@make h64q
 		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
 		@printf "\n\n\n"
 		./main.x < input.inp
 		@printf "\n\n\n"
-
 endif # opt_main
 
 
