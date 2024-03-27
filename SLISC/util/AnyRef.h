@@ -1,9 +1,10 @@
 #pragma once
+// AnyRef is like std::any, but doesn't own the object
+// AnyRefC is the lower const version
 #include "../global.h"
 
 namespace slisc {
 
-struct AnyRef;
 struct AnyRefC;
 
 struct AnyRef {
@@ -16,31 +17,8 @@ struct AnyRef {
 		return type == typeid(T).hash_code();
 	}
 
-	// copy assignment
-	AnyRef &operator=(const AnyRef &rhs) const {
-		if (p == rhs.p)
-			SLS_ERR("self assignment!");
-		if (type != rhs.type)
-			SLS_ERR("assignment of different types!");
-
-		if (is<Str>())
-			get<Str>() = rhs.get<Str>();
-		else if (is<Int>())
-			get<Int>() = rhs.get<Int>();
-		else
-			SLS_ERR("unsupported type!");
-	}
-	
-	// compare
-	bool operator==(const AnyRef &rhs) const {
-		if (type != rhs.type) return false;
-		if (is<Int>())
-			return get<Int>() == rhs.get<Int>();
-		else if (is<Str>())
-			return get<Str>() == rhs.get<Str>();
-		else
-			SLS_ERR("unsupported type!");
-	}
+	// copy values
+	AnyRef &operator=(const AnyRefC &rhs) const;
 
 	// bind
 	template <class T>
@@ -75,17 +53,6 @@ struct AnyRefC {
 		return type == typeid(T).hash_code();
 	}
 
-	
-	// compare
-	bool operator==(const AnyRefC &rhs) const {
-		if (type != rhs.type) return false;
-		if (is<Int>())
-			return get<Int>() == rhs.get<Int>();
-		else if (is<Str>())
-			return get<Str>() == rhs.get<Str>();
-		else
-			SLS_ERR("unsupported type!");
-	}
 
 	// bind
 	template <class T>
@@ -108,13 +75,74 @@ struct AnyRefC {
 typedef const AnyRefC &AnyRef_I;
 typedef const AnyRef &AnyRef_O, &AnyRef_IO;
 
+inline AnyRef &AnyRef::operator=(AnyRef_I rhs) const {
+	if (p == rhs.p)
+		SLS_ERR("self assignment!");
+	if (type != rhs.type)
+		SLS_ERR("assignment of different types!");
+
+	if (is<Int>())
+		get<Int>() = rhs.get<Int>();
+	else if (is<Llong>())
+		get<Llong>() = rhs.get<Llong>();
+
+	else if (is<Float>())
+		get<Float>() = rhs.get<Float>();
+
+	else if (is<Doub>())
+		get<Doub>() = rhs.get<Doub>();
+
+	else if (is<Comp>())
+		get<Comp>() = rhs.get<Comp>();
+
+	else if (is<Str>())
+		get<Str>() = rhs.get<Str>();
+
+	else
+		SLS_ERR("unsupported type!");
+}
+
+// compare
+inline bool operator==(AnyRef_I a, AnyRef_I b) {
+	if (a.type != b.type) return false;
+	if (a.is<Int>())
+		return a.get<Int>() == b.get<Int>();
+	else if (a.is<Llong>())
+		return a.get<Llong>() == b.get<Llong>();
+
+	else if (a.is<Float>())
+		return a.get<Float>() == b.get<Float>();
+
+	else if (a.is<Doub>())
+		return a.get<Doub>() == b.get<Doub>();
+
+	else if (a.is<Comp>())
+		return a.get<Comp>() == b.get<Comp>();
+
+	else if (a.is<Str>())
+		return a.get<Str>() == b.get<Str>();
+
+	else
+		SLS_ERR("unsupported type!");
+}
+
 // hasher for STL containers like unordered_set<>
 struct hash_AnyRef {
 	size_t operator()(AnyRef_I s) const {
 		if (s.is<Int>())
 			return std::hash<Int>{}(s.get<Int>());
+		else if (s.is<Llong>())
+			return std::hash<Llong>{}(s.get<Llong>());
+
+		else if (s.is<Float>())
+			return std::hash<Float>{}(s.get<Float>());
+
+		else if (s.is<Doub>())
+			return std::hash<Doub>{}(s.get<Doub>());
+
 		else if (s.is<Str>())
 			return std::hash<Str>{}(s.get<Str>());
+
 		else
 			SLS_ERR("unsupported type!");
 	}

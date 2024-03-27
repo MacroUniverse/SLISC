@@ -1,9 +1,10 @@
 #pragma once
+// AnyRef is like std::any, but doesn't own the object
+// AnyRefC is the lower const version
 #include "../global.h"
 
 namespace slisc {
 
-struct AnyRef;
 struct AnyRefC;
 
 //% tem('AnyRef', {0; 1});
@@ -25,32 +26,9 @@ struct @AnyRef@ {
 	}
 
 //% if ~constness
-	// copy assignment
-	@AnyRef@ &operator=(const @AnyRef@ &rhs) const {
-		if (p == rhs.p)
-			SLS_ERR("self assignment!");
-		if (type != rhs.type)
-			SLS_ERR("assignment of different types!");
-
-		if (is<Str>())
-			get<Str>() = rhs.get<Str>();
-		else if (is<Int>())
-			get<Int>() = rhs.get<Int>();
-		else
-			SLS_ERR("unsupported type!");
-	}
+	// copy values
+	AnyRef &operator=(const AnyRefC &rhs) const;
 //% end
-	
-	// compare
-	bool operator==(const @AnyRef@ &rhs) const {
-		if (type != rhs.type) return false;
-		if (is<Int>())
-			return get<Int>() == rhs.get<Int>();
-		else if (is<Str>())
-			return get<Str>() == rhs.get<Str>();
-		else
-			SLS_ERR("unsupported type!");
-	}
 
 	// bind
 	template <class T>
@@ -81,13 +59,50 @@ struct @AnyRef@ {
 typedef const AnyRefC &AnyRef_I;
 typedef const AnyRef &AnyRef_O, &AnyRef_IO;
 
+inline AnyRef &AnyRef::operator=(AnyRef_I rhs) const {
+	if (p == rhs.p)
+		SLS_ERR("self assignment!");
+	if (type != rhs.type)
+		SLS_ERR("assignment of different types!");
+
+	if (is<Int>())
+		get<Int>() = rhs.get<Int>();
+//% tem('AnyRef=', {'Llong'; 'Float'; 'Doub'; 'Comp'; 'Str'});
+//%--------------------------------
+//% mytype = varargin{:};
+	else if (is<@mytype@>())
+		get<@mytype@>() = rhs.get<@mytype@>();
+//%--------------------------------
+	else
+		SLS_ERR("unsupported type!");
+}
+
+// compare
+inline bool operator==(AnyRef_I a, AnyRef_I b) {
+	if (a.type != b.type) return false;
+	if (a.is<Int>())
+		return a.get<Int>() == b.get<Int>();
+//% tem('AnyRef==', {'Llong'; 'Float'; 'Doub'; 'Comp'; 'Str'});
+//%--------------------------------
+//% mytype = varargin{:};
+	else if (a.is<@mytype@>())
+		return a.get<@mytype@>() == b.get<@mytype@>();
+//%--------------------------------
+	else
+		SLS_ERR("unsupported type!");
+}
+
 // hasher for STL containers like unordered_set<>
 struct hash_AnyRef {
 	size_t operator()(AnyRef_I s) const {
 		if (s.is<Int>())
 			return std::hash<Int>{}(s.get<Int>());
-		else if (s.is<Str>())
-			return std::hash<Str>{}(s.get<Str>());
+//% tem('hash_AnyRef', {'Llong'; 'Float'; 'Doub'; 'Str'});
+//%--------------------------------
+//% mytype = varargin{:};
+		else if (s.is<@mytype@>())
+			return std::hash<@mytype@>{}(s.get<@mytype@>());
+//%--------------------------------
 		else
 			SLS_ERR("unsupported type!");
 	}
