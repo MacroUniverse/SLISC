@@ -30,13 +30,25 @@ inline void hash_combine(size_t &hash, const T &v) {
 
 // similar to std::hash, for pair<T,T1> as key
 struct hash_pair {
-	template<class T, class T1>
+	template <class T, class T1>
 	size_t operator()(const pair<T,T1> &a) const {
 		size_t h = 0;
 		hash_combine(h, a.first);
 		hash_combine(h, a.second);
 		return h;
 	}
+};
+
+// hash a vector
+template <class T, class Hasher = std::hash<T>>
+struct hash_vec {
+    size_t operator()(const vector<T>& vec) const {
+        Hasher hasher;
+        size_t h = 0;
+        for(const T& e : vec)
+            hash_combine(h, hasher(e));
+        return h;
+    }
 };
 
 template <class T1, class T2>
