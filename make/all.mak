@@ -669,7 +669,7 @@ endif
 
 make/deps/%.cpp.mak: tests/%.cpp
 	@echo "# this file is auto generated with Makefile and g++" > $@
-	g++ -MM -MT $(patsubst %.cpp,%.o,$<) $< >> $@
+	g++ --std=$(opt_std) -MM -MT $(patsubst %.cpp,%.o,$<) $< >> $@
 	@echo "	\$$(opt_compiler) \$$(all_flags) -c $< -o $(patsubst %.cpp,%.o,$<)" >> $@
 
 # rules for tests/*.o
