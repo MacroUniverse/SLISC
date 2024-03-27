@@ -6,8 +6,16 @@ namespace slisc {
 struct AnyRef;
 struct AnyRefC;
 
-struct AnyRef {
-	void *p;
+//% tem('AnyRef', {0; 1});
+//%--------------------------------
+//% constness = varargin{:};
+//% if constness
+//%     const = 'const '; AnyRef = 'AnyRefC';
+//% else
+//%     const = ''; AnyRef = 'AnyRef';
+//% end
+struct @AnyRef@ {
+	@const@void *p;
 	size_t type; // typeid, possibly from `typeid(...).hash_code()`
 
 	// check type
@@ -16,8 +24,9 @@ struct AnyRef {
 		return type == typeid(T).hash_code();
 	}
 
+//% if ~constness
 	// copy assignment
-	AnyRef &operator=(const AnyRef &rhs) const {
+	@AnyRef@ &operator=(const @AnyRef@ &rhs) const {
 		if (p == rhs.p)
 			SLS_ERR("self assignment!");
 		if (type != rhs.type)
@@ -30,9 +39,10 @@ struct AnyRef {
 		else
 			SLS_ERR("unsupported type!");
 	}
+//% end
 	
 	// compare
-	bool operator==(const AnyRef &rhs) const {
+	bool operator==(const @AnyRef@ &rhs) const {
 		if (type != rhs.type) return false;
 		if (is<Int>())
 			return get<Int>() == rhs.get<Int>();
@@ -44,66 +54,29 @@ struct AnyRef {
 
 	// bind
 	template <class T>
-	void bind(T &s) {
-		p = (void *)&s;
+	void bind(@const@T &s) {
+		p = (@const@void *)&s;
 		type = typeid(s).hash_code();
 	}
 
 	// get const reference
 	template <class T>
-	T &get() const {
+	@const@T &get() const {
 		if (!is<T>())
 			SLS_ERR("getting wrong type");
 		return *(T*)p;
 	}
 
+//% if ~constness
 	operator const AnyRefC &() const {
 		return reinterpret_cast<const AnyRefC &>(*this);
 	}
 	operator AnyRefC &() {
 		return reinterpret_cast<AnyRefC &>(*this);
 	}
+//% end
 };
-
-struct AnyRefC {
-	const void *p;
-	size_t type; // typeid, possibly from `typeid(...).hash_code()`
-
-	// check type
-	template <class T>
-	bool is() const {
-		return type == typeid(T).hash_code();
-	}
-
-	
-	// compare
-	bool operator==(const AnyRefC &rhs) const {
-		if (type != rhs.type) return false;
-		if (is<Int>())
-			return get<Int>() == rhs.get<Int>();
-		else if (is<Str>())
-			return get<Str>() == rhs.get<Str>();
-		else
-			SLS_ERR("unsupported type!");
-	}
-
-	// bind
-	template <class T>
-	void bind(const T &s) {
-		p = (const void *)&s;
-		type = typeid(s).hash_code();
-	}
-
-	// get const reference
-	template <class T>
-	const T &get() const {
-		if (!is<T>())
-			SLS_ERR("getting wrong type");
-		return *(T*)p;
-	}
-
-};
-
+//%--------------------------------
 
 typedef const AnyRefC &AnyRef_I;
 typedef const AnyRef &AnyRef_O, &AnyRef_IO;
