@@ -92,20 +92,25 @@ inline bool operator==(AnyRef_I a, AnyRef_I b) {
 		SLS_ERR("unsupported type!");
 }
 
+} // namespace slisc
+
+namespace std {
+
 // hasher for STL containers like unordered_set<>
-struct hash_AnyRef {
-	size_t operator()(AnyRef_I s) const {
-		if (s.is<Int>())
-			return std::hash<Int>{}(s.get<Int>());
+template<>
+struct hash<slisc::AnyRef> {
+	size_t operator()(slisc::AnyRef_I s) const {
+		if (s.is<slisc::Int>())
+			return std::hash<slisc::Int>{}(s.get<slisc::Int>());
 //% tem('hash_AnyRef', {'Llong'; 'Float'; 'Doub'; 'Str'});
 //%--------------------------------
 //% mytype = varargin{:};
-		else if (s.is<@mytype@>())
-			return std::hash<@mytype@>{}(s.get<@mytype@>());
+		else if (s.is<slisc::@mytype@>())
+			return std::hash<slisc::@mytype@>{}(s.get<slisc::@mytype@>());
 //%--------------------------------
 		else
 			SLS_ERR("unsupported type!");
 	}
 };
 
-} // namespace
+} // namespace std

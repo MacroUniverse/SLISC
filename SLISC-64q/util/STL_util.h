@@ -4,6 +4,42 @@
 
 namespace slisc {
 
+// combine 2 size_t hashs
+inline size_t hash_combine(size_t hash1, size_t hash2) {
+	hash1 ^= hash2 + 0x9e3779b9 + (hash1 << 6) + (hash1 >> 2);
+	return hash1;
+}
+}
+
+namespace std {
+
+// similar to std::hash, for pair<T,T1> as key
+template <class T, class T1>
+struct hash<pair<T,T1>> {
+	size_t operator()(const pair<T,T1> &a) const {
+		return slisc::hash_combine(hash<T>{}(a.first),
+			hash<T1>{}(a.second));
+	}
+};
+
+// hash a vector
+template <class T>
+struct hash<vector<T>> {
+    size_t operator()(const vector<T>& v) const {
+        size_t h = 0;
+		auto hasher = hash<T>{};
+        for(const T& s : v)
+            h = slisc::hash_combine(h, hasher(s));
+        return h;
+    }
+};
+
+} // namespace std
+
+namespace slisc {
+
+// ====== comparer ========
+
 // use sort(iter1, iter2, cmp_inv()) for descending sort
 struct cmp_inv {
 	template <class T1, class T2>
@@ -21,73 +57,36 @@ struct cmp_second_inv {
 	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) { return s1.second > s2.second; }
 };
 
-// combine different hash
-// from boost library
+// ====== iterator hack ======
+
+// erase ind-th element from vector
 template<class T>
-inline void hash_combine(size_t &hash, const T &v) {
-	hash ^= std::hash<T>{}(v) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+inline void erase(vector<T> &v, Long_I ind)
+{
+	v.erase(v.begin() + ind);
 }
 
-// similar to std::hash, for pair<T,T1> as key
-struct hash_pair {
-	template<class T, class T1>
-	size_t operator()(const pair<T,T1> &a) const {
-		size_t h = 0;
-		hash_combine(h, a.first);
-		hash_combine(h, a.second);
-		return h;
+// get n-th element from iterator supporting only ++
+template<class T>
+inline typename T::iterator iter_ind(T &s, Long_I ind)
+{
+	auto p = s.begin();
+	for (Long i = 0; i < ind; ++i)
+		++p;
+	return p;
+}
+
+template <class T>
+typename T::const_iterator const max_second(const T &v)
+{
+	auto it = v.begin(), it0 = it;
+	auto val = it->second;
+	for (++it; it != v.end(); ++it) {
+		if (val < it->second) {
+			val = it->second; it0 = it;
+		}
 	}
-};
-
-template <class T1, class T2>
-std::ostream &operator<<(std::ostream &os, const pair<T1,T2> &s) {
-	os << "(" << s.first << ", " << s.second << ")";
-	return os;
-}
-
-template <class T, class H>
-std::ostream &operator<<(std::ostream &os, const unordered_set<T, H> &v) {
-	for (auto &e : v)
-		cout << e << endl;
-	return os;
-}
-
-template <class T>
-std::ostream &operator<<(std::ostream &os, const set<T> &v) {
-	for (auto &e : v)
-		cout << e << " ";
-	return os;
-}
-
-template <class T1, class T2, class H>
-std::ostream &operator<<(std::ostream &os, const unordered_map<T1, T2, H> &v) {
-	for (auto &e : v)
-		cout << e.first << " -> " << e.second << endl;
-	return os;
-}
-
-template <class T1, class T2>
-std::ostream &operator<<(std::ostream &os, const map<T1, T2> &v) {
-	for (auto &e : v)
-		cout << e << endl;
-	return os;
-}
-
-template <class T>
-std::ostream &operator<<(std::ostream &os, const vector<T> &v) {
-	for (Long i = 0; i < (Long)v.size(); ++i)
-		cout << i << ":" << v[i] << " ";
-	return os;
-}
-
-template <class T>
-std::ostream &operator<<(std::ostream &os, const vector<vector<T>> &v) {
-	for (auto &row : v) {
-		for (auto &e: row)
-			cout << std::setw(3) << e << " ";
-		cout << endl;
-	}
-	return os;
+	return it0;
 }
 
 // priority queue smaller value first
@@ -108,36 +107,77 @@ typename T::const_iterator const min_second(const T &v)
 	return it0;
 }
 
-template <class T>
-typename T::const_iterator const max_second(const T &v)
-{
-	auto it = v.begin(), it0 = it;
-	auto val = it->second;
-	for (++it; it != v.end(); ++it) {
-		if (val < it->second) {
-			val = it->second; it0 = it;
-		}
+// ====== print STL containers ==========
+template <class T1, class T2>
+std::ostream &operator<<(std::ostream &os, const pair<T1,T2> &s) {
+	os << "(" << s.first << ", " << s.second << ")";
+	return os;
+}
+
+template <class T, class H>
+std::ostream &operator<<(std::ostream &os, const unordered_set<T, H> &v) {
+	cout << "(size " << v.size() << ") {";
+	for (auto it = v.begin(); it != v.end(); ++it) {
+		if (it != v.begin())
+			cout << ", ";
+		cout << *it;
 	}
-	return it0;
+	cout << '}' << endl;
+	return os;
 }
 
-// get n-th element from iterator
-// for iterator supporting only ++
-template<class T>
-inline typename T::iterator iter_ind(T &s, Long_I ind)
-{
-	auto p = s.begin();
-	for (Long i = 0; i < ind; ++i)
-		++p;
-	return p;
+template <class T>
+std::ostream &operator<<(std::ostream &os, const set<T> &v) {
+	cout << "(size " << v.size() << ") {";
+	for (auto it = v.begin(); it != v.end(); ++it) {
+		if (it != v.begin())
+			cout << ", ";
+		cout << *it;
+	}
+	cout << '}' << endl;
+	return os;
 }
 
-template<class T>
-inline void erase(vector<T> &v, Long_I ind)
-{
-	v.erase(v.begin() + ind);
+template <class T1, class T2, class H>
+std::ostream &operator<<(std::ostream &os, const unordered_map<T1, T2, H> &v) {
+	cout << "(size " << v.size() << ") {";
+	for (auto &e : v)
+		cout << e.first << ": " << e.second << '\n';
+	cout << '}' << endl;
+	return os;
 }
 
+template <class T1, class T2>
+std::ostream &operator<<(std::ostream &os, const map<T1, T2> &v) {
+	cout << "(size " << v.size() << ") {\n";
+	for (auto &e : v)
+		cout << e.first << ": " << e.second << '\n';
+	cout << '}' << endl;
+	return os;
+}
+
+template <class T>
+std::ostream &operator<<(std::ostream &os, const vector<T> &v) {
+	cout << "(size " << v.size() << ") (";
+	for (Long i = 0; i < (Long)v.size(); ++i)
+		cout << i << ":" << v[i] << " ";
+	cout << ')' << endl;
+	return os;
+}
+
+template <class T>
+std::ostream &operator<<(std::ostream &os, const vector<vector<T>> &v) {
+	cout << "(size " << v.size() << ") (";
+	for (auto &row : v) {
+		for (auto &e: row)
+			cout << std::setw(3) << e << " ";
+		cout << endl;
+	}
+	cout << ')' << endl;
+	return os;
+}
+
+// ======= string as stream ==========
 inline Str &operator<<(Str_IO s, char c) { return s += c; }
 
 inline Str &operator<<(Str_IO s, const char *p) { return s += p; }
