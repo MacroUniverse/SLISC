@@ -6,8 +6,12 @@ void test_AnyRef()
 	vecStr vs = {"abc", "bcd", "cde"};
 	vecInt vi = {1, 2, 3};
 	AnyRef ref;
-	ref.set(vs[1]);
-	SLS_ASSERT(ref.getStr() == "bcd");
+	ref.bind(vs[1]);
+	SLS_ASSERT(ref.is<Str>());
+	SLS_ASSERT(ref.get<Str>() == "bcd");
+	ref.bind(vi[2]);
+	SLS_ASSERT(ref.is<Int>());
+	SLS_ASSERT(ref.get<Int>() == 3);
 }
 
 #ifndef SLS_TEST_ALL

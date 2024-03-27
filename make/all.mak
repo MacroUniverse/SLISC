@@ -120,10 +120,10 @@ ifeq ($(opt_debug), true)
     $(info Build: Debug)
     tmp := $(shell echo "$(mydefine) SLS_CHECK_BOUNDS" >> SLISC/config.h.new)
     tmp := $(shell echo "$(mydefine) SLS_CHECK_SHAPES" >> SLISC/config.h.new)
-    debug_flag := -g
+    debug_flag := -g3
     release_flag :=
     ifeq ($(opt_compiler), g++)
-        debug_flag := -g -ftrapv $(asan_flag) # -pedantic # show more warnings
+        debug_flag := -g3 -ftrapv $(asan_flag) # -pedantic # show more warnings
     endif
 else
     $(info Build: Release)
