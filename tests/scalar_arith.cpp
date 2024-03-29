@@ -152,6 +152,9 @@ void test_scalar_arith()
 		v.resize(v1.size());
 		SLS_ASSERT(v == v1);
 	}
+
+	auto tup = make_tuple(3,4L,1.5);
+	cout << std::hash<decltype(tup)>{}(tup) << endl;
 }
 
 #ifndef SLS_TEST_ALL

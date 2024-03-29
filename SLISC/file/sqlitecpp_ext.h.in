@@ -6,27 +6,6 @@
 
 namespace slisc {
 
-struct VecRefAny
-{
-	vector<const void *> data; // a vector of pointer to actual data
-	char *types; // type for each column, 'i' is int, 's' is string
-	bool operator==(const VecRefAny &rhs) {
-		if (data.size() != rhs.data.size())
-			return false;
-		for (Long i = 0; i < size(data); ++i) {
-			if (types[i] == 'i') {
-				if (*(* int)data[i] != *(* int)rhs.data[i])
-					return false;
-			}
-			else if (types[i] == 's') {
-				if (*(* Str)data[i] != *(* Strs)rhs.data[i])
-					return false;
-			}
-		}
-		return true;
-	}
-}
-
 // similar to std::hash, for pair<T,T1> as key
 
 inline size_t operator()(const vector<const void *> &v,
@@ -43,12 +22,25 @@ inline size_t operator()(const vector<const void *> &v,
 	}
 };
 
-inline void update_table(
+//% tem('update_sqlite_table', {
+//%     1 'Str' 'Long' 'Str' 'Str' 'Long'; // 'part'
+//%	});
+//%--------------------
+//% TT = varargin{:};
+//% Npk = TT{1};
+//% Tlist1 = ''; Tlist2 = '';
+//% for i = 1:Npk
+//%     Tlist1 = [Tlist1 ',' TT(i+1)]
+//% end
+//% for i = Npk+1:numel(TT)
+//%     Tlist2 = [Tlist2 ',' TT(i+1)]
+//% end
+inline void update_sqlite_table(
 	Str_I table_name,
 	vecStr_I field_names, // field names of `data`s
 	Str_I condition, // the SQL statement after "WHERE"s
 	vecLong_I primary_keys, // which columns of `data` are primary keys
-	TabRefAny_I data, // new records
+	unordered_map<tuple<@Tlist1@>, tuple<@Tlist2@>> data, // new records
 	// assuming `data` doesn't have repeated primary keys
 	// assuming `data` satisfy `condition`
 	SQLite::Database &db_rw
@@ -57,11 +49,11 @@ inline void update_table(
 	
 	// SELECT statement
 	tmp = "SELECT ";
-	for (Long i : parimary_keys)
-		tmp << field_names[i] << ", ";
+	for (auto &field : field_names)
+		tmp << field << ", ";
 	tmp.resize(tmp.size()-2);
 	tmp << " FROM " << table_name << " WHERE " << condition;
-	SQLite::Statement stmt_select(db_rw, tmp);
+	SQLite::Statement stmt_select0(db_rw, tmp);
 
 	// INSERT statement
 	clear(tmp) << "INSERT INTO " << table_name << '(';
@@ -90,31 +82,32 @@ inline void update_table(
 	tmp.resize(tmp.size()-5);
 	SQLite::Statement stmt_delete(db_rw, tmp);
 
-	unordered_set<size_t> deleted;
-	
+	// delete record
 	while (stmt_select.executeStep()) {
 		for (Long j = 0; j < size(field_names); ++j) {
-			 stmt_select.getColumn(j);
+			stmt_select.getColumn(j);
 		}
 		deleted.push_back(make_tuple(, 
 			stmt_select.getColumn(primary_key2_ind)))
 	}
 
-	for (auto &record : data) {
-		Tpk pk = make_tuple(record.key1, record.key2);
-		if (!deleted.count(pk)) {
-			// insert
+	while (stmt_select0.execStep()) {
+		auto key = make_tuple(
+//% for j = 1:Npk-1
+			(@Tlist1(j)@)stmt_select0.getColumn(@j-1@),
+//% end
+			(@Tlist1(Npk-1)@)stmt_select0.getColumn(@Npk-1@);
+		);
+		if (!data.count(key)) {
+			// key not found, deleted
+//% for j = 1:Npk-1
+			stmt_delete.bind(@j@, get<@j@>(key));
+//% end
+			stmt_delete.exec(); stmt_delete.reset();
+			continue;
 		}
-		else { // record exist
-			deleted.erase(pk);
-			// get all columns of record
-			for (j in columns) {
-				// check change of field j
-				if (/*changed*/) {
-					// update field j
-				}
-			}
-		}
+		// check for change
+
 	}
 }
 
