@@ -22,19 +22,11 @@ inline size_t operator()(const vector<const void *> &v,
 	}
 };
 
-//% tem('update_sqlite_table', {
-//%   'Str,Long' 'Str,Long,Str,Str,Long'
-//% });
-//%--------------------
-//% [TpkS, TvalS] = varargin{:};
-//% Tpk = strsplit(TpkS, ',');
-//% Tval = strsplit(TvalS, ',');
-//% Npk = numel(Tpk); Nval = numel(Tval);
 // sync `data` to a db table, perform DELETE and UPDATE as needed, unchanged records won't be touched
 // only record in db satisfying `condition` will be checked
 // assume `data` satisfy `condition` (no check)
 inline void update_sqlite_table(
-	const unordered_map<tuple<@TpkS@>, tuple<@TvalS@>> &data, // (primary keys) -> (other fields)
+	const unordered_map<tuple<Str,Int>, tuple<Str,Int,Str,Str,Int>> &data, // (primary keys) -> (other fields)
 	Str_I table_name,
 	Str_I condition, // the SQL statement after "WHERE"s
 	vecStr_I field_names, // field names of `data`s
@@ -80,38 +72,42 @@ inline void update_sqlite_table(
 
 	while (stmt_select0.execStep()) {
 		auto key = make_tuple(
-//% for j = 1:Npk-1
-			(@Tpk{j}@)stmt_select0.getColumn(@j@),
-//% end
-			(@Tpk{Npk}@)stmt_select0.getColumn(@Npk@)
+			(Str)stmt_select0.getColumn(1),
+			(Int)stmt_select0.getColumn(2)
 		);
 		if (!data.count(key)) {
 			// key not found, deleted
-//% for j = 1:Npk
-			stmt_delete.bind(@j@, get<@j@>(key));
-//% end
+			stmt_delete.bind(1, get<1>(key));
+			stmt_delete.bind(2, get<2>(key));
 			stmt_delete.exec(); stmt_delete.reset();
 			continue;
 		}
 		// check for change
 		bool changed = false;
 		auto &vals = data[key];
-//% for j = 1:Nval
-		if (!changed && get<@j@>(vals) != (@Tval{j}@)stmt_select0.getColumn(@j@))
+		if (!changed && get<1>(vals) != (Str)stmt_select0.getColumn(1))
 			changed = true;
-//% end
+		if (!changed && get<2>(vals) != (Int)stmt_select0.getColumn(2))
+			changed = true;
+		if (!changed && get<3>(vals) != (Str)stmt_select0.getColumn(3))
+			changed = true;
+		if (!changed && get<4>(vals) != (Str)stmt_select0.getColumn(4))
+			changed = true;
+		if (!changed && get<5>(vals) != (Int)stmt_select0.getColumn(5))
+			changed = true;
 		if (changed) {
 			// update db record
-//% for j = 1:Nval
-			stmt_update.bind(j, get<@j@>(vals));
-//% end
-//% for j = 1:Npk
-			stmt_update.bind(@Npk@+j, get<@j@>(key));
-//% end
+			stmt_update.bind(j, get<1>(vals));
+			stmt_update.bind(j, get<2>(vals));
+			stmt_update.bind(j, get<3>(vals));
+			stmt_update.bind(j, get<4>(vals));
+			stmt_update.bind(j, get<5>(vals));
+			stmt_update.bind(2+j, get<1>(key));
+			stmt_update.bind(2+j, get<2>(key));
 			stmt_update.exec(); stmt_update.reset();
 		}
 	}
 }
-//%--------------------
+
 
 } // namespace
