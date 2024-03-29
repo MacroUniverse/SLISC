@@ -154,7 +154,7 @@ void test_scalar_arith()
 	}
 
 	auto tup = make_tuple(3,4L,1.5);
-	cout << std::hash<decltype(tup)>{}(tup) << endl;
+	SLS_ASSERT(std::hash<decltype(tup)>{}(tup) == 11093822469070ULL);
 }
 
 #ifndef SLS_TEST_ALL
