@@ -17,34 +17,38 @@ inline void update_sqlite_table_query(
 	// SELECT statement
 	clear(q_select) << "SELECT ";
 	for (auto &field : field_names)
-		q_select << field << ", ";
+		q_select << '"' << field << "\", ";
 	q_select.resize(q_select.size()-2);
-	q_select << " FROM " << table_name;
+	q_select << " FROM \"" << table_name << '"';
 	if (!condition.empty())
-		q_select << " WHERE " << condition;
+		q_select << " WHERE " << condition << ';';
 
 	// INSERT statement
-	clear(q_insert) << "INSERT INTO " << table_name << '(';
+	clear(q_insert) << "INSERT INTO \"" << table_name << "\" (";
 	for (auto &field : field_names)
-		q_insert << field << ", ";
+		q_insert << '"' << field << "\", ";
 	q_insert.resize(q_insert.size()-2);
 	q_insert << ") VALUES (";
 	for (Long i = 0; i < size(field_names); ++i)
 		q_insert << "?, ";
-	q_insert.resize(q_insert.size()-3);
+	q_insert.resize(q_insert.size()-2);
 	q_insert << ");";
 
 	// UPDATE statement
-	clear(q_update) << "UPDATE " << table_name << " SET ";
-	for (auto &field : field_names)
-		q_update << field << "=?, ";
+	clear(q_update) << "UPDATE \"" << table_name << "\" SET ";
+	for (Long i = Npk; i < size(field_names); ++i)
+		q_update << '"' << field_names[i] << "\"=?, ";
 	q_update.resize(q_update.size()-2);
+	q_update << " WHERE ";
+	for (Long i = 0; i < Npk; ++i)
+		q_update << '"' << field_names[i] << "\"=? AND ";
+	q_update.resize(q_update.size()-5);
 	q_update << ';';
 
 	// DELETE statement
-	clear(q_delete) << "DELETE FROM " << table_name << " WHERE ";
+	clear(q_delete) << "DELETE FROM \"" << table_name << "\" WHERE ";
 	for (Long i = 0; i < Npk; ++i)
-		q_delete << field_names[i] << "=? AND ";
+		q_delete << '"' << field_names[i] << "\"=? AND ";
 	q_delete.resize(q_delete.size()-5);
 }
 
@@ -59,8 +63,9 @@ inline void update_sqlite_table_query(
 // sync `data` to a db table, perform DELETE and UPDATE as needed, unchanged records won't be touched
 // only record in db satisfying `condition` will be checked
 // assume `data` satisfy `condition` (no check)
+// might violate 'UNIQUE' for non-primary-key fields
 inline void update_sqlite_table(
-	const unordered_map<tuple<@TpkS@>, tuple<@TvalS@>> &data, // (primary keys) -> (other fields)
+	unordered_map<tuple<@TpkS@>, tuple<@TvalS@>> &data, // (primary keys) -> (other fields)
 	Str_I table_name,
 	Str_I condition, // the SQL statement after "WHERE"
 	vecStr_I field_names, // field names of `data`, in order
@@ -110,7 +115,7 @@ inline void update_sqlite_table(
 //%     if strcmp(Tval{j+1}, 'Str')
 //%         tmp = '.getString()';
 //%     end
-		@tmp1@if (get<@j@>(vals) != (@Tval{j+1}@)stmt_select.getColumn(@j@)@tmp@)
+		@tmp1@if (get<@j@>(vals) != (@Tval{j+1}@)stmt_select.getColumn(@j+Npk@)@tmp@)
 			changed = true;
 //% end
 		if (changed) {
@@ -123,6 +128,19 @@ inline void update_sqlite_table(
 //% end
 			stmt_update.exec(); stmt_update.reset();
 		}
+		data.erase(key);
+	}
+	stmt_select.reset();
+
+	// new records
+	for (auto &pair : data) {
+//% for j = 0:Npk-1
+		stmt_insert.bind(@j+1@, get<@j@>(pair.first));
+//% end
+//% for j = 0:Nval-1
+		stmt_insert.bind(@j+1+Npk@, get<@j@>(pair.second));
+//% end
+		stmt_insert.exec(); stmt_insert.reset();
 	}
 }
 //%--------------------
