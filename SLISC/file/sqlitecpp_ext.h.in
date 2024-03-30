@@ -3,57 +3,49 @@
 
 #include "../str/str.h"
 #include "../util/STL_util.h"
-
 #include <SQLiteCpp/Statement.h>
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Transaction.h>
 
 namespace slisc {
 
-// helper for update_sqlite_table()
-inline tuple<SQLite::Statement,SQLite::Statement,SQLite::Statement,SQLite::Statement>
-	update_sqlite_table_stmt(
-		Str_I table_name, Str_I condition, vecStr_I field_names, Long_I Npk,
-		SQLite::Database &db_rw
+// queries for update_sqlite_table()
+inline void update_sqlite_table_query(
+		Str_O q_select, Str_O q_insert, Str_O q_update, Str_O q_delete,
+		Str_I table_name, Str_I condition, vecStr_I field_names, Long_I Npk
 ) {
 	// SELECT statement
-	Str tmp = "SELECT ";
+	clear(q_select) << "SELECT ";
 	for (auto &field : field_names)
-		tmp << field << ", ";
-	tmp.resize(tmp.size()-2);
-	tmp << " FROM " << table_name;
+		q_select << field << ", ";
+	q_select.resize(q_select.size()-2);
+	q_select << " FROM " << table_name;
 	if (!condition.empty())
-		tmp << " WHERE " << condition;
-	SQLite::Statement stmt_select(db_rw, tmp);
+		q_select << " WHERE " << condition;
 
 	// INSERT statement
-	clear(tmp) << "INSERT INTO " << table_name << '(';
+	clear(q_insert) << "INSERT INTO " << table_name << '(';
 	for (auto &field : field_names)
-		tmp << field << ", ";
-	tmp.resize(tmp.size()-2);
-	tmp << ") VALUES (";
+		q_insert << field << ", ";
+	q_insert.resize(q_insert.size()-2);
+	q_insert << ") VALUES (";
 	for (Long i = 0; i < size(field_names); ++i)
-		tmp << "?, ";
-	tmp.resize(tmp.size()-3);
-	tmp << ");";
-	SQLite::Statement stmt_insert(db_rw, tmp);
+		q_insert << "?, ";
+	q_insert.resize(q_insert.size()-3);
+	q_insert << ");";
 
 	// UPDATE statement
-	clear(tmp) << "UPDATE " << table_name << " SET ";
+	clear(q_update) << "UPDATE " << table_name << " SET ";
 	for (auto &field : field_names)
-		tmp << field << "=?, ";
-	tmp.resize(tmp.size()-2);
-	tmp << ';';
-	SQLite::Statement stmt_update(db_rw, tmp);
+		q_update << field << "=?, ";
+	q_update.resize(q_update.size()-2);
+	q_update << ';';
 
 	// DELETE statement
-	clear(tmp) << "DELETE FROM " << table << " WHERE ";
+	clear(q_delete) << "DELETE FROM " << table_name << " WHERE ";
 	for (Long i = 0; i < Npk; ++i)
-		tmp << field_names[i] << "=? AND ";
-	tmp.resize(tmp.size()-5);
-	SQLite::Statement stmt_delete(db_rw, tmp);
-
-	return make_tuple(stmt_select, stmt_insert, stmt_update, stmt_delete);
+		q_delete << field_names[i] << "=? AND ";
+	q_delete.resize(q_delete.size()-5);
 }
 
 //% tem('update_sqlite_table', {
@@ -70,16 +62,18 @@ inline tuple<SQLite::Statement,SQLite::Statement,SQLite::Statement,SQLite::State
 inline void update_sqlite_table(
 	const unordered_map<tuple<@TpkS@>, tuple<@TvalS@>> &data, // (primary keys) -> (other fields)
 	Str_I table_name,
-	Str_I condition, // the SQL statement after "WHERE"s
+	Str_I condition, // the SQL statement after "WHERE"
 	vecStr_I field_names, // field names of `data`, in order
 	Long_I Npk, // number of primary keys
 	SQLite::Database &db_rw
 ) {
-	auto ret = update_sqlite_table_stmt(table_name, condition, field_names, Npk, db_rw);
-	auto &stmt_select = get<0>(ret);
-	auto &stmt_insert = get<1>(ret);
-	auto &stmt_update = get<2>(ret);
-	auto &stmt_delete = get<3>(ret);
+	Str q_select, q_insert, q_update, q_delete;
+	update_sqlite_table_query(q_select, q_insert, q_update, q_delete,
+		table_name, condition, field_names, Npk);
+	SQLite::Statement stmt_select(db_rw, q_select);
+	SQLite::Statement stmt_insert(db_rw, q_insert);
+	SQLite::Statement stmt_update(db_rw, q_update);
+	SQLite::Statement stmt_delete(db_rw, q_delete);
 
 	while (stmt_select.executeStep()) {
 		auto key = make_tuple(
@@ -108,11 +102,15 @@ inline void update_sqlite_table(
 		bool changed = false;
 		auto &vals = data.at(key);
 //% for j = 0:Nval-1
+//%     tmp1 = '';
+//%     if j > 0
+//%         tmp1 = 'else ';
+//%     end
 //%     tmp = '';
 //%     if strcmp(Tval{j+1}, 'Str')
 //%         tmp = '.getString()';
 //%     end
-		if (!changed && get<@j@>(vals) != (@Tval{j+1}@)stmt_select.getColumn(@j@)@tmp@)
+		@tmp1@if (get<@j@>(vals) != (@Tval{j+1}@)stmt_select.getColumn(@j@)@tmp@)
 			changed = true;
 //% end
 		if (changed) {
@@ -121,7 +119,7 @@ inline void update_sqlite_table(
 			stmt_update.bind(@j+1@, get<@j@>(vals));
 //% end
 //% for j = 0:Npk-1
-			stmt_update.bind(@Npk+j@, get<@j@>(key));
+			stmt_update.bind(@Nval+j+1@, get<@j@>(key));
 //% end
 			stmt_update.exec(); stmt_update.reset();
 		}
