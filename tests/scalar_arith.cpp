@@ -153,8 +153,13 @@ void test_scalar_arith()
 		SLS_ASSERT(v == v1);
 	}
 
-	auto tup = make_tuple(3,4L,1.5);
-	SLS_ASSERT(std::hash<decltype(tup)>{}(tup) == 11093822469070ULL);
+	auto tup = make_tuple(3,1.5,Str("abc"));
+	// cout << std::hash<decltype(tup)>{}(tup) << endl;
+	size_t hash = 0;
+	hash = hash_combine(hash, std::hash<Int>{}(3));
+	hash = hash_combine(hash, std::hash<Doub>{}(1.5));
+	hash = hash_combine(hash, std::hash<Str>{}(Str("abc")));
+	SLS_ASSERT(std::hash<decltype(tup)>{}(tup) == hash);
 }
 
 #ifndef SLS_TEST_ALL

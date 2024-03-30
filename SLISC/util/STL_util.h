@@ -29,7 +29,7 @@ struct hash_tuple_impl {
 		hash_tuple_impl<Idx-1, Args...>{}(tup, hash);
 		auto &val = get<Idx>(tup);
 		// get element type, `decay` is to remove the `const &` from `decltype(get<1>(tup)`
-		using Telem = typename std::decay<decltype(get<1>(tup))>::type;
+		using Telem = typename std::decay<decltype(val)>::type;
 		hash = hash_combine(hash, std::hash<Telem>{}(val));
 	}
 };
