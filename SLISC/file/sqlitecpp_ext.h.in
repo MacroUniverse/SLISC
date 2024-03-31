@@ -35,15 +35,17 @@ inline void update_sqlite_table_query(
 	q_insert << ");";
 
 	// UPDATE statement
-	clear(q_update) << "UPDATE \"" << table_name << "\" SET ";
-	for (Long i = Npk; i < size(field_names); ++i)
-		q_update << '"' << field_names[i] << "\"=?, ";
-	q_update.resize(q_update.size()-2);
-	q_update << " WHERE ";
-	for (Long i = 0; i < Npk; ++i)
-		q_update << '"' << field_names[i] << "\"=? AND ";
-	q_update.resize(q_update.size()-5);
-	q_update << ';';
+	if (Npk < size(field_names)) {
+		clear(q_update) << "UPDATE \"" << table_name << "\" SET ";
+		for (Long i = Npk; i < size(field_names); ++i)
+			q_update << '"' << field_names[i] << "\"=?, ";
+		q_update.resize(q_update.size()-2);
+		q_update << " WHERE ";
+		for (Long i = 0; i < Npk; ++i)
+			q_update << '"' << field_names[i] << "\"=? AND ";
+		q_update.resize(q_update.size()-5);
+		q_update << ';';
+	}
 
 	// DELETE statement
 	clear(q_delete) << "DELETE FROM \"" << table_name << "\" WHERE ";
@@ -54,11 +56,15 @@ inline void update_sqlite_table_query(
 
 //% tem('update_sqlite_table', {
 //%   'Str' 'Long,Str,Str,Str'
+//%   'Str,Str' ''
 //% });
 //%--------------------
 //% [TpkS, TvalS] = varargin{:};
 //% Tpk = strsplit(TpkS, ',');
-//% Tval = strsplit(TvalS, ',');
+//% Tval = {};
+//% if (numel(TvalS) > 0)
+//%     Tval = strsplit(TvalS, ',');
+//% end
 //% Npk = numel(Tpk); Nval = numel(Tval);
 // sync `data` to a db table, perform DELETE and UPDATE as needed, unchanged records won't be touched
 // only record in db satisfying `condition` will be checked
@@ -77,7 +83,9 @@ inline void update_sqlite_table(
 		table_name, condition, field_names, Npk);
 	SQLite::Statement stmt_select(db_rw, q_select);
 	SQLite::Statement stmt_insert(db_rw, q_insert);
+//% if numel(Tval) > 0
 	SQLite::Statement stmt_update(db_rw, q_update);
+//% end
 	SQLite::Statement stmt_delete(db_rw, q_delete);
 
 	while (stmt_select.executeStep()) {
@@ -103,31 +111,33 @@ inline void update_sqlite_table(
 			stmt_delete.exec(); stmt_delete.reset();
 			continue;
 		}
+//% if numel(Tval) > 0
 		// check for change
 		bool changed = false;
 		auto &vals = data.at(key);
-//% for j = 0:Nval-1
-//%     tmp1 = '';
-//%     if j > 0
-//%         tmp1 = 'else ';
-//%     end
-//%     tmp = '';
-//%     if strcmp(Tval{j+1}, 'Str')
-//%         tmp = '.getString()';
-//%     end
+//%     for j = 0:Nval-1
+//%         tmp1 = '';
+//%         if j > 0
+//%             tmp1 = 'else ';
+//%         end
+//%         tmp = '';
+//%         if strcmp(Tval{j+1}, 'Str')
+//%             tmp = '.getString()';
+//%         end
 		@tmp1@if (get<@j@>(vals) != (@Tval{j+1}@)stmt_select.getColumn(@j+Npk@)@tmp@)
 			changed = true;
-//% end
+//%     end
 		if (changed) {
 			// update db record
-//% for j = 0:Nval-1
+//%     for j = 0:Nval-1
 			stmt_update.bind(@j+1@, get<@j@>(vals));
-//% end
-//% for j = 0:Npk-1
+//%     end
+//%     for j = 0:Npk-1
 			stmt_update.bind(@Nval+j+1@, get<@j@>(key));
-//% end
+//%     end
 			stmt_update.exec(); stmt_update.reset();
 		}
+//% end
 		data.erase(key);
 	}
 	stmt_select.reset();
@@ -144,5 +154,4 @@ inline void update_sqlite_table(
 	}
 }
 //%--------------------
-
 } // namespace
