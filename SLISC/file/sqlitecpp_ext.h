@@ -59,7 +59,7 @@ inline void update_sqlite_table_query(
 // assume `data` satisfy `condition` (no check)
 // might violate 'UNIQUE' for non-primary-key fields
 inline void update_sqlite_table(
-	unordered_map<tuple<Str>, tuple<Int,Str,Str,Str>> &data, // (primary keys) -> (other fields)
+	unordered_map<tuple<Str>, tuple<int64_t,Str,Str,Str>> &data, // (primary keys) -> (other fields)
 	Str_I table_name,
 	Str_I condition, // the SQL statement after "WHERE"
 	vecStr_I field_names, // field names of `data`, in order
@@ -81,13 +81,14 @@ inline void update_sqlite_table(
 		if (!data.count(key)) {
 			// key not found, deleted
 			stmt_delete.bind(1, get<0>(key));
-			stmt_delete.exec(); stmt_delete.reset();
+			if (stmt_delete.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_delete.reset();
 			continue;
 		}
 		// check for change
 		bool changed = false;
 		auto &vals = data.at(key);
-		if (get<0>(vals) != (Int)stmt_select.getColumn(1))
+		if (get<0>(vals) != (int64_t)stmt_select.getColumn(1))
 			changed = true;
 		else if (get<1>(vals) != (Str)stmt_select.getColumn(2).getString())
 			changed = true;
@@ -102,7 +103,8 @@ inline void update_sqlite_table(
 			stmt_update.bind(3, get<2>(vals));
 			stmt_update.bind(4, get<3>(vals));
 			stmt_update.bind(5, get<0>(key));
-			stmt_update.exec(); stmt_update.reset();
+			if (stmt_update.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_update.reset();
 		}
 		data.erase(key);
 	}
@@ -147,7 +149,8 @@ inline void update_sqlite_table(
 			// key not found, deleted
 			stmt_delete.bind(1, get<0>(key));
 			stmt_delete.bind(2, get<1>(key));
-			stmt_delete.exec(); stmt_delete.reset();
+			if (stmt_delete.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_delete.reset();
 			continue;
 		}
 		data.erase(key);
@@ -158,6 +161,65 @@ inline void update_sqlite_table(
 	for (auto &pair : data) {
 		stmt_insert.bind(1, get<0>(pair.first));
 		stmt_insert.bind(2, get<1>(pair.first));
+		stmt_insert.exec(); stmt_insert.reset();
+	}
+}
+
+// sync `data` to a db table, perform DELETE and UPDATE as needed, unchanged records won't be touched
+// only record in db satisfying `condition` will be checked
+// assume `data` satisfy `condition` (no check)
+// might violate 'UNIQUE' for non-primary-key fields
+inline void update_sqlite_table(
+	unordered_map<tuple<Str,int64_t>, tuple<int64_t>> &data, // (primary keys) -> (other fields)
+	Str_I table_name,
+	Str_I condition, // the SQL statement after "WHERE"
+	vecStr_I field_names, // field names of `data`, in order
+	Long_I Npk, // number of primary keys
+	SQLite::Database &db_rw
+) {
+	Str q_select, q_insert, q_update, q_delete;
+	update_sqlite_table_query(q_select, q_insert, q_update, q_delete,
+		table_name, condition, field_names, Npk);
+	SQLite::Statement stmt_select(db_rw, q_select);
+	SQLite::Statement stmt_insert(db_rw, q_insert);
+	SQLite::Statement stmt_update(db_rw, q_update);
+	SQLite::Statement stmt_delete(db_rw, q_delete);
+
+	while (stmt_select.executeStep()) {
+		auto key = make_tuple(
+			(Str)stmt_select.getColumn(0).getString(),
+			(int64_t)stmt_select.getColumn(1)
+		);
+		if (!data.count(key)) {
+			// key not found, deleted
+			stmt_delete.bind(1, get<0>(key));
+			stmt_delete.bind(2, get<1>(key));
+			if (stmt_delete.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_delete.reset();
+			continue;
+		}
+		// check for change
+		bool changed = false;
+		auto &vals = data.at(key);
+		if (get<0>(vals) != (int64_t)stmt_select.getColumn(2))
+			changed = true;
+		if (changed) {
+			// update db record
+			stmt_update.bind(1, get<0>(vals));
+			stmt_update.bind(2, get<0>(key));
+			stmt_update.bind(3, get<1>(key));
+			if (stmt_update.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_update.reset();
+		}
+		data.erase(key);
+	}
+	stmt_select.reset();
+
+	// new records
+	for (auto &pair : data) {
+		stmt_insert.bind(1, get<0>(pair.first));
+		stmt_insert.bind(2, get<1>(pair.first));
+		stmt_insert.bind(3, get<0>(pair.second));
 		stmt_insert.exec(); stmt_insert.reset();
 	}
 }

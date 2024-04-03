@@ -83,9 +83,10 @@ inline Long find_scopes(Intvs_O intv, Str_I key, Str_I str, Char option = 'i')
 // e.g. key = "%" for tex, "//" for c++
 // key is escaped and only escaped if preceded by backslash '\'
 // return number of comments found.
-// interval is from key[0] to '\n' (including)
+// if option='o', interval is from key[0] to '\n' (including), or to one char pass last char of the file
+// if option='i', interval is from next char of `key` to the char before `\n`
 // if the comment is at the end of file, right bound is one after the laster char
-inline Long find_comments(Intvs_O intv, Str_I str, Str_I key)
+inline Long find_comments(Intvs_O intv, Str_I str, Str_I key, Char_I option = 'o')
 {
 	Long ind0{}, ind1{};
 	Long N{}; // number of comments found
@@ -95,7 +96,11 @@ inline Long find_comments(Intvs_O intv, Str_I str, Str_I key)
 		if (ind1 < 0)
 			return N;
 		if (ind1 == 0 || (ind1 > 0 && str.at(ind1 - 1) != '\\')) {
-			intv.pushL(ind1); ++N;
+			if (option == 'o')
+				intv.pushL(ind1);
+			else
+				intv.pushL(ind1 + size(key));
+			++N;
 		}
 		else {
 			ind0 = ind1 + 1;  continue;
@@ -106,8 +111,12 @@ inline Long find_comments(Intvs_O intv, Str_I str, Str_I key)
 			intv.pushR(str.size());
 			return N;
 		}
-		else
-			intv.pushR(ind1);
+		else {
+			if (option == 'o')
+				intv.pushR(ind1);
+			else
+				intv.pushR(ind1-1);
+		}
 		ind0 = ind1;
 	}
 }

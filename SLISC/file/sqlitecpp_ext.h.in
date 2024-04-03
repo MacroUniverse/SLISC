@@ -55,8 +55,9 @@ inline void update_sqlite_table_query(
 }
 
 //% tem('update_sqlite_table', {
-//%   'Str' 'Long,Str,Str,Str'
+//%   'Str' 'int64_t,Str,Str,Str'
 //%   'Str,Str' ''
+//%   'Str,int64_t' 'int64_t'
 //% });
 //%--------------------
 //% [TpkS, TvalS] = varargin{:};
@@ -108,7 +109,8 @@ inline void update_sqlite_table(
 //% for j = 0:Npk-1
 			stmt_delete.bind(@j+1@, get<@j@>(key));
 //% end
-			stmt_delete.exec(); stmt_delete.reset();
+			if (stmt_delete.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_delete.reset();
 			continue;
 		}
 //% if numel(Tval) > 0
@@ -135,7 +137,8 @@ inline void update_sqlite_table(
 //%     for j = 0:Npk-1
 			stmt_update.bind(@Nval+j+1@, get<@j@>(key));
 //%     end
-			stmt_update.exec(); stmt_update.reset();
+			if (stmt_update.exec() != 1) SLS_ERR(SLS_WHERE);
+			stmt_update.reset();
 		}
 //% end
 		data.erase(key);

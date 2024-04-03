@@ -9,19 +9,40 @@ inline size_t hash_combine(size_t hash1, size_t hash2) {
 	hash1 ^= hash2 + 0x9e3779b9 + (hash1 << 6) + (hash1 >> 2);
 	return hash1;
 }
-}
 
-namespace std {
-
-// similar to std::hash, for pair<T,T1> as key
-template <class T, class T1>
-struct hash<pair<T,T1>> {
-	size_t operator()(const pair<T,T1> &a) const {
-		return slisc::hash_combine(hash<T>{}(a.first),
-			hash<T1>{}(a.second));
+// hash tuple<>
+// if you think variadic template is too tricky, use this instead
+// template <class T1, class T2, class T3>
+// struct hash<tuple<T1,T2,T3>> {
+//     size_t operator()(const tuple<T1,T2,T3>& v) const {
+// 		return slisc::hash_combine(
+// 			hash<T1>{}(get<0>(v)),
+// 			hash<T2>{}(get<1>(v)),
+// 			hash<T3>{}(get<3>(v))
+// 		);
+//     }
+// };
+template<int Idx, typename... Args>
+struct hash_tuple_impl {
+	void operator()(const tuple<Args...> &tup, size_t &hash) const
+	{
+		hash_tuple_impl<Idx-1, Args...>{}(tup, hash);
+		auto &val = get<Idx>(tup);
+		// get element type, `decay` is to remove the `const &` from `decltype(get<1>(tup)`
+		using Telem = typename std::decay<decltype(val)>::type;
+		hash = hash_combine(hash, std::hash<Telem>{}(val));
 	}
 };
 
+// has to use struct instead of function template because function template doesn't allow partial specialization
+template<typename... Args>
+struct hash_tuple_impl<-1, Args...> {
+	void operator()(const tuple<Args...> &tup, size_t &hash) const {}
+};
+
+} // namespace slisc
+
+namespace std {
 // hash a vector
 template <class T>
 struct hash<vector<T>> {
@@ -34,6 +55,27 @@ struct hash<vector<T>> {
     }
 };
 
+// hash a pair
+template <class T, class T1>
+struct hash<pair<T,T1>> {
+	size_t operator()(const pair<T,T1> &a) const {
+		return slisc::hash_combine(hash<T>{}(a.first),
+			hash<T1>{}(a.second));
+	}
+};
+
+// hash a tuple
+template<typename... Args>
+struct hash<tuple<Args...>> {
+	size_t operator()(const tuple<Args...> &tup) const
+	{
+		size_t hash = 0;
+		constexpr int N = (int)tuple_size<tuple<Args...>>::value;
+		slisc::hash_tuple_impl<N-1, Args...>{}(tup, hash);
+		return hash;
+	}
+};
+
 } // namespace std
 
 namespace slisc {
@@ -43,18 +85,18 @@ namespace slisc {
 // use sort(iter1, iter2, cmp_inv()) for descending sort
 struct cmp_inv {
 	template <class T1, class T2>
-	bool operator()(const T1 &s1, const T2 &s2) { return s2 > s1; }
+	bool operator()(const T1 &s1, const T2 &s2) const { return s2 > s1; }
 };
 
 // use sort(iter1, iter2, cmp_second()) to sort the second element of pair
 struct cmp_second {
 	template<class T11, class T12, class T21, class T22>
-	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) { return s1.second < s2.second; }
+	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) const { return s1.second < s2.second; }
 };
 
 struct cmp_second_inv {
 	template<class T11, class T12, class T21, class T22>
-	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) { return s1.second > s2.second; }
+	bool operator()(const pair<T11,T12> &s1, const pair<T21,T22> &s2) const { return s1.second > s2.second; }
 };
 
 // ====== iterator hack ======
