@@ -1664,11 +1664,12 @@ inline Str num2chinese(Long num) {
 	return result;
 }
 
-// parse a container of strings from a string (each element can be empty)
+// split() splits a stringget into substrings (each element can be empty)
+// can reconstruct original string with `join()`
 // two contiguous separators mean there is an empty element in between
 // if `str` starts or end with a separator, then there is an empty element at the beginning or end
 // str = v[0] + sep + v[1] + sep + ... v.back()
-inline void parse(vector<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
+inline void split(vector<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1692,7 +1693,7 @@ inline void join(Str_O str, const vector<Str> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(vector<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
+inline void split(vector<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1716,7 +1717,7 @@ inline void join(Str32_O str, const vector<Str32> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
+inline void split(set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1740,7 +1741,7 @@ inline void join(Str_O str, const set<Str> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
+inline void split(set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1764,7 +1765,7 @@ inline void join(Str32_O str, const set<Str32> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(unordered_set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
+inline void split(unordered_set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1788,7 +1789,7 @@ inline void join(Str_O str, const unordered_set<Str> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(unordered_set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
+inline void split(unordered_set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
