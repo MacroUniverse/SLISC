@@ -66,6 +66,7 @@ Depending on the compilation options, `CBLAS`, `LAPACKE`, `MKL`, `Boost`, `GSL`,
 
 ### Using precompiled binaries or dockerfiles (recommended)
 * All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC-libs-x64-centos7.9.2009). Check your Ubuntu version with `lsb_release -a`. These binaries are compiled with docker using `docker/*-build-*.dockerfile`. Note that Ubuntu16.04 is not fully supported (missing MPLAPACK)
+* Third party libraries for [MacOS](https://github.com/MacroUniverse/SLISC-libs-macOS-14.4-m1) are limited. Use `make/mac.mak` in `Makefile`
 * Use `source setup.sh` to add header and library paths to environment variables. You can add this command to `~/.bashrc` so it will run everytime you login.
 * See also `docker/ubuntu*-portable.dockerfile` to build docker images.
 
