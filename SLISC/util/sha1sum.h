@@ -222,7 +222,7 @@ namespace slisc {
 	}
 
 	// use sha1sum in the command line
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	inline Str sha1sum_f_exec(Str_I fname) {
 		Str stdout;
 		if (exec_str(stdout, "sha1sum \"" + fname + "\";"))
