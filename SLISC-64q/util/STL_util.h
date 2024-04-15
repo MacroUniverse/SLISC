@@ -4,6 +4,18 @@
 
 namespace slisc {
 
+// hash a c string
+// don't overload std::hash, 
+inline size_t hash_cstr(const char *s) {
+	size_t hash = 5381; // Magic number
+	char c;
+	do {
+		c = *s; ++s;
+		hash = ((hash << 5) + hash) + c;
+	} while (c);
+	return hash;
+}
+
 // combine 2 size_t hashs
 inline size_t hash_combine(size_t hash1, size_t hash2) {
 	hash1 ^= hash2 + 0x9e3779b9 + (hash1 << 6) + (hash1 >> 2);
@@ -43,6 +55,7 @@ struct hash_tuple_impl<-1, Args...> {
 } // namespace slisc
 
 namespace std {
+	
 // hash a vector
 template <class T>
 struct hash<vector<T>> {

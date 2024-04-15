@@ -77,25 +77,25 @@ void test_str()
 	SLS_ASSERT(ind < 0);
 	SLS_ASSERT(j == -922337203685477580LL);
 
-	// parse()
+	// split()
 	str = "123 2 13 4";
 	vecStr res, res0{"123", "2", "13", "4"};
 	vecLlong vl, vl0{123, 2, 13, 4};
 
-	parse(res, str);
+	split(res, str);
 	SLS_ASSERT(res == res0);
 
-	parse(vl, str);
+	split(vl, str);
 	SLS_ASSERT(vl == vl0);
 
 	str = " 123  2 13  4 ";
-	parse(res, str);
+	split(res, str);
 	SLS_ASSERT(res == res0);
 
-	parse(vl, str);
+	split(vl, str);
 	SLS_ASSERT(vl == vl0);
 
-	parse(res, str, " ", true);
+	split(res, str, " ", true);
 	res0 = {"", "123", "", "2", "13", "", "4", ""};
 	SLS_ASSERT(res == res0);
 }

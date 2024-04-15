@@ -1664,11 +1664,12 @@ inline Str num2chinese(Long num) {
 	return result;
 }
 
-// parse a container of strings from a string (each element can be empty)
+// split() splits a string into substrings (each element can be empty)
+// can reconstruct original string with `join()`
 // two contiguous separators mean there is an empty element in between
 // if `str` starts or end with a separator, then there is an empty element at the beginning or end
 // str = v[0] + sep + v[1] + sep + ... v.back()
-inline void parse(vector<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
+inline void split(vector<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1692,7 +1693,7 @@ inline void join(Str_O str, const vector<Str> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(vector<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
+inline void split(vector<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1716,7 +1717,7 @@ inline void join(Str32_O str, const vector<Str32> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
+inline void split(set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1740,7 +1741,7 @@ inline void join(Str_O str, const set<Str> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
+inline void split(set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1764,7 +1765,7 @@ inline void join(Str32_O str, const set<Str32> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(unordered_set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
+inline void split(unordered_set<Str> &v, Str_I str, Str_I sep = " ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1788,7 +1789,7 @@ inline void join(Str_O str, const unordered_set<Str> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(unordered_set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
+inline void split(unordered_set<Str32> &v, Str32_I str, Str32_I sep = U" ", bool has_empty = false)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1813,9 +1814,9 @@ inline void join(Str32_O str, const unordered_set<Str32> &v, Str32_I sep = U" ")
 }
 
 
-// parse a container of numbers from a string (elements can be empty)
+// integer-output version of split()
 // str = v[0] + sep + v[1] + sep + ... v.back()
-inline void parse(vector<Llong> &v, Str_I str, Str_I sep = " ")
+inline void split(vector<Llong> &v, Str_I str, Str_I sep = " ")
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1839,7 +1840,7 @@ inline void join(Str_O str, const vector<Llong> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(vector<Llong> &v, Str32_I str, Str32_I sep = U" ")
+inline void split(vector<Llong> &v, Str32_I str, Str32_I sep = U" ")
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1863,7 +1864,7 @@ inline void join(Str32_O str, const vector<Llong> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(set<Llong> &v, Str_I str, Str_I sep = " ")
+inline void split(set<Llong> &v, Str_I str, Str_I sep = " ")
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1887,7 +1888,7 @@ inline void join(Str_O str, const set<Llong> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(set<Llong> &v, Str32_I str, Str32_I sep = U" ")
+inline void split(set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1911,7 +1912,7 @@ inline void join(Str32_O str, const set<Llong> &v, Str32_I sep = U" ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(unordered_set<Llong> &v, Str_I str, Str_I sep = " ")
+inline void split(unordered_set<Llong> &v, Str_I str, Str_I sep = " ")
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
@@ -1935,7 +1936,7 @@ inline void join(Str_O str, const unordered_set<Llong> &v, Str_I sep = " ")
 	str.resize(str.size() - sep.size());
 }
 
-inline void parse(unordered_set<Llong> &v, Str32_I str, Str32_I sep = U" ")
+inline void split(unordered_set<Llong> &v, Str32_I str, Str32_I sep = U" ")
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;

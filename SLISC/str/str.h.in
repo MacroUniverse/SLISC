@@ -959,7 +959,7 @@ inline Str num2chinese(Long num) {
 	return result;
 }
 
-// split() splits a stringget into substrings (each element can be empty)
+// split() splits a string into substrings (each element can be empty)
 // can reconstruct original string with `join()`
 // two contiguous separators mean there is an empty element in between
 // if `str` starts or end with a separator, then there is an empty element at the beginning or end
@@ -1006,9 +1006,9 @@ inline void join(@Ts@_O str, const @Tv@<@Ts@> &v, @Ts@_I sep = @sep@)
 }
 //%----------------------------
 
-// parse a container of numbers from a string (elements can be empty)
+// integer-output version of split()
 // str = v[0] + sep + v[1] + sep + ... v.back()
-//% tem('parse2', {
+//% tem('split2', {
 //%   'vector'        'Llong' 'Str'    '" "'
 //%   'vector'        'Llong' 'Str32'  'U" "'
 //%   'set'           'Llong' 'Str'    '" "'
@@ -1023,9 +1023,9 @@ inline void join(@Ts@_O str, const @Tv@<@Ts@> &v, @Ts@_I sep = @sep@)
 //% elseif strcmp(Tv, 'vector')
 //%     add = 'push_back';
 //% else
-//%     error(['parse: not implemented: ' Tv]);
+//%     error(['split2: not implemented: ' Tv]);
 //% end
-inline void parse(@Tv@<@Ts@> &v, @Tstr@_I str, @Tstr@_I sep = @sep@)
+inline void split(@Tv@<@Ts@> &v, @Tstr@_I str, @Tstr@_I sep = @sep@)
 {
 	Long ind0 = 0; v.clear();
 	if (str.empty()) return;
