@@ -4,7 +4,7 @@
 
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
-opt_compiler := clang++
+opt_compiler := g++
 # use Octave for code generation
 # opt_octave := true # not implemented
 # define Long (array index type) as 32 or 64 bit integer
@@ -14,7 +14,7 @@ opt_debug := true
 # minimum build (all below options set to false)
 opt_min := true
 # address sanitizer (only for g++ dynamic debug build)
-opt_asan := $(opt_debug)
+opt_asan := false # mac doesn't support
 # c++ standard e.g. c++11, gnu++11, ..., c++20
 opt_std := c++11
 # static link (not all libs supported)
