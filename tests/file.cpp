@@ -5,6 +5,10 @@ void test_file()
 {
 #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
+	// pwd
+	Str path = pwd();
+	SLS_ASSERT(find(path, "/") || find(path, "\\"));
+	
 	// file_list
 	vecStr names;
 	file_list(names, "./");

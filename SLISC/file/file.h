@@ -30,7 +30,7 @@ inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
 inline void write(Str_I str, Str_I fname);
 
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 inline Str pwd()
 {
 	char buff[FILENAME_MAX];
@@ -106,7 +106,7 @@ inline void file_remove(Str_I fname)
 #endif
 }
 
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 // get innode of a file
 inline Ullong file_innode(Str_I file)
 {
