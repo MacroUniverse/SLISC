@@ -3,11 +3,12 @@
 
 void test_file()
 {
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 	// pwd
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	Str path = pwd();
 	SLS_ASSERT(find(path, "/") || find(path, "\\"));
+#endif
 	
 	// file_list
 	vecStr names;
@@ -130,7 +131,7 @@ void test_file()
 
 	// last modified time (local time)
 	{
-#ifndef _MSC_VER
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 		Str yyyymmddhhmmss;
 		last_modified(yyyymmddhhmmss, "Makefile");
 		if (yyyymmddhhmmss.size() != 14) {
@@ -143,14 +144,18 @@ void test_file()
 	// check if directory exist
 	// `path` must end with '/'
 	{
-		if (!dir_exist("SLISC/"))
-			SLS_FAIL;
-		if (!dir_exist("SLISC"))
-			SLS_FAIL;
-		if (dir_exist("abc/"))
-			SLS_FAIL;
-		if (dir_exist("abc"))
-			SLS_FAIL;
+		SLS_ASSERT(dir_exist("SLISC/"));
+		SLS_ASSERT(dir_exist("SLISC"));
+		SLS_ASSERT(!dir_exist("abc/"));
+		SLS_ASSERT(!dir_exist("abc"));
+	}
+
+	{
+		SLS_ASSERT(dir_exist("tests/test_file/测试abc（文件—￥123）"));
+		SLS_ASSERT(file_exist("tests/test_file/测试abc（文件—￥123）/测试abc（文件—￥123）.txt"));
+		Str str;
+		read(str, "tests/test_file/测试abc（文件—￥123）/测试abc（文件—￥123）.txt");
+		SLS_ASSERT(str == u8"测试abc（文件—￥123）");
 	}
 
 	// test ensure_dir()
@@ -196,9 +201,6 @@ void test_file()
 	SLS_ASSERT(file_same("tests/test_file/test1.json", "tests/test_file/../test_file/test1.json"));
 	SLS_ASSERT(!file_same("tests/test_file/test1.json", "tests/test_file/test1-bk.json"));
 	#endif
-#else
-	std::cout << "---------- disabled! ----------" << std::endl;
-#endif
 }
 
 #ifndef SLS_TEST_ALL

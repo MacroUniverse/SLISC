@@ -23,6 +23,9 @@ inline void str_patch(Str_O str2, Str_I str1, const vector<tuple<size_t, size_t,
 // calculate the difference between two strings
 // diff: vector<(start, size, string)>
 // str1.replace(start, size, string) from back to front will result in str2
+// algo: increase ind1 and ind2 of str1 and str2, find N_match chars of str2 in str1, if match,
+//     extend the match in both directions
+// TODO: for each ind1 and ind2, also find N_match chars of str1 in str2, and decide which one to use by comparing the length of deletion
 inline void str_diff(vector<tuple<size_t, size_t, Str>> &diff, Str_I str1, Str_I str2, bool debug = false)
 {
 	size_t ind1 = 0, ind2 = 0, start1, start2, end1, end2, ind, N_match = 10, N_skip = 10;

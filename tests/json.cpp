@@ -6,7 +6,6 @@ using json = nlohmann::json; // the main class
 
 void test_json()
 {
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	string str;
 	read(str, "tests/test_file/test1.json");
 	// can parse string or fstream
@@ -24,9 +23,6 @@ void test_json()
 	data["menu"].erase("id");
 	data["menu"]["popup"]["menuitem"].erase(1);
 	// cout << data.dump(2) << endl;
-#else
-	std::cout << "---------- disabled! ----------" << std::endl;
-#endif
 }
 
 #ifndef SLS_TEST_ALL

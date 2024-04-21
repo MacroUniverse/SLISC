@@ -4,8 +4,6 @@
 #include "../arith/scalar_arith.h"
 #include "../file/file.h"
 
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
-
 #ifndef SLS_MATT_DEFAULT_PREC
 // 17 digits decimal is enough to represent any double
 #define SLS_MATT_DEFAULT_PREC 17
@@ -2204,5 +2202,3 @@ inline void load_matt(Cmat4Comp_O var, Str_I varname, Str_I matt_file)
 }
 
 } // namespace slisc
-
-#endif

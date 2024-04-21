@@ -6,8 +6,6 @@
 #include "../util/bit.h"
 #include "../prec/quad_math.h"
 
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
-
 namespace slisc {
 
 // all non-data intergers in file are Llong
@@ -2930,4 +2928,3 @@ inline Long matb_q2d(Str_I matb_name, Bool_I replace = false)
 #endif
 
 } // namespace slisc
-#endif

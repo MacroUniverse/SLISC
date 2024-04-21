@@ -23,16 +23,12 @@
 #include <stdio.h>
 #endif
 
-// #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
-// #endif
-
 namespace slisc {
 
 using std::stringstream;
 
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MSVC)
+
 inline void file_list(vecStr_O names, Str_I path, Bool_I append = false);
-#endif
 inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
 inline void write(Str_I str, Str_I fname);
@@ -177,8 +173,6 @@ inline void mkdir(Str_I path)
 		SLS_ERR("mkdir failed: " + path1);
 #elif defined(SLS_USE_WINDOWS) // assume has winbase.h
 	CreateDirectoryW(utf82wstr(path1).c_str(), NULL);
-#else
-	#error ca26f8
 #endif
 	if (!dir_exist(path1))
 		SLS_ERR("mkdir failed: " + path1);
@@ -195,8 +189,6 @@ inline void rmdir(Str_I path)
 #elif defined(SLS_USE_WINDOWS) // assume has winbase.h
 	if (RemoveDirectoryW(utf82wstr(path).c_str()) == 0)
 		SLS_ERR("cannot remove directory: " + path);
-#else
-	#error dcf154
 #endif
 }
 
@@ -237,10 +229,10 @@ inline int file_rm(Str_I wildcard_name) {
 // list all files in current directory
 // path must end with '/'
 // result is sorted
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (!append)
 		fnames.clear();
 	// save a list of all files (no folder) to temporary file
@@ -264,33 +256,25 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 		fnames.push_back(name);
 	}
 	sort(fnames);
-}
-
-#elif defined(SLS_USE_MSVC) // assume has winbase.h
-
-inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
-{
-	WIN32_FIND_DATA data;
+#elif defined(SLS_USE_WINDOWS) // assume has winbase.h
+	WIN32_FIND_DATAW data;
 	HANDLE h = FindFirstFileW(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
 	Str fname;
 	if (!append)
 		fnames.clear();
 	if (h != INVALID_HANDLE_VALUE) {
 		do {
-			std::wstring wstr(data.cFileName);
-			fname = wstr2utf8(wstr);
+			fname = wstr2utf8(data.cFileName);
 			if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 				continue; // ignore directories
 			fnames.push_back(fname);
-		} while (FindNextFile(h, &data));
+		} while (FindNextFileW(h, &data));
 		FindClose(h);
 	}
 	sort(fnames);
+#endif
 }
 
-#endif
-
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_MSVC)
 // list all files including paths
 // path should end with '/'
 // result is sorted
@@ -303,48 +287,6 @@ inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
 	for (Long i = 0; i < size(names); ++i)
 		fnames.push_back(path + names[i]);
 }
-#endif
-
-#ifdef SLS_USE_MSVC // assume has <windows.h>
-
-// path should end with '/'
-// path can be full, relative or empty (./)
-// `folders` will not include `path`
-// result is sorted
-inline void folder_list(vecStr_O folders, Str_I path, Bool_I append = false)
-{
-	WIN32_FIND_DATA data;
-	HANDLE h = FindFirstFileW(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
-	Str fname;
-	if (!append)
-		folders.clear();
-	if (h != INVALID_HANDLE_VALUE) {
-		do {
-			std::wstring wstr(data.cFileName);
-			fname = wstr2utf8(wstr);
-			if (fname == "." || fname == "..")
-				continue;
-			if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-				folders.push_back(fname + "/"); // only include directories
-		} while (FindNextFile(h, &data));
-		FindClose(h);
-	}
-	sort(folders);
-}
-
-// `path` must end with '/'
-// `folders` will include `path`
-// result is sorted
-inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false)
-{
-	if (!append)
-		folders.clear();
-	vecStr names;
-	folder_list(names, path, append);
-	for (Long i = 0; i < size(names); ++i)
-		folders.push_back(path + names[i]);
-}
-#endif
 
 #if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 
@@ -382,23 +324,61 @@ inline void folder_list(vecStr_O folders, Str_I path, bool append = false)
 	}
 }
 
+#elif defined(SLS_USE_WINDOWS) // assume has <windows.h>
+
+// path should end with '/'
+// path can be full, relative or empty (./)
+// `folders` will not include `path`
+// result is sorted
+inline void folder_list(vecStr_O folders, Str_I path, Bool_I append = false)
+{
+	WIN32_FIND_DATAW data;
+	HANDLE h = FindFirstFileW(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
+	Str fname;
+	if (!append)
+		folders.clear();
+	if (h != INVALID_HANDLE_VALUE) {
+		do {
+			std::wstring wstr(data.cFileName);
+			fname = wstr2utf8(wstr);
+			if (fname == "." || fname == "..")
+				continue;
+			if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+				folders.push_back(fname + "/"); // only include directories
+		} while (FindNextFileW(h, &data));
+		FindClose(h);
+	}
+	sort(folders);
+}
+
+// `path` must end with '/'
+// `folders` will include `path`
+// result is sorted
+inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false)
+{
+	if (!append)
+		folders.clear();
+	vecStr names;
+	folder_list(names, path, append);
+	for (Long i = 0; i < size(names); ++i)
+		folders.push_back(path + names[i]);
+}
 #endif
 
 // list all files in a directory recursively (containing relative paths)
 // result is sorted
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
-
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (!append)
 		fnames.resize(0);
 	// save a list of all files (no folder) to temporary file
 	Str tmp = "find ", stdout;
-#ifdef SLS_USE_MACOS
+	#ifdef SLS_USE_MACOS
 	tmp << path.substr(0,path.size()-1) << " -type f";
-#else
+	#else // SLS_USE_LINUX
 	tmp << path << " -type f";
-#endif
+	#endif
 	if (exec_str(stdout, tmp))
 		SLS_ERR(stdout);
 	std::istringstream iss(stdout);
@@ -412,12 +392,7 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 		fnames.push_back(name);
 	}
 	sort(fnames);
-}
-
-#elif defined(SLS_USE_MSVC)
-
-inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
-{
+#elif defined(SLS_USE_WINDOWS)
 	if (!append)
 		fnames.clear();
 	file_list_full(fnames, path, true);
@@ -426,9 +401,8 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 	for (Long i = 0; i < size(folders); ++i)
 		file_list_r(fnames, path + folders[i], true);
 	sort(fnames);
-}
-
 #endif
+}
 
 // choose files with a given extension from a list of files
 inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
@@ -452,7 +426,6 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
 	}
 }
 
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MSVC)
 // list all files in current directory, with a given extension
 // result is sorted
 inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
@@ -472,7 +445,6 @@ inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I k
 	for (Long i = 0; i < size(fnames8); ++i)
 		fnames.push_back(u32(fnames8[i]));
 }
-#endif
 
 // copy a file (read then write)
 // use default fstream buffer, not sure about performance
@@ -981,10 +953,6 @@ inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
 		num2str(time->tm_mon + 1, 2) + num2str(time->tm_mday, 2) +
 		num2str(time->tm_hour, 2) + num2str(time->tm_min, 2) +
 		num2str(time->tm_sec, 2);
-}
-#else
-inline void last_modified(Str_O yymmddhhmmss, Str_I fname) {
-	SLS_ERR("not implemented!");
 }
 #endif
 

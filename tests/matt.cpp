@@ -6,7 +6,6 @@
 
 void test_matt()
 {
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 
 	// write to file
@@ -150,9 +149,6 @@ void test_matt()
 	if (r_CC3 != CC3) SLS_FAIL;
 
 	matt.close();
-#else
-	std::cout << "---------- disabled! ----------" << std::endl;
-#endif
 }
 
 #ifndef SLS_TEST_ALL

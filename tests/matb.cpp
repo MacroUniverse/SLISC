@@ -5,7 +5,6 @@
 
 void test_matb()
 {
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 	using namespace slisc;
 
 	// write to file
@@ -552,10 +551,6 @@ void test_matb()
 			SLS_ASSERT(r_CC3Q[i] == Comp(CC3Q[i].real(),CC3Q[i].imag()));
 	#endif
 	}
-#endif
-
-#else
-	std::cout << "---------- disabled! ----------" << std::endl;
 #endif
 }
 
