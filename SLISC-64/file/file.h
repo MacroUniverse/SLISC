@@ -1,10 +1,13 @@
 #pragma once
 #include "../global.h"
-#if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
 #include <sstream>
 #include <fstream>
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 #include <sys/types.h> // for time_stamp
 #include <sys/stat.h> // for time_stamp, stat()
+#elif defined(SLS_USE_WINDOWS)
+#include <Windows.h>
+#endif
 #include "../util/time.h"
 #include "../util/linux.h"
 #include "../arith/arith1.h"
@@ -15,33 +18,37 @@
 #include "../algo/search.h"
 #include "../str/str.h"
 #else
-#include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
 #include <stdio.h>
 #endif
 
+// #if !(defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__))
+// #endif
+
 namespace slisc {
 
 using std::stringstream;
 
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MSVC)
 inline void file_list(vecStr_O names, Str_I path, Bool_I append = false);
+#endif
 inline void read(ifstream &fin, Str_O str);
 inline void write(ofstream &fout, Str_I str);
 inline void write(Str_I str, Str_I fname);
 
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 inline Str pwd()
 {
 	char buff[FILENAME_MAX];
-	if (getcwd(buff, FILENAME_MAX) == NULL)
+	if (getcwd(buff, FILENAME_MAX) == NULL) // requires <unistd.h>
 		SLS_ERR("pwd()");
 	return buff;
 }
 
 inline void cd(Str_I path)
 {
-	chdir(path.c_str());
+	chdir(path.c_str()); // requires <unistd.h> 
 }
 #endif
 
@@ -74,16 +81,18 @@ inline bool file_exist_case(Str_I fname)
 // check if a file exist, default is case sensitive
 // case_sens only works on Windows
 inline bool file_exist(Str_I fname, Bool_I case_sens = true) {
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 	ifstream f(fname);
 	return f.good();
-#else
+#elif defined(SLS_USE_MSVC)
 	if (case_sens)
 		return file_exist_case(fname);
 	else {
 		ifstream f(utf82wstr(fname));
 		return f.good();
-}
+	}
+#else
+	#error d22b62
 #endif
 }
 
@@ -97,16 +106,19 @@ inline bool file_exist(Str32_I fname) {
 // if file exist after delete, throw
 inline void file_remove(Str_I fname)
 {
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 	if (remove(fname.c_str()) && file_exist(fname))
 		throw runtime_error("failed to remove, file being used? (" + fname + ")");
-#else
-	if (file_exist(fname) && DeleteFile(utf82wstr(fname).c_str()) == 0)
+#elif defined(SLS_USE_MSVC)
+	// supports Unicode filenames on Windoes
+	if (file_exist(fname) && DeleteFile(utf82wstr(fname).c_str()) == 0) 
 		throw runtime_error("failed to remove, file being used? (" + fname + ")");
+#else
+	#error e1a509
 #endif
 }
 
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 // get innode of a file
 inline Ullong file_innode(Str_I file)
 {
@@ -129,9 +141,9 @@ inline bool file_same(Str_I file1, Str_I file2)
 // `path` must end with '/'
 inline bool dir_exist(Str_I path)
 {
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 	ofstream file(path + "/sls_test_if_dir_exist");
-#else
+#elif defined(SLS_USE_MSVC)
 	ofstream file(utf82wstr(path + "/sls_test_if_dir_exist"));
 #endif
 	if (file.good()) {
@@ -160,11 +172,13 @@ inline void mkdir(Str_I path)
 {
 	Str path1 = path;
 	replace(path1, "\"", "\\\"");
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (system(("mkdir -p \"" + path1 + "\"").c_str()))
 		SLS_ERR("mkdir failed: " + path1);
+#elif defined(SLS_USE_WINDOWS) // assume has winbase.h
+	CreateDirectoryW(utf82wstr(path1).c_str(), NULL);
 #else
-	CreateDirectory(utf82wstr(tmp).c_str(), NULL);
+	#error ca26f8
 #endif
 	if (!dir_exist(path1))
 		SLS_ERR("mkdir failed: " + path1);
@@ -175,12 +189,14 @@ inline void rmdir(Str_I path)
 {
 	Str path1 = path;
 	replace(path1, "\"", "\\\"");
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (!system(("rmdir '" + path1 + "'").c_str()))
 		SLS_ERR("cannot remove directory: " + path);
-#else
-	if (RemoveDirectory(utf82wstr(path).c_str()) == 0)
+#elif defined(SLS_USE_WINDOWS) // assume has winbase.h
+	if (RemoveDirectoryW(utf82wstr(path).c_str()) == 0)
 		SLS_ERR("cannot remove directory: " + path);
+#else
+	#error dcf154
 #endif
 }
 
@@ -199,6 +215,7 @@ inline void ensure_dir(Str_I dir_or_file)
 }
 
 // get canonical path (i.e. absolute path with no symlink)
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 inline Str real_path(Str_I path)
 {
 	char *cstr = realpath(path.c_str(), nullptr);
@@ -211,7 +228,6 @@ inline Str real_path(Str_I path)
         throw sls_err();
 }
 
-#ifndef SLS_USE_MSVC
 // remove a file
 inline int file_rm(Str_I wildcard_name) {
 	return system(("rm " + wildcard_name).c_str());
@@ -221,7 +237,7 @@ inline int file_rm(Str_I wildcard_name) {
 // list all files in current directory
 // path must end with '/'
 // result is sorted
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
@@ -250,12 +266,12 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 	sort(fnames);
 }
 
-#else
+#elif defined(SLS_USE_MSVC) // assume has winbase.h
 
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
 	WIN32_FIND_DATA data;
-	HANDLE h = FindFirstFile(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
+	HANDLE h = FindFirstFileW(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
 	Str fname;
 	if (!append)
 		fnames.clear();
@@ -274,6 +290,7 @@ inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 
 #endif
 
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_MSVC)
 // list all files including paths
 // path should end with '/'
 // result is sorted
@@ -286,8 +303,9 @@ inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
 	for (Long i = 0; i < size(names); ++i)
 		fnames.push_back(path + names[i]);
 }
+#endif
 
-#ifdef SLS_USE_MSVC
+#ifdef SLS_USE_MSVC // assume has <windows.h>
 
 // path should end with '/'
 // path can be full, relative or empty (./)
@@ -296,7 +314,7 @@ inline void file_list_full(vecStr_O fnames, Str_I path, Bool_I append = false)
 inline void folder_list(vecStr_O folders, Str_I path, Bool_I append = false)
 {
 	WIN32_FIND_DATA data;
-	HANDLE h = FindFirstFile(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
+	HANDLE h = FindFirstFileW(utf82wstr(path + "*").c_str(), &data);  // DIRECTORY
 	Str fname;
 	if (!append)
 		folders.clear();
@@ -326,8 +344,9 @@ inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false
 	for (Long i = 0; i < size(names); ++i)
 		folders.push_back(path + names[i]);
 }
+#endif
 
-#else
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 
 // list direct sub-folders, including path, ending with `/`
 inline void folder_list_full(vecStr_O folders, Str_I path, bool append = false)
@@ -367,7 +386,7 @@ inline void folder_list(vecStr_O folders, Str_I path, bool append = false)
 
 // list all files in a directory recursively (containing relative paths)
 // result is sorted
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
@@ -395,7 +414,7 @@ inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 	sort(fnames);
 }
 
-#else
+#elif defined(SLS_USE_MSVC)
 
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
@@ -433,6 +452,7 @@ inline void file_ext(vecStr_O fnames_ext, vecStr_I fnames, Str_I ext, Bool_I kee
 	}
 }
 
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MSVC)
 // list all files in current directory, with a given extension
 // result is sorted
 inline void file_list_ext(vecStr_O fnames, Str_I path, Str_I ext, Bool_I keep_ext = true, Bool_I append = false)
@@ -452,6 +472,7 @@ inline void file_list_ext(vecStr32_O fnames, Str32_I path, Str32_I ext, Bool_I k
 	for (Long i = 0; i < size(fnames8); ++i)
 		fnames.push_back(u32(fnames8[i]));
 }
+#endif
 
 // copy a file (read then write)
 // use default fstream buffer, not sure about performance
@@ -572,10 +593,12 @@ inline Long file_size(Str_I fname)
 {
 	if (!file_exist(fname))
 		throw runtime_error("file_size(): file not exist: " + fname);
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 	ifstream fin(fname, ifstream::ate | ifstream::binary);
-#else
+#elif defined(SLS_USE_MSVC)
 	ifstream fin(utf82wstr(fname), ifstream::ate | ifstream::binary);
+#else
+	#error e5308c
 #endif
 	return fin.tellg();
 }
@@ -585,10 +608,12 @@ inline void open_bin(ofstream &fout, Str_I fname)
 {
 	if (fout.is_open())
 		fout.close();
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 	fout.open(fname, std::ios::out | std::ios::binary);
-#else
+#elif defined(SLS_USE_MSVC)
 	fout.open(utf82wstr(fname), std::ios::out | std::ios::binary);
+#else
+	#error 164483
 #endif
 	if (!fout)
 		throw runtime_error("failed to open file: " + fname);
@@ -601,10 +626,12 @@ inline void open_bin(ifstream &fin, Str_I fname)
 		throw std::runtime_error("file not found: " + fname);
 	if (fin.is_open())
 		fin.close();
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 	fin.open(fname, std::ios::in | std::ios::binary);
-#else
+#elif defined(SLS_USE_MSVC)
 	fin.open(utf82wstr(fname), std::ios::in | std::ios::binary);
+#else
+	#error a0a466
 #endif
 	if (!fin)
 		throw runtime_error("failed to open file: " + fname);
@@ -943,7 +970,7 @@ inline void read(VecDoub_O v, Str_I file, Long_I skip_lines = 0, Long_I max_size
 
 
 // get time-stamp of a file
-#ifndef SLS_USE_MSVC
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
 	struct tm *time;
 	struct stat attrib;
@@ -957,7 +984,7 @@ inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
 }
 #else
 inline void last_modified(Str_O yymmddhhmmss, Str_I fname) {
-	SLS_ERR("not implemented for windows!");
+	SLS_ERR("not implemented!");
 }
 #endif
 
@@ -1008,4 +1035,3 @@ struct fcout_t
 };
 
 } // namespace slisc
-#endif

@@ -4,6 +4,7 @@
 # 再修改 arb_path 以找到 baltam-plugin-arb/windows/include 中正确的头文件
 
 compiler = g++
+SHELL := /bin/bash
 
 # CBLAS
 # cblas_flag = -D SLS_USE_CBLAS
@@ -27,11 +28,9 @@ compiler = g++
 # arpack_lib = -larpack -lgfortran
 # 
 
-arb_path = /c/baltamatica/bex/tests/plugins/arb/windows
-arb_flag = -D SLS_USE_ARB -I $(arb_path)/include/flint -I $(arb_path)/include/flint/flintxx -I $(arb_path)/include/ -L /usr/local/bin
-arb_lib = -l arb-2 -l mpfr-6 -l flint -l gmp-23 # use -larb if compiled from source, or create soft link named flint-arb
-# Address Sanitizer
-# asan_flag = -fsanitize=address -static-libasan -D SLS_USE_ASAN
+# arb_path = /c/baltamatica/bex/tests/plugins/arb/windows
+# arb_flag = -D SLS_USE_ARB -I $(arb_path)/include/flint -I $(arb_path)/include/flint/flintxx -I $(arb_path)/include/ -L /usr/local/bin
+# arb_lib = -l arb-2 -l mpfr-6 -l flint -l gmp-23 # use -larb if compiled from source, or create soft link named flint-arb
 # Matfile
 # (conflicts with boost_filesystem.so other than version 1.56.0)
 # matfile_bin_path = ../MatFile_linux/lib
@@ -45,16 +44,15 @@ debug_flag = -g -ftrapv
 # release_flag = -O3 -D NDEBUG
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp $(debug_flag) $(release_flag) -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag) -D SLS_USE_INT_AS_LONG
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -D SLS_TEST_ALL $(debug_flag) $(release_flag) -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag)
 
 libs = $(gsl_lib) $(lapacke_lib) $(boost_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
 # file lists
-test_cpp = $(shell cd test && echo *.cpp) # tests/*.cpp (no path)
+test_cpp = $(shell cd tests && echo *.cpp) # tests/*.cpp (no path)
 test_o = $(test_cpp:.cpp=.o) # tests/*.cpp object files (no path)
 header_in = $(shell cd SLISC && echo *.h.in) # SLISC/*.h.in (no path)
 gen_headers = $(header_in:.h.in=.h) # generated headers in SLISC/ (no path)
-path_gen_headers = $(addprefix SLISC/,$(gen_headers)) # (with path)
 cur_headers = $(shell cd SLISC && echo *.h) # current headers in SLISC/, including hand written ones (no path)
 headers = $(gen_headers) $(cur_headers) # all headers (no path)
 path_headers = $(addprefix SLISC/,$(headers)) # (with path)
@@ -64,20 +62,14 @@ goal: main.x
 main.x: main.o $(test_o)
 	make link
 
-h: # remake all headers
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/','../tests/'}, [], false, true)"
-
 link: # link only
-	$(compiler) $(flags) -o main.x main.o test_*.o $(libs)
+	$(compiler) $(flags) -o main.x *.o $(libs)
 
 clean:
-	rm -f *.o *.x $(path_gen_headers)
+	rm -f *.o *.x
 
 main.o: main.cpp tests/test_all.h
 	$(compiler) $(flags) -c main.cpp
 
 %.o: tests/%.cpp $(path_headers)
 	$(compiler) $(flags) -c $<
-
-%.h: %.h.in
-	octave --no-window-system --eval "cd preprocessor; auto_gen({'../SLISC/'}, '$$(basename $<)', false, true)"

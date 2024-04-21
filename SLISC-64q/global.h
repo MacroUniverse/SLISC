@@ -59,7 +59,11 @@
 #endif
 
 // platform
-#if defined(__MINGW32__) || defined(__MINGW64__) || defined(__CYGWIN__) || defined(__MSYS__) || defined(_MSC_VER) || defined(_WIN32) || defined(_WIN64)
+#if defined(__MINGW32__) || defined(__MINGW64__) || defined(__MSYS__) // MSYS shell will not define __MINGW*__, but use g++ from MinGW
+	#define SLS_USE_MINGW
+#endif
+
+#if defined(SLS_USE_MINGW) || defined(__CYGWIN__) || defined(_MSC_VER) || defined(_WIN32) || defined(_WIN64)
 	#define SLS_USE_WINDOWS
 #elif defined(__APPLE__)
 	#define SLS_USE_MACOS
@@ -428,12 +432,12 @@ void print_imp(const T& first, const Args&... args) {
 	cout << first; print_imp(args...);
 }
 
-std::mutex print_mutex; // for thread safety
+// std::mutex print_mutex; // for thread safety （ODR error!)
 
 template<typename T, typename... Args>
 void print(const T& first, const Args&... args)
 {
-	std::lock_guard<std::mutex> lock(print_mutex);
+	// std::lock_guard<std::mutex> lock(print_mutex);
 	cout << first;
 	print_imp(args...);
 }

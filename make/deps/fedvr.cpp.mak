@@ -1,6 +1,6 @@
 # this file is auto generated with Makefile and g++
-tests/fedvr.o: tests/fedvr.cpp tests/../SLISC/lin/eig.h \
- tests/../SLISC/lin/../arith/copy.h \
+tests/fedvr.o: tests/fedvr.cpp tests/../SLISC/config.h \
+ tests/../SLISC/lin/eig.h tests/../SLISC/lin/../arith/copy.h \
  tests/../SLISC/lin/../arith/../arith/compare.h \
  tests/../SLISC/lin/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/lin/../arith/../arith/../dense/../dense/Vbase.h \

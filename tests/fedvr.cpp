@@ -1,3 +1,4 @@
+#include "../SLISC/config.h"
 #include "../SLISC/lin/eig.h"
 #include "../SLISC/tdse/fedvr.h"
 #include "../SLISC/file/matb.h"
@@ -73,15 +74,15 @@ void test_D2_mat()
 	VecDoub d2y(D2s.n0()); // second derivative
 	for (Long i = 0; i < Nx; ++i)
 		y[i] = test_fedvr_fun(x[i], 2);
-	file_remove("D2_mat_test.matb");
-	Matb matb("D2_mat_test.matb", "w");
-	save(x, "x", matb); save(y, "y", matb);
-	save(Nfe, "Nfe", matb); save(Ngs, "Ngs", matb);
+	// file_remove("D2_mat_test.matb");
+	// Matb matb("D2_mat_test.matb", "w");
+	// save(x, "x", matb); save(y, "y", matb);
+	// save(Nfe, "Nfe", matb); save(Ngs, "Ngs", matb);
 	y /= u;
 	mul(d2y, D2s, y);
 	d2y *= u;
-	save(d2y, "d2y", matb);
-	matb.close();
+	// save(d2y, "d2y", matb);
+	// matb.close();
 	d2y -= 2;
 	SLS_ASSERT(max_abs(d2y) < 5e-13);
 }
@@ -103,7 +104,7 @@ void test_D_mat()
 
 	for (Long i = 0; i < Nx; ++i)
 		y[i] = test_fedvr_fun(x[i], 2);
-	file_remove("D_mat_test.matb");
+	// file_remove("D_mat_test.matb");
 	// Matb matb("D_mat_test.matb", "w");
 	// save(x, "x", matb); save(y, "y", matb);
 	y /= u;
@@ -242,8 +243,8 @@ void test_fedvr()
 #endif
 
 	{ // plot fedvr basis and check orthogonality
-		file_remove("fedvr_orthor.matb");
-		Matb matb("fedvr_orthor.matb", "w");
+		// file_remove("fedvr_orthor.matb");
+		// Matb matb("fedvr_orthor.matb", "w");
 		Long Nplot = 3001;
 		VecDoub x_plot(Nplot);
 		linspace(x_plot, -1.5, 1.5);
@@ -252,9 +253,9 @@ void test_fedvr()
 			CmatDoub mat(Ngs, Ngs);
 			VecDoub x(Ngs), w(Ngs);
 			GaussLobatto_check_orthogonal(y_plot, x, w, mat, x_plot);
-			save(x_plot, "x_plot"+num2str(Ngs), matb); save(y_plot, "y_plot"+num2str(Ngs), matb);
-			save(x, "x"+num2str(Ngs), matb); save(w, "w"+num2str(Ngs), matb);
-			save(mat, "mat"+num2str(Ngs), matb);
+			// save(x_plot, "x_plot"+num2str(Ngs), matb); save(y_plot, "y_plot"+num2str(Ngs), matb);
+			// save(x, "x"+num2str(Ngs), matb); save(w, "w"+num2str(Ngs), matb);
+			// save(mat, "mat"+num2str(Ngs), matb);
 		}
 	}
 }

@@ -1,7 +1,9 @@
 # choose one of the following makefiles for different compilers and libraries
 
+# Linux
 include make/all.mak
 
+# MacOS
 # include make/mac.mak
 
 # Mingw64 / Msys2
