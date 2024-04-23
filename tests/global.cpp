@@ -3,13 +3,6 @@
 void test_global()
 {
 	using namespace slisc;
-	// test isnan()
-	Doub x = NaN;
-	if (!slisc::isnan(x) || slisc::isnan(1))
-		SLS_FAIL;
-	Comp c(NaN, NaN);
-	if (!slisc::isnan(c) || slisc::isnan(Comp(1,2)))
-		SLS_FAIL;
 	if (sizeof(Char) != 1) SLS_FAIL;
 	if (sizeof(Uchar) != 1) SLS_FAIL;
 	if (sizeof(Int) != 4) SLS_FAIL;

@@ -1,12 +1,10 @@
 #pragma once
 #include "../global.h"
-#include <sstream>
-#include <fstream>
 #if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
-#include <sys/types.h> // for time_stamp
-#include <sys/stat.h> // for time_stamp, stat()
+	#include <sys/types.h> // for time_stamp
+	#include <sys/stat.h> // for time_stamp, stat()
 #elif defined(SLS_USE_WINDOWS)
-#include <Windows.h>
+	#include <Windows.h>
 #endif
 #include "../util/time.h"
 #include "../util/linux.h"
@@ -15,12 +13,12 @@
 #include "../algo/sort.h"
 
 #ifdef SLS_USE_MSVC
-#include "../algo/search.h"
-#include "../str/str.h"
+	#include "../algo/search.h"
+	#include "../str/str.h"
 #else
-#include <unistd.h>
-#include <time.h>
-#include <stdio.h>
+	#include <unistd.h>
+	#include <time.h>
+	#include <stdio.h>
 #endif
 
 namespace slisc {

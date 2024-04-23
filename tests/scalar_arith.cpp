@@ -10,6 +10,12 @@ inline bool is_equiv(const T1 &s1, const T2 &s2)
 
 void test_scalar_arith()
 {
+	// test isnan()
+	Doub x = NaN;
+	SLS_ASSERT(slisc::isnan(x) && !slisc::isnan(1));
+	Comp c(NaN, NaN);
+	SLS_ASSERT(slisc::isnan(c) && !slisc::isnan(Comp(1,2)));
+	
 	// to_num(s)
 	if (!is_equiv(to_num(false), 0)) SLS_FAIL;
 	if (!is_equiv(to_num(true), 1)) SLS_FAIL;

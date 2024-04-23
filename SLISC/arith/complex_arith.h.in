@@ -4,6 +4,11 @@
 #include "../global.h"
 
 namespace slisc {
+
+inline bool isnan(Fcomp_I s) { return s != s; }
+inline bool isnan(Comp_I s) { return s != s; }
+inline bool isnan(Lcomp_I s) { return s != s; }
+
 //% tem('==comp', {
 //%     'Char', 'Fcomp';
 //%     'Char', 'Comp';
