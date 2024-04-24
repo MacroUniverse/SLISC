@@ -119,12 +119,10 @@ inline void SvbaseBoolC::shift(Long_I N) {
 inline SvbaseBoolC::~SvbaseBoolC() {}
 
 typedef const SvbaseBoolC &SvbaseBool_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseBool_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseBoolC &` makes it ambiguous
 inline const Bool *cptr(SvbaseBool_I v) { return v.p(); }
-
 
 class SvbaseBool
 {
@@ -251,7 +249,6 @@ inline SvbaseBool::~SvbaseBool() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseBool &SvbaseBool_O, &SvbaseBool_IO;
-
 // common api for STL and SLISC
 inline Bool *ptr(const SvbaseBool &v) { return v.p(); }
 
@@ -368,12 +365,10 @@ inline void SvbaseCharC::shift(Long_I N) {
 inline SvbaseCharC::~SvbaseCharC() {}
 
 typedef const SvbaseCharC &SvbaseChar_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseChar_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseCharC &` makes it ambiguous
 inline const Char *cptr(SvbaseChar_I v) { return v.p(); }
-
 
 class SvbaseChar
 {
@@ -500,7 +495,6 @@ inline SvbaseChar::~SvbaseChar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseChar &SvbaseChar_O, &SvbaseChar_IO;
-
 // common api for STL and SLISC
 inline Char *ptr(const SvbaseChar &v) { return v.p(); }
 
@@ -617,12 +611,10 @@ inline void SvbaseUcharC::shift(Long_I N) {
 inline SvbaseUcharC::~SvbaseUcharC() {}
 
 typedef const SvbaseUcharC &SvbaseUchar_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseUchar_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseUcharC &` makes it ambiguous
 inline const Uchar *cptr(SvbaseUchar_I v) { return v.p(); }
-
 
 class SvbaseUchar
 {
@@ -749,7 +741,6 @@ inline SvbaseUchar::~SvbaseUchar() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseUchar &SvbaseUchar_O, &SvbaseUchar_IO;
-
 // common api for STL and SLISC
 inline Uchar *ptr(const SvbaseUchar &v) { return v.p(); }
 
@@ -866,12 +857,10 @@ inline void SvbaseIntC::shift(Long_I N) {
 inline SvbaseIntC::~SvbaseIntC() {}
 
 typedef const SvbaseIntC &SvbaseInt_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseInt_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseIntC &` makes it ambiguous
 inline const Int *cptr(SvbaseInt_I v) { return v.p(); }
-
 
 class SvbaseInt
 {
@@ -998,7 +987,6 @@ inline SvbaseInt::~SvbaseInt() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseInt &SvbaseInt_O, &SvbaseInt_IO;
-
 // common api for STL and SLISC
 inline Int *ptr(const SvbaseInt &v) { return v.p(); }
 
@@ -1115,12 +1103,10 @@ inline void SvbaseLlongC::shift(Long_I N) {
 inline SvbaseLlongC::~SvbaseLlongC() {}
 
 typedef const SvbaseLlongC &SvbaseLlong_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseLlong_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseLlongC &` makes it ambiguous
 inline const Llong *cptr(SvbaseLlong_I v) { return v.p(); }
-
 
 class SvbaseLlong
 {
@@ -1247,7 +1233,6 @@ inline SvbaseLlong::~SvbaseLlong() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseLlong &SvbaseLlong_O, &SvbaseLlong_IO;
-
 // common api for STL and SLISC
 inline Llong *ptr(const SvbaseLlong &v) { return v.p(); }
 
@@ -1364,12 +1349,10 @@ inline void SvbaseFloatC::shift(Long_I N) {
 inline SvbaseFloatC::~SvbaseFloatC() {}
 
 typedef const SvbaseFloatC &SvbaseFloat_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseFloat_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseFloatC &` makes it ambiguous
 inline const Float *cptr(SvbaseFloat_I v) { return v.p(); }
-
 
 class SvbaseFloat
 {
@@ -1496,7 +1479,6 @@ inline SvbaseFloat::~SvbaseFloat() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseFloat &SvbaseFloat_O, &SvbaseFloat_IO;
-
 // common api for STL and SLISC
 inline Float *ptr(const SvbaseFloat &v) { return v.p(); }
 
@@ -1613,12 +1595,10 @@ inline void SvbaseDoubC::shift(Long_I N) {
 inline SvbaseDoubC::~SvbaseDoubC() {}
 
 typedef const SvbaseDoubC &SvbaseDoub_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseDoub_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseDoubC &` makes it ambiguous
 inline const Doub *cptr(SvbaseDoub_I v) { return v.p(); }
-
 
 class SvbaseDoub
 {
@@ -1745,7 +1725,6 @@ inline SvbaseDoub::~SvbaseDoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseDoub &SvbaseDoub_O, &SvbaseDoub_IO;
-
 // common api for STL and SLISC
 inline Doub *ptr(const SvbaseDoub &v) { return v.p(); }
 
@@ -1862,12 +1841,10 @@ inline void SvbaseLdoubC::shift(Long_I N) {
 inline SvbaseLdoubC::~SvbaseLdoubC() {}
 
 typedef const SvbaseLdoubC &SvbaseLdoub_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseLdoub_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseLdoubC &` makes it ambiguous
 inline const Ldoub *cptr(SvbaseLdoub_I v) { return v.p(); }
-
 
 class SvbaseLdoub
 {
@@ -1994,7 +1971,6 @@ inline SvbaseLdoub::~SvbaseLdoub() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseLdoub &SvbaseLdoub_O, &SvbaseLdoub_IO;
-
 // common api for STL and SLISC
 inline Ldoub *ptr(const SvbaseLdoub &v) { return v.p(); }
 
@@ -2113,12 +2089,10 @@ inline void SvbaseFcompC::shift(Long_I N) {
 inline SvbaseFcompC::~SvbaseFcompC() {}
 
 typedef const SvbaseFcompC &SvbaseFcomp_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseFcomp_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseFcompC &` makes it ambiguous
 inline const Fcomp *cptr(SvbaseFcomp_I v) { return v.p(); }
-
 
 class SvbaseFcomp
 {
@@ -2245,7 +2219,6 @@ inline SvbaseFcomp::~SvbaseFcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseFcomp &SvbaseFcomp_O, &SvbaseFcomp_IO;
-
 // common api for STL and SLISC
 inline Fcomp *ptr(const SvbaseFcomp &v) { return v.p(); }
 
@@ -2362,12 +2335,10 @@ inline void SvbaseCompC::shift(Long_I N) {
 inline SvbaseCompC::~SvbaseCompC() {}
 
 typedef const SvbaseCompC &SvbaseComp_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseComp_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseCompC &` makes it ambiguous
 inline const Comp *cptr(SvbaseComp_I v) { return v.p(); }
-
 
 class SvbaseComp
 {
@@ -2494,7 +2465,6 @@ inline SvbaseComp::~SvbaseComp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseComp &SvbaseComp_O, &SvbaseComp_IO;
-
 // common api for STL and SLISC
 inline Comp *ptr(const SvbaseComp &v) { return v.p(); }
 
@@ -2611,12 +2581,10 @@ inline void SvbaseLcompC::shift(Long_I N) {
 inline SvbaseLcompC::~SvbaseLcompC() {}
 
 typedef const SvbaseLcompC &SvbaseLcomp_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseLcomp_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseLcompC &` makes it ambiguous
 inline const Lcomp *cptr(SvbaseLcomp_I v) { return v.p(); }
-
 
 class SvbaseLcomp
 {
@@ -2743,7 +2711,6 @@ inline SvbaseLcomp::~SvbaseLcomp() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseLcomp &SvbaseLcomp_O, &SvbaseLcomp_IO;
-
 // common api for STL and SLISC
 inline Lcomp *ptr(const SvbaseLcomp &v) { return v.p(); }
 
@@ -2862,12 +2829,10 @@ inline void SvbaseFimagC::shift(Long_I N) {
 inline SvbaseFimagC::~SvbaseFimagC() {}
 
 typedef const SvbaseFimagC &SvbaseFimag_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseFimag_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseFimagC &` makes it ambiguous
 inline const Fimag *cptr(SvbaseFimag_I v) { return v.p(); }
-
 
 class SvbaseFimag
 {
@@ -2994,7 +2959,6 @@ inline SvbaseFimag::~SvbaseFimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseFimag &SvbaseFimag_O, &SvbaseFimag_IO;
-
 // common api for STL and SLISC
 inline Fimag *ptr(const SvbaseFimag &v) { return v.p(); }
 
@@ -3111,12 +3075,10 @@ inline void SvbaseImagC::shift(Long_I N) {
 inline SvbaseImagC::~SvbaseImagC() {}
 
 typedef const SvbaseImagC &SvbaseImag_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseImag_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseImagC &` makes it ambiguous
 inline const Imag *cptr(SvbaseImag_I v) { return v.p(); }
-
 
 class SvbaseImag
 {
@@ -3243,7 +3205,6 @@ inline SvbaseImag::~SvbaseImag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseImag &SvbaseImag_O, &SvbaseImag_IO;
-
 // common api for STL and SLISC
 inline Imag *ptr(const SvbaseImag &v) { return v.p(); }
 
@@ -3360,12 +3321,10 @@ inline void SvbaseLimagC::shift(Long_I N) {
 inline SvbaseLimagC::~SvbaseLimagC() {}
 
 typedef const SvbaseLimagC &SvbaseLimag_I;
-
 // common api for STL and SLISC
 inline Long size(SvbaseLimag_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const SvbaseLimagC &` makes it ambiguous
 inline const Limag *cptr(SvbaseLimag_I v) { return v.p(); }
-
 
 class SvbaseLimag
 {
@@ -3492,7 +3451,6 @@ inline SvbaseLimag::~SvbaseLimag() {}
 
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const SvbaseLimag &SvbaseLimag_O, &SvbaseLimag_IO;
-
 // common api for STL and SLISC
 inline Limag *ptr(const SvbaseLimag &v) { return v.p(); }
 

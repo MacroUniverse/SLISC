@@ -4,6 +4,11 @@
 #include "../global.h"
 
 namespace slisc {
+
+inline bool isnan(Fcomp_I s) { return s != s; }
+inline bool isnan(Comp_I s) { return s != s; }
+inline bool isnan(Lcomp_I s) { return s != s; }
+
 inline bool operator==(Char_I s1, Fcomp_I s2) { return real(s2) == s1 && imag(s2) == 0; }
 inline bool operator!=(Char_I s1, Fcomp_I s2) { return !(s1 == s2); }
 

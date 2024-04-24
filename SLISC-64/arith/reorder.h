@@ -267,44 +267,46 @@ inline void flip_vv(Int *v, const Int *v1, Long_I N)
 
 
 inline void flip(SvecInt_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 inline void flip(SvecLlong_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 inline void flip(SvecDoub_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 
 inline void flip(SvecComp_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 
 inline void flip(vecLlong_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 inline void flip(vecDoub_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 
 inline void flip(vecComp_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 
 inline void flip(vecStr_IO v)
-{ flip_v(&v[0], v.size()); }
+{ if (v.size()) flip_v(ptr(v), v.size()); }
 
 
 inline void flip(SvecInt_O v, SvecInt_I v1)
 {
 	assert_same_shape1(v, v1);
-	flip_vv(v.p(), v1.p(), v1.size());
+	if (v1.size())
+		flip_vv(ptr(v), cptr(v1), v1.size());
 }
 
 inline void flip(SvecDoub_O v, SvecDoub_I v1)
 {
 	assert_same_shape1(v, v1);
-	flip_vv(v.p(), v1.p(), v1.size());
+	if (v1.size())
+		flip_vv(ptr(v), cptr(v1), v1.size());
 }
 
 

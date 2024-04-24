@@ -166,16 +166,13 @@ inline @Class@::~@Class@() {}
 
 //% if constness
 typedef const @Class@ &@SvbaseT@_I;
-
 // common api for STL and SLISC
 inline Long size(@SvbaseT@_I v) { return v.size(); }
-
+	// cannot overload ptr() because auto cast `const @SvbaseTC@ &` makes it ambiguous
 inline const @T@ *cptr(@SvbaseT@_I v) { return v.p(); }
-
 //% else
 // use "const" so that it can be bind to a temporary e.g. copy(cut0(a), cut0(b))
 typedef const @Class@ &@SvbaseT@_O, &@SvbaseT@_IO;
-
 // common api for STL and SLISC
 inline @T@ *ptr(const @SvbaseT@ &v) { return v.p(); }
 //% end

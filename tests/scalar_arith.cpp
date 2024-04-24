@@ -1,5 +1,6 @@
 #include "../SLISC/arith/scalar_arith.h"
 #include "../SLISC/util/STL_util.h"
+#include "../SLISC/algo/prime.h"
 using namespace slisc;
 
 template <class T1, class T2>

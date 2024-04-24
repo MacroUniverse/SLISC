@@ -5,7 +5,7 @@
 #include "config.h"
 
 #ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
+	#define _CRT_SECURE_NO_WARNINGS
 #endif
 
 // ===== STL headers =====
@@ -167,16 +167,18 @@ namespace slisc {
 	};
 }
 
+// error handling with location info
+// you can define your own version
 #ifndef SLS_ERR
-#ifndef SLS_THROW_ERR
-	#define SLS_ERR(str) do { \
-		std::cerr << SLS_RED_BOLD "Error: " << std::string(str) << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
-	} while(0)
-#else
-	#define SLS_ERR(str) do { \
-		throw slisc::sls_err(SLS_RED_BOLD "Error: " + std::string(str) + SLS_NO_STYLE " " SLS_WHERE); \
-	} while(0)
-#endif
+	#ifndef SLS_THROW_ERR
+		#define SLS_ERR(str) do { \
+			std::cerr << SLS_RED_BOLD "Error: " << std::string(str) << SLS_NO_STYLE " " SLS_WHERE << std::endl; std::exit(1); \
+		} while(0)
+	#else
+		#define SLS_ERR(str) do { \
+			throw slisc::sls_err(SLS_RED_BOLD "Error: " + std::string(str) + SLS_NO_STYLE " " SLS_WHERE); \
+		} while(0)
+	#endif
 #endif
 
 #define SLS_FAIL SLS_ERR("failed!")
@@ -197,26 +199,28 @@ typedef __float128 _Float128;
 namespace slisc {
 
 // using std
-
-using std::u16string; using std::u32string;
-using std::complex; using std::tie;
-using std::vector; using std::string; using std::stringstream;
-using std::to_string; using std::pair; using std::tuple;
+using std::abs; using std::array;
+using std::complex; using std::cin; using std::cout; using std::cerr;
+using std::ceil; using std::conj; using std::cos; using std::cosh;
+using std::deque; using std::endl; using std::exp; using std::expm1;
+using std::floor; using std::get; using std::hypot;
+using std::isnan; using std::isinf; using std::ifstream; using std::imag;
+using std::log; using std::log10; using std::log1p;
 using std::make_pair; using std::make_tuple;
-using std::cin; using std::cout; using std::cerr; using std::endl;
-using std::setw; using std::ifstream; using std::ofstream;
-using std::min; using std::max; using std::swap; using std::reverse;
-using std::numeric_limits; using std::unordered_set; using std::set;
-using std::unordered_map; using std::map; using std::get;
-using std::deque; using std::queue; using std::stack;
-using std::isinf; using std::round; using std::ceil; using std::floor;
-using std::abs; using std::real; using std::imag; using std::array;
-using std::conj; using std::pow; using std::priority_queue;
-using std::sqrt; using std::sin; using std::cos; using std::tan;
-using std::exp; using std::log; using std::log10;
-using std::expm1; using std::log1p; using std::hypot;
-using std::sinh; using std::cosh; using std::tanh;
-using std::runtime_error; using std::move;
+using std::min; using std::max; using std::map; using std::move;
+using std::numeric_limits; using std::ofstream;
+using std::pair; using std::pow; using std::priority_queue;
+using std::queue;
+using std::round; using std::real; using std::reverse; using std::runtime_error;
+using std::string; using std::stringstream; using std::sinh;
+using std::stack; using std::sqrt; using std::sin;
+using std::setw; using std::swap; using std::set;
+using std::tie; using std::tuple; using std::to_string;
+using std::tan; using std::tanh;
+using std::u16string; using std::u32string;
+using std::unordered_set; using std::unordered_map;
+using std::vector;
+
 constexpr size_t npos = std::string::npos; // `using` doesn't work
 
 // Scalar types
@@ -420,8 +424,6 @@ typedef vvecDoub &vvecDoub_O, &vvecDoub_IO;
 typedef const vvecLong &vvecLong_I;
 typedef vvecLong &vvecLong_O, &vvecLong_IO;
 
-inline bool isnan(Comp_I s) { return s != s; }
-
 // === print() like python ===
 // print(a,b,...) is equivalent to `cout << a << b << ... << endl`
 // don't worry about how it works, just use it like a magic
@@ -432,7 +434,7 @@ void print_imp(const T& first, const Args&... args) {
 	cout << first; print_imp(args...);
 }
 
-// std::mutex print_mutex; // for thread safety （ODR error!)
+// std::mutex print_mutex; // for thread safety (ODR error!)
 
 template<typename T, typename... Args>
 void print(const T& first, const Args&... args)
@@ -461,41 +463,5 @@ const Qdoub
 PIq = 3.14159265358979323846264338327950288Q,
 Eq = 2.71828182845904523536028747135266250Q;
 #endif
-
-namespace c {
-	// exact
-	const Doub
-	c0 = 299792458,                   // speed of light
-	h = 6.62607015e-34,               // Plank constant
-	hbar = h/(2*PI),                  // reduced Plank constant
-	qe = 1.602176634e-19,             // elementary charge
-	Na = 6.02214076e23,               // Avogadro constant
-	kb = 1.380649e-23,                // Boltzmann constant
-	R = Na*kb,                        // gas constant
-	u = 0.9999999996530e-3/Na,        // atomic mass unit
-	AU = 149597870700,                // astronomical unit
-	ly = c0*3600*24*365.25,           // light-year
-
-	// measured
-	mu0 = 1.25663706212e-6,                // vacuum permeability
-	epsilon0 = 1/(mu0*c0*c0),              // vacuum permittivity
-	k = 1/(4*PI*epsilon0),                 // Coulomb's constant
-	G = 6.67430e-11,                       // gravitational constant
-	alpha = qe*qe/(4*PI*epsilon0*hbar*c0), // fine structure constant
-	me = 9.1093837015e-31,                 // electron mass
-	mp = 1.67262192369e-27,                // proton mass
-	Rh = 1.0973731568160e7,                // Rydberg constant
-	a0 = 5.29177210903e-11,                // Bohr radius
-
-	// conversion constants
-	inch = 2.54e-2,                   // length
-	gauss = 1e-4,                     // electric field
-	mile = 6.09e+2,                   // length
-	lb = 0.454, pound=0.454,          // mass
-	au_x = a0,                        // 1 a.u. distance
-	au_t = me*a0*a0/hbar,             // 1 a.u. time
-	au_E = hbar*hbar/(me*a0*a0),      // 1 a.u. energy
-	au_Ef = qe/(4*PI*epsilon0*a0*a0); // 1 a.u. electric field
-}
 
 } // namespace slisc
