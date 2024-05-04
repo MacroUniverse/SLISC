@@ -9,7 +9,7 @@
 
 SLISC is a header-only c++11 library written in a style similar to Numerical Recipes 3ed, using simple C++ features so that it is easy to read, debug and modify while maintaining a relatively high performance. The library currently provides simple classes for vector, matrix (row-major and column-major, fixed-size and sparse), 3- and 4-D arrays (column-major), and basic arithmetics for them. Many kinds of viewing classes are supported. Code from many other projects or libraries has been incorporated (e.g. Numerical Recipes, Boost, Eigen, Intel MKL etc. , which might not be header-only), and Macros can be defined to turn them on or off. The library also provides some utilities frequently used, such as timers and IO utilities (a text based file format `.matt` similar to Matlab's `.mat`, and a corresponding binary format `.matb`).
 
-SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests has been performed on Linux using g++, clang++ and Intel compiler. Note that this is a project in development, interfaces are subjected to change and not all parts are working.
+SLISC has a comprehensive test suit, `main.cpp` will execute all the tests. Tests have been performed on Linux using g++, clang++ and Intel compiler. Note that this is a project in development, interfaces are subject to change and not all features are fully implemented.
 
 A simple example:
 
@@ -41,7 +41,7 @@ int main()
 
 	// === view types ===
 	SvecDoub bs = cut0(b, 0); // get a view of 1st column of b
-	bs[0] += 1; // view can be modified, and used just like a normal vector/matrix
+	bs[0] += 1; // a view can be modified, and used just like a normal vector/matrix
 	Doub s2 = sum(bs); // sum of bs
 	DvecDoub bd = cut1(b, 1); // get a view of 2nd row of b
 	bd = cut1(b, 0, 1, 2); // get a view from b(0,1) to b(0,2)
