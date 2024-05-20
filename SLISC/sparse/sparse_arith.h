@@ -152,7 +152,7 @@ inline void mul_v_cooh_v(Ty *y, const Ta *a_ij, const Long *i, const Long *j, Lo
 // TODO: we can optimize this by using BLAS/Eigen matrix-vector multiplication for each block
 // or, just use Eigen sparse matrix
 template <class Ty, class Tx, class Ta>
-inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
+inline void mul_v_cmobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N)
 {
 	vecset(y, 0, N);
 	Long step = blk_size - 1, step2 = blk_size - 2;
@@ -172,7 +172,7 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 	// middle blocks
 	for (Long blk = 1; blk < Nblk - 1; ++blk) {
 		for (Long j = 0; j < blk_size; ++j) {
-			Tx s = x[j];
+			const Tx &s = x[j];
 			for (Long i = 0; i < blk_size; ++i) {
 				y[i] += (*a) * s;
 				++a;
@@ -183,7 +183,7 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 	
 	// last block
 	for (Long j = 0; j < step; ++j) {
-		Tx s = x[j];
+		const Tx &s = x[j];
 		for (Long i = 0; i < step; ++i) {
 			y[i] += (*a) * s;
 			++a;
@@ -192,8 +192,135 @@ inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Lo
 	}
 }
 
+// use a Cmobd submatrix to multiply a vector
+template <class Ty, class Tx, class Ta>
+inline void mul_v_cmobd_sub_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I Ny, Long_I start_blk, Long_I n_blk)
+{
+#ifdef SLS_CHECK_SHAPES
+	SLS_ASSERT(start_blk >= 0);
+	SLS_ASSERT(n_blk > 0);
+	SLS_ASSERT(start_blk + n_blk <= Nblk);
+	Long Ndim = Nblk * (blk_size-1) + 1;
+	if (start_blk == 0) --Ndim;
+	if (start_blk + n_blk == Nblk) --Ndim;
+	SLS_ASSERT(Ny == Ndim);
+	SLS_ASSERT(Ny == Ndim);
+#endif
+	vecset(y, 0, Ny);
+	const Long step = blk_size - 1, step2 = blk_size - 2;
+	Long blk, nFe_mid = n_blk;
+	bool has_last_blk = (start_blk + n_blk == Nblk);
+
+	// first block
+	if (start_blk == 0) {
+		a += blk_size + 1; // move to first element
+		for (Long j = 0; j < step; ++j) {
+			const Tx &s = x[j];
+			for (Long i = 0; i < step; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+			++a;
+		}
+		x += step2; y += step2; --a; ++blk; --nFe_mid;
+	}
+	else {
+		// jump to the 1st elm of block `start_blk`
+		a += blk_size * blk_size * start_blk;
+	}
+
+	// middle blocks
+	if (has_last_blk) --nFe_mid;
+	for (; blk < nFe_mid; ++blk) {
+		for (Long j = 0; j < blk_size; ++j) {
+			const Tx &s = x[j];
+			for (Long i = 0; i < blk_size; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+	}
+
+	// last block
+	if (has_last_blk) {
+		for (Long j = 0; j < step; ++j) {
+			const Tx &s = x[j];
+			for (Long i = 0; i < step; ++i) {
+				y[i] += (*a) * s;
+				++a;
+			}
+			++a;
+		}
+	}
+}
+
+template <class Ty, class Tx, class Ta>
+inline void mul_add_v_cmobd_sub_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I Ny,
+	Long_I start_blk, Long_I n_blk, Long_I step_xy, Bool_I add_eq = false)
+{
+#ifdef SLS_CHECK_SHAPES
+	SLS_ASSERT(start_blk >= 0);
+	SLS_ASSERT(n_blk > 0);
+	SLS_ASSERT(start_blk + n_blk <= Nblk);
+	Long Ndim = Nblk * (blk_size-1) + 1;
+	if (start_blk == 0) --Ndim;
+	if (start_blk + n_blk == Nblk) --Ndim;
+	SLS_ASSERT(Ny == Ndim);
+	SLS_ASSERT(Ny == Ndim);
+#endif
+	const Long step = step_xy*(blk_size - 1), step2 = step_xy*(blk_size - 2);
+	Long blk, nFe_mid = n_blk;
+	bool has_last_blk = (start_blk + n_blk == Nblk);
+
+	if (!add_eq) vecset(y, 0, Ny);
+
+	// first block
+	if (start_blk == 0) {
+		a += blk_size + 1; // move to first element
+		for (Long j = 0; j < step; j+=step_xy) {
+			const Tx &s = x[j];
+			for (Long i = 0; i < step; i+=step_xy) {
+				y[i] += (*a) * s;
+				++a;
+			}
+			++a;
+		}
+		x += step2; y += step2; --a; ++blk; --nFe_mid;
+	}
+	else {
+		// jump to the 1st elm of block `start_blk`
+		a += blk_size * blk_size * start_blk;
+	}
+
+	// middle blocks
+	if (has_last_blk) --nFe_mid;
+	for (; blk < nFe_mid; ++blk) {
+		for (Long j = 0; j < blk_size; j+=step_xy) {
+			const Tx &s = x[j];
+			for (Long i = 0; i < blk_size; i+=step_xy) {
+				y[i] += (*a) * s;
+				++a;
+			}
+		}
+		x += step; y += step;
+	}
+
+	// last block
+	if (has_last_blk) {
+		for (Long j = 0; j < step; j+=step_xy) {
+			const Tx &s = x[j];
+			for (Long i = 0; i < step; i+=step_xy) {
+				y[i] += (*a) * s;
+				++a;
+			}
+			++a;
+		}
+	}
+}
+
 template <class Ty, class Tx, class Ta, class Talpha, class Tbeta>
-inline void mul_v_cmatobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N,
+inline void mul_v_cmobd_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, Long_I Nblk, Long_I N,
 	Long_I step_y, Long_I step_x, const Talpha &alpha, const Tbeta &beta)
 {
 	Long step = blk_size - 1, step2 = blk_size - 2;
@@ -247,7 +374,7 @@ inline void mul(SvbaseInt_O y, CmobdInt_I a, SvbaseInt_I x)
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 
@@ -257,7 +384,7 @@ inline void mul(SvbaseDoub_O y, CmobdDoub_I a, SvbaseDoub_I x)
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 
@@ -268,7 +395,7 @@ inline void mul(SvbaseDoub_O y, CmobdDoub_I a, SvbaseDoub_I x, const Talpha &alp
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
 }
 
 
@@ -279,7 +406,7 @@ inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x)
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 
@@ -290,7 +417,7 @@ inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x, const Talpha &alp
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
 }
 
 
@@ -300,7 +427,7 @@ inline void mul(SvbaseComp_O y, CmobdComp_I a, SvbaseComp_I x)
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 
@@ -311,7 +438,7 @@ inline void mul(SvbaseComp_O y, CmobdComp_I a, SvbaseComp_I x, const Talpha &alp
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
 }
 
 
@@ -321,7 +448,7 @@ inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x)
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0());
 }
 
 
@@ -332,7 +459,7 @@ inline void mul(SvbaseComp_O y, CmobdImag_I a, SvbaseComp_I x, const Talpha &alp
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), 1, 1, alpha, beta);
 }
 
 
@@ -344,7 +471,7 @@ inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x, const Talpha &alpha, con
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
 
 inline void mul(DvecInt_O y, CmobdInt_I a, DvecInt_I x) { return mul(y, a, x, 1, 0); }
@@ -356,7 +483,7 @@ inline void mul(DvecDoub_O y, CmobdDoub_I a, DvecDoub_I x, const Talpha &alpha, 
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
 
 inline void mul(DvecDoub_O y, CmobdDoub_I a, DvecDoub_I x) { return mul(y, a, x, 1, 0); }
@@ -368,11 +495,30 @@ inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x, const Talpha &alpha, 
 	if (y.size() != a.n0() || x.size() != a.n1())
 		SLS_ERR("wrong shape!");
 #endif
-	mul_v_cmatobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
+	mul_v_cmobd_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), a.n0(), y.step(), x.step(), alpha, beta);
 }
 
 inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x) { return mul(y, a, x, 1, 0); }
 
+
+// only use submatrix of a_sub to multiply a vector
+// the submatrix is from the `start_blk` block, with `n_blk` # of blocks
+inline void mul(SvbaseComp_O y, CmobdDoub_I a, SvbaseComp_I x, Long_I start_blk, Long_I n_blk)
+{
+#ifdef SLS_CHECK_SHAPES
+	SLS_ASSERT(x.size() == y.size());
+#endif
+	mul_v_cmobd_sub_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), y.size(), start_blk, n_blk);
+}
+
+inline void mul(DvecComp_O y, CmobdDoub_I a, DvecComp_I x, Long_I start_blk, Long_I n_blk, bool add_eq = false)
+{
+#ifdef SLS_CHECK_SHAPES
+	SLS_ASSERT(x.size() == y.size());
+	SLS_ASSERT(x.step() == y.step());
+#endif
+	mul_add_v_cmobd_sub_v(y.p(), x.p(), a.p(), a.nblk0(), a.nblk(), y.size(), start_blk, n_blk, x.step(), add_eq);
+}
 
 inline void mul(SvbaseComp_O y, McooDoub_I a, SvbaseComp_I x)
 {

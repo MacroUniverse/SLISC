@@ -1091,17 +1091,87 @@ inline Qdoub max_abs_dcmat(Long_O i, Long_O j, const Qcomp *v, Long_I N0, Long_I
 inline Doub max_abs(SvbaseDoub_I v) { return max_abs_v(v.p(), v.size()); }
 inline Doub max_abs(Long_O ind, SvbaseDoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
+inline Doub max_abs_par(Long_O ind, SvbaseDoub_I v) {
+	const Doub *p = v.p();
+	Doub s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
+
 inline Qdoub max_abs(SvbaseQdoub_I v) { return max_abs_v(v.p(), v.size()); }
 inline Qdoub max_abs(Long_O ind, SvbaseQdoub_I v) { return max_abs_v(ind, v.p(), v.size()); }
+
+inline Qdoub max_abs_par(Long_O ind, SvbaseQdoub_I v) {
+	const Qdoub *p = v.p();
+	Qdoub s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
 
 inline Int max_abs(SvbaseInt_I v) { return max_abs_v(v.p(), v.size()); }
 inline Int max_abs(Long_O ind, SvbaseInt_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
+inline Int max_abs_par(Long_O ind, SvbaseInt_I v) {
+	const Int *p = v.p();
+	Int s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
+
 inline Doub max_abs(SvbaseComp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Doub max_abs(Long_O ind, SvbaseComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
+inline Doub max_abs_par(Long_O ind, SvbaseComp_I v) {
+	const Comp *p = v.p();
+	Doub s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
+
 inline Qdoub max_abs(SvbaseQcomp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Qdoub max_abs(Long_O ind, SvbaseQcomp_I v) { return max_abs_v(ind, v.p(), v.size()); }
+
+inline Qdoub max_abs_par(Long_O ind, SvbaseQcomp_I v) {
+	const Qcomp *p = v.p();
+	Qdoub s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
 
 inline Doub max_abs(DvecDoub_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 
@@ -1114,17 +1184,171 @@ inline Qdoub max_abs(DvecQcomp_I v) { return max_abs_v(v.p(), v.size(), v.step()
 inline Doub max_abs(MatComp_I v) { return max_abs_v(v.p(), v.size()); }
 inline Doub max_abs(Long_O ind, MatComp_I v) { return max_abs_v(ind, v.p(), v.size()); }
 
+inline Doub max_abs_par(Long_O ind, MatComp_I v) {
+	const Comp *p = v.p();
+	Doub s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
+
 inline Doub max_abs(DcmatDoub_I v) { return max_abs_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 inline Doub max_abs(Long_O i, Long_O j, DcmatDoub_I v) { return max_abs_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
+
+inline Doub max_abs_par(DcmatDoub_I a) {
+	Long Nr = a.n0();
+	Doub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Doub *p = &a(0, j);
+		Doub s, m = abs(p[0]);
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) m = s;
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
+inline Doub max_abs_par(Long_O ind0, Long_O ind1, DcmatDoub_I a) {
+	Long Nr = a.n0();
+	Doub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Doub *p = &a(0, j);
+		Doub s, m = abs(p[0]);
+		ind0 = 0, ind1 = j;
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) {
+				m = s; ind0 = i; ind1 = j;
+			}
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
 
 inline Qdoub max_abs(DcmatQdoub_I v) { return max_abs_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 inline Qdoub max_abs(Long_O i, Long_O j, DcmatQdoub_I v) { return max_abs_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 
+inline Qdoub max_abs_par(DcmatQdoub_I a) {
+	Long Nr = a.n0();
+	Qdoub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Qdoub *p = &a(0, j);
+		Qdoub s, m = abs(p[0]);
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) m = s;
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
+inline Qdoub max_abs_par(Long_O ind0, Long_O ind1, DcmatQdoub_I a) {
+	Long Nr = a.n0();
+	Qdoub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Qdoub *p = &a(0, j);
+		Qdoub s, m = abs(p[0]);
+		ind0 = 0, ind1 = j;
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) {
+				m = s; ind0 = i; ind1 = j;
+			}
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
 inline Doub max_abs(DcmatComp_I v) { return max_abs_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 inline Doub max_abs(Long_O i, Long_O j, DcmatComp_I v) { return max_abs_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
 
+inline Doub max_abs_par(DcmatComp_I a) {
+	Long Nr = a.n0();
+	Doub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Comp *p = &a(0, j);
+		Doub s, m = abs(p[0]);
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) m = s;
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
+inline Doub max_abs_par(Long_O ind0, Long_O ind1, DcmatComp_I a) {
+	Long Nr = a.n0();
+	Doub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Comp *p = &a(0, j);
+		Doub s, m = abs(p[0]);
+		ind0 = 0, ind1 = j;
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) {
+				m = s; ind0 = i; ind1 = j;
+			}
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
 inline Qdoub max_abs(DcmatQcomp_I v) { return max_abs_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 inline Qdoub max_abs(Long_O i, Long_O j, DcmatQcomp_I v) { return max_abs_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
+
+inline Qdoub max_abs_par(DcmatQcomp_I a) {
+	Long Nr = a.n0();
+	Qdoub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Qcomp *p = &a(0, j);
+		Qdoub s, m = abs(p[0]);
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) m = s;
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
+inline Qdoub max_abs_par(Long_O ind0, Long_O ind1, DcmatQcomp_I a) {
+	Long Nr = a.n0();
+	Qdoub m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Qcomp *p = &a(0, j);
+		Qdoub s, m = abs(p[0]);
+		ind0 = 0, ind1 = j;
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) {
+				m = s; ind0 = i; ind1 = j;
+			}
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
 
 
 // sum of absolute values
@@ -1854,6 +2078,21 @@ inline Doub norm2(DcmatComp_I a)
 	return s2;
 }
 
+inline Doub norm2_par(DcmatComp_I a)
+{
+	Long Nr = a.n0();
+	Doub s2 = 0;
+#pragma omp parallel for reduction(+:s2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Comp *p = &a(0, j);
+		Doub s = 0;
+		for (Long i = 0; i < Nr; ++i)
+			s += abs2(p[i]);
+		s2 += s;
+	}
+	return s2;
+}
+
 inline Doub norm2_dif(DcmatComp_I a, DcmatComp_I a1)
 {
 	const Comp *p = a.p(), *p1 = a1.p();
@@ -1885,6 +2124,21 @@ inline Qdoub norm2(DcmatQcomp_I a)
 		for (Long i = 0; i < Nr; ++i)
 			s2 += abs2(p[i]);
 		p += lda;
+	}
+	return s2;
+}
+
+inline Qdoub norm2_par(DcmatQcomp_I a)
+{
+	Long Nr = a.n0();
+	Qdoub s2 = 0;
+#pragma omp parallel for reduction(+:s2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const Qcomp *p = &a(0, j);
+		Qdoub s = 0;
+		for (Long i = 0; i < Nr; ++i)
+			s += abs2(p[i]);
+		s2 += s;
 	}
 	return s2;
 }

@@ -11,8 +11,9 @@
 
 namespace slisc {
 
-// execute a command in shell and get the output to stdout
+// execute a command in default shell and get the output to stdout
 // return exit code
+// use `int system(cmd)` if you don't need stdout
 inline int exec_str(Str_O stdout, Str_I cmd)
 {
 	SLS_ASSERT(&stdout != &cmd);

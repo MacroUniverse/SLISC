@@ -268,11 +268,60 @@ inline @Tr@ max_abs_dcmat(Long_O i, Long_O j, const @T@ *v, Long_I N0, Long_I N1
 //% if is_dense(T)
 inline @Tr@ max_abs(@T@_I v) { return max_abs_v(v.p(), v.size()); }
 inline @Tr@ max_abs(Long_O ind, @T@_I v) { return max_abs_v(ind, v.p(), v.size()); }
+
+inline @Tr@ max_abs_par(Long_O ind, @T@_I v) {
+	const @Ts@ *p = v.p();
+	@Tr@ s, m = abs(p[0]);
+	ind = 0;
+#pragma omp parallel for reduction(max:m)
+	for (Long i = 1; i < v.size(); ++i) {
+		s = abs(p[i]);
+		if (m < s) {
+			m = s; ind = i;
+		}
+	}
+	return m;
+}
 //% elseif is_Dvec(T)
 inline @Tr@ max_abs(@T@_I v) { return max_abs_v(v.p(), v.size(), v.step()); }
 //% elseif is_Dcmat(T)
 inline @Tr@ max_abs(@T@_I v) { return max_abs_dcmat(v.p(), v.n0(), v.n1(), v.lda()); }
 inline @Tr@ max_abs(Long_O i, Long_O j, @T@_I v) { return max_abs_dcmat(i, j, v.p(), v.n0(), v.n1(), v.lda()); }
+
+inline @Tr@ max_abs_par(@T@_I a) {
+	Long Nr = a.n0();
+	@Tr@ m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const @Ts@ *p = &a(0, j);
+		@Tr@ s, m = abs(p[0]);
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) m = s;
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
+
+inline @Tr@ max_abs_par(Long_O ind0, Long_O ind1, @T@_I a) {
+	Long Nr = a.n0();
+	@Tr@ m2 = 0;
+#pragma omp parallel for reduction(max:m2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const @Ts@ *p = &a(0, j);
+		@Tr@ s, m = abs(p[0]);
+		ind0 = 0, ind1 = j;
+		for (Long i = 1; i < Nr; ++i) {
+			s = abs(p[i]);
+			if (m < s) {
+				m = s; ind0 = i; ind1 = j;
+			}
+		}
+		if (m > m2) m2 = m;
+	}
+	return m2;
+}
 //% else
 //%     error('Not implemented!');
 //% end
@@ -447,6 +496,21 @@ inline @Tr@ norm2(@T@_I a)
 		for (Long i = 0; i < Nr; ++i)
 			s2 += abs2(p[i]);
 		p += lda;
+	}
+	return s2;
+}
+
+inline @Tr@ norm2_par(@T@_I a)
+{
+	Long Nr = a.n0();
+	@Tr@ s2 = 0;
+#pragma omp parallel for reduction(+:s2)
+	for (Long j = 0; j < a.n1(); ++j) {
+		const @Ts@ *p = &a(0, j);
+		@Tr@ s = 0;
+		for (Long i = 0; i < Nr; ++i)
+			s += abs2(p[i]);
+		s2 += s;
 	}
 	return s2;
 }

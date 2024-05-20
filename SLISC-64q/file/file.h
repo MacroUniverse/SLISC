@@ -1,30 +1,30 @@
 #pragma once
 #include "../global.h"
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
+#if SLS_CPP >= 17 // C++17 standard
+	#include <filesystem>
+	using std::filesystem;
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	#include <sys/types.h> // for time_stamp
-	#include <sys/stat.h> // for time_stamp, stat()
+	#include <sys/stat.h>  // for time_stamp, stat()
+	#include <time.h>
+	#include <stdio.h>
+	#include "../util/linux.h" // for exec_str()
 #elif defined(SLS_USE_WINDOWS)
+	// include MinGW/MSYS
 	#include <Windows.h>
+	#ifdef SLS_USE_MSVC
+		#include "../algo/search.h"
+		#include "../str/str.h"	
+	#endif
 #endif
 #include "../util/time.h"
-#include "../util/linux.h"
 #include "../arith/arith1.h"
 #include "../str/unicode.h"
 #include "../algo/sort.h"
 
-#ifdef SLS_USE_MSVC
-	#include "../algo/search.h"
-	#include "../str/str.h"
-#else
-	#include <unistd.h>
-	#include <time.h>
-	#include <stdio.h>
-#endif
-
 namespace slisc {
 
 using std::stringstream;
-
 
 inline void file_list(vecStr_O names, Str_I path, Bool_I append = false);
 inline void read(ifstream &fin, Str_O str);
@@ -116,12 +116,12 @@ inline void file_remove(Str_I fname)
 // get innode of a file
 inline Ullong file_innode(Str_I file)
 {
-    struct stat stat1;
+	struct stat stat1;
 	if (!file_exist(file))
 		SLS_ERR("file_innode: file not exist: " + file);
-    if (stat(file.c_str(), &stat1) != 0)
-        SLS_ERR("Error getting file status");
-    return stat1.st_ino;
+	if (stat(file.c_str(), &stat1) != 0)
+		SLS_ERR("Error getting file status");
+	return stat1.st_ino;
 }
 
 // if is the same file
@@ -164,24 +164,33 @@ inline Str path2dir(Str_I fname)
 
 inline void mkdir(Str_I path)
 {
+#if SLS_CPP >= 17
+	if (!filesystem::create_directory(path))
+		SLS_ERR("mkdir failed: " + path);
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	Str path1 = path;
 	replace(path1, "\"", "\\\"");
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (system(("mkdir -p \"" + path1 + "\"").c_str()))
 		SLS_ERR("mkdir failed: " + path1);
 #elif defined(SLS_USE_WINDOWS) // assume has winbase.h
-	CreateDirectoryW(utf82wstr(path1).c_str(), NULL);
+	CreateDirectoryW(utf82wstr(path).c_str(), NULL);
 #endif
-	if (!dir_exist(path1))
+	if (!dir_exist(path))
 		SLS_ERR("mkdir failed: " + path1);
 }
 
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
+#if SLS_CPP >= 17
+	filesystem::path p(path);
+	if (!filesystem::is_directory(p))
+		SLS_ERR("not a directory: " + path);
+	if (!filesystem::remove(p))
+		SLS_ERR("cannot remove directory: " + path);
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	Str path1 = path;
 	replace(path1, "\"", "\\\"");
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (!system(("rmdir '" + path1 + "'").c_str()))
 		SLS_ERR("cannot remove directory: " + path);
 #elif defined(SLS_USE_WINDOWS) // assume has winbase.h
@@ -205,42 +214,57 @@ inline void ensure_dir(Str_I dir_or_file)
 }
 
 // get canonical path (i.e. absolute path with no symlink)
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 inline Str real_path(Str_I path)
 {
+#if SLS_CPP >= 17
+	return filesystem::canonical(path).string();
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	char *cstr = realpath(path.c_str(), nullptr);
-    if (cstr) {
-        Str str(cstr);
-        free(cstr);
+	if (cstr) {
+		Str str(cstr);
+		free(cstr);
 		return str;
-    }
+	}
 	else
-        throw sls_err();
+		throw sls_err();
+#else
+	static_assert(true, "not implemented! " SLS_WHERE);
+#endif
 }
 
 // remove a file
 inline int file_rm(Str_I wildcard_name) {
+#if SLS_CPP >= 17
+	filesystem::path p(path);
+	if (!filesystem::is_regular_file(p))
+		SLS_ERR("not a regular file: " + path);
+	if (!filesystem::remove(p))
+		SLS_ERR("cannot remove file: " + path);
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	return system(("rm " + wildcard_name).c_str());
-}
+#else
+	static_assert(true, "not implemented! " SLS_WHERE);
 #endif
+}
 
-// list all files in current directory
+// list all files in current directory (not sub-folders)
 // path must end with '/'
 // result is sorted
-
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
-	if (!append)
-		fnames.clear();
+	if (!append) fnames.clear();
+#if SLS_CPP >= 17
+	for (const auto& entry : filesystem::directory_iterator(path))
+		if (entry.is_regular_file())
+			fnames.push_back(entry.path().string());
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	// save a list of all files (no folder) to temporary file
 	Str path1 = path, stdout;
 	replace(path1, "\"", "\"");
 	Str tmp = "ls -p \""; tmp << path1 << "\" | grep -v /";
 	// grep might return non-zero if there if no file found
-	if (exec_str(stdout, tmp) && !stdout.empty()) {
+	if (exec_str(stdout, tmp) && !stdout.empty())
 		SLS_ERR("command returned nonzero: \n" + tmp + "\nstdout = \n" + stdout);
-	}
 	if (stdout.empty())
 		return;
 	std::istringstream iss(stdout);
@@ -1068,8 +1092,8 @@ struct fcout_t
 	}
 
 	fcout_t &flush() {
-	    cout.flush(); fout.flush();
-	    return *this;
+		cout.flush(); fout.flush();
+		return *this;
 	}
 };
 

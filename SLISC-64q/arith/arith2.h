@@ -692,6 +692,22 @@ inline Qdoub dot_real_par(SvbaseQcomp_I v1, SvbaseQcomp_I v2)
 	return sum;
 }
 
+inline Doub dot_real_par(DcmatComp_I v1, DcmatComp_I v2)
+{
+	assert_same_shape2(v1, v2);
+	Doub sum2 = 0;
+#pragma omp parallel for reduction(+:sum2)
+	for (Long j = 0; j < v1.n1(); ++j) {
+		Doub sum = 0;
+		const Comp *p1 = &v1(0,j);
+		const Comp *p2 = &v2(0,j);
+		for (Long i = 0; i < v1.n0(); ++i)
+			sum += real(conj(p1[i])*p2[i]);
+		sum2 += sum;
+	}
+	return sum2;
+}
+
 
 inline void cumsum_vv(Doub *v, const Doub *v1, Long_I N)
 {
