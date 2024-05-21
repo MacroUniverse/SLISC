@@ -3,7 +3,7 @@ tests/sqlite.o: tests/sqlite.cpp tests/../SLISC/file/file.h \
  tests/../SLISC/file/../global.h tests/../SLISC/file/../config.h \
  tests/../SLISC/file/../prec/quad_math_declare.h \
  tests/../SLISC/file/../prec/quad_math.h \
- tests/../SLISC/file/../util/time.h \
+ tests/../SLISC/file/../util/linux.h \
  tests/../SLISC/file/../util/../str/str.h \
  tests/../SLISC/file/../util/../str/../str/unicode.h \
  tests/../SLISC/file/../util/../str/../str/../arith/scalar_arith.h \
@@ -17,8 +17,7 @@ tests/sqlite.o: tests/sqlite.cpp tests/../SLISC/file/file.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/cpp11.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/file/../util/../str/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/file/../util/linux.h \
- tests/../SLISC/file/../arith/arith1.h \
+ tests/../SLISC/file/../util/time.h tests/../SLISC/file/../arith/arith1.h \
  tests/../SLISC/file/../arith/../arith/compare.h \
  tests/../SLISC/file/../arith/../arith/../dense/Vec.h \
  tests/../SLISC/file/../arith/../arith/../dense/../dense/Vbase.h \

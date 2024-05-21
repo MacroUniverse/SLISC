@@ -38,8 +38,8 @@ tests/matfile.o: tests/matfile.cpp tests/../SLISC/file/matfile.h \
  tests/../SLISC/file/../arith/../arith/../sparse/Cmobd.h \
  tests/../SLISC/file/../arith/../arith/../dense/Jcmat3.h \
  tests/../SLISC/file/../file/file.h \
- tests/../SLISC/file/../file/../util/time.h \
  tests/../SLISC/file/../file/../util/linux.h \
+ tests/../SLISC/file/../file/../util/time.h \
  tests/../SLISC/file/../file/../algo/sort.h \
  tests/../SLISC/file/../file/../algo/../algo/heap.h \
  tests/../SLISC/file/../file/../algo/../algo/../util/random.h \

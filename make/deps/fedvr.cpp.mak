@@ -53,7 +53,7 @@ tests/fedvr.o: tests/fedvr.cpp tests/../SLISC/config.h \
  tests/../SLISC/tdse/../spec/legendreP.h tests/../SLISC/file/matb.h \
  tests/../SLISC/file/../file/matt.h \
  tests/../SLISC/file/../file/../file/file.h \
- tests/../SLISC/file/../file/../file/../util/time.h \
  tests/../SLISC/file/../file/../file/../util/linux.h \
+ tests/../SLISC/file/../file/../file/../util/time.h \
  tests/../SLISC/str/disp.h
 	$(opt_compiler) $(all_flags) -c tests/fedvr.cpp -o tests/fedvr.o

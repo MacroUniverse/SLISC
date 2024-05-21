@@ -5,7 +5,7 @@ tests/sha1sum.o: tests/sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/../config.h \
  tests/../SLISC/util/../file/../prec/quad_math_declare.h \
  tests/../SLISC/util/../file/../prec/quad_math.h \
- tests/../SLISC/util/../file/../util/time.h \
+ tests/../SLISC/util/../file/../util/linux.h \
  tests/../SLISC/util/../file/../util/../str/str.h \
  tests/../SLISC/util/../file/../util/../str/../str/unicode.h \
  tests/../SLISC/util/../file/../util/../str/../str/../arith/scalar_arith.h \
@@ -19,7 +19,7 @@ tests/sha1sum.o: tests/sha1sum.cpp tests/../SLISC/util/sha1sum.h \
  tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/cpp11.h \
  tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/checked.h \
  tests/../SLISC/util/../file/../util/../str/../str/utfcpp/utf8/unchecked.h \
- tests/../SLISC/util/../file/../util/linux.h \
+ tests/../SLISC/util/../file/../util/time.h \
  tests/../SLISC/util/../file/../arith/arith1.h \
  tests/../SLISC/util/../file/../arith/../arith/compare.h \
  tests/../SLISC/util/../file/../arith/../arith/../dense/Vec.h \

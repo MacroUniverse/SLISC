@@ -56,25 +56,32 @@ inline void save(ScmatDoub_I a, Str_I name, H5File &file)
 	}
 }
 
-// write elements one by one (less efficient, but can be used for sparse matrix)
-inline void save_sparse(ScmatDoub_I a, Str_I name, H5File &file)
+inline void save(ScmatComp_I a, Str_I name, H5File &file)
 {
-	hsize_t N0 = a.n0(), N1 = a.n1();
+	hsize_t N0 = 2*a.n0(), N1 = a.n1();
 	hsize_t dims[2] = {N0, N1};
 	DataSpace dataspace(2, dims);
 	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
-	hsize_t stride[2] = {1, 1};  // Stride of hyperslab
-	hsize_t count[2] = {1, 1};   // Block count
-	hsize_t block[2] = {1, 1};   // Block sizes
-	DataSpace memspace(2, block);
+	if (N0*N1 == 0) return;
 
-	for (size_t i = 0; i < N0; ++i) {
-		for (size_t j = 0; j < N1; ++j) {
-			Doub val = a(i, j);
-			hsize_t start[2] = {i, j}; // Start of hyperslab
-			dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
-			dataset.write(&val, PredType::NATIVE_DOUBLE, memspace, dataspace);
-		}
+	hsize_t col_dims[1] = {N0};
+	hsize_t stride[2] = {1, 1}; // move by 1 row and 1 column
+	hsize_t count[2] = {N0, 1}; // block size
+	hsize_t block[2] = {1, 1};  // block dimensions (1x1)
+	hsize_t offset_out[1] = {0};
+	DataSpace memspace(1, col_dims); // where in the memory, relative to the address in `dataset.write()`
+
+    DataSpace attr_dataspace(H5S_SCALAR);
+	const H5std_string ATTR_NAME("SLS_Comp");
+	const H5std_string ATTR_DATA("every 2 double in a column is a complex");
+	H5::Attribute attribute = dataset.createAttribute(ATTR_NAME, H5::StrType(PredType::C_S1, ATTR_DATA.size()), attr_dataspace);
+	attribute.write(H5::StrType(PredType::C_S1, ATTR_DATA.size()), ATTR_DATA);
+
+	for (hsize_t j = 0; j < N1; ++j) {
+		hsize_t start[2] = {0, j}; // start of block
+		dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
+		memspace.selectHyperslab(H5S_SELECT_SET, col_dims, offset_out);
+		dataset.write((const Doub *)&a(0,j), PredType::NATIVE_DOUBLE, memspace, dataspace);
 	}
 }
 
@@ -99,6 +106,51 @@ inline void save(Scmat3Doub_I a, Str_I name, H5File &file)
 			dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
 			memspace.selectHyperslab(H5S_SELECT_SET, col_dims, offset_out);
 			dataset.write(&a(0,j,k), PredType::NATIVE_DOUBLE, memspace, dataspace);
+		}
+	}
+}
+
+// write sparse matrix as a dense matrix
+// write elements one by one (including 0 elements)
+inline void save(McooDoub_I a, Str_I name, H5File &file)
+{
+	hsize_t N0 = a.n0(), N1 = a.n1();
+	hsize_t dims[2] = {N0, N1};
+	DataSpace dataspace(2, dims);
+	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
+	hsize_t stride[2] = {1, 1};  // Stride of hyperslab
+	hsize_t count[2] = {1, 1};   // Block count
+	hsize_t block[2] = {1, 1};   // Block sizes
+	DataSpace memspace(2, block);
+
+	for (size_t i = 0; i < N0; ++i) {
+		for (size_t j = 0; j < N1; ++j) {
+			Doub val = a(i, j);
+			hsize_t start[2] = {i, j}; // Start of hyperslab
+			dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
+			dataset.write(&val, PredType::NATIVE_DOUBLE, memspace, dataspace);
+		}
+	}
+}
+
+// write sparse matrix as a dense matrix
+inline void save(CmobdDoub_I a, Str_I name, H5File &file)
+{
+	hsize_t N0 = a.n0(), N1 = a.n1();
+	hsize_t dims[2] = {N0, N1};
+	DataSpace dataspace(2, dims);
+	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
+	hsize_t stride[2] = {1, 1};  // Stride of hyperslab
+	hsize_t count[2] = {1, 1};   // Block count
+	hsize_t block[2] = {1, 1};   // Block sizes
+	DataSpace memspace(2, block);
+
+	for (size_t i = 0; i < N0; ++i) {
+		for (size_t j = 0; j < N1; ++j) {
+			Doub val = a(i, j);
+			hsize_t start[2] = {i, j}; // Start of hyperslab
+			dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
+			dataset.write(&val, PredType::NATIVE_DOUBLE, memspace, dataspace);
 		}
 	}
 }
