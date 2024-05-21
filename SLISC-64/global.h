@@ -449,7 +449,7 @@ inline void flush() { cout.flush(); }
 #define SLS_PRINT(x) do { print(#x, "=", x); } while(0);
 
 // === constants ===
-const Doub
+constexpr Doub
 Eps = std::numeric_limits<Doub>::epsilon(),
 NaN = std::numeric_limits<Doub>::quiet_NaN(),
 SNaN = std::numeric_limits<Doub>::signaling_NaN(),
