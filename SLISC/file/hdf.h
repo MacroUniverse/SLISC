@@ -19,8 +19,17 @@ inline void save(Doub_I s, Str_I name, H5File &file)
 {
 	hsize_t dims[1] = {1};
 	DataSpace dataspace(1, dims);
-	DataSet dataset = file.createDataSet("dataset_name", PredType::NATIVE_DOUBLE, dataspace);
+	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
 	dataset.write(&s, PredType::NATIVE_DOUBLE);
+}
+
+inline void load(Doub_O s, Str_I name, H5File &file)
+{
+	DataSet dataset = file.openDataSet(name);
+	DataSpace dataspace = dataset.getSpace();
+	hsize_t dims[1];
+	dataspace.getSimpleExtentDims(dims, NULL);
+	dataset.read(&s, PredType::NATIVE_DOUBLE);
 }
 
 inline void save(SvecDoub_I v, Str_I name, H5File &file)
@@ -28,9 +37,21 @@ inline void save(SvecDoub_I v, Str_I name, H5File &file)
 	hsize_t N = v.size();
 	hsize_t dims[1] = {N};
 	DataSpace dataspace(1, dims);
-	DataSet dataset = file.createDataSet("dataset_name", PredType::NATIVE_DOUBLE, dataspace);
+	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
 	if (N > 0)
 		dataset.write(&v[0], PredType::NATIVE_DOUBLE);
+}
+
+inline void load(VecDoub_O v, Str_I name, H5File &file)
+{
+	DataSet dataset = file.openDataSet(name);
+	DataSpace dataspace = dataset.getSpace();
+	hsize_t dims[1];
+	dataspace.getSimpleExtentDims(dims, NULL);
+	hsize_t N = dims[0];
+	v.resize(N);
+	if (N > 0)
+		dataset.read(v.p(), PredType::NATIVE_DOUBLE);
 }
 
 inline void save(ScmatDoub_I a, Str_I name, H5File &file)
@@ -71,7 +92,7 @@ inline void save(ScmatComp_I a, Str_I name, H5File &file)
 	hsize_t offset_out[1] = {0};
 	DataSpace memspace(1, col_dims); // where in the memory, relative to the address in `dataset.write()`
 
-    DataSpace attr_dataspace(H5S_SCALAR);
+	DataSpace attr_dataspace(H5S_SCALAR);
 	const H5std_string ATTR_NAME("SLS_Comp");
 	const H5std_string ATTR_DATA("every 2 double in a column is a complex");
 	H5::Attribute attribute = dataset.createAttribute(ATTR_NAME, H5::StrType(PredType::C_S1, ATTR_DATA.size()), attr_dataspace);
@@ -153,6 +174,15 @@ inline void save(CmobdDoub_I a, Str_I name, H5File &file)
 			dataset.write(&val, PredType::NATIVE_DOUBLE, memspace, dataspace);
 		}
 	}
+}
+
+// save a string
+inline void save(Str_I str, Str_I name, H5File &file)
+{
+	DataSpace dataspace(H5S_SCALAR);
+	H5::StrType datatype(PredType::C_S1, H5T_VARIABLE);
+	DataSet dataset = file.createDataSet(name, datatype, dataspace);
+	dataset.write(str, datatype);
 }
 
 } // namespace slisc
