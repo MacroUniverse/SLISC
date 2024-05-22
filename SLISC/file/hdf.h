@@ -77,6 +77,31 @@ inline void save(ScmatDoub_I a, Str_I name, H5File &file)
 	}
 }
 
+inline void load(CmatDoub_O a, Str_I name, H5File &file)
+{
+	DataSet dataset = file.openDataSet(name);
+	DataSpace dataspace = dataset.getSpace();
+	hsize_t dims_out[2];
+	dataspace.getSimpleExtentDims(dims_out, NULL);
+	hsize_t N0 = dims_out[0];
+	hsize_t N1 = dims_out[1];
+	a.resize(N0, N1);
+	hsize_t col_dims[1] = {N0};
+	DataSpace memspace(1, col_dims);
+
+	hsize_t stride[2] = {1, 1};
+	hsize_t count[2] = {N0, 1};
+	hsize_t block[2] = {1, 1};
+	hsize_t offset_out[1] = {0};
+
+	for (hsize_t j = 0; j < N1; ++j) {
+		hsize_t start[2] = {0, j};
+		dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
+		memspace.selectHyperslab(H5S_SELECT_SET, col_dims, offset_out);
+		dataset.read(&a(0, j), PredType::NATIVE_DOUBLE, memspace, dataspace);
+	}
+}
+
 inline void save(ScmatComp_I a, Str_I name, H5File &file)
 {
 	hsize_t N0 = 2*a.n0(), N1 = a.n1();
@@ -103,6 +128,31 @@ inline void save(ScmatComp_I a, Str_I name, H5File &file)
 		dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
 		memspace.selectHyperslab(H5S_SELECT_SET, col_dims, offset_out);
 		dataset.write((const Doub *)&a(0,j), PredType::NATIVE_DOUBLE, memspace, dataspace);
+	}
+}
+
+inline void load(CmatComp_O a, Str_I name, H5File &file)
+{
+	DataSet dataset = file.openDataSet(name);
+	DataSpace dataspace = dataset.getSpace();
+	hsize_t dims_out[2];
+	dataspace.getSimpleExtentDims(dims_out, NULL);
+	hsize_t N0 = dims_out[0];
+	hsize_t N1 = dims_out[1];
+	a.resize(N0/2, N1);
+	hsize_t col_dims[1] = {N0};
+	DataSpace memspace(1, col_dims);
+
+	hsize_t stride[2] = {1, 1};
+	hsize_t count[2] = {N0, 1};
+	hsize_t block[2] = {1, 1};
+	hsize_t offset_out[1] = {0};
+
+	for (hsize_t j = 0; j < N1; ++j) {
+		hsize_t start[2] = {0, j};
+		dataspace.selectHyperslab(H5S_SELECT_SET, count, start, stride, block);
+		memspace.selectHyperslab(H5S_SELECT_SET, col_dims, offset_out);
+		dataset.read((Doub *)&a(0, j), PredType::NATIVE_DOUBLE, memspace, dataspace);
 	}
 }
 
