@@ -64,26 +64,26 @@ inline void save(SvecComp_I v, Str_I name, H5File &file)
 		dataset.write((const Doub *)&v[0], PredType::NATIVE_DOUBLE);
 }
 
-inline bool is_complex(H5File &dataset)
+inline bool is_hdf_dataset_complex(DataSet &dataset)
 {
 	Str label = "SLS_Comp";
-	Attribute attribute = dataset.openAttribute(label);
+	H5::Attribute attribute = dataset.openAttribute(label);
 	H5std_string labelValue;
 	attribute.read(attribute.getStrType(), labelValue);
-	retrun labelValue == label;
+	return labelValue == "every 2 double in a column is a complex";
 }
 
 inline void load(VecComp_O v, Str_I name, H5File &file)
 {
 	DataSet dataset = file.openDataSet(name);
-	SLS_ASSERT(is_complex(dataset));
+	SLS_ASSERT(is_hdf_dataset_complex(dataset));
 	DataSpace dataspace = dataset.getSpace();
 	hsize_t dims[1];
 	dataspace.getSimpleExtentDims(dims, NULL);
 	hsize_t N = dims[0];
 	v.resize(N/2);
 	if (N > 0)
-		dataset.read((const Doub *)v.p(), PredType::NATIVE_DOUBLE);
+		dataset.read((Doub *)v.p(), PredType::NATIVE_DOUBLE);
 }
 
 inline void save(ScmatDoub_I a, Str_I name, H5File &file)
@@ -167,7 +167,7 @@ inline void load(CmatComp_O a, Str_I name, H5File &file)
 {
 	DataSet dataset = file.openDataSet(name);
 	DataSpace dataspace = dataset.getSpace();
-	SLS_ASSERT(is_complex(dataset));
+	SLS_ASSERT(is_hdf_dataset_complex(dataset));
 
 	hsize_t dims_out[2];
 	dataspace.getSimpleExtentDims(dims_out, NULL);
@@ -279,7 +279,7 @@ inline void save(Scmat3Comp_I a, Str_I name, H5File &file)
 inline void load(Cmat3Comp_O a, Str_I name, H5File &file)
 {
     DataSet dataset = file.openDataSet(name);
-	SLS_ASSERT(is_complex(dataset));
+	SLS_ASSERT(is_hdf_dataset_complex(dataset));
 
     DataSpace dataspace = dataset.getSpace();
     int rank = dataspace.getSimpleExtentNdims();
