@@ -12,7 +12,7 @@ opt_long32 := true
 # debug mode
 opt_debug := true
 # minimum build (all below options set to false)
-opt_min := true
+opt_min := false
 # address sanitizer (only for g++ dynamic debug build)
 opt_asan := $(opt_debug)
 # c++ standard e.g. c++11, gnu++11, ..., c++20
