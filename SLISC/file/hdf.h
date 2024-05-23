@@ -54,6 +54,38 @@ inline void load(VecDoub_O v, Str_I name, H5File &file)
 		dataset.read(v.p(), PredType::NATIVE_DOUBLE);
 }
 
+inline void save(SvecComp_I v, Str_I name, H5File &file)
+{
+	hsize_t N = 2*v.size();
+	hsize_t dims[1] = {N};
+	DataSpace dataspace(1, dims);
+	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
+	if (N > 0)
+		dataset.write((const Doub *)&v[0], PredType::NATIVE_DOUBLE);
+}
+
+inline bool is_complex(H5File &dataset)
+{
+	Str label = "SLS_Comp";
+	Attribute attribute = dataset.openAttribute(label);
+	H5std_string labelValue;
+	attribute.read(attribute.getStrType(), labelValue);
+	retrun labelValue == label;
+}
+
+inline void load(VecComp_O v, Str_I name, H5File &file)
+{
+	DataSet dataset = file.openDataSet(name);
+	SLS_ASSERT(is_complex(dataset));
+	DataSpace dataspace = dataset.getSpace();
+	hsize_t dims[1];
+	dataspace.getSimpleExtentDims(dims, NULL);
+	hsize_t N = dims[0];
+	v.resize(N/2);
+	if (N > 0)
+		dataset.read((const Doub *)v.p(), PredType::NATIVE_DOUBLE);
+}
+
 inline void save(ScmatDoub_I a, Str_I name, H5File &file)
 {
 	hsize_t N0 = a.n0(), N1 = a.n1();
@@ -135,6 +167,8 @@ inline void load(CmatComp_O a, Str_I name, H5File &file)
 {
 	DataSet dataset = file.openDataSet(name);
 	DataSpace dataspace = dataset.getSpace();
+	SLS_ASSERT(is_complex(dataset));
+
 	hsize_t dims_out[2];
 	dataspace.getSimpleExtentDims(dims_out, NULL);
 	hsize_t N0 = dims_out[0];
@@ -162,6 +196,7 @@ inline void save(Scmat3Doub_I a, Str_I name, H5File &file)
 	hsize_t dims[3] = {N0, N1, N2};
 	DataSpace dataspace(3, dims);
 	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
+
 	if (N0*N1*N2 == 0) return;
 	
 	hsize_t col_dims[1] = {N0};
@@ -216,8 +251,8 @@ inline void save(Scmat3Comp_I a, Str_I name, H5File &file)
 	hsize_t dims[3] = {N0, N1, N2};
 	DataSpace dataspace(3, dims);
 	DataSet dataset = file.createDataSet(name, PredType::NATIVE_DOUBLE, dataspace);
+
 	if (N0*N1*N2 == 0) return;
-	
 	hsize_t col_dims[1] = {N0};
 	hsize_t stride[3] = {1, 1, 1};  // move by 1 row and 1 column
 	hsize_t count[3] = {N0, 1, 1};  // block size
@@ -244,6 +279,8 @@ inline void save(Scmat3Comp_I a, Str_I name, H5File &file)
 inline void load(Cmat3Comp_O a, Str_I name, H5File &file)
 {
     DataSet dataset = file.openDataSet(name);
+	SLS_ASSERT(is_complex(dataset));
+
     DataSpace dataspace = dataset.getSpace();
     int rank = dataspace.getSimpleExtentNdims();
 	SLS_ASSERT(rank == 3);
