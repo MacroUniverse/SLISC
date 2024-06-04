@@ -389,6 +389,24 @@ inline void to_upper(vecStr32_IO vs)
 }
 
 
+// if `s` starts with `key`
+inline bool startswith(Str_I s, Str_I key)
+{
+	if (s.size() >= key.size() && s.substr(0, key.size()) == key)
+		return true;
+	else
+		return false;
+}
+
+// if `s` ends with `key`
+inline bool endswith(Str_I s, Str_I key)
+{
+	if (s.size() >= key.size() && s.substr(s.size()-key.size()) == key)
+		return true;
+	else
+		return false;
+}
+
 // print Str32
 inline std::ostream &operator<<(std::ostream &out, Str32_I str32)
 {
