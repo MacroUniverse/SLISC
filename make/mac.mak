@@ -31,11 +31,11 @@ opt_lapack := none
 # use MPLAPACK lib
 opt_mplapack := $(opt_quadmath)
 # use Boost lib
-opt_boost := false
+opt_boost := true
 # use GSL lib
 opt_gsl := true
 # use Eigen lib
-opt_eigen := false
+opt_eigen := true
 # use Arblib lib
 opt_arb := true
 # use Arpack++2 lib
