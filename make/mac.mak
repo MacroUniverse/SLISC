@@ -41,11 +41,11 @@ opt_arb := false
 # use Arpack++2 lib
 opt_arpack := false
 # use sqlite
-opt_sqlite := false
+opt_sqlite := true
 # use SQLiteCpp
-opt_sqlitecpp := false
+opt_sqlitecpp := true
 # use HDF(5)
-opt_hdf := false
+opt_hdf := true
 # read and write Matlab .mat file
 opt_matfile := false
 #==========================
@@ -421,14 +421,15 @@ all:
 	make test
 
 ifeq ($(opt_main), false) # one executable for each test
-    test:
-		$(info remake and run all tests - default options)
+    test: clean clean_dep
+		$(info remake and run tests - default options)
+		@make depend -j$(Ncpu)
 		@make $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test32:
+    test32: clean clean_dep
 		$(info remake and run all tests - 32bit)
 		@make opt_long32=true opt_min=false depend -j$(Ncpu)
 		@make opt_long32=true opt_min=false $(path_test_x) -j$(Ncpu)
