@@ -300,7 +300,7 @@ ifeq ($(opt_sqlitecpp), true)
     opt_sqlite := false
     tmp := $(shell echo "$(mydefine) SLS_USE_SQLITECPP" >> SLISC/config.h.new)
     tmp := $(shell echo "$(mydefine) SLS_USE_SQLITE" >> SLISC/config.h.new)
-    $(info SQLiteCpp: static)
+    $(info SQLiteCpp: on)
     sqlitecpp_lib := -lSQLiteCpp -lSQLiteCpp-sqlite3
 else
     $(info SQLiteCpp: off)
@@ -422,7 +422,7 @@ all:
 
 ifeq ($(opt_main), false) # one executable for each test
     test: clean clean_dep
-		$(info remake and run tests - default options)
+		$(info remake and run all tests - default options)
 		@make depend -j$(Ncpu)
 		@make $(path_test_x) -j$(Ncpu)
 		@printf "\n\n\n"
