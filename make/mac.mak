@@ -27,7 +27,7 @@ opt_main := false
 # use quad precision float (`__float128` extension of gcc)
 opt_quadmath := false
 # lapack package (reference, openblas, mkl, none)
-opt_lapack := none
+opt_lapack := openblas
 # use MPLAPACK lib
 opt_mplapack := $(opt_quadmath)
 # use Boost lib
@@ -39,7 +39,7 @@ opt_eigen := true
 # use Arblib lib
 opt_arb := true
 # use Arpack++2 lib
-opt_arpack := false
+opt_arpack := true
 # use sqlite
 opt_sqlite := true
 # use SQLiteCpp
@@ -158,13 +158,13 @@ lapacke_lib :=
 ifeq ($(opt_lapack), reference)
 # === CBLAS (reference) ===
     tmp := $(shell echo "$(mydefine) SLS_USE_CBLAS" >> SLISC/config.h.new)
-    ifeq ($(opt_long32), false)
-        $(info CBLAS: ref64)
-        cblas_lib := -l cblas64 -l blas64 -l gfortran
-    else
-        $(info CBLAS: ref32)
-        cblas_lib := -l cblas -l blas -l gfortran
-    endif
+    # ifeq ($(opt_long32), false)
+    #     $(info CBLAS: ref64)
+    #     cblas_lib := -l cblas64 -l blas64 -l gfortran
+    # else
+    #     $(info CBLAS: ref32)
+    #     cblas_lib := -l cblas -l blas -l gfortran
+    # endif
 # === LAPACKE (reference) ===
     tmp := $(shell echo "$(mydefine) SLS_USE_LAPACKE" >> SLISC/config.h.new)
     ifeq ($(opt_long32), false)
@@ -269,7 +269,7 @@ endif
 # === Arpack ===
 arpack_lib :=
 ifeq ($(opt_arpack), true)
-    ifeq ($(opt_lapack), reference)
+    ifeq ($(opt_lapack), openblas)
         tmp := $(shell echo "$(mydefine) SLS_USE_ARPACK" >> SLISC/config.h.new)
         # we need the system gfortran and cannot include it in SLISC-libs-* since it depends on other system libs like libc
         gfortran_so := $(shell ldconfig -p | grep libgfortran.so | head -1 | awk '{print $$1}')

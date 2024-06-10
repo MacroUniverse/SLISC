@@ -1,6 +1,5 @@
 #include "../SLISC/arith/arith1.h"
 #include "../SLISC/lin/lin_eq.h"
-#include "../SLISC/lin/mul.h"
 #include "../SLISC/util/random.h"
 // #include "../SLISC/str/disp.h"
 
