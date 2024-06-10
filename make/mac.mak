@@ -185,97 +185,12 @@ ifeq ($(opt_lapack), openblas)
     tmp := $(shell echo "$(mydefine) SLS_USE_LAPACKE" >> SLISC/config.h.new)
 endif
 
-# === MKL ===
-# ref: MKL link advisor https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
-mkl_flag :=
-mkl_lib :=
-ifeq ($(opt_lapack), mkl)
-    $(info  )
-    $(info === Intel OneAPI config ===)
-    $(info Product: oneMKL 2021)
-    $(info OS: Linux)
-    $(info Language: C/C++)
-    $(info Arch: x86-64)
-    $(info Threading: Sequential)
-    # Interface: 32bit int
-    ifeq ($(opt_long32), true)
-        $(info Interface: 32bit int)
-        # Compiler: g++
-        ifeq ($(opt_compiler), g++)
-            $(info Compiler: g++)
-            tmp := $(shell echo "$(mydefine) SLS_USE_MKL" >> SLISC/config.h.new)
-            mkl_flag := -m64 # -I "${MKLROOT}/include"
-            # static link
-            ifeq ($(opt_static), true)
-                $(info Link: static)
-                mkl_lib := -Wl,--start-group -l:libmkl_intel_lp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
-            # dynamic link
-            else
-                $(info Link: dynamic)
-                mkl_lib := -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l:libmkl_intel_lp64.so -l:libmkl_sequential.so -l:libmkl_core.so -l pthread -l m -l dl
-            endif
-        endif
-        # Compiler: icpc
-        ifeq ($(opt_compiler), icpc)
-            $(info Compiler: icpc)
-            tmp := $(shell echo "$(mydefine) SLS_USE_MKL" >> SLISC/config.h.new)
-            mkl_flag := # -I "${MKLROOT}/include"
-            # static link
-            ifeq ($(opt_static), true)
-                $(info Link: static)
-                mkl_lib := -Wl,--start-group -l:libmkl_intel_lp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
-            # dynamic link
-            else
-                $(info Link: dynamic)
-                mkl_lib := -L${MKLROOT}/lib/intel64 -l:libmkl_intel_lp64.so -l:libmkl_sequential.so -l:libmkl_core.so -l pthread -l m -l dl
-            endif
-        endif
-    # Interface: 64bit int
-    else
-        $(info Interface: 64bit int)
-        # Compiler: g++
-        ifeq ($(opt_compiler), g++)
-            $(info Compiler: g++)
-            tmp := $(shell echo "$(mydefine) SLS_USE_MKL" >> SLISC/config.h.new)
-            tmp := $(shell echo "$(mydefine) MKL_ILP64" >> SLISC/config.h.new)
-            mkl_flag := -m64 # -I "${MKLROOT}/include"
-            # static link
-            ifeq ($(opt_static), true)
-                $(info Link: static)
-                mkl_lib := -Wl,--start-group -l:libmkl_intel_ilp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -l pthread -l m -l dl
-            # dynamic link
-            else
-                $(info Link: dynamic)
-                mkl_lib := -L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
-            endif
-        endif
-        # Compiler: icpc
-        ifeq ($(opt_compiler), icpc)
-            $(info Compiler: icpc)
-            tmp := $(shell echo "$(mydefine) SLS_USE_MKL" >> SLISC/config.h.new)
-            tmp := $(shell echo "$(mydefine) MKL_ILP64" >> SLISC/config.h.new)
-            mkl_flag := # -I "${MKLROOT}/include"
-            # static link
-            ifeq ($(opt_static), true)
-                $(info Link: static)
-                mkl_lib := -Wl,--start-group -l:libmkl_intel_ilp64.a -l:libmkl_sequential.a -l:libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
-            # dynamic link
-            else
-                $(info Link: dynamic)
-                mkl_lib := -L${MKLROOT}/lib/intel64 -l mkl_intel_ilp64 -l mkl_sequential -l mkl_core -l pthread -l m -l dl
-            endif
-        endif
-    endif
-    $(info ===========================)
-    $(info  )
-endif
-
 # === Boost ===
 ifeq ($(opt_boost), true)
     tmp := $(shell echo "$(mydefine) SLS_USE_BOOST" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info Boost: dynamic)
-        boost_lib := -l:libboost_system.so -l:libboost_filesystem.so
+        boost_lib := -lboost_system -lboost_filesystem
     else
         $(info Boost: static)
         boost_lib := -l:libboost_system.a -l:libboost_filesystem.a
@@ -290,7 +205,7 @@ ifeq ($(opt_gsl), true)
     tmp := $(shell echo "$(mydefine) SLS_USE_GSL" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info GSL: dynamic)
-        gsl_lib := -l:libgsl.so
+        gsl_lib := -lgsl
     else
         $(info GSL: static)
         gsl_lib := -l:libgsl.a
@@ -326,7 +241,7 @@ ifeq ($(opt_arb), true)
     ifeq ($(opt_static), false)
         $(info Arb: dynamic)
         # use -larb if compiled from source, or create soft link named flint-arb
-        arb_lib := -l:libflint-arb.so -l:libflint.so -l:libmpfr.so -l:libgmp.so 
+        arb_lib := -lflint-arb -lflint -lmpfr -lgmp 
     else
         $(info Arb: static)
         arb_lib := -l:libflint-arb.a -l:libflint.a -l:libmpfr.a -l:libgmp.a 
@@ -341,7 +256,7 @@ ifeq ($(opt_mplapack), true)
     tmp := $(shell echo "$(mydefine) SLS_USE_MPLAPACK" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info MPLAPACK: dynamic)
-        mplapack_lib := -l:libmplapack__Float128.so -l:libmpblas__Float128.so
+        mplapack_lib := -lmplapack__Float128 -lmpblas__Float128
     else
         $(info MPLAPACK: static)
         mplapack_lib := -l:libmplapack__Float128.a -l:libmpblas__Float128.a
@@ -360,10 +275,10 @@ ifeq ($(opt_arpack), true)
         gfortran_so := $(shell ldconfig -p | grep libgfortran.so | head -1 | awk '{print $$1}')
         ifeq ($(opt_static), false)
             $(info Arpack: dynamic)
-            ifeq ($(opt_long32), true)
-                arpack_lib := -l:libarpack.so -l:liblapack.so -l:libblas.so -l:$(gfortran_so)
+            ifeq ($(opt_long32), true) # -l:$(gfortran_so)
+                arpack_lib := -larpack -llapack -lblas
             else
-                arpack_lib := -l:libarpack64.so -l:liblapack64.so -l:libblas64.so -l:$(gfortran_so)
+                arpack_lib := -larpack64 -llapack64 -lblas64
             endif
         else
             $(info Arpack: static)
@@ -646,9 +561,9 @@ clean_dep:
 # ======= implicit/generated rules =======
 # default target
 
-ifneq ($(opt_main), false)
+ifeq ($(opt_main), true)
     tests/%.x:
-		$(error opt_main if off!)
+		$(error opt_main is on!)
 else
     tests/%.x: tests/%.o
 		@printf "\n$(yellow)$@$(normal):\n"
