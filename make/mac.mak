@@ -5,7 +5,7 @@
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
 # assume g++ is the Homebrew version
-opt_compiler := g++
+opt_compiler := clang++
 # use Octave for code generation
 # opt_octave := true # not implemented
 # define Long (array index type) as 32 or 64 bit integer
@@ -457,7 +457,7 @@ ifeq ($(opt_compiler), g++)
     compiler_flag := -std=$(opt_std) -Wall -Wno-reorder -fmax-errors=5 -Wno-unused-function -fopenmp # -ffast-math (including -fno-math-errno, -funsafe-math-optimizations, -fno-signed-zeros, -fno-trapping-math, -ffinite-math-only)
 endif
 ifeq ($(opt_compiler), clang++)
-    compiler_flag := -std=$(opt_std) -Wall -Wno-unqualified-std-cast-call -Wno-overloaded-virtual -ferror-limit=5 # -ffast-math
+    compiler_flag := -std=$(opt_std) -Wall -Wno-unqualified-std-cast-call -Wno-overloaded-virtual -Wno-reorder-ctor -Wno-pessimizing-move -Wno-unused-function -ferror-limit=5 # -ffast-math
 endif
 ifeq ($(opt_compiler), icpc)
     compiler_flag := -std=$(opt_std) -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
