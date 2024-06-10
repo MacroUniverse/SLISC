@@ -4,6 +4,7 @@
 
 #======== options =========
 # compiler [g++|clang++|icpc|icpx]
+# assume g++ is the Homebrew version
 opt_compiler := g++
 # use Octave for code generation
 # opt_octave := true # not implemented
@@ -453,7 +454,7 @@ $(info $(tmp));
 
 # === compiler flags ===
 ifeq ($(opt_compiler), g++)
-    compiler_flag := -std=$(opt_std) -Wall -Wno-reorder -fmax-errors=5 -Wno-unused-function # -ffast-math (including -fno-math-errno, -funsafe-math-optimizations, -fno-signed-zeros, -fno-trapping-math, -ffinite-math-only)
+    compiler_flag := -std=$(opt_std) -Wall -Wno-reorder -fmax-errors=5 -Wno-unused-function -fopenmp # -ffast-math (including -fno-math-errno, -funsafe-math-optimizations, -fno-signed-zeros, -fno-trapping-math, -ffinite-math-only)
 endif
 ifeq ($(opt_compiler), clang++)
     compiler_flag := -std=$(opt_std) -Wall -Wno-unqualified-std-cast-call -Wno-overloaded-virtual -ferror-limit=5 # -ffast-math

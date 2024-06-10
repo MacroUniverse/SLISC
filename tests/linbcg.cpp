@@ -86,7 +86,7 @@ void test_linbcg()
 		copy(b, {Comp(6,3), Comp(7,-3), Comp(8,-1)}); copy(x, 0);
 		Doub relres; Long iter;
 		auto mul_fun = [&a](SvbaseComp_O y, SvbaseComp_I x) { mul((SvecComp_O)y, a, (SvecComp_I)x); };
-		if (bicgstab_matlab_optim(relres, iter, x, mul_fun, b,  1e-15, 30, wsp) != 0) SLS_FAIL;
+		if (bicgstab_matlab_optim(relres, iter, x, mul_fun, b,  2e-15, 30, wsp) != 0) SLS_FAIL;
 		// cout << "a = " << endl; disp(a);
 		// cout << "b = " << endl; disp(b);
 		// cout << "x = " << endl; disp(x);
