@@ -18,7 +18,7 @@ struct AnyRef {
 	}
 
 	// copy values
-	AnyRef &operator=(const AnyRefC &rhs) const;
+	const AnyRef &operator=(const AnyRefC &rhs) const;
 
 	// bind
 	template <class T>
@@ -75,7 +75,7 @@ struct AnyRefC {
 typedef const AnyRefC &AnyRef_I;
 typedef const AnyRef &AnyRef_O, &AnyRef_IO;
 
-inline AnyRef &AnyRef::operator=(AnyRef_I rhs) const {
+inline const AnyRef &AnyRef::operator=(AnyRef_I rhs) const {
 	if (p == rhs.p)
 		SLS_ERR("self assignment!");
 	if (type != rhs.type)
@@ -100,6 +100,7 @@ inline AnyRef &AnyRef::operator=(AnyRef_I rhs) const {
 
 	else
 		SLS_ERR("unsupported type!");
+	return *this;
 }
 
 // compare

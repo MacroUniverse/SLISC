@@ -257,7 +257,7 @@ inline void mul_v_cmobd_sub_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_size, 
 #endif
 	vecset(y, 0, Ny);
 	const Long step = blk_size - 1, step2 = blk_size - 2;
-	Long blk, nFe_mid = n_blk;
+	Long blk = start_blk, nFe_mid = n_blk;
 	bool has_last_blk = (start_blk + n_blk == Nblk);
 
 	// first block
@@ -319,7 +319,7 @@ inline void mul_add_v_cmobd_sub_v(Ty *y, const Tx *x, const Ta *a, Long_I blk_si
 	SLS_ASSERT(Ny == Ndim);
 #endif
 	const Long step = step_xy*(blk_size - 1), step2 = step_xy*(blk_size - 2);
-	Long blk, nFe_mid = n_blk;
+	Long blk = start_blk, nFe_mid = n_blk;
 	bool has_last_blk = (start_blk + n_blk == Nblk);
 
 	if (!add_eq) vecset(y, 0, Ny);
