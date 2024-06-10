@@ -7,7 +7,7 @@
 # assume g++ is the Homebrew version
 opt_compiler := clang++
 # use Octave for code generation
-# opt_octave := true # not implemented
+opt_octave := false
 # define Long (array index type) as 32 or 64 bit integer
 opt_long32 := true
 # debug mode
@@ -33,11 +33,11 @@ opt_mplapack := $(opt_quadmath)
 # use Boost lib
 opt_boost := false
 # use GSL lib
-opt_gsl := false
+opt_gsl := true
 # use Eigen lib
 opt_eigen := false
 # use Arblib lib
-opt_arb := false
+opt_arb := true
 # use Arpack++2 lib
 opt_arpack := false
 # use sqlite
@@ -241,7 +241,7 @@ ifeq ($(opt_arb), true)
     ifeq ($(opt_static), false)
         $(info Arb: dynamic)
         # use -larb if compiled from source, or create soft link named flint-arb
-        arb_lib := -lflint-arb -lflint -lmpfr -lgmp 
+        arb_lib := -lflint -lgmp 
     else
         $(info Arb: static)
         arb_lib := -l:libflint-arb.a -l:libflint.a -l:libmpfr.a -l:libgmp.a 
@@ -421,7 +421,7 @@ all:
 	make test
 
 ifeq ($(opt_main), false) # one executable for each test
-    test: clean clean_dep
+    test: clean
 		$(info remake and run all tests - default options)
 		@make depend -j$(Ncpu)
 		@make $(path_test_x) -j$(Ncpu)
@@ -429,7 +429,7 @@ ifeq ($(opt_main), false) # one executable for each test
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test32: clean clean_dep
+    test32: clean
 		$(info remake and run all tests - 32bit)
 		@make opt_long32=true opt_min=false depend -j$(Ncpu)
 		@make opt_long32=true opt_min=false $(path_test_x) -j$(Ncpu)
@@ -437,7 +437,7 @@ ifeq ($(opt_main), false) # one executable for each test
 		@make run_test_x
 		@printf "\n\n\n"
 	
-    test64: clean clean_dep
+    test64: clean
 		$(info remake and run all tests - 64bit)
 		@make opt_long32=false opt_min=false depend -j$(Ncpu)
 		@make opt_long32=false opt_min=false $(path_test_x) -j$(Ncpu)
@@ -445,7 +445,7 @@ ifeq ($(opt_main), false) # one executable for each test
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test64q: clean clean_dep
+    test64q: clean
 		$(info remake and run all tests - 64bit & quadmath)
 		@make opt_long32=false opt_min=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_min=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
@@ -479,7 +479,7 @@ else # opt_main == false  # link all tests to main.x
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test32: clean clean_dep
+    test32: clean
 		$(info remake and run all tests - 32bit)
 		@make opt_long32=true depend -j$(Ncpu)
 		@make opt_long32=true main.x -j$(Ncpu)
@@ -487,7 +487,7 @@ else # opt_main == false  # link all tests to main.x
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test64: clean clean_dep
+    test64: clean
 		$(info remake and run all tests - 64bit)
 		@make opt_long32=false depend -j$(Ncpu)
 		@make opt_long32=false main.x -j$(Ncpu)
@@ -495,7 +495,7 @@ else # opt_main == false  # link all tests to main.x
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test64q: clean clean_dep
+    test64q: clean
 		$(info remake and run all tests - 64bit & quadmath)
 		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
@@ -521,7 +521,8 @@ endif
 
 # [manual] rule files for *.o [make/deps/*.mak]
 # use when you change `#include`
-depend: $(path_cpp_mak)
+depend: clean_dep
+	make $(path_cpp_mak)
 
 # remake all headers
 h_all:
@@ -529,9 +530,16 @@ h_all:
 	make h64q
 	make h
 
-h:
-	$(info remake all headers)
-	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), $(opt_verb))"
+ifeq ($(opt_octave), true)
+    h:
+		$(info remake all headers)
+		octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', [], $(opt_quadmath), $(opt_long32), $(opt_verb))"
+
+    # header generation with octave
+    %.h: %.h.in # code gen
+		@printf "\n$(green)$@$(normal):\n"
+		octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32), $(opt_verb))"
+endif
 
 h64:
 	$(info remake all headers - 64bit)
@@ -579,8 +587,3 @@ make/deps/%.cpp.mak: tests/%.cpp
 # rules for tests/*.o
 
 -include make/deps/*.mak
-
-# header generation with octave
-%.h: %.h.in # code gen
-	@printf "\n$(green)$@$(normal):\n"
-	octave --no-window-system --eval "cd preprocessor; auto_gen('$(in_paths)', '$$(basename $<)', $(opt_quadmath), $(opt_long32), $(opt_verb))"

@@ -7,13 +7,15 @@
 #ifdef SLS_USE_ARB
 #include "../util/bit.h"
 #include "../str/str.h"
-#include "arf.h"
-#include "acb_hypgeom.h"
+#include <flint/acb.h>
+#include <flint/arf.h>
+#include <flint/acb_hypgeom.h>
 
 namespace slisc {
 
 // __ARB_VERSION might not be defined in older versions
-#if !defined(__ARB_VERSION) || (__ARB_VERSION == 2 && __ARB_VERSION_MINOR <= 21)
+#ifndef SLS_USE_MACOS
+	#if !defined(__ARB_VERSION) || (__ARB_VERSION == 2 && __ARB_VERSION_MINOR <= 21)
 // similar to arb_get_str()
 inline char *arf_get_str(const arf_t x, slong prec)
 {
@@ -23,6 +25,7 @@ inline char *arf_get_str(const arf_t x, slong prec)
 	arb_clear(y);
 	return p;
 }
+	#endif
 #endif
 
 inline int arf_set_str(arf_t res, const char * inp, slong prec)
