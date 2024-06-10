@@ -386,7 +386,7 @@ ifeq ($(opt_sqlitecpp), true)
     tmp := $(shell echo "$(mydefine) SLS_USE_SQLITECPP" >> SLISC/config.h.new)
     tmp := $(shell echo "$(mydefine) SLS_USE_SQLITE" >> SLISC/config.h.new)
     $(info SQLiteCpp: static)
-    sqlitecpp_lib := -l:libSQLiteCpp.a -l:libSQLiteCpp-sqlite3.a -l pthread -l dl
+    sqlitecpp_lib := -lSQLiteCpp -lSQLiteCpp-sqlite3
 else
     $(info SQLiteCpp: off)
     sqlitecpp_lib :=
@@ -407,7 +407,7 @@ ifeq ($(opt_sqlite), true)
     tmp := $(shell echo "$(mydefine) SLS_USE_SQLITE" >> SLISC/config.h.new)
     ifeq ($(opt_static), false)
         $(info SQLite: dynamic)
-        sqlite_lib := -l:libsqlite3.so
+        sqlite_lib := -lsqlite3
     else
         $(info SQLite: static)
         sqlite_lib := -l:libsqlite3.a
