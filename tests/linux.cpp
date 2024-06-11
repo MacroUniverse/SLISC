@@ -1,11 +1,11 @@
 #include "../SLISC/util/linux.h"
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 #include <signal.h>
 #endif
 
 void test_linux()
 {
-#ifdef SLS_USE_LINUX
+#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	using namespace slisc;
 	
 	// test exec_str()
@@ -44,7 +44,7 @@ void test_linux()
 
 	// test ram_usage();
 	{
-#ifndef SLS_USE_MACOS
+	#ifdef SLS_USE_LINUX
 		Long old_ram = ram_usage();
 		Long N = 1024*1024*100; // 100 Mib
 		Char *s = new Char[N];
@@ -52,15 +52,15 @@ void test_linux()
 		for (Long i = 1; i < N; ++i)
 			s[i] = s[i-1] + 1;
 		Long new_ram = ram_usage();
-#ifdef SLS_USE_ASAN
+		#ifdef SLS_USE_ASAN
 		if (abs((new_ram - old_ram)/1024 - 100.) > 20)
 			SLS_FAIL;
-#else
+		#else
 		if (abs((new_ram - old_ram)/1024 - 100.) > 1.)
 			SLS_FAIL;
-#endif
+		#endif
 		delete [] s;
-#endif
+	#endif
 	}
 
 #else
