@@ -4,8 +4,8 @@
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint/flint.h>
-#include "arb_hypgeom.h" // real functions
-#include "acb_hypgeom.h" // complex functions
+#include <flint/arb_hypgeom.h> // real functions
+#include <flint/acb_hypgeom.h> // complex functions
 #include "../prec/arb_extension.h"
 #endif
 #ifdef SLS_USE_GSL

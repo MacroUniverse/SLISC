@@ -491,7 +491,7 @@ path_nogen_headers := $(filter-out $(path_headers),$(path_gen_headers)) # non-ge
 
 # number of cpu
 Ncpu := $(shell getconf _NPROCESSORS_ONLN)
-
+$(info number of cpu detedted: $(Ncpu))
 
 ##################### RULES ##########################
 
@@ -503,7 +503,7 @@ all:
 	make test
 
 ifeq ($(opt_main), false) # one executable for each test
-    test: clean clean_dep
+    test: clean
 		$(info remake and run all tests - default options)
 		@make depend
 		@make h
@@ -512,9 +512,8 @@ ifeq ($(opt_main), false) # one executable for each test
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test32: clean clean_dep
+    test32:
 		$(info remake and run all tests - 32bit)
-		@make depend
 		@make h
 		@make opt_long32=true opt_min=false depend -j$(Ncpu)
 		@make opt_long32=true opt_min=false $(path_test_x) -j$(Ncpu)
@@ -522,9 +521,8 @@ ifeq ($(opt_main), false) # one executable for each test
 		@make run_test_x
 		@printf "\n\n\n"
 	
-    test64: clean clean_dep
+    test64: clean
 		$(info remake and run all tests - 64bit)
-		@make depend
 		@make h64
 		@make opt_long32=false opt_min=false depend -j$(Ncpu)
 		@make opt_long32=false opt_min=false $(path_test_x) -j$(Ncpu)
@@ -532,9 +530,8 @@ ifeq ($(opt_main), false) # one executable for each test
 		@make run_test_x
 		@printf "\n\n\n"
 
-    test64q: clean clean_dep
+    test64q: clean
 		$(info remake and run all tests - 64bit & quadmath)
-		@make depend
 		@make h64q
 		@make opt_long32=false opt_min=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_min=false opt_quadmath=true $(path_test_x) -j$(Ncpu)
@@ -560,9 +557,8 @@ ifeq ($(opt_main), false) # one executable for each test
 else # opt_main == false  # link all tests to main.x
 
     # use `make test*` without any option! options will ignore.
-    test: clean clean_dep
+    test: clean
 		$(info remake and run all tests - default)
-		@make depend
 		@make h
 		@make depend -j$(Ncpu)
 		@make main.x -j$(Ncpu)
@@ -570,9 +566,8 @@ else # opt_main == false  # link all tests to main.x
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test32: clean clean_dep
+    test32: clean
 		$(info remake and run all tests - 32bit)
-		@make depend
 		@make h
 		@make opt_long32=true depend -j$(Ncpu)
 		@make opt_long32=true main.x -j$(Ncpu)
@@ -580,9 +575,8 @@ else # opt_main == false  # link all tests to main.x
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test64: clean clean_dep
+    test64: clean
 		$(info remake and run all tests - 64bit)
-		@make depend
 		@make h64
 		@make opt_long32=false depend -j$(Ncpu)
 		@make opt_long32=false main.x -j$(Ncpu)
@@ -590,9 +584,8 @@ else # opt_main == false  # link all tests to main.x
 		./main.x < input.inp
 		@printf "\n\n\n"
 
-    test64q: clean clean_dep
+    test64q: clean
 		$(info remake and run all tests - 64bit & quadmath)
-		@make depend
 		@make h64q
 		@make opt_long32=false opt_quadmath=true depend -j$(Ncpu)
 		@make opt_long32=false opt_quadmath=true main.x -j$(Ncpu)
@@ -617,7 +610,8 @@ endif
 
 # [manual] rule files for *.o [make/deps/*.mak]
 # use when you change `#include`
-depend: $(path_cpp_mak)
+depend: clean_dep
+	make $(path_cpp_mak)
 
 # remake all headers
 h_all:

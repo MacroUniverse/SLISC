@@ -1,5 +1,6 @@
 #pragma once
 #include "../arith/compare.h"
+#include "../lin/mul.h"
 #include "../sparse/band_arith.h"
 
 #ifdef SLS_USE_LAPACKE
