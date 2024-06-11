@@ -65,8 +65,9 @@ Depending on the compilation options, `CBLAS`, `LAPACKE`, `MKL`, `Boost`, `GSL`,
 `Octave` 4.2 (4.0 works but is slower) or higher is needed for code generation. If you don't want to install `Octave`, just `touch SLISC/*.h` before `make`, you only need to do this one time. Run `make h` to generate the header code with `octave`.
 
 ### Using precompiled binaries or dockerfiles (recommended)
-* All dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC-libs-x64-centos7.9.2009). Check your Ubuntu version with `lsb_release -a`. These binaries are compiled with docker using `docker/*-build-*.dockerfile`. Note that Ubuntu16.04 is not fully supported (missing MPLAPACK)
-* Third party libraries for [MacOS](https://github.com/MacroUniverse/SLISC-libs-macOS-14.4-m1) are limited. Use `make/mac.mak` in `Makefile`
+* Almost all dependent libraries for x86-64 for different linux distros are already precompiled, see, e.g. [Ubuntu22.04](https://github.com/MacroUniverse/SLISC-libs-x64-ubuntu22.04) and [CentOS7.9](https://github.com/MacroUniverse/SLISC-libs-x64-centos7.9.2009). Check your Ubuntu version with `lsb_release -a`. These binaries are compiled with docker using `docker/*-build-*.dockerfile`. Note that Ubuntu16.04 is not fully supported (missing MPLAPACK)
+* MacOS with arm64 is also mostly compatible [MacOS](https://github.com/MacroUniverse/SLISC-libs-macOS-14.4-m1). Use `make/mac.mak` in `Makefile`, then use `make test` for testing.
+* Visual Studio is not officially supported or tested, but it should work if you prepared the 3rd party libraries and do a little hacking (tested a while ago without 3rd party library).
 * Use `source setup.sh` to add header and library paths to environment variables. You can add this command to `~/.bashrc` so it will run everytime you login.
 * See also `docker/ubuntu*-portable.dockerfile` to build docker images.
 
@@ -88,7 +89,7 @@ make [options] [-j8]
 * `-j8` option is to compile with 8 thread in parallel, you can choose other numbers to.
 * For `[options]`, first try `opt_min=true` to compile with minimum dependency. For a full list of options and default values, see `make/all.mak`. You can also directly modify the values in the file.
 * Changing options `opt_long32` and `opt_quadmath` will require header regeneration with `make h` (requires Octave). For convenience, the generated headers by `make opt_long32=false, opt_quadmath=true h` are stored in `SLISC-64q`. Use `cp SLISC-64q/*h SLISC` if you don't want to regenerate.
-* Also supports CMake (not all options supported, recommend Makefile) and partially suport Visual Studio project file, tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
+* Also supports CMake (not all options supported, recommend Makefile), tested with g++8.3, g++11.2, clang-10, in Ubuntu 16.04-22.04, CentOS 7.9 and Windows WSL, MYSYS2.
 * Makefile provides multiple options, uncomment one line to enable. The future plan is to merge all of the `make/*.mak` files into one (currently called `make/all.mak`).
 * To recompile just one test, use `make [options] test_xxx.o link`, where `test_xxx` is one of the file names in the `test` folder.
 * Use `./main.x < input.inp` to run all tests. Use `./main.x <test>` to run 1 test.
@@ -300,8 +301,6 @@ There is no automatic `resize()` inside functions in SLISC, for performance reas
 * Use `u8"..."` for `UTF-8` literal
 * Use `U"..."` for `UTF-32` literal
 * for display, convert everything to `string` with `UTF-8` encoding, then use `cout`
-* Visual Studio does not support `UTF-8` source file without `BOM`, `u8"..."` will fail (`compiler error: newline in literal`). Add `BOM` for files with unicode.
-* TODO: `BOM` must be removed for linux compilation, this can be done automatically with Makefile.
 * `UTF-32` character lookup and convertion to `UTF-8` http://tools.jb51.net/transcoding/decode_encode_tool
 
 ### basic utilities
