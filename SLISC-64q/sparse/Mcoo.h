@@ -68,8 +68,8 @@ inline McooChar::McooChar(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooChar::McooChar(McooChar &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -129,8 +129,8 @@ inline Char McooChar::operator()(Long_I i, Long_I j) const
 
 inline McooChar &McooChar::operator=(McooChar &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -292,9 +292,9 @@ inline void McooChar::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooChar::reshape(Long_I N0, Long_I N1)
@@ -363,8 +363,8 @@ inline McooInt::McooInt(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooInt::McooInt(McooInt &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -424,8 +424,8 @@ inline Int McooInt::operator()(Long_I i, Long_I j) const
 
 inline McooInt &McooInt::operator=(McooInt &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -587,9 +587,9 @@ inline void McooInt::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooInt::reshape(Long_I N0, Long_I N1)
@@ -658,8 +658,8 @@ inline McooLlong::McooLlong(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooLlong::McooLlong(McooLlong &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -719,8 +719,8 @@ inline Llong McooLlong::operator()(Long_I i, Long_I j) const
 
 inline McooLlong &McooLlong::operator=(McooLlong &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -882,9 +882,9 @@ inline void McooLlong::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooLlong::reshape(Long_I N0, Long_I N1)
@@ -953,8 +953,8 @@ inline McooDoub::McooDoub(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooDoub::McooDoub(McooDoub &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -1014,8 +1014,8 @@ inline Doub McooDoub::operator()(Long_I i, Long_I j) const
 
 inline McooDoub &McooDoub::operator=(McooDoub &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -1177,9 +1177,9 @@ inline void McooDoub::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooDoub::reshape(Long_I N0, Long_I N1)
@@ -1248,8 +1248,8 @@ inline McooComp::McooComp(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooComp::McooComp(McooComp &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -1309,8 +1309,8 @@ inline Comp McooComp::operator()(Long_I i, Long_I j) const
 
 inline McooComp &McooComp::operator=(McooComp &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -1472,9 +1472,9 @@ inline void McooComp::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooComp::reshape(Long_I N0, Long_I N1)
@@ -1543,8 +1543,8 @@ inline McooQdoub::McooQdoub(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooQdoub::McooQdoub(McooQdoub &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -1604,8 +1604,8 @@ inline Qdoub McooQdoub::operator()(Long_I i, Long_I j) const
 
 inline McooQdoub &McooQdoub::operator=(McooQdoub &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -1767,9 +1767,9 @@ inline void McooQdoub::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooQdoub::reshape(Long_I N0, Long_I N1)
@@ -1838,8 +1838,8 @@ inline McooQcomp::McooQcomp(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooQcomp::McooQcomp(McooQcomp &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -1899,8 +1899,8 @@ inline Qcomp McooQcomp::operator()(Long_I i, Long_I j) const
 
 inline McooQcomp &McooQcomp::operator=(McooQcomp &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -2062,9 +2062,9 @@ inline void McooQcomp::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooQcomp::reshape(Long_I N0, Long_I N1)
@@ -2133,8 +2133,8 @@ inline McooImag::McooImag(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooImag::McooImag(McooImag &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -2194,8 +2194,8 @@ inline Imag McooImag::operator()(Long_I i, Long_I j) const
 
 inline McooImag &McooImag::operator=(McooImag &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -2357,9 +2357,9 @@ inline void McooImag::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooImag::reshape(Long_I N0, Long_I N1)
@@ -2428,8 +2428,8 @@ inline McooQimag::McooQimag(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline McooQimag::McooQimag(McooQimag &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -2489,8 +2489,8 @@ inline Qimag McooQimag::operator()(Long_I i, Long_I j) const
 
 inline McooQimag &McooQimag::operator=(McooQimag &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -2652,9 +2652,9 @@ inline void McooQimag::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void McooQimag::reshape(Long_I N0, Long_I N1)

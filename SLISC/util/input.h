@@ -12,7 +12,7 @@ inline void read_input(vector<int> &v_num, vector<string> &v_str)
     int num; string str;
     while (cin >> num >> str) {
         v_num.push_back(num);
-        v_str.push_back(move(str));
+        v_str.push_back(std::move(str));
     }
 }
 

@@ -44,11 +44,11 @@ void test_Vec()
 
 	{
 		VecInt a(3); a[0] = 1; a[1] = 2; a[2] = 3;
-		VecInt b(move(a));
+		VecInt b(std::move(a));
 		SLS_ASSERT(a.size() == 0);
 		VecInt c;
 		c = b;
-		c = move(b);
+		c = std::move(b);
 		SLS_ASSERT(b.size() == 0);
 	}
 }

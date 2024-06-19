@@ -566,7 +566,7 @@ inline void sort_col(@McooT@_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	@McooT@ new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = move(new_coo);
+	coo = std::move(new_coo);
 }
 
 //% Tr = rm_comp(T);

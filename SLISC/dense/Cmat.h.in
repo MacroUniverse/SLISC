@@ -50,7 +50,7 @@ inline @CmatT@::@CmatT@(const @CmatT@ &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline @CmatT@::@CmatT@(@CmatT@ &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline @CmatT@ &@CmatT@::operator=(const @CmatT@ &rhs)
 {
@@ -61,7 +61,7 @@ inline @CmatT@ &@CmatT@::operator=(const @CmatT@ &rhs)
 
 inline @CmatT@ &@CmatT@::operator=(@CmatT@ &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }

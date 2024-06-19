@@ -6,9 +6,9 @@ private:
 public:
 	ObjPool(Long_I n) { alloc(n); }
 	ObjPool(cons ObjPool &) = delete;
-	ObjPool(ObjPool &&rhs) : pool(move(rhs.pool)) {};
+	ObjPool(ObjPool &&rhs) : pool(std::move(rhs.pool)) {};
 	ObjPool &operator=(cons ObjPool &) = delete;
-	ObjPool &operator=(ObjPool &&rhs) { pool = move(rhs.pool); };
+	ObjPool &operator=(ObjPool &&rhs) { pool = std::move(rhs.pool); };
 
 	Long size() const { return (Long)pool.size(); }
 
@@ -23,13 +23,13 @@ public:
 			return make_unique<T>();
 		}
 		else {
-			unique_ptr<T> obj = move(pool.back());
+			unique_ptr<T> obj = std::move(pool.back());
 			pool.pop_back();
 			return obj;
 		}
 	}
 
 	void put(unique_ptr<T> &obj) {
-		pool.push_back(move(obj));
+		pool.push_back(std::move(obj));
 	}
 };

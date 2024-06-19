@@ -48,6 +48,7 @@
 #include <cerrno>
 #include <thread>
 #include <mutex>
+#include <memory>
 
 // compilers
 #ifdef _MSC_VER
@@ -207,7 +208,7 @@ using std::floor; using std::get; using std::hypot;
 using std::isnan; using std::isinf; using std::ifstream; using std::imag;
 using std::log; using std::log10; using std::log1p;
 using std::make_pair; using std::make_tuple;
-using std::min; using std::max; using std::map; using std::move;
+using std::min; using std::max; using std::map;
 using std::numeric_limits; using std::ofstream;
 using std::pair; using std::pow; using std::priority_queue;
 using std::queue;
@@ -215,9 +216,11 @@ using std::round; using std::real; using std::reverse; using std::runtime_error;
 using std::string; using std::stringstream; using std::sinh;
 using std::stack; using std::sqrt; using std::sin;
 using std::setw; using std::swap; using std::set;
+using std::shared_ptr;
 using std::tie; using std::tuple; using std::to_string;
 using std::tan; using std::tanh;
 using std::u16string; using std::u32string;
+using std::unique_ptr;
 using std::unordered_set; using std::unordered_map;
 using std::vector;
 

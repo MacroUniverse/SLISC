@@ -62,7 +62,7 @@ inline @Cmat3T@ &@Cmat3T@::operator=(const @Cmat3T@ &rhs)
 
 inline @Cmat3T@ &@Cmat3T@::operator=(@Cmat3T@ &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0; m_N1 = rhs.m_N1;
 	return *this;
 }

@@ -853,7 +853,7 @@ inline void sort_col(McooChar_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooChar new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = move(new_coo);
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooChar_IO coo, Char_I thresh = 0)
@@ -913,7 +913,7 @@ inline void sort_col(McooInt_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooInt new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = move(new_coo);
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooInt_IO coo, Int_I thresh = 0)
@@ -973,7 +973,7 @@ inline void sort_col(McooLlong_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooLlong new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = move(new_coo);
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooLlong_IO coo, Llong_I thresh = 0)
@@ -1033,7 +1033,7 @@ inline void sort_col(McooDoub_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooDoub new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = move(new_coo);
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooDoub_IO coo, Doub_I thresh = 0)
@@ -1094,7 +1094,7 @@ inline void sort_col(McooComp_IO coo)
 	Long new_Nnz = sort_col_dry(dest, coo);
 	McooComp new_coo(coo.n0(), coo.n1(), new_Nnz);
 	reorder(new_coo, coo, dest, new_Nnz);
-	coo = move(new_coo);
+	coo = std::move(new_coo);
 }
 
 inline void rm_zero(McooComp_IO coo, Doub_I thresh = 0)

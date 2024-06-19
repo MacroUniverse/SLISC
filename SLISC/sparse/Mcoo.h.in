@@ -76,8 +76,8 @@ inline @McooT@::@McooT@(Long_I N0, Long_I N1, Long_I Ncap) :
 	Base(Ncap), m_N0(N0), m_N1(N1), m_Nnz(0), m_row(Ncap), m_col(Ncap) {}
 
 inline @McooT@::@McooT@(@McooT@ &&rhs) :
-	Base(move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
-	m_row(move(rhs.m_row)), m_col(move(rhs.m_col))
+	Base(std::move(Base(rhs))), m_N0(rhs.m_N0), m_N1(rhs.m_N1), m_Nnz(rhs.m_Nnz),
+	m_row(std::move(rhs.m_row)), m_col(std::move(rhs.m_col))
 {
 	rhs.m_Nnz = 0;
 }
@@ -137,8 +137,8 @@ inline @T@ @McooT@::operator()(Long_I i, Long_I j) const
 
 inline @McooT@ &@McooT@::operator=(@McooT@ &&rhs)
 {
-	Base::operator=(move(rhs));
-	m_row = move(rhs.m_row); m_col = move(rhs.m_col);
+	Base::operator=(std::move(rhs));
+	m_row = std::move(rhs.m_row); m_col = std::move(rhs.m_col);
 	m_Nnz = rhs.m_Nnz;
 	rhs.m_Nnz = 0; rhs.m_N = 0;
 	return *this;
@@ -300,9 +300,9 @@ inline void @McooT@::reserve_cpy(Long_I N)
 	veccpy(data.p(), m_p, m_Nnz);
 	veccpy(row.p(), m_row.p(), m_Nnz);
 	veccpy(col.p(), m_col.p(), m_Nnz);
-	Base::operator=(move(data));
-	m_row = move(row);
-	m_col = move(col);
+	Base::operator=(std::move(data));
+	m_row = std::move(row);
+	m_col = std::move(col);
 }
 
 inline void @McooT@::reshape(Long_I N0, Long_I N1)

@@ -41,7 +41,7 @@ inline CmatBool::CmatBool(const CmatBool &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatBool::CmatBool(CmatBool &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatBool &CmatBool::operator=(const CmatBool &rhs)
 {
@@ -52,7 +52,7 @@ inline CmatBool &CmatBool::operator=(const CmatBool &rhs)
 
 inline CmatBool &CmatBool::operator=(CmatBool &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -157,7 +157,7 @@ inline CmatChar::CmatChar(const CmatChar &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatChar::CmatChar(CmatChar &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatChar &CmatChar::operator=(const CmatChar &rhs)
 {
@@ -168,7 +168,7 @@ inline CmatChar &CmatChar::operator=(const CmatChar &rhs)
 
 inline CmatChar &CmatChar::operator=(CmatChar &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -273,7 +273,7 @@ inline CmatUchar::CmatUchar(const CmatUchar &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatUchar::CmatUchar(CmatUchar &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatUchar &CmatUchar::operator=(const CmatUchar &rhs)
 {
@@ -284,7 +284,7 @@ inline CmatUchar &CmatUchar::operator=(const CmatUchar &rhs)
 
 inline CmatUchar &CmatUchar::operator=(CmatUchar &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -389,7 +389,7 @@ inline CmatInt::CmatInt(const CmatInt &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatInt::CmatInt(CmatInt &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatInt &CmatInt::operator=(const CmatInt &rhs)
 {
@@ -400,7 +400,7 @@ inline CmatInt &CmatInt::operator=(const CmatInt &rhs)
 
 inline CmatInt &CmatInt::operator=(CmatInt &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -505,7 +505,7 @@ inline CmatLlong::CmatLlong(const CmatLlong &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatLlong::CmatLlong(CmatLlong &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatLlong &CmatLlong::operator=(const CmatLlong &rhs)
 {
@@ -516,7 +516,7 @@ inline CmatLlong &CmatLlong::operator=(const CmatLlong &rhs)
 
 inline CmatLlong &CmatLlong::operator=(CmatLlong &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -621,7 +621,7 @@ inline CmatFloat::CmatFloat(const CmatFloat &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatFloat::CmatFloat(CmatFloat &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatFloat &CmatFloat::operator=(const CmatFloat &rhs)
 {
@@ -632,7 +632,7 @@ inline CmatFloat &CmatFloat::operator=(const CmatFloat &rhs)
 
 inline CmatFloat &CmatFloat::operator=(CmatFloat &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -737,7 +737,7 @@ inline CmatDoub::CmatDoub(const CmatDoub &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatDoub::CmatDoub(CmatDoub &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatDoub &CmatDoub::operator=(const CmatDoub &rhs)
 {
@@ -748,7 +748,7 @@ inline CmatDoub &CmatDoub::operator=(const CmatDoub &rhs)
 
 inline CmatDoub &CmatDoub::operator=(CmatDoub &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -853,7 +853,7 @@ inline CmatLdoub::CmatLdoub(const CmatLdoub &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatLdoub::CmatLdoub(CmatLdoub &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatLdoub &CmatLdoub::operator=(const CmatLdoub &rhs)
 {
@@ -864,7 +864,7 @@ inline CmatLdoub &CmatLdoub::operator=(const CmatLdoub &rhs)
 
 inline CmatLdoub &CmatLdoub::operator=(CmatLdoub &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -970,7 +970,7 @@ inline CmatFcomp::CmatFcomp(const CmatFcomp &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatFcomp::CmatFcomp(CmatFcomp &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatFcomp &CmatFcomp::operator=(const CmatFcomp &rhs)
 {
@@ -981,7 +981,7 @@ inline CmatFcomp &CmatFcomp::operator=(const CmatFcomp &rhs)
 
 inline CmatFcomp &CmatFcomp::operator=(CmatFcomp &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -1086,7 +1086,7 @@ inline CmatComp::CmatComp(const CmatComp &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatComp::CmatComp(CmatComp &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatComp &CmatComp::operator=(const CmatComp &rhs)
 {
@@ -1097,7 +1097,7 @@ inline CmatComp &CmatComp::operator=(const CmatComp &rhs)
 
 inline CmatComp &CmatComp::operator=(CmatComp &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -1202,7 +1202,7 @@ inline CmatLcomp::CmatLcomp(const CmatLcomp &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatLcomp::CmatLcomp(CmatLcomp &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatLcomp &CmatLcomp::operator=(const CmatLcomp &rhs)
 {
@@ -1213,7 +1213,7 @@ inline CmatLcomp &CmatLcomp::operator=(const CmatLcomp &rhs)
 
 inline CmatLcomp &CmatLcomp::operator=(CmatLcomp &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -1319,7 +1319,7 @@ inline CmatFimag::CmatFimag(const CmatFimag &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatFimag::CmatFimag(CmatFimag &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatFimag &CmatFimag::operator=(const CmatFimag &rhs)
 {
@@ -1330,7 +1330,7 @@ inline CmatFimag &CmatFimag::operator=(const CmatFimag &rhs)
 
 inline CmatFimag &CmatFimag::operator=(CmatFimag &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -1435,7 +1435,7 @@ inline CmatImag::CmatImag(const CmatImag &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatImag::CmatImag(CmatImag &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatImag &CmatImag::operator=(const CmatImag &rhs)
 {
@@ -1446,7 +1446,7 @@ inline CmatImag &CmatImag::operator=(const CmatImag &rhs)
 
 inline CmatImag &CmatImag::operator=(CmatImag &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }
@@ -1551,7 +1551,7 @@ inline CmatLimag::CmatLimag(const CmatLimag &rhs) : Base(rhs), m_N0(rhs.m_N0)
 }
 
 inline CmatLimag::CmatLimag(CmatLimag &&rhs)
-	: Base(move(rhs)), m_N0(rhs.m_N0) {}
+	: Base(std::move(rhs)), m_N0(rhs.m_N0) {}
 
 inline CmatLimag &CmatLimag::operator=(const CmatLimag &rhs)
 {
@@ -1562,7 +1562,7 @@ inline CmatLimag &CmatLimag::operator=(const CmatLimag &rhs)
 
 inline CmatLimag &CmatLimag::operator=(CmatLimag &&rhs)
 {
-	Base::operator=(move(rhs));
+	Base::operator=(std::move(rhs));
 	m_N0 = rhs.m_N0;
 	return *this;
 }

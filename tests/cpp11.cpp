@@ -99,9 +99,9 @@ void test_cpp11()
 		++i;
 	}
 
-	// move(), swap()
+	// std::move(), swap()
 	vector<int> aa = {1,2,3}, bb;
-	bb = move(aa);
+	bb = std::move(aa);
 	swap(aa, bb);
 }
 

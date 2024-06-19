@@ -9,7 +9,7 @@ void test_Mcoo()
 	{
 		McooDoub a(3, 3, 4);
 		a.push(2, 1, 2);
-		McooDoub b(move(a));
+		McooDoub b(std::move(a));
 		SLS_ASSERT(a.nnz() == 0);
 	}
 

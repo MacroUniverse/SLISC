@@ -135,21 +135,21 @@ void test_dense()
 	copy(c3Doub, c3Doub1);
 	if (c3Doub != c3Doub1) SLS_FAIL;
 
-	// move operator
+	// std::move operator
 	VecDoub vDoub2;
 	CmatDoub aDoub2;
 	Cmat3Doub a3Doub2;
 	Cmat3Doub c3Doub2;
-	vDoub2 = move(vDoub);
+	vDoub2 = std::move(vDoub);
 	if (vDoub2 != vDoub1) SLS_FAIL;
 	if (vDoub.size() != 0) SLS_FAIL;
-	aDoub2 = move(aDoub);
+	aDoub2 = std::move(aDoub);
 	if (aDoub2 != aDoub1)  SLS_FAIL;
 	if (aDoub.size() != 0) SLS_FAIL;
-	a3Doub2 = move(a3Doub);
+	a3Doub2 = std::move(a3Doub);
 	if (a3Doub2 != a3Doub1) SLS_FAIL;
 	if (a3Doub.size() != 0) SLS_FAIL;
-	c3Doub2 = move(c3Doub);
+	c3Doub2 = std::move(c3Doub);
 	if (c3Doub2 != c3Doub1) SLS_FAIL;
 	if (a3Doub.size() != 0) SLS_FAIL;
 
