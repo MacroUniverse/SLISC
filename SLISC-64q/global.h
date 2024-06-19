@@ -48,6 +48,7 @@
 #include <cerrno>
 #include <thread>
 #include <mutex>
+#include <memory>
 
 // compilers
 #ifdef _MSC_VER

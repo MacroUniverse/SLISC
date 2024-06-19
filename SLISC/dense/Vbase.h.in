@@ -74,7 +74,7 @@ inline @VbaseT@::@VbaseT@(const @VbaseT@ &rhs)
 }
 
 inline @VbaseT@::@VbaseT@(@VbaseT@ &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)

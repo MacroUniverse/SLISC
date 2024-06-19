@@ -66,7 +66,7 @@ inline VbaseBool::VbaseBool(const VbaseBool &rhs)
 }
 
 inline VbaseBool::VbaseBool(VbaseBool &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -257,7 +257,7 @@ inline VbaseChar::VbaseChar(const VbaseChar &rhs)
 }
 
 inline VbaseChar::VbaseChar(VbaseChar &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -448,7 +448,7 @@ inline VbaseUchar::VbaseUchar(const VbaseUchar &rhs)
 }
 
 inline VbaseUchar::VbaseUchar(VbaseUchar &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -639,7 +639,7 @@ inline VbaseInt::VbaseInt(const VbaseInt &rhs)
 }
 
 inline VbaseInt::VbaseInt(VbaseInt &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -830,7 +830,7 @@ inline VbaseLlong::VbaseLlong(const VbaseLlong &rhs)
 }
 
 inline VbaseLlong::VbaseLlong(VbaseLlong &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -1021,7 +1021,7 @@ inline VbaseFloat::VbaseFloat(const VbaseFloat &rhs)
 }
 
 inline VbaseFloat::VbaseFloat(VbaseFloat &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -1212,7 +1212,7 @@ inline VbaseDoub::VbaseDoub(const VbaseDoub &rhs)
 }
 
 inline VbaseDoub::VbaseDoub(VbaseDoub &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -1403,7 +1403,7 @@ inline VbaseLdoub::VbaseLdoub(const VbaseLdoub &rhs)
 }
 
 inline VbaseLdoub::VbaseLdoub(VbaseLdoub &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -1594,7 +1594,7 @@ inline VbaseQdoub::VbaseQdoub(const VbaseQdoub &rhs)
 }
 
 inline VbaseQdoub::VbaseQdoub(VbaseQdoub &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -1785,7 +1785,7 @@ inline VbaseFcomp::VbaseFcomp(const VbaseFcomp &rhs)
 }
 
 inline VbaseFcomp::VbaseFcomp(VbaseFcomp &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -1976,7 +1976,7 @@ inline VbaseComp::VbaseComp(const VbaseComp &rhs)
 }
 
 inline VbaseComp::VbaseComp(VbaseComp &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -2167,7 +2167,7 @@ inline VbaseLcomp::VbaseLcomp(const VbaseLcomp &rhs)
 }
 
 inline VbaseLcomp::VbaseLcomp(VbaseLcomp &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -2358,7 +2358,7 @@ inline VbaseQcomp::VbaseQcomp(const VbaseQcomp &rhs)
 }
 
 inline VbaseQcomp::VbaseQcomp(VbaseQcomp &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -2549,7 +2549,7 @@ inline VbaseFimag::VbaseFimag(const VbaseFimag &rhs)
 }
 
 inline VbaseFimag::VbaseFimag(VbaseFimag &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -2740,7 +2740,7 @@ inline VbaseImag::VbaseImag(const VbaseImag &rhs)
 }
 
 inline VbaseImag::VbaseImag(VbaseImag &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -2931,7 +2931,7 @@ inline VbaseLimag::VbaseLimag(const VbaseLimag &rhs)
 }
 
 inline VbaseLimag::VbaseLimag(VbaseLimag &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)
@@ -3122,7 +3122,7 @@ inline VbaseQimag::VbaseQimag(const VbaseQimag &rhs)
 }
 
 inline VbaseQimag::VbaseQimag(VbaseQimag &&rhs)
-	: m_N(rhs.m_N), m_p(rhs.m_p)
+	: m_p(rhs.m_p), m_N(rhs.m_N)
 {
 #ifndef NDEBUG
 	if (this == &rhs)

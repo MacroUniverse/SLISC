@@ -503,10 +503,12 @@ inline float NR3SIGN(const double &a, const float &b)
 template<class Stepper>
 Odeint<Stepper>::Odeint(VecDoub_IO ystartt, Doub_I xx1, Doub_I xx2,
 	Doub_I atol, Doub_I rtol, Doub_I h1, Doub_I hminn,
-	Output &outt,typename Stepper::Dtype &derivss) : nvar(ystartt.size()),
-	y(nvar),dydx(nvar),ystart(ystartt),x(xx1),nok(0),nbad(0),
-	x1(xx1),x2(xx2),hmin(hminn),dense(outt.dense),out(outt),derivs(derivss),
-	s(y,dydx,x,atol,rtol,dense) {
+	Output &outt,typename Stepper::Dtype &derivss) :
+	nok(0),nbad(0),nvar(ystartt.size()),
+	x1(xx1),x2(xx2),hmin(hminn),dense(outt.dense),
+	y(nvar),dydx(nvar),ystart(ystartt),
+	out(outt),derivs(derivss),
+	s(y,dydx,x,atol,rtol,dense),x(xx1) {
 	EPS=numeric_limits<Doub>::epsilon();
 	h=NR3SIGN(h1,x2-x1);
 	for (Int i=0;i<nvar;i++) y[i]=ystart[i];

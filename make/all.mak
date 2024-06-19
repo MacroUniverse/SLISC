@@ -457,13 +457,13 @@ ifeq ($(opt_compiler), g++)
 endif
 
 ifeq ($(opt_compiler), clang++)
-    compiler_flag := -std=$(opt_std) -Wall -Wno-overloaded-virtual -ferror-limit=5 -fopenmp # -ffast-math
+    compiler_flag := -std=$(opt_std) -Wall -ferror-limit=5 -fopenmp # -ffast-math
 endif
 ifeq ($(opt_compiler), icpc)
     compiler_flag := -std=$(opt_std) -Wall -fp-model precise -fp-model except -qopenmp -Qoption,cpp,--extended_float_type
 endif
 ifeq ($(opt_compiler), icpx)
-    compiler_flag := -std=$(opt_std) -Wall -fp-model precise -qopenmp -Qoption,cpp,--extended_float_types -Wno-reorder-ctor -Wno-overloaded-virtual
+    compiler_flag := -std=$(opt_std) -Wall -fp-model precise -qopenmp -Qoption,cpp,--extended_float_types -Wno-reorder-ctor
 endif
 
 $(info  )$(info  )$(info  )$(info  )

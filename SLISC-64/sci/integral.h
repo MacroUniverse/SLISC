@@ -16,7 +16,7 @@ struct Trapzd : Quadrature {
 	T &func;
 	Trapzd() {};
 	Trapzd(T &funcc, const Doub aa, const Doub bb) :
-		func(funcc), a(aa), b(bb) {n=0;}
+		a(aa), b(bb), func(funcc) {n=0;}
 	Doub next() {
 		Doub x,tnm,sum,del;
 		Long it,j;
@@ -72,7 +72,7 @@ struct Midpnt : Quadrature {
 	Doub a,b,s;
 	T &funk;
 	Midpnt(T &funcc, const Doub aa, const Doub bb) :
-		funk(funcc), a(aa), b(bb) {n=0;}
+		a(aa), b(bb), funk(funcc) {n=0;}
 	Doub next() {
 		Long it,j;
 		Doub x,tnm,sum,del,ddel;
