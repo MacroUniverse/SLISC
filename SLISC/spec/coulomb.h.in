@@ -4,8 +4,13 @@
 #ifdef SLS_USE_ARB
 #include <gmp.h>
 #include <flint/flint.h>
+	#if defined(SLS_USE_MINGW) || defined(SLS_USE_MACOS)
 #include <flint/arb_hypgeom.h> // real functions
 #include <flint/acb_hypgeom.h> // complex functions
+	#else
+#include <arb_hypgeom.h> // real functions
+#include <acb_hypgeom.h> // complex functions
+	#endif
 #include "../prec/arb_extension.h"
 #endif
 #ifdef SLS_USE_GSL

@@ -4,7 +4,11 @@
 #include <gmp.h>
 #include <flint/flint.h>
 // #include <flint/fmpz.h>
+	#if defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 #include <flint/arb_hypgeom.h>
+	#else
+#include <arb_hypgeom.h>
+	#endif
 #include "../SLISC/prec/arb_extension.h"
 #endif
 

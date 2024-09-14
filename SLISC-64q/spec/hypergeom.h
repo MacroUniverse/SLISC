@@ -1,9 +1,15 @@
 #pragma once
 #include "../str/str.h"
 #ifdef SLS_USE_ARB
+	#if defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 #include <flint/acb.h>
 #include <flint/arb_hypgeom.h> // real functions
 #include <flint/acb_hypgeom.h> // complex functions
+	#else
+#include <acb.h>
+#include <arb_hypgeom.h> // real functions
+#include <acb_hypgeom.h> // complex functions
+	#endif
 #endif
 
 namespace slisc {

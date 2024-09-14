@@ -7,14 +7,20 @@
 #ifdef SLS_USE_ARB
 #include "../util/bit.h"
 #include "../str/str.h"
+	#if defined(SLS_USE_MACOS) || defined(SLS_USE_MINGW)
 #include <flint/acb.h>
 #include <flint/arf.h>
 #include <flint/acb_hypgeom.h>
+	#else
+#include <acb.h>
+#include <arf.h>
+#include <acb_hypgeom.h>
+	#endif
 
 namespace slisc {
 
 // __ARB_VERSION might not be defined in older versions
-#ifndef SLS_USE_MACOS
+#if !defined(SLS_USE_MACOS) && !defined(SLS_USE_MINGW)
 	#if !defined(__ARB_VERSION) || (__ARB_VERSION == 2 && __ARB_VERSION_MINOR <= 21)
 // similar to arb_get_str()
 inline char *arf_get_str(const arf_t x, slong prec)
