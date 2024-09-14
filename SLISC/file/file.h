@@ -176,7 +176,7 @@ inline void mkdir(Str_I path)
 	CreateDirectoryW(utf82wstr(path).c_str(), NULL);
 #endif
 	if (!dir_exist(path))
-		SLS_ERR("mkdir failed: " + path1);
+		SLS_ERR("mkdir failed: " + path);
 }
 
 // remove an empty directory
@@ -229,6 +229,7 @@ inline Str real_path(Str_I path)
 		throw sls_err();
 #else
 	static_assert(true, "not implemented! " SLS_WHERE);
+	return "";
 #endif
 }
 
@@ -244,6 +245,7 @@ inline int file_rm(Str_I wildcard_name) {
 	return system(("rm " + wildcard_name).c_str());
 #else
 	static_assert(true, "not implemented! " SLS_WHERE);
+	return 1;
 #endif
 }
 

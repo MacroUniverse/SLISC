@@ -1,7 +1,4 @@
 # compile in msys2/mingw64
-# 使用北太天元提供的 mingw64.exe
-# 把 baltam-plugin-arb/windows/bin-arb4win 仓库中的所有 dll 拷贝到 mingw64 的 /usr/local/bin 新建目录下（默认的 dll 搜索路径， rpath 无效）
-# 再修改 arb_path 以找到 baltam-plugin-arb/windows/include 中正确的头文件
 
 compiler = g++
 SHELL := /bin/bash
@@ -44,7 +41,7 @@ debug_flag = -g -ftrapv
 # release_flag = -O3 -D NDEBUG
 
 # All
-flags = -Wall -Wno-reorder -Wno-misleading-indentation -std=c++11 -fopenmp -D SLS_TEST_ALL $(debug_flag) $(release_flag) -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag)
+flags = -Wall -Wno-reorder -Wno-misleading-indentation -Wno-unused-function -Wno-cast-user-defined -std=c++11 -fopenmp -D SLS_TEST_ALL $(debug_flag) $(release_flag) -fmax-errors=20 $(arpack_flag) $(cblas_flag) $(lapacke_flag) $(boost_flag) $(gsl_flag) $(arb_flag) $(quad_math_flag) $(eigen_flag) $(asan_flag) $(matfile_flag) $(sqlite_flag)
 
 libs = $(gsl_lib) $(lapacke_lib) $(boost_lib) $(cblas_lib) $(arb_lib) $(arpack_lib) $(quad_math_lib) $(matfile_lib) $(sqlite_lib)
 
