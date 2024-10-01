@@ -36,11 +36,11 @@ tests/lin_eq.o: tests/lin_eq.cpp tests/../SLISC/arith/arith1.h \
  tests/../SLISC/arith/../arith/../sparse/Mcoo.h \
  tests/../SLISC/arith/../arith/../sparse/Cmobd.h \
  tests/../SLISC/arith/../arith/../dense/Jcmat3.h \
- tests/../SLISC/lin/lin_eq.h tests/../SLISC/lin/../sparse/band_arith.h \
+ tests/../SLISC/lin/lin_eq.h tests/../SLISC/lin/../lin/mul.h \
+ tests/../SLISC/lin/../lin/../arith/copy.h \
+ tests/../SLISC/lin/../lin/../arith/../dense/cut.h \
+ tests/../SLISC/lin/../sparse/band_arith.h \
  tests/../SLISC/lin/../sparse/../arith/arith4.h \
- tests/../SLISC/lin/../sparse/../arith/copy.h \
- tests/../SLISC/lin/../sparse/../arith/../dense/cut.h \
- tests/../SLISC/lin/mul.h tests/../SLISC/util/random.h \
- tests/../SLISC/util/../arith/arith2.h \
+ tests/../SLISC/util/random.h tests/../SLISC/util/../arith/arith2.h \
  tests/../SLISC/util/../util/STL_util.h
 	$(opt_compiler) $(all_flags) -c tests/lin_eq.cpp -o tests/lin_eq.o
