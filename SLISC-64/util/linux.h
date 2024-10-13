@@ -16,31 +16,27 @@ namespace slisc {
 // use `int system(cmd)` if you don't need stdout
 inline int exec_str(Str_O stdout, Str_I cmd)
 {
-	SLS_ASSERT(&stdout != &cmd);
-	if (cmd.empty()) {
+	if (cmd.empty())
 		SLS_ERR("exec_str(): cmd is empty()");
-	}
 
-	static Str cmd1;
-	cmd1 = cmd;
-	trim(cmd1, " \n");
-	if (cmd1.back() != ';') cmd1 += " ; ";
-	cmd1 += "printf \\|$?";
-
-	std::array<char, 128> buffer{};
-	std::unique_ptr<FILE, decltype(&pclose)>
-		pipe(popen(cmd1.c_str(), "r"), pclose);
+	char buffer[256];
+	FILE *pipe = popen(cmd.c_str(), "r");
 	if (!pipe)
 		throw runtime_error("popen() failed!");
+
 	stdout.clear();
-	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
-		stdout += buffer.data();
-	size_t ind = stdout.rfind('|');
-	if (ind == npos)
-		throw runtime_error("exec_str(): cmd1 = \n" + cmd1);
-	int ret = str2Int(stdout.substr(ind + 1));
-	stdout.resize(ind);
-	return ret;
+	while (fgets(buffer, sizeof(buffer), fp) != nullptr)
+		stdout += buffer;
+
+	int ret = pclose(fp);
+    if (ret == -1) {
+        perror("pclose() failed");
+        SLS_ERR(SLS_WHERE);
+    }
+	if (WIFEXITED(ret))
+		return WEXITSTATUS(ret);
+	SLS_ERR(SLS_WHERE);
+	return -1;
 }
 
 // get pid of all child processes

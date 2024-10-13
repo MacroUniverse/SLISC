@@ -43,11 +43,11 @@ inline void bind(SQLite::Statement &stmt, Int_I i, SQLval_I val)
 		throw sls_err(SLS_WHERE);
 }
 
-inline void getColumn(SQLval &val, SQLite::Statement &stmt, Int_I i, Str &str)
+inline void getColumn(SQLval &val, SQLite::Statement &stmt, Int_I i, Str &str_cache)
 {
 	if (val.type == 's') {
-		str = stmt.getColumn(i).getString();
-		val.s = str.c_str();
+		str_cache = stmt.getColumn(i).getString();
+		val.s = str_cache.c_str();
 	}
 	else if (val.type == 'i')
 		val.i = stmt.getColumn(i).getInt64();
@@ -118,6 +118,11 @@ inline void update_sqlite_table_query(
 	q_delete.resize(q_delete.size()-5);
 }
 
+// update rows in db table satisfying `condition` to `data`
+// equivalent to deleting the rows satisfying `condition` then insert each row in `data`
+// rows that's unchanged will not be touched, which is much more efficient
+// each inserted/updated/deleted row will call the optional `callback()` function
+// `data` will be cleared empty after return
 inline void update_sqlite_table(
 	unordered_map<vecSQLval, vecSQLval> &data, // (primary keys) -> (other fields)
 	Str_I table_name,
@@ -126,8 +131,9 @@ inline void update_sqlite_table(
 	Int_I Npk, // first Npk of field_names are primary keys
 	SQLite::Database &db_rw,
 	void (*callback) ( // callback for db change
-		char act, // [i] insert [u] update [d] delete [a] all deleted (ind_changed[0] will be number of deleted records)
-		Str_I table, vecStr_I field_names, const pair<vecSQLval, vecSQLval> &row,
+		char act, // [i] insert [u] update [d] delete
+		Str_I table, vecStr_I field_names,
+		const pair<vecSQLval, vecSQLval> &row, // the inserted/updated/deleted row
 		vecLong_I ind_changed, const vecSQLval &old_vals, // row.second(ind_changed[j]) was old_vals[j]
 		void *data // user data
 	) = nullptr,
@@ -135,80 +141,82 @@ inline void update_sqlite_table(
 ) {
 	vecSQLval old_vals;
 	vecLong ind_changed;
-	Str stmp;
-	pair<vecSQLval,vecSQLval> row_empty;
-
-	if (data.empty()) {
-		// delete all records
-		clear(stmp) << "DELETE FROM \"" << table_name << '"';
-		if (!condition.empty())
-			stmp << " WHERE " << condition;
-		Long Ndel = db_rw.exec(stmp);
-		if (Ndel && callback) {
-			ind_changed.push_back(Ndel);
-			callback('a', table_name, field_names, row_empty, ind_changed, old_vals, callback_data);
-		}
-		return;
-	}
+	Str stmp; // temporary string
+	const pair<vecSQLval,vecSQLval> row_empty;
 
 	Int Nval = (int)size(field_names) - Npk;
 	Str q_select, q_insert, q_update, q_delete;
 	update_sqlite_table_query(q_select, q_insert, q_update, q_delete,
 		table_name, condition, field_names, Npk);
-	SQLite::Statement stmt_select(db_rw, q_select);
-	SQLite::Statement stmt_insert(db_rw, q_insert);
-	SQLite::Statement stmt_update(db_rw, q_update);
-	SQLite::Statement stmt_delete(db_rw, q_delete);
+	SQLite::Statement stmt_select(db_rw, q_select); // select db rows with `condition`
+	SQLite::Statement stmt_insert(db_rw, q_insert); // insert a row
+	SQLite::Statement stmt_update(db_rw, q_update); // update a row
+	SQLite::Statement stmt_delete(db_rw, q_delete); // delete a row
 
-	pair<vecSQLval, vecSQLval> old_row;
-	vecSQLval key(Npk);
-	vecStr str_pool(Npk+Nval); // temporary strings for SQLval to point to
+	pair<vecSQLval, vecSQLval> db_row{Npk, Nval};
+	vecSQLval &db_keys = db_row.first;
+	vecSQLval &db_vals = db_row.second;
+	vecStr str_cache(Npk+Nval); // temporary strings for SQLval to point to
 
-	// field types
-	auto &row0 = *data.begin();
-	for (Long i = 0; i < Npk; ++i)
-		key[i].type = row0.first[i].type;
+	// get field types
+	if (!data.empty()) {
+		auto it_row0 = data.begin();
+		for (Long i = 0; i < Npk; ++i)
+			db_keys[i].type = it_row0->first[i].type;
+		for (Long i = 0; i < Nval; ++i)
+			db_vals[i].type = it_row0->second[i].type;
+	}
+	else {
+		// the actual types don't matter
+		for (Long i = 0; i < Npk; ++i)
+			db_keys[i].type = 's';
+		for (Long i = 0; i < Nval; ++i)
+			db_vals[i].type = 's';
+	}
 
+	// loop through db rows satisfying `condition`
 	while (stmt_select.executeStep()) {
+		ind_changed.clear(); old_vals.clear();
 		for (Int j = 0; j < Npk; ++j)
-			getColumn(key[j], stmt_select, j, str_pool[j]);
-		auto p_row = data.find(key);
-		if (p_row == data.end()) {
-			// key not found, deleted
+			getColumn(db_keys[j], stmt_select, j, str_cache[j]);
+		for (Int j = 0; j < Nval; ++j)
+			getColumn(db_vals[j], stmt_select, Npk+j, str_cache[Npk+j]);
+
+		auto it_data_row = data.find(db_keys);
+		if (it_data_row == data.end()) {
+			// key not found in `data`, deleted
 			for (Int j = 0; j < Npk; ++j)
-				bind(stmt_delete, j+1, key[j]);
+				bind(stmt_delete, j+1, db_keys[j]);
 			if (stmt_delete.exec() != 1)
 				SLS_ERR(SLS_WHERE);
 			stmt_delete.reset();
 			if (callback)
-				callback('d', table_name, field_names, row_empty, ind_changed, old_vals, callback_data);
+				callback('d', table_name, field_names, db_row, ind_changed, old_vals, callback_data);
 			continue;
 		}
-		// check for change
-		if (Nval > 0) {
-			auto &vals = p_row->second;
+		// check for value updates
+		else if (Nval > 0) {
+			auto &data_vals = it_data_row->second;
 			for (Int j = 0; j < Nval; ++j) {
-				SQLval val(vals[j].type);
-				getColumn(val, stmt_select, Npk+j, str_pool[Npk+j]);
-				if (vals[j] != val) {
+				if (data_vals[j] != db_vals[j]) {
 					ind_changed.push_back(j);
-					old_vals.push_back(val);
+					old_vals.push_back(db_vals[j]);
 				}
 			}
 			if (!ind_changed.empty()) {
 				// update db record
 				for (Int j = 0; j < Nval; ++j)
-					bind(stmt_update, j+1, vals[j]);
+					bind(stmt_update, j+1, data_vals[j]);
 				for (Int j = 0; j < Npk; ++j)
-					bind(stmt_update, Nval+j+1, key[j]);
-				if (stmt_update.exec() != 1) SLS_ERR(SLS_WHERE);
+					bind(stmt_update, Nval+j+1, db_keys[j]);
+				if (stmt_update.exec() != 1)
+					SLS_ERR(SLS_WHERE);
 				stmt_update.reset();
 				if (callback)
-					callback('u', table_name, field_names, *p_row, ind_changed, old_vals, callback_data);
+					callback('u', table_name, field_names, *it_data_row, ind_changed, old_vals, callback_data);
 			}
 		}
-		data.erase(p_row);
-		ind_changed.clear();
+		data.erase(it_data_row);
 	}
 	stmt_select.reset();
 
@@ -222,6 +230,7 @@ inline void update_sqlite_table(
 		if (callback)
 			callback('i', table_name, field_names, row, ind_changed, old_vals, callback_data);
 	}
+	data.clear();
 }
 
 // a more static version
