@@ -1,6 +1,9 @@
 #pragma once
 #include "../global.h"
-#if SLS_CPP >= 17 // C++17 standard
+#if SLS_CPP >= 17 && !defined(SLS_USE_MINGW)
+	// C++17 standard
+	// MINGW / MSYS2 cannot find std::filesystem
+	#define SLS_USE_FILESYSTEM
 	#include <filesystem>
 	using std::filesystem;
 #elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
@@ -164,7 +167,7 @@ inline Str path2dir(Str_I fname)
 
 inline void mkdir(Str_I path)
 {
-#if SLS_CPP >= 17
+#if defined(SLS_USE_FILESYSTEM)
 	if (!filesystem::create_directory(path))
 		SLS_ERR("mkdir failed: " + path);
 #elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
@@ -182,7 +185,7 @@ inline void mkdir(Str_I path)
 // remove an empty directory
 inline void rmdir(Str_I path)
 {
-#if SLS_CPP >= 17
+#if defined(SLS_USE_FILESYSTEM)
 	filesystem::path p(path);
 	if (!filesystem::is_directory(p))
 		SLS_ERR("not a directory: " + path);
@@ -216,7 +219,7 @@ inline void ensure_dir(Str_I dir_or_file)
 // get canonical path (i.e. absolute path with no symlink)
 inline Str real_path(Str_I path)
 {
-#if SLS_CPP >= 17
+#if defined(SLS_USE_FILESYSTEM)
 	return filesystem::canonical(path).string();
 #elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	char *cstr = realpath(path.c_str(), nullptr);
@@ -235,7 +238,7 @@ inline Str real_path(Str_I path)
 
 // remove a file
 inline int file_rm(Str_I wildcard_name) {
-#if SLS_CPP >= 17
+#if defined(SLS_USE_FILESYSTEM)
 	filesystem::path p(path);
 	if (!filesystem::is_regular_file(p))
 		SLS_ERR("not a regular file: " + path);
@@ -255,7 +258,8 @@ inline int file_rm(Str_I wildcard_name) {
 inline void file_list(vecStr_O fnames, Str_I path, Bool_I append)
 {
 	if (!append) fnames.clear();
-#if SLS_CPP >= 17
+	SLS_ASSERT(path.back() == '/');
+#if defined(SLS_USE_FILESYSTEM)
 	for (const auto& entry : filesystem::directory_iterator(path))
 		if (entry.is_regular_file())
 			fnames.push_back(entry.path().string());
@@ -393,6 +397,7 @@ inline void folder_list_full(vecStr_O folders, Str_I path, Bool_I append = false
 // result is sorted
 inline void file_list_r(vecStr_O fnames, Str_I path, Bool_I append = false)
 {
+	SLS_ASSERT(path.back() == '/');
 #if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	if (!append)
 		fnames.resize(0);
@@ -1039,19 +1044,60 @@ inline void read(VecQdoub_O v, Str_I file, Long_I skip_lines = 0, Long_I max_siz
 
 
 // get time-stamp of a file
-#if defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
-inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname) {
-	struct tm *time;
+inline void last_modified(Str_O yyyymmddhhmmss, Str_I fname)
+{
+	struct tm *p_time;
+#if defined(SLS_USE_FILESYSTEM)
+	struct tm time;
+	p_time = &time;
+	// Define the path to the file
+    std::filesystem::path filePath = "example.txt";
+    // Get the last write time as a file_time_type
+    std::filesystem::file_time_type ftime = std::filesystem::last_write_time(filePath);
+    // Convert file_time_type to system time
+    auto system_time = std::chrono::system_clock::to_time_t(std::chrono::file_clock::to_sys(ftime));
+    // Convert system_time (time_t) to struct tm
+    localtime_r(&system_time, p_time); // Use localtime_r to be thread-safe
+#elif defined(SLS_USE_LINUX) || defined(SLS_USE_MACOS)
 	struct stat attrib;
 	stat(fname.c_str(), &attrib);
-	time = localtime(&(attrib.st_mtime));
-	yyyymmddhhmmss.clear();
-	yyyymmddhhmmss += num2str(time->tm_year + 1900) +
-		num2str(time->tm_mon + 1, 2) + num2str(time->tm_mday, 2) +
-		num2str(time->tm_hour, 2) + num2str(time->tm_min, 2) +
-		num2str(time->tm_sec, 2);
-}
+	p_time = localtime(&(attrib.st_mtime));
+#elif defined(SLS_USE_WINDOWS)
+	struct tm time;
+	p_time = &time;
+	WIN32_FILE_ATTRIBUTE_DATA fileInfo;
+    if (GetFileAttributesEx(fname.c_str(), GetFileExInfoStandard, &fileInfo) == 0) {
+        // Failed to get file attributes
+        SLS_ERR(SLS_WHERE);
+    }
+
+    // Convert FILETIME to SYSTEMTIME
+    FILETIME ftLocal;
+    FileTimeToLocalFileTime(&fileInfo.ftLastWriteTime, &ftLocal);
+    
+    SYSTEMTIME stUTC;
+    if (FileTimeToSystemTime(&ftLocal, &stUTC) == 0) {
+        // Failed to convert to SYSTEMTIME
+        SLS_ERR(SLS_WHERE);
+    }
+
+    // Populate struct tm with SYSTEMTIME values
+    time.tm_year = stUTC.wYear - 1900; // Year since 1900
+    time.tm_mon = stUTC.wMonth - 1;    // Month (0-11)
+    time.tm_mday = stUTC.wDay;         // Day of the month
+    time.tm_hour = stUTC.wHour;        // Hours since midnight (0-23)
+    time.tm_min = stUTC.wMinute;       // Minutes after the hour (0-59)
+    time.tm_sec = stUTC.wSecond;       // Seconds after the minute (0-59)
+    time.tm_isdst = -1;                // Not setting daylight saving time info
+#else
+	SLS_ERR("not implemented!");
 #endif
+	yyyymmddhhmmss.clear();
+	yyyymmddhhmmss += num2str(p_time->tm_year + 1900) +
+		num2str(p_time->tm_mon + 1, 2) + num2str(p_time->tm_mday, 2) +
+		num2str(p_time->tm_hour, 2) + num2str(p_time->tm_min, 2) +
+		num2str(p_time->tm_sec, 2);
+}
 
 // set write buffer
 // can speed up if there are a lot of staggered short reading and writing in the same drive
