@@ -1123,4 +1123,15 @@ inline Doub str2Doub(Str_I str, Long_I start = 0)
 	return x;
 }
 
+// escape 路径中所有双引号
+void escape_double_quotes(const std::string &str) {
+	while (true) {
+		ind = str.find('"', ind);
+		if (ind == std::string::npos)
+			break;
+		str.insert(ind, 1, '\\');
+		ind += 2;
+	}
+}
+
 } // namespace slisc
